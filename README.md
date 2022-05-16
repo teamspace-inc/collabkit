@@ -25,23 +25,14 @@ import { CollabProvider, Comments } from '@collabkit/ui';
 export function App() {
   return (
     <CollabProvider apiKey="<ADD_COLLABKIT_API_KEY>">
-      <Document id="1" />
+      <Comments thread="1" />
+      <CommentBox
+        thread="1"
+        placeholder="Add a comment…" />
     </CollabProvider>
-  )
-}
-
-// Add Comments to any component:
-function Document() {
-  // ...
-  return (
-    <article>
-      <p>{doc.text}</p>
-      <Comments id={doc.id} />
-    </article>
   )
 }
 ```
 
 ## How it works
 
-tbd
