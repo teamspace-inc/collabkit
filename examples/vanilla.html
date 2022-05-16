@@ -1,0 +1,19 @@
+<html>
+  <script type="module">
+    import { setup, identify } from "https://cdn.skypack.dev/@collabkit/vanilla";
+
+    setup('COLLABKIT_API_KEY');
+    identify({
+      id: '123',
+      name: 'John Doe',
+      avatar: 'https://example.com/avatar.png',
+      email: 'john@doe.com',
+    });
+
+  </script>
+  <body>
+    <h1>Hello world</h1>
+
+    <p>Some text here...</p>
+  </body>
+</html>
