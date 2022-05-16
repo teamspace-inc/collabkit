@@ -19,7 +19,7 @@ yarn add @collabkit/comments
 Then include the commenting UI in your React component:
 
 ```javascript
-import { CollabProvider, Comments } from '@collabkit/ui';
+import { CollabProvider, Comments, CommentBox } from '@collabkit/ui';
 
 // Add the provider to your root component:
 export function App() {
