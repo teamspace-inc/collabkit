@@ -13,13 +13,13 @@
 
 Install Collabkit with your favorite package manager:
 ```
-yarn add @collabkit/comments
+yarn add @collabkit/react
 ```
 
 Then include the commenting UI in your React component:
 
 ```javascript
-import { CollabProvider, Comments, CommentBox } from '@collabkit/ui';
+import { CollabProvider, Comments, CommentBox } from '@collabkit/react';
 
 // Add the provider to your root component:
 export function App() {
