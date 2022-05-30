@@ -1,0 +1,18 @@
+{
+  "private": true,
+  "name": "collabkit-monorepo",
+  "workspaces": [
+    "examples/*",
+    "packages/@collabkit/*"
+  ],
+  "scripts": {
+    "dev": "yarn workspace comments-example dev"
+  },
+  "devDependencies": {
+    "prettier": "^2.6.2"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "printWidth": 100
+  }
+}
