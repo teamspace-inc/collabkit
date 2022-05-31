@@ -399,7 +399,11 @@ function Thread(props: {
             <StyledScrollArea>
               <StyledViewport css={{ backgroundColor: 'white' }}>
                 {props.thread.comments.map((comment) => (
-                  <Comment message={comment.message} actor={props.thread.actors[comment.actorId]} />
+                  <Comment
+                    key={comment.id}
+                    message={comment.message}
+                    actor={props.thread.actors[comment.actorId]}
+                  />
                 ))}
               </StyledViewport>
               <StyledScrollbar orientation="vertical">

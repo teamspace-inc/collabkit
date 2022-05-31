@@ -1,6 +1,7 @@
 import { proxy } from 'valtio';
 
 export interface Comment {
+  id: string;
   message: string;
   actorId: string;
   seenBy: string[];
@@ -48,8 +49,8 @@ export const store = proxy<Store>({
       },
       composerMessage: '',
       comments: [
-        { message: 'Hey', actorId: 'user-1', seenBy: ['user-1', 'user-2'] },
-        { message: 'Hi', actorId: 'user-2', seenBy: ['user-2'] },
+        { id: '1', message: 'Hey', actorId: 'user-1', seenBy: ['user-1', 'user-2'] },
+        { id: '2', message: 'Hi', actorId: 'user-2', seenBy: ['user-2'] },
       ],
     },
     'thread-2': {
