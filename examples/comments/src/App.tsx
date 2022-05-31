@@ -1,6 +1,6 @@
-import { useMatrix } from "@collabkit/react";
+import { CollabKitPlayground, useMatrix } from '@collabkit/react';
 
-import logo from './logo.svg'
+import logo from './logo.svg';
 import './App.css';
 
 function App() {
@@ -16,16 +16,16 @@ function App() {
         <img src={logo} className="App-logo" alt="logo" />
         <p>Public rooms:</p>
         <ul>
-          {rooms.chunk.slice(0,10).map((room: any) => (
-            <li key={room.room_id}>
-              {room.name}
-            </li>
+          {rooms.chunk.slice(0, 10).map((room: any) => (
+            <li key={room.room_id}>{room.name}</li>
           ))}
           <li>...and {rooms.total_room_count_estimate - 10} more.</li>
         </ul>
+        <h1>components</h1>
+        <CollabKitPlayground />
       </header>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
