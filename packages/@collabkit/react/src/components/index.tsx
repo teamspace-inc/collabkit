@@ -189,7 +189,10 @@ const StyledComposerTextarea = styled(TextareaAutosize, {
   },
 });
 
-const StyledComposerSendButton = styled('button', {
+const StyledComposerSendButton = styled(Tooltip.TooltipTrigger, {
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
   backgroundColor: ACCENT,
   width: 28,
   height: 28,
@@ -222,16 +225,18 @@ function Composer(props: { onCommentSend: (message: string) => void; isFloating:
       <Tooltip.Root>
         <StyledComposerSendButton
           disabled={message.trim().length === 0}
-          onClick={(e) => (message.trim().length > 0 ? props.onCommentSend(message) : null)}
+          onClick={(e) => {
+            if (message.trim().length > 0) {
+              props.onCommentSend(message);
+            }
+          }}
         >
-          <StyledTooltipTrigger>
-            <ArrowUp
-              size={14}
-              color={'white'}
-              weight={'bold'}
-              style={{ position: 'relative', top: 1, cursor: 'pointer' }}
-            />
-          </StyledTooltipTrigger>
+          <ArrowUp
+            size={14}
+            color={'white'}
+            weight={'bold'}
+            style={{ position: 'relative', cursor: 'pointer' }}
+          />
         </StyledComposerSendButton>
         <StyledTooltipContent>
           Send
