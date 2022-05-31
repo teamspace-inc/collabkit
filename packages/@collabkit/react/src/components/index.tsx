@@ -144,7 +144,15 @@ const StyledComment = styled('div', {
   },
 });
 
-const StyledAvatar = styled('div', {
+const StyledAvatar = styled('img', {
+  width: 24,
+  height: 24,
+  flexShrink: 0,
+  borderRadius: 28,
+  background: '$accent',
+});
+
+const StyledAvatarPlaceholder = styled('div', {
   width: 24,
   height: 24,
   flexShrink: 0,
@@ -155,7 +163,11 @@ const StyledAvatar = styled('div', {
 function Comment(props: { message: string; actor: Actor }) {
   return (
     <StyledComment>
-      <StyledAvatar src={props.actor.photoURL} />
+      {props.actor.photoURL ? (
+        <StyledAvatar src={props.actor.photoURL} />
+      ) : (
+        <StyledAvatarPlaceholder />
+      )}
       <StyledMessage>{props.message}</StyledMessage>
     </StyledComment>
   );
@@ -216,7 +228,7 @@ function Composer(props: { onCommentSend: (message: string) => void; isFloating:
 
   return (
     <div style={{ position: 'relative', display: 'flex' }}>
-      <StyledAvatar style={{ position: 'absolute', left: 10, top: 12 }} />
+      <StyledAvatarPlaceholder style={{ position: 'absolute', left: 10, top: 12 }} />
       <StyledComposerTextarea
         onChange={(e) => setMessage(e.target.value)}
         placeholder="Type here..."
