@@ -1,5 +1,5 @@
 import { blackA, blue, mauve, sand } from '@radix-ui/colors';
-import { createStitches, styled } from '@stitches/react';
+import { createStitches } from '@stitches/react';
 
 import {
   IconContext,
@@ -21,7 +21,7 @@ import { Actor, CommentThread, events, store } from '../constants';
 
 const ACCENT = blue.blue10;
 
-createStitches({
+const { styled } = createStitches({
   theme: {
     fonts: {},
     space: {},
