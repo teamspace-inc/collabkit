@@ -144,7 +144,7 @@ const StyledComment = styled('div', {
   },
 });
 
-const StyledAvatar = styled('img', {
+const StyledAvatar = styled('div', {
   width: 24,
   height: 24,
   flexShrink: 0,
