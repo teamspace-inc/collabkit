@@ -511,6 +511,16 @@
   resolved "https://registry.yarnpkg.com/@stitches/react/-/react-1.2.8.tgz#954f8008be8d9c65c4e58efa0937f32388ce3a38"
   integrity sha512-9g9dWI4gsSVe8bNLlb+lMkBYsnIKCZTmvqvDG+Avnn69XfmHZKiaMrx7cgTaddq7aTPPmXiTsbFcUy0xgI4+wA==
 
+"@types/google.accounts@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@types/google.accounts/-/google.accounts-0.0.1.tgz#1cddd6b4b3ccf0a07c7282e3ca6f8d4390d3ce6e"
+  integrity sha512-US+e68xwCoiieDI1HYVCbk8PHCB6GIHyWUSBxpFAbTYtmvtnXLzbBusZrz3HCYAOBijkZebSNGNkc746Qz3R7Q==
+
+"@types/matrix-js-sdk@^11.0.1":
+  version "11.0.1"
+  resolved "https://registry.yarnpkg.com/@types/matrix-js-sdk/-/matrix-js-sdk-11.0.1.tgz#6766819b345003858e52b3ee0b8cdf6ce0447b27"
+  integrity sha512-0cI+IlIf96mxsTgtS9x7Cw2tZKhhkqwAmodKXGW+rf7THmbiM7rvOsRmp3eDik16mRlWrluq2egVFtQ8NGjgPw==
+
 "@types/prop-types@*":
   version "15.7.5"
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.5.tgz#5f19d2b85a98e9558036f6a3cacc8819420f05cf"

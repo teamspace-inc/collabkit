@@ -1,20 +1,29 @@
 import '../matrix/browser-matrix.min.js';
 
-import { useState, useEffect } from 'react';
+// import { createClient } from 'matrix-js-sdk/src/matrix';
+const { createClient } = matrixcs;
 
-import { CollabKitPlayground } from './components/index';
-export { CollabKitPlayground };
+export { CollabKitPlayground } from './components/index';
 
-export function useMatrix() {
-  const [rooms, setRooms] = useState(null);
+const client = createClient('https://matrix.org');
 
-  useEffect(() => {
-    // @ts-expect-error
-    const client = matrixcs.createClient('https://matrix.org');
-    client.publicRooms(function (err, data) {
-      setRooms(data);
-    });
-  }, []);
+export async function login() {
+  const data = await client.login('m.login.password', {
+    password: '*********',
+    identifier: {
+      type: 'm.id.user',
+      user: 'villei',
+    },
+    initial_device_display_name: 'CollabKit Playground',
+  });
 
-  return rooms;
+  return {
+    accessToken: data.access_token,
+    userId: data.user_id,
+    deviceId: data.device_id,
+  };
 }
+
+(async () => {
+  const credentials = await login();
+})();
