@@ -62,6 +62,14 @@ export const events = {
     }
   },
 
+  onKeyDown: (e: KeyboardEvent) => {
+    if (store.focusedId?.type === 'composer') {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        actions.sendMessage(store.focusedId.threadId);
+      }
+    }
+  },
+
   // onMouseDown: (e: MouseEvent) => {
   //   switch (store.uiState) {
   //     case 'selecting': {

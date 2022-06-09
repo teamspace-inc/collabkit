@@ -86,6 +86,7 @@ export const actions = {
     store.appState = 'config';
     store.config.setup = props;
     actions.monitorConnection();
+    document.addEventListener('keydown', events.onKeyDown);
   },
 
   identify: async (props: IdentifyProps) => {
