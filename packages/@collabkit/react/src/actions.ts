@@ -12,7 +12,7 @@ import {
 
 import { getAuth, signInWithCustomToken } from 'firebase/auth';
 import { store } from './store';
-import { CollabKitFirebaseApp, IdentifyProps, SetupProps, Target } from './constants';
+import { CollabKitFirebaseApp, Event, IdentifyProps, SetupProps, Target } from './constants';
 import { getRandomColor } from './colors';
 
 function timelineRef(threadId: string) {
@@ -220,6 +220,7 @@ export const actions = {
   },
 
   changeComposer: (threadId: string, value: string) => {
+    console.log('changeComposer', threadId, value);
     store.composers[threadId].body = value;
   },
 
@@ -275,18 +276,17 @@ export const actions = {
     console.log('sending message', body);
     // todo optimistic send
     try {
-      const eventRef = await push(timelineRef(threadId), {
+      const event: Event = {
         type: 'message',
         body: body,
         createdAt: serverTimestamp(),
         createdById: store.config.identify.userId,
-      });
+      };
+      const eventRef = await push(timelineRef(threadId), event);
       if (eventRef.key) {
-        store.timelines['thread-1'][eventRef.key] = {
-          body,
-          createdById: 'user-1',
+        store.timelines[threadId][eventRef.key] = {
+          ...event,
           createdAt: +Date.now(),
-          type: 'message',
         };
       } else {
         console.error('failed to send message');

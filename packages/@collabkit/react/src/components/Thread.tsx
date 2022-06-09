@@ -6,7 +6,6 @@ import ScrollArea from './ScrollArea';
 import React from 'react';
 import { useSnapshot } from 'valtio';
 import { store } from '../store';
-import { events } from '../events';
 import { actions } from '../actions';
 import { Comment } from './Comment';
 import { Composer } from './Composer';

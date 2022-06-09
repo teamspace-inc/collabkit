@@ -1,5 +1,4 @@
 import { Unsubscribe } from 'firebase/database';
-
 import { initializeApp } from '@firebase/app';
 import { Color } from './colors';
 
@@ -23,7 +22,7 @@ type ThreadTarget = { type: 'thread'; threadId: string };
 export interface Event {
   type: 'message' | 'reaction';
   body: string;
-  createdAt: number;
+  createdAt: number | object;
   createdById: string;
   parentId?: string;
 }
