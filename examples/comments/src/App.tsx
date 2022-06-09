@@ -1,9 +1,9 @@
-import { CollabKitPlayground } from '@collabkit/react';
+import {} from '@collabkit/react';
 
 import './App.css';
 
 function App() {
-  return <CollabKitPlayground />;
+  return <div>Show commenting example here</div>;
 }
 
 export default App;

@@ -1,20 +1,16 @@
-import '../matrix/browser-matrix.min.js';
+import React from 'react';
+import { actions } from './actions';
+import { Thread } from './components/Thread';
+import { store } from './store';
 
-import { useState, useEffect } from 'react';
-
-import { CollabKitPlayground } from './components/index';
-export { CollabKitPlayground };
-
-export function useMatrix() {
-  const [rooms, setRooms] = useState(null);
-
-  useEffect(() => {
-    // @ts-expect-error
-    const client = matrixcs.createClient('https://matrix.org');
-    client.publicRooms(function (err, data) {
-      setRooms(data);
-    });
-  }, []);
-
-  return rooms;
+function App(props: { token: string; children: React.ReactElement }) {
+  store.token = props.token;
+  return props.children;
 }
+
+export const CollabKit = {
+  App,
+  Thread,
+  setup: actions.setup,
+  identify: actions.identify,
+};

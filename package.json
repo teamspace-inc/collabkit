@@ -3,10 +3,12 @@
   "name": "collabkit-monorepo",
   "workspaces": [
     "examples/*",
-    "packages/@collabkit/*"
+    "packages/@collabkit/*",
+    "org/*"
   ],
   "scripts": {
-    "dev": "yarn workspace comments-example dev"
+    "dev": "yarn workspace comments-example dev",
+    "server": "yarn workspace server dev"
   },
   "devDependencies": {
     "prettier": "^2.6.2"

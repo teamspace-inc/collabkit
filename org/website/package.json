@@ -1,7 +1,7 @@
 {
   "private": true,
-  "name": "comments-example",
   "version": "0.0.0",
+  "name": "website",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -10,7 +10,8 @@
   "dependencies": {
     "@collabkit/react": "^0.0.0",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react-dom": "^18.0.0",
+    "wouter": "^2.8.0-alpha.2"
   },
   "devDependencies": {
     "@types/react": "^18.0.0",
