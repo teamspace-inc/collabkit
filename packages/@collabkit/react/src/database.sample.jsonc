@@ -1,0 +1,29 @@
+{
+  "apps": {
+    "exampleApp": {
+      "name": "Example App",
+      "mode": "UNSECURED",
+      "members": {
+        "adminUserId": true
+      }
+    }
+  },
+  "profiles": {
+    "exampleApp": {
+      "exampleUser": {
+        "name": "Example User",
+        "email": "joe@example.com"
+      }
+    }
+  },
+  "timeline": {
+    "exampleApp": {
+      "exampleRoom": {
+        "type": "message",
+        "body": "Hello world!",
+        "createdById": "exampleUser",
+        "createdAt": 1654512649689
+      }
+    }
+  }
+}
