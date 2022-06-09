@@ -12,7 +12,7 @@ import {
 
 import { getAuth, signInWithCustomToken } from 'firebase/auth';
 import { store } from './store';
-import { CollabKitFirebaseApp, IdentifyProps, SetupProps } from './constants';
+import { CollabKitFirebaseApp, IdentifyProps, SetupProps, Target } from './constants';
 import { getRandomColor } from './colors';
 
 function timelineRef(threadId: string) {
@@ -134,7 +134,7 @@ export const actions = {
       );
       store.profiles[config.identify.userId] = profile;
       if (store.appState === 'config') {
-        store.appState = 'idle';
+        store.appState = 'ready';
       }
     } catch (e) {
       console.error(e);
@@ -187,7 +187,19 @@ export const actions = {
     }
   },
 
+  focus: (target: Target) => {
+    store.focusedId = target;
+  },
+
+  blur: (target: Target) => {
+    store.focusedId = null;
+  },
+
   openThread: async (uuid: string) => {
+    store.composers[uuid] = {
+      body: '',
+    };
+
     console.log('openThread', uuid, timelineRef(uuid).toString());
 
     if (store.subs[timelineRef(uuid).toString()]) {
@@ -207,52 +219,58 @@ export const actions = {
     }
   },
 
+  changeComposer: (threadId: string, value: string) => {
+    store.composers[threadId].body = value;
+  },
+
   closeThread: (threadId: string) => {
     store.subs[timelineRef(threadId).toString()]?.();
   },
 
-  removeSelection: () => {
-    document.querySelectorAll('[data-commentable]').forEach((el) => {
-      if (el.classList.contains('commentable-hover')) {
-        el.classList.remove('commentable-hover');
-      }
-    });
-  },
+  // removeSelection: () => {
+  //   document.querySelectorAll('[data-commentable]').forEach((el) => {
+  //     if (el.classList.contains('commentable-hover')) {
+  //       el.classList.remove('commentable-hover');
+  //     }
+  //   });
+  // },
 
-  hover: (el: Element) => {
-    el.classList.add('commentable-hover');
-  },
+  // hover: (el: Element) => {
+  //   el.classList.add('commentable-hover');
+  // },
 
-  startSelecting: () => {
-    if (store.appState === 'idle') {
-      store.appState = 'selecting';
-      document.addEventListener('mouseover', events.onMouseOver);
-      document.addEventListener('keydown', events.onKeyDown);
-      document.addEventListener('mousedown', events.onMouseDown);
-    }
-  },
+  // startSelecting: () => {
+  //   if (store.uiState === 'idle') {
+  //     store.uiState = 'selecting';
+  //     document.addEventListener('mouseover', events.onMouseOver);
+  //     document.addEventListener('keydown', events.onKeyDown);
+  //     document.addEventListener('mousedown', events.onMouseDown);
+  //   }
+  // },
 
-  startCommenting: (id: string) => {
-    document.removeEventListener('mouseover', events.onMouseOver);
-    document.removeEventListener('keydown', events.onKeyDown);
-    if (store.appState === 'selecting') {
-      store.appState = 'commenting';
-    }
-  },
+  // startCommenting: (id: string) => {
+  //   document.removeEventListener('mouseover', events.onMouseOver);
+  //   document.removeEventListener('keydown', events.onKeyDown);
+  //   if (store.appState === 'selecting') {
+  //     store.appState = 'commenting';
+  //   }
+  // },
 
-  cancel: () => {
-    store.appState = 'idle';
-    // actions.removeSelection();
-    document.removeEventListener('mousedown', events.onMouseDown);
-    document.removeEventListener('mouseover', events.onMouseOver);
-    document.removeEventListener('keydown', events.onKeyDown);
-  },
+  // cancel: () => {
+  //   store.appState = 'idle';
+  //   // actions.removeSelection();
+  //   document.removeEventListener('mousedown', events.onMouseDown);
+  //   document.removeEventListener('mouseover', events.onMouseOver);
+  //   document.removeEventListener('keydown', events.onKeyDown);
+  // },
 
-  sendMessage: async (threadId: string, body: string) => {
+  sendMessage: async (threadId: string) => {
     if (!store.config.identify) {
       console.warn('[CollabKit] Did you forget to call CollabKit.identify?');
       return;
     }
+
+    const { body } = store.composers[threadId];
 
     console.log('sending message', body);
     // todo optimistic send
@@ -274,6 +292,7 @@ export const actions = {
         console.error('failed to send message');
         // handle failure here
       }
+      store.composers[threadId].body = '';
     } catch (e) {
       console.error(e);
       // handle failure here

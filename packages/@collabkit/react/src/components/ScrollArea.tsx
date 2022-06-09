@@ -2,12 +2,14 @@ import { blackA, mauve } from '@radix-ui/colors';
 import * as ScrollArea from '@radix-ui/react-scroll-area';
 import { styled } from '@stitches/react';
 
-const SCROLLBAR_SIZE = 10;
+const SCROLLBAR_SIZE = 6;
 
 const StyledScrollArea = styled(ScrollArea.Root, {
   width: '100%',
   height: '352px',
-  borderRadius: 4,
+  borderTopRightRadius: 6,
+  borderTopLeftRadius: 6,
+  // borderBottomRightRadius: 4,
   overflow: 'hidden',
   // boxShadow: `0 2px 10px ${blackA.blackA7}`,
 });
@@ -25,9 +27,8 @@ const StyledScrollbar = styled(ScrollArea.Scrollbar, {
   // disable browser handling of all panning and zooming gestures on touch devices
   touchAction: 'none',
   padding: 2,
-  background: blackA.blackA6,
   transition: 'background 160ms ease-out',
-  '&:hover': { background: blackA.blackA8 },
+  '&:hover': { background: blackA.blackA4 },
   '&[data-orientation="vertical"]': { width: SCROLLBAR_SIZE },
   '&[data-orientation="horizontal"]': {
     flexDirection: 'column',

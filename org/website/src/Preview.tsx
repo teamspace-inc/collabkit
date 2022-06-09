@@ -15,6 +15,7 @@ export function Preview(props: { appId: string; apiKey: string; mode: 'SECURED' 
   return (
     <div style={{ padding: 20, background: '#eee', borderRadius: '20px' }}>
       <h1>Preview</h1>
+      <CollabKit.Debug />
       <CollabKit.App token={props.apiKey}>
         <CollabKit.Thread uuid={'foobaz'}></CollabKit.Thread>
       </CollabKit.App>
