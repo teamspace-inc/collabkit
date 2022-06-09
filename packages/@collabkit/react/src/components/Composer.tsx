@@ -4,7 +4,6 @@ import { Profile, Target } from '../constants';
 import { Avatar } from './Avatar';
 import { blue, sand } from '@radix-ui/colors';
 import { styled } from '@stitches/react';
-
 import TextareaAutosize from 'react-textarea-autosize';
 import { useSnapshot } from 'valtio';
 import { store } from '../store';
@@ -65,7 +64,8 @@ const StyledComposerSendButton = styled(Tooltip.Trigger, {
 
 export function Composer(props: { profile?: Profile; threadId: string; isFloating: boolean }) {
   const { composers } = useSnapshot(store);
-  const target = { type: 'thread', threadId: props.threadId } as Target;
+  const target = { type: 'composer', threadId: props.threadId } as Target;
+  const bodyLength = composers[props.threadId]?.body.trim().length;
 
   return (
     <div style={{ position: 'relative', display: 'flex' }}>
@@ -82,9 +82,9 @@ export function Composer(props: { profile?: Profile; threadId: string; isFloatin
       />
       <Tooltip.Root>
         <StyledComposerSendButton
-          disabled={composers[props.threadId]?.body.trim().length === 0}
+          disabled={bodyLength === 0}
           onClick={(e) => {
-            if (composers[props.threadId].body.trim().length > 0) {
+            if (bodyLength > 0) {
               events.onSend(props.threadId);
             }
           }}
