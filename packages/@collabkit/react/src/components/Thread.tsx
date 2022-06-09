@@ -54,6 +54,7 @@ const StyledIconButton = styled('div', {
   borderRadius: 22,
   height: 32,
   width: 32,
+  cursor: 'pointer',
 
   '&:hover': {
     background: '$gray200',
@@ -88,7 +89,7 @@ export function Thread(props: { uuid: string }) {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    appState === 'idle' ? actions.openThread(props.uuid) : null;
+    appState === 'ready' ? actions.openThread(props.uuid) : null;
   }, [props.uuid, appState]);
 
   const handleScroll = useCallback((e: React.SyntheticEvent) => {
@@ -147,7 +148,6 @@ export function Thread(props: { uuid: string }) {
           <Composer
             profile={config.identify?.userId ? profiles[config.identify?.userId] : undefined}
             threadId={props.uuid}
-            onSend={events.onSend}
             isFloating={!isEmpty}
           />
         </IconContext.Provider>

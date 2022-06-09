@@ -15,6 +15,11 @@ const firebaseConfig = {
 
 export const CollabKitFirebaseApp = initializeApp(firebaseConfig, 'CollabKit');
 
+export type Target = ComposerTarget | ThreadTarget;
+
+type ComposerTarget = { type: 'composer'; threadId: string };
+type ThreadTarget = { type: 'thread'; threadId: string };
+
 export interface Event {
   type: 'message' | 'reaction';
   body: string;
@@ -54,17 +59,19 @@ export interface Composer {
 export interface Store {
   isConnected: boolean;
   token: string;
-  selectedId: null | string;
+  selectedId: null | Target;
+  focusedId: null | Target;
   config: {
     identify: IdentifyProps | null | undefined;
     setup: SetupProps | null | undefined;
     isSetup: boolean;
     hasIdentified: boolean;
   };
-  appState: 'blank' | 'config' | 'idle' | 'commenting' | 'selecting' | 'composing';
+  appState: 'blank' | 'config' | 'ready';
+  uiState: 'idle' | 'commenting' | 'selecting' | 'composing';
   timelines: { [threadId: string]: Timeline };
   profiles: { [profileId: string]: Profile };
-  composer: {
+  composers: {
     [threadId: string]: Composer;
   };
   subs: { [subId: string]: Unsubscribe };

@@ -5,6 +5,7 @@ const StyledTooltipTrigger = styled(Tooltip.Trigger, {
   background: 'none',
   border: 'none',
   padding: '0px',
+  cursor: 'pointer',
 });
 
 const StyledTooltipContent = styled(Tooltip.Content, {

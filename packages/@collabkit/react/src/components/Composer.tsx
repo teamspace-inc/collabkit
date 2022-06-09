@@ -1,12 +1,14 @@
-import { useState } from 'react';
 import { ArrowUp } from 'phosphor-react';
 import * as Tooltip from './Tooltip';
-import { Profile } from '../constants';
+import { Profile, Target } from '../constants';
 import { Avatar } from './Avatar';
 import { blue, sand } from '@radix-ui/colors';
 import { styled } from '@stitches/react';
 
 import TextareaAutosize from 'react-textarea-autosize';
+import { useSnapshot } from 'valtio';
+import { store } from '../store';
+import { events } from '../events';
 
 const ACCENT = blue.blue10;
 
@@ -22,7 +24,7 @@ const StyledComposerTextarea = styled(TextareaAutosize, {
   resize: 'none',
   height: '96px',
   boxSizing: 'border-box',
-  borderTop: '1px solid $gray200',
+  borderTop: `1px solid ${sand.sand4}`,
 
   '&:focus': {
     outline: 'none',
@@ -61,13 +63,9 @@ const StyledComposerSendButton = styled(Tooltip.Trigger, {
   },
 });
 
-export function Composer(props: {
-  profile?: Profile;
-  threadId: string;
-  onSend: (threadId: string, body: string) => void;
-  isFloating: boolean;
-}) {
-  const [body, setBody] = useState('');
+export function Composer(props: { profile?: Profile; threadId: string; isFloating: boolean }) {
+  const { composers } = useSnapshot(store);
+  const target = { type: 'thread', threadId: props.threadId } as Target;
 
   return (
     <div style={{ position: 'relative', display: 'flex' }}>
@@ -75,16 +73,19 @@ export function Composer(props: {
         <Avatar profile={props.profile} style={{ position: 'absolute', left: 10, top: 12 }} />
       ) : null}
       <StyledComposerTextarea
-        onChange={(e) => setBody(e.target.value)}
+        onFocus={(e) => events.onFocus(e, { target })}
+        onBlur={(e) => events.onBlur(e, { target })}
+        onChange={(e) => events.onChange(e, { target })}
+        value={composers[props.threadId]?.body}
         placeholder="Type here..."
         fullyRounded={props.isFloating}
       />
       <Tooltip.Root>
         <StyledComposerSendButton
-          disabled={body.trim().length === 0}
+          disabled={composers[props.threadId]?.body.trim().length === 0}
           onClick={(e) => {
-            if (body.trim().length > 0) {
-              props.onSend(props.threadId, body);
+            if (composers[props.threadId].body.trim().length > 0) {
+              events.onSend(props.threadId);
             }
           }}
         >
