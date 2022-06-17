@@ -46,6 +46,7 @@ export const generateToken = functions.https.onRequest(async (request, response)
             const token = await admin
               .auth()
               .createCustomToken(apiKey.toString(), { api: true, appId, mode });
+
             response.send(
               JSON.stringify({
                 status: 201,
@@ -65,7 +66,7 @@ export const generateToken = functions.https.onRequest(async (request, response)
         }
 
         case 'SECURED': {
-          const { endUserId: userId } = request.query;
+          const { endUserId: userId, workspaceId } = request.query;
 
           const idToken = request.get('Authorization')?.split('Bearer ')[1];
 
@@ -77,15 +78,20 @@ export const generateToken = functions.https.onRequest(async (request, response)
           const decodedTokenId = await admin.auth().verifyIdToken(idToken.toString());
           const { uid } = decodedTokenId;
 
-          // check the user is a member of the app with provided appId
-          const snapshot = await admin.database().ref(`/apps/${appId}/users/${uid}/`).once('value');
-
-          if (!snapshot.exists()) {
-            response.status(401).send({ status: 401, error: 'Unauthorized' });
+          if (!workspaceId) {
+            response.status(400).send({ status: 400, error: 'No workspaceId' });
             return;
           }
 
-          const token = await admin.auth().createCustomToken(uid, { api: true, appId, userId });
+          if (!userId) {
+            response.status(400).send({ status: 400, error: 'No userId' });
+            return;
+          }
+
+          const token = await admin
+            .auth()
+            .createCustomToken(uid, { api: true, appId, userId, workspaceId });
+
           response.send(
             JSON.stringify({
               status: 201,
@@ -99,6 +105,7 @@ export const generateToken = functions.https.onRequest(async (request, response)
           );
           return;
         }
+
         default: {
           response.status(400).send({ status: 400, error: '"mode" not supported' });
           return;

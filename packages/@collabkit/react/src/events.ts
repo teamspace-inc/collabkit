@@ -24,17 +24,20 @@ export const events = {
 
   onTimelineEventAdded: (snapshot: DataSnapshot) => {
     const event = snapshot.val();
+    const eventId = snapshot.key;
+    const workspaceId = snapshot.ref.parent?.ref.parent?.key;
+    const threadId = snapshot.ref.parent?.key;
+
     // todo validate data here
-    if (snapshot.key) {
-      if (snapshot.ref.parent?.ref.key) {
-        store.timelines[snapshot.ref.parent?.ref.key] ||= {};
-        store.timelines[snapshot.ref.parent?.ref.key][snapshot.key] = event;
-      }
+    //
+    if (threadId && workspaceId && eventId) {
+      store.workspaces[workspaceId].timeline[threadId] ||= {};
+      store.workspaces[workspaceId].timeline[threadId][eventId] ||= event;
     }
   },
 
-  onSend: (threadId: string) => {
-    actions.sendMessage(threadId);
+  onSend: (workspaceId: string, threadId: string) => {
+    actions.sendMessage(workspaceId, threadId);
   },
 
   // onMouseOver: (e: MouseEvent) => {
@@ -58,14 +61,16 @@ export const events = {
     props: { target: Target }
   ) => {
     if (props.target.type === 'composer') {
-      actions.changeComposer(props.target.threadId, e.target.value);
+      actions.changeComposer(props.target.workspaceId, props.target.threadId, e.target.value);
     }
   },
 
   onKeyDown: (e: KeyboardEvent) => {
     if (store.focusedId?.type === 'composer') {
       if (e.key === 'Enter' && !e.shiftKey) {
-        actions.sendMessage(store.focusedId.threadId);
+        actions.sendMessage(store.focusedId.workspaceId, store.focusedId.threadId);
+        e.stopPropagation();
+        e.preventDefault();
       }
     }
   },

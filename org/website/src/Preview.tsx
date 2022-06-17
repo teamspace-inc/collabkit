@@ -5,7 +5,9 @@ export function Preview(props: { appId: string; apiKey: string; mode: 'SECURED' 
   useEffect(() => {
     CollabKit.setup(props);
     CollabKit.identify({
+      workspaceId: 'teamspace',
       userId: 'user1',
+      workspaceName: 'Teamspace',
       name: 'Namit',
       email: 'namit@useteamspace.com',
       avatar: 'namit.pic.jpg',
@@ -17,7 +19,9 @@ export function Preview(props: { appId: string; apiKey: string; mode: 'SECURED' 
       <h1>Preview</h1>
       <CollabKit.Debug />
       <CollabKit.App token={props.apiKey}>
-        <CollabKit.Thread uuid={'foobaz'}></CollabKit.Thread>
+        <CollabKit.Workspace workspaceId="teamspace">
+          <CollabKit.Thread threadId={'example'} />
+        </CollabKit.Workspace>
       </CollabKit.App>
     </div>
   );

@@ -1,16 +1,12 @@
-import React from 'react';
 import { actions } from './actions';
+import { App } from './components/App';
 import { Debug } from './components/Debug';
 import { Thread } from './components/Thread';
-import { store } from './store';
-
-function App(props: { token: string; children: React.ReactElement }) {
-  store.token = props.token;
-  return props.children;
-}
+import { Workspace } from './components/Workspace';
 
 export const CollabKit = {
   App,
+  Workspace,
   Thread,
   Debug,
   setup: actions.setup,

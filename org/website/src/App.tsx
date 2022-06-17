@@ -14,6 +14,8 @@ import {
 import {
   getDatabase,
   ref,
+  set,
+  remove,
   DataSnapshot,
   Unsubscribe,
   onValue,
@@ -29,14 +31,17 @@ import { useSnapshot, proxy } from 'valtio';
 import { Route } from 'wouter';
 import { Dashboard } from './Dashboard';
 
+import { mauveDark } from '@radix-ui/colors';
+
 export interface App {
   appId: string;
   keys: { [apiKey: string]: boolean };
+  admins: { [adminId: string]: boolean };
   mode: 'UNSECURED' | 'SECURED';
   name: string;
 }
 
-export interface Membership {
+export interface AdminApp {
   [appId: string]: true;
 }
 
@@ -44,12 +49,12 @@ export interface Store {
   user: User | null;
   apps: { [appId: string]: App };
   subs: { [key: string]: Unsubscribe };
-  memberships: { [appId: string]: boolean };
+  adminApps: { [appId: string]: boolean };
 }
 
 export type CreateApp = {
   app: App;
-  membership: Membership;
+  adminApp: AdminApp;
 };
 
 export type FunctionResponse<T> =
@@ -78,30 +83,37 @@ export const store = proxy<Store>({
   user: null,
   apps: {},
   subs: {},
-  memberships: {},
+  adminApps: {},
 });
 
 export const events = {
   onAppChanged: (snapshot: DataSnapshot) => {
+    // console.log('onAppChanged');
     if (snapshot.key) {
-      store.apps[snapshot.key] = snapshot.val();
+      const app = { ...snapshot.val(), appId: snapshot.key };
+      // console.log('adding app', app);
+      store.apps[snapshot.key] = app;
     }
   },
 
-  onMembershipAdded: (snapshot: DataSnapshot) => {
-    console.log('membership added', snapshot.key, snapshot.val());
+  onDeleteAppButtonClick: (props: { appId: string; e: React.MouseEvent }) => {
+    actions.deleteApp(props.appId);
+  },
+
+  onAdminAppAdded: (snapshot: DataSnapshot) => {
+    // console.log('admin app added', snapshot.key, snapshot.val());
     if (snapshot.key) {
-      store.memberships[snapshot.key] = snapshot.val();
-      store.subs['appChanged'] = onValue(
-        ref(database, `apps/${snapshot.key}`),
+      store.adminApps[snapshot.key] = snapshot.val();
+      store.subs[snapshot.key] = onValue(
+        ref(database, `/apps/${snapshot.key}`),
         events.onAppChanged
       );
     }
   },
 
-  onMembershipRemoved: (snapshot: DataSnapshot) => {
+  onAdminAppRemoved: (snapshot: DataSnapshot) => {
     if (snapshot.key) {
-      delete store.memberships[snapshot.key];
+      delete store.adminApps[snapshot.key];
       delete store.apps[snapshot.key];
     }
   },
@@ -109,9 +121,21 @@ export const events = {
   onCreateAppButtonClick: (e: React.MouseEvent) => {
     actions.createApp();
   },
+
+  onAppNameChange: (props: { appId: string; e: React.ChangeEvent<HTMLInputElement> }) => {
+    actions.changeAppName({ appId: props.appId, newName: props.e.target.value });
+  },
 };
 
 const actions = {
+  changeAppName: async (props: { appId: string; newName: string }) => {
+    await set(ref(getDatabase(app), `/apps/${props.appId}/name`), props.newName);
+  },
+
+  deleteApp: async (appId: string) => {
+    await remove(ref(getDatabase(app), `/apps/${appId}`));
+  },
+
   createApp: async () => {
     if (!store.user) {
       return;
@@ -129,7 +153,7 @@ const actions = {
       const json = (await response.json()) as FunctionResponse<CreateApp>;
       if (json.status === 200 || json.status === 201) {
         store.apps[json.data.app.appId] = json.data.app;
-        store.memberships[json.data.app.appId] = json.data.membership !== null;
+        store.adminApps[json.data.app.appId] = json.data.adminApp !== null;
       }
       return;
     }
@@ -250,25 +274,25 @@ store.subs['user'] = onAuthStateChanged(auth, (user) => {
   store.user = user;
   if (user) {
     console.log('subscribing', user.uid);
-    store.subs['membershipAdded'] = onChildAdded(
-      ref(database, `/memberships/${user.uid}`),
-      events.onMembershipAdded
+    store.subs['adminAppAdded'] = onChildAdded(
+      ref(database, `/adminApps/${user.uid}`),
+      events.onAdminAppAdded
     );
-    store.subs['membershipRemoved'] = onChildRemoved(
-      ref(database, `/memberships/${user.uid}`),
-      events.onMembershipRemoved
+    store.subs['adminAppRemoved'] = onChildRemoved(
+      ref(database, `/adminApps/${user.uid}`),
+      events.onAdminAppRemoved
     );
   } else {
     console.log('unsubscribing');
-    store.subs['membershipAdded']?.();
-    store.subs['membershipRemoved']?.();
+    store.subs['adminAppAdded']?.();
+    store.subs['adminAppRemoved']?.();
   }
 });
 
 function App() {
   const { user } = useSnapshot(store);
   return (
-    <div>
+    <div style={{ backgroundColor: mauveDark.mauve1, color: mauveDark.mauve11 }}>
       <Route path="/preview">
         <h1>Preview</h1>
       </Route>
