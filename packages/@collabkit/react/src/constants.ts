@@ -16,8 +16,8 @@ export const CollabKitFirebaseApp = initializeApp(firebaseConfig, 'CollabKit');
 
 export type Target = ComposerTarget | ThreadTarget;
 
-type ComposerTarget = { type: 'composer'; threadId: string };
-type ThreadTarget = { type: 'thread'; threadId: string };
+type ComposerTarget = { type: 'composer'; threadId: string; workspaceId: string };
+type ThreadTarget = { type: 'thread'; threadId: string; workspaceId: string };
 
 export interface Event {
   type: 'message' | 'reaction';
@@ -28,7 +28,9 @@ export interface Event {
 }
 
 export type IdentifyProps = {
+  workspaceId: string;
   userId: string;
+  workspaceName?: string | null;
   name?: string | null;
   email?: string | null;
   avatar?: string | null;
@@ -66,12 +68,14 @@ export interface Store {
     isSetup: boolean;
     hasIdentified: boolean;
   };
+  profiles: { [profileId: string]: Profile };
+  workspaces: {
+    [workspaceId: string]: {
+      timeline: { [threadId: string]: Timeline };
+      composers: { [threadId: string]: Composer };
+    };
+  };
   appState: 'blank' | 'config' | 'ready';
   uiState: 'idle' | 'commenting' | 'selecting' | 'composing';
-  timelines: { [threadId: string]: Timeline };
-  profiles: { [profileId: string]: Profile };
-  composers: {
-    [threadId: string]: Composer;
-  };
   subs: { [subId: string]: Unsubscribe };
 }

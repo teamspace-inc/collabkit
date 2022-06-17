@@ -22,7 +22,7 @@ export const createApp = functions.https.onRequest(async (request, response) => 
         keys: {
           [nanoid()]: true,
         },
-        members: {
+        admins: {
           [uid]: true,
         },
         mode: 'UNSECURED' as const,
@@ -32,8 +32,9 @@ export const createApp = functions.https.onRequest(async (request, response) => 
         const appRef = await admin.database().ref('/apps').push(app);
         if (appRef.key) {
           try {
-            const membershipRef = await admin.database().ref(`/memberships/${uid}/${appRef.key}`);
-            membershipRef.set(true);
+            const adminRef = await admin.database().ref(`/adminApps/${uid}/${appRef.key}`);
+            // create ".default" workspace here
+            adminRef.set(true);
             response.status(201).send({
               status: 201,
               data: {
@@ -41,13 +42,13 @@ export const createApp = functions.https.onRequest(async (request, response) => 
                   ...app,
                   appId: appRef.key,
                 },
-                membership: {
+                adminApps: {
                   [appRef.key]: true,
                 },
               },
             });
           } catch (e) {
-            functions.logger.error('Failed to create membership', { error: e });
+            functions.logger.error('Failed to create adminApp', { error: e });
             response.status(400).send({ status: 400, error: 'Something went wrong' });
           }
         } else {

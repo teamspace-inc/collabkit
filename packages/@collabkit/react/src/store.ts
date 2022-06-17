@@ -14,8 +14,7 @@ export const store = proxy<Store>({
   },
   focusedId: null,
   selectedId: null,
-  composers: {},
+  workspaces: {},
   profiles: {},
-  timelines: {},
   subs: {},
 });

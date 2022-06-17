@@ -8,20 +8,21 @@ import {
   push,
   serverTimestamp,
   onValue,
+  update,
 } from 'firebase/database';
 
 import { getAuth, signInWithCustomToken } from 'firebase/auth';
 import { store } from './store';
 import { CollabKitFirebaseApp, Event, IdentifyProps, SetupProps, Target } from './constants';
-import { getRandomColor } from './colors';
+import { Color, getRandomColor } from './colors';
 
-function timelineRef(threadId: string) {
+function timelineRef(workspaceId: string, threadId: string) {
   if (!store.config.setup?.appId) {
     throw new Error('no appId');
   }
   return ref(
     getDatabase(CollabKitFirebaseApp),
-    `/timeline/${store.config.setup.appId}/${threadId}/`
+    `/timeline/${store.config.setup.appId}/${workspaceId}/${threadId}/`
   );
 }
 
@@ -91,6 +92,10 @@ export const actions = {
 
   identify: async (props: IdentifyProps) => {
     store.config.identify = props;
+    store.workspaces[props.workspaceId] ||= {
+      timeline: {},
+      composers: {},
+    };
   },
 
   monitorConnection: () => {
@@ -119,12 +124,52 @@ export const actions = {
     }
 
     try {
-      if (!config.identify) {
-        return;
+      const color = getRandomColor();
+
+      let profile: Partial<IdentifyProps> & { color: Color } = { ...config.identify, color };
+
+      delete profile.workspaceId;
+      delete profile.workspaceName;
+      delete profile.userId;
+
+      let workspace: Pick<IdentifyProps, 'workspaceId' | 'workspaceName'> = {
+        workspaceId: config.identify.workspaceId,
+      };
+
+      // only if the user has explicitly passed workspaceName do
+      // we want to apply it as a change
+      if (config.identify.hasOwnProperty('workspaceName')) {
+        workspace.workspaceName = config.identify.workspaceName;
       }
 
-      const color = getRandomColor();
-      const profile = { ...store.config.identify, color };
+      await update(
+        ref(
+          getDatabase(CollabKitFirebaseApp),
+          `/workspaces/${config.setup.appId}/${config.identify.workspaceId}/`
+        ),
+        workspace
+      );
+
+      await set(
+        ref(
+          getDatabase(CollabKitFirebaseApp),
+          `/workspaces/${config.setup.appId}/${config.identify.workspaceId}/profiles/${config.identify.userId}`
+        ),
+        true
+      );
+
+      console.log(
+        (
+          await get(
+            ref(
+              getDatabase(CollabKitFirebaseApp),
+              `/profiles/${config.setup.appId}/${config.identify.userId}`
+            )
+          )
+        ).val()
+      );
+
+      console.log(profile);
 
       await set(
         ref(
@@ -133,7 +178,9 @@ export const actions = {
         ),
         profile
       );
+
       store.profiles[config.identify.userId] = profile;
+
       if (store.appState === 'config') {
         store.appState = 'ready';
       }
@@ -163,8 +210,9 @@ export const actions = {
         );
 
         const result = await userCredential.user.getIdTokenResult();
-        const claimedMode = result.claims.mode;
-        console.log('claimedMode', claimedMode);
+        const mode = result.claims.mode;
+
+        console.log('mode', mode);
         console.log('signed in', userCredential);
       } catch (e) {
         console.error('failed to sign in', e);
@@ -174,12 +222,20 @@ export const actions = {
       try {
         // this should be an onValue sub
         const snapshot = await get(
-          ref(getDatabase(CollabKitFirebaseApp), '/profiles/' + config.setup.appId)
+          ref(
+            getDatabase(CollabKitFirebaseApp),
+            `/profiles/${config.setup.appId}/${config.identify?.workspaceId}`
+          )
         );
-        snapshot.forEach((child) => {
-          const profile = child.val();
-          store.profiles[profile.id] = profile;
-        });
+        const workspaceId = snapshot.key;
+        if (workspaceId) {
+          snapshot.forEach((child) => {
+            const profile = child.val();
+            if (workspaceId) {
+              store.profiles[profile.id] = profile;
+            }
+          });
+        }
       } catch (e) {
         console.error('collabkit.setup failed', e);
       }
@@ -196,37 +252,39 @@ export const actions = {
     store.focusedId = null;
   },
 
-  openThread: async (uuid: string) => {
-    store.composers[uuid] = {
-      body: '',
+  openThread: async (workspaceId: string, endUserId: string) => {
+    store.workspaces[workspaceId] ||= {
+      composers: {
+        [endUserId]: {
+          body: '',
+        },
+      },
+      timeline: {},
     };
 
-    console.log('openThread', uuid, timelineRef(uuid).toString());
+    const timeline = timelineRef(workspaceId, endUserId);
 
-    if (store.subs[timelineRef(uuid).toString()]) {
+    console.log('openThread', endUserId, timeline.toString());
+
+    if (store.subs[timeline.toString()]) {
       console.log('returing');
       return;
     }
 
     try {
-      console.log((await get(timelineRef(uuid))).val());
-
-      store.subs[timelineRef(uuid).toString()] = onChildAdded(
-        timelineRef(uuid),
-        events.onTimelineEventAdded
-      );
+      store.subs[timeline.toString()] = onChildAdded(timeline, events.onTimelineEventAdded);
     } catch (e) {
-      console.error('onchildadded', e);
+      console.error('onChildAdded', e);
     }
   },
 
-  changeComposer: (threadId: string, value: string) => {
-    console.log('changeComposer', threadId, value);
-    store.composers[threadId].body = value;
+  changeComposer: (workspaceId: string, threadId: string, value: string) => {
+    console.log('changeComposer', workspaceId, threadId, value);
+    store.workspaces[workspaceId].composers[threadId].body = value;
   },
 
-  closeThread: (threadId: string) => {
-    store.subs[timelineRef(threadId).toString()]?.();
+  closeThread: (workspaceId: string, threadId: string) => {
+    store.subs[timelineRef(workspaceId, threadId).toString()]?.();
   },
 
   // removeSelection: () => {
@@ -266,13 +324,20 @@ export const actions = {
   //   document.removeEventListener('keydown', events.onKeyDown);
   // },
 
-  sendMessage: async (threadId: string) => {
+  sendMessage: async (workspaceId: string, threadId: string) => {
     if (!store.config.identify) {
       console.warn('[CollabKit] Did you forget to call CollabKit.identify?');
       return;
     }
 
-    const { body } = store.composers[threadId];
+    const { body } = store.workspaces[workspaceId].composers[threadId];
+
+    if (body.trim().length === 0) {
+      // can't send empty messages
+      return;
+    }
+
+    store.workspaces[workspaceId].composers[threadId].body = '';
 
     console.log('sending message', body);
     // todo optimistic send
@@ -283,9 +348,10 @@ export const actions = {
         createdAt: serverTimestamp(),
         createdById: store.config.identify.userId,
       };
-      const eventRef = await push(timelineRef(threadId), event);
+      const eventRef = await push(timelineRef(workspaceId, threadId), event);
       if (eventRef.key) {
-        store.timelines[threadId][eventRef.key] = {
+        store.workspaces[workspaceId].timeline[threadId] ||= {};
+        store.workspaces[workspaceId].timeline[threadId][eventRef.key] = {
           ...event,
           createdAt: +Date.now(),
         };
@@ -293,7 +359,6 @@ export const actions = {
         console.error('failed to send message');
         // handle failure here
       }
-      store.composers[threadId].body = '';
     } catch (e) {
       console.error(e);
       // handle failure here

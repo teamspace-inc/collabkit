@@ -8,6 +8,8 @@ import TextareaAutosize from 'react-textarea-autosize';
 import { useSnapshot } from 'valtio';
 import { store } from '../store';
 import { events } from '../events';
+import { useContext } from 'react';
+import { WorkspaceContext } from './Workspace';
 
 const ACCENT = blue.blue10;
 
@@ -62,10 +64,21 @@ const StyledComposerSendButton = styled(Tooltip.Trigger, {
   },
 });
 
-export function Composer(props: { profile?: Profile; threadId: string; isFloating: boolean }) {
-  const { composers } = useSnapshot(store);
-  const target = { type: 'composer', threadId: props.threadId } as Target;
-  const bodyLength = composers[props.threadId]?.body.trim().length;
+export function Composer(props: {
+  profile?: Profile;
+  workspaceId: string;
+  threadId: string;
+  isFloating: boolean;
+}) {
+  const { workspaces } = useSnapshot(store);
+  const workspace = workspaces[props.workspaceId];
+  const target = {
+    type: 'composer',
+    threadId: props.threadId,
+    workspaceId: props.workspaceId,
+  } as Target;
+  const composer = workspace && workspace.composers[props.threadId];
+  const bodyLength = composer?.body.trim().length ?? 0;
 
   return (
     <div style={{ position: 'relative', display: 'flex' }}>
@@ -76,7 +89,7 @@ export function Composer(props: { profile?: Profile; threadId: string; isFloatin
         onFocus={(e) => events.onFocus(e, { target })}
         onBlur={(e) => events.onBlur(e, { target })}
         onChange={(e) => events.onChange(e, { target })}
-        value={composers[props.threadId]?.body}
+        value={composer?.body || ''}
         placeholder="Type here..."
         fullyRounded={props.isFloating}
       />
@@ -85,7 +98,7 @@ export function Composer(props: { profile?: Profile; threadId: string; isFloatin
           disabled={bodyLength === 0}
           onClick={(e) => {
             if (bodyLength > 0) {
-              events.onSend(props.threadId);
+              events.onSend(props.workspaceId, props.threadId);
             }
           }}
         >

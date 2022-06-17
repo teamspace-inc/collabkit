@@ -1,5 +1,5 @@
 import { styled } from '@stitches/react';
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useContext, useEffect, useRef } from 'react';
 import { ArrowLeft, ArrowRight, CheckCircle, IconContext, X } from 'phosphor-react';
 import * as Tooltip from './Tooltip';
 import ScrollArea from './ScrollArea';
@@ -9,6 +9,7 @@ import { store } from '../store';
 import { actions } from '../actions';
 import { Comment } from './Comment';
 import { Composer } from './Composer';
+import { WorkspaceContext } from './Workspace';
 
 const StyledThread = styled('div', {
   backgroundColor: 'white',
@@ -81,15 +82,34 @@ const StyledHeaderLeftGroup = styled('div', {
   gap: 0,
 });
 
-export function Thread(props: { uuid: string }) {
-  const { timelines, profiles, appState, config } = useSnapshot(store);
-  const timeline = timelines[props.uuid];
-  const isEmpty = timeline && Object.keys(timeline).length > 0;
+export function Thread(props: { threadId: string }) {
+  const { workspaceId } = useContext(WorkspaceContext);
+  const { workspaces, profiles, appState, config } = useSnapshot(store);
+  React.useMemo(() => {
+    if (workspaceId) {
+      store.workspaces[workspaceId] ||= {
+        timeline: {},
+        composers: {
+          [props.threadId]: {
+            body: '',
+          },
+        },
+      };
+    }
+  }, [props.threadId, workspaceId]);
+
+  const workspace = workspaceId && workspaces[workspaceId];
+  const timeline = workspace && workspace.timeline[props.threadId];
+  const isEmpty = timeline && Object.keys(timeline).length === 0;
   const scrollRef = useRef<HTMLDivElement>(null);
 
+  console.log(isEmpty, timeline);
+
   useEffect(() => {
-    appState === 'ready' ? actions.openThread(props.uuid) : null;
-  }, [props.uuid, appState]);
+    if (workspaceId && appState === 'ready') {
+      actions.openThread(workspaceId, props.threadId);
+    }
+  }, [workspaceId, props.threadId, appState]);
 
   const handleScroll = useCallback((e: React.SyntheticEvent) => {
     console.log('didScroll', e.currentTarget.scrollTop);
@@ -121,7 +141,7 @@ export function Thread(props: { uuid: string }) {
               </IconButton>
             </StyledThreadHeader>
           )}
-          {isEmpty && (
+          {!isEmpty && timeline && (
             <StyledCommentList>
               <ScrollArea.Root>
                 <ScrollArea.Viewport
@@ -144,11 +164,14 @@ export function Thread(props: { uuid: string }) {
               </ScrollArea.Root>
             </StyledCommentList>
           )}
-          <Composer
-            profile={config.identify?.userId ? profiles[config.identify?.userId] : undefined}
-            threadId={props.uuid}
-            isFloating={!isEmpty}
-          />
+          {workspaceId ? (
+            <Composer
+              profile={config.identify?.userId ? profiles[config.identify?.userId] : undefined}
+              workspaceId={workspaceId}
+              threadId={props.threadId}
+              isFloating={false}
+            />
+          ) : null}
         </IconContext.Provider>
       </StyledThread>
     </div>
