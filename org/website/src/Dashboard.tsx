@@ -1,12 +1,13 @@
-import { signOut } from 'firebase/auth';
 import { useSnapshot } from 'valtio';
-import { store, auth, events } from './App';
+import { store, events } from './App';
 import { styled } from '@stitches/react';
 import { AppListItem } from './AppListItem';
-import { mint, mauve } from '@radix-ui/colors';
+import { mint } from '@radix-ui/colors';
 import { Preview } from './Preview';
+import { CurrentUser } from './CurrentUser';
+import { Hero } from './Hero';
 
-const VStack = styled('div', {
+export const VStack = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   align: {
@@ -32,7 +33,7 @@ export const HStack = styled('div', {
   },
 });
 
-const Center = styled('div', {
+export const Center = styled('div', {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -40,7 +41,7 @@ const Center = styled('div', {
   height: '80vh',
 });
 
-const Grid = styled('div', {
+export const Grid = styled('div', {
   display: 'grid',
   variants: {
     layout: {
@@ -54,7 +55,7 @@ const Grid = styled('div', {
   },
 });
 
-const Inset = styled('div', {
+export const Inset = styled('div', {
   padding: '2rem 2rem',
 });
 
@@ -62,51 +63,34 @@ export const Code = styled('code', {
   fontFamily: 'Roboto Mono',
 });
 
-const Button = styled('button', {
+export const Button = styled('button', {
+  cursor: 'pointer',
+  borderRadius: 6,
   variants: {
     type: {
       cta: {
-        fontSize: 18,
-        lineHeight: '18px',
-        border: 'none',
-        padding: '1rem',
+        fontSize: '1rem',
+        lineHeight: 1,
+        padding: '0.5rem',
         fontWeight: 600,
+        color: mint.mint1,
         backgroundColor: mint.mint10,
+        border: '1px solid red',
+        borderColor: mint.mint10,
+      },
+      secondary: {
+        fontSize: '1rem',
+        lineHeight: 1,
+        padding: '0.5rem',
+        color: mint.mint11,
+        fontWeight: 600,
+        border: '1px solid red',
+        borderColor: mint.mint10,
+        backgroundColor: 'transparent',
       },
     },
   },
 });
-
-function Hero() {
-  return (
-    <Grid layout="col1">
-      <Inset>
-        <Center>
-          <VStack>
-            <h1
-              style={{
-                fontFamily: 'Prompt',
-                fontSize: '4rem',
-                lineHeight: '1',
-                color: mauve.mauve1,
-              }}
-            >
-              Add collaboration to your web app.
-            </h1>
-            <p style={{ fontSize: 20 }}>
-              Help your users collaborate with their teammates, inside of your app, instead of
-              losing them to Slack, Microsoft Teams or email. <br />
-            </p>
-            <p style={{ fontSize: 20 }}>
-              Integerate our React SDK to start driving retention and engagement
-            </p>
-            <Button type="cta">Get started</Button>
-          </VStack>
-        </Center>
-      </Inset>
-    </Grid>
-  );
-}
 
 function HowItWorks() {
   return <div>How It Works</div>;
@@ -140,18 +124,7 @@ function DetailedWhy() {
   );
 }
 
-function CurrentUser() {
-  const { user } = useSnapshot(store);
-
-  return (
-    <HStack style={{ gap: '6px' }}>
-      <img src={user?.photoURL || ''} /> {user?.displayName} {user?.email ?? 'Anonymous'}
-      <button onClick={() => signOut(auth)}>Sign Out</button>
-    </HStack>
-  );
-}
-
-export function Dashboard() {
+function Apps() {
   const { apps } = useSnapshot(store);
   const appList = (
     <ol>
@@ -162,24 +135,44 @@ export function Dashboard() {
       ))}
     </ol>
   );
-
   const selectedAppId = Object.keys(apps)?.[0];
 
   return (
+    <div style={{ padding: '2rem' }}>
+      {/* <h1>Apps</h1>
+      {appList}
+      <Button type="cta" onClick={events.onCreateAppButtonClick}>
+        Create new app
+      </Button> */}
+      {/* <textarea value={idToken ?? ''} /> */}
+      {selectedAppId ? (
+        <Preview
+          appId={selectedAppId}
+          apiKey={Object.keys(apps[selectedAppId].keys)[0]}
+          mode={apps[selectedAppId].mode}
+        />
+      ) : null}
+    </div>
+  );
+}
+
+export function Dashboard() {
+  return (
     <div>
-      <div style={{ padding: '2rem' }}>
+      <div style={{ padding: '2rem 2rem 0' }}>
         <HStack>
-          <b>CollabKit</b>
+          <b style={{ fontSize: 20, fontWeight: 500 }}>CollabKit</b>
           <Spacer />
           <CurrentUser />
         </HStack>
       </div>
 
-      <Hero />
-      <HowItWorks />
-      <DetailedWhy />
-      <Integrate />
-      <Pricing />
+      {/* <Hero /> */}
+      <Apps />
+      {/* <HowItWorks /> */}
+      {/* <DetailedWhy /> */}
+      {/* <Integrate /> */}
+      {/* <Pricing /> */}
 
       {/* <p>
         <b>Public discussions</b>
@@ -195,17 +188,6 @@ export function Dashboard() {
         If your users are creating content in your product. Comments enables others to provide
         feedback in context on work in progress.
       </p> */}
-      <h2>Your apps</h2>
-      {appList}
-      <button onClick={events.onCreateAppButtonClick}>Create new app</button>
-      {/* <textarea value={idToken ?? ''} /> */}
-      {selectedAppId ? (
-        <Preview
-          appId={selectedAppId}
-          apiKey={Object.keys(apps[selectedAppId].keys)[0]}
-          mode={apps[selectedAppId].mode}
-        />
-      ) : null}
     </div>
   );
 }

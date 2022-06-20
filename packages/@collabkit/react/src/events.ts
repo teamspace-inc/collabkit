@@ -52,6 +52,14 @@ export const events = {
     actions.focus(props.target);
   },
 
+  onClick: (e: React.MouseEvent, props: { target: Target }) => {
+    switch (props.target.type) {
+      case 'commentButton': {
+        break;
+      }
+    }
+  },
+
   onBlur: (e: React.FocusEvent, props: { target: Target }) => {
     actions.blur(props.target);
   },

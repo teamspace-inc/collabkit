@@ -1,6 +1,6 @@
 import { styled } from '@stitches/react';
 import { useCallback, useContext, useEffect, useRef } from 'react';
-import { ArrowLeft, ArrowRight, CheckCircle, IconContext, X } from 'phosphor-react';
+import { IconContext, X } from 'phosphor-react';
 import * as Tooltip from './Tooltip';
 import ScrollArea from './ScrollArea';
 import React from 'react';
@@ -10,18 +10,25 @@ import { actions } from '../actions';
 import { Comment } from './Comment';
 import { Composer } from './Composer';
 import { WorkspaceContext } from './Workspace';
+import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
 
 const StyledThread = styled('div', {
-  backgroundColor: 'white',
-  borderRadius: '11px',
   padding: 0,
-  boxShadow: '0 6px 11px rgba(0, 0, 0, 0.1)',
-  maxWidth: '286px',
   gap: 0,
   display: 'flex',
   flexDirection: 'column',
 
   variants: {
+    type: {
+      popout: {
+        marginTop: '0.414rem',
+        position: 'absolute',
+        backgroundColor: 'white',
+        borderRadius: '11px',
+        maxWidth: '286px',
+        boxShadow: '0 6px 11px rgba(0, 0, 0, 0.1)',
+      },
+    },
     hasComments: {
       true: {
         minHeight: '320px',
@@ -38,14 +45,14 @@ const StyledCommentList = styled('div', {
   padding: '0px 0px',
 });
 
-const StyledThreadHeader = styled('div', {
-  height: 40,
-  borderBottom: '1px solid $gray200',
-  display: 'flex',
-  gap: 0,
-  padding: '3px 3px',
-  alignItems: 'center',
-});
+// const StyledThreadHeader = styled('div', {
+//   height: 40,
+//   borderBottom: '1px solid $gray200',
+//   display: 'flex',
+//   gap: 0,
+//   padding: '3px 3px',
+//   alignItems: 'center',
+// });
 
 const StyledIconButton = styled('div', {
   display: 'flex',
@@ -62,27 +69,28 @@ const StyledIconButton = styled('div', {
   },
 });
 
-function IconButton(props: { children: React.ReactNode; tooltip: string }) {
-  return (
-    <Tooltip.Root>
-      <Tooltip.Trigger>
-        <StyledIconButton>{props.children}</StyledIconButton>
-      </Tooltip.Trigger>
-      <Tooltip.Content>
-        {props.tooltip}
-        <Tooltip.Arrow />
-      </Tooltip.Content>
-    </Tooltip.Root>
-  );
-}
+// function IconButton(props: { children: React.ReactNode; tooltip: string }) {
+//   return (
+//     <Tooltip.Root>
+//       <Tooltip.Trigger>
+//         <StyledIconButton>{props.children}</StyledIconButton>
+//       </Tooltip.Trigger>
+//       <Tooltip.Content>
+//         {props.tooltip}
+//         <Tooltip.Arrow />
+//       </Tooltip.Content>
+//     </Tooltip.Root>
+//   );
+// }
 
-const StyledHeaderLeftGroup = styled('div', {
-  display: 'flex',
-  flexGrow: 1,
-  gap: 0,
-});
+// const StyledHeaderLeftGroup = styled('div', {
+//   display: 'flex',
+//   flexGrow: 1,
+//   gap: 0,
+// });
 
-export function Thread(props: { threadId: string }) {
+export function Thread(props: { threadId: string; type?: 'popout' }) {
+  const { threadId } = props;
   const { workspaceId } = useContext(WorkspaceContext);
   const { workspaces, profiles, appState, config } = useSnapshot(store);
   React.useMemo(() => {
@@ -102,12 +110,16 @@ export function Thread(props: { threadId: string }) {
   const timeline = workspace && workspace.timeline[props.threadId];
   const isEmpty = timeline && Object.keys(timeline).length === 0;
   const scrollRef = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
 
-  console.log(isEmpty, timeline);
+  const intersection = useIntersectionObserver(ref, [props.threadId, props.type]);
+
+  console.log(intersection);
 
   useEffect(() => {
     if (workspaceId && appState === 'ready') {
-      actions.openThread(workspaceId, props.threadId);
+      actions.initThread({ workspaceId, threadId });
+      actions.loadThread({ workspaceId, threadId });
     }
   }, [workspaceId, props.threadId, appState]);
 
@@ -120,27 +132,17 @@ export function Thread(props: { threadId: string }) {
   }, [timeline && Object.keys(timeline).length]);
 
   return (
-    <div>
-      <StyledThread>
+    <div ref={ref}>
+      <StyledThread type={props.type}>
         <IconContext.Provider value={{ size: '20px' }}>
-          {!isEmpty && (
+          {/* {!isEmpty && (
             <StyledThreadHeader>
-              <StyledHeaderLeftGroup>
-                <IconButton tooltip="Previous Comment">
-                  <ArrowLeft />
-                </IconButton>
-                <IconButton tooltip="Next Comment">
-                  <ArrowRight />
-                </IconButton>
-              </StyledHeaderLeftGroup>
-              <IconButton tooltip="Mark as done">
-                <CheckCircle />
-              </IconButton>
+              <StyledHeaderLeftGroup />
               <IconButton tooltip="Close">
                 <X />
               </IconButton>
             </StyledThreadHeader>
-          )}
+          )} */}
           {!isEmpty && timeline && (
             <StyledCommentList>
               <ScrollArea.Root>

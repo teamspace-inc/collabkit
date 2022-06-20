@@ -14,10 +14,11 @@ const firebaseConfig = {
 
 export const CollabKitFirebaseApp = initializeApp(firebaseConfig, 'CollabKit');
 
-export type Target = ComposerTarget | ThreadTarget;
+export type Target = ComposerTarget | ThreadTarget | CommentButtonTarget;
 
-type ComposerTarget = { type: 'composer'; threadId: string; workspaceId: string };
-type ThreadTarget = { type: 'thread'; threadId: string; workspaceId: string };
+export type ComposerTarget = { type: 'composer'; threadId: string; workspaceId: string };
+export type ThreadTarget = { type: 'thread'; threadId: string; workspaceId: string };
+export type CommentButtonTarget = { type: 'commentButton'; threadId: string; workspaceId: string };
 
 export interface Event {
   type: 'message' | 'reaction';

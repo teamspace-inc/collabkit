@@ -31,7 +31,7 @@ import { useSnapshot, proxy } from 'valtio';
 import { Route } from 'wouter';
 import { Dashboard } from './Dashboard';
 
-import { mauveDark } from '@radix-ui/colors';
+import { mauveDark, grayDark } from '@radix-ui/colors';
 
 export interface App {
   appId: string;
@@ -292,7 +292,7 @@ store.subs['user'] = onAuthStateChanged(auth, (user) => {
 function App() {
   const { user } = useSnapshot(store);
   return (
-    <div style={{ backgroundColor: mauveDark.mauve1, color: mauveDark.mauve11 }}>
+    <div>
       <Route path="/preview">
         <h1>Preview</h1>
       </Route>
