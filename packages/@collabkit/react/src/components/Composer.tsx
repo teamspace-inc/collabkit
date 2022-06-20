@@ -18,10 +18,11 @@ const StyledComposerTextarea = styled(TextareaAutosize, {
   borderRadius: '0px 0px 11px 11px',
   border: 'none',
   background: '$input',
-  width: 'calc(100%)',
   fontFamily: 'inherit',
   resize: 'none',
   height: '96px',
+  display: 'flex',
+  flex: 1,
   boxSizing: 'border-box',
   borderTop: `1px solid ${sand.sand4}`,
 
@@ -79,7 +80,7 @@ export function Composer(props: {
   const bodyLength = composer?.body.trim().length ?? 0;
 
   return (
-    <div style={{ position: 'relative', display: 'flex' }}>
+    <div style={{ position: 'relative', display: 'flex', flex: 0 }}>
       {props.profile ? (
         <Avatar profile={props.profile} style={{ position: 'absolute', left: 10, top: 12 }} />
       ) : null}

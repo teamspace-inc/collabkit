@@ -1,7 +1,6 @@
 import { styled } from '@stitches/react';
 import { useCallback, useContext, useEffect, useRef } from 'react';
 import { IconContext, X } from 'phosphor-react';
-import * as Tooltip from './Tooltip';
 import ScrollArea from './ScrollArea';
 import React from 'react';
 import { useSnapshot } from 'valtio';
@@ -11,12 +10,16 @@ import { Comment } from './Comment';
 import { Composer } from './Composer';
 import { WorkspaceContext } from './Workspace';
 import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
+import { mauve } from '@radix-ui/colors';
 
 const StyledThread = styled('div', {
   padding: 0,
   gap: 0,
   display: 'flex',
   flexDirection: 'column',
+  alignItems: 'stretch',
+  justifyItems: 'stretch',
+  flex: 1,
 
   variants: {
     type: {
@@ -41,7 +44,7 @@ const StyledCommentList = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   flexGrow: 1,
-  maxHeight: '308px',
+  // maxHeight: '308px',
   padding: '0px 0px',
 });
 
@@ -54,20 +57,20 @@ const StyledCommentList = styled('div', {
 //   alignItems: 'center',
 // });
 
-const StyledIconButton = styled('div', {
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  borderRadius: 22,
-  height: 32,
-  width: 32,
-  cursor: 'pointer',
+// const StyledIconButton = styled('div', {
+//   display: 'flex',
+//   justifyContent: 'center',
+//   alignItems: 'center',
+//   borderRadius: 22,
+//   height: 32,
+//   width: 32,
+//   cursor: 'pointer',
 
-  '&:hover': {
-    background: '$gray200',
-    cursor: 'pointer',
-  },
-});
+//   '&:hover': {
+//     background: '$gray200',
+//     cursor: 'pointer',
+//   },
+// });
 
 // function IconButton(props: { children: React.ReactNode; tooltip: string }) {
 //   return (
@@ -89,26 +92,32 @@ const StyledIconButton = styled('div', {
 //   gap: 0,
 // });
 
+function Audience(props: {}) {
+  return <div></div>;
+}
+
 export function Thread(props: { threadId: string; type?: 'popout' }) {
   const { threadId } = props;
   const { workspaceId } = useContext(WorkspaceContext);
   const { workspaces, profiles, appState, config } = useSnapshot(store);
-  React.useMemo(() => {
-    if (workspaceId) {
-      store.workspaces[workspaceId] ||= {
-        timeline: {},
-        composers: {
-          [props.threadId]: {
-            body: '',
-          },
-        },
-      };
-    }
-  }, [props.threadId, workspaceId]);
 
-  const workspace = workspaceId && workspaces[workspaceId];
-  const timeline = workspace && workspace.timeline[props.threadId];
-  const isEmpty = timeline && Object.keys(timeline).length === 0;
+  // React.useMemo(() => {
+  //   if (workspaceId) {
+  //     store.workspaces[workspaceId] ||= {
+  //       name: '',
+  //       timeline: {},
+  //       composers: {
+  //         [props.threadId]: {
+  //           body: '',
+  //         },
+  //       },
+  //     };
+  //   }
+  // }, [props.threadId, workspaceId]);
+
+  const workspace = workspaceId ? workspaces[workspaceId] : null;
+  const timeline = workspace ? workspace.timeline[props.threadId] : null;
+  const isEmpty = timeline ? Object.keys(timeline).length === 0 : true;
   const scrollRef = useRef<HTMLDivElement>(null);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -132,8 +141,34 @@ export function Thread(props: { threadId: string; type?: 'popout' }) {
   }, [timeline && Object.keys(timeline).length]);
 
   return (
-    <div ref={ref}>
+    <div
+      ref={ref}
+      style={{
+        display: 'flex',
+        height: '100%',
+        flex: 1,
+      }}
+    >
       <StyledThread type={props.type}>
+        {isEmpty ? (
+          <div
+            style={{
+              display: 'flex',
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              flexDirection: 'column',
+            }}
+          >
+            <div style={{ fontWeight: '500', fontSize: '1.212rem', marginBottom: '1.212rem' }}>
+              Start the conversation
+            </div>
+            <div style={{ color: mauve.mauve10 }}>
+              {' '}
+              Send a comment to notify others in {workspace?.name || 'this workspace'}.
+            </div>
+          </div>
+        ) : null}
         <IconContext.Provider value={{ size: '20px' }}>
           {/* {!isEmpty && (
             <StyledThreadHeader>

@@ -32,6 +32,7 @@ import { Route } from 'wouter';
 import { Dashboard } from './Dashboard';
 
 import { mauveDark, grayDark } from '@radix-ui/colors';
+import { CollabKit } from '@collabkit/react';
 
 export interface App {
   appId: string;
@@ -289,10 +290,58 @@ store.subs['user'] = onAuthStateChanged(auth, (user) => {
   }
 });
 
+function AppLoader(props: { children: React.ReactNode }) {
+  const { apps } = useSnapshot(store);
+
+  if (apps == null) {
+    return null;
+  }
+
+  const app = apps[Object.keys(apps)?.[0]];
+
+  if (app == null) {
+    return null;
+  }
+
+  return <Dev app={app}>{props.children}</Dev>;
+}
+
+function Dev(props: { app: App; children: React.ReactNode }) {
+  const { app } = props;
+
+  useEffect(() => {
+    const token = Object.keys(app.keys)[0];
+    CollabKit.setup({ appId: app.appId, apiKey: token, mode: 'UNSECURED' });
+    CollabKit.identify({
+      workspaceId: 'acme',
+      userId: 'user1',
+      workspaceName: 'ACME',
+      name: 'Namit',
+      email: 'namit@useteamspace.com',
+      avatar: 'namit.pic.jpg',
+    });
+  }, [app]);
+
+  if (app == null) {
+    return null;
+  }
+
+  return (
+    <div style={{ display: 'flex', flexGrow: 1, width: '100%' }}>
+      <CollabKit.App token={Object.keys(app.keys)[0]}>{props.children}</CollabKit.App>
+    </div>
+  );
+}
+
+function Fullscreen(props: { children: React.ReactNode }) {
+  return <div style={{ position: 'absolute', inset: 0 }}>{props.children}</div>;
+}
+
 function App() {
   const { user } = useSnapshot(store);
+
   return (
-    <div>
+    <>
       <Route path="/preview">
         <h1>Preview</h1>
       </Route>
@@ -300,7 +349,18 @@ function App() {
       <Route path="/signedIn">
         <SignedIn />
       </Route>
-    </div>
+      <Route path="/dev/:workspace_id/:thread_id">
+        {(params) => (
+          <AppLoader>
+            <CollabKit.Workspace workspaceId={params.workspace_id}>
+              <Fullscreen>
+                <CollabKit.Thread threadId={params.thread_id} />
+              </Fullscreen>
+            </CollabKit.Workspace>
+          </AppLoader>
+        )}
+      </Route>
+    </>
   );
 }
 
