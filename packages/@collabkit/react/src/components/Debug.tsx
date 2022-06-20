@@ -4,8 +4,8 @@ import { store } from '../store';
 export function Debug() {
   const { appState, uiState } = useSnapshot(store);
   return (
-    <div>
+    <code style={{ fontSize: 14 }}>
       {appState} - {uiState}
-    </div>
+    </code>
   );
 }

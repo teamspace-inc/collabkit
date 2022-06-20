@@ -4,7 +4,7 @@ export const WorkspaceContext = React.createContext<{ workspaceId: string | null
   workspaceId: null,
 });
 
-function Workspace(props: { workspaceId: string; children: React.ReactElement }) {
+function Workspace(props: { workspaceId: string; children: React.ReactNode }) {
   return (
     <WorkspaceContext.Provider value={{ workspaceId: props.workspaceId }}>
       {props.children}

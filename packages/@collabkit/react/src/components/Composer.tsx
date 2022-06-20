@@ -8,8 +8,6 @@ import TextareaAutosize from 'react-textarea-autosize';
 import { useSnapshot } from 'valtio';
 import { store } from '../store';
 import { events } from '../events';
-import { useContext } from 'react';
-import { WorkspaceContext } from './Workspace';
 
 const ACCENT = blue.blue10;
 

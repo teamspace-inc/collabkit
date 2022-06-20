@@ -20,8 +20,5 @@
     }
   },
   "include": ["src"],
-  "references": [
-    { "path": "./tsconfig.node.json" },
-    { "path": "../../packages/@collabkit/react" }
-  ]
+  "references": [{ "path": "./tsconfig.node.json" }, { "path": "../../packages/@collabkit/react" }]
 }

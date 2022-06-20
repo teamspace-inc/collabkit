@@ -98,6 +98,36 @@ export const actions = {
     };
   },
 
+  initThread: (props: { workspaceId: string; threadId: string }) => {
+    store.workspaces[props.workspaceId] ||= {
+      composers: {
+        [props.threadId]: {
+          body: '',
+        },
+      },
+      timeline: {},
+    };
+  },
+
+  loadThread: async (props: { workspaceId: string; threadId: string }) => {
+    const timeline = timelineRef(props.workspaceId, props.threadId);
+
+    if (store.subs[timeline.toString()]) {
+      return;
+    }
+
+    try {
+      store.subs[timeline.toString()] = onChildAdded(timeline, events.onTimelineEventAdded);
+    } catch (e) {
+      console.error('onChildAdded', e);
+    }
+  },
+
+  toggleThread: (props: { workspaceId: string; threadId: string }) => {
+    actions.initThread(props);
+    actions.loadThread(props);
+  },
+
   monitorConnection: () => {
     if (store.subs['connectionState']) {
       return;
@@ -252,39 +282,14 @@ export const actions = {
     store.focusedId = null;
   },
 
-  openThread: async (workspaceId: string, endUserId: string) => {
-    store.workspaces[workspaceId] ||= {
-      composers: {
-        [endUserId]: {
-          body: '',
-        },
-      },
-      timeline: {},
-    };
-
-    const timeline = timelineRef(workspaceId, endUserId);
-
-    console.log('openThread', endUserId, timeline.toString());
-
-    if (store.subs[timeline.toString()]) {
-      console.log('returing');
-      return;
-    }
-
-    try {
-      store.subs[timeline.toString()] = onChildAdded(timeline, events.onTimelineEventAdded);
-    } catch (e) {
-      console.error('onChildAdded', e);
-    }
-  },
-
   changeComposer: (workspaceId: string, threadId: string, value: string) => {
     console.log('changeComposer', workspaceId, threadId, value);
+    store.workspaces[workspaceId].composers[threadId] ||= { body: '' };
     store.workspaces[workspaceId].composers[threadId].body = value;
   },
 
-  closeThread: (workspaceId: string, threadId: string) => {
-    store.subs[timelineRef(workspaceId, threadId).toString()]?.();
+  unloadThread: (props: { workspaceId: string; threadId: string }) => {
+    store.subs[timelineRef(props.workspaceId, props.threadId).toString()]?.();
   },
 
   // removeSelection: () => {
