@@ -72,6 +72,7 @@ export interface Store {
   profiles: { [profileId: string]: Profile };
   workspaces: {
     [workspaceId: string]: {
+      name: string;
       timeline: { [threadId: string]: Timeline };
       composers: { [threadId: string]: Composer };
     };

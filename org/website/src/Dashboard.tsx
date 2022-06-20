@@ -1,11 +1,8 @@
-import { useSnapshot } from 'valtio';
-import { store, events } from './App';
 import { styled } from '@stitches/react';
-import { AppListItem } from './AppListItem';
 import { mint } from '@radix-ui/colors';
-import { Preview } from './Preview';
 import { CurrentUser } from './CurrentUser';
 import { Hero } from './Hero';
+import { AppList } from './Apps';
 
 export const VStack = styled('div', {
   display: 'flex',
@@ -124,38 +121,6 @@ function DetailedWhy() {
   );
 }
 
-function Apps() {
-  const { apps } = useSnapshot(store);
-  const appList = (
-    <ol>
-      {Object.keys(apps).map((id) => (
-        <li key={id}>
-          <AppListItem app={apps[id]} />
-        </li>
-      ))}
-    </ol>
-  );
-  const selectedAppId = Object.keys(apps)?.[0];
-
-  return (
-    <div style={{ padding: '2rem' }}>
-      {/* <h1>Apps</h1>
-      {appList}
-      <Button type="cta" onClick={events.onCreateAppButtonClick}>
-        Create new app
-      </Button> */}
-      {/* <textarea value={idToken ?? ''} /> */}
-      {selectedAppId ? (
-        <Preview
-          appId={selectedAppId}
-          apiKey={Object.keys(apps[selectedAppId].keys)[0]}
-          mode={apps[selectedAppId].mode}
-        />
-      ) : null}
-    </div>
-  );
-}
-
 export function Dashboard() {
   return (
     <div>
@@ -167,8 +132,8 @@ export function Dashboard() {
         </HStack>
       </div>
 
-      {/* <Hero /> */}
-      <Apps />
+      <Hero />
+      <AppList />
       {/* <HowItWorks /> */}
       {/* <DetailedWhy /> */}
       {/* <Integrate /> */}

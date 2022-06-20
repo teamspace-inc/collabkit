@@ -93,6 +93,7 @@ export const actions = {
   identify: async (props: IdentifyProps) => {
     store.config.identify = props;
     store.workspaces[props.workspaceId] ||= {
+      name: store.config.identify.workspaceName || '',
       timeline: {},
       composers: {},
     };
@@ -100,6 +101,7 @@ export const actions = {
 
   initThread: (props: { workspaceId: string; threadId: string }) => {
     store.workspaces[props.workspaceId] ||= {
+      name: store.config.identify?.workspaceName || '',
       composers: {
         [props.threadId]: {
           body: '',
@@ -187,19 +189,6 @@ export const actions = {
         ),
         true
       );
-
-      console.log(
-        (
-          await get(
-            ref(
-              getDatabase(CollabKitFirebaseApp),
-              `/profiles/${config.setup.appId}/${config.identify.userId}`
-            )
-          )
-        ).val()
-      );
-
-      console.log(profile);
 
       await set(
         ref(
