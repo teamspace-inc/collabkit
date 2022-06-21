@@ -327,14 +327,19 @@ function Dev(props: { app: App; children: React.ReactNode }) {
   }
 
   return (
-    <div style={{ display: 'flex', flexGrow: 1, width: '100%' }}>
+    <div style={{ height: '100%', width: '100%' }}>
       <CollabKit.App token={Object.keys(app.keys)[0]}>{props.children}</CollabKit.App>
     </div>
   );
 }
 
 function Fullscreen(props: { children: React.ReactNode }) {
-  return <div style={{ position: 'absolute', inset: 0 }}>{props.children}</div>;
+  return (
+    <div style={{ display: 'flex', width: '100%', height: '100%', flex: 1 }}>
+      <style type="text/css">{`body, html, #root { overflow: hidden; width: 100%; height: 100%; }`}</style>
+      {props.children}
+    </div>
+  );
 }
 
 function App() {

@@ -1,5 +1,5 @@
 import { styled } from '@stitches/react';
-import { useCallback, useContext, useEffect, useRef } from 'react';
+import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { IconContext, X } from 'phosphor-react';
 import ScrollArea from './ScrollArea';
 import React from 'react';
@@ -20,6 +20,7 @@ const StyledThread = styled('div', {
   alignItems: 'stretch',
   justifyItems: 'stretch',
   flex: 1,
+  height: '100%',
 
   variants: {
     type: {
@@ -44,6 +45,7 @@ const StyledCommentList = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   flexGrow: 1,
+  maxHeight: 'calc(100% - 43px)',
   // maxHeight: '308px',
   padding: '0px 0px',
 });
@@ -99,7 +101,8 @@ const StyledCommentList = styled('div', {
 export function Thread(props: { threadId: string; type?: 'popout' }) {
   const { threadId } = props;
   const { workspaceId } = useContext(WorkspaceContext);
-  const { workspaces, profiles, appState, config } = useSnapshot(store);
+  const { workspaces, profiles, appState, config, isConnected } = useSnapshot(store);
+  const [textareaHeight, setTextareaHeight] = useState(-1);
 
   // React.useMemo(() => {
   //   if (workspaceId) {
@@ -117,7 +120,6 @@ export function Thread(props: { threadId: string; type?: 'popout' }) {
 
   const workspace = workspaceId ? workspaces[workspaceId] : null;
   const timeline = workspace ? workspace.timeline[props.threadId] : null;
-  const hasLoaded = !!timeline;
   const isEmpty = timeline ? Object.keys(timeline).length === 0 : true;
   const scrollRef = useRef<HTMLDivElement>(null);
   const ref = useRef<HTMLDivElement>(null);
@@ -151,7 +153,7 @@ export function Thread(props: { threadId: string; type?: 'popout' }) {
       }}
     >
       <StyledThread type={props.type}>
-        {!hasLoaded ? (
+        {!isConnected ? (
           <div
             style={{
               display: 'flex',
@@ -162,7 +164,7 @@ export function Thread(props: { threadId: string; type?: 'popout' }) {
             }}
           ></div>
         ) : null}
-        {hasLoaded && isEmpty ? (
+        {isConnected && isEmpty ? (
           <div
             style={{
               display: 'flex',
@@ -191,7 +193,9 @@ export function Thread(props: { threadId: string; type?: 'popout' }) {
             </StyledThreadHeader>
           )} */}
           {!isEmpty && timeline && (
-            <StyledCommentList>
+            <StyledCommentList
+              style={textareaHeight > -1 ? { maxHeight: `calc(100% - ${textareaHeight + 2})` } : {}}
+            >
               <ScrollArea.Root style={{ ...(props.type === 'popout' ? { height: 352 } : {}) }}>
                 <ScrollArea.Viewport
                   css={{
@@ -220,6 +224,7 @@ export function Thread(props: { threadId: string; type?: 'popout' }) {
           )}
           {workspaceId ? (
             <Composer
+              onHeightChange={(newHeight) => setTextareaHeight(newHeight)}
               profile={config.identify?.userId ? profiles[config.identify?.userId] : undefined}
               workspaceId={workspaceId}
               threadId={props.threadId}
