@@ -68,6 +68,7 @@ export function Composer(props: {
   workspaceId: string;
   threadId: string;
   isFloating: boolean;
+  onHeightChange: (height: number) => void
 }) {
   const { workspaces } = useSnapshot(store);
   const workspace = workspaces[props.workspaceId];
@@ -97,6 +98,7 @@ export function Composer(props: {
         onBlur={(e) => events.onBlur(e, { target })}
         onChange={(e) => events.onChange(e, { target })}
         value={composer?.body || ''}
+        onHeightChange={props.onHeightChange}
         placeholder="Write a comment..."
         fullyRounded={props.isFloating}
       />

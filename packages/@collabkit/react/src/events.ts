@@ -1,7 +1,7 @@
 import { DataSnapshot } from 'firebase/database';
 import React from 'react';
 import { actions } from './actions';
-import { Target } from './constants';
+import { ComposerTarget, Target } from './constants';
 import { store } from './store';
 
 // function closestCommentable(target: EventTarget) {
