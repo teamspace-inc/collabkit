@@ -9,13 +9,12 @@ export function Hero() {
           <VStack>
             <h1
               style={{
-                fontSize: '3rem',
+                fontSize: '4rem',
                 lineHeight: '1',
                 margin: '0 0 0.5rem',
               }}
             >
-              Add collaboration to <br />
-              your web app.
+              Add collaboration to your web app.
             </h1>
             <p style={{ fontSize: '1.33rem', color: mauve.mauve11, lineHeight: 1.414 }}>
               CollabKit lets you add commenting to your web app so your users from the same team or

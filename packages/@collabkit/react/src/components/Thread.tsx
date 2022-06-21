@@ -92,9 +92,9 @@ const StyledCommentList = styled('div', {
 //   gap: 0,
 // });
 
-function Audience(props: {}) {
-  return <div></div>;
-}
+// function Audience(props: {}) {
+//   return <div></div>;
+// }
 
 export function Thread(props: { threadId: string; type?: 'popout' }) {
   const { threadId } = props;
@@ -117,6 +117,7 @@ export function Thread(props: { threadId: string; type?: 'popout' }) {
 
   const workspace = workspaceId ? workspaces[workspaceId] : null;
   const timeline = workspace ? workspace.timeline[props.threadId] : null;
+  const hasLoaded = !!timeline;
   const isEmpty = timeline ? Object.keys(timeline).length === 0 : true;
   const scrollRef = useRef<HTMLDivElement>(null);
   const ref = useRef<HTMLDivElement>(null);
@@ -150,7 +151,18 @@ export function Thread(props: { threadId: string; type?: 'popout' }) {
       }}
     >
       <StyledThread type={props.type}>
-        {isEmpty ? (
+        {!hasLoaded ? (
+          <div
+            style={{
+              display: 'flex',
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              flexDirection: 'column',
+            }}
+          ></div>
+        ) : null}
+        {hasLoaded && isEmpty ? (
           <div
             style={{
               display: 'flex',
@@ -180,14 +192,19 @@ export function Thread(props: { threadId: string; type?: 'popout' }) {
           )} */}
           {!isEmpty && timeline && (
             <StyledCommentList>
-              <ScrollArea.Root>
+              <ScrollArea.Root style={{ ...(props.type === 'popout' ? { height: 352 } : {}) }}>
                 <ScrollArea.Viewport
-                  css={{ backgroundColor: 'white' }}
+                  css={{
+                    backgroundColor: 'white',
+                    display: 'flex',
+                    flex: 1,
+                  }}
                   onScroll={handleScroll}
                   ref={scrollRef}
                 >
                   {Object.keys(timeline).map((id) => (
                     <Comment
+                      timestamp={timeline[id].createdAt}
                       key={id}
                       body={timeline[id].body}
                       profile={profiles[timeline[id].createdById]}

@@ -1,31 +1,108 @@
 import { Profile } from '../constants';
 import { Avatar } from './Avatar';
-import { sand } from '@radix-ui/colors';
 import { styled } from '@stitches/react';
+import { mauve } from '@radix-ui/colors';
 
 export const StyledComment = styled('div', {
-  padding: '6px 10px',
+  padding: '4px 10px',
   display: 'flex',
   gap: '6px',
-  fontSize: 16,
-  lineHeight: '24px',
+
   overflowWrap: 'break-word',
+});
+
+const StyledMessageTimestamp = styled('span', {
+  fontSize: 12,
+  color: mauve.mauve11,
+  textDecoration: 'none',
+  fontWeight: '400',
+});
+
+const StyledMessageAction = styled('a', {
+  fontSize: 12,
+  color: mauve.mauve11,
+  textDecoration: 'none',
+  fontWeight: '600',
 
   '&:hover': {
-    background: sand.sand3,
+    textDecoration: 'underline',
   },
 });
 
-export const StyledMessage = styled('div', {
-  width: 'calc(100% - 36px)',
-  color: sand.sand12,
+const StyledMessageActions = styled('div', {
+  padding: '4px 10px 0px',
+  display: 'flex',
+  gap: '16px',
 });
 
-export function Comment(props: { body: string; profile: Profile }) {
+export const StyledMessage = styled('div', {
+  padding: '6px 10px',
+  display: 'flex',
+  flexDirection: 'column',
+  flex: 0,
+  fontSize: 14,
+  lineHeight: '20px',
+  borderRadius: 14,
+  color: mauve.mauve12,
+  wordBreak: 'break-word',
+  background: mauve.mauve4,
+});
+
+const StyledName = styled('div', {
+  fontSize: 12,
+  fontWeight: '600',
+  lineHeight: '12px',
+  marginTop: 4,
+  marginBottom: 2,
+});
+
+function timeDifference(current: number, previous: number) {
+  var msPerMinute = 60 * 1000;
+  var msPerHour = msPerMinute * 60;
+  var msPerDay = msPerHour * 24;
+  var msPerMonth = msPerDay * 30;
+  var msPerYear = msPerDay * 365;
+
+  var elapsed = current - previous;
+
+  if (elapsed < msPerMinute) {
+    if (Math.round(elapsed / 1000) < 60) {
+      return 'just now';
+    } else {
+      return Math.round(elapsed / 1000) + ' seconds ago';
+    }
+  } else if (elapsed < msPerHour) {
+    return Math.round(elapsed / msPerMinute) + ' minutes ago';
+  } else if (elapsed < msPerDay) {
+    return Math.round(elapsed / msPerHour) + ' hours ago';
+  } else if (elapsed < msPerMonth) {
+    return 'approximately ' + Math.round(elapsed / msPerDay) + ' days ago';
+  } else if (elapsed < msPerYear) {
+    return 'approximately ' + Math.round(elapsed / msPerMonth) + ' months ago';
+  } else {
+    return 'approximately ' + Math.round(elapsed / msPerYear) + ' years ago';
+  }
+}
+
+export function Comment(props: { timestamp: number | object; body: string; profile: Profile }) {
   return props.profile ? (
     <StyledComment>
-      <Avatar profile={props.profile} />
-      <StyledMessage>{props.body}</StyledMessage>
+      <Avatar profile={props.profile} style={{ position: 'relative', top: 2 }} />
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <StyledMessage>
+          <StyledName>{props.profile.name || props.profile.email}</StyledName>
+          {props.body}
+        </StyledMessage>
+        <StyledMessageActions>
+          {/* <StyledMessageAction href="">Like</StyledMessageAction> */}
+          <StyledMessageAction href="">Reply</StyledMessageAction>
+          <StyledMessageTimestamp>
+            {typeof props.timestamp === 'number'
+              ? timeDifference(+new Date(), props.timestamp)
+              : null}
+          </StyledMessageTimestamp>
+        </StyledMessageActions>
+      </div>
     </StyledComment>
   ) : null;
 }

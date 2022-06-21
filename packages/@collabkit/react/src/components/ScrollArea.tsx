@@ -6,7 +6,7 @@ const SCROLLBAR_SIZE = 6;
 
 const StyledScrollArea = styled(ScrollArea.Root, {
   width: '100%',
-  height: '352px',
+  height: '100%',
   borderTopRightRadius: 6,
   borderTopLeftRadius: 6,
   // borderBottomRightRadius: 4,

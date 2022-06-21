@@ -2,7 +2,7 @@ import { ArrowUp } from 'phosphor-react';
 import * as Tooltip from './Tooltip';
 import { Profile, Target } from '../constants';
 import { Avatar } from './Avatar';
-import { blue, sand } from '@radix-ui/colors';
+import { blue, mauve } from '@radix-ui/colors';
 import { styled } from '@stitches/react';
 import TextareaAutosize from 'react-textarea-autosize';
 import { useSnapshot } from 'valtio';
@@ -13,8 +13,8 @@ const ACCENT = blue.blue10;
 
 const StyledComposerTextarea = styled(TextareaAutosize, {
   padding: '12px 36px 12px 40px',
-  fontSize: 16,
-  lineHeight: '24px',
+  fontSize: '14px',
+  lineHeight: '18px',
   borderRadius: '0px 0px 11px 11px',
   border: 'none',
   background: '$input',
@@ -24,7 +24,7 @@ const StyledComposerTextarea = styled(TextareaAutosize, {
   display: 'flex',
   flex: 1,
   boxSizing: 'border-box',
-  borderTop: `1px solid ${sand.sand4}`,
+  borderTop: `1px solid ${mauve.mauve4}`,
 
   '&:focus': {
     outline: 'none',
@@ -46,18 +46,18 @@ const StyledComposerSendButton = styled(Tooltip.Trigger, {
   alignItems: 'center',
   backgroundColor: ACCENT,
 
-  width: 28,
-  height: 28,
+  width: 26,
+  height: 26,
   position: 'absolute',
-  right: 10,
-  top: 10,
-  borderRadius: 28,
+  right: 12,
+  top: 12,
+  borderRadius: 25,
   border: 'none',
 
   variants: {
     disabled: {
       true: {
-        backgroundColor: sand.sand8,
+        backgroundColor: mauve.mauve8,
       },
     },
   },
@@ -80,16 +80,24 @@ export function Composer(props: {
   const bodyLength = composer?.body.trim().length ?? 0;
 
   return (
-    <div style={{ position: 'relative', display: 'flex', flex: 0 }}>
+    <div
+      style={{
+        minHeight: 48,
+        position: 'relative',
+        display: 'flex',
+        flex: 0,
+        alignItems: 'center',
+      }}
+    >
       {props.profile ? (
-        <Avatar profile={props.profile} style={{ position: 'absolute', left: 10, top: 12 }} />
+        <Avatar profile={props.profile} style={{ position: 'absolute', left: 10, top: 13 }} />
       ) : null}
       <StyledComposerTextarea
         onFocus={(e) => events.onFocus(e, { target })}
         onBlur={(e) => events.onBlur(e, { target })}
         onChange={(e) => events.onChange(e, { target })}
         value={composer?.body || ''}
-        placeholder="Type here..."
+        placeholder="Write a comment..."
         fullyRounded={props.isFloating}
       />
       <Tooltip.Root>
