@@ -11,6 +11,7 @@ import { Composer } from './Composer';
 import { WorkspaceContext } from './Workspace';
 import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
 import { mauve } from '@radix-ui/colors';
+import * as Tooltip from './Tooltip';
 
 const StyledThread = styled('div', {
   padding: 0,
@@ -45,58 +46,56 @@ const StyledCommentList = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   flexGrow: 1,
-  maxHeight: 'calc(100% - 43px)',
-  // maxHeight: '308px',
   padding: '0px 0px',
 });
 
-// const StyledThreadHeader = styled('div', {
-//   height: 40,
-//   borderBottom: '1px solid $gray200',
-//   display: 'flex',
-//   gap: 0,
-//   padding: '3px 3px',
-//   alignItems: 'center',
-// });
+const StyledThreadHeader = styled('div', {
+  height: 40,
+  borderBottom: '1px solid $gray200',
+  display: 'flex',
+  gap: 0,
+  padding: '3px 3px',
+  alignItems: 'center',
+});
 
-// const StyledIconButton = styled('div', {
-//   display: 'flex',
-//   justifyContent: 'center',
-//   alignItems: 'center',
-//   borderRadius: 22,
-//   height: 32,
-//   width: 32,
-//   cursor: 'pointer',
+const StyledIconButton = styled('div', {
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  borderRadius: 22,
+  height: 32,
+  width: 32,
+  cursor: 'pointer',
 
-//   '&:hover': {
-//     background: '$gray200',
-//     cursor: 'pointer',
-//   },
-// });
+  '&:hover': {
+    background: '$gray200',
+    cursor: 'pointer',
+  },
+});
 
-// function IconButton(props: { children: React.ReactNode; tooltip: string }) {
-//   return (
-//     <Tooltip.Root>
-//       <Tooltip.Trigger>
-//         <StyledIconButton>{props.children}</StyledIconButton>
-//       </Tooltip.Trigger>
-//       <Tooltip.Content>
-//         {props.tooltip}
-//         <Tooltip.Arrow />
-//       </Tooltip.Content>
-//     </Tooltip.Root>
-//   );
-// }
+function IconButton(props: { children: React.ReactNode; tooltip: string }) {
+  return (
+    <Tooltip.Root>
+      <Tooltip.Trigger>
+        <StyledIconButton>{props.children}</StyledIconButton>
+      </Tooltip.Trigger>
+      <Tooltip.Content>
+        {props.tooltip}
+        <Tooltip.Arrow />
+      </Tooltip.Content>
+    </Tooltip.Root>
+  );
+}
 
-// const StyledHeaderLeftGroup = styled('div', {
-//   display: 'flex',
-//   flexGrow: 1,
-//   gap: 0,
-// });
+const StyledHeaderLeftGroup = styled('div', {
+  display: 'flex',
+  flexGrow: 1,
+  gap: 0,
+});
 
-// function Audience(props: {}) {
-//   return <div></div>;
-// }
+function Audience(props: {}) {
+  return <div></div>;
+}
 
 export function Thread(props: { threadId: string; type?: 'popout' }) {
   const { threadId } = props;
@@ -184,17 +183,27 @@ export function Thread(props: { threadId: string; type?: 'popout' }) {
           </div>
         ) : null}
         <IconContext.Provider value={{ size: '20px' }}>
-          {/* {!isEmpty && (
+          {!isEmpty && props.type === 'popout' && (
             <StyledThreadHeader>
               <StyledHeaderLeftGroup />
               <IconButton tooltip="Close">
                 <X />
               </IconButton>
             </StyledThreadHeader>
+          )}
+          {/* {!isEmpty && props.type !== 'popout' && (
+            <StyledThreadHeader>
+              <StyledHeaderLeftGroup />
+              <IconButton tooltip="Resolve">
+                <Check />
+              </IconButton>
+            </StyledThreadHeader>
           )} */}
           {!isEmpty && timeline && (
             <StyledCommentList
-              style={textareaHeight > -1 ? { maxHeight: `calc(100% - ${textareaHeight + 2})` } : {}}
+              style={
+                textareaHeight > -1 ? { maxHeight: `calc(100% - ${textareaHeight + 2}px)` } : {}
+              }
             >
               <ScrollArea.Root style={{ ...(props.type === 'popout' ? { height: 352 } : {}) }}>
                 <ScrollArea.Viewport
@@ -224,7 +233,7 @@ export function Thread(props: { threadId: string; type?: 'popout' }) {
           )}
           {workspaceId ? (
             <Composer
-              onHeightChange={(newHeight) => setTextareaHeight(newHeight)}
+              onHeightChange={setTextareaHeight}
               profile={config.identify?.userId ? profiles[config.identify?.userId] : undefined}
               workspaceId={workspaceId}
               threadId={props.threadId}
