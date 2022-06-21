@@ -4,6 +4,7 @@ import { Debug } from './components/Debug';
 import { Thread } from './components/Thread';
 import { Workspace } from './components/Workspace';
 import { Button } from './components/Button';
+// import { Inbox } from './components/Inbox';
 
 export const CollabKit = {
   App,
