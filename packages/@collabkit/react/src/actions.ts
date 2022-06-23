@@ -13,7 +13,14 @@ import {
 
 import { getAuth, signInWithCustomToken } from 'firebase/auth';
 import { store } from './store';
-import { CollabKitFirebaseApp, Event, IdentifyProps, SetupProps, Target } from './constants';
+import {
+  CollabKitFirebaseApp,
+  Event,
+  IdentifyProps,
+  MentionProps,
+  SetupProps,
+  Target,
+} from './constants';
 import { Color, getRandomColor } from './colors';
 import { $createTextNode, $getRoot, createEditor } from 'lexical';
 import { createEditorConfig } from './components/Composer';
@@ -100,6 +107,12 @@ export const actions = {
       timeline: {},
       composers: {},
     };
+  },
+
+  mentions: (props: MentionProps) => {
+    // todo runtime validation for props;
+    store.config.isMentionsEnabled = true;
+    store.config.mentions = props;
   },
 
   initThread: (props: { workspaceId: string; threadId: string }) => {

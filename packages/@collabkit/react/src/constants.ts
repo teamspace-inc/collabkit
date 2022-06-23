@@ -1,7 +1,7 @@
 import { Unsubscribe } from 'firebase/database';
 import { initializeApp } from '@firebase/app';
 import { Color } from './colors';
-import { EditorState, LexicalEditor } from 'lexical';
+import { LexicalEditor } from 'lexical';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyDYl8MwTEgsIzXO7EHgBlvuN5BLVJqPZ6k',
@@ -44,10 +44,20 @@ export type SetupProps = {
   mode: 'UNSECURED' | 'SECURED';
 };
 
-export interface Profile {
+export type MentionProps = Mention[];
+
+export interface Mention extends BasicProfile {
+  workspaceId: string;
+  userId: string;
+}
+
+export type BasicProfile = {
   name?: string | null;
   avatar?: string | null;
   email?: string | null;
+};
+
+export interface Profile extends BasicProfile {
   color: Color;
 }
 
@@ -75,6 +85,8 @@ export interface Store {
     setup: SetupProps | null | undefined;
     isSetup: boolean;
     hasIdentified: boolean;
+    isMentionsEnabled: boolean;
+    mentions: MentionProps | null | undefined;
   };
   profiles: { [profileId: string]: Profile };
   workspaces: {
