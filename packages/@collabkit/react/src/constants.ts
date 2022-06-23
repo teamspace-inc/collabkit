@@ -1,6 +1,7 @@
 import { Unsubscribe } from 'firebase/database';
 import { initializeApp } from '@firebase/app';
 import { Color } from './colors';
+import { EditorState, LexicalEditor } from 'lexical';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyDYl8MwTEgsIzXO7EHgBlvuN5BLVJqPZ6k',
@@ -55,7 +56,13 @@ export interface Timeline {
 }
 
 export interface Composer {
-  body: string;
+  editor: LexicalEditor;
+}
+
+export interface Workspace {
+  name: string;
+  timeline: { [threadId: string]: Timeline };
+  composers: { [threadId: string]: Composer };
 }
 
 export interface Store {
@@ -71,11 +78,7 @@ export interface Store {
   };
   profiles: { [profileId: string]: Profile };
   workspaces: {
-    [workspaceId: string]: {
-      name: string;
-      timeline: { [threadId: string]: Timeline };
-      composers: { [threadId: string]: Composer };
-    };
+    [workspaceId: string]: Workspace;
   };
   appState: 'blank' | 'config' | 'ready';
   uiState: 'idle' | 'commenting' | 'selecting' | 'composing';

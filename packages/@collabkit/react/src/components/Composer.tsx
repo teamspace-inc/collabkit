@@ -1,14 +1,12 @@
 import { ArrowUp } from 'phosphor-react';
 import * as Tooltip from './Tooltip';
-import { Profile } from '../constants';
+import { Profile, Target, Workspace } from '../constants';
 import { Avatar } from './Avatar';
 import { blue, mauve } from '@radix-ui/colors';
 import { styled } from '@stitches/react';
-import { useSnapshot } from 'valtio';
-import { store } from '../store';
 import { events } from '../events';
 
-import { EditorState, $getRoot, $getSelection } from 'lexical';
+import { EditorState, $getRoot } from 'lexical';
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import { PlainTextPlugin } from '@lexical/react/LexicalPlainTextPlugin';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable';
@@ -20,13 +18,9 @@ import { useResizeObserver } from '../hooks/useResizeObserver';
 import MentionsPlugin from './MentionsPlugin';
 import { MentionNode } from './MentionNode';
 
-function onChange(editorState: EditorState) {
+function onChange(target: Target, editorState: EditorState) {
   editorState.read(() => {
-    // Read the contents of the EditorState here.
-    const root = $getRoot();
-    const selection = $getSelection();
-
-    console.log(root, selection);
+    console.log('editorState', target, $getRoot().getTextContent(false));
   });
 }
 
@@ -73,27 +67,44 @@ function Placeholder() {
   return <div className="editor-placeholder">Write a comment...</div>;
 }
 
+export function createEditorConfig() {
+  return {
+    namespace: 'Composer',
+    theme,
+    nodes: [MentionNode],
+    onError,
+  };
+}
+
 export function Composer(props: {
   profile?: Profile;
   workspaceId: string;
   threadId: string;
   isFloating: boolean;
+  workspace: Workspace;
   onHeightChange: (height: number) => void;
 }) {
-  const { workspaces } = useSnapshot(store);
-  const workspace = workspaces[props.workspaceId];
-  // const target = {
-  //   type: 'composer',
-  //   threadId: props.threadId,
-  //   workspaceId: props.workspaceId,
-  // } as Target;
-  const composer = workspace && workspace.composers[props.threadId];
-  const bodyLength = composer?.body.trim().length ?? 0;
+  const editorStateRef = useRef<EditorState>();
+
+  const target = {
+    type: 'composer',
+    threadId: props.threadId,
+    workspaceId: props.workspaceId,
+  } as Target;
+
+  const composer = props.workspace.composers[props.threadId];
+
+  const bodyLength =
+    composer?.editor
+      .getEditorState()
+      .read(() => {
+        return $getRoot().getTextContent(false);
+      })
+      .trim().length ?? 0;
+
   const initialConfig = {
-    namespace: 'MyEditor',
-    theme,
-    nodes: [MentionNode],
-    onError,
+    ...createEditorConfig(),
+    editor__DEPRECATED: composer?.editor,
   };
 
   const editorContainerRef = useRef(null);
@@ -103,6 +114,11 @@ export function Composer(props: {
       props.onHeightChange(info.height);
     },
   });
+
+  if (!composer) {
+    console.warn('no ocmposer');
+    return null;
+  }
 
   return (
     <div
@@ -117,17 +133,13 @@ export function Composer(props: {
       {props.profile ? (
         <Avatar profile={props.profile} style={{ position: 'absolute', left: 10, top: 13 }} />
       ) : null}
-      {/* <StyledComposerTextarea
-        onFocus={(e) => events.onFocus(e, { target })}
-        onBlur={(e) => events.onBlur(e, { target })}
-        onChange={(e) => events.onChange(e, { target })}
-        value={composer?.body || ''}
-        onHeightChange={props.onHeightChange}
-        placeholder="Write a comment..."
-        fullyRounded={props.isFloating}
-      /> */}
       <LexicalComposer initialConfig={initialConfig}>
-        <div className="editor-container" ref={editorContainerRef}>
+        <div
+          className="editor-container"
+          ref={editorContainerRef}
+          onFocus={(e) => events.onFocus(e, { target })}
+          onBlur={(e) => events.onBlur(e, { target })}
+        >
           <style>
             // todo move this to @stitches // copied from
             https://codesandbox.io/s/lexical-plain-text-example-g932e?file=/src/styles.css:554-1383
@@ -185,7 +197,12 @@ export function Composer(props: {
             contentEditable={<ContentEditable className="editor-input" />}
             placeholder={<Placeholder />}
           />
-          <OnChangePlugin onChange={onChange} />
+          <OnChangePlugin
+            onChange={(editorState) => {
+              editorStateRef.current = editorState;
+              onChange(target, editorState);
+            }}
+          />
           <HistoryPlugin />
           <MentionsPlugin />
         </div>

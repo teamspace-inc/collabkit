@@ -12,6 +12,7 @@ import { WorkspaceContext } from './Workspace';
 import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
 import { mauve } from '@radix-ui/colors';
 import * as Tooltip from './Tooltip';
+import { Workspace } from '../constants';
 
 const StyledThread = styled('div', {
   padding: 0,
@@ -103,29 +104,14 @@ export function Thread(props: { threadId: string; type?: 'popout' }) {
   const { workspaces, profiles, appState, config, isConnected } = useSnapshot(store);
   const [textareaHeight, setTextareaHeight] = useState(-1);
 
-  // React.useMemo(() => {
-  //   if (workspaceId) {
-  //     store.workspaces[workspaceId] ||= {
-  //       name: '',
-  //       timeline: {},
-  //       composers: {
-  //         [props.threadId]: {
-  //           body: '',
-  //         },
-  //       },
-  //     };
-  //   }
-  // }, [props.threadId, workspaceId]);
-
-  const workspace = workspaceId ? workspaces[workspaceId] : null;
+  const workspace = workspaceId ? (workspaces[workspaceId] as Workspace) : null;
   const timeline = workspace ? workspace.timeline[props.threadId] : null;
   const isEmpty = timeline ? Object.keys(timeline).length === 0 : true;
+
   const scrollRef = useRef<HTMLDivElement>(null);
   const ref = useRef<HTMLDivElement>(null);
 
-  const intersection = useIntersectionObserver(ref, [props.threadId, props.type]);
-
-  console.log(intersection);
+  // const intersection = useIntersectionObserver(ref, [props.threadId, props.type]);
 
   useEffect(() => {
     if (workspaceId && appState === 'ready') {
@@ -231,8 +217,9 @@ export function Thread(props: { threadId: string; type?: 'popout' }) {
               </ScrollArea.Root>
             </StyledCommentList>
           )}
-          {workspaceId ? (
+          {workspaceId && workspace ? (
             <Composer
+              workspace={workspace}
               onHeightChange={setTextareaHeight}
               profile={config.identify?.userId ? profiles[config.identify?.userId] : undefined}
               workspaceId={workspaceId}
