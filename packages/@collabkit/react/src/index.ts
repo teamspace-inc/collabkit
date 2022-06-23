@@ -14,4 +14,5 @@ export const CollabKit = {
   Debug,
   setup: actions.setup,
   identify: actions.identify,
+  mentions: actions.mentions,
 };

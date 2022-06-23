@@ -9,8 +9,10 @@ export const store = proxy<Store>({
   config: {
     identify: null,
     setup: null,
+    mentions: null,
     isSetup: false,
     hasIdentified: false,
+    isMentionsEnabled: false,
   },
   focusedId: null,
   selectedId: null,

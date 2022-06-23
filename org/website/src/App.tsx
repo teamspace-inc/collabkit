@@ -320,6 +320,29 @@ function Dev(props: { app: App; children: React.ReactNode }) {
       email: 'namit@useteamspace.com',
       avatar: 'namit.pic.jpg',
     });
+    CollabKit.mentions([
+      {
+        name: 'Tom',
+        email: 'tom@useteamspace.com',
+        avatar: 'tom.pic.jpg',
+        workspaceId: 'acme',
+        userId: 'user1',
+      },
+      {
+        name: 'Mike',
+        email: 'mike@useteamspace.com',
+        avatar: 'mike.pic.jpg',
+        workspaceId: 'acme',
+        userId: 'user2',
+      },
+      {
+        name: 'Jessica',
+        email: 'jessica@useteamspace.com',
+        avatar: 'jess.pic.jpg',
+        workspaceId: 'acme',
+        userId: 'user3',
+      },
+    ]);
   }, [app]);
 
   if (app == null) {

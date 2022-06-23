@@ -2,7 +2,7 @@ import { ArrowUp } from 'phosphor-react';
 import * as Tooltip from './Tooltip';
 import { Profile, Target, Workspace } from '../constants';
 import { Avatar } from './Avatar';
-import { blue, mauve } from '@radix-ui/colors';
+import { blue, mauve, sand } from '@radix-ui/colors';
 import { styled } from '@stitches/react';
 import { events } from '../events';
 
@@ -128,6 +128,7 @@ export function Composer(props: {
         display: 'flex',
         flex: 0,
         alignItems: 'start',
+        borderTop: `1px solid ${sand.sand5}`,
       }}
     >
       {props.profile ? (
