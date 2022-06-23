@@ -191,7 +191,42 @@ export function Composer(props: {
 .editor-paragraph {
   margin: 0 0 0px 0;
   position: relative;
-}`}
+}
+
+#mentions-typeahead {
+  position: fixed;
+  background: #fff;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  z-index: 3;
+}
+
+#mentions-typeahead ul {
+  padding: 0;
+  list-style: none;
+  margin: 0;
+  border-radius: 8px;
+}
+
+#mentions-typeahead ul li {
+  padding: 10px 15px;
+  margin: 0;
+  min-width: 180px;
+  font-size: 14px;
+  outline: none;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+#mentions-typeahead ul li.selected {
+  background: #eee;
+}
+
+#mentions-typeahead.bottom_edge {
+  transform: translateY(calc(-100% - 36px));
+}
+
+`}
           </style>
           <PlainTextPlugin
             contentEditable={<ContentEditable className="editor-input" />}

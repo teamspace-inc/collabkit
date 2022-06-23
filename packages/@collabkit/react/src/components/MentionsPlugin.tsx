@@ -18,6 +18,7 @@ import { useLayoutEffect } from 'react';
 import { createPortal } from 'react-dom';
 
 import { $createMentionNode, MentionNode } from './MentionNode';
+import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
 
 type MentionMatch = {
   leadOffset: number;
@@ -731,12 +732,21 @@ function MentionsTypeahead({
     );
   }, [applyCurrentSelected, close, editor, results, selectedIndex, updateSelectedIndex]);
 
+  const intersects = useIntersectionObserver(divRef, [results === null]);
+  console.log({ intersects });
+
   if (results === null) {
     return null;
   }
 
   return (
-    <div aria-label="Suggested mentions" id="mentions-typeahead" ref={divRef} role="listbox">
+    <div
+      aria-label="Suggested mentions"
+      id="mentions-typeahead"
+      ref={divRef}
+      role="listbox"
+      className={intersects}
+    >
       <ul>
         {results.slice(0, SUGGESTION_LIST_LENGTH_LIMIT).map((result, i) => (
           <MentionsTypeaheadItem
