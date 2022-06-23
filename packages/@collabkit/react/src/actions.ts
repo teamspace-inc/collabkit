@@ -15,6 +15,9 @@ import { getAuth, signInWithCustomToken } from 'firebase/auth';
 import { store } from './store';
 import { CollabKitFirebaseApp, Event, IdentifyProps, SetupProps, Target } from './constants';
 import { Color, getRandomColor } from './colors';
+import { $createTextNode, $getRoot, createEditor } from 'lexical';
+import { createEditorConfig } from './components/Composer';
+import { ref as valtioRef } from 'valtio';
 
 function timelineRef(workspaceId: string, threadId: string) {
   if (!store.config.setup?.appId) {
@@ -100,11 +103,11 @@ export const actions = {
   },
 
   initThread: (props: { workspaceId: string; threadId: string }) => {
-    store.workspaces[props.workspaceId] ||= {
+    store.workspaces[props.workspaceId] = {
       name: store.config.identify?.workspaceName || '',
       composers: {
         [props.threadId]: {
-          body: '',
+          editor: valtioRef(createEditor(createEditorConfig())),
         },
       },
       timeline: {},
@@ -271,12 +274,6 @@ export const actions = {
     store.focusedId = null;
   },
 
-  changeComposer: (workspaceId: string, threadId: string, value: string) => {
-    console.log('changeComposer', workspaceId, threadId, value);
-    store.workspaces[workspaceId].composers[threadId] ||= { body: '' };
-    store.workspaces[workspaceId].composers[threadId].body = value;
-  },
-
   unloadThread: (props: { workspaceId: string; threadId: string }) => {
     store.subs[timelineRef(props.workspaceId, props.threadId).toString()]?.();
   },
@@ -324,14 +321,16 @@ export const actions = {
       return;
     }
 
-    const { body } = store.workspaces[workspaceId].composers[threadId];
+    const { editor } = store.workspaces[workspaceId].composers[threadId];
+
+    const body = editor.getEditorState().read(() => $getRoot().getTextContent(false));
 
     if (body.trim().length === 0) {
       // can't send empty messages
       return;
     }
 
-    store.workspaces[workspaceId].composers[threadId].body = '';
+    editor.update(() => $getRoot().getChildren()[0].replace($createTextNode('')));
 
     console.log('sending message', body);
     // todo optimistic send

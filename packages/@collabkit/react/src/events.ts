@@ -1,7 +1,7 @@
 import { DataSnapshot } from 'firebase/database';
 import React from 'react';
 import { actions } from './actions';
-import { ComposerTarget, Target } from './constants';
+import { Target } from './constants';
 import { store } from './store';
 
 // function closestCommentable(target: EventTarget) {
@@ -62,15 +62,6 @@ export const events = {
 
   onBlur: (e: React.FocusEvent, props: { target: Target }) => {
     actions.blur(props.target);
-  },
-
-  onChange: (
-    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
-    props: { target: Target }
-  ) => {
-    if (props.target.type === 'composer') {
-      actions.changeComposer(props.target.workspaceId, props.target.threadId, e.target.value);
-    }
   },
 
   onKeyDown: (e: KeyboardEvent) => {
