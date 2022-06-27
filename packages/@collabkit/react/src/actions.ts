@@ -119,6 +119,7 @@ export const actions = {
       composers: {
         [props.threadId]: {
           editor: valtioRef(createEditor(createEditorConfig())),
+          $$body: '',
         },
       },
       timeline: {},
@@ -126,6 +127,7 @@ export const actions = {
 
     store.workspaces[props.workspaceId].composers[props.threadId] ||= {
       editor: valtioRef(createEditor(createEditorConfig())),
+      $$body: '',
     };
   },
 

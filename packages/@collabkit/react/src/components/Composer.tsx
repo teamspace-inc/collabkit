@@ -17,9 +17,12 @@ import { useResizeObserver } from '../hooks/useResizeObserver';
 
 import MentionsPlugin from './MentionsPlugin';
 import { MentionNode } from './MentionNode';
+import { store } from '../store';
 
 function onChange(target: Target, editorState: EditorState) {
   editorState.read(() => {
+    store.workspaces[target.workspaceId].composers[target.threadId].$$body =
+      $getRoot().getTextContent(false) ?? '';
     console.log('editorState', target, $getRoot().getTextContent(false));
   });
 }
@@ -93,14 +96,7 @@ export function Composer(props: {
   } as Target;
 
   const composer = props.workspace.composers[props.threadId];
-
-  const bodyLength =
-    composer?.editor
-      .getEditorState()
-      .read(() => {
-        return $getRoot().getTextContent(false);
-      })
-      .trim().length ?? 0;
+  const bodyLength = composer?.$$body.trim().length ?? 0;
 
   const initialConfig = {
     ...createEditorConfig(),
@@ -155,7 +151,7 @@ export function Composer(props: {
 
 .editor-container {
   border-radius: 2px;
-  width: 100%;
+  width: calc(100% - 68px); // take into account send button
   color: #000;
   margin-left: 32px;
   position: relative;

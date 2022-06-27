@@ -1,12 +1,10 @@
 import { styled } from '@stitches/react';
-import { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { IconContext, X } from 'phosphor-react';
-import ScrollArea from './ScrollArea';
 import React from 'react';
 import { useSnapshot } from 'valtio';
 import { store } from '../store';
 import { actions } from '../actions';
-import { Comment } from './Comment';
 import { Composer } from './Composer';
 // import { WorkspaceIDContext } from './Workspace';
 // import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
@@ -14,6 +12,7 @@ import { Composer } from './Composer';
 import * as Tooltip from './Tooltip';
 // import { Workspace } from '../constants';
 import { WorkspaceContext, WorkspaceLoader } from './WorkspaceLoader';
+import { CommentList } from './CommentList';
 
 const StyledThread = styled('div', {
   padding: 0,
@@ -47,12 +46,6 @@ const StyledThread = styled('div', {
   },
 });
 
-const StyledCommentList = styled('div', {
-  display: 'flex',
-  flexDirection: 'column',
-  flexGrow: 1,
-  padding: '0px 0px',
-});
 
 const StyledThreadHeader = styled('div', {
   height: 40,
@@ -130,7 +123,6 @@ function _Thread(props: {
   const timeline = workspace ? workspace.timeline[props.threadId] : null;
   const isEmpty = timeline ? Object.keys(timeline).length === 0 : true;
 
-  const scrollRef = useRef<HTMLDivElement>(null);
   const ref = useRef<HTMLDivElement>(null);
 
   // const intersection = useIntersectionObserver(ref, [props.threadId, props.type]);
@@ -141,14 +133,6 @@ function _Thread(props: {
       actions.loadThread({ workspaceId, threadId });
     }
   }, [workspaceId, props.threadId, appState]);
-
-  const handleScroll = useCallback((e: React.SyntheticEvent) => {
-    console.log('didScroll', e.currentTarget.scrollTop);
-  }, []);
-
-  useEffect(() => {
-    scrollRef.current?.scrollTo(0, scrollRef.current?.scrollHeight);
-  }, [timeline && Object.keys(timeline).length]);
 
   return (
     <div
@@ -181,7 +165,9 @@ function _Thread(props: {
               flexDirection: 'column',
             }}
           >
-            <div style={{ fontWeight: '400', fontSize: '1rem' }}>Start the conversation</div>
+            <div style={{ fontWeight: '400', fontSize: '1rem', color: 'rgba(0,0,0,0.2)' }}>
+              Start the conversation
+            </div>
           </div>
         ) : null}
         <IconContext.Provider value={{ size: '20px' }}>
@@ -193,44 +179,13 @@ function _Thread(props: {
               </IconButton>
             </StyledThreadHeader>
           )}
-          {/* {!isEmpty && props.type !== 'popout' && (
-            <StyledThreadHeader>
-              <StyledHeaderLeftGroup />
-              <IconButton tooltip="Resolve">
-                <Check />
-              </IconButton>
-            </StyledThreadHeader>
-          )} */}
           {!isEmpty && timeline && (
-            <StyledCommentList
-              style={
-                textareaHeight > -1 ? { maxHeight: `calc(100% - ${textareaHeight + 2}px)` } : {}
-              }
-            >
-              <ScrollArea.Root style={{ ...(props.type === 'popout' ? { height: 352 } : {}) }}>
-                <ScrollArea.Viewport
-                  css={{
-                    display: 'flex',
-                    flex: 1,
-                  }}
-                  onScroll={handleScroll}
-                  ref={scrollRef}
-                >
-                  {Object.keys(timeline).map((id) => (
-                    <Comment
-                      timestamp={timeline[id].createdAt}
-                      key={id}
-                      body={timeline[id].body}
-                      profile={profiles[timeline[id].createdById]}
-                    />
-                  ))}
-                </ScrollArea.Viewport>
-                <ScrollArea.Scrollbar orientation="vertical">
-                  <ScrollArea.Thumb />
-                </ScrollArea.Scrollbar>
-                <ScrollArea.Corner />
-              </ScrollArea.Root>
-            </StyledCommentList>
+            <CommentList
+              type={props.type}
+              profiles={profiles}
+              composerHeight={textareaHeight}
+              timeline={timeline}
+            />
           )}
           {workspaceId && workspace ? (
             <Composer

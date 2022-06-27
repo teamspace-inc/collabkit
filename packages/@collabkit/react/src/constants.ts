@@ -67,6 +67,7 @@ export interface Timeline {
 
 export interface Composer {
   editor: LexicalEditor;
+  $$body: string;
 }
 
 export interface Workspace {
