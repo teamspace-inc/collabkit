@@ -10,9 +10,7 @@ export function Popout(props: { children: React.ReactNode }) {
           left: '66vh',
           top: '20vh',
           width: '300px',
-          height: '400px',
-          borderRadius: '11px',
-          boxShadow: '0px 12px 24px rgba(0,0,0,0.04)',
+          height: '600px',
         }}
       >
         {props.children}

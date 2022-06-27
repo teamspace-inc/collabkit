@@ -114,7 +114,7 @@ export const actions = {
   },
 
   initThread: (props: { workspaceId: string; threadId: string }) => {
-    store.workspaces[props.workspaceId] = {
+    store.workspaces[props.workspaceId] ||= {
       name: store.config.identify?.workspaceName || '',
       composers: {
         [props.threadId]: {
@@ -122,6 +122,10 @@ export const actions = {
         },
       },
       timeline: {},
+    };
+
+    store.workspaces[props.workspaceId].composers[props.threadId] ||= {
+      editor: valtioRef(createEditor(createEditorConfig())),
     };
   },
 

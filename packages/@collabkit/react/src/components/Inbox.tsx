@@ -1,10 +1,10 @@
 import { useContext } from 'react';
 import { useSnapshot } from 'valtio';
 import { store } from '../store';
-import { WorkspaceContext } from './Workspace';
+import { WorkspaceIDContext } from './Workspace';
 
 export function Inbox() {
-  const { workspaceId } = useContext(WorkspaceContext);
+  const { workspaceId } = useContext(WorkspaceIDContext);
   const { workspaces } = useSnapshot(store);
 
   if (workspaceId == null) {
