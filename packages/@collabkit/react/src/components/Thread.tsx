@@ -46,7 +46,6 @@ const StyledThread = styled('div', {
   },
 });
 
-
 const StyledThreadHeader = styled('div', {
   height: 40,
   borderBottom: '1px solid $gray200',
@@ -189,6 +188,7 @@ function _Thread(props: {
           )}
           {workspaceId && workspace ? (
             <Composer
+              style={{ position: 'absolute', bottom: 0, left: 0, right: 0 }}
               workspace={workspace}
               workspaceId={workspaceId}
               onHeightChange={setTextareaHeight}

@@ -49,12 +49,12 @@ const StyledComposerSendButton = styled(Tooltip.Trigger, {
   alignItems: 'center',
   backgroundColor: ACCENT,
 
-  width: 26,
-  height: 26,
+  width: 24,
+  height: 24,
   position: 'absolute',
-  right: 10,
+  right: 12,
   top: 8,
-  borderRadius: 25,
+  borderRadius: 24,
   border: 'none',
 
   variants: {
@@ -85,6 +85,7 @@ export function Composer(props: {
   threadId: string;
   isFloating: boolean;
   workspace: Workspace;
+  style?: React.CSSProperties;
   onHeightChange: (height: number) => void;
 }) {
   const editorStateRef = useRef<EditorState>();
@@ -107,7 +108,7 @@ export function Composer(props: {
   useResizeObserver({
     ref: editorContainerRef,
     onResize: (info) => {
-      props.onHeightChange(info.height);
+      props.onHeightChange(info.height + 8);
     },
   });
 
@@ -119,12 +120,13 @@ export function Composer(props: {
   return (
     <div
       style={{
-        minHeight: 8 * 4 + 18,
+        minHeight: 8 * 2 + 20,
         position: 'relative',
         display: 'flex',
         flex: 0,
         alignItems: 'start',
         borderTop: `1px solid ${sand.sand5}`,
+        ...props.style,
       }}
     >
       {/* {props.profile ? (
@@ -157,7 +159,8 @@ export function Composer(props: {
   padding: 4px 0px;
   position: relative;
   vertical-align: top;
-  line-height: 18px;
+  font-size: 14px;
+  line-height: 20px;
   font-weight: 400;
   text-align: left;
 }
@@ -180,7 +183,7 @@ export function Composer(props: {
   text-overflow: ellipsis;
   top: 12px;
   left: 10px;
-  font-size: 15px;
+  font-size: 14px;
   user-select: none;
   display: inline-block;
   pointer-events: none;
