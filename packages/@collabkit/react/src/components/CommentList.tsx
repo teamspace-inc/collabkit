@@ -33,7 +33,7 @@ export function CommentList(props: {
           if (typeof nextEvent.createdAt === 'number' && typeof event.createdAt === 'number') {
             // 10 minutes before last message and same person results
             // in a grouped message
-            if (nextEvent.createdAt < event.createdAt + 1000 * 60 * 10) {
+            if (nextEvent.createdAt < event.createdAt + 1000 * 60 * 20) {
               if (groupedEvents[groupedEvents.length - 1]) {
                 groupedEvents[groupedEvents.length - 1].push(event);
                 return groupedEvents;
@@ -65,15 +65,31 @@ export function CommentList(props: {
           ref={scrollRef}
         >
           {groupedTimeline.map((group, i) =>
-            group.map((event, j) => (
-              <Comment
-                type={j > 1 ? 'inline' : 'default'}
-                timestamp={event.createdAt}
-                key={`event-${i}-${j}`}
-                body={event.body}
-                profile={profiles[event.createdById]}
-              />
-            ))
+            group.map((event, j) => {
+              let type: 'default' | 'inline-start' | 'inline' | 'inline-end' = 'default';
+
+              if (group.length > 1) {
+                type = 'inline';
+
+                if (j === 0) {
+                  type = 'inline-start';
+                }
+
+                if (j === group.length - 1) {
+                  type = 'inline-end';
+                }
+              }
+
+              return (
+                <Comment
+                  type={type}
+                  timestamp={event.createdAt}
+                  key={`event-${i}-${j}`}
+                  body={event.body}
+                  profile={profiles[event.createdById]}
+                />
+              );
+            })
           )}
         </ScrollArea.Viewport>
         <ScrollArea.Scrollbar orientation="vertical">
