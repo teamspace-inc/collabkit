@@ -1,7 +1,6 @@
 import { Profile } from '../constants';
 import { Avatar } from './Avatar';
-import { styled } from '@stitches/react';
-import { mauve } from '@radix-ui/colors';
+import { styled } from './UIKit';
 import { Smiley } from 'phosphor-react';
 
 export const StyledComment = styled('div', {
@@ -35,14 +34,14 @@ export const StyledComment = styled('div', {
 
 const StyledMessageTimestamp = styled('span', {
   fontSize: 12,
-  color: mauve.mauve11,
+  color: '$neutral9',
   textDecoration: 'none',
   fontWeight: '400',
 });
 
 const StyledMessageAction = styled('a', {
   fontSize: 12,
-  color: mauve.mauve11,
+  color: '$neutral9',
   textDecoration: 'none',
   fontWeight: '600',
 
@@ -66,8 +65,8 @@ export const StyledMessage = styled('div', {
   fontSize: 14,
   lineHeight: '20px',
   borderRadius: 11,
-  color: mauve.mauve12,
-  background: mauve.mauve3,
+  color: '$neutral12',
+  background: '$neutral2',
   wordBreak: 'break-word',
   variants: {
     type: {
@@ -85,7 +84,7 @@ export const StyledMessage = styled('div', {
     },
   },
   '&:hover': {
-    background: mauve.mauve5,
+    background: '$neutral4',
   },
 });
 

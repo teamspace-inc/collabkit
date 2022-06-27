@@ -1,6 +1,5 @@
-import { blackA, mauve } from '@radix-ui/colors';
 import * as ScrollArea from '@radix-ui/react-scroll-area';
-import { styled } from '@stitches/react';
+import { styled } from './UIKit';
 
 const SCROLLBAR_SIZE = 6;
 
@@ -9,9 +8,7 @@ const StyledScrollArea = styled(ScrollArea.Root, {
   height: '100%',
   borderTopRightRadius: 6,
   borderTopLeftRadius: 6,
-  // borderBottomRightRadius: 4,
   overflow: 'hidden',
-  // boxShadow: `0 2px 10px ${blackA.blackA7}`,
 });
 
 const StyledViewport = styled(ScrollArea.Viewport, {
@@ -28,7 +25,7 @@ const StyledScrollbar = styled(ScrollArea.Scrollbar, {
   touchAction: 'none',
   padding: 2,
   transition: 'background 160ms ease-out',
-  '&:hover': { background: blackA.blackA4 },
+  '&:hover': { background: '$neutral3' },
   '&[data-orientation="vertical"]': { width: SCROLLBAR_SIZE },
   '&[data-orientation="horizontal"]': {
     flexDirection: 'column',
@@ -38,7 +35,7 @@ const StyledScrollbar = styled(ScrollArea.Scrollbar, {
 
 const StyledThumb = styled(ScrollArea.Thumb, {
   flex: 1,
-  background: mauve.mauve10,
+  background: '$neutral10',
   borderRadius: SCROLLBAR_SIZE,
   // increase target size for touch devices https://www.w3.org/WAI/WCAG21/Understanding/target-size.html
   position: 'relative',
@@ -56,7 +53,7 @@ const StyledThumb = styled(ScrollArea.Thumb, {
 });
 
 const StyledCorner = styled(ScrollArea.Corner, {
-  background: blackA.blackA8,
+  background: '$neutral8',
 });
 
 export default {

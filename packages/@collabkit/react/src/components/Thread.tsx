@@ -1,4 +1,4 @@
-import { styled } from '@stitches/react';
+import { FlexCenter, styled, theme } from './UIKit';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { IconContext, X, ChatCircle } from 'phosphor-react';
 import React from 'react';
@@ -8,7 +8,6 @@ import { actions } from '../actions';
 import { Composer } from './Composer';
 // import { WorkspaceIDContext } from './Workspace';
 // import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
-// import { mauve } from '@radix-ui/colors';
 import * as Tooltip from './Tooltip';
 import { WorkspaceContext, WorkspaceLoader } from './WorkspaceLoader';
 import { CommentList } from './CommentList';
@@ -22,12 +21,12 @@ const StyledThread = styled('div', {
   justifyItems: 'stretch',
   flex: 1,
   height: '100%',
-  border: '1px solid rgba(0,0,0,0.1)',
   borderRadius: '11px',
 
   variants: {
     type: {
       popout: {
+        border: '1px solid $neutral6',
         marginTop: '0.414rem',
         position: 'absolute',
         backgroundColor: 'white',
@@ -37,21 +36,16 @@ const StyledThread = styled('div', {
         boxShadow: '0px 12px 24px rgba(0,0,0,0.04)',
       },
     },
-    hasComments: {
-      true: {
-        minHeight: '320px',
-      },
-    },
   },
 });
 
 const StyledThreadHeader = styled('div', {
   height: 40,
-  borderBottom: '1px solid $gray200',
   display: 'flex',
   gap: 0,
   padding: '3px 3px',
   alignItems: 'center',
+  pointerEvents: 'none',
   variants: {
     type: {
       popout: {
@@ -71,15 +65,25 @@ const StyledIconButton = styled('div', {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  borderRadius: 22,
   height: 32,
   width: 32,
   cursor: 'pointer',
+  pointerEvents: 'all',
 
   '&:hover': {
-    background: '$gray200',
     cursor: 'pointer',
   },
+});
+
+const NullState = styled('div', {
+  fontWeight: '400',
+  fontSize: '14px',
+  color: '$neutral10',
+  display: 'flex',
+  alignItems: 'center',
+  flexDirection: 'column',
+  marginBottom: '40px', // composer height
+  gap: '5px',
 });
 
 function IconButton(props: {
@@ -142,50 +146,21 @@ function _Thread(props: {
       }}
     >
       <StyledThread type={props.type}>
-        {!isConnected ? (
-          <div
-            style={{
-              display: 'flex',
-              flex: 1,
-              justifyContent: 'center',
-              alignItems: 'center',
-              flexDirection: 'column',
-            }}
-          ></div>
-        ) : null}
+        {!isConnected ? <FlexCenter /> : null}
         {isConnected && isEmpty ? (
-          <div
-            style={{
-              display: 'flex',
-              flex: 1,
-              justifyContent: 'center',
-              alignItems: 'center',
-              flexDirection: 'column',
-            }}
-          >
-            <div
-              style={{
-                fontWeight: '400',
-                fontSize: '14px',
-                color: 'rgba(0,0,0,0.4)',
-                display: 'flex',
-                alignItems: 'center',
-                flexDirection: 'column',
-                marginBottom: '40px', // composer height
-                gap: '5px',
-              }}
-            >
-              <ChatCircle weight="fill" size={45} color="rgba(0,0,0,0.1)" />
+          <FlexCenter>
+            <NullState>
+              <ChatCircle weight="fill" size={60} color={theme.colors.neutral8.toString()} />
               No comments
-            </div>
-          </div>
+            </NullState>
+          </FlexCenter>
         ) : null}
         <IconContext.Provider value={{ size: '20px' }}>
           {props.type === 'popout' && (
             <StyledThreadHeader type={props.type}>
               <StyledHeaderLeftGroup />
               <IconButton tooltip="Close" onCloseButtonClick={(e) => props.onCloseButtonClick?.(e)}>
-                <X />
+                <X color={theme.colors.neutral12.toString()} />
               </IconButton>
             </StyledThreadHeader>
           )}

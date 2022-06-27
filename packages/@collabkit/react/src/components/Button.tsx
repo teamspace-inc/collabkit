@@ -1,5 +1,4 @@
-import { gray } from '@radix-ui/colors';
-import { styled } from '@stitches/react';
+import { styled, theme } from './UIKit';
 import { useRef, useState } from 'react';
 import { ChatCircle } from 'phosphor-react';
 import { Thread } from './Thread';
@@ -7,9 +6,9 @@ import { WorkspaceLoader } from './WorkspaceLoader';
 
 const StyledButton = styled('button', {
   padding: '9px 14px 9px 12px',
-  border: '1px solid rgba(0,0,0,0.1)',
+  border: '1px solid $neutral6',
   background: 'white',
-  color: gray.gray12,
+  color: '$neutral12',
   fontWeight: 600,
   fontSize: '15px',
   lineHeight: '20px',
@@ -23,7 +22,7 @@ const StyledButton = styled('button', {
   variants: {
     isHovering: {
       true: {
-        backgroundColor: gray.gray2,
+        backgroundColor: '$neutral3',
       },
     },
     isOpen: {
@@ -57,7 +56,7 @@ export function Button(props: {
         ref={ref}
       >
         <div style={{ display: 'flex', flexDirection: 'row', gap: '6px' }}>
-          <ChatCircle weight="fill" size={18} color={'rgba(0,0,0,0.9)'} />
+          <ChatCircle weight="fill" size={20} color={theme.colors.neutral12.toString()} />
           Comment
         </div>
       </StyledButton>

@@ -1,8 +1,7 @@
 import { ArrowUp } from 'phosphor-react';
 import * as Tooltip from './Tooltip';
 import { Profile, Target, Workspace } from '../constants';
-import { mauve, sand } from '@radix-ui/colors';
-import { styled } from './UIKit';
+import { styled, theme } from './UIKit';
 import { events } from '../events';
 
 import { EditorState, $getRoot } from 'lexical';
@@ -25,7 +24,7 @@ function onChange(target: Target, editorState: EditorState) {
   });
 }
 
-const theme = {
+const lexicalTheme = {
   ltr: 'ltr',
   rtl: 'rtl',
   placeholder: 'editor-placeholder',
@@ -43,20 +42,22 @@ const StyledComposerSendButton = styled(Tooltip.Trigger, {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  backgroundColor: '$color$accent10',
 
   width: 24,
   height: 24,
   position: 'absolute',
-  right: 12,
-  top: 8,
+  right: 10,
+  top: 10,
   borderRadius: 24,
   border: 'none',
 
   variants: {
     disabled: {
       true: {
-        backgroundColor: mauve.mauve8,
+        backgroundColor: '$neutral8',
+      },
+      false: {
+        backgroundColor: '$accent10',
       },
     },
   },
@@ -69,11 +70,40 @@ function Placeholder() {
 export function createEditorConfig() {
   return {
     namespace: 'Composer',
-    theme,
+    theme: lexicalTheme,
     nodes: [MentionNode],
     onError,
   };
 }
+
+const ComposerContainer = styled('div', {
+  minHeight: 8 * 2 + 20, // default composer height
+  position: 'relative',
+  display: 'flex',
+  flex: 0,
+  alignItems: 'start',
+  background: '$neutral1',
+  borderBottomLeftRadius: 11,
+  borderBottomRightRadius: 11,
+  borderTop: `1px solid $neutral6`,
+});
+
+const StyledLexicalEditorContainer = styled('div', {
+  borderRadius: 6,
+  width: 'calc(100% - 68px)', // take into account send button
+  color: 'black',
+  marginLeft: 0,
+  borderBottomLeftRadius: 11,
+  borderBottomRightRadius: 11,
+  padding: '4px 0',
+  background: '$neutral1',
+  position: 'relative',
+  verticalAlign: 'top',
+  fontSize: '14px',
+  lineHeight: '20px',
+  fontWeight: 400,
+  textAlign: 'left',
+});
 
 export function Composer(props: {
   profile?: Profile;
@@ -104,29 +134,19 @@ export function Composer(props: {
   useResizeObserver({
     ref: editorContainerRef,
     onResize: (info) => {
-      props.onHeightChange(info.height + 8);
+      props.onHeightChange(info.height + 7);
     },
   });
 
   if (!composer) {
-    console.warn('no ocmposer');
+    console.debug('CollabKit: Failed to boot composer');
     return null;
   }
 
   return (
-    <div
-      style={{
-        minHeight: 8 * 2 + 20,
-        position: 'relative',
-        display: 'flex',
-        flex: 0,
-        alignItems: 'start',
-        borderTop: `1px solid ${sand.sand5}`,
-        ...props.style,
-      }}
-    >
+    <ComposerContainer style={props.style}>
       <LexicalComposer initialConfig={initialConfig}>
-        <div
+        <StyledLexicalEditorContainer
           className="editor-container"
           ref={editorContainerRef}
           onFocus={(e) => events.onFocus(e, { target })}
@@ -144,38 +164,23 @@ export function Composer(props: {
   text-align: right;
 }
 
-.editor-container {
-  border-radius: 2px;
-  width: calc(100% - 68px); // take into account send button
-  color: #000;
-  margin-left: 0px;
-  padding: 4px 0px;
-  position: relative;
-  vertical-align: top;
-  font-size: 14px;
-  line-height: 20px;
-  font-weight: 400;
-  text-align: left;
-}
-
 .editor-input {
   resize: none;
-  font-size: 15px;
-  caret-color: rgb(5, 5, 5);
+  font-size: 14px;
+  caret-color: ${theme.colors.neutral12};
   position: relative;
   tab-size: 1;
   outline: 0;
-  padding: 8px 10px;
-  caret-color: #444;
+  padding: 10px 12px;
 }
 
 .editor-placeholder {
-  color: #999;
+  color: ${theme.colors.neutral10};
   overflow: hidden;
   position: absolute;
   text-overflow: ellipsis;
-  top: 12px;
-  left: 10px;
+  top: 14px;
+  left: 12px;
   font-size: 14px;
   user-select: none;
   display: inline-block;
@@ -189,10 +194,11 @@ export function Composer(props: {
 
 #mentions-typeahead {
   position: fixed;
-  background: #fff;
+  background: ${theme.colors.neutral1};
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
-  border-radius: 8px;
+  border-radius: 6px;
   z-index: 3;
+  margin: 0 0 0 10px;
 }
 
 #mentions-typeahead ul {
@@ -203,23 +209,24 @@ export function Composer(props: {
 }
 
 #mentions-typeahead ul li {
-  padding: 10px 15px;
+  padding: 6px 10px;
   margin: 0;
-  min-width: 180px;
+  min-width: 10ch;
   font-size: 14px;
   outline: none;
   cursor: pointer;
-  border-radius: 8px;
+  border-radius: 6px;
 }
 
 #mentions-typeahead ul li.selected {
-  background: #eee;
+  background: ${theme.colors.accent10};
+  font-weight: 500;
+  color: white;
 }
 
 #mentions-typeahead.bottom_edge {
   transform: translateY(calc(-100% - 36px));
 }
-
 `}
           </style>
           <PlainTextPlugin
@@ -234,7 +241,7 @@ export function Composer(props: {
           />
           <HistoryPlugin />
           <MentionsPlugin />
-        </div>
+        </StyledLexicalEditorContainer>
       </LexicalComposer>
       <Tooltip.Root>
         <StyledComposerSendButton
@@ -257,6 +264,6 @@ export function Composer(props: {
           <Tooltip.Arrow />
         </Tooltip.Content>
       </Tooltip.Root>
-    </div>
+    </ComposerContainer>
   );
 }

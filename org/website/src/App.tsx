@@ -4,7 +4,6 @@ import { User, onAuthStateChanged } from 'firebase/auth';
 
 import { ref, Unsubscribe, onChildAdded, onChildRemoved } from 'firebase/database';
 
-import { useSnapshot, proxy } from 'valtio';
 import { Route } from 'wouter';
 import { Dashboard } from './Dashboard';
 
