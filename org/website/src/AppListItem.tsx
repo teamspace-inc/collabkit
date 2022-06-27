@@ -1,7 +1,8 @@
-import { events, App } from './App';
+import { App } from './App';
 import { Switch, SwitchLabel, SwitchThumb } from './Switch';
-import { HStack, Code } from './Dashboard';
 import { useState } from 'react';
+import { events } from './events';
+import { Code, HStack } from './UIKit';
 
 function Name(props: { app: App }) {
   const [isEditing, setIsEditing] = useState(false);

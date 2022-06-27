@@ -10,6 +10,7 @@
   "dependencies": {
     "@collabkit/react": "^0.0.0",
     "@radix-ui/react-switch": "^0.1.5",
+    "codemirror": "^6.0.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "wouter": "^2.8.0-alpha.2"

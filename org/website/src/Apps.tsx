@@ -1,8 +1,9 @@
 import { useSnapshot } from 'valtio';
-import { store, events } from './App';
 import { AppListItem } from './AppListItem';
 import { Preview } from './Preview';
-import { Button } from './Dashboard';
+import { store } from './store';
+import { events } from './events';
+import { Button } from './UIKit';
 
 export function AppList() {
   const { apps } = useSnapshot(store);
