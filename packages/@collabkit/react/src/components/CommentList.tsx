@@ -32,8 +32,8 @@ export function CommentList(props: {
         if (prevEvent.createdById === event.createdById) {
           if (typeof prevEvent.createdAt === 'number' && typeof event.createdAt === 'number') {
             // 5 minutes before last message and same person results
-            // in a grouped message
-            if (prevEvent.createdAt < event.createdAt + 1000 * 60 * 5) {
+            // in a grouped message.
+            if (prevEvent.createdAt + 1000 * 60 * 5 > event.createdAt) {
               if (groupedEvents[groupedEvents.length - 1]) {
                 groupedEvents[groupedEvents.length - 1].push(event);
                 return groupedEvents;
