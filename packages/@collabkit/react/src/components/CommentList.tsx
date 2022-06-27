@@ -82,6 +82,7 @@ export function CommentList(props: {
 
               return (
                 <Comment
+                  threadType={props.type ?? 'inline'}
                   type={type}
                   timestamp={event.createdAt}
                   key={`event-${i}-${j}`}

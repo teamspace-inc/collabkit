@@ -1,8 +1,8 @@
 import { ArrowUp } from 'phosphor-react';
 import * as Tooltip from './Tooltip';
 import { Profile, Target, Workspace } from '../constants';
-import { blue, mauve, sand } from '@radix-ui/colors';
-import { styled } from '@stitches/react';
+import { mauve, sand } from '@radix-ui/colors';
+import { styled } from './UIKit';
 import { events } from '../events';
 
 import { EditorState, $getRoot } from 'lexical';
@@ -39,13 +39,11 @@ function onError(error: any) {
   console.error(error);
 }
 
-const ACCENT = blue.blue10;
-
 const StyledComposerSendButton = styled(Tooltip.Trigger, {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  backgroundColor: ACCENT,
+  backgroundColor: '$color$accent10',
 
   width: 24,
   height: 24,

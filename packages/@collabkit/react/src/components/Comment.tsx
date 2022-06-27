@@ -9,8 +9,13 @@ export const StyledComment = styled('div', {
   gap: '5px',
   position: 'relative',
   overflowWrap: 'break-word',
-  maxWidth: '230px',
   variants: {
+    threadType: {
+      inline: {},
+      popout: {
+        maxWidth: '230px',
+      },
+    },
     type: {
       default: {
         padding: '5px 10px 5px',
@@ -165,6 +170,7 @@ export function Comment(props: {
   body: string;
   profile: Profile;
   type: 'default' | 'inline' | 'inline-start' | 'inline-end';
+  threadType: 'inline' | 'popout';
 }) {
   return props.profile ? (
     props.type === 'default' || props.type === 'inline-start' ? (
