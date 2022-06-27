@@ -15,7 +15,7 @@ export const StyledComment = styled('div', {
         padding: '5px 10px 5px',
       },
       'inline-start': {
-        padding: '1px 10px',
+        padding: '5px 10px 1px',
         maxWidth: '220px',
       },
       inline: {

@@ -164,8 +164,8 @@ function _Thread(props: {
               flexDirection: 'column',
             }}
           >
-            <div style={{ fontWeight: '400', fontSize: '1rem', color: 'rgba(0,0,0,0.2)' }}>
-              Start the conversation
+            <div style={{ fontWeight: '400', fontSize: '14px', color: 'rgba(0,0,0,0.4)' }}>
+              No comments
             </div>
           </div>
         ) : null}
