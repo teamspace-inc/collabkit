@@ -69,10 +69,10 @@ function timeDifference(current: number, previous: number) {
     if (Math.round(elapsed / 1000) < 60) {
       return 'just now';
     } else {
-      return Math.round(elapsed / 1000) + ' seconds ago';
+      return Math.round(elapsed / 1000) + ' secs ago';
     }
   } else if (elapsed < msPerHour) {
-    return Math.round(elapsed / msPerMinute) + ' minutes ago';
+    return Math.round(elapsed / msPerMinute) + ' mins ago';
   } else if (elapsed < msPerDay) {
     return Math.round(elapsed / msPerHour) + ' hours ago';
   } else if (elapsed < msPerMonth) {
@@ -87,20 +87,22 @@ function timeDifference(current: number, previous: number) {
 export function Comment(props: { timestamp: number | object; body: string; profile: Profile }) {
   return props.profile ? (
     <StyledComment>
-      <Avatar profile={props.profile} style={{ position: 'relative', top: 2 }} />
+      <Avatar profile={props.profile} style={{ position: 'relative', top: 0 }} />
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <StyledMessage>
-          <StyledName>{props.profile.name || props.profile.email}</StyledName>
+          <StyledName>
+            {props.profile.name || props.profile.email}{' '}
+            <StyledMessageTimestamp>
+              {typeof props.timestamp === 'number'
+                ? timeDifference(+new Date(), props.timestamp)
+                : null}
+            </StyledMessageTimestamp>
+          </StyledName>
           {props.body}
         </StyledMessage>
         <StyledMessageActions>
           {/* <StyledMessageAction href="">Like</StyledMessageAction> */}
           {/* <StyledMessageAction href="">Reply</StyledMessageAction> */}
-          <StyledMessageTimestamp>
-            {typeof props.timestamp === 'number'
-              ? timeDifference(+new Date(), props.timestamp)
-              : null}
-          </StyledMessageTimestamp>
         </StyledMessageActions>
       </div>
     </StyledComment>
