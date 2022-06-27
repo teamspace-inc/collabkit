@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef } from 'react';
 import ScrollArea from './ScrollArea';
 import React from 'react';
 import { Comment } from './Comment';
-import { Profile, Timeline } from '../constants';
+import { Event, Profile, Timeline } from '../constants';
 import { styled } from '@stitches/react';
 
 export const StyledCommentList = styled('div', {
@@ -20,8 +20,31 @@ export function CommentList(props: {
   composerHeight: number;
 }) {
   const scrollRef = useRef<HTMLDivElement>(null);
-
   const { profiles, timeline, composerHeight } = props;
+
+  const eventIds = Object.keys(timeline);
+
+  const groupedTimeline = eventIds
+    .map((id) => timeline[id])
+    .reduce<Event[][]>((groupedEvents, event, i) => {
+      const nextEvent = timeline[eventIds[i + 1]];
+      if (nextEvent) {
+        if (nextEvent.createdById === event.createdById) {
+          if (typeof nextEvent.createdAt === 'number' && typeof event.createdAt === 'number') {
+            // 10 minutes before last message and same person results
+            // in a grouped message
+            if (nextEvent.createdAt < event.createdAt + 1000 * 60 * 10) {
+              if (groupedEvents[groupedEvents.length - 1]) {
+                groupedEvents[groupedEvents.length - 1].push(event);
+                return groupedEvents;
+              }
+            }
+          }
+        }
+      }
+      return groupedEvents.concat([[event]]);
+    }, []);
+
   useEffect(() => {
     scrollRef.current?.scrollTo(0, scrollRef.current?.scrollHeight + 10);
   }, [timeline && Object.keys(timeline).length]);
@@ -41,14 +64,17 @@ export function CommentList(props: {
           onScroll={handleScroll}
           ref={scrollRef}
         >
-          {Object.keys(timeline).map((id) => (
-            <Comment
-              timestamp={timeline[id].createdAt}
-              key={id}
-              body={timeline[id].body}
-              profile={profiles[timeline[id].createdById]}
-            />
-          ))}
+          {groupedTimeline.map((group, i) =>
+            group.map((event, j) => (
+              <Comment
+                type={j > 1 ? 'inline' : 'default'}
+                timestamp={event.createdAt}
+                key={`event-${i}-${j}`}
+                body={event.body}
+                profile={profiles[event.createdById]}
+              />
+            ))
+          )}
         </ScrollArea.Viewport>
         <ScrollArea.Scrollbar orientation="vertical">
           <ScrollArea.Thumb />

@@ -7,14 +7,13 @@ import { WorkspaceLoader } from './WorkspaceLoader';
 
 const StyledButton = styled('button', {
   padding: '8px 14px 8px 12px',
-  border: '1px solid rgba(0,0,0,0.05)',
+  border: '1px solid rgba(0,0,0,0.1)',
   background: 'white',
   color: gray.gray12,
   fontWeight: 600,
   fontSize: '15px',
-  lineHeight: '18px',
+  lineHeight: '20px',
   borderRadius: 6,
-  boxShadow: `0px 1px 0px rgba(0,0,0,0.05), 0px 1px 3px rgba(0,0,0,0.025)`,
   cursor: 'pointer',
   display: 'flex',
   alignItems: 'center',
