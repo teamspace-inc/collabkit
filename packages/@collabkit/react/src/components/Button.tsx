@@ -1,20 +1,25 @@
-import { gray, blue } from '@radix-ui/colors';
+import { gray } from '@radix-ui/colors';
 import { styled } from '@stitches/react';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { ChatCircle } from 'phosphor-react';
-import { WorkspaceContext } from './Workspace';
 import { Thread } from './Thread';
+import { WorkspaceLoader } from './WorkspaceLoader';
 
 const StyledButton = styled('button', {
-  padding: '0.5rem 0.75rem',
-  border: 'none',
+  padding: '8px 14px 8px 12px',
+  border: '1px solid rgba(0,0,0,0.05)',
   background: 'white',
   color: gray.gray12,
   fontWeight: 600,
-  fontSize: '1rem',
+  fontSize: '15px',
+  lineHeight: '18px',
   borderRadius: 6,
-  boxShadow: `0px 1px 0px ${gray.gray6}, 0px 1px 4px ${gray.gray4}`,
+  boxShadow: `0px 1px 0px rgba(0,0,0,0.05), 0px 1px 3px rgba(0,0,0,0.025)`,
   cursor: 'pointer',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  gap: '8px',
 
   variants: {
     isHovering: {
@@ -25,39 +30,19 @@ const StyledButton = styled('button', {
   },
 });
 
-// Button states
-
-// plain - no styles
-// new comment badged
-// new comment see preview
-
 export function Button(props: {
   threadId: string;
   style?: React.CSSProperties;
   className?: string;
+  defaultOpen?: boolean;
 }) {
   const { threadId } = props;
   const [isHovering, setIsHovering] = useState(false);
-  const [showThread, setShowThread] = useState(false);
+  const [showThread, setShowThread] = useState(props.defaultOpen);
   const ref = useRef(null);
 
-  useEffect(() => {
-    console.log(props.threadId);
-  }, [props.threadId]);
-
-  const { workspaceId } = useContext(WorkspaceContext);
-  if (!workspaceId) {
-    return null;
-  }
-
-  // const target: CommentButtonTarget = {
-  //   type: 'commentButton',
-  //   threadId,
-  //   workspaceId,
-  // };
-
   return (
-    <>
+    <WorkspaceLoader>
       <StyledButton
         onMouseOver={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}
@@ -67,12 +52,14 @@ export function Button(props: {
         onClick={() => setShowThread(!showThread)}
         ref={ref}
       >
-        <div style={{ display: 'flex', flexDirection: 'row', gap: '0.25rem', fontWeight: '600' }}>
-          <ChatCircle weight="fill" size={20} style={{ marginTop: -2, marginLeft: -2 }} />
+        <div style={{ display: 'flex', flexDirection: 'row', gap: '6px' }}>
+          <ChatCircle weight="fill" size={18} color={'rgba(0,0,0,0.9)'} />
           Comment
         </div>
       </StyledButton>
-      {showThread ? <Thread threadId={threadId} type="popout"></Thread> : null}
-    </>
+      {showThread ? (
+        <Thread threadId={threadId} type="popout" onCloseButtonClick={() => setShowThread(false)} />
+      ) : null}
+    </WorkspaceLoader>
   );
 }

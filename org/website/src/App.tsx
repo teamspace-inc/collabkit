@@ -116,7 +116,7 @@ function App() {
           <AppLoader>
             <CollabKit.Workspace workspaceId={params.workspace_id}>
               <Popout>
-                <CollabKit.Thread threadId={params.thread_id} />
+                <CollabKit.Button threadId={params.thread_id} defaultOpen={true} />
               </Popout>
             </CollabKit.Workspace>
           </AppLoader>

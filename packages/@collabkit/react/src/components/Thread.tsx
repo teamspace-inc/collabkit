@@ -8,11 +8,12 @@ import { store } from '../store';
 import { actions } from '../actions';
 import { Comment } from './Comment';
 import { Composer } from './Composer';
-import { WorkspaceContext } from './Workspace';
-import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
-import { mauve } from '@radix-ui/colors';
+// import { WorkspaceIDContext } from './Workspace';
+// import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
+// import { mauve } from '@radix-ui/colors';
 import * as Tooltip from './Tooltip';
-import { Workspace } from '../constants';
+// import { Workspace } from '../constants';
+import { WorkspaceContext, WorkspaceLoader } from './WorkspaceLoader';
 
 const StyledThread = styled('div', {
   padding: 0,
@@ -33,8 +34,9 @@ const StyledThread = styled('div', {
         position: 'absolute',
         backgroundColor: 'white',
         borderRadius: '11px',
-        maxWidth: '286px',
-        boxShadow: '0 6px 11px rgba(0, 0, 0, 0.1)',
+        width: '280px',
+        height: '396px',
+        boxShadow: '0px 12px 24px rgba(0,0,0,0.04)',
       },
     },
     hasComments: {
@@ -64,6 +66,11 @@ const StyledThreadHeader = styled('div', {
       popout: {
         borderTopRightRadius: 11,
         borderTopLeftRadius: 11,
+        position: 'absolute',
+        left: 0,
+        top: 0,
+        right: 0,
+        zIndex: 99,
       },
     },
   },
@@ -84,11 +91,17 @@ const StyledIconButton = styled('div', {
   },
 });
 
-function IconButton(props: { children: React.ReactNode; tooltip: string }) {
+function IconButton(props: {
+  children: React.ReactNode;
+  tooltip: string;
+  onCloseButtonClick?: (e: React.MouseEvent) => void;
+}) {
   return (
     <Tooltip.Root>
       <Tooltip.Trigger>
-        <StyledIconButton>{props.children}</StyledIconButton>
+        <StyledIconButton onClick={(e) => props.onCloseButtonClick?.(e)}>
+          {props.children}
+        </StyledIconButton>
       </Tooltip.Trigger>
       <Tooltip.Content>
         {props.tooltip}
@@ -104,17 +117,16 @@ const StyledHeaderLeftGroup = styled('div', {
   gap: 0,
 });
 
-function Audience(props: {}) {
-  return <div></div>;
-}
-
-export function Thread(props: { threadId: string; type?: 'popout' }) {
+function _Thread(props: {
+  threadId: string;
+  type?: 'popout';
+  onCloseButtonClick?: (e: React.MouseEvent) => void;
+}) {
   const { threadId } = props;
-  const { workspaceId } = useContext(WorkspaceContext);
-  const { workspaces, profiles, appState, config, isConnected } = useSnapshot(store);
+  const { profiles, appState, config, isConnected } = useSnapshot(store);
   const [textareaHeight, setTextareaHeight] = useState(-1);
 
-  const workspace = workspaceId ? (workspaces[workspaceId] as Workspace) : null;
+  const { workspace, workspaceId } = useContext(WorkspaceContext);
   const timeline = workspace ? workspace.timeline[props.threadId] : null;
   const isEmpty = timeline ? Object.keys(timeline).length === 0 : true;
 
@@ -124,7 +136,7 @@ export function Thread(props: { threadId: string; type?: 'popout' }) {
   // const intersection = useIntersectionObserver(ref, [props.threadId, props.type]);
 
   useEffect(() => {
-    if (workspaceId && appState === 'ready') {
+    if (workspace && workspaceId && appState === 'ready') {
       actions.initThread({ workspaceId, threadId });
       actions.loadThread({ workspaceId, threadId });
     }
@@ -176,7 +188,7 @@ export function Thread(props: { threadId: string; type?: 'popout' }) {
           {!isEmpty && props.type === 'popout' && (
             <StyledThreadHeader type={props.type}>
               <StyledHeaderLeftGroup />
-              <IconButton tooltip="Close">
+              <IconButton tooltip="Close" onCloseButtonClick={(e) => props.onCloseButtonClick?.(e)}>
                 <X />
               </IconButton>
             </StyledThreadHeader>
@@ -223,9 +235,9 @@ export function Thread(props: { threadId: string; type?: 'popout' }) {
           {workspaceId && workspace ? (
             <Composer
               workspace={workspace}
+              workspaceId={workspaceId}
               onHeightChange={setTextareaHeight}
               profile={config.identify?.userId ? profiles[config.identify?.userId] : undefined}
-              workspaceId={workspaceId}
               threadId={props.threadId}
               isFloating={false}
             />
@@ -233,5 +245,17 @@ export function Thread(props: { threadId: string; type?: 'popout' }) {
         </IconContext.Provider>
       </StyledThread>
     </div>
+  );
+}
+
+export function Thread(props: {
+  threadId: string;
+  type?: 'popout';
+  onCloseButtonClick?: (e: React.MouseEvent) => void;
+}) {
+  return (
+    <WorkspaceLoader>
+      <_Thread {...props} />
+    </WorkspaceLoader>
   );
 }
