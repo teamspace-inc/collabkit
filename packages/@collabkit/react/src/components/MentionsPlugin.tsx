@@ -101,6 +101,7 @@ const SUGGESTION_LIST_LENGTH_LIMIT = 5;
 
 const mentionsCache = new Map();
 
+// todo remove this dummy service
 const dummyLookupService = {
   search(string: string, callback: (results: Array<string> | null) => void): void {
     const { config } = snapshot(store);
@@ -114,7 +115,7 @@ const dummyLookupService = {
       } else {
         callback(results.map((mention) => mention.name!));
       }
-    }, 50);
+    }, 0);
   },
 };
 

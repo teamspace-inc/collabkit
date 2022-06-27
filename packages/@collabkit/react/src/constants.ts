@@ -85,7 +85,6 @@ export interface Store {
     setup: SetupProps | null | undefined;
     isSetup: boolean;
     hasIdentified: boolean;
-    isMentionsEnabled: boolean;
     mentions: MentionProps | null | undefined;
   };
   profiles: { [profileId: string]: Profile };

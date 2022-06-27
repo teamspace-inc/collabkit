@@ -110,8 +110,6 @@ export const actions = {
   },
 
   mentions: (props: MentionProps) => {
-    // todo runtime validation for props;
-    store.config.isMentionsEnabled = true;
     store.config.mentions = props;
   },
 

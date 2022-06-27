@@ -12,7 +12,6 @@ export const store = proxy<Store>({
     mentions: null,
     isSetup: false,
     hasIdentified: false,
-    isMentionsEnabled: false,
   },
   focusedId: null,
   selectedId: null,

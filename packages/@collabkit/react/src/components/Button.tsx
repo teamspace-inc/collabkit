@@ -1,10 +1,8 @@
-import { gray } from '@radix-ui/colors';
+import { gray, blue } from '@radix-ui/colors';
 import { styled } from '@stitches/react';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { ChatCircle } from 'phosphor-react';
-// import { events } from '../events';
 import { WorkspaceContext } from './Workspace';
-// import { CommentButtonTarget } from '../constants';
 import { Thread } from './Thread';
 
 const StyledButton = styled('button', {

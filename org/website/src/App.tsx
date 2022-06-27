@@ -1,38 +1,18 @@
 import './App.css';
 
-import {
-  User,
-  getAuth,
-  sendSignInLinkToEmail,
-  onAuthStateChanged,
-  setPersistence,
-  indexedDBLocalPersistence,
-  isSignInWithEmailLink,
-  signInWithEmailLink,
-} from 'firebase/auth';
+import { User, onAuthStateChanged } from 'firebase/auth';
 
-import {
-  getDatabase,
-  ref,
-  set,
-  remove,
-  DataSnapshot,
-  Unsubscribe,
-  onValue,
-  onChildAdded,
-  onChildRemoved,
-} from 'firebase/database';
+import { ref, Unsubscribe, onChildAdded, onChildRemoved } from 'firebase/database';
 
-import { getFunctions } from 'firebase/functions';
-
-import React, { useEffect, useState } from 'react';
-import { initializeApp } from 'firebase/app';
 import { useSnapshot, proxy } from 'valtio';
 import { Route } from 'wouter';
 import { Dashboard } from './Dashboard';
 
-import { mauveDark, grayDark } from '@radix-ui/colors';
 import { CollabKit } from '@collabkit/react';
+import { Fullscreen } from './Fullscreen';
+import { SignedIn } from './SignedIn';
+import { SignIn } from './SignIn';
+import { AppLoader } from './AppLoader';
 
 export interface App {
   appId: string;
@@ -80,196 +60,11 @@ export type FunctionResponse<T> =
       error: string;
     };
 
-export const store = proxy<Store>({
-  user: null,
-  apps: {},
-  subs: {},
-  adminApps: {},
-});
-
-export const events = {
-  onAppChanged: (snapshot: DataSnapshot) => {
-    // console.log('onAppChanged');
-    if (snapshot.key) {
-      const app = { ...snapshot.val(), appId: snapshot.key };
-      // console.log('adding app', app);
-      store.apps[snapshot.key] = app;
-    }
-  },
-
-  onDeleteAppButtonClick: (props: { appId: string; e: React.MouseEvent }) => {
-    actions.deleteApp(props.appId);
-  },
-
-  onAdminAppAdded: (snapshot: DataSnapshot) => {
-    // console.log('admin app added', snapshot.key, snapshot.val());
-    if (snapshot.key) {
-      store.adminApps[snapshot.key] = snapshot.val();
-      store.subs[snapshot.key] = onValue(
-        ref(database, `/apps/${snapshot.key}`),
-        events.onAppChanged
-      );
-    }
-  },
-
-  onAdminAppRemoved: (snapshot: DataSnapshot) => {
-    if (snapshot.key) {
-      delete store.adminApps[snapshot.key];
-      delete store.apps[snapshot.key];
-    }
-  },
-
-  onCreateAppButtonClick: (e: React.MouseEvent) => {
-    actions.createApp();
-  },
-
-  onAppNameChange: (props: { appId: string; e: React.ChangeEvent<HTMLInputElement> }) => {
-    actions.changeAppName({ appId: props.appId, newName: props.e.target.value });
-  },
-};
-
-const actions = {
-  changeAppName: async (props: { appId: string; newName: string }) => {
-    await set(ref(getDatabase(app), `/apps/${props.appId}/name`), props.newName);
-  },
-
-  deleteApp: async (appId: string) => {
-    await remove(ref(getDatabase(app), `/apps/${appId}`));
-  },
-
-  createApp: async () => {
-    if (!store.user) {
-      return;
-    }
-    const idToken = await store.user.getIdToken(true);
-    const response = await fetch(`/api/createApp`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${idToken}`,
-      },
-    });
-
-    if (response.ok) {
-      const json = (await response.json()) as FunctionResponse<CreateApp>;
-      if (json.status === 200 || json.status === 201) {
-        store.apps[json.data.app.appId] = json.data.app;
-        store.adminApps[json.data.app.appId] = json.data.adminApp !== null;
-      }
-      return;
-    }
-
-    console.error('Failed to create app', response.status, await response.text());
-  },
-};
-
-const firebaseConfig = {
-  apiKey: 'AIzaSyDYl8MwTEgsIzXO7EHgBlvuN5BLVJqPZ6k',
-  authDomain: 'collabkit-dev.firebaseapp.com',
-  databaseURL: 'https://collabkit-dev-default-rtdb.europe-west1.firebasedatabase.app',
-  projectId: 'collabkit-dev',
-  storageBucket: 'collabkit-dev.appspot.com',
-  messagingSenderId: '927079647438',
-  appId: '1:927079647438:web:3535f7ba40a758167ee89f',
-};
-
-const app = initializeApp(firebaseConfig, 'CollabKitWebsite');
-
-export const auth = getAuth(app);
-
-const database = getDatabase(app);
-
-getFunctions(app);
-
-setPersistence(auth, indexedDBLocalPersistence);
-
-async function verifyEmailLink() {
-  // Confirm the link is a sign-in with email link.
-  if (isSignInWithEmailLink(auth, window.location.href)) {
-    // Additional state parameters can also be passed via URL.
-    // This can be used to continue the user's intended action before triggering
-    // the sign-in operation.
-    // Get the email if available. This should be available if the user completes
-    // the flow on the same device where they started it.
-    let email = window.localStorage.getItem('emailForSignIn');
-    if (!email) {
-      // User opened the link on a different device. To prevent session fixation
-      // attacks, ask the user to provide the associated email again. For example:
-      email = window.prompt('Please provide your email for confirmation');
-    }
-    // The client SDK will parse the code from the link for you.
-    await signInWithEmailLink(auth, email!, window.location.href)
-      .then((result) => {
-        // Clear email from storage.
-        window.localStorage.removeItem('emailForSignIn');
-        // You can access the new user via result.user
-        // Additional user info profile not available via:
-        // result.additionalUserInfo.profile == null
-        // You can check if the user is new or existing:
-        // result.additionalUserInfo.isNewUser
-      })
-      .catch((error) => {
-        console.error(error);
-        // Some error occurred, you can inspect the code: error.code
-        // Common errors could be invalid email and invalid or expired OTPs.
-      });
-  }
-}
-
-async function sendVerificationEmail(email: string) {
-  const actionCodeSettings = {
-    url: window.location.origin + '/signedIn',
-    handleCodeInApp: true,
-  };
-
-  try {
-    await sendSignInLinkToEmail(auth, email, actionCodeSettings);
-    window.localStorage.setItem('emailForSignIn', email);
-    return true;
-  } catch (e) {
-    console.error(e);
-    return false;
-  }
-}
-
-function SignIn() {
-  const [email, setEmail] = useState(window.localStorage.getItem('emailForSignIn') || '');
-  const [didSendEmail, setDidSendEmail] = useState(false);
-
-  return (
-    <div>
-      <h1>Sign in to Collabkit</h1>
-      <input
-        type="email"
-        onChange={(e) => {
-          setEmail(e.target.value);
-          setDidSendEmail(false);
-        }}
-        value={email}
-      />
-      <button onClick={async () => setDidSendEmail(await sendVerificationEmail(email))}>
-        Submit
-      </button>
-      {didSendEmail && 'Check your email'}
-    </div>
-  );
-}
-
-function SignedIn() {
-  useEffect(() => {
-    verifyEmailLink();
-  }, []);
-
-  const { user } = useSnapshot(store);
-
-  console.log({ user });
-
-  return (
-    <div>
-      <h1>Signed in {user?.email}</h1>
-    </div>
-  );
-}
+import { database, auth } from './database';
+import { store } from './store';
+import { events } from './events';
+import { Home } from './Home';
+import { Popout } from './Popout';
 
 store.subs['user'] = onAuthStateChanged(auth, (user) => {
   store.user = user;
@@ -290,100 +85,39 @@ store.subs['user'] = onAuthStateChanged(auth, (user) => {
   }
 });
 
-function AppLoader(props: { children: React.ReactNode }) {
-  const { apps } = useSnapshot(store);
-
-  if (apps == null) {
-    return null;
-  }
-
-  const app = apps[Object.keys(apps)?.[0]];
-
-  if (app == null) {
-    return null;
-  }
-
-  return <Dev app={app}>{props.children}</Dev>;
-}
-
-function Dev(props: { app: App; children: React.ReactNode }) {
-  const { app } = props;
-
-  useEffect(() => {
-    const token = Object.keys(app.keys)[0];
-    CollabKit.setup({ appId: app.appId, apiKey: token, mode: 'UNSECURED' });
-    CollabKit.identify({
-      workspaceId: 'acme',
-      userId: 'user1',
-      workspaceName: 'ACME',
-      name: 'Namit',
-      email: 'namit@useteamspace.com',
-      avatar: 'namit.pic.jpg',
-    });
-    CollabKit.mentions([
-      {
-        name: 'Tom',
-        email: 'tom@useteamspace.com',
-        avatar: 'tom.pic.jpg',
-        workspaceId: 'acme',
-        userId: 'user1',
-      },
-      {
-        name: 'Mike',
-        email: 'mike@useteamspace.com',
-        avatar: 'mike.pic.jpg',
-        workspaceId: 'acme',
-        userId: 'user2',
-      },
-      {
-        name: 'Jessica',
-        email: 'jessica@useteamspace.com',
-        avatar: 'jess.pic.jpg',
-        workspaceId: 'acme',
-        userId: 'user3',
-      },
-    ]);
-  }, [app]);
-
-  if (app == null) {
-    return null;
-  }
-
-  return (
-    <div style={{ height: '100%', width: '100%' }}>
-      <CollabKit.App token={Object.keys(app.keys)[0]}>{props.children}</CollabKit.App>
-    </div>
-  );
-}
-
-function Fullscreen(props: { children: React.ReactNode }) {
-  return (
-    <div style={{ display: 'flex', width: '100%', height: '100%', flex: 1 }}>
-      <style type="text/css">{`body, html, #root { overflow: hidden; width: 100%; height: 100%; }`}</style>
-      {props.children}
-    </div>
-  );
-}
-
 function App() {
-  const { user } = useSnapshot(store);
+  // const { user } = useSnapshot(store);
 
   return (
     <>
       <Route path="/preview">
         <h1>Preview</h1>
       </Route>
-      <Route path="/">{user !== null ? <Dashboard /> : <SignIn />}</Route>
+      <Route path="/">
+        <Home></Home>
+      </Route>
+      {/* <Route path="/">{user !== null ? <Dashboard /> : <SignIn />}</Route> */}
       <Route path="/signedIn">
         <SignedIn />
       </Route>
-      <Route path="/dev/:workspace_id/:thread_id">
+      <Route path="/dev/:workspace_id/:thread_id/fullscreen">
         {(params) => (
           <AppLoader>
             <CollabKit.Workspace workspaceId={params.workspace_id}>
               <Fullscreen>
                 <CollabKit.Thread threadId={params.thread_id} />
               </Fullscreen>
+            </CollabKit.Workspace>
+          </AppLoader>
+        )}
+      </Route>
+      <Route path="/dev/:workspace_id/:thread_id">
+        {(params) => (
+          <AppLoader>
+            <CollabKit.Workspace workspaceId={params.workspace_id}>
+              <Popout>
+                <CollabKit.Thread threadId={params.thread_id} />
+              </Popout>
             </CollabKit.Workspace>
           </AppLoader>
         )}

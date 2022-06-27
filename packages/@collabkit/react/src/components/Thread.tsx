@@ -23,6 +23,8 @@ const StyledThread = styled('div', {
   justifyItems: 'stretch',
   flex: 1,
   height: '100%',
+  border: '1px solid rgba(0,0,0,0.1)',
+  borderRadius: '11px',
 
   variants: {
     type: {
@@ -57,6 +59,14 @@ const StyledThreadHeader = styled('div', {
   gap: 0,
   padding: '3px 3px',
   alignItems: 'center',
+  variants: {
+    type: {
+      popout: {
+        borderTopRightRadius: 11,
+        borderTopLeftRadius: 11,
+      },
+    },
+  },
 });
 
 const StyledIconButton = styled('div', {
@@ -159,18 +169,12 @@ export function Thread(props: { threadId: string; type?: 'popout' }) {
               flexDirection: 'column',
             }}
           >
-            <div style={{ fontWeight: '500', fontSize: '1.212rem', marginBottom: '1.212rem' }}>
-              Start the conversation
-            </div>
-            <div style={{ color: mauve.mauve10 }}>
-              {' '}
-              Send a comment to notify others in {workspace?.name || 'this workspace'}.
-            </div>
+            <div style={{ fontWeight: '400', fontSize: '1rem' }}>Start the conversation</div>
           </div>
         ) : null}
         <IconContext.Provider value={{ size: '20px' }}>
           {!isEmpty && props.type === 'popout' && (
-            <StyledThreadHeader>
+            <StyledThreadHeader type={props.type}>
               <StyledHeaderLeftGroup />
               <IconButton tooltip="Close">
                 <X />
@@ -194,7 +198,6 @@ export function Thread(props: { threadId: string; type?: 'popout' }) {
               <ScrollArea.Root style={{ ...(props.type === 'popout' ? { height: 352 } : {}) }}>
                 <ScrollArea.Viewport
                   css={{
-                    backgroundColor: 'white',
                     display: 'flex',
                     flex: 1,
                   }}

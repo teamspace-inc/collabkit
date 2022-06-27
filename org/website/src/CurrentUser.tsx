@@ -1,7 +1,8 @@
 import { signOut } from 'firebase/auth';
 import { useSnapshot } from 'valtio';
-import { store, auth } from './App';
-import { Button, HStack } from './Dashboard';
+import { auth } from './database';
+import { HStack, Button } from './UIKit';
+import { store } from './store';
 
 export function CurrentUser() {
   const { user } = useSnapshot(store);
