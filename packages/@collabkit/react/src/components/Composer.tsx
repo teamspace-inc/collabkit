@@ -1,7 +1,6 @@
 import { ArrowUp } from 'phosphor-react';
 import * as Tooltip from './Tooltip';
 import { Profile, Target, Workspace } from '../constants';
-import { Avatar } from './Avatar';
 import { blue, mauve, sand } from '@radix-ui/colors';
 import { styled } from '@stitches/react';
 import { events } from '../events';
@@ -23,7 +22,6 @@ function onChange(target: Target, editorState: EditorState) {
   editorState.read(() => {
     store.workspaces[target.workspaceId].composers[target.threadId].$$body =
       $getRoot().getTextContent(false) ?? '';
-    console.log('editorState', target, $getRoot().getTextContent(false));
   });
 }
 
@@ -129,9 +127,6 @@ export function Composer(props: {
         ...props.style,
       }}
     >
-      {/* {props.profile ? (
-        <Avatar profile={props.profile} style={{ position: 'absolute', left: 8, top: 9 }} />
-      ) : null} */}
       <LexicalComposer initialConfig={initialConfig}>
         <div
           className="editor-container"

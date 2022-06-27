@@ -109,7 +109,7 @@ const colors = css({
   variants: {
     type: {
       primary: {
-        color: '$neutral12',
+        color: '$neutral1',
       },
       secondary: {
         color: '$neutral11',

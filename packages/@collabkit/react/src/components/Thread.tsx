@@ -1,6 +1,6 @@
 import { styled } from '@stitches/react';
 import { useContext, useEffect, useRef, useState } from 'react';
-import { IconContext, X } from 'phosphor-react';
+import { IconContext, X, ChatCircle } from 'phosphor-react';
 import React from 'react';
 import { useSnapshot } from 'valtio';
 import { store } from '../store';
@@ -10,7 +10,6 @@ import { Composer } from './Composer';
 // import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
 // import { mauve } from '@radix-ui/colors';
 import * as Tooltip from './Tooltip';
-// import { Workspace } from '../constants';
 import { WorkspaceContext, WorkspaceLoader } from './WorkspaceLoader';
 import { CommentList } from './CommentList';
 
@@ -164,13 +163,25 @@ function _Thread(props: {
               flexDirection: 'column',
             }}
           >
-            <div style={{ fontWeight: '400', fontSize: '14px', color: 'rgba(0,0,0,0.4)' }}>
+            <div
+              style={{
+                fontWeight: '400',
+                fontSize: '14px',
+                color: 'rgba(0,0,0,0.4)',
+                display: 'flex',
+                alignItems: 'center',
+                flexDirection: 'column',
+                marginBottom: '40px', // composer height
+                gap: '5px',
+              }}
+            >
+              <ChatCircle weight="fill" size={45} color="rgba(0,0,0,0.1)" />
               No comments
             </div>
           </div>
         ) : null}
         <IconContext.Provider value={{ size: '20px' }}>
-          {!isEmpty && props.type === 'popout' && (
+          {props.type === 'popout' && (
             <StyledThreadHeader type={props.type}>
               <StyledHeaderLeftGroup />
               <IconButton tooltip="Close" onCloseButtonClick={(e) => props.onCloseButtonClick?.(e)}>
