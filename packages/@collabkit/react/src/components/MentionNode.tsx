@@ -10,6 +10,7 @@ import {
   SerializedTextNode,
   TextNode,
 } from 'lexical';
+import { theme } from './UIKit';
 
 export type SerializedMentionNode = Spread<
   {
@@ -27,7 +28,7 @@ function convertMentionElement(domNode: Node): DOMConversionOutput {
   };
 }
 
-const mentionStyle = 'background-color: rgba(24, 119, 232, 0.2)';
+const mentionStyle = `background-color: ${theme.colors.accent4.toString()}`;
 export class MentionNode extends TextNode {
   __mention: string;
 

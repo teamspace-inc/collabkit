@@ -1,4 +1,5 @@
 import React from 'react';
+import { Theme } from './Theme';
 
 export const WorkspaceIDContext = React.createContext<{ workspaceId: string | null }>({
   workspaceId: null,
@@ -7,7 +8,7 @@ export const WorkspaceIDContext = React.createContext<{ workspaceId: string | nu
 function Workspace(props: { workspaceId: string; children: React.ReactNode }) {
   return (
     <WorkspaceIDContext.Provider value={{ workspaceId: props.workspaceId }}>
-      {props.children}
+      <Theme>{props.children}</Theme>
     </WorkspaceIDContext.Provider>
   );
 }

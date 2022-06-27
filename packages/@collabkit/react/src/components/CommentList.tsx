@@ -6,11 +6,13 @@ import { Event, Profile, Timeline } from '../constants';
 import { styled } from '@stitches/react';
 
 export const StyledCommentList = styled('div', {
-  display: 'flex',
-  flexDirection: 'column',
-  flexGrow: 1,
   gap: 0,
   padding: 0,
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'stretch',
+  justifyItems: 'stretch',
+  flex: 1,
 });
 
 export function CommentList(props: {
@@ -46,8 +48,8 @@ export function CommentList(props: {
     }, []);
 
   useEffect(() => {
-    scrollRef.current?.scrollTo(0, scrollRef.current?.scrollHeight + 10);
-  }, [timeline && Object.keys(timeline).length]);
+    scrollRef.current?.scrollTo(0, scrollRef.current?.scrollHeight);
+  }, [timeline && Object.keys(timeline).length, props.composerHeight]);
   const handleScroll = useCallback((e: React.SyntheticEvent) => {
     // todo use this to load more comments
   }, []);
