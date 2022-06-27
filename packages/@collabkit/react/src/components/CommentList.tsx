@@ -10,7 +10,7 @@ export const StyledCommentList = styled('div', {
   flexDirection: 'column',
   flexGrow: 1,
   gap: 0,
-  padding: '0px 0px',
+  padding: 0,
 });
 
 export function CommentList(props: {
@@ -24,16 +24,16 @@ export function CommentList(props: {
 
   const eventIds = Object.keys(timeline);
 
-  const groupedTimeline = eventIds
+  const groupedList = eventIds
     .map((id) => timeline[id])
     .reduce<Event[][]>((groupedEvents, event, i) => {
-      const nextEvent = timeline[eventIds[i + 1]];
-      if (nextEvent) {
-        if (nextEvent.createdById === event.createdById) {
-          if (typeof nextEvent.createdAt === 'number' && typeof event.createdAt === 'number') {
-            // 10 minutes before last message and same person results
+      const prevEvent = timeline[eventIds[i - 1]];
+      if (prevEvent) {
+        if (prevEvent.createdById === event.createdById) {
+          if (typeof prevEvent.createdAt === 'number' && typeof event.createdAt === 'number') {
+            // 5 minutes before last message and same person results
             // in a grouped message
-            if (nextEvent.createdAt < event.createdAt + 1000 * 60 * 20) {
+            if (prevEvent.createdAt < event.createdAt + 1000 * 60 * 5) {
               if (groupedEvents[groupedEvents.length - 1]) {
                 groupedEvents[groupedEvents.length - 1].push(event);
                 return groupedEvents;
@@ -64,7 +64,7 @@ export function CommentList(props: {
           onScroll={handleScroll}
           ref={scrollRef}
         >
-          {groupedTimeline.map((group, i) =>
+          {groupedList.map((group, i) =>
             group.map((event, j) => {
               let type: 'default' | 'inline-start' | 'inline' | 'inline-end' = 'default';
 

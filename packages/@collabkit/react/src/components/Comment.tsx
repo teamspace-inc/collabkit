@@ -9,6 +9,7 @@ export const StyledComment = styled('div', {
   gap: '5px',
   position: 'relative',
   overflowWrap: 'break-word',
+  maxWidth: '230px',
   variants: {
     type: {
       default: {
@@ -16,15 +17,12 @@ export const StyledComment = styled('div', {
       },
       'inline-start': {
         padding: '5px 10px 1px',
-        maxWidth: '220px',
       },
       inline: {
         padding: '1px 10px',
-        maxWidth: '220px',
       },
       'inline-end': {
         padding: '1px 10px 5px',
-        maxWidth: '220px',
       },
     },
   },

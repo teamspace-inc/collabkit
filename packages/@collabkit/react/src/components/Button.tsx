@@ -6,7 +6,7 @@ import { Thread } from './Thread';
 import { WorkspaceLoader } from './WorkspaceLoader';
 
 const StyledButton = styled('button', {
-  padding: '8px 14px 8px 12px',
+  padding: '9px 14px 9px 12px',
   border: '1px solid rgba(0,0,0,0.1)',
   background: 'white',
   color: gray.gray12,
@@ -26,6 +26,10 @@ const StyledButton = styled('button', {
         backgroundColor: gray.gray2,
       },
     },
+    isOpen: {
+      true: {},
+      false: {},
+    },
   },
 });
 
@@ -43,6 +47,7 @@ export function Button(props: {
   return (
     <WorkspaceLoader>
       <StyledButton
+        isOpen={showThread}
         onMouseOver={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}
         isHovering={isHovering}
