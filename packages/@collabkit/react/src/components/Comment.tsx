@@ -4,11 +4,24 @@ import { styled } from '@stitches/react';
 import { mauve } from '@radix-ui/colors';
 
 export const StyledComment = styled('div', {
-  padding: '4px 10px',
   display: 'flex',
-  gap: '6px',
+  gap: '2px',
 
   overflowWrap: 'break-word',
+  variants: {
+    type: {
+      default: {
+        padding: '4px 10px',
+      },
+      inline: {
+        padding: '4px 10px',
+      },
+    },
+  },
+
+  '&:hover': {
+    background: 'rgba(0,0,0,0.05)',
+  },
 });
 
 const StyledMessageTimestamp = styled('span', {
@@ -36,24 +49,24 @@ const StyledMessageActions = styled('div', {
 });
 
 export const StyledMessage = styled('div', {
-  padding: '6px 10px',
+  padding: '0px 8px',
   display: 'flex',
   flexDirection: 'column',
+  gap: 0,
   flex: 0,
   fontSize: 14,
   lineHeight: '20px',
   borderRadius: 14,
   color: mauve.mauve12,
   wordBreak: 'break-word',
-  background: mauve.mauve4,
 });
 
 const StyledName = styled('div', {
-  fontSize: 12,
+  fontSize: 14,
   fontWeight: '600',
-  lineHeight: '12px',
-  marginTop: 4,
-  marginBottom: 2,
+  lineHeight: '20px',
+  display: 'flex',
+  gap: 8,
 });
 
 function timeDifference(current: number, previous: number) {
@@ -84,27 +97,40 @@ function timeDifference(current: number, previous: number) {
   }
 }
 
-export function Comment(props: { timestamp: number | object; body: string; profile: Profile }) {
+export function Comment(props: {
+  timestamp: number | object;
+  body: string;
+  profile: Profile;
+  type: 'default' | 'inline';
+}) {
   return props.profile ? (
-    <StyledComment>
-      <Avatar profile={props.profile} style={{ position: 'relative', top: 0 }} />
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <StyledMessage>
-          <StyledName>
-            {props.profile.name || props.profile.email}{' '}
-            <StyledMessageTimestamp>
-              {typeof props.timestamp === 'number'
-                ? timeDifference(+new Date(), props.timestamp)
-                : null}
-            </StyledMessageTimestamp>
-          </StyledName>
-          {props.body}
-        </StyledMessage>
-        <StyledMessageActions>
+    props.type === 'default' ? (
+      <StyledComment type={props.type}>
+        <Avatar profile={props.profile} style={{ position: 'relative', top: 4 }} />
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <StyledMessage>
+            <StyledName>
+              {props.profile.name || props.profile.email}{' '}
+              <StyledMessageTimestamp>
+                {typeof props.timestamp === 'number'
+                  ? timeDifference(+new Date(), props.timestamp)
+                  : null}
+              </StyledMessageTimestamp>
+            </StyledName>
+            {props.body}
+          </StyledMessage>
+          {/* <StyledMessageActions> */}
           {/* <StyledMessageAction href="">Like</StyledMessageAction> */}
           {/* <StyledMessageAction href="">Reply</StyledMessageAction> */}
-        </StyledMessageActions>
-      </div>
-    </StyledComment>
+          {/* </StyledMessageActions> */}
+        </div>
+      </StyledComment>
+    ) : (
+      <StyledComment type={props.type}>
+        <div style={{ display: 'flex', flexDirection: 'column', marginLeft: '34px' }}>
+          <StyledMessage>{props.body}</StyledMessage>
+        </div>
+      </StyledComment>
+    )
   ) : null;
 }

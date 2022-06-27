@@ -5,15 +5,15 @@ import { Profile } from '../constants';
 import { css, styled } from '@stitches/react';
 
 export const avatarStyles = css({
-  width: 24,
-  height: 24,
+  width: 32,
+  height: 32,
   flexShrink: 0,
-  borderRadius: 28,
-  fontSize: 13,
+  borderRadius: 6,
+  fontSize: 16,
   fontWeight: 500,
   textAlign: 'center',
   verticalAlign: 'middle',
-  lineHeight: '24px',
+  lineHeight: '32px',
   cursor: 'default',
   userSelect: 'none',
 });

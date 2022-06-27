@@ -52,8 +52,8 @@ const StyledComposerSendButton = styled(Tooltip.Trigger, {
   width: 26,
   height: 26,
   position: 'absolute',
-  right: 12,
-  top: 12,
+  right: 10,
+  top: 8,
   borderRadius: 25,
   border: 'none',
 
@@ -119,7 +119,7 @@ export function Composer(props: {
   return (
     <div
       style={{
-        minHeight: 48,
+        minHeight: 8 * 4 + 18,
         position: 'relative',
         display: 'flex',
         flex: 0,
@@ -127,9 +127,9 @@ export function Composer(props: {
         borderTop: `1px solid ${sand.sand5}`,
       }}
     >
-      {props.profile ? (
-        <Avatar profile={props.profile} style={{ position: 'absolute', left: 10, top: 13 }} />
-      ) : null}
+      {/* {props.profile ? (
+        <Avatar profile={props.profile} style={{ position: 'absolute', left: 8, top: 9 }} />
+      ) : null} */}
       <LexicalComposer initialConfig={initialConfig}>
         <div
           className="editor-container"
@@ -153,10 +153,11 @@ export function Composer(props: {
   border-radius: 2px;
   width: calc(100% - 68px); // take into account send button
   color: #000;
-  margin-left: 32px;
+  margin-left: 0px;
+  padding: 4px 0px;
   position: relative;
   vertical-align: top;
-  line-height: 20px;
+  line-height: 18px;
   font-weight: 400;
   text-align: left;
 }
@@ -168,7 +169,7 @@ export function Composer(props: {
   position: relative;
   tab-size: 1;
   outline: 0;
-  padding: 15px 10px;
+  padding: 8px 10px;
   caret-color: #444;
 }
 
@@ -177,7 +178,7 @@ export function Composer(props: {
   overflow: hidden;
   position: absolute;
   text-overflow: ellipsis;
-  top: 15px;
+  top: 12px;
   left: 10px;
   font-size: 15px;
   user-select: none;
