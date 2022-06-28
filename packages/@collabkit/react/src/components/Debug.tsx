@@ -1,7 +1,11 @@
 import { useSnapshot } from 'valtio';
-import { store } from '../store';
+import { useApp } from './App';
 
 export function Debug() {
+  const { store } = useApp();
+  if (store == null) {
+    return null;
+  }
   const { appState, uiState } = useSnapshot(store);
   return (
     <code style={{ fontSize: 14 }}>

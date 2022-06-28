@@ -20,7 +20,8 @@ import { createPortal } from 'react-dom';
 import { $createMentionNode, MentionNode } from './MentionNode';
 import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
 import { snapshot } from 'valtio';
-import { store } from '../store';
+import { Store } from '../constants';
+import { useApp } from './App';
 
 type MentionMatch = {
   leadOffset: number;
@@ -103,7 +104,7 @@ const mentionsCache = new Map();
 
 // todo remove this dummy service
 const dummyLookupService = {
-  search(string: string, callback: (results: Array<string> | null) => void): void {
+  search(store: Store, string: string, callback: (results: Array<string> | null) => void): void {
     const { config } = snapshot(store);
 
     setTimeout(() => {
@@ -120,6 +121,11 @@ const dummyLookupService = {
 };
 
 function useMentionLookupService(mentionString: string) {
+  const { store } = useApp();
+  if (!store) {
+    return null;
+  }
+
   const [results, setResults] = useState<Array<string> | null>(null);
 
   useEffect(() => {
@@ -133,7 +139,7 @@ function useMentionLookupService(mentionString: string) {
     }
 
     mentionsCache.set(mentionString, null);
-    dummyLookupService.search(mentionString, (newResults) => {
+    dummyLookupService.search(store, mentionString, (newResults) => {
       mentionsCache.set(mentionString, newResults);
       setResults(newResults);
     });

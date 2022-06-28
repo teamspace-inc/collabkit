@@ -1,8 +1,7 @@
 import { ArrowUp } from 'phosphor-react';
 import * as Tooltip from './Tooltip';
-import { Profile, Target, Workspace } from '../constants';
+import { Profile, Store, Target, Workspace } from '../constants';
 import { styled, theme } from './UIKit';
-import { events } from '../events';
 
 import { EditorState, $getRoot } from 'lexical';
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
@@ -15,9 +14,9 @@ import { useResizeObserver } from '../hooks/useResizeObserver';
 
 import MentionsPlugin from './MentionsPlugin';
 import { MentionNode } from './MentionNode';
-import { store } from '../store';
+import { useApp } from './App';
 
-function onChange(target: Target, editorState: EditorState) {
+function onChange(store: Store, target: Target, editorState: EditorState) {
   if (target.type === 'composer') {
     editorState.read(() => {
       store.workspaces[target.workspaceId].composers[target.threadId].$$body =
@@ -116,6 +115,11 @@ export function Composer(props: {
   style?: React.CSSProperties;
   onHeightChange: (height: number) => void;
 }) {
+  const { events, store } = useApp();
+  if (!events || !store) {
+    return null;
+  }
+
   const editorStateRef = useRef<EditorState>();
 
   const target = {
@@ -238,7 +242,7 @@ export function Composer(props: {
           <OnChangePlugin
             onChange={(editorState) => {
               editorStateRef.current = editorState;
-              onChange(target, editorState);
+              onChange(store, target, editorState);
             }}
           />
           <HistoryPlugin />

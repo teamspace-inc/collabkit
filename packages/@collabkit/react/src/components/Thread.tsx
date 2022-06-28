@@ -3,14 +3,14 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import { IconContext, X, ChatCircle } from 'phosphor-react';
 import React from 'react';
 import { useSnapshot } from 'valtio';
-import { store } from '../store';
-import { actions } from '../actions';
 import { Composer } from './Composer';
 // import { WorkspaceIDContext } from './Workspace';
 // import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
 import * as Tooltip from './Tooltip';
 import { WorkspaceContext, WorkspaceLoader } from './WorkspaceLoader';
 import { CommentList } from './CommentList';
+import { useApp } from './App';
+import { actions } from '../actions';
 
 const StyledThread = styled('div', {
   padding: 0,
@@ -117,6 +117,10 @@ function _Thread(props: {
   type?: 'popout';
   onCloseButtonClick?: (e: React.MouseEvent) => void;
 }) {
+  const { store, events } = useApp();
+  if (events == null || store == null) {
+    return null;
+  }
   const { threadId } = props;
   const { profiles, appState, config, isConnected } = useSnapshot(store);
   const [textareaHeight, setTextareaHeight] = useState(-1);
@@ -131,8 +135,7 @@ function _Thread(props: {
 
   useEffect(() => {
     if (workspace && workspaceId && appState === 'ready') {
-      actions.initThread({ workspaceId, threadId });
-      actions.loadThread({ workspaceId, threadId });
+      actions.toggleThread(store, { workspaceId, threadId });
     }
   }, [workspaceId, props.threadId, appState]);
 

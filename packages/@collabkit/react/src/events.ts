@@ -1,124 +1,253 @@
 import { DataSnapshot } from 'firebase/database';
-import React from 'react';
+import React, { useContext } from 'react';
 import { actions } from './actions';
-import { CommentReactionTarget, CommentTarget, Target } from './constants';
-import { store } from './store';
+import { CommentReactionTarget, CommentTarget, Store, Target } from './constants';
 
 // function closestCommentable(target: EventTarget) {
 //   const el = (target as Element).closest('[data-commentable=true]');
 //   return el;
 // }
 
-export const events = {
-  onConnectionStateChange: async (isConnected: boolean) => {
-    store.isConnected = isConnected;
+export type Events = ReturnType<typeof createEvents>;
 
-    if (!store.config.isSetup) {
-      await actions.authenticate();
+function onKeyDown(store: Store, e: KeyboardEvent) {
+  if (store.focusedId?.type === 'composer') {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      actions.sendMessage(store, store.focusedId.workspaceId, store.focusedId.threadId);
+      e.stopPropagation();
+      e.preventDefault();
     }
+  }
+}
 
-    if (!store.config.hasIdentified) {
-      await actions.saveProfile();
-    }
-  },
+export function createEvents(store: Store) {
+  document.addEventListener('keydown', (e) => onKeyDown(store, e));
 
-  onTimelineEventAdded: (snapshot: DataSnapshot) => {
-    const event = snapshot.val();
-    const eventId = snapshot.key;
-    const workspaceId = snapshot.ref.parent?.ref.parent?.key;
-    const threadId = snapshot.ref.parent?.key;
+  return {
+    onConnectionStateChange: async (isConnected: boolean) => {
+      store.isConnected = isConnected;
 
-    // todo validate data here
-    //
-    if (threadId && workspaceId && eventId) {
-      store.workspaces[workspaceId].timeline[threadId] ||= {};
-      store.workspaces[workspaceId].timeline[threadId][eventId] ||= event;
-    }
-  },
-
-  onSend: (workspaceId: string, threadId: string) => {
-    actions.sendMessage(workspaceId, threadId);
-  },
-
-  // onMouseOver: (e: MouseEvent) => {
-  //   actions.removeSelection();
-  //   if (e.target) {
-  //     const el = closestCommentable(e.target);
-  //     if (el) actions.hover(el);
-  //   }
-  // },
-
-  onFocus: (e: React.FocusEvent, props: { target: Target }) => {
-    actions.focus(props.target);
-  },
-
-  onClick: (e: React.MouseEvent, props: { target: Target }) => {
-    switch (props.target.type) {
-      case 'commentButton': {
-        break;
+      if (!store.config.isSetup) {
+        await actions.authenticate(store);
       }
-    }
-  },
 
-  onEmojiReactionClick: (e: React.MouseEvent, props: { target: CommentReactionTarget }) => {
-    actions.toggleCommentReaction(props);
-  },
-
-  onEmojiReactPointerDown: (e: React.PointerEvent, props: { target: CommentTarget }) => {
-    actions.toggleEmojiReactionPicker(props);
-  },
-
-  onBlur: (e: React.FocusEvent, props: { target: Target }) => {
-    actions.blur(props.target);
-  },
-
-  onKeyDown: (e: KeyboardEvent) => {
-    if (store.focusedId?.type === 'composer') {
-      if (e.key === 'Enter' && !e.shiftKey) {
-        actions.sendMessage(store.focusedId.workspaceId, store.focusedId.threadId);
-        e.stopPropagation();
-        e.preventDefault();
+      if (!store.config.hasIdentified) {
+        await actions.saveProfile(store);
       }
-    }
-  },
+    },
 
-  // onMouseDown: (e: MouseEvent) => {
-  //   switch (store.uiState) {
-  //     case 'selecting': {
-  //       if (!e.target) return;
+    onTimelineEventAdded: (snapshot: DataSnapshot) => {
+      const event = snapshot.val();
+      const eventId = snapshot.key;
+      const workspaceId = snapshot.ref.parent?.ref.parent?.key;
+      const threadId = snapshot.ref.parent?.key;
 
-  //       const el = closestCommentable(e.target);
-  //       if (!el) return;
+      // todo validate data here
+      //
+      if (threadId && workspaceId && eventId) {
+        store.workspaces[workspaceId].timeline[threadId] ||= {};
+        store.workspaces[workspaceId].timeline[threadId][eventId] ||= event;
+      }
+    },
 
-  //       const id = el.getAttribute('data-commentable-id');
-  //       if (!id) return;
+    onSend: (workspaceId: string, threadId: string) => {
+      actions.sendMessage(store, workspaceId, threadId);
+    },
 
-  //       actions.startCommenting(id);
-  //       break;
-  //     }
-  //     case 'commenting': {
-  //       break;
-  //     }
-  //     case 'idle': {
-  //       break;
-  //     }
-  //     case 'composing': {
-  //       break;
-  //     }
-  //   }
-  // },
+    // onMouseOver: (e: MouseEvent) => {
+    //   actions.removeSelection();
+    //   if (e.target) {
+    //     const el = closestCommentable(e.target);
+    //     if (el) actions.hover(el);
+    //   }
+    // },
 
-  // onKeyDown: (e: KeyboardEvent) => {
-  //   if (e.key === 'Escape') {
-  //     actions.cancel();
-  //   }
-  //   switch (store.uiState) {
-  //     case 'composing': {
-  //       if (store.selectedId) {
-  //         store.composers[store.selectedId.threadId].body += e.key;
-  //       }
-  //       break;
-  //     }
-  //   }
-  // },
-};
+    onFocus: (e: React.FocusEvent, props: { target: Target }) => {
+      actions.focus(store, props.target);
+    },
+
+    onClick: (e: React.MouseEvent, props: { target: Target }) => {
+      switch (props.target.type) {
+        case 'commentButton': {
+          break;
+        }
+      }
+    },
+
+    onEmojiReactionClick: (e: React.MouseEvent, props: { target: CommentReactionTarget }) => {
+      actions.toggleCommentReaction(store, props);
+    },
+
+    onEmojiReactPointerDown: (e: React.PointerEvent, props: { target: CommentTarget }) => {
+      actions.toggleEmojiReactionPicker(store, props);
+    },
+
+    onBlur: (e: React.FocusEvent, props: { target: Target }) => {
+      actions.blur(store, props.target);
+    },
+
+    onKeyDown: (e: KeyboardEvent) => {
+      if (store.focusedId?.type === 'composer') {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          actions.sendMessage(store, store.focusedId.workspaceId, store.focusedId.threadId);
+          e.stopPropagation();
+          e.preventDefault();
+        }
+      }
+    },
+
+    // onMouseDown: (e: MouseEvent) => {
+    //   switch (store.uiState) {
+    //     case 'selecting': {
+    //       if (!e.target) return;
+
+    //       const el = closestCommentable(e.target);
+    //       if (!el) return;
+
+    //       const id = el.getAttribute('data-commentable-id');
+    //       if (!id) return;
+
+    //       actions.startCommenting(id);
+    //       break;
+    //     }
+    //     case 'commenting': {
+    //       break;
+    //     }
+    //     case 'idle': {
+    //       break;
+    //     }
+    //     case 'composing': {
+    //       break;
+    //     }
+    //   }
+    // },
+
+    // onKeyDown: (e: KeyboardEvent) => {
+    //   if (e.key === 'Escape') {
+    //     actions.cancel();
+    //   }
+    //   switch (store.uiState) {
+    //     case 'composing': {
+    //       if (store.selectedId) {
+    //         store.composers[store.selectedId.threadId].body += e.key;
+    //       }
+    //       break;
+    //     }
+    //   }
+    // },
+  };
+}
+
+// export const events = {
+//   onConnectionStateChange: async (isConnected: boolean) => {
+//     store.isConnected = isConnected;
+
+//     if (!store.config.isSetup) {
+//       await actions.authenticate();
+//     }
+
+//     if (!store.config.hasIdentified) {
+//       await actions.saveProfile();
+//     }
+//   },
+
+//   onTimelineEventAdded: (snapshot: DataSnapshot) => {
+//     const event = snapshot.val();
+//     const eventId = snapshot.key;
+//     const workspaceId = snapshot.ref.parent?.ref.parent?.key;
+//     const threadId = snapshot.ref.parent?.key;
+
+//     // todo validate data here
+//     //
+//     if (threadId && workspaceId && eventId) {
+//       store.workspaces[workspaceId].timeline[threadId] ||= {};
+//       store.workspaces[workspaceId].timeline[threadId][eventId] ||= event;
+//     }
+//   },
+
+//   onSend: (workspaceId: string, threadId: string) => {
+//     actions.sendMessage(workspaceId, threadId);
+//   },
+
+//   // onMouseOver: (e: MouseEvent) => {
+//   //   actions.removeSelection();
+//   //   if (e.target) {
+//   //     const el = closestCommentable(e.target);
+//   //     if (el) actions.hover(el);
+//   //   }
+//   // },
+
+//   onFocus: (e: React.FocusEvent, props: { target: Target }) => {
+//     actions.focus(props.target);
+//   },
+
+//   onClick: (e: React.MouseEvent, props: { target: Target }) => {
+//     switch (props.target.type) {
+//       case 'commentButton': {
+//         break;
+//       }
+//     }
+//   },
+
+//   onEmojiReactionClick: (e: React.MouseEvent, props: { target: CommentReactionTarget }) => {
+//     actions.toggleCommentReaction(props);
+//   },
+
+//   onEmojiReactPointerDown: (e: React.PointerEvent, props: { target: CommentTarget }) => {
+//     actions.toggleEmojiReactionPicker(props);
+//   },
+
+//   onBlur: (e: React.FocusEvent, props: { target: Target }) => {
+//     actions.blur(props.target);
+//   },
+
+//   onKeyDown: (e: KeyboardEvent) => {
+//     if (store.focusedId?.type === 'composer') {
+//       if (e.key === 'Enter' && !e.shiftKey) {
+//         actions.sendMessage(store.focusedId.workspaceId, store.focusedId.threadId);
+//         e.stopPropagation();
+//         e.preventDefault();
+//       }
+//     }
+//   },
+
+//   // onMouseDown: (e: MouseEvent) => {
+//   //   switch (store.uiState) {
+//   //     case 'selecting': {
+//   //       if (!e.target) return;
+
+//   //       const el = closestCommentable(e.target);
+//   //       if (!el) return;
+
+//   //       const id = el.getAttribute('data-commentable-id');
+//   //       if (!id) return;
+
+//   //       actions.startCommenting(id);
+//   //       break;
+//   //     }
+//   //     case 'commenting': {
+//   //       break;
+//   //     }
+//   //     case 'idle': {
+//   //       break;
+//   //     }
+//   //     case 'composing': {
+//   //       break;
+//   //     }
+//   //   }
+//   // },
+
+//   // onKeyDown: (e: KeyboardEvent) => {
+//   //   if (e.key === 'Escape') {
+//   //     actions.cancel();
+//   //   }
+//   //   switch (store.uiState) {
+//   //     case 'composing': {
+//   //       if (store.selectedId) {
+//   //         store.composers[store.selectedId.threadId].body += e.key;
+//   //       }
+//   //       break;
+//   //     }
+//   //   }
+//   // },
+// };
