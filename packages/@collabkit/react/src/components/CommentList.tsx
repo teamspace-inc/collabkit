@@ -81,8 +81,8 @@ export function CommentList(props: {
     messageEvents.length,
     props.composerHeight,
     // did react to last message
-    reactionEvents[reactionEvents.length - 1].parentId ===
-      messageEvents[messageEvents.length - 1].id,
+    reactionEvents[reactionEvents.length - 1]?.parentId ===
+      messageEvents[messageEvents.length - 1]?.id,
   ]);
 
   const handleScroll = useCallback((e: React.SyntheticEvent) => {
@@ -123,7 +123,10 @@ export function CommentList(props: {
               }
 
               return (
-                <Target target={{ type: 'comment', eventId: event.id, workspaceId, threadId }}>
+                <Target
+                  key={event.id}
+                  target={{ type: 'comment', eventId: event.id, workspaceId, threadId }}
+                >
                   <Comment
                     reactions={reactions[event.id]}
                     threadType={props.type ?? 'inline'}

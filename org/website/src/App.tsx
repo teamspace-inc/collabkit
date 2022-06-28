@@ -84,8 +84,13 @@ store.subs['user'] = onAuthStateChanged(auth, (user) => {
   }
 });
 
+function Foo() {
+  return <div>Foo</div>;
+}
+
 function App() {
   // const { user } = useSnapshot(store);
+  const HOC = CollabKit.withComments(Foo, { threadId: 'foo' });
 
   return (
     <>
@@ -117,6 +122,7 @@ function App() {
         {(params) => (
           <AppLoader>
             <CollabKit.Workspace workspaceId={params.workspace_id}>
+              <HOC />
               <Popout>
                 <CollabKit.Button threadId={params.thread_id} defaultOpen={true} />
               </Popout>
