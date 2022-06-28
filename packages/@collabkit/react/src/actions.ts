@@ -328,6 +328,8 @@ export const actions = {
           ...event,
           createdAt: +Date.now(),
         };
+
+        store.reactingId = null;
       } else {
         console.error('failed to toggle emoji reaction');
         // handle failure here

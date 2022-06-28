@@ -12,7 +12,7 @@ import { targetEqual } from '../utils/targetEqual';
 
 export const StyledComment = styled('div', {
   display: 'flex',
-  maxWidth: 'calc(100% - 40px)',
+  maxWidth: 'calc(100% - 46px)',
   variants: {
     threadType: {
       inline: {},
@@ -200,13 +200,13 @@ const StyledReactions = styled('div', {
   background: 'white',
   display: 'inline-block',
   position: 'absolute',
-  left: 10,
-  top: 25,
+  left: 8,
+  bottom: -18,
   fontSize: 16,
-  borderRadius: 620,
+  borderRadius: 62,
   width: 'auto',
-  padding: '1px 6px',
-  boxShadow: `0px 1px 0px rgba(0,0,0,0.1), 0px 1px 5px rgba(0,0,0,0.1)`,
+  padding: '1px 5px',
+  boxShadow: `0px 1px 0px rgba(0,0,0,0.075), 0px 1px 3px rgba(0,0,0,0.05)`,
   flex: 0,
 });
 

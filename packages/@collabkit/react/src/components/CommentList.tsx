@@ -31,48 +31,59 @@ export function CommentList(props: {
 
   const eventIds = Object.keys(timeline);
 
-  const reactions = eventIds
-    .map((id) => timeline[id])
-    .filter((event) => event.type === 'reaction')
-    .reduce<{ [parentId: string]: { [createdById: string]: Event } }>((reactions, event, i) => {
+  const events: WithID<Event>[] = eventIds.map((eventId) => ({
+    ...timeline[eventId],
+    id: eventId,
+  }));
+
+  const reactionEvents = events.filter((event) => event.type === 'reaction');
+
+  const messageEvents = events.filter((event) => event.type === 'message');
+
+  const reactions = reactionEvents.reduce<{ [parentId: string]: { [createdById: string]: Event } }>(
+    (reactions, event, i) => {
       if (!event.parentId) {
         return reactions;
       }
       reactions[event.parentId] ||= {};
       reactions[event.parentId][event.createdById] = event;
       return reactions;
-    }, {});
+    },
+    {}
+  );
 
-  const groupedList = eventIds
-    .map((id) => timeline[id])
-    .filter((event) => event.type === 'message')
-    .reduce<WithID<Event>[][]>((groupedEvents, event, i) => {
-      const prevEvent = timeline[eventIds[i - 1]];
-      const eventId: string = eventIds[i];
-      // since idiomatic use of firebase does not include the eventId inside
-      // the event, we need to add it here to make passing the event around
-      // in React easier.
-      const eventWithId = { ...event, id: eventId };
-      if (prevEvent) {
-        if (prevEvent.createdById === event.createdById) {
-          if (typeof prevEvent.createdAt === 'number' && typeof event.createdAt === 'number') {
-            // 5 minutes before last message and same person results
-            // in a grouped message.
-            if (prevEvent.createdAt + 1000 * 60 * 5 > event.createdAt) {
-              if (groupedEvents[groupedEvents.length - 1]) {
-                groupedEvents[groupedEvents.length - 1].push(eventWithId);
-                return groupedEvents;
-              }
+  const groupedList = messageEvents.reduce<WithID<Event>[][]>((groupedEvents, event, i) => {
+    const prevEvent = timeline[messageEvents.map((e) => e.id)[i - 1]];
+    // since idiomatic use of firebase does not include the eventId inside
+    // the event, we need to add it here to make passing the event around
+    // in React easier.
+    if (prevEvent) {
+      if (prevEvent.createdById === event.createdById) {
+        if (typeof prevEvent.createdAt === 'number' && typeof event.createdAt === 'number') {
+          // 5 minutes before last message and same person results
+          // in a grouped message.
+          if (prevEvent.createdAt + 1000 * 60 * 5 > event.createdAt) {
+            if (groupedEvents[groupedEvents.length - 1]) {
+              groupedEvents[groupedEvents.length - 1].push(event);
+              return groupedEvents;
             }
           }
         }
       }
-      return groupedEvents.concat([[eventWithId]]);
-    }, []);
+    }
+    return groupedEvents.concat([[event]]);
+  }, []);
 
+  // todo this needs reworking anyway to show a 'new messages' button
   useEffect(() => {
     scrollRef.current?.scrollTo(0, scrollRef.current?.scrollHeight);
-  }, [timeline && Object.keys(timeline).length, props.composerHeight]);
+  }, [
+    messageEvents.length,
+    props.composerHeight,
+    // did react to last message
+    reactionEvents[reactionEvents.length - 1].parentId ===
+      messageEvents[messageEvents.length - 1].id,
+  ]);
 
   const handleScroll = useCallback((e: React.SyntheticEvent) => {
     // todo use this to load more comments when scrolling to top / near the top

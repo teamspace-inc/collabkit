@@ -164,7 +164,7 @@ function _Thread(props: {
               </IconButton>
             </StyledThreadHeader>
           )}
-          {!isEmpty && timeline && (
+          {!isEmpty && timeline && workspaceId && (
             <CommentList
               type={props.type}
               profiles={profiles}
