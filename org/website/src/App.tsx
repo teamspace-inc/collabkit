@@ -90,7 +90,7 @@ function Foo() {
 
 function App() {
   // const { user } = useSnapshot(store);
-  const HOC = CollabKit.withComments(Foo, { threadId: 'foo' });
+  // const HOC = CollabKit.withComments(Foo, { threadId: 'foo' });
 
   return (
     <>
@@ -122,7 +122,7 @@ function App() {
         {(params) => (
           <AppLoader>
             <CollabKit.Workspace workspaceId={params.workspace_id}>
-              <HOC />
+              {/* <HOC /> */}
               <Popout>
                 <CollabKit.Button threadId={params.thread_id} defaultOpen={true} />
               </Popout>
