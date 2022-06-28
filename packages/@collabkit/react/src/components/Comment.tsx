@@ -249,7 +249,7 @@ export function Comment(props: {
   const emojiReactionPicker = targetEqual(reactingId, target) ? (
     <ReactionPicker>
       {emojiReacts.map((emoji) => (
-        <Target target={{ type: 'commentReaction', comment: target, emoji }}>
+        <Target key={emoji} target={{ type: 'commentReaction', comment: target, emoji }}>
           <EmojiReaction emoji={emoji} />
         </Target>
       ))}

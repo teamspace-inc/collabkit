@@ -1,7 +1,7 @@
 import { CollabKit } from '@collabkit/react';
 import { useEffect } from 'react';
 import { tomato, blue } from '@radix-ui/colors';
-import { Center, Grid } from './Dashboard';
+import { Center, Grid } from './UIKit';
 
 export function Preview(props: { appId: string; apiKey: string; mode: 'SECURED' | 'UNSECURED' }) {
   useEffect(() => {
