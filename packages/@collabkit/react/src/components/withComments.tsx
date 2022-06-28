@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { useSnapshot } from 'valtio';
-import { store } from '../store';
+import { useApp } from './App';
 import { styled } from './UIKit';
 import { WorkspaceIDContext } from './Workspace';
 import { WorkspaceContext } from './WorkspaceLoader';
@@ -30,6 +30,10 @@ export function withComments<T>(
   commentProps: { threadId: string }
 ) {
   return (props: T) => {
+    const { store } = useApp();
+    if (!store) {
+      return null;
+    }
     const { workspaceId } = useContext(WorkspaceIDContext);
     const { workspaces } = useSnapshot(store);
     const workspace = workspaceId ? workspaces[workspaceId] : null;

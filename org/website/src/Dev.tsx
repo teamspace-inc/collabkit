@@ -1,14 +1,18 @@
 import React, { useEffect } from 'react';
 import { CollabKit } from '@collabkit/react';
 import { App } from './App';
+import { useApp } from '@collabkit/react/src/components/App';
 
-export function Dev(props: { app: App; children: React.ReactNode }) {
+function Boot(props: { app: App; children: React.ReactNode }) {
+  const { store, events } = useApp();
   const { app } = props;
-
   useEffect(() => {
+    if (store == null || events == null) {
+      return;
+    }
     const token = Object.keys(app.keys)[0];
-    CollabKit.setup({ appId: app.appId, apiKey: token, mode: 'UNSECURED' });
-    CollabKit.identify({
+    CollabKit.setup(store, events, { appId: app.appId, apiKey: token, mode: 'UNSECURED' });
+    CollabKit.identify(store, {
       workspaceId: 'acme',
       userId: 'user1',
       workspaceName: 'ACME',
@@ -16,7 +20,7 @@ export function Dev(props: { app: App; children: React.ReactNode }) {
       email: 'namit@useteamspace.com',
       avatar: 'namit.pic.jpg',
     });
-    CollabKit.mentions([
+    CollabKit.mentions(store, [
       {
         name: 'Tom',
         email: 'tom@useteamspace.com',
@@ -39,7 +43,12 @@ export function Dev(props: { app: App; children: React.ReactNode }) {
         userId: 'user3',
       },
     ]);
-  }, [app]);
+  }, [app, store]);
+  return <>{props.children}</>;
+}
+
+export function Dev(props: { app: App; children: React.ReactNode }) {
+  const { app } = props;
 
   if (app == null) {
     return null;
@@ -47,7 +56,9 @@ export function Dev(props: { app: App; children: React.ReactNode }) {
 
   return (
     <div style={{ height: '100%', width: '100%' }}>
-      <CollabKit.App token={Object.keys(app.keys)[0]}>{props.children}</CollabKit.App>
+      <CollabKit.App token={Object.keys(app.keys)[0]}>
+        {<Boot app={app}>{props.children}</Boot>}
+      </CollabKit.App>
     </div>
   );
 }

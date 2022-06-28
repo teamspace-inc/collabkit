@@ -3,12 +3,11 @@ import { Avatar } from './Avatar';
 import { styled, theme } from './UIKit';
 import { Smiley } from 'phosphor-react';
 import { useContext, useState } from 'react';
-import { events } from '../events';
 import { Target, TargetContext } from './Target';
 import { useSnapshot } from 'valtio';
-import { store } from '../store';
 import { timeDifference } from '../utils/timeDifference';
 import { targetEqual } from '../utils/targetEqual';
+import { useApp } from './App';
 
 export const StyledComment = styled('div', {
   display: 'flex',
@@ -140,6 +139,10 @@ const StyledEmojiReaction = styled('div', {
 });
 
 function EmojiReaction(props: { emoji: string }) {
+  const { events } = useApp();
+  if (!events) {
+    return null;
+  }
   const { target } = useContext(TargetContext);
   if (target == null || target.type !== 'commentReaction') {
     return null;
@@ -153,6 +156,10 @@ function EmojiReaction(props: { emoji: string }) {
 }
 
 function AddReactionButton() {
+  const { events } = useApp();
+  if (!events) {
+    return null;
+  }
   const { target } = useContext(TargetContext);
   if (target == null || target.type !== 'comment') {
     return null;
@@ -208,6 +215,7 @@ const StyledReactions = styled('div', {
   padding: '1px 5px',
   boxShadow: `0px 1px 0px rgba(0,0,0,0.075), 0px 1px 3px rgba(0,0,0,0.05)`,
   flex: 0,
+  cursor: 'pointer',
 });
 
 // const StyledReactionProfileName = styled('span', {
@@ -216,6 +224,10 @@ const StyledReactions = styled('div', {
 // });
 
 function Reactions(props: { reactions: { [createdById: string]: Event } }) {
+  const { store } = useApp();
+  if (!store) {
+    return null;
+  }
   const { profiles } = useSnapshot(store);
 
   return props.reactions ? (
@@ -238,6 +250,10 @@ export function Comment(props: {
   type: 'default' | 'inline' | 'inline-start' | 'inline-end';
   threadType: 'inline' | 'popout';
 }) {
+  const { store } = useApp();
+  if (!store) {
+    return null;
+  }
   const [isHovering, setIsHovering] = useState(false);
   const { reactingId } = useSnapshot(store);
   const { target } = useContext(TargetContext);

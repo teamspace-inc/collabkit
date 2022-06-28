@@ -1,4 +1,3 @@
-import { events } from './events';
 import {
   get,
   set,
@@ -9,10 +8,10 @@ import {
   serverTimestamp,
   onValue,
   update,
+  DataSnapshot,
 } from 'firebase/database';
 
 import { getAuth, signInWithCustomToken } from 'firebase/auth';
-import { store } from './store';
 import {
   CollabKitFirebaseApp,
   CommentReactionTarget,
@@ -21,14 +20,16 @@ import {
   IdentifyProps,
   MentionProps,
   SetupProps,
+  Store,
   Target,
 } from './constants';
 import { Color, getRandomColor } from './colors';
 import { $createTextNode, $getRoot, createEditor } from 'lexical';
 import { createEditorConfig } from './components/Composer';
 import { ref as valtioRef } from 'valtio';
+import { createEvents, Events } from './events';
 
-function timelineRef(workspaceId: string, threadId: string) {
+function timelineRef(store: Store, workspaceId: string, threadId: string) {
   if (!store.config.setup?.appId) {
     throw new Error('no appId');
   }
@@ -73,6 +74,66 @@ type FunctionResponse<T> =
       error: string;
     };
 
+function monitorConnection(store: Store, events: ReturnType<typeof createEvents>) {
+  if (store.subs['connectionState']) {
+    return;
+  }
+  const connectedRef = ref(getDatabase(CollabKitFirebaseApp), '.info/connected');
+  store.subs['connectionState'] = onValue(connectedRef, (snapshot) => {
+    if (!store.isConnected && snapshot.val()) {
+      events.onConnectionStateChange(snapshot.val());
+    }
+  });
+}
+
+function initThread(store: Store, props: { workspaceId: string; threadId: string }) {
+  store.workspaces[props.workspaceId] ||= {
+    name: store.config.identify?.workspaceName || '',
+    composers: {
+      [props.threadId]: {
+        editor: valtioRef(createEditor(createEditorConfig())),
+        $$body: '',
+      },
+    },
+    timeline: {},
+  };
+
+  store.workspaces[props.workspaceId].composers[props.threadId] ||= {
+    editor: valtioRef(createEditor(createEditorConfig())),
+    $$body: '',
+  };
+}
+
+async function loadThread(store: Store, props: { workspaceId: string; threadId: string }) {
+  const timeline = timelineRef(store, props.workspaceId, props.threadId);
+
+  if (store.subs[timeline.toString()]) {
+    return;
+  }
+
+  try {
+    store.subs[timeline.toString()] = onChildAdded(timeline, (snapshot) =>
+      onTimelineEventAdded(store, snapshot)
+    );
+  } catch (e) {
+    console.error('onChildAdded', e);
+  }
+}
+
+function onTimelineEventAdded(store: Store, snapshot: DataSnapshot) {
+  const event = snapshot.val();
+  const eventId = snapshot.key;
+  const workspaceId = snapshot.ref.parent?.ref.parent?.key;
+  const threadId = snapshot.ref.parent?.key;
+
+  // todo validate data here
+  //
+  if (threadId && workspaceId && eventId) {
+    store.workspaces[workspaceId].timeline[threadId] ||= {};
+    store.workspaces[workspaceId].timeline[threadId][eventId] ||= event;
+  }
+}
+
 // todo make this work in secured mode
 async function generateToken(appId: string, apiKey: string, mode: 'SECURED' | 'UNSECURED') {
   try {
@@ -95,14 +156,13 @@ async function generateToken(appId: string, apiKey: string, mode: 'SECURED' | 'U
 }
 
 export const actions = {
-  setup: async (props: SetupProps) => {
+  setup: async (store: Store, events: Events, props: SetupProps) => {
     store.appState = 'config';
     store.config.setup = props;
-    actions.monitorConnection();
-    document.addEventListener('keydown', events.onKeyDown);
+    monitorConnection(store, events);
   },
 
-  identify: async (props: IdentifyProps) => {
+  identify: async (store: Store, props: IdentifyProps) => {
     store.config.identify = props;
     store.workspaces[props.workspaceId] ||= {
       name: store.config.identify.workspaceName || '',
@@ -111,60 +171,16 @@ export const actions = {
     };
   },
 
-  mentions: (props: MentionProps) => {
+  mentions: (store: Store, props: MentionProps) => {
     store.config.mentions = props;
   },
 
-  initThread: (props: { workspaceId: string; threadId: string }) => {
-    store.workspaces[props.workspaceId] ||= {
-      name: store.config.identify?.workspaceName || '',
-      composers: {
-        [props.threadId]: {
-          editor: valtioRef(createEditor(createEditorConfig())),
-          $$body: '',
-        },
-      },
-      timeline: {},
-    };
-
-    store.workspaces[props.workspaceId].composers[props.threadId] ||= {
-      editor: valtioRef(createEditor(createEditorConfig())),
-      $$body: '',
-    };
+  toggleThread: (store: Store, props: { workspaceId: string; threadId: string }) => {
+    initThread(store, props);
+    loadThread(store, props);
   },
 
-  loadThread: async (props: { workspaceId: string; threadId: string }) => {
-    const timeline = timelineRef(props.workspaceId, props.threadId);
-
-    if (store.subs[timeline.toString()]) {
-      return;
-    }
-
-    try {
-      store.subs[timeline.toString()] = onChildAdded(timeline, events.onTimelineEventAdded);
-    } catch (e) {
-      console.error('onChildAdded', e);
-    }
-  },
-
-  toggleThread: (props: { workspaceId: string; threadId: string }) => {
-    actions.initThread(props);
-    actions.loadThread(props);
-  },
-
-  monitorConnection: () => {
-    if (store.subs['connectionState']) {
-      return;
-    }
-    const connectedRef = ref(getDatabase(CollabKitFirebaseApp), '.info/connected');
-    store.subs['connectionState'] = onValue(connectedRef, (snapshot) => {
-      if (!store.isConnected && snapshot.val()) {
-        events.onConnectionStateChange(snapshot.val());
-      }
-    });
-  },
-
-  saveProfile: async () => {
+  saveProfile: async (store: Store) => {
     const { config } = store;
 
     if (!config.setup) {
@@ -230,7 +246,7 @@ export const actions = {
     }
   },
 
-  authenticate: async () => {
+  authenticate: async (store: Store) => {
     const { config } = store;
     if (!config.setup) {
       console.warn('Did you forget to call `CollabKit.setup`?');
@@ -285,19 +301,19 @@ export const actions = {
     }
   },
 
-  focus: (target: Target) => {
+  focus: (store: Store, target: Target) => {
     store.focusedId = target;
   },
 
-  blur: (target: Target) => {
+  blur: (store: Store, target: Target) => {
     store.focusedId = null;
   },
 
-  unloadThread: (props: { workspaceId: string; threadId: string }) => {
-    store.subs[timelineRef(props.workspaceId, props.threadId).toString()]?.();
+  unloadThread: (store: Store, props: { workspaceId: string; threadId: string }) => {
+    store.subs[timelineRef(store, props.workspaceId, props.threadId).toString()]?.();
   },
 
-  toggleCommentReaction: async (props: { target: CommentReactionTarget }) => {
+  toggleCommentReaction: async (store: Store, props: { target: CommentReactionTarget }) => {
     if (!store.config.identify) {
       console.warn('[CollabKit] Did you forget to call CollabKit.identify?');
       return;
@@ -320,7 +336,7 @@ export const actions = {
         parentId: eventId,
       };
 
-      const eventRef = await push(timelineRef(workspaceId, threadId), event);
+      const eventRef = await push(timelineRef(store, workspaceId, threadId), event);
 
       if (eventRef.key) {
         store.workspaces[workspaceId].timeline[threadId] ||= {};
@@ -340,11 +356,11 @@ export const actions = {
     }
   },
 
-  toggleEmojiReactionPicker: (props: { target: CommentTarget }) => {
+  toggleEmojiReactionPicker: (store: Store, props: { target: CommentTarget }) => {
     store.reactingId = props.target;
   },
 
-  closeEmojiReactionPicker: () => {
+  closeEmojiReactionPicker: (store: Store) => {
     store.reactingId = null;
   },
 
@@ -385,7 +401,7 @@ export const actions = {
   //   document.removeEventListener('keydown', events.onKeyDown);
   // },
 
-  sendMessage: async (workspaceId: string, threadId: string) => {
+  sendMessage: async (store: Store, workspaceId: string, threadId: string) => {
     if (!store.config.identify) {
       console.warn('[CollabKit] Did you forget to call CollabKit.identify?');
       return;
@@ -415,7 +431,7 @@ export const actions = {
         createdAt: serverTimestamp(),
         createdById: store.config.identify.userId,
       };
-      const eventRef = await push(timelineRef(workspaceId, threadId), event);
+      const eventRef = await push(timelineRef(store, workspaceId, threadId), event);
       if (eventRef.key) {
         store.workspaces[workspaceId].timeline[threadId] ||= {};
         store.workspaces[workspaceId].timeline[threadId][eventRef.key] = {

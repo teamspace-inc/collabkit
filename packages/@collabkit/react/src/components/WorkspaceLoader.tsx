@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useSnapshot } from 'valtio';
 import { Workspace } from '../constants';
-import { store } from '../store';
+import { useApp } from './App';
 import { WorkspaceIDContext } from './Workspace';
 
 export const WorkspaceContext = React.createContext<{
@@ -13,6 +13,10 @@ export const WorkspaceContext = React.createContext<{
 });
 
 export function WorkspaceLoader(props: { children: React.ReactNode }) {
+  const { store } = useApp();
+  if (!store) {
+    return null;
+  }
   const { workspaceId } = useContext(WorkspaceIDContext);
   const { workspaces } = useSnapshot(store);
   const workspace = workspaceId ? (workspaces[workspaceId] as Workspace) : null;
