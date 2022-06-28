@@ -7,7 +7,7 @@ export function Popout(props: { children: React.ReactNode }) {
       <div
         style={{
           position: 'fixed',
-          left: '66vh',
+          left: '28vw',
           top: '20vh',
           width: '300px',
           height: '600px',

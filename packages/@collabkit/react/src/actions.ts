@@ -15,6 +15,8 @@ import { getAuth, signInWithCustomToken } from 'firebase/auth';
 import { store } from './store';
 import {
   CollabKitFirebaseApp,
+  CommentReactionTarget,
+  CommentTarget,
   Event,
   IdentifyProps,
   MentionProps,
@@ -295,6 +297,55 @@ export const actions = {
     store.subs[timelineRef(props.workspaceId, props.threadId).toString()]?.();
   },
 
+  toggleCommentReaction: async (props: { target: CommentReactionTarget }) => {
+    if (!store.config.identify) {
+      console.warn('[CollabKit] Did you forget to call CollabKit.identify?');
+      return;
+    }
+
+    const { emoji } = props.target;
+    const { workspaceId, threadId, eventId } = props.target.comment;
+
+    console.log('reacting with emoji', emoji);
+
+    // to remove an existing emoji reaction set
+    // body to empty!
+
+    try {
+      const event: Event = {
+        type: 'reaction',
+        body: emoji,
+        createdAt: serverTimestamp(),
+        createdById: store.config.identify.userId,
+        parentId: eventId,
+      };
+
+      const eventRef = await push(timelineRef(workspaceId, threadId), event);
+
+      if (eventRef.key) {
+        store.workspaces[workspaceId].timeline[threadId] ||= {};
+        store.workspaces[workspaceId].timeline[threadId][eventRef.key] = {
+          ...event,
+          createdAt: +Date.now(),
+        };
+      } else {
+        console.error('failed to toggle emoji reaction');
+        // handle failure here
+      }
+    } catch (e) {
+      console.error(e);
+      // handle failure here
+    }
+  },
+
+  toggleEmojiReactionPicker: (props: { target: CommentTarget }) => {
+    store.reactingId = props.target;
+  },
+
+  closeEmojiReactionPicker: () => {
+    store.reactingId = null;
+  },
+
   // removeSelection: () => {
   //   document.querySelectorAll('[data-commentable]').forEach((el) => {
   //     if (el.classList.contains('commentable-hover')) {
@@ -350,6 +401,10 @@ export const actions = {
     editor.update(() => $getRoot().getChildren()[0].replace($createTextNode('')));
 
     console.log('sending message', body);
+
+    // close emoji picker on send
+    store.reactingId = null;
+
     // todo optimistic send
     try {
       const event: Event = {

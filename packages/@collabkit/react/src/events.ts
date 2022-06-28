@@ -1,7 +1,7 @@
 import { DataSnapshot } from 'firebase/database';
 import React from 'react';
 import { actions } from './actions';
-import { Target } from './constants';
+import { CommentReactionTarget, CommentTarget, Target } from './constants';
 import { store } from './store';
 
 // function closestCommentable(target: EventTarget) {
@@ -58,6 +58,14 @@ export const events = {
         break;
       }
     }
+  },
+
+  onEmojiReactionClick: (e: React.MouseEvent, props: { target: CommentReactionTarget }) => {
+    actions.toggleCommentReaction(props);
+  },
+
+  onEmojiReactPointerDown: (e: React.PointerEvent, props: { target: CommentTarget }) => {
+    actions.toggleEmojiReactionPicker(props);
   },
 
   onBlur: (e: React.FocusEvent, props: { target: Target }) => {

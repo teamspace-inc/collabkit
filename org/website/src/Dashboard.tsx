@@ -1,9 +1,6 @@
-import { styled } from '@stitches/react';
-import { mint } from '@radix-ui/colors';
 import { CurrentUser } from './CurrentUser';
-import { Hero } from './Hero';
 import { AppList } from './Apps';
-
+import { HStack, Spacer } from './UIKit';
 
 function HowItWorks() {
   return <div>How It Works</div>;
@@ -48,7 +45,7 @@ export function Dashboard() {
         </HStack>
       </div>
 
-      <Hero />
+      {/* <Hero /> */}
       <AppList />
       {/* <HowItWorks /> */}
       {/* <DetailedWhy /> */}

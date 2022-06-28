@@ -15,6 +15,7 @@ export const store = proxy<Store>({
   },
   focusedId: null,
   selectedId: null,
+  reactingId: null,
   workspaces: {},
   profiles: {},
   subs: {},

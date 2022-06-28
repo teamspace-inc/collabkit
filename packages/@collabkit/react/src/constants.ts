@@ -15,11 +15,28 @@ const firebaseConfig = {
 
 export const CollabKitFirebaseApp = initializeApp(firebaseConfig, 'CollabKit');
 
-export type Target = ComposerTarget | ThreadTarget | CommentButtonTarget;
+export type Target =
+  | ComposerTarget
+  | ThreadTarget
+  | CommentButtonTarget
+  | CommentTarget
+  | CommentReactionTarget;
 
 export type ComposerTarget = { type: 'composer'; threadId: string; workspaceId: string };
 export type ThreadTarget = { type: 'thread'; threadId: string; workspaceId: string };
 export type CommentButtonTarget = { type: 'commentButton'; threadId: string; workspaceId: string };
+export type CommentReactionTarget = {
+  type: 'commentReaction';
+  emoji: string;
+  comment: CommentTarget;
+};
+
+export type CommentTarget = {
+  type: 'comment';
+  threadId: string;
+  workspaceId: string;
+  eventId: string;
+};
 
 export interface Event {
   type: 'message' | 'reaction';
@@ -28,6 +45,10 @@ export interface Event {
   createdById: string;
   parentId?: string;
 }
+
+export type WithID<T> = T & {
+  id: string;
+};
 
 export type IdentifyProps = {
   workspaceId: string;
@@ -93,6 +114,7 @@ export interface Store {
     [workspaceId: string]: Workspace;
   };
   appState: 'blank' | 'config' | 'ready';
-  uiState: 'idle' | 'commenting' | 'selecting' | 'composing';
+  uiState: 'idle' | 'reacting';
+  reactingId: null | Target;
   subs: { [subId: string]: Unsubscribe };
 }

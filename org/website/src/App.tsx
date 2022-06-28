@@ -95,6 +95,9 @@ function App() {
       <Route path="/">
         <Home></Home>
       </Route>
+      <Route path="/signIn">
+        <SignIn />
+      </Route>
       {/* <Route path="/">{user !== null ? <Dashboard /> : <SignIn />}</Route> */}
       <Route path="/signedIn">
         <SignedIn />
