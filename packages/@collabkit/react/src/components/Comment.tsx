@@ -232,8 +232,8 @@ function Reactions(props: { reactions: { [createdById: string]: Event } }) {
 
   return props.reactions ? (
     <StyledReactions>
-      {Object.keys(props.reactions).map((createdById) => (
-        <div>
+      {Object.keys(props.reactions).map((createdById, i) => (
+        <div key={i}>
           {props.reactions[createdById].body}{' '}
           {/* <StyledReactionProfileName>{profiles[createdById].name}</StyledReactionProfileName> */}
         </div>
