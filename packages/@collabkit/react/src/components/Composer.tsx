@@ -18,10 +18,12 @@ import { MentionNode } from './MentionNode';
 import { store } from '../store';
 
 function onChange(target: Target, editorState: EditorState) {
-  editorState.read(() => {
-    store.workspaces[target.workspaceId].composers[target.threadId].$$body =
-      $getRoot().getTextContent(false) ?? '';
-  });
+  if (target.type === 'composer') {
+    editorState.read(() => {
+      store.workspaces[target.workspaceId].composers[target.threadId].$$body =
+        $getRoot().getTextContent(false) ?? '';
+    });
+  }
 }
 
 const lexicalTheme = {
@@ -90,7 +92,7 @@ const ComposerContainer = styled('div', {
 
 const StyledLexicalEditorContainer = styled('div', {
   borderRadius: 6,
-  width: 'calc(100% - 68px)', // take into account send button
+  width: 'calc(100% - 35px)', // take into account send button
   color: 'black',
   marginLeft: 0,
   borderBottomLeftRadius: 11,

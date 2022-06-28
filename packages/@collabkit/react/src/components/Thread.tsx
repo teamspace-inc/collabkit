@@ -168,6 +168,8 @@ function _Thread(props: {
             <CommentList
               type={props.type}
               profiles={profiles}
+              threadId={props.threadId}
+              workspaceId={workspaceId}
               composerHeight={textareaHeight}
               timeline={timeline}
             />

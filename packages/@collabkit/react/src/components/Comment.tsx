@@ -1,19 +1,22 @@
-import { Profile } from '../constants';
+import { Event, Profile } from '../constants';
 import { Avatar } from './Avatar';
-import { styled } from './UIKit';
+import { styled, theme } from './UIKit';
 import { Smiley } from 'phosphor-react';
+import { useContext, useState } from 'react';
+import { events } from '../events';
+import { Target, TargetContext } from './Target';
+import { useSnapshot } from 'valtio';
+import { store } from '../store';
+import { timeDifference } from '../utils/timeDifference';
+import { targetEqual } from '../utils/targetEqual';
 
 export const StyledComment = styled('div', {
   display: 'flex',
-  gap: '5px',
-  position: 'relative',
-  overflowWrap: 'break-word',
+  maxWidth: 'calc(100% - 40px)',
   variants: {
     threadType: {
       inline: {},
-      popout: {
-        maxWidth: '230px',
-      },
+      popout: {},
     },
     type: {
       default: {
@@ -39,26 +42,10 @@ const StyledMessageTimestamp = styled('span', {
   fontWeight: '400',
 });
 
-const StyledMessageAction = styled('a', {
-  fontSize: 12,
-  color: '$neutral9',
-  textDecoration: 'none',
-  fontWeight: '600',
-
-  '&:hover': {
-    textDecoration: 'underline',
-  },
-});
-
-const StyledMessageActions = styled('div', {
-  padding: '4px 10px 0px',
-  display: 'flex',
-  gap: '16px',
-});
-
 export const StyledMessage = styled('div', {
   padding: '5px 10px',
   display: 'flex',
+  position: 'relative',
   flexDirection: 'column',
   gap: 0,
   flex: 0,
@@ -83,8 +70,17 @@ export const StyledMessage = styled('div', {
       },
     },
   },
+});
+
+const StyledCommentContainer = styled('div', {
+  display: 'flex',
+  gap: '5px',
+  overflowWrap: 'break-word',
+  position: 'relative',
   '&:hover': {
-    background: '$neutral4',
+    [`.${StyledMessage.className}`]: {
+      background: '$neutral4',
+    },
   },
 });
 
@@ -96,110 +92,205 @@ const StyledName = styled('div', {
   gap: 5,
 });
 
-function timeDifference(current: number, previous: number) {
-  var msPerMinute = 60 * 1000;
-  var msPerHour = msPerMinute * 60;
-  var msPerDay = msPerHour * 24;
-  var msPerMonth = msPerDay * 30;
-  var msPerYear = msPerDay * 365;
-
-  var elapsed = current - previous;
-
-  if (elapsed < msPerMinute) {
-    if (Math.round(elapsed / 1000) < 60) {
-      return 'just now';
-    } else {
-      return Math.round(elapsed / 1000) + ' secs ago';
-    }
-  } else if (elapsed < msPerHour) {
-    return Math.round(elapsed / msPerMinute) + ' mins ago';
-  } else if (elapsed < msPerDay) {
-    return Math.round(elapsed / msPerHour) + ' hours ago';
-  } else if (elapsed < msPerMonth) {
-    return Math.round(elapsed / msPerDay) + ' days ago';
-  } else if (elapsed < msPerYear) {
-    return Math.round(elapsed / msPerMonth) + ' months ago';
-  } else {
-    return Math.round(elapsed / msPerYear) + ' years ago';
-  }
-}
-
 const MessageButton = styled('button', {
-  padding: '0',
-  width: '24px',
-  height: '24px',
+  padding: 0,
+  width: '22px',
+  height: '22px',
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
-  borderRadius: 24,
+  borderRadius: '22px',
   alignItems: 'center',
   border: 'none',
-  background: 'none',
   cursor: 'pointer',
+  background: '$neutral1',
   '&:hover': {
-    background: 'rgba(0,0,0,0.05)',
+    background: '$neutral4',
   },
 });
 
-function AddReactionButton() {
+const ReactionPicker = styled('div', {
+  padding: '5px 5px',
+  display: 'flex',
+  flexDirection: 'row',
+  borderRadius: '30px',
+  boxShadow: '0px 5px 20px rgba(0,0,0,0.1), 0px 1px 0px rgba(0,0,0,0.05)',
+  position: 'absolute',
+  top: '-45px',
+  left: '30px',
+  background: 'white',
+  fontSize: '24px',
+  zIndex: 999,
+});
+
+const emojiReacts = ['👍', '❤️', '😂', '😮', '😢', '🙏'];
+
+const StyledEmojiReaction = styled('div', {
+  width: '35px',
+  height: '35px',
+  display: 'flex',
+  borderRadius: '35px',
+  justifyContent: 'center',
+  alignItems: 'center',
+  cursor: 'pointer',
+
+  '&:hover': {
+    background: '$neutral3',
+  },
+});
+
+function EmojiReaction(props: { emoji: string }) {
+  const { target } = useContext(TargetContext);
+  if (target == null || target.type !== 'commentReaction') {
+    return null;
+  }
+
   return (
-    <MessageButton>
-      <Smiley weight="regular" size={20} color="rgba(0,0,0,0.3)" />
-    </MessageButton>
+    <StyledEmojiReaction onClick={(e) => events.onEmojiReactionClick(e, { target })}>
+      {props.emoji}
+    </StyledEmojiReaction>
   );
 }
 
-function MessageToolbar() {
+function AddReactionButton() {
+  const { target } = useContext(TargetContext);
+  if (target == null || target.type !== 'comment') {
+    return null;
+  }
+  return target ? (
+    <>
+      <MessageButton onPointerDown={(e) => events.onEmojiReactPointerDown(e, { target })}>
+        <Smiley weight="regular" size={18} color={theme.colors.neutral9.toString()} />
+      </MessageButton>
+    </>
+  ) : null;
+}
+
+const StyledMessageToolbar = styled('div', {
+  position: 'absolute',
+  display: 'flex',
+  height: '100%',
+  alignItems: 'flex-start',
+  justifyContent: 'center',
+  top: '4px',
+  right: '-24px',
+  variants: {
+    isVisible: {
+      true: {
+        pointerEvents: 'all',
+        opacity: 1,
+      },
+      false: {
+        pointerEvent: 'none',
+        opacity: 0,
+      },
+    },
+  },
+});
+
+function MessageToolbar(props: { isVisible: boolean }) {
   return (
-    <div
-      style={{
-        position: 'absolute',
-        right: 16,
-        top: -6,
-        zIndex: 99,
-      }}
-    >
+    <StyledMessageToolbar isVisible={props.isVisible}>
       <AddReactionButton />
-    </div>
+    </StyledMessageToolbar>
   );
+}
+
+const StyledReactions = styled('div', {
+  background: 'white',
+  display: 'inline-block',
+  position: 'absolute',
+  left: 10,
+  top: 25,
+  fontSize: 16,
+  borderRadius: 620,
+  width: 'auto',
+  padding: '1px 6px',
+  boxShadow: `0px 1px 0px rgba(0,0,0,0.1), 0px 1px 5px rgba(0,0,0,0.1)`,
+  flex: 0,
+});
+
+// const StyledReactionProfileName = styled('span', {
+//   color: `$neutral11`,
+//   fontSize: 12,
+// });
+
+function Reactions(props: { reactions: { [createdById: string]: Event } }) {
+  const { profiles } = useSnapshot(store);
+
+  return props.reactions ? (
+    <StyledReactions>
+      {Object.keys(props.reactions).map((createdById) => (
+        <div>
+          {props.reactions[createdById].body}{' '}
+          {/* <StyledReactionProfileName>{profiles[createdById].name}</StyledReactionProfileName> */}
+        </div>
+      ))}
+    </StyledReactions>
+  ) : null;
 }
 
 export function Comment(props: {
+  reactions: { [createdById: string]: Event };
   timestamp: number | object;
   body: string;
   profile: Profile;
   type: 'default' | 'inline' | 'inline-start' | 'inline-end';
   threadType: 'inline' | 'popout';
 }) {
+  const [isHovering, setIsHovering] = useState(false);
+  const { reactingId } = useSnapshot(store);
+  const { target } = useContext(TargetContext);
+
+  if (target == null || target.type !== 'comment') {
+    return null;
+  }
+
+  const emojiReactionPicker = targetEqual(reactingId, target) ? (
+    <ReactionPicker>
+      {emojiReacts.map((emoji) => (
+        <Target target={{ type: 'commentReaction', comment: target, emoji }}>
+          <EmojiReaction emoji={emoji} />
+        </Target>
+      ))}
+    </ReactionPicker>
+  ) : null;
+
+  const showProfile = props.type === 'default' || props.type === 'inline-start';
+
+  const hasReactions = props.reactions && Object.keys(props.reactions).length > 0;
+
   return props.profile ? (
-    props.type === 'default' || props.type === 'inline-start' ? (
-      <StyledComment type={props.type}>
-        <Avatar profile={props.profile} style={{ position: 'relative', top: 4 }} />
+    <StyledComment
+      type={props.type}
+      threadType={props.threadType}
+      onMouseOver={() => setIsHovering(true)}
+      onMouseOut={() => setIsHovering(false)}
+    >
+      <StyledCommentContainer>
+        {showProfile && <Avatar profile={props.profile} style={{ position: 'relative', top: 4 }} />}
         <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <StyledMessage type={props.type}>
-            <StyledName>
-              {props.profile.name || props.profile.email}{' '}
-              <StyledMessageTimestamp>
-                {typeof props.timestamp === 'number'
-                  ? timeDifference(+new Date(), props.timestamp)
-                  : null}
-              </StyledMessageTimestamp>
-            </StyledName>
+          <StyledMessage
+            type={props.type}
+            style={{ marginLeft: showProfile ? 0 : 30, marginBottom: hasReactions ? 20 : 0 }}
+          >
+            {showProfile && (
+              <StyledName>
+                {props.profile.name || props.profile.email}
+                <StyledMessageTimestamp>
+                  {typeof props.timestamp === 'number'
+                    ? timeDifference(+new Date(), props.timestamp)
+                    : null}
+                </StyledMessageTimestamp>
+              </StyledName>
+            )}
             {props.body}
+            <Reactions reactions={props.reactions} />
           </StyledMessage>
-          {/* <MessageToolbar /> */}
-          {/* <StyledMessageActions> */}
-          {/* <StyledMessageAction href="">Like</StyledMessageAction> */}
-          {/* <StyledMessageAction href="">Reply</StyledMessageAction> */}
-          {/* </StyledMessageActions> */}
+          <MessageToolbar isVisible={isHovering} />
         </div>
-      </StyledComment>
-    ) : (
-      <StyledComment type={props.type}>
-        <div style={{ display: 'flex', flexDirection: 'column', marginLeft: '30px' }}>
-          <StyledMessage type={props.type}>{props.body}</StyledMessage>
-        </div>
-      </StyledComment>
-    )
+        {emojiReactionPicker}
+      </StyledCommentContainer>
+    </StyledComment>
   ) : null;
 }
