@@ -17,12 +17,14 @@ import {
   CollabKitFirebaseApp,
   CommentReactionTarget,
   CommentTarget,
+  ComposerTarget,
   Event,
   IdentifyProps,
   MentionProps,
   SetupProps,
   Store,
   Target,
+  ThreadTarget,
 } from './constants';
 import { Color, getRandomColor } from './colors';
 import { $createTextNode, $getRoot, createEditor } from 'lexical';
@@ -210,6 +212,22 @@ export const actions = {
   toggleThread: (store: Store, props: { workspaceId: string; threadId: string }) => {
     initThread(store, props);
     loadThread(store, props);
+  },
+
+  isTyping: async (store: Store, props: { target: ComposerTarget }) => {
+    const { config } = store;
+
+    if (!config.setup || !config.identify?.workspaceId) {
+      return;
+    }
+
+    await set(
+      ref(
+        getDatabase(CollabKitFirebaseApp),
+        `/isTyping/${config.setup.appId}/${props.target.workspaceId}/${props.target.threadId}/${config.identify.userId}`
+      ),
+      serverTimestamp()
+    );
   },
 
   subscribeProfiles,

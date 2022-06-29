@@ -12,7 +12,7 @@ const StyledButton = styled('button', {
   fontWeight: 600,
   fontSize: '15px',
   lineHeight: '20px',
-  borderRadius: 6,
+  borderRadius: 11,
   cursor: 'pointer',
   display: 'flex',
   alignItems: 'center',

@@ -205,16 +205,17 @@ function MessageToolbar(props: { isVisible: boolean }) {
 
 const StyledReactions = styled('div', {
   background: 'white',
-  display: 'inline-block',
+  display: 'inline-flex',
+  flex: 1,
+  gap: 6,
   position: 'absolute',
-  left: 8,
-  bottom: -18,
+  right: 5,
+  bottom: -10,
   fontSize: 16,
   borderRadius: 62,
   width: 'auto',
   padding: '1px 5px',
   boxShadow: `0px 1px 0px rgba(0,0,0,0.075), 0px 1px 3px rgba(0,0,0,0.05)`,
-  flex: 0,
   cursor: 'pointer',
 });
 
