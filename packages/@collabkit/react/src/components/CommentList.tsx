@@ -122,6 +122,9 @@ export function CommentList(props: {
                 }
               }
 
+              const profile = profiles[event.createdById];
+              console.log({ profile });
+
               return (
                 <Target
                   key={event.id}
@@ -134,7 +137,7 @@ export function CommentList(props: {
                     timestamp={event.createdAt}
                     key={`event-${i}-${j}`}
                     body={event.body}
-                    profile={profiles[event.createdById]}
+                    profile={profile}
                   />
                 </Target>
               );

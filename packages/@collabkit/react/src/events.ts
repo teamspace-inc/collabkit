@@ -33,6 +33,7 @@ export function createEvents(store: Store) {
 
       if (!store.config.hasIdentified) {
         await actions.saveProfile(store);
+        await actions.subscribeProfiles(store);
       }
     },
 

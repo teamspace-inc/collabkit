@@ -13,6 +13,8 @@ import { SignedIn } from './SignedIn';
 import { SignIn } from './SignIn';
 import { AppLoader } from './AppLoader';
 
+import { useSnapshot } from 'valtio';
+
 export interface App {
   appId: string;
   keys: { [apiKey: string]: boolean };
@@ -63,7 +65,7 @@ import { database, auth } from './database';
 import { store } from './store';
 import { events } from './events';
 import { Home } from './Home';
-import { Popout } from './Popout';
+import { PopoutWrapper } from './Popout';
 
 store.subs['user'] = onAuthStateChanged(auth, (user) => {
   store.user = user;
@@ -84,9 +86,47 @@ store.subs['user'] = onAuthStateChanged(auth, (user) => {
   }
 });
 
-function Foo() {
-  return <div>Foo</div>;
-}
+const mentions = [
+  {
+    name: 'Tom',
+    email: 'tom@useteamspace.com',
+    avatar: 'tom.pic.jpg',
+    workspaceId: 'acme',
+    userId: 'user1',
+  },
+  {
+    name: 'Mike',
+    email: 'mike@useteamspace.com',
+    avatar: 'mike.pic.jpg',
+    workspaceId: 'acme',
+    userId: 'user2',
+  },
+  {
+    name: 'Jessica',
+    email: 'jessica@useteamspace.com',
+    avatar: 'jess.pic.jpg',
+    workspaceId: 'acme',
+    userId: 'user3',
+  },
+];
+
+const identity = {
+  workspaceId: 'acme',
+  userId: 'user1',
+  workspaceName: 'ACME',
+  name: 'Namit',
+  email: 'namit@useteamspace.com',
+  avatar: 'namit.pic.jpg',
+};
+
+const identity2 = {
+  workspaceName: 'ACME',
+  name: 'Jessica',
+  email: 'jessica@useteamspace.com',
+  avatar: 'jess.pic.jpg',
+  workspaceId: 'acme',
+  userId: 'user3',
+};
 
 function App() {
   // const { user } = useSnapshot(store);
@@ -119,16 +159,52 @@ function App() {
         )}
       </Route>
       <Route path="/dev/:workspace_id/:thread_id">
-        {(params) => (
-          <AppLoader>
-            <CollabKit.Workspace workspaceId={params.workspace_id}>
-              {/* <HOC /> */}
-              <Popout>
-                <CollabKit.Button threadId={params.thread_id} defaultOpen={true} />
-              </Popout>
-            </CollabKit.Workspace>
-          </AppLoader>
-        )}
+        {(params) => {
+          const { apps } = useSnapshot(store);
+
+          if (apps == null) {
+            console.warn('AppLoader: apps is null');
+            return null;
+          }
+
+          console.log({ apps });
+
+          const app = apps[Object.keys(apps)?.[0]];
+
+          if (app == null) {
+            console.warn('AppLoader: app is null');
+            return null;
+          }
+
+          return (
+            <div>
+              <CollabKit.App
+                token={Object.keys(app.keys)[0]}
+                appId={app.appId}
+                identity={identity}
+                mentions={mentions}
+              >
+                <CollabKit.Workspace workspaceId={params.workspace_id}>
+                  <PopoutWrapper>
+                    <CollabKit.Button threadId={params.thread_id} defaultOpen={true} />
+                  </PopoutWrapper>
+                </CollabKit.Workspace>
+              </CollabKit.App>
+              <CollabKit.App
+                token={Object.keys(app.keys)[0]}
+                appId={app.appId}
+                identity={identity2}
+                mentions={mentions}
+              >
+                <CollabKit.Workspace workspaceId={params.workspace_id}>
+                  <PopoutWrapper>
+                    <CollabKit.Button threadId={params.thread_id} defaultOpen={true} />
+                  </PopoutWrapper>
+                </CollabKit.Workspace>
+              </CollabKit.App>
+            </div>
+          );
+        }}
       </Route>
     </>
   );
