@@ -9,6 +9,7 @@ import {
   onValue,
   update,
   DataSnapshot,
+  onChildChanged,
 } from 'firebase/database';
 
 import { getAuth, signInWithCustomToken } from 'firebase/auth';
@@ -120,11 +121,42 @@ async function loadThread(store: Store, props: { workspaceId: string; threadId: 
   }
 }
 
+function subscribeProfiles(store: Store) {
+  if (!store.config.setup) {
+    console.warn('no profiles');
+    return;
+  }
+  if (store.subs['profiles']) {
+    return;
+  }
+  console.log('got sub profiles', store.config.setup.appId);
+  try {
+    store.subs['profiles'] = onChildAdded(
+      ref(getDatabase(CollabKitFirebaseApp), `/profiles/${store.config.setup.appId}/`),
+      (snapshot) => {
+        console.log('got profile', snapshot.val());
+        const profile = snapshot.val();
+        const profileId = snapshot.key;
+        if (profileId) {
+          store.profiles[profileId] = profile;
+        }
+      },
+      (e) => {
+        console.error({ e });
+      }
+    );
+  } catch (e) {
+    console.error(e);
+  }
+}
+
 function onTimelineEventAdded(store: Store, snapshot: DataSnapshot) {
   const event = snapshot.val();
   const eventId = snapshot.key;
   const workspaceId = snapshot.ref.parent?.ref.parent?.key;
   const threadId = snapshot.ref.parent?.key;
+
+  console.log('got event');
 
   // todo validate data here
   //
@@ -179,6 +211,8 @@ export const actions = {
     initThread(store, props);
     loadThread(store, props);
   },
+
+  subscribeProfiles,
 
   saveProfile: async (store: Store) => {
     const { config } = store;

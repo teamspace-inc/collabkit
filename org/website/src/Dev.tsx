@@ -35,7 +35,16 @@ const identity = {
   avatar: 'namit.pic.jpg',
 };
 
-export function Dev(props: { app: App; children: React.ReactNode }) {
+const identity2 = {
+  workspaceName: 'ACME',
+  name: 'Jessica',
+  email: 'jessica@useteamspace.com',
+  avatar: 'jess.pic.jpg',
+  workspaceId: 'acme',
+  userId: 'user3',
+};
+
+export function UseApp(props: { app: App; children: React.ReactNode; useOtherIdentity?: boolean }) {
   const { app } = props;
 
   if (app == null) {
@@ -47,7 +56,7 @@ export function Dev(props: { app: App; children: React.ReactNode }) {
       <CollabKit.App
         token={Object.keys(app.keys)[0]}
         appId={app.appId}
-        identity={identity}
+        identity={props.useOtherIdentity ? identity2 : identity}
         mentions={mentions}
       >
         {props.children}

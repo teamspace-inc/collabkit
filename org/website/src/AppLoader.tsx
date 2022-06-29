@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSnapshot } from 'valtio';
-import { Dev } from './Dev';
+import { UseApp } from './Dev';
 import { store } from './store';
 
 export function AppLoader(props: { children: React.ReactNode }) {
@@ -20,5 +20,5 @@ export function AppLoader(props: { children: React.ReactNode }) {
     return null;
   }
 
-  return <Dev app={app}>{props.children}</Dev>;
+  return <UseApp app={app}>{props.children}</UseApp>;
 }

@@ -72,8 +72,8 @@
     },
     "profiles": {
       "$appId": {
+        ".read": "auth.token.appId === $appId",
         "$endUserId": {
-          ".read": "auth.token.appId === $appId",
           ".write": "(auth.token.appId === $appId) && (root.child('apps').child(auth.token.appId).child('mode').val() === 'UNSECURED' || (root.child('apps').child(auth.token.appId).child('mode').val() === 'SECURED' && $endUserId === auth.token.userId))",
           "name": {
             ".validate": "newData.isString()"
@@ -102,7 +102,7 @@
                 ".validate": "newData.isString()"
               },
               "createdById": {
-                ".validate": "newData.isString() && root.child('profiles').child($appId).child($workspaceId).child(newData.val()).exists()"
+                ".validate": "newData.isString() && root.child('profiles').child($appId).child(newData.val()).exists()"
               },
               "createdAt": {
                 ".validate": "newData.isNumber()"
