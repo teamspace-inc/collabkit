@@ -5,13 +5,11 @@ import { User, onAuthStateChanged } from 'firebase/auth';
 import { ref, Unsubscribe, onChildAdded, onChildRemoved } from 'firebase/database';
 
 import { Route } from 'wouter';
-import { Dashboard } from './Dashboard';
 
 import { CollabKit } from '@collabkit/react';
 import { Fullscreen } from './Fullscreen';
 import { SignedIn } from './SignedIn';
 import { SignIn } from './SignIn';
-import { AppLoader } from './AppLoader';
 
 import { useSnapshot } from 'valtio';
 
@@ -66,6 +64,7 @@ import { store } from './store';
 import { events } from './events';
 import { Home } from './Home';
 import { PopoutWrapper } from './Popout';
+import { theme } from './UIKit';
 
 store.subs['user'] = onAuthStateChanged(auth, (user) => {
   store.user = user;
@@ -148,15 +147,36 @@ function App() {
         <SignedIn />
       </Route>
       <Route path="/dev/:workspace_id/:thread_id/fullscreen">
-        {(params) => (
-          <AppLoader>
-            <CollabKit.Workspace workspaceId={params.workspace_id}>
-              <Fullscreen>
-                <CollabKit.Thread threadId={params.thread_id} />
-              </Fullscreen>
-            </CollabKit.Workspace>
-          </AppLoader>
-        )}
+        {(params) => {
+          const { apps } = useSnapshot(store);
+
+          if (apps == null) {
+            console.warn('AppLoader: apps is null');
+            return null;
+          }
+
+          const app = apps[Object.keys(apps)?.[0]];
+
+          if (app == null) {
+            console.warn('AppLoader: app is null');
+            return null;
+          }
+
+          return (
+            <CollabKit.App
+              token={Object.keys(app.keys)[0]}
+              appId={app.appId}
+              identity={identity}
+              mentions={mentions}
+            >
+              <CollabKit.Workspace workspaceId={params.workspace_id}>
+                <Fullscreen>
+                  <CollabKit.Thread threadId={params.thread_id} />
+                </Fullscreen>
+              </CollabKit.Workspace>
+            </CollabKit.App>
+          );
+        }}
       </Route>
       <Route path="/dev/:workspace_id/:thread_id">
         {(params) => {
@@ -167,8 +187,6 @@ function App() {
             return null;
           }
 
-          console.log({ apps });
-
           const app = apps[Object.keys(apps)?.[0]];
 
           if (app == null) {
@@ -177,31 +195,53 @@ function App() {
           }
 
           return (
-            <div>
-              <CollabKit.App
-                token={Object.keys(app.keys)[0]}
-                appId={app.appId}
-                identity={identity}
-                mentions={mentions}
+            <div style={{ display: 'flex', flexDirection: 'row', flex: 1, gap: 0 }}>
+              <div
+                style={{
+                  width: '50vw',
+                  padding: '2rem',
+                  margin: '1rem 1rem 0',
+                  borderRadius: '24px',
+                  background: theme.colors.neutral12.toString(),
+                }}
               >
-                <CollabKit.Workspace workspaceId={params.workspace_id}>
-                  <PopoutWrapper>
-                    <CollabKit.Button threadId={params.thread_id} defaultOpen={true} />
-                  </PopoutWrapper>
-                </CollabKit.Workspace>
-              </CollabKit.App>
-              <CollabKit.App
-                token={Object.keys(app.keys)[0]}
-                appId={app.appId}
-                identity={identity2}
-                mentions={mentions}
+                <h3 style={{ color: 'rgba(0,0,0,0.25)', marginTop: 0 }}>{identity.name}</h3>
+                <CollabKit.App
+                  token={Object.keys(app.keys)[0]}
+                  appId={app.appId}
+                  identity={identity}
+                  mentions={mentions}
+                >
+                  <CollabKit.Workspace workspaceId={params.workspace_id}>
+                    <PopoutWrapper>
+                      <CollabKit.Button threadId={params.thread_id} defaultOpen={true} />
+                    </PopoutWrapper>
+                  </CollabKit.Workspace>
+                </CollabKit.App>
+              </div>
+              <div
+                style={{
+                  width: '50vw',
+                  padding: '2rem',
+                  margin: '1rem 1rem 0',
+                  borderRadius: '24px',
+                  background: theme.colors.neutral12.toString(),
+                }}
               >
-                <CollabKit.Workspace workspaceId={params.workspace_id}>
-                  <PopoutWrapper>
-                    <CollabKit.Button threadId={params.thread_id} defaultOpen={true} />
-                  </PopoutWrapper>
-                </CollabKit.Workspace>
-              </CollabKit.App>
+                <h3 style={{ color: 'rgba(0,0,0,0.25)', marginTop: 0 }}>{identity2.name}</h3>
+                <CollabKit.App
+                  token={Object.keys(app.keys)[0]}
+                  appId={app.appId}
+                  identity={identity2}
+                  mentions={mentions}
+                >
+                  <CollabKit.Workspace workspaceId={params.workspace_id}>
+                    <PopoutWrapper>
+                      <CollabKit.Button threadId={params.thread_id} defaultOpen={true} />
+                    </PopoutWrapper>
+                  </CollabKit.Workspace>
+                </CollabKit.App>
+              </div>
             </div>
           );
         }}

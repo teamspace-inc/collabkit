@@ -123,7 +123,6 @@ export function CommentList(props: {
               }
 
               const profile = profiles[event.createdById];
-              console.log({ profile });
 
               return (
                 <Target
