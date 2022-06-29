@@ -298,7 +298,7 @@ export function Comment(props: {
             type={props.type}
             style={{
               marginLeft: showProfile ? 0 : 30,
-              marginBottom: hasReactions(props.reactions) ? 20 : 0,
+              marginBottom: hasReactions(props.reactions) ? 15 : 0,
             }}
           >
             {showProfile && (
