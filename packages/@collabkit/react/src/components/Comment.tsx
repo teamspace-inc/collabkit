@@ -242,6 +242,15 @@ function Reactions(props: { reactions: { [createdById: string]: Event } }) {
   ) : null;
 }
 
+function hasReactions(reactions: { [createdById: string]: Event } | null | undefined) {
+  return (
+    reactions &&
+    Object.keys(reactions).length > 0 &&
+    Object.keys(reactions).filter((createdById) => reactions[createdById].body.length > 0).length >
+      0
+  );
+}
+
 export function Comment(props: {
   reactions: { [createdById: string]: Event };
   timestamp: number | object;
@@ -274,8 +283,6 @@ export function Comment(props: {
 
   const showProfile = props.type === 'default' || props.type === 'inline-start';
 
-  const hasReactions = props.reactions && Object.keys(props.reactions).length > 0;
-
   return props.profile ? (
     <StyledComment
       type={props.type}
@@ -288,7 +295,10 @@ export function Comment(props: {
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <StyledMessage
             type={props.type}
-            style={{ marginLeft: showProfile ? 0 : 30, marginBottom: hasReactions ? 20 : 0 }}
+            style={{
+              marginLeft: showProfile ? 0 : 30,
+              marginBottom: hasReactions(props.reactions) ? 20 : 0,
+            }}
           >
             {showProfile && (
               <StyledName>
