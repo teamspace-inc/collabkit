@@ -322,7 +322,32 @@ export const actions = {
     const { emoji } = props.target;
     const { workspaceId, threadId, eventId } = props.target.comment;
 
-    console.log('reacting with emoji', emoji);
+    // check if this user has a last reaction to the comment already
+    const thread = store.workspaces[workspaceId].timeline[threadId];
+    const reactions = Object.keys(thread)
+      .map((eventId) => thread[eventId])
+      .filter(
+        (event) => event.parentId === eventId && event.createdById === store.config.identify?.userId
+      );
+
+    const lastReaction = reactions.length > 0 ? reactions[reactions.length - 1] : null;
+
+    // toggle logic
+    // if we have no a last Reaction we need to check
+    // if this is a toggle operation
+    const body = lastReaction
+      ? // if the last event was clearing the reaction
+        // then we want to set it this time
+        lastReaction.body.length === 0
+        ? emoji
+        : // otherwise if the reaction is the same
+        // we want to clear it
+        emoji === lastReaction.body
+        ? ''
+        : emoji
+      : emoji;
+
+    console.log('reacting with emoji', { body });
 
     // to remove an existing emoji reaction set
     // body to empty!
@@ -330,7 +355,7 @@ export const actions = {
     try {
       const event: Event = {
         type: 'reaction',
-        body: emoji,
+        body,
         createdAt: serverTimestamp(),
         createdById: store.config.identify.userId,
         parentId: eventId,
