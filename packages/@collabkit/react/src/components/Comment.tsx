@@ -229,16 +229,18 @@ function Reactions(props: { reactions: { [createdById: string]: Event } }) {
   if (!store) {
     return null;
   }
-  const { profiles } = useSnapshot(store);
+  // const { profiles } = useSnapshot(store);
 
   return props.reactions ? (
     <StyledReactions>
-      {Object.keys(props.reactions).map((createdById, i) => (
-        <div key={i}>
-          {props.reactions[createdById].body}{' '}
-          {/* <StyledReactionProfileName>{profiles[createdById].name}</StyledReactionProfileName> */}
-        </div>
-      ))}
+      {Object.keys(props.reactions).map((createdById, i) =>
+        props.reactions[createdById].body.length > 0 ? (
+          <div key={i}>
+            {props.reactions[createdById].body}
+            {/* <StyledReactionProfileName>{profiles[createdById].name}</StyledReactionProfileName> */}
+          </div>
+        ) : null
+      )}
     </StyledReactions>
   ) : null;
 }
