@@ -122,7 +122,7 @@ const identity2 = {
   workspaceName: 'ACME',
   name: 'Jessica',
   email: 'jessica@useteamspace.com',
-  avatar: 'jess.pic.jpg',
+  avatar: 'https://faces-img.xcdn.link/image-lorem-face-1309.jpg',
   workspaceId: 'acme',
   userId: 'user3',
 };
