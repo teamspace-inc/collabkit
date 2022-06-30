@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useRef } from 'react';
 import ScrollArea from './ScrollArea';
 import React from 'react';
-import { Comment } from './Comment';
+import { Comment, TypingIndicator } from './Comment';
 import { Event, Profile, Timeline, WithID } from '../constants';
 import { styled } from '@stitches/react';
 import { Target } from './Target';
 
-export const StyledCommentList = styled('div', {
+const StyledCommentList = styled('div', {
   gap: 0,
   padding: 0,
   display: 'flex',
@@ -18,10 +18,12 @@ export const StyledCommentList = styled('div', {
 
 export function CommentList(props: {
   type?: 'popout' | 'inline';
+  isTyping?: { [endUserId: string]: boolean };
   profiles: { [profileId: string]: Profile };
   timeline: Timeline;
   composerHeight: number;
   workspaceId: string;
+  userId: string;
   threadId: string;
 }) {
   const { threadId, workspaceId } = props;
@@ -83,6 +85,8 @@ export function CommentList(props: {
     // did react to last message
     reactionEvents[reactionEvents.length - 1]?.parentId ===
       messageEvents[messageEvents.length - 1]?.id,
+    // someone is typing
+    props.isTyping ? Object.keys(props.isTyping) : null,
   ]);
 
   const handleScroll = useCallback((e: React.SyntheticEvent) => {
@@ -142,6 +146,16 @@ export function CommentList(props: {
               );
             })
           )}
+          {props.isTyping
+            ? Object.keys(props.isTyping).map((endUserId) =>
+                // skip current user
+                endUserId !== props.userId ? (
+                  props.isTyping?.[endUserId] === true ? (
+                    <TypingIndicator profile={profiles[endUserId]} />
+                  ) : null
+                ) : null
+              )
+            : null}
         </ScrollArea.Viewport>
         <ScrollArea.Scrollbar orientation="vertical">
           <ScrollArea.Thumb />

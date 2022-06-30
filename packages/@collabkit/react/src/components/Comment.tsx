@@ -8,6 +8,7 @@ import { useSnapshot } from 'valtio';
 import { timeDifference } from '../utils/timeDifference';
 import { targetEqual } from '../utils/targetEqual';
 import { useApp } from './App';
+import { keyframes } from '@stitches/react';
 
 export const StyledComment = styled('div', {
   display: 'flex',
@@ -207,14 +208,15 @@ const StyledReactions = styled('div', {
   background: 'white',
   display: 'inline-flex',
   flex: 1,
-  gap: 6,
+  gap: 3,
   position: 'absolute',
   right: 5,
-  bottom: -10,
-  fontSize: 16,
-  borderRadius: 62,
+  bottom: -15,
+  fontSize: 15,
+  lineHeight: '15px',
+  borderRadius: '15px',
   width: 'auto',
-  padding: '1px 5px',
+  padding: '2px 3px',
   boxShadow: `0px 1px 0px rgba(0,0,0,0.075), 0px 1px 3px rgba(0,0,0,0.05)`,
   cursor: 'pointer',
 });
@@ -251,6 +253,50 @@ function hasReactions(reactions: { [createdById: string]: Event } | null | undef
     Object.keys(reactions).length > 0 &&
     Object.keys(reactions).filter((createdById) => reactions[createdById].body.length > 0).length >
       0
+  );
+}
+
+const loadingFade = keyframes({
+  '0%': { opacity: 0, transform: 'scale(1)' },
+  '50%': { opacity: 0.8, transform: 'scale(1.2)' },
+  '100%': { opacity: 0, transform: 'scale(1)' },
+});
+
+const Bubble = styled('div', {
+  width: 5,
+  height: 5,
+  background: '$neutral9',
+  borderRadius: '50px',
+  opacity: 0,
+  animation: `${loadingFade} 1.5s infinite`,
+});
+
+const Bubbles = styled('div', {
+  width: '28px',
+  height: '20px',
+  display: 'flex',
+  gap: '5px',
+  justifyContent: 'center',
+  alignItems: 'center',
+  position: 'relative',
+});
+
+export function TypingIndicator(props: { profile: Profile }) {
+  return (
+    <StyledComment type={'default'}>
+      <Avatar profile={props.profile} style={{ position: 'relative', top: 4 }} />
+      <StyledCommentContainer style={{ left: 5 }}>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <StyledMessage>
+            <Bubbles>
+              <Bubble style={{ animationDelay: '0s' }} />
+              <Bubble style={{ animationDelay: '0.2s' }} />
+              <Bubble style={{ animationDelay: '0.4s' }} />
+            </Bubbles>
+          </StyledMessage>
+        </div>
+      </StyledCommentContainer>
+    </StyledComment>
   );
 }
 

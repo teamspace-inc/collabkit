@@ -9,7 +9,9 @@ import {
   onValue,
   update,
   DataSnapshot,
-  onChildChanged,
+  onDisconnect,
+  remove,
+  onChildRemoved,
 } from 'firebase/database';
 
 import { getAuth, signInWithCustomToken } from 'firebase/auth';
@@ -24,13 +26,14 @@ import {
   SetupProps,
   Store,
   Target,
-  ThreadTarget,
 } from './constants';
 import { Color, getRandomColor } from './colors';
 import { $createTextNode, $getRoot, createEditor } from 'lexical';
 import { createEditorConfig } from './components/Composer';
 import { ref as valtioRef } from 'valtio';
 import { createEvents, Events } from './events';
+
+import debounce from 'lodash.debounce';
 
 function timelineRef(store: Store, workspaceId: string, threadId: string) {
   if (!store.config.setup?.appId) {
@@ -96,6 +99,7 @@ function initThread(store: Store, props: { workspaceId: string; threadId: string
       [props.threadId]: {
         editor: valtioRef(createEditor(createEditorConfig())),
         $$body: '',
+        isTyping: {},
       },
     },
     timeline: {},
@@ -104,6 +108,7 @@ function initThread(store: Store, props: { workspaceId: string; threadId: string
   store.workspaces[props.workspaceId].composers[props.threadId] ||= {
     editor: valtioRef(createEditor(createEditorConfig())),
     $$body: '',
+    isTyping: {},
   };
 }
 
@@ -121,6 +126,8 @@ async function loadThread(store: Store, props: { workspaceId: string; threadId: 
   } catch (e) {
     console.error('onChildAdded', e);
   }
+
+  subscribeThreadIsTyping(store, props.workspaceId, props.threadId);
 }
 
 function subscribeProfiles(store: Store) {
@@ -150,6 +157,80 @@ function subscribeProfiles(store: Store) {
   } catch (e) {
     console.error(e);
   }
+}
+
+function subscribeThreadIsTyping(store: Store, workspaceId: string, threadId: string) {
+  if (!store.config.identify?.userId) {
+    return;
+  }
+
+  const key = `isTyping-${workspaceId}/${threadId}`;
+  const addedKey = `${key}-added`;
+  const removedKey = `${key}-removed`;
+
+  onDisconnect(
+    ref(
+      getDatabase(CollabKitFirebaseApp),
+      `/isTyping/${workspaceId}/${threadId}/${store.config.identify?.userId}`
+    )
+  ).remove();
+
+  if (store.subs[addedKey] && store.subs[removedKey]) {
+    return;
+  }
+
+  const isTypingRef = ref(
+    getDatabase(CollabKitFirebaseApp),
+    `/isTyping/${store.config.setup?.appId}/${workspaceId}/${threadId}`
+  );
+
+  try {
+    store.subs[addedKey] = onChildAdded(isTypingRef, (snapshot) => {
+      const userId = snapshot.key;
+      if (userId) {
+        store.workspaces[workspaceId].composers[threadId].isTyping[userId] = true;
+      }
+    });
+    store.subs[removedKey] = onChildRemoved(isTypingRef, (snapshot) => {
+      const userId = snapshot.key;
+      if (userId) {
+        store.workspaces[workspaceId].composers[threadId].isTyping[userId] = false;
+      }
+    });
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+function getIsTypingRef(appId: string, workspaceId: string, threadId: string, userId: string) {
+  return ref(
+    getDatabase(CollabKitFirebaseApp),
+    `/isTyping/${appId}/${workspaceId}/${threadId}/${userId}`
+  );
+}
+
+async function stopTyping(store: Store, props: { target: ComposerTarget }) {
+  const { config } = store;
+
+  if (!config.setup || !config.identify?.workspaceId) {
+    return;
+  }
+
+  const timeoutID =
+    store.workspaces[props.target.workspaceId].composers[props.target.threadId].isTypingTimeoutID;
+
+  if (timeoutID) {
+    clearTimeout(timeoutID);
+  }
+
+  await remove(
+    getIsTypingRef(
+      config.setup.appId,
+      props.target.workspaceId,
+      props.target.threadId,
+      config.identify.userId
+    )
+  );
 }
 
 function onTimelineEventAdded(store: Store, snapshot: DataSnapshot) {
@@ -214,21 +295,39 @@ export const actions = {
     loadThread(store, props);
   },
 
-  isTyping: async (store: Store, props: { target: ComposerTarget }) => {
-    const { config } = store;
+  stopTyping,
 
-    if (!config.setup || !config.identify?.workspaceId) {
-      return;
-    }
+  isTyping: debounce(
+    async (store: Store, props: { target: ComposerTarget }) => {
+      const { config } = store;
 
-    await set(
-      ref(
+      if (!config.setup || !config.identify?.workspaceId) {
+        return;
+      }
+
+      const isTypingRef = ref(
         getDatabase(CollabKitFirebaseApp),
         `/isTyping/${config.setup.appId}/${props.target.workspaceId}/${props.target.threadId}/${config.identify.userId}`
-      ),
-      serverTimestamp()
-    );
-  },
+      );
+
+      const timeoutID =
+        store.workspaces[props.target.workspaceId].composers[props.target.threadId]
+          .isTypingTimeoutID;
+
+      if (timeoutID) {
+        clearTimeout(timeoutID);
+      }
+
+      await set(isTypingRef, true);
+      store.workspaces[props.target.workspaceId].composers[
+        props.target.threadId
+      ].isTypingTimeoutID = setTimeout(() => {
+        remove(isTypingRef);
+      }, 1000);
+    },
+    1000,
+    { leading: true, maxWait: 1000 }
+  ),
 
   subscribeProfiles,
 
@@ -515,6 +614,7 @@ export const actions = {
           ...event,
           createdAt: +Date.now(),
         };
+        actions.stopTyping(store, { target: { type: 'composer', workspaceId, threadId } });
       } else {
         console.error('failed to send message');
         // handle failure here
