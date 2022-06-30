@@ -25,8 +25,10 @@ const StyledThread = styled('div', {
     type: {
       popout: {
         border: '1px solid $neutral6',
-        marginTop: '0.414rem',
+        marginTop: '0.212rem',
         position: 'absolute',
+        left: 0,
+        top: 0,
         backgroundColor: 'white',
         borderRadius: '11px',
         width: '280px',
@@ -113,6 +115,7 @@ const StyledHeaderLeftGroup = styled('div', {
 function _Thread(props: {
   threadId: string;
   type?: 'popout';
+  style?: React.CSSProperties;
   onCloseButtonClick?: (e: React.MouseEvent) => void;
 }) {
   const { store, events } = useApp();
@@ -145,7 +148,16 @@ function _Thread(props: {
       style={{
         display: 'flex',
         height: '100%',
+        position: 'relative',
         flex: 1,
+        ...(props.type === 'popout'
+          ? {}
+          : {
+              background: 'white',
+              borderRadius: 11,
+              border: '1px solid rgba(0,0,0,0.1)',
+            }),
+        ...props.style,
       }}
     >
       <StyledThread type={props.type}>
@@ -199,6 +211,7 @@ function _Thread(props: {
 export function Thread(props: {
   threadId: string;
   type?: 'popout';
+  style?: React.CSSProperties;
   onCloseButtonClick?: (e: React.MouseEvent) => void;
 }) {
   return (

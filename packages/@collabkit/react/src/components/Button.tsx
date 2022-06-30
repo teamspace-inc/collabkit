@@ -45,24 +45,30 @@ export function Button(props: {
 
   return (
     <WorkspaceLoader>
-      <StyledButton
-        isOpen={showThread}
-        onMouseOver={() => setIsHovering(true)}
-        onMouseLeave={() => setIsHovering(false)}
-        isHovering={isHovering}
-        style={props.style}
-        className={props.className}
-        onClick={() => setShowThread(!showThread)}
-        ref={ref}
-      >
-        <div style={{ display: 'flex', flexDirection: 'row', gap: '6px' }}>
-          <ChatCircle weight="fill" size={20} color={theme.colors.neutral12.toString()} />
-          Comment
-        </div>
-      </StyledButton>
-      {showThread ? (
-        <Thread threadId={threadId} type="popout" onCloseButtonClick={() => setShowThread(false)} />
-      ) : null}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+        <StyledButton
+          isOpen={showThread}
+          onMouseOver={() => setIsHovering(true)}
+          onMouseLeave={() => setIsHovering(false)}
+          isHovering={isHovering}
+          style={props.style}
+          className={props.className}
+          onClick={() => setShowThread(!showThread)}
+          ref={ref}
+        >
+          <div style={{ display: 'flex', flexDirection: 'row', gap: '6px' }}>
+            <ChatCircle weight="fill" size={20} color={theme.colors.neutral12.toString()} />
+            Comment
+          </div>
+        </StyledButton>
+        {showThread ? (
+          <Thread
+            threadId={threadId}
+            type="popout"
+            onCloseButtonClick={() => setShowThread(false)}
+          />
+        ) : null}
+      </div>
     </WorkspaceLoader>
   );
 }
