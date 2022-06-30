@@ -195,40 +195,57 @@ function App() {
           }
 
           return (
-            <div style={{ display: 'flex', flexDirection: 'row', flex: 1, gap: 0 }}>
+            <div
+              style={{
+                display: 'grid',
+                height: '100%',
+                gridTemplateColumns: '1fr 1fr',
+                gridTemplateRows: '1fr',
+                gridGap: '1rem',
+                padding: '1rem',
+              }}
+            >
               <div
                 style={{
-                  width: '50vw',
+                  // width: '50vw',
+                  // display: 'flex',
+                  // flexDirection: 'column',
+                  // height: '100%',
                   padding: '2rem',
-                  margin: '1rem 1rem 0',
                   borderRadius: '24px',
                   background: theme.colors.neutral12.toString(),
                 }}
               >
-                <h3 style={{ color: 'rgba(0,0,0,0.25)', marginTop: 0 }}>{identity.name}</h3>
-                <CollabKit.App
-                  token={Object.keys(app.keys)[0]}
-                  appId={app.appId}
-                  identity={identity}
-                  mentions={mentions}
-                >
-                  <CollabKit.Workspace workspaceId={params.workspace_id}>
-                    <PopoutWrapper>
+                <h3 style={{ color: 'rgba(0,0,0,0.25)', marginTop: 0 }}>CollabKit.Button</h3>
+                <p style={{ color: 'rgba(0,0,0,0.4)' }}>
+                  A button you can add to lists of Sales, Customers, etc. to let users comment on a
+                  particular thing in a list of things.
+                </p>
+                <div>
+                  <CollabKit.App
+                    token={Object.keys(app.keys)[0]}
+                    appId={app.appId}
+                    identity={identity}
+                    mentions={mentions}
+                  >
+                    <CollabKit.Workspace workspaceId={params.workspace_id}>
                       <CollabKit.Button threadId={params.thread_id} defaultOpen={true} />
-                    </PopoutWrapper>
-                  </CollabKit.Workspace>
-                </CollabKit.App>
+                    </CollabKit.Workspace>
+                  </CollabKit.App>
+                </div>
               </div>
               <div
                 style={{
-                  width: '50vw',
                   padding: '2rem',
-                  margin: '1rem 1rem 0',
                   borderRadius: '24px',
                   background: theme.colors.neutral12.toString(),
                 }}
               >
-                <h3 style={{ color: 'rgba(0,0,0,0.25)', marginTop: 0 }}>{identity2.name}</h3>
+                <h3 style={{ color: 'rgba(0,0,0,0.25)', marginTop: 0 }}>CollabKit.Thread</h3>
+                <p style={{ color: 'rgba(0,0,0,0.4)' }}>
+                  An inline thread you can embed on Product, Sales, Customer and other types of
+                  detail pages.
+                </p>
                 <CollabKit.App
                   token={Object.keys(app.keys)[0]}
                   appId={app.appId}
@@ -236,9 +253,7 @@ function App() {
                   mentions={mentions}
                 >
                   <CollabKit.Workspace workspaceId={params.workspace_id}>
-                    <PopoutWrapper>
-                      <CollabKit.Button threadId={params.thread_id} defaultOpen={true} />
-                    </PopoutWrapper>
+                    <CollabKit.Thread threadId={params.thread_id} style={{ maxHeight: '440px' }} />
                   </CollabKit.Workspace>
                 </CollabKit.App>
               </div>
