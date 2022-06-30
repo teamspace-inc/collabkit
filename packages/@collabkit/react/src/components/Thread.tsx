@@ -4,8 +4,6 @@ import { IconContext, X, ChatCircle } from 'phosphor-react';
 import React from 'react';
 import { useSnapshot } from 'valtio';
 import { Composer } from './Composer';
-// import { WorkspaceIDContext } from './Workspace';
-// import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
 import * as Tooltip from './Tooltip';
 import { WorkspaceContext, WorkspaceLoader } from './WorkspaceLoader';
 import { CommentList } from './CommentList';
@@ -123,6 +121,8 @@ function _Thread(props: {
   }
   const { threadId } = props;
   const { profiles, appState, config, isConnected } = useSnapshot(store);
+  const userId = config.identify!.userId;
+
   const [textareaHeight, setTextareaHeight] = useState(-1);
 
   const { workspace, workspaceId } = useContext(WorkspaceContext);
@@ -169,9 +169,11 @@ function _Thread(props: {
           )}
           {!isEmpty && timeline && workspaceId && (
             <CommentList
+              isTyping={workspace?.composers[threadId]?.isTyping}
               type={props.type}
               profiles={profiles}
               threadId={props.threadId}
+              userId={userId}
               workspaceId={workspaceId}
               composerHeight={textareaHeight}
               timeline={timeline}
@@ -183,7 +185,7 @@ function _Thread(props: {
               workspace={workspace}
               workspaceId={workspaceId}
               onHeightChange={setTextareaHeight}
-              profile={config.identify?.userId ? profiles[config.identify?.userId] : undefined}
+              profile={profiles[userId]}
               threadId={props.threadId}
               isFloating={false}
             />

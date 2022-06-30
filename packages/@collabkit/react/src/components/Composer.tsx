@@ -15,12 +15,21 @@ import { useResizeObserver } from '../hooks/useResizeObserver';
 import MentionsPlugin from './MentionsPlugin';
 import { MentionNode } from './MentionNode';
 import { useApp } from './App';
+import { actions } from '../actions';
 
 function onChange(store: Store, target: Target, editorState: EditorState) {
   if (target.type === 'composer') {
     editorState.read(() => {
-      store.workspaces[target.workspaceId].composers[target.threadId].$$body =
-        $getRoot().getTextContent(false) ?? '';
+      const newBody = $getRoot().getTextContent(false) ?? '';
+      const body = store.workspaces[target.workspaceId].composers[target.threadId].$$body;
+
+      store.workspaces[target.workspaceId].composers[target.threadId].$$body = newBody;
+      if (newBody.length === 0) {
+        actions.stopTyping(store, { target });
+        actions.isTyping.cancel();
+      } else if (newBody.length !== body.length) {
+        actions.isTyping(store, { target });
+      }
     });
   }
 }

@@ -89,6 +89,8 @@ export interface Timeline {
 export interface Composer {
   editor: LexicalEditor;
   $$body: string;
+  isTypingTimeoutID?: number | NodeJS.Timeout;
+  isTyping: { [endUserId: string]: boolean };
 }
 
 export interface Workspace {
