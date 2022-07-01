@@ -40,7 +40,9 @@ export function CommentList(props: {
 
   const reactionEvents = events.filter((event) => event.type === 'reaction');
 
-  const messageEvents = events.filter((event) => event.type === 'message');
+  const messageEvents = events.filter(
+    (event) => event.type === 'message' || event.type === 'system'
+  );
 
   const reactions = reactionEvents.reduce<{ [parentId: string]: { [createdById: string]: Event } }>(
     (reactions, event, i) => {
@@ -99,7 +101,9 @@ export function CommentList(props: {
 
   return (
     <StyledCommentList
-      style={composerHeight > -1 ? { maxHeight: `calc(100% - ${composerHeight + 2}px)` } : {}}
+      style={
+        composerHeight > -1 ? { maxHeight: `calc(100% - ${composerHeight + 2}px - 35px)` } : {}
+      }
     >
       <ScrollArea.Root style={{ ...(props.type === 'popout' ? { height: 352 } : {}) }}>
         <ScrollArea.Viewport
@@ -134,6 +138,7 @@ export function CommentList(props: {
                   target={{ type: 'comment', eventId: event.id, workspaceId, threadId }}
                 >
                   <Comment
+                    event={event}
                     reactions={reactions[event.id]}
                     threadType={props.type ?? 'inline'}
                     type={type}

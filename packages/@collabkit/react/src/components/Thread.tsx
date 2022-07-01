@@ -46,7 +46,6 @@ const StyledThread = styled('div', {
       isEmpty: true,
       css: {
         height: 'auto',
-        // height: '48px',
       },
     },
   ],
@@ -173,8 +172,6 @@ function _Thread(props: {
     systemEventIds.length > 0 &&
     timeline[systemEventIds[systemEventIds.length - 1]].system === 'resolve';
 
-  console.log({ isResolved });
-
   return (
     <div
       ref={ref}
@@ -221,7 +218,7 @@ function _Thread(props: {
                 {!isResolved ? (
                   <Check color={theme.colors.neutral12.toString()} />
                 ) : (
-                  <CheckCircle color={theme.colors.accent10.toString()} weight="fill" />
+                  <CheckCircle size={24} color={theme.colors.accent10.toString()} weight="fill" />
                 )}
               </IconButton>
               <IconButton
