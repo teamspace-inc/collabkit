@@ -72,6 +72,16 @@ export function createEvents(store: Store) {
         case 'commentButton': {
           break;
         }
+        case 'closeThreadButton': {
+        }
+        case 'resolveThreadButton': {
+          actions.resolve(store, props.target.workspaceId, props.target.threadId);
+          break;
+        }
+        case 'reopenThreadButton': {
+          actions.open(store, props.target.workspaceId, props.target.threadId);
+          break;
+        }
       }
     },
 

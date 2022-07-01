@@ -65,6 +65,7 @@ import { events } from './events';
 import { Home } from './Home';
 import { PopoutWrapper } from './Popout';
 import { theme } from './UIKit';
+import React from 'react';
 
 store.subs['user'] = onAuthStateChanged(auth, (user) => {
   store.user = user;
@@ -253,7 +254,29 @@ function App() {
                   mentions={mentions}
                 >
                   <CollabKit.Workspace workspaceId={params.workspace_id}>
-                    <CollabKit.Thread threadId={params.thread_id} style={{ maxHeight: '440px' }} />
+                    <CollabKit.Thread threadId={params.thread_id} style={{ height: '440px' }} />
+                  </CollabKit.Workspace>
+                </CollabKit.App>
+              </div>
+              <div
+                style={{
+                  padding: '2rem',
+                  borderRadius: '24px',
+                  background: theme.colors.neutral12.toString(),
+                }}
+              >
+                <h3 style={{ color: 'rgba(0,0,0,0.25)', marginTop: 0 }}>CollabKit.Inbox</h3>
+                <p style={{ color: 'rgba(0,0,0,0.4)' }}>
+                  A list of all the threads for a workspace.
+                </p>
+                <CollabKit.App
+                  token={Object.keys(app.keys)[0]}
+                  appId={app.appId}
+                  identity={identity2}
+                  mentions={mentions}
+                >
+                  <CollabKit.Workspace workspaceId={params.workspace_id}>
+                    <CollabKit.Inbox />
                   </CollabKit.Workspace>
                 </CollabKit.App>
               </div>

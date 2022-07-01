@@ -20,15 +20,37 @@ export type Target =
   | ThreadTarget
   | CommentButtonTarget
   | CommentTarget
-  | CommentReactionTarget;
+  | CommentReactionTarget
+  | ThreadResolveButtonTarget
+  | ThreadCloseButtonTarget
+  | ReopenThreadButtonTarget;
 
 export type ComposerTarget = { type: 'composer'; threadId: string; workspaceId: string };
 export type ThreadTarget = { type: 'thread'; threadId: string; workspaceId: string };
 export type CommentButtonTarget = { type: 'commentButton'; threadId: string; workspaceId: string };
+
 export type CommentReactionTarget = {
   type: 'commentReaction';
   emoji: string;
   comment: CommentTarget;
+};
+
+export type ThreadResolveButtonTarget = {
+  type: 'resolveThreadButton';
+  threadId: string;
+  workspaceId: string;
+};
+
+export type ReopenThreadButtonTarget = {
+  type: 'reopenThreadButton';
+  threadId: string;
+  workspaceId: string;
+};
+
+export type ThreadCloseButtonTarget = {
+  type: 'closeThreadButton';
+  threadId: string;
+  workspaceId: string;
 };
 
 export type CommentTarget = {
@@ -38,13 +60,14 @@ export type CommentTarget = {
   eventId: string;
 };
 
-export interface Event {
-  type: 'message' | 'reaction';
+export type Event = {
+  type: 'message' | 'reaction' | 'adminMessage' | 'system';
   body: string;
+  system?: 'resolve' | 'reopen';
   createdAt: number | object;
   createdById: string;
   parentId?: string;
-}
+};
 
 export type WithID<T> = T & {
   id: string;

@@ -1,6 +1,6 @@
 import { FlexCenter, styled, theme } from './UIKit';
 import { useContext, useEffect, useRef, useState } from 'react';
-import { IconContext, X, ChatCircle } from 'phosphor-react';
+import { IconContext, X, ChatCircle, Check, CheckCircle } from 'phosphor-react';
 import React from 'react';
 import { useSnapshot } from 'valtio';
 import { Composer } from './Composer';
@@ -36,26 +36,40 @@ const StyledThread = styled('div', {
         boxShadow: '0px 12px 24px rgba(0,0,0,0.04)',
       },
     },
+    isEmpty: {
+      true: {},
+    },
   },
+  compoundVariants: [
+    {
+      type: 'popout',
+      isEmpty: true,
+      css: {
+        height: 'auto',
+        // height: '48px',
+      },
+    },
+  ],
 });
 
 const StyledThreadHeader = styled('div', {
-  height: 40,
+  height: 30,
   display: 'flex',
   gap: 0,
   padding: '3px 3px',
   alignItems: 'center',
   pointerEvents: 'none',
+  borderBottom: '1px solid $neutral4',
   variants: {
     type: {
       popout: {
-        borderTopRightRadius: 11,
-        borderTopLeftRadius: 11,
-        position: 'absolute',
-        left: 0,
-        top: 0,
-        right: 0,
-        zIndex: 99,
+        // borderTopRightRadius: 11,
+        // borderTopLeftRadius: 11,
+        // position: 'absolute',
+        // left: 0,
+        // top: 0,
+        // right: 0,
+        // zIndex: 99,
       },
     },
   },
@@ -89,14 +103,12 @@ const NullState = styled('div', {
 function IconButton(props: {
   children: React.ReactNode;
   tooltip: string;
-  onCloseButtonClick?: (e: React.MouseEvent) => void;
+  onClick?: (e: React.MouseEvent) => void;
 }) {
   return (
     <Tooltip.Root>
       <Tooltip.Trigger>
-        <StyledIconButton onClick={(e) => props.onCloseButtonClick?.(e)}>
-          {props.children}
-        </StyledIconButton>
+        <StyledIconButton onClick={(e) => props.onClick?.(e)}>{props.children}</StyledIconButton>
       </Tooltip.Trigger>
       <Tooltip.Content>
         {props.tooltip}
@@ -142,6 +154,27 @@ function _Thread(props: {
     }
   }, [workspaceId, props.threadId, appState]);
 
+  if (!workspaceId) {
+    return null;
+  }
+
+  const target = { type: 'thread', threadId, workspaceId } as const;
+
+  const systemEventIds = timeline
+    ? Object.keys(timeline).filter(
+        (eventId) =>
+          (timeline[eventId].type === 'system' && timeline[eventId].system === 'resolve') ||
+          timeline[eventId].system === 'reopen'
+      )
+    : [];
+
+  const isResolved =
+    timeline &&
+    systemEventIds.length > 0 &&
+    timeline[systemEventIds[systemEventIds.length - 1]].system === 'resolve';
+
+  console.log({ isResolved });
+
   return (
     <div
       ref={ref}
@@ -160,9 +193,9 @@ function _Thread(props: {
         ...props.style,
       }}
     >
-      <StyledThread type={props.type}>
-        {!isConnected ? <FlexCenter /> : null}
-        {isConnected && isEmpty ? (
+      <StyledThread type={props.type} isEmpty={isEmpty}>
+        {!isConnected && props.type !== 'popout' ? <FlexCenter /> : null}
+        {isConnected && isEmpty && props.type !== 'popout' ? (
           <FlexCenter>
             <NullState>
               <ChatCircle weight="fill" size={60} color={theme.colors.neutral8.toString()} />
@@ -171,10 +204,34 @@ function _Thread(props: {
           </FlexCenter>
         ) : null}
         <IconContext.Provider value={{ size: '20px' }}>
-          {props.type === 'popout' && (
+          {props.type === 'popout' && !isEmpty && (
             <StyledThreadHeader type={props.type}>
               <StyledHeaderLeftGroup />
-              <IconButton tooltip="Close" onCloseButtonClick={(e) => props.onCloseButtonClick?.(e)}>
+              <IconButton
+                tooltip={isResolved ? 'Re-open' : 'Resolve'}
+                onClick={(e) =>
+                  events.onClick(e, {
+                    target: {
+                      ...target,
+                      type: isResolved ? 'reopenThreadButton' : 'resolveThreadButton',
+                    } as const,
+                  })
+                }
+              >
+                {!isResolved ? (
+                  <Check color={theme.colors.neutral12.toString()} />
+                ) : (
+                  <CheckCircle color={theme.colors.accent10.toString()} weight="fill" />
+                )}
+              </IconButton>
+              <IconButton
+                tooltip="Close"
+                onClick={(e) => {
+                  // if called from a button we need to use this
+                  props.onCloseButtonClick?.(e);
+                  events.onClick(e, { target });
+                }}
+              >
                 <X color={theme.colors.neutral12.toString()} />
               </IconButton>
             </StyledThreadHeader>
@@ -193,10 +250,16 @@ function _Thread(props: {
           )}
           {workspaceId && workspace ? (
             <Composer
-              style={{ position: 'absolute', bottom: 0, left: 0, right: 0 }}
+              style={
+                isEmpty && props.type === 'popout'
+                  ? {}
+                  : { position: 'absolute', bottom: 0, left: 0, right: 0 }
+              }
               workspace={workspace}
+              hasComments={!isEmpty}
               workspaceId={workspaceId}
               onHeightChange={setTextareaHeight}
+              type={props.type}
               profile={profiles[userId]}
               threadId={props.threadId}
               isFloating={false}
