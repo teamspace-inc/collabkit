@@ -1,7 +1,7 @@
 import { Event, Profile } from '../constants';
 import { Avatar } from './Avatar';
 import { styled, theme } from './UIKit';
-import { Smiley } from 'phosphor-react';
+import { CheckCircle, Circle, RadioButton, Smiley } from 'phosphor-react';
 import { useContext, useState } from 'react';
 import { Target, TargetContext } from './Target';
 import { useSnapshot } from 'valtio';
@@ -30,6 +30,9 @@ export const StyledComment = styled('div', {
       },
       'inline-end': {
         padding: '1px 10px 5px',
+      },
+      system: {
+        padding: '5px 10px 5px',
       },
     },
   },
@@ -281,6 +284,28 @@ const Bubbles = styled('div', {
   position: 'relative',
 });
 
+const SystemMessageText = styled('span', {
+  display: 'flex',
+  gap: '5px',
+  padding: '0px 0 0px',
+  color: '$neutral10',
+  alignItems: 'center',
+});
+
+function SystemBody(props: { event: Event }) {
+  return props.event.system === 'resolve' ? (
+    <SystemMessageText>
+      <CheckCircle size={19} weight="fill" color={theme.colors.accent10.toString()} />
+      Marked as Resolved
+    </SystemMessageText>
+  ) : (
+    <SystemMessageText>
+      <RadioButton size={19} weight="regular" color={theme.colors.neutral6.toString()} />
+      Reopened this thread
+    </SystemMessageText>
+  );
+}
+
 export function TypingIndicator(props: { profile: Profile }) {
   return (
     <StyledComment type={'default'}>
@@ -304,6 +329,7 @@ export function Comment(props: {
   reactions: { [createdById: string]: Event };
   timestamp: number | object;
   body: string;
+  event: Event;
   profile: Profile;
   type: 'default' | 'inline' | 'inline-start' | 'inline-end';
   threadType: 'inline' | 'popout';
@@ -320,6 +346,10 @@ export function Comment(props: {
     return null;
   }
 
+  // if (props.event.type === 'system') {
+  //   return <SystemMessage event={props.event} profile={props.profile} />;
+  // }
+
   const emojiReactionPicker = targetEqual(reactingId, target) ? (
     <ReactionPicker>
       {emojiReacts.map((emoji) => (
@@ -331,6 +361,12 @@ export function Comment(props: {
   ) : null;
 
   const showProfile = props.type === 'default' || props.type === 'inline-start';
+
+  const body = props.event.type === 'system' ? <SystemBody event={props.event} /> : props.body;
+
+  if (props.event.type === 'system') {
+    return null;
+  }
 
   return props.profile ? (
     <StyledComment
@@ -359,7 +395,7 @@ export function Comment(props: {
                 </StyledMessageTimestamp>
               </StyledName>
             )}
-            {props.body}
+            {body}
             <Reactions reactions={props.reactions} />
           </StyledMessage>
           <MessageToolbar isVisible={isHovering} />
