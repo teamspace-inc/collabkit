@@ -57,11 +57,18 @@ const StyledComposerSendButton = styled(Tooltip.Trigger, {
   height: 24,
   position: 'absolute',
   right: 10,
-  top: 11,
+  top: 12,
   borderRadius: 24,
   border: 'none',
 
   variants: {
+    type: {
+      popout: {},
+    },
+    hasComments: {
+      true: {},
+      false: {},
+    },
     disabled: {
       true: {
         backgroundColor: '$neutral8',
@@ -71,10 +78,32 @@ const StyledComposerSendButton = styled(Tooltip.Trigger, {
       },
     },
   },
+  compoundVariants: [
+    {
+      type: 'popout',
+      hasComments: false,
+      css: {
+        // position: 'unset',
+        // top: 'unset',
+        // right: 'unset',
+        // width: 'auto',
+        // color: '$neutral1',
+        // fontWeight: 500,
+        // fontFamily: 'Inter',
+        // gap: '2px',
+        // padding: '0px 10px',
+        // lineHeight: '24px',
+      },
+    },
+  ],
 });
 
-function Placeholder() {
-  return <div className="editor-placeholder">Write a comment...</div>;
+function Placeholder(props: { hasComments: boolean }) {
+  return (
+    <div className="editor-placeholder">
+      {props.hasComments ? 'Reply or add others with @' : 'Add a new comment'}
+    </div>
+  );
 }
 
 export function createEditorConfig() {
@@ -90,16 +119,38 @@ const ComposerContainer = styled('div', {
   minHeight: 8 * 2 + 20, // default composer height
   position: 'relative',
   display: 'flex',
-  flex: 0,
+  flex: 1,
   alignItems: 'start',
   background: '$neutral1',
   borderBottomLeftRadius: 11,
   borderBottomRightRadius: 11,
-  borderTop: `1px solid $neutral6`,
+
+  variants: {
+    hasComments: {
+      true: {
+        borderTop: `1px solid $neutral4`,
+      },
+      false: {
+        borderRadius: 11,
+      },
+    },
+    type: {
+      popout: {},
+    },
+  },
+  // compoundVariants: [
+  //   {
+  //     type: 'popout',
+  //     hasComments: false,
+  //     css: {
+  //       minHeight: 8 * 2 + 20 + 60,
+  //     },
+  //   },
+  // ],
 });
 
 const StyledLexicalEditorContainer = styled('div', {
-  borderRadius: 6,
+  borderRadius: 0,
   width: 'calc(100% - 35px)', // take into account send button
   color: 'black',
   marginLeft: 0,
@@ -113,14 +164,37 @@ const StyledLexicalEditorContainer = styled('div', {
   lineHeight: '20px',
   fontWeight: 400,
   textAlign: 'left',
+  variants: {
+    type: {
+      popout: {},
+    },
+    hasComments: {
+      true: {},
+      false: {},
+    },
+  },
+  compoundVariants: [
+    {
+      type: 'popout',
+      hasComments: false,
+      css: {
+        borderTopLeftRadius: 11,
+        borderTopRightRadius: 11,
+        borderBottomLeftRadius: 11,
+        borderBottomRightRadius: 11,
+      },
+    },
+  ],
 });
 
 export function Composer(props: {
   profile?: Profile;
   workspaceId: string;
   threadId: string;
+  type: 'popout' | undefined;
   isFloating: boolean;
   workspace: Workspace;
+  hasComments: boolean;
   style?: React.CSSProperties;
   onHeightChange: (height: number) => void;
 }) {
@@ -159,9 +233,11 @@ export function Composer(props: {
   }
 
   return (
-    <ComposerContainer style={props.style}>
+    <ComposerContainer style={props.style} hasComments={props.hasComments} type={props.type}>
       <LexicalComposer initialConfig={initialConfig}>
         <StyledLexicalEditorContainer
+          type={props.type}
+          hasComments={props.hasComments}
           className="editor-container"
           ref={editorContainerRef}
           onFocus={(e) => events.onFocus(e, { target })}
@@ -246,7 +322,7 @@ export function Composer(props: {
           </style>
           <PlainTextPlugin
             contentEditable={<ContentEditable className="editor-input" />}
-            placeholder={<Placeholder />}
+            placeholder={<Placeholder hasComments={props.hasComments} />}
           />
           <OnChangePlugin
             onChange={(editorState) => {
@@ -260,6 +336,8 @@ export function Composer(props: {
       </LexicalComposer>
       <Tooltip.Root>
         <StyledComposerSendButton
+          type={props.type}
+          hasComments={props.hasComments}
           disabled={bodyLength === 0}
           onClick={(e) => {
             if (bodyLength > 0) {
@@ -267,6 +345,7 @@ export function Composer(props: {
             }
           }}
         >
+          {props.type === 'popout' && !props.hasComments ? '' : ''}
           <ArrowUp
             size={14}
             color={'white'}
@@ -275,7 +354,7 @@ export function Composer(props: {
           />
         </StyledComposerSendButton>
         <Tooltip.Content>
-          Send
+          Post
           <Tooltip.Arrow />
         </Tooltip.Content>
       </Tooltip.Root>

@@ -202,6 +202,186 @@ function subscribeThreadIsTyping(store: Store, workspaceId: string, threadId: st
   }
 }
 
+async function sendMessage(store: Store, workspaceId: string, threadId: string) {
+  if (!store.config.identify) {
+    console.warn('[CollabKit] Did you forget to call CollabKit.identify?');
+    return;
+  }
+
+  const { editor } = store.workspaces[workspaceId].composers[threadId];
+
+  const body = editor.getEditorState().read(() => $getRoot().getTextContent(false));
+
+  if (body.trim().length === 0) {
+    // can't send empty messages
+    return;
+  }
+
+  editor.update(() => $getRoot().getChildren()[0].replace($createTextNode('')));
+
+  console.log('sending message', body);
+
+  // close emoji picker on send
+  store.reactingId = null;
+
+  // todo optimistic send
+  try {
+    const event: Event = {
+      type: 'message',
+      body: body,
+      createdAt: serverTimestamp(),
+      createdById: store.config.identify.userId,
+    };
+    const eventRef = await push(timelineRef(store, workspaceId, threadId), event);
+    if (eventRef.key) {
+      store.workspaces[workspaceId].timeline[threadId] ||= {};
+      store.workspaces[workspaceId].timeline[threadId][eventRef.key] = {
+        ...event,
+        createdAt: +Date.now(),
+      };
+      actions.stopTyping(store, { target: { type: 'composer', workspaceId, threadId } });
+    } else {
+      console.error('CollabKit: failed to send message');
+      // handle failure here
+    }
+  } catch (e) {
+    console.error(e);
+    // handle failure here
+  }
+}
+
+async function saveProfile(store: Store) {
+  const { config } = store;
+
+  if (!config.setup) {
+    console.warn('[CollabKit] Did you forget to call `CollabKit.setup`?');
+    return;
+  }
+
+  if (!config.identify) {
+    console.warn('[CollabKit] Did you forget to call `CollabKit.identify`?');
+    return;
+  }
+
+  try {
+    const color = getRandomColor();
+
+    let profile: Partial<IdentifyProps> & { color: Color } = { ...config.identify, color };
+
+    delete profile.workspaceId;
+    delete profile.workspaceName;
+    delete profile.userId;
+
+    let workspace: Pick<IdentifyProps, 'workspaceId' | 'workspaceName'> = {
+      workspaceId: config.identify.workspaceId,
+    };
+
+    // only if the user has explicitly passed workspaceName do
+    // we want to apply it as a change
+    if (config.identify.hasOwnProperty('workspaceName')) {
+      workspace.workspaceName = config.identify.workspaceName;
+    }
+
+    await update(
+      ref(
+        getDatabase(CollabKitFirebaseApp),
+        `/workspaces/${config.setup.appId}/${config.identify.workspaceId}/`
+      ),
+      workspace
+    );
+
+    await set(
+      ref(
+        getDatabase(CollabKitFirebaseApp),
+        `/workspaces/${config.setup.appId}/${config.identify.workspaceId}/profiles/${config.identify.userId}`
+      ),
+      true
+    );
+
+    await set(
+      ref(
+        getDatabase(CollabKitFirebaseApp),
+        `/profiles/${config.setup.appId}/${config.identify.userId}`
+      ),
+      profile
+    );
+
+    store.profiles[config.identify.userId] = profile;
+
+    if (store.appState === 'config') {
+      store.appState = 'ready';
+    }
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+async function open(store: Store, workspaceId: string, threadId: string) {
+  if (!store.config.identify) {
+    console.warn('[CollabKit] Did you forget to call CollabKit.identify?');
+    return;
+  }
+
+  // todo optimistic send
+  try {
+    const event: Event = {
+      type: 'system',
+      body: '',
+      system: 'reopen',
+      createdAt: serverTimestamp(),
+      createdById: store.config.identify.userId,
+    };
+    const eventRef = await push(timelineRef(store, workspaceId, threadId), event);
+    if (eventRef.key) {
+      store.workspaces[workspaceId].timeline[threadId] ||= {};
+      store.workspaces[workspaceId].timeline[threadId][eventRef.key] = {
+        ...event,
+        createdAt: +Date.now(),
+      };
+      actions.stopTyping(store, { target: { type: 'composer', workspaceId, threadId } });
+    } else {
+      console.error('CollabKit: failed to open thread');
+      // handle failure here
+    }
+  } catch (e) {
+    console.error(e);
+    // handle failure here
+  }
+}
+
+async function resolve(store: Store, workspaceId: string, threadId: string) {
+  if (!store.config.identify) {
+    console.warn('[CollabKit] Did you forget to call CollabKit.identify?');
+    return;
+  }
+
+  // todo optimistic send
+  try {
+    const event: Event = {
+      type: 'system',
+      body: '',
+      system: 'resolve',
+      createdAt: serverTimestamp(),
+      createdById: store.config.identify.userId,
+    };
+    const eventRef = await push(timelineRef(store, workspaceId, threadId), event);
+    if (eventRef.key) {
+      store.workspaces[workspaceId].timeline[threadId] ||= {};
+      store.workspaces[workspaceId].timeline[threadId][eventRef.key] = {
+        ...event,
+        createdAt: +Date.now(),
+      };
+      actions.stopTyping(store, { target: { type: 'composer', workspaceId, threadId } });
+    } else {
+      console.error('CollabKit: failed to resolve thread');
+      // handle failure here
+    }
+  } catch (e) {
+    console.error(e);
+    // handle failure here
+  }
+}
+
 function getIsTypingRef(appId: string, workspaceId: string, threadId: string, userId: string) {
   return ref(
     getDatabase(CollabKitFirebaseApp),
@@ -231,6 +411,61 @@ async function stopTyping(store: Store, props: { target: ComposerTarget }) {
       config.identify.userId
     )
   );
+}
+
+async function authenticate(store: Store) {
+  const { config } = store;
+  if (!config.setup) {
+    console.warn('Did you forget to call `CollabKit.setup`?');
+    return;
+  }
+  const auth = await generateToken(config.setup.appId, config.setup.apiKey, config.setup.mode);
+
+  if (auth !== null) {
+    store.token = auth.token;
+
+    // use this code to tell the user what mode their app is running in
+    // and if it's been configured properly
+    //
+    try {
+      const userCredential = await signInWithCustomToken(
+        getAuth(CollabKitFirebaseApp),
+        store.token
+      );
+
+      const result = await userCredential.user.getIdTokenResult();
+      const mode = result.claims.mode;
+
+      console.log('mode', mode);
+      console.log('signed in', userCredential);
+    } catch (e) {
+      console.error('failed to sign in', e);
+    }
+
+    // todo handle spotty network
+    try {
+      // this should be an onValue sub
+      const snapshot = await get(
+        ref(
+          getDatabase(CollabKitFirebaseApp),
+          `/profiles/${config.setup.appId}/${config.identify?.workspaceId}`
+        )
+      );
+      const workspaceId = snapshot.key;
+      if (workspaceId) {
+        snapshot.forEach((child) => {
+          const profile = child.val();
+          if (workspaceId) {
+            store.profiles[profile.id] = profile;
+          }
+        });
+      }
+    } catch (e) {
+      console.error('collabkit.setup failed', e);
+    }
+  } else {
+    console.error('failed to auth', auth);
+  }
 }
 
 function onTimelineEventAdded(store: Store, snapshot: DataSnapshot) {
@@ -331,126 +566,9 @@ export const actions = {
 
   subscribeProfiles,
 
-  saveProfile: async (store: Store) => {
-    const { config } = store;
+  saveProfile,
 
-    if (!config.setup) {
-      console.warn('[CollabKit] Did you forget to call `CollabKit.setup`?');
-      return;
-    }
-
-    if (!config.identify) {
-      console.warn('[CollabKit] Did you forget to call `CollabKit.identify`?');
-      return;
-    }
-
-    try {
-      const color = getRandomColor();
-
-      let profile: Partial<IdentifyProps> & { color: Color } = { ...config.identify, color };
-
-      delete profile.workspaceId;
-      delete profile.workspaceName;
-      delete profile.userId;
-
-      let workspace: Pick<IdentifyProps, 'workspaceId' | 'workspaceName'> = {
-        workspaceId: config.identify.workspaceId,
-      };
-
-      // only if the user has explicitly passed workspaceName do
-      // we want to apply it as a change
-      if (config.identify.hasOwnProperty('workspaceName')) {
-        workspace.workspaceName = config.identify.workspaceName;
-      }
-
-      await update(
-        ref(
-          getDatabase(CollabKitFirebaseApp),
-          `/workspaces/${config.setup.appId}/${config.identify.workspaceId}/`
-        ),
-        workspace
-      );
-
-      await set(
-        ref(
-          getDatabase(CollabKitFirebaseApp),
-          `/workspaces/${config.setup.appId}/${config.identify.workspaceId}/profiles/${config.identify.userId}`
-        ),
-        true
-      );
-
-      await set(
-        ref(
-          getDatabase(CollabKitFirebaseApp),
-          `/profiles/${config.setup.appId}/${config.identify.userId}`
-        ),
-        profile
-      );
-
-      store.profiles[config.identify.userId] = profile;
-
-      if (store.appState === 'config') {
-        store.appState = 'ready';
-      }
-    } catch (e) {
-      console.error(e);
-    }
-  },
-
-  authenticate: async (store: Store) => {
-    const { config } = store;
-    if (!config.setup) {
-      console.warn('Did you forget to call `CollabKit.setup`?');
-      return;
-    }
-    const auth = await generateToken(config.setup.appId, config.setup.apiKey, config.setup.mode);
-
-    if (auth !== null) {
-      store.token = auth.token;
-
-      // use this code to tell the user what mode their app is running in
-      // and if it's been configured properly
-      //
-      try {
-        const userCredential = await signInWithCustomToken(
-          getAuth(CollabKitFirebaseApp),
-          store.token
-        );
-
-        const result = await userCredential.user.getIdTokenResult();
-        const mode = result.claims.mode;
-
-        console.log('mode', mode);
-        console.log('signed in', userCredential);
-      } catch (e) {
-        console.error('failed to sign in', e);
-      }
-
-      // todo handle spotty network
-      try {
-        // this should be an onValue sub
-        const snapshot = await get(
-          ref(
-            getDatabase(CollabKitFirebaseApp),
-            `/profiles/${config.setup.appId}/${config.identify?.workspaceId}`
-          )
-        );
-        const workspaceId = snapshot.key;
-        if (workspaceId) {
-          snapshot.forEach((child) => {
-            const profile = child.val();
-            if (workspaceId) {
-              store.profiles[profile.id] = profile;
-            }
-          });
-        }
-      } catch (e) {
-        console.error('collabkit.setup failed', e);
-      }
-    } else {
-      console.error('failed to auth', auth);
-    }
-  },
+  authenticate,
 
   focus: (store: Store, target: Target) => {
     store.focusedId = target;
@@ -577,51 +695,9 @@ export const actions = {
   //   document.removeEventListener('keydown', events.onKeyDown);
   // },
 
-  sendMessage: async (store: Store, workspaceId: string, threadId: string) => {
-    if (!store.config.identify) {
-      console.warn('[CollabKit] Did you forget to call CollabKit.identify?');
-      return;
-    }
+  open,
 
-    const { editor } = store.workspaces[workspaceId].composers[threadId];
+  resolve,
 
-    const body = editor.getEditorState().read(() => $getRoot().getTextContent(false));
-
-    if (body.trim().length === 0) {
-      // can't send empty messages
-      return;
-    }
-
-    editor.update(() => $getRoot().getChildren()[0].replace($createTextNode('')));
-
-    console.log('sending message', body);
-
-    // close emoji picker on send
-    store.reactingId = null;
-
-    // todo optimistic send
-    try {
-      const event: Event = {
-        type: 'message',
-        body: body,
-        createdAt: serverTimestamp(),
-        createdById: store.config.identify.userId,
-      };
-      const eventRef = await push(timelineRef(store, workspaceId, threadId), event);
-      if (eventRef.key) {
-        store.workspaces[workspaceId].timeline[threadId] ||= {};
-        store.workspaces[workspaceId].timeline[threadId][eventRef.key] = {
-          ...event,
-          createdAt: +Date.now(),
-        };
-        actions.stopTyping(store, { target: { type: 'composer', workspaceId, threadId } });
-      } else {
-        console.error('failed to send message');
-        // handle failure here
-      }
-    } catch (e) {
-      console.error(e);
-      // handle failure here
-    }
-  },
+  sendMessage,
 };
