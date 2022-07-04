@@ -125,6 +125,8 @@ const StyledHeaderLeftGroup = styled('div', {
   gap: 0,
 });
 
+export const MODAL_Z_INDEX = 4;
+
 function _Thread(props: {
   threadId: string;
   type?: 'popout';
@@ -136,7 +138,7 @@ function _Thread(props: {
     return null;
   }
   const { threadId } = props;
-  const { profiles, appState, config, isConnected } = useSnapshot(store);
+  const { profiles, appState, config, isConnected, reactingId } = useSnapshot(store);
   const userId = config.identify!.userId;
   // const profile = userId ? profiles[userId] : null;
 
@@ -193,6 +195,21 @@ function _Thread(props: {
         ...props.style,
       }}
     >
+      {reactingId ? (
+        <div
+          onClick={(e) => events.onEmojiReactionPickerModalBackgroundClick(e)}
+          style={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            bottom: 0,
+            top: 0,
+            background: 'rgba(0,0,0,0.5',
+            zIndex: MODAL_Z_INDEX,
+            borderRadius: 11,
+          }}
+        ></div>
+      ) : null}
       <StyledThread type={props.type} isEmpty={isEmpty}>
         {!isConnected && props.type !== 'popout' ? <FlexCenter /> : null}
         {isConnected && isEmpty && props.type !== 'popout' ? (
