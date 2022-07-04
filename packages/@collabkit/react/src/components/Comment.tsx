@@ -6,10 +6,15 @@ import { useContext, useRef, useState } from 'react';
 import { Target, TargetContext } from './Target';
 import { useSnapshot } from 'valtio';
 import { timeDifference } from '../utils/timeDifference';
-import { targetEqual } from '../utils/targetEqual';
+import { isSameComment } from '../utils/isSameComment';
 import { useApp } from './App';
 import { keyframes } from '@stitches/react';
-import { intersectionStyles, useIntersectionObserver } from '../hooks/useIntersectionObserver';
+import {
+  intersectionStyles,
+  TLBoundsCorner,
+  TLBoundsEdge,
+  useIntersectionObserver,
+} from '../hooks/useIntersectionObserver';
 
 export const StyledComment = styled('div', {
   display: 'flex',
@@ -169,7 +174,30 @@ const StyledReactionPicker = styled(
     fontSize: '24px',
     zIndex: 999,
   },
-  intersectionStyles
+  {
+    variants: {
+      intersection: {
+        [TLBoundsEdge.Right]: {
+          opacity: 1,
+          transform: `translateX(calc(-100% + 1em))`,
+        },
+        [TLBoundsEdge.Bottom]: {
+          opacity: 1,
+          transform: `translateY(calc(100% + 50px))`,
+        },
+        [TLBoundsCorner.BottomRight]: {
+          opacity: 1,
+          transform: `translateY(calc(100% + 50px))`,
+        },
+        none: {
+          opacity: 1,
+        },
+        pending: {
+          opacity: 0,
+        },
+      },
+    },
+  }
 );
 
 const emojiReacts = ['👍', '❤️', '😂', '😮', '😢', '🙏'];
@@ -327,7 +355,7 @@ const loadingFade = keyframes({
   '100%': { opacity: 0, transform: 'scale(1)' },
 });
 
-const Bubble = styled('div', {
+const TypingDot = styled('div', {
   width: 5,
   height: 5,
   background: '$neutral9',
@@ -336,7 +364,7 @@ const Bubble = styled('div', {
   animation: `${loadingFade} 1.5s infinite`,
 });
 
-const Bubbles = styled('div', {
+const TypingDots = styled('div', {
   width: '28px',
   height: '20px',
   display: 'flex',
@@ -370,16 +398,16 @@ function SystemBody(props: { event: Event }) {
 
 export function TypingIndicator(props: { profile: Profile }) {
   return (
-    <StyledComment type={'default'}>
+    <StyledComment type={'default'} ui="bubbles">
       <Avatar profile={props.profile} style={{ position: 'relative', top: 4 }} />
-      <StyledCommentContainer style={{ left: 5 }}>
+      <StyledCommentContainer ui="bubbles" style={{ left: 5 }}>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <StyledMessage>
-            <Bubbles>
-              <Bubble style={{ animationDelay: '0s' }} />
-              <Bubble style={{ animationDelay: '0.2s' }} />
-              <Bubble style={{ animationDelay: '0.4s' }} />
-            </Bubbles>
+          <StyledMessage ui="bubbles">
+            <TypingDots>
+              <TypingDot style={{ animationDelay: '0s' }} />
+              <TypingDot style={{ animationDelay: '0.2s' }} />
+              <TypingDot style={{ animationDelay: '0.4s' }} />
+            </TypingDots>
           </StyledMessage>
         </div>
       </StyledCommentContainer>
@@ -412,7 +440,7 @@ export function Comment(props: {
   //   return <SystemMessage event={props.event} profile={props.profile} />;
   // }
 
-  const emojiReactionPicker = targetEqual(reactingId, target) ? (
+  const emojiReactionPicker = isSameComment(reactingId, target) ? (
     <ReactionPicker target={target} />
   ) : null;
 
