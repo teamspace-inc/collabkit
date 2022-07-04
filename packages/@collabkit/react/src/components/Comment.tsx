@@ -1,14 +1,15 @@
-import { Event, Profile } from '../constants';
+import { CommentTarget, Event, Profile } from '../constants';
 import { Avatar } from './Avatar';
 import { styled, theme } from './UIKit';
 import { CheckCircle, Circle, RadioButton, Smiley } from 'phosphor-react';
-import { useContext, useState } from 'react';
+import { useContext, useRef, useState } from 'react';
 import { Target, TargetContext } from './Target';
 import { useSnapshot } from 'valtio';
 import { timeDifference } from '../utils/timeDifference';
 import { targetEqual } from '../utils/targetEqual';
 import { useApp } from './App';
 import { keyframes } from '@stitches/react';
+import { intersectionStyles, useIntersectionObserver } from '../hooks/useIntersectionObserver';
 
 export const StyledComment = styled('div', {
   display: 'flex',
@@ -153,19 +154,23 @@ const MessageButton = styled('button', {
   },
 });
 
-const ReactionPicker = styled('div', {
-  padding: '5px 5px',
-  display: 'flex',
-  flexDirection: 'row',
-  borderRadius: '30px',
-  boxShadow: '0px 5px 20px rgba(0,0,0,0.1), 0px 1px 0px rgba(0,0,0,0.05)',
-  position: 'absolute',
-  top: '-45px',
-  left: '30px',
-  background: 'white',
-  fontSize: '24px',
-  zIndex: 999,
-});
+const StyledReactionPicker = styled(
+  'div',
+  {
+    padding: '5px 5px',
+    display: 'flex',
+    flexDirection: 'row',
+    borderRadius: '30px',
+    boxShadow: '0px 5px 20px rgba(0,0,0,0.1), 0px 1px 0px rgba(0,0,0,0.05)',
+    position: 'absolute',
+    top: '-45px',
+    left: '30px',
+    background: 'white',
+    fontSize: '24px',
+    zIndex: 999,
+  },
+  intersectionStyles
+);
 
 const emojiReacts = ['👍', '❤️', '😂', '😮', '😢', '🙏'];
 
@@ -182,6 +187,22 @@ const StyledEmojiReaction = styled('div', {
     background: '$neutral3',
   },
 });
+
+function ReactionPicker(props: { target: CommentTarget }) {
+  const ref = useRef(null);
+  const intersection = useIntersectionObserver(ref, [props.target]);
+  console.log({ intersection });
+
+  return (
+    <StyledReactionPicker ref={ref} intersection={intersection}>
+      {emojiReacts.map((emoji) => (
+        <Target key={emoji} target={{ type: 'commentReaction', comment: props.target, emoji }}>
+          <EmojiReaction emoji={emoji} />
+        </Target>
+      ))}
+    </StyledReactionPicker>
+  );
+}
 
 function EmojiReaction(props: { emoji: string }) {
   const { events } = useApp();
@@ -392,13 +413,7 @@ export function Comment(props: {
   // }
 
   const emojiReactionPicker = targetEqual(reactingId, target) ? (
-    <ReactionPicker>
-      {emojiReacts.map((emoji) => (
-        <Target key={emoji} target={{ type: 'commentReaction', comment: target, emoji }}>
-          <EmojiReaction emoji={emoji} />
-        </Target>
-      ))}
-    </ReactionPicker>
+    <ReactionPicker target={target} />
   ) : null;
 
   const showProfile = props.type === 'default' || props.type === 'inline-start';

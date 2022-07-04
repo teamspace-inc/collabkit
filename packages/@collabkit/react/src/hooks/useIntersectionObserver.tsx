@@ -31,11 +31,11 @@ export const intersectionStyles = css({
       },
       [TLBoundsEdge.Bottom]: {
         opacity: 1,
-        transform: `translateY(calc(-100% - 2em))`,
+        transform: `translateY(200%)`,
       },
       [TLBoundsCorner.BottomRight]: {
         opacity: 1,
-        transform: `translate(-100%, -100%)`,
+        transform: `translateY(200%)`,
       },
       none: {
         opacity: 1,
