@@ -1,7 +1,7 @@
 import { CommentTarget, Event, Profile } from '../constants';
 import { Avatar } from './Avatar';
 import { styled, theme } from './UIKit';
-import { CheckCircle, Circle, RadioButton, Smiley } from 'phosphor-react';
+import { CheckCircle, RadioButton, Smiley } from 'phosphor-react';
 import { useContext, useRef, useState } from 'react';
 import { Target, TargetContext } from './Target';
 import { useSnapshot } from 'valtio';
@@ -10,11 +10,11 @@ import { isSameComment } from '../utils/isSameComment';
 import { useApp } from './App';
 import { keyframes } from '@stitches/react';
 import {
-  intersectionStyles,
   TLBoundsCorner,
   TLBoundsEdge,
   useIntersectionObserver,
 } from '../hooks/useIntersectionObserver';
+import { MODAL_Z_INDEX } from './Thread';
 
 export const StyledComment = styled('div', {
   display: 'flex',
@@ -326,7 +326,7 @@ function Reactions(props: { reactions: { [createdById: string]: Event } }) {
   }
   // const { profiles } = useSnapshot(store);
 
-  return props.reactions ? (
+  return hasReactions(props.reactions) ? (
     <StyledReactions>
       {Object.keys(props.reactions).map((createdById, i) =>
         props.reactions[createdById].body.length > 0 ? (
@@ -452,15 +452,18 @@ export function Comment(props: {
     return null;
   }
 
+  const zStyles = { zIndex: MODAL_Z_INDEX + 1 };
+
   return props.profile ? (
     <StyledComment
+      style={isSameComment(reactingId, target) ? zStyles : {}}
       ui="bubbles"
       type={props.type}
       threadType={props.threadType}
       onMouseOver={() => setIsHovering(true)}
       onMouseOut={() => setIsHovering(false)}
     >
-      <StyledCommentContainer ui="bubbles">
+      <StyledCommentContainer style={isSameComment(reactingId, target) ? zStyles : {}} ui="bubbles">
         {showProfile && <Avatar profile={props.profile} style={{ position: 'relative', top: 4 }} />}
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <StyledMessage

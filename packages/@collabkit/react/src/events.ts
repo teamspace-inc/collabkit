@@ -63,6 +63,10 @@ export function createEvents(store: Store) {
     //   }
     // },
 
+    onEmojiReactionPickerModalBackgroundClick: (e: React.MouseEvent) => {
+      store.reactingId = null;
+    },
+
     onFocus: (e: React.FocusEvent, props: { target: Target }) => {
       actions.focus(store, props.target);
     },
