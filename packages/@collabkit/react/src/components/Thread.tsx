@@ -140,7 +140,7 @@ function _Thread(props: {
   const userId = config.identify!.userId;
   // const profile = userId ? profiles[userId] : null;
 
-  const [textareaHeight, setTextareaHeight] = useState(-1);
+  const [composerHeight, setTextareaHeight] = useState(-1);
 
   const { workspace, workspaceId } = useContext(WorkspaceContext);
   const timeline = workspace ? workspace.timeline[props.threadId] : null;
@@ -193,28 +193,23 @@ function _Thread(props: {
         ...props.style,
       }}
     >
-      {
-        <div
-          onClick={(e) => (reactingId ? events.onEmojiReactionPickerModalBackgroundClick(e) : null)}
-          style={{
-            position: 'absolute',
-            left: 0,
-            right: 0,
-            bottom: 0,
-            top: 0,
-            transition: 'background-color 0.2s ease-in-out',
-            zIndex: MODAL_Z_INDEX,
-            pointerEvents: 'none',
-            borderRadius: 11,
-            ...(reactingId
-              ? {
-                  backgroundColor: 'rgba(0,0,0,0.3)',
-                  pointerEvents: 'all',
-                }
-              : {}),
-          }}
-        />
-      }
+      <div
+        onClick={(e) => (reactingId ? events.onEmojiReactionPickerModalBackgroundClick(e) : null)}
+        style={{
+          position: 'absolute',
+          inset: 0,
+          transition: 'background-color 0.2s ease-in-out',
+          zIndex: MODAL_Z_INDEX,
+          pointerEvents: 'none',
+          borderRadius: 11,
+          ...(reactingId
+            ? {
+                backgroundColor: 'rgba(0,0,0,0.3)',
+                pointerEvents: 'all',
+              }
+            : {}),
+        }}
+      />
       <StyledThread type={props.type} isEmpty={isEmpty}>
         {!isConnected && props.type !== 'popout' ? <FlexCenter /> : null}
         {isConnected && isEmpty && props.type !== 'popout' ? (
@@ -266,7 +261,8 @@ function _Thread(props: {
               threadId={props.threadId}
               userId={userId}
               workspaceId={workspaceId}
-              composerHeight={textareaHeight}
+              composerHeight={composerHeight}
+              headerHeight={props.type === 'popout' ? 37 : 0}
               timeline={timeline}
             />
           )}

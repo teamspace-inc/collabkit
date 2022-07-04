@@ -22,6 +22,7 @@ export function CommentList(props: {
   profiles: { [profileId: string]: Profile };
   timeline: Timeline;
   composerHeight: number;
+  headerHeight: number;
   workspaceId: string;
   userId: string;
   threadId: string;
@@ -102,7 +103,9 @@ export function CommentList(props: {
   return (
     <StyledCommentList
       style={
-        composerHeight > -1 ? { maxHeight: `calc(100% - ${composerHeight + 2}px - 35px)` } : {}
+        composerHeight > -1
+          ? { maxHeight: `calc(100% - ${composerHeight + 2}px - ${props.headerHeight}px)` }
+          : {}
       }
     >
       <ScrollArea.Root style={{ ...(props.type === 'popout' ? { height: 352 } : {}) }}>
