@@ -9,6 +9,8 @@ import { WorkspaceContext, WorkspaceLoader } from './WorkspaceLoader';
 import { CommentList } from './CommentList';
 import { useApp } from './App';
 import { actions } from '../actions';
+// import { StyledName } from './Comment';
+// import { Avatar } from './Avatar';
 
 const StyledThread = styled('div', {
   padding: 0,
@@ -136,6 +138,7 @@ function _Thread(props: {
   const { threadId } = props;
   const { profiles, appState, config, isConnected } = useSnapshot(store);
   const userId = config.identify!.userId;
+  // const profile = userId ? profiles[userId] : null;
 
   const [textareaHeight, setTextareaHeight] = useState(-1);
 
@@ -245,6 +248,20 @@ function _Thread(props: {
               timeline={timeline}
             />
           )}
+          {/* {isEmpty && props.type === 'popout' ? (
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                gap: 8,
+                padding: 10,
+              }}
+            >
+              {profile ? <Avatar profile={profile} /> : null}
+              <StyledName>{'Namit'}</StyledName>
+            </div>
+          ) : null} */}
           {workspaceId && workspace ? (
             <Composer
               style={

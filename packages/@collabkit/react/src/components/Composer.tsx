@@ -124,6 +124,7 @@ const ComposerContainer = styled('div', {
   background: '$neutral1',
   borderBottomLeftRadius: 11,
   borderBottomRightRadius: 11,
+  padding: '5px 10px',
 
   variants: {
     hasComments: {
@@ -150,14 +151,12 @@ const ComposerContainer = styled('div', {
 });
 
 const StyledLexicalEditorContainer = styled('div', {
-  borderRadius: 0,
+  borderRadius: 11,
   width: 'calc(100% - 35px)', // take into account send button
   color: 'black',
   marginLeft: 0,
-  borderBottomLeftRadius: 11,
-  borderBottomRightRadius: 11,
-  padding: '4px 0',
-  background: '$neutral1',
+  padding: '0px 0',
+  background: '$neutral3',
   position: 'relative',
   verticalAlign: 'top',
   fontSize: '14px',
@@ -166,7 +165,12 @@ const StyledLexicalEditorContainer = styled('div', {
   textAlign: 'left',
   variants: {
     type: {
-      popout: {},
+      popout: {
+        borderTopLeftRadius: 11,
+        borderTopRightRadius: 11,
+        borderBottomLeftRadius: 11,
+        borderBottomRightRadius: 11,
+      },
     },
     hasComments: {
       true: {},
@@ -262,7 +266,7 @@ export function Composer(props: {
   position: relative;
   tab-size: 1;
   outline: 0;
-  padding: 10px 12px;
+  padding: 10px 10px;
 }
 
 .editor-placeholder {
@@ -270,8 +274,8 @@ export function Composer(props: {
   overflow: hidden;
   position: absolute;
   text-overflow: ellipsis;
-  top: 14px;
-  left: 12px;
+  top: 10px;
+  left: 10px;
   font-size: 14px;
   user-select: none;
   display: inline-block;

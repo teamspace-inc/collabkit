@@ -14,6 +14,9 @@ export const StyledComment = styled('div', {
   display: 'flex',
   maxWidth: 'calc(100% - 46px)',
   variants: {
+    ui: {
+      bubbles: {},
+    },
     threadType: {
       inline: {},
       popout: {},
@@ -46,7 +49,6 @@ const StyledMessageTimestamp = styled('span', {
 });
 
 export const StyledMessage = styled('div', {
-  padding: '5px 10px',
   display: 'flex',
   position: 'relative',
   flexDirection: 'column',
@@ -54,11 +56,16 @@ export const StyledMessage = styled('div', {
   flex: 0,
   fontSize: 14,
   lineHeight: '20px',
-  borderRadius: 11,
   color: '$neutral12',
-  background: '$neutral2',
   wordBreak: 'break-word',
   variants: {
+    ui: {
+      bubbles: {
+        padding: '5px 10px',
+        background: '$neutral2',
+        borderRadius: 11,
+      },
+    },
     type: {
       default: {},
       'inline-start': {
@@ -73,6 +80,33 @@ export const StyledMessage = styled('div', {
       },
     },
   },
+  compoundVariants: [
+    {
+      ui: 'bubbles',
+      type: 'inline-start',
+      css: {
+        borderRadius: 11,
+        borderBottomLeftRadius: 3,
+      },
+    },
+    {
+      ui: 'bubbles',
+      type: 'inline',
+      css: {
+        borderRadius: 11,
+        borderBottomLeftRadius: 3,
+        borderTopLeftRadius: 3,
+      },
+    },
+    {
+      ui: 'bubbles',
+      type: 'inline-end',
+      css: {
+        borderRadius: 11,
+        borderTopLeftRadius: 3,
+      },
+    },
+  ],
 });
 
 const StyledCommentContainer = styled('div', {
@@ -80,16 +114,23 @@ const StyledCommentContainer = styled('div', {
   gap: '5px',
   overflowWrap: 'break-word',
   position: 'relative',
-  '&:hover': {
-    [`.${StyledMessage.className}`]: {
-      background: '$neutral4',
+
+  variants: {
+    ui: {
+      bubbles: {
+        '&:hover': {
+          [`.${StyledMessage.className}`]: {
+            background: '$neutral4',
+          },
+        },
+      },
     },
   },
 });
 
-const StyledName = styled('div', {
+export const StyledName = styled('div', {
   fontSize: 14,
-  fontWeight: '600',
+  fontWeight: '500',
   lineHeight: '20px',
   display: 'flex',
   gap: 5,
@@ -370,15 +411,17 @@ export function Comment(props: {
 
   return props.profile ? (
     <StyledComment
+      ui="bubbles"
       type={props.type}
       threadType={props.threadType}
       onMouseOver={() => setIsHovering(true)}
       onMouseOut={() => setIsHovering(false)}
     >
-      <StyledCommentContainer>
+      <StyledCommentContainer ui="bubbles">
         {showProfile && <Avatar profile={props.profile} style={{ position: 'relative', top: 4 }} />}
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <StyledMessage
+            ui="bubbles"
             type={props.type}
             style={{
               marginLeft: showProfile ? 0 : 30,
