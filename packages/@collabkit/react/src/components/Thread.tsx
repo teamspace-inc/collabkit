@@ -9,8 +9,6 @@ import { WorkspaceContext, WorkspaceLoader } from './WorkspaceLoader';
 import { CommentList } from './CommentList';
 import { useApp } from './App';
 import { actions } from '../actions';
-// import { StyledName } from './Comment';
-// import { Avatar } from './Avatar';
 
 const StyledThread = styled('div', {
   padding: 0,
@@ -125,7 +123,7 @@ const StyledHeaderLeftGroup = styled('div', {
   gap: 0,
 });
 
-export const MODAL_Z_INDEX = 4;
+export const MODAL_Z_INDEX = 999999;
 
 function _Thread(props: {
   threadId: string;
@@ -195,21 +193,28 @@ function _Thread(props: {
         ...props.style,
       }}
     >
-      {reactingId ? (
+      {
         <div
-          onClick={(e) => events.onEmojiReactionPickerModalBackgroundClick(e)}
+          onClick={(e) => (reactingId ? events.onEmojiReactionPickerModalBackgroundClick(e) : null)}
           style={{
             position: 'absolute',
             left: 0,
             right: 0,
             bottom: 0,
             top: 0,
-            background: 'rgba(0,0,0,0.5',
+            transition: 'background-color 0.2s ease-in-out',
             zIndex: MODAL_Z_INDEX,
+            pointerEvents: 'none',
             borderRadius: 11,
+            ...(reactingId
+              ? {
+                  backgroundColor: 'rgba(0,0,0,0.3)',
+                  pointerEvents: 'all',
+                }
+              : {}),
           }}
-        ></div>
-      ) : null}
+        />
+      }
       <StyledThread type={props.type} isEmpty={isEmpty}>
         {!isConnected && props.type !== 'popout' ? <FlexCenter /> : null}
         {isConnected && isEmpty && props.type !== 'popout' ? (
