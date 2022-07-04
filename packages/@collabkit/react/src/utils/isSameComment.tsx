@@ -1,6 +1,6 @@
 import { Target } from '../constants';
 
-export function targetEqual(a: Target | null, b: Target | null) {
+export function isSameComment(a: Target | null, b: Target | null) {
   return (
     a !== null &&
     b !== null &&
