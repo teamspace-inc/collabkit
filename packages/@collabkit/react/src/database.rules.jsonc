@@ -1,44 +1,7 @@
 {
   "rules": {
-    "mailbox": {
-      "$appId": {
-        "$endUserId": {
-          "$mailId": {
-            "from": {},
-            "to": {},
-            "subject": {},
-            "text": {}
-          }
-        }
-      }
-    },
-    // "rooms": {
-    //   "$appId": {
-    //     ".read": "auth.token.appId === $appId",
-    //     "$workspaceId": {
-    //       ".read": "auth.token.appId === $appId",
-    //       ".write": "(auth.token.appId === $appId) && ((root.child('apps').child(auth.token.appId).child('mode').val() === 'UNSECURED' || (root.child('apps').child(auth.token.appId).child('mode').val() === 'SECURED' && $workspaceId === auth.token.workspaceId)))",
-    //       "$roomId": {
-    //         ".validate": "newData.hasChildren(['state'])",
-    //        	"state": {
-    //           ".validate": "newData.val() === 'open' || newData.val() === 'resolved'"
-    //         },
-    //         "createdById": {
-    //           ".validate": "newData.isString() && root.child('profiles').child($appId).child(newData.val()).exists()"
-    //         },
-    //         "createdAt": {
-    //           ".validate": "newData.isNumber()"
-    //         }
-    //       }
-    //     }
-    //   }
-    // },
-
     "workspaces": {
       "$appId": {
-        // "default": {
-        //   ".read": "auth.token.appId === $appId"
-        // },
         "$workspaceId": {
           ".read": "auth.token.appId === $appId",
           ".write": "(root.child('apps').child(auth.token.appId).child('mode').val() === 'UNSECURED' || (root.child('apps').child(auth.token.appId).child('mode').val() === 'SECURED' && $workspaceId === auth.token.workspaceId)) && !root.child('teams').child($appId).child($workspaceId).exists()",
@@ -136,14 +99,40 @@
       }
     },
     "views": {
-      "inbox": {
+      "seenBy": {
         "$appId": {
           "$workspaceId": {
             ".read": "auth.token.appId === $appId",
             "$threadId": {
-              ".write": "newData.hasChildren(['type', 'body', 'createdById', 'createdAt']) && (auth.token.appId === $appId) && ((root.child('apps').child(auth.token.appId).child('mode').val() === 'UNSECURED' || (root.child('apps').child(auth.token.appId).child('mode').val() === 'SECURED' && $workspaceId === auth.token.workspaceId && newData.child('createdById').val() === auth.token.userId)))",
+              "$endUserId": {
+                ".read": "auth.token.appId === $appId",
+                ".write": "!newData.exists() && auth.token.appId === $appId && ((root.child('apps').child(auth.token.appId).child('mode').val() === 'UNSECURED' || (root.child('apps').child(auth.token.appId).child('mode').val() === 'SECURED' && $workspaceId === auth.token.workspaceId && $endUserId === auth.token.userId)))",
+                "seenUntilId": {
+                  ".validate": "newData.exists() && root.child('timeline').child($appId).child($workspaceId).child($threadId).child(newData.val()).exists()"
+                },
+                "seenAt": {
+                  ".validate": "newData.isNumber()"
+                }
+              }
+            }
+          }
+        }
+      },
+      "inbox": {
+        "$appId": {
+          "$workspaceId": {
+            ".indexOn": "createdAt",
+            ".read": "auth.token.appId === $appId",
+            "$threadId": {
+              ".write": "newData.hasChildren(['type', 'body', 'createdById', 'createdAt', 'name']) && (auth.token.appId === $appId) && ((root.child('apps').child(auth.token.appId).child('mode').val() === 'UNSECURED' || (root.child('apps').child(auth.token.appId).child('mode').val() === 'SECURED' && $workspaceId === auth.token.workspaceId && newData.child('createdById').val() === auth.token.userId)))",
+              "name": {
+                ".validate": "newData.isString()"
+              },
               "type": {
                 ".validate": "newData.isString() && (newData.val() === 'message' || newData.val() ==='reaction' || newData.val() === 'adminMessage' || newData.val() === 'system')"
+              },
+              "createdById": {
+                ".validate": "newData.isString() && root.child('profiles').child($appId).child(newData.val()).exists()"
               },
               "createdAt": {
                 ".validate": "newData.isNumber()"
@@ -158,19 +147,25 @@
     },
     "seen": {
       "$appId": {
-        "$workspaceId": {
-          ".read": "auth.token.appId === $appId",
-          "$threadId": {
+        "$endUserId": {
+          "$workspaceId": {
             ".read": "auth.token.appId === $appId",
-            "$endUserId": {
+            ".indexOn": "seenUntilId",
+            "$threadId": {
+              ".read": "auth.token.appId === $appId",
+              ".write": "!newData.exists() && auth.token.appId === $appId && ((root.child('apps').child(auth.token.appId).child('mode').val() === 'UNSECURED' || (root.child('apps').child(auth.token.appId).child('mode').val() === 'SECURED' && $workspaceId === auth.token.workspaceId && $endUserId === auth.token.userId)))",
               "seenUntilId": {
                 ".validate": "newData.exists() && root.child('timeline').child($appId).child($workspaceId).child($threadId).child(newData.val()).exists()"
+              },
+              "seenAt": {
+                ".validate": "newData.isNumber()"
               }
             }
           }
         }
       }
     },
+
     "timeline": {
       "$appId": {
         "$workspaceId": {
