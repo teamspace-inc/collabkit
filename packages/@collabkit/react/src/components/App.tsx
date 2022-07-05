@@ -7,14 +7,21 @@ import { createStore } from '../store';
 // Enable using multiple isolated App
 // instances in the same page.
 
-const AppContext = React.createContext<{
-  token: string | null;
-  store: Store | null;
-  events: Events | null;
-}>({ token: null, store: null, events: null });
+const AppContext = React.createContext<
+  | {
+      token: string;
+      store: Store;
+      events: Events;
+    }
+  | undefined
+>(undefined);
 
 export function useApp() {
-  return useContext(AppContext);
+  const app = useContext(AppContext);
+  if (app === undefined) {
+    throw new Error('useApp must be used within a App');
+  }
+  return app;
 }
 
 export function App(props: {

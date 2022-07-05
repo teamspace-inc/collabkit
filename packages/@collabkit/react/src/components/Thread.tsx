@@ -132,9 +132,6 @@ function _Thread(props: {
   onCloseButtonClick?: (e: React.MouseEvent) => void;
 }) {
   const { store, events } = useApp();
-  if (events == null || store == null) {
-    return null;
-  }
   const { threadId } = props;
   const { profiles, appState, config, isConnected, reactingId } = useSnapshot(store);
   const userId = config.identify!.userId;

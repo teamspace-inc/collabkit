@@ -10,9 +10,9 @@ export const WorkspaceIDContext = React.createContext<{ workspaceId: string | nu
 
 function Workspace(props: { workspaceId: string; children: React.ReactNode | React.ReactNode[] }) {
   const { store } = useApp();
-  const { appState } = useSnapshot(store!);
+  const { appState } = useSnapshot(store);
   useEffect(() => {
-    if (store && appState === 'ready') actions.subscribeSeen(store);
+    if (appState === 'ready') actions.subscribeSeen(store);
   }, [appState, store]);
 
   return (
