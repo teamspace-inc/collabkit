@@ -16,7 +16,6 @@ import {
   orderByChild,
   limitToLast,
   onChildMoved,
-  onChildChanged,
 } from 'firebase/database';
 
 import { getAuth, signInWithCustomToken } from 'firebase/auth';
@@ -33,14 +32,16 @@ import {
   Target,
 } from './constants';
 import { Color, getRandomColor } from './colors';
-import { $createTextNode, $getRoot, createEditor } from 'lexical';
+import { createEditor } from 'lexical';
 import { createEditorConfig } from './components/Composer';
 import { ref as valtioRef } from 'valtio';
 import { createEvents, Events } from './events';
 
 import debounce from 'lodash.debounce';
 
-function timelineRef(store: Store, workspaceId: string, threadId: string) {
+import { sendMessage } from './actions/sendMessage';
+
+export function timelineRef(store: Store, workspaceId: string, threadId: string) {
   if (!store.config.setup?.appId) {
     throw new Error('no appId');
   }
@@ -116,6 +117,74 @@ function initThread(store: Store, props: { workspaceId: string; threadId: string
     $$body: '',
     isTyping: {},
   };
+}
+
+async function toggleCommentReaction(store: Store, props: { target: CommentReactionTarget }) {
+  if (!store.config.identify) {
+    console.warn('[CollabKit] Did you forget to call CollabKit.identify?');
+    return;
+  }
+
+  const { emoji } = props.target;
+  const { workspaceId, threadId, eventId } = props.target.comment;
+
+  // check if this user has a last reaction to the comment already
+  const thread = store.workspaces[workspaceId].timeline[threadId];
+  const reactions = Object.keys(thread)
+    .map((eventId) => thread[eventId])
+    .filter(
+      (event) => event.parentId === eventId && event.createdById === store.config.identify?.userId
+    );
+
+  const lastReaction = reactions.length > 0 ? reactions[reactions.length - 1] : null;
+
+  // toggle logic
+  // if we have no a last Reaction we need to check
+  // if this is a toggle operation
+  const body = lastReaction
+    ? // if the last event was clearing the reaction
+      // then we want to set it this time
+      lastReaction.body.length === 0
+      ? emoji
+      : // otherwise if the reaction is the same
+      // we want to clear it
+      emoji === lastReaction.body
+      ? ''
+      : emoji
+    : emoji;
+
+  console.log('reacting with emoji', { body });
+
+  // to remove an existing emoji reaction set
+  // body to empty!
+
+  try {
+    const event: Event = {
+      type: 'reaction',
+      body,
+      createdAt: serverTimestamp(),
+      createdById: store.config.identify.userId,
+      parentId: eventId,
+    };
+
+    const eventRef = await push(timelineRef(store, workspaceId, threadId), event);
+
+    if (eventRef.key) {
+      store.workspaces[workspaceId].timeline[threadId] ||= {};
+      store.workspaces[workspaceId].timeline[threadId][eventRef.key] = {
+        ...event,
+        createdAt: +Date.now(),
+      };
+
+      store.reactingId = null;
+    } else {
+      console.error('failed to toggle emoji reaction');
+      // handle failure here
+    }
+  } catch (e) {
+    console.error(e);
+    // handle failure here
+  }
 }
 
 async function loadThread(store: Store, props: { workspaceId: string; threadId: string }) {
@@ -208,52 +277,8 @@ function subscribeThreadIsTyping(store: Store, workspaceId: string, threadId: st
   }
 }
 
-async function sendMessage(store: Store, workspaceId: string, threadId: string) {
-  if (!store.config.identify) {
-    console.warn('[CollabKit] Did you forget to call CollabKit.identify?');
-    return;
-  }
-
-  const { editor } = store.workspaces[workspaceId].composers[threadId];
-
-  const body = editor.getEditorState().read(() => $getRoot().getTextContent(false));
-
-  if (body.trim().length === 0) {
-    // can't send empty messages
-    return;
-  }
-
-  editor.update(() => $getRoot().getChildren()[0].replace($createTextNode('')));
-
-  console.log('sending message', body);
-
-  // close emoji picker on send
-  store.reactingId = null;
-
-  // todo optimistic send
-  try {
-    const event: Event = {
-      type: 'message',
-      body: body,
-      createdAt: serverTimestamp(),
-      createdById: store.config.identify.userId,
-    };
-    const eventRef = await push(timelineRef(store, workspaceId, threadId), event);
-    if (eventRef.key) {
-      store.workspaces[workspaceId].timeline[threadId] ||= {};
-      store.workspaces[workspaceId].timeline[threadId][eventRef.key] = {
-        ...event,
-        createdAt: +Date.now(),
-      };
-      actions.stopTyping(store, { target: { type: 'composer', workspaceId, threadId } });
-    } else {
-      console.error('CollabKit: failed to send message');
-      // handle failure here
-    }
-  } catch (e) {
-    console.error(e);
-    // handle failure here
-  }
+function unloadThread(store: Store, props: { workspaceId: string; threadId: string }) {
+  store.subs[timelineRef(store, props.workspaceId, props.threadId).toString()]?.();
 }
 
 async function saveProfile(store: Store) {
@@ -353,6 +378,14 @@ async function open(store: Store, workspaceId: string, threadId: string) {
     console.error(e);
     // handle failure here
   }
+}
+
+function focus(store: Store, target: Target) {
+  store.focusedId = target;
+}
+
+function blur(store: Store, target: Target) {
+  store.focusedId = null;
 }
 
 async function resolve(store: Store, workspaceId: string, threadId: string) {
@@ -535,6 +568,14 @@ async function authenticate(store: Store) {
   }
 }
 
+function toggleEmojiReactionPicker(store: Store, props: { target: CommentTarget }) {
+  store.reactingId = props.target;
+}
+
+function closeEmojiReactionPicker(store: Store) {
+  store.reactingId = null;
+}
+
 function onTimelineEventAdded(store: Store, snapshot: DataSnapshot) {
   const event = snapshot.val();
   const eventId = snapshot.key;
@@ -572,31 +613,39 @@ async function generateToken(appId: string, apiKey: string, mode: 'SECURED' | 'U
   return null;
 }
 
+async function setup(store: Store, events: Events, props: SetupProps) {
+  store.appState = 'config';
+  store.config.setup = props;
+  monitorConnection(store, events);
+}
+
+async function identify(store: Store, props: IdentifyProps) {
+  store.config.identify = props;
+  store.workspaces[props.workspaceId] ||= {
+    name: store.config.identify.workspaceName || '',
+    timeline: {},
+    composers: {},
+    recentThreadIds: [],
+  };
+}
+
+function mentions(store: Store, props: MentionProps) {
+  store.config.mentions = props;
+}
+
+function toggleThread(store: Store, props: { workspaceId: string; threadId: string }) {
+  initThread(store, props);
+  loadThread(store, props);
+}
+
 export const actions = {
-  setup: async (store: Store, events: Events, props: SetupProps) => {
-    store.appState = 'config';
-    store.config.setup = props;
-    monitorConnection(store, events);
-  },
+  setup,
 
-  identify: async (store: Store, props: IdentifyProps) => {
-    store.config.identify = props;
-    store.workspaces[props.workspaceId] ||= {
-      name: store.config.identify.workspaceName || '',
-      timeline: {},
-      composers: {},
-      recentThreadIds: [],
-    };
-  },
+  identify,
 
-  mentions: (store: Store, props: MentionProps) => {
-    store.config.mentions = props;
-  },
+  mentions,
 
-  toggleThread: (store: Store, props: { workspaceId: string; threadId: string }) => {
-    initThread(store, props);
-    loadThread(store, props);
-  },
+  toggleThread,
 
   subscribeInbox,
 
@@ -640,93 +689,17 @@ export const actions = {
 
   authenticate,
 
-  focus: (store: Store, target: Target) => {
-    store.focusedId = target;
-  },
+  focus,
 
-  blur: (store: Store, target: Target) => {
-    store.focusedId = null;
-  },
+  blur,
 
-  unloadThread: (store: Store, props: { workspaceId: string; threadId: string }) => {
-    store.subs[timelineRef(store, props.workspaceId, props.threadId).toString()]?.();
-  },
+  unloadThread,
 
-  toggleCommentReaction: async (store: Store, props: { target: CommentReactionTarget }) => {
-    if (!store.config.identify) {
-      console.warn('[CollabKit] Did you forget to call CollabKit.identify?');
-      return;
-    }
+  toggleCommentReaction,
 
-    const { emoji } = props.target;
-    const { workspaceId, threadId, eventId } = props.target.comment;
+  toggleEmojiReactionPicker,
 
-    // check if this user has a last reaction to the comment already
-    const thread = store.workspaces[workspaceId].timeline[threadId];
-    const reactions = Object.keys(thread)
-      .map((eventId) => thread[eventId])
-      .filter(
-        (event) => event.parentId === eventId && event.createdById === store.config.identify?.userId
-      );
-
-    const lastReaction = reactions.length > 0 ? reactions[reactions.length - 1] : null;
-
-    // toggle logic
-    // if we have no a last Reaction we need to check
-    // if this is a toggle operation
-    const body = lastReaction
-      ? // if the last event was clearing the reaction
-        // then we want to set it this time
-        lastReaction.body.length === 0
-        ? emoji
-        : // otherwise if the reaction is the same
-        // we want to clear it
-        emoji === lastReaction.body
-        ? ''
-        : emoji
-      : emoji;
-
-    console.log('reacting with emoji', { body });
-
-    // to remove an existing emoji reaction set
-    // body to empty!
-
-    try {
-      const event: Event = {
-        type: 'reaction',
-        body,
-        createdAt: serverTimestamp(),
-        createdById: store.config.identify.userId,
-        parentId: eventId,
-      };
-
-      const eventRef = await push(timelineRef(store, workspaceId, threadId), event);
-
-      if (eventRef.key) {
-        store.workspaces[workspaceId].timeline[threadId] ||= {};
-        store.workspaces[workspaceId].timeline[threadId][eventRef.key] = {
-          ...event,
-          createdAt: +Date.now(),
-        };
-
-        store.reactingId = null;
-      } else {
-        console.error('failed to toggle emoji reaction');
-        // handle failure here
-      }
-    } catch (e) {
-      console.error(e);
-      // handle failure here
-    }
-  },
-
-  toggleEmojiReactionPicker: (store: Store, props: { target: CommentTarget }) => {
-    store.reactingId = props.target;
-  },
-
-  closeEmojiReactionPicker: (store: Store) => {
-    store.reactingId = null;
-  },
+  closeEmojiReactionPicker,
 
   // removeSelection: () => {
   //   document.querySelectorAll('[data-commentable]').forEach((el) => {
