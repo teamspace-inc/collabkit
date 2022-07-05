@@ -232,6 +232,7 @@ function subscribeThreadSeenBy(
       if (!userId) {
         return;
       }
+      store.workspaces[props.workspaceId].seenBy[props.threadId] ||= {};
       store.workspaces[props.workspaceId].seenBy[props.threadId][userId] = snapshot.val();
     }
   );
