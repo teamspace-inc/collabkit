@@ -3,8 +3,8 @@ import { useSnapshot } from 'valtio';
 import { actions } from '../actions';
 import { useApp } from './App';
 import { styled } from './UIKit';
-import { WorkspaceIDContext } from './Workspace';
-import { WorkspaceContext, WorkspaceLoader } from './WorkspaceLoader';
+import { useWorkspaceId, WorkspaceIDContext } from './Workspace';
+import { useWorkspace, WorkspaceContext, WorkspaceLoader } from './WorkspaceLoader';
 
 const StyledInbox = styled('div', {
   borderRadius: 11,
@@ -44,7 +44,7 @@ const StyledThreadMessagePreview = styled('div', {
 function _Inbox() {
   const { store } = useApp();
   const { profiles } = useSnapshot(store!);
-  const { workspace } = useContext(WorkspaceContext);
+  const { workspace } = useWorkspace();
   const { appState } = useSnapshot(store);
 
   const inboxIds = workspace ? Object.keys(workspace.inbox) : null;
@@ -81,20 +81,6 @@ function _Inbox() {
 }
 
 export function Inbox() {
-  const { workspaceId } = useContext(WorkspaceIDContext);
-  const { store } = useApp();
-  const { workspaces } = useSnapshot(store!);
-
-  if (workspaceId == null) {
-    return null;
-  }
-
-  const workspace = workspaces[workspaceId];
-
-  if (workspace == null) {
-    return null;
-  }
-
   return (
     <WorkspaceLoader>
       <_Inbox />
