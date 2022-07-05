@@ -22,23 +22,3 @@ export function createStore() {
     subs: {},
   });
 }
-
-// export const store = proxy<Store>({
-//   isConnected: false,
-//   token: '',
-//   appState: 'blank',
-//   uiState: 'idle',
-//   config: {
-//     identify: null,
-//     setup: null,
-//     mentions: null,
-//     isSetup: false,
-//     hasIdentified: false,
-//   },
-//   focusedId: null,
-//   selectedId: null,
-//   reactingId: null,
-//   workspaces: {},
-//   profiles: {},
-//   subs: {},
-// });

@@ -16,6 +16,7 @@ import {
   orderByChild,
   limitToLast,
   onChildMoved,
+  onChildChanged,
 } from 'firebase/database';
 
 import { getAuth, signInWithCustomToken } from 'firebase/auth';
@@ -382,7 +383,30 @@ async function open(store: Store, workspaceId: string, threadId: string) {
 }
 
 function seen(store: Store, target: CommentTarget) {
-  console.log('SEEN', target.eventId, target.threadId, target.workspaceId);
+  const appId = store.config.setup?.appId;
+  const userId = store.config.identify?.userId;
+  if (!appId || !userId) {
+    return;
+  }
+  const { workspaceId, threadId, eventId } = target;
+  const lastSeenId = store.workspaces[workspaceId].seen[threadId];
+  const isNewer = lastSeenId ? eventId > lastSeenId : true;
+
+  if (isNewer) {
+    store.workspaces[workspaceId].seen[threadId] = eventId;
+
+    console.log('SEEN', eventId, threadId, workspaceId);
+
+    const data = {
+      seenUntilId: eventId,
+      seenAt: serverTimestamp(),
+    };
+
+    update(ref(getDatabase(CollabKitFirebaseApp)), {
+      [`/seen/${appId}/${userId}/${workspaceId}/${threadId}/`]: data,
+      [`/views/seenBy/${appId}/${workspaceId}/${threadId}/${userId}`]: data,
+    });
+  }
 }
 
 function focus(store: Store, target: Target) {
@@ -457,7 +481,36 @@ async function stopTyping(store: Store, props: { target: ComposerTarget }) {
   );
 }
 
-async function subscribeSeen(store: Store) {}
+async function subscribeSeen(store: Store) {
+  const { config } = store;
+  if (!config.setup) {
+    console.warn('Did you forget to call `CollabKit.setup`?');
+    return;
+  }
+
+  const appId = config.setup.appId;
+  const workspaceId = config.identify?.workspaceId;
+  const userId = config.identify?.userId;
+
+  if (!appId || !workspaceId) {
+    return;
+  }
+
+  const seenQuery = query(
+    ref(getDatabase(CollabKitFirebaseApp), `/seen/${appId}/${userId}/${workspaceId}`),
+    orderByChild('seenUntilId'),
+    limitToLast(20)
+  );
+
+  store.subs[`${appId}-${workspaceId}-seen`] ||= onChildChanged(seenQuery, (snapshot) => {
+    if (snapshot.key) {
+      console.log('applying seen id change');
+      store.workspaces[workspaceId].seen[snapshot.key] = snapshot.val() || {};
+    } else {
+      console.log('no kley');
+    }
+  });
+}
 
 async function subscribeInbox(store: Store) {
   const { config } = store;
@@ -748,6 +801,8 @@ export const actions = {
   ),
 
   seen,
+
+  subscribeSeen,
 
   subscribeProfiles,
 
