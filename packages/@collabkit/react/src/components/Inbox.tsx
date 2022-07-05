@@ -27,7 +27,7 @@ const StyledInboxItem = styled('div', {
 });
 
 const StyledThreadName = styled('div', {
-  fontWeight: 600,
+  fontWeight: 500,
   fontSize: 14,
   lineHeight: '20px',
 });
