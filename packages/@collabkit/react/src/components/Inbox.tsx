@@ -2,13 +2,28 @@ import { useContext, useEffect } from 'react';
 import { useSnapshot } from 'valtio';
 import { actions } from '../actions';
 import { useApp } from './App';
+import { styled } from './UIKit';
 import { WorkspaceIDContext } from './Workspace';
 import { WorkspaceContext, WorkspaceLoader } from './WorkspaceLoader';
 
+const StyledInboxItem = styled('div', {
+  background: '$neutral1',
+  padding: '10px 10px',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '2px',
+  borderBottom: '1px solid $neutral4',
+});
+
+const StyledThreadName = styled('div', {
+  fontWeight: 600,
+});
+
 function _Inbox() {
   const { store } = useApp();
+  const { profiles } = useSnapshot(store!);
   const { workspace } = useContext(WorkspaceContext);
-  const timelines = workspace ? Object.keys(workspace.timeline) : null;
+  const inboxIds = workspace ? Object.keys(workspace.inbox) : null;
   if (store === null) {
     return null;
   }
@@ -20,15 +35,22 @@ function _Inbox() {
     actions.subscribeInbox(store);
   }, [appState]);
 
-  return timelines ? (
-    <div>
+  return inboxIds ? (
+    <div style={{ width: '100%' }}>
       <h5>Recent Threads</h5>
-      {timelines.map((timeline) => {
-        return <div key={timeline}>{timeline}</div>;
+      {inboxIds.map((threadId) => {
+        const event = workspace?.inbox[threadId];
+        const profile = profiles[event?.createdById || ''];
+        return (
+          <StyledInboxItem key={threadId}>
+            <StyledThreadName>{event?.name || 'Unnamed'}</StyledThreadName>
+            {profile?.name}: {event?.body}
+          </StyledInboxItem>
+        );
       })}
     </div>
   ) : (
-    <div>No timelines</div>
+    <div>No inbox</div>
   );
 }
 

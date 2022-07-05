@@ -161,7 +161,7 @@ export const CommentList = React.memo(function CommentList(props: {
                 // skip current user
                 endUserId !== props.userId ? (
                   props.isTyping?.[endUserId] === true ? (
-                    <TypingIndicator profile={profiles[endUserId]} />
+                    <TypingIndicator key={`typing-${endUserId}`} profile={profiles[endUserId]} />
                   ) : null
                 ) : null
               )

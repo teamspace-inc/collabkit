@@ -69,6 +69,10 @@ export type Event = {
   parentId?: string;
 };
 
+export type WithName<T> = T & {
+  name: string;
+};
+
 export type WithID<T> = T & {
   id: string;
 };
@@ -119,6 +123,7 @@ export interface Composer {
 export interface Workspace {
   name: string;
   recentThreadIds: string[];
+  inbox: { [threadId: string]: WithName<Event> };
   timeline: { [threadId: string]: Timeline };
   composers: { [threadId: string]: Composer };
 }
