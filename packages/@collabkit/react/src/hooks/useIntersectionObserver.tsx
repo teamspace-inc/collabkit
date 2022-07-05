@@ -84,21 +84,22 @@ export function useIntersectionObserver(
   const { ref, root } = props;
 
   const observer = useRef<IntersectionObserver>();
-  const [intersectsEdge, setIntersectsEdge] = useState<Intersection>('pending');
+  const [edge, setEdge] = useState<Intersection>('pending');
 
   const observe = useCallback((entries: IntersectionObserverEntry[] = []) => {
-    const { boundingClientRect, intersectionRect } = entries[0];
-    if (
-      intersectionRect.width <= boundingClientRect.width &&
-      intersectionRect.height <= boundingClientRect.height
-    ) {
-      setIntersectsEdge(TLBoundsCorner.BottomRight);
-    } else if (intersectionRect.width <= boundingClientRect.width) {
-      setIntersectsEdge(TLBoundsEdge.Right);
-    } else if (intersectionRect.height <= boundingClientRect.height) {
-      setIntersectsEdge(TLBoundsEdge.Bottom);
+    const { boundingClientRect, intersectionRect, isIntersecting } = entries[0];
+    const right = intersectionRect.width - boundingClientRect.width < 0;
+    const bottom = intersectionRect.height - boundingClientRect.height < 0;
+    if (isIntersecting) {
+      if (bottom && right) {
+        setEdge(TLBoundsCorner.BottomRight);
+      } else if (right) {
+        setEdge(TLBoundsEdge.Right);
+      } else if (bottom) {
+        setEdge(TLBoundsEdge.Bottom);
+      }
     } else {
-      setIntersectsEdge('none');
+      setEdge('none');
     }
   }, []);
 
@@ -109,5 +110,5 @@ export function useIntersectionObserver(
     }
   }, deps.concat(root));
 
-  return intersectsEdge;
+  return edge;
 }

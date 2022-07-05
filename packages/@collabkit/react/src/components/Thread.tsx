@@ -1,11 +1,11 @@
 import { FlexCenter, styled, theme } from './UIKit';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { IconContext, X, ChatCircle, Check, CheckCircle } from 'phosphor-react';
 import React from 'react';
 import { useSnapshot } from 'valtio';
 import { Composer } from './Composer';
 import * as Tooltip from './Tooltip';
-import { useWorkspace, WorkspaceContext, WorkspaceLoader } from './WorkspaceLoader';
+import { useWorkspace, WorkspaceLoader } from './WorkspaceLoader';
 import { CommentList } from './CommentList';
 import { useApp } from './App';
 import { actions } from '../actions';
