@@ -250,7 +250,7 @@ function App() {
                 <CollabKit.App
                   token={Object.keys(app.keys)[0]}
                   appId={app.appId}
-                  identity={identity2}
+                  identity={identity}
                   mentions={mentions}
                 >
                   <CollabKit.Workspace workspaceId={params.workspace_id}>
@@ -292,7 +292,7 @@ function App() {
                 <CollabKit.App
                   token={Object.keys(app.keys)[0]}
                   appId={app.appId}
-                  identity={identity2}
+                  identity={identity}
                   mentions={mentions}
                 >
                   <CollabKit.Workspace workspaceId={params.workspace_id}>
