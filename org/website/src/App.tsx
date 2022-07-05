@@ -280,6 +280,26 @@ function App() {
                   </CollabKit.Workspace>
                 </CollabKit.App>
               </div>
+              <div
+                style={{
+                  padding: '2rem',
+                  borderRadius: '24px',
+                  background: theme.colors.neutral12.toString(),
+                }}
+              >
+                <h3 style={{ color: 'rgba(0,0,0,0.25)', marginTop: 0 }}>CollabKit.CurrentUser</h3>
+                <p style={{ color: 'rgba(0,0,0,0.4)' }}>The current user..</p>
+                <CollabKit.App
+                  token={Object.keys(app.keys)[0]}
+                  appId={app.appId}
+                  identity={identity2}
+                  mentions={mentions}
+                >
+                  <CollabKit.Workspace workspaceId={params.workspace_id}>
+                    <CollabKit.CurrentUser />
+                  </CollabKit.Workspace>
+                </CollabKit.App>
+              </div>
             </div>
           );
         }}
