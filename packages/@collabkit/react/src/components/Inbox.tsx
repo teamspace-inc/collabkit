@@ -1,10 +1,20 @@
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useSnapshot } from 'valtio';
 import { actions } from '../actions';
 import { useApp } from './App';
 import { styled } from './UIKit';
-import { useWorkspaceId, WorkspaceIDContext } from './Workspace';
-import { useWorkspace, WorkspaceContext, WorkspaceLoader } from './WorkspaceLoader';
+import { useWorkspace, WorkspaceLoader } from './WorkspaceLoader';
+
+const unreadStyle = {
+  variants: {
+    isUnread: {
+      true: {
+        fontWeight: '600',
+        color: '$neutral12',
+      },
+    },
+  },
+};
 
 const StyledInbox = styled('div', {
   borderRadius: 11,
@@ -13,41 +23,65 @@ const StyledInbox = styled('div', {
   border: '1px solid rgba(0,0,0,0.1)',
 });
 
-const StyledInboxItem = styled('div', {
-  padding: '10px 20px',
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '2px',
-  borderBottom: '1px solid $neutral4',
-  fontSize: 14,
-  lineHeight: '20px',
-  '&:last-of-type': {
-    borderBottom: 0,
+const StyledInboxItem = styled(
+  'div',
+  {
+    cursor: 'pointer',
+    padding: '10px 20px',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '2px',
+    borderBottom: '1px solid $neutral4',
+    fontSize: 14,
+    lineHeight: '20px',
+    '&:last-of-type': {
+      borderBottom: 0,
+    },
+    '&:hover': {
+      background: '$neutral3',
+      '&:first-of-type': {
+        borderTopLeftRadius: 11,
+        borderTopRightRadius: 11,
+      },
+      '&:last-of-type': {
+        borderBottomRightRadius: 11,
+        borderBottomLeftRadius: 11,
+      },
+    },
   },
-});
+  unreadStyle
+);
 
-const StyledThreadName = styled('div', {
-  fontWeight: 500,
-  fontSize: 14,
-  lineHeight: '20px',
-});
+const StyledThreadName = styled(
+  'div',
+  {
+    fontWeight: 500,
+    fontSize: 14,
+    lineHeight: '20px',
+    color: '$neutral11',
+  },
+  unreadStyle
+);
 
-const StyledThreadMessagePreview = styled('div', {
-  color: '$neutral12',
-  overflow: 'hidden',
-  wordBreak: 'none',
-  characterBreak: 'none',
-  whiteSpace: 'nowrap',
-  textOverflow: 'ellipsis',
-});
+const StyledThreadMessagePreview = styled(
+  'div',
+  {
+    color: '$neutral11',
+    overflow: 'hidden',
+    wordBreak: 'none',
+    characterBreak: 'none',
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+  },
+  unreadStyle
+);
 
 function _Inbox() {
   const { store } = useApp();
-  const { profiles } = useSnapshot(store!);
+  const { profiles, appState } = useSnapshot(store);
   const { workspace } = useWorkspace();
-  const { appState } = useSnapshot(store);
 
-  const inboxIds = workspace ? Object.keys(workspace.inbox) : null;
+  const inboxIds = Object.keys(workspace.inbox);
 
   useEffect(() => {
     if (appState !== 'ready') return;
@@ -58,16 +92,16 @@ function _Inbox() {
     <div style={{ width: '100%' }}>
       <StyledInbox style={{ width: '100%' }}>
         {inboxIds
-          .sort((a, b) =>
-            (workspace?.inbox[a].createdAt ?? 0) <= (workspace?.inbox[b].createdAt ?? 0) ? 1 : -1
-          )
+          .sort((a, b) => (workspace.inbox[a].createdAt <= workspace.inbox[b].createdAt ? 1 : -1))
           .map((threadId) => {
-            const event = workspace?.inbox[threadId];
+            const event = workspace.inbox[threadId];
             const profile = profiles[event?.createdById || ''];
+            const seen = workspace.seen[threadId];
+            const isUnread = seen < event.id;
             return (
-              <StyledInboxItem key={threadId}>
-                <StyledThreadName>{event?.name || 'Unnamed'}</StyledThreadName>
-                <StyledThreadMessagePreview>
+              <StyledInboxItem key={threadId} isUnread={isUnread}>
+                <StyledThreadName isUnread={isUnread}>{event?.name || 'Unnamed'}</StyledThreadName>
+                <StyledThreadMessagePreview isUnread={isUnread}>
                   {profile?.name}: {event?.body}
                 </StyledThreadMessagePreview>
               </StyledInboxItem>

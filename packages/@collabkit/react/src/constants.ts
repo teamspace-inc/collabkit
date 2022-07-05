@@ -128,7 +128,7 @@ export interface SeenBy {
 
 export interface Workspace {
   name: string;
-  inbox: { [threadId: string]: WithName<Event> };
+  inbox: { [threadId: string]: WithID<WithName<Event>> };
   timeline: { [threadId: string]: Timeline };
   composers: { [threadId: string]: Composer };
   seen: { [threadId: string]: string }; // lastSeenEventId

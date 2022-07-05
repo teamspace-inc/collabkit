@@ -120,10 +120,7 @@ function initThread(store: Store, props: { workspaceId: string; threadId: string
 }
 
 async function toggleCommentReaction(store: Store, props: { target: CommentReactionTarget }) {
-  if (!store.config.identify) {
-    console.warn('[CollabKit] Did you forget to call CollabKit.identify?');
-    return;
-  }
+  const { userId } = getConfig(store);
 
   const { emoji } = props.target;
   const { workspaceId, threadId, eventId } = props.target.comment;
@@ -163,7 +160,7 @@ async function toggleCommentReaction(store: Store, props: { target: CommentReact
       type: 'reaction',
       body,
       createdAt: serverTimestamp(),
-      createdById: store.config.identify.userId,
+      createdById: userId,
       parentId: eventId,
     };
 
@@ -309,17 +306,8 @@ function unloadThread(store: Store, props: { workspaceId: string; threadId: stri
 }
 
 async function saveProfile(store: Store) {
+  const { workspaceId, appId, userId } = getConfig(store);
   const { config } = store;
-
-  if (!config.setup) {
-    console.warn('[CollabKit] Did you forget to call `CollabKit.setup`?');
-    return;
-  }
-
-  if (!config.identify) {
-    console.warn('[CollabKit] Did you forget to call `CollabKit.identify`?');
-    return;
-  }
 
   try {
     const color = getRandomColor();
@@ -331,31 +319,22 @@ async function saveProfile(store: Store) {
     delete profile.userId;
 
     let workspace: Pick<IdentifyProps, 'workspaceId' | 'workspaceName'> = {
-      workspaceId: config.identify.workspaceId,
+      workspaceId,
     };
 
     // only if the user has explicitly passed workspaceName do
     // we want to apply it as a change
-    if (config.identify.hasOwnProperty('workspaceName')) {
+    if (config.identify?.hasOwnProperty('workspaceName')) {
       workspace.workspaceName = config.identify.workspaceName;
     }
 
-    await update(
-      ref(DB, `/workspaces/${config.setup.appId}/${config.identify.workspaceId}/`),
-      workspace
-    );
+    await update(ref(DB, `/workspaces/${appId}/${workspaceId}/`), workspace);
 
-    await set(
-      ref(
-        DB,
-        `/workspaces/${config.setup.appId}/${config.identify.workspaceId}/profiles/${config.identify.userId}`
-      ),
-      true
-    );
+    await set(ref(DB, `/workspaces/${appId}/${workspaceId}/profiles/${userId}`), true);
 
-    await set(ref(DB, `/profiles/${config.setup.appId}/${config.identify.userId}`), profile);
+    await set(ref(DB, `/profiles/${appId}/${userId}`), profile);
 
-    store.profiles[config.identify.userId] = profile;
+    store.profiles[userId] = profile;
 
     if (store.appState === 'config') {
       store.appState = 'ready';
@@ -366,11 +345,7 @@ async function saveProfile(store: Store) {
 }
 
 async function open(store: Store, workspaceId: string, threadId: string) {
-  if (!store.config.identify) {
-    console.warn('[CollabKit] Did you forget to call CollabKit.identify?');
-    return;
-  }
-
+  const { userId } = getConfig(store);
   // todo optimistic send
   try {
     const event: Event = {
@@ -378,7 +353,7 @@ async function open(store: Store, workspaceId: string, threadId: string) {
       body: '',
       system: 'reopen',
       createdAt: serverTimestamp(),
-      createdById: store.config.identify.userId,
+      createdById: userId,
     };
     const eventRef = await push(timelineRef(store, workspaceId, threadId), event);
     if (eventRef.key) {
@@ -399,11 +374,8 @@ async function open(store: Store, workspaceId: string, threadId: string) {
 }
 
 async function seen(store: Store, target: CommentTarget) {
-  const appId = store.config.setup?.appId;
-  const userId = store.config.identify?.userId;
-  if (!appId || !userId) {
-    return;
-  }
+  const { appId, userId } = getConfig(store);
+
   const { workspaceId, threadId, eventId } = target;
   const lastSeenId = store.workspaces[workspaceId].seen[threadId];
   const isNewer = lastSeenId ? eventId > lastSeenId : true;
@@ -439,10 +411,7 @@ function blur(store: Store, target: Target) {
 }
 
 async function resolve(store: Store, workspaceId: string, threadId: string) {
-  if (!store.config.identify) {
-    console.warn('[CollabKit] Did you forget to call CollabKit.identify?');
-    return;
-  }
+  const { userId } = getConfig(store);
 
   // todo optimistic send
   try {
@@ -451,7 +420,7 @@ async function resolve(store: Store, workspaceId: string, threadId: string) {
       body: '',
       system: 'resolve',
       createdAt: serverTimestamp(),
-      createdById: store.config.identify.userId,
+      createdById: userId,
     };
     const eventRef = await push(timelineRef(store, workspaceId, threadId), event);
     if (eventRef.key) {
@@ -476,11 +445,7 @@ function getIsTypingRef(appId: string, workspaceId: string, threadId: string, us
 }
 
 async function stopTyping(store: Store, props: { target: ComposerTarget }) {
-  const { config } = store;
-
-  if (!config.setup || !config.identify?.workspaceId) {
-    return;
-  }
+  const { userId, appId } = getConfig(store);
 
   const timeoutID =
     store.workspaces[props.target.workspaceId].composers[props.target.threadId].isTypingTimeoutID;
@@ -489,31 +454,11 @@ async function stopTyping(store: Store, props: { target: ComposerTarget }) {
     clearTimeout(timeoutID);
   }
 
-  await remove(
-    getIsTypingRef(
-      config.setup.appId,
-      props.target.workspaceId,
-      props.target.threadId,
-      config.identify.userId
-    )
-  );
+  await remove(getIsTypingRef(appId, props.target.workspaceId, props.target.threadId, userId));
 }
 
 async function subscribeSeen(store: Store) {
-  const { config } = store;
-  if (!config.setup) {
-    console.warn('Did you forget to call `CollabKit.setup`?');
-    return;
-  }
-
-  const appId = config.setup.appId;
-  const workspaceId = config.identify?.workspaceId;
-  const userId = config.identify?.userId;
-
-  if (!appId || !workspaceId) {
-    console.warn('abort subscribe seen');
-    return;
-  }
+  const { appId, workspaceId, userId } = getConfig(store);
 
   const seenQuery = query(
     ref(DB, `/seen/${appId}/${userId}/${workspaceId}`),
@@ -548,19 +493,27 @@ async function subscribeSeen(store: Store) {
   );
 }
 
-async function subscribeInbox(store: Store) {
+function getConfig(store: Store) {
   const { config } = store;
   if (!config.setup) {
     console.warn('Did you forget to call `CollabKit.setup`?');
-    return;
+    throw new Error('Did you forget to call `CollabKit.setup`?');
   }
 
   const appId = config.setup.appId;
   const workspaceId = config.identify?.workspaceId;
+  const apiKey = config.setup.apiKey;
+  const mode = config.setup.mode;
+  const userId = config.identify?.userId;
 
-  if (!appId || !workspaceId) {
-    return;
+  if (!appId || !workspaceId || !apiKey || !mode || !userId) {
+    throw new Error('Did you forget to call `CollabKit.setup`?');
   }
+  return { appId, workspaceId, apiKey, mode, userId };
+}
+
+async function subscribeInbox(store: Store) {
+  const { appId, workspaceId } = getConfig(store);
 
   console.log('Subscribing to Inbox');
 
@@ -584,7 +537,7 @@ async function subscribeInbox(store: Store) {
     console.log('#inbox', threadId, prevChildName);
 
     const event = snapshot.val();
-    store.workspaces[workspaceId].inbox[threadId] = event;
+    store.workspaces[workspaceId].inbox[threadId] = { ...event, id: snapshot.key };
   }
 
   store.subs['inbox#added'] ||= onChildAdded(inboxRef, childCallback, (error) => {
@@ -597,12 +550,8 @@ async function subscribeInbox(store: Store) {
 }
 
 async function authenticate(store: Store) {
-  const { config } = store;
-  if (!config.setup) {
-    console.warn('Did you forget to call `CollabKit.setup`?');
-    return;
-  }
-  const auth = await generateToken(config.setup.appId, config.setup.apiKey, config.setup.mode);
+  const { appId, workspaceId, apiKey, mode } = getConfig(store);
+  const auth = await generateToken(appId, apiKey, mode);
 
   if (auth !== null) {
     store.token = auth.token;
@@ -628,11 +577,8 @@ async function authenticate(store: Store) {
     // todo handle spotty network
     try {
       // this should be an onValue sub
-      const snapshot = await get(
-        ref(DB, `/profiles/${config.setup.appId}/${config.identify?.workspaceId}`)
-      );
-      const workspaceId = snapshot.key;
-      if (workspaceId) {
+      const snapshot = await get(ref(DB, `/profiles/${appId}/${workspaceId}`));
+      if (snapshot.key) {
         snapshot.forEach((child) => {
           const profile = child.val();
           if (workspaceId) {
