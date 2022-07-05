@@ -2,7 +2,7 @@ import { CommentTarget, Event, Profile } from '../constants';
 import { Avatar } from './Avatar';
 import { styled, theme } from './UIKit';
 import { CheckCircle, RadioButton, Smiley } from 'phosphor-react';
-import { useContext, useRef, useState } from 'react';
+import { forwardRef, RefObject, useContext, useRef, useState } from 'react';
 import { Target, TargetContext } from './Target';
 import { useSnapshot } from 'valtio';
 import { timeDifference } from '../utils/timeDifference';
@@ -218,9 +218,15 @@ const StyledEmojiReaction = styled('div', {
   },
 });
 
-function ReactionPicker(props: { target: CommentTarget }) {
+function ReactionPicker(props: {
+  target: CommentTarget;
+  commentListViewportRef: RefObject<HTMLDivElement>;
+}) {
   const ref = useRef(null);
-  const intersection = useIntersectionObserver(ref, [props.target]);
+  const intersection = useIntersectionObserver(
+    { ref, root: props.commentListViewportRef.current },
+    [props.target]
+  );
   console.log({ intersection });
 
   return (
@@ -423,6 +429,7 @@ export function Comment(props: {
   body: string;
   event: Event;
   profile: Profile;
+  commentListViewportRef: React.RefObject<HTMLDivElement>;
   type: 'default' | 'inline' | 'inline-start' | 'inline-end';
   threadType: 'inline' | 'popout';
 }) {
@@ -443,7 +450,7 @@ export function Comment(props: {
   // }
 
   const emojiReactionPicker = isSameComment(reactingId, target) ? (
-    <ReactionPicker target={target} />
+    <ReactionPicker target={target} commentListViewportRef={props.commentListViewportRef} />
   ) : null;
 
   const showProfile = props.type === 'default' || props.type === 'inline-start';

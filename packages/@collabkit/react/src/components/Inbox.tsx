@@ -17,7 +17,7 @@ const StyledInboxItem = styled('div', {
   padding: '10px 20px',
   display: 'flex',
   flexDirection: 'column',
-  gap: '5px',
+  gap: '2px',
   borderBottom: '1px solid $neutral4',
   fontSize: 14,
   lineHeight: '20px',
@@ -59,7 +59,6 @@ function _Inbox() {
 
   return inboxIds ? (
     <div style={{ width: '100%' }}>
-      <h5>Recent Threads</h5>
       <StyledInbox style={{ width: '100%' }}>
         {inboxIds.map((threadId) => {
           const event = workspace?.inbox[threadId];

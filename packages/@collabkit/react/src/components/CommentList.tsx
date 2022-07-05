@@ -149,6 +149,7 @@ export const CommentList = React.memo(function CommentList(props: {
                     type={type}
                     timestamp={event.createdAt}
                     key={`event-${i}-${j}`}
+                    commentListViewportRef={scrollRef}
                     body={event.body}
                     profile={profile}
                   />
