@@ -9,7 +9,7 @@ const unreadStyle = {
   variants: {
     isUnread: {
       true: {
-        fontWeight: '600',
+        fontWeight: 600,
         color: '$neutral12',
       },
     },

@@ -185,13 +185,8 @@ async function toggleCommentReaction(store: Store, props: { target: CommentReact
 }
 
 async function loadThread(store: Store, props: { workspaceId: string; threadId: string }) {
+  const { appId, userId } = getConfig(store);
   const timeline = timelineRef(store, props.workspaceId, props.threadId);
-  const appId = store.config.setup?.appId;
-  const userId = store.config.identify?.userId;
-
-  if (!appId || !userId) {
-    return;
-  }
 
   if (store.subs[timeline.toString()]) {
     return;
@@ -236,17 +231,15 @@ function subscribeThreadSeenBy(
 }
 
 function subscribeProfiles(store: Store) {
-  if (!store.config.setup) {
-    console.warn('no profiles');
-    return;
-  }
+  const { appId } = getConfig(store);
+
   if (store.subs['profiles']) {
     return;
   }
-  console.log('got sub profiles', store.config.setup.appId);
+  console.log('got sub profiles', appId);
   try {
     store.subs['profiles'] = onChildAdded(
-      ref(DB, `/profiles/${store.config.setup.appId}/`),
+      ref(DB, `/profiles/${appId}/`),
       (snapshot) => {
         console.log('got profile', snapshot.val());
         const profile = snapshot.val();
@@ -265,23 +258,19 @@ function subscribeProfiles(store: Store) {
 }
 
 function subscribeThreadIsTyping(store: Store, workspaceId: string, threadId: string) {
-  if (!store.config.identify?.userId) {
-    return;
-  }
+  const { appId, userId } = getConfig(store);
 
   const key = `isTyping-${workspaceId}/${threadId}`;
   const addedKey = `${key}-added`;
   const removedKey = `${key}-removed`;
 
-  onDisconnect(
-    ref(DB, `/isTyping/${workspaceId}/${threadId}/${store.config.identify?.userId}`)
-  ).remove();
+  onDisconnect(ref(DB, `/isTyping/${workspaceId}/${threadId}/${userId}`)).remove();
 
   if (store.subs[addedKey] && store.subs[removedKey]) {
     return;
   }
 
-  const isTypingRef = ref(DB, `/isTyping/${store.config.setup?.appId}/${workspaceId}/${threadId}`);
+  const isTypingRef = ref(DB, `/isTyping/${appId}/${workspaceId}/${threadId}`);
 
   try {
     store.subs[addedKey] = onChildAdded(isTypingRef, (snapshot) => {
