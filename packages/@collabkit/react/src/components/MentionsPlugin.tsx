@@ -337,7 +337,7 @@ function MentionsTypeahead({
     );
   }, [applyCurrentSelected, close, editor, results, selectedIndex, updateSelectedIndex]);
 
-  const intersects = useIntersectionObserver(divRef, [results === null]);
+  const intersects = useIntersectionObserver({ ref: divRef, root: null }, [results === null]);
   console.log({ intersects });
 
   if (results === null) {

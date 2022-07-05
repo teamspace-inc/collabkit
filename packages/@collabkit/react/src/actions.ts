@@ -453,6 +453,10 @@ async function stopTyping(store: Store, props: { target: ComposerTarget }) {
   );
 }
 
+async function subscribeSeen(store: Store) {
+  
+}
+
 async function subscribeInbox(store: Store) {
   const { config } = store;
   if (!config.setup) {

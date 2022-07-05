@@ -47,8 +47,16 @@ export const intersectionStyles = css({
   },
 });
 
-export function useIntersectionObserver(ref: RefObject<HTMLElement>, deps: any[]) {
-  const intersectionObserver = useRef<IntersectionObserver>();
+export function useIntersectionObserver(
+  props: {
+    ref: RefObject<HTMLElement>;
+    root: Element | Document | null | undefined;
+  },
+  deps: any[]
+) {
+  const { ref, root } = props;
+
+  const observer = useRef<IntersectionObserver>();
   const [intersectsEdge, setIntersectsEdge] = useState<Intersection>('pending');
 
   const observe = useCallback((entries: IntersectionObserverEntry[] = []) => {
@@ -69,10 +77,10 @@ export function useIntersectionObserver(ref: RefObject<HTMLElement>, deps: any[]
 
   useEffect(() => {
     if (ref.current) {
-      intersectionObserver.current = new IntersectionObserver(observe, { root: null });
-      intersectionObserver.current.observe(ref.current);
+      observer.current = new IntersectionObserver(observe, { root });
+      observer.current.observe(ref.current);
     }
-  }, deps);
+  }, deps.concat(root));
 
   return intersectsEdge;
 }
