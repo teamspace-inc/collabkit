@@ -475,7 +475,7 @@ async function subscribeInbox(store: Store) {
     limitToLast(20)
   );
 
-  store.subs['inbox#moved'] = onChildAdded(
+  store.subs['inbox#added'] ||= onChildAdded(
     inboxRef,
     (snapshot, prevChildName) => {
       if (!workspaceId) {
@@ -496,7 +496,7 @@ async function subscribeInbox(store: Store) {
     }
   );
 
-  store.subs['inbox#moved'] = onChildMoved(
+  store.subs['inbox#moved'] ||= onChildMoved(
     inboxRef,
     (snapshot, prevChildName) => {
       if (!workspaceId) {

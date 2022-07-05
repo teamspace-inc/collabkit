@@ -9,6 +9,7 @@ import { WorkspaceContext, WorkspaceLoader } from './WorkspaceLoader';
 const StyledInbox = styled('div', {
   borderRadius: 11,
   background: '$neutral1',
+  maxWidth: '320px',
   border: '1px solid rgba(0,0,0,0.1)',
 });
 
@@ -32,7 +33,12 @@ const StyledThreadName = styled('div', {
 });
 
 const StyledThreadMessagePreview = styled('div', {
-  color: '$neutral11',
+  color: '$neutral12',
+  overflow: 'hidden',
+  wordBreak: 'none',
+  characterBreak: 'none',
+  whiteSpace: 'nowrap',
+  textOverflow: 'ellipsis',
 });
 
 function _Inbox() {
@@ -52,7 +58,7 @@ function _Inbox() {
   }, [appState]);
 
   return inboxIds ? (
-    <div>
+    <div style={{ width: '100%' }}>
       <h5>Recent Threads</h5>
       <StyledInbox style={{ width: '100%' }}>
         {inboxIds.map((threadId) => {
