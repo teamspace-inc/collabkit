@@ -190,13 +190,13 @@ const StyledReactionPicker = styled(
         },
         [TLBoundsCorner.BottomRight]: {
           opacity: 1,
-          transform: `translateY(calc(100% + 50px))`,
+          transform: `translateY(calc(-100% + 50px))`,
         },
         none: {
           opacity: 1,
         },
         pending: {
-          opacity: 0,
+          opacity: 1,
         },
       },
     },
@@ -224,8 +224,6 @@ function ReactionPicker(props: { target: CommentTarget; viewportRef: RefObject<H
   const intersection = useIntersectionObserver({ ref, root: props.viewportRef.current }, [
     props.target,
   ]);
-  console.log({ intersection });
-
   return (
     <StyledReactionPicker ref={ref} intersection={intersection}>
       {emojiReacts.map((emoji) => (
@@ -456,7 +454,7 @@ export function Comment(props: {
   // }
 
   const emojiReactionPicker = isSameComment(reactingId, target) ? (
-    <ReactionPicker target={target} viewportRef={props.scrollRef} />
+    <ReactionPicker target={target} viewportRef={props.rootRef} />
   ) : null;
 
   const showProfile = props.type === 'default' || props.type === 'inline-start';

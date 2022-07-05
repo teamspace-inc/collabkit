@@ -9,7 +9,7 @@ const unreadStyle = {
   variants: {
     isUnread: {
       true: {
-        fontWeight: 600,
+        fontWeight: 500,
         color: '$neutral12',
       },
     },
@@ -59,6 +59,13 @@ const StyledThreadName = styled(
     fontSize: 14,
     lineHeight: '20px',
     color: '$neutral11',
+    variants: {
+      isUnread: {
+        true: {
+          fontWeight: 700,
+        },
+      },
+    },
   },
   unreadStyle
 );

@@ -83,7 +83,6 @@ export const CommentList = React.memo(function CommentList(props: {
 
   // todo this needs reworking anyway to show a 'new messages' button
   useEffect(() => {
-    console.log({ scrolling: true });
     scrollRef.current?.scrollTo(0, scrollRef.current?.scrollHeight);
   }, [
     messageEvents.length,
