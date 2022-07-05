@@ -6,10 +6,12 @@ import { Workspace } from './components/Workspace';
 import { Button } from './components/Button';
 import { withComments } from './components/withComments';
 import { Inbox } from './components/Inbox';
+import { CurrentUser } from './components/CurrentUser';
 
 export const CollabKit = {
   App,
   Workspace,
+  CurrentUser,
   Thread,
   Button,
   Inbox,
