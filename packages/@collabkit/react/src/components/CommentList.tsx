@@ -5,6 +5,7 @@ import { Comment, TypingIndicator } from './Comment';
 import { Event, Profile, Timeline, WithID } from '../constants';
 import { styled } from '@stitches/react';
 import { Target } from './Target';
+import equal from 'fast-deep-equal';
 
 const StyledCommentList = styled('div', {
   gap: 0,
@@ -16,7 +17,7 @@ const StyledCommentList = styled('div', {
   flex: 1,
 });
 
-export function CommentList(props: {
+export const CommentList = React.memo(function CommentList(props: {
   type?: 'popout' | 'inline';
   isTyping?: { [endUserId: string]: boolean };
   profiles: { [profileId: string]: Profile };
@@ -81,6 +82,7 @@ export function CommentList(props: {
 
   // todo this needs reworking anyway to show a 'new messages' button
   useEffect(() => {
+    console.log({ scrolling: true });
     scrollRef.current?.scrollTo(0, scrollRef.current?.scrollHeight);
   }, [
     messageEvents.length,
@@ -172,4 +174,5 @@ export function CommentList(props: {
       </ScrollArea.Root>
     </StyledCommentList>
   );
-}
+},
+equal);

@@ -12,6 +12,11 @@ import {
   onDisconnect,
   remove,
   onChildRemoved,
+  query,
+  orderByChild,
+  limitToLast,
+  onChildMoved,
+  onChildChanged,
 } from 'firebase/database';
 
 import { getAuth, signInWithCustomToken } from 'firebase/auth';
@@ -103,6 +108,7 @@ function initThread(store: Store, props: { workspaceId: string; threadId: string
       },
     },
     timeline: {},
+    recentThreadIds: [],
   };
 
   store.workspaces[props.workspaceId].composers[props.threadId] ||= {
@@ -413,6 +419,67 @@ async function stopTyping(store: Store, props: { target: ComposerTarget }) {
   );
 }
 
+async function subscribeInbox(store: Store) {
+  const { config } = store;
+  if (!config.setup) {
+    console.warn('Did you forget to call `CollabKit.setup`?');
+    return;
+  }
+
+  console.log('Subscribing to Inbox');
+
+  const threadsRef = query(
+    ref(
+      getDatabase(CollabKitFirebaseApp),
+      `/timeline/${config.setup.appId}/${config.identify?.workspaceId}`
+    ),
+    orderByChild('createdAt'),
+    limitToLast(20)
+  );
+
+  store.subs['subscribeInbox#onChildAdded'] = onChildAdded(
+    threadsRef,
+    (snapshot) => {
+      if (!config.identify?.workspaceId) {
+        return;
+      }
+
+      if (!snapshot.key) {
+        return;
+      }
+
+      console.log('got inbox item', snapshot.key);
+
+      const timeline = snapshot.val();
+      store.workspaces[config.identify.workspaceId].timeline[snapshot.key] = timeline;
+    },
+    (error) => {
+      console.error('Error subscribing to Inbox', error);
+    }
+  );
+
+  store.subs['subscribeInbox#onChildMoved'] = onChildMoved(
+    threadsRef,
+    (snapshot, prevChildName) => {
+      if (!config.identify?.workspaceId) {
+        return;
+      }
+
+      if (!snapshot.key) {
+        return;
+      }
+
+      console.log('got inbox item', snapshot.key, prevChildName);
+
+      const timeline = snapshot.val();
+      store.workspaces[config.identify.workspaceId].timeline[snapshot.key] = timeline;
+    },
+    (error) => {
+      console.error('Error subscribing to Inbox', error);
+    }
+  );
+}
+
 async function authenticate(store: Store) {
   const { config } = store;
   if (!config.setup) {
@@ -518,6 +585,7 @@ export const actions = {
       name: store.config.identify.workspaceName || '',
       timeline: {},
       composers: {},
+      recentThreadIds: [],
     };
   },
 
@@ -529,6 +597,8 @@ export const actions = {
     initThread(store, props);
     loadThread(store, props);
   },
+
+  subscribeInbox,
 
   stopTyping,
 

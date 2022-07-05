@@ -118,6 +118,7 @@ export interface Composer {
 
 export interface Workspace {
   name: string;
+  recentThreadIds: string[];
   timeline: { [threadId: string]: Timeline };
   composers: { [threadId: string]: Composer };
 }
