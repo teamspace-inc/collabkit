@@ -57,18 +57,22 @@ function _Inbox() {
   return inboxIds ? (
     <div style={{ width: '100%' }}>
       <StyledInbox style={{ width: '100%' }}>
-        {inboxIds.map((threadId) => {
-          const event = workspace?.inbox[threadId];
-          const profile = profiles[event?.createdById || ''];
-          return (
-            <StyledInboxItem key={threadId}>
-              <StyledThreadName>{event?.name || 'Unnamed'}</StyledThreadName>
-              <StyledThreadMessagePreview>
-                {profile?.name}: {event?.body}
-              </StyledThreadMessagePreview>
-            </StyledInboxItem>
-          );
-        })}
+        {inboxIds
+          .sort((a, b) =>
+            (workspace?.inbox[a].createdAt ?? 0) <= (workspace?.inbox[b].createdAt ?? 0) ? 1 : -1
+          )
+          .map((threadId) => {
+            const event = workspace?.inbox[threadId];
+            const profile = profiles[event?.createdById || ''];
+            return (
+              <StyledInboxItem key={threadId}>
+                <StyledThreadName>{event?.name || 'Unnamed'}</StyledThreadName>
+                <StyledThreadMessagePreview>
+                  {profile?.name}: {event?.body}
+                </StyledThreadMessagePreview>
+              </StyledInboxItem>
+            );
+          })}
       </StyledInbox>
     </div>
   ) : (

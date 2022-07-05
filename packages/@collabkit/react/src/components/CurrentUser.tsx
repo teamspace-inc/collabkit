@@ -26,8 +26,8 @@ export function CurrentUser() {
     return profile ? (
       <StyledUser>
         <Avatar profile={profile} />
-        <StyledUserName>{profile?.name}</StyledUserName>
-        <StyledUserEmail>{profile?.email}</StyledUserEmail>
+        <StyledUserName>{profile.name}</StyledUserName>
+        <StyledUserEmail>{profile.email}</StyledUserEmail>
       </StyledUser>
     ) : (
       <div>No profile</div>
