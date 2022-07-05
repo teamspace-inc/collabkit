@@ -6,17 +6,33 @@ import { styled } from './UIKit';
 import { WorkspaceIDContext } from './Workspace';
 import { WorkspaceContext, WorkspaceLoader } from './WorkspaceLoader';
 
-const StyledInboxItem = styled('div', {
+const StyledInbox = styled('div', {
+  borderRadius: 11,
   background: '$neutral1',
-  padding: '10px 10px',
+  border: '1px solid rgba(0,0,0,0.1)',
+});
+
+const StyledInboxItem = styled('div', {
+  padding: '10px 20px',
   display: 'flex',
   flexDirection: 'column',
-  gap: '2px',
+  gap: '5px',
   borderBottom: '1px solid $neutral4',
+  fontSize: 14,
+  lineHeight: '20px',
+  '&:last-of-type': {
+    borderBottom: 0,
+  },
 });
 
 const StyledThreadName = styled('div', {
   fontWeight: 600,
+  fontSize: 14,
+  lineHeight: '20px',
+});
+
+const StyledThreadMessagePreview = styled('div', {
+  color: '$neutral11',
 });
 
 function _Inbox() {
@@ -36,18 +52,22 @@ function _Inbox() {
   }, [appState]);
 
   return inboxIds ? (
-    <div style={{ width: '100%' }}>
+    <div>
       <h5>Recent Threads</h5>
-      {inboxIds.map((threadId) => {
-        const event = workspace?.inbox[threadId];
-        const profile = profiles[event?.createdById || ''];
-        return (
-          <StyledInboxItem key={threadId}>
-            <StyledThreadName>{event?.name || 'Unnamed'}</StyledThreadName>
-            {profile?.name}: {event?.body}
-          </StyledInboxItem>
-        );
-      })}
+      <StyledInbox style={{ width: '100%' }}>
+        {inboxIds.map((threadId) => {
+          const event = workspace?.inbox[threadId];
+          const profile = profiles[event?.createdById || ''];
+          return (
+            <StyledInboxItem key={threadId}>
+              <StyledThreadName>{event?.name || 'Unnamed'}</StyledThreadName>
+              <StyledThreadMessagePreview>
+                {profile?.name}: {event?.body}
+              </StyledThreadMessagePreview>
+            </StyledInboxItem>
+          );
+        })}
+      </StyledInbox>
     </div>
   ) : (
     <div>No inbox</div>
