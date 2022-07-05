@@ -2,7 +2,6 @@ import {
   get,
   set,
   ref,
-  getDatabase,
   onChildAdded,
   push,
   serverTimestamp,
@@ -16,7 +15,6 @@ import {
   orderByChild,
   limitToLast,
   onChildMoved,
-  onChildChanged,
 } from 'firebase/database';
 
 import { getAuth, signInWithCustomToken } from 'firebase/auth';
@@ -25,6 +23,7 @@ import {
   CommentReactionTarget,
   CommentTarget,
   ComposerTarget,
+  DB,
   Event,
   IdentifyProps,
   MentionProps,
@@ -32,6 +31,7 @@ import {
   Store,
   Target,
 } from './constants';
+
 import { Color, getRandomColor } from './colors';
 import { createEditor } from 'lexical';
 import { createEditorConfig } from './components/Composer';
@@ -46,10 +46,7 @@ export function timelineRef(store: Store, workspaceId: string, threadId: string)
   if (!store.config.setup?.appId) {
     throw new Error('no appId');
   }
-  return ref(
-    getDatabase(CollabKitFirebaseApp),
-    `/timeline/${store.config.setup.appId}/${workspaceId}/${threadId}/`
-  );
+  return ref(DB, `/timeline/${store.config.setup.appId}/${workspaceId}/${threadId}/`);
 }
 
 type GenerateToken =
@@ -91,7 +88,7 @@ function monitorConnection(store: Store, events: ReturnType<typeof createEvents>
   if (store.subs['connectionState']) {
     return;
   }
-  const connectedRef = ref(getDatabase(CollabKitFirebaseApp), '.info/connected');
+  const connectedRef = ref(DB, '.info/connected');
   store.subs['connectionState'] = onValue(connectedRef, (snapshot) => {
     if (!store.isConnected && snapshot.val()) {
       events.onConnectionStateChange(snapshot.val());
@@ -112,6 +109,7 @@ function initThread(store: Store, props: { workspaceId: string; threadId: string
     },
     timeline: {},
     seen: {},
+    seenBy: {},
   };
 
   store.workspaces[props.workspaceId].composers[props.threadId] ||= {
@@ -191,6 +189,12 @@ async function toggleCommentReaction(store: Store, props: { target: CommentReact
 
 async function loadThread(store: Store, props: { workspaceId: string; threadId: string }) {
   const timeline = timelineRef(store, props.workspaceId, props.threadId);
+  const appId = store.config.setup?.appId;
+  const userId = store.config.identify?.userId;
+
+  if (!appId || !userId) {
+    return;
+  }
 
   if (store.subs[timeline.toString()]) {
     return;
@@ -205,6 +209,32 @@ async function loadThread(store: Store, props: { workspaceId: string; threadId: 
   }
 
   subscribeThreadIsTyping(store, props.workspaceId, props.threadId);
+  subscribeThreadSeenBy(store, { appId, userId, ...props });
+}
+
+function subscribeThreadSeenBy(
+  store: Store,
+  props: {
+    appId: string;
+    userId: string;
+    workspaceId: string;
+    threadId: string;
+  }
+) {
+  const seenByQuery = query(
+    ref(DB, `/views/seenBy/${props.appId}/${props.workspaceId}/${props.threadId}`),
+    orderByChild('seenUntilId')
+  );
+  store.subs[`${props.workspaceId}-${props.threadId}-threadSeenBy`] ||= onChildMoved(
+    seenByQuery,
+    (snapshot) => {
+      const userId = snapshot.key;
+      if (!userId) {
+        return;
+      }
+      store.workspaces[props.workspaceId].seenBy[props.threadId][userId] = snapshot.val();
+    }
+  );
 }
 
 function subscribeProfiles(store: Store) {
@@ -218,7 +248,7 @@ function subscribeProfiles(store: Store) {
   console.log('got sub profiles', store.config.setup.appId);
   try {
     store.subs['profiles'] = onChildAdded(
-      ref(getDatabase(CollabKitFirebaseApp), `/profiles/${store.config.setup.appId}/`),
+      ref(DB, `/profiles/${store.config.setup.appId}/`),
       (snapshot) => {
         console.log('got profile', snapshot.val());
         const profile = snapshot.val();
@@ -246,20 +276,14 @@ function subscribeThreadIsTyping(store: Store, workspaceId: string, threadId: st
   const removedKey = `${key}-removed`;
 
   onDisconnect(
-    ref(
-      getDatabase(CollabKitFirebaseApp),
-      `/isTyping/${workspaceId}/${threadId}/${store.config.identify?.userId}`
-    )
+    ref(DB, `/isTyping/${workspaceId}/${threadId}/${store.config.identify?.userId}`)
   ).remove();
 
   if (store.subs[addedKey] && store.subs[removedKey]) {
     return;
   }
 
-  const isTypingRef = ref(
-    getDatabase(CollabKitFirebaseApp),
-    `/isTyping/${store.config.setup?.appId}/${workspaceId}/${threadId}`
-  );
+  const isTypingRef = ref(DB, `/isTyping/${store.config.setup?.appId}/${workspaceId}/${threadId}`);
 
   try {
     store.subs[addedKey] = onChildAdded(isTypingRef, (snapshot) => {
@@ -316,28 +340,19 @@ async function saveProfile(store: Store) {
     }
 
     await update(
-      ref(
-        getDatabase(CollabKitFirebaseApp),
-        `/workspaces/${config.setup.appId}/${config.identify.workspaceId}/`
-      ),
+      ref(DB, `/workspaces/${config.setup.appId}/${config.identify.workspaceId}/`),
       workspace
     );
 
     await set(
       ref(
-        getDatabase(CollabKitFirebaseApp),
+        DB,
         `/workspaces/${config.setup.appId}/${config.identify.workspaceId}/profiles/${config.identify.userId}`
       ),
       true
     );
 
-    await set(
-      ref(
-        getDatabase(CollabKitFirebaseApp),
-        `/profiles/${config.setup.appId}/${config.identify.userId}`
-      ),
-      profile
-    );
+    await set(ref(DB, `/profiles/${config.setup.appId}/${config.identify.userId}`), profile);
 
     store.profiles[config.identify.userId] = profile;
 
@@ -382,7 +397,7 @@ async function open(store: Store, workspaceId: string, threadId: string) {
   }
 }
 
-function seen(store: Store, target: CommentTarget) {
+async function seen(store: Store, target: CommentTarget) {
   const appId = store.config.setup?.appId;
   const userId = store.config.identify?.userId;
   if (!appId || !userId) {
@@ -402,10 +417,15 @@ function seen(store: Store, target: CommentTarget) {
       seenAt: serverTimestamp(),
     };
 
-    update(ref(getDatabase(CollabKitFirebaseApp)), {
-      [`/seen/${appId}/${userId}/${workspaceId}/${threadId}/`]: data,
-      [`/views/seenBy/${appId}/${workspaceId}/${threadId}/${userId}`]: data,
-    });
+    try {
+      await update(ref(DB), {
+        [`/seen/${appId}/${userId}/${workspaceId}/${threadId}/`]: data,
+        [`/views/seenBy/${appId}/${workspaceId}/${threadId}/${userId}`]: data,
+      });
+    } catch (e) {
+      // error is expected if already seen
+      // console.error(e);
+    }
   }
 }
 
@@ -451,10 +471,7 @@ async function resolve(store: Store, workspaceId: string, threadId: string) {
 }
 
 function getIsTypingRef(appId: string, workspaceId: string, threadId: string, userId: string) {
-  return ref(
-    getDatabase(CollabKitFirebaseApp),
-    `/isTyping/${appId}/${workspaceId}/${threadId}/${userId}`
-  );
+  return ref(DB, `/isTyping/${appId}/${workspaceId}/${threadId}/${userId}`);
 }
 
 async function stopTyping(store: Store, props: { target: ComposerTarget }) {
@@ -493,23 +510,41 @@ async function subscribeSeen(store: Store) {
   const userId = config.identify?.userId;
 
   if (!appId || !workspaceId) {
+    console.warn('abort subscribe seen');
     return;
   }
 
   const seenQuery = query(
-    ref(getDatabase(CollabKitFirebaseApp), `/seen/${appId}/${userId}/${workspaceId}`),
+    ref(DB, `/seen/${appId}/${userId}/${workspaceId}`),
     orderByChild('seenUntilId'),
     limitToLast(20)
   );
 
-  store.subs[`${appId}-${workspaceId}-seen`] ||= onChildChanged(seenQuery, (snapshot) => {
-    if (snapshot.key) {
-      console.log('applying seen id change');
-      store.workspaces[workspaceId].seen[snapshot.key] = snapshot.val() || {};
+  function childCallback(snapshot: DataSnapshot) {
+    const threadId = snapshot.key;
+    if (threadId && workspaceId) {
+      const { seenUntilId } = snapshot.val();
+      store.workspaces[workspaceId].seen[threadId] = seenUntilId;
     } else {
       console.log('no kley');
     }
-  });
+  }
+
+  store.subs[`${appId}-${workspaceId}-seen-added`] ||= onChildAdded(
+    seenQuery,
+    childCallback,
+    (error) => {
+      console.error('seen: ', error);
+    }
+  );
+
+  store.subs[`${appId}-${workspaceId}-seen-moved`] ||= onChildMoved(
+    seenQuery,
+    childCallback,
+    (error) => {
+      console.error('seen: ', error);
+    }
+  );
 }
 
 async function subscribeInbox(store: Store) {
@@ -529,103 +564,35 @@ async function subscribeInbox(store: Store) {
   console.log('Subscribing to Inbox');
 
   const inboxRef = query(
-    ref(getDatabase(CollabKitFirebaseApp), `views/inbox/${appId}/${workspaceId}`),
+    ref(DB, `views/inbox/${appId}/${workspaceId}`),
     orderByChild('createdAt'),
     limitToLast(20)
   );
 
-  store.subs['inbox#added'] ||= onChildAdded(
-    inboxRef,
-    (snapshot, prevChildName) => {
-      if (!workspaceId) {
-        return;
-      }
-
-      if (!snapshot.key) {
-        return;
-      }
-
-      console.log('#inbox', snapshot.key, prevChildName);
-
-      const event = snapshot.val();
-      store.workspaces[workspaceId].inbox[snapshot.key] = event;
-    },
-    (error) => {
-      console.error('Error subscribing to Inbox', error);
+  function childCallback(snapshot: DataSnapshot, prevChildName?: string | null) {
+    if (!workspaceId) {
+      return;
     }
-  );
 
-  store.subs['inbox#moved'] ||= onChildMoved(
-    inboxRef,
-    (snapshot, prevChildName) => {
-      if (!workspaceId) {
-        return;
-      }
+    const threadId = snapshot.key;
 
-      if (!snapshot.key) {
-        return;
-      }
-
-      console.log('#inbox', snapshot.key, prevChildName);
-
-      const event = snapshot.val();
-      store.workspaces[workspaceId].inbox[snapshot.key] = event;
-    },
-    (error) => {
-      console.error('Error subscribing to Inbox', error);
+    if (!threadId) {
+      return;
     }
-  );
 
-  // const threadsRef = query(
-  //   ref(
-  //     getDatabase(CollabKitFirebaseApp),
-  //     `/timeline/${config.setup.appId}/${config.identify?.workspaceId}`
-  //   ),
-  //   orderByChild('createdAt'),
-  //   limitToLast(20)
-  // );
+    console.log('#inbox', threadId, prevChildName);
 
-  // store.subs['subscribeInbox#onChildAdded'] = onChildAdded(
-  //   threadsRef,
-  //   (snapshot) => {
-  //     if (!config.identify?.workspaceId) {
-  //       return;
-  //     }
+    const event = snapshot.val();
+    store.workspaces[workspaceId].inbox[threadId] = event;
+  }
 
-  //     if (!snapshot.key) {
-  //       return;
-  //     }
+  store.subs['inbox#added'] ||= onChildAdded(inboxRef, childCallback, (error) => {
+    console.error('Error subscribing to Inbox', error);
+  });
 
-  //     console.log('got inbox item', snapshot.key);
-
-  //     const timeline = snapshot.val();
-  //     store.workspaces[config.identify.workspaceId].timeline[snapshot.key] = timeline;
-  //   },
-  //   (error) => {
-  //     console.error('Error subscribing to Inbox', error);
-  //   }
-  // );
-
-  // store.subs['subscribeInbox#onChildMoved'] = onChildMoved(
-  //   threadsRef,
-  //   (snapshot, prevChildName) => {
-  //     if (!config.identify?.workspaceId) {
-  //       return;
-  //     }
-
-  //     if (!snapshot.key) {
-  //       return;
-  //     }
-
-  //     console.log('got inbox item', snapshot.key, prevChildName);
-
-  //     const timeline = snapshot.val();
-  //     store.workspaces[config.identify.workspaceId].timeline[snapshot.key] = timeline;
-  //   },
-  //   (error) => {
-  //     console.error('Error subscribing to Inbox', error);
-  //   }
-  // );
+  store.subs['inbox#moved'] ||= onChildMoved(inboxRef, childCallback, (error) => {
+    console.error('Error subscribing to Inbox', error);
+  });
 }
 
 async function authenticate(store: Store) {
@@ -661,10 +628,7 @@ async function authenticate(store: Store) {
     try {
       // this should be an onValue sub
       const snapshot = await get(
-        ref(
-          getDatabase(CollabKitFirebaseApp),
-          `/profiles/${config.setup.appId}/${config.identify?.workspaceId}`
-        )
+        ref(DB, `/profiles/${config.setup.appId}/${config.identify?.workspaceId}`)
       );
       const workspaceId = snapshot.key;
       if (workspaceId) {
@@ -743,6 +707,7 @@ async function identify(store: Store, props: IdentifyProps) {
     timeline: {},
     composers: {},
     seen: {},
+    seenBy: {},
   };
 }
 
@@ -777,7 +742,7 @@ export const actions = {
       }
 
       const isTypingRef = ref(
-        getDatabase(CollabKitFirebaseApp),
+        DB,
         `/isTyping/${config.setup.appId}/${props.target.workspaceId}/${props.target.threadId}/${config.identify.userId}`
       );
 

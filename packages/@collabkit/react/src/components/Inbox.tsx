@@ -45,14 +45,11 @@ function _Inbox() {
   const { store } = useApp();
   const { profiles } = useSnapshot(store!);
   const { workspace } = useContext(WorkspaceContext);
-  const inboxIds = workspace ? Object.keys(workspace.inbox) : null;
-  if (store === null) {
-    return null;
-  }
   const { appState } = useSnapshot(store);
 
+  const inboxIds = workspace ? Object.keys(workspace.inbox) : null;
+
   useEffect(() => {
-    if (!store) return;
     if (appState !== 'ready') return;
     actions.subscribeInbox(store);
   }, [appState]);

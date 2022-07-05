@@ -1,4 +1,4 @@
-import { Unsubscribe } from 'firebase/database';
+import { getDatabase, Unsubscribe } from 'firebase/database';
 import { initializeApp } from '@firebase/app';
 import { Color } from './colors';
 import { LexicalEditor } from 'lexical';
@@ -14,6 +14,8 @@ const firebaseConfig = {
 };
 
 export const CollabKitFirebaseApp = initializeApp(firebaseConfig, 'CollabKit');
+
+export const DB = getDatabase(CollabKitFirebaseApp);
 
 export type Target =
   | ComposerTarget
@@ -120,12 +122,17 @@ export interface Composer {
   isTyping: { [endUserId: string]: boolean };
 }
 
+export interface SeenBy {
+  [userId: string]: { seenAt: number; seenUntilId: string };
+}
+
 export interface Workspace {
   name: string;
   inbox: { [threadId: string]: WithName<Event> };
   timeline: { [threadId: string]: Timeline };
   composers: { [threadId: string]: Composer };
   seen: { [threadId: string]: string }; // lastSeenEventId
+  seenBy: { [threadId: string]: SeenBy };
 }
 
 export interface Store {
