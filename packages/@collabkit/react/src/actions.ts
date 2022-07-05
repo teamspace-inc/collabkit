@@ -100,6 +100,7 @@ function monitorConnection(store: Store, events: ReturnType<typeof createEvents>
 
 function initThread(store: Store, props: { workspaceId: string; threadId: string }) {
   store.workspaces[props.workspaceId] ||= {
+    inbox: {},
     name: store.config.identify?.workspaceName || '',
     composers: {
       [props.threadId]: {
@@ -459,42 +460,25 @@ async function subscribeInbox(store: Store) {
     return;
   }
 
+  const appId = config.setup.appId;
+  const workspaceId = config.identify?.workspaceId;
+
+  if (!appId || !workspaceId) {
+    return;
+  }
+
   console.log('Subscribing to Inbox');
 
-  const threadsRef = query(
-    ref(
-      getDatabase(CollabKitFirebaseApp),
-      `/timeline/${config.setup.appId}/${config.identify?.workspaceId}`
-    ),
+  const inboxRef = query(
+    ref(getDatabase(CollabKitFirebaseApp), `views/inbox/${appId}/${workspaceId}`),
     orderByChild('createdAt'),
     limitToLast(20)
   );
 
-  store.subs['subscribeInbox#onChildAdded'] = onChildAdded(
-    threadsRef,
-    (snapshot) => {
-      if (!config.identify?.workspaceId) {
-        return;
-      }
-
-      if (!snapshot.key) {
-        return;
-      }
-
-      console.log('got inbox item', snapshot.key);
-
-      const timeline = snapshot.val();
-      store.workspaces[config.identify.workspaceId].timeline[snapshot.key] = timeline;
-    },
-    (error) => {
-      console.error('Error subscribing to Inbox', error);
-    }
-  );
-
-  store.subs['subscribeInbox#onChildMoved'] = onChildMoved(
-    threadsRef,
+  store.subs['inbox#moved'] = onChildAdded(
+    inboxRef,
     (snapshot, prevChildName) => {
-      if (!config.identify?.workspaceId) {
+      if (!workspaceId) {
         return;
       }
 
@@ -502,15 +486,87 @@ async function subscribeInbox(store: Store) {
         return;
       }
 
-      console.log('got inbox item', snapshot.key, prevChildName);
+      console.log('#inbox', snapshot.key, prevChildName);
 
-      const timeline = snapshot.val();
-      store.workspaces[config.identify.workspaceId].timeline[snapshot.key] = timeline;
+      const event = snapshot.val();
+      store.workspaces[workspaceId].inbox[snapshot.key] = event;
     },
     (error) => {
       console.error('Error subscribing to Inbox', error);
     }
   );
+
+  store.subs['inbox#moved'] = onChildMoved(
+    inboxRef,
+    (snapshot, prevChildName) => {
+      if (!workspaceId) {
+        return;
+      }
+
+      if (!snapshot.key) {
+        return;
+      }
+
+      console.log('#inbox', snapshot.key, prevChildName);
+
+      const event = snapshot.val();
+      store.workspaces[workspaceId].inbox[snapshot.key] = event;
+    },
+    (error) => {
+      console.error('Error subscribing to Inbox', error);
+    }
+  );
+
+  // const threadsRef = query(
+  //   ref(
+  //     getDatabase(CollabKitFirebaseApp),
+  //     `/timeline/${config.setup.appId}/${config.identify?.workspaceId}`
+  //   ),
+  //   orderByChild('createdAt'),
+  //   limitToLast(20)
+  // );
+
+  // store.subs['subscribeInbox#onChildAdded'] = onChildAdded(
+  //   threadsRef,
+  //   (snapshot) => {
+  //     if (!config.identify?.workspaceId) {
+  //       return;
+  //     }
+
+  //     if (!snapshot.key) {
+  //       return;
+  //     }
+
+  //     console.log('got inbox item', snapshot.key);
+
+  //     const timeline = snapshot.val();
+  //     store.workspaces[config.identify.workspaceId].timeline[snapshot.key] = timeline;
+  //   },
+  //   (error) => {
+  //     console.error('Error subscribing to Inbox', error);
+  //   }
+  // );
+
+  // store.subs['subscribeInbox#onChildMoved'] = onChildMoved(
+  //   threadsRef,
+  //   (snapshot, prevChildName) => {
+  //     if (!config.identify?.workspaceId) {
+  //       return;
+  //     }
+
+  //     if (!snapshot.key) {
+  //       return;
+  //     }
+
+  //     console.log('got inbox item', snapshot.key, prevChildName);
+
+  //     const timeline = snapshot.val();
+  //     store.workspaces[config.identify.workspaceId].timeline[snapshot.key] = timeline;
+  //   },
+  //   (error) => {
+  //     console.error('Error subscribing to Inbox', error);
+  //   }
+  // );
 }
 
 async function authenticate(store: Store) {
@@ -621,7 +677,9 @@ async function setup(store: Store, events: Events, props: SetupProps) {
 
 async function identify(store: Store, props: IdentifyProps) {
   store.config.identify = props;
+  // todo extract this
   store.workspaces[props.workspaceId] ||= {
+    inbox: {},
     name: store.config.identify.workspaceName || '',
     timeline: {},
     composers: {},

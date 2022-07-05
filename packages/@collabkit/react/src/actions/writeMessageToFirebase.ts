@@ -46,6 +46,7 @@ export async function writeMessageToFirebase(
     [`/views/inbox/${appId}/${workspaceId}/${threadId}`]: {
       ...event,
       body: preview,
+      name: threadId,
     },
   };
 
