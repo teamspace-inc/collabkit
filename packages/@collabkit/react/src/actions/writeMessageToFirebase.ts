@@ -43,7 +43,7 @@ export async function writeMessageToFirebase(
 
   const data = {
     [`/timeline/${appId}/${workspaceId}/${threadId}/${eventRef.key}`]: event,
-    [`/views/inbox/${appId}/${workspaceId}/${threadId}/${eventRef.key}`]: {
+    [`/views/inbox/${appId}/${workspaceId}/${threadId}`]: {
       ...event,
       body: preview,
     },
@@ -52,7 +52,7 @@ export async function writeMessageToFirebase(
   // write the data to firebase
   await update(ref(getDatabase(CollabKitFirebaseApp)), data);
 
-  if (eventRef.key) {
+  if (eventRef.key !== null) {
     store.workspaces[workspaceId].timeline[threadId] ||= {};
     store.workspaces[workspaceId].timeline[threadId][eventRef.key] = {
       ...event,
