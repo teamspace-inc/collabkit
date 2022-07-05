@@ -1,5 +1,5 @@
 import { DataSnapshot } from 'firebase/database';
-import React, { useContext } from 'react';
+import React from 'react';
 import { actions } from './actions';
 import { CommentReactionTarget, CommentTarget, Store, Target } from './constants';
 
@@ -109,6 +109,10 @@ export function createEvents(store: Store) {
           e.preventDefault();
         }
       }
+    },
+
+    onSeen: (props: { target: CommentTarget }) => {
+      actions.seen(store, props.target);
     },
 
     // onMouseDown: (e: MouseEvent) => {

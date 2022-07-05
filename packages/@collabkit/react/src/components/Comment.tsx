@@ -2,7 +2,7 @@ import { CommentTarget, Event, Profile } from '../constants';
 import { Avatar } from './Avatar';
 import { styled, theme } from './UIKit';
 import { CheckCircle, RadioButton, Smiley } from 'phosphor-react';
-import { forwardRef, RefObject, useContext, useRef, useState } from 'react';
+import { RefObject, useContext, useEffect, useRef, useState } from 'react';
 import { Target, TargetContext } from './Target';
 import { useSnapshot } from 'valtio';
 import { timeDifference } from '../utils/timeDifference';
@@ -13,6 +13,7 @@ import {
   TLBoundsCorner,
   TLBoundsEdge,
   useIntersectionObserver,
+  useIsIntersecting,
 } from '../hooks/useIntersectionObserver';
 import { MODAL_Z_INDEX } from './Thread';
 
@@ -218,15 +219,11 @@ const StyledEmojiReaction = styled('div', {
   },
 });
 
-function ReactionPicker(props: {
-  target: CommentTarget;
-  commentListViewportRef: RefObject<HTMLDivElement>;
-}) {
+function ReactionPicker(props: { target: CommentTarget; viewportRef: RefObject<HTMLDivElement> }) {
   const ref = useRef(null);
-  const intersection = useIntersectionObserver(
-    { ref, root: props.commentListViewportRef.current },
-    [props.target]
-  );
+  const intersection = useIntersectionObserver({ ref, root: props.viewportRef.current }, [
+    props.target,
+  ]);
   console.log({ intersection });
 
   return (
@@ -424,17 +421,20 @@ export function TypingIndicator(props: { profile: Profile }) {
 }
 
 export function Comment(props: {
+  id: string;
   reactions: { [createdById: string]: Event };
   timestamp: number | object;
   body: string;
   event: Event;
   profile: Profile;
-  commentListViewportRef: React.RefObject<HTMLDivElement>;
+  rootRef: React.RefObject<HTMLDivElement>;
+  scrollRef: React.RefObject<HTMLDivElement>;
   type: 'default' | 'inline' | 'inline-start' | 'inline-end';
   threadType: 'inline' | 'popout';
 }) {
-  const { store } = useApp();
-  if (!store) {
+  const ref = useRef(null);
+  const { store, events } = useApp();
+  if (!store || !events) {
     return null;
   }
   const [isHovering, setIsHovering] = useState(false);
@@ -445,12 +445,18 @@ export function Comment(props: {
     return null;
   }
 
+  const isIntersecting = useIsIntersecting({ ref, root: props.scrollRef.current }, []);
+
+  useEffect(() => {
+    if (isIntersecting) events.onSeen({ target });
+  }, [isIntersecting]);
+
   // if (props.event.type === 'system') {
   //   return <SystemMessage event={props.event} profile={props.profile} />;
   // }
 
   const emojiReactionPicker = isSameComment(reactingId, target) ? (
-    <ReactionPicker target={target} commentListViewportRef={props.commentListViewportRef} />
+    <ReactionPicker target={target} viewportRef={props.scrollRef} />
   ) : null;
 
   const showProfile = props.type === 'default' || props.type === 'inline-start';
@@ -472,7 +478,11 @@ export function Comment(props: {
       onMouseOver={() => setIsHovering(true)}
       onMouseOut={() => setIsHovering(false)}
     >
-      <StyledCommentContainer style={isSameComment(reactingId, target) ? zStyles : {}} ui="bubbles">
+      <StyledCommentContainer
+        ref={ref}
+        style={isSameComment(reactingId, target) ? zStyles : {}}
+        ui="bubbles"
+      >
         {showProfile && <Avatar profile={props.profile} style={{ position: 'relative', top: 4 }} />}
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <StyledMessage
