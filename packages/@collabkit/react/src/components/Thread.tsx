@@ -193,23 +193,25 @@ function _Thread(props: {
         ...props.style,
       }}
     >
-      <div
-        onClick={(e) => (reactingId ? events.onEmojiReactionPickerModalBackgroundClick(e) : null)}
-        style={{
-          position: 'absolute',
-          inset: 0,
-          transition: 'background-color 0.2s ease-in-out',
-          zIndex: MODAL_Z_INDEX,
-          pointerEvents: 'none',
-          borderRadius: 11,
-          ...(reactingId
-            ? {
-                backgroundColor: 'rgba(0,0,0,0.3)',
-                pointerEvents: 'all',
-              }
-            : {}),
-        }}
-      />
+      {reactingId ? (
+        <div
+          onClick={(e) => (reactingId ? events.onEmojiReactionPickerModalBackgroundClick(e) : null)}
+          style={{
+            position: 'absolute',
+            inset: 0,
+            transition: 'background-color 0.2s ease-in-out',
+            zIndex: MODAL_Z_INDEX,
+            pointerEvents: 'none',
+            borderRadius: 11,
+            ...(reactingId
+              ? {
+                  backgroundColor: 'rgba(0,0,0,0.3)',
+                  pointerEvents: 'all',
+                }
+              : {}),
+          }}
+        />
+      ) : null}
       <StyledThread type={props.type} isEmpty={isEmpty}>
         {!isConnected && props.type !== 'popout' ? <FlexCenter /> : null}
         {isConnected && isEmpty && props.type !== 'popout' ? (

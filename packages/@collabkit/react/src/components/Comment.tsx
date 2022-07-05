@@ -18,6 +18,8 @@ import { MODAL_Z_INDEX } from './Thread';
 
 export const StyledComment = styled('div', {
   display: 'flex',
+  // enough space for the react button
+  // with bubbles on
   maxWidth: 'calc(100% - 46px)',
   variants: {
     ui: {
