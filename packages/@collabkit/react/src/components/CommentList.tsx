@@ -30,6 +30,7 @@ export const CommentList = React.memo(function CommentList(props: {
 }) {
   const { threadId, workspaceId } = props;
 
+  const rootRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const { profiles, timeline, composerHeight } = props;
 
@@ -110,7 +111,10 @@ export const CommentList = React.memo(function CommentList(props: {
           : {}
       }
     >
-      <ScrollArea.Root style={{ ...(props.type === 'popout' ? { height: 352 } : {}) }}>
+      <ScrollArea.Root
+        ref={rootRef}
+        style={{ ...(props.type === 'popout' ? { height: 352 } : {}) }}
+      >
         <ScrollArea.Viewport
           css={{
             display: 'flex',
@@ -143,13 +147,15 @@ export const CommentList = React.memo(function CommentList(props: {
                   target={{ type: 'comment', eventId: event.id, workspaceId, threadId }}
                 >
                   <Comment
+                    id={event.id}
                     event={event}
                     reactions={reactions[event.id]}
                     threadType={props.type ?? 'inline'}
                     type={type}
                     timestamp={event.createdAt}
                     key={`event-${i}-${j}`}
-                    commentListViewportRef={scrollRef}
+                    rootRef={rootRef}
+                    scrollRef={scrollRef}
                     body={event.body}
                     profile={profile}
                   />

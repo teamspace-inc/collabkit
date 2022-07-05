@@ -110,7 +110,7 @@ function initThread(store: Store, props: { workspaceId: string; threadId: string
       },
     },
     timeline: {},
-    recentThreadIds: [],
+    seen: {},
   };
 
   store.workspaces[props.workspaceId].composers[props.threadId] ||= {
@@ -381,6 +381,10 @@ async function open(store: Store, workspaceId: string, threadId: string) {
   }
 }
 
+function seen(store: Store, target: CommentTarget) {
+  console.log('SEEN', target.eventId, target.threadId, target.workspaceId);
+}
+
 function focus(store: Store, target: Target) {
   store.focusedId = target;
 }
@@ -453,9 +457,7 @@ async function stopTyping(store: Store, props: { target: ComposerTarget }) {
   );
 }
 
-async function subscribeSeen(store: Store) {
-  
-}
+async function subscribeSeen(store: Store) {}
 
 async function subscribeInbox(store: Store) {
   const { config } = store;
@@ -687,7 +689,7 @@ async function identify(store: Store, props: IdentifyProps) {
     name: store.config.identify.workspaceName || '',
     timeline: {},
     composers: {},
-    recentThreadIds: [],
+    seen: {},
   };
 }
 
@@ -744,6 +746,8 @@ export const actions = {
     1000,
     { leading: true, maxWait: 1000 }
   ),
+
+  seen,
 
   subscribeProfiles,
 

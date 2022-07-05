@@ -122,10 +122,10 @@ export interface Composer {
 
 export interface Workspace {
   name: string;
-  recentThreadIds: string[];
   inbox: { [threadId: string]: WithName<Event> };
   timeline: { [threadId: string]: Timeline };
   composers: { [threadId: string]: Composer };
+  seen: { [threadId: string]: string }; // lastSeenEventId
 }
 
 export interface Store {

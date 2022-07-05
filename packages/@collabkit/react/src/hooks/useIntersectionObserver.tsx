@@ -47,6 +47,33 @@ export const intersectionStyles = css({
   },
 });
 
+export function useIsIntersecting(
+  props: {
+    ref: RefObject<HTMLElement>;
+    root: Element | Document | null | undefined;
+  },
+  deps: any[]
+) {
+  const { ref, root } = props;
+
+  const observer = useRef<IntersectionObserver>();
+  const [isIntersecting, setIsIntersecting] = useState<boolean>(false);
+
+  const observe = useCallback((entries: IntersectionObserverEntry[] = []) => {
+    const { isIntersecting } = entries[0];
+    setIsIntersecting(isIntersecting);
+  }, []);
+
+  useEffect(() => {
+    if (ref.current) {
+      observer.current = new IntersectionObserver(observe, { root });
+      observer.current.observe(ref.current);
+    }
+  }, deps.concat(root));
+
+  return isIntersecting;
+}
+
 export function useIntersectionObserver(
   props: {
     ref: RefObject<HTMLElement>;
@@ -62,13 +89,13 @@ export function useIntersectionObserver(
   const observe = useCallback((entries: IntersectionObserverEntry[] = []) => {
     const { boundingClientRect, intersectionRect } = entries[0];
     if (
-      intersectionRect.width < boundingClientRect.width &&
-      intersectionRect.height < boundingClientRect.height
+      intersectionRect.width <= boundingClientRect.width &&
+      intersectionRect.height <= boundingClientRect.height
     ) {
       setIntersectsEdge(TLBoundsCorner.BottomRight);
-    } else if (intersectionRect.width < boundingClientRect.width) {
+    } else if (intersectionRect.width <= boundingClientRect.width) {
       setIntersectsEdge(TLBoundsEdge.Right);
-    } else if (intersectionRect.height < boundingClientRect.height) {
+    } else if (intersectionRect.height <= boundingClientRect.height) {
       setIntersectsEdge(TLBoundsEdge.Bottom);
     } else {
       setIntersectsEdge('none');
