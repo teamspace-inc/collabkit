@@ -22,12 +22,15 @@ export function CurrentUser() {
   if (!userId) {
     return <div>No Current User</div>;
   } else {
-    return (
+    const profile = profiles[userId];
+    return profile ? (
       <StyledUser>
-        <Avatar profile={profiles[userId]} />
-        <StyledUserName>{profiles[userId].name}</StyledUserName>
-        <StyledUserEmail>{profiles[userId].email}</StyledUserEmail>
+        <Avatar profile={profile} />
+        <StyledUserName>{profile?.name}</StyledUserName>
+        <StyledUserEmail>{profile?.email}</StyledUserEmail>
       </StyledUser>
+    ) : (
+      <div>No profile</div>
     );
   }
 }
