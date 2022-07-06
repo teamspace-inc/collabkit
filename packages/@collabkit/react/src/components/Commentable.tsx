@@ -3,6 +3,7 @@ import { useApp } from './App';
 import { useSnapshot } from 'valtio';
 import './Commentable.css';
 import { CollabKit } from '..';
+import { useWorkspaceId } from './Workspace';
 
 function inspectSize(nodes: HTMLElement[]) {
   const sizeNodes = nodes.filter(hasSize);
@@ -77,9 +78,10 @@ function getPlacementStylesForPoint(point: { x: number; y: number }): React.CSSP
 export function Commentable(props: { children: React.ReactNode }) {
   const nodesAtPointerRef = useRef<HTMLElement[]>([]);
   const { store, events } = useApp();
+  const { workspaceId } = useWorkspaceId();
   const { uiState, openId, point } = useSnapshot(store);
   const ref = useRef<HTMLElement>(null);
-  const target = { type: 'commentableContainer' } as const;
+  const target = { type: 'commentableContainer', workspaceId } as const;
 
   useEffect(() => {
     if (uiState !== 'selecting') uninspect();

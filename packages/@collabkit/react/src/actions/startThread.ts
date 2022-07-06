@@ -4,7 +4,7 @@ import { initThread } from './initThread';
 import { unloadThread } from './unloadThread';
 import { positionThread } from './positionThread';
 
-export function toggleThread(
+export function startThread(
   store: Store,
   props: { workspaceId: string; threadId: string; point?: { x: number; y: number } }
 ) {
@@ -15,6 +15,8 @@ export function toggleThread(
   if (props.point) {
     positionThread(store, { point: props.point });
     store.openId = { type: 'thread', workspaceId: props.workspaceId, threadId: props.threadId };
-    store.uiState = 'commenting';
+  }
+  if (store.uiState === 'selecting') {
+    store.uiState = 'idle';
   }
 }
