@@ -7,6 +7,7 @@ import { Button } from './components/Button';
 import { withComments } from './components/withComments';
 import { Inbox } from './components/Inbox';
 import { CurrentUser } from './components/CurrentUser';
+import { FloatingButton } from './components/FloatingButton';
 
 export const CollabKit = {
   App,
@@ -14,6 +15,7 @@ export const CollabKit = {
   CurrentUser,
   Thread,
   Button,
+  FloatingButton,
   Inbox,
   Debug,
   withComments,
