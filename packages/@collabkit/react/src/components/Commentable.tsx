@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { getPlacementData, SIDE_OPTIONS } from '@radix-ui/popper';
 import { useApp } from './App';
 import { useSnapshot } from 'valtio';
+import './Commentable.css';
 
 function createMarkerNode(text: string, type: string, popperOptions: any) {
   const marker = document.createElement('inspx');
@@ -121,7 +122,8 @@ function inspectSize(nodes: HTMLElement[]) {
   const { width, height, top, left, right, bottom } = node.getBoundingClientRect();
 
   const marker = document.createElement('inspx');
-  marker.innerText = `${Math.round(width)} x ${Math.round(height)}`;
+  // marker.innerText = `${Math.round(width)} x ${Math.round(height)}`;
+  marker.innerText = 'Comment';
   marker.setAttribute('type', 'size');
 
   document.body.appendChild(marker);
