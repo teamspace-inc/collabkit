@@ -628,6 +628,14 @@ async function generateToken(appId: string, apiKey: string, mode: 'SECURED' | 'U
   return null;
 }
 
+function stopSelecting(store: Store) {
+  store.uiState = 'idle';
+}
+
+function startSelecting(store: Store) {
+  store.uiState = 'selecting';
+}
+
 async function setup(store: Store, events: Events, props: SetupProps) {
   store.appState = 'config';
   store.config.setup = props;
@@ -700,6 +708,10 @@ export const actions = {
     1000,
     { leading: true, maxWait: 1000 }
   ),
+
+  stopSelecting,
+
+  startSelecting,
 
   seen,
 

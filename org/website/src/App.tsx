@@ -267,7 +267,7 @@ function App() {
               >
                 <h3 style={{ color: 'rgba(0,0,0,0.25)', marginTop: 0 }}>CollabKit.Inbox</h3>
                 <p style={{ color: 'rgba(0,0,0,0.4)' }}>
-                  A list of all the threads for a workspace.
+                  A list of all the threads for a workspace. Unread threads in bold.
                 </p>
                 <CollabKit.App
                   token={Object.keys(app.keys)[0]}
@@ -288,7 +288,7 @@ function App() {
                 }}
               >
                 <h3 style={{ color: 'rgba(0,0,0,0.25)', marginTop: 0 }}>CollabKit.CurrentUser</h3>
-                <p style={{ color: 'rgba(0,0,0,0.4)' }}>The current user..</p>
+                <p style={{ color: 'rgba(0,0,0,0.4)' }}>The current user.</p>
                 <CollabKit.App
                   token={Object.keys(app.keys)[0]}
                   appId={app.appId}
@@ -297,6 +297,30 @@ function App() {
                 >
                   <CollabKit.Workspace workspaceId={params.workspace_id}>
                     <CollabKit.CurrentUser />
+                  </CollabKit.Workspace>
+                </CollabKit.App>
+              </div>
+              <div
+                style={{
+                  padding: '2rem',
+                  borderRadius: '24px',
+                  background: theme.colors.neutral12.toString(),
+                }}
+              >
+                <h3 style={{ color: 'rgba(0,0,0,0.25)', marginTop: 0 }}>
+                  CollabKit.FloatingButton
+                </h3>
+                <p style={{ color: 'rgba(0,0,0,0.4)' }}>
+                  Floating button to start commenting on something in an app. Has a fixed position.
+                </p>
+                <CollabKit.App
+                  token={Object.keys(app.keys)[0]}
+                  appId={app.appId}
+                  identity={identity}
+                  mentions={mentions}
+                >
+                  <CollabKit.Workspace workspaceId={params.workspace_id}>
+                    <CollabKit.FloatingButton />
                   </CollabKit.Workspace>
                 </CollabKit.App>
               </div>

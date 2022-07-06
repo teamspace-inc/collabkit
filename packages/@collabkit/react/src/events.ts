@@ -11,6 +11,15 @@ import { CommentReactionTarget, CommentTarget, Store, Target } from './constants
 export type Events = ReturnType<typeof createEvents>;
 
 function onKeyDown(store: Store, e: KeyboardEvent) {
+  if (store.uiState === 'selecting') {
+    if (e.key === 'Escape') {
+      actions.stopSelecting(store);
+      e.stopPropagation();
+      e.preventDefault();
+      return;
+    }
+  }
+
   if (store.focusedId?.type === 'composer') {
     if (e.key === 'Enter' && !e.shiftKey) {
       actions.sendMessage(store, store.focusedId.workspaceId, store.focusedId.threadId);
@@ -101,12 +110,21 @@ export function createEvents(store: Store) {
       actions.blur(store, props.target);
     },
 
-    onKeyDown: (e: KeyboardEvent) => {
-      if (store.focusedId?.type === 'composer') {
-        if (e.key === 'Enter' && !e.shiftKey) {
-          actions.sendMessage(store, store.focusedId.workspaceId, store.focusedId.threadId);
-          e.stopPropagation();
-          e.preventDefault();
+    onKeyDown,
+
+    onPointerDown: (e: React.PointerEvent, props: { target: Target }) => {
+      switch (store.uiState) {
+        case 'idle': {
+          if (props.target.type === 'floatingCommentButton') {
+            actions.startSelecting(store);
+          }
+          break;
+        }
+        case 'selecting': {
+          break;
+        }
+        case 'commenting': {
+          break;
         }
       }
     },

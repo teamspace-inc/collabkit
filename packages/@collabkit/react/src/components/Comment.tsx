@@ -221,9 +221,8 @@ const StyledEmojiReaction = styled('div', {
 
 function ReactionPicker(props: { target: CommentTarget; viewportRef: RefObject<HTMLDivElement> }) {
   const ref = useRef(null);
-  const intersection = useIntersectionObserver({ ref, root: props.viewportRef.current }, [
-    props.target,
-  ]);
+  const root = props.viewportRef.current;
+  const intersection = useIntersectionObserver({ ref, root }, [props.target]);
   return (
     <StyledReactionPicker ref={ref} intersection={intersection}>
       {emojiReacts.map((emoji) => (

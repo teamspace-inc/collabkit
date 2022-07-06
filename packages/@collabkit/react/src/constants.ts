@@ -25,7 +25,10 @@ export type Target =
   | CommentReactionTarget
   | ThreadResolveButtonTarget
   | ThreadCloseButtonTarget
-  | ReopenThreadButtonTarget;
+  | ReopenThreadButtonTarget
+  | FloatingCommentButtonTarget;
+
+export type FloatingCommentButtonTarget = { type: 'floatingCommentButton' };
 
 export type ComposerTarget = { type: 'composer'; threadId: string; workspaceId: string };
 export type ThreadTarget = { type: 'thread'; threadId: string; workspaceId: string };
@@ -152,7 +155,7 @@ export interface Store {
     [workspaceId: string]: Workspace;
   };
   appState: 'blank' | 'config' | 'ready';
-  uiState: 'idle' | 'reacting';
+  uiState: 'idle' | 'selecting' | 'commenting';
   reactingId: null | Target;
   subs: { [subId: string]: Unsubscribe };
 }
