@@ -1,112 +1,112 @@
 import React, { useRef } from 'react';
-import { getPlacementData, SIDE_OPTIONS } from '@radix-ui/popper';
+// import { getPlacementData, SIDE_OPTIONS } from '@radix-ui/popper';
 import { useApp } from './App';
 import { useSnapshot } from 'valtio';
 import './Commentable.css';
 
-function createMarkerNode(text: string, type: string, popperOptions: any) {
-  const marker = document.createElement('inspx');
-  marker.innerText = text;
-  marker.setAttribute('type', type);
+// function createMarkerNode(text: string, type: string, popperOptions: any) {
+//   const marker = document.createElement('inspx');
+//   marker.innerText = text;
+//   marker.setAttribute('type', type);
 
-  document.body.appendChild(marker);
+//   document.body.appendChild(marker);
 
-  const { width: popperWidth, height: popperHeight } = marker.getBoundingClientRect();
+//   const { width: popperWidth, height: popperHeight } = marker.getBoundingClientRect();
 
-  const { popperStyles } = getPlacementData({
-    popperSize: { width: popperWidth, height: popperHeight },
-    sideOffset: 8,
-    align: 'center',
-    side: 'bottom',
-    alignOffset: 0,
-    collisionBoundariesRect: DOMRect.fromRect({
-      width: window.innerWidth,
-      height: window.innerHeight,
-      x: 0,
-      y: 0,
-    }),
-    collisionTolerance: 0,
-    shouldAvoidCollisions: true,
-    ...popperOptions,
-  });
+//   const { popperStyles } = getPlacementData({
+//     popperSize: { width: popperWidth, height: popperHeight },
+//     sideOffset: 8,
+//     align: 'center',
+//     side: 'top',
+//     alignOffset: 0,
+//     collisionBoundariesRect: DOMRect.fromRect({
+//       width: window.innerWidth,
+//       height: window.innerHeight,
+//       x: 0,
+//       y: 0,
+//     }),
+//     collisionTolerance: 0,
+//     shouldAvoidCollisions: true,
+//     ...popperOptions,
+//   });
 
-  Object.entries(popperStyles).forEach(([key, value]) => {
-    marker.style.setProperty(key, value);
-  });
-}
+//   Object.entries(popperStyles).forEach(([key, value]) => {
+//     marker.style.setProperty(key, value);
+//   });
+// }
 
-function createMargin(
-  index: number,
-  value: number,
-  node: HTMLElement,
-  side: 'top' | 'right' | 'bottom' | 'left'
-) {
-  const margin = document.createElement('margin');
+// function createMargin(
+//   index: number,
+//   value: number,
+//   node: HTMLElement,
+//   side: 'top' | 'right' | 'bottom' | 'left'
+// ) {
+//   const margin = document.createElement('margin');
 
-  const { width: nodeWidth, height: nodeHeight } = node.getBoundingClientRect();
+//   const { width: nodeWidth, height: nodeHeight } = node.getBoundingClientRect();
 
-  const widths = [nodeWidth, value, nodeWidth, value];
-  const heights = [value, nodeHeight, value, nodeHeight];
+//   const widths = [nodeWidth, value, nodeWidth, value];
+//   const heights = [value, nodeHeight, value, nodeHeight];
 
-  const width = widths[index];
-  const height = heights[index];
+//   const width = widths[index];
+//   const height = heights[index];
 
-  style(margin, {
-    width,
-    height,
-  });
+//   style(margin, {
+//     width,
+//     height,
+//   });
 
-  const { popperStyles } = getPlacementData({
-    popperSize: { width, height },
-    sideOffset: 0,
-    align: 'start',
-    side: side,
-    alignOffset: 0,
-    collisionBoundariesRect: DOMRect.fromRect({
-      width: window.innerWidth,
-      height: window.innerHeight,
-      x: 0,
-      y: 0,
-    }),
-    anchorRect: node.getBoundingClientRect(),
-    collisionTolerance: 0,
-    shouldAvoidCollisions: false,
-  });
+//   const { popperStyles } = getPlacementData({
+//     popperSize: { width, height },
+//     sideOffset: 0,
+//     align: 'start',
+//     side: side,
+//     alignOffset: 0,
+//     collisionBoundariesRect: DOMRect.fromRect({
+//       width: window.innerWidth,
+//       height: window.innerHeight,
+//       x: 0,
+//       y: 0,
+//     }),
+//     anchorRect: node.getBoundingClientRect(),
+//     collisionTolerance: 0,
+//     shouldAvoidCollisions: false,
+//   });
 
-  style(margin, popperStyles as any);
-  document.body.appendChild(margin);
-}
+//   style(margin, popperStyles as any);
+//   document.body.appendChild(margin);
+// }
 
-function inspectMargin(nodes: HTMLElement[]) {
-  const marginNodes = nodes.filter(hasMargin);
+// function inspectMargin(nodes: HTMLElement[]) {
+//   const marginNodes = nodes.filter(hasMargin);
 
-  const node = marginNodes[0];
+//   const node = marginNodes[0];
 
-  if (!node) {
-    return;
-  }
+//   if (!node) {
+//     return;
+//   }
 
-  node.setAttribute('data-inspx-active', '');
+//   node.setAttribute('data-inspx-active', '');
 
-  const { marginTop, marginRight, marginBottom, marginLeft } = window.getComputedStyle(node);
+//   const { marginTop, marginRight, marginBottom, marginLeft } = window.getComputedStyle(node);
 
-  const margins = [marginTop, marginRight, marginBottom, marginLeft].map((m) => parseInt(m, 10));
+//   const margins = [marginTop, marginRight, marginBottom, marginLeft].map((m) => parseInt(m, 10));
 
-  margins.forEach((margin, index) => {
-    if (!margin) {
-      return;
-    }
+//   margins.forEach((margin, index) => {
+//     if (!margin) {
+//       return;
+//     }
 
-    createMarkerNode(String(margin), 'margin', {
-      anchorRect: node.getBoundingClientRect(),
-      side: SIDE_OPTIONS[index],
-      shouldAvoidCollisions: false,
-      sideOffset: margin / 2 - 10,
-    });
+//     createMarkerNode(String(margin), 'margin', {
+//       anchorRect: node.getBoundingClientRect(),
+//       side: SIDE_OPTIONS[index],
+//       shouldAvoidCollisions: false,
+//       sideOffset: margin / 2 - 10,
+//     });
 
-    createMargin(index, margin, node, SIDE_OPTIONS[index]);
-  });
-}
+//     createMargin(index, margin, node, SIDE_OPTIONS[index]);
+//   });
+// }
 
 function inspectSize(nodes: HTMLElement[]) {
   const sizeNodes = nodes.filter(hasSize);
@@ -136,56 +136,56 @@ function inspectSize(nodes: HTMLElement[]) {
   style(marker, getPlacementStylesForPoint({ x, y }));
 }
 
-function createPadding(node: HTMLElement, paddings: number[]) {
-  const padding = document.createElement('padding');
+// function createPadding(node: HTMLElement, paddings: number[]) {
+//   const padding = document.createElement('padding');
 
-  const { width, height, x, y } = node.getBoundingClientRect();
+//   const { width, height, x, y } = node.getBoundingClientRect();
 
-  style(padding, {
-    ...getPlacementStylesForPoint({ x, y }),
-    width: width,
-    height: height,
-    'border-top-width': paddings[0],
-    'border-right-width': paddings[1],
-    'border-bottom-width': paddings[2],
-    'border-left-width': paddings[3],
-  });
+//   style(padding, {
+//     ...getPlacementStylesForPoint({ x, y }),
+//     width: width,
+//     height: height,
+//     'border-top-width': paddings[0],
+//     'border-right-width': paddings[1],
+//     'border-bottom-width': paddings[2],
+//     'border-left-width': paddings[3],
+//   });
 
-  document.body.appendChild(padding);
-}
+//   document.body.appendChild(padding);
+// }
 
-function inspectPadding(nodes: HTMLElement[]) {
-  const marginNodes = nodes.filter(hasPadding);
+// function inspectPadding(nodes: HTMLElement[]) {
+//   const marginNodes = nodes.filter(hasPadding);
 
-  const node = marginNodes[0];
+//   const node = marginNodes[0];
 
-  if (!node) {
-    return;
-  }
+//   if (!node) {
+//     return;
+//   }
 
-  node.setAttribute('data-inspx-active', '');
+//   node.setAttribute('data-inspx-active', '');
 
-  const { paddingTop, paddingRight, paddingBottom, paddingLeft } = window.getComputedStyle(node);
+//   const { paddingTop, paddingRight, paddingBottom, paddingLeft } = window.getComputedStyle(node);
 
-  const paddings = [paddingTop, paddingRight, paddingBottom, paddingLeft].map((m) =>
-    parseInt(m, 10)
-  );
+//   const paddings = [paddingTop, paddingRight, paddingBottom, paddingLeft].map((m) =>
+//     parseInt(m, 10)
+//   );
 
-  paddings.forEach((padding, index) => {
-    if (!padding) {
-      return;
-    }
+//   paddings.forEach((padding, index) => {
+//     if (!padding) {
+//       return;
+//     }
 
-    createMarkerNode(String(padding), 'padding', {
-      anchorRect: node.getBoundingClientRect(),
-      side: SIDE_OPTIONS[index],
-      shouldAvoidCollisions: false,
-      sideOffset: -padding / 2 - 10,
-    });
-  });
+//     createMarkerNode(String(padding), 'padding', {
+//       anchorRect: node.getBoundingClientRect(),
+//       side: SIDE_OPTIONS[index],
+//       shouldAvoidCollisions: false,
+//       sideOffset: -padding / 2 - 10,
+//     });
+//   });
 
-  createPadding(node, paddings);
-}
+//   createPadding(node, paddings);
+// }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Helpers.
@@ -209,29 +209,29 @@ function isDefined(margin: string) {
   return !!parseInt(margin, 10);
 }
 
-function hasMargin(node: HTMLElement) {
-  const styles = window.getComputedStyle(node);
+// function hasMargin(node: HTMLElement) {
+//   const styles = window.getComputedStyle(node);
 
-  return (
-    isDefined(styles.marginTop) ||
-    isDefined(styles.marginRight) ||
-    isDefined(styles.marginBottom) ||
-    isDefined(styles.marginLeft) ||
-    isDefined(styles.margin)
-  );
-}
+//   return (
+//     isDefined(styles.marginTop) ||
+//     isDefined(styles.marginRight) ||
+//     isDefined(styles.marginBottom) ||
+//     isDefined(styles.marginLeft) ||
+//     isDefined(styles.margin)
+//   );
+// }
 
-function hasPadding(node: HTMLElement) {
-  const styles = window.getComputedStyle(node);
+// function hasPadding(node: HTMLElement) {
+//   const styles = window.getComputedStyle(node);
 
-  return (
-    isDefined(styles.paddingTop) ||
-    isDefined(styles.paddingRight) ||
-    isDefined(styles.paddingBottom) ||
-    isDefined(styles.paddingLeft) ||
-    isDefined(styles.padding)
-  );
-}
+//   return (
+//     isDefined(styles.paddingTop) ||
+//     isDefined(styles.paddingRight) ||
+//     isDefined(styles.paddingBottom) ||
+//     isDefined(styles.paddingLeft) ||
+//     isDefined(styles.padding)
+//   );
+// }
 
 function hasSize(node: HTMLElement) {
   const styles = window.getComputedStyle(node);

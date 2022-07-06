@@ -157,5 +157,6 @@ export interface Store {
   appState: 'blank' | 'config' | 'ready';
   uiState: 'idle' | 'selecting' | 'commenting';
   reactingId: null | Target;
+  point: { x: number; y: number } | null;
   subs: { [subId: string]: Unsubscribe };
 }
