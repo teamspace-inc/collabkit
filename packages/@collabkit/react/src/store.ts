@@ -17,6 +17,7 @@ export function createStore() {
     focusedId: null,
     selectedId: null,
     reactingId: null,
+    openId: null,
     point: null,
     workspaces: {},
     profiles: {},

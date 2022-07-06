@@ -121,6 +121,7 @@ export function createEvents(store: Store) {
           break;
         }
         case 'selecting': {
+          actions.startCommenting(store, { x: e.clientX, y: e.clientY });
           break;
         }
         case 'commenting': {

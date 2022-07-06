@@ -26,7 +26,10 @@ export type Target =
   | ThreadResolveButtonTarget
   | ThreadCloseButtonTarget
   | ReopenThreadButtonTarget
-  | FloatingCommentButtonTarget;
+  | FloatingCommentButtonTarget
+  | CommentableContainer;
+
+export type CommentableContainer = { type: 'commentableContainer' };
 
 export type FloatingCommentButtonTarget = { type: 'floatingCommentButton' };
 
@@ -157,6 +160,7 @@ export interface Store {
   appState: 'blank' | 'config' | 'ready';
   uiState: 'idle' | 'selecting' | 'commenting';
   reactingId: null | Target;
+  openId: ThreadTarget | null;
   point: { x: number; y: number } | null;
   subs: { [subId: string]: Unsubscribe };
 }
