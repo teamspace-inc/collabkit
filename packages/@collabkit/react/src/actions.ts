@@ -737,43 +737,6 @@ export const actions = {
 
   closeEmojiReactionPicker,
 
-  // removeSelection: () => {
-  //   document.querySelectorAll('[data-commentable]').forEach((el) => {
-  //     if (el.classList.contains('commentable-hover')) {
-  //       el.classList.remove('commentable-hover');
-  //     }
-  //   });
-  // },
-
-  // hover: (el: Element) => {
-  //   el.classList.add('commentable-hover');
-  // },
-
-  // startSelecting: () => {
-  //   if (store.uiState === 'idle') {
-  //     store.uiState = 'selecting';
-  //     document.addEventListener('mouseover', events.onMouseOver);
-  //     document.addEventListener('keydown', events.onKeyDown);
-  //     document.addEventListener('mousedown', events.onMouseDown);
-  //   }
-  // },
-
-  // startCommenting: (id: string) => {
-  //   document.removeEventListener('mouseover', events.onMouseOver);
-  //   document.removeEventListener('keydown', events.onKeyDown);
-  //   if (store.appState === 'selecting') {
-  //     store.appState = 'commenting';
-  //   }
-  // },
-
-  // cancel: () => {
-  //   store.appState = 'idle';
-  //   // actions.removeSelection();
-  //   document.removeEventListener('mousedown', events.onMouseDown);
-  //   document.removeEventListener('mouseover', events.onMouseOver);
-  //   document.removeEventListener('keydown', events.onKeyDown);
-  // },
-
   open,
 
   resolve,
