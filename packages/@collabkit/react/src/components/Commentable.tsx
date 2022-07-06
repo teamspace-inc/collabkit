@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { getPlacementData, SIDE_OPTIONS } from '@radix-ui/popper';
 import { useApp } from './App';
 import { useSnapshot } from 'valtio';
@@ -258,12 +258,31 @@ function getPlacementStylesForPoint(point: { x: number; y: number }): React.CSSP
 }
 
 export function Commentable(props: { children: React.ReactNode }) {
-  const nodesAtPointerRef = React.useRef<HTMLElement[]>([]);
+  const nodesAtPointerRef = useRef<HTMLElement[]>([]);
   const { store } = useApp();
   const { uiState } = useSnapshot(store);
+  const ref = useRef<HTMLElement>(null);
 
   return (
     <span
+      ref={ref}
+      onMouseOut={(e) => {
+        if (uiState !== 'selecting') {
+          return;
+        }
+
+        const el = document.elementFromPoint(e.clientX, e.clientY);
+
+        if (el?.tagName === 'INSPX') {
+          return;
+        }
+
+        if (ref.current?.contains(el)) {
+          return;
+        }
+
+        uninspect();
+      }}
       onMouseOver={(e) => {
         if (uiState !== 'selecting') {
           return;

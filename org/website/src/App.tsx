@@ -322,7 +322,10 @@ function App() {
                   <CollabKit.Workspace workspaceId={params.workspace_id}>
                     <CollabKit.Commentable>
                       <div>Comment on this</div>
-                      <div>Comment on that</div>
+                      <img
+                        style={{ maxWidth: 200 }}
+                        src="https://images.unsplash.com/photo-1546240181-a6430032edb7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8YXJjaGlsbGVjdHxlbnwwfHwwfHw%3D&w=1000&q=80"
+                      />
                     </CollabKit.Commentable>
                     <CollabKit.FloatingButton />
                   </CollabKit.Workspace>
