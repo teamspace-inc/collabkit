@@ -503,7 +503,12 @@ function getConfig(store: Store) {
   return { appId, workspaceId, apiKey, mode, userId };
 }
 
-async function startCommenting(store: Store, point: { x: number; y: number }) {
+async function closeThread(store: Store) {
+  store.openId = null;
+  store.point = null;
+}
+
+async function startThreadAtPoint(store: Store, point: { x: number; y: number }) {
   store.point = point;
   const { workspaceId } = getConfig(store);
   const threadId = nanoid();
@@ -678,11 +683,13 @@ function toggleThread(
   props: { workspaceId: string; threadId: string; point?: { x: number; y: number } }
 ) {
   console.log('toggling thread', props.point);
+  store.openId && unloadThread(store, store.openId);
   initThread(store, props);
   loadThread(store, props);
   if (props.point) {
     positionThread(store, { point: props.point });
     store.openId = { type: 'thread', workspaceId: props.workspaceId, threadId: props.threadId };
+    store.uiState = 'commenting';
   }
 }
 
@@ -698,6 +705,10 @@ export const actions = {
   subscribeInbox,
 
   stopTyping,
+
+  closeThread,
+
+  startThreadAtPoint,
 
   isTyping: debounce(
     async (store: Store, props: { target: ComposerTarget }) => {
@@ -734,8 +745,6 @@ export const actions = {
   stopSelecting,
 
   startSelecting,
-
-  startCommenting,
 
   seen,
 

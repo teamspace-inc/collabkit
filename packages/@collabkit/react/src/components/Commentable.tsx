@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 // import { getPlacementData, SIDE_OPTIONS } from '@radix-ui/popper';
 import { useApp } from './App';
 import { useSnapshot } from 'valtio';
@@ -265,6 +265,10 @@ export function Commentable(props: { children: React.ReactNode }) {
   const ref = useRef<HTMLElement>(null);
   const target = { type: 'commentableContainer' } as const;
 
+  useEffect(() => {
+    if (uiState !== 'selecting') uninspect();
+  }, [uiState]);
+
   return (
     <span
       style={{ position: 'relative' }}
@@ -310,6 +314,9 @@ export function Commentable(props: { children: React.ReactNode }) {
           type="popout"
           style={{ position: 'fixed', left: point?.x, top: point?.y }}
           threadId={openId.threadId}
+          onCloseButtonClick={(e) =>
+            events.onClick(e, { target: { ...openId, type: 'closeThreadButton' } as const })
+          }
         />
       ) : null}
       {props.children}
