@@ -29,7 +29,7 @@ export type Target =
   | FloatingCommentButtonTarget
   | CommentableContainer;
 
-export type CommentableContainer = { type: 'commentableContainer' };
+export type CommentableContainer = { type: 'commentableContainer'; workspaceId: string };
 
 export type FloatingCommentButtonTarget = { type: 'floatingCommentButton' };
 
@@ -158,7 +158,7 @@ export interface Store {
     [workspaceId: string]: Workspace;
   };
   appState: 'blank' | 'config' | 'ready';
-  uiState: 'idle' | 'selecting' | 'commenting';
+  uiState: 'idle' | 'selecting';
   reactingId: null | Target;
   openId: ThreadTarget | null;
   point: { x: number; y: number } | null;

@@ -149,7 +149,7 @@ function _Thread(props: {
 
   useEffect(() => {
     if (workspace && workspaceId && appState === 'ready') {
-      actions.toggleThread(store, { workspaceId, threadId });
+      actions.startThread(store, { workspaceId, threadId });
     }
   }, [workspaceId, props.threadId, appState]);
 

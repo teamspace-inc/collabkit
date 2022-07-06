@@ -15,7 +15,6 @@ import { resolve } from './resolve';
 import { saveProfile } from './saveProfile';
 import { seen } from './seen';
 import { setup } from './setup';
-import { startThreadAtPoint } from './startThreadAtPoint';
 import { stopSelecting } from './stopSelecting';
 import { stopTyping } from './stopTyping';
 import { subscribeInbox } from './subscribeInbox';
@@ -23,7 +22,7 @@ import { subscribeProfiles } from './subscribeProfiles';
 import { subscribeSeen } from './subscribeSeen';
 import { toggleCommentReaction } from './toggleCommentReaction';
 import { toggleEmojiReactionPicker } from './toggleEmojiReactionPicker';
-import { toggleThread } from './toggleThread';
+import { startThread } from './startThread';
 import { unloadThread } from './unloadThread';
 import { focus } from './focus';
 import { blur } from './blur';
@@ -106,15 +105,13 @@ export const actions = {
 
   mentions,
 
-  toggleThread,
+  startThread,
 
   subscribeInbox,
 
   stopTyping,
 
   closeThread,
-
-  startThreadAtPoint,
 
   isTyping: debounce(
     async (store: Store, props: { target: ComposerTarget }) => {

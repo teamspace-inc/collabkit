@@ -1,4 +1,5 @@
 import { DataSnapshot } from 'firebase/database';
+import { nanoid } from 'nanoid';
 import React from 'react';
 import { actions } from './actions';
 import { CommentReactionTarget, CommentTarget, Store, Target } from './constants';
@@ -18,7 +19,7 @@ function onKeyDown(store: Store, e: KeyboardEvent) {
       e.preventDefault();
       return;
     }
-  } else if (store.uiState === 'commenting') {
+  } else if (store.openId) {
     if (e.key === 'Escape') {
       actions.closeThread(store);
       e.stopPropagation();
@@ -128,10 +129,13 @@ export function createEvents(store: Store) {
           break;
         }
         case 'selecting': {
-          actions.startThreadAtPoint(store, { x: e.clientX, y: e.clientY });
-          break;
-        }
-        case 'commenting': {
+          if (props.target.type === 'commentableContainer') {
+            actions.startThread(store, {
+              threadId: nanoid(),
+              workspaceId: props.target.workspaceId,
+              point: { x: e.clientX, y: e.clientY },
+            });
+          }
           break;
         }
       }
