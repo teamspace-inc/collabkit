@@ -320,6 +320,10 @@ function App() {
                   mentions={mentions}
                 >
                   <CollabKit.Workspace workspaceId={params.workspace_id}>
+                    <CollabKit.Commentable>
+                      <div>Comment on this</div>
+                      <div>Comment on that</div>
+                    </CollabKit.Commentable>
                     <CollabKit.FloatingButton />
                   </CollabKit.Workspace>
                 </CollabKit.App>

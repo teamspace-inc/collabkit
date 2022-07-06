@@ -41,6 +41,7 @@ import { createEvents, Events } from './events';
 import debounce from 'lodash.debounce';
 
 import { sendMessage } from './actions/sendMessage';
+import { uninspect } from './components/Commentable';
 
 export function timelineRef(store: Store, workspaceId: string, threadId: string) {
   if (!store.config.setup?.appId) {
@@ -630,6 +631,7 @@ async function generateToken(appId: string, apiKey: string, mode: 'SECURED' | 'U
 
 function stopSelecting(store: Store) {
   store.uiState = 'idle';
+  uninspect();
 }
 
 function startSelecting(store: Store) {
