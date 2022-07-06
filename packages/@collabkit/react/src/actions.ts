@@ -42,6 +42,7 @@ import debounce from 'lodash.debounce';
 
 import { sendMessage } from './actions/sendMessage';
 import { uninspect } from './components/Commentable';
+import { nanoid } from 'nanoid';
 
 export function timelineRef(store: Store, workspaceId: string, threadId: string) {
   if (!store.config.setup?.appId) {
@@ -502,6 +503,13 @@ function getConfig(store: Store) {
   return { appId, workspaceId, apiKey, mode, userId };
 }
 
+async function startCommenting(store: Store, point: { x: number; y: number }) {
+  store.point = point;
+  const { workspaceId } = getConfig(store);
+  const threadId = nanoid();
+  actions.toggleThread(store, { workspaceId, threadId, point });
+}
+
 async function subscribeInbox(store: Store) {
   const { appId, workspaceId } = getConfig(store);
 
@@ -661,9 +669,21 @@ function mentions(store: Store, props: MentionProps) {
   store.config.mentions = props;
 }
 
-function toggleThread(store: Store, props: { workspaceId: string; threadId: string }) {
+function positionThread(store: Store, props: { point: { x: number; y: number } }) {
+  store.point = props.point;
+}
+
+function toggleThread(
+  store: Store,
+  props: { workspaceId: string; threadId: string; point?: { x: number; y: number } }
+) {
+  console.log('toggling thread', props.point);
   initThread(store, props);
   loadThread(store, props);
+  if (props.point) {
+    positionThread(store, { point: props.point });
+    store.openId = { type: 'thread', workspaceId: props.workspaceId, threadId: props.threadId };
+  }
 }
 
 export const actions = {
@@ -714,6 +734,8 @@ export const actions = {
   stopSelecting,
 
   startSelecting,
+
+  startCommenting,
 
   seen,
 

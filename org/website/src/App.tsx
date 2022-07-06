@@ -321,7 +321,16 @@ function App() {
                 >
                   <CollabKit.Workspace workspaceId={params.workspace_id}>
                     <CollabKit.Commentable>
-                      <div>Comment on this</div>
+                      <div
+                        style={{
+                          padding: 20,
+                          background: 'rgba(255,255,255,0.5)',
+                          textAlign: 'center',
+                        }}
+                      >
+                        Comment on this
+                      </div>
+                      <br />
                       <img
                         style={{ maxWidth: 200 }}
                         src="https://images.unsplash.com/photo-1546240181-a6430032edb7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8YXJjaGlsbGVjdHxlbnwwfHwwfHw%3D&w=1000&q=80"

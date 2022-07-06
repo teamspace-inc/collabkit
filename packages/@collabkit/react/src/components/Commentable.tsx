@@ -3,6 +3,7 @@ import React, { useRef } from 'react';
 import { useApp } from './App';
 import { useSnapshot } from 'valtio';
 import './Commentable.css';
+import { CollabKit } from '..';
 
 // function createMarkerNode(text: string, type: string, popperOptions: any) {
 //   const marker = document.createElement('inspx');
@@ -259,13 +260,16 @@ function getPlacementStylesForPoint(point: { x: number; y: number }): React.CSSP
 
 export function Commentable(props: { children: React.ReactNode }) {
   const nodesAtPointerRef = useRef<HTMLElement[]>([]);
-  const { store } = useApp();
-  const { uiState } = useSnapshot(store);
+  const { store, events } = useApp();
+  const { uiState, openId, point } = useSnapshot(store);
   const ref = useRef<HTMLElement>(null);
+  const target = { type: 'commentableContainer' } as const;
 
   return (
     <span
+      style={{ position: 'relative' }}
       ref={ref}
+      onPointerDown={(e) => events.onPointerDown(e, { target })}
       onMouseOut={(e) => {
         if (uiState !== 'selecting') {
           return;
@@ -301,6 +305,13 @@ export function Commentable(props: { children: React.ReactNode }) {
         }
       }}
     >
+      {openId ? (
+        <CollabKit.Thread
+          type="popout"
+          style={{ position: 'fixed', left: point?.x, top: point?.y }}
+          threadId={openId.threadId}
+        />
+      ) : null}
       {props.children}
     </span>
   );
