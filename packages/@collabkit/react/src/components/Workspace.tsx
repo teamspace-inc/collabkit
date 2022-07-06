@@ -14,7 +14,11 @@ export const WorkspaceIDContext = React.createContext<{ workspaceId: string } | 
   undefined
 );
 
-function Workspace(props: { workspaceId: string; children: React.ReactNode | React.ReactNode[] }) {
+function Workspace(props: {
+  workspaceId: string;
+  workspaceName?: string;
+  children: React.ReactNode | React.ReactNode[];
+}) {
   const { store } = useApp();
   const { appState } = useSnapshot(store);
   useEffect(() => {
