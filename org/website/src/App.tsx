@@ -63,9 +63,7 @@ import { database, auth } from './database';
 import { store } from './store';
 import { events } from './events';
 import { Home } from './Home';
-import { PopoutWrapper } from './Popout';
 import { theme } from './UIKit';
-import React from 'react';
 
 store.subs['user'] = onAuthStateChanged(auth, (user) => {
   store.user = user;

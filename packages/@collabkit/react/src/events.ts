@@ -99,7 +99,7 @@ export function createEvents(store: Store) {
           break;
         }
         case 'reopenThreadButton': {
-          actions.open(store, props.target.workspaceId, props.target.threadId);
+          actions.reopenThread(store, props.target.workspaceId, props.target.threadId);
           break;
         }
       }
