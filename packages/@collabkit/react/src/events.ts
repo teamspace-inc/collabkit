@@ -18,6 +18,12 @@ function onKeyDown(store: Store, e: KeyboardEvent) {
       e.preventDefault();
       return;
     }
+  } else if (store.uiState === 'commenting') {
+    if (e.key === 'Escape') {
+      actions.closeThread(store);
+      e.stopPropagation();
+      e.preventDefault();
+    }
   }
 
   if (store.focusedId?.type === 'composer') {
@@ -86,6 +92,7 @@ export function createEvents(store: Store) {
           break;
         }
         case 'closeThreadButton': {
+          actions.closeThread(store);
         }
         case 'resolveThreadButton': {
           actions.resolve(store, props.target.workspaceId, props.target.threadId);
@@ -121,7 +128,7 @@ export function createEvents(store: Store) {
           break;
         }
         case 'selecting': {
-          actions.startCommenting(store, { x: e.clientX, y: e.clientY });
+          actions.startThreadAtPoint(store, { x: e.clientX, y: e.clientY });
           break;
         }
         case 'commenting': {
