@@ -8,10 +8,12 @@ import { withComments } from './components/withComments';
 import { Inbox } from './components/Inbox';
 import { CurrentUser } from './components/CurrentUser';
 import { FloatingButton } from './components/FloatingButton';
+import { Commentable } from './components/Commentable';
 
 export const CollabKit = {
   App,
   Workspace,
+  Commentable,
   CurrentUser,
   Thread,
   Button,
