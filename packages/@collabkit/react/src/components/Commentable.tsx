@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useApp } from './App';
 import { useSnapshot } from 'valtio';
 import './Commentable.css';
@@ -6,6 +6,7 @@ import { CollabKit } from '..';
 import { useWorkspaceId } from './Workspace';
 import { finder } from '@medv/finder';
 import { styled } from './UIKit';
+import { Sticky } from './Sticky';
 
 function inspectSize(nodes: HTMLElement[]) {
   const sizeNodes = nodes.filter(hasSize);
@@ -75,52 +76,6 @@ function getPlacementStylesForPoint(point: { x: number; y: number }): React.CSSP
     willChange: 'transform',
     transform: `translate3d(${x}px, ${y}px, 0)`,
   };
-}
-
-const StyledStickyContainer = styled('div', {
-  position: 'fixed',
-  left: 0,
-  top: 0,
-});
-
-function calculatePosition(node: Element, point: { x: number; y: number }) {
-  const rect = node.getBoundingClientRect();
-  const x = rect.left + point.x;
-  const y = rect.top + point.y;
-  return { x, y };
-}
-
-function Sticky(props: {
-  children: React.ReactNode;
-  selector: string;
-  point: { x: number; y: number };
-}) {
-  const stickyRef = useRef<HTMLDivElement | null>(null);
-  const originRef = useRef<Element | null>(null);
-  const { children, selector, point } = props;
-  const prevPosition = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
-
-  const updatePosition = useCallback(() => {
-    if (stickyRef.current && originRef.current) {
-      const position = calculatePosition(originRef.current, point);
-      if (prevPosition.current.x !== position.x || prevPosition.current.y !== position.y) {
-        Object.assign(stickyRef.current.style, {
-          left: `${position.x}px`,
-          top: `${position.y}px`,
-        });
-      }
-      prevPosition.current = position;
-    }
-  }, [point]);
-
-  useEffect(() => {
-    window.addEventListener('scroll', updatePosition);
-    originRef.current = document.querySelector(selector);
-    updatePosition();
-    return () => window.removeEventListener('scroll', updatePosition);
-  }, [selector]);
-
-  return <StyledStickyContainer ref={stickyRef}>{children}</StyledStickyContainer>;
 }
 
 export function Commentable(props: { children: React.ReactNode }) {
@@ -200,7 +155,7 @@ export function Commentable(props: { children: React.ReactNode }) {
       }}
     >
       {viewingId && viewingId.context.point ? (
-        <Sticky point={viewingId.context.point} selector={viewingId.context.selector}>
+        <Sticky offset={viewingId.context.point} selector={viewingId.context.selector}>
           <CollabKit.Thread
             type="popout"
             threadId={viewingId.threadId}
