@@ -90,18 +90,31 @@ function calculatePosition(node: Element, point: { x: number; y: number }) {
   return { x, y };
 }
 
-function useSticky(selector: string, point: { x: number; y: number }) {
-  const ref = useRef<HTMLDivElement | null>(null);
+function Sticky(props: {
+  children: React.ReactNode;
+  selector: string;
+  point: { x: number; y: number };
+}) {
+  const stickyRef = useRef<HTMLDivElement | null>(null);
+  const originRef = useRef<Element | null>(null);
+  const { children, selector, point } = props;
 
-  const handleScroll = useCallback(() => {}, []);
+  const handleScroll = useCallback(() => {
+    if (stickyRef.current && originRef.current) {
+      const position = calculatePosition(originRef.current, point);
+      Object.assign(stickyRef.current.style, {
+        left: `${position.x}px`,
+        top: `${position.y}px`,
+      });
+    }
+  }, [selector, point]);
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
-
-    const el = document.querySelector(selector);
-    if (ref.current && el) {
-      const position = calculatePosition(el, point);
-      Object.assign(ref.current.style, {
+    originRef.current = document.querySelector(selector);
+    if (stickyRef.current && originRef.current) {
+      const position = calculatePosition(originRef.current, point);
+      Object.assign(stickyRef.current.style, {
         left: `${position.x}px`,
         top: `${position.y}px`,
       });
@@ -109,16 +122,8 @@ function useSticky(selector: string, point: { x: number; y: number }) {
 
     return () => window.removeEventListener('scroll', handleScroll);
   }, [selector]);
-  return { ref };
-}
 
-function Sticky(props: {
-  children: React.ReactNode;
-  selector: string;
-  point: { x: number; y: number };
-}) {
-  const { ref } = useSticky(props.selector, props.point);
-  return <StyledStickyContainer ref={ref}>{props.children}</StyledStickyContainer>;
+  return <StyledStickyContainer ref={stickyRef}>{children}</StyledStickyContainer>;
 }
 
 export function Commentable(props: { children: React.ReactNode }) {
