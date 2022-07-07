@@ -4,11 +4,17 @@ import { timelineRef, actions } from '../actions';
 
 export async function writeMessageToFirebase(
   store: Store,
-  workspaceId: string,
-  threadId: string,
-  body: string,
-  preview: string
+  props: {
+    workspaceId: string;
+    threadId: string;
+    body: string;
+    preview: string;
+    parentId?: string;
+    type: 'message' | 'reaction';
+  }
 ) {
+  const { type, workspaceId, threadId, body, preview, parentId } = props;
+
   if (!store.config.identify) {
     console.warn('[CollabKit] Did you forget to call CollabKit.identify?');
     return;
@@ -27,11 +33,15 @@ export async function writeMessageToFirebase(
   store.reactingId = null;
 
   const event: Event = {
-    type: 'message',
-    body: body,
+    type,
+    body,
     createdAt: serverTimestamp(),
     createdById: store.config.identify.userId,
   };
+
+  if (parentId) {
+    event.parentId = parentId;
+  }
 
   // generate an id for the message
   const eventRef = await push(timelineRef(store, workspaceId, threadId));
@@ -51,7 +61,12 @@ export async function writeMessageToFirebase(
   };
 
   // write the data to firebase
-  await update(ref(getDatabase(CollabKitFirebaseApp)), data);
+  try {
+    await update(ref(getDatabase(CollabKitFirebaseApp)), data);
+  } catch (e) {
+    console.error({ str: 'failed to write msg', e });
+    return;
+  }
 
   if (eventRef.key !== null) {
     store.workspaces[workspaceId].timeline[threadId] ||= {};

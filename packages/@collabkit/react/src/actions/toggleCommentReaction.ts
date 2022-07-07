@@ -40,9 +40,16 @@ export async function toggleCommentReaction(
 
   console.log('reacting with emoji', { body });
 
-  // todo write different preview image here
   try {
-    writeMessageToFirebase(store, workspaceId, threadId, body, body);
+    writeMessageToFirebase(store, {
+      workspaceId,
+      threadId,
+      body,
+      type: 'reaction',
+      // todo write different preview message here
+      preview: body,
+      parentId: eventId,
+    });
   } catch (e) {
     return;
   }

@@ -5,7 +5,6 @@ import './Commentable.css';
 import { CollabKit } from '..';
 import { useWorkspaceId } from './Workspace';
 import { finder } from '@medv/finder';
-import { styled } from './UIKit';
 import { Sticky } from './Sticky';
 
 function inspectSize(nodes: HTMLElement[]) {
