@@ -1,10 +1,34 @@
 {
   "rules": {
+    "context": {
+      "$appId": {
+        "$workspaceId": {
+          ".validate": "newData.hasChildren(['url'])",
+          "$threadId": {
+            ".write": "(root.child('apps').child(auth.token.appId).child('mode').val() === 'UNSECURED' || (root.child('apps').child(auth.token.appId).child('mode').val() === 'SECURED' && !root.child('threads').child($appId).child($workspaceId).child($threadId).exists()))",
+            ".read": "auth.token.appId === $appId",
+            "url": { ".validate": "newData.isString()" },
+            "selector": {
+              ".validate": "newData.isString()"
+            },
+            "point": {
+              ".validate": "newData.hasChildren(['x', 'y'])",
+              "x": {
+                ".validate": "newData.isNumber()"
+              },
+              "y": {
+                ".validate": "newData.isNumber()"
+              }
+            }
+          }
+        }
+      }
+    },
     "workspaces": {
       "$appId": {
         "$workspaceId": {
           ".read": "auth.token.appId === $appId",
-          ".write": "(root.child('apps').child(auth.token.appId).child('mode').val() === 'UNSECURED' || (root.child('apps').child(auth.token.appId).child('mode').val() === 'SECURED' && $workspaceId === auth.token.workspaceId)) && !root.child('teams').child($appId).child($workspaceId).exists()",
+          ".write": "(root.child('apps').child(auth.token.appId).child('mode').val() === 'UNSECURED' || (root.child('apps').child(auth.token.appId).child('mode').val() === 'SECURED' && $workspaceId === auth.token.workspaceId))",
           "name": {
             ".validate": "newData.isString()",
             ".write": "root.child('apps').child(auth.token.appId).child('mode').val() === 'UNSECURED' || (root.child('apps').child(auth.token.appId).child('mode').val() === 'SECURED' && $workspaceId === auth.token.workspaceId)"
@@ -165,7 +189,6 @@
         }
       }
     },
-
     "timeline": {
       "$appId": {
         "$workspaceId": {

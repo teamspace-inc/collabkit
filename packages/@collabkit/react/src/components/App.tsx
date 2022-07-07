@@ -33,7 +33,7 @@ export function App(props: {
 }) {
   const store = useRef(createStore());
   const events = useRef(createEvents(store.current));
-
+  
   useEffect(() => {
     actions.setup(store.current, events.current, {
       appId: props.appId,
