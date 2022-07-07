@@ -97,7 +97,7 @@ function _Inbox() {
 
   return inboxIds ? (
     <div style={{ width: '100%' }}>
-      <StyledInbox style={{ width: '100%' }}>
+      <StyledInbox style={{ width: '100%', maxHeight: 500, overflow: 'scroll' }}>
         {inboxIds
           .sort((a, b) => (workspace.inbox[a].createdAt <= workspace.inbox[b].createdAt ? 1 : -1))
           .map((threadId) => {

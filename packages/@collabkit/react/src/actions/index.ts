@@ -23,7 +23,6 @@ import { subscribeSeen } from './subscribeSeen';
 import { toggleCommentReaction } from './toggleCommentReaction';
 import { toggleEmojiReactionPicker } from './toggleEmojiReactionPicker';
 import { startThread } from './startThread';
-import { unloadThread } from './unloadThread';
 import { focus } from './focus';
 import { blur } from './blur';
 import { reopenThread } from './reopenThread';
@@ -162,8 +161,6 @@ export const actions = {
   focus,
 
   blur,
-
-  unloadThread,
 
   toggleCommentReaction,
 

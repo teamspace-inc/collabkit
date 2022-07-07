@@ -19,7 +19,7 @@ function onKeyDown(store: Store, e: KeyboardEvent) {
       e.preventDefault();
       return;
     }
-  } else if (store.openId) {
+  } else if (store.viewingId) {
     if (e.key === 'Escape') {
       actions.closeThread(store);
       e.stopPropagation();
@@ -129,11 +129,10 @@ export function createEvents(store: Store) {
           break;
         }
         case 'selecting': {
-          if (props.target.type === 'commentableContainer') {
+          if (props.target.type === 'commentable') {
             actions.startThread(store, {
               threadId: nanoid(),
-              workspaceId: props.target.workspaceId,
-              point: { x: e.clientX, y: e.clientY },
+              ...props.target,
             });
           }
           break;

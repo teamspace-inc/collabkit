@@ -27,7 +27,19 @@ export type Target =
   | ThreadCloseButtonTarget
   | ReopenThreadButtonTarget
   | FloatingCommentButtonTarget
-  | CommentableContainer;
+  | CommentableContainer
+  | Commentable
+  | StickyThreadTarget;
+
+export type Commentable = {
+  type: 'commentable';
+  workspaceId: string;
+  context: {
+    selector: string;
+    url: string;
+    point: { x: number; y: number };
+  };
+};
 
 export type CommentableContainer = { type: 'commentableContainer'; workspaceId: string };
 
@@ -35,6 +47,12 @@ export type FloatingCommentButtonTarget = { type: 'floatingCommentButton' };
 
 export type ComposerTarget = { type: 'composer'; threadId: string; workspaceId: string };
 export type ThreadTarget = { type: 'thread'; threadId: string; workspaceId: string };
+export type StickyThreadTarget = {
+  type: 'stickyThread';
+  threadId: string;
+  workspaceId: string;
+  context: { selector: string; url: string; point?: { x: number; y: number } };
+};
 export type CommentButtonTarget = { type: 'commentButton'; threadId: string; workspaceId: string };
 
 export type CommentReactionTarget = {
@@ -160,7 +178,6 @@ export interface Store {
   appState: 'blank' | 'config' | 'ready';
   uiState: 'idle' | 'selecting';
   reactingId: null | Target;
-  openId: ThreadTarget | null;
-  point: { x: number; y: number } | null;
+  viewingId: StickyThreadTarget | null;
   subs: { [subId: string]: Unsubscribe };
 }
