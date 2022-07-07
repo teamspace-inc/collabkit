@@ -15,9 +15,15 @@ export async function sendMessage(store: Store, workspaceId: string, threadId: s
   editor.update(() => $getRoot().getChildren()[0].replace($createTextNode('')));
 
   try {
-    await writeMessageToFirebase(store, workspaceId, threadId, body, body);
+    await writeMessageToFirebase(store, {
+      workspaceId,
+      threadId,
+      body,
+      preview: body,
+      type: 'message',
+    });
   } catch (e) {
-    console.error(' failed to send message ');
+    console.error(' failed to send message ', e);
     return;
   }
 }

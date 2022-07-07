@@ -338,6 +338,33 @@ function App() {
                   </CollabKit.Workspace>
                 </CollabKit.App>
               </div>
+              <div
+                style={{
+                  padding: '2rem',
+                  borderRadius: '24px',
+                  background: theme.colors.neutral12.toString(),
+                }}
+              >
+                <h3 style={{ color: 'rgba(0,0,0,0.25)', marginTop: 0 }}>CollabKit.Indicator</h3>
+                <p style={{ color: 'rgba(0,0,0,0.4)' }}>
+                  An indicator that shows a comment is present <br />
+                  at that location.
+                </p>
+                <CollabKit.App
+                  token={Object.keys(app.keys)[0]}
+                  appId={app.appId}
+                  identity={identity}
+                  mentions={mentions}
+                >
+                  <CollabKit.Workspace workspaceId={params.workspace_id}>
+                    <div style={{ display: 'flex', flexDirection: 'row', gap: '12px' }}>
+                      <CollabKit.Indicator letter="A"></CollabKit.Indicator>
+                      <CollabKit.Indicator letter="B"></CollabKit.Indicator>
+                      <CollabKit.Indicator letter="C"></CollabKit.Indicator>
+                    </div>
+                  </CollabKit.Workspace>
+                </CollabKit.App>
+              </div>
             </div>
           );
         }}
