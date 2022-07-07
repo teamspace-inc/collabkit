@@ -34,10 +34,6 @@ export function withComments<T>(
     if (!store) {
       return null;
     }
-    const { workspaceId } = useContext(WorkspaceIDContext);
-    const { workspaces } = useSnapshot(store);
-    const workspace = workspaceId ? workspaces[workspaceId] : null;
-
     const hasComments = true;
     const newComments = true;
 
