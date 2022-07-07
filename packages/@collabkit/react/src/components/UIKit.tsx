@@ -18,6 +18,21 @@ import {
   brown,
 } from '@radix-ui/colors';
 
+const neutral = {
+  neutral1: '$gray1',
+  neutral2: '$gray2',
+  neutral3: '$gray3',
+  neutral4: '$gray4',
+  neutral5: '$gray5',
+  neutral6: '$gray6',
+  neutral7: '$gray7',
+  neutral8: '$gray8',
+  neutral9: '$gray9',
+  neutral10: '$gray10',
+  neutral11: '$gray11',
+  neutral12: '$gray12',
+};
+
 export const { styled, css, theme } = createStitches({
   theme: {
     colors: {
@@ -37,24 +52,14 @@ export const { styled, css, theme } = createStitches({
       accent11: '$green11',
       accent12: '$green12',
 
-      neutral1: '$gray1',
-      neutral2: '$gray2',
-      neutral3: '$gray3',
-      neutral4: '$gray4',
-      neutral5: '$gray5',
-      neutral6: '$gray6',
-      neutral7: '$gray7',
-      neutral8: '$gray8',
-      neutral9: '$gray9',
-      neutral10: '$gray10',
-      neutral11: '$gray11',
-      neutral12: '$gray12',
+      ...neutral,
     },
   },
 });
 
 export const tomatoTheme = createTheme({
   colors: {
+    ...gray,
     ...tomato,
     accent1: '$tomato1',
     accent2: '$tomato2',
@@ -68,11 +73,13 @@ export const tomatoTheme = createTheme({
     accent10: '$tomato10',
     accent11: '$tomato11',
     accent12: '$tomato12',
+    ...neutral,
   },
 });
 
 export const redTheme = createTheme({
   colors: {
+    ...gray,
     ...red,
     accent1: '$red1',
     accent2: '$red2',
@@ -86,11 +93,13 @@ export const redTheme = createTheme({
     accent10: '$red10',
     accent11: '$red11',
     accent12: '$red12',
+    ...neutral,
   },
 });
 
 export const crimsonTheme = createTheme({
   colors: {
+    ...gray,
     ...crimson,
     accent1: '$crimson1',
     accent2: '$crimson2',
@@ -104,11 +113,13 @@ export const crimsonTheme = createTheme({
     accent10: '$crimson10',
     accent11: '$crimson11',
     accent12: '$crimson12',
+    ...neutral,
   },
 });
 
 export const pinkTheme = createTheme({
   colors: {
+    ...gray,
     ...pink,
     accent1: '$pink1',
     accent2: '$pink2',
@@ -122,11 +133,13 @@ export const pinkTheme = createTheme({
     accent10: '$pink10',
     accent11: '$pink11',
     accent12: '$pink12',
+    ...neutral,
   },
 });
 
 export const plumTheme = createTheme({
   colors: {
+    ...gray,
     ...plum,
     accent1: '$purple',
     accent2: '$plum2',
@@ -140,11 +153,13 @@ export const plumTheme = createTheme({
     accent10: '$plum10',
     accent11: '$plum11',
     accent12: '$plum12',
+    ...neutral,
   },
 });
 
 export const purpleTheme = createTheme({
   colors: {
+    ...gray,
     ...purple,
     accent1: '$purple1',
     accent2: '$purple2',
@@ -156,14 +171,16 @@ export const purpleTheme = createTheme({
     accent8: '$purple8',
     accent9: '$purple9',
     accent10: '$purple10',
-    accent11: '$purple1',
-    accent12: '$purple2',
+    accent11: '$purple11',
+    accent12: '$purple12',
+    ...neutral,
   },
 });
 
 // write out violetTheme
 export const violetTheme = createTheme({
   colors: {
+    ...gray,
     ...violet,
     accent1: '$violet1',
     accent2: '$violet2',
@@ -177,11 +194,13 @@ export const violetTheme = createTheme({
     accent10: '$violet10',
     accent11: '$violet11',
     accent12: '$violet12',
+    ...neutral,
   },
 });
 
 export const indigoTheme = createTheme({
   colors: {
+    ...gray,
     ...indigo,
     accent1: '$indigo1',
     accent2: '$indigo2',
@@ -195,11 +214,13 @@ export const indigoTheme = createTheme({
     accent10: '$indigo10',
     accent11: '$indigo11',
     accent12: '$indigo12',
+    ...neutral,
   },
 });
 
 export const blueTheme = createTheme({
   colors: {
+    ...gray,
     ...blue,
     accent1: '$blue1',
     accent2: '$blue2',
@@ -213,11 +234,13 @@ export const blueTheme = createTheme({
     accent10: '$blue10',
     accent11: '$blue11',
     accent12: '$blue12',
+    ...neutral,
   },
 });
 
 export const cyanTheme = createTheme({
   colors: {
+    ...gray,
     ...cyan,
     accent1: '$cyan1',
     accent2: '$cyan2',
@@ -231,11 +254,13 @@ export const cyanTheme = createTheme({
     accent10: '$cyan10',
     accent11: '$cyan11',
     accent12: '$cyan12',
+    ...neutral,
   },
 });
 
 export const tealTheme = createTheme({
   colors: {
+    ...gray,
     ...teal,
     accent1: '$teal1',
     accent2: '$teal2',
@@ -249,11 +274,13 @@ export const tealTheme = createTheme({
     accent10: '$teal10',
     accent11: '$teal11',
     accent12: '$teal12',
+    ...neutral,
   },
 });
 
 export const greenTheme = createTheme({
   colors: {
+    ...gray,
     ...green,
     accent1: '$green1',
     accent2: '$green2',
@@ -267,11 +294,13 @@ export const greenTheme = createTheme({
     accent10: '$green10',
     accent11: '$green11',
     accent12: '$green12',
+    ...neutral,
   },
 });
 
 export const grassTheme = createTheme({
   colors: {
+    ...gray,
     ...grass,
     accent1: '$grass1',
     accent2: '$grass2',
@@ -285,11 +314,13 @@ export const grassTheme = createTheme({
     accent10: '$grass10',
     accent11: '$grass11',
     accent12: '$grass12',
+    ...neutral,
   },
 });
 
 export const orangeTheme = createTheme({
   colors: {
+    ...gray,
     ...orange,
     accent1: '$orange1',
     accent2: '$orange2',
@@ -303,11 +334,13 @@ export const orangeTheme = createTheme({
     accent10: '$orange10',
     accent11: '$orange11',
     accent12: '$orange12',
+    ...neutral,
   },
 });
 
 export const brownTheme = createTheme({
   colors: {
+    ...gray,
     ...brown,
     accent1: '$brown1',
     accent2: '$brown2',
@@ -321,6 +354,7 @@ export const brownTheme = createTheme({
     accent10: '$brown10',
     accent11: '$brown11',
     accent12: '$brown12',
+    ...neutral,
   },
 });
 
