@@ -98,29 +98,26 @@ function Sticky(props: {
   const stickyRef = useRef<HTMLDivElement | null>(null);
   const originRef = useRef<Element | null>(null);
   const { children, selector, point } = props;
+  const prevPosition = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
 
-  const handleScroll = useCallback(() => {
+  const updatePosition = useCallback(() => {
     if (stickyRef.current && originRef.current) {
       const position = calculatePosition(originRef.current, point);
-      Object.assign(stickyRef.current.style, {
-        left: `${position.x}px`,
-        top: `${position.y}px`,
-      });
+      if (prevPosition.current.x !== position.x || prevPosition.current.y !== position.y) {
+        Object.assign(stickyRef.current.style, {
+          left: `${position.x}px`,
+          top: `${position.y}px`,
+        });
+      }
+      prevPosition.current = position;
     }
-  }, [selector, point]);
+  }, [point]);
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', updatePosition);
     originRef.current = document.querySelector(selector);
-    if (stickyRef.current && originRef.current) {
-      const position = calculatePosition(originRef.current, point);
-      Object.assign(stickyRef.current.style, {
-        left: `${position.x}px`,
-        top: `${position.y}px`,
-      });
-    }
-
-    return () => window.removeEventListener('scroll', handleScroll);
+    updatePosition();
+    return () => window.removeEventListener('scroll', updatePosition);
   }, [selector]);
 
   return <StyledStickyContainer ref={stickyRef}>{children}</StyledStickyContainer>;
