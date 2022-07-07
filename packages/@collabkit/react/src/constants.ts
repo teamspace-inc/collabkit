@@ -132,7 +132,7 @@ export type BasicProfile = {
 };
 
 export interface Profile extends BasicProfile {
-  color: Color;
+  color?: Color;
 }
 
 export interface Timeline {

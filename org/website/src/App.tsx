@@ -135,6 +135,11 @@ function App() {
       <Route path="/preview">
         <h1>Preview</h1>
       </Route>
+      <Route path="/indicator">
+        <div style={{ padding: 20 }}>
+          <CollabKit.Indicator letter="N"></CollabKit.Indicator>
+        </div>
+      </Route>
       <Route path="/">
         <Home></Home>
       </Route>
@@ -358,9 +363,9 @@ function App() {
                 >
                   <CollabKit.Workspace workspaceId={params.workspace_id}>
                     <div style={{ display: 'flex', flexDirection: 'row', gap: '12px' }}>
-                      <CollabKit.Indicator letter="A"></CollabKit.Indicator>
-                      <CollabKit.Indicator letter="B"></CollabKit.Indicator>
-                      <CollabKit.Indicator letter="C"></CollabKit.Indicator>
+                      <CollabKit.Indicator letter="N"></CollabKit.Indicator>
+                      {/* <CollabKit.Indicator letter="B"></CollabKit.Indicator> */}
+                      {/* <CollabKit.Indicator letter="C"></CollabKit.Indicator> */}
                     </div>
                   </CollabKit.Workspace>
                 </CollabKit.App>

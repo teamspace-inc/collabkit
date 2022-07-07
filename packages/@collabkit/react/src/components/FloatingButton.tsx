@@ -1,5 +1,5 @@
 import { styled, theme } from './UIKit';
-import { ChatCircle } from 'phosphor-react';
+import { Chat } from 'phosphor-react';
 import { useSnapshot } from 'valtio';
 import { useApp } from './App';
 import { Cursor } from './Cursor';
@@ -43,7 +43,7 @@ export function FloatingButton() {
           uiState={uiState}
           onPointerDown={(e) => events.onPointerDown(e, { target })}
         >
-          <ChatCircle
+          <Chat
             weight="fill"
             color={theme.colors.accent1.toString()}
             size={40}

@@ -16,6 +16,8 @@ export const avatarStyles = css({
   lineHeight: '25px',
   cursor: 'default',
   userSelect: 'none',
+  backgroundColor: '$accent10',
+  color: '$accent1',
 });
 
 export const StyledAvatar = styled('img', avatarStyles);
@@ -23,11 +25,13 @@ export const StyledAvatar = styled('img', avatarStyles);
 export function Avatar(props: { profile: Profile; style?: React.CSSProperties }) {
   const [didError, setDidError] = useState(false);
   const noImage = didError || !props.profile.avatar;
-  const styles = {
-    backgroundColor: getShade(props.profile.color, 9),
-    color: getShade(props.profile.color, 3),
-    ...(props.style || {}),
-  };
+  const styles = props.profile.color
+    ? {
+        backgroundColor: getShade(props.profile.color, 9),
+        color: getShade(props.profile.color, 3),
+        ...(props.style || {}),
+      }
+    : props.style;
 
   return noImage ? (
     <div className={avatarStyles().className} style={styles}>

@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useRef } from 'react';
 import ScrollArea from './ScrollArea';
 import React from 'react';
-import { Comment, TypingIndicator } from './Comment';
+import { Comment } from './Comment';
 import { Event, Profile, Timeline, WithID } from '../constants';
 import { styled } from '@stitches/react';
 import { Target } from './Target';
 import equal from 'fast-deep-equal';
+import { TypingIndicator } from './comment/TypingIndicator';
 
 const StyledCommentList = styled('div', {
   gap: 0,
