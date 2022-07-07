@@ -1,11 +1,22 @@
 {
   "name": "@collabkit/react",
   "version": "0.0.0",
-  "module": "src/index.ts",
+  "module": "dist/esm/index.js",
+  "types": "dist/src/index.d.ts",
+  "files": [
+    "dist/esm/index.css",
+    "dist/esm/index.mjs",
+    "dist/esm/index.js",
+    "dist/src/**/*.d.ts",
+    "package.json"
+  ],
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview"
+    "build": "yarn clean && rollup -c",
+    "clean": "rimraf dist",
+    "preview": "vite preview",
+    "prepublish": "yarn build",
+    "publish": "yarn publish --access public"
   },
   "dependencies": {
     "@lexical/react": "^0.3.5",
@@ -27,11 +38,18 @@
     "valtio": "^1.6.1"
   },
   "devDependencies": {
+    "@rollup/plugin-node-resolve": "^13.3.0",
+    "@rollup/plugin-replace": "^4.0.0",
+    "@rollup/plugin-typescript": "^8.3.2",
     "@types/lodash.shuffle": "^4.2.7",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
     "@vitejs/plugin-react": "^1.3.0",
     "prettier": "^2.6.2",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.74.1",
+    "rollup-plugin-esbuild": "^4.9.1",
+    "rollup-plugin-import-css": "^3.0.3",
     "typescript": "^4.6.3",
     "vite": "^2.9.9"
   },
