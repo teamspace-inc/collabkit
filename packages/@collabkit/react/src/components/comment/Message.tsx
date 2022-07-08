@@ -25,11 +25,14 @@ export const StyledMessage = styled('div', {
         background: '$neutral2',
         borderRadius: 11,
       },
-      indicator: {
+      preview: {
+        cursor: 'pointer',
         padding: '10px 10px',
         background: '$neutral2',
         borderRadius: 11,
         gap: 0,
+      },
+      indicator: {
         // filter:
         //   'drop-shadow(0 1px 0px rgba(0, 0, 0, 0.01))  drop-shadow(0 1px 2px rgba(0, 0, 0, 0.025))',
       },
