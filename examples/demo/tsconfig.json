@@ -14,8 +14,16 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "baseUrl": "../../",
+    "paths": {
+      "@collabkit/*": ["packages/@collabkit/*/src"]
+    }
   },
   "include": ["src"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "references": [
+    {
+      "path": "../../packages/@collabkit/react"
+    }
+  ]
 }

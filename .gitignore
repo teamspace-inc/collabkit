@@ -12,3 +12,4 @@ coverage
 database-coverage.html
 *.log
 tsconfig.tsbuildinfo
+*.tsbuildinfo
