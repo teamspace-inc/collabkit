@@ -7,6 +7,7 @@ export const StyledName = styled('div', {
   display: 'flex',
   gap: 5,
   flexDirection: 'row',
+  color: '$neutral12',
   alignItems: 'baseline',
 });
 

@@ -403,7 +403,7 @@ function Logo() {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
       <LogoText>CollabKit</LogoText>
-      <ChatTeardrop size={24} color={theme.colors.accent10.toString()} weight="fill" />
+      <ChatTeardrop size={24} color={theme.colors.websiteAccent10.toString()} weight="fill" />
     </div>
   );
 }

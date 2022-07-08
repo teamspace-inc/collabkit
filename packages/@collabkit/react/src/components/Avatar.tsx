@@ -17,7 +17,7 @@ export const avatarStyles = css({
   cursor: 'inherit',
   userSelect: 'none',
   backgroundColor: '$accent10',
-  color: '$accent1',
+  color: '$accent12',
   variants: {
     neutralBackground: {
       true: {

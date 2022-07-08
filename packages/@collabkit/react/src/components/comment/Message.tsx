@@ -15,7 +15,7 @@ export const StyledMessage = styled('div', {
   flex: 0,
   fontSize: 14,
   lineHeight: '20px',
-  color: '$neutral1',
+  color: '$neutral12',
   wordBreak: 'break-word',
   overflowWrap: 'break-word',
   variants: {
