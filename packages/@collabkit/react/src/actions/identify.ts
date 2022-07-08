@@ -5,6 +5,7 @@ export async function identify(store: Store, props: IdentifyProps) {
   // todo extract this
   store.workspaces[props.workspaceId] ||= {
     inbox: {},
+    pins: {},
     name: store.config.identify.workspaceName || '',
     timeline: {},
     composers: {},
