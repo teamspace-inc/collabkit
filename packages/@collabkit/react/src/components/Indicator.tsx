@@ -3,6 +3,7 @@ import { Avatar } from './Avatar';
 import { StyledMessage, StyledMessageTimestamp } from './comment/Message';
 import { Name } from './profile/Name';
 import { styled, themeIds, themes } from './UIKit';
+import { motion } from 'framer-motion';
 
 const StyledIndicator = styled('div', {
   width: 25,
@@ -14,10 +15,18 @@ const StyledIndicator = styled('div', {
   background: '$accent10',
   filter: 'drop-shadow(0 1px 0px rgba(0, 0, 0, 0.1))  drop-shadow(0 1px 2px rgba(0, 0, 0, 0.15))',
   padding: '2px',
-  borderRadius: 22,
+  borderRadius: 25,
   userSelect: 'none',
   border: '2px solid $neutral1',
   cursor: 'pointer',
+
+  variants: {
+    isActive: {
+      true: {
+        background: '$neutral1',
+      },
+    },
+  },
 });
 
 export function Indicator(props: { letter: string }) {
@@ -46,14 +55,17 @@ export function Indicator(props: { letter: string }) {
         filter:
           'drop-shadow(0px 4px 12px rgba(0,0,0,0.1)), drop-shadow(0px 1px 0px rgba(0,0,0,0.2))',
       }}
-      onMouseOver={() => setShowComment(true)}
-      onMouseOut={() => setShowComment(false)}
+      onClick={() => setShowComment(!showComment)}
     >
-      <div style={{ padding: 10, margin: -10 }}>
-        <StyledIndicator>
-          <Avatar profile={{ name: 'A' }} />
+      <motion.div
+        animate={{ scale: [0, 1.1, 1] }}
+        transition={{ duration: 0.5 }}
+        style={{ padding: 10, margin: -10 }}
+      >
+        <StyledIndicator isActive={showComment}>
+          <Avatar profile={{ name: 'A' }} neutralBackground={showComment} />
         </StyledIndicator>
-      </div>
+      </motion.div>
       {inner}
     </div>
   );

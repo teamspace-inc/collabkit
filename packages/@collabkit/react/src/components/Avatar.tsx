@@ -14,15 +14,28 @@ export const avatarStyles = css({
   textAlign: 'center',
   verticalAlign: 'middle',
   lineHeight: '25px',
-  cursor: 'default',
+  cursor: 'inherit',
   userSelect: 'none',
   backgroundColor: '$accent10',
   color: '$accent1',
+  variants: {
+    neutralBackground: {
+      true: {
+        color: '$neutral12',
+        fontWeight: 600,
+        backgroundColor: '$neutral1',
+      },
+    },
+  },
 });
 
 export const StyledAvatar = styled('img', avatarStyles);
 
-export function Avatar(props: { profile: Profile; style?: React.CSSProperties }) {
+export function Avatar(props: {
+  profile: Profile;
+  style?: React.CSSProperties;
+  neutralBackground?: boolean;
+}) {
   const [didError, setDidError] = useState(false);
   const noImage = didError || !props.profile.avatar;
   const styles = props.profile.color
@@ -34,7 +47,10 @@ export function Avatar(props: { profile: Profile; style?: React.CSSProperties })
     : props.style;
 
   return noImage ? (
-    <div className={avatarStyles().className} style={styles}>
+    <div
+      className={avatarStyles({ neutralBackground: props.neutralBackground }).className}
+      style={styles}
+    >
       {props.profile.name?.charAt(0)}
     </div>
   ) : (
