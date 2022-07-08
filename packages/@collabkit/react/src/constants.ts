@@ -150,22 +150,15 @@ export interface SeenBy {
   [userId: string]: { seenAt: number; seenUntilId: string };
 }
 
-export interface Context {
+export interface Pin {
   selector: string;
-  point: { x: number; y: number };
+  offset: { x: number; y: number };
   url: string;
-}
-
-export interface Thread {
-  state: 'open' | 'resolved';
-  createdAt: number;
-  createdById: string;
-  context: {};
 }
 
 export interface Workspace {
   name: string;
-  threads: { [threadId: string]: Thread };
+  pins: { [threadId: string]: Pin };
   inbox: { [threadId: string]: WithID<WithName<Event>> };
   timeline: { [threadId: string]: Timeline };
   composers: { [threadId: string]: Composer };

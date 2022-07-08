@@ -10,13 +10,13 @@ export async function subscribeThread(
   props: {
     workspaceId: string;
     threadId: string;
-    context?: { selector: string; url: string; point?: { x: number; y: number } };
+    pin?: { selector: string; url: string; point?: { x: number; y: number } };
   }
 ) {
   // initialise the store
   store.workspaces[props.workspaceId] ||= {
     inbox: {},
-    threads: {},
+    pins: {},
     name: store.config.identify?.workspaceName || '',
     composers: {
       [props.threadId]: {
