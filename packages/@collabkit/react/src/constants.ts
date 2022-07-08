@@ -34,7 +34,7 @@ export type Target =
 export type Commentable = {
   type: 'commentable';
   workspaceId: string;
-  context: {
+  pin: {
     selector: string;
     url: string;
     point: { x: number; y: number };
@@ -51,7 +51,7 @@ export type StickyThreadTarget = {
   type: 'stickyThread';
   threadId: string;
   workspaceId: string;
-  context: { selector: string; url: string; point?: { x: number; y: number } };
+  pin: { selector: string; url: string; point?: { x: number; y: number } };
 };
 export type CommentButtonTarget = { type: 'commentButton'; threadId: string; workspaceId: string };
 
