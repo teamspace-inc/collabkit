@@ -26,10 +26,12 @@ export const StyledMessage = styled('div', {
         borderRadius: 11,
       },
       indicator: {
-        padding: '5px 10px',
-        background: '$neutral12',
+        padding: '10px 10px',
+        background: '$neutral2',
         borderRadius: 11,
         gap: 0,
+        // filter:
+        //   'drop-shadow(0 1px 0px rgba(0, 0, 0, 0.01))  drop-shadow(0 1px 2px rgba(0, 0, 0, 0.025))',
       },
     },
     type: {
