@@ -1,17 +1,20 @@
 {
   "rules": {
-    "context": {
+    "pins": {
       "$appId": {
         "$workspaceId": {
           ".validate": "newData.hasChildren(['url'])",
           "$threadId": {
             ".write": "(root.child('apps').child(auth.token.appId).child('mode').val() === 'UNSECURED' || (root.child('apps').child(auth.token.appId).child('mode').val() === 'SECURED' && !root.child('threads').child($appId).child($workspaceId).child($threadId).exists()))",
             ".read": "auth.token.appId === $appId",
+            "state": {
+              ".validate": "newData.isString() && (newData.val() === 'open' || newData.val() === 'resolved')"
+            },
             "url": { ".validate": "newData.isString()" },
             "selector": {
               ".validate": "newData.isString()"
             },
-            "point": {
+            "offset": {
               ".validate": "newData.hasChildren(['x', 'y'])",
               "x": {
                 ".validate": "newData.isNumber()"
