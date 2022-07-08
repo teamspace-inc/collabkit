@@ -1,6 +1,6 @@
 import { useSnapshot } from 'valtio';
 import { AppListItem } from './AppListItem';
-import { Preview } from './Preview';
+// import { Preview } from './Preview';
 import { store } from './store';
 import { events } from './events';
 import { Button } from './UIKit';
@@ -26,13 +26,15 @@ export function AppList() {
         Create new app
       </Button>
       {/* <textarea value={idToken ?? ''} /> */}
-      {selectedAppId ? (
-        <Preview
-          appId={selectedAppId}
-          apiKey={Object.keys(apps[selectedAppId].keys)[0]}
-          mode={apps[selectedAppId].mode}
-        />
-      ) : null}
+      {selectedAppId
+        ? null
+        : // todo show a preview app here
+          // <Preview
+          //   appId={selectedAppId}
+          //   apiKey={Object.keys(apps[selectedAppId].keys)[0]}
+          //   mode={apps[selectedAppId].mode}
+          // />
+          null}
     </div>
   );
 }

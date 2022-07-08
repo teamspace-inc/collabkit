@@ -7,31 +7,31 @@ export const { styled, css, theme } = createStitches({
       ...grayDark,
       ...greenDark,
 
-      accent1: '$green1',
-      accent2: '$green2',
-      accent3: '$green3',
-      accent4: '$green4',
-      accent5: '$green5',
-      accent6: '$green6',
-      accent7: '$green7',
-      accent8: '$green8',
-      accent9: '$green9',
-      accent10: '$green10',
-      accent11: '$green11',
-      accent12: '$green12',
+      websiteAccent1: '$green1',
+      websiteAccent2: '$green2',
+      websiteAccent3: '$green3',
+      websiteAccent4: '$green4',
+      websiteAccent5: '$green5',
+      websiteAccent6: '$green6',
+      websiteAccent7: '$green7',
+      websiteAccent8: '$green8',
+      websiteAccent9: '$green9',
+      websiteAccent10: '$green10',
+      websiteAccent11: '$green11',
+      websiteAccent12: '$green12',
 
-      neutral1: '$gray1',
-      neutral2: '$gray2',
-      neutral3: '$gray3',
-      neutral4: '$gray4',
-      neutral5: '$gray5',
-      neutral6: '$gray6',
-      neutral7: '$gray7',
-      neutral8: '$gray8',
-      neutral9: '$gray9',
-      neutral10: '$gray10',
-      neutral11: '$gray11',
-      neutral12: '$gray12',
+      websiteNeutral1: '$gray1',
+      websiteNeutral2: '$gray2',
+      websiteNeutral3: '$gray3',
+      websiteNeutral4: '$gray4',
+      websiteNeutral5: '$gray5',
+      websiteNeutral6: '$gray6',
+      websiteNeutral7: '$gray7',
+      websiteNeutral8: '$gray8',
+      websiteNeutral9: '$gray9',
+      websiteNeutral10: '$gray10',
+      websiteNeutral11: '$gray11',
+      websiteNeutral12: '$gray12',
     },
   },
 });
@@ -99,7 +99,7 @@ const shadow = css({
         boxShadow: 'none',
       },
       1: {
-        boxShadow: '0px 5px 20px $accent9',
+        boxShadow: '0px 5px 20px $websiteAccent9',
       },
     },
   },
@@ -109,10 +109,10 @@ const colors = css({
   variants: {
     type: {
       primary: {
-        color: '$neutral1',
+        color: '$websiteNeutral1',
       },
       secondary: {
-        color: '$neutral11',
+        color: '$websiteNeutral11',
       },
     },
   },
@@ -167,7 +167,7 @@ export const Box = styled(
 
 export const A = styled('a', {
   textDecoration: 'none',
-  color: '$accent10',
+  color: '$websiteAccent10',
 });
 
 const display = css({
@@ -292,12 +292,12 @@ export const Button = styled('button', {
     type: {
       cta: {
         color: 'white',
-        backgroundColor: '$accent10',
-        border: '1px solid $accent10',
+        backgroundColor: '$websiteAccent10',
+        border: '1px solid $websiteAccent10',
       },
       secondary: {
-        color: '$neutralDark10',
-        border: '1px solid $neutral4',
+        color: '$websiteNeutralDark10',
+        border: '1px solid $websiteNeutral4',
         backgroundColor: 'transparent',
       },
     },

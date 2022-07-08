@@ -17,7 +17,7 @@ const StyledIndicator = styled('div', {
   padding: '2px',
   borderRadius: 25,
   userSelect: 'none',
-  border: '2px solid $neutral1',
+  border: '2px solid $neutral12',
   cursor: 'pointer',
 
   variants: {

@@ -217,7 +217,7 @@ function App() {
                   // height: '100%',
                   padding: '2rem',
                   borderRadius: '24px',
-                  background: theme.colors.neutral12.toString(),
+                  background: theme.colors.websiteNeutral12.toString(),
                 }}
               >
                 <h3 style={{ color: 'rgba(0,0,0,0.25)', marginTop: 0 }}>CollabKit.Button</h3>
@@ -242,7 +242,7 @@ function App() {
                 style={{
                   padding: '2rem',
                   borderRadius: '24px',
-                  background: theme.colors.neutral12.toString(),
+                  background: theme.colors.websiteNeutral12.toString(),
                 }}
               >
                 <h3 style={{ color: 'rgba(0,0,0,0.25)', marginTop: 0 }}>CollabKit.Thread</h3>
@@ -265,7 +265,7 @@ function App() {
                 style={{
                   padding: '2rem',
                   borderRadius: '24px',
-                  background: theme.colors.neutral12.toString(),
+                  background: theme.colors.websiteNeutral12.toString(),
                 }}
               >
                 <h3 style={{ color: 'rgba(0,0,0,0.25)', marginTop: 0 }}>CollabKit.Inbox</h3>
@@ -287,7 +287,7 @@ function App() {
                 style={{
                   padding: '2rem',
                   borderRadius: '24px',
-                  background: theme.colors.neutral12.toString(),
+                  background: theme.colors.websiteNeutral12.toString(),
                 }}
               >
                 <h3 style={{ color: 'rgba(0,0,0,0.25)', marginTop: 0 }}>CollabKit.CurrentUser</h3>
@@ -307,7 +307,7 @@ function App() {
                 style={{
                   padding: '2rem',
                   borderRadius: '24px',
-                  background: theme.colors.neutral12.toString(),
+                  background: theme.colors.websiteNeutral12.toString(),
                 }}
               >
                 <h3 style={{ color: 'rgba(0,0,0,0.25)', marginTop: 0 }}>
@@ -347,7 +347,7 @@ function App() {
                 style={{
                   padding: '2rem',
                   borderRadius: '24px',
-                  background: theme.colors.neutral12.toString(),
+                  background: theme.colors.websiteNeutral12.toString(),
                 }}
               >
                 <h3 style={{ color: 'rgba(0,0,0,0.25)', marginTop: 0 }}>CollabKit.Indicator</h3>
