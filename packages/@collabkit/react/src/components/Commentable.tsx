@@ -153,8 +153,8 @@ export function Commentable(props: { children: React.ReactNode }) {
         }
       }}
     >
-      {viewingId && viewingId.context.point ? (
-        <Sticky offset={viewingId.context.point} selector={viewingId.context.selector}>
+      {viewingId && viewingId.pin.point ? (
+        <Sticky offset={viewingId.pin.point} selector={viewingId.pin.selector}>
           <CollabKit.Thread
             type="popout"
             threadId={viewingId.threadId}
