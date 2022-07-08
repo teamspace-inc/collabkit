@@ -96,17 +96,17 @@ export async function startThread(
   props: {
     workspaceId: string;
     threadId: string;
-    context?: { selector: string; url: string; point?: { x: number; y: number } };
+    pin?: { selector: string; url: string; point?: { x: number; y: number } };
   }
 ) {
   subscribeThread(store, props);
 
-  if (props.context) {
+  if (props.pin) {
     store.viewingId = {
       type: 'stickyThread',
       workspaceId: props.workspaceId,
       threadId: props.threadId,
-      context: props.context,
+      pin: props.pin,
     };
   }
 
