@@ -4,6 +4,7 @@ import { StyledMessage, StyledMessageTimestamp } from './comment/Message';
 import { Name } from './profile/Name';
 import { styled, themeIds, themes } from './UIKit';
 import { motion } from 'framer-motion';
+import { Profile } from '../constants';
 
 const StyledIndicator = styled('div', {
   width: 25,
@@ -40,7 +41,11 @@ export function Indicator(props: { letter: string }) {
   const [showThread, setShowThread] = useState(false);
   const themeRef = useRef(() => themes[themeIds[Math.floor(Math.random() * themeIds.length)]]);
 
-  const profile = { name: 'N' };
+  const profile: Profile = { name: 'Namit' };
+  const event = {
+    createdAt: new Date(),
+    body: 'This number looks off? Did we import the right data?',
+  };
 
   const thread = showThread ? (
     <div
@@ -51,35 +56,32 @@ export function Indicator(props: { letter: string }) {
     >
       <StyledMessage ui="indicator">
         <Name>
-          Namit <StyledMessageTimestamp>10:00</StyledMessageTimestamp>
+          {profile.name} <StyledMessageTimestamp>10:00</StyledMessageTimestamp>
         </Name>
-        <div>This number looks off? Did we import the right data?</div>
+        <div>{event.body}</div>
       </StyledMessage>
     </div>
-  ) : // </div>
-  null;
+  ) : null;
 
   const preview =
     !showThread && showPreview ? (
       <div style={{ position: 'absolute', left: -10, top: -10, width: 240 }}>
         <div style={{}}>
           <StyledMessage
-            ui="indicator"
+            ui="preview"
             style={{ display: 'flex', flexDirection: 'row', width: 240, gap: 10 }}
+            onClick={() => {
+              setShowThread(!showThread);
+            }}
           >
-            <StyledIndicator
-              isActive={false}
-              onClick={() => {
-                setShowThread(!showThread);
-              }}
-            >
+            <StyledIndicator isActive={false}>
               <Avatar profile={profile} neutralBackground={showThread} />
             </StyledIndicator>
             <div style={{ display: 'flex', flexDirection: 'column', width: 240 }}>
               <Name>
-                Namit <StyledMessageTimestamp>10:00</StyledMessageTimestamp>
+                {profile.name} <StyledMessageTimestamp>10:00</StyledMessageTimestamp>
               </Name>
-              <div>This number looks off? Did we import the right data?</div>
+              <div>{event.body}</div>
             </div>
           </StyledMessage>
         </div>
@@ -91,7 +93,6 @@ export function Indicator(props: { letter: string }) {
       style={{
         display: 'flex',
         maxWidth: '280px',
-        // background: 'red',
         position: 'relative',
         filter:
           'drop-shadow(0px 4px 12px rgba(0,0,0,0.1)), drop-shadow(0px 1px 0px rgba(0,0,0,0.2))',
