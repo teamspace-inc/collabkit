@@ -110,7 +110,7 @@ export function Commentable(props: { children: React.ReactNode }) {
         const target = {
           type: 'commentable',
           workspaceId,
-          context: {
+          pin: {
             selector,
             point: { x, y },
             url: window.location.href.toString(),
