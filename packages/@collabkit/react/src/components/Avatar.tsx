@@ -4,20 +4,22 @@ import { getShade } from '../colors';
 import { Profile } from '../constants';
 import { css, styled } from '@stitches/react';
 
+export const AVATAR_SIZE = 25;
+
 export const avatarStyles = css({
-  width: 25,
-  height: 25,
+  width: AVATAR_SIZE,
+  height: AVATAR_SIZE,
   flexShrink: 0,
-  borderRadius: 25,
+  borderRadius: AVATAR_SIZE,
   fontSize: 14,
-  fontWeight: 500,
+  fontWeight: 600,
   textAlign: 'center',
   verticalAlign: 'middle',
   lineHeight: '25px',
   cursor: 'inherit',
   userSelect: 'none',
   backgroundColor: '$accent10',
-  color: '$accent12',
+  color: '$neutral1',
   variants: {
     neutralBackground: {
       true: {

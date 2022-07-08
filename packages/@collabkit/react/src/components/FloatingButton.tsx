@@ -12,7 +12,7 @@ const StyledFloatingButtonContainer = styled('div', {
 });
 
 const StyledFloatingButton = styled(motion.div, {
-  background: '$neutral12',
+  background: '$neutral2',
   cursor: 'pointer',
   width: 60,
   borderRadius: 60,
@@ -21,7 +21,7 @@ const StyledFloatingButton = styled(motion.div, {
   userSelect: 'none',
   justifyContent: 'center',
   alignItems: 'center',
-  boxShadow: '0 1px 6px 0 rgb(0 0 0 / 6%), 0 2px 32px 0 rgb(0 0 0 / 16%)',
+  boxShadow: '0 1px 6px 0 rgb(0 0 0 / 5%), 0 2px 32px 0 rgb(0 0 0 / 12%)',
   variants: {
     uiState: {
       selecting: {},
@@ -50,7 +50,7 @@ export function FloatingButton() {
           ) : (
             <ChatText
               weight="fill"
-              color={theme.colors.neutral2.toString()}
+              color={theme.colors.neutral12.toString()}
               size={35}
               style={{ margin: '-2px 0px 0px 0px' }}
             />
