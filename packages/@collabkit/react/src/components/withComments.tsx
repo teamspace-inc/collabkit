@@ -25,19 +25,12 @@ const StyledWithComments = styled('div', {
   },
 });
 
-export function withComments<T>(
-  Component: React.ComponentType<T>,
-  commentProps: { threadId: string }
-) {
+export function withComments<T>(Component: React.ComponentType<T>) {
   return (props: T) => {
     const { store } = useApp();
     if (!store) {
       return null;
     }
-    const { workspaceId } = useContext(WorkspaceIDContext);
-    const { workspaces } = useSnapshot(store);
-    const workspace = workspaceId ? workspaces[workspaceId] : null;
-
     const hasComments = true;
     const newComments = true;
 

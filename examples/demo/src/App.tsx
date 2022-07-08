@@ -1,45 +1,27 @@
-import { useState } from 'react'
-import logo from './logo.svg'
-import './App.css'
+import { CollabKit } from '@collabkit/react';
+import { users, mentions, workspaceId } from './data';
+import './App.css';
+import { useState } from 'react';
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.tsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
-    </div>
-  )
+    <CollabKit.App
+      token={import.meta.env.VITE_COLLABKIT_TOKEN}
+      appId={import.meta.env.VITE_COLLABKIT_APP_ID}
+      identity={users.ALICE}
+      mentions={mentions}
+    >
+      <CollabKit.Workspace workspaceId={workspaceId}>
+        <CollabKit.Commentable>
+          <img
+            style={{ width: '100vw' }}
+            src="https://unsplash.com/photos/t7YycgAoVSw/download?ixid=MnwxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjU3Mjg3OTkz&force=true&w=2400"
+          />
+        </CollabKit.Commentable>
+        <CollabKit.FloatingButton />
+      </CollabKit.Workspace>
+    </CollabKit.App>
+  );
 }
 
-export default App
+export default App;
