@@ -150,8 +150,22 @@ export interface SeenBy {
   [userId: string]: { seenAt: number; seenUntilId: string };
 }
 
+export interface Context {
+  selector: string;
+  point: { x: number; y: number };
+  url: string;
+}
+
+export interface Thread {
+  state: 'open' | 'resolved';
+  createdAt: number;
+  createdById: string;
+  context: {};
+}
+
 export interface Workspace {
   name: string;
+  threads: { [threadId: string]: Thread };
   inbox: { [threadId: string]: WithID<WithName<Event>> };
   timeline: { [threadId: string]: Timeline };
   composers: { [threadId: string]: Composer };
@@ -176,7 +190,7 @@ export interface Store {
     [workspaceId: string]: Workspace;
   };
   appState: 'blank' | 'config' | 'ready';
-  uiState: 'idle' | 'selecting';
+  uiState: 'idle' | 'selecting' | 'viewing';
   reactingId: null | Target;
   viewingId: StickyThreadTarget | null;
   subs: { [subId: string]: Unsubscribe };
