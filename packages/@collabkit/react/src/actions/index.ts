@@ -25,6 +25,7 @@ import { toggleEmojiReactionPicker } from './toggleEmojiReactionPicker';
 import { startThread } from './startThread';
 import { focus } from './focus';
 import { blur } from './blur';
+import { subscribeThread } from './subscribeThread';
 import { reopenThread } from './reopenThread';
 
 export function timelineRef(store: Store, workspaceId: string, threadId: string) {
@@ -147,6 +148,8 @@ export const actions = {
   stopSelecting,
 
   startSelecting,
+
+  subscribeThread,
 
   seen,
 

@@ -149,7 +149,7 @@ function _Thread(props: {
 
   useEffect(() => {
     if (workspace && workspaceId && appState === 'ready') {
-      actions.startThread(store, { workspaceId, threadId });
+      actions.subscribeThread(store, { workspaceId, threadId });
     }
   }, [workspaceId, props.threadId, appState]);
 

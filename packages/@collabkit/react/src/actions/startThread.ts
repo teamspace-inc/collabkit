@@ -1,9 +1,5 @@
 import { DB, Store } from '../constants';
 
-import { createEditor } from 'lexical';
-import { createEditorConfig } from '../components/Composer';
-import { ref as valtioRef } from 'valtio';
-
 import {
   ref,
   onChildAdded,
@@ -15,8 +11,12 @@ import {
 } from 'firebase/database';
 import { getConfig, timelineRef } from './index';
 import { onTimelineEventAdded } from './onTimelineEventAdded';
+import { subscribeThread } from './subscribeThread';
 
-function subscribeToTimeline(store: Store, props: { workspaceId: string; threadId: string }) {
+export function subscribeToTimeline(
+  store: Store,
+  props: { workspaceId: string; threadId: string }
+) {
   const timeline = timelineRef(store, props.workspaceId, props.threadId);
 
   if (store.subs[timeline.toString()]) {
@@ -32,7 +32,7 @@ function subscribeToTimeline(store: Store, props: { workspaceId: string; threadI
   }
 }
 
-function subscribeThreadIsTyping(store: Store, workspaceId: string, threadId: string) {
+export function subscribeThreadIsTyping(store: Store, workspaceId: string, threadId: string) {
   const { appId, userId } = getConfig(store);
 
   const key = `isTyping-${workspaceId}/${threadId}`;
@@ -65,7 +65,7 @@ function subscribeThreadIsTyping(store: Store, workspaceId: string, threadId: st
   }
 }
 
-function subscribeThreadSeenBy(
+export function subscribeThreadSeenBy(
   store: Store,
   props: {
     appId: string;
@@ -99,35 +99,7 @@ export async function startThread(
     context?: { selector: string; url: string; point?: { x: number; y: number } };
   }
 ) {
-  // initialise the store
-  store.workspaces[props.workspaceId] ||= {
-    inbox: {},
-    name: store.config.identify?.workspaceName || '',
-    composers: {
-      [props.threadId]: {
-        editor: valtioRef(createEditor(createEditorConfig())),
-        $$body: '',
-        isTyping: {},
-      },
-    },
-    timeline: {},
-    seen: {},
-    seenBy: {},
-  };
-
-  store.workspaces[props.workspaceId].composers[props.threadId] ||= {
-    editor: valtioRef(createEditor(createEditorConfig())),
-    $$body: '',
-    isTyping: {},
-  };
-
-  const { appId, userId } = getConfig(store);
-  // if (store.openId) {
-  //   store.subs[timelineRef(store, props.workspaceId, props.threadId).toString()]?.();
-  // }
-  subscribeToTimeline(store, props);
-  subscribeThreadIsTyping(store, props.workspaceId, props.threadId);
-  subscribeThreadSeenBy(store, { appId, userId, ...props });
+  subscribeThread(store, props);
 
   if (props.context) {
     store.viewingId = {

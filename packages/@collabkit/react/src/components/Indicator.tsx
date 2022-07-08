@@ -5,6 +5,10 @@ import { Name } from './profile/Name';
 import { styled, themeIds, themes } from './UIKit';
 import { motion } from 'framer-motion';
 import { Profile } from '../constants';
+import { Thread } from './Thread';
+import { useApp } from './App';
+import { useSnapshot } from 'valtio';
+import { useWorkspaceId } from './Workspace';
 
 const StyledIndicator = styled('div', {
   width: 25,
@@ -36,7 +40,10 @@ const StyledIndicator = styled('div', {
   },
 });
 
-export function Indicator(props: { letter: string }) {
+export function Indicator(props: { threadId: string }) {
+  const { store } = useApp();
+  const { uiState, viewingId } = useSnapshot(store);
+  const { workspaceId } = useWorkspaceId();
   const [showPreview, setShowPreview] = useState(false);
   const [showThread, setShowThread] = useState(false);
   const themeRef = useRef(() => themes[themeIds[Math.floor(Math.random() * themeIds.length)]]);
@@ -47,21 +54,14 @@ export function Indicator(props: { letter: string }) {
     body: 'This number looks off? Did we import the right data?',
   };
 
-  const thread = showThread ? (
-    <div
-      style={{ display: 'flex', flexDirection: 'column' }}
-      onClick={() => {
-        setShowThread(!showThread);
-      }}
-    >
-      <StyledMessage ui="indicator">
-        <Name>
-          {profile.name} <StyledMessageTimestamp>10:00</StyledMessageTimestamp>
-        </Name>
-        <div>{event.body}</div>
-      </StyledMessage>
-    </div>
-  ) : null;
+  const thread =
+    uiState === 'viewing' &&
+    viewingId?.threadId === props.threadId &&
+    viewingId.workspaceId === workspaceId ? (
+      <div style={{ display: 'flex', flexDirection: 'column', width: 280, height: 200 }}>
+        <Thread threadId={props.threadId} />
+      </div>
+    ) : null;
 
   const preview =
     !showThread && showPreview ? (
@@ -77,7 +77,7 @@ export function Indicator(props: { letter: string }) {
             <StyledIndicator isActive={false}>
               <Avatar profile={profile} neutralBackground={showThread} />
             </StyledIndicator>
-            <div style={{ display: 'flex', flexDirection: 'column', width: 240 }}>
+            <div style={{ display: 'flex', flexDirection: 'column', width: 240, gap: 0 }}>
               <Name>
                 {profile.name} <StyledMessageTimestamp>10:00</StyledMessageTimestamp>
               </Name>
@@ -112,7 +112,12 @@ export function Indicator(props: { letter: string }) {
         }}
         className={themeRef.current.toString()}
       >
-        <StyledIndicator isActive={showThread}>
+        <StyledIndicator
+          isActive={showThread}
+          onClick={() => {
+            showThread && setShowThread(false);
+          }}
+        >
           <Avatar profile={profile} neutralBackground={showThread} />
         </StyledIndicator>
       </motion.div>
