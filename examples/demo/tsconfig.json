@@ -20,10 +20,5 @@
       "@collabkit/*": ["packages/@collabkit/*/src"]
     }
   },
-  "include": ["src"],
-  "references": [
-    {
-      "path": "../../packages/@collabkit/react"
-    }
-  ]
+  "include": ["src"]
 }
