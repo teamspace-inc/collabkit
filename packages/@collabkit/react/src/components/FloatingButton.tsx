@@ -46,12 +46,12 @@ export function FloatingButton() {
           onPointerDown={(e) => events.onPointerDown(e, { target })}
         >
           {uiState === 'selecting' ? (
-            <X weight="fill" color={theme.colors.neutral6.toString()} size={35} />
+            <X weight="fill" color={theme.colors.neutral8.toString()} size={28} />
           ) : (
             <ChatText
               weight="fill"
               color={theme.colors.neutral12.toString()}
-              size={35}
+              size={32}
               style={{ margin: '-2px 0px 0px 0px' }}
             />
           )}
