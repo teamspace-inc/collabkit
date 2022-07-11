@@ -118,8 +118,6 @@ function _Commentable(props: { children: React.ReactNode }) {
         const x = (e.clientX - rect.left) / rect.width;
         const y = (e.clientY - rect.top) / rect.height;
 
-        console.log({ x, y });
-
         const selector = finder(el, { root: ref.current! });
         console.log('pointer down', x, y, selector);
         const target = {
@@ -131,7 +129,6 @@ function _Commentable(props: { children: React.ReactNode }) {
             url: window.location.href.toString(),
           },
         } as const;
-        // console.log(target);
         events.onPointerDown(e, { target });
       }}
       onMouseOut={(e) => {
