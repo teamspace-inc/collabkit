@@ -6,6 +6,7 @@ import { CollabKit } from '..';
 import { useWorkspaceId } from './Workspace';
 import { finder } from '@medv/finder';
 import { Sticky } from './Sticky';
+import { useWorkspace, WorkspaceLoader } from './WorkspaceLoader';
 
 function inspectSize(nodes: HTMLElement[]) {
   const sizeNodes = nodes.filter(hasSize);
@@ -78,15 +79,22 @@ function getPlacementStylesForPoint(point: { x: number; y: number }): React.CSSP
 }
 
 export function Commentable(props: { children: React.ReactNode }) {
+  return (
+    <WorkspaceLoader>
+      <_Commentable>{props.children}</_Commentable>
+    </WorkspaceLoader>
+  );
+}
+
+function _Commentable(props: { children: React.ReactNode }) {
   const nodesAtPointerRef = useRef<HTMLElement[]>([]);
   const { store, events } = useApp();
   const { workspaceId } = useWorkspaceId();
   const { uiState, viewingId } = useSnapshot(store);
   const ref = useRef<HTMLElement>(null);
-
-  // const { context } = useFloating();
-
-  // const target = { type: 'commentableContainer', workspaceId } as const;
+  const { workspace } = useWorkspace();
+  console.log({ workspace });
+  const pinIds = Object.keys(workspace?.pins || {});
 
   useEffect(() => {
     if (uiState !== 'selecting') uninspect();
@@ -153,6 +161,13 @@ export function Commentable(props: { children: React.ReactNode }) {
         }
       }}
     >
+      {pinIds.map((pinId) => {
+        return (
+          <div key={pinId}>
+            <CollabKit.Pin threadId={pinId}></CollabKit.Pin>
+          </div>
+        );
+      })}
       {viewingId && viewingId.pin.offset ? (
         <Sticky offset={viewingId.pin.offset} selector={viewingId.pin.selector}>
           <CollabKit.Thread

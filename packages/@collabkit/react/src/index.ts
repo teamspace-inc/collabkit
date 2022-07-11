@@ -11,7 +11,7 @@ import { Inbox } from './components/Inbox';
 import { CurrentUser } from './components/CurrentUser';
 import { FloatingButton } from './components/FloatingButton';
 import { Commentable } from './components/Commentable';
-import { Indicator } from './components/Indicator';
+import { Pin } from './components/Pin';
 import { IdentifyProps, Mention } from './constants';
 import { MentionProps } from './constants';
 
@@ -23,7 +23,7 @@ export {
   Thread,
   Button,
   FloatingButton,
-  Indicator,
+  Pin,
   Inbox,
   Debug,
   withComments,
@@ -42,7 +42,7 @@ export const CollabKit = {
   Thread,
   Button,
   FloatingButton,
-  Indicator,
+  Pin,
   Inbox,
   Debug,
   withComments,

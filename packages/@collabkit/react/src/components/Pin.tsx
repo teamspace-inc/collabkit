@@ -40,7 +40,7 @@ const StyledIndicator = styled('div', {
   },
 });
 
-export function Indicator(props: { threadId: string }) {
+export function Pin(props: { threadId: string }) {
   const { store } = useApp();
   const { uiState, viewingId } = useSnapshot(store);
   const { workspaceId } = useWorkspaceId();

@@ -10,7 +10,9 @@ export async function subscribePins(store: Store, props: { workspaceId: string }
   const onChange = (child: DataSnapshot) => {
     const pin = child.val();
     console.log('got', pin);
-    store.workspaces[props.workspaceId].pins[pin.id] = pin;
+    if (child.key) {
+      store.workspaces[props.workspaceId].pins[child.key] = pin;
+    }
   };
 
   store.subs[`pin#added`] = onChildAdded(
