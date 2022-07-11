@@ -1,3 +1,4 @@
+import React from 'react';
 import { styled } from '../UIKit';
 import { useApp } from '../App';
 import { Event } from '../../constants';

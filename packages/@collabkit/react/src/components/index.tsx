@@ -1,3 +1,4 @@
+import React from 'react';
 import { sand } from '@radix-ui/colors';
 import { createStitches } from '@stitches/react';
 

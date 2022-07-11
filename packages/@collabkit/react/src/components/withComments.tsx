@@ -1,9 +1,6 @@
-import { useContext } from 'react';
-import { useSnapshot } from 'valtio';
+import React from 'react';
 import { useApp } from './App';
 import { styled } from './UIKit';
-import { WorkspaceIDContext } from './Workspace';
-import { WorkspaceContext } from './WorkspaceLoader';
 
 // Evan from LiveFlow suggested a HOC as a way to
 // create 'Commentable' things, this is a quick sketch

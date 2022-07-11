@@ -1,3 +1,4 @@
+import React from 'react';
 import { useSnapshot } from 'valtio';
 import { useApp } from './App';
 import { Avatar } from './Avatar';

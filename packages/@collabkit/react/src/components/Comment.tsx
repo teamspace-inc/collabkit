@@ -1,9 +1,10 @@
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { useSnapshot } from 'valtio';
+
 import { Event, Profile } from '../constants';
 import { Avatar } from './Avatar';
 import { styled } from './UIKit';
-import { useContext, useEffect, useRef, useState } from 'react';
 import { TargetContext } from './Target';
-import { useSnapshot } from 'valtio';
 import { timeDifference } from '../utils/timeDifference';
 import { isSameComment } from '../utils/isSameComment';
 import { useApp } from './App';

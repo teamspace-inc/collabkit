@@ -1,8 +1,9 @@
+import React from 'react';
 import { ArrowUp } from 'phosphor-react';
+
 import * as Tooltip from './Tooltip';
 import { Profile, Store, Target, Workspace } from '../constants';
 import { styled, theme } from './UIKit';
-
 import { EditorState, $getRoot } from 'lexical';
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import { PlainTextPlugin } from '@lexical/react/LexicalPlainTextPlugin';

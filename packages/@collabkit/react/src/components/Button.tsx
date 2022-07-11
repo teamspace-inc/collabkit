@@ -1,5 +1,5 @@
 import { styled, theme } from './UIKit';
-import { useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { ChatCircle } from 'phosphor-react';
 import { Thread } from './Thread';
 import { WorkspaceLoader } from './WorkspaceLoader';

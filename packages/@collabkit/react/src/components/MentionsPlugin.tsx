@@ -1,3 +1,4 @@
+import React from 'react';
 import type { LexicalEditor, RangeSelection } from 'lexical';
 
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';

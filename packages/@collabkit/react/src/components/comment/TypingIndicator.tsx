@@ -1,3 +1,4 @@
+import React from 'react';
 import { keyframes, styled } from '@stitches/react';
 import { Profile } from '../../constants';
 import { Avatar } from '../Avatar';

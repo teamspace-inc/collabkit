@@ -1,4 +1,4 @@
-import { RefObject, useContext, useRef } from 'react';
+import React, { RefObject, useContext, useRef } from 'react';
 import { CommentTarget } from '../../constants';
 import { Target } from '../Target';
 import {

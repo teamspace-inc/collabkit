@@ -1,3 +1,4 @@
+import React from 'react';
 import { styled, theme } from './UIKit';
 import { ChatText, X } from 'phosphor-react';
 import { useSnapshot } from 'valtio';

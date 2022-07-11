@@ -1,3 +1,4 @@
+import React from 'react';
 import { CheckCircle, RadioButton } from 'phosphor-react';
 import { styled, theme } from '../UIKit';
 import { Event } from '../../constants';
