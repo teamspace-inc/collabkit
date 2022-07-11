@@ -33,7 +33,7 @@ export function UserMenu({
           fontSize: 0,
           color: 'transparent',
           outline: 'none',
-          height: 32,
+          height: 44,
           backgroundColor: 'transparent',
           border: 'none',
           cursor: 'pointer',
