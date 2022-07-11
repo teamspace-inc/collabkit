@@ -7,10 +7,10 @@ export const StyledStickyContainer = styled('div', {
   top: 0,
 });
 
-export function calculatePosition(node: Element, point: { x: number; y: number }) {
+export function calculatePosition(node: Element, offset: { x: number; y: number }) {
   const rect = node.getBoundingClientRect();
-  const x = rect.left + point.x;
-  const y = rect.top + point.y;
+  const x = rect.left + offset.x * rect.width;
+  const y = rect.top + offset.y * rect.height;
   return { x, y };
 }
 
@@ -21,13 +21,13 @@ export function Sticky(props: {
   offset: { x: number; y: number };
 }) {
   const stickyRef = useRef<HTMLDivElement | null>(null);
-  const originRef = useRef<Element | null>(null);
+  const selectorRef = useRef<Element | null>(null);
   const { children, selector, offset } = props;
   const prevPosition = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
 
   const updatePosition = useCallback(() => {
-    if (stickyRef.current && originRef.current) {
-      const position = calculatePosition(originRef.current, offset);
+    if (stickyRef.current && selectorRef.current) {
+      const position = calculatePosition(selectorRef.current, offset);
       if (prevPosition.current.x !== position.x || prevPosition.current.y !== position.y) {
         Object.assign(stickyRef.current.style, {
           left: `${position.x}px`,
@@ -39,10 +39,14 @@ export function Sticky(props: {
   }, [offset]);
 
   useEffect(() => {
+    window.addEventListener('resize', updatePosition);
     window.addEventListener('scroll', updatePosition);
-    originRef.current = document.querySelector(selector);
+    selectorRef.current = document.querySelector(selector);
     updatePosition();
-    return () => window.removeEventListener('scroll', updatePosition);
+    return () => {
+      window.removeEventListener('scroll', updatePosition);
+      window.removeEventListener('resize', updatePosition);
+    };
   }, [selector]);
 
   return <StyledStickyContainer ref={stickyRef}>{children}</StyledStickyContainer>;

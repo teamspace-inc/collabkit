@@ -17,6 +17,7 @@ inspx {
   color: white;
   padding: 0 4px;
   position: absolute;
+  pointer-events: none;
   top: 0;
   left: 0;
   z-index: 1337;

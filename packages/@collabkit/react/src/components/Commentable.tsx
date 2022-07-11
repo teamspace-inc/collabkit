@@ -110,10 +110,17 @@ function _Commentable(props: { children: React.ReactNode }) {
         e.preventDefault();
         // get position of pointer
         // relative to element
-        const rect = e.currentTarget.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const selector = finder(e.currentTarget);
+        const nodes = document.elementsFromPoint(e.clientX, e.clientY) as HTMLElement[];
+
+        const el = nodes[0];
+
+        const rect = el.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width;
+        const y = (e.clientY - rect.top) / rect.height;
+
+        console.log({ x, y });
+
+        const selector = finder(el, { root: ref.current! });
         console.log('pointer down', x, y, selector);
         const target = {
           type: 'commentable',
@@ -124,6 +131,7 @@ function _Commentable(props: { children: React.ReactNode }) {
             url: window.location.href.toString(),
           },
         } as const;
+        // console.log(target);
         events.onPointerDown(e, { target });
       }}
       onMouseOut={(e) => {
@@ -162,25 +170,25 @@ function _Commentable(props: { children: React.ReactNode }) {
       }}
     >
       {pinIds.map((pinId) => {
+        const pin = workspace.pins[pinId];
+        const isViewing = viewingId?.threadId === pinId;
         return (
-          <div key={pinId}>
+          <Sticky key={pinId} selector={pin.selector} offset={pin.offset}>
             <CollabKit.Pin threadId={pinId}></CollabKit.Pin>
-          </div>
+            {isViewing ? (
+              <CollabKit.Thread
+                type="popout"
+                threadId={viewingId.threadId}
+                onCloseButtonClick={(e) =>
+                  events.onClick(e, {
+                    target: { ...viewingId, type: 'closeThreadButton' } as const,
+                  })
+                }
+              />
+            ) : null}
+          </Sticky>
         );
       })}
-      {viewingId && viewingId.pin.offset ? (
-        <Sticky offset={viewingId.pin.offset} selector={viewingId.pin.selector}>
-          <CollabKit.Thread
-            type="popout"
-            threadId={viewingId.threadId}
-            onCloseButtonClick={(e) =>
-              events.onClick(e, {
-                target: { ...viewingId, type: 'closeThreadButton' } as const,
-              })
-            }
-          />
-        </Sticky>
-      ) : null}
       {props.children}
     </span>
   );

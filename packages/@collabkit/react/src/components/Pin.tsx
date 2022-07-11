@@ -41,7 +41,7 @@ const StyledIndicator = styled('div', {
 });
 
 export function Pin(props: { threadId: string }) {
-  const { store } = useApp();
+  const { store, events } = useApp();
   const { uiState, viewingId } = useSnapshot(store);
   const { workspaceId } = useWorkspaceId();
   const [showPreview, setShowPreview] = useState(false);
