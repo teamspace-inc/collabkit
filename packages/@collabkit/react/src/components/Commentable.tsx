@@ -112,7 +112,7 @@ export function Commentable(props: { children: React.ReactNode }) {
           workspaceId,
           pin: {
             selector,
-            point: { x, y },
+            offset: { x, y },
             url: window.location.href.toString(),
           },
         } as const;
@@ -153,8 +153,8 @@ export function Commentable(props: { children: React.ReactNode }) {
         }
       }}
     >
-      {viewingId && viewingId.pin.point ? (
-        <Sticky offset={viewingId.pin.point} selector={viewingId.pin.selector}>
+      {viewingId && viewingId.pin.offset ? (
+        <Sticky offset={viewingId.pin.offset} selector={viewingId.pin.selector}>
           <CollabKit.Thread
             type="popout"
             threadId={viewingId.threadId}

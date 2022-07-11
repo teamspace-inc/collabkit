@@ -18,7 +18,6 @@ import { setup } from './setup';
 import { stopSelecting } from './stopSelecting';
 import { stopTyping } from './stopTyping';
 import { subscribeInbox } from './subscribeInbox';
-import { subscribeProfiles } from './subscribeProfiles';
 import { subscribeSeen } from './subscribeSeen';
 import { toggleCommentReaction } from './toggleCommentReaction';
 import { toggleEmojiReactionPicker } from './toggleEmojiReactionPicker';
@@ -27,6 +26,9 @@ import { focus } from './focus';
 import { blur } from './blur';
 import { subscribeThread } from './subscribeThread';
 import { reopenThread } from './reopenThread';
+import { subscribePins } from './subscribePins';
+import { subscribeWorkspace } from './subscribeWorkspace';
+import { subscribeProfiles } from './subscribeProfiles';
 
 export function timelineRef(store: Store, workspaceId: string, threadId: string) {
   if (!store.config.setup?.appId) {
@@ -81,8 +83,9 @@ export function getIsTypingRef(
 
 export function getConfig(store: Store) {
   const { config } = store;
+  // console.log('getConfig', config);
   if (!config.setup) {
-    console.warn('Did you forget to call `CollabKit.setup`?');
+    console.warn('Did you forget to call `CollabKit.setup`?', config.setup);
     throw new Error('Did you forget to call `CollabKit.setup`?');
   }
 
@@ -93,6 +96,13 @@ export function getConfig(store: Store) {
   const userId = config.identify?.userId;
 
   if (!appId || !workspaceId || !apiKey || !mode || !userId) {
+    console.log({
+      appId,
+      workspaceId,
+      apiKey,
+      mode,
+      userId,
+    });
     throw new Error('Did you forget to call `CollabKit.setup`?');
   }
   return { appId, workspaceId, apiKey, mode, userId };
@@ -160,6 +170,10 @@ export const actions = {
   saveProfile,
 
   authenticate,
+
+  subscribePins,
+
+  subscribeWorkspace,
 
   focus,
 

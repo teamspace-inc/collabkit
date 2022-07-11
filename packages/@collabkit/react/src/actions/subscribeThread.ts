@@ -3,14 +3,15 @@ import { createEditor } from 'lexical';
 import { createEditorConfig } from '../components/Composer';
 import { ref as valtioRef } from 'valtio';
 import { getConfig } from './index';
-import { subscribeToTimeline, subscribeThreadIsTyping, subscribeThreadSeenBy } from './startThread';
+import { subscribeThreadSeenBy } from './subscribeThreadSeenBy';
+import { subscribeThreadIsTyping } from './subscribeThreadIsTyping';
+import { subscribeToTimeline } from './subscribeToTimeline';
 
 export async function subscribeThread(
   store: Store,
   props: {
     workspaceId: string;
     threadId: string;
-    pin?: { selector: string; url: string; point?: { x: number; y: number } };
   }
 ) {
   // initialise the store
