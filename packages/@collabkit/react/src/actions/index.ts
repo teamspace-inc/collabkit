@@ -21,7 +21,7 @@ import { subscribeInbox } from './subscribeInbox';
 import { subscribeSeen } from './subscribeSeen';
 import { toggleCommentReaction } from './toggleCommentReaction';
 import { toggleEmojiReactionPicker } from './toggleEmojiReactionPicker';
-import { startThread } from './startThread';
+import { placePinAndStartComposingThread } from './placePinAndStartComposingThread';
 import { focus } from './focus';
 import { blur } from './blur';
 import { subscribeThread } from './subscribeThread';
@@ -29,6 +29,7 @@ import { reopenThread } from './reopenThread';
 import { subscribePins } from './subscribePins';
 import { subscribeWorkspace } from './subscribeWorkspace';
 import { subscribeProfiles } from './subscribeProfiles';
+import { removePendingPins } from './removePendingPins';
 
 export function timelineRef(store: Store, workspaceId: string, threadId: string) {
   if (!store.config.setup?.appId) {
@@ -115,7 +116,7 @@ export const actions = {
 
   mentions,
 
-  startThread,
+  startThread: placePinAndStartComposingThread,
 
   subscribeInbox,
 
@@ -190,4 +191,8 @@ export const actions = {
   resolve,
 
   sendMessage,
+
+  placePinAndStartComposingThread,
+
+  removePendingPins,
 };

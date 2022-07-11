@@ -151,7 +151,7 @@ function App() {
             mentions={[]}
           >
             <CollabKit.Workspace workspaceId="acme">
-              <CollabKit.Pin threadId="foobarn" />
+              <CollabKit.Pin pinId="foobarn" />
             </CollabKit.Workspace>
           </CollabKit.App>
         </div>

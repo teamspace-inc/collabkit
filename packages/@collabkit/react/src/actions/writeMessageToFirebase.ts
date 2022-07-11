@@ -1,5 +1,5 @@
 import { getDatabase, push, ref, serverTimestamp, update } from 'firebase/database';
-import { CollabKitFirebaseApp, Event, Store } from '../constants';
+import { CollabKitFirebaseApp, DB, Event, FirebasePin, Pin, Store } from '../constants';
 import { timelineRef, actions } from '../actions';
 
 export async function writeMessageToFirebase(
@@ -11,6 +11,7 @@ export async function writeMessageToFirebase(
     preview: string;
     parentId?: string;
     type: 'message' | 'reaction';
+    pin?: Pin;
   }
 ) {
   const { type, workspaceId, threadId, body, preview, parentId } = props;
@@ -58,11 +59,17 @@ export async function writeMessageToFirebase(
       body: preview,
       name: threadId,
     },
+    [`/pins/${appId}/${props.workspaceId}/${props.threadId}`]: {
+      ...props.pin,
+      state: 'open',
+      createdAt: serverTimestamp(),
+      createdById: userId,
+    },
   };
 
   // write the data to firebase
   try {
-    await update(ref(getDatabase(CollabKitFirebaseApp)), data);
+    await update(ref(DB), data);
   } catch (e) {
     console.error({ str: 'failed to write msg', e });
     return;

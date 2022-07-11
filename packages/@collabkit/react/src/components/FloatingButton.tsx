@@ -29,6 +29,7 @@ const StyledFloatingButton = styled(motion.div, {
       idle: {},
       commenting: {},
       viewing: {},
+      composing: {},
     },
   },
 });

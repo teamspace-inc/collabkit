@@ -29,16 +29,25 @@ export type Target =
   | FloatingCommentButtonTarget
   | CommentableContainer
   | Commentable
-  | StickyThreadTarget;
+  | StickyThreadTarget
+  | PinTarget;
 
 export type Commentable = {
   type: 'commentable';
   workspaceId: string;
-  pin: {
-    selector: string;
-    url: string;
-    offset: { x: number; y: number };
-  };
+  pin: BasicPinProps;
+};
+
+export type BasicPinProps = {
+  selector: string;
+  url: string;
+  offset: { x: number; y: number };
+};
+
+export type PinTarget = {
+  type: 'pin';
+  pinId: string;
+  workspaceId: string;
 };
 
 export type CommentableContainer = { type: 'commentableContainer'; workspaceId: string };
@@ -57,6 +66,12 @@ export type StickyThreadTarget = {
 };
 
 export type CommentButtonTarget = { type: 'commentButton'; threadId: string; workspaceId: string };
+
+export type ClickedOutsidePinTarget = {
+  type: 'clickedOutsidePin';
+  workspaceId: string;
+  pinId: string;
+};
 
 export type CommentReactionTarget = {
   type: 'commentReaction';
@@ -157,7 +172,14 @@ export interface Pin {
   selector: string;
   offset: { x: number; y: number };
   url: string;
+  createdById: string;
+  createdAt: number;
+  state: 'pending' | 'open' | 'closed';
 }
+
+export type FirebasePin = Pin & {
+  createdAt: object;
+};
 
 export interface Workspace {
   name: string;
@@ -186,8 +208,9 @@ export interface Store {
     [workspaceId: string]: Workspace;
   };
   appState: 'blank' | 'config' | 'ready';
-  uiState: 'idle' | 'selecting' | 'viewing';
+  uiState: 'idle' | 'selecting' | 'composing' | 'viewing';
   reactingId: null | Target;
+  composingId: null | ThreadTarget;
   viewingId: StickyThreadTarget | null;
   subs: { [subId: string]: Unsubscribe };
 }
