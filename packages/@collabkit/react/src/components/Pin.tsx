@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, MutableRefObject } from 'react';
+import React, { useState, useRef } from 'react';
 import { Avatar } from './Avatar';
 import { StyledMessage, StyledMessageTimestamp } from './comment/Message';
 import { Name } from './profile/Name';
@@ -11,16 +11,14 @@ import { useWorkspaceId } from './Workspace';
 import { useWorkspace } from './WorkspaceLoader';
 import { PinTarget } from '../constants';
 
-const StyledIndicator = styled('div', {
+const StyledPin = styled('div', {
   width: 25,
   height: 25,
+  borderRadius: 25,
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'center',
   alignItems: 'center',
-  background: '$accent10',
-  padding: '2px',
-  borderRadius: 25,
   userSelect: 'none',
   border: '2px solid $neutral1',
   cursor: 'pointer',
@@ -54,10 +52,10 @@ export function Pin(props: { pinId: string }) {
   const pin = workspace.pins[props.pinId];
   const profile = pin ? profiles[pin.createdById] : null;
 
-  const event = {
-    createdAt: +Date.now(),
-    body: 'This number looks off? Did we import the right data?',
-  };
+  const firstEventId = workspace.timeline[props.pinId]
+    ? Object.keys(workspace.timeline[props.pinId])[0]
+    : null;
+  const firstEvent = firstEventId ? workspace.timeline[props.pinId][firstEventId] : null;
 
   const target: PinTarget = {
     type: 'pin',
@@ -75,7 +73,7 @@ export function Pin(props: { pinId: string }) {
     ) : null;
 
   const preview =
-    !showThread && showPreview && profile ? (
+    !showThread && showPreview && profile && firstEvent ? (
       <div style={{ position: 'absolute', left: -10, top: -10, width: 240 }}>
         <div style={{}}>
           <StyledMessage
@@ -85,14 +83,18 @@ export function Pin(props: { pinId: string }) {
               setShowThread(!showThread);
             }}
           >
-            <StyledIndicator isActive={false}>
-              <Avatar profile={profile} neutralBackground={showThread} />
-            </StyledIndicator>
+            <StyledPin isActive={false}>
+              <Avatar
+                style={{ height: 25, width: 25 }}
+                profile={profile}
+                neutralBackground={showThread}
+              />
+            </StyledPin>
             <div style={{ display: 'flex', flexDirection: 'column', width: 240, gap: 0 }}>
               <Name>
                 {profile.name} <StyledMessageTimestamp>10:00</StyledMessageTimestamp>
               </Name>
-              <div>{event.body}</div>
+              <div>{firstEvent.body}</div>
             </div>
           </StyledMessage>
         </div>
@@ -129,7 +131,7 @@ export function Pin(props: { pinId: string }) {
           }}
           className={themeRef.current.toString()}
         >
-          <StyledIndicator
+          <StyledPin
             isActive={showThread}
             onPointerDown={(e) => {
               e.stopPropagation();
@@ -140,8 +142,12 @@ export function Pin(props: { pinId: string }) {
               showThread && setShowThread(false);
             }}
           >
-            <Avatar profile={profile} neutralBackground={showThread} />
-          </StyledIndicator>
+            <Avatar
+              profile={profile}
+              neutralBackground={showThread}
+              style={{ height: 25, width: 25 }}
+            />
+          </StyledPin>
         </motion.div>
         {thread}
         {pin.state === 'open' ? preview : null}

@@ -4,13 +4,11 @@ import { getShade } from '../colors';
 import { Profile } from '../constants';
 import { css, styled } from '@stitches/react';
 
-export const AVATAR_SIZE = 25;
-
 export const avatarStyles = css({
-  width: AVATAR_SIZE,
-  height: AVATAR_SIZE,
+  width: '100%',
+  height: '100%',
   flexShrink: 0,
-  borderRadius: AVATAR_SIZE,
+  borderRadius: '2000px',
   fontSize: 14,
   fontWeight: 600,
   textAlign: 'center',

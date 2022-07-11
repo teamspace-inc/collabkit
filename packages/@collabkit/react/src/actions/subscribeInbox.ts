@@ -13,7 +13,7 @@ import { getConfig } from './index';
 export async function subscribeInbox(store: Store) {
   const { appId, workspaceId } = getConfig(store);
 
-  console.log('Subscribing to Inbox');
+  // console.log('Subscribing to Inbox');
 
   const inboxRef = query(
     ref(DB, `views/inbox/${appId}/${workspaceId}`),
@@ -21,7 +21,11 @@ export async function subscribeInbox(store: Store) {
     limitToLast(20)
   );
 
-  function childCallback(snapshot: DataSnapshot, prevChildName?: string | null) {
+  function onError(e: Error) {
+    console.error('subscribing to inbox', { e });
+  }
+
+  function childCallback(snapshot: DataSnapshot) {
     if (!workspaceId) {
       return;
     }
@@ -32,17 +36,13 @@ export async function subscribeInbox(store: Store) {
       return;
     }
 
-    console.log('#inbox', threadId, prevChildName);
+    // console.log('#inbox', threadId, prevChildName);
 
     const event = snapshot.val();
     store.workspaces[workspaceId].inbox[threadId] = { ...event, id: snapshot.key };
   }
 
-  store.subs['inbox#added'] ||= onChildAdded(inboxRef, childCallback, (error) => {
-    console.error('Error subscribing to Inbox', error);
-  });
+  store.subs[`${inboxRef.toString()}#added`] ||= onChildAdded(inboxRef, childCallback, onError);
 
-  store.subs['inbox#moved'] ||= onChildMoved(inboxRef, childCallback, (error) => {
-    console.error('Error subscribing to Inbox', error);
-  });
+  store.subs[`${inboxRef.toString()}#moved`] ||= onChildMoved(inboxRef, childCallback, onError);
 }

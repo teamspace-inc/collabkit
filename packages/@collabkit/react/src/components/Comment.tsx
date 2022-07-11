@@ -117,7 +117,12 @@ export function Comment(props: {
       onMouseOut={() => setIsHovering(false)}
       ref={ref}
     >
-      {showProfile && <Avatar profile={props.profile} style={{ position: 'relative', top: 4 }} />}
+      {showProfile && (
+        <Avatar
+          profile={props.profile}
+          style={{ position: 'relative', top: 4, width: 25, height: 25 }}
+        />
+      )}
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <StyledMessage
           ui="bubbles"

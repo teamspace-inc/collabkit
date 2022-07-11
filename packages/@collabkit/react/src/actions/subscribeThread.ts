@@ -38,10 +38,10 @@ export async function subscribeThread(
   };
 
   const { appId, userId } = getConfig(store);
-  // if (store.openId) {
-  //   store.subs[timelineRef(store, props.workspaceId, props.threadId).toString()]?.();
-  // }
+
   subscribeToTimeline(store, props);
   subscribeThreadIsTyping(store, props.workspaceId, props.threadId);
+
+  // we could probably make this more efficient by only subscribing to it when the thread is visible.
   subscribeThreadSeenBy(store, { appId, userId, ...props });
 }
