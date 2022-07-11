@@ -8,8 +8,10 @@ export async function subscribeProfiles(store: Store) {
     console.error({ e });
   };
   const onChange = (child: DataSnapshot) => {
-    const profile = child.val();
-    store.profiles[profile.id] = profile;
+    if (child.key) {
+      const profile = child.val();
+      store.profiles[child.key] = profile;
+    }
   };
 
   store.subs[`profile#added`] = onChildAdded(ref(DB, `/profiles/${appId}`), onChange, onError);
