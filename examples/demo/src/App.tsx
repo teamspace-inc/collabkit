@@ -1,7 +1,7 @@
 import { CollabKit } from '@collabkit/react';
 import { users, mentions, workspaceId } from './data';
 import './App.css';
-import { useState } from 'react';
+import { Chat } from './Chat';
 
 function App() {
   return (
@@ -12,10 +12,11 @@ function App() {
       mentions={mentions}
     >
       <CollabKit.Workspace workspaceId={workspaceId}>
+        <Chat />
         <CollabKit.Commentable>
           <img
-            style={{ width: '100vw' }}
-            src="https://unsplash.com/photos/t7YycgAoVSw/download?ixid=MnwxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjU3Mjg3OTkz&force=true&w=2400"
+            style={{ width: '100vw', maxHeight: '100vh', objectFit: 'cover' }}
+            src="https://images.unsplash.com/photo-1433838552652-f9a46b332c40"
           />
         </CollabKit.Commentable>
         <CollabKit.FloatingButton />
