@@ -1,4 +1,4 @@
-import { FlexCenter, styled, theme } from './UIKit';
+import { darkTheme, FlexCenter, styled, theme } from './UIKit';
 import { useEffect, useRef, useState } from 'react';
 import { IconContext, X, ChatCircle, Check, CheckCircle } from 'phosphor-react';
 import React from 'react';
@@ -122,6 +122,22 @@ const StyledHeaderLeftGroup = styled('div', {
   flexGrow: 1,
   gap: 0,
 });
+
+// const StyledThreadOuter = styled('div', {
+//   display: 'flex',
+//   height: '100%',
+//   position: 'relative',
+//   flex: 1,
+//   variants: {
+//     type: {
+//       popout: {
+//         background: '$neutral1',
+//         borderRadius: 11,
+//         border: '1px solid rgba(0,0,0,0.1)',
+//       }
+//     }
+//   }
+// });
 
 export const MODAL_Z_INDEX = 999999;
 

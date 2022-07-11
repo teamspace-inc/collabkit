@@ -55,7 +55,7 @@ export function Pin(props: { pinId: string }) {
   const profile = pin ? profiles[pin.createdById] : null;
 
   const event = {
-    createdAt: new Date(),
+    createdAt: +Date.now(),
     body: 'This number looks off? Did we import the right data?',
   };
 
@@ -109,7 +109,7 @@ export function Pin(props: { pinId: string }) {
         style={{
           flexDirection: 'column',
           display: 'flex',
-          maxWidth: '280px',
+          // maxWidth: '280px',
           position: 'relative',
           filter:
             'drop-shadow(0px 4px 12px rgba(0,0,0,0.1)), drop-shadow(0px 1px 0px rgba(0,0,0,0.2))',

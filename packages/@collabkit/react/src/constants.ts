@@ -174,12 +174,8 @@ export interface Pin {
   url: string;
   createdById: string;
   createdAt: number;
-  state: 'pending' | 'open' | 'closed';
+  state: 'pending' | 'open' | 'resolved' | 'deleted';
 }
-
-export type FirebasePin = Pin & {
-  createdAt: object;
-};
 
 export interface Workspace {
   name: string;

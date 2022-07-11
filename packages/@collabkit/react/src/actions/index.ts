@@ -11,7 +11,7 @@ import { closeEmojiReactionPicker } from './closeEmojiReactionPicker';
 import { closeThread } from './closeThread';
 import { identify } from './identify';
 import { mentions } from './mentions';
-import { resolve } from './resolve';
+import { resolveThread } from './resolve';
 import { saveProfile } from './saveProfile';
 import { seen } from './seen';
 import { setup } from './setup';
@@ -188,7 +188,7 @@ export const actions = {
 
   reopenThread,
 
-  resolve,
+  resolve: resolveThread,
 
   sendMessage,
 

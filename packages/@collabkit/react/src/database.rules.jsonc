@@ -4,11 +4,10 @@
       "$appId": {
         "$workspaceId": {
           ".read": "auth.token.appId === $appId",
-          ".validate": "newData.hasChildren(['url'])",
           "$threadId": {
-            ".write": "(root.child('apps').child(auth.token.appId).child('mode').val() === 'UNSECURED' || (root.child('apps').child(auth.token.appId).child('mode').val() === 'SECURED' && !root.child('threads').child($appId).child($workspaceId).child($threadId).exists()))",
+            ".write": "(root.child('apps').child(auth.token.appId).child('mode').val() === 'UNSECURED' || (root.child('apps').child(auth.token.appId).child('mode').val() === 'SECURED' && !root.child('pins').child($appId).child($workspaceId).child($threadId).exists()))",
             "state": {
-              ".validate": "newData.isString() && (newData.val() === 'open' || newData.val() === 'resolved')"
+              ".validate": "newData.isString() && (newData.val() === 'open' || newData.val() === 'resolved' || newData.val() === 'deleted')"
             },
             "url": { ".validate": "newData.isString()" },
             "selector": {

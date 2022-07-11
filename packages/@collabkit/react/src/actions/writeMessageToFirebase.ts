@@ -1,5 +1,5 @@
-import { getDatabase, push, ref, serverTimestamp, update } from 'firebase/database';
-import { CollabKitFirebaseApp, DB, Event, FirebasePin, Pin, Store } from '../constants';
+import { push, ref, serverTimestamp, update } from 'firebase/database';
+import { DB, Event, Pin, Store } from '../constants';
 import { timelineRef, actions } from '../actions';
 
 export async function writeMessageToFirebase(

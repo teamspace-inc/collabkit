@@ -23,7 +23,7 @@ export async function sendMessage(store: Store, props: { workspaceId: string; th
       body,
       preview: body,
       type: 'message',
-      ...(workspace.pins[threadId].state === 'pending'
+      ...(workspace.pins[threadId]?.state === 'pending'
         ? {
             pin: { ...workspace.pins[threadId] },
           }
