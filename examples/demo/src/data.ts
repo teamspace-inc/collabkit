@@ -36,4 +36,4 @@ const FRANK: IdentifyProps = {
 };
 export const users = { ALICE, JANET, JUAN, FRANK };
 
-export const mentions: MentionProps = [ALICE, JANET, JUAN, FRANK];
+export const mentionableUsers: MentionProps = [ALICE, JANET, JUAN, FRANK];

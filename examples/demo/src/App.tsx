@@ -1,17 +1,22 @@
 import { CollabKit } from '@collabkit/react';
-import { users, mentions, workspaceId } from './data';
+import { users, mentionableUsers, workspaceId } from './data';
 import './App.css';
 import { Chat } from './Chat';
+import { UserMenu } from './UserMenu';
+import { useState } from 'react';
+import { User } from './types';
 
 function App() {
+  const [user, setUser] = useState<User>(users.FRANK);
   return (
     <CollabKit.App
       token={import.meta.env.VITE_COLLABKIT_TOKEN}
       appId={import.meta.env.VITE_COLLABKIT_APP_ID}
-      identity={users.ALICE}
-      mentions={mentions}
+      identity={user}
+      mentions={mentionableUsers}
     >
       <CollabKit.Workspace workspaceId={workspaceId}>
+        <UserMenu user={user} onChangeUser={setUser} />
         <Chat />
         <CollabKit.Commentable>
           <img
