@@ -16,6 +16,8 @@ import {
   grass,
   orange,
   brown,
+  grayDark,
+  blueDark,
 } from '@radix-ui/colors';
 
 const neutral = {
@@ -31,6 +33,21 @@ const neutral = {
   neutral10: '$gray10',
   neutral11: '$gray11',
   neutral12: '$gray12',
+};
+
+const neutralDark = {
+  neutral1: '$grayDark1',
+  neutral2: '$grayDark2',
+  neutral3: '$grayDark3',
+  neutral4: '$grayDark4',
+  neutral5: '$grayDark5',
+  neutral6: '$grayDark6',
+  neutral7: '$grayDark7',
+  neutral8: '$grayDark8',
+  neutral9: '$grayDark9',
+  neutral10: '$grayDark10',
+  neutral11: '$grayDark11',
+  neutral12: '$grayDark12',
 };
 
 export const { styled, css, theme } = createStitches({
@@ -54,6 +71,26 @@ export const { styled, css, theme } = createStitches({
 
       ...neutral,
     },
+  },
+});
+
+export const darkTheme = createTheme({
+  colors: {
+    ...grayDark,
+    ...blueDark,
+    accent1: '$blueDark1',
+    accent2: '$blueDark2',
+    accent3: '$blueDark3',
+    accent4: '$blueDark4',
+    accent5: '$blueDark5',
+    accent6: '$blueDark6',
+    accent7: '$blueDark7',
+    accent8: '$blueDark8',
+    accent9: '$blueDark9',
+    accent10: '$blueDark10',
+    accent11: '$blueDark11',
+    accent12: '$blueDark12',
+    ...neutralDark,
   },
 });
 
