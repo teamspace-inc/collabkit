@@ -137,7 +137,23 @@ function App() {
       </Route>
       <Route path="/indicator">
         <div style={{ padding: 20 }}>
-          {/* <CollabKit.Indicator profile="N"></CollabKit.Indicator> */}
+          <CollabKit.App
+            token={import.meta.env.VITE_COLLABKIT_TOKEN}
+            appId={import.meta.env.VITE_COLLABKIT_APP_ID}
+            identity={{
+              workspaceId: 'acme',
+              userId: 'alice-1',
+              workspaceName: 'ACME',
+              name: 'Alice Levine',
+              email: 'alice@example.com',
+              avatar: 'https://www.uifiller.com/images/portraits/anon-4.jpg',
+            }}
+            mentions={[]}
+          >
+            <CollabKit.Workspace workspaceId="acme">
+              <CollabKit.Pin threadId="foobarn" />
+            </CollabKit.Workspace>
+          </CollabKit.App>
         </div>
       </Route>
       <Route path="/">

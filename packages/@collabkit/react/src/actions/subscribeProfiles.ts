@@ -1,30 +1,18 @@
-import { ref, onChildAdded } from 'firebase/database';
+import { DataSnapshot, onChildAdded, onChildChanged, ref } from 'firebase/database';
 import { DB, Store } from '../constants';
 import { getConfig } from './index';
 
-export function subscribeProfiles(store: Store) {
+export async function subscribeProfiles(store: Store) {
   const { appId } = getConfig(store);
+  const onError = (e: Error) => {
+    console.error({ e });
+  };
+  const onChange = (child: DataSnapshot) => {
+    const profile = child.val();
+    store.profiles[profile.id] = profile;
+  };
 
-  if (store.subs['profiles']) {
-    return;
-  }
-  console.log('got sub profiles', appId);
-  try {
-    store.subs['profiles'] = onChildAdded(
-      ref(DB, `/profiles/${appId}/`),
-      (snapshot) => {
-        console.log('got profile', snapshot.val());
-        const profile = snapshot.val();
-        const profileId = snapshot.key;
-        if (profileId) {
-          store.profiles[profileId] = profile;
-        }
-      },
-      (e) => {
-        console.error({ e });
-      }
-    );
-  } catch (e) {
-    console.error(e);
-  }
+  store.subs[`profile#added`] = onChildAdded(ref(DB, `/profiles/${appId}`), onChange, onError);
+
+  store.subs[`profile#changed`] = onChildChanged(ref(DB, `/profiles/${appId}`), onChange, onError);
 }

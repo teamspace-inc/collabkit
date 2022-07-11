@@ -6,6 +6,7 @@ import { CollabKit } from '..';
 import { useWorkspaceId } from './Workspace';
 import { finder } from '@medv/finder';
 import { Sticky } from './Sticky';
+import { useWorkspace, WorkspaceLoader } from './WorkspaceLoader';
 
 function inspectSize(nodes: HTMLElement[]) {
   const sizeNodes = nodes.filter(hasSize);
@@ -78,15 +79,22 @@ function getPlacementStylesForPoint(point: { x: number; y: number }): React.CSSP
 }
 
 export function Commentable(props: { children: React.ReactNode }) {
+  return (
+    <WorkspaceLoader>
+      <_Commentable>{props.children}</_Commentable>
+    </WorkspaceLoader>
+  );
+}
+
+function _Commentable(props: { children: React.ReactNode }) {
   const nodesAtPointerRef = useRef<HTMLElement[]>([]);
   const { store, events } = useApp();
   const { workspaceId } = useWorkspaceId();
   const { uiState, viewingId } = useSnapshot(store);
   const ref = useRef<HTMLElement>(null);
-
-  // const { context } = useFloating();
-
-  // const target = { type: 'commentableContainer', workspaceId } as const;
+  const { workspace } = useWorkspace();
+  console.log({ workspace });
+  const pinIds = Object.keys(workspace?.pins || {});
 
   useEffect(() => {
     if (uiState !== 'selecting') uninspect();
@@ -102,17 +110,22 @@ export function Commentable(props: { children: React.ReactNode }) {
         e.preventDefault();
         // get position of pointer
         // relative to element
-        const rect = e.currentTarget.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const selector = finder(e.currentTarget);
+        const nodes = document.elementsFromPoint(e.clientX, e.clientY) as HTMLElement[];
+
+        const el = nodes[0];
+
+        const rect = el.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width;
+        const y = (e.clientY - rect.top) / rect.height;
+
+        const selector = finder(el, { root: ref.current! });
         console.log('pointer down', x, y, selector);
         const target = {
           type: 'commentable',
           workspaceId,
           pin: {
             selector,
-            point: { x, y },
+            offset: { x, y },
             url: window.location.href.toString(),
           },
         } as const;
@@ -153,19 +166,26 @@ export function Commentable(props: { children: React.ReactNode }) {
         }
       }}
     >
-      {viewingId && viewingId.pin.point ? (
-        <Sticky offset={viewingId.pin.point} selector={viewingId.pin.selector}>
-          <CollabKit.Thread
-            type="popout"
-            threadId={viewingId.threadId}
-            onCloseButtonClick={(e) =>
-              events.onClick(e, {
-                target: { ...viewingId, type: 'closeThreadButton' } as const,
-              })
-            }
-          />
-        </Sticky>
-      ) : null}
+      {pinIds.map((pinId) => {
+        const pin = workspace.pins[pinId];
+        const isViewing = viewingId?.threadId === pinId;
+        return (
+          <Sticky key={pinId} selector={pin.selector} offset={pin.offset}>
+            <CollabKit.Pin threadId={pinId}></CollabKit.Pin>
+            {isViewing ? (
+              <CollabKit.Thread
+                type="popout"
+                threadId={viewingId.threadId}
+                onCloseButtonClick={(e) =>
+                  events.onClick(e, {
+                    target: { ...viewingId, type: 'closeThreadButton' } as const,
+                  })
+                }
+              />
+            ) : null}
+          </Sticky>
+        );
+      })}
       {props.children}
     </span>
   );

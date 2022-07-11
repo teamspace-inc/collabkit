@@ -10,8 +10,9 @@ import {
 import { DB, Store } from '../constants';
 import { getConfig } from './index';
 
-export async function subscribeSeen(store: Store) {
-  const { appId, workspaceId, userId } = getConfig(store);
+export async function subscribeSeen(store: Store, props: { workspaceId: string }) {
+  const { appId, userId } = getConfig(store);
+  const { workspaceId } = props;
 
   const seenQuery = query(
     ref(DB, `/seen/${appId}/${userId}/${workspaceId}`),
@@ -29,19 +30,19 @@ export async function subscribeSeen(store: Store) {
     }
   }
 
+  function onError(e: Error) {
+    console.error({ e });
+  }
+
   store.subs[`${appId}-${workspaceId}-seen-added`] ||= onChildAdded(
     seenQuery,
     childCallback,
-    (error) => {
-      console.error('seen: ', error);
-    }
+    onError
   );
 
   store.subs[`${appId}-${workspaceId}-seen-moved`] ||= onChildMoved(
     seenQuery,
     childCallback,
-    (error) => {
-      console.error('seen: ', error);
-    }
+    onError
   );
 }

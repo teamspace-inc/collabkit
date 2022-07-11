@@ -22,7 +22,7 @@ function Workspace(props: {
   const { store } = useApp();
   const { appState } = useSnapshot(store);
   useEffect(() => {
-    if (appState === 'ready') actions.subscribeSeen(store);
+    if (appState === 'ready') actions.subscribeWorkspace(store, props);
   }, [appState, store]);
 
   return (

@@ -37,7 +37,7 @@ export type Commentable = {
   pin: {
     selector: string;
     url: string;
-    point: { x: number; y: number };
+    offset: { x: number; y: number };
   };
 };
 
@@ -46,13 +46,16 @@ export type CommentableContainer = { type: 'commentableContainer'; workspaceId: 
 export type FloatingCommentButtonTarget = { type: 'floatingCommentButton' };
 
 export type ComposerTarget = { type: 'composer'; threadId: string; workspaceId: string };
+
 export type ThreadTarget = { type: 'thread'; threadId: string; workspaceId: string };
+
 export type StickyThreadTarget = {
   type: 'stickyThread';
   threadId: string;
   workspaceId: string;
-  pin: { selector: string; url: string; point?: { x: number; y: number } };
+  pin: { selector: string; url: string; offset?: { x: number; y: number } };
 };
+
 export type CommentButtonTarget = { type: 'commentButton'; threadId: string; workspaceId: string };
 
 export type CommentReactionTarget = {

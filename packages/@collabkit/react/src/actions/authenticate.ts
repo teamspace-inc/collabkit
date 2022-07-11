@@ -1,11 +1,10 @@
-import { get, ref } from 'firebase/database';
 import { getAuth, signInWithCustomToken } from 'firebase/auth';
-import { CollabKitFirebaseApp, DB, Store } from '../constants';
+import { CollabKitFirebaseApp, Store } from '../constants';
 import { generateToken } from './generateToken';
-import { getConfig } from './index';
+import { actions, getConfig } from './index';
 
 export async function authenticate(store: Store) {
-  const { appId, workspaceId, apiKey, mode } = getConfig(store);
+  const { appId, apiKey, mode } = getConfig(store);
   const auth = await generateToken(appId, apiKey, mode);
 
   if (auth !== null) {
@@ -32,15 +31,7 @@ export async function authenticate(store: Store) {
     // todo handle spotty network
     try {
       // this should be an onValue sub
-      const snapshot = await get(ref(DB, `/profiles/${appId}/${workspaceId}`));
-      if (snapshot.key) {
-        snapshot.forEach((child) => {
-          const profile = child.val();
-          if (workspaceId) {
-            store.profiles[profile.id] = profile;
-          }
-        });
-      }
+      actions.subscribeProfiles(store);
     } catch (e) {
       console.error('collabkit.setup failed', e);
     }
