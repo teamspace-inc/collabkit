@@ -4,6 +4,8 @@ node_modules
 **/dist/
 **/docs/
 **/.idea/*
+packages/@collabkit/react/src/**/*.js
+packages/@collabkit/react/src/**/*.d.ts
 
 .env
 .env.*.local
