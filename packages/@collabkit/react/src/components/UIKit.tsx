@@ -57,7 +57,8 @@ export const { styled, css, theme } = createStitches({
     fontSize: {
       ['0']: '11px',
       ['1']: '12px',
-      ['2']: '14px',
+      ['2']: '13px',
+      ['3']: '16px',
     },
     lineHeights: {
       ['0']: '16px',
@@ -81,6 +82,16 @@ export const { styled, css, theme } = createStitches({
       ['3']: '24px',
       ['4']: '32px',
     },
+    sizes: {
+      sendButton: '26px',
+    },
+    space: {
+      ['0']: '0px',
+      ['1']: '4px',
+      ['2']: '8px',
+      ['3']: '12px',
+      ['4']: '16px',
+    },
     colors: {
       primaryText: '$neutral12',
       secondaryText: '$neutral9',
@@ -88,9 +99,13 @@ export const { styled, css, theme } = createStitches({
       typingDot: '$neutral9',
 
       primaryButtonBackground: '$neutral1',
+      composerButtonBackground: '$accent10',
+      composerBackground: 'transparent',
 
       bubbleHoverBackground: '$neutral4',
       selectionBackground: '$accent10',
+
+      borderColor: '$neutral4',
 
       ...gray,
       ...green,

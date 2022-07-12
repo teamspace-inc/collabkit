@@ -55,10 +55,10 @@ const StyledThreadHeader = styled('div', {
   height: 30,
   display: 'flex',
   gap: 0,
-  padding: '3px 3px',
+  padding: '2px 0px',
   alignItems: 'center',
   pointerEvents: 'none',
-  borderBottom: '1px solid $neutral4',
+  borderBottom: '1px solid $borderColor',
   variants: {
     type: {
       popout: {
@@ -122,22 +122,6 @@ const StyledHeaderLeftGroup = styled('div', {
   flexGrow: 1,
   gap: 0,
 });
-
-// const StyledThreadOuter = styled('div', {
-//   display: 'flex',
-//   height: '100%',
-//   position: 'relative',
-//   flex: 1,
-//   variants: {
-//     type: {
-//       popout: {
-//         background: '$neutral1',
-//         borderRadius: 11,
-//         border: '1px solid rgba(0,0,0,0.1)',
-//       }
-//     }
-//   }
-// });
 
 export const MODAL_Z_INDEX = 999999;
 
@@ -251,9 +235,9 @@ function _Thread(props: {
                 }
               >
                 {!isResolved ? (
-                  <Check color={theme.colors.neutral12.toString()} />
+                  <Check size={16} weight={'light'} color={theme.colors.neutral12.toString()} />
                 ) : (
-                  <CheckCircle size={24} color={theme.colors.accent10.toString()} weight="fill" />
+                  <CheckCircle size={18} weight={'fill'} color={theme.colors.accent10.toString()} />
                 )}
               </IconButton>
               <IconButton
@@ -264,7 +248,7 @@ function _Thread(props: {
                   events.onClick(e, { target });
                 }}
               >
-                <X color={theme.colors.neutral12.toString()} />
+                <X size="16" weight="light" color={theme.colors.neutral12.toString()} />
               </IconButton>
             </StyledThreadHeader>
           )}
@@ -281,20 +265,6 @@ function _Thread(props: {
               timeline={timeline}
             />
           )}
-          {/* {isEmpty && props.type === 'popout' ? (
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
-                gap: 8,
-                padding: 10,
-              }}
-            >
-              {profile ? <Avatar profile={profile} /> : null}
-              <StyledName>{'Namit'}</StyledName>
-            </div>
-          ) : null} */}
           {workspaceId && workspace ? (
             <Composer
               style={

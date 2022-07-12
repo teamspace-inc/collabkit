@@ -1,7 +1,7 @@
 import { styled } from '../UIKit';
 
 export const StyledName = styled('div', {
-  fontSize: '$fontSize$0',
+  fontSize: '$fontSize$1',
   fontWeight: '$fontWeights$1',
   lineHeight: '$lineHeights$0',
   display: 'flex',

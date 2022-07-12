@@ -19,11 +19,12 @@ import { hasReactions, Reactions } from './comment/Reactions';
 
 export const StyledCommentContainer = styled('div', {
   display: 'flex',
-  gap: '$padding$0',
+  gap: '$space$2',
   position: 'relative',
   // enough space for the react button
   // with bubbles on
   maxWidth: 'calc(100% - $padding$1)',
+  // alignmentBaseline: 'hanging',
   variants: {
     ui: {
       bubbles: {
@@ -33,7 +34,9 @@ export const StyledCommentContainer = styled('div', {
           },
         },
       },
-      freeform: {},
+      freeform: {
+        padding: '$padding$1 $padding$2',
+      },
     },
     threadType: {
       inline: {},
@@ -41,19 +44,23 @@ export const StyledCommentContainer = styled('div', {
     },
     type: {
       default: {
-        padding: '$padding$0 $padding$1 $padding$0',
+        // padding: '$padding$0 $padding$1 $padding$0',
       },
       'inline-start': {
-        padding: '$padding$0 $padding$1 1px',
+        // padding: '$padding$0 $padding$1 1px',
+        paddingBottom: 0,
       },
       inline: {
-        padding: '1px $padding$1',
+        paddingTop: 0,
+        paddingBottom: 0,
       },
       'inline-end': {
-        padding: '1px $padding$1 $padding$0',
+        paddingTop: 0,
+        paddingBottom: 0,
+        // padding: '1px $padding$1 $padding$0',
       },
       system: {
-        padding: '$padding$0 $padding$1 $padding$0',
+        // padding: '$padding$0 $padding$1 $padding$0',
       },
     },
   },
@@ -121,7 +128,7 @@ export function Comment(props: {
       {showProfile && (
         <Avatar
           profile={props.profile}
-          style={{ position: 'relative', top: 4, width: AVATAR_SIZE, height: AVATAR_SIZE }}
+          style={{ position: 'relative', width: AVATAR_SIZE, height: AVATAR_SIZE }}
         />
       )}
       <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -130,7 +137,7 @@ export function Comment(props: {
           type={props.type}
           style={{
             marginLeft: showProfile ? 0 : theme.padding[4].toString(),
-            marginBottom: hasReactions(props.reactions) ? theme.padding[2].toString() : 0,
+            // marginBottom: hasReactions(props.reactions) ? theme.padding[2].toString() : 0,
           }}
         >
           {showProfile && (
@@ -144,9 +151,9 @@ export function Comment(props: {
             </Name>
           )}
           {body}
-          <Reactions reactions={props.reactions} />
+          {/* <Reactions reactions={props.reactions} /> */}
         </StyledMessage>
-        <MessageToolbar isVisible={isHovering} />
+        {/* <MessageToolbar isVisible={isHovering} /> */}
       </div>
       {emojiReactionPicker}
     </StyledCommentContainer>

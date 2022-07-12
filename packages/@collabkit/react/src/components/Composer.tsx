@@ -54,12 +54,12 @@ const StyledComposerSendButton = styled(Tooltip.Trigger, {
   justifyContent: 'center',
   alignItems: 'center',
 
-  width: 26,
-  height: 26,
+  width: '$sizes$sendButton',
+  height: '$sizes$sendButton',
   position: 'absolute',
-  right: 8,
-  top: 8,
-  borderRadius: 26,
+  right: '$space$2',
+  top: '$space$2',
+  borderRadius: '$sizes$sendButton',
   border: 'none',
 
   variants: {
@@ -72,10 +72,11 @@ const StyledComposerSendButton = styled(Tooltip.Trigger, {
     },
     disabled: {
       true: {
-        backgroundColor: '$neutral8',
+        opacity: 0,
+        // backgroundColor: '$neutral8',
       },
       false: {
-        backgroundColor: '$accent10',
+        backgroundColor: '$colors$composerButtonBackground',
       },
     },
   },
@@ -122,7 +123,6 @@ const ComposerContainer = styled('div', {
   display: 'flex',
   flex: 1,
   alignItems: 'start',
-  background: '$neutral1',
   borderBottomLeftRadius: '$radii$1',
   borderBottomRightRadius: '$radii$1',
   padding: '$padding$0 $padding$1',
@@ -130,7 +130,7 @@ const ComposerContainer = styled('div', {
   variants: {
     hasComments: {
       true: {
-        borderTop: `1px solid $neutral4`,
+        borderTop: `1px solid $borderColor`,
       },
       false: {
         borderRadius: '$radii$1',
@@ -152,17 +152,17 @@ const ComposerContainer = styled('div', {
 });
 
 const StyledLexicalEditorContainer = styled('div', {
-  borderRadius: 11,
-  width: 'calc(100% - 35px)', // take into account send button
-  color: 'black',
+  borderRadius: '$radii$1',
+  width: '100%', // take into account send button
+  color: '$colors$primaryText',
   marginLeft: 0,
   padding: '0px 0',
-  background: '$neutral3',
+  background: '$colors$composerBackground',
   position: 'relative',
   verticalAlign: 'top',
-  fontSize: '14px',
-  lineHeight: '20px',
-  fontWeight: 400,
+  fontSize: '$fontSize$2',
+  lineHeight: '$lineHeights$1',
+  fontWeight: '$fontWeights$0',
   textAlign: 'left',
   variants: {
     type: {
@@ -262,7 +262,7 @@ export function Composer(props: {
 
 .editor-input {
   resize: none;
-  font-size: ${theme.fontSize[0].toString()};
+  font-size: ${theme.fontSize[2].toString()};
   line-height: ${theme.lineHeights[0].toString()};
   caret-color: ${theme.colors.neutral12};
   position: relative;
@@ -278,7 +278,7 @@ export function Composer(props: {
   text-overflow: ellipsis;
   top: ${theme.padding[1].toString()};
   left:  ${theme.padding[1].toString()};
-  font-size: ${theme.fontSize[0].toString()};
+  font-size: ${theme.fontSize[2].toString()};
   line-height: ${theme.lineHeights[0].toString()};
   user-select: none;
   display: inline-block;
@@ -292,9 +292,9 @@ export function Composer(props: {
 
 #mentions-typeahead {
   position: fixed;
-  background: ${theme.colors.neutral1};
+  background: ${theme.colors.neutral12};
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
-  border-radius: 6px;
+  border-radius: ${theme.radii[1].toString()};
   z-index: 3;
   margin: 0 0 0  ${theme.padding[1].toString()};
 }
@@ -303,18 +303,18 @@ export function Composer(props: {
   padding: 0;
   list-style: none;
   margin: 0;
-  border-radius: 8px;
+  border-radius: ${theme.radii[1].toString()};
 }
 
 #mentions-typeahead ul li {
   padding: ${theme.padding[0].toString()} ${theme.padding[1].toString()};
   margin: 0;
   min-width: 10ch;
-  font-size: ${theme.fontSize[0].toString()};
+  font-size: ${theme.fontSize[2].toString()};
   line-height: ${theme.lineHeights[0].toString()};
   outline: none;
   cursor: pointer;
-  border-radius: 6px;
+  border-radius: ${theme.radii[1].toString()};
 }
 
 #mentions-typeahead ul li.selected {

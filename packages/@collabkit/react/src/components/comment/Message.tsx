@@ -1,7 +1,7 @@
 import { styled } from '../UIKit';
 
 export const StyledMessageTimestamp = styled('span', {
-  fontSize: '$fontSize$0',
+  fontSize: '$fontSize$1',
   color: '$colors$secondaryText',
   textDecoration: 'none',
   fontWeight: '$fontWeights$0',
@@ -13,7 +13,7 @@ export const StyledMessage = styled('div', {
   flexDirection: 'column',
   gap: 0,
   flex: 0,
-  fontSize: '$fontSize$0',
+  fontSize: '$fontSize$2',
   lineHeight: '$lineHeights$0',
   color: '$colors$primaryText',
   wordBreak: 'break-word',
@@ -26,9 +26,8 @@ export const StyledMessage = styled('div', {
         borderRadius: '$radii$1',
       },
       freeform: {
-        gap: '$padding$0',
-        padding: '$padding$1',
-        background: '$neutral2',
+        gap: '$space$1',
+        padding: '0 0 $padding$1',
         borderRadius: '$radii$1',
       },
       preview: {
