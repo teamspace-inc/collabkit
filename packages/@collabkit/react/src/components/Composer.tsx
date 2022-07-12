@@ -54,12 +54,12 @@ const StyledComposerSendButton = styled(Tooltip.Trigger, {
   justifyContent: 'center',
   alignItems: 'center',
 
-  width: 24,
-  height: 24,
+  width: 26,
+  height: 26,
   position: 'absolute',
-  right: 10,
-  top: 12,
-  borderRadius: 24,
+  right: 8,
+  top: 8,
+  borderRadius: 26,
   border: 'none',
 
   variants: {
@@ -123,9 +123,9 @@ const ComposerContainer = styled('div', {
   flex: 1,
   alignItems: 'start',
   background: '$neutral1',
-  borderBottomLeftRadius: 11,
-  borderBottomRightRadius: 11,
-  padding: '5px 10px',
+  borderBottomLeftRadius: '$radii$1',
+  borderBottomRightRadius: '$radii$1',
+  padding: '$padding$0 $padding$1',
 
   variants: {
     hasComments: {
@@ -133,7 +133,7 @@ const ComposerContainer = styled('div', {
         borderTop: `1px solid $neutral4`,
       },
       false: {
-        borderRadius: 11,
+        borderRadius: '$radii$1',
       },
     },
     type: {
@@ -167,10 +167,10 @@ const StyledLexicalEditorContainer = styled('div', {
   variants: {
     type: {
       popout: {
-        borderTopLeftRadius: 11,
-        borderTopRightRadius: 11,
-        borderBottomLeftRadius: 11,
-        borderBottomRightRadius: 11,
+        borderTopLeftRadius: '$radii$1',
+        borderTopRightRadius: '$radii$1',
+        borderBottomLeftRadius: '$radii$1',
+        borderBottomRightRadius: '$radii$1',
       },
     },
     hasComments: {
@@ -183,10 +183,10 @@ const StyledLexicalEditorContainer = styled('div', {
       type: 'popout',
       hasComments: false,
       css: {
-        borderTopLeftRadius: 11,
-        borderTopRightRadius: 11,
-        borderBottomLeftRadius: 11,
-        borderBottomRightRadius: 11,
+        borderTopLeftRadius: '$radii$1',
+        borderTopRightRadius: '$radii$1',
+        borderBottomLeftRadius: '$radii$1',
+        borderBottomRightRadius: '$radii$1',
       },
     },
   ],
@@ -262,22 +262,24 @@ export function Composer(props: {
 
 .editor-input {
   resize: none;
-  font-size: 14px;
+  font-size: ${theme.fontSize[0].toString()};
+  line-height: ${theme.lineHeights[0].toString()};
   caret-color: ${theme.colors.neutral12};
   position: relative;
   tab-size: 1;
   outline: 0;
-  padding: 10px 10px;
+  padding: ${theme.padding[1].toString()} ${theme.padding[1].toString()};
 }
 
 .editor-placeholder {
-  color: ${theme.colors.neutral10};
+  color: ${theme.colors.secondaryText.toString()};
   overflow: hidden;
   position: absolute;
   text-overflow: ellipsis;
-  top: 10px;
-  left: 10px;
-  font-size: 14px;
+  top: ${theme.padding[1].toString()};
+  left:  ${theme.padding[1].toString()};
+  font-size: ${theme.fontSize[0].toString()};
+  line-height: ${theme.lineHeights[0].toString()};
   user-select: none;
   display: inline-block;
   pointer-events: none;
@@ -294,7 +296,7 @@ export function Composer(props: {
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
   border-radius: 6px;
   z-index: 3;
-  margin: 0 0 0 10px;
+  margin: 0 0 0  ${theme.padding[1].toString()};
 }
 
 #mentions-typeahead ul {
@@ -305,18 +307,19 @@ export function Composer(props: {
 }
 
 #mentions-typeahead ul li {
-  padding: 6px 10px;
+  padding: ${theme.padding[0].toString()} ${theme.padding[1].toString()};
   margin: 0;
   min-width: 10ch;
-  font-size: 14px;
+  font-size: ${theme.fontSize[0].toString()};
+  line-height: ${theme.lineHeights[0].toString()};
   outline: none;
   cursor: pointer;
   border-radius: 6px;
 }
 
 #mentions-typeahead ul li.selected {
-  background: ${theme.colors.accent10};
-  font-weight: 500;
+  background: ${theme.colors.selectionBackground};
+  font-weight: ${theme.fontWeights[1].toString()};
   color: white;
 }
 

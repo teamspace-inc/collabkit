@@ -3,7 +3,7 @@ import { useSnapshot } from 'valtio';
 
 import { Event, Profile } from '../constants';
 import { Avatar } from './Avatar';
-import { styled } from './UIKit';
+import { AVATAR_SIZE, styled, theme } from './UIKit';
 import { TargetContext } from './Target';
 import { timeDifference } from '../utils/timeDifference';
 import { isSameComment } from '../utils/isSameComment';
@@ -19,20 +19,21 @@ import { hasReactions, Reactions } from './comment/Reactions';
 
 export const StyledCommentContainer = styled('div', {
   display: 'flex',
-  gap: '5px',
+  gap: '$padding$0',
   position: 'relative',
   // enough space for the react button
   // with bubbles on
-  maxWidth: 'calc(100% - 10px)',
+  maxWidth: 'calc(100% - $padding$1)',
   variants: {
     ui: {
       bubbles: {
         '&:hover': {
           [`.${StyledMessage.className}`]: {
-            background: '$neutral4',
+            background: '$colors$bubbleHoverBackground',
           },
         },
       },
+      freeform: {},
     },
     threadType: {
       inline: {},
@@ -40,19 +41,19 @@ export const StyledCommentContainer = styled('div', {
     },
     type: {
       default: {
-        padding: '5px 10px 5px',
+        padding: '$padding$0 $padding$1 $padding$0',
       },
       'inline-start': {
-        padding: '5px 10px 1px',
+        padding: '$padding$0 $padding$1 1px',
       },
       inline: {
-        padding: '1px 10px',
+        padding: '1px $padding$1',
       },
       'inline-end': {
-        padding: '1px 10px 5px',
+        padding: '1px $padding$1 $padding$0',
       },
       system: {
-        padding: '5px 10px 5px',
+        padding: '$padding$0 $padding$1 $padding$0',
       },
     },
   },
@@ -110,7 +111,7 @@ export function Comment(props: {
   return props.profile ? (
     <StyledCommentContainer
       style={isSameComment(reactingId, target) ? zStyles : {}}
-      ui="bubbles"
+      ui="freeform"
       type={props.type}
       threadType={props.threadType}
       onMouseOver={() => setIsHovering(true)}
@@ -120,16 +121,16 @@ export function Comment(props: {
       {showProfile && (
         <Avatar
           profile={props.profile}
-          style={{ position: 'relative', top: 4, width: 25, height: 25 }}
+          style={{ position: 'relative', top: 4, width: AVATAR_SIZE, height: AVATAR_SIZE }}
         />
       )}
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <StyledMessage
-          ui="bubbles"
+          ui="freeform"
           type={props.type}
           style={{
-            marginLeft: showProfile ? 0 : 30,
-            marginBottom: hasReactions(props.reactions) ? 15 : 0,
+            marginLeft: showProfile ? 0 : theme.padding[4].toString(),
+            marginBottom: hasReactions(props.reactions) ? theme.padding[2].toString() : 0,
           }}
         >
           {showProfile && (

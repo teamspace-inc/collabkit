@@ -5,9 +5,9 @@ import { Event } from '../../constants';
 
 const SystemMessageText = styled('span', {
   display: 'flex',
-  gap: '5px',
+  gap: '$padding$0',
   padding: '0px 0 0px',
-  color: '$neutral10',
+  color: '$colors$primaryText',
   alignItems: 'center',
 });
 

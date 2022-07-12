@@ -50,9 +50,48 @@ const neutralDark = {
   neutral12: '$grayDark12',
 };
 
+export const AVATAR_SIZE = 24;
+
 export const { styled, css, theme } = createStitches({
   theme: {
+    fontSize: {
+      ['0']: '11px',
+      ['1']: '12px',
+      ['2']: '14px',
+    },
+    lineHeights: {
+      ['0']: '16px',
+      ['1']: '16px',
+      ['2']: '16px',
+    },
+    fontWeights: {
+      ['0']: 400,
+      ['1']: 700,
+      ['2']: 700,
+    },
+    radii: {
+      ['0']: '4px',
+      ['1']: '12px',
+      ['2']: '16px',
+    },
+    padding: {
+      ['0']: '6px',
+      ['1']: '8px',
+      ['2']: '16px',
+      ['3']: '24px',
+      ['4']: '32px',
+    },
     colors: {
+      primaryText: '$neutral12',
+      secondaryText: '$neutral9',
+
+      typingDot: '$neutral9',
+
+      primaryButtonBackground: '$neutral1',
+
+      bubbleHoverBackground: '$neutral4',
+      selectionBackground: '$accent10',
+
       ...gray,
       ...green,
 

@@ -77,7 +77,7 @@ export function Pin(props: { pinId: string }) {
       <div style={{ position: 'absolute', left: -10, top: -10, width: 240 }}>
         <div style={{}}>
           <StyledMessage
-            ui="preview"
+            ui="freeform"
             style={{ display: 'flex', flexDirection: 'row', width: 240, gap: 10 }}
             onClick={() => {
               setShowThread(!showThread);

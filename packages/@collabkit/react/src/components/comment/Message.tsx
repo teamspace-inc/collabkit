@@ -1,10 +1,10 @@
 import { styled } from '../UIKit';
 
 export const StyledMessageTimestamp = styled('span', {
-  fontSize: 12,
-  color: '$neutral9',
+  fontSize: '$fontSize$0',
+  color: '$colors$secondaryText',
   textDecoration: 'none',
-  fontWeight: '400',
+  fontWeight: '$fontWeights$0',
 });
 
 export const StyledMessage = styled('div', {
@@ -13,41 +13,43 @@ export const StyledMessage = styled('div', {
   flexDirection: 'column',
   gap: 0,
   flex: 0,
-  fontSize: 14,
-  lineHeight: '20px',
-  color: '$neutral12',
+  fontSize: '$fontSize$0',
+  lineHeight: '$lineHeights$0',
+  color: '$colors$primaryText',
   wordBreak: 'break-word',
   overflowWrap: 'break-word',
   variants: {
     ui: {
       bubbles: {
-        padding: '5px 10px',
+        padding: '$padding$0 $padding$1',
         background: '$neutral2',
-        borderRadius: 11,
+        borderRadius: '$radii$1',
+      },
+      freeform: {
+        gap: '$padding$0',
+        padding: '$padding$1',
+        background: '$neutral2',
+        borderRadius: '$radii$1',
       },
       preview: {
         cursor: 'pointer',
-        padding: '10px 10px',
+        padding: '$padding$0 $padding$0',
         background: '$neutral2',
-        borderRadius: 11,
+        borderRadius: '$radii$1',
         gap: 0,
-      },
-      indicator: {
-        // filter:
-        //   'drop-shadow(0 1px 0px rgba(0, 0, 0, 0.01))  drop-shadow(0 1px 2px rgba(0, 0, 0, 0.025))',
       },
     },
     type: {
       default: {},
       'inline-start': {
-        borderBottomLeftRadius: 3,
+        borderBottomLeftRadius: '$radii$0',
       },
       inline: {
-        borderBottomLeftRadius: 3,
-        borderTopLeftRadius: 3,
+        borderBottomLeftRadius: '$radii$0',
+        borderTopLeftRadius: '$radii$0',
       },
       'inline-end': {
-        borderTopLeftRadius: 3,
+        borderTopLeftRadius: '$radii$0',
       },
     },
   },
@@ -56,25 +58,25 @@ export const StyledMessage = styled('div', {
       ui: 'bubbles',
       type: 'inline-start',
       css: {
-        borderRadius: 11,
-        borderBottomLeftRadius: 3,
+        borderRadius: '$radii$1',
+        borderBottomLeftRadius: '$radii$0',
       },
     },
     {
       ui: 'bubbles',
       type: 'inline',
       css: {
-        borderRadius: 11,
-        borderBottomLeftRadius: 3,
-        borderTopLeftRadius: 3,
+        borderRadius: '$radii$1',
+        borderBottomLeftRadius: '$radii$0',
+        borderTopLeftRadius: '$radii$0',
       },
     },
     {
       ui: 'bubbles',
       type: 'inline-end',
       css: {
-        borderRadius: 11,
-        borderTopLeftRadius: 3,
+        borderRadius: '$radii$1',
+        borderTopLeftRadius: '$radii$0',
       },
     },
   ],

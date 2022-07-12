@@ -1,13 +1,13 @@
 import { styled } from '../UIKit';
 
 export const StyledName = styled('div', {
-  fontSize: 14,
-  fontWeight: '500',
-  lineHeight: '20px',
+  fontSize: '$fontSize$0',
+  fontWeight: '$fontWeights$1',
+  lineHeight: '$lineHeights$0',
   display: 'flex',
-  gap: 5,
+  gap: '$padding$0',
   flexDirection: 'row',
-  color: '$neutral12',
+  color: '$colors$primaryText',
   alignItems: 'baseline',
 });
 

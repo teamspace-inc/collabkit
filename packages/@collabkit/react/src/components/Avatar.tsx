@@ -9,8 +9,8 @@ export const avatarStyles = css({
   height: '100%',
   flexShrink: 0,
   borderRadius: '2000px',
-  fontSize: 14,
-  fontWeight: 600,
+  fontSize: '$fontSize$0',
+  fontWeight: '$fontWeights$1',
   textAlign: 'center',
   verticalAlign: 'middle',
   lineHeight: '25px',
@@ -22,7 +22,7 @@ export const avatarStyles = css({
     neutralBackground: {
       true: {
         color: '$neutral12',
-        fontWeight: 600,
+        fontWeight: '$fontWeights$1',
         backgroundColor: '$neutral1',
       },
     },

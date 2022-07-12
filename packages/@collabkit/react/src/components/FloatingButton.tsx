@@ -13,7 +13,7 @@ const StyledFloatingButtonContainer = styled('div', {
 });
 
 const StyledFloatingButton = styled(motion.div, {
-  background: '$neutral2',
+  background: '$colors$primaryButtonBackground',
   cursor: 'pointer',
   width: 60,
   borderRadius: 60,
