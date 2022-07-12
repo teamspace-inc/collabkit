@@ -36,12 +36,12 @@ export function App(props: {
   useLayoutEffect(() => {
     const store = createStore();
     const events = createEvents(store);
+    actions.identify(store, props.identity);
     actions.setup(store, events, {
       appId: props.appId,
       apiKey: props.token,
       mode: 'UNSECURED',
     });
-    actions.identify(store, props.identity);
     actions.mentions(store, props.mentions);
     setContext({ store, events });
 
