@@ -43,7 +43,9 @@ export function Pin(props: { pinId: string }) {
   const { uiState, viewingId, profiles } = useSnapshot(store);
   const [showPreview, setShowPreview] = useState(false);
   const [showThread, setShowThread] = useState(false);
-  const themeRef = useRef(() => themes[themeIds[Math.floor(Math.random() * themeIds.length)]]);
+  const [currentTheme] = useState(
+    () => themes[themeIds[Math.floor(Math.random() * themeIds.length)]]
+  );
   const ref = useRef<HTMLDivElement | null>(null);
 
   const { workspace, workspaceId } = useWorkspace();
@@ -130,7 +132,7 @@ export function Pin(props: { pinId: string }) {
             flexDirection: 'row',
             gap: 10,
           }}
-          className={themeRef.current.toString()}
+          className={currentTheme.className}
         >
           <StyledPin
             isActive={showThread}
