@@ -7,8 +7,7 @@ import { motion } from 'framer-motion';
 import { Thread } from './Thread';
 import { useApp } from './App';
 import { useSnapshot } from 'valtio';
-import { useWorkspaceId } from './Workspace';
-import { useWorkspace } from './WorkspaceLoader';
+import { useWorkspace } from '../hooks/useWorkspace';
 import { PinTarget } from '../constants';
 
 const StyledPin = styled('div', {
@@ -42,13 +41,12 @@ const StyledPin = styled('div', {
 export function Pin(props: { pinId: string }) {
   const { store, events } = useApp();
   const { uiState, viewingId, profiles } = useSnapshot(store);
-  const { workspaceId } = useWorkspaceId();
   const [showPreview, setShowPreview] = useState(false);
   const [showThread, setShowThread] = useState(false);
   const themeRef = useRef(() => themes[themeIds[Math.floor(Math.random() * themeIds.length)]]);
   const ref = useRef<HTMLDivElement | null>(null);
 
-  const { workspace } = useWorkspace();
+  const { workspace, workspaceId } = useWorkspace();
   const pin = workspace.pins[props.pinId];
   const profile = pin ? profiles[pin.createdById] : null;
 
