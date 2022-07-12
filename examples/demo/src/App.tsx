@@ -16,14 +16,14 @@ function App() {
       mentions={mentionableUsers}
     >
       <CollabKit.Workspace workspaceId={workspaceId}>
-        <UserMenu user={user} onChangeUser={setUser} />
-        <Chat />
         <CollabKit.Commentable>
           <img
             style={{ width: '100vw', maxHeight: '100vh', objectFit: 'cover' }}
             src="https://images.unsplash.com/photo-1433838552652-f9a46b332c40"
           />
         </CollabKit.Commentable>
+        <Chat />
+        <UserMenu user={user} onChangeUser={setUser} />
         <CollabKit.FloatingButton />
       </CollabKit.Workspace>
     </CollabKit.App>
