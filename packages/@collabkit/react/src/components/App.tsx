@@ -1,4 +1,4 @@
-import React, { useContext, useLayoutEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { actions } from '../actions';
 import { IdentifyProps, MentionProps, Store } from '../constants';
 import { Events, createEvents } from '../events';
@@ -44,7 +44,20 @@ export function App(props: {
     actions.identify(store, props.identity);
     actions.mentions(store, props.mentions);
     setContext({ store, events });
+
+    return () => {
+      events.onDestroy();
+    };
   }, [props.token]);
+
+  useEffect(() => {
+    if (context) {
+      document.addEventListener('keydown', context.events.onKeyDown);
+      return () => {
+        document.removeEventListener('keydown', context.events.onKeyDown);
+      };
+    }
+  }, [context]);
 
   if (!context) {
     return null;
