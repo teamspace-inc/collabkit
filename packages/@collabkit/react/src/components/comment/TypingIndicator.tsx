@@ -30,7 +30,29 @@ const TypingDots = styled('div', {
   position: 'relative',
 });
 
-export function TypingIndicator(props: { profile: Profile }) {
+// renders a list of users who are
+// typing at the moment
+export function CurrentlyTyping(props: {
+  profiles: { [userId: string]: Profile };
+  userId: string;
+  isTyping?: { [key: string]: boolean };
+}) {
+  const { profiles, isTyping, userId } = props;
+  return isTyping ? (
+    <>
+      {Object.keys(isTyping).map((endUserId) =>
+        // skip current user
+        endUserId !== userId ? (
+          isTyping?.[endUserId] === true ? (
+            <TypingIndicator key={`typing-${endUserId}`} profile={profiles[endUserId]} />
+          ) : null
+        ) : null
+      )}
+    </>
+  ) : null;
+}
+
+function TypingIndicator(props: { profile: Profile }) {
   return (
     <StyledCommentContainer ui="freeform" style={{ left: 5 }} type={'default'}>
       <Avatar profile={props.profile} style={{ position: 'relative', top: 4 }} />

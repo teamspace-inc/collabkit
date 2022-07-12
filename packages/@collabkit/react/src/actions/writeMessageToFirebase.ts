@@ -52,20 +52,23 @@ export async function writeMessageToFirebase(
     return;
   }
 
-  const data = {
+  let data: { [key: string]: any } = {
     [`/timeline/${appId}/${workspaceId}/${threadId}/${eventRef.key}`]: event,
     [`/views/inbox/${appId}/${workspaceId}/${threadId}`]: {
       ...event,
       body: preview,
       name: threadId,
     },
-    [`/pins/${appId}/${props.workspaceId}/${props.threadId}`]: {
+  };
+
+  if (props.pin) {
+    data[`/pins/${appId}/${props.workspaceId}/${props.threadId}`] = {
       ...props.pin,
       state: 'open',
       createdAt: serverTimestamp(),
       createdById: userId,
-    },
-  };
+    };
+  }
 
   // write the data to firebase
   try {

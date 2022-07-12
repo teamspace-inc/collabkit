@@ -1,7 +1,7 @@
 import { styled, theme } from './UIKit';
 import React, { useRef, useState } from 'react';
 import { ChatCircle } from 'phosphor-react';
-import { Thread } from './Thread';
+import { PopoverThread } from './PopoverThread';
 
 const StyledButton = styled('button', {
   padding: '9px 14px 9px 12px',
@@ -60,7 +60,7 @@ export function Button(props: {
         </div>
       </StyledButton>
       {showThread ? (
-        <Thread threadId={threadId} type="popout" onCloseButtonClick={() => setShowThread(false)} />
+        <PopoverThread threadId={threadId} onCloseButtonClick={() => setShowThread(false)} />
       ) : null}
     </div>
   );

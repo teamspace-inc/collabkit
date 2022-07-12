@@ -1,17 +1,17 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import { Avatar } from './Avatar';
 import { StyledMessage, StyledMessageTimestamp } from './comment/Message';
 import { Name } from './profile/Name';
 import { styled, theme, themeIds, themes } from './UIKit';
 import { motion } from 'framer-motion';
-import { Thread } from './Thread';
+import { PopoverThread } from './PopoverThread';
 import { useApp } from './App';
 import { useSnapshot } from 'valtio';
 import { useWorkspace } from '../hooks/useWorkspace';
 import { PinTarget } from '../constants';
 
 const StyledPin = styled('div', {
-  width: 'calc($sizes$pinSize + 2px)',
+  width: 'calc($sizes$pinSize + 2px) ',
   height: 'calc($sizes$pinSize + 2px)',
   borderRadius: 'calc($sizes$pinSize + 2px)',
   display: 'flex',
@@ -23,11 +23,6 @@ const StyledPin = styled('div', {
   cursor: 'pointer',
 
   variants: {
-    isActive: {
-      true: {
-        background: '$neutral12',
-      },
-    },
     effect: {
       flat: {},
       sticker: {
@@ -40,9 +35,7 @@ const StyledPin = styled('div', {
 
 export function Pin(props: { pinId: string }) {
   const { store, events } = useApp();
-  const { uiState, viewingId, profiles } = useSnapshot(store);
-  const [showPreview, setShowPreview] = useState(false);
-  const [showThread, setShowThread] = useState(false);
+  const { uiState, viewingId, hoveringId, profiles } = useSnapshot(store);
   const themeRef = useRef(() => themes[themeIds[Math.floor(Math.random() * themeIds.length)]]);
   const ref = useRef<HTMLDivElement | null>(null);
 
@@ -61,12 +54,16 @@ export function Pin(props: { pinId: string }) {
     workspaceId,
   };
 
+  const showPreview = hoveringId?.type === 'pin' && hoveringId.pinId === props.pinId;
+
+  const showThread = false;
+
   const thread =
     uiState === 'viewing' &&
     viewingId?.threadId === props.pinId &&
     viewingId.workspaceId === workspaceId ? (
-      <div style={{ display: 'flex', flexDirection: 'column', width: 280, height: 200 }}>
-        <Thread threadId={props.pinId} />
+      <div style={{ display: 'flex', flexDirection: 'column', width: 280 }}>
+        <PopoverThread threadId={props.pinId} />
       </div>
     ) : null;
 
@@ -80,25 +77,30 @@ export function Pin(props: { pinId: string }) {
           width: theme.sizes.threadPreviewWidth.toString(),
         }}
       >
-        <div style={{}}>
-          <StyledMessage
-            ui="preview"
-            onClick={() => {
-              setShowThread(!showThread);
+        <StyledMessage
+          ui="preview"
+          onPointerDown={(e) => {
+            events.onPointerDown(e, { target });
+          }}
+        >
+          <StyledPin style={{ border: 'none' }}>
+            <Avatar profile={profile} style={{ flexShrink: 0 }} />
+          </StyledPin>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              width: '100%',
+              gap: theme.padding['0'].toString(),
             }}
           >
-            <StyledPin isActive={false}>
-              <Avatar profile={profile} neutralBackground={showThread} style={{ flexShrink: 0 }} />
-            </StyledPin>
-            <div style={{ display: 'flex', flexDirection: 'column', width: 240, gap: 0 }}>
-              <Name>
-                {profile.name} <StyledMessageTimestamp>10:00</StyledMessageTimestamp>
-              </Name>
-              <div>{firstEvent.body}</div>
-              <b style={{ marginTop: 16 }}>Reply</b>
-            </div>
-          </StyledMessage>
-        </div>
+            <Name>
+              {profile.name} <StyledMessageTimestamp>10:00</StyledMessageTimestamp>
+            </Name>
+            <div>{firstEvent.body}</div>
+            <b style={{ marginTop: theme.space['3'].toString() }}>Reply</b>
+          </div>
+        </StyledMessage>
       </div>
     ) : null;
 
@@ -107,21 +109,20 @@ export function Pin(props: { pinId: string }) {
   }
 
   return pin && profile ? (
-    <div ref={ref}>
+    <div ref={ref} style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
       <div
         style={{
           flexDirection: 'column',
           display: 'flex',
-          // maxWidth: '280px',
           position: 'relative',
           filter:
             'drop-shadow(0px 4px 12px rgba(0,0,0,0.1)), drop-shadow(0px 1px 0px rgba(0,0,0,0.2))',
         }}
-        onMouseOver={() => setShowPreview(true)}
-        onMouseLeave={() => setShowPreview(false)}
+        onMouseOver={(e) => events.onMouseOver(e, { target })}
+        onMouseLeave={(e) => events.onMouseOut(e, { target })}
       >
         <motion.div
-          animate={{ scale: [0, 1.1, 1] }}
+          animate={{ scale: [0.9, 1.1, 1] }}
           transition={{ duration: 0.5 }}
           style={{
             padding: 10,
@@ -133,7 +134,6 @@ export function Pin(props: { pinId: string }) {
           className={themeRef.current.toString()}
         >
           <StyledPin
-            isActive={showThread}
             onPointerDown={(e) => {
               e.stopPropagation();
               e.preventDefault();
@@ -143,12 +143,12 @@ export function Pin(props: { pinId: string }) {
             //   showThread && setShowThread(false);
             // }}
           >
-            <Avatar profile={profile} neutralBackground={showThread} />
+            <Avatar profile={profile} />
           </StyledPin>
         </motion.div>
-        {thread}
         {pin.state === 'open' ? preview : null}
       </div>
+      {thread}
     </div>
   ) : null;
 }

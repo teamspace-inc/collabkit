@@ -38,6 +38,10 @@ export type Commentable = {
   pin: BasicPinProps;
 };
 
+export type CommentType = 'default' | 'inline-start' | 'inline' | 'inline-end';
+
+export type ThreadType = 'inline' | 'popover';
+
 export type BasicPinProps = {
   selector: string;
   url: string;

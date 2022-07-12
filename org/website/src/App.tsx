@@ -6,7 +6,17 @@ import { ref, Unsubscribe, onChildAdded, onChildRemoved } from 'firebase/databas
 
 import { Route } from 'wouter';
 
-import { CollabKit } from '@collabkit/react';
+import {
+  Thread,
+  CollabKitProvider,
+  Pin,
+  Workspace,
+  Button,
+  CurrentUser,
+  Inbox,
+  Commentable,
+  FloatingButton,
+} from '@collabkit/react';
 import { Fullscreen } from './Fullscreen';
 import { SignedIn } from './SignedIn';
 import { SignIn } from './SignIn';
@@ -127,9 +137,6 @@ const identity2 = {
 };
 
 function App() {
-  // const { user } = useSnapshot(store);
-  // const HOC = CollabKit.withComments(Foo, { threadId: 'foo' });
-
   return (
     <>
       <Route path="/preview">
@@ -137,7 +144,7 @@ function App() {
       </Route>
       <Route path="/indicator">
         <div style={{ padding: 20 }}>
-          <CollabKit.App
+          <CollabKitProvider
             token={import.meta.env.VITE_COLLABKIT_TOKEN}
             appId={import.meta.env.VITE_COLLABKIT_APP_ID}
             identity={{
@@ -150,10 +157,10 @@ function App() {
             }}
             mentions={[]}
           >
-            <CollabKit.Workspace workspaceId="acme">
-              <CollabKit.Pin pinId="foobarn" />
-            </CollabKit.Workspace>
-          </CollabKit.App>
+            <Workspace workspaceId="acme">
+              <Pin pinId="foobarn" />
+            </Workspace>
+          </CollabKitProvider>
         </div>
       </Route>
       <Route path="/">
@@ -183,18 +190,18 @@ function App() {
           }
 
           return (
-            <CollabKit.App
+            <CollabKitProvider
               token={Object.keys(app.keys)[0]}
               appId={app.appId}
               identity={identity}
               mentions={mentions}
             >
-              <CollabKit.Workspace workspaceId={params.workspace_id}>
+              <Workspace workspaceId={params.workspace_id}>
                 <Fullscreen>
-                  <CollabKit.Thread threadId={params.thread_id} />
+                  <Thread threadId={params.thread_id} />
                 </Fullscreen>
-              </CollabKit.Workspace>
-            </CollabKit.App>
+              </Workspace>
+            </CollabKitProvider>
           );
         }}
       </Route>
@@ -242,16 +249,16 @@ function App() {
                   particular thing in a list of things.
                 </p>
                 <div>
-                  <CollabKit.App
+                  <CollabKitProvider
                     token={Object.keys(app.keys)[0]}
                     appId={app.appId}
                     identity={identity}
                     mentions={mentions}
                   >
-                    <CollabKit.Workspace workspaceId={params.workspace_id}>
-                      <CollabKit.Button threadId={params.thread_id} defaultOpen={true} />
-                    </CollabKit.Workspace>
-                  </CollabKit.App>
+                    <Workspace workspaceId={params.workspace_id}>
+                      <Button threadId={params.thread_id} defaultOpen={true} />
+                    </Workspace>
+                  </CollabKitProvider>
                 </div>
               </div>
               <div
@@ -266,16 +273,16 @@ function App() {
                   An inline thread you can embed on Product, Sales, Customer and other types of
                   detail pages.
                 </p>
-                <CollabKit.App
+                <CollabKitProvider
                   token={Object.keys(app.keys)[0]}
                   appId={app.appId}
                   identity={identity}
                   mentions={mentions}
                 >
-                  <CollabKit.Workspace workspaceId={params.workspace_id}>
-                    <CollabKit.Thread threadId={params.thread_id} style={{ height: '440px' }} />
-                  </CollabKit.Workspace>
-                </CollabKit.App>
+                  <Workspace workspaceId={params.workspace_id}>
+                    <Thread threadId={params.thread_id} style={{ height: '440px' }} />
+                  </Workspace>
+                </CollabKitProvider>
               </div>
               <div
                 style={{
@@ -288,16 +295,16 @@ function App() {
                 <p style={{ color: 'rgba(0,0,0,0.4)' }}>
                   A list of all the threads for a workspace. Unread threads in bold.
                 </p>
-                <CollabKit.App
+                <CollabKitProvider
                   token={Object.keys(app.keys)[0]}
                   appId={app.appId}
                   identity={identity2}
                   mentions={mentions}
                 >
-                  <CollabKit.Workspace workspaceId={params.workspace_id}>
-                    <CollabKit.Inbox />
-                  </CollabKit.Workspace>
-                </CollabKit.App>
+                  <Workspace workspaceId={params.workspace_id}>
+                    <Inbox />
+                  </Workspace>
+                </CollabKitProvider>
               </div>
               <div
                 style={{
@@ -308,16 +315,16 @@ function App() {
               >
                 <h3 style={{ color: 'rgba(0,0,0,0.25)', marginTop: 0 }}>CollabKit.CurrentUser</h3>
                 <p style={{ color: 'rgba(0,0,0,0.4)' }}>The current user.</p>
-                <CollabKit.App
+                <CollabKitProvider
                   token={Object.keys(app.keys)[0]}
                   appId={app.appId}
                   identity={identity}
                   mentions={mentions}
                 >
-                  <CollabKit.Workspace workspaceId={params.workspace_id}>
-                    <CollabKit.CurrentUser />
-                  </CollabKit.Workspace>
-                </CollabKit.App>
+                  <Workspace workspaceId={params.workspace_id}>
+                    <CurrentUser />
+                  </Workspace>
+                </CollabKitProvider>
               </div>
               <div
                 style={{
@@ -332,14 +339,14 @@ function App() {
                 <p style={{ color: 'rgba(0,0,0,0.4)' }}>
                   Floating button to start commenting on something in an app. Has a fixed position.
                 </p>
-                <CollabKit.App
+                <CollabKitProvider
                   token={Object.keys(app.keys)[0]}
                   appId={app.appId}
                   identity={identity}
                   mentions={mentions}
                 >
-                  <CollabKit.Workspace workspaceId={params.workspace_id}>
-                    <CollabKit.Commentable>
+                  <Workspace workspaceId={params.workspace_id}>
+                    <Commentable>
                       <div
                         style={{
                           padding: 20,
@@ -354,10 +361,10 @@ function App() {
                         style={{ maxWidth: 200 }}
                         src="https://images.unsplash.com/photo-1546240181-a6430032edb7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8YXJjaGlsbGVjdHxlbnwwfHwwfHw%3D&w=1000&q=80"
                       />
-                    </CollabKit.Commentable>
-                    <CollabKit.FloatingButton />
-                  </CollabKit.Workspace>
-                </CollabKit.App>
+                    </Commentable>
+                    <FloatingButton />
+                  </Workspace>
+                </CollabKitProvider>
               </div>
               <div
                 style={{
@@ -371,20 +378,20 @@ function App() {
                   An indicator that shows a comment is present <br />
                   at that location.
                 </p>
-                <CollabKit.App
+                <CollabKitProvider
                   token={Object.keys(app.keys)[0]}
                   appId={app.appId}
                   identity={identity}
                   mentions={mentions}
                 >
-                  <CollabKit.Workspace workspaceId={params.workspace_id}>
+                  <Workspace workspaceId={params.workspace_id}>
                     <div style={{ display: 'flex', flexDirection: 'row', gap: '12px' }}>
                       {/* <CollabKit.Indicator letter="N"></CollabKit.Indicator> */}
                       {/* <CollabKit.Indicator letter="B"></CollabKit.Indicator> */}
                       {/* <CollabKit.Indicator letter="C"></CollabKit.Indicator> */}
                     </div>
-                  </CollabKit.Workspace>
-                </CollabKit.App>
+                  </Workspace>
+                </CollabKitProvider>
               </div>
             </div>
           );

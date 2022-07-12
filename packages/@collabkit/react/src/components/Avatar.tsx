@@ -5,8 +5,8 @@ import { Profile } from '../constants';
 import { css, styled } from '@stitches/react';
 
 export const avatarStyles = css({
-  width: '100%',
-  height: '100%',
+  width: '24px',
+  height: '24px',
   flexShrink: 0,
   aspectRatio: 1,
   borderRadius: '2000px',
@@ -19,24 +19,11 @@ export const avatarStyles = css({
   userSelect: 'none',
   backgroundColor: '$accent10',
   color: '$neutral1',
-  variants: {
-    neutralBackground: {
-      true: {
-        color: '$neutral12',
-        fontWeight: '$fontWeights$1',
-        backgroundColor: '$neutral1',
-      },
-    },
-  },
 });
 
 export const StyledAvatar = styled('img', avatarStyles);
 
-export function Avatar(props: {
-  profile: Profile;
-  style?: React.CSSProperties;
-  neutralBackground?: boolean;
-}) {
+export function Avatar(props: { profile: Profile; style?: React.CSSProperties }) {
   const [didError, setDidError] = useState(false);
   const noImage = didError || !props.profile.avatar;
   const styles = props.profile.color
@@ -48,10 +35,7 @@ export function Avatar(props: {
     : props.style;
 
   return noImage ? (
-    <div
-      className={avatarStyles({ neutralBackground: props.neutralBackground }).className}
-      style={styles}
-    >
+    <div className={avatarStyles().className} style={styles}>
       {props.profile.name?.charAt(0)}
     </div>
   ) : (

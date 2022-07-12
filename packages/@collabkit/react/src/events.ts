@@ -110,6 +110,14 @@ export function createEvents(store: Store) {
 
     onKeyDown,
 
+    onMouseOver: (e: React.MouseEvent, props: { target: Target }) => {
+      actions.hover(store, props);
+    },
+
+    onMouseOut: (e: React.MouseEvent, props: { target: Target }) => {
+      actions.unhover(store, props);
+    },
+
     onPointerDown: (e: React.PointerEvent, props: { target: Target }) => {
       switch (store.uiState) {
         case 'idle': {

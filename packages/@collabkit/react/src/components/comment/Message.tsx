@@ -26,7 +26,7 @@ export const StyledMessage = styled('div', {
         borderRadius: '$radii$1',
       },
       freeform: {
-        gap: '$space$1',
+        gap: '6px',
         padding: '0 0 $padding$1',
         borderRadius: '$radii$1',
       },

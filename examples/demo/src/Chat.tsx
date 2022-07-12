@@ -1,4 +1,4 @@
-import { CollabKit } from '@collabkit/react';
+import { Thread } from '@collabkit/react';
 
 export function Chat() {
   return (
@@ -12,7 +12,7 @@ export function Chat() {
         height: 'calc(100vh - 2 * 16px)',
       }}
     >
-      <CollabKit.Thread threadId="demo-chat" />
+      <Thread threadId="demo-chat2" />
     </div>
   );
 }
