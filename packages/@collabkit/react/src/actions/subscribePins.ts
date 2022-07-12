@@ -16,7 +16,7 @@ export async function subscribePins(store: Store, props: { workspaceId: string }
       switch (pin.state) {
         case 'resolved':
         case 'deleted':
-        case 'resolved':
+        case 'pending':
           // don't need to worry about this
           // will not be subscribed on the next refresh
           break;
