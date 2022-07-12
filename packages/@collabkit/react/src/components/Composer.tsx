@@ -17,6 +17,7 @@ import MentionsPlugin from './MentionsPlugin';
 import { MentionNode } from './MentionNode';
 import { useApp } from './App';
 import { actions } from '../actions';
+import { SendButton } from './composer/SendButton';
 
 function onChange(store: Store, target: Target, editorState: EditorState) {
   if (target.type === 'composer') {
@@ -49,57 +50,6 @@ function onError(error: any) {
   console.error(error);
 }
 
-const StyledComposerSendButton = styled(Tooltip.Trigger, {
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-
-  width: '$sizes$sendButton',
-  height: '$sizes$sendButton',
-  position: 'absolute',
-  right: '$space$2',
-  top: '$space$2',
-  borderRadius: '$sizes$sendButton',
-  border: 'none',
-
-  variants: {
-    type: {
-      popout: {},
-    },
-    hasComments: {
-      true: {},
-      false: {},
-    },
-    disabled: {
-      true: {
-        opacity: 0,
-        // backgroundColor: '$neutral8',
-      },
-      false: {
-        backgroundColor: '$colors$composerButtonBackground',
-      },
-    },
-  },
-  compoundVariants: [
-    {
-      type: 'popout',
-      hasComments: false,
-      css: {
-        // position: 'unset',
-        // top: 'unset',
-        // right: 'unset',
-        // width: 'auto',
-        // color: '$neutral1',
-        // fontWeight: 500,
-        // fontFamily: 'Inter',
-        // gap: '2px',
-        // padding: '0px 10px',
-        // lineHeight: '24px',
-      },
-    },
-  ],
-});
-
 function Placeholder(props: { hasComments: boolean }) {
   return (
     <div className="editor-placeholder">
@@ -118,7 +68,7 @@ export function createEditorConfig() {
 }
 
 const ComposerContainer = styled('div', {
-  minHeight: 8 * 2 + 20, // default composer height
+  minHeight: 33, // default composer height, 32 + 1px for border
   position: 'relative',
   display: 'flex',
   flex: 1,
@@ -342,30 +292,13 @@ export function Composer(props: {
           <MentionsPlugin />
         </StyledLexicalEditorContainer>
       </LexicalComposer>
-      <Tooltip.Root>
-        <StyledComposerSendButton
-          type={props.type}
-          hasComments={props.hasComments}
-          disabled={bodyLength === 0}
-          onClick={(e) => {
-            if (bodyLength > 0) {
-              events.onSend(props.workspaceId, props.threadId);
-            }
-          }}
-        >
-          {props.type === 'popout' && !props.hasComments ? '' : ''}
-          <ArrowUp
-            size={14}
-            color={'white'}
-            weight={'bold'}
-            style={{ position: 'relative', cursor: 'pointer' }}
-          />
-        </StyledComposerSendButton>
-        <Tooltip.Content>
-          Post
-          <Tooltip.Arrow />
-        </Tooltip.Content>
-      </Tooltip.Root>
+      <SendButton
+        bodyLength={bodyLength}
+        hasComments={props.hasComments}
+        workspaceId={props.workspaceId}
+        threadId={props.threadId}
+        type={props.type}
+      />
     </ComposerContainer>
   );
 }

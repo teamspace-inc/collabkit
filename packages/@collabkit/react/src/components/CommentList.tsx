@@ -113,7 +113,7 @@ export const CommentList = React.memo(function CommentList(props: {
     >
       <ScrollArea.Root
         ref={rootRef}
-        style={{ ...(props.type === 'popout' ? { height: 352 } : {}) }}
+        style={{ ...(props.type === 'popout' ? { height: 'auto' } : {}) }}
       >
         <ScrollArea.Viewport
           css={{
