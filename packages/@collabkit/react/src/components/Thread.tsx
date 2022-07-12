@@ -1,11 +1,11 @@
-import { darkTheme, FlexCenter, styled, theme } from './UIKit';
+import { FlexCenter, styled, theme } from './UIKit';
 import { useEffect, useRef, useState } from 'react';
 import { IconContext, X, ChatCircle, Check, CheckCircle } from 'phosphor-react';
 import React from 'react';
 import { useSnapshot } from 'valtio';
 import { Composer } from './Composer';
 import * as Tooltip from './Tooltip';
-import { useWorkspace, WorkspaceLoader } from './WorkspaceLoader';
+import { useWorkspace } from '../hooks/useWorkspace';
 import { CommentList } from './CommentList';
 import { useApp } from './App';
 import { actions } from '../actions';
@@ -125,7 +125,7 @@ const StyledHeaderLeftGroup = styled('div', {
 
 export const MODAL_Z_INDEX = 999999;
 
-function _Thread(props: {
+export function Thread(props: {
   threadId: string;
   type?: 'popout';
   style?: React.CSSProperties;
@@ -285,18 +285,5 @@ function _Thread(props: {
         </IconContext.Provider>
       </StyledThread>
     </div>
-  );
-}
-
-export function Thread(props: {
-  threadId: string;
-  type?: 'popout';
-  style?: React.CSSProperties;
-  onCloseButtonClick?: (e: React.MouseEvent) => void;
-}) {
-  return (
-    <WorkspaceLoader>
-      <_Thread {...props} />
-    </WorkspaceLoader>
   );
 }

@@ -3,7 +3,7 @@ import { useSnapshot } from 'valtio';
 import { actions } from '../actions';
 import { useApp } from './App';
 import { styled } from './UIKit';
-import { useWorkspace, WorkspaceLoader } from './WorkspaceLoader';
+import { useWorkspace } from '../hooks/useWorkspace';
 
 const unreadStyle = {
   variants: {
@@ -83,7 +83,7 @@ const StyledThreadMessagePreview = styled(
   unreadStyle
 );
 
-function _Inbox() {
+export function Inbox() {
   const { store } = useApp();
   const { profiles, appState } = useSnapshot(store);
   const { workspace } = useWorkspace();
@@ -118,13 +118,5 @@ function _Inbox() {
     </div>
   ) : (
     <div>No inbox</div>
-  );
-}
-
-export function Inbox() {
-  return (
-    <WorkspaceLoader>
-      <_Inbox />
-    </WorkspaceLoader>
   );
 }

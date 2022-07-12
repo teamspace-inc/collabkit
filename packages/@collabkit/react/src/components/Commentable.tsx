@@ -3,10 +3,9 @@ import { useApp } from './App';
 import { useSnapshot } from 'valtio';
 import './Commentable.css';
 import { CollabKit } from '..';
-import { useWorkspaceId } from './Workspace';
 import { finder } from '@medv/finder';
 import { Sticky } from './Sticky';
-import { useWorkspace, WorkspaceLoader } from './WorkspaceLoader';
+import { useWorkspace } from '../hooks/useWorkspace';
 
 function inspectSize(nodes: HTMLElement[]) {
   const sizeNodes = nodes.filter(hasSize);
@@ -79,21 +78,11 @@ function getPlacementStylesForPoint(point: { x: number; y: number }): React.CSSP
 }
 
 export function Commentable(props: { children: React.ReactNode }) {
-  return (
-    <WorkspaceLoader>
-      <_Commentable>{props.children}</_Commentable>
-    </WorkspaceLoader>
-  );
-}
-
-function _Commentable(props: { children: React.ReactNode }) {
   const nodesAtPointerRef = useRef<HTMLElement[]>([]);
   const { store, events } = useApp();
-  const { workspaceId } = useWorkspaceId();
   const { uiState, viewingId } = useSnapshot(store);
   const ref = useRef<HTMLElement>(null);
-  const { workspace } = useWorkspace();
-  console.log({ workspace });
+  const { workspace, workspaceId } = useWorkspace();
   const pinIds = Object.keys(workspace?.pins || {});
 
   useEffect(() => {

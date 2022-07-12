@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useContext, useLayoutEffect, useRef, useState } from 'react';
 import { actions } from '../actions';
 import { IdentifyProps, MentionProps, Store } from '../constants';
 import { Events, createEvents } from '../events';
@@ -33,8 +33,9 @@ export function App(props: {
 }) {
   const store = useRef(createStore());
   const events = useRef(createEvents(store.current));
-  
-  useEffect(() => {
+
+  const [isReady, setIsReady] = useState(false);
+  useLayoutEffect(() => {
     actions.setup(store.current, events.current, {
       appId: props.appId,
       apiKey: props.token,
@@ -42,7 +43,12 @@ export function App(props: {
     });
     actions.identify(store.current, props.identity);
     actions.mentions(store.current, props.mentions);
+    setIsReady(true);
   }, [props.token]);
+
+  if (!isReady) {
+    return null;
+  }
 
   return (
     <AppContext.Provider
