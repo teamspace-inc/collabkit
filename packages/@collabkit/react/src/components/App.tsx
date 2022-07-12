@@ -19,7 +19,14 @@ const AppContext = React.createContext<
 export function useApp() {
   const app = useContext(AppContext);
   if (app === undefined) {
-    throw new Error('useApp must be used within a App');
+    if (import.meta.env.DEV) {
+      // FIXME: This is a workaround for
+      // "useApp must be used within a App" error happening in development mode.
+      // Reload the page to fix the error.
+      window.location.reload();
+    } else {
+      throw new Error('useApp must be used within a App');
+    }
   }
   return app;
 }
