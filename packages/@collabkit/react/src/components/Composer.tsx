@@ -1,7 +1,5 @@
 import React from 'react';
-import { ArrowUp } from 'phosphor-react';
 
-import * as Tooltip from './Tooltip';
 import { Profile, Store, Target, Workspace } from '../constants';
 import { styled, theme } from './UIKit';
 import { EditorState, $getRoot } from 'lexical';
@@ -103,7 +101,7 @@ const ComposerContainer = styled('div', {
 
 const StyledLexicalEditorContainer = styled('div', {
   borderRadius: '$radii$1',
-  width: '100%', // take into account send button
+  width: 'calc(100% - $sizes$sendButton)', // take into account send button
   color: '$colors$primaryText',
   marginLeft: 0,
   padding: '0px 0',
