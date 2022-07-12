@@ -12,10 +12,10 @@ const loadingFade = keyframes({
 });
 
 const TypingDot = styled('div', {
-  width: 5,
-  height: 5,
-  background: '$neutral9',
-  borderRadius: '50px',
+  width: '6px',
+  height: '6px',
+  background: '$colors$typingDot',
+  borderRadius: '6px',
   opacity: 0,
   animation: `${loadingFade} 1.5s infinite`,
 });
@@ -24,7 +24,7 @@ const TypingDots = styled('div', {
   width: '28px',
   height: '20px',
   display: 'flex',
-  gap: '5px',
+  gap: '$padding$0',
   justifyContent: 'center',
   alignItems: 'center',
   position: 'relative',
@@ -32,11 +32,11 @@ const TypingDots = styled('div', {
 
 export function TypingIndicator(props: { profile: Profile }) {
   return (
-    <StyledCommentContainer ui="bubbles" style={{ left: 5 }} type={'default'}>
+    <StyledCommentContainer ui="freeform" style={{ left: 5 }} type={'default'}>
       <Avatar profile={props.profile} style={{ position: 'relative', top: 4 }} />
 
       <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <StyledMessage ui="bubbles">
+        <StyledMessage ui="freeform">
           <TypingDots>
             <TypingDot style={{ animationDelay: '0s' }} />
             <TypingDot style={{ animationDelay: '0.2s' }} />

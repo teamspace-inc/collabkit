@@ -1,4 +1,4 @@
-import { FlexCenter, styled, theme } from './UIKit';
+import { darkTheme, FlexCenter, styled, theme } from './UIKit';
 import { useEffect, useRef, useState } from 'react';
 import { IconContext, X, ChatCircle, Check, CheckCircle } from 'phosphor-react';
 import React from 'react';
@@ -31,8 +31,8 @@ const StyledThread = styled('div', {
         top: 0,
         backgroundColor: 'white',
         borderRadius: '11px',
-        width: '280px',
-        height: '396px',
+        width: '$threadWidth',
+        // height: '396px',
         boxShadow: '0px 12px 24px rgba(0,0,0,0.04)',
       },
     },
@@ -55,10 +55,10 @@ const StyledThreadHeader = styled('div', {
   height: 30,
   display: 'flex',
   gap: 0,
-  padding: '3px 3px',
+  padding: '2px 0px',
   alignItems: 'center',
   pointerEvents: 'none',
-  borderBottom: '1px solid $neutral4',
+  borderBottom: '1px solid $borderColor',
   variants: {
     type: {
       popout: {
@@ -235,9 +235,9 @@ function _Thread(props: {
                 }
               >
                 {!isResolved ? (
-                  <Check color={theme.colors.neutral12.toString()} />
+                  <Check size={16} weight={'light'} color={theme.colors.neutral12.toString()} />
                 ) : (
-                  <CheckCircle size={24} color={theme.colors.accent10.toString()} weight="fill" />
+                  <CheckCircle size={18} weight={'fill'} color={theme.colors.accent10.toString()} />
                 )}
               </IconButton>
               <IconButton
@@ -248,7 +248,7 @@ function _Thread(props: {
                   events.onClick(e, { target });
                 }}
               >
-                <X color={theme.colors.neutral12.toString()} />
+                <X size="16" weight="light" color={theme.colors.neutral12.toString()} />
               </IconButton>
             </StyledThreadHeader>
           )}
@@ -265,20 +265,6 @@ function _Thread(props: {
               timeline={timeline}
             />
           )}
-          {/* {isEmpty && props.type === 'popout' ? (
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
-                gap: 8,
-                padding: 10,
-              }}
-            >
-              {profile ? <Avatar profile={profile} /> : null}
-              <StyledName>{'Namit'}</StyledName>
-            </div>
-          ) : null} */}
           {workspaceId && workspace ? (
             <Composer
               style={

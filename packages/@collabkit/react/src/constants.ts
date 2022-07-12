@@ -29,16 +29,25 @@ export type Target =
   | FloatingCommentButtonTarget
   | CommentableContainer
   | Commentable
-  | StickyThreadTarget;
+  | StickyThreadTarget
+  | PinTarget;
 
 export type Commentable = {
   type: 'commentable';
   workspaceId: string;
-  pin: {
-    selector: string;
-    url: string;
-    offset: { x: number; y: number };
-  };
+  pin: BasicPinProps;
+};
+
+export type BasicPinProps = {
+  selector: string;
+  url: string;
+  offset: { x: number; y: number };
+};
+
+export type PinTarget = {
+  type: 'pin';
+  pinId: string;
+  workspaceId: string;
 };
 
 export type CommentableContainer = { type: 'commentableContainer'; workspaceId: string };
@@ -57,6 +66,12 @@ export type StickyThreadTarget = {
 };
 
 export type CommentButtonTarget = { type: 'commentButton'; threadId: string; workspaceId: string };
+
+export type ClickedOutsidePinTarget = {
+  type: 'clickedOutsidePin';
+  workspaceId: string;
+  pinId: string;
+};
 
 export type CommentReactionTarget = {
   type: 'commentReaction';
@@ -157,6 +172,9 @@ export interface Pin {
   selector: string;
   offset: { x: number; y: number };
   url: string;
+  createdById: string;
+  createdAt: number;
+  state: 'pending' | 'open' | 'resolved' | 'deleted';
 }
 
 export interface Workspace {
@@ -174,6 +192,10 @@ export interface Store {
   token: string;
   selectedId: null | Target;
   focusedId: null | Target;
+  hoveringId: null | Target;
+  reactingId: null | Target;
+  composingId: null | ThreadTarget;
+  viewingId: StickyThreadTarget | null;
   config: {
     identify: IdentifyProps | null | undefined;
     setup: SetupProps | null | undefined;
@@ -186,8 +208,6 @@ export interface Store {
     [workspaceId: string]: Workspace;
   };
   appState: 'blank' | 'config' | 'ready';
-  uiState: 'idle' | 'selecting' | 'viewing';
-  reactingId: null | Target;
-  viewingId: StickyThreadTarget | null;
+  uiState: 'idle' | 'selecting' | 'composing' | 'viewing';
   subs: { [subId: string]: Unsubscribe };
 }

@@ -1,7 +1,5 @@
 import React from 'react';
-import { ArrowUp } from 'phosphor-react';
 
-import * as Tooltip from './Tooltip';
 import { Profile, Store, Target, Workspace } from '../constants';
 import { styled, theme } from './UIKit';
 import { EditorState, $getRoot } from 'lexical';
@@ -17,6 +15,7 @@ import MentionsPlugin from './MentionsPlugin';
 import { MentionNode } from './MentionNode';
 import { useApp } from './App';
 import { actions } from '../actions';
+import { SendButton } from './composer/SendButton';
 
 function onChange(store: Store, target: Target, editorState: EditorState) {
   if (target.type === 'composer') {
@@ -49,56 +48,6 @@ function onError(error: any) {
   console.error(error);
 }
 
-const StyledComposerSendButton = styled(Tooltip.Trigger, {
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-
-  width: 24,
-  height: 24,
-  position: 'absolute',
-  right: 10,
-  top: 12,
-  borderRadius: 24,
-  border: 'none',
-
-  variants: {
-    type: {
-      popout: {},
-    },
-    hasComments: {
-      true: {},
-      false: {},
-    },
-    disabled: {
-      true: {
-        backgroundColor: '$neutral8',
-      },
-      false: {
-        backgroundColor: '$accent10',
-      },
-    },
-  },
-  compoundVariants: [
-    {
-      type: 'popout',
-      hasComments: false,
-      css: {
-        // position: 'unset',
-        // top: 'unset',
-        // right: 'unset',
-        // width: 'auto',
-        // color: '$neutral1',
-        // fontWeight: 500,
-        // fontFamily: 'Inter',
-        // gap: '2px',
-        // padding: '0px 10px',
-        // lineHeight: '24px',
-      },
-    },
-  ],
-});
-
 function Placeholder(props: { hasComments: boolean }) {
   return (
     <div className="editor-placeholder">
@@ -117,23 +66,22 @@ export function createEditorConfig() {
 }
 
 const ComposerContainer = styled('div', {
-  minHeight: 8 * 2 + 20, // default composer height
+  minHeight: 33, // default composer height, 32 + 1px for border
   position: 'relative',
   display: 'flex',
   flex: 1,
   alignItems: 'start',
-  background: '$neutral1',
-  borderBottomLeftRadius: 11,
-  borderBottomRightRadius: 11,
-  padding: '5px 10px',
+  borderBottomLeftRadius: '$radii$1',
+  borderBottomRightRadius: '$radii$1',
+  padding: '$padding$0 $padding$1',
 
   variants: {
     hasComments: {
       true: {
-        borderTop: `1px solid $neutral4`,
+        borderTop: `1px solid $borderColor`,
       },
       false: {
-        borderRadius: 11,
+        borderRadius: '$radii$1',
       },
     },
     type: {
@@ -152,25 +100,25 @@ const ComposerContainer = styled('div', {
 });
 
 const StyledLexicalEditorContainer = styled('div', {
-  borderRadius: 11,
-  width: 'calc(100% - 35px)', // take into account send button
-  color: 'black',
+  borderRadius: '$radii$1',
+  width: 'calc(100% - $sizes$sendButton)', // take into account send button
+  color: '$colors$primaryText',
   marginLeft: 0,
   padding: '0px 0',
-  background: '$neutral3',
+  background: '$colors$composerBackground',
   position: 'relative',
   verticalAlign: 'top',
-  fontSize: '14px',
-  lineHeight: '20px',
-  fontWeight: 400,
+  fontSize: '$fontSize$2',
+  lineHeight: '$lineHeights$1',
+  fontWeight: '$fontWeights$0',
   textAlign: 'left',
   variants: {
     type: {
       popout: {
-        borderTopLeftRadius: 11,
-        borderTopRightRadius: 11,
-        borderBottomLeftRadius: 11,
-        borderBottomRightRadius: 11,
+        borderTopLeftRadius: '$radii$1',
+        borderTopRightRadius: '$radii$1',
+        borderBottomLeftRadius: '$radii$1',
+        borderBottomRightRadius: '$radii$1',
       },
     },
     hasComments: {
@@ -183,10 +131,10 @@ const StyledLexicalEditorContainer = styled('div', {
       type: 'popout',
       hasComments: false,
       css: {
-        borderTopLeftRadius: 11,
-        borderTopRightRadius: 11,
-        borderBottomLeftRadius: 11,
-        borderBottomRightRadius: 11,
+        borderTopLeftRadius: '$radii$1',
+        borderTopRightRadius: '$radii$1',
+        borderBottomLeftRadius: '$radii$1',
+        borderBottomRightRadius: '$radii$1',
       },
     },
   ],
@@ -262,22 +210,24 @@ export function Composer(props: {
 
 .editor-input {
   resize: none;
-  font-size: 14px;
+  font-size: ${theme.fontSize[2].toString()};
+  line-height: ${theme.lineHeights[0].toString()};
   caret-color: ${theme.colors.neutral12};
   position: relative;
   tab-size: 1;
   outline: 0;
-  padding: 10px 10px;
+  padding: ${theme.padding[1].toString()} ${theme.padding[1].toString()};
 }
 
 .editor-placeholder {
-  color: ${theme.colors.neutral10};
+  color: ${theme.colors.secondaryText.toString()};
   overflow: hidden;
   position: absolute;
   text-overflow: ellipsis;
-  top: 10px;
-  left: 10px;
-  font-size: 14px;
+  top: ${theme.padding[1].toString()};
+  left:  ${theme.padding[1].toString()};
+  font-size: ${theme.fontSize[2].toString()};
+  line-height: ${theme.lineHeights[0].toString()};
   user-select: none;
   display: inline-block;
   pointer-events: none;
@@ -290,34 +240,36 @@ export function Composer(props: {
 
 #mentions-typeahead {
   position: fixed;
-  background: ${theme.colors.neutral1};
+  background: ${theme.colors.neutral12};
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
-  border-radius: 6px;
+  border-radius: ${theme.radii[1].toString()};
   z-index: 3;
-  margin: 0 0 0 10px;
+  margin: 0 0 0  ${theme.padding[1].toString()};
 }
 
 #mentions-typeahead ul {
   padding: 0;
   list-style: none;
   margin: 0;
-  border-radius: 8px;
+  border-radius: ${theme.radii[1].toString()};
 }
 
 #mentions-typeahead ul li {
-  padding: 6px 10px;
+  padding: ${theme.padding[0].toString()} ${theme.padding[1].toString()};
   margin: 0;
   min-width: 10ch;
-  font-size: 14px;
+  font-size: ${theme.fontSize[2].toString()};
+  line-height: ${theme.lineHeights[0].toString()};
   outline: none;
   cursor: pointer;
-  border-radius: 6px;
+  border-radius: ${theme.radii[1].toString()};
+  color: ${theme.colors.neutral6.toString()};
 }
 
 #mentions-typeahead ul li.selected {
-  background: ${theme.colors.accent10};
-  font-weight: 500;
-  color: white;
+  background: ${theme.colors.selectionBackground};
+  font-weight: ${theme.fontWeights[1].toString()};
+  color: ${theme.colors.neutral1.toString()};
 }
 
 #mentions-typeahead.bottom_edge {
@@ -339,30 +291,13 @@ export function Composer(props: {
           <MentionsPlugin />
         </StyledLexicalEditorContainer>
       </LexicalComposer>
-      <Tooltip.Root>
-        <StyledComposerSendButton
-          type={props.type}
-          hasComments={props.hasComments}
-          disabled={bodyLength === 0}
-          onClick={(e) => {
-            if (bodyLength > 0) {
-              events.onSend(props.workspaceId, props.threadId);
-            }
-          }}
-        >
-          {props.type === 'popout' && !props.hasComments ? '' : ''}
-          <ArrowUp
-            size={14}
-            color={'white'}
-            weight={'bold'}
-            style={{ position: 'relative', cursor: 'pointer' }}
-          />
-        </StyledComposerSendButton>
-        <Tooltip.Content>
-          Post
-          <Tooltip.Arrow />
-        </Tooltip.Content>
-      </Tooltip.Root>
+      <SendButton
+        bodyLength={bodyLength}
+        hasComments={props.hasComments}
+        workspaceId={props.workspaceId}
+        threadId={props.threadId}
+        type={props.type}
+      />
     </ComposerContainer>
   );
 }

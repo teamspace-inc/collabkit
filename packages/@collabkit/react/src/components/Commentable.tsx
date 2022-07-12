@@ -118,8 +118,19 @@ function _Commentable(props: { children: React.ReactNode }) {
         const x = (e.clientX - rect.left) / rect.width;
         const y = (e.clientY - rect.top) / rect.height;
 
-        const selector = finder(el, { root: ref.current! });
-        console.log('pointer down', x, y, selector);
+        let selector = finder(el, { root: ref.current! });
+        // console.log('pointer down', x, y, selector);
+
+        // annotate selector with img src
+        if (el.tagName === 'IMG') {
+          const src = el.getAttribute('src');
+          if (selector.endsWith('img')) {
+            selector = `${selector}[src="${src}"]`;
+          } else {
+            selector = `img[src="${src}"]`;
+          }
+        }
+
         const target = {
           type: 'commentable',
           workspaceId,
@@ -129,6 +140,9 @@ function _Commentable(props: { children: React.ReactNode }) {
             url: window.location.href.toString(),
           },
         } as const;
+
+        // console.log(target);
+
         events.onPointerDown(e, { target });
       }}
       onMouseOut={(e) => {
@@ -171,7 +185,7 @@ function _Commentable(props: { children: React.ReactNode }) {
         const isViewing = viewingId?.threadId === pinId;
         return (
           <Sticky key={pinId} selector={pin.selector} offset={pin.offset}>
-            <CollabKit.Pin threadId={pinId}></CollabKit.Pin>
+            <CollabKit.Pin pinId={pinId}></CollabKit.Pin>
             {isViewing ? (
               <CollabKit.Thread
                 type="popout"

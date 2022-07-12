@@ -2,24 +2,23 @@ import React, { useState, useRef } from 'react';
 import { Avatar } from './Avatar';
 import { StyledMessage, StyledMessageTimestamp } from './comment/Message';
 import { Name } from './profile/Name';
-import { styled, themeIds, themes } from './UIKit';
+import { styled, theme, themeIds, themes } from './UIKit';
 import { motion } from 'framer-motion';
-import { Profile } from '../constants';
 import { Thread } from './Thread';
 import { useApp } from './App';
 import { useSnapshot } from 'valtio';
 import { useWorkspaceId } from './Workspace';
+import { useWorkspace } from './WorkspaceLoader';
+import { PinTarget } from '../constants';
 
-const StyledIndicator = styled('div', {
-  width: 25,
-  height: 25,
+const StyledPin = styled('div', {
+  width: 'calc($sizes$pinSize + 2px)',
+  height: 'calc($sizes$pinSize + 2px)',
+  borderRadius: 'calc($sizes$pinSize + 2px)',
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'center',
   alignItems: 'center',
-  background: '$accent10',
-  padding: '2px',
-  borderRadius: 25,
   userSelect: 'none',
   border: '2px solid $neutral1',
   cursor: 'pointer',
@@ -40,89 +39,118 @@ const StyledIndicator = styled('div', {
   },
 });
 
-export function Pin(props: { threadId: string }) {
+export function Pin(props: { pinId: string }) {
   const { store, events } = useApp();
-  const { uiState, viewingId } = useSnapshot(store);
+  const { uiState, viewingId, profiles } = useSnapshot(store);
   const { workspaceId } = useWorkspaceId();
   const [showPreview, setShowPreview] = useState(false);
   const [showThread, setShowThread] = useState(false);
   const themeRef = useRef(() => themes[themeIds[Math.floor(Math.random() * themeIds.length)]]);
+  const ref = useRef<HTMLDivElement | null>(null);
 
-  const profile: Profile = { name: 'Namit' };
-  const event = {
-    createdAt: new Date(),
-    body: 'This number looks off? Did we import the right data?',
+  const { workspace } = useWorkspace();
+  const pin = workspace.pins[props.pinId];
+  const profile = pin ? profiles[pin.createdById] : null;
+
+  const firstEventId = workspace.timeline[props.pinId]
+    ? Object.keys(workspace.timeline[props.pinId])[0]
+    : null;
+  const firstEvent = firstEventId ? workspace.timeline[props.pinId][firstEventId] : null;
+
+  const target: PinTarget = {
+    type: 'pin',
+    pinId: props.pinId,
+    workspaceId,
   };
 
   const thread =
     uiState === 'viewing' &&
-    viewingId?.threadId === props.threadId &&
+    viewingId?.threadId === props.pinId &&
     viewingId.workspaceId === workspaceId ? (
       <div style={{ display: 'flex', flexDirection: 'column', width: 280, height: 200 }}>
-        <Thread threadId={props.threadId} />
+        <Thread threadId={props.pinId} />
       </div>
     ) : null;
 
   const preview =
-    !showThread && showPreview ? (
-      <div style={{ position: 'absolute', left: -10, top: -10, width: 240 }}>
+    !showThread && showPreview && profile && firstEvent ? (
+      <div
+        style={{
+          position: 'absolute',
+          left: 0,
+          top: 0,
+          width: theme.sizes.threadPreviewWidth.toString(),
+        }}
+      >
         <div style={{}}>
           <StyledMessage
             ui="preview"
-            style={{ display: 'flex', flexDirection: 'row', width: 240, gap: 10 }}
             onClick={() => {
               setShowThread(!showThread);
             }}
           >
-            <StyledIndicator isActive={false}>
-              <Avatar profile={profile} neutralBackground={showThread} />
-            </StyledIndicator>
+            <StyledPin isActive={false}>
+              <Avatar profile={profile} neutralBackground={showThread} style={{ flexShrink: 0 }} />
+            </StyledPin>
             <div style={{ display: 'flex', flexDirection: 'column', width: 240, gap: 0 }}>
               <Name>
                 {profile.name} <StyledMessageTimestamp>10:00</StyledMessageTimestamp>
               </Name>
-              <div>{event.body}</div>
+              <div>{firstEvent.body}</div>
+              <b style={{ marginTop: 16 }}>Reply</b>
             </div>
           </StyledMessage>
         </div>
       </div>
     ) : null;
 
-  return (
-    <div
-      style={{
-        display: 'flex',
-        maxWidth: '280px',
-        position: 'relative',
-        filter:
-          'drop-shadow(0px 4px 12px rgba(0,0,0,0.1)), drop-shadow(0px 1px 0px rgba(0,0,0,0.2))',
-      }}
-      onMouseOver={() => setShowPreview(true)}
-      onMouseLeave={() => setShowPreview(false)}
-    >
-      <motion.div
-        animate={{ scale: [0, 1.1, 1] }}
-        transition={{ duration: 0.5 }}
+  if (!profile) {
+    console.warn('Pin has no profile');
+  }
+
+  return pin && profile ? (
+    <div ref={ref}>
+      <div
         style={{
-          padding: 10,
-          margin: -10,
+          flexDirection: 'column',
           display: 'flex',
-          flexDirection: 'row',
-          gap: 10,
+          // maxWidth: '280px',
+          position: 'relative',
+          filter:
+            'drop-shadow(0px 4px 12px rgba(0,0,0,0.1)), drop-shadow(0px 1px 0px rgba(0,0,0,0.2))',
         }}
-        className={themeRef.current.toString()}
+        onMouseOver={() => setShowPreview(true)}
+        onMouseLeave={() => setShowPreview(false)}
       >
-        <StyledIndicator
-          isActive={showThread}
-          onClick={() => {
-            showThread && setShowThread(false);
+        <motion.div
+          animate={{ scale: [0, 1.1, 1] }}
+          transition={{ duration: 0.5 }}
+          style={{
+            padding: 10,
+            margin: -10,
+            display: 'flex',
+            flexDirection: 'row',
+            gap: 10,
           }}
+          className={themeRef.current.toString()}
         >
-          <Avatar profile={profile} neutralBackground={showThread} />
-        </StyledIndicator>
-      </motion.div>
-      {thread}
-      {preview}
+          <StyledPin
+            isActive={showThread}
+            onPointerDown={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
+              events.onPointerDown(e, { target });
+            }}
+            // onClick={() => {
+            //   showThread && setShowThread(false);
+            // }}
+          >
+            <Avatar profile={profile} neutralBackground={showThread} />
+          </StyledPin>
+        </motion.div>
+        {thread}
+        {pin.state === 'open' ? preview : null}
+      </div>
     </div>
-  );
+  ) : null;
 }

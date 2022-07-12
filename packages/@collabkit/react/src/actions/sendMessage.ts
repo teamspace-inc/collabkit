@@ -2,9 +2,11 @@ import { Store } from '../constants';
 import { $createTextNode, $getRoot } from 'lexical';
 import { writeMessageToFirebase } from './writeMessageToFirebase';
 
-export async function sendMessage(store: Store, workspaceId: string, threadId: string) {
+export async function sendMessage(store: Store, props: { workspaceId: string; threadId: string }) {
+  const { workspaceId, threadId } = props;
   console.log('sending message', workspaceId, threadId);
-  const { editor, $$body: body } = store.workspaces[workspaceId].composers[threadId];
+  const workspace = store.workspaces[workspaceId];
+  const { editor, $$body: body } = workspace.composers[threadId];
 
   if (body.trim().length === 0) {
     console.warn('tried to send an empty message');
@@ -21,6 +23,11 @@ export async function sendMessage(store: Store, workspaceId: string, threadId: s
       body,
       preview: body,
       type: 'message',
+      ...(workspace.pins[threadId]?.state === 'pending'
+        ? {
+            pin: { ...workspace.pins[threadId] },
+          }
+        : {}),
     });
   } catch (e) {
     console.error(' failed to send message ', e);

@@ -1,9 +1,9 @@
-import { push, serverTimestamp } from 'firebase/database';
-import { Event, Store } from '../constants';
+import { push, set, serverTimestamp, ref } from 'firebase/database';
+import { DB, Event, Store } from '../constants';
 import { getConfig, timelineRef, actions } from './index';
 
-export async function resolve(store: Store, workspaceId: string, threadId: string) {
-  const { userId } = getConfig(store);
+export async function resolveThread(store: Store, workspaceId: string, threadId: string) {
+  const { appId, userId } = getConfig(store);
 
   // todo optimistic send
   try {
@@ -21,6 +21,11 @@ export async function resolve(store: Store, workspaceId: string, threadId: strin
         ...event,
         createdAt: +Date.now(),
       };
+      try {
+        set(ref(DB, `pins/${appId}/${workspaceId}/${threadId}/state`), 'resolved');
+      } catch (e) {
+        console.error('failed to set pin state', e);
+      }
       actions.stopTyping(store, { target: { type: 'composer', workspaceId, threadId } });
     } else {
       console.error('CollabKit: failed to resolve thread');

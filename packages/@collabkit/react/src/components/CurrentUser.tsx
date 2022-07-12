@@ -6,14 +6,14 @@ import { styled } from './UIKit';
 
 const StyledUser = styled('div', {
   display: 'flex',
-  gap: '10px',
+  gap: '$space$2',
 });
 const StyledUserName = styled('div', {
-  fontWeight: 500,
+  fontWeight: '$fontWeights$1',
 });
 
 const StyledUserEmail = styled('div', {
-  color: '$neutral11',
+  color: '$colors$secondaryText',
 });
 
 export function CurrentUser() {
@@ -26,7 +26,7 @@ export function CurrentUser() {
     const profile = profiles[userId];
     return profile ? (
       <StyledUser>
-        <Avatar profile={profile} />
+        <Avatar style={{ width: 24, height: 24 }} profile={profile} />
         <StyledUserName>{profile.name}</StyledUserName>
         <StyledUserEmail>{profile.email}</StyledUserEmail>
       </StyledUser>

@@ -16,6 +16,8 @@ import {
   grass,
   orange,
   brown,
+  grayDark,
+  blueDark,
 } from '@radix-ui/colors';
 
 const neutral = {
@@ -33,9 +35,81 @@ const neutral = {
   neutral12: '$gray12',
 };
 
+const neutralDark = {
+  neutral1: '$grayDark1',
+  neutral2: '$grayDark2',
+  neutral3: '$grayDark3',
+  neutral4: '$grayDark4',
+  neutral5: '$grayDark5',
+  neutral6: '$grayDark6',
+  neutral7: '$grayDark7',
+  neutral8: '$grayDark8',
+  neutral9: '$grayDark9',
+  neutral10: '$grayDark10',
+  neutral11: '$grayDark11',
+  neutral12: '$grayDark12',
+};
+
+export const AVATAR_SIZE = 24;
+
 export const { styled, css, theme } = createStitches({
   theme: {
+    fontSize: {
+      ['0']: '11px',
+      ['1']: '12px',
+      ['2']: '13px',
+      ['3']: '16px',
+    },
+    lineHeights: {
+      ['0']: '16px',
+      ['1']: '16px',
+      ['2']: '16px',
+    },
+    fontWeights: {
+      ['0']: 400,
+      ['1']: 700,
+      ['2']: 700,
+    },
+    radii: {
+      ['0']: '4px',
+      ['1']: '12px',
+      ['2']: '16px',
+    },
+    padding: {
+      ['0']: '6px',
+      ['1']: '8px',
+      ['2']: '16px',
+      ['3']: '24px',
+      ['4']: '32px',
+    },
+    sizes: {
+      sendButton: '26px',
+      threadWidth: '260px',
+      threadPreviewWidth: '248px',
+      pinSize: '24px',
+    },
+    space: {
+      ['0']: '0px',
+      ['1']: '4px',
+      ['2']: '8px',
+      ['3']: '12px',
+      ['4']: '16px',
+    },
     colors: {
+      primaryText: '$neutral12',
+      secondaryText: '$neutral9',
+
+      typingDot: '$neutral9',
+
+      primaryButtonBackground: '$neutral1',
+      composerButtonBackground: '$accent10',
+      composerBackground: 'transparent',
+
+      bubbleHoverBackground: '$neutral4',
+      selectionBackground: '$accent10',
+
+      borderColor: '$neutral4',
+
       ...gray,
       ...green,
 
@@ -54,6 +128,26 @@ export const { styled, css, theme } = createStitches({
 
       ...neutral,
     },
+  },
+});
+
+export const darkTheme = createTheme({
+  colors: {
+    ...grayDark,
+    ...blueDark,
+    accent1: '$blueDark1',
+    accent2: '$blueDark2',
+    accent3: '$blueDark3',
+    accent4: '$blueDark4',
+    accent5: '$blueDark5',
+    accent6: '$blueDark6',
+    accent7: '$blueDark7',
+    accent8: '$blueDark8',
+    accent9: '$blueDark9',
+    accent10: '$blueDark10',
+    accent11: '$blueDark11',
+    accent12: '$blueDark12',
+    ...neutralDark,
   },
 });
 

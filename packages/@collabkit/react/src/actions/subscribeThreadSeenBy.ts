@@ -14,15 +14,15 @@ export function subscribeThreadSeenBy(
     ref(DB, `/views/seenBy/${props.appId}/${props.workspaceId}/${props.threadId}`),
     orderByChild('seenUntilId')
   );
-  store.subs[`${props.workspaceId}-${props.threadId}-threadSeenBy`] ||= onChildMoved(
-    seenByQuery,
-    (snapshot) => {
-      const userId = snapshot.key;
-      if (!userId) {
-        return;
-      }
-      store.workspaces[props.workspaceId].seenBy[props.threadId] ||= {};
-      store.workspaces[props.workspaceId].seenBy[props.threadId][userId] = snapshot.val();
+  if (store.subs[seenByQuery.toString()]) {
+    return;
+  }
+  store.subs[`${seenByQuery.toString()}`] ||= onChildMoved(seenByQuery, (snapshot) => {
+    const userId = snapshot.key;
+    if (!userId) {
+      return;
     }
-  );
+    store.workspaces[props.workspaceId].seenBy[props.threadId] ||= {};
+    store.workspaces[props.workspaceId].seenBy[props.threadId][userId] = snapshot.val();
+  });
 }

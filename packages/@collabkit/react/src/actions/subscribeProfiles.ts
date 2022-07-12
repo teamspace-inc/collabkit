@@ -14,7 +14,9 @@ export async function subscribeProfiles(store: Store) {
     }
   };
 
-  store.subs[`profile#added`] = onChildAdded(ref(DB, `/profiles/${appId}`), onChange, onError);
+  const profilesRef = ref(DB, `/profiles/${appId}`);
 
-  store.subs[`profile#changed`] = onChildChanged(ref(DB, `/profiles/${appId}`), onChange, onError);
+  store.subs[`${profilesRef.toString()}#added`] = onChildAdded(profilesRef, onChange, onError);
+
+  store.subs[`${profilesRef.toString()}#changed`] = onChildChanged(profilesRef, onChange, onError);
 }

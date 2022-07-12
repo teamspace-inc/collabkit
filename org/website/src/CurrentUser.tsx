@@ -9,7 +9,8 @@ export function CurrentUser() {
 
   return (
     <HStack style={{ gap: '1rem', alignItems: 'center' }}>
-      <img src={user?.photoURL || ''} /> {user?.displayName} {user?.email ?? 'Anonymous'}
+      <img style={{ width: '25', height: '25' }} src={user?.photoURL || ''} /> {user?.displayName}{' '}
+      {user?.email ?? 'Anonymous'}
       <Button type="secondary" onClick={() => signOut(auth)}>
         Sign Out
       </Button>
