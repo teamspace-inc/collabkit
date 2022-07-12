@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { Avatar } from './Avatar';
 import { StyledMessage, StyledMessageTimestamp } from './comment/Message';
 import { Name } from './profile/Name';
-import { styled, themeIds, themes } from './UIKit';
+import { styled, theme, themeIds, themes } from './UIKit';
 import { motion } from 'framer-motion';
 import { Thread } from './Thread';
 import { useApp } from './App';
@@ -74,23 +74,30 @@ export function Pin(props: { pinId: string }) {
 
   const preview =
     !showThread && showPreview && profile && firstEvent ? (
-      <div style={{ position: 'absolute', left: 0, top: 0, width: 240 }}>
+      <div
+        style={{
+          position: 'absolute',
+          left: 0,
+          top: 0,
+          width: theme.sizes.threadPreviewWidth.toString(),
+        }}
+      >
         <div style={{}}>
           <StyledMessage
-            ui="freeform"
-            style={{ display: 'flex', flexDirection: 'row', width: 240, gap: 8 }}
+            ui="preview"
             onClick={() => {
               setShowThread(!showThread);
             }}
           >
             <StyledPin isActive={false}>
-              <Avatar profile={profile} neutralBackground={showThread} />
+              <Avatar profile={profile} neutralBackground={showThread} style={{ flexShrink: 0 }} />
             </StyledPin>
             <div style={{ display: 'flex', flexDirection: 'column', width: 240, gap: 0 }}>
               <Name>
                 {profile.name} <StyledMessageTimestamp>10:00</StyledMessageTimestamp>
               </Name>
               <div>{firstEvent.body}</div>
+              <b style={{ marginTop: 16 }}>Reply</b>
             </div>
           </StyledMessage>
         </div>

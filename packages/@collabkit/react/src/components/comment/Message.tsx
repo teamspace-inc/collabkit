@@ -31,11 +31,15 @@ export const StyledMessage = styled('div', {
         borderRadius: '$radii$1',
       },
       preview: {
+        marginTop: -16,
+        marginLeft: -16,
         cursor: 'pointer',
-        padding: '$padding$0 $padding$0',
+        padding: '$padding$2',
         background: '$neutral2',
         borderRadius: '$radii$1',
-        gap: 0,
+        flexDirection: 'row',
+        width: '$sizes$threadPreviewWidth',
+        gap: '$space$2',
       },
     },
     type: {

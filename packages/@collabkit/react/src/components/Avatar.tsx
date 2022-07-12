@@ -8,6 +8,7 @@ export const avatarStyles = css({
   width: '100%',
   height: '100%',
   flexShrink: 0,
+  aspectRatio: 1,
   borderRadius: '2000px',
   fontSize: '$fontSize$0',
   fontWeight: '$fontWeights$1',
