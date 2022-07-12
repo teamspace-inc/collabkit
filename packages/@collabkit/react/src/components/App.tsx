@@ -31,28 +31,28 @@ export function App(props: {
   mentions: MentionProps;
   children: React.ReactNode;
 }) {
-  const store = useRef(createStore());
-  const events = useRef(createEvents(store.current));
+  const [context, setContext] = useState<{ store: Store; events: Events } | null>(null);
 
-  const [isReady, setIsReady] = useState(false);
   useLayoutEffect(() => {
-    actions.setup(store.current, events.current, {
+    const store = createStore();
+    const events = createEvents(store);
+    actions.setup(store, events, {
       appId: props.appId,
       apiKey: props.token,
       mode: 'UNSECURED',
     });
-    actions.identify(store.current, props.identity);
-    actions.mentions(store.current, props.mentions);
-    setIsReady(true);
+    actions.identify(store, props.identity);
+    actions.mentions(store, props.mentions);
+    setContext({ store, events });
   }, [props.token]);
 
-  if (!isReady) {
+  if (!context) {
     return null;
   }
 
   return (
     <AppContext.Provider
-      value={{ token: props.token, store: store.current, events: events.current }}
+      value={{ token: props.token, store: context.store, events: context.events }}
     >
       {props.children}
     </AppContext.Provider>
