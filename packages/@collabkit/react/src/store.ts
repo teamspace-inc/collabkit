@@ -19,6 +19,7 @@ export function createStore() {
     reactingId: null,
     viewingId: null,
     composingId: null,
+    hoveringId: null,
     workspaces: {},
     profiles: {},
     subs: {},

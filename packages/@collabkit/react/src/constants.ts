@@ -192,6 +192,10 @@ export interface Store {
   token: string;
   selectedId: null | Target;
   focusedId: null | Target;
+  hoveringId: null | Target;
+  reactingId: null | Target;
+  composingId: null | ThreadTarget;
+  viewingId: StickyThreadTarget | null;
   config: {
     identify: IdentifyProps | null | undefined;
     setup: SetupProps | null | undefined;
@@ -205,8 +209,5 @@ export interface Store {
   };
   appState: 'blank' | 'config' | 'ready';
   uiState: 'idle' | 'selecting' | 'composing' | 'viewing';
-  reactingId: null | Target;
-  composingId: null | ThreadTarget;
-  viewingId: StickyThreadTarget | null;
   subs: { [subId: string]: Unsubscribe };
 }

@@ -12,9 +12,9 @@ import { useWorkspace } from './WorkspaceLoader';
 import { PinTarget } from '../constants';
 
 const StyledPin = styled('div', {
-  width: 25,
-  height: 25,
-  borderRadius: 25,
+  width: 'calc($sizes$pinSize + 2px)',
+  height: 'calc($sizes$pinSize + 2px)',
+  borderRadius: 'calc($sizes$pinSize + 2px)',
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'center',
@@ -74,21 +74,17 @@ export function Pin(props: { pinId: string }) {
 
   const preview =
     !showThread && showPreview && profile && firstEvent ? (
-      <div style={{ position: 'absolute', left: -10, top: -10, width: 240 }}>
+      <div style={{ position: 'absolute', left: 0, top: 0, width: 240 }}>
         <div style={{}}>
           <StyledMessage
             ui="freeform"
-            style={{ display: 'flex', flexDirection: 'row', width: 240, gap: 10 }}
+            style={{ display: 'flex', flexDirection: 'row', width: 240, gap: 8 }}
             onClick={() => {
               setShowThread(!showThread);
             }}
           >
             <StyledPin isActive={false}>
-              <Avatar
-                style={{ height: 25, width: 25 }}
-                profile={profile}
-                neutralBackground={showThread}
-              />
+              <Avatar profile={profile} neutralBackground={showThread} />
             </StyledPin>
             <div style={{ display: 'flex', flexDirection: 'column', width: 240, gap: 0 }}>
               <Name>
@@ -138,15 +134,11 @@ export function Pin(props: { pinId: string }) {
               e.preventDefault();
               events.onPointerDown(e, { target });
             }}
-            onClick={() => {
-              showThread && setShowThread(false);
-            }}
+            // onClick={() => {
+            //   showThread && setShowThread(false);
+            // }}
           >
-            <Avatar
-              profile={profile}
-              neutralBackground={showThread}
-              style={{ height: 25, width: 25 }}
-            />
+            <Avatar profile={profile} neutralBackground={showThread} />
           </StyledPin>
         </motion.div>
         {thread}

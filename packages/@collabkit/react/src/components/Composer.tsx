@@ -263,12 +263,13 @@ export function Composer(props: {
   outline: none;
   cursor: pointer;
   border-radius: ${theme.radii[1].toString()};
+  color: ${theme.colors.neutral6.toString()};
 }
 
 #mentions-typeahead ul li.selected {
   background: ${theme.colors.selectionBackground};
   font-weight: ${theme.fontWeights[1].toString()};
-  color: white;
+  color: ${theme.colors.neutral1.toString()};
 }
 
 #mentions-typeahead.bottom_edge {
