@@ -45,6 +45,9 @@ export function Pin(props: { pinId: string }) {
   const { store, events } = useApp();
   const { viewingId, hoveringId, profiles } = useSnapshot(store);
   const themeRef = useRef(() => themes[themeIds[Math.floor(Math.random() * themeIds.length)]]);
+   const [currentTheme] = useState(
+    () => themes[themeIds[Math.floor(Math.random() * themeIds.length)]]
+  );
 
   const { workspace, workspaceId } = useWorkspace();
   const pin = workspace.pins[props.pinId];
@@ -127,7 +130,7 @@ export function Pin(props: { pinId: string }) {
             flexDirection: 'row',
             gap: 10,
           }}
-          className={themeRef.current.toString()}
+          className={currentTheme.className}
         >
           <StyledPin
             onPointerDown={(e) => {
