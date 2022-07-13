@@ -72,8 +72,8 @@ export function Pin(props: { pinId: string }) {
       <div
         style={{
           position: 'absolute',
-          left: 0,
-          top: 0,
+          left: 2,
+          top: 2,
           width: theme.sizes.threadPreviewWidth.toString(),
         }}
       >
@@ -125,9 +125,10 @@ export function Pin(props: { pinId: string }) {
           animate={{ scale: [0.9, 1.1, 1] }}
           transition={{ duration: 0.5 }}
           style={{
-            padding: 6,
-            margin: -10,
-            marginTop: -8,
+            // padding: 10,
+            // margin: -10,
+            // marginTop: -6,
+            // marginLeft: -6,
             display: 'flex',
             flexDirection: 'row',
             gap: 10,
@@ -144,7 +145,7 @@ export function Pin(props: { pinId: string }) {
             //   showThread && setShowThread(false);
             // }}
           >
-            <Avatar profile={profile} size={28} />
+            <Avatar profile={profile} size={24} />
           </StyledPin>
         </motion.div>
         {pin.state === 'open' ? preview : null}

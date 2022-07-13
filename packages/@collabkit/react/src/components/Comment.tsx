@@ -3,7 +3,7 @@ import { useSnapshot } from 'valtio';
 
 import { CommentType, Event, Profile, ThreadType } from '../constants';
 import { Avatar } from './Avatar';
-import { AVATAR_SIZE, styled, theme } from './UIKit';
+import { styled, theme } from './UIKit';
 import { TargetContext } from './Target';
 import { timeDifference } from '../utils/timeDifference';
 import { isSameComment } from '../utils/isSameComment';
@@ -118,7 +118,8 @@ export function Comment(props: {
       {showProfile && (
         <Avatar
           profile={props.profile}
-          style={{ position: 'relative', width: AVATAR_SIZE, height: AVATAR_SIZE }}
+          size={+theme.sizes.avatarSize}
+          style={{ position: 'relative' }}
         />
       )}
       <div style={{ display: 'flex', flexDirection: 'column' }}>
