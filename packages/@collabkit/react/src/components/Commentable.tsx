@@ -173,7 +173,8 @@ export function Commentable(props: { children: React.ReactNode }) {
       {pinIds.map((pinId) => {
         const pin = workspace.pins[pinId];
         const isViewing = viewingId?.type === 'pin' && viewingId?.pinId === pinId;
-        return (
+
+        return pin.state !== 'resolved' ? (
           <Sticky key={pinId} selector={pin.selector} offset={pin.offset}>
             <Pin pinId={pinId} />
             {isViewing ? (
@@ -184,7 +185,7 @@ export function Commentable(props: { children: React.ReactNode }) {
               />
             ) : null}
           </Sticky>
-        );
+        ) : null;
       })}
       {props.children}
     </span>
