@@ -118,9 +118,9 @@ export type WithID<T> = T & {
 };
 
 export type IdentifyProps = {
-  workspaceId: string;
+  // workspaceId: string;
   userId: string;
-  workspaceName?: string | null;
+  // workspaceName?: string | null;
   name?: string | null;
   email?: string | null;
   avatar?: string | null;
@@ -174,6 +174,7 @@ export interface Pin {
 }
 
 export interface Workspace {
+  profiles: { [userId: string]: boolean };
   name: string;
   pins: { [threadId: string]: Pin };
   inbox: { [threadId: string]: WithID<WithName<Event>> };
@@ -196,6 +197,7 @@ export interface Store {
     identify: IdentifyProps | null | undefined;
     setup: SetupProps | null | undefined;
     mentions: MentionProps | null | undefined;
+    workspace: { id: string; name?: string } | null | undefined;
   };
   profiles: { [profileId: string]: Profile };
   workspaces: {

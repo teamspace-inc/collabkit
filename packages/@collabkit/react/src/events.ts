@@ -20,7 +20,6 @@ export function createEvents(store: Store) {
 
       await actions.authenticate(store);
       await actions.saveProfile(store);
-      await actions.subscribeProfiles(store);
     },
 
     onTimelineEventAdded: (snapshot: DataSnapshot) => {

@@ -22,20 +22,14 @@ export async function authenticate(store: Store) {
       const result = await userCredential.user.getIdTokenResult();
       const mode = result.claims.mode;
 
-      console.log('mode', mode);
-      console.log('signed in', userCredential);
-    } catch (e) {
-      console.error('failed to sign in', e);
-    }
+      console.log('CollabKit authenticated', userCredential, mode);
 
-    // todo handle spotty network
-    try {
-      // this should be an onValue sub
       actions.subscribeProfiles(store);
+      actions.subscribeWorkspace(store);
     } catch (e) {
-      console.error('collabkit.setup failed', e);
+      console.error('CollabKit: failed to sign in', e);
     }
   } else {
-    console.error('failed to auth', auth);
+    console.error('CollabKit: failed to auth', auth);
   }
 }

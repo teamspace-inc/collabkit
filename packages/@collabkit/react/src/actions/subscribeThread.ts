@@ -5,7 +5,7 @@ import { ref as valtioRef } from 'valtio';
 import { getConfig } from './index';
 import { subscribeThreadSeenBy } from './subscribeThreadSeenBy';
 import { subscribeThreadIsTyping } from './subscribeThreadIsTyping';
-import { subscribeToTimeline } from './subscribeToTimeline';
+import { subscribeTimeline } from './subscribeToTimeline';
 
 export async function subscribeThread(
   store: Store,
@@ -22,7 +22,7 @@ export async function subscribeThread(
 
   const { appId, userId } = getConfig(store);
 
-  subscribeToTimeline(store, props);
+  subscribeTimeline(store, props);
   subscribeThreadIsTyping(store, props.workspaceId, props.threadId);
 
   // we could probably make this more efficient by only subscribing to it when the thread is visible.

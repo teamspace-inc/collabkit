@@ -1,7 +1,6 @@
 import { CollabKitProvider } from './components/Provider';
 import { Debug } from './components/Debug';
 import { Thread } from './components/Thread';
-import { Workspace } from './components/Workspace';
 import { Button } from './components/Button';
 import { withComments } from './components/withComments';
 import { Inbox } from './components/Inbox';
@@ -15,7 +14,6 @@ import { PopoverThread } from './components/PopoverThread';
 
 export {
   CollabKitProvider as Provider,
-  Workspace,
   Commentable,
   CurrentUser,
   Thread,

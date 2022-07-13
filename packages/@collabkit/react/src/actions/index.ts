@@ -90,22 +90,22 @@ export function getConfig(store: Store) {
   }
 
   const appId = config.setup.appId;
-  const workspaceId = config.identify?.workspaceId;
   const apiKey = config.setup.apiKey;
   const mode = config.setup.mode;
   const userId = config.identify?.userId;
+  const workspaceId = config.workspace?.id;
 
-  if (!appId || !workspaceId || !apiKey || !mode || !userId) {
+  if (!appId || !apiKey || !mode || !userId || !workspaceId) {
     console.log({
       appId,
-      workspaceId,
       apiKey,
       mode,
       userId,
+      workspaceId,
     });
     throw new Error('Did you forget to call `CollabKit.setup`?');
   }
-  return { appId, workspaceId, apiKey, mode, userId };
+  return { appId, apiKey, mode, userId, workspaceId };
 }
 
 export const actions = {
@@ -123,7 +123,7 @@ export const actions = {
     async (store: Store, props: { target: ComposerTarget }) => {
       const { config } = store;
 
-      if (!config.setup || !config.identify?.workspaceId) {
+      if (!config.setup || !config.identify?.userId) {
         return;
       }
 
