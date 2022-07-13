@@ -14,6 +14,7 @@ import { Commentable } from './components/Commentable';
 import { Pin } from './components/Pin';
 import { IdentifyProps, Mention } from './constants';
 import { MentionProps } from './constants';
+import { PopoverThread } from './components/PopoverThread';
 
 export {
   App as CollabKitProvider,
@@ -23,6 +24,7 @@ export {
   Thread,
   Button,
   FloatingButton,
+  PopoverThread,
   Pin,
   Inbox,
   Debug,
@@ -32,21 +34,3 @@ export {
   mentions,
 };
 export type { IdentifyProps, MentionProps, Mention };
-
-/** @depracated use the named exports */
-export const CollabKit = {
-  App,
-  Workspace,
-  Commentable,
-  CurrentUser,
-  Thread,
-  Button,
-  FloatingButton,
-  Pin,
-  Inbox,
-  Debug,
-  withComments,
-  setup,
-  identify,
-  mentions,
-};

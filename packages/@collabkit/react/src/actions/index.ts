@@ -30,6 +30,9 @@ import { subscribePins } from './subscribePins';
 import { subscribeWorkspace } from './subscribeWorkspace';
 import { subscribeProfiles } from './subscribeProfiles';
 import { removePendingPins } from './removePendingPins';
+import { hover } from './hover';
+import { unhover } from './unhover';
+import { viewThread } from './viewThread';
 
 export function timelineRef(store: Store, workspaceId: string, threadId: string) {
   if (!store.config.setup?.appId) {
@@ -195,4 +198,10 @@ export const actions = {
   placePinAndStartComposingThread,
 
   removePendingPins,
+
+  hover,
+
+  unhover,
+
+  viewThread,
 };

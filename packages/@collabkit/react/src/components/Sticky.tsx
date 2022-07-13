@@ -5,6 +5,9 @@ export const StyledStickyContainer = styled('div', {
   position: 'fixed',
   left: 0,
   top: 0,
+  display: 'flex',
+  flexDirection: 'row',
+  gap: '8px',
 });
 
 export function calculatePosition(node: Element, offset: { x: number; y: number }) {

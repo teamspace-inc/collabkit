@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { useSnapshot } from 'valtio';
 
-import { Event, Profile } from '../constants';
+import { CommentType, Event, Profile, ThreadType } from '../constants';
 import { Avatar } from './Avatar';
-import { AVATAR_SIZE, styled, theme } from './UIKit';
+import { styled, theme } from './UIKit';
 import { TargetContext } from './Target';
 import { timeDifference } from '../utils/timeDifference';
 import { isSameComment } from '../utils/isSameComment';
@@ -21,10 +21,7 @@ export const StyledCommentContainer = styled('div', {
   display: 'flex',
   gap: '$space$2',
   position: 'relative',
-  // enough space for the react button
-  // with bubbles on
   maxWidth: 'calc(100% - $padding$1)',
-  // alignmentBaseline: 'hanging',
   variants: {
     ui: {
       bubbles: {
@@ -38,16 +35,9 @@ export const StyledCommentContainer = styled('div', {
         padding: '$padding$1 $padding$2',
       },
     },
-    threadType: {
-      inline: {},
-      popout: {},
-    },
     type: {
-      default: {
-        // padding: '$padding$0 $padding$1 $padding$0',
-      },
+      default: {},
       'inline-start': {
-        // padding: '$padding$0 $padding$1 1px',
         paddingBottom: 0,
       },
       inline: {
@@ -57,11 +47,8 @@ export const StyledCommentContainer = styled('div', {
       'inline-end': {
         paddingTop: 0,
         paddingBottom: 0,
-        // padding: '1px $padding$1 $padding$0',
       },
-      system: {
-        // padding: '$padding$0 $padding$1 $padding$0',
-      },
+      system: {},
     },
   },
 });
@@ -74,16 +61,15 @@ export function Comment(props: {
   event: Event;
   profile: Profile;
   rootRef: React.RefObject<HTMLDivElement>;
-  scrollRef: React.RefObject<HTMLDivElement>;
-  type: 'default' | 'inline' | 'inline-start' | 'inline-end';
-  threadType: 'inline' | 'popout';
+  scrollRef?: React.RefObject<HTMLDivElement>;
+  type: CommentType;
+  threadType: ThreadType;
 }) {
   const ref = useRef(null);
   const { store, events } = useApp();
   if (!store || !events) {
     return null;
   }
-  const [isHovering, setIsHovering] = useState(false);
   const { reactingId } = useSnapshot(store);
   const { target } = useContext(TargetContext);
 
@@ -91,7 +77,12 @@ export function Comment(props: {
     return null;
   }
 
-  const isIntersecting = useIsIntersecting({ ref, root: props.scrollRef.current }, []);
+  // note this means a Comment which has been passed a scrollRef
+  // or not, cannot have this changed as it will violate the
+  // rules of hook
+  const isIntersecting = props.scrollRef
+    ? useIsIntersecting({ ref, root: props.scrollRef.current }, [])
+    : false;
 
   useEffect(() => {
     if (isIntersecting) events.onSeen({ target });
@@ -120,15 +111,15 @@ export function Comment(props: {
       style={isSameComment(reactingId, target) ? zStyles : {}}
       ui="freeform"
       type={props.type}
-      threadType={props.threadType}
-      onMouseOver={() => setIsHovering(true)}
-      onMouseOut={() => setIsHovering(false)}
+      onMouseOver={(e) => events.onMouseOver(e, { target })}
+      onMouseOut={(e) => events.onMouseOver(e, { target })}
       ref={ref}
     >
       {showProfile && (
         <Avatar
           profile={props.profile}
-          style={{ position: 'relative', width: AVATAR_SIZE, height: AVATAR_SIZE }}
+          size={+theme.sizes.avatarSize}
+          style={{ position: 'relative' }}
         />
       )}
       <div style={{ display: 'flex', flexDirection: 'column' }}>

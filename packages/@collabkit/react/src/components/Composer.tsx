@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Profile, Store, Target, Workspace } from '../constants';
+import { Profile, Store, Target, ThreadType, Workspace } from '../constants';
 import { styled, theme } from './UIKit';
 import { EditorState, $getRoot } from 'lexical';
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
@@ -48,12 +48,8 @@ function onError(error: any) {
   console.error(error);
 }
 
-function Placeholder(props: { hasComments: boolean }) {
-  return (
-    <div className="editor-placeholder">
-      {props.hasComments ? 'Reply or add others with @' : 'Add a new comment'}
-    </div>
-  );
+function Placeholder(props: { children: React.ReactNode }) {
+  return <div className="editor-placeholder">{props.children}</div>;
 }
 
 export function createEditorConfig() {
@@ -66,7 +62,7 @@ export function createEditorConfig() {
 }
 
 const ComposerContainer = styled('div', {
-  minHeight: 33, // default composer height, 32 + 1px for border
+  minHeight: 36, // default composer height, 32 + 1px for border
   position: 'relative',
   display: 'flex',
   flex: 1,
@@ -74,29 +70,7 @@ const ComposerContainer = styled('div', {
   borderBottomLeftRadius: '$radii$1',
   borderBottomRightRadius: '$radii$1',
   padding: '$padding$0 $padding$1',
-
-  variants: {
-    hasComments: {
-      true: {
-        borderTop: `1px solid $borderColor`,
-      },
-      false: {
-        borderRadius: '$radii$1',
-      },
-    },
-    type: {
-      popout: {},
-    },
-  },
-  // compoundVariants: [
-  //   {
-  //     type: 'popout',
-  //     hasComments: false,
-  //     css: {
-  //       minHeight: 8 * 2 + 20 + 60,
-  //     },
-  //   },
-  // ],
+  background: '$neutral1',
 });
 
 const StyledLexicalEditorContainer = styled('div', {
@@ -112,42 +86,16 @@ const StyledLexicalEditorContainer = styled('div', {
   lineHeight: '$lineHeights$1',
   fontWeight: '$fontWeights$0',
   textAlign: 'left',
-  variants: {
-    type: {
-      popout: {
-        borderTopLeftRadius: '$radii$1',
-        borderTopRightRadius: '$radii$1',
-        borderBottomLeftRadius: '$radii$1',
-        borderBottomRightRadius: '$radii$1',
-      },
-    },
-    hasComments: {
-      true: {},
-      false: {},
-    },
-  },
-  compoundVariants: [
-    {
-      type: 'popout',
-      hasComments: false,
-      css: {
-        borderTopLeftRadius: '$radii$1',
-        borderTopRightRadius: '$radii$1',
-        borderBottomLeftRadius: '$radii$1',
-        borderBottomRightRadius: '$radii$1',
-      },
-    },
-  ],
 });
 
 export function Composer(props: {
   profile?: Profile;
   workspaceId: string;
   threadId: string;
-  type: 'popout' | undefined;
+  threadType?: ThreadType;
   isFloating: boolean;
   workspace: Workspace;
-  hasComments: boolean;
+  placeholder: React.ReactNode | string;
   style?: React.CSSProperties;
   onHeightChange: (height: number) => void;
 }) {
@@ -186,11 +134,9 @@ export function Composer(props: {
   }
 
   return (
-    <ComposerContainer style={props.style} hasComments={props.hasComments} type={props.type}>
+    <ComposerContainer style={props.style}>
       <LexicalComposer initialConfig={initialConfig}>
         <StyledLexicalEditorContainer
-          type={props.type}
-          hasComments={props.hasComments}
           className="editor-container"
           ref={editorContainerRef}
           onFocus={(e) => events.onFocus(e, { target })}
@@ -279,7 +225,7 @@ export function Composer(props: {
           </style>
           <PlainTextPlugin
             contentEditable={<ContentEditable className="editor-input" />}
-            placeholder={<Placeholder hasComments={props.hasComments} />}
+            placeholder={<Placeholder>{props.placeholder}</Placeholder>}
           />
           <OnChangePlugin
             onChange={(editorState) => {
@@ -293,10 +239,8 @@ export function Composer(props: {
       </LexicalComposer>
       <SendButton
         bodyLength={bodyLength}
-        hasComments={props.hasComments}
         workspaceId={props.workspaceId}
         threadId={props.threadId}
-        type={props.type}
       />
     </ComposerContainer>
   );

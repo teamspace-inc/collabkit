@@ -29,7 +29,6 @@ export type Target =
   | FloatingCommentButtonTarget
   | CommentableContainer
   | Commentable
-  | StickyThreadTarget
   | PinTarget;
 
 export type Commentable = {
@@ -37,6 +36,10 @@ export type Commentable = {
   workspaceId: string;
   pin: BasicPinProps;
 };
+
+export type CommentType = 'default' | 'inline-start' | 'inline' | 'inline-end';
+
+export type ThreadType = 'inline' | 'popover';
 
 export type BasicPinProps = {
   selector: string;
@@ -57,13 +60,6 @@ export type FloatingCommentButtonTarget = { type: 'floatingCommentButton' };
 export type ComposerTarget = { type: 'composer'; threadId: string; workspaceId: string };
 
 export type ThreadTarget = { type: 'thread'; threadId: string; workspaceId: string };
-
-export type StickyThreadTarget = {
-  type: 'stickyThread';
-  threadId: string;
-  workspaceId: string;
-  pin: { selector: string; url: string; offset?: { x: number; y: number } };
-};
 
 export type CommentButtonTarget = { type: 'commentButton'; threadId: string; workspaceId: string };
 
@@ -195,7 +191,7 @@ export interface Store {
   hoveringId: null | Target;
   reactingId: null | Target;
   composingId: null | ThreadTarget;
-  viewingId: StickyThreadTarget | null;
+  viewingId: null | Target;
   config: {
     identify: IdentifyProps | null | undefined;
     setup: SetupProps | null | undefined;

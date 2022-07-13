@@ -1,33 +1,27 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { Avatar } from './Avatar';
 import { StyledMessage, StyledMessageTimestamp } from './comment/Message';
 import { Name } from './profile/Name';
 import { styled, theme, themeIds, themes } from './UIKit';
 import { motion } from 'framer-motion';
-import { Thread } from './Thread';
 import { useApp } from './App';
 import { useSnapshot } from 'valtio';
 import { useWorkspace } from '../hooks/useWorkspace';
 import { PinTarget } from '../constants';
 
 const StyledPin = styled('div', {
-  width: 'calc($sizes$pinSize + 2px)',
-  height: 'calc($sizes$pinSize + 2px)',
-  borderRadius: 'calc($sizes$pinSize + 2px)',
+  width: '$sizes$pinSize',
+  height: '$sizes$pinSize',
+  borderRadius: '$radii$pin',
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'center',
   alignItems: 'center',
   userSelect: 'none',
-  border: '2px solid $neutral1',
+  border: '2px solid $colors$pinBorderColor',
   cursor: 'pointer',
 
   variants: {
-    isActive: {
-      true: {
-        background: '$neutral12',
-      },
-    },
     effect: {
       flat: {},
       sticker: {
@@ -38,15 +32,21 @@ const StyledPin = styled('div', {
   },
 });
 
+const StyledPinContainer = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '8px',
+  // so the pin is centered
+  marginTop: -12,
+  marginLeft: -12,
+});
+
 export function Pin(props: { pinId: string }) {
   const { store, events } = useApp();
-  const { uiState, viewingId, profiles } = useSnapshot(store);
-  const [showPreview, setShowPreview] = useState(false);
-  const [showThread, setShowThread] = useState(false);
+  const { viewingId, hoveringId, profiles } = useSnapshot(store);
   const [currentTheme] = useState(
     () => themes[themeIds[Math.floor(Math.random() * themeIds.length)]]
   );
-  const ref = useRef<HTMLDivElement | null>(null);
 
   const { workspace, workspaceId } = useWorkspace();
   const pin = workspace.pins[props.pinId];
@@ -63,45 +63,45 @@ export function Pin(props: { pinId: string }) {
     workspaceId,
   };
 
-  const thread =
-    uiState === 'viewing' &&
-    viewingId?.threadId === props.pinId &&
-    viewingId.workspaceId === workspaceId ? (
-      <div style={{ display: 'flex', flexDirection: 'column', width: 280, height: 200 }}>
-        <Thread threadId={props.pinId} />
-      </div>
-    ) : null;
+  const showThread = viewingId?.type === 'pin' && viewingId.pinId === props.pinId;
+
+  const showPreview = hoveringId?.type === 'pin' && hoveringId.pinId === props.pinId;
+
+  const avatar = profile ? (
+    <Avatar profile={profile} size={+theme.sizes.pinSize.toString()} />
+  ) : null;
 
   const preview =
     !showThread && showPreview && profile && firstEvent ? (
-      <div
+      <StyledMessage
         style={{
           position: 'absolute',
-          left: 0,
-          top: 0,
+          left: 2,
+          top: 2,
           width: theme.sizes.threadPreviewWidth.toString(),
         }}
+        ui="preview"
+        onPointerDown={(e) => {
+          console.log('pin preview pointer down');
+          events.onPointerDown(e, { target });
+        }}
       >
-        <div style={{}}>
-          <StyledMessage
-            ui="preview"
-            onClick={() => {
-              setShowThread(!showThread);
-            }}
-          >
-            <StyledPin isActive={false}>
-              <Avatar profile={profile} neutralBackground={showThread} style={{ flexShrink: 0 }} />
-            </StyledPin>
-            <div style={{ display: 'flex', flexDirection: 'column', width: 240, gap: 0 }}>
-              <Name>
-                {profile.name} <StyledMessageTimestamp>10:00</StyledMessageTimestamp>
-              </Name>
-              <div>{firstEvent.body}</div>
-              <b style={{ marginTop: 16 }}>Reply</b>
-            </div>
-          </StyledMessage>
+        {avatar}
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            width: '100%',
+            gap: theme.padding['0'].toString(),
+          }}
+        >
+          <Name>
+            {profile.name} <StyledMessageTimestamp>10:00</StyledMessageTimestamp>
+          </Name>
+          <div>{firstEvent.body}</div>
+          <b style={{ marginTop: theme.space['3'].toString() }}>Reply</b>
         </div>
-      </div>
+      </StyledMessage>
     ) : null;
 
   if (!profile) {
@@ -109,25 +109,22 @@ export function Pin(props: { pinId: string }) {
   }
 
   return pin && profile ? (
-    <div ref={ref}>
+    <StyledPinContainer>
       <div
         style={{
           flexDirection: 'column',
           display: 'flex',
-          // maxWidth: '280px',
           position: 'relative',
           filter:
             'drop-shadow(0px 4px 12px rgba(0,0,0,0.1)), drop-shadow(0px 1px 0px rgba(0,0,0,0.2))',
         }}
-        onMouseOver={() => setShowPreview(true)}
-        onMouseLeave={() => setShowPreview(false)}
+        onMouseOver={(e) => events.onMouseOver(e, { target })}
+        onMouseLeave={(e) => events.onMouseOut(e, { target })}
       >
         <motion.div
-          animate={{ scale: [0, 1.1, 1] }}
+          animate={{ scale: [0.9, 1.1, 1] }}
           transition={{ duration: 0.5 }}
           style={{
-            padding: 10,
-            margin: -10,
             display: 'flex',
             flexDirection: 'row',
             gap: 10,
@@ -135,22 +132,17 @@ export function Pin(props: { pinId: string }) {
           className={currentTheme.className}
         >
           <StyledPin
-            isActive={showThread}
             onPointerDown={(e) => {
               e.stopPropagation();
               e.preventDefault();
               events.onPointerDown(e, { target });
             }}
-            // onClick={() => {
-            //   showThread && setShowThread(false);
-            // }}
           >
-            <Avatar profile={profile} neutralBackground={showThread} />
+            {avatar}
           </StyledPin>
         </motion.div>
-        {thread}
         {pin.state === 'open' ? preview : null}
       </div>
-    </div>
+    </StyledPinContainer>
   ) : null;
 }

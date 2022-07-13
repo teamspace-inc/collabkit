@@ -50,8 +50,6 @@ const neutralDark = {
   neutral12: '$grayDark12',
 };
 
-export const AVATAR_SIZE = 24;
-
 export const { styled, css, theme } = createStitches({
   theme: {
     fontSize: {
@@ -61,9 +59,9 @@ export const { styled, css, theme } = createStitches({
       ['3']: '16px',
     },
     lineHeights: {
-      ['0']: '16px',
-      ['1']: '16px',
-      ['2']: '16px',
+      ['0']: '18px',
+      ['1']: '18px',
+      ['2']: '18px',
     },
     fontWeights: {
       ['0']: 400,
@@ -74,6 +72,7 @@ export const { styled, css, theme } = createStitches({
       ['0']: '4px',
       ['1']: '12px',
       ['2']: '16px',
+      pin: '24px',
     },
     padding: {
       ['0']: '6px',
@@ -83,10 +82,11 @@ export const { styled, css, theme } = createStitches({
       ['4']: '32px',
     },
     sizes: {
-      sendButton: '26px',
+      sendButton: '24px',
       threadWidth: '260px',
       threadPreviewWidth: '248px',
-      pinSize: '24px',
+      pinSize: 24,
+      avatarSize: 24,
     },
     space: {
       ['0']: '0px',
@@ -102,13 +102,14 @@ export const { styled, css, theme } = createStitches({
       typingDot: '$neutral9',
 
       primaryButtonBackground: '$neutral1',
-      composerButtonBackground: '$accent10',
+      composerButtonBackground: '$neutral12',
       composerBackground: 'transparent',
 
       bubbleHoverBackground: '$neutral4',
       selectionBackground: '$accent10',
 
       borderColor: '$neutral4',
+      pinBorderColor: '$neutral1',
 
       ...gray,
       ...green,

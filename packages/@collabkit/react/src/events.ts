@@ -77,24 +77,7 @@ export function createEvents(store: Store) {
       actions.focus(store, props.target);
     },
 
-    onClick: (e: React.MouseEvent, props: { target: Target }) => {
-      switch (props.target.type) {
-        case 'commentButton': {
-          break;
-        }
-        case 'closeThreadButton': {
-          actions.closeThread(store);
-        }
-        case 'resolveThreadButton': {
-          actions.resolve(store, props.target.workspaceId, props.target.threadId);
-          break;
-        }
-        case 'reopenThreadButton': {
-          actions.reopenThread(store, props.target.workspaceId, props.target.threadId);
-          break;
-        }
-      }
-    },
+    onClick: (e: React.MouseEvent, props: { target: Target }) => {},
 
     onEmojiReactionClick: (e: React.MouseEvent, props: { target: CommentReactionTarget }) => {
       actions.toggleCommentReaction(store, props);
@@ -110,13 +93,42 @@ export function createEvents(store: Store) {
 
     onKeyDown,
 
+    onMouseOver: (e: React.MouseEvent, props: { target: Target }) => {
+      actions.hover(store, props);
+    },
+
+    onMouseOut: (e: React.MouseEvent, props: { target: Target }) => {
+      actions.unhover(store, props);
+    },
+
     onPointerDown: (e: React.PointerEvent, props: { target: Target }) => {
+      console.log('onPointerDown', props);
       switch (store.uiState) {
         case 'idle': {
-          if (props.target.type === 'floatingCommentButton') {
-            actions.startSelecting(store);
+          switch (props.target.type) {
+            case 'floatingCommentButton': {
+              actions.startSelecting(store);
+              break;
+            }
+            case 'pin': {
+              actions.viewThread(store, props);
+              break;
+            }
+            case 'commentButton': {
+              break;
+            }
+            case 'closeThreadButton': {
+              actions.closeThread(store);
+            }
+            case 'resolveThreadButton': {
+              actions.resolve(store, props.target.workspaceId, props.target.threadId);
+              break;
+            }
+            case 'reopenThreadButton': {
+              actions.reopenThread(store, props.target.workspaceId, props.target.threadId);
+              break;
+            }
           }
-          break;
         }
         case 'selecting': {
           if (props.target.type === 'commentable') {

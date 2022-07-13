@@ -2,7 +2,8 @@ import React, { useEffect, useRef } from 'react';
 import { useApp } from './App';
 import { useSnapshot } from 'valtio';
 import './Commentable.css';
-import { CollabKit } from '..';
+import { PopoverThread } from './PopoverThread';
+import { Pin } from './Pin';
 import { finder } from '@medv/finder';
 import { Sticky } from './Sticky';
 import { useWorkspace } from '../hooks/useWorkspace';
@@ -171,19 +172,15 @@ export function Commentable(props: { children: React.ReactNode }) {
     >
       {pinIds.map((pinId) => {
         const pin = workspace.pins[pinId];
-        const isViewing = viewingId?.threadId === pinId;
+        const isViewing = viewingId?.type === 'pin' && viewingId?.pinId === pinId;
         return (
           <Sticky key={pinId} selector={pin.selector} offset={pin.offset}>
-            <CollabKit.Pin pinId={pinId}></CollabKit.Pin>
+            <Pin pinId={pinId} />
             {isViewing ? (
-              <CollabKit.Thread
-                type="popout"
-                threadId={viewingId.threadId}
-                onCloseButtonClick={(e) =>
-                  events.onClick(e, {
-                    target: { ...viewingId, type: 'closeThreadButton' } as const,
-                  })
-                }
+              <PopoverThread
+                // half of pin size
+                style={{ marginTop: -12 }}
+                threadId={viewingId.pinId}
               />
             ) : null}
           </Sticky>
