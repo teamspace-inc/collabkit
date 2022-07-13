@@ -23,7 +23,7 @@ export function createWorkspace(config: Config): Workspace {
 
 export function createStore(config: Config): Store {
   if (import.meta.env.DEV && _storeCache[config.apiKey]) {
-    return _storeCache[config.appId];
+    return _storeCache[config.apiKey];
   }
   const store = proxy<Store>({
     isConnected: false,
