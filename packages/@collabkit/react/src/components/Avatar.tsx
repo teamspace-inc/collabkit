@@ -23,13 +23,16 @@ export const avatarStyles = css({
 
 export const StyledAvatar = styled('img', avatarStyles);
 
-export function Avatar(props: { profile: Profile; style?: React.CSSProperties }) {
+export function Avatar(props: { profile: Profile; style?: React.CSSProperties; size?: number }) {
   const [didError, setDidError] = useState(false);
   const noImage = didError || !props.profile.avatar;
   const styles = props.profile.color
     ? {
         backgroundColor: getShade(props.profile.color, 9),
         color: getShade(props.profile.color, 3),
+        ...(props.size
+          ? { width: props.size, height: props.size, lineHeight: `${props.size}px` }
+          : {}),
         ...(props.style || {}),
       }
     : props.style;

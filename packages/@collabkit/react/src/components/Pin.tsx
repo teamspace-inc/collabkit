@@ -11,9 +11,9 @@ import { useWorkspace } from '../hooks/useWorkspace';
 import { PinTarget } from '../constants';
 
 const StyledPin = styled('div', {
-  width: 'calc($sizes$pinSize + 2px) ',
-  height: 'calc($sizes$pinSize + 2px)',
-  borderRadius: 'calc($sizes$pinSize + 2px)',
+  width: '$sizes$pinSize',
+  height: '$sizes$pinSize',
+  borderRadius: '$sizes$pinSize',
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'center',
@@ -125,8 +125,9 @@ export function Pin(props: { pinId: string }) {
           animate={{ scale: [0.9, 1.1, 1] }}
           transition={{ duration: 0.5 }}
           style={{
-            padding: 10,
+            padding: 6,
             margin: -10,
+            marginTop: -8,
             display: 'flex',
             flexDirection: 'row',
             gap: 10,
@@ -143,7 +144,7 @@ export function Pin(props: { pinId: string }) {
             //   showThread && setShowThread(false);
             // }}
           >
-            <Avatar profile={profile} />
+            <Avatar profile={profile} size={28} />
           </StyledPin>
         </motion.div>
         {pin.state === 'open' ? preview : null}

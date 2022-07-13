@@ -86,7 +86,7 @@ export const { styled, css, theme } = createStitches({
       sendButton: '24px',
       threadWidth: '260px',
       threadPreviewWidth: '248px',
-      pinSize: '24px',
+      pinSize: '28px',
     },
     space: {
       ['0']: '0px',
