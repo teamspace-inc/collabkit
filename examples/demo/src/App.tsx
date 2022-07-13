@@ -15,18 +15,18 @@ function App() {
       identity={user}
       mentions={mentionableUsers}
     >
-      <CollabKit.Workspace workspaceId={workspaceId}>
-        <CollabKit.Commentable>
+      <Workspace workspaceId={workspaceId}>
+        <Commentable>
           <img
             style={{ width: '100vw', maxHeight: '100vh', objectFit: 'cover' }}
             src="https://images.unsplash.com/photo-1433838552652-f9a46b332c40"
           />
-        </CollabKit.Commentable>
+        </Commentable>
         <Chat />
         <UserMenu user={user} onChangeUser={setUser} />
-        <CollabKit.FloatingButton />
-      </CollabKit.Workspace>
-    </CollabKit.App>
+        <FloatingButton />
+      </Workspace>
+    </CollabKitProvider>
   );
 }
 
