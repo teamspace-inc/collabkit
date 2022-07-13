@@ -115,6 +115,7 @@ export function createEvents(store: Store) {
             }
             case 'closeThreadButton': {
               actions.closeThread(store);
+              break;
             }
             case 'resolveThreadButton': {
               actions.resolve(store, props.target.workspaceId, props.target.threadId);
