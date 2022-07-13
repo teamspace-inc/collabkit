@@ -52,7 +52,6 @@ export function Thread(props: {
         flex: 1,
         background: 'white',
         borderRadius: 11,
-        border: '1px solid rgba(0,0,0,0.1)',
         ...props.style,
       }}
     >
@@ -65,7 +64,7 @@ export function Thread(props: {
             transition: 'background-color 0.2s ease-in-out',
             zIndex: MODAL_Z_INDEX,
             pointerEvents: 'none',
-            borderRadius: 11,
+            borderRadius: theme.radii['1'].toString(),
             ...(reactingId
               ? {
                   backgroundColor: 'rgba(0,0,0,0.3)',
@@ -107,7 +106,7 @@ export function Thread(props: {
               //     : { position: 'absolute', bottom: 0, left: 0, right: 0 }
               // }
               workspace={workspace}
-              hasComments={!isEmpty}
+              placeholder={isEmpty ? 'Add a comment' : 'Reply to this comment'}
               workspaceId={workspaceId}
               onHeightChange={setComposerHeight}
               threadType={'inline'}

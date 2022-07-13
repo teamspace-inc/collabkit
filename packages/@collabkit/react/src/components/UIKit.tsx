@@ -50,8 +50,6 @@ const neutralDark = {
   neutral12: '$grayDark12',
 };
 
-export const AVATAR_SIZE = 24;
-
 export const { styled, css, theme } = createStitches({
   theme: {
     fontSize: {
@@ -74,6 +72,7 @@ export const { styled, css, theme } = createStitches({
       ['0']: '4px',
       ['1']: '12px',
       ['2']: '16px',
+      pin: '24px',
     },
     padding: {
       ['0']: '6px',
@@ -86,7 +85,7 @@ export const { styled, css, theme } = createStitches({
       sendButton: '24px',
       threadWidth: '260px',
       threadPreviewWidth: '248px',
-      pinSize: '24px',
+      pinSize: 24,
       avatarSize: 24,
     },
     space: {
@@ -110,6 +109,7 @@ export const { styled, css, theme } = createStitches({
       selectionBackground: '$accent10',
 
       borderColor: '$neutral4',
+      pinBorderColor: '$neutral1',
 
       ...gray,
       ...green,

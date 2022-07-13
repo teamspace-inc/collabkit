@@ -119,10 +119,13 @@ export function createEvents(store: Store) {
     },
 
     onPointerDown: (e: React.PointerEvent, props: { target: Target }) => {
+      console.log('onPointerDown', props);
       switch (store.uiState) {
         case 'idle': {
           if (props.target.type === 'floatingCommentButton') {
             actions.startSelecting(store);
+          } else if (props.target.type === 'pin') {
+            actions.viewThread(store, props);
           }
           break;
         }

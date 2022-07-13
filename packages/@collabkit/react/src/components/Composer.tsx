@@ -48,12 +48,8 @@ function onError(error: any) {
   console.error(error);
 }
 
-function Placeholder(props: { hasComments: boolean }) {
-  return (
-    <div className="editor-placeholder">
-      {props.hasComments ? 'Reply or add others with @' : 'Add a new comment'}
-    </div>
-  );
+function Placeholder(props: { children: React.ReactNode }) {
+  return <div className="editor-placeholder">{props.children}</div>;
 }
 
 export function createEditorConfig() {
@@ -75,17 +71,6 @@ const ComposerContainer = styled('div', {
   borderBottomRightRadius: '$radii$1',
   padding: '$padding$0 $padding$1',
   background: '$neutral1',
-
-  variants: {
-    isEmpty: {
-      true: {
-        borderTop: `1px solid $borderColor`,
-      },
-      false: {
-        borderRadius: '$radii$1',
-      },
-    },
-  },
 });
 
 const StyledLexicalEditorContainer = styled('div', {
@@ -110,7 +95,7 @@ export function Composer(props: {
   threadType?: ThreadType;
   isFloating: boolean;
   workspace: Workspace;
-  hasComments: boolean;
+  placeholder: React.ReactNode | string;
   style?: React.CSSProperties;
   onHeightChange: (height: number) => void;
 }) {
@@ -149,7 +134,7 @@ export function Composer(props: {
   }
 
   return (
-    <ComposerContainer style={props.style} isEmpty={!props.hasComments}>
+    <ComposerContainer style={props.style}>
       <LexicalComposer initialConfig={initialConfig}>
         <StyledLexicalEditorContainer
           className="editor-container"
@@ -240,7 +225,7 @@ export function Composer(props: {
           </style>
           <PlainTextPlugin
             contentEditable={<ContentEditable className="editor-input" />}
-            placeholder={<Placeholder hasComments={props.hasComments} />}
+            placeholder={<Placeholder>{props.placeholder}</Placeholder>}
           />
           <OnChangePlugin
             onChange={(editorState) => {

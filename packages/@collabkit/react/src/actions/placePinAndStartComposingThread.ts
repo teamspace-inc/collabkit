@@ -26,10 +26,9 @@ export async function placePinAndStartComposingThread(
     store.workspaces[workspaceId].pins[threadId] = pin;
 
     store.viewingId = {
-      type: 'stickyThread',
-      pin,
+      type: 'pin',
+      pinId: threadId,
       workspaceId,
-      threadId,
     };
   }
 

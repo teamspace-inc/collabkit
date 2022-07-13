@@ -172,18 +172,15 @@ export function Commentable(props: { children: React.ReactNode }) {
     >
       {pinIds.map((pinId) => {
         const pin = workspace.pins[pinId];
-        const isViewing = viewingId?.threadId === pinId;
+        const isViewing = viewingId?.type === 'pin' && viewingId?.pinId === pinId;
         return (
           <Sticky key={pinId} selector={pin.selector} offset={pin.offset}>
             <Pin pinId={pinId} />
             {isViewing ? (
               <PopoverThread
-                threadId={viewingId.threadId}
-                // onCloseButtonClick={(e) =>
-                //   events.onClick(e, {
-                //     target: { ...viewingId, type: 'closeThreadButton' } as const,
-                //   })
-                // }
+                // half of pin size
+                style={{ marginTop: -12 }}
+                threadId={viewingId.pinId}
               />
             ) : null}
           </Sticky>

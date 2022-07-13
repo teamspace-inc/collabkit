@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { useSnapshot } from 'valtio';
 
 import { CommentType, Event, Profile, ThreadType } from '../constants';
