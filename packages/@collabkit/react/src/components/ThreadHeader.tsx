@@ -43,8 +43,8 @@ export function ThreadHeader(props: { isResolved: boolean; target: ThreadTarget 
       <StyledHeaderLeftGroup />
       <IconButton
         tooltip={isResolved ? 'Re-open' : 'Resolve'}
-        onClick={(e) =>
-          events.onClick(e, {
+        onPointerDown={(e) =>
+          events.onPointerDown(e, {
             target: {
               ...target,
               type: isResolved ? 'reopenThreadButton' : 'resolveThreadButton',
@@ -60,8 +60,8 @@ export function ThreadHeader(props: { isResolved: boolean; target: ThreadTarget 
       </IconButton>
       <IconButton
         tooltip="Close"
-        onClick={(e) => {
-          events.onClick(e, { target });
+        onPointerDown={(e) => {
+          events.onPointerDown(e, { target });
         }}
       >
         <X size="16" weight="light" color={theme.colors.neutral12.toString()} />

@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useState } from 'react';
 import { Avatar } from './Avatar';
 import { StyledMessage, StyledMessageTimestamp } from './comment/Message';
 import { Name } from './profile/Name';
@@ -44,8 +44,7 @@ const StyledPinContainer = styled('div', {
 export function Pin(props: { pinId: string }) {
   const { store, events } = useApp();
   const { viewingId, hoveringId, profiles } = useSnapshot(store);
-  const themeRef = useRef(() => themes[themeIds[Math.floor(Math.random() * themeIds.length)]]);
-   const [currentTheme] = useState(
+  const [currentTheme] = useState(
     () => themes[themeIds[Math.floor(Math.random() * themeIds.length)]]
   );
 
