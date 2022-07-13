@@ -23,15 +23,6 @@ const StyledFloatingButton = styled(motion.div, {
   justifyContent: 'center',
   alignItems: 'center',
   boxShadow: '0 1px 6px 0 rgb(0 0 0 / 5%), 0 2px 32px 0 rgb(0 0 0 / 12%)',
-  variants: {
-    uiState: {
-      selecting: {},
-      idle: {},
-      commenting: {},
-      viewing: {},
-      composing: {},
-    },
-  },
 });
 
 export function FloatingButton() {
@@ -45,7 +36,6 @@ export function FloatingButton() {
         <StyledFloatingButton
           animate={{ scale: [0.8, 1.1, 1] }}
           transition={{ duration: 0.5 }}
-          uiState={uiState}
           onPointerDown={(e) => events.onPointerDown(e, { target })}
         >
           {uiState === 'selecting' ? (

@@ -126,6 +126,7 @@ export function createEvents(store: Store) {
               break;
             }
           }
+          break;
         }
         case 'selecting': {
           if (props.target.type === 'commentable') {
