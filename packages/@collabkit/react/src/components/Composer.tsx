@@ -234,7 +234,7 @@ export function Composer(props: {
             }}
           />
           <HistoryPlugin />
-          <MentionsPlugin />
+          {/* <MentionsPlugin /> */}
         </StyledLexicalEditorContainer>
       </LexicalComposer>
       <SendButton
