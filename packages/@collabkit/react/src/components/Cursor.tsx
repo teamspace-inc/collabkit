@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useSnapshot } from 'valtio';
-import { useApp } from './App';
+import { useApp } from './Provider';
 
 export function Cursor() {
   const { store } = useApp();

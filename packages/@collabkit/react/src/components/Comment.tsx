@@ -7,7 +7,7 @@ import { styled, theme } from './UIKit';
 import { TargetContext } from './Target';
 import { timeDifference } from '../utils/timeDifference';
 import { isSameComment } from '../utils/isSameComment';
-import { useApp } from './App';
+import { useApp } from './Provider';
 import { useIsIntersecting } from '../hooks/useIntersectionObserver';
 import { MODAL_Z_INDEX } from './Thread';
 import { Name } from './profile/Name';

@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { Composer } from './Composer';
 import { useWorkspace } from '../hooks/useWorkspace';
 import { ScrollableCommentList } from './ScrollableCommentList';
-import { useApp } from './App';
+import { useApp } from './Provider';
 import { useThread } from './useThread';
 import { StyledThread } from './thread/StyledThread';
 

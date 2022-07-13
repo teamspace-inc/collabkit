@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { styled } from '@stitches/react';
 import { Smiley } from 'phosphor-react';
-import { useApp } from '../App';
+import { useApp } from '../Provider';
 import { TargetContext } from '../Target';
 import { theme } from '../UIKit';
 

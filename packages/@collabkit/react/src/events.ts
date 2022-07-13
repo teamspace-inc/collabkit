@@ -18,14 +18,9 @@ export function createEvents(store: Store) {
     onConnectionStateChange: async (isConnected: boolean) => {
       store.isConnected = isConnected;
 
-      if (!store.config.isSetup) {
-        await actions.authenticate(store);
-      }
-
-      if (!store.config.hasIdentified) {
-        await actions.saveProfile(store);
-        await actions.subscribeProfiles(store);
-      }
+      await actions.authenticate(store);
+      await actions.saveProfile(store);
+      await actions.subscribeProfiles(store);
     },
 
     onTimelineEventAdded: (snapshot: DataSnapshot) => {

@@ -16,7 +16,12 @@ export async function subscribeProfiles(store: Store) {
 
   const profilesRef = ref(DB, `/profiles/${appId}`);
 
-  store.subs[`${profilesRef.toString()}#added`] = onChildAdded(profilesRef, onChange, onError);
-
-  store.subs[`${profilesRef.toString()}#changed`] = onChildChanged(profilesRef, onChange, onError);
+  const addedKey = `${profilesRef.toString()}#added`;
+  const changedKey = `${profilesRef.toString()}#changed`;
+  if (!store.subs[addedKey]) {
+    store.subs[addedKey] = onChildAdded(profilesRef, onChange, onError);
+  }
+  if (!store.subs[changedKey]) {
+    store.subs[changedKey] = onChildChanged(profilesRef, onChange, onError);
+  }
 }
