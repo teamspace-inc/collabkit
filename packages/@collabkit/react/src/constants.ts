@@ -195,8 +195,6 @@ export interface Store {
   config: {
     identify: IdentifyProps | null | undefined;
     setup: SetupProps | null | undefined;
-    isSetup: boolean;
-    hasIdentified: boolean;
     mentions: MentionProps | null | undefined;
   };
   profiles: { [profileId: string]: Profile };

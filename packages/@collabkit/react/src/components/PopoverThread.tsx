@@ -5,7 +5,7 @@ import { Composer } from './Composer';
 import * as Tooltip from './Tooltip';
 import { useWorkspace } from '../hooks/useWorkspace';
 import { CommentList } from './CommentList';
-import { useApp } from './App';
+import { useApp } from './Provider';
 import { useThread } from './useThread';
 import { ThreadHeader } from './ThreadHeader';
 import { StyledThread } from './thread/StyledThread';

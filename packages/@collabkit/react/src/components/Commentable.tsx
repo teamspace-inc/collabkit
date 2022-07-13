@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { useApp } from './App';
+import { useApp } from './Provider';
 import { useSnapshot } from 'valtio';
 import './Commentable.css';
 import { PopoverThread } from './PopoverThread';

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSnapshot } from 'valtio';
 import { actions } from '../actions';
-import { useApp } from './App';
+import { useApp } from './Provider';
 import { styled } from './UIKit';
 import { useWorkspace } from '../hooks/useWorkspace';
 

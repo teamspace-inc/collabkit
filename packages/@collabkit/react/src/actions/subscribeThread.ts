@@ -14,23 +14,6 @@ export async function subscribeThread(
     threadId: string;
   }
 ) {
-  // initialise the store
-  store.workspaces[props.workspaceId] ||= {
-    inbox: {},
-    pins: {},
-    name: store.config.identify?.workspaceName || '',
-    composers: {
-      [props.threadId]: {
-        editor: valtioRef(createEditor(createEditorConfig())),
-        $$body: '',
-        isTyping: {},
-      },
-    },
-    timeline: {},
-    seen: {},
-    seenBy: {},
-  };
-
   store.workspaces[props.workspaceId].composers[props.threadId] ||= {
     editor: valtioRef(createEditor(createEditorConfig())),
     $$body: '',

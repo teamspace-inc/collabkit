@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { useSnapshot } from 'valtio';
 import { actions } from '../actions';
-import { useApp } from './App';
+import { useApp } from './Provider';
 import { Theme } from './Theme';
 
 export function useWorkspaceId() {

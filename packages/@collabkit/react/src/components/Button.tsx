@@ -59,9 +59,7 @@ export function Button(props: {
           Comment
         </div>
       </StyledButton>
-      {showThread ? (
-        <PopoverThread threadId={threadId} onCloseButtonClick={() => setShowThread(false)} />
-      ) : null}
+      {showThread ? <PopoverThread threadId={threadId} /> : null}
     </div>
   );
 }

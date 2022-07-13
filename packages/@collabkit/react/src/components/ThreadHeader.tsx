@@ -1,7 +1,7 @@
 import { styled, theme } from './UIKit';
 import { X, Check, CheckCircle } from 'phosphor-react';
 import React from 'react';
-import { useApp } from './App';
+import { useApp } from './Provider';
 import { ThreadTarget } from '../constants';
 import { IconButton } from './PopoverThread';
 

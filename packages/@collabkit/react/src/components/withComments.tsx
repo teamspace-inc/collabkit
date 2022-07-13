@@ -1,5 +1,5 @@
 import React from 'react';
-import { useApp } from './App';
+import { useApp } from './Provider';
 import { styled } from './UIKit';
 
 // Evan from LiveFlow suggested a HOC as a way to

@@ -1,7 +1,4 @@
-import { setup } from './actions/setup';
-import { identify } from './actions/identify';
-import { mentions } from './actions/mentions';
-import { App } from './components/App';
+import { CollabKitProvider } from './components/Provider';
 import { Debug } from './components/Debug';
 import { Thread } from './components/Thread';
 import { Workspace } from './components/Workspace';
@@ -17,7 +14,7 @@ import { MentionProps } from './constants';
 import { PopoverThread } from './components/PopoverThread';
 
 export {
-  App as CollabKitProvider,
+  CollabKitProvider as Provider,
   Workspace,
   Commentable,
   CurrentUser,
@@ -29,8 +26,5 @@ export {
   Inbox,
   Debug,
   withComments,
-  setup,
-  identify,
-  mentions,
 };
 export type { IdentifyProps, MentionProps, Mention };

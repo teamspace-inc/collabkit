@@ -6,49 +6,21 @@ import { CommentReactionTarget, CommentTarget, Store, Target } from './constants
 
 export type Events = ReturnType<typeof createEvents>;
 
-function onKeyDown(store: Store, e: KeyboardEvent) {
-  if (store.uiState === 'selecting') {
-    if (e.key === 'Escape') {
-      console.log('escaping');
-      actions.stopSelecting(store);
-      e.stopPropagation();
-      e.preventDefault();
-      return;
-    }
-  } else if (store.viewingId) {
-    if (e.key === 'Escape') {
-      console.log('scaping2');
-      actions.removePendingPins(store);
-      actions.closeThread(store);
-      e.stopPropagation();
-      e.preventDefault();
-    }
-  }
-
-  if (store.focusedId?.type === 'composer') {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      actions.sendMessage(store, { ...store.focusedId });
-      e.stopPropagation();
-      e.preventDefault();
-    }
-  }
-}
-
 export function createEvents(store: Store) {
-  document.addEventListener('keydown', (e) => onKeyDown(store, e));
-
   return {
+    onDestroy: () => {
+      for (const unsubscribe of Object.values(store.subs)) {
+        unsubscribe();
+      }
+      store.subs = {};
+    },
+
     onConnectionStateChange: async (isConnected: boolean) => {
       store.isConnected = isConnected;
 
-      if (!store.config.isSetup) {
-        await actions.authenticate(store);
-      }
-
-      if (!store.config.hasIdentified) {
-        await actions.saveProfile(store);
-        await actions.subscribeProfiles(store);
-      }
+      await actions.authenticate(store);
+      await actions.saveProfile(store);
+      await actions.subscribeProfiles(store);
     },
 
     onTimelineEventAdded: (snapshot: DataSnapshot) => {
@@ -91,7 +63,31 @@ export function createEvents(store: Store) {
       actions.blur(store, props.target);
     },
 
-    onKeyDown,
+    onKeyDown: (e: KeyboardEvent) => {
+      if (store.uiState === 'selecting') {
+        if (e.key === 'Escape') {
+          actions.stopSelecting(store);
+          e.stopPropagation();
+          e.preventDefault();
+          return;
+        }
+      } else if (store.viewingId) {
+        if (e.key === 'Escape') {
+          actions.removePendingPins(store);
+          actions.closeThread(store);
+          e.stopPropagation();
+          e.preventDefault();
+        }
+      }
+
+      if (store.focusedId?.type === 'composer') {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          actions.sendMessage(store, { ...store.focusedId });
+          e.stopPropagation();
+          e.preventDefault();
+        }
+      }
+    },
 
     onMouseOver: (e: React.MouseEvent, props: { target: Target }) => {
       actions.hover(store, props);

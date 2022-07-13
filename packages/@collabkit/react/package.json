@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "module": "src/index.ts",
   "scripts": {
-    "dev": "yarn clean && tsc --build --watch",
+    "dev": "yarn clean && tsc --noEmit --watch",
     "build": "yarn clean && tsc && vite build",
-    "clean": "rimraf dist *.tsbuildinfo src/**/*.js src/**/*.d.ts",
+    "clean": "rimraf dist *.tsbuildinfo src/**/*.js",
     "preview": "vite preview"
   },
   "dependencies": {

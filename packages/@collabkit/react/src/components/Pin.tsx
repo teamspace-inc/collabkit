@@ -4,7 +4,7 @@ import { StyledMessage, StyledMessageTimestamp } from './comment/Message';
 import { Name } from './profile/Name';
 import { styled, theme, themeIds, themes } from './UIKit';
 import { motion } from 'framer-motion';
-import { useApp } from './App';
+import { useApp } from './Provider';
 import { useSnapshot } from 'valtio';
 import { useWorkspace } from '../hooks/useWorkspace';
 import { PinTarget } from '../constants';

@@ -1,20 +1,16 @@
 import { set, ref, remove } from 'firebase/database';
-
-import { ComposerTarget, DB, Store } from '../constants';
-
 import debounce from 'lodash.debounce';
 
+import { ComposerTarget, DB, Store } from '../constants';
 import { sendMessage } from './sendMessage';
 import { startSelecting } from './startSelecting';
 import { authenticate } from './authenticate';
 import { closeEmojiReactionPicker } from './closeEmojiReactionPicker';
 import { closeThread } from './closeThread';
-import { identify } from './identify';
-import { mentions } from './mentions';
+import { monitorConnection } from './monitorConnection';
 import { resolveThread } from './resolveThread';
 import { saveProfile } from './saveProfile';
 import { seen } from './seen';
-import { setup } from './setup';
 import { stopSelecting } from './stopSelecting';
 import { stopTyping } from './stopTyping';
 import { subscribeInbox } from './subscribeInbox';
@@ -113,11 +109,7 @@ export function getConfig(store: Store) {
 }
 
 export const actions = {
-  setup,
-
-  identify,
-
-  mentions,
+  monitorConnection,
 
   startThread: placePinAndStartComposingThread,
 

@@ -1,29 +1,60 @@
 import { proxy } from 'valtio';
-import { Store } from './constants';
+import { IdentifyProps, MentionProps, Store, Workspace } from './constants';
 
-const store = proxy<Store>({
-  isConnected: false,
-  token: '',
-  appState: 'blank',
-  uiState: 'idle',
-  config: {
-    identify: null,
-    setup: null,
-    mentions: null,
-    isSetup: false,
-    hasIdentified: false,
-  },
-  focusedId: null,
-  selectedId: null,
-  reactingId: null,
-  viewingId: null,
-  composingId: null,
-  hoveringId: null,
-  workspaces: {},
-  profiles: {},
-  subs: {},
-});
+type Config = {
+  appId: string;
+  apiKey: string;
+  workspace: { name?: string; id: string };
+  user: IdentifyProps;
+  mentionableUsers: MentionProps;
+};
 
-export function createStore() {
+export function createWorkspace(config: Config): Workspace {
+  return {
+    inbox: {},
+    pins: {},
+    name: config.workspace.name || '',
+    timeline: {},
+    composers: {},
+    seen: {},
+    seenBy: {},
+  };
+}
+
+export function createStore(config: Config): Store {
+  if (import.meta.env.DEV && _storeCache[config.apiKey]) {
+    return _storeCache[config.apiKey];
+  }
+  const store = proxy<Store>({
+    isConnected: false,
+    token: config.apiKey,
+    appState: 'config',
+    uiState: 'idle',
+    config: {
+      identify: config.user,
+      setup: {
+        appId: config.appId,
+        apiKey: config.apiKey,
+        mode: 'UNSECURED',
+      },
+      mentions: config.mentionableUsers,
+    },
+    focusedId: null,
+    selectedId: null,
+    reactingId: null,
+    viewingId: null,
+    composingId: null,
+    hoveringId: null,
+    workspaces: {
+      [config.workspace.id]: createWorkspace(config),
+    },
+    profiles: {},
+    subs: {},
+  });
+  if (import.meta.env.DEV) {
+    _storeCache[config.apiKey] = store;
+  }
   return store;
 }
+
+const _storeCache: Record<string, Store> = {};
