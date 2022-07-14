@@ -100,7 +100,6 @@ export function Thread(props: {
               placeholder={isEmpty ? 'Add a comment' : 'Reply to this comment'}
               workspaceId={workspaceId}
               onHeightChange={setComposerHeight}
-              threadType={'inline'}
               profile={profiles[userId]}
               threadId={props.threadId}
               isFloating={false}

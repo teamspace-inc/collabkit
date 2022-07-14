@@ -92,7 +92,6 @@ export function Composer(props: {
   profile?: Profile;
   workspaceId: string;
   threadId: string;
-  threadType?: ThreadType;
   isFloating: boolean;
   workspace: Workspace;
   placeholder: React.ReactNode | string;
