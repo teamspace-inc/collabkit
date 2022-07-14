@@ -10,7 +10,7 @@ import { useThread } from './useThread';
 import { ThreadHeader } from './ThreadHeader';
 import { StyledThread } from './thread/StyledThread';
 
-const StyledPopverThread = styled(StyledThread, {
+const StyledPopoverThread = styled(StyledThread, {
   backgroundColor: '$neutral1',
   borderRadius: '$radii$1',
   display: 'flex',
@@ -75,7 +75,7 @@ export function PopoverThread(props: { threadId: string; style?: React.CSSProper
   });
 
   return (
-    <StyledPopverThread isEmpty={isEmpty} style={props.style}>
+    <StyledPopoverThread isEmpty={isEmpty} style={props.style}>
       <IconContext.Provider value={{ size: '20px' }}>
         {!isEmpty && <ThreadHeader isResolved={isResolved} target={target} />}
         {!isEmpty && timeline && (
@@ -113,6 +113,6 @@ export function PopoverThread(props: { threadId: string; style?: React.CSSProper
           />
         }
       </IconContext.Provider>
-    </StyledPopverThread>
+    </StyledPopoverThread>
   );
 }
