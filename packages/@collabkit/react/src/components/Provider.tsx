@@ -1,21 +1,13 @@
-import React, { useContext, useEffect, useLayoutEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { actions } from '../actions';
 import { IdentifyProps, MentionProps, Store } from '../constants';
 import { Events, createEvents } from '../events';
-import { AppContext, AppContextData } from '../hooks/useAppContext';
+import { AppContext } from '../hooks/useAppContext';
 import { createStore } from '../store';
-
-export function useApp(): AppContextData {
-  const app = useContext(AppContext);
-  if (app == null) {
-    throw new Error('useApp must be used within a CollabKit.Provider');
-  }
-  return app;
-}
+import { darkTheme } from './UIKit';
 
 // Enable using multiple isolated App
 // instances in the same page.
-
 export function CollabKitProvider({
   children,
   ...config
@@ -58,9 +50,10 @@ export function CollabKitProvider({
         store: context.store,
         events: context.events,
         workspaceId: config.workspace.id,
+        theme: darkTheme,
       }}
     >
-      {children}
+      <span className={darkTheme.className.toString()}>{children}</span>
     </AppContext.Provider>
   );
 }

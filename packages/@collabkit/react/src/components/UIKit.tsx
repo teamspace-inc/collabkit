@@ -35,21 +35,6 @@ const neutral = {
   neutral12: '$gray12',
 };
 
-const neutralDark = {
-  neutral1: '$grayDark1',
-  neutral2: '$grayDark2',
-  neutral3: '$grayDark3',
-  neutral4: '$grayDark4',
-  neutral5: '$grayDark5',
-  neutral6: '$grayDark6',
-  neutral7: '$grayDark7',
-  neutral8: '$grayDark8',
-  neutral9: '$grayDark9',
-  neutral10: '$grayDark10',
-  neutral11: '$grayDark11',
-  neutral12: '$grayDark12',
-};
-
 export const { styled, css, theme } = createStitches({
   theme: {
     fontSize: {
@@ -133,9 +118,54 @@ export const { styled, css, theme } = createStitches({
 });
 
 export const darkTheme = createTheme({
+  fontSize: {
+    ['0']: '11px',
+    ['1']: '12px',
+    ['2']: '13px',
+    ['3']: '16px',
+  },
+  lineHeights: {
+    ['0']: '18px',
+    ['1']: '18px',
+    ['2']: '18px',
+  },
+  fontWeights: {
+    ['0']: 400,
+    ['1']: 700,
+    ['2']: 700,
+  },
+  radii: {
+    ['0']: '4px',
+    ['1']: '12px',
+    ['2']: '16px',
+    pin: '24px',
+  },
+  padding: {
+    ['0']: '6px',
+    ['1']: '8px',
+    ['2']: '16px',
+    ['3']: '24px',
+    ['4']: '32px',
+  },
+  sizes: {
+    sendButton: '24px',
+    threadWidth: '260px',
+    threadPreviewWidth: '248px',
+    pinSize: 24,
+    avatarSize: 24,
+  },
+  space: {
+    ['0']: '0px',
+    ['1']: '4px',
+    ['2']: '8px',
+    ['3']: '12px',
+    ['4']: '16px',
+  },
   colors: {
     ...grayDark,
     ...blueDark,
+    ...neutral,
+
     accent1: '$blueDark1',
     accent2: '$blueDark2',
     accent3: '$blueDark3',
@@ -148,7 +178,21 @@ export const darkTheme = createTheme({
     accent10: '$blueDark10',
     accent11: '$blueDark11',
     accent12: '$blueDark12',
-    ...neutralDark,
+
+    primaryText: '$neutral12',
+    secondaryText: '$neutral9',
+
+    typingDot: '$neutral9',
+
+    primaryButtonBackground: '$neutral1',
+    composerButtonBackground: '$neutral12',
+    composerBackground: 'transparent',
+
+    bubbleHoverBackground: '$neutral4',
+    selectionBackground: '$accent10',
+
+    borderColor: '$neutral4',
+    pinBorderColor: '$neutral1',
   },
 });
 
@@ -470,6 +514,16 @@ export const themes = {
   orangeTheme,
   brownTheme,
 };
+
+export const HStack = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+});
+
+export const VStack = styled('div', {
+  display: 'flex',
+  flexDirection: 'row',
+});
 
 export const themeIds = Object.keys(themes) as (keyof typeof themes)[];
 

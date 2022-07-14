@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { Avatar } from './Avatar';
-import { StyledMessage, StyledMessageTimestamp } from './comment/Message';
-import { Name } from './profile/Name';
-import { styled, theme, themeIds, themes } from './UIKit';
+import { styled, themeIds, themes } from './UIKit';
 import { motion } from 'framer-motion';
-import { useApp } from './Provider';
+import { useApp } from './useApp';
 import { useSnapshot } from 'valtio';
 import { useWorkspace } from '../hooks/useWorkspace';
-import { Event, PinTarget, Profile } from '../constants';
+import { PinTarget } from '../constants';
+import { PinPreview } from './PinPreview';
 
 const StyledPin = styled('div', {
   width: '$sizes$pinSize',
@@ -41,49 +40,8 @@ const StyledPinContainer = styled('div', {
   marginLeft: -12,
 });
 
-function ThreadPreview(props: {
-  target: PinTarget;
-  avatar: React.ReactNode;
-  profile: Profile;
-  event: Event;
-}) {
-  const { events } = useApp();
-  const { target } = props;
-  return (
-    <StyledMessage
-      style={{
-        position: 'absolute',
-        left: 2,
-        top: 2,
-        width: theme.sizes.threadPreviewWidth.toString(),
-      }}
-      ui="preview"
-      onPointerDown={(e) => {
-        console.log('pin preview pointer down');
-        events.onPointerDown(e, { target });
-      }}
-    >
-      {props.avatar}
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          width: '100%',
-          gap: theme.padding['0'].toString(),
-        }}
-      >
-        <Name>
-          {props.profile.name} <StyledMessageTimestamp>10:00</StyledMessageTimestamp>
-        </Name>
-        <div>{props.event.body}</div>
-        <div style={{ marginTop: theme.space['3'].toString() }}>Reply</div>
-      </div>
-    </StyledMessage>
-  );
-}
-
 export function Pin(props: { pinId: string }) {
-  const { store, events } = useApp();
+  const { store, events, theme } = useApp();
   const { viewingId, hoveringId, profiles } = useSnapshot(store);
   const [currentTheme] = useState(
     () => themes[themeIds[Math.floor(Math.random() * themeIds.length)]]
@@ -114,7 +72,7 @@ export function Pin(props: { pinId: string }) {
 
   const preview =
     !showThread && showPreview && profile && firstEvent ? (
-      <ThreadPreview target={target} avatar={avatar} profile={profile} event={firstEvent} />
+      <PinPreview target={target} avatar={avatar} profile={profile} event={firstEvent} />
     ) : null;
 
   if (!profile) {

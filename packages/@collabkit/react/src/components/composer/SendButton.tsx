@@ -2,7 +2,7 @@ import { styled } from '../UIKit';
 import * as Tooltip from '../Tooltip';
 import React from 'react';
 import { ArrowUp } from 'phosphor-react';
-import { useApp } from '../Provider';
+import { useApp } from '../useApp';
 
 export function SendButton(props: { bodyLength: number; workspaceId: string; threadId: string }) {
   const { events } = useApp();

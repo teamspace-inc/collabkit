@@ -54,7 +54,7 @@ export function CurrentlyTyping(props: {
 
 function TypingIndicator(props: { profile: Profile }) {
   return (
-    <StyledCommentContainer ui="freeform" style={{ left: 5 }} type={'default'}>
+    <StyledCommentContainer style={{ left: 5 }} type={'default'}>
       <Avatar profile={props.profile} style={{ position: 'relative', top: 4 }} />
 
       <div style={{ display: 'flex', flexDirection: 'column' }}>

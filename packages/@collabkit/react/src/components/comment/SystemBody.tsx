@@ -1,7 +1,8 @@
 import React from 'react';
 import { CheckCircle, RadioButton } from 'phosphor-react';
-import { styled, theme } from '../UIKit';
+import { styled } from '../UIKit';
 import { Event } from '../../constants';
+import { useApp } from '../useApp';
 
 const SystemMessageText = styled('span', {
   display: 'flex',
@@ -12,6 +13,7 @@ const SystemMessageText = styled('span', {
 });
 
 export function SystemBody(props: { event: Event }) {
+  const { theme } = useApp();
   return props.event.type === 'system' ? (
     <SystemMessageText>
       <CheckCircle size={19} weight="fill" color={theme.colors.accent10.toString()} />

@@ -6,7 +6,7 @@ import {
   TLBoundsEdge,
   useIntersectionObserver,
 } from '../../hooks/useIntersectionObserver';
-import { useApp } from '../Provider';
+import { useApp } from '../useApp';
 import { TargetContext } from '../Target';
 import { styled } from '../UIKit';
 

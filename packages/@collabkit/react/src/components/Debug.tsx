@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSnapshot } from 'valtio';
-import { useApp } from './Provider';
+import { useApp } from './useApp';
 
 export function Debug() {
   const { store } = useApp();

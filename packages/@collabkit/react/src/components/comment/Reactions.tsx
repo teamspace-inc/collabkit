@@ -1,6 +1,6 @@
 import React from 'react';
 import { styled } from '../UIKit';
-import { useApp } from '../Provider';
+import { useApp } from '../useApp';
 import { Event } from '../../constants';
 
 const StyledReactions = styled('div', {

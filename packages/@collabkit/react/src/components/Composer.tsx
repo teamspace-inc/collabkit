@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Profile, Store, Target, ThreadType, Workspace } from '../constants';
-import { styled, theme } from './UIKit';
+import { styled } from './UIKit';
 import { EditorState, $getRoot } from 'lexical';
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import { PlainTextPlugin } from '@lexical/react/LexicalPlainTextPlugin';
@@ -11,9 +11,9 @@ import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
 import { useRef } from 'react';
 import { useResizeObserver } from '../hooks/useResizeObserver';
 
-import MentionsPlugin from './MentionsPlugin';
+// import MentionsPlugin from './MentionsPlugin';
 import { MentionNode } from './MentionNode';
-import { useApp } from './Provider';
+import { useApp } from './useApp';
 import { actions } from '../actions';
 import { SendButton } from './composer/SendButton';
 
@@ -99,10 +99,7 @@ export function Composer(props: {
   style?: React.CSSProperties;
   onHeightChange: (height: number) => void;
 }) {
-  const { events, store } = useApp();
-  if (!events || !store) {
-    return null;
-  }
+  const { events, store, theme } = useApp();
 
   const editorStateRef = useRef<EditorState>();
 

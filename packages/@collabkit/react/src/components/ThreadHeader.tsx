@@ -1,7 +1,7 @@
-import { styled, theme } from './UIKit';
+import { styled } from './UIKit';
 import { X, Check, CheckCircle } from 'phosphor-react';
 import React from 'react';
-import { useApp } from './Provider';
+import { useApp } from './useApp';
 import { ThreadTarget } from '../constants';
 import { IconButton } from './PopoverThread';
 
@@ -35,7 +35,7 @@ const StyledHeaderLeftGroup = styled('div', {
 });
 
 export function ThreadHeader(props: { isResolved: boolean; target: ThreadTarget }) {
-  const { events } = useApp();
+  const { events, theme } = useApp();
   const { isResolved, target } = props;
 
   return (
