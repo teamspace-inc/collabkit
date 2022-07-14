@@ -5,7 +5,7 @@ import { CommentType, Event, Profile, ThreadType } from '../constants';
 import { Avatar } from './Avatar';
 import { HStack, styled } from './UIKit';
 import { TargetContext } from './Target';
-import { timeDifference } from '../utils/timeDifference';
+import { formatDistanceToNowStrict } from 'date-fns';
 import { isSameComment } from '../utils/isSameComment';
 import { useApp } from './useApp';
 import { useIsIntersecting } from '../hooks/useIntersectionObserver';
@@ -36,6 +36,7 @@ export const StyledCommentContainer = styled('div', {
   position: 'relative',
   maxWidth: 'calc(100% - $padding$1)',
   padding: '$padding$1 $padding$2',
+
   variants: {
     type: {
       default: {},
@@ -118,8 +119,9 @@ export function Comment(props: {
               {props.profile.name || props.profile.email}
               <StyledMessageTimestamp>
                 {typeof props.timestamp === 'number'
-                  ? timeDifference(+new Date(), props.timestamp)
-                  : null}
+                  ? formatDistanceToNowStrict(props.timestamp, { roundingMethod: 'floor' })
+                  : null}{' '}
+                ago
               </StyledMessageTimestamp>
             </Name>
           )}
