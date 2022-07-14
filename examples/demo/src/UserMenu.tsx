@@ -7,7 +7,7 @@ export function UserMenu({
   onChangeUser,
 }: {
   user: User;
-  onChangeUser: (user: User) => void;
+  onChangeUser: (user: User | null) => void;
 }) {
   const [isOpen, setIsOpen] = useState(false);
   return (

@@ -33,8 +33,15 @@ export default function App() {
     }
   }, []);
 
+  const image = (
+    <img
+      style={{ width: '100vw', maxHeight: '100vh', objectFit: 'cover' }}
+      src="https://images.unsplash.com/photo-1433838552652-f9a46b332c40"
+    />
+  );
+
   if (!user) {
-    return null;
+    return image;
   }
 
   return (
@@ -45,12 +52,7 @@ export default function App() {
       user={user}
       mentionableUsers={mentionableUsers}
     >
-      <CollabKit.Commentable>
-        <img
-          style={{ width: '100vw', maxHeight: '100vh', objectFit: 'cover' }}
-          src="https://images.unsplash.com/photo-1433838552652-f9a46b332c40"
-        />
-      </CollabKit.Commentable>
+      <CollabKit.Commentable>{image}</CollabKit.Commentable>
       <Chat />
       <UserMenu user={user} onChangeUser={onChangeUser} />
       <CollabKit.FloatingButton />
