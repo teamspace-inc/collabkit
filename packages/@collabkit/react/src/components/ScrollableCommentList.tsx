@@ -2,12 +2,13 @@ import { useCallback, useEffect, useRef } from 'react';
 import ScrollArea from './ScrollArea';
 import React from 'react';
 import { Comment } from './Comment';
-import { Profile, ThreadType, Timeline } from '../constants';
+import { Profile, Timeline } from '../constants';
 import { Target } from './Target';
 import equal from 'fast-deep-equal';
 import { CurrentlyTyping } from './comment/TypingIndicator';
 import { useCommentList } from './useCommentList';
 import { StyledCommentList } from './CommentList';
+import { FlexCenter } from './UIKit';
 
 export const ScrollableCommentList = React.memo(function ScrollableCommentList(props: {
   isTyping?: { [endUserId: string]: boolean };
@@ -52,19 +53,15 @@ export const ScrollableCommentList = React.memo(function ScrollableCommentList(p
     <StyledCommentList
       style={
         composerHeight > -1
-          ? { maxHeight: `calc(100% - ${composerHeight + 2}px - ${props.headerHeight}px)` }
-          : {}
+          ? {
+              height: '100%',
+              maxHeight: `calc(100% - ${composerHeight + 2}px - ${props.headerHeight}px)`,
+            }
+          : { height: '100%' }
       }
     >
       <ScrollArea.Root ref={rootRef}>
-        <ScrollArea.Viewport
-          css={{
-            display: 'flex',
-            flex: 1,
-          }}
-          onScroll={handleScroll}
-          ref={scrollRef}
-        >
+        <ScrollArea.Viewport onScroll={handleScroll} ref={scrollRef}>
           {list.map((group, i) =>
             group.map((event, j) => {
               let type: 'default' | 'inline-start' | 'inline' | 'inline-end' = 'default';
