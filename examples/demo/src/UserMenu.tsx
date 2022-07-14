@@ -51,6 +51,13 @@ export function UserMenu({
 
 function Avatar({ user }: { user: User }) {
   if (!user?.avatar) {
+    let initials = '';
+    if (user.name) {
+      const names = user.name.split(' ');
+      if (names.length > 1) {
+        initials = names[0][0] + names[names.length - 1][0];
+      }
+    }
     return (
       <div
         style={{
@@ -58,8 +65,15 @@ function Avatar({ user }: { user: User }) {
           height: 44,
           borderRadius: '50%',
           background: 'rebeccapurple',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          color: 'white',
+          fontWeight: 'bold',
         }}
-      />
+      >
+        {initials}
+      </div>
     );
   }
   return <img src={user.avatar} style={{ width: 44, height: 44, borderRadius: '50%' }} />;
