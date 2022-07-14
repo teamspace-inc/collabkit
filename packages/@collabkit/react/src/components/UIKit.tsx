@@ -88,6 +88,7 @@ export const { styled, css, theme } = createStitches({
 
       primaryButtonBackground: '$neutral1',
       composerButtonBackground: '$neutral12',
+      composerButtonIconColor: '$neutral1',
       composerBackground: 'transparent',
 
       bubbleHoverBackground: '$neutral4',
@@ -186,6 +187,7 @@ export const darkTheme = createTheme({
 
     primaryButtonBackground: '$neutral1',
     composerButtonBackground: '$neutral12',
+    composerButtonIconColor: '$neutral1',
     composerBackground: 'transparent',
 
     bubbleHoverBackground: '$neutral4',

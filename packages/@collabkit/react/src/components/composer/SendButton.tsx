@@ -5,7 +5,7 @@ import { ArrowUp } from 'phosphor-react';
 import { useApp } from '../useApp';
 
 export function SendButton(props: { bodyLength: number; workspaceId: string; threadId: string }) {
-  const { events } = useApp();
+  const { events, theme } = useApp();
   const { bodyLength, workspaceId, threadId } = props;
   return (
     <Tooltip.Root>
@@ -19,7 +19,7 @@ export function SendButton(props: { bodyLength: number; workspaceId: string; thr
       >
         <ArrowUp
           size={13}
-          color={'white'}
+          color={theme.colors.composerButtonIconColor.toString()}
           weight={'bold'}
           style={{ position: 'relative', cursor: 'pointer' }}
         />
