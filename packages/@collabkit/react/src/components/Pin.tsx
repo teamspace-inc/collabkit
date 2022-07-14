@@ -43,9 +43,6 @@ const StyledPinContainer = styled('div', {
 export function Pin(props: { pinId: string }) {
   const { store, events, theme } = useApp();
   const { viewingId, hoveringId, profiles } = useSnapshot(store);
-  const [currentTheme] = useState(
-    () => themes[themeIds[Math.floor(Math.random() * themeIds.length)]]
-  );
 
   const { workspace, workspaceId } = useWorkspace();
   const pin = workspace.pins[props.pinId];
@@ -100,7 +97,6 @@ export function Pin(props: { pinId: string }) {
             flexDirection: 'row',
             gap: 10,
           }}
-          className={currentTheme.className}
         >
           <StyledPin
             onPointerDown={(e) => {
