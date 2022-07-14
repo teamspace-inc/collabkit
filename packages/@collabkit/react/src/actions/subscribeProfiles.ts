@@ -29,7 +29,7 @@ export async function subscribeProfiles(store: Store) {
     }
   };
 
-  const profilesRef = ref(DB, `/profiles/${appId}/${workspaceId}`);
+  const profilesRef = ref(DB, `/workspaces/${appId}/${workspaceId}/profiles`);
   const addedKey = `${profilesRef.toString()}#added`;
   const changedKey = `${profilesRef.toString()}#changed`;
   if (!store.subs[addedKey]) {
