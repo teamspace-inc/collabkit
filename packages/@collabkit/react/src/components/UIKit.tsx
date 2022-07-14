@@ -17,7 +17,7 @@ import {
   orange,
   brown,
   grayDark,
-  blueDark,
+  greenDark,
 } from '@radix-ui/colors';
 
 const neutral = {
@@ -35,68 +35,85 @@ const neutral = {
   neutral12: '$gray12',
 };
 
+const fontSize = {
+  ['0']: '11px',
+  ['1']: '12px',
+  ['2']: '13px',
+  ['3']: '16px',
+};
+
+const lineHeights = {
+  ['0']: '18px',
+  ['1']: '18px',
+  ['2']: '18px',
+};
+
+const fontWeights = {
+  ['0']: 400,
+  ['1']: 700,
+  ['2']: 700,
+};
+
+const radii = {
+  ['0']: '4px',
+  ['1']: '12px',
+  ['2']: '16px',
+  pin: '24px',
+};
+
+const padding = {
+  composer: '12px',
+  ['0']: '6px',
+  ['1']: '8px',
+  ['2']: '16px',
+  ['3']: '24px',
+  ['4']: '32px',
+};
+
+const sizes = {
+  sendButton: '20px',
+  threadWidth: '260px',
+  threadPreviewWidth: '248px',
+  pinSize: 24,
+  avatarSize: 24,
+};
+
+const space = {
+  ['0']: '0px',
+  ['1']: '4px',
+  ['2']: '8px',
+  ['3']: '12px',
+  ['4']: '16px',
+};
+
+const colors = {
+  primaryText: '$neutral12',
+  secondaryText: '$neutral9',
+
+  typingDot: '$neutral9',
+
+  primaryButtonBackground: '$neutral1',
+  composerButtonBackground: '$neutral12',
+  composerButtonIconColor: '$neutral1',
+  composerBackground: 'transparent',
+
+  bubbleHoverBackground: '$neutral4',
+  selectionBackground: '$accent10',
+
+  borderColor: '$neutral4',
+  pinBorderColor: '$neutral1',
+};
+
 export const { styled, css, theme } = createStitches({
   theme: {
-    fontSize: {
-      ['0']: '11px',
-      ['1']: '12px',
-      ['2']: '13px',
-      ['3']: '16px',
-    },
-    lineHeights: {
-      ['0']: '18px',
-      ['1']: '18px',
-      ['2']: '18px',
-    },
-    fontWeights: {
-      ['0']: 400,
-      ['1']: 700,
-      ['2']: 700,
-    },
-    radii: {
-      ['0']: '4px',
-      ['1']: '12px',
-      ['2']: '16px',
-      pin: '24px',
-    },
-    padding: {
-      ['0']: '6px',
-      ['1']: '8px',
-      ['2']: '16px',
-      ['3']: '24px',
-      ['4']: '32px',
-    },
-    sizes: {
-      sendButton: '24px',
-      threadWidth: '260px',
-      threadPreviewWidth: '248px',
-      pinSize: 24,
-      avatarSize: 24,
-    },
-    space: {
-      ['0']: '0px',
-      ['1']: '4px',
-      ['2']: '8px',
-      ['3']: '12px',
-      ['4']: '16px',
-    },
+    fontSize,
+    lineHeights,
+    fontWeights,
+    radii,
+    padding,
+    sizes,
+    space,
     colors: {
-      primaryText: '$neutral12',
-      secondaryText: '$neutral9',
-
-      typingDot: '$neutral9',
-
-      primaryButtonBackground: '$neutral1',
-      composerButtonBackground: '$neutral12',
-      composerButtonIconColor: '$neutral1',
-      composerBackground: 'transparent',
-
-      bubbleHoverBackground: '$neutral4',
-      selectionBackground: '$accent10',
-
-      borderColor: '$neutral4',
-      pinBorderColor: '$neutral1',
-
       ...gray,
       ...green,
 
@@ -114,87 +131,38 @@ export const { styled, css, theme } = createStitches({
       accent12: '$green12',
 
       ...neutral,
+      ...colors,
     },
   },
 });
 
 export const darkTheme = createTheme({
-  fontSize: {
-    ['0']: '11px',
-    ['1']: '12px',
-    ['2']: '13px',
-    ['3']: '16px',
-  },
-  lineHeights: {
-    ['0']: '18px',
-    ['1']: '18px',
-    ['2']: '18px',
-  },
-  fontWeights: {
-    ['0']: 400,
-    ['1']: 700,
-    ['2']: 700,
-  },
-  radii: {
-    ['0']: '4px',
-    ['1']: '12px',
-    ['2']: '16px',
-    pin: '24px',
-  },
-  padding: {
-    ['0']: '6px',
-    ['1']: '8px',
-    ['2']: '16px',
-    ['3']: '24px',
-    ['4']: '32px',
-  },
-  sizes: {
-    sendButton: '24px',
-    threadWidth: '260px',
-    threadPreviewWidth: '248px',
-    pinSize: 24,
-    avatarSize: 24,
-  },
-  space: {
-    ['0']: '0px',
-    ['1']: '4px',
-    ['2']: '8px',
-    ['3']: '12px',
-    ['4']: '16px',
-  },
+  fontSize,
+  lineHeights,
+  fontWeights,
+  radii,
+  padding,
+  sizes,
+  space,
   colors: {
     ...grayDark,
-    ...blueDark,
+    ...greenDark,
+
+    accent1: '$green1',
+    accent2: '$green2',
+    accent3: '$green3',
+    accent4: '$green4',
+    accent5: '$green5',
+    accent6: '$green6',
+    accent7: '$green7',
+    accent8: '$green8',
+    accent9: '$green9',
+    accent10: '$green10',
+    accent11: '$green11',
+    accent12: '$green12',
+
     ...neutral,
-
-    accent1: '$blueDark1',
-    accent2: '$blueDark2',
-    accent3: '$blueDark3',
-    accent4: '$blueDark4',
-    accent5: '$blueDark5',
-    accent6: '$blueDark6',
-    accent7: '$blueDark7',
-    accent8: '$blueDark8',
-    accent9: '$blueDark9',
-    accent10: '$blueDark10',
-    accent11: '$blueDark11',
-    accent12: '$blueDark12',
-
-    primaryText: '$neutral12',
-    secondaryText: '$neutral9',
-
-    typingDot: '$neutral9',
-
-    primaryButtonBackground: '$neutral1',
-    composerButtonBackground: '$neutral12',
-    composerButtonIconColor: '$neutral1',
-    composerBackground: 'transparent',
-
-    bubbleHoverBackground: '$neutral4',
-    selectionBackground: '$accent10',
-
-    borderColor: '$neutral4',
-    pinBorderColor: '$neutral1',
+    ...colors,
   },
 });
 

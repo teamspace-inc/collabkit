@@ -75,7 +75,7 @@ const ComposerContainer = styled('div', {
 
 const StyledLexicalEditorContainer = styled('div', {
   borderRadius: '$radii$1',
-  width: 'calc(100% - $sizes$sendButton)', // take into account send button
+  width: 'calc(100% - $sizes$sendButton - $padding$composer)', // take into account send button
   color: '$colors$primaryText',
   marginLeft: 0,
   padding: '0px 0',
