@@ -63,10 +63,7 @@ export const MODAL_Z_INDEX = 999999;
 export function PopoverThread(props: { threadId: string; style?: React.CSSProperties }) {
   const { store, theme } = useApp();
   const userId = store.config.identify?.userId!;
-  const [composerHeight, setComposerHeight] = useState(0);
-
   const { workspace, workspaceId } = useWorkspace();
-
   const { profiles, timeline, isResolved, isEmpty, target } = useThread({
     ...props,
     store,
@@ -92,10 +89,8 @@ export function PopoverThread(props: { threadId: string; style?: React.CSSProper
           <Composer
             workspace={workspace}
             placeholder={isEmpty ? 'Add a comment' : 'Reply to this comment'}
-            // minus top padding
             style={{
-              borderRadius: '12px',
-              minHeight: `${composerHeight - 6}px`,
+              borderRadius: theme.radii['2'].value.toString(),
               ...(isEmpty
                 ? {}
                 : {
@@ -108,7 +103,6 @@ export function PopoverThread(props: { threadId: string; style?: React.CSSProper
             profile={profiles[userId]}
             threadId={props.threadId}
             isFloating={false}
-            onHeightChange={setComposerHeight}
           />
         }
       </IconContext.Provider>

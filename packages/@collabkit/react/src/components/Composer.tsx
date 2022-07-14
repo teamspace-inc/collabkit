@@ -62,11 +62,10 @@ export function createEditorConfig() {
 }
 
 const ComposerContainer = styled('div', {
-  minHeight: 36, // default composer height, 32 + 1px for border
+  minHeight: 33, // default composer height, 32 + 1px for border
   position: 'relative',
   display: 'flex',
-  flex: 1,
-  alignItems: 'start',
+  flex: '0 1 auto',
   borderBottomLeftRadius: '$radii$1',
   borderBottomRightRadius: '$radii$1',
   padding: '$padding$0 $padding$1',
@@ -96,7 +95,7 @@ export function Composer(props: {
   workspace: Workspace;
   placeholder: React.ReactNode | string;
   style?: React.CSSProperties;
-  onHeightChange: (height: number) => void;
+  onHeightChange?: (height: number) => void;
 }) {
   const { events, store, theme } = useApp();
 
@@ -120,7 +119,7 @@ export function Composer(props: {
   useResizeObserver({
     ref: editorContainerRef,
     onResize: (info) => {
-      props.onHeightChange(info.height + 7);
+      props.onHeightChange?.(info.height + 7);
     },
   });
 

@@ -95,6 +95,9 @@ export function Thread(props: {
           )}
           {workspaceId && workspace ? (
             <Composer
+              style={{
+                borderTop: `1px solid ${theme.colors.borderColor.value.toString()}`,
+              }}
               workspace={workspace}
               placeholder={isEmpty ? 'Add a comment' : 'Reply to this comment'}
               workspaceId={workspaceId}
