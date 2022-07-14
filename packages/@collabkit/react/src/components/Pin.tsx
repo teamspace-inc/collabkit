@@ -90,8 +90,8 @@ export function Pin(props: { pinId: string }) {
         onMouseLeave={(e) => events.onMouseOut(e, { target })}
       >
         <motion.div
-          animate={{ scale: [0.9, 1.1, 1] }}
-          transition={{ duration: 0.5 }}
+          // animate={{ scale: [0.95, 1.05, 1] }}
+          // transition={{ duration: 0.33 }}
           style={{
             display: 'flex',
             flexDirection: 'row',
