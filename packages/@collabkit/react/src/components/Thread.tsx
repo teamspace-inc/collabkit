@@ -84,7 +84,6 @@ export function Thread(props: {
           {!isEmpty && timeline && workspaceId && (
             <ScrollableCommentList
               isTyping={workspace?.composers[threadId]?.isTyping}
-              type={'inline'}
               profiles={profiles}
               threadId={props.threadId}
               userId={userId}

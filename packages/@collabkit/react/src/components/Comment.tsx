@@ -66,7 +66,6 @@ export function Comment(props: {
   rootRef: React.RefObject<HTMLDivElement>;
   scrollRef?: React.RefObject<HTMLDivElement>;
   type: CommentType;
-  threadType: ThreadType;
 }) {
   const ref = useRef(null);
   const { store, events, theme } = useApp();
