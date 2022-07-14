@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Avatar } from './Avatar';
-import { styled, themeIds, themes } from './UIKit';
+import { styled } from './UIKit';
 import { motion } from 'framer-motion';
 import { useApp } from './useApp';
 import { useSnapshot } from 'valtio';
