@@ -84,7 +84,6 @@ export function Thread(props: {
           {!isEmpty && timeline && workspaceId && (
             <ScrollableCommentList
               isTyping={workspace?.composers[threadId]?.isTyping}
-              type={'inline'}
               profiles={profiles}
               threadId={props.threadId}
               userId={userId}
@@ -100,7 +99,6 @@ export function Thread(props: {
               placeholder={isEmpty ? 'Add a comment' : 'Reply to this comment'}
               workspaceId={workspaceId}
               onHeightChange={setComposerHeight}
-              threadType={'inline'}
               profile={profiles[userId]}
               threadId={props.threadId}
               isFloating={false}

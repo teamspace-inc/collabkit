@@ -81,7 +81,6 @@ export function PopoverThread(props: { threadId: string; style?: React.CSSProper
         {!isEmpty && timeline && (
           <CommentList
             isTyping={workspace?.composers[props.threadId]?.isTyping}
-            type={'popover'}
             profiles={profiles}
             threadId={props.threadId}
             userId={userId}

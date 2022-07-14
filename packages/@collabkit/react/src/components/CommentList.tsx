@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import React from 'react';
 import { Comment } from './Comment';
-import { CommentType, Profile, ThreadType, Timeline } from '../constants';
+import { CommentType, Profile, Timeline } from '../constants';
 import { styled } from './UIKit';
 import { Target } from './Target';
 import equal from 'fast-deep-equal';
@@ -10,7 +10,7 @@ import { useCommentList } from './useCommentList';
 
 export const StyledCommentList = styled('div', {
   gap: 0,
-  padding: 0,
+  padding: '$padding$1 0 0',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'stretch',
@@ -19,7 +19,6 @@ export const StyledCommentList = styled('div', {
 });
 
 export const CommentList = React.memo(function CommentList(props: {
-  type?: ThreadType;
   isTyping?: { [endUserId: string]: boolean };
   profiles: { [profileId: string]: Profile };
   timeline: Timeline;
@@ -66,7 +65,6 @@ export const CommentList = React.memo(function CommentList(props: {
                 id={event.id}
                 event={event}
                 reactions={reactions[event.id]}
-                threadType={props.type ?? 'inline'}
                 type={type}
                 timestamp={event.createdAt}
                 key={`event-${i}-${j}`}

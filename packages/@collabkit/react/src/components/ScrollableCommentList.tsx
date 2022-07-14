@@ -10,7 +10,6 @@ import { useCommentList } from './useCommentList';
 import { StyledCommentList } from './CommentList';
 
 export const ScrollableCommentList = React.memo(function ScrollableCommentList(props: {
-  type?: ThreadType;
   isTyping?: { [endUserId: string]: boolean };
   profiles: { [profileId: string]: Profile };
   timeline: Timeline;
@@ -57,10 +56,7 @@ export const ScrollableCommentList = React.memo(function ScrollableCommentList(p
           : {}
       }
     >
-      <ScrollArea.Root
-        ref={rootRef}
-        style={{ ...(props.type === 'popover' ? { height: 'auto' } : {}) }}
-      >
+      <ScrollArea.Root ref={rootRef}>
         <ScrollArea.Viewport
           css={{
             display: 'flex',
@@ -96,7 +92,6 @@ export const ScrollableCommentList = React.memo(function ScrollableCommentList(p
                     id={event.id}
                     event={event}
                     reactions={reactions[event.id]}
-                    threadType={props.type ?? 'inline'}
                     type={type}
                     timestamp={event.createdAt}
                     key={`event-${i}-${j}`}
