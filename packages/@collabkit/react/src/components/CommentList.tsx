@@ -10,7 +10,7 @@ import { useCommentList } from './useCommentList';
 
 export const StyledCommentList = styled('div', {
   gap: 0,
-  padding: 0,
+  padding: '$padding$1 0 0',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'stretch',
