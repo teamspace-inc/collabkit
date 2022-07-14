@@ -8,6 +8,13 @@ export const StyledStickyContainer = styled('div', {
   display: 'flex',
   flexDirection: 'row',
   gap: '8px',
+  variants: {
+    zTop: {
+      true: {
+        zIndex: 9999,
+      },
+    },
+  },
 });
 
 export function calculatePosition(node: Element, offset: { x: number; y: number }) {
@@ -22,6 +29,7 @@ export function Sticky(props: {
   children: React.ReactNode;
   selector: string;
   offset: { x: number; y: number };
+  zTop?: boolean;
 }) {
   const stickyRef = useRef<HTMLDivElement | null>(null);
   const selectorRef = useRef<Element | null>(null);
@@ -52,5 +60,9 @@ export function Sticky(props: {
     };
   }, [selector]);
 
-  return <StyledStickyContainer ref={stickyRef}>{children}</StyledStickyContainer>;
+  return (
+    <StyledStickyContainer ref={stickyRef} zTop={props.zTop}>
+      {children}
+    </StyledStickyContainer>
+  );
 }

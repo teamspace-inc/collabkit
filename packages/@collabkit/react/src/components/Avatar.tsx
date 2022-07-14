@@ -2,7 +2,7 @@ import { useState } from 'react';
 import React from 'react';
 import { getShade } from '../colors';
 import { Profile } from '../constants';
-import { css, styled } from '@stitches/react';
+import { css, styled } from './UIKit';
 
 export const avatarStyles = css({
   width: '24px',
@@ -29,7 +29,6 @@ export function Avatar(props: { profile: Profile; style?: React.CSSProperties; s
   const styles = props.profile.color
     ? {
         backgroundColor: getShade(props.profile.color, 9),
-        color: getShade(props.profile.color, 3),
         ...(props.size
           ? { width: props.size, height: props.size, lineHeight: `${props.size}px` }
           : {}),

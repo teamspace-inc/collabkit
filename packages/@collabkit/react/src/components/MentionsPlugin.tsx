@@ -22,7 +22,7 @@ import { $createMentionNode, MentionNode } from './MentionNode';
 import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
 import { snapshot } from 'valtio';
 import { Store } from '../constants';
-import { useApp } from './Provider';
+import { useApp } from './useApp';
 
 type MentionMatch = {
   leadOffset: number;

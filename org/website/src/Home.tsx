@@ -21,7 +21,7 @@ import {
 } from './UIKit';
 
 import { ChatTeardrop } from 'phosphor-react';
-import { CollabKit } from '@collabkit/react';
+import * as CollabKit from '@collabkit/react';
 
 export function Integrate() {
   return (
@@ -411,9 +411,9 @@ function Logo() {
 function Chat() {
   return (
     <div>
-      <CollabKit.Workspace workspaceId="demo">
-        <CollabKit.Thread threadId="example" />
-      </CollabKit.Workspace>
+      {/* <CollabKit.Workspace workspaceId="demo"> */}
+      <CollabKit.Thread threadId="example" />
+      {/* </CollabKit.Workspace> */}
     </div>
   );
 }

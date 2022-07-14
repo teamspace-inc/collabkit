@@ -2,10 +2,10 @@ import { styled } from '../UIKit';
 import * as Tooltip from '../Tooltip';
 import React from 'react';
 import { ArrowUp } from 'phosphor-react';
-import { useApp } from '../Provider';
+import { useApp } from '../useApp';
 
 export function SendButton(props: { bodyLength: number; workspaceId: string; threadId: string }) {
-  const { events } = useApp();
+  const { events, theme } = useApp();
   const { bodyLength, workspaceId, threadId } = props;
   return (
     <Tooltip.Root>
@@ -19,7 +19,7 @@ export function SendButton(props: { bodyLength: number; workspaceId: string; thr
       >
         <ArrowUp
           size={13}
-          color={'white'}
+          color={theme.colors.composerButtonIconColor.toString()}
           weight={'bold'}
           style={{ position: 'relative', cursor: 'pointer' }}
         />
@@ -40,8 +40,8 @@ const StyledComposerSendButton = styled(Tooltip.Trigger, {
   width: '$sizes$sendButton',
   height: '$sizes$sendButton',
   position: 'absolute',
-  right: '$space$2',
-  top: '10px',
+  right: '$padding$composer',
+  top: '$padding$composer',
   borderRadius: '$sizes$sendButton',
   border: 'none',
 

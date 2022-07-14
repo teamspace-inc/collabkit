@@ -1,11 +1,11 @@
-import { styled, theme } from './UIKit';
+import { styled } from './UIKit';
 import { IconContext } from 'phosphor-react';
 import React, { useState } from 'react';
 import { Composer } from './Composer';
 import * as Tooltip from './Tooltip';
 import { useWorkspace } from '../hooks/useWorkspace';
 import { CommentList } from './CommentList';
-import { useApp } from './Provider';
+import { useApp } from './useApp';
 import { useThread } from './useThread';
 import { ThreadHeader } from './ThreadHeader';
 import { StyledThread } from './thread/StyledThread';
@@ -15,6 +15,7 @@ const StyledPopverThread = styled(StyledThread, {
   borderRadius: '$radii$1',
   display: 'flex',
   width: '$threadWidth',
+  zIndex: 9999,
 });
 
 const StyledIconButton = styled('div', {
@@ -60,7 +61,7 @@ export const StyledHeaderLeftGroup = styled('div', {
 export const MODAL_Z_INDEX = 999999;
 
 export function PopoverThread(props: { threadId: string; style?: React.CSSProperties }) {
-  const { store } = useApp();
+  const { store, theme } = useApp();
   const userId = store.config.identify?.userId!;
   const [composerHeight, setComposerHeight] = useState(0);
 

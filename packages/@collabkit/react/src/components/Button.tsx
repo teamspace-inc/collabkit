@@ -1,7 +1,8 @@
-import { styled, theme } from './UIKit';
+import { styled, VStack } from './UIKit';
 import React, { useRef, useState } from 'react';
 import { ChatCircle } from 'phosphor-react';
 import { PopoverThread } from './PopoverThread';
+import { useApp } from './useApp';
 
 const StyledButton = styled('button', {
   padding: '9px 14px 9px 12px',
@@ -37,6 +38,7 @@ export function Button(props: {
   className?: string;
   defaultOpen?: boolean;
 }) {
+  const { theme } = useApp();
   const { threadId } = props;
   const [isHovering, setIsHovering] = useState(false);
   const [showThread, setShowThread] = useState(props.defaultOpen);
@@ -54,10 +56,10 @@ export function Button(props: {
         onClick={() => setShowThread(!showThread)}
         ref={ref}
       >
-        <div style={{ display: 'flex', flexDirection: 'row', gap: '6px' }}>
+        <VStack style={{ gap: '6px' }}>
           <ChatCircle weight="fill" size={20} color={theme.colors.neutral12.toString()} />
           Comment
-        </div>
+        </VStack>
       </StyledButton>
       {showThread ? <PopoverThread threadId={threadId} /> : null}
     </div>

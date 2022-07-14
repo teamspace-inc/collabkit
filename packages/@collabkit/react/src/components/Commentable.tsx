@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { useApp } from './Provider';
+import { useApp } from './useApp';
 import { useSnapshot } from 'valtio';
 import './Commentable.css';
 import { PopoverThread } from './PopoverThread';
@@ -81,7 +81,7 @@ function getPlacementStylesForPoint(point: { x: number; y: number }): React.CSSP
 export function Commentable(props: { children: React.ReactNode }) {
   const nodesAtPointerRef = useRef<HTMLElement[]>([]);
   const { store, events } = useApp();
-  const { uiState, viewingId } = useSnapshot(store);
+  const { uiState, viewingId, hoveringId } = useSnapshot(store);
   const ref = useRef<HTMLElement>(null);
   const { workspace, workspaceId } = useWorkspace();
   const pinIds = Object.keys(workspace?.pins || {});
@@ -172,10 +172,16 @@ export function Commentable(props: { children: React.ReactNode }) {
     >
       {pinIds.map((pinId) => {
         const pin = workspace.pins[pinId];
+        const isPreviewing = hoveringId?.type === 'pin' && hoveringId.pinId === pinId;
         const isViewing = viewingId?.type === 'pin' && viewingId?.pinId === pinId;
 
         return pin.state !== 'resolved' ? (
-          <Sticky key={pinId} selector={pin.selector} offset={pin.offset}>
+          <Sticky
+            key={pinId}
+            selector={pin.selector}
+            offset={pin.offset}
+            zTop={isViewing || isPreviewing}
+          >
             <Pin pinId={pinId} />
             {isViewing ? (
               <PopoverThread

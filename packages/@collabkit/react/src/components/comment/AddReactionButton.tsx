@@ -1,9 +1,8 @@
 import React, { useContext } from 'react';
 import { styled } from '@stitches/react';
 import { Smiley } from 'phosphor-react';
-import { useApp } from '../Provider';
+import { useApp } from '../useApp';
 import { TargetContext } from '../Target';
-import { theme } from '../UIKit';
 
 const StyledMessageButton = styled('button', {
   padding: 0,
@@ -23,10 +22,8 @@ const StyledMessageButton = styled('button', {
 });
 
 export function AddReactionButton() {
-  const { events } = useApp();
-  if (!events) {
-    return null;
-  }
+  const { events, theme } = useApp();
+  // todo create a hook that ensures a target is set
   const { target } = useContext(TargetContext);
   if (target == null || target.type !== 'comment') {
     return null;
