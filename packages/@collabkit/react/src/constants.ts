@@ -118,9 +118,8 @@ export type WithID<T> = T & {
 };
 
 export type IdentifyProps = {
-  // workspaceId: string;
+  workspaceId?: string;
   userId: string;
-  // workspaceName?: string | null;
   name?: string | null;
   email?: string | null;
   avatar?: string | null;

@@ -2,28 +2,28 @@ import { IdentifyProps, MentionProps } from '@collabkit/react';
 
 export const workspaceId = 'acme';
 
-const ALICE: IdentifyProps = {
+const ALICE = {
   userId: 'alice-1',
   name: 'Alice Levine',
   email: 'alice@example.com',
   avatar: 'https://www.uifiller.com/images/portraits/anon-4.jpg',
   workspaceId,
 };
-const JANET: IdentifyProps = {
+const JANET = {
   userId: 'janet-1',
   name: 'Janet Reilly',
   email: 'janet@example.org',
   avatar: 'https://www.uifiller.com/images/portraits/anon-40.jpg',
   workspaceId,
 };
-const JUAN: IdentifyProps = {
+const JUAN = {
   userId: 'juan-1',
   name: 'Juan Dunn',
   email: 'juan@example.com',
   avatar: 'https://www.uifiller.com/images/portraits/anon-19.jpg',
   workspaceId,
 };
-const FRANK: IdentifyProps = {
+const FRANK = {
   userId: 'frank-1',
   name: 'Frank Harvey',
   email: 'frank@example.edu',
