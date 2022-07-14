@@ -2,17 +2,19 @@ import { DataSnapshot, onChildAdded, onChildChanged, ref } from 'firebase/databa
 import { actions, getConfig } from '.';
 import { DB, Pin, Store } from '../constants';
 
-export async function subscribePins(store: Store, props: { workspaceId: string }) {
-  const { appId } = getConfig(store);
+export async function subscribePins(store: Store) {
+  console.log('subscribePins');
+  const { appId, workspaceId } = getConfig(store);
   const onError = (e: Error) => {
     console.error({ e });
   };
 
   const onChange = (child: DataSnapshot) => {
+    console.log('onPin');
     const pin = child.val() as Pin;
     const pinId = child.key;
     if (pinId) {
-      store.workspaces[props.workspaceId].pins[pinId] = pin;
+      store.workspaces[workspaceId].pins[pinId] = pin;
       switch (pin.state) {
         case 'resolved':
         case 'deleted':
@@ -21,21 +23,14 @@ export async function subscribePins(store: Store, props: { workspaceId: string }
           // will not be subscribed on the next refresh
           break;
         case 'open':
-          actions.subscribeThread(store, { workspaceId: props.workspaceId, threadId: pinId });
+          actions.subscribeThread(store, { workspaceId, threadId: pinId });
           break;
       }
     }
   };
 
-  store.subs[`pin#added`] = onChildAdded(
-    ref(DB, `/pins/${appId}/${props.workspaceId}`),
-    onChange,
-    onError
-  );
+  const pinsRef = ref(DB, `/pins/${appId}/${workspaceId}`);
 
-  store.subs[`pin#changed`] = onChildChanged(
-    ref(DB, `/pins/${appId}/${props.workspaceId}`),
-    onChange,
-    onError
-  );
+  store.subs[`${pinsRef.toString()}#added`] = onChildAdded(pinsRef, onChange, onError);
+  store.subs[`${pinsRef.toString()}#changed`] = onChildChanged(pinsRef, onChange, onError);
 }

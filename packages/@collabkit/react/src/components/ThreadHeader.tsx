@@ -61,7 +61,7 @@ export function ThreadHeader(props: { isResolved: boolean; target: ThreadTarget 
       <IconButton
         tooltip="Close"
         onPointerDown={(e) => {
-          events.onPointerDown(e, { target });
+          events.onPointerDown(e, { target: { ...target, type: 'closeThreadButton' } });
         }}
       >
         <X size="16" weight="light" color={theme.colors.neutral12.toString()} />

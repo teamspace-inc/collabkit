@@ -13,6 +13,7 @@ export function createWorkspace(config: Config): Workspace {
   return {
     inbox: {},
     pins: {},
+    profiles: {},
     name: config.workspace.name || '',
     timeline: {},
     composers: {},
@@ -37,6 +38,7 @@ export function createStore(config: Config): Store {
         apiKey: config.apiKey,
         mode: 'UNSECURED',
       },
+      workspace: config.workspace,
       mentions: config.mentionableUsers,
     },
     focusedId: null,

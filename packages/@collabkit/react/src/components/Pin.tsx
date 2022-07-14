@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 import { useApp } from './Provider';
 import { useSnapshot } from 'valtio';
 import { useWorkspace } from '../hooks/useWorkspace';
-import { PinTarget } from '../constants';
+import { Event, PinTarget, Profile } from '../constants';
 
 const StyledPin = styled('div', {
   width: '$sizes$pinSize',
@@ -41,6 +41,47 @@ const StyledPinContainer = styled('div', {
   marginLeft: -12,
 });
 
+function ThreadPreview(props: {
+  target: PinTarget;
+  avatar: React.ReactNode;
+  profile: Profile;
+  event: Event;
+}) {
+  const { events } = useApp();
+  const { target } = props;
+  return (
+    <StyledMessage
+      style={{
+        position: 'absolute',
+        left: 2,
+        top: 2,
+        width: theme.sizes.threadPreviewWidth.toString(),
+      }}
+      ui="preview"
+      onPointerDown={(e) => {
+        console.log('pin preview pointer down');
+        events.onPointerDown(e, { target });
+      }}
+    >
+      {props.avatar}
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          width: '100%',
+          gap: theme.padding['0'].toString(),
+        }}
+      >
+        <Name>
+          {props.profile.name} <StyledMessageTimestamp>10:00</StyledMessageTimestamp>
+        </Name>
+        <div>{props.event.body}</div>
+        <div style={{ marginTop: theme.space['3'].toString() }}>Reply</div>
+      </div>
+    </StyledMessage>
+  );
+}
+
 export function Pin(props: { pinId: string }) {
   const { store, events } = useApp();
   const { viewingId, hoveringId, profiles } = useSnapshot(store);
@@ -73,35 +114,7 @@ export function Pin(props: { pinId: string }) {
 
   const preview =
     !showThread && showPreview && profile && firstEvent ? (
-      <StyledMessage
-        style={{
-          position: 'absolute',
-          left: 2,
-          top: 2,
-          width: theme.sizes.threadPreviewWidth.toString(),
-        }}
-        ui="preview"
-        onPointerDown={(e) => {
-          console.log('pin preview pointer down');
-          events.onPointerDown(e, { target });
-        }}
-      >
-        {avatar}
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            width: '100%',
-            gap: theme.padding['0'].toString(),
-          }}
-        >
-          <Name>
-            {profile.name} <StyledMessageTimestamp>10:00</StyledMessageTimestamp>
-          </Name>
-          <div>{firstEvent.body}</div>
-          <b style={{ marginTop: theme.space['3'].toString() }}>Reply</b>
-        </div>
-      </StyledMessage>
+      <ThreadPreview target={target} avatar={avatar} profile={profile} event={firstEvent} />
     ) : null;
 
   if (!profile) {

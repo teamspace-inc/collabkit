@@ -10,9 +10,8 @@ import {
 import { DB, Store } from '../constants';
 import { getConfig } from './index';
 
-export async function subscribeSeen(store: Store, props: { workspaceId: string }) {
-  const { appId, userId } = getConfig(store);
-  const { workspaceId } = props;
+export async function subscribeSeen(store: Store) {
+  const { appId, userId, workspaceId } = getConfig(store);
 
   const seenQuery = query(
     ref(DB, `/seen/${appId}/${userId}/${workspaceId}`),

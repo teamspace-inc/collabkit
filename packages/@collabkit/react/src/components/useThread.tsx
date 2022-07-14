@@ -14,7 +14,6 @@ export function useThread(props: {
   // const profile = userId ? profiles[userId] : null;
   const timeline = workspace ? workspace.timeline[threadId] : null;
   const isEmpty = timeline ? Object.keys(timeline).length === 0 : true;
-  console.log(isEmpty);
 
   const ref = useRef<HTMLDivElement>(null);
 

@@ -20,7 +20,6 @@ export function createEvents(store: Store) {
 
       await actions.authenticate(store);
       await actions.saveProfile(store);
-      await actions.subscribeProfiles(store);
     },
 
     onTimelineEventAdded: (snapshot: DataSnapshot) => {
@@ -115,6 +114,7 @@ export function createEvents(store: Store) {
             }
             case 'closeThreadButton': {
               actions.closeThread(store);
+              break;
             }
             case 'resolveThreadButton': {
               actions.resolve(store, props.target.workspaceId, props.target.threadId);
@@ -125,6 +125,7 @@ export function createEvents(store: Store) {
               break;
             }
           }
+          break;
         }
         case 'selecting': {
           if (props.target.type === 'commentable') {
