@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { mentionableUsers } from './data';
 import { User } from './types';
 
@@ -8,6 +9,7 @@ export function UserMenu({
   user: User;
   onChangeUser: (user: User) => void;
 }) {
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <div
       style={{
@@ -21,30 +23,18 @@ export function UserMenu({
         gap: 8,
       }}
     >
-      <Avatar user={user} />
-      <select
-        value={user.userId}
-        onChange={(e) => {
-          onChangeUser(mentionableUsers.find((user) => user.userId === e.currentTarget.value)!);
-        }}
-        style={{
-          position: 'absolute',
-          inset: 0,
-          fontSize: 0,
-          color: 'transparent',
-          outline: 'none',
-          height: 44,
-          backgroundColor: 'transparent',
-          border: 'none',
-          cursor: 'pointer',
-        }}
-      >
-        {mentionableUsers.map((user) => (
-          <option key={user.userId} value={user.userId}>
-            {user.name}
-          </option>
-        ))}
-      </select>
+      <div onClick={() => setIsOpen((isOpen) => !isOpen)}>
+        <Avatar user={user} />
+      </div>
+      {isOpen && (
+        <button
+          type="button"
+          style={{ position: 'absolute', top: 50, width: 100 }}
+          onClick={() => onChangeUser(null)}
+        >
+          Sign out
+        </button>
+      )}
     </div>
   );
 }

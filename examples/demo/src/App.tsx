@@ -1,13 +1,42 @@
 import * as CollabKit from '@collabkit/react';
-import { users, mentionableUsers } from './data';
+import { mentionableUsers } from './data';
 import './App.css';
 import { Chat } from './Chat';
 import { UserMenu } from './UserMenu';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { User } from './types';
 
-function App() {
-  const [user, setUser] = useState<User>(users.JANET);
+import jwtDecode from 'jwt-decode';
+
+export default function App() {
+  const [user, setUser] = useState<User | null>(() => {
+    try {
+      return JSON.parse(localStorage.getItem('demoUser') || 'null') as User;
+    } catch {
+      return null;
+    }
+  });
+
+  const onChangeUser = useCallback((user: User | null) => {
+    setUser(user);
+    if (user != null) {
+      localStorage.setItem('demoUser', JSON.stringify(user));
+    } else {
+      localStorage.removeItem('demoUser');
+      showGoogleLogin((user) => onChangeUser(user));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (user == null) {
+      showGoogleLogin((user) => onChangeUser(user));
+    }
+  }, []);
+
+  if (!user) {
+    return null;
+  }
+
   return (
     <CollabKit.Provider
       apiKey={import.meta.env.VITE_COLLABKIT_TOKEN}
@@ -23,10 +52,28 @@ function App() {
         />
       </CollabKit.Commentable>
       <Chat />
-      <UserMenu user={user} onChangeUser={setUser} />
+      <UserMenu user={user} onChangeUser={onChangeUser} />
       <CollabKit.FloatingButton />
     </CollabKit.Provider>
   );
 }
 
-export default App;
+function showGoogleLogin(callback: (user: User) => void) {
+  google.accounts.id.initialize({
+    client_id: '913144916238-5301s2hqmurtvub2ic17529uh3ccsgqt.apps.googleusercontent.com',
+    callback: (response) => {
+      callback(userFromGoogleToken(response.credential));
+    },
+  });
+  google.accounts.id.prompt();
+}
+
+function userFromGoogleToken(token: string) {
+  const { sub, name, picture, email } = jwtDecode(token) as any;
+  return {
+    userId: sub,
+    name,
+    email,
+    avatar: picture,
+  };
+}
