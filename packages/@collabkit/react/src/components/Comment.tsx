@@ -9,7 +9,6 @@ import { timeDifference } from '../utils/timeDifference';
 import { isSameComment } from '../utils/isSameComment';
 import { useApp } from './Provider';
 import { useIsIntersecting } from '../hooks/useIntersectionObserver';
-import { MODAL_Z_INDEX } from './Thread';
 import { Name } from './profile/Name';
 import { StyledMessage, StyledMessageTimestamp } from './comment/Message';
 import { MessageToolbar } from './comment/MessageToolbar';
@@ -104,11 +103,9 @@ export function Comment(props: {
     return null;
   }
 
-  const zStyles = { zIndex: MODAL_Z_INDEX + 1 };
-
   return props.profile ? (
     <StyledCommentContainer
-      style={isSameComment(reactingId, target) ? zStyles : {}}
+      // style={isSameComment(reactingId, target) ? zStyles : {}}
       ui="freeform"
       type={props.type}
       onMouseOver={(e) => events.onMouseOver(e, { target })}

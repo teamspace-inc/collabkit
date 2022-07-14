@@ -15,6 +15,7 @@ const StyledPopverThread = styled(StyledThread, {
   borderRadius: '$radii$1',
   display: 'flex',
   width: '$threadWidth',
+  zIndex: 9999,
 });
 
 const StyledIconButton = styled('div', {

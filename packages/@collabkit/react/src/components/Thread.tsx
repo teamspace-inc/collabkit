@@ -19,7 +19,7 @@ const NullState = styled('div', {
   gap: '5px',
 });
 
-export const MODAL_Z_INDEX = 999999;
+// export const MODAL_Z_INDEX = 999999;
 
 export function Thread(props: {
   threadId: string;
@@ -62,7 +62,7 @@ export function Thread(props: {
             position: 'absolute',
             inset: 0,
             transition: 'background-color 0.2s ease-in-out',
-            zIndex: MODAL_Z_INDEX,
+            // zIndex: MODAL_Z_INDEX,
             pointerEvents: 'none',
             borderRadius: theme.radii['1'].toString(),
             ...(reactingId
