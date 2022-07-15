@@ -89,15 +89,17 @@ export function createEvents(store: Store) {
     },
 
     onMouseOver: (e: React.MouseEvent, props: { target: Target }) => {
+      // console.log('onMouseOver', props);
       actions.hover(store, props);
     },
 
     onMouseOut: (e: React.MouseEvent, props: { target: Target }) => {
+      // console.log('onMouseOut', props);
       actions.unhover(store, props);
     },
 
     onPointerDown: (e: React.PointerEvent, props: { target: Target }) => {
-      console.log('onPointerDown', props);
+      // console.log('onPointerDown', props);
       switch (store.uiState) {
         case 'idle': {
           switch (props.target.type) {

@@ -70,7 +70,7 @@ export function Thread(props: {
           }}
         />
       ) : null} */}
-      <StyledThread isEmpty={isEmpty}>
+      <StyledThread>
         {!isConnected ? <FlexCenter /> : null}
         {isConnected && isEmpty ? (
           <FlexCenter>

@@ -1,6 +1,6 @@
 import { styled } from './UIKit';
 import { IconContext } from 'phosphor-react';
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { Composer } from './Composer';
 import { useWorkspace } from '../hooks/useWorkspace';
 import { CommentList } from './CommentList';
@@ -18,24 +18,25 @@ const StyledPopoverThread = styled(StyledThread, {
   backgroundColor: '$neutral1',
   borderRadius: '$radii$1',
   display: 'flex',
-  width: '$threadWidth',
+  flexDirection: 'column',
   zIndex: 9999,
   variants: {
     intersection: {
       [TLBoundsEdge.Right]: {
         opacity: 1,
-        transform: `translateX(calc(-100% - 44px))`,
+        transform: `translateX(calc(-100% - $sizes$pin - 16px - $sizes$pinBorderWidth))`,
+        marginTop: 'calc($sizes$pin/-2 + $sizes$pinBorderWidth)',
       },
       [TLBoundsEdge.Bottom]: {
         opacity: 1,
-        transform: `translateY(200%)`,
+        transform: `translateY(calc(-100% + $sizes$pin/2 + $sizes$pinBorderWidth))`,
       },
       [TLBoundsCorner.BottomRight]: {
         opacity: 1,
-        transform: `translateY(200%)`,
+        transform: `translate(calc(-100% - $sizes$pin - 16px), calc(-100% + $sizes$pin/2 + $sizes$pinBorderWidth))`,
       },
-      other: { opacity: 1 },
-      none: { opacity: 1 },
+      other: { opacity: 1, marginTop: 'calc($sizes$pin/-2 + $sizes$pinBorderWidth)' },
+      none: { opacity: 1, marginTop: 'calc($sizes$pin/-2 + $sizes$pinBorderWidth)' },
       pending: {
         opacity: 0,
       },
@@ -45,7 +46,11 @@ const StyledPopoverThread = styled(StyledThread, {
 
 export const MODAL_Z_INDEX = 999999;
 
-export function PopoverThread(props: { threadId: string; style?: React.CSSProperties }) {
+export function PopoverThread(props: {
+  threadId: string;
+  style?: React.CSSProperties;
+  isPreview?: boolean;
+}) {
   const { store, theme } = useApp();
   const ref = useRef<HTMLDivElement | null>(null);
   const userId = store.config.identify?.userId!;
@@ -59,17 +64,10 @@ export function PopoverThread(props: { threadId: string; style?: React.CSSProper
 
   const intersection = useIntersectionObserver({ ref, root: null }, []);
 
-  console.log('intersection', intersection);
-
   return (
-    <StyledPopoverThread
-      isEmpty={isEmpty}
-      style={props.style}
-      ref={ref}
-      intersection={intersection}
-    >
+    <StyledPopoverThread intersection={intersection} style={props.style} ref={ref}>
       <IconContext.Provider value={{ size: '20px' }}>
-        {!isEmpty && <ThreadHeader isResolved={isResolved} target={target} />}
+        {/* {!isEmpty && <ThreadHeader isResolved={isResolved} target={target} />} */}
         {!isEmpty && timeline && (
           <CommentList
             isTyping={workspace?.composers[props.threadId]?.isTyping}
@@ -78,9 +76,10 @@ export function PopoverThread(props: { threadId: string; style?: React.CSSProper
             userId={userId}
             workspaceId={workspaceId}
             timeline={timeline}
+            isPreview={props.isPreview}
           />
         )}
-        {
+        {props.isPreview ? null : (
           <Composer
             workspace={workspace}
             placeholder={isEmpty ? 'Add a comment' : 'Reply to this comment'}
@@ -99,7 +98,7 @@ export function PopoverThread(props: { threadId: string; style?: React.CSSProper
             threadId={props.threadId}
             isFloating={false}
           />
-        }
+        )}
       </IconContext.Provider>
     </StyledPopoverThread>
   );

@@ -5,7 +5,7 @@ import { ref as valtioRef } from 'valtio';
 import { getConfig } from './index';
 import { subscribeThreadSeenBy } from './subscribeThreadSeenBy';
 import { subscribeThreadIsTyping } from './subscribeThreadIsTyping';
-import { subscribeTimeline } from './subscribeToTimeline';
+import { subscribeTimeline } from './subscribeTimeline';
 
 export async function subscribeThread(
   store: Store,

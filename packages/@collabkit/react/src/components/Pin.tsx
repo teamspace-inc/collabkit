@@ -1,17 +1,16 @@
 import React from 'react';
 import { Avatar } from './Avatar';
-import { HStack, styled } from './UIKit';
-// import { motion } from 'framer-motion';
+import { HStack, styled, VStack } from './UIKit';
 import { useApp } from './useApp';
 import { useSnapshot } from 'valtio';
 import { useWorkspace } from '../hooks/useWorkspace';
 import { PinTarget } from '../constants';
-import { PinPreview } from './PinPreview';
 import { Badge } from './Badge';
+import { PopoverThread } from './PopoverThread';
 
 const StyledPin = styled('div', {
-  width: '$sizes$pinSize',
-  height: '$sizes$pinSize',
+  width: '$sizes$pin',
+  height: '$sizes$pin',
   borderRadius: '$radii$pin',
   display: 'flex',
   flexDirection: 'row',
@@ -38,12 +37,12 @@ const StyledPinContainer = styled('div', {
   flexDirection: 'column',
   gap: '8px',
   // so the pin is centered
-  marginTop: -12,
-  marginLeft: -12,
+  marginTop: 'calc($sizes$pin / -2)',
+  marginLeft: 'calc($sizes$pin / -2)',
 });
 
 export function Pin(props: { pinId: string }) {
-  const { store, events, theme } = useApp();
+  const { store, events } = useApp();
   const { viewingId, hoveringId, profiles } = useSnapshot(store);
 
   const { workspace, workspaceId } = useWorkspace();
@@ -61,61 +60,61 @@ export function Pin(props: { pinId: string }) {
     workspaceId,
   };
 
-  const showThread = viewingId?.type === 'pin' && viewingId.pinId === props.pinId;
+  const isViewing = viewingId?.type === 'pin' && viewingId.pinId === props.pinId;
 
-  const showPreview = hoveringId?.type === 'pin' && hoveringId.pinId === props.pinId;
+  const isHovering = hoveringId?.type === 'pin' && hoveringId.pinId === props.pinId;
 
-  const avatar = profile ? (
-    <Avatar profile={profile} size={+theme.sizes.pinSize.toString()} />
-  ) : null;
+  const avatar = profile ? <Avatar profile={profile} size={28} /> : null;
 
-  const preview =
-    !showThread && showPreview && profile && firstEvent ? (
-      <PinPreview
-        target={target}
-        avatar={avatar}
-        profile={profile}
-        timeline={workspace.timeline[props.pinId]}
-      />
+  const thread =
+    (isViewing || isHovering) && profile && (pin.state === 'open' || pin.state === 'pending') ? (
+      <div
+        style={{ cursor: isHovering && !isViewing ? 'pointer' : 'default' }}
+        onPointerDown={(e) => {
+          if (isHovering && !isViewing) {
+            e.stopPropagation();
+            e.preventDefault();
+            events.onPointerDown(e, { target });
+          }
+        }}
+      >
+        <PopoverThread threadId={props.pinId} isPreview={isHovering && !isViewing} />
+      </div>
     ) : null;
+
+  console.log('thread', thread, pin.state);
 
   if (!profile) {
     console.warn('Pin has no profile');
   }
 
   return pin && profile ? (
-    <StyledPinContainer>
-      <HStack
-        style={{
-          position: 'relative',
-          filter:
-            'drop-shadow(0px 4px 12px rgba(0,0,0,0.1)), drop-shadow(0px 1px 0px rgba(0,0,0,0.2))',
-        }}
-        onMouseOver={(e) => events.onMouseOver(e, { target })}
-        onMouseLeave={(e) => events.onMouseOut(e, { target })}
-      >
-        {/* <motion.div
-          // animate={{ scale: [0.95, 1.05, 1] }}
-          // transition={{ duration: 0.33 }}
+    <VStack
+      style={{ gap: 8 }}
+      onMouseOver={(e) => events.onMouseOver(e, { target })}
+      onMouseLeave={(e) => events.onMouseOut(e, { target })}
+    >
+      <StyledPinContainer>
+        <HStack
           style={{
-            display: 'flex',
-            flexDirection: 'row',
-            gap: 10,
-          }}
-        > */}
-        <StyledPin
-          onPointerDown={(e) => {
-            e.stopPropagation();
-            e.preventDefault();
-            events.onPointerDown(e, { target });
+            position: 'relative',
+            filter:
+              'drop-shadow(0px 4px 12px rgba(0,0,0,0.1)), drop-shadow(0px 1px 0px rgba(0,0,0,0.2))',
           }}
         >
-          <Badge size={6} />
-          {avatar}
-        </StyledPin>
-        {/* </motion.div> */}
-        {pin.state === 'open' ? preview : null}
-      </HStack>
-    </StyledPinContainer>
+          <StyledPin
+            onPointerDown={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
+              events.onPointerDown(e, { target });
+            }}
+          >
+            <Badge size={6} />
+            {avatar}
+          </StyledPin>
+        </HStack>
+      </StyledPinContainer>
+      <HStack style={{ width: isViewing || isHovering ? 248 : 'unset' }}>{thread}</HStack>
+    </VStack>
   ) : null;
 }

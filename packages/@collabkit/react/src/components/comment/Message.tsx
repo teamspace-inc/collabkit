@@ -30,17 +30,6 @@ export const StyledMessage = styled('div', {
         padding: '0 0 $padding$1',
         borderRadius: '$radii$1',
       },
-      preview: {
-        marginTop: -16,
-        marginLeft: -16,
-        cursor: 'pointer',
-        padding: '$padding$2',
-        background: '$neutral2',
-        borderRadius: '$radii$1',
-        flexDirection: 'row',
-        width: '$sizes$threadPreviewWidth',
-        gap: '$space$2',
-      },
     },
     type: {
       default: {},

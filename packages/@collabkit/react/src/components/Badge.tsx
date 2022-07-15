@@ -16,6 +16,7 @@ const StyledBadge = styled('div', {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+  color: '$colors$primaryText',
 });
 
 export function Badge(props: { size: number; number?: number; style?: React.CSSProperties }) {

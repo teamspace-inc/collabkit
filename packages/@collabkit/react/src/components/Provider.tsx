@@ -4,12 +4,13 @@ import { IdentifyProps, MentionProps, Store } from '../constants';
 import { Events, createEvents } from '../events';
 import { AppContext } from '../hooks/useAppContext';
 import { createStore } from '../store';
-import { darkTheme } from './UIKit';
+import { darkTheme, theme } from './UIKit';
 
 // Enable using multiple isolated App
 // instances in the same page.
 export function CollabKitProvider({
   children,
+  darkMode,
   ...config
 }: {
   appId: string;
@@ -18,6 +19,7 @@ export function CollabKitProvider({
   user: IdentifyProps;
   mentionableUsers: MentionProps;
   children: React.ReactNode;
+  darkMode?: boolean;
 }) {
   const [context, setContext] = useState<{ store: Store; events: Events } | null>(null);
 
@@ -50,10 +52,10 @@ export function CollabKitProvider({
         store: context.store,
         events: context.events,
         workspaceId: config.workspace.id,
-        theme: darkTheme,
+        theme: darkMode ? darkTheme : theme,
       }}
     >
-      <span className={darkTheme.className.toString()}>{children}</span>
+      <span className={(darkMode ? darkTheme : theme).className.toString()}>{children}</span>
     </AppContext.Provider>
   );
 }

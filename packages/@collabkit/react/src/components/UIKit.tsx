@@ -75,9 +75,8 @@ const sizes = {
   sendButton: '20px',
   threadWidth: '260px',
   threadPreviewWidth: '248px',
-  pinSize: 24,
-  avatarSize: 24,
-  pinBorderWidth: '2px',
+  pin: '28px',
+  pinBorderWidth: '1.5px',
 };
 
 const space = {

@@ -13,9 +13,16 @@ export const StyledCommentList = styled('div', {
   padding: '$padding$1 0 0',
   display: 'flex',
   flexDirection: 'column',
-  alignItems: 'stretch',
-  justifyItems: 'stretch',
   flex: 1,
+});
+
+const SeeAllRepliesLink = styled('div', {
+  fontSize: '13px',
+  display: 'flex',
+  marginTop: '0px',
+  paddingBottom: '28px',
+  marginLeft: 'calc(16px + 24px + 8px)',
+  color: '$colors$secondaryText',
 });
 
 export const CommentList = React.memo(function CommentList(props: {
@@ -25,6 +32,7 @@ export const CommentList = React.memo(function CommentList(props: {
   workspaceId: string;
   userId: string;
   threadId: string;
+  isPreview?: boolean;
 }) {
   const { userId, threadId, workspaceId, profiles, timeline, isTyping } = props;
 
@@ -38,7 +46,7 @@ export const CommentList = React.memo(function CommentList(props: {
 
   return (
     <StyledCommentList>
-      {list.map((group, i) =>
+      {(props.isPreview ? list.slice(0, 1) : list).map((group, i) =>
         group.map((event, j) => {
           let type: CommentType = 'default';
 
@@ -76,6 +84,13 @@ export const CommentList = React.memo(function CommentList(props: {
           );
         })
       )}
+      {props.isPreview ? (
+        <SeeAllRepliesLink>
+          {list.length > 1
+            ? `See ${list.length - 1} ${list.length - 1 === 1 ? 'reply' : 'replies'}`
+            : 'Reply'}
+        </SeeAllRepliesLink>
+      ) : null}
       <CurrentlyTyping profiles={profiles} userId={userId} isTyping={isTyping} />
     </StyledCommentList>
   );

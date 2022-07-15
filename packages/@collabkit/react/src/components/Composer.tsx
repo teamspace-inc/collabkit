@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Profile, Store, Target, ThreadType, Workspace } from '../constants';
+import { Profile, Store, Target, Workspace } from '../constants';
 import { styled } from './UIKit';
 import { EditorState, $getRoot } from 'lexical';
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
@@ -62,7 +62,6 @@ export function createEditorConfig() {
 }
 
 const ComposerContainer = styled('div', {
-  minHeight: 33, // default composer height, 32 + 1px for border
   position: 'relative',
   display: 'flex',
   flex: '0 1 auto',
