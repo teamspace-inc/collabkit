@@ -1,5 +1,5 @@
 import { styled } from './UIKit';
-import { X, Check, CheckCircle } from 'phosphor-react';
+import { X, CheckCircle } from 'phosphor-react';
 import React from 'react';
 import { useApp } from './useApp';
 import { ThreadTarget } from '../constants';
@@ -14,19 +14,6 @@ const StyledThreadHeader = styled('div', {
   alignItems: 'center',
   pointerEvents: 'none',
   borderBottom: '1px solid $borderColor',
-  variants: {
-    type: {
-      popout: {
-        // borderTopRightRadius: 11,
-        // borderTopLeftRadius: 11,
-        // position: 'absolute',
-        // left: 0,
-        // top: 0,
-        // right: 0,
-        // zIndex: 99,
-      },
-    },
-  },
 });
 
 const StyledHeaderLeftGroup = styled('div', {
@@ -40,7 +27,7 @@ export function ThreadHeader(props: { isResolved: boolean; target: ThreadTarget 
   const { isResolved, target } = props;
 
   return (
-    <StyledThreadHeader type={'popout'}>
+    <StyledThreadHeader>
       <Tooltip.Provider delayDuration={0}>
         <StyledHeaderLeftGroup />
         <IconButton
