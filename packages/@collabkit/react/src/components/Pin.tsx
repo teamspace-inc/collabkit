@@ -1,12 +1,13 @@
 import React from 'react';
 import { Avatar } from './Avatar';
-import { styled } from './UIKit';
-import { motion } from 'framer-motion';
+import { HStack, styled } from './UIKit';
+// import { motion } from 'framer-motion';
 import { useApp } from './useApp';
 import { useSnapshot } from 'valtio';
 import { useWorkspace } from '../hooks/useWorkspace';
 import { PinTarget } from '../constants';
 import { PinPreview } from './PinPreview';
+import { Badge } from './Badge';
 
 const StyledPin = styled('div', {
   width: '$sizes$pinSize',
@@ -17,8 +18,9 @@ const StyledPin = styled('div', {
   justifyContent: 'center',
   alignItems: 'center',
   userSelect: 'none',
-  border: '2px solid $colors$pinBorderColor',
+  border: '$sizes$pinBorderWidth solid $colors$pinBorderColor',
   cursor: 'pointer',
+  position: 'relative',
 
   variants: {
     effect: {
@@ -83,10 +85,8 @@ export function Pin(props: { pinId: string }) {
 
   return pin && profile ? (
     <StyledPinContainer>
-      <div
+      <HStack
         style={{
-          flexDirection: 'column',
-          display: 'flex',
           position: 'relative',
           filter:
             'drop-shadow(0px 4px 12px rgba(0,0,0,0.1)), drop-shadow(0px 1px 0px rgba(0,0,0,0.2))',
@@ -94,7 +94,7 @@ export function Pin(props: { pinId: string }) {
         onMouseOver={(e) => events.onMouseOver(e, { target })}
         onMouseLeave={(e) => events.onMouseOut(e, { target })}
       >
-        <motion.div
+        {/* <motion.div
           // animate={{ scale: [0.95, 1.05, 1] }}
           // transition={{ duration: 0.33 }}
           style={{
@@ -102,19 +102,20 @@ export function Pin(props: { pinId: string }) {
             flexDirection: 'row',
             gap: 10,
           }}
+        > */}
+        <StyledPin
+          onPointerDown={(e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            events.onPointerDown(e, { target });
+          }}
         >
-          <StyledPin
-            onPointerDown={(e) => {
-              e.stopPropagation();
-              e.preventDefault();
-              events.onPointerDown(e, { target });
-            }}
-          >
-            {avatar}
-          </StyledPin>
-        </motion.div>
+          <Badge size={6} />
+          {avatar}
+        </StyledPin>
+        {/* </motion.div> */}
         {pin.state === 'open' ? preview : null}
-      </div>
+      </HStack>
     </StyledPinContainer>
   ) : null;
 }

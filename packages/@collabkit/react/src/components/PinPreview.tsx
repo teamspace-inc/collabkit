@@ -5,7 +5,13 @@ import { useApp } from './useApp';
 import { PinTarget, Profile, Timeline } from '../constants';
 import { formatDistanceToNowStrict } from 'date-fns';
 import { useTimeline } from './useTimeline';
-import { HStack } from './UIKit';
+import { styled, HStack } from './UIKit';
+
+const PinPreviewStyledMessage = styled(StyledMessage, {
+  position: 'absolute',
+  left: '$sizes$pinBorderWidth',
+  top: '$sizes$pinBorderWidth',
+});
 
 export function PinPreview(props: {
   target: PinTarget;
@@ -18,11 +24,8 @@ export function PinPreview(props: {
   const { list } = useTimeline(props.timeline);
 
   return (
-    <StyledMessage
+    <PinPreviewStyledMessage
       style={{
-        position: 'absolute',
-        left: 2,
-        top: 2,
         width: theme.sizes.threadPreviewWidth.toString(),
       }}
       ui="preview"
@@ -45,7 +48,7 @@ export function PinPreview(props: {
         </Name>
         <HStack style={{ gap: '6px' }}>
           {list[0].map((item) => {
-            return <div>{item.body}</div>;
+            return <div key={item.id}>{item.body}</div>;
           })}
         </HStack>
         <div
@@ -59,6 +62,6 @@ export function PinPreview(props: {
             : 'Reply'}
         </div>
       </HStack>
-    </StyledMessage>
+    </PinPreviewStyledMessage>
   );
 }
