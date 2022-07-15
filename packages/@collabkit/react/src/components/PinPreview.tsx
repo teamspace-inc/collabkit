@@ -15,7 +15,7 @@ export function PinPreview(props: {
 }) {
   const { events, theme } = useApp();
   const { target } = props;
-  const { list, messageEvents } = useTimeline(props.timeline);
+  const { list } = useTimeline(props.timeline);
 
   return (
     <StyledMessage
@@ -27,7 +27,6 @@ export function PinPreview(props: {
       }}
       ui="preview"
       onPointerDown={(e) => {
-        console.log('pin preview pointer down');
         events.onPointerDown(e, { target });
       }}
     >
