@@ -4,7 +4,8 @@
   "workspaces": [
     "examples/*",
     "packages/@collabkit/*",
-    "org/*"
+    "org/*",
+    "www"
   ],
   "scripts": {
     "dev": "pnpm --recursive --parallel run dev",
