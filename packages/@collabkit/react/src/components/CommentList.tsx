@@ -6,7 +6,7 @@ import { styled } from './UIKit';
 import { Target } from './Target';
 import equal from 'fast-deep-equal';
 import { CurrentlyTyping } from './comment/TypingIndicator';
-import { useCommentList } from './useCommentList';
+import { useTimeline } from './useTimeline';
 
 export const StyledCommentList = styled('div', {
   gap: 0,
@@ -30,7 +30,7 @@ export const CommentList = React.memo(function CommentList(props: {
 
   const rootRef = useRef<HTMLDivElement>(null);
 
-  const { reactions, list } = useCommentList(timeline);
+  const { reactions, list } = useTimeline(timeline);
 
   if (!workspaceId) {
     return null;

@@ -69,7 +69,12 @@ export function Pin(props: { pinId: string }) {
 
   const preview =
     !showThread && showPreview && profile && firstEvent ? (
-      <PinPreview target={target} avatar={avatar} profile={profile} event={firstEvent} />
+      <PinPreview
+        target={target}
+        avatar={avatar}
+        profile={profile}
+        timeline={workspace.timeline[props.pinId]}
+      />
     ) : null;
 
   if (!profile) {

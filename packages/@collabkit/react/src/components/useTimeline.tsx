@@ -1,6 +1,6 @@
 import { Event, Timeline, WithID } from '../constants';
 
-export function useCommentList(timeline: Timeline) {
+export function useTimeline(timeline: Timeline) {
   const eventIds = Object.keys(timeline);
 
   const events: WithID<Event>[] = eventIds.map((eventId) => ({
