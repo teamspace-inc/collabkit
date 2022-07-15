@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "module": "src/index.ts",
   "scripts": {
-    "dev": "yarn clean && tsc --noEmit --watch",
+    "dev": "vite",
     "build": "yarn clean && tsc && vite build",
     "clean": "rimraf dist *.tsbuildinfo src/**/*.js",
     "preview": "vite preview"
@@ -37,6 +37,7 @@
     "@types/react-dom": "^18.0.0",
     "@vitejs/plugin-react": "^1.3.0",
     "prettier": "^2.6.2",
+    "rollup-plugin-visualizer": "^5.7.0",
     "vite": "^2.9.9"
   },
   "prettier": {
