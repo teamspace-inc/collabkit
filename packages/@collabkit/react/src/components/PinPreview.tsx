@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { StyledMessage, StyledMessageTimestamp } from './comment/Message';
 import { Name } from './profile/Name';
 import { useApp } from './useApp';
@@ -6,11 +6,37 @@ import { PinTarget, Profile, Timeline } from '../constants';
 import { formatDistanceToNowStrict } from 'date-fns';
 import { useTimeline } from './useTimeline';
 import { styled, HStack } from './UIKit';
+import {
+  TLBoundsCorner,
+  TLBoundsEdge,
+  useIntersectionObserver,
+} from '../hooks/useIntersectionObserver';
 
 const PinPreviewStyledMessage = styled(StyledMessage, {
   position: 'absolute',
   left: '$sizes$pinBorderWidth',
   top: '$sizes$pinBorderWidth',
+  variants: {
+    intersection: {
+      [TLBoundsEdge.Right]: {
+        opacity: 1,
+        transform: `translateX(calc(-100%))`,
+      },
+      [TLBoundsEdge.Bottom]: {
+        opacity: 1,
+        transform: `translateY(200%)`,
+      },
+      [TLBoundsCorner.BottomRight]: {
+        opacity: 1,
+        transform: `translateY(200%)`,
+      },
+      other: { opacity: 1 },
+      none: { opacity: 1 },
+      pending: {
+        opacity: 0,
+      },
+    },
+  },
 });
 
 export function PinPreview(props: {
@@ -19,12 +45,16 @@ export function PinPreview(props: {
   profile: Profile;
   timeline: Timeline;
 }) {
+  const ref = useRef<HTMLDivElement | null>(null);
   const { events, theme } = useApp();
   const { target } = props;
   const { list } = useTimeline(props.timeline);
+  const intersection = useIntersectionObserver({ ref, root: null }, []);
 
   return (
     <PinPreviewStyledMessage
+      intersection={intersection}
+      ref={ref}
       style={{
         width: theme.sizes.threadPreviewWidth.toString(),
       }}

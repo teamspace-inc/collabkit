@@ -1,14 +1,18 @@
 import { styled } from './UIKit';
 import { IconContext } from 'phosphor-react';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Composer } from './Composer';
-import * as Tooltip from './Tooltip';
 import { useWorkspace } from '../hooks/useWorkspace';
 import { CommentList } from './CommentList';
 import { useApp } from './useApp';
 import { useThread } from './useThread';
 import { ThreadHeader } from './ThreadHeader';
 import { StyledThread } from './thread/StyledThread';
+import {
+  TLBoundsCorner,
+  TLBoundsEdge,
+  useIntersectionObserver,
+} from '../hooks/useIntersectionObserver';
 
 const StyledPopoverThread = styled(StyledThread, {
   backgroundColor: '$neutral1',
@@ -16,52 +20,34 @@ const StyledPopoverThread = styled(StyledThread, {
   display: 'flex',
   width: '$threadWidth',
   zIndex: 9999,
-});
-
-const StyledIconButton = styled('div', {
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  height: 32,
-  width: 32,
-  cursor: 'pointer',
-  pointerEvents: 'all',
-
-  '&:hover': {
-    cursor: 'pointer',
+  variants: {
+    intersection: {
+      [TLBoundsEdge.Right]: {
+        opacity: 1,
+        transform: `translateX(calc(-100% - 44px))`,
+      },
+      [TLBoundsEdge.Bottom]: {
+        opacity: 1,
+        transform: `translateY(200%)`,
+      },
+      [TLBoundsCorner.BottomRight]: {
+        opacity: 1,
+        transform: `translateY(200%)`,
+      },
+      other: { opacity: 1 },
+      none: { opacity: 1 },
+      pending: {
+        opacity: 0,
+      },
+    },
   },
-});
-
-export function IconButton(props: {
-  children: React.ReactNode;
-  tooltip: string;
-  onPointerDown?: (e: React.PointerEvent) => void;
-}) {
-  return (
-    <Tooltip.Root>
-      <Tooltip.Trigger>
-        <StyledIconButton onPointerDown={(e) => props.onPointerDown?.(e)}>
-          {props.children}
-        </StyledIconButton>
-      </Tooltip.Trigger>
-      <Tooltip.Content>
-        {props.tooltip}
-        <Tooltip.Arrow />
-      </Tooltip.Content>
-    </Tooltip.Root>
-  );
-}
-
-export const StyledHeaderLeftGroup = styled('div', {
-  display: 'flex',
-  flexGrow: 1,
-  gap: 0,
 });
 
 export const MODAL_Z_INDEX = 999999;
 
 export function PopoverThread(props: { threadId: string; style?: React.CSSProperties }) {
   const { store, theme } = useApp();
+  const ref = useRef<HTMLDivElement | null>(null);
   const userId = store.config.identify?.userId!;
   const { workspace, workspaceId } = useWorkspace();
   const { profiles, timeline, isResolved, isEmpty, target } = useThread({
@@ -71,8 +57,17 @@ export function PopoverThread(props: { threadId: string; style?: React.CSSProper
     workspace,
   });
 
+  const intersection = useIntersectionObserver({ ref, root: null }, []);
+
+  console.log('intersection', intersection);
+
   return (
-    <StyledPopoverThread isEmpty={isEmpty} style={props.style}>
+    <StyledPopoverThread
+      isEmpty={isEmpty}
+      style={props.style}
+      ref={ref}
+      intersection={intersection}
+    >
       <IconContext.Provider value={{ size: '20px' }}>
         {!isEmpty && <ThreadHeader isResolved={isResolved} target={target} />}
         {!isEmpty && timeline && (

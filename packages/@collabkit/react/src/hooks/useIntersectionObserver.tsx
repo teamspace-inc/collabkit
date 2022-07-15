@@ -20,7 +20,8 @@ export type Intersection =
   | TLBoundsEdge.Bottom
   | TLBoundsEdge.Right
   | 'none'
-  | 'pending';
+  | 'pending'
+  | 'other'; // an edge we haven't fully encoded yet
 
 export const intersectionStyles = css({
   variants: {
@@ -97,6 +98,8 @@ export function useIntersectionObserver(
         setEdge(TLBoundsEdge.Right);
       } else if (bottom) {
         setEdge(TLBoundsEdge.Bottom);
+      } else {
+        setEdge('other');
       }
     } else {
       setEdge('none');
