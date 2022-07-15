@@ -7,12 +7,11 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      '@collabkit/react': resolve(__dirname, '../../packages/@collabkit/react'),
+      '@collabkit/react': resolve(__dirname, '../packages/@collabkit/react'),
     },
   },
-
   server: {
-    port: 8080,
+    port: 8000,
     proxy: {
       // with options
       '/api': {

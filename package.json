@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "pnpm --recursive --parallel run dev",
     "server": "yarn workspace server dev",
-    "typecheck": "tsc -b examples/demo org/website"
+    "typecheck": "tsc -b examples/demo www"
   },
   "devDependencies": {
     "pnpm": "^7.5.0",
