@@ -10,6 +10,14 @@ export default defineConfig({
       '@collabkit/react': resolve(__dirname, '../../packages/@collabkit/react'),
     },
   },
+  build: {
+    minify: "terser",
+    terserOptions: {
+      format: {
+        comments: false
+      }
+    }
+  },
   server: {
     proxy: {
       // with options
