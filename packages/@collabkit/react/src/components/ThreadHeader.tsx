@@ -4,6 +4,7 @@ import React from 'react';
 import { useApp } from './useApp';
 import { ThreadTarget } from '../constants';
 import { IconButton } from './PopoverThread';
+import * as Tooltip from '@radix-ui/react-tooltip';
 
 const StyledThreadHeader = styled('div', {
   height: 30,
@@ -40,32 +41,34 @@ export function ThreadHeader(props: { isResolved: boolean; target: ThreadTarget 
 
   return (
     <StyledThreadHeader type={'popout'}>
-      <StyledHeaderLeftGroup />
-      <IconButton
-        tooltip={isResolved ? 'Re-open' : 'Resolve'}
-        onPointerDown={(e) =>
-          events.onPointerDown(e, {
-            target: {
-              ...target,
-              type: isResolved ? 'reopenThreadButton' : 'resolveThreadButton',
-            } as const,
-          })
-        }
-      >
-        {!isResolved ? (
-          <Check size={16} weight={'light'} color={theme.colors.neutral12.toString()} />
-        ) : (
-          <CheckCircle size={18} weight={'fill'} color={theme.colors.accent10.toString()} />
-        )}
-      </IconButton>
-      <IconButton
-        tooltip="Close"
-        onPointerDown={(e) => {
-          events.onPointerDown(e, { target: { ...target, type: 'closeThreadButton' } });
-        }}
-      >
-        <X size="16" weight="light" color={theme.colors.neutral12.toString()} />
-      </IconButton>
+      <Tooltip.Provider delayDuration={0}>
+        <StyledHeaderLeftGroup />
+        <IconButton
+          tooltip={isResolved ? 'Re-open' : 'Resolve'}
+          onPointerDown={(e) =>
+            events.onPointerDown(e, {
+              target: {
+                ...target,
+                type: isResolved ? 'reopenThreadButton' : 'resolveThreadButton',
+              } as const,
+            })
+          }
+        >
+          {!isResolved ? (
+            <CheckCircle size={19} weight={'thin'} color={theme.colors.neutral12.toString()} />
+          ) : (
+            <CheckCircle size={18} weight={'fill'} color={theme.colors.accent10.toString()} />
+          )}
+        </IconButton>
+        <IconButton
+          tooltip="Close"
+          onPointerDown={(e) => {
+            events.onPointerDown(e, { target: { ...target, type: 'closeThreadButton' } });
+          }}
+        >
+          <X size="16" weight="light" color={theme.colors.neutral12.toString()} />
+        </IconButton>
+      </Tooltip.Provider>
     </StyledThreadHeader>
   );
 }
