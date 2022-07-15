@@ -1,4 +1,5 @@
 {
+  "name": "collabkit-www",
   "private": true,
   "scripts": {
     "dev": "vite",
