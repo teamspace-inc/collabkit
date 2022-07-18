@@ -12,13 +12,5 @@ export default defineConfig({
   },
   server: {
     port: 8000,
-    proxy: {
-      // with options
-      '/api': {
-        target: 'https://us-central1-collabkit-dev.cloudfunctions.net',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
-      },
-    },
   },
 });
