@@ -3,21 +3,21 @@ import { CommentTarget, DB, Store } from '../constants';
 import { getConfig } from './index';
 
 export async function seen(store: Store, target: CommentTarget) {
-  const { appId, userId } = getConfig(store);
+  const { appId, userId, workspaceId } = getConfig(store);
 
-  const { workspaceId, threadId, eventId } = target;
+  const { threadId, eventId } = target;
   const lastSeenId = store.workspaces[workspaceId].seen[threadId];
   const isNewer = lastSeenId ? eventId > lastSeenId : true;
 
   if (isNewer) {
     store.workspaces[workspaceId].seen[threadId] = eventId;
 
-    console.log('SEEN', eventId, threadId, workspaceId);
-
     const data = {
       seenUntilId: eventId,
       seenAt: serverTimestamp(),
     };
+
+    console.log('SEEN', userId, data);
 
     try {
       await update(ref(DB), {
@@ -25,8 +25,7 @@ export async function seen(store: Store, target: CommentTarget) {
         [`/views/seenBy/${appId}/${workspaceId}/${threadId}/${userId}`]: data,
       });
     } catch (e) {
-      // error is expected if already seen
-      // console.error(e);
+      console.error(e);
     }
   }
 }

@@ -4,8 +4,8 @@ import React, { useRef } from 'react';
 import { Composer } from './Composer';
 import { useWorkspace } from '../hooks/useWorkspace';
 import { CommentList } from './CommentList';
-import { useApp } from './useApp';
-import { useThread } from './useThread';
+import { useApp } from '../hooks/useApp';
+import { useThread } from '../hooks/useThread';
 import { ThreadHeader } from './ThreadHeader';
 import { StyledThread } from './thread/StyledThread';
 import {
@@ -67,7 +67,7 @@ export function PopoverThread(props: {
   return (
     <StyledPopoverThread intersection={intersection} style={props.style} ref={ref}>
       <IconContext.Provider value={{ size: '20px' }}>
-        {/* {!isEmpty && <ThreadHeader isResolved={isResolved} target={target} />} */}
+        {!isEmpty && !props.isPreview && <ThreadHeader isResolved={isResolved} target={target} />}
         {!isEmpty && timeline && (
           <CommentList
             isTyping={workspace?.composers[props.threadId]?.isTyping}

@@ -185,9 +185,9 @@
             ".indexOn": "seenUntilId",
             "$threadId": {
               ".read": "auth.token.appId === $appId",
-              ".write": "!newData.exists() && auth.token.appId === $appId && ((root.child('apps').child(auth.token.appId).child('mode').val() === 'UNSECURED' || (root.child('apps').child(auth.token.appId).child('mode').val() === 'SECURED' && $workspaceId === auth.token.workspaceId && $endUserId === auth.token.userId)))",
+              ".write": "newData.hasChildren(['seenUntilId', 'seenAt']) && (auth.token.appId === $appId) && ((root.child('apps').child(auth.token.appId).child('mode').val() === 'UNSECURED' || (root.child('apps').child(auth.token.appId).child('mode').val() === 'SECURED' && $workspaceId === auth.token.workspaceId && $endUserId === auth.token.userId)))",
               "seenUntilId": {
-                ".validate": "newData.exists() && root.child('timeline').child($appId).child($workspaceId).child($threadId).child(newData.val()).exists()"
+                ".validate": "root.child('timeline').child($appId).child($workspaceId).child($threadId).child(newData.val()).exists()"
               },
               "seenAt": {
                 ".validate": "newData.isNumber()"

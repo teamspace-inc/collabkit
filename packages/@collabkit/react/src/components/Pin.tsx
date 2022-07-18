@@ -1,12 +1,13 @@
 import React from 'react';
 import { Avatar } from './Avatar';
 import { HStack, styled, VStack } from './UIKit';
-import { useApp } from './useApp';
+import { useApp } from '../hooks/useApp';
 import { useSnapshot } from 'valtio';
 import { useWorkspace } from '../hooks/useWorkspace';
 import { PinTarget } from '../constants';
 import { Badge } from './Badge';
 import { PopoverThread } from './PopoverThread';
+import { useHasUnread } from '../hooks/useHasUnread';
 
 const StyledPin = styled('div', {
   width: '$sizes$pin',
@@ -42,6 +43,7 @@ const StyledPinContainer = styled('div', {
 });
 
 export function Pin(props: { pinId: string }) {
+  const { pinId } = props;
   const { store, events } = useApp();
   const { viewingId, hoveringId, profiles } = useSnapshot(store);
 
@@ -49,14 +51,11 @@ export function Pin(props: { pinId: string }) {
   const pin = workspace.pins[props.pinId];
   const profile = pin ? profiles[pin.createdById] : null;
 
-  const firstEventId = workspace.timeline[props.pinId]
-    ? Object.keys(workspace.timeline[props.pinId])[0]
-    : null;
-  const firstEvent = firstEventId ? workspace.timeline[props.pinId][firstEventId] : null;
+  const hasUnread = useHasUnread({ pinId, workspace });
 
   const target: PinTarget = {
     type: 'pin',
-    pinId: props.pinId,
+    pinId,
     workspaceId,
   };
 
@@ -82,8 +81,6 @@ export function Pin(props: { pinId: string }) {
       </div>
     ) : null;
 
-  console.log('thread', thread, pin.state);
-
   if (!profile) {
     console.warn('Pin has no profile');
   }
@@ -91,7 +88,7 @@ export function Pin(props: { pinId: string }) {
   return pin && profile ? (
     <VStack
       style={{ gap: 8 }}
-      onMouseOver={(e) => events.onMouseOver(e, { target })}
+      onMouseOver={(e) => !isViewing && events.onMouseOver(e, { target })}
       onMouseLeave={(e) => events.onMouseOut(e, { target })}
     >
       <StyledPinContainer>
@@ -109,7 +106,7 @@ export function Pin(props: { pinId: string }) {
               events.onPointerDown(e, { target });
             }}
           >
-            <Badge size={6} />
+            {hasUnread ? <Badge size={6} /> : null}
             {avatar}
           </StyledPin>
         </HStack>

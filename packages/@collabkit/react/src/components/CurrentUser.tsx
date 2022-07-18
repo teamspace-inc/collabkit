@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSnapshot } from 'valtio';
-import { useApp } from './useApp';
+import { useApp } from '../hooks/useApp';
 import { Avatar } from './Avatar';
 import { styled } from './UIKit';
 

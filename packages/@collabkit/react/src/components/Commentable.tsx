@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { useApp } from './useApp';
+import { useApp } from '../hooks/useApp';
 import { useSnapshot } from 'valtio';
 import './Commentable.css';
 import { Pin } from './Pin';

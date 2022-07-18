@@ -11,12 +11,12 @@ const StyledBadge = styled('div', {
   top: 'calc(-$sizes$pinBorderWidth)',
   right: 'calc(-$sizes$pinBorderWidth)',
   textAlign: 'center',
-  fontSize: '11px',
+  fontSize: '9px',
   fontWeight: '700',
   display: 'flex',
-  alignItems: 'center',
+  lineHeight: '6px',
   justifyContent: 'center',
-  color: '$colors$primaryText',
+  color: 'white',
 });
 
 export function Badge(props: { size: number; number?: number; style?: React.CSSProperties }) {
@@ -28,6 +28,7 @@ export function Badge(props: { size: number; number?: number; style?: React.CSSP
               width: props.size,
               height: props.size,
               borderRadius: props.size,
+              lineHeight: `${props.size}px`,
               ...props.style,
             }
           : props.style

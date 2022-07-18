@@ -1,4 +1,4 @@
-import { DataSnapshot, onChildAdded, onChildChanged, ref, get, onValue } from 'firebase/database';
+import { DataSnapshot, onChildAdded, onChildChanged, ref, onValue } from 'firebase/database';
 import { DB, Store } from '../constants';
 import { getConfig } from './index';
 

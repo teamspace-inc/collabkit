@@ -6,7 +6,7 @@ import {
   TLBoundsEdge,
   useIntersectionObserver,
 } from '../../hooks/useIntersectionObserver';
-import { useApp } from '../useApp';
+import { useApp } from '../../hooks/useApp';
 import { TargetContext } from '../Target';
 import { styled } from '../UIKit';
 
@@ -90,9 +90,9 @@ export function ReactionPicker(props: {
 }) {
   const ref = useRef(null);
   const root = props.viewportRef.current;
-  const intersection = useIntersectionObserver({ ref, root }, [props.target]);
+  // const intersection = useIntersectionObserver({ ref, root }, [props.target]);
   return (
-    <StyledReactionPicker ref={ref} intersection={intersection}>
+    <StyledReactionPicker ref={ref}>
       {emojiReacts.map((emoji) => (
         <Target
           key={emoji}

@@ -13,7 +13,7 @@ import { useResizeObserver } from '../hooks/useResizeObserver';
 
 // import MentionsPlugin from './MentionsPlugin';
 import { MentionNode } from './MentionNode';
-import { useApp } from './useApp';
+import { useApp } from '../hooks/useApp';
 import { actions } from '../actions';
 import { SendButton } from './composer/SendButton';
 

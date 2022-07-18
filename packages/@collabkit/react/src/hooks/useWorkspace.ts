@@ -1,6 +1,6 @@
 import { useSnapshot } from 'valtio';
 
-import { useApp } from '../components/useApp';
+import { useApp } from '../hooks/useApp';
 import { Workspace } from '../constants';
 
 export function useWorkspace(): { workspace: Workspace; workspaceId: string } {

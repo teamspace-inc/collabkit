@@ -2,7 +2,7 @@ import React from 'react';
 import { styled, theme } from './UIKit';
 import { ChatText, X } from 'phosphor-react';
 import { useSnapshot } from 'valtio';
-import { useApp } from './useApp';
+import { useApp } from '../hooks/useApp';
 import { Cursor } from './Cursor';
 // import { motion } from 'framer-motion';
 import { Badge } from './Badge';
@@ -34,7 +34,7 @@ export function FloatingButton() {
     <>
       <Cursor />
       <StyledFloatingButtonContainer>
-        <Badge size={20} number={1}></Badge>
+        {/* <Badge size={20} number={1}></Badge> */}
         <StyledFloatingButton
           // animate={{ scale: [0.8, 1.1, 1] }}
           // transition={{ duration: 0.5 }}
