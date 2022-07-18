@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { Profile, Store, Target, Workspace } from '../constants';
+import { Profile, Target, Workspace } from '../constants';
 import { styled } from './UIKit';
-import { EditorState, $getRoot } from 'lexical';
+import { EditorState } from 'lexical';
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import { PlainTextPlugin } from '@lexical/react/LexicalPlainTextPlugin';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable';
@@ -11,28 +11,10 @@ import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
 import { useRef } from 'react';
 import { useResizeObserver } from '../hooks/useResizeObserver';
 
-// import MentionsPlugin from './MentionsPlugin';
+import MentionsPlugin from './MentionsPlugin';
 import { MentionNode } from './MentionNode';
 import { useApp } from '../hooks/useApp';
-import { actions } from '../actions';
 import { SendButton } from './composer/SendButton';
-
-function onChange(store: Store, target: Target, editorState: EditorState) {
-  if (target.type === 'composer') {
-    editorState.read(() => {
-      const newBody = $getRoot().getTextContent(false) ?? '';
-      const body = store.workspaces[target.workspaceId].composers[target.threadId].$$body;
-
-      store.workspaces[target.workspaceId].composers[target.threadId].$$body = newBody;
-      if (newBody.length === 0) {
-        actions.stopTyping(store, { target });
-        actions.isTyping.cancel();
-      } else if (newBody.length !== body.length) {
-        actions.isTyping(store, { target });
-      }
-    });
-  }
-}
 
 const lexicalTheme = {
   ltr: 'ltr',
@@ -96,7 +78,7 @@ export function Composer(props: {
   style?: React.CSSProperties;
   onHeightChange?: (height: number) => void;
 }) {
-  const { events, store, theme } = useApp();
+  const { events, theme } = useApp();
 
   const editorStateRef = useRef<EditorState>();
 
@@ -177,44 +159,6 @@ export function Composer(props: {
   margin: 0 0 0px 0;
   position: relative;
 }
-
-#mentions-typeahead {
-  position: fixed;
-  background: ${theme.colors.neutral12};
-  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
-  border-radius: ${theme.radii[1].toString()};
-  z-index: 3;
-  margin: 0 0 0  ${theme.padding[1].toString()};
-}
-
-#mentions-typeahead ul {
-  padding: 0;
-  list-style: none;
-  margin: 0;
-  border-radius: ${theme.radii[1].toString()};
-}
-
-#mentions-typeahead ul li {
-  padding: ${theme.padding[0].toString()} ${theme.padding[1].toString()};
-  margin: 0;
-  min-width: 10ch;
-  font-size: ${theme.fontSize[2].toString()};
-  line-height: ${theme.lineHeights[0].toString()};
-  outline: none;
-  cursor: pointer;
-  border-radius: ${theme.radii[1].toString()};
-  color: ${theme.colors.neutral6.toString()};
-}
-
-#mentions-typeahead ul li.selected {
-  background: ${theme.colors.selectionBackground};
-  font-weight: ${theme.fontWeights[1].toString()};
-  color: ${theme.colors.neutral1.toString()};
-}
-
-#mentions-typeahead.bottom_edge {
-  transform: translateY(calc(-100% - 36px));
-}
 `}
           </style>
           <PlainTextPlugin
@@ -224,11 +168,11 @@ export function Composer(props: {
           <OnChangePlugin
             onChange={(editorState) => {
               editorStateRef.current = editorState;
-              onChange(store, target, editorState);
+              events.onComposerChange(target, editorState);
             }}
           />
           <HistoryPlugin />
-          {/* <MentionsPlugin /> */}
+          <MentionsPlugin />
         </StyledLexicalEditorContainer>
       </LexicalComposer>
       <SendButton

@@ -46,6 +46,6 @@ inspx[type='padding'] {
   background: var(--inspx-padding-color);
 }
 
-inspx[type='size'] {
-  background: var(--inspx-size-color);
-}
+/* inspx[type='size'] { */
+/* background: var(--inspx-size-color); */
+/* } */

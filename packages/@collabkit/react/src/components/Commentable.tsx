@@ -21,7 +21,7 @@ function inspectSize(nodes: HTMLElement[]) {
   const { top, left, right, bottom } = node.getBoundingClientRect();
 
   const marker = document.createElement('inspx');
-  marker.innerText = 'Comment';
+  // marker.innerText = 'Comment';
   marker.setAttribute('type', 'size');
 
   document.body.appendChild(marker);

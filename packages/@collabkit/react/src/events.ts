@@ -1,4 +1,5 @@
 import { DataSnapshot } from 'firebase/database';
+import { $getRoot, EditorState } from 'lexical';
 import { nanoid } from 'nanoid';
 import React from 'react';
 import { actions } from './actions';
@@ -8,6 +9,38 @@ export type Events = ReturnType<typeof createEvents>;
 
 export function createEvents(store: Store) {
   return {
+    onComposerChange: (target: Target, editorState: EditorState) => {
+      if (target.type === 'composer') {
+        editorState.read(() => {
+          let newBody = '';
+          const nodes = $getRoot().getAllTextNodes();
+
+          nodes.forEach((node) => {
+            switch (node.__type) {
+              case 'text':
+                newBody += node.__text;
+                break;
+              case 'mention':
+                newBody += `[${node.__text}](@${node.__mention})`;
+                break;
+            }
+          });
+
+          const body = store.workspaces[target.workspaceId].composers[target.threadId].$$body;
+          store.workspaces[target.workspaceId].composers[target.threadId].$$body = newBody;
+
+          if (newBody.length === 0) {
+            actions.isTyping.cancel();
+            setTimeout(() => {
+              actions.stopTyping(store, { target });
+            }, 100);
+          } else if (newBody.length !== body.length) {
+            actions.isTyping(store, { target });
+          }
+        });
+      }
+    },
+
     onDestroy: () => {
       for (const unsubscribe of Object.values(store.subs)) {
         unsubscribe();
@@ -87,17 +120,14 @@ export function createEvents(store: Store) {
     },
 
     onMouseOver: (e: React.MouseEvent, props: { target: Target }) => {
-      // console.log('onMouseOver', props);
       actions.hover(store, props);
     },
 
     onMouseOut: (e: React.MouseEvent, props: { target: Target }) => {
-      // console.log('onMouseOut', props);
       actions.unhover(store, props);
     },
 
     onPointerDown: (e: React.PointerEvent, props: { target: Target }) => {
-      // console.log('onPointerDown', props);
       switch (store.uiState) {
         case 'idle': {
           switch (props.target.type) {

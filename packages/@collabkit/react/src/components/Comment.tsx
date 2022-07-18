@@ -11,9 +11,10 @@ import { useIsIntersecting } from '../hooks/useIntersectionObserver';
 import { StyledMessage } from './comment/MessageHeader';
 // import { MessageToolbar } from './comment/MessageToolbar';
 import { ReactionPicker } from './comment/ReactionPicker';
-import { SystemBody } from './comment/SystemBody';
+// import { SystemBody } from './comment/SystemBody';
 import { MessageHeader } from './comment/MessageHeader';
 // import { hasReactions, Reactions } from './comment/Reactions';
+import reactStringReplace from 'react-string-replace';
 
 const StyledCommentMessage = styled(StyledMessage, {
   variants: {
@@ -36,23 +37,6 @@ export const StyledCommentContainer = styled('div', {
   position: 'relative',
   maxWidth: 'calc(100% - $padding$1)',
   padding: '4px $padding$2',
-  // variants: {
-  //   type: {
-  //     default: {},
-  //     'inline-start': {
-  //       paddingBottom: 0,
-  //     },
-  //     inline: {
-  //       paddingTop: 0,
-  //       paddingBottom: 0,
-  //     },
-  //     'inline-end': {
-  //       paddingTop: 0,
-  //       paddingBottom: 0,
-  //     },
-  //     system: {},
-  //   },
-  // },
 });
 
 function isElementInViewport(el: Element) {
@@ -105,7 +89,18 @@ export function Comment(props: {
 
   const showProfile = props.type === 'default' || props.type === 'inline-start';
 
-  const body = props.event.type === 'system' ? <SystemBody event={props.event} /> : props.body;
+  const body = reactStringReplace(props.body, /\[([\w\d\s]*)\]\(\@[\w\d\s]*\)/g, (match, i) => {
+    // todo check if it matches a profile before bolding
+    return (
+      <span key={i} style={{ fontWeight: 'bold' }}>
+        {match}
+      </span>
+    );
+  });
+
+  // console.log(match);
+
+  // const body = props.event.type === 'system' ? <SystemBody event={props.event} /> : rawBody;
 
   if (props.event.type === 'system') {
     return null;
@@ -126,7 +121,7 @@ export function Comment(props: {
               createdAt={+props.timestamp}
             />
           )}
-          {body}
+          <span>{body}</span>
           {/* <Reactions reactions={props.reactions} /> */}
         </StyledCommentMessage>
         {/* <MessageToolbar isVisible={isHovering} /> */}

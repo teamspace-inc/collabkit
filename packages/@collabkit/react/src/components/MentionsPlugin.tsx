@@ -22,7 +22,9 @@ import { $createMentionNode, MentionNode } from './MentionNode';
 import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
 import { snapshot } from 'valtio';
 import { Store } from '../constants';
-import { useApp } from './useApp';
+import { useApp } from '../hooks/useApp';
+import { styled } from './UIKit';
+import { Avatar } from './Avatar';
 
 type MentionMatch = {
   leadOffset: number;
@@ -34,6 +36,58 @@ type Resolution = {
   match: MentionMatch;
   range: Range;
 };
+
+const StyledMentionsTypeahead = styled('div', {
+  position: 'fixed',
+  background: '$neutral1',
+  boxShadow: '0px 5px 10px rgba(0, 0, 0, 0.3)',
+  borderRadius: '$radii$0',
+  zIndex: 9999,
+  margin: '4px 0 0 -2px',
+  padding: 0,
+});
+
+const StyledMentionsTypeaheadUl = styled('div', {
+  padding: 0,
+  listStyle: 'none',
+  margin: 0,
+  borderRadius: '$radii$0',
+  zIndex: 9999,
+});
+
+const StyledMentionsTypeaheadLi = styled('div', {
+  padding: '8px 12px',
+  margin: 0,
+  boxSizing: 'border-box',
+  minWidth: '10ch',
+  display: 'flex',
+  width: '$sizes$threadPreviewWidth',
+  fontSize: '$fontSize$2',
+  lineHeight: '$lineHeights$0',
+  justifyContent: 'left',
+  alignItems: 'center',
+  gap: '6px',
+  outline: 'none',
+  cursor: 'pointer',
+  color: '$neutral12',
+  fontWeight: '$fontWeights$1',
+  '&:first-of-type': {
+    borderTopLeftRadius: '$radii$0',
+    borderTopRightRadius: '$radii$0',
+  },
+  '&:last-of-type': {
+    borderBottomLeftRadius: '$radii$0',
+    borderBottomRightRadius: '$radii$0',
+  },
+  variants: {
+    selected: {
+      true: {
+        background: '$neutral5',
+        color: '$neutral12',
+      },
+    },
+  },
+});
 
 const PUNCTUATION = '\\.,\\+\\*\\?\\$\\@\\|#{}\\(\\)\\^\\-\\[\\]\\\\/!%\'"~=<>_:;';
 const NAME = '\\b[A-Z][^\\s' + PUNCTUATION + ']';
@@ -109,6 +163,7 @@ const dummyLookupService = {
     const { config } = snapshot(store);
 
     setTimeout(() => {
+      // todo come up with a better search algorithm
       const results = config.mentions?.filter(
         (mention) => mention.name && mention.name.toLowerCase().includes(string.toLowerCase())
       );
@@ -164,16 +219,11 @@ function MentionsTypeaheadItem({
 }) {
   const liRef = useRef(null);
 
-  let className = 'item';
-  if (isSelected) {
-    className += ' selected';
-  }
-
   return (
-    <li
+    <StyledMentionsTypeaheadLi
+      selected={isSelected}
       key={result}
       tabIndex={-1}
-      className={className}
       ref={liRef}
       role="option"
       aria-selected={isSelected}
@@ -181,8 +231,9 @@ function MentionsTypeaheadItem({
       onMouseEnter={onMouseEnter}
       onClick={onClick}
     >
+      <Avatar profile={{ name: result }} />
       {result}
-    </li>
+    </StyledMentionsTypeaheadLi>
   );
 }
 
@@ -346,14 +397,13 @@ function MentionsTypeahead({
   }
 
   return (
-    <div
+    <StyledMentionsTypeahead
       aria-label="Suggested mentions"
-      id="mentions-typeahead"
       ref={divRef}
       role="listbox"
       className={intersects}
     >
-      <ul>
+      <StyledMentionsTypeaheadUl>
         {results.slice(0, SUGGESTION_LIST_LENGTH_LIMIT).map((result, i) => (
           <MentionsTypeaheadItem
             index={i}
@@ -369,8 +419,8 @@ function MentionsTypeahead({
             result={result}
           />
         ))}
-      </ul>
-    </div>
+      </StyledMentionsTypeaheadUl>
+    </StyledMentionsTypeahead>
   );
 }
 
