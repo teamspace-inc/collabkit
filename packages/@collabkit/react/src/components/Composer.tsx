@@ -11,7 +11,7 @@ import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
 import { useRef } from 'react';
 import { useResizeObserver } from '../hooks/useResizeObserver';
 
-// import MentionsPlugin from './MentionsPlugin';
+import MentionsPlugin from './MentionsPlugin';
 import { MentionNode } from './MentionNode';
 import { useApp } from '../hooks/useApp';
 import { actions } from '../actions';
@@ -177,44 +177,6 @@ export function Composer(props: {
   margin: 0 0 0px 0;
   position: relative;
 }
-
-#mentions-typeahead {
-  position: fixed;
-  background: ${theme.colors.neutral12};
-  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
-  border-radius: ${theme.radii[1].toString()};
-  z-index: 3;
-  margin: 0 0 0  ${theme.padding[1].toString()};
-}
-
-#mentions-typeahead ul {
-  padding: 0;
-  list-style: none;
-  margin: 0;
-  border-radius: ${theme.radii[1].toString()};
-}
-
-#mentions-typeahead ul li {
-  padding: ${theme.padding[0].toString()} ${theme.padding[1].toString()};
-  margin: 0;
-  min-width: 10ch;
-  font-size: ${theme.fontSize[2].toString()};
-  line-height: ${theme.lineHeights[0].toString()};
-  outline: none;
-  cursor: pointer;
-  border-radius: ${theme.radii[1].toString()};
-  color: ${theme.colors.neutral6.toString()};
-}
-
-#mentions-typeahead ul li.selected {
-  background: ${theme.colors.selectionBackground};
-  font-weight: ${theme.fontWeights[1].toString()};
-  color: ${theme.colors.neutral1.toString()};
-}
-
-#mentions-typeahead.bottom_edge {
-  transform: translateY(calc(-100% - 36px));
-}
 `}
           </style>
           <PlainTextPlugin
@@ -228,7 +190,7 @@ export function Composer(props: {
             }}
           />
           <HistoryPlugin />
-          {/* <MentionsPlugin /> */}
+          <MentionsPlugin />
         </StyledLexicalEditorContainer>
       </LexicalComposer>
       <SendButton

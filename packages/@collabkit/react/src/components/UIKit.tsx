@@ -100,7 +100,7 @@ const colors = {
   composerBackground: 'transparent',
 
   bubbleHoverBackground: '$neutral4',
-  selectionBackground: '$accent10',
+  selectionBackground: '$neutral10',
 
   borderColor: '$neutral4',
   pinBorderColor: '$neutral1',

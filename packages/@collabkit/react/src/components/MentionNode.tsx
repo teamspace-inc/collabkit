@@ -10,7 +10,7 @@ import {
   SerializedTextNode,
   TextNode,
 } from 'lexical';
-import { theme } from './UIKit';
+// import { styled, theme } from './UIKit';
 
 export type SerializedMentionNode = Spread<
   {
@@ -28,7 +28,8 @@ function convertMentionElement(domNode: Node): DOMConversionOutput {
   };
 }
 
-const mentionStyle = `background-color: ${theme.colors.accent4.toString()}`;
+// find a way to hook this up to the Stitches theme
+const mentionStyle = `font-weight: 700`;
 export class MentionNode extends TextNode {
   __mention: string;
 
