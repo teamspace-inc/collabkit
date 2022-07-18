@@ -23,10 +23,10 @@ export async function subscribeSeen(store: Store) {
     const threadId = snapshot.key;
     if (threadId && workspaceId) {
       const { seenUntilId } = snapshot.val();
-      console.log('chil');
+      // console.log('chil');
       store.workspaces[workspaceId].seen[threadId] = seenUntilId;
     } else {
-      console.log('no kley');
+      // console.log('no kley');
     }
   }
 

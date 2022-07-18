@@ -17,7 +17,7 @@ export async function subscribeProfiles(store: Store) {
         profileRef,
         (profileSnapshot) => {
           const profile = profileSnapshot.val();
-          console.log({ profile });
+          // console.log({ profile });
           if (profile) {
             store.profiles[id] = profile;
           }

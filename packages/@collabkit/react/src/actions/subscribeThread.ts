@@ -14,7 +14,7 @@ export async function subscribeThread(
     threadId: string;
   }
 ) {
-  console.log('subscribeThread', props);
+  // console.log('subscribeThread', props);
 
   store.workspaces[props.workspaceId].composers[props.threadId] ||= {
     editor: valtioRef(createEditor(createEditorConfig())),

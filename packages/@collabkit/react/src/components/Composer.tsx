@@ -123,7 +123,7 @@ export function Composer(props: {
   });
 
   if (!composer) {
-    console.debug('CollabKit: Failed to boot composer');
+    // console.debug('CollabKit: Failed to boot composer');
     return null;
   }
 

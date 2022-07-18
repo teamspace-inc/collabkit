@@ -17,7 +17,7 @@ export async function seen(store: Store, target: CommentTarget) {
       seenAt: serverTimestamp(),
     };
 
-    console.log('SEEN', userId, data);
+    // console.log('SEEN', userId, data);
 
     try {
       await update(ref(DB), {

@@ -28,7 +28,7 @@ export async function writeMessageToFirebase(
     return;
   }
 
-  console.log('sending message', body);
+  // console.log('sending message', body);
 
   // close emoji picker on send
   store.reactingId = null;

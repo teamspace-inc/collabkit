@@ -3,14 +3,14 @@ import { actions, getConfig } from '.';
 import { DB, Pin, Store } from '../constants';
 
 export async function subscribePins(store: Store) {
-  console.log('subscribePins');
+  // console.log('subscribePins');
   const { appId, workspaceId } = getConfig(store);
   const onError = (e: Error) => {
     console.error({ e });
   };
 
   const onChange = (child: DataSnapshot) => {
-    console.log('onPin');
+    // console.log('onPin');
     const pin = child.val() as Pin;
     const pinId = child.key;
     if (pinId) {

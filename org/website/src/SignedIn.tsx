@@ -10,7 +10,7 @@ export function SignedIn() {
 
   const { user } = useSnapshot(store);
 
-  console.log({ user });
+  // console.log({ user });
 
   return (
     <div>

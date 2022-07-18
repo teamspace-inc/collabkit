@@ -63,7 +63,7 @@ export const ScrollableCommentList = React.memo(function ScrollableCommentList(p
         <ScrollArea.Viewport onScroll={handleScroll} ref={scrollRef}>
           <StyledCommentList>
             {list.map((group, i) => (
-              <span>
+              <span key={`group-${i}`}>
                 {group.map((event, j) => {
                   let type: 'default' | 'inline-start' | 'inline' | 'inline-end' = 'default';
 
