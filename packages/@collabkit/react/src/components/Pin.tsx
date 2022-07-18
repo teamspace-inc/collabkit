@@ -90,6 +90,7 @@ export function Pin(props: { pinId: string }) {
       style={{ gap: 8 }}
       onMouseOver={(e) => !isViewing && events.onMouseOver(e, { target })}
       onMouseLeave={(e) => events.onMouseOut(e, { target })}
+      data-collabkit-internal="true"
     >
       <StyledPinContainer>
         <HStack

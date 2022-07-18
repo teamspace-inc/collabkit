@@ -48,7 +48,7 @@ export function ThreadHeader(props: { isResolved: boolean; target: ThreadTarget 
           {!isResolved ? (
             <CheckCircle size={19} weight={'thin'} color={theme.colors.neutral12.toString()} />
           ) : (
-            <CheckCircle size={18} weight={'fill'} />
+            <CheckCircle size={18} weight={'fill'} color={theme.colors.neutral12.toString()} />
           )}
         </IconButton>
         <IconButton

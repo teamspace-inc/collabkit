@@ -65,7 +65,12 @@ export function PopoverThread(props: {
   const intersection = useIntersectionObserver({ ref, root: null }, []);
 
   return (
-    <StyledPopoverThread intersection={intersection} style={props.style} ref={ref}>
+    <StyledPopoverThread
+      data-collabkit-internal="true"
+      intersection={intersection}
+      style={props.style}
+      ref={ref}
+    >
       <IconContext.Provider value={{ size: '20px' }}>
         {!isEmpty && !props.isPreview && <ThreadHeader isResolved={isResolved} target={target} />}
         {!isEmpty && timeline && (

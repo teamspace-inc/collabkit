@@ -50,7 +50,7 @@ export function Thread(props: {
   });
 
   return (
-    <StyledThreadContainer ref={ref} style={props.style}>
+    <StyledThreadContainer ref={ref} style={props.style} data-collabkit-internal="true">
       {/* {reactingId ? (
         <div
           onClick={(e) => (reactingId ? events.onEmojiReactionPickerModalBackgroundClick(e) : null)}
