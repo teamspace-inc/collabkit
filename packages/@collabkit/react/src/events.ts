@@ -28,9 +28,12 @@ export function createEvents(store: Store) {
 
           const body = store.workspaces[target.workspaceId].composers[target.threadId].$$body;
           store.workspaces[target.workspaceId].composers[target.threadId].$$body = newBody;
+
           if (newBody.length === 0) {
-            actions.stopTyping(store, { target });
             actions.isTyping.cancel();
+            setTimeout(() => {
+              actions.stopTyping(store, { target });
+            }, 100);
           } else if (newBody.length !== body.length) {
             actions.isTyping(store, { target });
           }
@@ -117,17 +120,14 @@ export function createEvents(store: Store) {
     },
 
     onMouseOver: (e: React.MouseEvent, props: { target: Target }) => {
-      // console.log('onMouseOver', props);
       actions.hover(store, props);
     },
 
     onMouseOut: (e: React.MouseEvent, props: { target: Target }) => {
-      // console.log('onMouseOut', props);
       actions.unhover(store, props);
     },
 
     onPointerDown: (e: React.PointerEvent, props: { target: Target }) => {
-      // console.log('onPointerDown', props);
       switch (store.uiState) {
         case 'idle': {
           switch (props.target.type) {

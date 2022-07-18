@@ -62,7 +62,7 @@ function TypingIndicator(props: { profile: Profile }) {
       <div style={{ display: 'flex', flexDirection: 'column', marginLeft: 32 }}>
         <StyledMessage>
           <StyledIsTypingText>
-            {props.profile.name || props.profile.email} is typing...
+            <span>{props.profile.name || props.profile.email}</span> is typing...
           </StyledIsTypingText>
         </StyledMessage>
       </div>

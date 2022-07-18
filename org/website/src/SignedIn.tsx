@@ -10,8 +10,6 @@ export function SignedIn() {
 
   const { user } = useSnapshot(store);
 
-  // console.log({ user });
-
   return (
     <div>
       <h1>Signed in {user?.email}</h1>
