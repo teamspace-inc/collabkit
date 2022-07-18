@@ -11,7 +11,7 @@ import { useIsIntersecting } from '../hooks/useIntersectionObserver';
 import { StyledMessage } from './comment/MessageHeader';
 // import { MessageToolbar } from './comment/MessageToolbar';
 import { ReactionPicker } from './comment/ReactionPicker';
-import { SystemBody } from './comment/SystemBody';
+// import { SystemBody } from './comment/SystemBody';
 import { MessageHeader } from './comment/MessageHeader';
 // import { hasReactions, Reactions } from './comment/Reactions';
 import reactStringReplace from 'react-string-replace';
@@ -37,23 +37,6 @@ export const StyledCommentContainer = styled('div', {
   position: 'relative',
   maxWidth: 'calc(100% - $padding$1)',
   padding: '4px $padding$2',
-  // variants: {
-  //   type: {
-  //     default: {},
-  //     'inline-start': {
-  //       paddingBottom: 0,
-  //     },
-  //     inline: {
-  //       paddingTop: 0,
-  //       paddingBottom: 0,
-  //     },
-  //     'inline-end': {
-  //       paddingTop: 0,
-  //       paddingBottom: 0,
-  //     },
-  //     system: {},
-  //   },
-  // },
 });
 
 function isElementInViewport(el: Element) {
