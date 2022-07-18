@@ -17,6 +17,8 @@ export const CollabKitFirebaseApp = initializeApp(firebaseConfig, 'CollabKit');
 
 export const DB = getDatabase(CollabKitFirebaseApp);
 
+export const API_HOST = 'https://us-central1-collabkit-dev.cloudfunctions.net';
+
 export type Target =
   | ComposerTarget
   | ThreadTarget

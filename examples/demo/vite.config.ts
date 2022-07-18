@@ -11,20 +11,10 @@ export default defineConfig({
     },
   },
   build: {
-    minify: "terser",
+    minify: 'terser',
     terserOptions: {
       format: {
-        comments: false
-      }
-    }
-  },
-  server: {
-    proxy: {
-      // with options
-      '/api': {
-        target: 'https://us-central1-collabkit-dev.cloudfunctions.net',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
+        comments: false,
       },
     },
   },
