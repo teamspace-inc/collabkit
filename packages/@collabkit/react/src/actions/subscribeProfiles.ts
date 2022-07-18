@@ -1,4 +1,4 @@
-import { DataSnapshot, onChildAdded, onChildChanged, ref, get, onValue } from 'firebase/database';
+import { DataSnapshot, onChildAdded, onChildChanged, ref, onValue } from 'firebase/database';
 import { DB, Store } from '../constants';
 import { getConfig } from './index';
 
@@ -17,7 +17,7 @@ export async function subscribeProfiles(store: Store) {
         profileRef,
         (profileSnapshot) => {
           const profile = profileSnapshot.val();
-          console.log({ profile });
+          // console.log({ profile });
           if (profile) {
             store.profiles[id] = profile;
           }

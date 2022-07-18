@@ -16,16 +16,17 @@ export async function subscribeSeen(store: Store) {
   const seenQuery = query(
     ref(DB, `/seen/${appId}/${userId}/${workspaceId}`),
     orderByChild('seenUntilId'),
-    limitToLast(20)
+    limitToLast(100)
   );
 
   function childCallback(snapshot: DataSnapshot) {
     const threadId = snapshot.key;
     if (threadId && workspaceId) {
       const { seenUntilId } = snapshot.val();
+      // console.log('chil');
       store.workspaces[workspaceId].seen[threadId] = seenUntilId;
     } else {
-      console.log('no kley');
+      // console.log('no kley');
     }
   }
 

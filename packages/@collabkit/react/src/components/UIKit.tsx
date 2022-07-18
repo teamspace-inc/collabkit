@@ -16,6 +16,7 @@ import {
   grass,
   orange,
   brown,
+  redDark,
   grayDark,
   greenDark,
 } from '@radix-ui/colors';
@@ -74,8 +75,8 @@ const sizes = {
   sendButton: '20px',
   threadWidth: '260px',
   threadPreviewWidth: '248px',
-  pinSize: 24,
-  avatarSize: 24,
+  pin: '28px',
+  pinBorderWidth: '1.5px',
 };
 
 const space = {
@@ -91,6 +92,7 @@ const colors = {
   secondaryText: '$neutral9',
 
   typingDot: '$neutral9',
+  badgeColor: '$red10',
 
   primaryButtonBackground: '$neutral1',
   composerButtonBackground: '$neutral12',
@@ -114,6 +116,7 @@ export const { styled, css, theme } = createStitches({
     sizes,
     space,
     colors: {
+      ...red,
       ...gray,
       ...green,
 
@@ -145,6 +148,7 @@ export const darkTheme = createTheme({
   sizes,
   space,
   colors: {
+    ...redDark,
     ...grayDark,
     ...greenDark,
 

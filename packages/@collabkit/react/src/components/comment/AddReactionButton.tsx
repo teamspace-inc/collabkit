@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { styled } from '@stitches/react';
 import { Smiley } from 'phosphor-react';
-import { useApp } from '../useApp';
+import { useApp } from '../../hooks/useApp';
 import { TargetContext } from '../Target';
 
 const StyledMessageButton = styled('button', {

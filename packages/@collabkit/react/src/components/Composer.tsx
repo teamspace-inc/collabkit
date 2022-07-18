@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Profile, Store, Target, ThreadType, Workspace } from '../constants';
+import { Profile, Store, Target, Workspace } from '../constants';
 import { styled } from './UIKit';
 import { EditorState, $getRoot } from 'lexical';
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
@@ -13,7 +13,7 @@ import { useResizeObserver } from '../hooks/useResizeObserver';
 
 // import MentionsPlugin from './MentionsPlugin';
 import { MentionNode } from './MentionNode';
-import { useApp } from './useApp';
+import { useApp } from '../hooks/useApp';
 import { actions } from '../actions';
 import { SendButton } from './composer/SendButton';
 
@@ -62,7 +62,6 @@ export function createEditorConfig() {
 }
 
 const ComposerContainer = styled('div', {
-  minHeight: 33, // default composer height, 32 + 1px for border
   position: 'relative',
   display: 'flex',
   flex: '0 1 auto',
@@ -124,7 +123,7 @@ export function Composer(props: {
   });
 
   if (!composer) {
-    console.debug('CollabKit: Failed to boot composer');
+    // console.debug('CollabKit: Failed to boot composer');
     return null;
   }
 

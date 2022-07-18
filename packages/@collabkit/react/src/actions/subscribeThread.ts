@@ -5,7 +5,7 @@ import { ref as valtioRef } from 'valtio';
 import { getConfig } from './index';
 import { subscribeThreadSeenBy } from './subscribeThreadSeenBy';
 import { subscribeThreadIsTyping } from './subscribeThreadIsTyping';
-import { subscribeTimeline } from './subscribeToTimeline';
+import { subscribeTimeline } from './subscribeTimeline';
 
 export async function subscribeThread(
   store: Store,
@@ -14,6 +14,8 @@ export async function subscribeThread(
     threadId: string;
   }
 ) {
+  // console.log('subscribeThread', props);
+
   store.workspaces[props.workspaceId].composers[props.threadId] ||= {
     editor: valtioRef(createEditor(createEditorConfig())),
     $$body: '',

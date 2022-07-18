@@ -2,9 +2,10 @@ import React from 'react';
 import { styled, theme } from './UIKit';
 import { ChatText, X } from 'phosphor-react';
 import { useSnapshot } from 'valtio';
-import { useApp } from './useApp';
+import { useApp } from '../hooks/useApp';
 import { Cursor } from './Cursor';
-import { motion } from 'framer-motion';
+// import { motion } from 'framer-motion';
+import { Badge } from './Badge';
 
 const StyledFloatingButtonContainer = styled('div', {
   position: 'fixed',
@@ -12,7 +13,7 @@ const StyledFloatingButtonContainer = styled('div', {
   bottom: 20,
 });
 
-const StyledFloatingButton = styled(motion.div, {
+const StyledFloatingButton = styled('div', {
   background: '$colors$primaryButtonBackground',
   cursor: 'pointer',
   width: 60,
@@ -33,9 +34,10 @@ export function FloatingButton() {
     <>
       <Cursor />
       <StyledFloatingButtonContainer>
+        {/* <Badge size={20} number={1}></Badge> */}
         <StyledFloatingButton
-          animate={{ scale: [0.8, 1.1, 1] }}
-          transition={{ duration: 0.5 }}
+          // animate={{ scale: [0.8, 1.1, 1] }}
+          // transition={{ duration: 0.5 }}
           onPointerDown={(e) => events.onPointerDown(e, { target })}
         >
           {uiState === 'selecting' ? (
@@ -53,3 +55,4 @@ export function FloatingButton() {
     </>
   );
 }
+//

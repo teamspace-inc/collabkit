@@ -339,7 +339,7 @@ function MentionsTypeahead({
   }, [applyCurrentSelected, close, editor, results, selectedIndex, updateSelectedIndex]);
 
   const intersects = useIntersectionObserver({ ref: divRef, root: null }, [results === null]);
-  console.log({ intersects });
+  // console.log({ intersects });
 
   if (results === null) {
     return null;

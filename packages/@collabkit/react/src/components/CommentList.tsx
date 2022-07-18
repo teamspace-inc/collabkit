@@ -1,21 +1,27 @@
 import { useRef } from 'react';
 import React from 'react';
-import { Comment } from './Comment';
-import { CommentType, Profile, Timeline } from '../constants';
+import { Profile, Timeline } from '../constants';
 import { styled } from './UIKit';
-import { Target } from './Target';
 import equal from 'fast-deep-equal';
 import { CurrentlyTyping } from './comment/TypingIndicator';
-import { useTimeline } from './useTimeline';
+import { useTimeline } from '../hooks/useTimeline';
+import { CommentGroup } from './CommentGroup';
 
 export const StyledCommentList = styled('div', {
-  gap: 0,
-  padding: '$padding$1 0 0',
+  padding: '8px 0',
   display: 'flex',
+  gap: '8px',
   flexDirection: 'column',
-  alignItems: 'stretch',
-  justifyItems: 'stretch',
   flex: 1,
+});
+
+const SeeAllRepliesLink = styled('div', {
+  fontSize: '13px',
+  display: 'flex',
+  marginTop: '0px',
+  paddingBottom: '20px',
+  marginLeft: 'calc(16px + 24px + 8px)',
+  color: '$colors$secondaryText',
 });
 
 export const CommentList = React.memo(function CommentList(props: {
@@ -25,6 +31,7 @@ export const CommentList = React.memo(function CommentList(props: {
   workspaceId: string;
   userId: string;
   threadId: string;
+  isPreview?: boolean;
 }) {
   const { userId, threadId, workspaceId, profiles, timeline, isTyping } = props;
 
@@ -38,45 +45,27 @@ export const CommentList = React.memo(function CommentList(props: {
 
   return (
     <StyledCommentList>
-      {list.map((group, i) =>
-        group.map((event, j) => {
-          let type: CommentType = 'default';
-
-          if (group.length > 1) {
-            type = 'inline';
-
-            if (j === 0) {
-              type = 'inline-start';
-            }
-
-            if (j === group.length - 1) {
-              type = 'inline-end';
-            }
-          }
-
-          const profile = profiles[event.createdById];
-
-          return (
-            <Target
-              key={event.id}
-              target={{ type: 'comment', eventId: event.id, workspaceId, threadId }}
-            >
-              <Comment
-                id={event.id}
-                event={event}
-                reactions={reactions[event.id]}
-                type={type}
-                timestamp={event.createdAt}
-                key={`event-${i}-${j}`}
-                rootRef={rootRef}
-                body={event.body}
-                profile={profile}
-              />
-            </Target>
-          );
-        })
+      {(props.isPreview ? list.slice(0, 1) : list).map((group, i) => (
+        <CommentGroup
+          key={i}
+          group={group}
+          profiles={profiles}
+          reactions={reactions}
+          workspaceId={workspaceId}
+          threadId={threadId}
+          rootRef={rootRef}
+        />
+      ))}
+      {props.isPreview ? null : (
+        <CurrentlyTyping profiles={profiles} userId={userId} isTyping={isTyping} />
       )}
-      <CurrentlyTyping profiles={profiles} userId={userId} isTyping={isTyping} />
+      {props.isPreview ? (
+        <SeeAllRepliesLink>
+          {list.length > 1
+            ? `See ${list.length - 1} ${list.length - 1 === 1 ? 'reply' : 'replies'}`
+            : 'Reply'}
+        </SeeAllRepliesLink>
+      ) : null}
     </StyledCommentList>
   );
 },

@@ -19,12 +19,14 @@ const StyledIconButton = styled('div', {
 export function IconButton(props: {
   children: React.ReactNode;
   tooltip: string;
-  onClick?: (e: React.MouseEvent) => void;
+  onPointerDown?: (e: React.PointerEvent) => void;
 }) {
   return (
     <Tooltip.Root>
       <Tooltip.Trigger>
-        <StyledIconButton onClick={(e) => props.onClick?.(e)}>{props.children}</StyledIconButton>
+        <StyledIconButton onPointerDown={(e) => props.onPointerDown?.(e)}>
+          {props.children}
+        </StyledIconButton>
       </Tooltip.Trigger>
       <Tooltip.Content>
         {props.tooltip}

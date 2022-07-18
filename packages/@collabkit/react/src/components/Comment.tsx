@@ -1,19 +1,18 @@
 import React, { useContext, useEffect, useRef } from 'react';
 import { useSnapshot } from 'valtio';
 
-import { CommentType, Event, Profile, ThreadType } from '../constants';
+import { CommentType, Event, Profile } from '../constants';
 import { Avatar } from './Avatar';
 import { HStack, styled } from './UIKit';
 import { TargetContext } from './Target';
-import { formatDistanceToNowStrict } from 'date-fns';
 import { isSameComment } from '../utils/isSameComment';
-import { useApp } from './useApp';
+import { useApp } from '../hooks/useApp';
 import { useIsIntersecting } from '../hooks/useIntersectionObserver';
-import { Name } from './profile/Name';
-import { StyledMessage, StyledMessageTimestamp } from './comment/Message';
+import { StyledMessage } from './comment/MessageHeader';
 // import { MessageToolbar } from './comment/MessageToolbar';
 import { ReactionPicker } from './comment/ReactionPicker';
 import { SystemBody } from './comment/SystemBody';
+import { MessageHeader } from './comment/MessageHeader';
 // import { hasReactions, Reactions } from './comment/Reactions';
 
 const StyledCommentMessage = styled(StyledMessage, {
@@ -32,29 +31,42 @@ const StyledCommentMessage = styled(StyledMessage, {
 
 export const StyledCommentContainer = styled('div', {
   display: 'flex',
+  flex: 1,
   gap: '$space$2',
   position: 'relative',
   maxWidth: 'calc(100% - $padding$1)',
-  padding: '$padding$1 $padding$2',
-
-  variants: {
-    type: {
-      default: {},
-      'inline-start': {
-        paddingBottom: 0,
-      },
-      inline: {
-        paddingTop: 0,
-        paddingBottom: 0,
-      },
-      'inline-end': {
-        paddingTop: 0,
-        paddingBottom: 0,
-      },
-      system: {},
-    },
-  },
+  padding: '4px $padding$2',
+  // variants: {
+  //   type: {
+  //     default: {},
+  //     'inline-start': {
+  //       paddingBottom: 0,
+  //     },
+  //     inline: {
+  //       paddingTop: 0,
+  //       paddingBottom: 0,
+  //     },
+  //     'inline-end': {
+  //       paddingTop: 0,
+  //       paddingBottom: 0,
+  //     },
+  //     system: {},
+  //   },
+  // },
 });
+
+function isElementInViewport(el: Element) {
+  var rect = el.getBoundingClientRect();
+
+  return (
+    rect.top >= 0 &&
+    rect.left >= 0 &&
+    rect.bottom <=
+      (window.innerHeight || document.documentElement.clientHeight) /* or $(window).height() */ &&
+    rect.right <=
+      (window.innerWidth || document.documentElement.clientWidth) /* or $(window).width() */
+  );
+}
 
 export function Comment(props: {
   id: string;
@@ -68,7 +80,7 @@ export function Comment(props: {
   type: CommentType;
 }) {
   const ref = useRef(null);
-  const { store, events, theme } = useApp();
+  const { store, events } = useApp();
   const { reactingId } = useSnapshot(store);
   const { target } = useContext(TargetContext);
 
@@ -84,12 +96,8 @@ export function Comment(props: {
     : false;
 
   useEffect(() => {
-    if (isIntersecting) events.onSeen({ target });
+    ref.current && isElementInViewport(ref.current) && events.onSeen({ target });
   }, [isIntersecting]);
-
-  // if (props.event.type === 'system') {
-  //   return <SystemMessage event={props.event} profile={props.profile} />;
-  // }
 
   const emojiReactionPicker = isSameComment(reactingId, target) ? (
     <ReactionPicker target={target} viewportRef={props.rootRef} />
@@ -105,24 +113,18 @@ export function Comment(props: {
 
   return props.profile ? (
     <StyledCommentContainer
-      type={props.type}
-      onMouseOver={(e) => events.onMouseOver(e, { target })}
-      onMouseOut={(e) => events.onMouseOver(e, { target })}
+      // onMouseOver={(e) => events.onMouseOver(e, { target })}
+      // onMouseOut={(e) => events.onMouseOver(e, { target })}
       ref={ref}
     >
-      {showProfile && <Avatar profile={props.profile} size={+theme.sizes.avatarSize} />}
+      {showProfile && <Avatar profile={props.profile} size={24} />}
       <HStack>
-        <StyledCommentMessage ui="freeform" type={props.type} profileIndent={!showProfile}>
+        <StyledCommentMessage profileIndent={!showProfile}>
           {showProfile && (
-            <Name>
-              {props.profile.name || props.profile.email}
-              <StyledMessageTimestamp>
-                {typeof props.timestamp === 'number'
-                  ? formatDistanceToNowStrict(props.timestamp, { roundingMethod: 'floor' })
-                  : null}{' '}
-                ago
-              </StyledMessageTimestamp>
-            </Name>
+            <MessageHeader
+              name={props.profile.name ?? props.profile.email ?? 'Anonymous'}
+              createdAt={+props.timestamp}
+            />
           )}
           {body}
           {/* <Reactions reactions={props.reactions} /> */}

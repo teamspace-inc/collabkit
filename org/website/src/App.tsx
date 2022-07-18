@@ -68,7 +68,7 @@ import { theme } from './UIKit';
 store.subs['user'] = onAuthStateChanged(auth, (user) => {
   store.user = user;
   if (user) {
-    console.log('subscribing', user.uid);
+    // console.log('subscribing', user.uid);
     store.subs['adminAppAdded'] = onChildAdded(
       ref(database, `/adminApps/${user.uid}`),
       events.onAdminAppAdded
@@ -78,7 +78,7 @@ store.subs['user'] = onAuthStateChanged(auth, (user) => {
       events.onAdminAppRemoved
     );
   } else {
-    console.log('unsubscribing');
+    // console.log('unsubscribing');
     store.subs['adminAppAdded']?.();
     store.subs['adminAppRemoved']?.();
   }

@@ -2,7 +2,7 @@ import { styled, VStack } from './UIKit';
 import React, { useRef, useState } from 'react';
 import { ChatCircle } from 'phosphor-react';
 import { PopoverThread } from './PopoverThread';
-import { useApp } from './useApp';
+import { useApp } from '../hooks/useApp';
 
 const StyledButton = styled('button', {
   padding: '9px 14px 9px 12px',

@@ -4,8 +4,8 @@ import React, { useState } from 'react';
 import { Composer } from './Composer';
 import { useWorkspace } from '../hooks/useWorkspace';
 import { ScrollableCommentList } from './ScrollableCommentList';
-import { useApp } from './useApp';
-import { useThread } from './useThread';
+import { useApp } from '../hooks/useApp';
+import { useThread } from '../hooks/useThread';
 import { StyledThread } from './thread/StyledThread';
 
 const NullState = styled('div', {
@@ -70,7 +70,7 @@ export function Thread(props: {
           }}
         />
       ) : null} */}
-      <StyledThread isEmpty={isEmpty}>
+      <StyledThread>
         {!isConnected ? <FlexCenter /> : null}
         {isConnected && isEmpty ? (
           <FlexCenter>

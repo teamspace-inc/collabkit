@@ -23,7 +23,7 @@ export async function authenticate(store: Store) {
       const mode = result.claims.mode;
 
       console.log('CollabKit authenticated', userCredential, mode);
-
+      await actions.saveProfile(store);
       actions.subscribeProfiles(store);
       actions.subscribeWorkspace(store);
     } catch (e) {

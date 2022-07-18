@@ -1,8 +1,7 @@
 import React, { useEffect, useRef } from 'react';
-import { useApp } from './useApp';
+import { useApp } from '../hooks/useApp';
 import { useSnapshot } from 'valtio';
 import './Commentable.css';
-import { PopoverThread } from './PopoverThread';
 import { Pin } from './Pin';
 import { finder } from '@medv/finder';
 import { Sticky } from './Sticky';
@@ -172,7 +171,7 @@ export function Commentable(props: { children: React.ReactNode }) {
     >
       {pinIds.map((pinId) => {
         const pin = workspace.pins[pinId];
-        const isPreviewing = hoveringId?.type === 'pin' && hoveringId.pinId === pinId;
+        const isHovering = hoveringId?.type === 'pin' && hoveringId.pinId === pinId;
         const isViewing = viewingId?.type === 'pin' && viewingId?.pinId === pinId;
 
         return pin.state !== 'resolved' ? (
@@ -180,16 +179,9 @@ export function Commentable(props: { children: React.ReactNode }) {
             key={pinId}
             selector={pin.selector}
             offset={pin.offset}
-            zTop={isViewing || isPreviewing}
+            zTop={isViewing || isHovering}
           >
             <Pin pinId={pinId} />
-            {isViewing ? (
-              <PopoverThread
-                // half of pin size
-                style={{ marginTop: -12 }}
-                threadId={viewingId.pinId}
-              />
-            ) : null}
           </Sticky>
         ) : null;
       })}

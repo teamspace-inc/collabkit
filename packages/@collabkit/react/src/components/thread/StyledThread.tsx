@@ -10,10 +10,4 @@ export const StyledThread = styled('div', {
   flex: 1,
   height: '100%',
   borderRadius: '11px',
-
-  variants: {
-    isEmpty: {
-      true: {},
-    },
-  },
 });

@@ -2,7 +2,7 @@ import React from 'react';
 import { CheckCircle, RadioButton } from 'phosphor-react';
 import { styled } from '../UIKit';
 import { Event } from '../../constants';
-import { useApp } from '../useApp';
+import { useApp } from '../../hooks/useApp';
 
 const SystemMessageText = styled('span', {
   display: 'flex',

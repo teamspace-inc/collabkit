@@ -14,33 +14,60 @@ export const avatarStyles = css({
   fontWeight: '$fontWeights$1',
   textAlign: 'center',
   verticalAlign: 'middle',
-  lineHeight: '25px',
+  lineHeight: '24px',
   cursor: 'inherit',
   userSelect: 'none',
   backgroundColor: '$accent10',
   color: '$neutral1',
+  variants: {
+    size: {
+      32: {
+        width: '32px',
+        height: '32px',
+        lineHeight: '32px',
+      },
+
+      28: {
+        width: '28px',
+        height: '28px',
+        lineHeight: '28px',
+      },
+
+      24: {
+        width: '24px',
+        height: '24px',
+        lineHeight: '24px',
+      },
+    },
+  },
 });
 
 export const StyledAvatar = styled('img', avatarStyles);
 
-export function Avatar(props: { profile: Profile; style?: React.CSSProperties; size?: number }) {
+export function Avatar(props: {
+  profile: Profile;
+  style?: React.CSSProperties;
+  size?: 24 | 28 | 32;
+}) {
   const [didError, setDidError] = useState(false);
   const noImage = didError || !props.profile.avatar;
   const styles = props.profile.color
     ? {
         backgroundColor: getShade(props.profile.color, 9),
-        ...(props.size
-          ? { width: props.size, height: props.size, lineHeight: `${props.size}px` }
-          : {}),
         ...(props.style || {}),
       }
     : props.style;
 
   return noImage ? (
-    <div className={avatarStyles().className} style={styles}>
+    <div className={avatarStyles({ size: props.size ?? 24 }).className} style={styles}>
       {props.profile.name?.charAt(0)}
     </div>
   ) : (
-    <StyledAvatar src={props.profile.avatar!} onError={() => setDidError(true)} style={styles} />
+    <StyledAvatar
+      size={props.size ?? 24}
+      src={props.profile.avatar!}
+      onError={() => setDidError(true)}
+      style={styles}
+    />
   );
 }
