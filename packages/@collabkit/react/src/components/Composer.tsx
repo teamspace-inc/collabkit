@@ -17,23 +17,6 @@ import { useApp } from '../hooks/useApp';
 import { actions } from '../actions';
 import { SendButton } from './composer/SendButton';
 
-function onChange(store: Store, target: Target, editorState: EditorState) {
-  if (target.type === 'composer') {
-    editorState.read(() => {
-      const newBody = $getRoot().getTextContent(false) ?? '';
-      const body = store.workspaces[target.workspaceId].composers[target.threadId].$$body;
-
-      store.workspaces[target.workspaceId].composers[target.threadId].$$body = newBody;
-      if (newBody.length === 0) {
-        actions.stopTyping(store, { target });
-        actions.isTyping.cancel();
-      } else if (newBody.length !== body.length) {
-        actions.isTyping(store, { target });
-      }
-    });
-  }
-}
-
 const lexicalTheme = {
   ltr: 'ltr',
   rtl: 'rtl',
@@ -96,7 +79,7 @@ export function Composer(props: {
   style?: React.CSSProperties;
   onHeightChange?: (height: number) => void;
 }) {
-  const { events, store, theme } = useApp();
+  const { events, theme } = useApp();
 
   const editorStateRef = useRef<EditorState>();
 
@@ -186,7 +169,7 @@ export function Composer(props: {
           <OnChangePlugin
             onChange={(editorState) => {
               editorStateRef.current = editorState;
-              onChange(store, target, editorState);
+              events.onComposerChange(target, editorState);
             }}
           />
           <HistoryPlugin />

@@ -1,4 +1,5 @@
 import { DataSnapshot } from 'firebase/database';
+import { $getRoot, EditorState } from 'lexical';
 import { nanoid } from 'nanoid';
 import React from 'react';
 import { actions } from './actions';
@@ -8,6 +9,35 @@ export type Events = ReturnType<typeof createEvents>;
 
 export function createEvents(store: Store) {
   return {
+    onComposerChange: (target: Target, editorState: EditorState) => {
+      if (target.type === 'composer') {
+        editorState.read(() => {
+          let newBody = '';
+          const nodes = $getRoot().getAllTextNodes();
+
+          nodes.forEach((node) => {
+            switch (node.__type) {
+              case 'text':
+                newBody += node.__text;
+                break;
+              case 'mention':
+                newBody += `[${node.__text}](@${node.__mention})`;
+                break;
+            }
+          });
+
+          const body = store.workspaces[target.workspaceId].composers[target.threadId].$$body;
+          store.workspaces[target.workspaceId].composers[target.threadId].$$body = newBody;
+          if (newBody.length === 0) {
+            actions.stopTyping(store, { target });
+            actions.isTyping.cancel();
+          } else if (newBody.length !== body.length) {
+            actions.isTyping(store, { target });
+          }
+        });
+      }
+    },
+
     onDestroy: () => {
       for (const unsubscribe of Object.values(store.subs)) {
         unsubscribe();
