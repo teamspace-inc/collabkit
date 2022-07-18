@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { Profile, Store, Target, Workspace } from '../constants';
+import { Profile, Target, Workspace } from '../constants';
 import { styled } from './UIKit';
-import { EditorState, $getRoot } from 'lexical';
+import { EditorState } from 'lexical';
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import { PlainTextPlugin } from '@lexical/react/LexicalPlainTextPlugin';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable';
@@ -14,7 +14,6 @@ import { useResizeObserver } from '../hooks/useResizeObserver';
 import MentionsPlugin from './MentionsPlugin';
 import { MentionNode } from './MentionNode';
 import { useApp } from '../hooks/useApp';
-import { actions } from '../actions';
 import { SendButton } from './composer/SendButton';
 
 const lexicalTheme = {

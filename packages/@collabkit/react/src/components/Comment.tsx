@@ -14,6 +14,7 @@ import { ReactionPicker } from './comment/ReactionPicker';
 import { SystemBody } from './comment/SystemBody';
 import { MessageHeader } from './comment/MessageHeader';
 // import { hasReactions, Reactions } from './comment/Reactions';
+import reactStringReplace from 'react-string-replace';
 
 const StyledCommentMessage = styled(StyledMessage, {
   variants: {
@@ -105,7 +106,18 @@ export function Comment(props: {
 
   const showProfile = props.type === 'default' || props.type === 'inline-start';
 
-  const body = props.event.type === 'system' ? <SystemBody event={props.event} /> : props.body;
+  const body = reactStringReplace(props.body, /\[([\w\d\s]*)\]\(\@[\w\d\s]*\)/g, (match, i) => {
+    // todo check if it matches a profile before bolding
+    return (
+      <span key={i} style={{ fontWeight: 'bold' }}>
+        {match}
+      </span>
+    );
+  });
+
+  // console.log(match);
+
+  // const body = props.event.type === 'system' ? <SystemBody event={props.event} /> : rawBody;
 
   if (props.event.type === 'system') {
     return null;
@@ -126,7 +138,7 @@ export function Comment(props: {
               createdAt={+props.timestamp}
             />
           )}
-          {body}
+          <span>{body}</span>
           {/* <Reactions reactions={props.reactions} /> */}
         </StyledCommentMessage>
         {/* <MessageToolbar isVisible={isHovering} /> */}
