@@ -6,11 +6,20 @@ import { AppContext } from '../hooks/useAppContext';
 import { createStore } from '../store';
 import { darkTheme, theme } from './UIKit';
 
+const systemDarkMode =
+  window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+const themes = {
+  dark: darkTheme,
+  light: theme,
+  auto: systemDarkMode ? darkTheme : theme,
+};
+
 // Enable using multiple isolated App
 // instances in the same page.
 export function CollabKitProvider({
   children,
-  darkMode,
+  colorScheme,
   ...config
 }: {
   appId: string;
@@ -19,7 +28,7 @@ export function CollabKitProvider({
   user: IdentifyProps;
   mentionableUsers: MentionProps;
   children: React.ReactNode;
-  darkMode?: boolean;
+  colorScheme?: 'light' | 'dark' | 'auto';
 }) {
   const [context, setContext] = useState<{ store: Store; events: Events } | null>(null);
 
@@ -46,16 +55,18 @@ export function CollabKitProvider({
     return null;
   }
 
+  const theme = themes[colorScheme ?? 'auto'];
+
   return (
     <AppContext.Provider
       value={{
         store: context.store,
         events: context.events,
         workspaceId: config.workspace.id,
-        theme: darkMode ? darkTheme : theme,
+        theme,
       }}
     >
-      <span className={(darkMode ? darkTheme : theme).className.toString()}>{children}</span>
+      <span className={theme.className.toString()}>{children}</span>
     </AppContext.Provider>
   );
 }

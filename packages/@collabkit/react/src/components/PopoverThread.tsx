@@ -1,6 +1,6 @@
 import { styled } from './UIKit';
 import { IconContext } from 'phosphor-react';
-import React, { useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Composer } from './Composer';
 import { useWorkspace } from '../hooks/useWorkspace';
 import { CommentList } from './CommentList';
@@ -13,6 +13,8 @@ import {
   TLBoundsEdge,
   useIntersectionObserver,
 } from '../hooks/useIntersectionObserver';
+import { useWindowSize } from '../hooks/useWindowSize';
+import { ScrollableCommentList } from './ScrollableCommentList';
 
 const StyledPopoverThread = styled(StyledThread, {
   backgroundColor: '$neutral1',
@@ -62,22 +64,62 @@ export function PopoverThread(props: {
     workspace,
   });
 
+  const [composerHeight, setComposerHeight] = useState(0);
   const intersection = useIntersectionObserver({ ref, root: null }, []);
 
+  const windowSize = useWindowSize();
+
+  useEffect(() => {
+    console.log('recalc thread layout');
+    if (!ref.current) {
+      return;
+    }
+
+    const rect = ref.current.getBoundingClientRect();
+    console.log(rect, windowSize, intersection);
+  }, [windowSize?.height, windowSize?.width, intersection]);
+
   return (
-    <StyledPopoverThread intersection={intersection} style={props.style} ref={ref}>
+    <StyledPopoverThread
+      data-collabkit-internal="true"
+      intersection={intersection}
+      style={props.style}
+      ref={ref}
+    >
       <IconContext.Provider value={{ size: '20px' }}>
         {!isEmpty && !props.isPreview && <ThreadHeader isResolved={isResolved} target={target} />}
         {!isEmpty && timeline && (
-          <CommentList
-            isTyping={workspace?.composers[props.threadId]?.isTyping}
-            profiles={profiles}
-            threadId={props.threadId}
-            userId={userId}
-            workspaceId={workspaceId}
-            timeline={timeline}
-            isPreview={props.isPreview}
-          />
+          <div
+            style={
+              composerHeight > -1
+                ? {
+                    height: '100%',
+                    // maxHeight: `calc(100% - ${composerHeight + 2}px)`,
+                  }
+                : { height: '100%' }
+            }
+          >
+            {/* <CommentList
+              isTyping={workspace?.composers[props.threadId]?.isTyping}
+              profiles={profiles}
+              threadId={props.threadId}
+              userId={userId}
+              workspaceId={workspaceId}
+              timeline={timeline}
+              isPreview={props.isPreview}
+            /> */}
+            <ScrollableCommentList
+              isTyping={workspace?.composers[props.threadId]?.isTyping}
+              profiles={profiles}
+              threadId={props.threadId}
+              userId={userId}
+              workspaceId={workspaceId}
+              // composerHeight={composerHeight}
+              // headerHeight={0}
+              isPreview={props.isPreview}
+              timeline={timeline}
+            />
+          </div>
         )}
         {props.isPreview ? null : (
           <Composer
@@ -97,6 +139,7 @@ export function PopoverThread(props: {
             profile={profiles[userId]}
             threadId={props.threadId}
             isFloating={false}
+            onHeightChange={(height) => setComposerHeight(height)}
           />
         )}
       </IconContext.Provider>

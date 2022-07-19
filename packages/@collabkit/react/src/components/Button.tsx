@@ -45,7 +45,10 @@ export function Button(props: {
   const ref = useRef(null);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+    <div
+      data-collabkit-internal="true"
+      style={{ display: 'flex', flexDirection: 'column', gap: 0 }}
+    >
       <StyledButton
         isOpen={showThread}
         onMouseOver={() => setIsHovering(true)}

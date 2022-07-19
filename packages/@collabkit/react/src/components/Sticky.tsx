@@ -61,7 +61,7 @@ export function Sticky(props: {
   }, [selector]);
 
   return (
-    <StyledStickyContainer ref={stickyRef} zTop={props.zTop}>
+    <StyledStickyContainer ref={stickyRef} zTop={props.zTop} data-collabkit-internal="true">
       {children}
     </StyledStickyContainer>
   );

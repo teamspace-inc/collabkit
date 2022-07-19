@@ -54,6 +54,7 @@ export default function App() {
     >
       <CollabKit.Commentable>{image}</CollabKit.Commentable>
       <Chat />
+
       <UserMenu user={user} onChangeUser={onChangeUser} />
       <CollabKit.FloatingButton />
     </CollabKit.Provider>

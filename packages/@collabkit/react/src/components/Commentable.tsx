@@ -6,6 +6,7 @@ import { Pin } from './Pin';
 import { finder } from '@medv/finder';
 import { Sticky } from './Sticky';
 import { useWorkspace } from '../hooks/useWorkspace';
+import { unstable_renderSubtreeIntoContainer } from 'react-dom';
 
 function inspectSize(nodes: HTMLElement[]) {
   const sizeNodes = nodes.filter(hasSize);
@@ -163,6 +164,20 @@ export function Commentable(props: { children: React.ReactNode }) {
         const nodes = document.elementsFromPoint(e.clientX, e.clientY) as HTMLElement[];
 
         nodesAtPointerRef.current = nodes as HTMLElement[];
+
+        const internalEl = nodes.find((node) => node.closest('[data-collabkit-internal=true]'));
+
+        const idEl = nodes.find((node) => node.closest('[data-collabkit-thread-id]'));
+
+        console.log(idEl);
+
+        if (idEl) {
+          console.log('idEl', idEl.getAttribute('data-collabkit-thread-id'));
+        }
+
+        if (internalEl) {
+          return;
+        }
 
         if (uiState === 'selecting') {
           inspectSize(nodes);
