@@ -3,13 +3,14 @@
   "version": "0.0.0",
   "module": "src/index.ts",
   "scripts": {
-    "dev": "vite",
+    "dev": "ladle serve",
     "build": "yarn clean && tsc && vite build",
     "clean": "rimraf dist *.tsbuildinfo src/**/*.js",
     "preview": "vite preview"
   },
   "dependencies": {
     "@floating-ui/react-dom-interactions": "^0.6.6",
+    "@ladle/react": "^2.0.0",
     "@lexical/react": "^0.3.5",
     "@medv/finder": "^2.1.0",
     "@radix-ui/colors": "^0.1.8",
