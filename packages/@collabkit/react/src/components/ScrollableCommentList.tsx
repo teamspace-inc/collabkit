@@ -13,17 +13,18 @@ export const ScrollableCommentList = React.memo(function ScrollableCommentList(p
   isTyping?: { [endUserId: string]: boolean };
   profiles: { [profileId: string]: Profile };
   timeline: Timeline;
-  composerHeight: number;
-  headerHeight: number;
+  // composerHeight: number;
+  // headerHeight: number;
   workspaceId: string;
   userId: string;
   threadId: string;
+  isPreview?: boolean;
 }) {
   const { threadId, workspaceId } = props;
 
   const rootRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const { profiles, timeline, composerHeight } = props;
+  const { profiles, timeline } = props;
 
   const { list, messageEvents, reactionEvents, reactions } = useTimeline(timeline);
 
@@ -32,7 +33,7 @@ export const ScrollableCommentList = React.memo(function ScrollableCommentList(p
     scrollRef.current?.scrollTo(0, scrollRef.current?.scrollHeight);
   }, [
     messageEvents.length,
-    props.composerHeight,
+    // props.composerHeight,
     // did react to last message
     reactionEvents[reactionEvents.length - 1]?.parentId ===
       messageEvents[messageEvents.length - 1]?.id,
@@ -49,69 +50,68 @@ export const ScrollableCommentList = React.memo(function ScrollableCommentList(p
   }
 
   return (
-    <div
-      style={
-        composerHeight > -1
-          ? {
-              height: '100%',
-              maxHeight: `calc(100% - ${composerHeight + 2}px - ${props.headerHeight}px)`,
-            }
-          : { height: '100%' }
-      }
-    >
-      <ScrollArea.Root ref={rootRef}>
-        <ScrollArea.Viewport onScroll={handleScroll} ref={scrollRef}>
-          <StyledCommentList>
-            {list.map((group, i) => (
-              <span key={`group-${i}`}>
-                {group.map((event, j) => {
-                  let type: 'default' | 'inline-start' | 'inline' | 'inline-end' = 'default';
+    // <div
+    //   style={
+    //     composerHeight > -1
+    //       ? {
+    //           height: '100%',
+    //           maxHeight: `calc(100% - ${composerHeight + 2}px - ${props.headerHeight}px)`,
+    //         }
+    //       : { height: '100%' }
+    //   }
+    // >
+    <ScrollArea.Root ref={rootRef}>
+      <ScrollArea.Viewport onScroll={handleScroll} ref={scrollRef}>
+        <StyledCommentList>
+          {list.map((group, i) => (
+            <span key={`group-${i}`}>
+              {group.map((event, j) => {
+                let type: 'default' | 'inline-start' | 'inline' | 'inline-end' = 'default';
 
-                  if (group.length > 1) {
-                    type = 'inline';
+                if (group.length > 1) {
+                  type = 'inline';
 
-                    if (j === 0) {
-                      type = 'inline-start';
-                    }
-
-                    if (j === group.length - 1) {
-                      type = 'inline-end';
-                    }
+                  if (j === 0) {
+                    type = 'inline-start';
                   }
 
-                  const profile = profiles[event.createdById];
+                  if (j === group.length - 1) {
+                    type = 'inline-end';
+                  }
+                }
 
-                  return (
-                    <Target
-                      key={event.id}
-                      target={{ type: 'comment', eventId: event.id, workspaceId, threadId }}
-                    >
-                      <Comment
-                        id={event.id}
-                        event={event}
-                        reactions={reactions[event.id]}
-                        type={type}
-                        timestamp={event.createdAt}
-                        key={`event-${i}-${j}`}
-                        rootRef={rootRef}
-                        scrollRef={scrollRef}
-                        body={event.body}
-                        profile={profile}
-                      />
-                    </Target>
-                  );
-                })}
-              </span>
-            ))}
-            <CurrentlyTyping profiles={profiles} userId={props.userId} isTyping={props.isTyping} />
-          </StyledCommentList>
-        </ScrollArea.Viewport>
-        <ScrollArea.Scrollbar orientation="vertical">
-          <ScrollArea.Thumb />
-        </ScrollArea.Scrollbar>
-        <ScrollArea.Corner />
-      </ScrollArea.Root>
-    </div>
+                const profile = profiles[event.createdById];
+
+                return (
+                  <Target
+                    key={event.id}
+                    target={{ type: 'comment', eventId: event.id, workspaceId, threadId }}
+                  >
+                    <Comment
+                      id={event.id}
+                      event={event}
+                      reactions={reactions[event.id]}
+                      type={type}
+                      timestamp={event.createdAt}
+                      key={`event-${i}-${j}`}
+                      rootRef={rootRef}
+                      scrollRef={scrollRef}
+                      body={event.body}
+                      profile={profile}
+                    />
+                  </Target>
+                );
+              })}
+            </span>
+          ))}
+          <CurrentlyTyping profiles={profiles} userId={props.userId} isTyping={props.isTyping} />
+        </StyledCommentList>
+      </ScrollArea.Viewport>
+      <ScrollArea.Scrollbar orientation="vertical">
+        <ScrollArea.Thumb />
+      </ScrollArea.Scrollbar>
+      <ScrollArea.Corner />
+    </ScrollArea.Root>
+    // </div>
   );
-},
-equal);
+}, equal);
