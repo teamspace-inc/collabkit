@@ -88,8 +88,8 @@ export function Thread(props: {
               threadId={props.threadId}
               userId={userId}
               workspaceId={workspaceId}
-              composerHeight={composerHeight}
-              headerHeight={0}
+              // composerHeight={composerHeight}
+              // headerHeight={0}
               timeline={timeline}
             />
           )}
