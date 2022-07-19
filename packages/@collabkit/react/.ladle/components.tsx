@@ -15,7 +15,7 @@ export const Provider: GlobalProvider = ({ children, globalState }) => (
       userId: 'alice',
     }}
     mentionableUsers={[]}
-    darkMode={globalState.theme === 'dark'}
+    colorScheme={globalState.theme}
   >
     {children}
   </CollabKit.Provider>
