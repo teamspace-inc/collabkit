@@ -91,7 +91,7 @@ export function Commentable(props: { children: React.ReactNode }) {
 
   return (
     <span
-      // style={{ position: 'relative' }}
+      style={{ cursor: uiState === 'selecting' ? 'crosshair' : 'unset' }}
       ref={ref}
       onPointerDown={(e) => {
         if (uiState !== 'selecting') return;

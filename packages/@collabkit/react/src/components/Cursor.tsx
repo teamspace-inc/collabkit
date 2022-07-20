@@ -6,10 +6,9 @@ export function Cursor() {
   const { store } = useApp();
   const { uiState } = useSnapshot(store);
   useEffect(() => {
-    if (uiState === 'idle') {
-      document.body.style.cursor = 'auto';
-    } else if (uiState === 'selecting') {
-      document.body.style.cursor = 'crosshair';
+    if (uiState === 'selecting') {
+      // This will be overriden by the Commentable component.
+      document.body.style.cursor = 'not-allowed';
     } else {
       document.body.style.cursor = 'auto';
     }
