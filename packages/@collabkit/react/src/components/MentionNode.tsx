@@ -1,5 +1,4 @@
 import type { Spread } from 'lexical';
-
 import {
   DOMConversionMap,
   DOMConversionOutput,
@@ -10,7 +9,6 @@ import {
   SerializedTextNode,
   TextNode,
 } from 'lexical';
-// import { styled, theme } from './UIKit';
 
 export type SerializedMentionNode = Spread<
   {

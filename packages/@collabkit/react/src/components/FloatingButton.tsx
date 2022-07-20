@@ -4,8 +4,6 @@ import { ChatText, X } from 'phosphor-react';
 import { useSnapshot } from 'valtio';
 import { useApp } from '../hooks/useApp';
 import { Cursor } from './Cursor';
-// import { motion } from 'framer-motion';
-import { Badge } from './Badge';
 
 const StyledFloatingButtonContainer = styled('div', {
   position: 'fixed',

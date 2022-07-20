@@ -6,7 +6,6 @@ import { Pin } from './Pin';
 import { finder } from '@medv/finder';
 import { Sticky } from './Sticky';
 import { useWorkspace } from '../hooks/useWorkspace';
-import { unstable_renderSubtreeIntoContainer } from 'react-dom';
 
 function inspectSize(nodes: HTMLElement[]) {
   const sizeNodes = nodes.filter(hasSize);

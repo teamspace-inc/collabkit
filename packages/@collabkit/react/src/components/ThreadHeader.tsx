@@ -6,10 +6,6 @@ import { ThreadTarget } from '../constants';
 import { IconButton } from './IconButton';
 import * as Tooltip from '@radix-ui/react-tooltip';
 
-const StyledIconButtonWithLabel = styled(IconButton, {
-  width: 'auto',
-});
-
 const StyledThreadHeader = styled('div', {
   height: 30,
   display: 'flex',

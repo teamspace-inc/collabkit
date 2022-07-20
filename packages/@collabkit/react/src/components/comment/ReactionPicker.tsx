@@ -1,11 +1,7 @@
 import React, { RefObject, useContext, useRef } from 'react';
 import { CommentTarget } from '../../constants';
 import { Target } from '../Target';
-import {
-  TLBoundsCorner,
-  TLBoundsEdge,
-  useIntersectionObserver,
-} from '../../hooks/useIntersectionObserver';
+import { TLBoundsCorner, TLBoundsEdge } from '../../hooks/useIntersectionObserver';
 import { useApp } from '../../hooks/useApp';
 import { TargetContext } from '../Target';
 import { styled } from '../UIKit';
