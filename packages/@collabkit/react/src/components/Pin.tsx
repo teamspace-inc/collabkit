@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { Avatar } from './Avatar';
 import { HStack, styled, VStack } from './UIKit';
 import { useApp } from '../hooks/useApp';
@@ -8,6 +8,13 @@ import { PinTarget } from '../constants';
 import { Badge } from './Badge';
 import { PopoverThread } from './PopoverThread';
 import { useHasUnread } from '../hooks/useHasUnread';
+import {
+  autoPlacement,
+  offset,
+  useFloating,
+  size,
+  autoUpdate,
+} from '@floating-ui/react-dom-interactions';
 
 const StyledPin = styled('div', {
   width: '$sizes$pin',
@@ -37,15 +44,21 @@ const StyledPinContainer = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   gap: '8px',
+  position: 'relative',
   // so the pin is centered
-  marginTop: 'calc($sizes$pin / -2)',
-  marginLeft: 'calc($sizes$pin / -2)',
+  top: 'calc($sizes$pin / -2)',
+  left: 'calc($sizes$pin / -2)',
+});
+
+const StyledFloatingThreadContainer = styled('div', {
+  width: '$sizes$threadPreviewWidth',
 });
 
 export function Pin(props: { pinId: string }) {
   const { pinId } = props;
   const { store, events } = useApp();
   const { viewingId, hoveringId, profiles } = useSnapshot(store);
+  const [maxAvailableSize, setMaxAvailableSize] = useState({ width: -1, height: -1 });
 
   const { workspace, workspaceId } = useWorkspace();
   const pin = workspace.pins[props.pinId];
@@ -65,21 +78,60 @@ export function Pin(props: { pinId: string }) {
 
   const avatar = profile ? <Avatar profile={profile} size={28} /> : null;
 
-  const thread =
-    (isViewing || isHovering) && profile && (pin.state === 'open' || pin.state === 'pending') ? (
-      <div
-        style={{ cursor: isHovering && !isViewing ? 'pointer' : 'default' }}
-        onPointerDown={(e) => {
-          if (isHovering && !isViewing) {
-            e.stopPropagation();
-            e.preventDefault();
-            events.onPointerDown(e, { target });
-          }
-        }}
-      >
-        <PopoverThread threadId={props.pinId} isPreview={isHovering && !isViewing} />
-      </div>
-    ) : null;
+  const open = !!(
+    (isViewing || isHovering) &&
+    profile &&
+    (pin.state === 'open' || pin.state === 'pending')
+  );
+
+  const { x, y, reference, floating, strategy } = useFloating({
+    whileElementsMounted: autoUpdate,
+    open,
+    middleware: [
+      autoPlacement({ alignment: 'start', padding: 12 }),
+      size({
+        apply({ availableWidth, availableHeight, elements }) {
+          // Do things with the data, e.g.
+          setMaxAvailableSize({ width: availableWidth, height: availableHeight });
+          Object.assign(elements.floating.style, {
+            maxWidth: `${availableWidth}px`,
+            maxHeight: `${availableHeight}px`,
+          });
+        },
+      }),
+      offset(() => {
+        return {
+          mainAxis: 6,
+        };
+      }),
+    ],
+  });
+
+  const thread = open ? (
+    <StyledFloatingThreadContainer
+      ref={floating}
+      style={{
+        cursor: isHovering && !isViewing ? 'pointer' : 'default',
+        position: strategy,
+        top: y ?? 0,
+        left: x ?? 0,
+        height: 'auto',
+      }}
+      onPointerDown={(e) => {
+        if (isHovering && !isViewing) {
+          e.stopPropagation();
+          e.preventDefault();
+          events.onPointerDown(e, { target });
+        }
+      }}
+    >
+      <PopoverThread
+        maxAvailableSize={maxAvailableSize}
+        threadId={props.pinId}
+        isPreview={isHovering && !isViewing}
+      />
+    </StyledFloatingThreadContainer>
+  ) : null;
 
   if (!profile) {
     console.warn('Pin has no profile');
@@ -88,11 +140,11 @@ export function Pin(props: { pinId: string }) {
   return pin && profile ? (
     <VStack
       style={{ gap: 8 }}
-      onMouseOver={(e) => !isViewing && events.onMouseOver(e, { target })}
+      onMouseOver={(e) => !open && events.onMouseOver(e, { target })}
       onMouseLeave={(e) => events.onMouseOut(e, { target })}
       data-collabkit-internal="true"
     >
-      <StyledPinContainer>
+      <StyledPinContainer ref={reference}>
         <HStack
           style={{
             position: 'relative',

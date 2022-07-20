@@ -7,14 +7,12 @@ import { Target } from './Target';
 import equal from 'fast-deep-equal';
 import { CurrentlyTyping } from './comment/TypingIndicator';
 import { useTimeline } from '../hooks/useTimeline';
-import { StyledCommentList } from './CommentList';
+import { CommentList, StyledCommentList } from './CommentList';
 
 export const ScrollableCommentList = React.memo(function ScrollableCommentList(props: {
   isTyping?: { [endUserId: string]: boolean };
   profiles: { [profileId: string]: Profile };
   timeline: Timeline;
-  // composerHeight: number;
-  // headerHeight: number;
   workspaceId: string;
   userId: string;
   threadId: string;
@@ -50,68 +48,23 @@ export const ScrollableCommentList = React.memo(function ScrollableCommentList(p
   }
 
   return (
-    // <div
-    //   style={
-    //     composerHeight > -1
-    //       ? {
-    //           height: '100%',
-    //           maxHeight: `calc(100% - ${composerHeight + 2}px - ${props.headerHeight}px)`,
-    //         }
-    //       : { height: '100%' }
-    //   }
-    // >
     <ScrollArea.Root ref={rootRef}>
       <ScrollArea.Viewport onScroll={handleScroll} ref={scrollRef}>
-        <StyledCommentList>
-          {list.map((group, i) => (
-            <span key={`group-${i}`}>
-              {group.map((event, j) => {
-                let type: 'default' | 'inline-start' | 'inline' | 'inline-end' = 'default';
-
-                if (group.length > 1) {
-                  type = 'inline';
-
-                  if (j === 0) {
-                    type = 'inline-start';
-                  }
-
-                  if (j === group.length - 1) {
-                    type = 'inline-end';
-                  }
-                }
-
-                const profile = profiles[event.createdById];
-
-                return (
-                  <Target
-                    key={event.id}
-                    target={{ type: 'comment', eventId: event.id, workspaceId, threadId }}
-                  >
-                    <Comment
-                      id={event.id}
-                      event={event}
-                      reactions={reactions[event.id]}
-                      type={type}
-                      timestamp={event.createdAt}
-                      key={`event-${i}-${j}`}
-                      rootRef={rootRef}
-                      scrollRef={scrollRef}
-                      body={event.body}
-                      profile={profile}
-                    />
-                  </Target>
-                );
-              })}
-            </span>
-          ))}
-          <CurrentlyTyping profiles={profiles} userId={props.userId} isTyping={props.isTyping} />
-        </StyledCommentList>
+        <CommentList
+          isTyping={props.isTyping}
+          profiles={profiles}
+          threadId={props.threadId}
+          userId={props.userId}
+          workspaceId={workspaceId}
+          isPreview={props.isPreview}
+          timeline={timeline}
+        ></CommentList>
       </ScrollArea.Viewport>
       <ScrollArea.Scrollbar orientation="vertical">
         <ScrollArea.Thumb />
       </ScrollArea.Scrollbar>
       <ScrollArea.Corner />
     </ScrollArea.Root>
-    // </div>
   );
-}, equal);
+},
+equal);

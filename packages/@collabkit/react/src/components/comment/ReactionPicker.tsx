@@ -1,7 +1,7 @@
 import React, { RefObject, useContext, useRef } from 'react';
 import { CommentTarget } from '../../constants';
 import { Target } from '../Target';
-import { TLBoundsCorner, TLBoundsEdge } from '../../hooks/useIntersectionObserver';
+import { Corner, Edge } from '../../hooks/useIntersectionObserver';
 import { useApp } from '../../hooks/useApp';
 import { TargetContext } from '../Target';
 import { styled } from '../UIKit';
@@ -26,15 +26,15 @@ const StyledReactionPicker = styled(
   {
     variants: {
       intersection: {
-        [TLBoundsEdge.Right]: {
+        [Edge.Right]: {
           opacity: 1,
           transform: `translateX(calc(-100% + 1em))`,
         },
-        [TLBoundsEdge.Bottom]: {
+        [Edge.Bottom]: {
           opacity: 1,
           transform: `translateY(calc(100% + 50px))`,
         },
-        [TLBoundsCorner.BottomRight]: {
+        [Corner.BottomRight]: {
           opacity: 1,
           transform: `translateY(calc(-100% + 50px))`,
         },

@@ -10,12 +10,13 @@ export function CommentGroup(props: {
   workspaceId: string;
   threadId: string;
   rootRef: React.RefObject<HTMLDivElement>;
+  isPreview?: boolean;
 }) {
   const { group, profiles, reactions, workspaceId, threadId } = props;
 
   return (
     <div>
-      {group.map((event, j) => {
+      {(props.isPreview ? group.slice(0, 1) : group).map((event, j) => {
         let type: CommentType = 'default';
 
         if (group.length > 1) {
@@ -47,6 +48,7 @@ export function CommentGroup(props: {
               rootRef={props.rootRef}
               body={event.body}
               profile={profile}
+              isPreview={props.isPreview}
             />
           </Target>
         );

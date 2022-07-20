@@ -21,6 +21,8 @@ import {
   greenDark,
 } from '@radix-ui/colors';
 
+export const PIN_SIZE = 28;
+
 const neutral = {
   neutral1: '$gray1',
   neutral2: '$gray2',
@@ -75,7 +77,7 @@ const sizes = {
   sendButton: '20px',
   threadWidth: '260px',
   threadPreviewWidth: '248px',
-  pin: '28px',
+  pin: `${PIN_SIZE}px`,
   pinBorderWidth: '1.5px',
 };
 

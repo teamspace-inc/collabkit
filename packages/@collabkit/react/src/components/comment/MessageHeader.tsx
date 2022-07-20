@@ -33,8 +33,9 @@ export function MessageHeader(props: { name: string; createdAt: number }) {
       {props.name}{' '}
       <StyledMessageTimestamp>
         {formatRelative(props.createdAt, +Date.now())
-          .replace('yesterday at', 'yesterday')
-          .replace('today at', '')}
+          .replace(/yesterday at (.*)/, 'yesterday')
+          .replace('today at', '')
+          .replace(/(last Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday) .*/, '$1')}
       </StyledMessageTimestamp>
     </Name>
   );

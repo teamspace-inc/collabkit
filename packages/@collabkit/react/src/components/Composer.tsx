@@ -10,6 +10,7 @@ import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
 import { useRef } from 'react';
 import { useResizeObserver } from '../hooks/useResizeObserver';
+import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
 
 import MentionsPlugin from './MentionsPlugin';
 import { MentionNode } from './MentionNode';
@@ -76,6 +77,7 @@ export function Composer(props: {
   workspace: Workspace;
   placeholder: React.ReactNode | string;
   style?: React.CSSProperties;
+  autoFocus?: boolean;
   onHeightChange?: (height: number) => void;
 }) {
   const { events, theme } = useApp();
@@ -173,6 +175,7 @@ export function Composer(props: {
           />
           <HistoryPlugin />
           <MentionsPlugin />
+          {props.autoFocus ? <AutoFocusPlugin /> : null}
         </StyledLexicalEditorContainer>
       </LexicalComposer>
       <SendButton

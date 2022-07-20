@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useSnapshot } from 'valtio';
 
 import { CommentType, Event, Profile } from '../constants';
 import { Avatar } from './Avatar';
-import { HStack, styled } from './UIKit';
+import { HStack, styled, theme } from './UIKit';
 import { TargetContext } from './Target';
 import { isSameComment } from '../utils/isSameComment';
 import { useApp } from '../hooks/useApp';
@@ -52,6 +52,33 @@ function isElementInViewport(el: Element) {
   );
 }
 
+const StyledMessageFade = styled('span', {
+  '&::before': {
+    content: '""',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    background: 'linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.9) 100%)',
+    opacity: 1,
+  },
+});
+
+function hasOverflow(ref: React.RefObject<HTMLDivElement>, deps: any[]) {
+  const [isOverflowing, setIsOverflowing] = useState(false);
+
+  useEffect(() => {
+    if (!ref.current) {
+      return;
+    }
+
+    setIsOverflowing(ref.current.offsetHeight < ref.current.scrollHeight);
+  }, deps);
+
+  return isOverflowing;
+}
+
 export function Comment(props: {
   id: string;
   reactions: { [createdById: string]: Event };
@@ -62,9 +89,11 @@ export function Comment(props: {
   rootRef: React.RefObject<HTMLDivElement>;
   scrollRef?: React.RefObject<HTMLDivElement>;
   type: CommentType;
+  isPreview?: boolean;
 }) {
   const ref = useRef(null);
-  const { store, events } = useApp();
+  const bodyRef = useRef(null);
+  const { store, events, theme } = useApp();
   const { reactingId } = useSnapshot(store);
   const { target } = useContext(TargetContext);
 
@@ -106,8 +135,11 @@ export function Comment(props: {
     return null;
   }
 
+  const isOverflowing = hasOverflow(bodyRef, [props.body]);
+
   return props.profile ? (
     <StyledCommentContainer
+      style={props.isPreview ? { overflow: 'hidden' } : {}}
       // onMouseOver={(e) => events.onMouseOver(e, { target })}
       // onMouseOut={(e) => events.onMouseOver(e, { target })}
       ref={ref}
@@ -121,7 +153,26 @@ export function Comment(props: {
               createdAt={+props.timestamp}
             />
           )}
-          <span>{body}</span>
+          <span
+            ref={bodyRef}
+            style={
+              props.isPreview ? { position: 'relative', maxHeight: 54, display: 'inline-flex' } : {}
+            }
+          >
+            {body}
+            {isOverflowing ? (
+              <span
+                style={{
+                  position: 'absolute',
+                  right: '0ch',
+                  bottom: 0,
+                  background: theme.colors.neutral1.value.toString(),
+                }}
+              >
+                {'...'}
+              </span>
+            ) : null}
+          </span>
           {/* <Reactions reactions={props.reactions} /> */}
         </StyledCommentMessage>
         {/* <MessageToolbar isVisible={isHovering} /> */}
