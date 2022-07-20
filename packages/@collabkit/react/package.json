@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@floating-ui/dom": "^1.0.0",
     "@floating-ui/react-dom-interactions": "^0.7.0",
     "@ladle/react": "^2.0.0",
     "@lexical/react": "^0.3.5",

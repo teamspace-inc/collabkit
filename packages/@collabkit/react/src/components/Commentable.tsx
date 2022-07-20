@@ -6,8 +6,10 @@ import { Pin } from './Pin';
 import { finder } from '@medv/finder';
 import { Sticky } from './Sticky';
 import { useWorkspace } from '../hooks/useWorkspace';
+import { computePosition } from '@floating-ui/dom';
+import { generateSelector } from '../selectors';
 
-function inspectSize(nodes: HTMLElement[]) {
+function inspectSize(nodes: HTMLElement[], rootNode: HTMLElement) {
   const sizeNodes = nodes.filter(hasSize);
 
   const node = sizeNodes[0];
@@ -21,7 +23,21 @@ function inspectSize(nodes: HTMLElement[]) {
   const { top, left, right, bottom } = node.getBoundingClientRect();
 
   const marker = document.createElement('inspx');
-  // marker.innerText = 'Comment';
+  const name1 = document.createElement('p');
+  const name2 = document.createElement('p');
+  name1.className = 'CollabKit__selector-algo';
+  name2.className = 'CollabKit__selector-algo';
+  name1.textContent = 'Finder:';
+  name2.textContent = 'Playwright:';
+  const selector1 = document.createElement('p');
+  const selector2 = document.createElement('p');
+  selector1.textContent = finder(node, { root: rootNode });
+  selector2.textContent = generateSelector(node).selector;
+  marker.appendChild(name1);
+  marker.appendChild(selector1);
+  marker.appendChild(name2);
+  marker.appendChild(selector2);
+
   marker.setAttribute('type', 'size');
 
   document.body.appendChild(marker);
@@ -31,7 +47,16 @@ function inspectSize(nodes: HTMLElement[]) {
   const x = (left + right) / 2 - markerWidth / 2;
   const y = (top + bottom) / 2 - markerHeight / 2;
 
-  style(marker, getPlacementStylesForPoint({ x, y }));
+  //style(marker, getPlacementStylesForPoint({ x, y }));
+  computePosition(node, marker, {
+    // Try changing this to a different side.
+    placement: 'top-start',
+  }).then(({ x, y }) => {
+    Object.assign(marker.style, {
+      top: `${y}px`,
+      left: `${x}px`,
+    });
+  });
 }
 
 export function uninspect() {
@@ -168,8 +193,9 @@ export function Commentable(props: { children: React.ReactNode }) {
 
         const idEl = nodes.find((node) => node.closest('[data-collabkit-thread-id]'));
 
-        console.log(idEl);
-
+        let el = nodes[0];
+        let selector = finder(el, { root: ref.current! });
+        console.log(selector);
         if (idEl) {
           console.log('idEl', idEl.getAttribute('data-collabkit-thread-id'));
         }
@@ -178,9 +204,7 @@ export function Commentable(props: { children: React.ReactNode }) {
           return;
         }
 
-        if (uiState === 'selecting') {
-          inspectSize(nodes);
-        }
+        inspectSize(nodes, ref.current!);
       }}
     >
       {pinIds.map((pinId) => {
