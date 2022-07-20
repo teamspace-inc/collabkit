@@ -8,6 +8,7 @@ import PlotExample from '../__fixtures__/PlotExample';
 export const DataTable = (props: any) => (
   <CollabKit.Commentable>
     <DataTableExample {...props} />
+    <CollabKit.FloatingButton />
   </CollabKit.Commentable>
 );
 DataTable.args = DataTableExampleArgs;
@@ -15,17 +16,20 @@ DataTable.args = DataTableExampleArgs;
 export const Calendar = () => (
   <CollabKit.Commentable>
     <CalendarExample />
+    <CollabKit.FloatingButton />
   </CollabKit.Commentable>
 );
 
 export const EnergySankey = () => (
   <CollabKit.Commentable>
     <EnergySankeyExample />
+    <CollabKit.FloatingButton />
   </CollabKit.Commentable>
 );
 
 export const Plot = () => (
   <CollabKit.Commentable>
     <PlotExample />
+    <CollabKit.FloatingButton />
   </CollabKit.Commentable>
 );
