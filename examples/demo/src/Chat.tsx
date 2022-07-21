@@ -12,7 +12,7 @@ export function Chat() {
         height: 'calc(100vh - 2 * 16px)',
       }}
     >
-      <Thread threadId="demo-chat2" />
+      <Thread threadId="demo-chat3" />
     </div>
   );
 }

@@ -19,7 +19,7 @@ const SeeAllRepliesLink = styled('div', {
   fontSize: '13px',
   display: 'flex',
   marginTop: '0px',
-  paddingBottom: '20px',
+  paddingBottom: '8px',
   marginLeft: 'calc(16px + 24px + 8px)',
   color: '$colors$secondaryText',
 });
@@ -54,6 +54,7 @@ export const CommentList = React.memo(function CommentList(props: {
           workspaceId={workspaceId}
           threadId={threadId}
           rootRef={rootRef}
+          isPreview={props.isPreview}
         />
       ))}
       {props.isPreview ? null : (
