@@ -139,25 +139,3 @@ export function PopoverThread(props: {
     </StyledPopoverThread>
   );
 }
-
-// <div
-//   style={
-//     composerHeight > -1
-//       ? {
-//           height: '100%',
-//           // maxHeight: `calc(100% - ${composerHeight + 2}px)`,
-//         }
-//       : { height: '100%' }
-//   }
-// >
-{
-  /* <CommentList
-              isTyping={workspace?.composers[props.threadId]?.isTyping}
-              profiles={profiles}
-              threadId={props.threadId}
-              userId={userId}
-              workspaceId={workspaceId}
-              timeline={timeline}
-              isPreview={props.isPreview}
-            /> */
-}

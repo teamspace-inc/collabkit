@@ -1,0 +1,21 @@
+<CH.Section>
+
+```typescript
+import {
+  Provider as CollabKit,
+  Commentable
+} from ‘@collabkit/react’;
+
+export function App() {
+   return (
+    <CollabKit apiKey={API_KEY}>
+      <Commentable>
+        {'Your code here'}
+      </Commentable>
+      <FloatingCommentButton />
+    </CollabKit>
+  )
+}
+```
+
+</CH.Section>

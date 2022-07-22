@@ -218,10 +218,6 @@ function App() {
             >
               <div
                 style={{
-                  // width: '50vw',
-                  // display: 'flex',
-                  // flexDirection: 'column',
-                  // height: '100%',
                   padding: '2rem',
                   borderRadius: '24px',
                   background: theme.colors.websiteNeutral12.toString(),
