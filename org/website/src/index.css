@@ -10,6 +10,30 @@ html {
   font-size: 100%;
 } /*16px*/
 
+@media screen and (min-width: 768px) {
+  html {
+    font-size: 60%;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  html {
+    font-size: 80%;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  html {
+    font-size: 105%;
+  }
+}
+
+@media screen and (min-width: 2560px) {
+  html {
+    font-size: 166%;
+  }
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
