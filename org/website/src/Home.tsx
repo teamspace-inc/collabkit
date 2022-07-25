@@ -372,7 +372,7 @@ export function Home() {
       </Section>
       <Section style={{ background: '#905EC9' }}>
         <Circle color="yellow">
-          <VStack style={{ marginTop: '8rem', justifyContent: 'center' }}>
+          <VStack style={{ marginTop: '8crem', justifyContent: 'center' }}>
             <Title>
               Get <Em>started</Em> now
             </Title>
