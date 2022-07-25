@@ -5,7 +5,6 @@ import { styled } from '../UIKit';
 
 export const StyledMessageTimestamp = styled('span', {
   fontSize: '$fontSize$0',
-  letterSpacing: '-0.015em',
   color: '$colors$secondaryText',
   textDecoration: 'none',
   fontWeight: '$fontWeights$0',

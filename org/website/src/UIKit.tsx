@@ -195,11 +195,11 @@ export const VStack = styled(
     flexDirection: 'column',
     align: {
       center: {
-        justifyContent: 'center',
+        // justifyContent: 'center',
       },
     },
   },
-  align,
+  // align,
   gap
 );
 
