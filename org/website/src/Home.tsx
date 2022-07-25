@@ -1,11 +1,9 @@
-import { styled, HStack, VStack, Grid } from './UIKit';
-import { getHighlighter, setCDN } from 'shiki';
+import { styled, VStack, Grid } from './UIKit';
 import Example from './Example.svg';
 import CommentAnything from './CommentAnything.svg';
 import AnyApp from './AnyApp.svg';
 import Realtime from './Realtime.svg';
 import Email from './Email.svg';
-import { useEffect } from 'react';
 import ExampleCode from './Example.mdx';
 import ChevronDown from './ChevronDown.svg';
 
@@ -31,6 +29,9 @@ const Title = styled('h1', {
   color: '#222222',
   margin: '4rem 0 2rem',
   zIndex: 1,
+
+  '@bp1': { marginTop: 0, maxWidth: '90vw', minWidth: '90vw', fontSize: '4rem' },
+  '@bp2': { maxWidth: 'unset', minWidth: 'unset', fontSize: '5.5rem' },
 });
 
 const Em = styled('em', {
@@ -90,6 +91,8 @@ const Header = styled('header', {
   padding: '0 5vw',
   position: 'fixed',
   zIndex: 2,
+
+  // '@bp1': { marginTop: '1rem', flexDirection: 'column', alignItems: 'flex-start' },
 });
 
 const Link = styled('a', {
@@ -107,6 +110,9 @@ const Circle = styled('div', {
   borderRadius: '50%',
   background: '#FFEC6B',
   zIndex: 0,
+
+  '@bp1': { maxWidth: '90vw', minWidth: '90vw', width: '90vw' },
+  '@bp2': { minWidth: '40rem', maxWidth: '66vw', width: 'unset' },
 
   variants: {
     color: {
@@ -143,6 +149,31 @@ const Article = styled('article', {
   img: {
     width: '100%',
   },
+
+  '@bp1': {
+    padding: '2rem',
+    gridTemplateColumns: '1fr',
+  },
+  '@bp2': {
+    padding: 'unset',
+    gridTemplateColumns: '20rem 27.5rem',
+  },
+});
+
+const BoostActivationLayout = styled('div', {
+  display: 'grid',
+  justifyContent: 'center',
+  gridTemplateColumns: 'minmax(20rem, 60rem) 20rem',
+  columnGap: '4rem',
+  width: 'calc(100vw - 4rem)',
+
+  '@bp1': {
+    gridTemplateColumns: '1fr',
+    rowGap: '4rem',
+  },
+  '@bp2': {
+    gridTemplateColumns: 'minmax(20rem, 60rem) 20rem',
+  },
 });
 
 const RequestDemoButton = (
@@ -154,19 +185,6 @@ const RequestDemoButton = (
 );
 
 export function Home() {
-  useEffect(() => {
-    setCDN('https://unpkg.com/shiki/');
-    getHighlighter({
-      theme: 'nord',
-    })
-      .then((highlighter) => {
-        const tokens = highlighter.codeToHtml(`console.log('shiki');`, { lang: 'js' });
-        console.log('tokens', tokens);
-        console.log(tokens);
-      })
-      .catch((e) => console.error(e));
-  }, []);
-
   return (
     <div style={{}}>
       <Header>
@@ -174,10 +192,14 @@ export function Home() {
           <h1>CollabKit</h1>
         </div>
         <div style={{ display: 'flex', flexDirection: 'row', gap: '4rem' }}>
-          <Text>
-            <Link href="mailto:namit@collabkit.dev">Contact us</Link>
-          </Text>
-          <div style={{ position: 'relative', top: '0.5rem' }}>{RequestDemoButton}</div>
+          {window.innerWidth > 480 ? (
+            <Text>
+              <Link href="mailto:namit@collabkit.dev">Contact us</Link>
+            </Text>
+          ) : null}
+          <div style={{ position: 'relative', top: window.innerWidth > 480 ? '0.5rem' : 0 }}>
+            {RequestDemoButton}
+          </div>
         </div>
       </Header>
       <Section
@@ -227,15 +249,7 @@ export function Home() {
           background: '#9FEFD7',
         }}
       >
-        <div
-          style={{
-            display: 'grid',
-            justifyContent: 'center',
-            gridTemplateColumns: 'minmax(20rem, 60rem) 20rem',
-            columnGap: '4rem',
-            width: 'calc(100vw - 4rem)',
-          }}
-        >
+        <BoostActivationLayout>
           <img src={Example} style={{ width: '100%' }} />
           <VStack>
             <Subtitle>
@@ -253,7 +267,7 @@ export function Home() {
               </b>
             </Text>
           </VStack>
-        </div>
+        </BoostActivationLayout>
       </Section>
       <Section
         style={{
@@ -309,7 +323,13 @@ export function Home() {
               calendars and more...
             </Text>
           </VStack>
-          <div style={{ width: '100%', position: 'relative', left: -44 }}>
+          <div
+            style={{
+              width: window.innerWidth < 480 ? '94%' : '100%',
+              position: 'relative',
+              left: window.innerWidth < 480 ? 0 : -44,
+            }}
+          >
             <img src={AnyApp} style={{ width: '107%' }} />
           </div>
         </Article>
@@ -322,7 +342,7 @@ export function Home() {
             </Text>
           </VStack>
           <div style={{ width: '100%' }}>
-            <img src={Realtime} style={{ width: '87%' }} />
+            <img src={Realtime} style={{ width: window.innerWidth < 480 ? '100%' : '87%' }} />
           </div>
         </Article>
         <Article>
@@ -357,7 +377,7 @@ export function Home() {
         <Article>
           <VStack>
             <Subtitle>
-              Let us do the <br />
+              Let us do the {window.innerWidth < 480 ? null : <br />}
               hard work
             </Subtitle>
             <Text>
@@ -365,14 +385,14 @@ export function Home() {
               no time.
             </Text>
           </VStack>
-          <div style={{ marginTop: '-16rem' }}>
+          <div style={{ marginTop: window.innerWidth < 480 ? 0 : '-16rem' }}>
             <ExampleCode />
           </div>
         </Article>
       </Section>
       <Section style={{ background: '#905EC9' }}>
         <Circle color="yellow">
-          <VStack style={{ marginTop: '8crem', justifyContent: 'center' }}>
+          <VStack style={{ marginTop: '8rem', justifyContent: 'center' }}>
             <Title>
               Get <Em>started</Em> now
             </Title>

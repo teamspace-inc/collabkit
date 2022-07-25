@@ -34,6 +34,10 @@ export const { styled, css, theme } = createStitches({
       websiteNeutral12: '$gray12',
     },
   },
+  media: {
+    bp1: '(min-width: 320px)',
+    bp2: '(min-width: 720px)',
+  },
 });
 
 export const TextLeft = styled('div', {
