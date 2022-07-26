@@ -4,6 +4,10 @@ import { getConfig, timelineRef, actions } from './index';
 
 export async function reopenThread(store: Store, workspaceId: string, threadId: string) {
   const { userId } = getConfig(store);
+  if (store.isReadOnly) {
+    console.warn('CollabKit: cannot reopen thread in read-only mode');
+    return;
+  }
   // todo optimistic send
   try {
     const event: Event = {

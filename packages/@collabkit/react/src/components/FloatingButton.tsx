@@ -24,14 +24,14 @@ const StyledFloatingButton = styled('div', {
   boxShadow: '0 1px 6px 0 rgb(0 0 0 / 5%), 0 2px 32px 0 rgb(0 0 0 / 12%)',
 });
 
-export function FloatingButton() {
+export function FloatingButton(props: { style?: React.CSSProperties }) {
   const { store, events } = useApp();
   const { uiState } = useSnapshot(store);
   const target = { type: 'floatingCommentButton' } as const;
   return (
     <>
       <Cursor />
-      <StyledFloatingButtonContainer>
+      <StyledFloatingButtonContainer style={props.style}>
         {/* <Badge size={20} number={1}></Badge> */}
         <StyledFloatingButton
           // animate={{ scale: [0.8, 1.1, 1] }}

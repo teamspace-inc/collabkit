@@ -1,4 +1,4 @@
-import { styled, VStack, Grid } from './UIKit';
+import { styled } from './UIKit';
 import Example from './Example.svg';
 import CommentAnything from './CommentAnything.svg';
 import AnyApp from './AnyApp.svg';
@@ -6,6 +6,17 @@ import Realtime from './Realtime.svg';
 import Email from './Email.svg';
 import ExampleCode from './Example.mdx';
 import ChevronDown from './ChevronDown.svg';
+
+import * as CollabKit from '../../packages/@collabkit/react/src/index';
+
+const Grid = styled('div', {
+  display: 'grid',
+});
+
+const VStack = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+});
 
 const Text = styled('p', {
   fontFamily: 'Inter',
@@ -31,13 +42,13 @@ const Title = styled('h1', {
   zIndex: 1,
 
   '@bp1': { marginTop: 0, maxWidth: '90vw', minWidth: '90vw', fontSize: '4rem' },
-  '@bp2': { maxWidth: 'unset', minWidth: 'unset', fontSize: '5.5rem' },
+  '@bp2': { maxWidth: 'unset', minWidth: 'unset', fontSize: '7rem' },
 });
 
 const Em = styled('em', {
-  fontFamily: 'Source Serif Pro',
+  // fontFamily: 'Source Serif Pro',
   zIndex: 1,
-  // fontStyle: 'normal',
+  fontStyle: 'normal',
 });
 
 const Subtitle = styled('h2', {
@@ -194,7 +205,7 @@ export function Home() {
         <div style={{ display: 'flex', flexDirection: 'row', gap: '4rem' }}>
           {window.innerWidth > 480 ? (
             <Text>
-              <Link href="mailto:namit@collabkit.dev">Contact us</Link>
+              <Link href="https://discord.gg/UCA4CbZad4">Discord</Link>
             </Text>
           ) : null}
           <div style={{ position: 'relative', top: window.innerWidth > 480 ? '0.5rem' : 0 }}>
@@ -208,6 +219,23 @@ export function Home() {
           overflow: 'hidden',
         }}
       >
+        <CollabKit.Provider
+          apiKey={import.meta.env.VITE_COLLABKIT_TOKEN}
+          appId={import.meta.env.VITE_COLLABKIT_APP_ID}
+          workspace={{ id: 'acme', name: 'ACME' }}
+          user={{
+            userId: 'alice-1',
+            name: 'Alice Levine',
+            email: 'alice@example.com',
+            avatar: 'https://www.uifiller.com/images/portraits/anon-4.jpg',
+          }}
+          mentionableUsers={[]}
+        >
+          <div style={{ width: '248px', height: '280px' }}>
+            <CollabKit.Pin pinId="foobarn12" />
+            <CollabKit.Thread threadId="foobarn12" />
+          </div>
+        </CollabKit.Provider>
         <Grid
           style={{
             alignItems: 'center',
@@ -250,7 +278,7 @@ export function Home() {
         }}
       >
         <BoostActivationLayout>
-          <img src={Example} style={{ width: '100%' }} />
+          <img src={Example} style={{ width: '100%', maxWidth: '743px' }} />
           <VStack>
             <Subtitle>
               Boost activation <br />
@@ -273,6 +301,7 @@ export function Home() {
         style={{
           position: 'relative',
           overflow: 'hidden',
+          minHeight: '55rem',
         }}
       >
         <Grid
@@ -290,8 +319,7 @@ export function Home() {
           >
             <VStack style={{ margin: '0 -5rem' }}>
               <Title>
-                Have conversations <br />
-                with <Em>context</Em>
+                Have conversations with <Em>context</Em>
               </Title>
               <Text style={{ textAlign: 'center' }}>
                 CollabKit works just like commenting in
@@ -392,12 +420,26 @@ export function Home() {
       </Section>
       <Section style={{ background: '#905EC9' }}>
         <Circle color="yellow">
-          <VStack style={{ marginTop: '12rem', justifyContent: 'center' }}>
+          <VStack
+            style={{
+              marginTop: '12rem',
+              marginLeft: '-4rem',
+              marginRight: '-4rem',
+              justifyContent: 'center',
+            }}
+          >
             <Title>
               Get <Em>started</Em> now
             </Title>
             <Text style={{ textAlign: 'center' }}>Schedule a chat with our team</Text>
-            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginTop: '3rem',
+              }}
+            >
               <VStack>{RequestDemoButton}</VStack>
             </div>
           </VStack>

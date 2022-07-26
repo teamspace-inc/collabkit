@@ -77,7 +77,7 @@ function getPlacementStylesForPoint(point: { x: number; y: number }): React.CSSP
   };
 }
 
-export function Commentable(props: { children: React.ReactNode }) {
+export function Commentable(props: { children: React.ReactNode; style?: React.CSSProperties }) {
   const nodesAtPointerRef = useRef<HTMLElement[]>([]);
   const { store, events } = useApp();
   const { uiState, viewingId, hoveringId } = useSnapshot(store);
@@ -91,6 +91,7 @@ export function Commentable(props: { children: React.ReactNode }) {
 
   return (
     <span
+      style={props.style}
       // style={{ position: 'relative' }}
       ref={ref}
       onPointerDown={(e) => {
@@ -183,6 +184,7 @@ export function Commentable(props: { children: React.ReactNode }) {
         }
       }}
     >
+      {props.children}
       {pinIds.map((pinId) => {
         const pin = workspace.pins[pinId];
         const isHovering = hoveringId?.type === 'pin' && hoveringId.pinId === pinId;
@@ -199,7 +201,6 @@ export function Commentable(props: { children: React.ReactNode }) {
           </Sticky>
         ) : null;
       })}
-      {props.children}
     </span>
   );
 }

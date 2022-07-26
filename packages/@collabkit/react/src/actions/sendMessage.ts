@@ -4,7 +4,12 @@ import { writeMessageToFirebase } from './writeMessageToFirebase';
 
 export async function sendMessage(store: Store, props: { workspaceId: string; threadId: string }) {
   const { workspaceId, threadId } = props;
+  if (store.isReadOnly) {
+    console.warn('CollabKit: cannot send message in read-only mode');
+    return;
+  }
   console.log('sending message', workspaceId, threadId);
+
   const workspace = store.workspaces[workspaceId];
   const { editor, $$body: body } = workspace.composers[threadId];
 

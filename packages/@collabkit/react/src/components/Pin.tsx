@@ -4,7 +4,7 @@ import { HStack, styled, VStack } from './UIKit';
 import { useApp } from '../hooks/useApp';
 import { useSnapshot } from 'valtio';
 import { useWorkspace } from '../hooks/useWorkspace';
-import { PinTarget } from '../constants';
+import { PinTarget, Profile } from '../constants';
 import { Badge } from './Badge';
 import { PopoverThread } from './PopoverThread';
 import { useHasUnread } from '../hooks/useHasUnread';
@@ -15,6 +15,7 @@ import {
   size,
   autoUpdate,
 } from '@floating-ui/react-dom-interactions';
+import { keyframes } from '@stitches/react';
 
 const StyledPin = styled('div', {
   width: '$sizes$pin',
@@ -54,6 +55,66 @@ const StyledFloatingThreadContainer = styled('div', {
   width: '$sizes$threadPreviewWidth',
 });
 
+const loadingFade = keyframes({
+  '0%': { opacity: 0, transform: 'scale(1)' },
+  '50%': { opacity: 1, transform: 'scale(1.2)' },
+  '100%': { opacity: 0, transform: 'scale(1)' },
+});
+
+const TypingDot = styled('div', {
+  width: '5px',
+  height: '5px',
+  background: '$colors$neutral1',
+  borderRadius: '5px',
+  opacity: 0,
+  animation: `${loadingFade} 1.5s infinite`,
+
+  '&:nth-child(1)': {
+    animationDelay: '0s',
+  },
+  '&:nth-child(2)': {
+    animationDelay: '0.25s',
+  },
+  '&:nth-child(3)': {
+    animationDelay: '0.5s',
+  },
+});
+
+const TypingDots = styled('div', {
+  width: '28px',
+  height: '28px',
+  display: 'flex',
+  gap: '2px',
+  justifyContent: 'center',
+  alignItems: 'center',
+  position: 'relative',
+});
+
+export function PurePin(props: {
+  hasUnread: boolean;
+  profile: Profile;
+  onPointerDown?: (event: React.PointerEvent) => void;
+  isTyping?: { [userId: string]: boolean };
+}) {
+  const isSomeoneTyping = props.isTyping
+    ? Object.keys(props.isTyping).find((key) => props.isTyping?.[key])
+    : null;
+  return (
+    <StyledPin onPointerDown={props.onPointerDown}>
+      {props.hasUnread ? <Badge size={6} /> : null}
+      <Avatar profile={props.profile} size={28}>
+        {isSomeoneTyping ? (
+          <TypingDots>
+            <TypingDot />
+            <TypingDot />
+            <TypingDot />
+          </TypingDots>
+        ) : undefined}
+      </Avatar>
+    </StyledPin>
+  );
+}
+
 export function Pin(props: { pinId: string }) {
   const { pinId } = props;
   const { store, events } = useApp();
@@ -75,8 +136,6 @@ export function Pin(props: { pinId: string }) {
   const isViewing = viewingId?.type === 'pin' && viewingId.pinId === props.pinId;
 
   const isHovering = hoveringId?.type === 'pin' && hoveringId.pinId === props.pinId;
-
-  const avatar = profile ? <Avatar profile={profile} size={28} /> : null;
 
   const open = !!(
     (isViewing || isHovering) &&
@@ -152,16 +211,16 @@ export function Pin(props: { pinId: string }) {
               'drop-shadow(0px 4px 12px rgba(0,0,0,0.1)), drop-shadow(0px 1px 0px rgba(0,0,0,0.2))',
           }}
         >
-          <StyledPin
+          <PurePin
+            profile={profile}
+            hasUnread={hasUnread}
+            isTyping={workspace.composers[props.pinId]?.isTyping}
             onPointerDown={(e) => {
               e.stopPropagation();
               e.preventDefault();
               events.onPointerDown(e, { target });
             }}
-          >
-            {hasUnread ? <Badge size={6} /> : null}
-            {avatar}
-          </StyledPin>
+          />
         </HStack>
       </StyledPinContainer>
       <HStack style={{ width: isViewing || isHovering ? 248 : 'unset' }}>{thread}</HStack>

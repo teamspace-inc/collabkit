@@ -16,6 +16,11 @@ export async function writeMessageToFirebase(
 ) {
   const { type, workspaceId, threadId, body, preview, parentId } = props;
 
+  if (store.isReadOnly) {
+    console.warn('CollabKit: cannot send message in read-only mode');
+    return;
+  }
+
   if (!store.config.identify) {
     console.warn('[CollabKit] Did you forget to call CollabKit.identify?');
     return;
