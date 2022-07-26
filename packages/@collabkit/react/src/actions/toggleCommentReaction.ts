@@ -10,6 +10,11 @@ export async function toggleCommentReaction(
     return;
   }
 
+  if (store.isReadOnly) {
+    console.warn('[CollabKit] Cannot toggle comment reaction in read-only mode');
+    return;
+  }
+
   const { emoji } = props.target;
   const { workspaceId, threadId, eventId } = props.target.comment;
 

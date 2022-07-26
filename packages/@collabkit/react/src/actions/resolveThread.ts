@@ -4,7 +4,10 @@ import { getConfig, timelineRef, actions } from './index';
 
 export async function resolveThread(store: Store, workspaceId: string, threadId: string) {
   const { appId, userId } = getConfig(store);
-
+  if (store.isReadOnly) {
+    console.warn('CollabKit: cannot resolve thread in read-only mode');
+    return;
+  }
   // todo optimistic send
   try {
     const event: Event = {

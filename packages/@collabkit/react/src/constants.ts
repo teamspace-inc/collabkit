@@ -184,6 +184,7 @@ export interface Workspace {
 }
 
 export interface Store {
+  isReadOnly: boolean;
   isConnected: boolean;
   token: string;
   selectedId: null | Target;

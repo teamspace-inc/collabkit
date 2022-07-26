@@ -29,6 +29,7 @@ export function CollabKitProvider({
   mentionableUsers: MentionProps;
   children: React.ReactNode;
   colorScheme?: 'light' | 'dark' | 'auto';
+  readOnly?: boolean;
 }) {
   const [context, setContext] = useState<{ store: Store; events: Events } | null>(null);
 
