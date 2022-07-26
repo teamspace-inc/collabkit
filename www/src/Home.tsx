@@ -7,8 +7,6 @@ import Email from './Email.svg';
 import ExampleCode from './Example.mdx';
 import ChevronDown from './ChevronDown.svg';
 
-import * as CollabKit from '../../packages/@collabkit/react/src/index';
-
 const Grid = styled('div', {
   display: 'grid',
 });
@@ -219,23 +217,6 @@ export function Home() {
           overflow: 'hidden',
         }}
       >
-        <CollabKit.Provider
-          apiKey={import.meta.env.VITE_COLLABKIT_TOKEN}
-          appId={import.meta.env.VITE_COLLABKIT_APP_ID}
-          workspace={{ id: 'acme', name: 'ACME' }}
-          user={{
-            userId: 'alice-1',
-            name: 'Alice Levine',
-            email: 'alice@example.com',
-            avatar: 'https://www.uifiller.com/images/portraits/anon-4.jpg',
-          }}
-          mentionableUsers={[]}
-        >
-          <div style={{ width: '248px', height: '280px' }}>
-            <CollabKit.Pin pinId="foobarn12" />
-            <CollabKit.Thread threadId="foobarn12" />
-          </div>
-        </CollabKit.Provider>
         <Grid
           style={{
             alignItems: 'center',

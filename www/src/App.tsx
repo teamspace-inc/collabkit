@@ -1,5 +1,5 @@
 import { styled } from '@stitches/react';
-import { Route, Router } from 'wouter';
+import { Route } from 'wouter';
 import { Home } from './Home';
 import { Demo } from './Demo';
 
@@ -12,10 +12,8 @@ const Title = styled('h1', {});
 export default function App() {
   return (
     <Page>
-      <Router>
-        <Route path="/" component={Home} />
-        <Route path="/demo" component={Demo} />
-      </Router>
+      <Route path="/" component={Home} />
+      <Route path="/demo" component={Demo} />
     </Page>
   );
 }
