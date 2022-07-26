@@ -184,6 +184,7 @@ export function Commentable(props: { children: React.ReactNode; style?: React.CS
         }
       }}
     >
+      {props.children}
       {pinIds.map((pinId) => {
         const pin = workspace.pins[pinId];
         const isHovering = hoveringId?.type === 'pin' && hoveringId.pinId === pinId;
@@ -200,7 +201,6 @@ export function Commentable(props: { children: React.ReactNode; style?: React.CS
           </Sticky>
         ) : null;
       })}
-      {props.children}
     </span>
   );
 }

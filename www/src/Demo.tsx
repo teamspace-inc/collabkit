@@ -24,9 +24,11 @@ export function Demo() {
               height: 'auto',
             }}
           >
-            <span style={{ position: 'relative', zIndex: -1 }}>
+            <span style={{ position: 'relative' }}>
               <img className="demoImage" src={UI} />
-              <CollabKit.FloatingButton style={{ position: 'absolute', right: 20, bottom: 20 }} />
+              <CollabKit.FloatingButton
+                style={{ position: 'absolute', right: 20, bottom: 20, zIndex: 99 }}
+              />
             </span>
           </div>
         </CollabKit.Commentable>
