@@ -260,9 +260,13 @@ const BoostActivation = (
       padding: '4rem 0',
     }}
   >
-    <img style={{ width: '6rem', marginBottom: '2rem' }} src={RocketLaunchIcon} />
-    <Subtitle>Boost activation and retention</Subtitle>
-    <Text style={{ maxWidth: '40rem', textAlign: 'center' }}>
+    <img style={{ width: '6rem', marginBottom: '2.5rem' }} src={RocketLaunchIcon} />
+    <Subtitle
+      style={{ fontSize: '3rem', lineHeight: '3.5rem', marginBottom: '2rem', marginTop: 0 }}
+    >
+      Boost activation and retention
+    </Subtitle>
+    <Text style={{ maxWidth: '40rem', textAlign: 'center', marginTop: 0 }}>
       Give contextual feedback, onboard coworkers or even leave tips on how to use your product all
       in real time
     </Text>
@@ -280,9 +284,13 @@ const TryItOut = (
       padding: '4rem 0',
     }}
   >
-    <img style={{ width: '6rem', marginBottom: '2rem' }} src={HandPointingIcon} />
-    <Subtitle>Try it out</Subtitle>
-    <Text style={{ maxWidth: '50rem', textAlign: 'center' }}>
+    <img style={{ width: '6rem', marginBottom: '2.5rem' }} src={HandPointingIcon} />
+    <Subtitle
+      style={{ fontSize: '3rem', lineHeight: '3.5rem', marginBottom: '2rem', marginTop: 0 }}
+    >
+      Try it out
+    </Subtitle>
+    <Text style={{ maxWidth: '50rem', textAlign: 'center', marginTop: 0 }}>
       Click anywhere to leave a comment or reply to an existing one
     </Text>
   </div>
@@ -407,7 +415,7 @@ export function Home() {
           }}
         >
           <Article>
-            <div style={{ width: '100%' }}>
+            <div style={{ width: '100%', marginBottom: '2.5rem' }}>
               <img src={CommentAnything} />
             </div>
             <VStack>
@@ -419,7 +427,7 @@ export function Home() {
             </VStack>
           </Article>
           <Article>
-            <div style={{ width: '100%' }}>
+            <div style={{ width: '100%', marginBottom: '2.5rem' }}>
               <img src={AnyApp} />
             </div>
             <VStack>
@@ -431,8 +439,8 @@ export function Home() {
             </VStack>
           </Article>
           <Article>
-            <div style={{ width: '100%' }}>
-              <img src={Realtime} style={{ width: window.innerWidth < 480 ? '100%' : '87%' }} />
+            <div style={{ width: '100%', marginBottom: '2.5rem' }}>
+              <img src={Realtime} />
             </div>
             <VStack>
               <Subtitle>All in real time</Subtitle>
@@ -443,7 +451,7 @@ export function Home() {
             </VStack>
           </Article>
           <Article>
-            <div style={{ width: '100%' }}>
+            <div style={{ width: '100%', marginBottom: '2.5rem' }}>
               <img src={Email} />
             </div>
             <VStack>
