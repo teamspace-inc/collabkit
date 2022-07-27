@@ -10,7 +10,10 @@ import RocketLaunchIcon from './RocketLaunch.svg';
 import HandPointingIcon from './HandPointing.svg';
 import Cursor from './Cursor.svg';
 import Logo from './Logo.svg';
+import ycLogoSvg from './yc-logo.svg';
+import checkmarkSvg from './checkmark.svg';
 import { Demo } from './Demo';
+import React, { ReactNode } from 'react';
 
 const Grid = styled('div', {
   display: 'grid',
@@ -19,6 +22,11 @@ const Grid = styled('div', {
 const VStack = styled('div', {
   display: 'flex',
   flexDirection: 'column',
+});
+
+const HStack = styled('div', {
+  display: 'flex',
+  flexDirection: 'row',
 });
 
 const Text = styled('p', {
@@ -194,13 +202,17 @@ const BoostActivationLayout = styled('div', {
   },
 });
 
-const RequestDemoButton = (
-  <Button
-    onClick={() => (window.location.href = 'https://calendly.com/namit-chadha/30min?month=2022-07')}
-  >
-    Request a demo
-  </Button>
-);
+function RequestDemoButton() {
+  return (
+    <Button
+      onClick={() =>
+        (window.location.href = 'https://calendly.com/namit-chadha/30min?month=2022-07')
+      }
+    >
+      Request a demo
+    </Button>
+  );
+}
 
 // const BoostActivation = (
 //   <Section
@@ -242,7 +254,7 @@ const StickyHeader = (
         </Text>
       ) : null}
       <div style={{ position: 'relative', top: window.innerWidth > 480 ? '0.5rem' : 0 }}>
-        {RequestDemoButton}
+        <RequestDemoButton />
       </div>
     </div>
   </Header>
@@ -382,6 +394,74 @@ const Hero = (
 //     </Grid>
 //   </Section>
 // );
+
+const Plan = styled(VStack, {
+  border: '2px solid #222222',
+  borderRadius: 24,
+  textAlign: 'initial',
+  padding: '2.5rem 15%',
+});
+
+const PlanTitle = styled('h3', {
+  fontFamily: 'Space Grotesk',
+  fontStyle: 'normal',
+  fontWeight: '400',
+  fontSize: '2rem',
+  lineHeight: '128.125%',
+  letterSpacing: '-0.05em',
+  color: '#222222',
+});
+
+const PlanPrice = styled('span', {
+  fontFamily: 'Inter',
+  fontStyle: 'normal',
+  fontWeight: '600',
+  fontSize: '3rem',
+  lineHeight: '120%',
+  letterSpacing: '-0.03em',
+  color: '#222222',
+});
+
+const Small = styled('span', {
+  fontFamily: 'Inter',
+  fontStyle: 'normal',
+  fontWeight: 500,
+  fontSize: '1rem',
+  lineHeight: '118.75%',
+  whiteSpace: 'nowrap',
+});
+
+const PlanFeatures = styled('ul', {
+  paddingBlock: 0,
+  paddingInline: 0, //'1.5rem',
+  marginBottom: '2.5rem',
+  listStyleType: 'none',
+  flex: 1,
+});
+
+const PlanFeatureItem = styled('li', {
+  fontFamily: 'Inter',
+  fontStyle: 'normal',
+  fontWeight: '500',
+  fontSize: '1rem',
+  lineHeight: '250%',
+  color: '#222222',
+  display: 'flex',
+  flexDirection: 'row',
+});
+
+const PlanFeatureContent = styled('div', {
+  marginLeft: '0.625rem',
+});
+
+function PlanFeature({ children }: { children: ReactNode }) {
+  return (
+    <PlanFeatureItem>
+      <img src={checkmarkSvg} style={{ width: '1rem', height: '1rem', marginTop: '0.75rem' }} />
+      <PlanFeatureContent>{children}</PlanFeatureContent>
+    </PlanFeatureItem>
+  );
+}
 
 export function Home() {
   return (
@@ -524,7 +604,76 @@ export function Home() {
           Placeholder for demo2
         </div>
       </Section>
-      <Section style={{ background: '#905EC9' }}>
+      <Section style={{ background: '#FFEC6B', textAlign: 'center', paddingTop: '15rem' }}>
+        <Title
+          style={{
+            marginTop: 0,
+            marginBottom: '3.75rem',
+          }}
+        >
+          Pricing
+        </Title>
+        <Text
+          style={{
+            marginTop: 0,
+            marginBottom: '7.5rem',
+          }}
+        >
+          Choose a package that suits you
+        </Text>
+        <Grid
+          style={{
+            gridTemplateColumns: '1fr 1fr 1fr',
+            columnGap: '3rem',
+          }}
+        >
+          <Plan>
+            <PlanTitle>Starter</PlanTitle>
+            <PlanPrice>Free</PlanPrice>
+            <PlanFeatures>
+              <PlanFeature>100 monthly active users</PlanFeature>
+              <PlanFeature>Commenting</PlanFeature>
+              <PlanFeature>Presence</PlanFeature>
+            </PlanFeatures>
+            <RequestDemoButton />
+          </Plan>
+          <Plan>
+            <PlanTitle>Pro</PlanTitle>
+            <PlanPrice>
+              $200 <Small>Per month</Small>
+            </PlanPrice>
+            <PlanFeatures>
+              <PlanFeature>Unlimited monthly active users</PlanFeature>
+              <PlanFeature>Commenting</PlanFeature>
+              <PlanFeature>Presence</PlanFeature>
+              <PlanFeature>Analytics Dashboard</PlanFeature>
+              <PlanFeature>Customisability</PlanFeature>
+              <PlanFeature>Slack & Discord channel support</PlanFeature>
+            </PlanFeatures>
+            <RequestDemoButton />
+          </Plan>
+          <Plan>
+            <PlanTitle>Enterprise</PlanTitle>
+            <PlanPrice>Custom</PlanPrice>
+            <PlanFeatures>
+              <PlanFeature>Unlimited monthly active users</PlanFeature>
+              <PlanFeature>Commenting</PlanFeature>
+              <PlanFeature>Presence</PlanFeature>
+              <PlanFeature>Analytics Dashboard</PlanFeature>
+              <PlanFeature>Customisability</PlanFeature>
+              <PlanFeature>Slack & Discord channel support</PlanFeature>
+              <PlanFeature>SLA</PlanFeature>
+              <PlanFeature>API</PlanFeature>
+            </PlanFeatures>
+            <RequestDemoButton />
+          </Plan>
+        </Grid>
+        <HStack style={{ marginBlock: '5rem', alignItems: 'center', gap: '0.625rem' }}>
+          <img src={ycLogoSvg} style={{ width: '2rem', height: '2rem' }} />
+          <Small>Backed by Y Combinator</Small>
+        </HStack>
+      </Section>
+      {/* <Section style={{ background: '#905EC9' }}>
         <Circle color="yellow">
           <VStack
             style={{
@@ -550,7 +699,7 @@ export function Home() {
             </div>
           </VStack>
         </Circle>
-      </Section>
+      </Section> */}
     </div>
   );
 }
