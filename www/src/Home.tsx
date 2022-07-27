@@ -11,7 +11,9 @@ import HandPointingIcon from './HandPointing.svg';
 import Cursor from './Cursor.svg';
 import Logo from './Logo.svg';
 import ycLogoSvg from './yc-logo.svg';
+import checkmarkSvg from './checkmark.svg';
 import { Demo } from './Demo';
+import React, { ReactNode } from 'react';
 
 const Grid = styled('div', {
   display: 'grid',
@@ -426,25 +428,40 @@ const Small = styled('span', {
   fontWeight: 500,
   fontSize: '1rem',
   lineHeight: '118.75%',
+  whiteSpace: 'nowrap',
 });
 
 const PlanFeatures = styled('ul', {
   paddingBlock: 0,
-  paddingInline: '1.5rem',
-  marginBlockEnd: '2.5rem',
-  listStyleImage: `url("data:image/svg+xml,%3Csvg width='13' height='10' viewBox='0 0 13 10' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11.5 1.50049L4.5 8.50018L1 5.00049' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A")`,
-  listStylePosition: 'inside',
+  paddingInline: 0, //'1.5rem',
+  marginBottom: '2.5rem',
+  listStyleType: 'none',
   flex: 1,
 });
 
-const PlanFeature = styled('li', {
+const PlanFeatureItem = styled('li', {
   fontFamily: 'Inter',
   fontStyle: 'normal',
   fontWeight: '500',
   fontSize: '1rem',
   lineHeight: '250%',
   color: '#222222',
+  display: 'flex',
+  flexDirection: 'row',
 });
+
+const PlanFeatureContent = styled('div', {
+  marginLeft: '0.625rem',
+});
+
+function PlanFeature({ children }: { children: ReactNode }) {
+  return (
+    <PlanFeatureItem>
+      <img src={checkmarkSvg} style={{ width: '1rem', height: '1rem', marginTop: '0.75rem' }} />
+      <PlanFeatureContent>{children}</PlanFeatureContent>
+    </PlanFeatureItem>
+  );
+}
 
 export function Home() {
   return (
