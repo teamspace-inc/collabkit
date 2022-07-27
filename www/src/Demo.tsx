@@ -14,6 +14,7 @@ export function Demo() {
           name: 'Jane Doe',
           email: 'anon@example.com',
         }}
+        colorScheme={'dark'}
         mentionableUsers={[]}
       >
         <CollabKit.Commentable style={{ position: 'relative' }}>

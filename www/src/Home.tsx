@@ -713,7 +713,12 @@ export function Home() {
           </Plan>
         </PlanGrid>
         <HStack
-          style={{ marginTop: '15rem', marginBottom: 0, alignItems: 'center', gap: '0.625rem' }}
+          style={{
+            marginTop: '6rem',
+            marginBottom: '4rem',
+            alignItems: 'center',
+            gap: '0.625rem',
+          }}
         >
           <img src={ycLogoSvg} style={{ width: '2rem', height: '2rem' }} />
           <Small>Backed by Y Combinator</Small>
