@@ -395,11 +395,22 @@ const Hero = (
 //   </Section>
 // );
 
+const PlanGrid = styled(Grid, {
+  width: 'calc(100% - 12rem)',
+  maxWidth: '1352px',
+  gridTemplateColumns: '1fr 1fr 1fr',
+  columnGap: '3rem',
+  padding: '0 4rem',
+
+  '@bp1': { gridTemplateColumns: '1fr', rowGap: '2rem' },
+  '@bp2': { gridTemplateColumns: '1fr 1fr 1fr' },
+});
+
 const Plan = styled(VStack, {
   border: '2px solid #222222',
   borderRadius: 24,
   textAlign: 'initial',
-  padding: '2.5rem 15%',
+  padding: '2.5rem 3.5rem',
 });
 
 const PlanTitle = styled('h3', {
@@ -566,10 +577,10 @@ export function Home() {
         </VStack>
         <div
           style={{
-            maxWidth: '90vw',
+            maxWidth: '1352px',
             background: 'rgba(255,255,255,0.05)',
             borderRadius: '24px',
-            width: '100%',
+            width: '90vw',
             height: '760px',
             marginTop: '8.75rem',
             display: 'flex',
@@ -589,10 +600,10 @@ export function Home() {
         </VStack>
         <div
           style={{
-            maxWidth: '90vw',
+            maxWidth: '1352px',
             background: 'rgba(255,255,255,0.05)',
             borderRadius: '24px',
-            width: '100%',
+            width: '90vw',
             height: '760px',
             marginTop: '8.75rem',
             marginBottom: '7.5rem',
@@ -621,12 +632,7 @@ export function Home() {
         >
           Choose a package that suits you
         </Text>
-        <Grid
-          style={{
-            gridTemplateColumns: '1fr 1fr 1fr',
-            columnGap: '3rem',
-          }}
-        >
+        <PlanGrid>
           <Plan>
             <PlanTitle>Starter</PlanTitle>
             <PlanPrice>Free</PlanPrice>
@@ -643,7 +649,7 @@ export function Home() {
               $200 <Small>Per month</Small>
             </PlanPrice>
             <PlanFeatures>
-              <PlanFeature>Unlimited monthly active users</PlanFeature>
+              <PlanFeature>Unlimited monthly active users.</PlanFeature>
               <PlanFeature>Commenting</PlanFeature>
               <PlanFeature>Presence</PlanFeature>
               <PlanFeature>Analytics Dashboard</PlanFeature>
@@ -667,39 +673,12 @@ export function Home() {
             </PlanFeatures>
             <RequestDemoButton />
           </Plan>
-        </Grid>
+        </PlanGrid>
         <HStack style={{ marginBlock: '5rem', alignItems: 'center', gap: '0.625rem' }}>
           <img src={ycLogoSvg} style={{ width: '2rem', height: '2rem' }} />
           <Small>Backed by Y Combinator</Small>
         </HStack>
       </Section>
-      {/* <Section style={{ background: '#905EC9' }}>
-        <Circle color="yellow">
-          <VStack
-            style={{
-              marginTop: '12rem',
-              marginLeft: '-4rem',
-              marginRight: '-4rem',
-              justifyContent: 'center',
-            }}
-          >
-            <Title>
-              Get <Em>started</Em> now
-            </Title>
-            <Text style={{ textAlign: 'center' }}>Schedule a chat with our team</Text>
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                marginTop: '3rem',
-              }}
-            >
-              <VStack>{RequestDemoButton}</VStack>
-            </div>
-          </VStack>
-        </Circle>
-      </Section> */}
     </div>
   );
 }
