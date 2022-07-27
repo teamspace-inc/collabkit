@@ -466,35 +466,63 @@ export function Home() {
       </Section>
       <Section
         style={{
-          background: '#343643',
+          background: '#35284A',
           color: 'white',
         }}
       >
-        <VStack style={{ textAlign: 'center', marginTop: '-8rem' }}>
-          <Title style={{ color: 'white' }}>
-            Why <Em>build</Em> it?
+        <VStack style={{ textAlign: 'center', marginTop: '15rem', maxWidth: '58rem' }}>
+          <Title style={{ color: 'white', marginBottom: '3.75rem' }}>
+            Just add {'<CollabKit />'}
           </Title>
-          <Text>CollabKit React SDK integrates in minutes.</Text>
+          <Text style={{ marginBottom: 0, marginTop: 0 }}>
+            {`To enable commenting throughout your app, wrap it in a `}
+            <span style={{ color: '#E25982' }}>{`<Commentable />`}</span>
+            {`  and add a `}
+            <span style={{ color: '#C9EB59' }}>{`<CommentButton />`}</span>
+            {`. Optionally, include a `}
+            <span style={{ color: '#92E4FD' }}>{`<Presence />`}</span>
+            {` facepile.`}
+          </Text>
         </VStack>
-        <br />
-        <br />
-        <br />
-        <br />
-        <Article>
-          <VStack>
-            <Subtitle>
-              Let us do the {window.innerWidth < 480 ? null : <br />}
-              hard work
-            </Subtitle>
-            <Text>
-              Install our customisable React SDK and add real time collaboration to your product in
-              no time.
-            </Text>
-          </VStack>
-          <div style={{ marginTop: window.innerWidth < 480 ? 0 : '-16rem' }}>
-            <ExampleCode />
-          </div>
-        </Article>
+        <div
+          style={{
+            maxWidth: '90vw',
+            background: 'rgba(255,255,255,0.05)',
+            borderRadius: '24px',
+            width: '100%',
+            height: '760px',
+            marginTop: '8.75rem',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          Placeholder for demo1
+        </div>
+        <VStack style={{ textAlign: 'center', marginTop: '15rem', maxWidth: '58rem' }}>
+          <Subtitle style={{ color: 'white', marginBottom: '3.75rem' }}>
+            Or add a {'<Thread />'}
+          </Subtitle>
+          <Text style={{ marginBottom: 0, marginTop: 0 }}>
+            {`Our flexible thread component can be include inline in your app. Great for detail views where your want to talk about a customer, product, invoice or sale`}
+          </Text>
+        </VStack>
+        <div
+          style={{
+            maxWidth: '90vw',
+            background: 'rgba(255,255,255,0.05)',
+            borderRadius: '24px',
+            width: '100%',
+            height: '760px',
+            marginTop: '8.75rem',
+            marginBottom: '7.5rem',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          Placeholder for demo2
+        </div>
       </Section>
       <Section style={{ background: '#905EC9' }}>
         <Circle color="yellow">
