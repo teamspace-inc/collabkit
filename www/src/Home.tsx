@@ -566,7 +566,7 @@ export function Home() {
         </VStack>
         <div
           style={{
-            maxWidth: '90vw',
+            maxWidth: '1352px',
             background: 'rgba(255,255,255,0.05)',
             borderRadius: '24px',
             width: '100%',
@@ -589,7 +589,7 @@ export function Home() {
         </VStack>
         <div
           style={{
-            maxWidth: '90vw',
+            maxWidth: '1352px',
             background: 'rgba(255,255,255,0.05)',
             borderRadius: '24px',
             width: '100%',
