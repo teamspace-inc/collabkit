@@ -651,7 +651,7 @@ export function Home() {
           Placeholder for demo2
         </div>
       </Section>
-      <Section style={{ background: '#FFEC6B', textAlign: 'center' }}>
+      <Section style={{ background: '#FFEC6B', textAlign: 'center', paddingTop: '15rem' }}>
         <VStack>
           <Title
             style={{
