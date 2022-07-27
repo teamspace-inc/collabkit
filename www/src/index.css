@@ -30,12 +30,6 @@ html {
 
 @media screen and (min-width: 1440px) {
   html {
-    font-size: 90%;
-  }
-}
-
-@media screen and (min-width: 2560px) {
-  html {
     font-size: 100%;
   }
 }
