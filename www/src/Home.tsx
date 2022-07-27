@@ -25,7 +25,7 @@ const Text = styled('p', {
   fontFamily: 'Inter',
   fontStyle: 'normal',
   fontWeight: 500,
-  fontSize: '1.5rem',
+  fontSize: '1.25rem',
   lineHeight: '140%',
   letterSpacing: '-0.03em,',
   zIndex: 1,
@@ -58,7 +58,7 @@ const Subtitle = styled('h2', {
   fontFamily: 'Space Grotesk',
   fontStyle: 'normal',
   fontWeight: 700,
-  fontSize: '3rem',
+  fontSize: '2rem',
   lineHeight: '116%',
   letterSpacing: '-0.05em',
   zIndex: 1,
@@ -157,12 +157,15 @@ const Article = styled('article', {
   display: 'grid',
   alignItems: 'center',
   justifyContent: 'center',
-  marginBottom: '12rem',
   gridTemplateColumns: '20rem 27.5rem',
   columnGap: '8rem',
+  border: '2px solid #222222',
+  borderRadius: '1.25rem',
+  maxWidth: '20rem',
 
   img: {
-    width: '100%',
+    // width: '100%',
+    maxWidth: '100%',
   },
 
   '@bp1': {
@@ -170,8 +173,8 @@ const Article = styled('article', {
     gridTemplateColumns: '1fr',
   },
   '@bp2': {
-    padding: 'unset',
-    gridTemplateColumns: '20rem 27.5rem',
+    padding: '4rem',
+    gridTemplateColumns: '1fr',
   },
 });
 
@@ -228,7 +231,7 @@ const RequestDemoButton = (
 // );
 
 const StickyHeader = (
-  <Header>
+  <Header style={{ marginTop: '1rem' }}>
     <div style={{ display: 'flex', flex: 1 }}>
       <img src={Logo} style={{ height: '1.5rem' }} />
     </div>
@@ -238,7 +241,7 @@ const StickyHeader = (
           <Link href="https://discord.gg/UCA4CbZad4">Discord</Link>
         </Text>
       ) : null}
-      <div style={{ position: 'relative', top: window.innerWidth > 480 ? '1rem' : 0 }}>
+      <div style={{ position: 'relative', top: window.innerWidth > 480 ? '0.5rem' : 0 }}>
         {RequestDemoButton}
       </div>
     </div>
@@ -257,9 +260,13 @@ const BoostActivation = (
       padding: '4rem 0',
     }}
   >
-    <img style={{ width: '6rem', marginBottom: '2rem' }} src={RocketLaunchIcon} />
-    <Subtitle>Boost activation and retention</Subtitle>
-    <Text style={{ maxWidth: '40rem', textAlign: 'center' }}>
+    <img style={{ width: '6rem', marginBottom: '2.5rem' }} src={RocketLaunchIcon} />
+    <Subtitle
+      style={{ fontSize: '3rem', lineHeight: '3.5rem', marginBottom: '2rem', marginTop: 0 }}
+    >
+      Boost activation and retention
+    </Subtitle>
+    <Text style={{ maxWidth: '40rem', textAlign: 'center', marginTop: 0 }}>
       Give contextual feedback, onboard coworkers or even leave tips on how to use your product all
       in real time
     </Text>
@@ -277,9 +284,13 @@ const TryItOut = (
       padding: '4rem 0',
     }}
   >
-    <img style={{ width: '6rem', marginBottom: '2rem' }} src={HandPointingIcon} />
-    <Subtitle>Try it out</Subtitle>
-    <Text style={{ maxWidth: '50rem', textAlign: 'center' }}>
+    <img style={{ width: '6rem', marginBottom: '2.5rem' }} src={HandPointingIcon} />
+    <Subtitle
+      style={{ fontSize: '3rem', lineHeight: '3.5rem', marginBottom: '2rem', marginTop: 0 }}
+    >
+      Try it out
+    </Subtitle>
+    <Text style={{ maxWidth: '50rem', textAlign: 'center', marginTop: 0 }}>
       Click anywhere to leave a comment or reply to an existing one
     </Text>
   </div>
@@ -395,60 +406,63 @@ export function Home() {
           </Title>
           <Text>CollabKit works just like commenting in Figma, Google Docs &amp; Notion</Text>
         </div>
-        <Article>
-          <VStack>
-            <Subtitle>Comment on anything</Subtitle>
-            <Text>
-              Have discussions in context. Conversations about that sale, product, invoice or
-              customer all happen in the same place.
-            </Text>
-          </VStack>
-          <div style={{ width: '100%' }}>
-            <img src={CommentAnything} />
-          </div>
-        </Article>
-        <Article>
-          <VStack>
-            <Subtitle>In any type of app</Subtitle>
-            <Text>
-              CollabKit Works across all kinds of interfaces; CRMs, documents, analytics dashboards,
-              calendars and more...
-            </Text>
-          </VStack>
-          <div
-            style={{
-              width: window.innerWidth < 480 ? '94%' : '100%',
-              position: 'relative',
-              left: window.innerWidth < 480 ? 0 : -44,
-            }}
-          >
-            <img src={AnyApp} style={{ width: '107%' }} />
-          </div>
-        </Article>
-        <Article>
-          <VStack>
-            <Subtitle>All in real time</Subtitle>
-            <Text>
-              See who’s online, who’s typing and keep the conversation going without ever leaving
-              your product.
-            </Text>
-          </VStack>
-          <div style={{ width: '100%' }}>
-            <img src={Realtime} style={{ width: window.innerWidth < 480 ? '100%' : '87%' }} />
-          </div>
-        </Article>
-        <Article>
-          <VStack>
-            <Subtitle>Get notified by email</Subtitle>
-            <Text>
-              New comments are sent straight to your inbox. Reply directly via email or click
-              through to the comment thread.
-            </Text>
-          </VStack>
-          <div style={{ width: '100%' }}>
-            <img src={Email} />
-          </div>
-        </Article>
+        <Grid
+          style={{
+            gridTemplateColumns: '1fr 1fr',
+            gap: '4rem',
+            marginTop: '4rem',
+            padding: '4rem 4rem 8rem',
+          }}
+        >
+          <Article>
+            <div style={{ width: '100%', marginBottom: '2.5rem' }}>
+              <img src={CommentAnything} />
+            </div>
+            <VStack>
+              <Subtitle>Comment on anything</Subtitle>
+              <Text>
+                Have discussions in context. Conversations about that sale, product, invoice or
+                customer all happen in the same place.
+              </Text>
+            </VStack>
+          </Article>
+          <Article>
+            <div style={{ width: '100%', marginBottom: '2.5rem' }}>
+              <img src={AnyApp} />
+            </div>
+            <VStack>
+              <Subtitle>In any type of app</Subtitle>
+              <Text>
+                CollabKit Works across all kinds of interfaces; CRMs, documents, analytics
+                dashboards, calendars and more...
+              </Text>
+            </VStack>
+          </Article>
+          <Article>
+            <div style={{ width: '100%', marginBottom: '2.5rem' }}>
+              <img src={Realtime} />
+            </div>
+            <VStack>
+              <Subtitle>All in real time</Subtitle>
+              <Text>
+                See who’s online, who’s typing and keep the conversation going without ever leaving
+                your product.
+              </Text>
+            </VStack>
+          </Article>
+          <Article>
+            <div style={{ width: '100%', marginBottom: '2.5rem' }}>
+              <img src={Email} />
+            </div>
+            <VStack>
+              <Subtitle>Get notified by email</Subtitle>
+              <Text>
+                New comments are sent straight to your inbox. Reply directly via email or click
+                through to the comment thread.
+              </Text>
+            </VStack>
+          </Article>
+        </Grid>
       </Section>
       <Section
         style={{
