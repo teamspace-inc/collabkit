@@ -46,9 +46,6 @@ const StyledPinContainer = styled('div', {
   flexDirection: 'column',
   gap: '8px',
   position: 'relative',
-  // so the pin is centered
-  top: 'calc($sizes$pin / -2)',
-  left: 'calc($sizes$pin / -2)',
 });
 
 const StyledFloatingThreadContainer = styled('div', {
@@ -143,13 +140,13 @@ export function Pin(props: { pinId: string }) {
     (pin.state === 'open' || pin.state === 'pending')
   );
 
-  const demoMode = true;
+  // const demoMode = true;
 
   const { x, y, reference, floating, strategy } = useFloating({
     whileElementsMounted: autoUpdate,
     open,
     middleware: [
-      autoPlacement({ alignment: 'start', padding: 12 }),
+      autoPlacement({ alignment: 'start', padding: 14 }),
       size({
         apply({ availableWidth, availableHeight, elements }) {
           // Do things with the data, e.g.

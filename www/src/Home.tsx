@@ -169,7 +169,7 @@ const Article = styled('article', {
   columnGap: '8rem',
   border: '2px solid #222222',
   borderRadius: '1.25rem',
-  maxWidth: '20rem',
+  maxWidth: '36rem',
 
   img: {
     // width: '100%',
@@ -181,7 +181,7 @@ const Article = styled('article', {
     gridTemplateColumns: '1fr',
   },
   '@bp2': {
-    padding: '4rem',
+    padding: '0rem',
     gridTemplateColumns: '1fr',
   },
 });
@@ -495,7 +495,7 @@ export function Home() {
           <Title style={{ textAlign: 'center', marginBottom: '3rem' }}>
             Conversations with context
           </Title>
-          <Text>CollabKit works just like commenting in Figma, Google Docs &amp; Notion</Text>
+          <Text>CollabKit works just like commenting in Figma, Google Docs &amp; Notion.</Text>
         </div>
         <Grid
           style={{
@@ -506,10 +506,19 @@ export function Home() {
           }}
         >
           <Article>
-            <div style={{ width: '100%', marginBottom: '2.5rem' }}>
-              <img src={CommentAnything} />
+            <div
+              style={{
+                width: '100%',
+                marginTop: '4rem',
+                marginBottom: '2.5rem',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <img src={CommentAnything} style={{ width: '100%', maxWidth: 'calc(100% - 8rem)' }} />
             </div>
-            <VStack>
+            <VStack style={{ padding: '0 4rem 2rem' }}>
               <Subtitle>Comment on anything</Subtitle>
               <Text>
                 Have discussions in context. Conversations about that sale, product, invoice or
@@ -518,10 +527,19 @@ export function Home() {
             </VStack>
           </Article>
           <Article>
-            <div style={{ width: '100%', marginBottom: '2.5rem' }}>
-              <img src={AnyApp} />
+            <div
+              style={{
+                width: '100%',
+                marginTop: '4rem',
+                marginBottom: '2.5rem',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <img src={AnyApp} style={{ width: '100%', maxWidth: 'calc(100% - 8rem)' }} />
             </div>
-            <VStack>
+            <VStack style={{ padding: '0 4rem 2rem' }}>
               <Subtitle>In any type of app</Subtitle>
               <Text>
                 CollabKit Works across all kinds of interfaces; CRMs, documents, analytics
@@ -530,10 +548,19 @@ export function Home() {
             </VStack>
           </Article>
           <Article>
-            <div style={{ width: '100%', marginBottom: '2.5rem' }}>
-              <img src={Realtime} />
+            <div
+              style={{
+                width: '100%',
+                marginTop: '4rem',
+                marginBottom: '2.5rem',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <img src={Realtime} style={{ width: '100%', maxWidth: 'calc(100% - 8rem)' }} />
             </div>
-            <VStack>
+            <VStack style={{ padding: '0 4rem 2rem' }}>
               <Subtitle>All in real time</Subtitle>
               <Text>
                 See who’s online, who’s typing and keep the conversation going without ever leaving
@@ -542,10 +569,19 @@ export function Home() {
             </VStack>
           </Article>
           <Article>
-            <div style={{ width: '100%', marginBottom: '2.5rem' }}>
-              <img src={Email} />
+            <div
+              style={{
+                width: '100%',
+                marginTop: '4rem',
+                marginBottom: '2.5rem',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <img src={Email} style={{ width: '100%', maxWidth: 'calc(100% - 8rem)' }} />
             </div>
-            <VStack>
+            <VStack style={{ padding: '0 4rem 2rem' }}>
               <Subtitle>Get notified by email</Subtitle>
               <Text>
                 New comments are sent straight to your inbox. Reply directly via email or click
@@ -595,7 +631,7 @@ export function Home() {
             Or add a {'<Thread />'}
           </Subtitle>
           <Text style={{ marginBottom: 0, marginTop: 0 }}>
-            {`Our flexible thread component can be include inline in your app. Great for detail views where your want to talk about a customer, product, invoice or sale`}
+            {`Our flexible thread component can be include inline in your app. Great for detail views where your want to talk about a customer, product, invoice or sale.`}
           </Text>
         </VStack>
         <div
@@ -615,23 +651,25 @@ export function Home() {
           Placeholder for demo2
         </div>
       </Section>
-      <Section style={{ background: '#FFEC6B', textAlign: 'center', paddingTop: '15rem' }}>
-        <Title
-          style={{
-            marginTop: 0,
-            marginBottom: '3.75rem',
-          }}
-        >
-          Pricing
-        </Title>
-        <Text
-          style={{
-            marginTop: 0,
-            marginBottom: '7.5rem',
-          }}
-        >
-          Choose a package that suits you
-        </Text>
+      <Section style={{ background: '#FFEC6B', textAlign: 'center' }}>
+        <VStack>
+          <Title
+            style={{
+              marginTop: 0,
+              marginBottom: '3.75rem',
+            }}
+          >
+            Pricing
+          </Title>
+          <Text
+            style={{
+              marginTop: 0,
+              marginBottom: '7.5rem',
+            }}
+          >
+            Choose a package that suits you.
+          </Text>
+        </VStack>
         <PlanGrid>
           <Plan>
             <PlanTitle>Starter</PlanTitle>
@@ -649,12 +687,12 @@ export function Home() {
               $200 <Small>Per month</Small>
             </PlanPrice>
             <PlanFeatures>
-              <PlanFeature>Unlimited monthly active users.</PlanFeature>
+              <PlanFeature>Unlimited monthly active users</PlanFeature>
               <PlanFeature>Commenting</PlanFeature>
               <PlanFeature>Presence</PlanFeature>
-              <PlanFeature>Analytics Dashboard</PlanFeature>
+              <PlanFeature>Analytics dashboard</PlanFeature>
               <PlanFeature>Customisability</PlanFeature>
-              <PlanFeature>Slack & Discord channel support</PlanFeature>
+              <PlanFeature>Slack &amp; Discord support</PlanFeature>
             </PlanFeatures>
             <RequestDemoButton />
           </Plan>
@@ -665,16 +703,18 @@ export function Home() {
               <PlanFeature>Unlimited monthly active users</PlanFeature>
               <PlanFeature>Commenting</PlanFeature>
               <PlanFeature>Presence</PlanFeature>
-              <PlanFeature>Analytics Dashboard</PlanFeature>
+              <PlanFeature>Analytics dashboard</PlanFeature>
               <PlanFeature>Customisability</PlanFeature>
-              <PlanFeature>Slack & Discord channel support</PlanFeature>
+              <PlanFeature>Slack &amp; Discord support</PlanFeature>
               <PlanFeature>SLA</PlanFeature>
               <PlanFeature>API</PlanFeature>
             </PlanFeatures>
             <RequestDemoButton />
           </Plan>
         </PlanGrid>
-        <HStack style={{ marginBlock: '5rem', alignItems: 'center', gap: '0.625rem' }}>
+        <HStack
+          style={{ marginTop: '15rem', marginBottom: 0, alignItems: 'center', gap: '0.625rem' }}
+        >
           <img src={ycLogoSvg} style={{ width: '2rem', height: '2rem' }} />
           <Small>Backed by Y Combinator</Small>
         </HStack>

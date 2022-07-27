@@ -1,8 +1,9 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { styled } from './UIKit';
+import { autoUpdate, computePosition, offset } from '@floating-ui/dom';
 
 export const StyledStickyContainer = styled('div', {
-  position: 'fixed',
+  position: 'absolute',
   left: 0,
   top: 0,
   display: 'flex',
@@ -17,13 +18,6 @@ export const StyledStickyContainer = styled('div', {
   },
 });
 
-export function calculatePosition(node: Element, offset: { x: number; y: number }) {
-  const rect = node.getBoundingClientRect();
-  const x = rect.left + offset.x * rect.width;
-  const y = rect.top + offset.y * rect.height;
-  return { x, y };
-}
-
 // positions children relative to the selector and point
 export function Sticky(props: {
   children: React.ReactNode;
@@ -33,33 +27,41 @@ export function Sticky(props: {
 }) {
   const stickyRef = useRef<HTMLDivElement | null>(null);
   const selectorRef = useRef<Element | null>(null);
-  const { children, selector, offset } = props;
+  const { children, selector } = props;
   const prevPosition = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
-  const requestRef = React.useRef();
-
-  const updatePosition = useCallback(() => {
-    if (stickyRef.current && selectorRef.current) {
-      const position = calculatePosition(selectorRef.current, offset);
-      if (prevPosition.current.x !== position.x || prevPosition.current.y !== position.y) {
-        Object.assign(stickyRef.current.style, {
-          left: `${position.x}px`,
-          top: `${position.y}px`,
-        });
-      }
-      prevPosition.current = position;
-    }
-  }, [offset]);
 
   useEffect(() => {
-    window.addEventListener('resize', updatePosition);
-    window.addEventListener('scroll', updatePosition);
     selectorRef.current = document.querySelector(selector);
-    updatePosition();
-    return () => {
-      window.removeEventListener('scroll', updatePosition);
-      window.removeEventListener('resize', updatePosition);
-    };
-  }, [selector]);
+    if (!selectorRef.current || !stickyRef.current) return;
+    const cleanup = autoUpdate(selectorRef.current, stickyRef.current, () => {
+      if (!selectorRef.current || !stickyRef.current) return;
+      computePosition(selectorRef.current, stickyRef.current, {
+        placement: 'top-start',
+        middleware: [
+          offset(({ rects }) => {
+            return {
+              // so the pin is centered
+              crossAxis: props.offset.x * rects.reference.width - 16,
+              mainAxis: props.offset.y * rects.reference.height - (28 + 18),
+            };
+          }),
+        ],
+      }).then(({ x, y }) => {
+        // for some reason it returns a -y value
+        const absX = Math.abs(x);
+        const absY = Math.abs(y);
+        if (absX === prevPosition.current.x && absY === prevPosition.current.y) {
+          return;
+        }
+        Object.assign(stickyRef.current!.style, {
+          left: `${absX}px`,
+          top: `${absY}px`,
+        });
+        prevPosition.current = { x: absX, y: absY };
+      });
+    });
+    return cleanup;
+  }, [selector, props.offset.x, props.offset.y]);
 
   return (
     <StyledStickyContainer ref={stickyRef} zTop={props.zTop} data-collabkit-internal="true">
