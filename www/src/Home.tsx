@@ -6,6 +6,11 @@ import Realtime from './Realtime.svg';
 import Email from './Email.svg';
 import ExampleCode from './Example.mdx';
 import ChevronDown from './ChevronDown.svg';
+import RocketLaunchIcon from './RocketLaunch.svg';
+import HandPointingIcon from './HandPointing.svg';
+import Cursor from './Cursor.svg';
+import Logo from './Logo.svg';
+import { Demo } from './Demo';
 
 const Grid = styled('div', {
   display: 'grid',
@@ -20,7 +25,7 @@ const Text = styled('p', {
   fontFamily: 'Inter',
   fontStyle: 'normal',
   fontWeight: 500,
-  fontSize: '1.25rem',
+  fontSize: '1.5rem',
   lineHeight: '140%',
   letterSpacing: '-0.03em,',
   zIndex: 1,
@@ -53,7 +58,7 @@ const Subtitle = styled('h2', {
   fontFamily: 'Space Grotesk',
   fontStyle: 'normal',
   fontWeight: 700,
-  fontSize: '2rem',
+  fontSize: '3rem',
   lineHeight: '116%',
   letterSpacing: '-0.05em',
   zIndex: 1,
@@ -105,6 +110,7 @@ const Header = styled('header', {
 });
 
 const Link = styled('a', {
+  fontSize: '1.25rem',
   textDecoration: 'none',
   color: 'black',
   '&:hover': {
@@ -115,13 +121,13 @@ const Link = styled('a', {
 const Circle = styled('div', {
   aspectRatio: 1,
   minWidth: '40rem',
-  maxWidth: '66vw',
+  maxWidth: '40rem',
   borderRadius: '50%',
   background: '#FFEC6B',
   zIndex: 0,
 
   '@bp1': { maxWidth: '90vw', minWidth: '90vw', width: '90vw' },
-  '@bp2': { minWidth: '40rem', maxWidth: '66vw', width: 'unset' },
+  '@bp2': { minWidth: '40rem', maxWidth: '50rem', width: 'unset' },
 
   variants: {
     color: {
@@ -193,125 +199,202 @@ const RequestDemoButton = (
   </Button>
 );
 
+// const BoostActivation = (
+//   <Section
+//     style={{
+//       background: '#9FEFD7',
+//     }}
+//   >
+//     <BoostActivationLayout>
+//       <img src={Example} style={{ width: '100%', maxWidth: '743px' }} />
+//       <VStack>
+//         <Subtitle>
+//           Boost activation <br />
+//           and retention
+//         </Subtitle>
+//         <Text>
+//           Give contextual feedback, onboard coworkers or even leave tips on how to use your product
+//           all in real time.
+//           <br />
+//           <br />
+//           <b>
+//             With CollabKit, you can figure <br />
+//             things out as a team.
+//           </b>
+//         </Text>
+//       </VStack>
+//     </BoostActivationLayout>
+//   </Section>
+// );
+
+const StickyHeader = (
+  <Header>
+    <div style={{ display: 'flex', flex: 1 }}>
+      <img src={Logo} style={{ height: '1.5rem' }} />
+    </div>
+    <div style={{ display: 'flex', flexDirection: 'row', gap: '4rem' }}>
+      {window.innerWidth > 480 ? (
+        <Text>
+          <Link href="https://discord.gg/UCA4CbZad4">Discord</Link>
+        </Text>
+      ) : null}
+      <div style={{ position: 'relative', top: window.innerWidth > 480 ? '1rem' : 0 }}>
+        {RequestDemoButton}
+      </div>
+    </div>
+  </Header>
+);
+
+const BoostActivation = (
+  <div
+    style={{
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '0',
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: '100vw',
+      padding: '4rem 0',
+    }}
+  >
+    <img style={{ width: '6rem', marginBottom: '2rem' }} src={RocketLaunchIcon} />
+    <Subtitle>Boost activation and retention</Subtitle>
+    <Text style={{ maxWidth: '40rem', textAlign: 'center' }}>
+      Give contextual feedback, onboard coworkers or even leave tips on how to use your product all
+      in real time
+    </Text>
+  </div>
+);
+
+const TryItOut = (
+  <div
+    style={{
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '0',
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: '4rem 0',
+    }}
+  >
+    <img style={{ width: '6rem', marginBottom: '2rem' }} src={HandPointingIcon} />
+    <Subtitle>Try it out</Subtitle>
+    <Text style={{ maxWidth: '50rem', textAlign: 'center' }}>
+      Click anywhere to leave a comment or reply to an existing one
+    </Text>
+  </div>
+);
+
+const Hero = (
+  <Section
+    style={{
+      position: 'relative',
+      overflow: 'hidden',
+    }}
+  >
+    <Grid
+      style={{
+        alignItems: 'center',
+        justifyContent: 'center',
+        gridTemplateColumns: '1fr',
+        columnGap: '0',
+      }}
+    >
+      {/* <Circle color="sky" style={{ transform: 'translateX(-33%)' }} /> */}
+      <Circle
+        color="yellow"
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          position: 'relative',
+        }}
+      >
+        <VStack style={{ margin: '3rem -6rem 0' }}>
+          <Title>
+            Add commenting to <br />
+            <Em>your</Em> product
+          </Title>
+          <Text style={{ textAlign: 'center' }}>
+            It only takes minutes, with our
+            <br /> customisable React SDK.
+          </Text>
+        </VStack>
+        <img style={{ position: 'absolute', bottom: 0, right: 0 }} src={Cursor} />
+      </Circle>
+      {/* <Circle color="purple" style={{ transform: 'translateX(33%)' }} /> */}
+    </Grid>
+    <img
+      src={ChevronDown}
+      style={{
+        position: 'absolute',
+        left: '50%',
+        marginLeft: -14,
+        bottom: 'calc((100vh - 40rem)/4)',
+      }}
+    />
+  </Section>
+);
+
+// const ContextualConversations = (
+//   <Section
+//     style={{
+//       position: 'relative',
+//       overflow: 'hidden',
+//       minHeight: '55rem',
+//     }}
+//   >
+//     <Grid
+//       style={{
+//         alignItems: 'center',
+//         justifyContent: 'center',
+//         gridTemplateColumns: 'repeat(3, 1fr)',
+//         columnGap: '0',
+//       }}
+//     >
+//       <Circle color="pink" style={{ transform: 'translateX(-33%)' }} />
+//       <Circle
+//         color="amber"
+//         style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+//       >
+//         <VStack style={{ margin: '0 -5rem' }}>
+//           <Title>
+//             Have conversations with <Em>context</Em>
+//           </Title>
+//           <Text style={{ textAlign: 'center' }}>
+//             CollabKit works just like commenting in
+//             <br /> Figma, Google Docs and Notion.
+//           </Text>
+//         </VStack>
+//       </Circle>
+//       <Circle color="indigo" style={{ transform: 'translateX(33%)' }} />
+//     </Grid>
+//   </Section>
+// );
+
 export function Home() {
   return (
-    <div style={{}}>
-      <Header>
-        <div style={{ display: 'flex', flex: 1 }}>
-          <h1>CollabKit</h1>
+    <div>
+      {StickyHeader}
+      {Hero}
+      {BoostActivation}
+      {TryItOut}
+      {/* {ContextualConversations} */}
+      <Demo />
+      <Section
+        style={{
+          marginTop: '6rem',
+          justifyContent: 'center',
+          alignItems: 'center',
+          background: '#EDF5F7',
+        }}
+      >
+        <div style={{ marginTop: '10rem', maxWidth: '50rem', textAlign: 'center' }}>
+          <Title style={{ textAlign: 'center', marginBottom: '3rem' }}>
+            Conversations with context
+          </Title>
+          <Text>CollabKit works just like commenting in Figma, Google Docs &amp; Notion</Text>
         </div>
-        <div style={{ display: 'flex', flexDirection: 'row', gap: '4rem' }}>
-          {window.innerWidth > 480 ? (
-            <Text>
-              <Link href="https://discord.gg/UCA4CbZad4">Discord</Link>
-            </Text>
-          ) : null}
-          <div style={{ position: 'relative', top: window.innerWidth > 480 ? '0.5rem' : 0 }}>
-            {RequestDemoButton}
-          </div>
-        </div>
-      </Header>
-      <Section
-        style={{
-          position: 'relative',
-          overflow: 'hidden',
-        }}
-      >
-        <Grid
-          style={{
-            alignItems: 'center',
-            justifyContent: 'center',
-            gridTemplateColumns: '1fr 1fr 1fr',
-            columnGap: '0',
-          }}
-        >
-          <Circle color="sky" style={{ transform: 'translateX(-33%)' }} />
-          <Circle
-            color="yellow"
-            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-          >
-            <VStack style={{ margin: '0 -5rem' }}>
-              <Title>
-                Add commenting to <br />
-                <Em>your</Em> product
-              </Title>
-              <Text style={{ textAlign: 'center' }}>
-                It only takes minutes, with our
-                <br /> customisable React SDK.
-              </Text>
-            </VStack>
-          </Circle>
-          <Circle color="purple" style={{ transform: 'translateX(33%)' }} />
-        </Grid>
-        <img
-          src={ChevronDown}
-          style={{
-            position: 'absolute',
-            left: '50%',
-            marginLeft: -14,
-            bottom: 'calc((100vh - 40rem)/4)',
-          }}
-        />
-      </Section>
-      <Section
-        style={{
-          background: '#9FEFD7',
-        }}
-      >
-        <BoostActivationLayout>
-          <img src={Example} style={{ width: '100%', maxWidth: '743px' }} />
-          <VStack>
-            <Subtitle>
-              Boost activation <br />
-              and retention
-            </Subtitle>
-            <Text>
-              Give contextual feedback, onboard coworkers or even leave tips on how to use your
-              product all in real time.
-              <br />
-              <br />
-              <b>
-                With CollabKit, you can figure <br />
-                things out as a team.
-              </b>
-            </Text>
-          </VStack>
-        </BoostActivationLayout>
-      </Section>
-      <Section
-        style={{
-          position: 'relative',
-          overflow: 'hidden',
-          minHeight: '55rem',
-        }}
-      >
-        <Grid
-          style={{
-            alignItems: 'center',
-            justifyContent: 'center',
-            gridTemplateColumns: 'repeat(3, 1fr)',
-            columnGap: '0',
-          }}
-        >
-          <Circle color="pink" style={{ transform: 'translateX(-33%)' }} />
-          <Circle
-            color="amber"
-            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-          >
-            <VStack style={{ margin: '0 -5rem' }}>
-              <Title>
-                Have conversations with <Em>context</Em>
-              </Title>
-              <Text style={{ textAlign: 'center' }}>
-                CollabKit works just like commenting in
-                <br /> Figma, Google Docs and Notion.
-              </Text>
-            </VStack>
-          </Circle>
-          <Circle color="indigo" style={{ transform: 'translateX(33%)' }} />
-        </Grid>
-      </Section>
-      <Section style={{ justifyContent: 'center', alignItems: 'center' }}>
         <Article>
           <VStack>
             <Subtitle>Comment on anything</Subtitle>

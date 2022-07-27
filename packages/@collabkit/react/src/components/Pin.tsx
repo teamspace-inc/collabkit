@@ -143,6 +143,8 @@ export function Pin(props: { pinId: string }) {
     (pin.state === 'open' || pin.state === 'pending')
   );
 
+  const demoMode = true;
+
   const { x, y, reference, floating, strategy } = useFloating({
     whileElementsMounted: autoUpdate,
     open,

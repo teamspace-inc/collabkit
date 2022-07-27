@@ -3,7 +3,7 @@ import * as CollabKit from '../../packages/@collabkit/react/src/index';
 
 export function Demo() {
   return (
-    <div>
+    <div style={{ width: '100vw' }}>
       <CollabKit.Provider
         readOnly={true}
         apiKey={import.meta.env.VITE_COLLABKIT_TOKEN}
@@ -25,7 +25,7 @@ export function Demo() {
             }}
           >
             <span style={{ position: 'relative' }}>
-              <img className="demoImage" src={UI} />
+              <img className="demoImage" style={{ maxWidth: '90vw' }} src={UI} />
               <CollabKit.FloatingButton
                 style={{ position: 'absolute', right: 20, bottom: 20, zIndex: 99 }}
               />

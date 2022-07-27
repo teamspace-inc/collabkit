@@ -35,6 +35,7 @@ export function Sticky(props: {
   const selectorRef = useRef<Element | null>(null);
   const { children, selector, offset } = props;
   const prevPosition = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
+  const requestRef = React.useRef();
 
   const updatePosition = useCallback(() => {
     if (stickyRef.current && selectorRef.current) {
