@@ -9,7 +9,7 @@
     "www"
   ],
   "scripts": {
-    "dev": "pnpm --recursive --parallel run dev",
+    "dev": "pnpm --recursive --parallel --filter=!website run dev",
     "server": "yarn workspace server dev",
     "typecheck": "tsc -b examples/demo www"
   },
