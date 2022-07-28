@@ -40,7 +40,7 @@ export function Demo2() {
             }}
           >
             <span style={{ position: 'relative' }}>
-              <DemoUI style={{ width: '90vw' }} />
+              <DemoUI style={{ width: '90vw', maxWidth: '1352px' }} />
               <Modal>
                 <img src={dashUISvg} style={{ margin: '3.75rem' }} />
                 <CollabKit.Thread

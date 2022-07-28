@@ -26,7 +26,7 @@ export function Demo1() {
           }}
         >
           <span style={{ position: 'relative' }}>
-            <DemoUI style={{ width: '90vw' }} />
+            <DemoUI style={{ width: '90vw', maxWidth: '1352px' }} />
             <CollabKit.FloatingButton
               style={{ position: 'absolute', right: 20, bottom: 20, zIndex: 99 }}
             />
