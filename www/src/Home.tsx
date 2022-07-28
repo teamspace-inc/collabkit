@@ -204,14 +204,15 @@ const BoostActivationLayout = styled('div', {
 const FeatureGrid = styled(Grid, {
   gridTemplateColumns: '1fr 1fr',
   marginTop: '4rem',
-  padding: '4rem 4rem 8rem',
 
   '@bp1': {
+    padding: '2rem 2rem 8rem',
     gridTemplateColumns: '1fr',
     gap: '2rem',
   },
 
   '@bp2': {
+    padding: '4rem 4rem 8rem',
     gridTemplateColumns: '1fr 1fr',
     width: 'unset',
     gap: '4rem',
@@ -266,9 +267,9 @@ const BoostActivation = (
       gap: '0',
       alignItems: 'center',
       justifyContent: 'center',
-      width: '100vw',
-      textAlign: 'center',
-      padding: '4rem 0',
+      ...(window.innerWidth > 480
+        ? { textAlign: 'center', padding: '4rem 0', width: '100vw' }
+        : { textAlign: 'left', padding: '4rem 2rem', width: 'calc(100vw - 4rem)' }),
     }}
   >
     <img style={{ width: '6rem', marginBottom: '2.5rem' }} src={RocketLaunchIcon} />
@@ -277,7 +278,13 @@ const BoostActivation = (
     >
       Boost activation and retention
     </Subtitle>
-    <Text style={{ maxWidth: '40rem', textAlign: 'center', marginTop: 0 }}>
+    <Text
+      style={{
+        maxWidth: '40rem',
+        ...(window.innerWidth > 480 ? { textAlign: 'center' } : { textAlign: 'left' }),
+        marginTop: 0,
+      }}
+    >
       Give contextual feedback, onboard coworkers or even leave tips on how to use your product all
       in real time
     </Text>
@@ -342,7 +349,9 @@ const Hero = (
             <br /> customisable React SDK.
           </Text>
         </VStack>
-        <img style={{ position: 'absolute', bottom: 0, right: 0 }} src={Cursor} />
+        {window.innerWidth > 480 ? (
+          <img style={{ position: 'absolute', bottom: 0, right: 0 }} src={Cursor} />
+        ) : null}
       </Circle>
       {/* <Circle color="purple" style={{ transform: 'translateX(33%)' }} /> */}
     </Grid>
@@ -399,21 +408,20 @@ const Hero = (
 // );
 
 const PlanGrid = styled(Grid, {
-  width: 'calc(100% - 12rem)',
-  maxWidth: '1352px',
   gridTemplateColumns: '1fr 1fr 1fr',
   columnGap: '3rem',
   padding: '0 4rem',
 
   '@bp1': { gridTemplateColumns: '1fr', rowGap: '2rem', width: 'calc(100% - 4rem)' },
-  '@bp2': { gridTemplateColumns: '1fr 1fr 1fr' },
+  '@bp2': { gridTemplateColumns: '1fr 1fr 1fr', width: 'calc(100% - 12rem)', maxWidth: '1352px' },
 });
 
 const Plan = styled(VStack, {
   border: '2px solid #222222',
   borderRadius: 24,
   textAlign: 'initial',
-  padding: '2.5rem 3.5rem',
+  '@bp1': { padding: '2.5rem 2rem' },
+  '@bp2': { padding: '2.5rem 3.5rem' },
 });
 
 const PlanTitle = styled('h3', {
@@ -499,7 +507,7 @@ export function Home() {
       <StickyHeader invertFilter={invertFilter} />
       {Hero}
       {BoostActivation}
-      {TryItOut}
+      {window.innerWidth > 480 ? TryItOut : null}
       {/* {ContextualConversations} */}
       <Demo />
       <Section
@@ -536,9 +544,21 @@ export function Home() {
                 alignItems: 'center',
               }}
             >
-              <img src={CommentAnything} style={{ width: '100%', maxWidth: 'calc(100% - 8rem)' }} />
+              <img
+                src={CommentAnything}
+                style={{
+                  width: '100%',
+                  ...(window.innerWidth > 480
+                    ? { maxWidth: 'calc(100% - 8rem)' }
+                    : { maxWidth: 'calc(100% - 0rem)' }),
+                }}
+              />
             </div>
-            <VStack style={{ padding: '0 4rem 2rem' }}>
+            <VStack
+              style={
+                window.innerWidth > 480 ? { padding: '0 4rem 2rem' } : { padding: '0 2rem 2rem' }
+              }
+            >
               <Subtitle>Comment on anything</Subtitle>
               <Text>
                 Have discussions in context. Conversations about that sale, product, invoice or
@@ -557,9 +577,22 @@ export function Home() {
                 alignItems: 'center',
               }}
             >
-              <img src={AnyApp} style={{ width: '100%', maxWidth: 'calc(100% - 8rem)' }} />
+              <img
+                src={AnyApp}
+                style={{
+                  width: '100%',
+                  ...(window.innerWidth > 480
+                    ? { maxWidth: 'calc(100% - 8rem)' }
+                    : { maxWidth: 'calc(100% - 0rem)' }),
+                }}
+              />
             </div>
-            <VStack style={{ padding: '0 4rem 2rem' }}>
+            <VStack
+              style={
+                window.innerWidth > 480 ? { padding: '0 4rem 2rem' } : { padding: '0 2rem 2rem' }
+              }
+            >
+              {' '}
               <Subtitle>In any type of app</Subtitle>
               <Text>
                 CollabKit Works across all kinds of interfaces; CRMs, documents, analytics
@@ -578,9 +611,22 @@ export function Home() {
                 alignItems: 'center',
               }}
             >
-              <img src={Realtime} style={{ width: '100%', maxWidth: 'calc(100% - 8rem)' }} />
+              <img
+                src={Realtime}
+                style={{
+                  width: '100%',
+                  ...(window.innerWidth > 480
+                    ? { maxWidth: 'calc(100% - 8rem)' }
+                    : { maxWidth: 'calc(100% - 0rem)' }),
+                }}
+              />
             </div>
-            <VStack style={{ padding: '0 4rem 2rem' }}>
+            <VStack
+              style={
+                window.innerWidth > 480 ? { padding: '0 4rem 2rem' } : { padding: '0 2rem 2rem' }
+              }
+            >
+              {' '}
               <Subtitle>All in real time</Subtitle>
               <Text>
                 See who’s online, who’s typing and keep the conversation going without ever leaving
@@ -599,9 +645,22 @@ export function Home() {
                 alignItems: 'center',
               }}
             >
-              <img src={Email} style={{ width: '100%', maxWidth: 'calc(100% - 8rem)' }} />
+              <img
+                src={Email}
+                style={{
+                  width: '100%',
+                  ...(window.innerWidth > 480
+                    ? { maxWidth: 'calc(100% - 8rem)' }
+                    : { maxWidth: 'calc(100% - 0rem)' }),
+                }}
+              />
             </div>
-            <VStack style={{ padding: '0 4rem 2rem' }}>
+            <VStack
+              style={
+                window.innerWidth > 480 ? { padding: '0 4rem 2rem' } : { padding: '0 2rem 2rem' }
+              }
+            >
+              {' '}
               <Subtitle>Get notified by email</Subtitle>
               <Text>
                 New comments are sent straight to your inbox. Reply directly via email or click
@@ -631,7 +690,13 @@ export function Home() {
             Just add <br />
             {'<CollabKit />'}
           </Title>
-          <Text style={{ marginBottom: 0, marginTop: 0 }}>
+          <Text
+            style={{
+              marginBottom: 0,
+              marginTop: 0,
+              ...(window.innerWidth > 480 ? {} : { padding: '0 2rem', textAlign: 'left' }),
+            }}
+          >
             {`To enable commenting throughout your app, wrap it in a `}
             <span style={{ color: '#E25982' }}>{`<Commentable />`}</span>
             {`  and add a `}
@@ -658,7 +723,13 @@ export function Home() {
           <Subtitle style={{ color: 'white', marginBottom: '3.75rem' }}>
             Or add a {'<Thread />'}
           </Subtitle>
-          <Text style={{ marginBottom: 0, marginTop: 0 }}>
+          <Text
+            style={{
+              marginBottom: 0,
+              marginTop: 0,
+              ...(window.innerWidth > 480 ? {} : { padding: '0 2rem', textAlign: 'left' }),
+            }}
+          >
             {`Our flexible thread component can be include inline in your app. Great for detail views where your want to talk about a customer, product, invoice or sale.`}
           </Text>
         </VStack>
