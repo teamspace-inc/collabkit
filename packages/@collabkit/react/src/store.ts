@@ -1,7 +1,7 @@
 import { proxy } from 'valtio';
 import { IdentifyProps, MentionProps, Store, Workspace } from './constants';
 
-type Config = {
+export type Config = {
   appId: string;
   apiKey: string;
   workspace: { name?: string; id: string };

@@ -131,7 +131,7 @@ export type SetupProps = {
   mode: 'UNSECURED' | 'SECURED';
 };
 
-export type MentionProps = Mention[];
+export type MentionProps = readonly Mention[];
 
 export interface Mention extends BasicProfile {
   workspaceId: string;

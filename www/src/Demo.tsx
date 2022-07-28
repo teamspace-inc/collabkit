@@ -2,25 +2,29 @@ import UI from './UI.svg';
 import * as CollabKit from '../../packages/@collabkit/react/src/index';
 import DemoMobileImage from './image_01.png';
 import { DemoImageMobileFallback } from './Home';
+import { createDemoStore } from './store';
+
+const config: CollabKit.Config = {
+  mode: 'demo',
+  readOnly: true,
+  apiKey: 'DUMMY_API_KEY_FOR_DEMO',
+  appId: 'DUMMY_APP_ID_FOR_DEMO',
+  workspace: { id: 'acme', name: 'ACME' },
+  user: {
+    userId: 'anon-1',
+    name: 'Jane Doe',
+    email: 'anon@example.com',
+  },
+  mentionableUsers: [],
+};
+
+const store = createDemoStore(config);
 
 export function Demo() {
   return (
     <div style={{ width: '100vw' }}>
       {window.innerWidth > 480 ? (
-        <CollabKit.Provider
-          mode={'demo'}
-          readOnly={true}
-          apiKey={import.meta.env.VITE_COLLABKIT_TOKEN}
-          appId={import.meta.env.VITE_COLLABKIT_APP_ID}
-          workspace={{ id: 'acme', name: 'ACME' }}
-          user={{
-            userId: 'anon-1',
-            name: 'Jane Doe',
-            email: 'anon@example.com',
-          }}
-          colorScheme={'dark'}
-          mentionableUsers={[]}
-        >
+        <CollabKit.Provider _demoStore={store} colorScheme={'dark'} {...config}>
           <CollabKit.Commentable style={{ position: 'relative' }}>
             <div
               style={{

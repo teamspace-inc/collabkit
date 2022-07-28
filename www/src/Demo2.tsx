@@ -1,9 +1,10 @@
 import { styled } from '@stitches/react';
-import * as CollabKit from '../../packages/@collabkit/react/src/index';
+import * as CollabKit from '@collabkit/react';
 import { DemoUI } from './DemoUI';
 import dashUISvg from './dash-ui.svg';
 import DemoMobileImage from './image_03.png';
 import { DemoImageMobileFallback } from './Home';
+import { createDemoStore } from './store';
 
 const Modal = styled('div', {
   position: 'absolute',
@@ -17,22 +18,26 @@ const Modal = styled('div', {
   overflow: 'hidden',
 });
 
+const config: CollabKit.Config = {
+  mode: 'demo',
+  readOnly: true,
+  apiKey: 'DUMMY_API_KEY_FOR_DEMO',
+  appId: 'DUMMY_APP_ID_FOR_DEMO',
+  workspace: { id: 'acme', name: 'ACME' },
+  user: {
+    userId: 'anon-1',
+    name: 'Jane Doe',
+    email: 'anon@example.com',
+  },
+  mentionableUsers: [],
+};
+
+const store = createDemoStore(config);
+
 export function Demo2() {
   return window.innerWidth > 480 ? (
     <div style={{ width: '100vw' }}>
-      <CollabKit.Provider
-        mode={'demo'}
-        apiKey={import.meta.env.VITE_COLLABKIT_TOKEN}
-        appId={import.meta.env.VITE_COLLABKIT_APP_ID}
-        workspace={{ id: 'acme', name: 'ACME' }}
-        user={{
-          userId: 'anon-1',
-          name: 'Jane Doe',
-          email: 'anon@example.com',
-        }}
-        colorScheme={'dark'}
-        mentionableUsers={[]}
-      >
+      <CollabKit.Provider _demoStore={store} colorScheme={'dark'} {...config}>
         <CollabKit.Commentable style={{ position: 'relative' }}>
           <div
             style={{

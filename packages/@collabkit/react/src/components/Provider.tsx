@@ -31,11 +31,12 @@ export function CollabKitProvider({
   colorScheme?: 'light' | 'dark' | 'auto';
   readOnly?: boolean;
   mode?: 'demo';
+  _demoStore?: Store;
 }) {
   const [context, setContext] = useState<{ store: Store; events: Events } | null>(null);
 
   useLayoutEffect(() => {
-    const store = createStore(config);
+    const store = config._demoStore ?? createStore(config);
     const events = createEvents(store);
     actions.monitorConnection(store, events);
     setContext({ store, events });
