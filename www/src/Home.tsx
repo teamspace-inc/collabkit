@@ -690,7 +690,13 @@ export function Home() {
             Just add <br />
             {'<CollabKit />'}
           </Title>
-          <Text style={{ marginBottom: 0, marginTop: 0 }}>
+          <Text
+            style={{
+              marginBottom: 0,
+              marginTop: 0,
+              ...(window.innerWidth > 480 ? {} : { padding: '0 2rem', textAlign: 'left' }),
+            }}
+          >
             {`To enable commenting throughout your app, wrap it in a `}
             <span style={{ color: '#E25982' }}>{`<Commentable />`}</span>
             {`  and add a `}
@@ -717,7 +723,13 @@ export function Home() {
           <Subtitle style={{ color: 'white', marginBottom: '3.75rem' }}>
             Or add a {'<Thread />'}
           </Subtitle>
-          <Text style={{ marginBottom: 0, marginTop: 0 }}>
+          <Text
+            style={{
+              marginBottom: 0,
+              marginTop: 0,
+              ...(window.innerWidth > 480 ? {} : { padding: '0 2rem', textAlign: 'left' }),
+            }}
+          >
             {`Our flexible thread component can be include inline in your app. Great for detail views where your want to talk about a customer, product, invoice or sale.`}
           </Text>
         </VStack>
