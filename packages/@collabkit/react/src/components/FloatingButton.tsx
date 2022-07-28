@@ -31,7 +31,7 @@ export function FloatingButton(props: { style?: React.CSSProperties }) {
   return (
     <>
       <Cursor />
-      <StyledFloatingButtonContainer style={props.style}>
+      <StyledFloatingButtonContainer style={props.style} data-collabkit-internal="true">
         {/* <Badge size={20} number={1}></Badge> */}
         <StyledFloatingButton
           // animate={{ scale: [0.8, 1.1, 1] }}
