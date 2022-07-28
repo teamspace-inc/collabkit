@@ -228,34 +228,6 @@ function RequestDemoButton() {
   );
 }
 
-// const BoostActivation = (
-//   <Section
-//     style={{
-//       background: '#9FEFD7',
-//     }}
-//   >
-//     <BoostActivationLayout>
-//       <img src={Example} style={{ width: '100%', maxWidth: '743px' }} />
-//       <VStack>
-//         <Subtitle>
-//           Boost activation <br />
-//           and retention
-//         </Subtitle>
-//         <Text>
-//           Give contextual feedback, onboard coworkers or even leave tips on how to use your product
-//           all in real time.
-//           <br />
-//           <br />
-//           <b>
-//             With CollabKit, you can figure <br />
-//             things out as a team.
-//           </b>
-//         </Text>
-//       </VStack>
-//     </BoostActivationLayout>
-//   </Section>
-// );
-
 function StickyHeader(props: { invertFilter?: number }) {
   return (
     <Header style={{ marginTop: '1rem', filter: `invert(${props.invertFilter ?? 0})` }}>
