@@ -8,6 +8,7 @@ type Config = {
   user: IdentifyProps;
   mentionableUsers: MentionProps;
   readOnly?: boolean;
+  mode?: 'demo';
 };
 
 export function createWorkspace(config: Config): Workspace {
@@ -28,6 +29,7 @@ export function createStore(config: Config): Store {
     return _storeCache[config.apiKey];
   }
   const store = proxy<Store>({
+    mode: config.mode,
     isReadOnly: config.readOnly ?? false,
     isConnected: false,
     token: config.apiKey,

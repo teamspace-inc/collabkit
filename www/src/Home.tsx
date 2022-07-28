@@ -202,6 +202,20 @@ const BoostActivationLayout = styled('div', {
   },
 });
 
+const FeatureGrid = styled(Grid, {
+  gridTemplateColumns: '1fr 1fr',
+  gap: '4rem',
+  marginTop: '4rem',
+  padding: '4rem 4rem 8rem',
+
+  '@bp1': {
+    gridTemplateColumns: '1fr',
+  },
+  '@bp2': {
+    gridTemplateColumns: '1fr 1fr',
+  },
+});
+
 function RequestDemoButton() {
   return (
     <Button
@@ -269,6 +283,7 @@ const BoostActivation = (
       alignItems: 'center',
       justifyContent: 'center',
       width: '100vw',
+      textAlign: 'center',
       padding: '4rem 0',
     }}
   >
@@ -491,20 +506,21 @@ export function Home() {
           background: '#EDF5F7',
         }}
       >
-        <div style={{ marginTop: '10rem', maxWidth: '50rem', textAlign: 'center' }}>
+        <VStack
+          style={{
+            marginTop: '10rem',
+            maxWidth: '50rem',
+            textAlign: 'center',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
           <Title style={{ textAlign: 'center', marginBottom: '3rem' }}>
             Conversations with context
           </Title>
           <Text>CollabKit works just like commenting in Figma, Google Docs &amp; Notion.</Text>
-        </div>
-        <Grid
-          style={{
-            gridTemplateColumns: '1fr 1fr',
-            gap: '4rem',
-            marginTop: '4rem',
-            padding: '4rem 4rem 8rem',
-          }}
-        >
+        </VStack>
+        <FeatureGrid>
           <Article>
             <div
               style={{
@@ -589,7 +605,7 @@ export function Home() {
               </Text>
             </VStack>
           </Article>
-        </Grid>
+        </FeatureGrid>
       </Section>
       <Section
         style={{
