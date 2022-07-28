@@ -1,3 +1,4 @@
+import { ReactNode, useEffect, useRef, useState } from 'react';
 import { styled } from './UIKit';
 import CommentAnything from './CommentAnything.svg';
 import AnyApp from './AnyApp.svg';
@@ -12,7 +13,6 @@ import ycLogoSvg from './yc-logo.svg';
 import checkmarkSvg from './checkmark.svg';
 import { Demo } from './Demo';
 import { Demo1 } from './Demo1';
-import React, { ReactNode } from 'react';
 import { Demo2 } from './Demo2';
 
 const Grid = styled('div', {
@@ -256,23 +256,25 @@ function RequestDemoButton() {
 //   </Section>
 // );
 
-const StickyHeader = (
-  <Header style={{ marginTop: '1rem' }}>
-    <div style={{ display: 'flex', flex: 1 }}>
-      <img src={Logo} style={{ height: '1.5rem' }} />
-    </div>
-    <div style={{ display: 'flex', flexDirection: 'row', gap: '4rem' }}>
-      {window.innerWidth > 480 ? (
-        <Text>
-          <Link href="https://discord.gg/UCA4CbZad4">Discord</Link>
-        </Text>
-      ) : null}
-      <div style={{ position: 'relative', top: window.innerWidth > 480 ? '0.5rem' : 0 }}>
-        <RequestDemoButton />
+function StickyHeader(props: { invertFilter?: number }) {
+  return (
+    <Header style={{ marginTop: '1rem', filter: `invert(${props.invertFilter ?? 0})` }}>
+      <div style={{ display: 'flex', flex: 1 }}>
+        <img src={Logo} style={{ height: '1.5rem' }} />
       </div>
-    </div>
-  </Header>
-);
+      <div style={{ display: 'flex', flexDirection: 'row', gap: '4rem' }}>
+        {window.innerWidth > 480 ? (
+          <Text>
+            <Link href="https://discord.gg/UCA4CbZad4">Discord</Link>
+          </Text>
+        ) : null}
+        <div style={{ position: 'relative', top: window.innerWidth > 480 ? '0.5rem' : 0 }}>
+          <RequestDemoButton />
+        </div>
+      </div>
+    </Header>
+  );
+}
 
 const BoostActivation = (
   <div
@@ -490,9 +492,25 @@ function PlanFeature({ children }: { children: ReactNode }) {
 }
 
 export function Home() {
+  const [invertFilter, setInvertFilter] = useState(0);
+  const examplesRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const listener = () => {
+      if (examplesRef.current) {
+        const rect = examplesRef.current.getBoundingClientRect();
+        if (rect.top < 0 && rect.top > -rect.height) {
+          setInvertFilter(1);
+        } else {
+          setInvertFilter(0);
+        }
+      }
+    };
+    window.addEventListener('scroll', listener);
+    return () => window.removeEventListener('scroll', listener);
+  }, []);
   return (
     <div>
-      {StickyHeader}
+      <StickyHeader invertFilter={invertFilter} />
       {Hero}
       {BoostActivation}
       {TryItOut}
@@ -608,6 +626,7 @@ export function Home() {
         </FeatureGrid>
       </Section>
       <Section
+        ref={examplesRef}
         style={{
           background: '#35284A',
           color: 'white',
