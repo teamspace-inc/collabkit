@@ -250,6 +250,7 @@ function StickyHeader(props: { invertFilter?: number }) {
 
 const BoostActivation = (
   <div
+    id="boost-activation"
     style={{
       display: 'flex',
       flexDirection: 'column',
@@ -337,6 +338,10 @@ const Hero = (
       {/* <Circle color="purple" style={{ transform: 'translateX(33%)' }} /> */}
     </Grid>
     <img
+      role={'button'}
+      onClick={() =>
+        document.querySelector('#boost-activation')?.scrollIntoView({ behavior: 'smooth' })
+      }
       src={ChevronDown}
       style={{
         position: 'absolute',
