@@ -184,6 +184,7 @@ export interface Workspace {
 }
 
 export interface Store {
+  mode: 'demo' | undefined | null;
   isReadOnly: boolean;
   isConnected: boolean;
   token: string;

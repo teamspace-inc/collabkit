@@ -11,7 +11,7 @@ export const avatarStyles = css({
   aspectRatio: 1,
   borderRadius: '2000px',
   fontSize: '$fontSize$0',
-  fontWeight: '$fontWeights$1',
+  fontWeight: '700',
   textAlign: 'center',
   verticalAlign: 'middle',
   lineHeight: '24px',
@@ -31,6 +31,7 @@ export const avatarStyles = css({
         width: '28px',
         height: '28px',
         lineHeight: '28px',
+        fontSize: '$fontSize$2',
       },
 
       24: {

@@ -5,6 +5,7 @@ export function Demo() {
   return (
     <div style={{ width: '100vw' }}>
       <CollabKit.Provider
+        mode={'demo'}
         readOnly={true}
         apiKey={import.meta.env.VITE_COLLABKIT_TOKEN}
         appId={import.meta.env.VITE_COLLABKIT_APP_ID}
@@ -14,6 +15,7 @@ export function Demo() {
           name: 'Jane Doe',
           email: 'anon@example.com',
         }}
+        colorScheme={'dark'}
         mentionableUsers={[]}
       >
         <CollabKit.Commentable style={{ position: 'relative' }}>

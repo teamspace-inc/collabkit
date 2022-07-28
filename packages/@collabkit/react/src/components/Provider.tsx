@@ -30,6 +30,7 @@ export function CollabKitProvider({
   children: React.ReactNode;
   colorScheme?: 'light' | 'dark' | 'auto';
   readOnly?: boolean;
+  mode?: 'demo';
 }) {
   const [context, setContext] = useState<{ store: Store; events: Events } | null>(null);
 

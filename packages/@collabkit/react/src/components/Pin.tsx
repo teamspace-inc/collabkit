@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { Avatar } from './Avatar';
 import { HStack, styled, VStack } from './UIKit';
 import { useApp } from '../hooks/useApp';
@@ -46,9 +46,6 @@ const StyledPinContainer = styled('div', {
   flexDirection: 'column',
   gap: '8px',
   position: 'relative',
-  // so the pin is centered
-  top: 'calc($sizes$pin / -2)',
-  left: 'calc($sizes$pin / -2)',
 });
 
 const StyledFloatingThreadContainer = styled('div', {
@@ -118,7 +115,7 @@ export function PurePin(props: {
 export function Pin(props: { pinId: string }) {
   const { pinId } = props;
   const { store, events } = useApp();
-  const { viewingId, hoveringId, profiles } = useSnapshot(store);
+  const { viewingId, hoveringId, profiles, mode } = useSnapshot(store);
   const [maxAvailableSize, setMaxAvailableSize] = useState({ width: -1, height: -1 });
 
   const { workspace, workspaceId } = useWorkspace();
@@ -143,29 +140,37 @@ export function Pin(props: { pinId: string }) {
     (pin.state === 'open' || pin.state === 'pending')
   );
 
-  const demoMode = true;
-
   const { x, y, reference, floating, strategy } = useFloating({
     whileElementsMounted: autoUpdate,
+    placement: mode === 'demo' ? 'bottom-start' : undefined,
     open,
-    middleware: [
-      autoPlacement({ alignment: 'start', padding: 12 }),
-      size({
-        apply({ availableWidth, availableHeight, elements }) {
-          // Do things with the data, e.g.
-          setMaxAvailableSize({ width: availableWidth, height: availableHeight });
-          Object.assign(elements.floating.style, {
-            maxWidth: `${availableWidth}px`,
-            maxHeight: `${availableHeight}px`,
-          });
-        },
-      }),
-      offset(() => {
-        return {
-          mainAxis: 6,
-        };
-      }),
-    ],
+    middleware:
+      mode === 'demo'
+        ? [
+            offset(() => {
+              return {
+                mainAxis: 6,
+              };
+            }),
+          ]
+        : [
+            autoPlacement({ alignment: 'start', padding: 14 }),
+            size({
+              apply({ availableWidth, availableHeight, elements }) {
+                // Do things with the data, e.g.
+                setMaxAvailableSize({ width: availableWidth, height: availableHeight });
+                Object.assign(elements.floating.style, {
+                  maxWidth: `${availableWidth}px`,
+                  maxHeight: `${availableHeight}px`,
+                });
+              },
+            }),
+            offset(() => {
+              return {
+                mainAxis: 6,
+              };
+            }),
+          ],
   });
 
   const thread = open ? (

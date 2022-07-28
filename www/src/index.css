@@ -34,6 +34,12 @@ html {
   }
 }
 
+@media screen and (min-width: 2560px) {
+  html {
+    font-size: 100%;
+  }
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
