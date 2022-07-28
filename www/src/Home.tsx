@@ -1,10 +1,8 @@
 import { styled } from './UIKit';
-import Example from './Example.svg';
 import CommentAnything from './CommentAnything.svg';
 import AnyApp from './AnyApp.svg';
 import Realtime from './Realtime.svg';
 import Email from './Email.svg';
-import ExampleCode from './Example.mdx';
 import ChevronDown from './ChevronDown.svg';
 import RocketLaunchIcon from './RocketLaunch.svg';
 import HandPointingIcon from './HandPointing.svg';
@@ -13,7 +11,9 @@ import Logo from './Logo.svg';
 import ycLogoSvg from './yc-logo.svg';
 import checkmarkSvg from './checkmark.svg';
 import { Demo } from './Demo';
+import { Demo1 } from './Demo1';
 import React, { ReactNode } from 'react';
+import { Demo2 } from './Demo2';
 
 const Grid = styled('div', {
   display: 'grid',
@@ -630,8 +630,8 @@ export function Home() {
         <div
           style={{
             maxWidth: '1352px',
-            background: 'rgba(255,255,255,0.05)',
-            borderRadius: '24px',
+            //background: 'rgba(255,255,255,0.05)',
+            //borderRadius: '24px',
             width: '90vw',
             height: '760px',
             marginTop: '8.75rem',
@@ -640,7 +640,7 @@ export function Home() {
             alignItems: 'center',
           }}
         >
-          Placeholder for demo1
+          <Demo1 />
         </div>
         <VStack style={{ textAlign: 'center', marginTop: '15rem', maxWidth: '58rem' }}>
           <Subtitle style={{ color: 'white', marginBottom: '3.75rem' }}>
@@ -653,8 +653,8 @@ export function Home() {
         <div
           style={{
             maxWidth: '1352px',
-            background: 'rgba(255,255,255,0.05)',
-            borderRadius: '24px',
+            //background: 'rgba(255,255,255,0.05)',
+            //borderRadius: '24px',
             width: '90vw',
             height: '760px',
             marginTop: '8.75rem',
@@ -664,7 +664,7 @@ export function Home() {
             alignItems: 'center',
           }}
         >
-          Placeholder for demo2
+          <Demo2 />
         </div>
       </Section>
       <Section style={{ background: '#FFEC6B', textAlign: 'center', paddingTop: '15rem' }}>

@@ -3,11 +3,7 @@ import { Route } from 'wouter';
 import { Home } from './Home';
 import { Demo } from './Demo';
 
-const Page = styled('div', {
-  // textAlign: 'center',
-});
-
-const Title = styled('h1', {});
+const Page = styled('div', {});
 
 export default function App() {
   return (
