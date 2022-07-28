@@ -172,12 +172,11 @@ const Article = styled('article', {
   maxWidth: '36rem',
 
   img: {
-    // width: '100%',
     maxWidth: '100%',
   },
 
   '@bp1': {
-    padding: '2rem',
+    padding: '0rem',
     gridTemplateColumns: '1fr',
   },
   '@bp2': {
@@ -204,15 +203,18 @@ const BoostActivationLayout = styled('div', {
 
 const FeatureGrid = styled(Grid, {
   gridTemplateColumns: '1fr 1fr',
-  gap: '4rem',
   marginTop: '4rem',
   padding: '4rem 4rem 8rem',
 
   '@bp1': {
     gridTemplateColumns: '1fr',
+    gap: '2rem',
   },
+
   '@bp2': {
     gridTemplateColumns: '1fr 1fr',
+    width: 'unset',
+    gap: '4rem',
   },
 });
 
@@ -232,7 +234,14 @@ function StickyHeader(props: { invertFilter?: number }) {
   return (
     <Header style={{ marginTop: '1rem', filter: `invert(${props.invertFilter ?? 0})` }}>
       <div style={{ display: 'flex', flex: 1 }}>
-        <img src={Logo} style={{ height: '1.5rem' }} />
+        <img
+          src={Logo}
+          style={{
+            height: '1.5rem',
+            position: 'relative',
+            top: window.innerWidth > 480 ? '0.15rem' : 0,
+          }}
+        />
       </div>
       <div style={{ display: 'flex', flexDirection: 'row', gap: '4rem' }}>
         {window.innerWidth > 480 ? (
@@ -396,7 +405,7 @@ const PlanGrid = styled(Grid, {
   columnGap: '3rem',
   padding: '0 4rem',
 
-  '@bp1': { gridTemplateColumns: '1fr', rowGap: '2rem' },
+  '@bp1': { gridTemplateColumns: '1fr', rowGap: '2rem', width: 'calc(100% - 4rem)' },
   '@bp2': { gridTemplateColumns: '1fr 1fr 1fr' },
 });
 
@@ -609,9 +618,18 @@ export function Home() {
           color: 'white',
         }}
       >
-        <VStack style={{ textAlign: 'center', marginTop: '15rem', maxWidth: '58rem' }}>
+        <VStack
+          style={{
+            textAlign: 'center',
+            marginTop: '15rem',
+            maxWidth: '58rem',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
           <Title style={{ color: 'white', marginBottom: '3.75rem' }}>
-            Just add {'<CollabKit />'}
+            Just add <br />
+            {'<CollabKit />'}
           </Title>
           <Text style={{ marginBottom: 0, marginTop: 0 }}>
             {`To enable commenting throughout your app, wrap it in a `}
@@ -626,10 +644,8 @@ export function Home() {
         <div
           style={{
             maxWidth: '1352px',
-            //background: 'rgba(255,255,255,0.05)',
-            //borderRadius: '24px',
             width: '90vw',
-            height: '760px',
+            maxHeight: '760px',
             marginTop: '8.75rem',
             display: 'flex',
             justifyContent: 'center',
@@ -649,10 +665,8 @@ export function Home() {
         <div
           style={{
             maxWidth: '1352px',
-            //background: 'rgba(255,255,255,0.05)',
-            //borderRadius: '24px',
             width: '90vw',
-            height: '760px',
+            maxHeight: '760px',
             marginTop: '8.75rem',
             marginBottom: '7.5rem',
             display: 'flex',
