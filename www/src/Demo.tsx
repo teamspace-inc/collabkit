@@ -6,7 +6,6 @@ import { createDemoStore } from './store';
 
 const config: CollabKit.Config = {
   mode: 'demo',
-  readOnly: true,
   apiKey: 'DUMMY_API_KEY_FOR_DEMO',
   appId: 'DUMMY_APP_ID_FOR_DEMO',
   workspace: { id: 'acme', name: 'ACME' },

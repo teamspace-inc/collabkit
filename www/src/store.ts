@@ -5,11 +5,12 @@ import {
   Workspace,
 } from '@collabkit/react';
 import { subscribe } from 'valtio/vanilla';
+import { LocalOnlySync } from './LocalOnlySync';
 
 export function createDemoStore(config: Config) {
-  const store = createStore(config);
-
   const workspace = loadWorkspace();
+  const sync = new LocalOnlySync(workspace);
+  const store = createStore(config, sync);
 
   store.workspaces.acme = {
     ...createWorkspace(config),

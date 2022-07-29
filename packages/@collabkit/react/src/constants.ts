@@ -2,6 +2,7 @@ import { getDatabase, Unsubscribe } from 'firebase/database';
 import { initializeApp } from '@firebase/app';
 import { Color } from './colors';
 import { LexicalEditor } from 'lexical';
+import { SyncAdapter } from './sync';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyDYl8MwTEgsIzXO7EHgBlvuN5BLVJqPZ6k',
@@ -184,6 +185,7 @@ export interface Workspace {
 }
 
 export interface Store {
+  sync: SyncAdapter;
   mode: 'demo' | undefined | null;
   isReadOnly: boolean;
   isConnected: boolean;
@@ -206,5 +208,7 @@ export interface Store {
   };
   appState: 'blank' | 'config' | 'ready';
   uiState: 'idle' | 'selecting' | 'composing' | 'viewing';
-  subs: { [subId: string]: Unsubscribe };
+  subs: Subscriptions;
 }
+
+export type Subscriptions = { [subId: string]: Unsubscribe };

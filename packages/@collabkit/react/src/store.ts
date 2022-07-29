@@ -1,5 +1,6 @@
-import { proxy } from 'valtio';
+import { proxy, ref } from 'valtio';
 import { IdentifyProps, MentionProps, Store, Workspace } from './constants';
+import { SyncAdapter } from './sync';
 
 export type Config = {
   appId: string;
@@ -24,16 +25,17 @@ export function createWorkspace(config: Config): Workspace {
   };
 }
 
-export function createStore(config: Config): Store {
+export function createStore(config: Config, sync: SyncAdapter): Store {
   if (import.meta.env.DEV && _storeCache[config.apiKey]) {
     return _storeCache[config.apiKey];
   }
   const store = proxy<Store>({
+    sync: ref(sync),
     mode: config.mode,
     isReadOnly: config.readOnly ?? false,
     isConnected: false,
     token: config.apiKey,
-    appState: 'config',
+    appState: 'ready',
     uiState: 'idle',
     config: {
       identify: config.user,

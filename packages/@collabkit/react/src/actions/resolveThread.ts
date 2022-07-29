@@ -1,6 +1,5 @@
-import { push, set, serverTimestamp, ref } from 'firebase/database';
-import { DB, Event, Store } from '../constants';
-import { getConfig, timelineRef, actions } from './index';
+import { Event, Store } from '../constants';
+import { getConfig, actions } from './index';
 
 export async function resolveThread(store: Store, workspaceId: string, threadId: string) {
   const { appId, userId } = getConfig(store);
@@ -14,26 +13,27 @@ export async function resolveThread(store: Store, workspaceId: string, threadId:
       type: 'system',
       body: '',
       system: 'resolve',
-      createdAt: serverTimestamp(),
+      createdAt: store.sync.serverTimestamp(),
       createdById: userId,
     };
-    const eventRef = await push(timelineRef(store, workspaceId, threadId), event);
-    if (eventRef.key) {
-      store.workspaces[workspaceId].timeline[threadId] ||= {};
-      store.workspaces[workspaceId].timeline[threadId][eventRef.key] = {
-        ...event,
-        createdAt: +Date.now(),
-      };
-      try {
-        set(ref(DB, `pins/${appId}/${workspaceId}/${threadId}/state`), 'resolved');
-      } catch (e) {
-        console.error('failed to set pin state', e);
-      }
-      actions.stopTyping(store, { target: { type: 'composer', workspaceId, threadId } });
-    } else {
-      console.error('CollabKit: failed to resolve thread');
-      // handle failure here
+    const { id } = await store.sync.saveEvent({
+      appId,
+      workspaceId,
+      threadId,
+      event,
+    });
+
+    store.workspaces[workspaceId].timeline[threadId] ||= {};
+    store.workspaces[workspaceId].timeline[threadId][id] = {
+      ...event,
+      createdAt: +Date.now(),
+    };
+    try {
+      store.sync.markResolved;
+    } catch (e) {
+      console.error('failed to set pin state', e);
     }
+    actions.stopTyping(store, { target: { type: 'composer', workspaceId, threadId } });
   } catch (e) {
     console.error(e);
     // handle failure here

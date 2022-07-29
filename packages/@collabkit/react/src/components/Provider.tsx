@@ -4,6 +4,7 @@ import { IdentifyProps, MentionProps, Store } from '../constants';
 import { Events, createEvents } from '../events';
 import { AppContext } from '../hooks/useAppContext';
 import { createStore } from '../store';
+import { FirebaseSync } from '../sync';
 import { darkTheme, theme } from './UIKit';
 
 const systemDarkMode =
@@ -36,7 +37,8 @@ export function CollabKitProvider({
   const [context, setContext] = useState<{ store: Store; events: Events } | null>(null);
 
   useLayoutEffect(() => {
-    const store = config._demoStore ?? createStore(config);
+    const sync = new FirebaseSync();
+    const store = config._demoStore ?? createStore(config, sync);
     const events = createEvents(store);
     actions.monitorConnection(store, events);
     setContext({ store, events });

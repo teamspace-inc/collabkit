@@ -1,5 +1,4 @@
-import { set, ref } from 'firebase/database';
-import { DB, IdentifyProps, Store } from '../constants';
+import { IdentifyProps, Store } from '../constants';
 import { Color, getRandomColor } from '../colors';
 import { getConfig } from './index';
 
@@ -17,23 +16,9 @@ export async function saveProfile(store: Store) {
 
     delete profile.userId;
 
-    try {
-      await set(ref(DB, `/profiles/${appId}/${userId}`), profile);
-    } catch (e) {
-      console.error('CollabKit: failed to set profile', e);
-    }
-
-    try {
-      await set(ref(DB, `/workspaces/${appId}/${workspaceId}/profiles/${userId}`), true);
-    } catch (e) {
-      console.error('CollabKit: failed to join workspace', e);
-    }
+    store.sync.saveProfile({ appId, userId, workspaceId, profile });
 
     store.profiles[userId] = profile;
-
-    if (store.appState === 'config') {
-      store.appState = 'ready';
-    }
   } catch (e) {
     console.error('CollabKit: saveProfile failed', e);
   }

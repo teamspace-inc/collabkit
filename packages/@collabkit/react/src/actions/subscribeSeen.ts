@@ -1,48 +1,12 @@
-import {
-  ref,
-  onChildAdded,
-  DataSnapshot,
-  query,
-  orderByChild,
-  limitToLast,
-  onChildMoved,
-} from 'firebase/database';
-import { DB, Store } from '../constants';
 import { getConfig } from './index';
+import type { Store } from '../constants';
 
 export async function subscribeSeen(store: Store) {
   const { appId, userId, workspaceId } = getConfig(store);
 
-  const seenQuery = query(
-    ref(DB, `/seen/${appId}/${userId}/${workspaceId}`),
-    orderByChild('seenUntilId'),
-    limitToLast(100)
-  );
+  const onSeenChange = (event: { threadId: string; seenUntilId: string }) => {
+    store.workspaces[workspaceId].seen[event.threadId] = event.seenUntilId;
+  };
 
-  function childCallback(snapshot: DataSnapshot) {
-    const threadId = snapshot.key;
-    if (threadId && workspaceId) {
-      const { seenUntilId } = snapshot.val();
-      // console.log('chil');
-      store.workspaces[workspaceId].seen[threadId] = seenUntilId;
-    } else {
-      // console.log('no kley');
-    }
-  }
-
-  function onError(e: Error) {
-    console.error({ e });
-  }
-
-  store.subs[`${appId}-${workspaceId}-seen-added`] ||= onChildAdded(
-    seenQuery,
-    childCallback,
-    onError
-  );
-
-  store.subs[`${appId}-${workspaceId}-seen-moved`] ||= onChildMoved(
-    seenQuery,
-    childCallback,
-    onError
-  );
+  store.sync.subscribeSeen({ appId, userId, workspaceId, subs: store.subs }, onSeenChange);
 }

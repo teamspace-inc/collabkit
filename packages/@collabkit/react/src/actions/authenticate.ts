@@ -4,6 +4,9 @@ import { generateToken } from './generateToken';
 import { actions, getConfig } from './index';
 
 export async function authenticate(store: Store) {
+  if (!store.sync.shouldAuthenticate()) {
+    return;
+  }
   const { appId, apiKey, mode } = getConfig(store);
   const auth = await generateToken(appId, apiKey, mode);
 
