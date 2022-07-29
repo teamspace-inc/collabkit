@@ -1,5 +1,4 @@
-import { Subscriptions } from '@collabkit/react';
-import { PinEventHandler, SyncAdapter } from '@collabkit/react/src/sync';
+import { SyncAdapter } from '@collabkit/react/src/sync';
 
 import { nanoid } from 'nanoid';
 
