@@ -25,8 +25,9 @@ export function createWorkspace(config: Config): Workspace {
   };
 }
 
-export function createStore(config: Config, sync: SyncAdapter): Store {
-  if (import.meta.env.DEV && _storeCache[config.apiKey]) {
+export function createStore(config: Config, sync: SyncAdapter, skipCache = false): Store {
+  if (!skipCache && import.meta.env.DEV && _storeCache[config.apiKey]) {
+    console.warn('CollabKit: using cached store');
     return _storeCache[config.apiKey];
   }
   const store = proxy<Store>({
@@ -59,7 +60,7 @@ export function createStore(config: Config, sync: SyncAdapter): Store {
     profiles: {},
     subs: {},
   });
-  if (import.meta.env.DEV) {
+  if (!skipCache && import.meta.env.DEV) {
     _storeCache[config.apiKey] = store;
   }
   return store;

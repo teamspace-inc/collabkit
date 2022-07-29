@@ -107,7 +107,7 @@ export function Composer(props: {
   });
 
   if (!composer) {
-    console.warn('CollabKit: Failed to boot composer');
+    //console.warn('CollabKit: Failed to boot composer');
     return null;
   }
 

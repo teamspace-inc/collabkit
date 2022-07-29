@@ -7,10 +7,10 @@ import {
 import { subscribe } from 'valtio/vanilla';
 import { LocalOnlySync } from './LocalOnlySync';
 
-export function createDemoStore(config: Config) {
-  const workspace = loadWorkspace();
+export function createDemoStore(config: Config, storageKey: string) {
+  const workspace = loadWorkspace(storageKey);
   const sync = new LocalOnlySync(workspace);
-  const store = createStore(config, sync);
+  const store = createStore(config, sync, true);
 
   store.workspaces.acme = {
     ...createWorkspace(config),
@@ -19,7 +19,7 @@ export function createDemoStore(config: Config) {
   store.profiles = profiles as any;
   subscribe(store, (ops) => {
     if (ops.some(shouldPersistChange)) {
-      saveWorkspace(store.workspaces.acme);
+      saveWorkspace(storageKey, store.workspaces.acme);
     }
   });
   return store;
@@ -31,20 +31,20 @@ function shouldPersistChange(op: Op) {
 }
 
 const VERSION = 'v0';
-function saveWorkspace({ pins, timeline, seen }: Workspace) {
+function saveWorkspace(storageKey: string, { pins, timeline, seen }: Workspace) {
   try {
     localStorage.setItem(
-      'collabkitDemo',
+      storageKey,
       JSON.stringify({ workspace: { pins, timeline, seen }, version: VERSION })
     );
   } catch {
     console.error('Failed to save workspace to localStorage');
   }
 }
-function loadWorkspace() {
+function loadWorkspace(storageKey: string) {
   let data = null;
   try {
-    data = JSON.parse(localStorage.getItem('collabkitDemo') ?? 'null');
+    data = JSON.parse(localStorage.getItem(storageKey) ?? 'null');
   } catch {
     return defaultWorkspace;
   }

@@ -31,7 +31,7 @@ const config: CollabKit.Config = {
   mentionableUsers: [],
 };
 
-const store = createDemoStore(config);
+const store = createDemoStore(config, 'collabkit-demo-2');
 
 export function Demo2() {
   return window.innerWidth > 480 ? (
