@@ -6,6 +6,8 @@ import DemoMobileImage from './image_03.png';
 import { DemoImageMobileFallback } from './Home';
 import { createDemoStore } from './store';
 
+const defaultWorkspace = {};
+
 const Modal = styled('div', {
   position: 'absolute',
   inset: 0,
@@ -31,7 +33,7 @@ const config: CollabKit.Config = {
   mentionableUsers: [],
 };
 
-const store = createDemoStore(config, 'collabkit-demo-2');
+const store = createDemoStore(config, 'collabkit-demo-2', defaultWorkspace);
 
 export function Demo2() {
   return window.innerWidth > 480 ? (

@@ -4,6 +4,8 @@ import { DemoImageMobileFallback } from './Home';
 import DemoMobileImage from './image_02.png';
 import { createDemoStore } from './store';
 
+const defaultWorkspace = {};
+
 const config: CollabKit.Config = {
   mode: 'demo',
   apiKey: 'DUMMY_API_KEY_FOR_DEMO',
@@ -17,7 +19,7 @@ const config: CollabKit.Config = {
   mentionableUsers: [],
 };
 
-const store = createDemoStore(config, 'collabkit-demo-1');
+const store = createDemoStore(config, 'collabkit-demo-1', defaultWorkspace);
 
 export function Demo1() {
   return window.innerWidth > 480 ? (
