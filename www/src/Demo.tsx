@@ -10,25 +10,25 @@ const defaultWorkspace: Partial<CollabKit.Workspace> = {
       createdAt: 1658843343088,
       createdById: 'alicia-1',
       offset: { x: 0.5791564580251479, y: 0.7686934621710526 },
-      selector: 'img[src="/src/UI.svg"]',
+      selector: '#demo-0-ui',
       state: 'open',
-      url: 'http://localhost:8000/demo',
+      url: '/',
     },
     IdNMQ8uP07YfJtxyNqH28: {
       createdAt: 1658843169471,
       createdById: 'dom-1',
       offset: { x: 0.5128657775517751, y: 0.29183799342105265 },
-      selector: 'img[src="/src/UI.svg"]',
+      selector: '#demo-0-ui',
       state: 'open',
-      url: 'http://localhost:8000/demo',
+      url: '/',
     },
     ssuGX9o7kJEE7SeSEhVvR: {
       createdAt: 1658842883088,
       createdById: 'ville-1',
       offset: { x: 0.2997497919748521, y: 0.5798673930921052 },
-      selector: 'img[src="/src/UI.svg"]',
+      selector: '#demo-0-ui',
       state: 'open',
-      url: 'http://localhost:8000/demo',
+      url: '/',
     },
   },
   timeline: {
@@ -100,7 +100,7 @@ export function Demo() {
               }}
             >
               <span style={{ position: 'relative' }}>
-                <img className="demoImage" style={{ maxWidth: '90vw' }} src={UI} />
+                <img id="demo-0-ui" className="demoImage" style={{ maxWidth: '90vw' }} src={UI} />
                 <CollabKit.FloatingButton
                   style={{ position: 'absolute', right: 20, bottom: 20, zIndex: 99 }}
                 />
