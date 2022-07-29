@@ -31,9 +31,12 @@ function shouldPersistChange(op: Op) {
 }
 
 const VERSION = 'v0';
-function saveWorkspace(workspace: Workspace) {
+function saveWorkspace({ pins, timeline, seen }: Workspace) {
   try {
-    localStorage.setItem('collabkitDemo', JSON.stringify({ workspace, version: VERSION }));
+    localStorage.setItem(
+      'collabkitDemo',
+      JSON.stringify({ workspace: { pins, timeline, seen }, version: VERSION })
+    );
   } catch {
     console.error('Failed to save workspace to localStorage');
   }
@@ -53,7 +56,6 @@ function loadWorkspace() {
 }
 
 const defaultWorkspace: Partial<Workspace> = {
-  inbox: {},
   pins: {
     B0ENawPadDHvTyyILKWz2: {
       createdAt: 1658843343088,
@@ -118,7 +120,6 @@ const defaultWorkspace: Partial<Workspace> = {
     B0ENawPadDHvTyyILKWz2: '-N7ul9YUhGqMcZnBhpUh',
     sxG87Sq0t3HHG0ghJMaXu: '-N84KobQKUnix1nNkMH-',
   },
-  seenBy: {},
 };
 const profiles = {
   'anon-1': { color: 'slate', email: 'anon@example.com', name: 'Jane Doe' },

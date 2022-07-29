@@ -54,12 +54,12 @@ export class LocalOnlySync implements SyncAdapter {
     },
     onPinChange: PinEventHandler
   ): void {
-    for (const pinId in this.workspaceData.pins) {
-      onPinChange({
-        pinId,
-        pin: this.workspaceData.pins[pinId],
-      });
-    }
+    // for (const pinId in this.workspaceData.pins) {
+    //   onPinChange({
+    //     pinId,
+    //     pin: this.workspaceData.pins[pinId],
+    //   });
+    // }
   }
 
   subscribeThread(): void {
