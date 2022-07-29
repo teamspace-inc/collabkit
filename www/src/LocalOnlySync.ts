@@ -46,20 +46,8 @@ export class LocalOnlySync implements SyncAdapter {
     // noop
   }
 
-  subscribePins(
-    params: {
-      appId: string;
-      workspaceId: string;
-      subs: Subscriptions;
-    },
-    onPinChange: PinEventHandler
-  ): void {
-    // for (const pinId in this.workspaceData.pins) {
-    //   onPinChange({
-    //     pinId,
-    //     pin: this.workspaceData.pins[pinId],
-    //   });
-    // }
+  subscribePins(): void {
+    // noop
   }
 
   subscribeThread(): void {
