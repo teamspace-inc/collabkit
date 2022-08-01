@@ -2,7 +2,7 @@ import * as CollabKit from '@collabkit/react';
 import { DemoUI } from './DemoUI';
 import { DemoImageMobileFallback } from './Home';
 import DemoMobileImage from './image_02.png';
-import { createDemoStore } from './store';
+import { createDemoStore, mentionableUsers } from './store';
 
 const defaultWorkspace: Partial<CollabKit.Workspace> = {
   pins: {
@@ -81,7 +81,7 @@ const config: CollabKit.Config = {
     name: 'Jane Doe',
     email: 'anon@example.com',
   },
-  mentionableUsers: [],
+  mentionableUsers: mentionableUsers,
 };
 
 const store = createDemoStore(config, 'collabkit-demo-1', defaultWorkspace);

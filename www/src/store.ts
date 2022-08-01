@@ -34,7 +34,7 @@ function shouldPersistChange(op: Op) {
   return path[0] === 'workspaces' && path[1] === 'acme';
 }
 
-const VERSION = 'v1';
+const VERSION = 'v3';
 function saveWorkspace(storageKey: string, { pins, timeline, seen }: Workspace) {
   try {
     localStorage.setItem(
@@ -61,24 +61,21 @@ function loadWorkspace(storageKey: string, defaultWorkspace: Partial<Workspace>)
 
 const profiles = {
   'anon-1': { color: 'slate', email: 'anon@example.com', name: 'Jane Doe' },
-  alice: { color: 'green', name: 'Alice', workspaceId: 'acme' },
-  'alice-1': {
-    color: 'slate',
-    email: 'alice@example.com',
-    name: 'Alice Levine',
-  },
   'alicia-1': { color: 'orange', email: 'alicia@example.com', name: 'Alicia Baker' },
-  'andy-1': { color: 'orange', email: 'andy@example.com', name: 'Andy Jones' },
   'dom-1': { color: 'sky', email: 'dom@example.com', name: 'Dominic Burt' },
   'greta-1': { color: 'violet', email: 'greta@example.com', name: 'Greta Aziz' },
-  'janet-1': {
-    color: 'yellow',
-    email: 'janet@example.org',
-    name: 'Janet Reilly',
-    workspaceId: 'acme',
-  },
   'ville-1': { color: 'green', email: 'ville@example.com', name: 'Ville Deckard' },
+  john: { color: 'pink', email: 'john@example.com', name: 'John Doe' },
+  sara: { color: 'blue', email: 'sara@example.com', name: 'Sarah Donner' },
+  tamar: { color: 'teal', email: 'tamar@example.com', name: 'Tamar Jones' },
 };
+
+export const mentionableUsers = Object.entries(profiles).map(([userId, profile]) => ({
+  userId,
+  name: profile.name,
+  email: profile.email,
+  workspaceId: 'acme',
+}));
 
 type Path = (string | symbol)[];
 type Op =
