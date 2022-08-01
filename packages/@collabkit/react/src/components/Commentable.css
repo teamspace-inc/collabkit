@@ -23,9 +23,9 @@ inspx {
   z-index: 1337;
 }
 
-[data-inspx-active] {
+/* [data-inspx-active] {
   background: var(--inspx-active-color) !important;
-}
+} */
 
 margin {
   background: var(--inspx-margin-color);
