@@ -3,9 +3,7 @@ import { createEditor } from 'lexical';
 import { createEditorConfig } from '../components/Composer';
 import { ref as valtioRef } from 'valtio';
 import { getConfig } from './index';
-import { subscribeThreadSeenBy } from './subscribeThreadSeenBy';
-import { subscribeThreadIsTyping } from './subscribeThreadIsTyping';
-import { subscribeTimeline } from './subscribeTimeline';
+import { ThreadSeenEvent, TimelineChangeEvent, TypingEvent } from '../sync';
 
 export async function subscribeThread(
   store: Store,
@@ -14,19 +12,31 @@ export async function subscribeThread(
     threadId: string;
   }
 ) {
-  // console.log('subscribeThread', props);
+  console.log('subscribeThread', props);
 
   store.workspaces[props.workspaceId].composers[props.threadId] ||= {
     editor: valtioRef(createEditor(createEditorConfig())),
     $$body: '',
     isTyping: {},
   };
-
+  const { workspaceId, threadId } = props;
   const { appId, userId } = getConfig(store);
-
-  subscribeTimeline(store, props);
-  subscribeThreadIsTyping(store, props.workspaceId, props.threadId);
-
-  // we could probably make this more efficient by only subscribing to it when the thread is visible.
-  subscribeThreadSeenBy(store, { appId, userId, ...props });
+  store.sync.subscribeThread({
+    appId,
+    userId,
+    workspaceId,
+    threadId,
+    subs: store.subs,
+    onTimelineEventAdded: (event: TimelineChangeEvent) => {
+      store.workspaces[event.workspaceId].timeline[event.threadId] ||= {};
+      store.workspaces[event.workspaceId].timeline[event.threadId][event.eventId] ||= event.event;
+    },
+    onThreadTypingChange: ({ workspaceId, threadId, userId, isTyping }: TypingEvent) => {
+      store.workspaces[workspaceId].composers[threadId].isTyping[userId] = isTyping;
+    },
+    onThreadSeenByUser: (event: ThreadSeenEvent) => {
+      store.workspaces[event.workspaceId].seenBy[event.threadId] ||= {};
+      store.workspaces[event.workspaceId].seenBy[event.threadId][event.userId] = event.data;
+    },
+  });
 }

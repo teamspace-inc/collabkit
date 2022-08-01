@@ -13,7 +13,7 @@ export default defineConfig(async () => {
     plugins: [react(), mdx.default({ remarkPlugins: [[remarkCodeHike, { theme }]] })],
     resolve: {
       alias: {
-        '@collabkit/react': resolve(__dirname, '../../packages/@collabkit/react'),
+        '@collabkit/react': resolve(__dirname, '../packages/@collabkit/react'),
       },
     },
     optimizeDeps: {

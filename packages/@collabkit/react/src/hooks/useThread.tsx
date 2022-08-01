@@ -19,7 +19,7 @@ export function useThread(props: {
 
   // const intersection = useIntersectionObserver(ref, [props.threadId, props.type]);
   useEffect(() => {
-    if (workspace && workspaceId && appState === 'ready') {
+    if (workspace && workspaceId) {
       actions.subscribeThread(store, { workspaceId, threadId });
     }
   }, [workspaceId, threadId, appState]);

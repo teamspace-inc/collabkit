@@ -1,7 +1,6 @@
-import { set, ref, remove } from 'firebase/database';
 import debounce from 'lodash.debounce';
 
-import { ComposerTarget, DB, Store } from '../constants';
+import { Store } from '../constants';
 import { sendMessage } from './sendMessage';
 import { startSelecting } from './startSelecting';
 import { authenticate } from './authenticate';
@@ -29,13 +28,7 @@ import { removePendingPins } from './removePendingPins';
 import { hover } from './hover';
 import { unhover } from './unhover';
 import { viewThread } from './viewThread';
-
-export function timelineRef(store: Store, workspaceId: string, threadId: string) {
-  if (!store.config.setup?.appId) {
-    throw new Error('no appId');
-  }
-  return ref(DB, `/timeline/${store.config.setup.appId}/${workspaceId}/${threadId}/`);
-}
+import { isTyping } from './isTyping';
 
 export type GenerateToken =
   | {
@@ -71,15 +64,6 @@ export type FunctionResponse<T> =
       status: 500;
       error: string;
     };
-
-export function getIsTypingRef(
-  appId: string,
-  workspaceId: string,
-  threadId: string,
-  userId: string
-) {
-  return ref(DB, `/isTyping/${appId}/${workspaceId}/${threadId}/${userId}`);
-}
 
 export function getConfig(store: Store) {
   const { config } = store;
@@ -119,37 +103,7 @@ export const actions = {
 
   closeThread,
 
-  isTyping: debounce(
-    async (store: Store, props: { target: ComposerTarget }) => {
-      const { config } = store;
-
-      if (!config.setup || !config.identify?.userId) {
-        return;
-      }
-
-      const isTypingRef = ref(
-        DB,
-        `/isTyping/${config.setup.appId}/${props.target.workspaceId}/${props.target.threadId}/${config.identify.userId}`
-      );
-
-      const timeoutID =
-        store.workspaces[props.target.workspaceId].composers[props.target.threadId]
-          .isTypingTimeoutID;
-
-      if (timeoutID) {
-        clearTimeout(timeoutID);
-      }
-
-      await set(isTypingRef, true);
-      store.workspaces[props.target.workspaceId].composers[
-        props.target.threadId
-      ].isTypingTimeoutID = setTimeout(() => {
-        remove(isTypingRef);
-      }, 1000);
-    },
-    1000,
-    { leading: true, maxWait: 1000 }
-  ),
+  isTyping: debounce(isTyping, 1000, { leading: true, maxWait: 1000 }),
 
   stopSelecting,
 

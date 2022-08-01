@@ -1,7 +1,8 @@
-import { proxy } from 'valtio';
+import { proxy, ref } from 'valtio';
 import { IdentifyProps, MentionProps, Store, Workspace } from './constants';
+import { SyncAdapter } from './sync';
 
-type Config = {
+export type Config = {
   appId: string;
   apiKey: string;
   workspace: { name?: string; id: string };
@@ -24,16 +25,18 @@ export function createWorkspace(config: Config): Workspace {
   };
 }
 
-export function createStore(config: Config): Store {
-  if (import.meta.env.DEV && _storeCache[config.apiKey]) {
+export function createStore(config: Config, sync: SyncAdapter, skipCache = false): Store {
+  if (!skipCache && import.meta.env.DEV && _storeCache[config.apiKey]) {
+    console.warn('CollabKit: using cached store');
     return _storeCache[config.apiKey];
   }
   const store = proxy<Store>({
+    sync: ref(sync),
     mode: config.mode,
     isReadOnly: config.readOnly ?? false,
     isConnected: false,
     token: config.apiKey,
-    appState: 'config',
+    appState: 'ready',
     uiState: 'idle',
     config: {
       identify: config.user,
@@ -57,7 +60,7 @@ export function createStore(config: Config): Store {
     profiles: {},
     subs: {},
   });
-  if (import.meta.env.DEV) {
+  if (!skipCache && import.meta.env.DEV) {
     _storeCache[config.apiKey] = store;
   }
   return store;

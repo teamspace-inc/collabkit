@@ -1,4 +1,3 @@
-import { DataSnapshot } from 'firebase/database';
 import { $getRoot, EditorState } from 'lexical';
 import { nanoid } from 'nanoid';
 import React from 'react';
@@ -51,20 +50,6 @@ export function createEvents(store: Store) {
     onConnectionStateChange: async (isConnected: boolean) => {
       store.isConnected = isConnected;
       await actions.authenticate(store);
-    },
-
-    onTimelineEventAdded: (snapshot: DataSnapshot) => {
-      const event = snapshot.val();
-      const eventId = snapshot.key;
-      const workspaceId = snapshot.ref.parent?.ref.parent?.key;
-      const threadId = snapshot.ref.parent?.key;
-
-      // todo validate data here
-      //
-      if (threadId && workspaceId && eventId) {
-        store.workspaces[workspaceId].timeline[threadId] ||= {};
-        store.workspaces[workspaceId].timeline[threadId][eventId] ||= event;
-      }
     },
 
     onSend: (workspaceId: string, threadId: string) => {

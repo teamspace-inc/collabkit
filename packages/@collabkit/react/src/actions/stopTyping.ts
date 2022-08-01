@@ -1,6 +1,5 @@
-import { remove } from 'firebase/database';
 import { ComposerTarget, Store } from '../constants';
-import { getConfig, getIsTypingRef } from './index';
+import { getConfig } from './index';
 
 export async function stopTyping(store: Store, props: { target: ComposerTarget }) {
   const { userId, appId } = getConfig(store);
@@ -16,5 +15,10 @@ export async function stopTyping(store: Store, props: { target: ComposerTarget }
     clearTimeout(timeoutID);
   }
 
-  await remove(getIsTypingRef(appId, props.target.workspaceId, props.target.threadId, userId));
+  await store.sync.stopTyping({
+    appId,
+    workspaceId: props.target.workspaceId,
+    threadId: props.target.threadId,
+    userId,
+  });
 }
