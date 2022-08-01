@@ -811,7 +811,7 @@ export function Home() {
               $400 <Small>Per month</Small>
             </PlanPrice>
             <PlanFeatures>
-              <PlanFeature>Unlimited monthly active users</PlanFeature>
+              <PlanFeature>Up to 5,000 monthly active users</PlanFeature>
               <PlanFeature>Commenting</PlanFeature>
               <PlanFeature>Presence</PlanFeature>
               <PlanFeature>Analytics dashboard</PlanFeature>
