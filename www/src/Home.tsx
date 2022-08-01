@@ -113,6 +113,7 @@ const Header = styled('header', {
   padding: '0 5vw',
   position: 'fixed',
   zIndex: 2,
+  maxWidth: '1352px',
 
   // '@bp1': { marginTop: '1rem', flexDirection: 'column', alignItems: 'flex-start' },
 });
@@ -236,10 +237,18 @@ function StickyHeader(props: { invertFilter?: number }) {
     <Header style={{ marginTop: '1rem', filter: `invert(${props.invertFilter ?? 0})` }}>
       <div style={{ display: 'flex', flex: 1 }}>
         <img
+          onClick={() =>
+            window.scrollTo({
+              top: 0,
+              left: 0,
+              behavior: 'smooth',
+            })
+          }
           src={Logo}
           style={{
             height: '1.5rem',
             position: 'relative',
+            cursor: 'pointer',
             top: window.innerWidth > 480 ? '0.15rem' : 0,
           }}
         />
@@ -344,7 +353,7 @@ const Hero = (
             Add commenting to <br />
             <Em>your</Em> product
           </Title>
-          <Text style={{ textAlign: 'center' }}>
+          <Text style={{ textAlign: 'center', fontSize: '1.5rem', letterSpacing: '-0.03em' }}>
             It only takes minutes, with our
             <br /> customisable React SDK.
           </Text>
@@ -439,7 +448,7 @@ const Plan = styled(VStack, {
   borderRadius: 24,
   textAlign: 'initial',
   '@bp1': { padding: '2.5rem 2rem' },
-  '@bp2': { padding: '2.5rem 3.5rem' },
+  '@bp2': { padding: '2.5rem 3.5rem 2.5rem' },
 });
 
 const PlanTitle = styled('h3', {
@@ -447,6 +456,8 @@ const PlanTitle = styled('h3', {
   fontStyle: 'normal',
   fontWeight: '400',
   fontSize: '2rem',
+  marginTop: 0,
+  marginBottom: '1.25rem',
   lineHeight: '128.125%',
   letterSpacing: '-0.05em',
   color: '#222222',
@@ -469,6 +480,7 @@ const Small = styled('span', {
   fontSize: '1rem',
   lineHeight: '118.75%',
   whiteSpace: 'nowrap',
+  letterSpacing: '0',
 });
 
 const PlanFeatures = styled('ul', {
@@ -551,7 +563,7 @@ export function Home() {
     return () => window.removeEventListener('scroll', listener);
   }, []);
   return (
-    <div>
+    <VStack style={{ alignItems: 'center' }}>
       <StickyHeader invertFilter={invertFilter} />
       {Hero}
       {BoostActivation}
@@ -811,7 +823,7 @@ export function Home() {
           <Plan>
             <PlanTitle>Pro</PlanTitle>
             <PlanPrice>
-              $400 <Small>Per month</Small>
+              $400 <Small>Per month*</Small>
             </PlanPrice>
             <PlanFeatures>
               <PlanFeature>Up to 5,000 monthly active users</PlanFeature>
@@ -854,6 +866,6 @@ export function Home() {
           <Small>Backed by Y Combinator</Small>
         </HStack>
       </Section>
-    </div>
+    </VStack>
   );
 }
