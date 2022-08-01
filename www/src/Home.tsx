@@ -757,9 +757,9 @@ export function Home() {
             </span>
             {`  and add a `}
             <span style={{ color: '#C9EB59' }}>{`<CommentButton />`}</span>
-            {/* {`. Optionally, include a `}
-            <span style={{ color: '#92E4FD' }}>{`<Presence />`}</span>
-            {` facepile.`} */}
+            {`. Optionally, mark things with a `}
+            <span style={{ color: '#92E4FD' }}>{`data-commentable-id`}</span>
+            {` attribute to ensure a canonical thread is created.`}
           </Text>
         </JustAddInnerSection>
         <DemoContainer>
