@@ -91,7 +91,7 @@ store.enableContinuousMode = true;
 export function Demo() {
   return (
     <div style={{ width: '100vw' }}>
-      {window.innerWidth > 480 ? (
+      {window.innerWidth > 640 ? (
         <CollabKit.Provider _demoStore={store} colorScheme={'dark'} {...config}>
           <CollabKit.Commentable style={{ position: 'relative' }}>
             <div

@@ -249,17 +249,17 @@ function StickyHeader(props: { invertFilter?: number }) {
             height: '1.5rem',
             position: 'relative',
             cursor: 'pointer',
-            top: window.innerWidth > 480 ? '0.15rem' : 0,
+            top: window.innerWidth > 640 ? '0.15rem' : 0,
           }}
         />
       </div>
       <div style={{ display: 'flex', flexDirection: 'row', gap: '4rem' }}>
-        {window.innerWidth > 480 ? (
+        {window.innerWidth > 640 ? (
           <Text>
             <Link href="https://discord.gg/UCA4CbZad4">Discord</Link>
           </Text>
         ) : null}
-        <div style={{ position: 'relative', top: window.innerWidth > 480 ? '0.5rem' : 0 }}>
+        <div style={{ position: 'relative', top: window.innerWidth > 640 ? '0.5rem' : 0 }}>
           <RequestDemoButton />
         </div>
       </div>
@@ -276,7 +276,7 @@ const BoostActivation = (
       gap: '0',
       alignItems: 'center',
       justifyContent: 'center',
-      ...(window.innerWidth > 480
+      ...(window.innerWidth > 640
         ? { textAlign: 'center', padding: '4rem 0', width: '100vw' }
         : { textAlign: 'left', padding: '4rem 2rem', width: 'calc(100vw - 4rem)' }),
     }}
@@ -290,7 +290,7 @@ const BoostActivation = (
     <Text
       style={{
         maxWidth: '40rem',
-        ...(window.innerWidth > 480 ? { textAlign: 'center' } : { textAlign: 'left' }),
+        ...(window.innerWidth > 640 ? { textAlign: 'center' } : { textAlign: 'left' }),
         marginTop: 0,
       }}
     >
@@ -358,7 +358,7 @@ const Hero = (
             <br /> customisable React SDK.
           </Text>
         </VStack>
-        {window.innerWidth > 480 ? (
+        {window.innerWidth > 640 ? (
           <img style={{ position: 'absolute', bottom: 0, right: 0 }} src={Cursor} />
         ) : null}
       </Circle>
@@ -567,7 +567,7 @@ export function Home() {
       <StickyHeader invertFilter={invertFilter} />
       {Hero}
       {BoostActivation}
-      {window.innerWidth > 480 ? TryItOut : null}
+      {window.innerWidth > 640 ? TryItOut : null}
       {/* {ContextualConversations} */}
       <Demo />
       <Section
@@ -609,7 +609,7 @@ export function Home() {
                 src={CommentAnything}
                 style={{
                   width: '100%',
-                  ...(window.innerWidth > 480
+                  ...(window.innerWidth > 640
                     ? { maxWidth: 'calc(100% - 8rem)' }
                     : { maxWidth: 'calc(100% - 0rem)' }),
                 }}
@@ -617,7 +617,7 @@ export function Home() {
             </div>
             <VStack
               style={
-                window.innerWidth > 480 ? { padding: '0 4rem 2rem' } : { padding: '0 2rem 2rem' }
+                window.innerWidth > 640 ? { padding: '0 4rem 2rem' } : { padding: '0 2rem 2rem' }
               }
             >
               <Subtitle>Comment on anything</Subtitle>
@@ -642,7 +642,7 @@ export function Home() {
                 src={AnyApp}
                 style={{
                   width: '100%',
-                  ...(window.innerWidth > 480
+                  ...(window.innerWidth > 640
                     ? { maxWidth: 'calc(100% - 8rem)' }
                     : { maxWidth: 'calc(100% - 0rem)' }),
                 }}
@@ -650,7 +650,7 @@ export function Home() {
             </div>
             <VStack
               style={
-                window.innerWidth > 480 ? { padding: '0 4rem 2rem' } : { padding: '0 2rem 2rem' }
+                window.innerWidth > 640 ? { padding: '0 4rem 2rem' } : { padding: '0 2rem 2rem' }
               }
             >
               {' '}
@@ -676,7 +676,7 @@ export function Home() {
                 src={Realtime}
                 style={{
                   width: '100%',
-                  ...(window.innerWidth > 480
+                  ...(window.innerWidth > 640
                     ? { maxWidth: 'calc(100% - 8rem)' }
                     : { maxWidth: 'calc(100% - 0rem)' }),
                 }}
@@ -684,7 +684,7 @@ export function Home() {
             </div>
             <VStack
               style={
-                window.innerWidth > 480 ? { padding: '0 4rem 2rem' } : { padding: '0 2rem 2rem' }
+                window.innerWidth > 640 ? { padding: '0 4rem 2rem' } : { padding: '0 2rem 2rem' }
               }
             >
               {' '}
@@ -710,7 +710,7 @@ export function Home() {
                 src={Email}
                 style={{
                   width: '100%',
-                  ...(window.innerWidth > 480
+                  ...(window.innerWidth > 640
                     ? { maxWidth: 'calc(100% - 8rem)' }
                     : { maxWidth: 'calc(100% - 0rem)' }),
                 }}
@@ -718,7 +718,7 @@ export function Home() {
             </div>
             <VStack
               style={
-                window.innerWidth > 480 ? { padding: '0 4rem 2rem' } : { padding: '0 2rem 2rem' }
+                window.innerWidth > 640 ? { padding: '0 4rem 2rem' } : { padding: '0 2rem 2rem' }
               }
             >
               {' '}
@@ -747,7 +747,7 @@ export function Home() {
             style={{
               marginBottom: 0,
               marginTop: 0,
-              ...(window.innerWidth > 480 ? {} : { padding: '0 2rem', textAlign: 'left' }),
+              ...(window.innerWidth > 640 ? {} : { padding: '0 2rem', textAlign: 'left' }),
             }}
           >
             {`To enable commenting throughout your app, wrap it in a `}
@@ -773,7 +773,7 @@ export function Home() {
             style={{
               marginBottom: 0,
               marginTop: 0,
-              ...(window.innerWidth > 480 ? {} : { padding: '0 2rem', textAlign: 'left' }),
+              ...(window.innerWidth > 640 ? {} : { padding: '0 2rem', textAlign: 'left' }),
             }}
           >
             {`Our flexible thread component can be include inline in your app. Great for detail views where your want to talk about a customer, product, invoice or sale.`}

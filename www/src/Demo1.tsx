@@ -88,7 +88,7 @@ const config: CollabKit.Config = {
 const store = createDemoStore(config, 'collabkit-demo-1', defaultWorkspace);
 
 export function Demo1() {
-  return window.innerWidth > 480 ? (
+  return window.innerWidth > 640 ? (
     <CollabKit.Provider _demoStore={store} colorScheme={'dark'} {...config}>
       <CollabKit.Commentable style={{ position: 'relative' }}>
         <div
