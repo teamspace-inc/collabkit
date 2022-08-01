@@ -3,7 +3,6 @@ import { styled, theme } from './UIKit';
 import { ChatText, X } from 'phosphor-react';
 import { useSnapshot } from 'valtio';
 import { useApp } from '../hooks/useApp';
-import { Cursor } from './Cursor';
 
 const StyledFloatingButtonContainer = styled('div', {
   position: 'fixed',
@@ -30,7 +29,6 @@ export function FloatingButton(props: { style?: React.CSSProperties }) {
   const target = { type: 'floatingCommentButton' } as const;
   return (
     <>
-      <Cursor />
       <StyledFloatingButtonContainer style={props.style} data-collabkit-internal="true">
         {/* <Badge size={20} number={1}></Badge> */}
         <StyledFloatingButton
