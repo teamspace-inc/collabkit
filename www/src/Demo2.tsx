@@ -3,6 +3,8 @@ import * as CollabKit from '../../packages/@collabkit/react/src/index';
 import { DemoUI } from './DemoUI';
 import dashUISvg from './dash-ui.svg';
 
+import DemoMobileImage from './Image_03.png';
+
 const Modal = styled('div', {
   position: 'absolute',
   inset: 0,
@@ -16,7 +18,7 @@ const Modal = styled('div', {
 });
 
 export function Demo2() {
-  return (
+  return window.innerWidth > 480 ? (
     <div style={{ width: '100vw' }}>
       <CollabKit.Provider
         mode={'demo'}
@@ -55,5 +57,7 @@ export function Demo2() {
         </CollabKit.Commentable>
       </CollabKit.Provider>
     </div>
+  ) : (
+    <img src={DemoMobileImage} style={{ width: '100vw', maxWidth: '90vw', margin: '0 5vw' }} />
   );
 }

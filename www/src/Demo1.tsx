@@ -1,8 +1,9 @@
 import * as CollabKit from '../../packages/@collabkit/react/src/index';
 import { DemoUI } from './DemoUI';
+import DemoMobileImage from './Image_02.png';
 
 export function Demo1() {
-  return (
+  return window.innerWidth > 480 ? (
     <CollabKit.Provider
       mode={'demo'}
       readOnly={true}
@@ -34,5 +35,7 @@ export function Demo1() {
         </div>
       </CollabKit.Commentable>
     </CollabKit.Provider>
+  ) : (
+    <img src={DemoMobileImage} style={{ width: '100vw', maxWidth: '90vw', margin: '0 5vw' }} />
   );
 }
