@@ -28,10 +28,13 @@ export async function resolveThread(store: Store, workspaceId: string, threadId:
       ...event,
       createdAt: +Date.now(),
     };
+    const pinState = store.workspaces[workspaceId].pins[threadId].state;
     try {
-      store.sync.markResolved;
+      store.sync.markResolved({ appId, workspaceId, threadId });
+      store.workspaces[workspaceId].pins[threadId].state = 'resolved';
     } catch (e) {
       console.error('failed to set pin state', e);
+      store.workspaces[workspaceId].pins[threadId].state = pinState;
     }
     actions.stopTyping(store, { target: { type: 'composer', workspaceId, threadId } });
   } catch (e) {
