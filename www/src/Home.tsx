@@ -739,12 +739,15 @@ export function Home() {
             }}
           >
             {`To enable commenting throughout your app, wrap it in a `}
-            <span style={{ color: '#E25982' }}>{`<Commentable />`}</span>
+            <span style={{ color: '#E25982' }}>
+              {`<Commentable />`}
+              <br />
+            </span>
             {`  and add a `}
             <span style={{ color: '#C9EB59' }}>{`<CommentButton />`}</span>
-            {`. Optionally, include a `}
+            {/* {`. Optionally, include a `}
             <span style={{ color: '#92E4FD' }}>{`<Presence />`}</span>
-            {` facepile.`}
+            {` facepile.`} */}
           </Text>
         </JustAddInnerSection>
         <DemoContainer>
