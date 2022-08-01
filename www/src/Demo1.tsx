@@ -123,7 +123,7 @@ const OverlayedCaption = styled('span', {
   position: 'absolute',
   fontFamily: 'Inter',
   fontStyle: 'normal',
-  fontWeight: '400',
+  fontWeight: '500',
   fontSize: '1.25rem',
   lineHeight: '2.125rem',
   textAlign: 'center',

@@ -109,7 +109,9 @@ export function Demo() {
           </CollabKit.Commentable>
         </CollabKit.Provider>
       ) : (
-        <DemoImageMobileFallback src={DemoMobileImage} />
+        <div style={{ display: 'flex', justifyContent: 'center', width: '100vw' }}>
+          <DemoImageMobileFallback src={DemoMobileImage} />
+        </div>
       )}
     </div>
   );
