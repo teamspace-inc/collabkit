@@ -1,6 +1,12 @@
-export function DemoUI(props: { style?: React.CSSProperties }) {
+export function DemoUI(props: { id?: string; style?: React.CSSProperties }) {
   return (
-    <svg style={props.style} viewBox="0 0 1352 760" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      id={props.id}
+      style={props.style}
+      viewBox="0 0 1352 760"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <rect
         opacity="0.05"
         x="1.5"
