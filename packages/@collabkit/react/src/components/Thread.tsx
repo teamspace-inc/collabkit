@@ -1,5 +1,5 @@
-import { FlexCenter, styled } from './UIKit';
-import { IconContext, ChatCircle } from 'phosphor-react';
+import { FlexCenter, HStack, styled } from './UIKit';
+import { IconContext, ChatCircle, X } from 'phosphor-react';
 import React, { useState } from 'react';
 import { Composer } from './Composer';
 import { useWorkspace } from '../hooks/useWorkspace';
@@ -29,9 +29,18 @@ const StyledThreadContainer = styled('div', {
   borderRadius: 11,
 });
 
+const StyledThreadHeader = styled('div', {
+  fontSize: '16px',
+  fontWeight: '700',
+  color: '$neutral12',
+  padding: '28px 24px',
+  display: 'flex',
+});
+
 export function Thread(props: {
   threadId: string;
   style?: React.CSSProperties;
+  showHeader?: boolean;
   onCloseButtonClick?: (e: React.MouseEvent) => void;
 }) {
   const { threadId } = props;
@@ -71,6 +80,12 @@ export function Thread(props: {
         />
       ) : null} */}
       <StyledThread>
+        {props.showHeader ? (
+          <StyledThreadHeader>
+            <div style={{ flex: '1' }}>Comments</div>
+            <X style={{ marginTop: '2' }}></X>
+          </StyledThreadHeader>
+        ) : null}
         {!isConnected ? <FlexCenter /> : null}
         {isConnected && isEmpty ? (
           <FlexCenter>

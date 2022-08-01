@@ -83,6 +83,7 @@ export function Demo2() {
               <Modal>
                 <img src={dashUISvg} style={{ margin: '3.75rem' }} />
                 <CollabKit.Thread
+                  showHeader={true}
                   threadId={'demo2'}
                   style={{
                     borderRadius: 0,
