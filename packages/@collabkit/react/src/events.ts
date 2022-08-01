@@ -148,7 +148,7 @@ export function createEvents(store: Store) {
               threadId: nanoid(),
               ...props.target,
             });
-          } else if (props.target.type === 'floatingCommentButton') {
+          } else if (props.target.type === 'floatingCommentButton' && !store.enableContinuousMode) {
             actions.stopSelecting(store);
           }
           break;

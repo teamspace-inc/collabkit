@@ -85,6 +85,8 @@ const config: CollabKit.Config = {
 };
 
 const store = createDemoStore(config, 'collabkit-demo-0', defaultWorkspace);
+store.uiState = 'selecting';
+store.enableContinuousMode = true;
 
 export function Demo() {
   return (
@@ -101,9 +103,6 @@ export function Demo() {
             >
               <span style={{ position: 'relative' }}>
                 <img id="demo-0-ui" className="demoImage" style={{ maxWidth: '90vw' }} src={UI} />
-                <CollabKit.FloatingButton
-                  style={{ position: 'absolute', right: 20, bottom: 20, zIndex: 99 }}
-                />
               </span>
             </div>
           </CollabKit.Commentable>

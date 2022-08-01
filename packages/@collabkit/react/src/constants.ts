@@ -208,6 +208,7 @@ export interface Store {
   };
   appState: 'blank' | 'config' | 'ready';
   uiState: 'idle' | 'selecting' | 'composing' | 'viewing';
+  enableContinuousMode: boolean;
   subs: Subscriptions;
 }
 

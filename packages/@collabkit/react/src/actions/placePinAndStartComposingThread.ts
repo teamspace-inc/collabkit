@@ -15,6 +15,14 @@ export async function placePinAndStartComposingThread(
   subscribeThread(store, props);
   store.composingId = { type: 'thread', threadId, workspaceId };
 
+  if (store.enableContinuousMode) {
+    for (const threadId in store.workspaces[workspaceId].pins) {
+      if (store.workspaces[workspaceId].pins[threadId].state === 'pending') {
+        delete store.workspaces[workspaceId].pins[threadId];
+      }
+    }
+  }
+
   if (props.pin) {
     const pin: Pin = {
       ...props.pin,
@@ -33,6 +41,8 @@ export async function placePinAndStartComposingThread(
   }
 
   if (store.uiState === 'selecting') {
-    store.uiState = 'idle';
+    if (!store.enableContinuousMode) {
+      store.uiState = 'idle';
+    }
   }
 }
