@@ -92,9 +92,12 @@ export function PurePin(props: {
   profile: Profile;
   onPointerDown?: (event: React.PointerEvent) => void;
   isTyping?: { [userId: string]: boolean };
+  currentUserId: string;
 }) {
   const isSomeoneTyping = props.isTyping
-    ? Object.keys(props.isTyping).find((key) => props.isTyping?.[key])
+    ? Object.keys(props.isTyping)
+        .filter((key) => key !== props.currentUserId)
+        .find((key) => props.isTyping?.[key])
     : null;
   return (
     <StyledPin onPointerDown={props.onPointerDown}>
@@ -115,8 +118,10 @@ export function PurePin(props: {
 export function Pin(props: { pinId: string }) {
   const { pinId } = props;
   const { store, events } = useApp();
-  const { viewingId, hoveringId, profiles, mode } = useSnapshot(store);
+  const { viewingId, hoveringId, profiles, mode, config } = useSnapshot(store);
   const [maxAvailableSize, setMaxAvailableSize] = useState({ width: -1, height: -1 });
+
+  const currentUserId = config.identify?.userId;
 
   const { workspace, workspaceId } = useWorkspace();
   const pin = workspace.pins[props.pinId];
@@ -203,6 +208,10 @@ export function Pin(props: { pinId: string }) {
     console.warn('Pin has no profile');
   }
 
+  if (!currentUserId) {
+    return null;
+  }
+
   return pin && profile ? (
     <VStack
       style={{ gap: 8 }}
@@ -219,6 +228,7 @@ export function Pin(props: { pinId: string }) {
           }}
         >
           <PurePin
+            currentUserId={currentUserId}
             profile={profile}
             hasUnread={hasUnread}
             isTyping={workspace.composers[props.pinId]?.isTyping}
