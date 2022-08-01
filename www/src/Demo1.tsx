@@ -1,4 +1,5 @@
 import * as CollabKit from '@collabkit/react';
+import { styled } from '@stitches/react';
 import { DemoUI } from './DemoUI';
 import { DemoImageMobileFallback } from './Home';
 import DemoMobileImage from './image_02.png';
@@ -104,9 +105,42 @@ export function Demo1() {
             />
           </span>
         </div>
+        <CommentableCaption style={{ top: '2rem', left: '2rem' }}>
+          {'<Commentable />'}
+        </CommentableCaption>
+        {/* <PresenceCaption style={{ top: '2rem', right: '2rem' }}>{'<Presence />'}</PresenceCaption> */}
+        <CommentButtonCaption style={{ bottom: 'calc(2rem + 60px)', right: '2rem' }}>
+          {'<CommentButton />'}
+        </CommentButtonCaption>
       </CollabKit.Commentable>
     </CollabKit.Provider>
   ) : (
     <DemoImageMobileFallback src={DemoMobileImage} />
   );
 }
+
+const OverlayedCaption = styled('span', {
+  position: 'absolute',
+  fontFamily: 'Inter',
+  fontStyle: 'normal',
+  fontWeight: '400',
+  fontSize: '20px',
+  lineHeight: '34px',
+  textAlign: 'center',
+  letterSpacing: '-0.03em',
+});
+
+const CommentableCaption = styled(OverlayedCaption, {
+  /* Crimson */
+  color: '#E25982',
+});
+
+// const PresenceCaption = styled(OverlayedCaption, {
+//   /* Sky */
+//   color: '#92E4FD',
+// });
+
+const CommentButtonCaption = styled(OverlayedCaption, {
+  /* Lime */
+  color: '#C9EB59',
+});
