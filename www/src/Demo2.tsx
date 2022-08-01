@@ -3,7 +3,7 @@ import * as CollabKit from '../../packages/@collabkit/react/src/index';
 import { DemoUI } from './DemoUI';
 import dashUISvg from './dash-ui.svg';
 
-import DemoMobileImage from './Image_03.png';
+import DemoMobileImage from './image_03.png';
 
 const Modal = styled('div', {
   position: 'absolute',

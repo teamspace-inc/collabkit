@@ -1,6 +1,6 @@
 import UI from './UI.svg';
 import * as CollabKit from '../../packages/@collabkit/react/src/index';
-import DemoMobileImage from './Image_01.png';
+import DemoMobileImage from './image_01.png';
 
 export function Demo() {
   return (

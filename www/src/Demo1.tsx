@@ -1,6 +1,6 @@
 import * as CollabKit from '../../packages/@collabkit/react/src/index';
 import { DemoUI } from './DemoUI';
-import DemoMobileImage from './Image_02.png';
+import DemoMobileImage from './image_02.png';
 
 export function Demo1() {
   return window.innerWidth > 480 ? (
