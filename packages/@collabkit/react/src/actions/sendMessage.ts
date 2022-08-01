@@ -21,6 +21,9 @@ export async function sendMessage(store: Store, props: { workspaceId: string; th
 
   editor.update(() => $getRoot().getChildren()[0].replace($createTextNode('')));
 
+  // a pending pin is marked as 'open' on first message send
+  const hasPendingPin = workspace.pins[threadId]?.state === 'pending';
+
   try {
     await writeMessageToFirebase(store, {
       workspaceId,
@@ -28,14 +31,19 @@ export async function sendMessage(store: Store, props: { workspaceId: string; th
       body,
       preview: body,
       type: 'message',
-      ...(workspace.pins[threadId]?.state === 'pending'
+      ...(hasPendingPin
         ? {
             pin: { ...workspace.pins[threadId] },
           }
         : {}),
     });
+
+    if (hasPendingPin) {
+      workspace.pins[threadId].state = 'open';
+    }
   } catch (e) {
     console.error(' failed to send message ', e);
+    workspace.pins[threadId].state = 'pending';
     return;
   }
 }
