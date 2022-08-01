@@ -4,6 +4,7 @@ import { DemoUI } from './DemoUI';
 import dashUISvg from './dash-ui.svg';
 
 import DemoMobileImage from './image_03.png';
+import { DemoImageMobileFallback } from './Home';
 
 const Modal = styled('div', {
   position: 'absolute',
@@ -58,6 +59,6 @@ export function Demo2() {
       </CollabKit.Provider>
     </div>
   ) : (
-    <img src={DemoMobileImage} style={{ width: '100vw', maxWidth: '90vw', margin: '0 5vw' }} />
+    <DemoImageMobileFallback src={DemoMobileImage} />
   );
 }

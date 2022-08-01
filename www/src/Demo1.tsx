@@ -1,5 +1,6 @@
 import * as CollabKit from '../../packages/@collabkit/react/src/index';
 import { DemoUI } from './DemoUI';
+import { DemoImageMobileFallback } from './Home';
 import DemoMobileImage from './image_02.png';
 
 export function Demo1() {
@@ -36,6 +37,6 @@ export function Demo1() {
       </CollabKit.Commentable>
     </CollabKit.Provider>
   ) : (
-    <img src={DemoMobileImage} style={{ width: '100vw', maxWidth: '90vw', margin: '0 5vw' }} />
+    <DemoImageMobileFallback src={DemoMobileImage} />
   );
 }

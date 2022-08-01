@@ -506,17 +506,22 @@ const PlanPricingSmall = styled('div', {
 
 const JustAddInnerSection = styled(VStack, {
   textAlign: 'center',
-  marginTop: '15rem',
   maxWidth: '58rem',
+  width: '90vw',
   justifyContent: 'center',
   alignItems: 'center',
 
   '@bp1': {
-    marginTop: '10rem',
+    marginTop: '4rem',
   },
   '@bp2': {
-    marginTop: '15rem',
+    marginTop: '7rem',
   },
+});
+
+export const DemoImageMobileFallback = styled('img', {
+  width: '90vw',
+  maxWidth: '90vw',
 });
 
 function PlanFeature({ children }: { children: ReactNode }) {
@@ -565,6 +570,7 @@ export function Home() {
           style={{
             marginTop: '10rem',
             maxWidth: '50rem',
+            width: '90vw',
             textAlign: 'center',
             justifyContent: 'center',
             alignItems: 'center',
@@ -720,7 +726,7 @@ export function Home() {
           color: 'white',
         }}
       >
-        <JustAddInnerSection>
+        <JustAddInnerSection style={{ marginTop: '12rem' }}>
           <Title style={{ color: 'white', marginBottom: '3.75rem' }}>
             Just add <br />
             {'<CollabKit />'}
@@ -745,7 +751,7 @@ export function Home() {
           <Demo1 />
         </DemoContainer>
         <JustAddInnerSection>
-          <Subtitle style={{ color: 'white', marginBottom: '3.75rem' }}>
+          <Subtitle style={{ fontSize: '3rem', color: 'white', marginBottom: '3.75rem' }}>
             Or add a {'<Thread />'}
           </Subtitle>
           <Text
@@ -762,7 +768,14 @@ export function Home() {
           <Demo2 />
         </DemoContainer>
       </Section>
-      <Section style={{ background: '#FFEC6B', textAlign: 'center', paddingTop: '15rem' }}>
+      <Section
+        style={{
+          background: '#FFEC6B',
+          textAlign: 'center',
+          paddingTop: '10rem',
+          minHeight: '80vh',
+        }}
+      >
         <VStack>
           <Title
             style={{
