@@ -371,6 +371,24 @@ const Hero = (
   </Section>
 );
 
+const DemoContainer = styled('div', {
+  maxWidth: '1352px',
+  width: '90vw',
+  maxHeight: '760px',
+  marginTop: '8.75rem',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+
+  '@bp1': {
+    marginTop: '3rem',
+    marginBottom: 0,
+  },
+  '@bp2': {
+    marginTop: '8.75rem',
+  },
+});
+
 // const ContextualConversations = (
 //   <Section
 //     style={{
@@ -474,6 +492,21 @@ const PlanFeatureItem = styled('li', {
 
 const PlanFeatureContent = styled('div', {
   marginLeft: '0.625rem',
+});
+
+const JustAddInnerSection = styled(VStack, {
+  textAlign: 'center',
+  marginTop: '15rem',
+  maxWidth: '58rem',
+  justifyContent: 'center',
+  alignItems: 'center',
+
+  '@bp1': {
+    marginTop: '10rem',
+  },
+  '@bp2': {
+    marginTop: '15rem',
+  },
 });
 
 function PlanFeature({ children }: { children: ReactNode }) {
@@ -677,15 +710,7 @@ export function Home() {
           color: 'white',
         }}
       >
-        <VStack
-          style={{
-            textAlign: 'center',
-            marginTop: '15rem',
-            maxWidth: '58rem',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
+        <JustAddInnerSection>
           <Title style={{ color: 'white', marginBottom: '3.75rem' }}>
             Just add <br />
             {'<CollabKit />'}
@@ -705,21 +730,11 @@ export function Home() {
             <span style={{ color: '#92E4FD' }}>{`<Presence />`}</span>
             {` facepile.`}
           </Text>
-        </VStack>
-        <div
-          style={{
-            maxWidth: '1352px',
-            width: '90vw',
-            maxHeight: '760px',
-            marginTop: '8.75rem',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
+        </JustAddInnerSection>
+        <DemoContainer>
           <Demo1 />
-        </div>
-        <VStack style={{ textAlign: 'center', marginTop: '15rem', maxWidth: '58rem' }}>
+        </DemoContainer>
+        <JustAddInnerSection>
           <Subtitle style={{ color: 'white', marginBottom: '3.75rem' }}>
             Or add a {'<Thread />'}
           </Subtitle>
@@ -732,21 +747,10 @@ export function Home() {
           >
             {`Our flexible thread component can be include inline in your app. Great for detail views where your want to talk about a customer, product, invoice or sale.`}
           </Text>
-        </VStack>
-        <div
-          style={{
-            maxWidth: '1352px',
-            width: '90vw',
-            maxHeight: '760px',
-            marginTop: '8.75rem',
-            marginBottom: '7.5rem',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
+        </JustAddInnerSection>
+        <DemoContainer style={{ marginBottom: '10rem' }}>
           <Demo2 />
-        </div>
+        </DemoContainer>
       </Section>
       <Section style={{ background: '#FFEC6B', textAlign: 'center', paddingTop: '15rem' }}>
         <VStack>
