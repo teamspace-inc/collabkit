@@ -124,8 +124,8 @@ const OverlayedCaption = styled('span', {
   fontFamily: 'Inter',
   fontStyle: 'normal',
   fontWeight: '400',
-  fontSize: '20px',
-  lineHeight: '34px',
+  fontSize: '1.25rem',
+  lineHeight: '2.125rem',
   textAlign: 'center',
   letterSpacing: '-0.03em',
 });
