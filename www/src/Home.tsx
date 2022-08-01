@@ -473,7 +473,7 @@ const Small = styled('span', {
 
 const PlanFeatures = styled('ul', {
   paddingBlock: 0,
-  paddingInline: 0, //'1.5rem',
+  paddingInline: 0,
   marginBottom: '2.5rem',
   listStyleType: 'none',
   flex: 1,
@@ -494,19 +494,34 @@ const PlanFeatureContent = styled('div', {
   marginLeft: '0.625rem',
 });
 
+const PlanPricingSmall = styled('div', {
+  fontFamily: 'Inter',
+  fontStyle: 'normal',
+  fontWeight: 500,
+  fontSize: 12,
+  lineHeight: '15px',
+  marginTop: '0rem',
+  marginBottom: '1.5rem',
+});
+
 const JustAddInnerSection = styled(VStack, {
   textAlign: 'center',
-  marginTop: '15rem',
   maxWidth: '58rem',
+  width: '90vw',
   justifyContent: 'center',
   alignItems: 'center',
 
   '@bp1': {
-    marginTop: '10rem',
+    marginTop: '4rem',
   },
   '@bp2': {
-    marginTop: '15rem',
+    marginTop: '7rem',
   },
+});
+
+export const DemoImageMobileFallback = styled('img', {
+  width: '90vw',
+  maxWidth: '90vw',
 });
 
 function PlanFeature({ children }: { children: ReactNode }) {
@@ -555,6 +570,7 @@ export function Home() {
           style={{
             marginTop: '10rem',
             maxWidth: '50rem',
+            width: '90vw',
             textAlign: 'center',
             justifyContent: 'center',
             alignItems: 'center',
@@ -710,7 +726,7 @@ export function Home() {
           color: 'white',
         }}
       >
-        <JustAddInnerSection>
+        <JustAddInnerSection style={{ marginTop: '12rem' }}>
           <Title style={{ color: 'white', marginBottom: '3.75rem' }}>
             Just add <br />
             {'<CollabKit />'}
@@ -735,7 +751,7 @@ export function Home() {
           <Demo1 />
         </DemoContainer>
         <JustAddInnerSection>
-          <Subtitle style={{ color: 'white', marginBottom: '3.75rem' }}>
+          <Subtitle style={{ fontSize: '3rem', color: 'white', marginBottom: '3.75rem' }}>
             Or add a {'<Thread />'}
           </Subtitle>
           <Text
@@ -752,7 +768,14 @@ export function Home() {
           <Demo2 />
         </DemoContainer>
       </Section>
-      <Section style={{ background: '#FFEC6B', textAlign: 'center', paddingTop: '15rem' }}>
+      <Section
+        style={{
+          background: '#FFEC6B',
+          textAlign: 'center',
+          paddingTop: '10rem',
+          minHeight: '80vh',
+        }}
+      >
         <VStack>
           <Title
             style={{
@@ -785,7 +808,7 @@ export function Home() {
           <Plan>
             <PlanTitle>Pro</PlanTitle>
             <PlanPrice>
-              $200 <Small>Per month</Small>
+              $400 <Small>Per month</Small>
             </PlanPrice>
             <PlanFeatures>
               <PlanFeature>Unlimited monthly active users</PlanFeature>
@@ -795,6 +818,9 @@ export function Home() {
               <PlanFeature>Customisability</PlanFeature>
               <PlanFeature>Slack &amp; Discord support</PlanFeature>
             </PlanFeatures>
+            <PlanPricingSmall>
+              *Up to 5000 monthly active users, then $1 per 100 monthly active users thereafter.
+            </PlanPricingSmall>
             <RequestDemoButton />
           </Plan>
           <Plan>
