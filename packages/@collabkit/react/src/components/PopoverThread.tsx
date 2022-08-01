@@ -59,7 +59,6 @@ export function PopoverThread(props: {
       return;
     }
     const rect = ref.current.getBoundingClientRect();
-    console.log('PopoverThread.useEffect', rect.height, props.maxAvailableSize.height);
 
     if (rect.height > props.maxAvailableSize.height || didOverflowY) {
       setDidOverflowY(true);

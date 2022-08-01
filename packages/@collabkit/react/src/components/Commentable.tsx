@@ -167,13 +167,7 @@ export function Commentable(props: { children: React.ReactNode; style?: React.CS
 
         const internalEl = nodes.find((node) => node.closest('[data-collabkit-internal=true]'));
 
-        const idEl = nodes.find((node) => node.closest('[data-collabkit-thread-id]'));
-
-        console.log(idEl);
-
-        if (idEl) {
-          console.log('idEl', idEl.getAttribute('data-collabkit-thread-id'));
-        }
+        //const idEl = nodes.find((node) => node.closest('[data-collabkit-thread-id]'));
 
         if (internalEl) {
           return;
