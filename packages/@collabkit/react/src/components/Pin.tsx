@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Avatar } from './Avatar';
 import { HStack, styled, VStack } from './UIKit';
 import { useApp } from '../hooks/useApp';
@@ -14,8 +14,11 @@ import {
   useFloating,
   size,
   autoUpdate,
+  useInteractions,
+  useHover,
 } from '@floating-ui/react-dom-interactions';
 import { keyframes } from '@stitches/react';
+import debounce from 'lodash.debounce';
 
 const StyledPin = styled('div', {
   width: '$sizes$pin',
@@ -145,7 +148,7 @@ export function Pin(props: { pinId: string }) {
     (pin.state === 'open' || pin.state === 'pending')
   );
 
-  const { x, y, reference, floating, strategy } = useFloating({
+  const { x, y, reference, floating, strategy, context } = useFloating({
     whileElementsMounted: autoUpdate,
     placement: mode === 'demo' ? 'bottom-start' : undefined,
     open,
@@ -177,6 +180,14 @@ export function Pin(props: { pinId: string }) {
             }),
           ],
   });
+
+  const { getReferenceProps, getFloatingProps } = useInteractions([
+    useHover(context, {
+      // props
+    }),
+  ]);
+
+  // console.log(getReferenceProps, getFloatingProps);
 
   const thread = open ? (
     <StyledFloatingThreadContainer
@@ -212,12 +223,30 @@ export function Pin(props: { pinId: string }) {
     return null;
   }
 
+  const handleMouseLeave = debounce(
+    useCallback((e: React.MouseEvent) => {
+      events.onMouseOut(e, { target });
+    }, []),
+    150,
+    { trailing: true }
+  );
+
+  const handleMouseOver = useCallback(
+    (e: React.MouseEvent) => {
+      handleMouseLeave.cancel();
+      !open && events.onMouseOver(e, { target });
+    },
+    [handleMouseLeave, open, events.onMouseOver, target]
+  );
+
   return pin && profile ? (
     <VStack
       style={{ gap: 8 }}
-      onMouseOver={(e) => !open && events.onMouseOver(e, { target })}
-      onMouseLeave={(e) => events.onMouseOut(e, { target })}
+      onMouseOver={handleMouseOver}
+      onMouseLeave={handleMouseLeave}
       data-collabkit-internal="true"
+      // {...getReferenceProps()}
+      // {...getFloatingProps()}
     >
       <StyledPinContainer ref={reference}>
         <HStack
