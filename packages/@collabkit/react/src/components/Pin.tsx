@@ -227,6 +227,7 @@ export function Pin(props: { pinId: string }) {
     useCallback((e: React.MouseEvent) => {
       events.onMouseOut(e, { target });
     }, []),
+    // how long to wait before dismissing the tooltip
     150,
     { trailing: true }
   );
