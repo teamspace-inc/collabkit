@@ -89,7 +89,7 @@ export function Demo2() {
                   threadId={'demo2'}
                   style={{
                     borderRadius: 0,
-                    minWidth: 284,
+                    minWidth: 234,
                   }}
                 />
               </Modal>
