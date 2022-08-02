@@ -38,7 +38,6 @@ export function createStore(config: Config, sync: SyncAdapter, skipCache = false
     token: config.apiKey,
     appState: 'ready',
     uiState: 'idle',
-    enableContinuousMode: false,
     config: {
       identify: config.user,
       setup: {

@@ -114,6 +114,29 @@ export function createEvents(store: Store) {
 
     onPointerDown: (e: React.PointerEvent, props: { target: Target }) => {
       switch (store.uiState) {
+        case 'continuous': {
+          switch (props.target.type) {
+            case 'pin': {
+              actions.viewThread(store, props);
+              break;
+            }
+            case 'closeThreadButton': {
+              actions.closeThread(store);
+              break;
+            }
+            case 'resolveThreadButton': {
+              actions.resolve(store, props.target.workspaceId, props.target.threadId);
+              break;
+            }
+            case 'reopenThreadButton': {
+              actions.reopenThread(store, props.target.workspaceId, props.target.threadId);
+              break;
+            }
+            case 'commentable': {
+              actions.startThread(store, { threadId: nanoid(), ...props.target });
+            }
+          }
+        }
         case 'idle': {
           switch (props.target.type) {
             case 'floatingCommentButton': {
@@ -148,7 +171,7 @@ export function createEvents(store: Store) {
               threadId: nanoid(),
               ...props.target,
             });
-          } else if (props.target.type === 'floatingCommentButton' && !store.enableContinuousMode) {
+          } else if (props.target.type === 'floatingCommentButton') {
             actions.stopSelecting(store);
           }
           break;

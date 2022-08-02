@@ -86,8 +86,7 @@ const config: CollabKit.Config = {
 };
 
 const store = createDemoStore(config, 'collabkit-demo-0', defaultWorkspace);
-store.uiState = 'selecting';
-store.enableContinuousMode = true;
+store.uiState = 'continuous';
 
 export function Demo() {
   const size = useWindowSize();

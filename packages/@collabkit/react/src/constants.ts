@@ -207,8 +207,7 @@ export interface Store {
     [workspaceId: string]: Workspace;
   };
   appState: 'blank' | 'config' | 'ready';
-  uiState: 'idle' | 'selecting' | 'composing' | 'viewing';
-  enableContinuousMode: boolean;
+  uiState: 'idle' | 'selecting' | 'continuous';
   subs: Subscriptions;
 }
 
