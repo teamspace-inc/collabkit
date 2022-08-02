@@ -1,4 +1,4 @@
-import { FlexCenter, HStack, styled } from './UIKit';
+import { FlexCenter, styled } from './UIKit';
 import { IconContext, ChatCircle, X } from 'phosphor-react';
 import React, { useState } from 'react';
 import { Composer } from './Composer';
