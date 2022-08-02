@@ -90,7 +90,7 @@ const store = createDemoStore(config, 'collabkit-demo-1', defaultWorkspace);
 
 export function Demo1() {
   const size = useWindowSize();
-  return (size?.width ?? 0) > 640 ? (
+  return (size?.width ?? 0) > 640 && window.chrome ? (
     <CollabKit.Provider _demoStore={store} colorScheme={'dark'} {...config}>
       <CollabKit.Commentable style={{ position: 'relative' }}>
         <div

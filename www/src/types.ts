@@ -1,1 +1,3 @@
+///<reference types="chrome"/>
+
 export {};

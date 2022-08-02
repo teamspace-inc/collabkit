@@ -94,7 +94,7 @@ export function Demo() {
 
   return (
     <div style={{ width: '100vw' }}>
-      {(size?.width ?? 0) > 640 ? (
+      {(size?.width ?? 0) > 640 && window.chrome ? (
         <CollabKit.Provider _demoStore={store} colorScheme={'dark'} {...config}>
           <CollabKit.Commentable style={{ position: 'relative' }}>
             <div
