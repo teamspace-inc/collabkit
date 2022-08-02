@@ -1,5 +1,6 @@
 import * as CollabKit from '@collabkit/react';
 import { styled } from '@stitches/react';
+import { useWindowSize } from '@collabkit/react/src/hooks/useWindowSize';
 import { DemoUI } from './DemoUI';
 import { DemoImageMobileFallback } from './Home';
 import DemoMobileImage from './image_02.png';
@@ -88,7 +89,8 @@ const config: CollabKit.Config = {
 const store = createDemoStore(config, 'collabkit-demo-1', defaultWorkspace);
 
 export function Demo1() {
-  return window.innerWidth > 640 ? (
+  const size = useWindowSize();
+  return (size?.width ?? 0) > 640 ? (
     <CollabKit.Provider _demoStore={store} colorScheme={'dark'} {...config}>
       <CollabKit.Commentable style={{ position: 'relative' }}>
         <div

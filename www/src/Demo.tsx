@@ -3,6 +3,7 @@ import * as CollabKit from '../../packages/@collabkit/react/src/index';
 import DemoMobileImage from './image_01.png';
 import { DemoImageMobileFallback } from './Home';
 import { createDemoStore, mentionableUsers } from './store';
+import { useWindowSize } from '@collabkit/react/src/hooks/useWindowSize';
 
 const defaultWorkspace: Partial<CollabKit.Workspace> = {
   pins: {
@@ -89,9 +90,11 @@ store.uiState = 'selecting';
 store.enableContinuousMode = true;
 
 export function Demo() {
+  const size = useWindowSize();
+
   return (
     <div style={{ width: '100vw' }}>
-      {window.innerWidth > 640 ? (
+      {(size?.width ?? 0) > 640 ? (
         <CollabKit.Provider _demoStore={store} colorScheme={'dark'} {...config}>
           <CollabKit.Commentable style={{ position: 'relative' }}>
             <div

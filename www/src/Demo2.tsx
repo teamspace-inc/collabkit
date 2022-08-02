@@ -5,6 +5,7 @@ import dashUISvg from './dash-ui.svg';
 import DemoMobileImage from './image_03.png';
 import { DemoImageMobileFallback } from './Home';
 import { createDemoStore, mentionableUsers } from './store';
+import { useWindowSize } from '@collabkit/react/src/hooks/useWindowSize';
 
 const defaultWorkspace: Partial<CollabKit.Workspace> = {
   pins: {},
@@ -67,7 +68,8 @@ const config: CollabKit.Config = {
 const store = createDemoStore(config, 'collabkit-demo-2', defaultWorkspace);
 
 export function Demo2() {
-  return window.innerWidth > 1124 ? (
+  const size = useWindowSize();
+  return (size?.width ?? 0) > 1124 ? (
     <div style={{ width: '100vw' }}>
       <CollabKit.Provider _demoStore={store} colorScheme={'dark'} {...config}>
         <CollabKit.Commentable style={{ position: 'relative' }}>
