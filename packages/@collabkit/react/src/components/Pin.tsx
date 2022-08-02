@@ -150,7 +150,6 @@ export function Pin(props: { pinId: string }) {
     whileElementsMounted: autoUpdate,
     placement: mode === 'demo' ? 'bottom-start' : undefined,
     open,
-    strategy: 'fixed',
     middleware:
       mode === 'demo'
         ? [
@@ -185,7 +184,7 @@ export function Pin(props: { pinId: string }) {
       ref={floating}
       style={{
         cursor: isHovering && !isViewing ? 'pointer' : 'default',
-        position: 'fixed',
+        position: strategy,
         top: y ?? 0,
         left: x ?? 0,
         height: 'auto',
