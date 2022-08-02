@@ -170,7 +170,7 @@ export interface Pin {
   url: string;
   createdById: string;
   createdAt: number;
-  state: 'pending' | 'open' | 'resolved' | 'deleted';
+  state: 'new' | 'pending' | 'open' | 'resolved' | 'deleted';
 }
 
 export interface Workspace {

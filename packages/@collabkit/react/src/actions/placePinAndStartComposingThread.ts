@@ -24,7 +24,7 @@ export async function placePinAndStartComposingThread(
       ...props.pin,
       createdAt: +new Date(),
       createdById: userId,
-      state: 'pending',
+      state: 'new',
     };
 
     store.workspaces[workspaceId].pins[threadId] = pin;
@@ -36,7 +36,7 @@ export async function placePinAndStartComposingThread(
     };
 
     setTimeout(() => {
-      store.workspaces[workspaceId].pins[threadId].state = 'open';
+      store.workspaces[workspaceId].pins[threadId].state = 'pending';
     }, 16);
   }
 
