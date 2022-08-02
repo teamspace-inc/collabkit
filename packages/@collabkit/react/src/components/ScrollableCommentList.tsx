@@ -1,13 +1,10 @@
 import { useCallback, useEffect, useRef } from 'react';
 import ScrollArea from './ScrollArea';
 import React from 'react';
-import { Comment } from './Comment';
 import { Profile, Timeline } from '../constants';
-import { Target } from './Target';
 import equal from 'fast-deep-equal';
-import { CurrentlyTyping } from './comment/TypingIndicator';
 import { useTimeline } from '../hooks/useTimeline';
-import { CommentList, StyledCommentList } from './CommentList';
+import { CommentList } from './CommentList';
 
 export const ScrollableCommentList = React.memo(function ScrollableCommentList(props: {
   isTyping?: { [endUserId: string]: boolean };
@@ -18,13 +15,13 @@ export const ScrollableCommentList = React.memo(function ScrollableCommentList(p
   threadId: string;
   isPreview?: boolean;
 }) {
-  const { threadId, workspaceId } = props;
+  const { workspaceId } = props;
 
   const rootRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const { profiles, timeline } = props;
 
-  const { list, messageEvents, reactionEvents, reactions } = useTimeline(timeline);
+  const { messageEvents, reactionEvents } = useTimeline(timeline);
 
   // todo this needs reworking anyway to show a 'new messages' button
   useEffect(() => {
