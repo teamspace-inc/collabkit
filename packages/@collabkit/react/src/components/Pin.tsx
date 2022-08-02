@@ -14,8 +14,6 @@ import {
   useFloating,
   size,
   autoUpdate,
-  useInteractions,
-  useHover,
 } from '@floating-ui/react-dom-interactions';
 import { keyframes } from '@stitches/react';
 import debounce from 'lodash.debounce';
@@ -148,10 +146,11 @@ export function Pin(props: { pinId: string }) {
     (pin.state === 'open' || pin.state === 'pending')
   );
 
-  const { x, y, reference, floating, strategy, context } = useFloating({
+  const { x, y, reference, floating, strategy } = useFloating({
     whileElementsMounted: autoUpdate,
     placement: mode === 'demo' ? 'bottom-start' : undefined,
     open,
+    strategy: 'fixed',
     middleware:
       mode === 'demo'
         ? [
@@ -181,20 +180,12 @@ export function Pin(props: { pinId: string }) {
           ],
   });
 
-  const { getReferenceProps, getFloatingProps } = useInteractions([
-    useHover(context, {
-      // props
-    }),
-  ]);
-
-  // console.log(getReferenceProps, getFloatingProps);
-
   const thread = open ? (
     <StyledFloatingThreadContainer
       ref={floating}
       style={{
         cursor: isHovering && !isViewing ? 'pointer' : 'default',
-        position: strategy,
+        position: 'fixed',
         top: y ?? 0,
         left: x ?? 0,
         height: 'auto',
