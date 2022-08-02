@@ -140,14 +140,11 @@ export function Pin(props: { pinId: string }) {
 
   const isHovering = hoveringId?.type === 'pin' && hoveringId.pinId === props.pinId;
 
-  const open = !!(
-    (isViewing || isHovering) &&
-    profile &&
-    (pin.state === 'open' || pin.state === 'pending')
-  );
+  const open = !!((isViewing || isHovering) && profile && pin.state === 'open');
 
   const { x, y, reference, floating, strategy } = useFloating({
     whileElementsMounted: autoUpdate,
+    strategy: 'fixed',
     placement: mode === 'demo' ? 'bottom-start' : undefined,
     open,
     middleware:

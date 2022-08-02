@@ -34,6 +34,10 @@ export async function placePinAndStartComposingThread(
       pinId: threadId,
       workspaceId,
     };
+
+    setTimeout(() => {
+      store.workspaces[workspaceId].pins[threadId].state = 'open';
+    }, 16);
   }
 
   if (store.uiState === 'selecting') {

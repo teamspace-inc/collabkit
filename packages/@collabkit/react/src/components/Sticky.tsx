@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useLayoutEffect, useRef } from 'react';
 import { styled } from './UIKit';
 import { autoUpdate, computePosition, offset } from '@floating-ui/dom';
 
@@ -30,7 +30,7 @@ export function Sticky(props: {
   const { children, selector } = props;
   const prevPosition = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     selectorRef.current = document.querySelector(selector);
     if (!selectorRef.current || !stickyRef.current) return;
     const cleanup = autoUpdate(selectorRef.current, stickyRef.current, () => {
