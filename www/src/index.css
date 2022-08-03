@@ -50,4 +50,6 @@ body {
   font-weight: 400;
   font-size: 24px;
   color: #000000;
+  width: 100vw;
+  overflow-x: hidden;
 }

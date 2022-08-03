@@ -97,7 +97,7 @@ const Section = styled('section', {
   minHeight: '100vh',
   position: 'relative',
   display: 'flex',
-  width: '100%',
+  width: '100vw',
   overflow: 'hidden',
   flexDirection: 'column',
   alignItems: 'center',
@@ -866,6 +866,19 @@ export function Home() {
           <Small>Backed by Y Combinator</Small>
         </HStack>
       </Section>
+      {/* <Section>
+        <Title>Contact Us</Title>
+        <Text>Any questions? Email us or join our Discord</Text>
+        <div>
+          <div>info@collabkit.dev</div>
+          <div>Discord</div>
+        </div>
+        <footer>
+          <a href="">Privacy</a>
+          <a href="">Cookies</a>
+          <a href="">Terms &amp; Conditions</a>
+        </footer>
+      </Section> */}
     </VStack>
   );
 }
