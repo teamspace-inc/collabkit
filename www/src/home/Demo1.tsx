@@ -4,7 +4,7 @@ import { useWindowSize } from '@collabkit/react/src/hooks/useWindowSize';
 import { DemoUI } from './DemoUI';
 import { DemoImageMobileFallback } from './Home';
 import DemoMobileImage from '../assets/image_02.png';
-import { createDemoStore, mentionableUsers } from '../store';
+import { createDemoStore, mentionableUsers } from './demoStore';
 
 const defaultWorkspace: Partial<CollabKit.Workspace> = {
   pins: {

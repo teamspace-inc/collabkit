@@ -2,7 +2,7 @@ import UI from '../assets/UI.svg';
 import * as CollabKit from '../../../packages/@collabkit/react/src/index';
 import DemoMobileImage from '../assets/image_01.png';
 import { DemoImageMobileFallback } from './Home';
-import { createDemoStore, mentionableUsers } from '../store';
+import { createDemoStore, mentionableUsers } from './demoStore';
 import { useWindowSize } from '@collabkit/react/src/hooks/useWindowSize';
 
 const defaultWorkspace: Partial<CollabKit.Workspace> = {

@@ -1,5 +1,4 @@
 import { ReactNode, useEffect, useRef, useState } from 'react';
-import { styled } from '../UIKit';
 import CommentAnything from '../assets/CommentAnything.svg';
 import AnyApp from '../assets/AnyApp.svg';
 import Realtime from '../assets/Realtime.svg';
@@ -8,54 +7,56 @@ import ChevronDown from '../assets/ChevronDown.svg';
 import RocketLaunchIcon from '../assets/RocketLaunch.svg';
 import HandPointingIcon from '../assets/HandPointing.svg';
 import Cursor from '../assets/Cursor.svg';
-import Logo from '../assets/Logo.svg';
 import ycLogoSvg from '../assets/yc-logo.svg';
 import checkmarkSvg from '../assets/checkmark.svg';
 import { Demo } from './Demo';
 import { Demo1 } from './Demo1';
 import { Demo2 } from './Demo2';
 import { DiscordLogo } from 'phosphor-react';
+import { StickyHeader } from '../StickyHeader';
+import { Text, VStack, HStack, styled, Title } from '../UIKit';
+import { Logo } from '../Logo';
 
 const Grid = styled('div', {
   display: 'grid',
 });
 
-const VStack = styled('div', {
-  display: 'flex',
-  flexDirection: 'column',
-});
+// const VStack = styled('div', {
+//   display: 'flex',
+//   flexDirection: 'column',
+// });
 
-const HStack = styled('div', {
-  display: 'flex',
-  flexDirection: 'row',
-});
+// const HStack = styled('div', {
+//   display: 'flex',
+//   flexDirection: 'row',
+// });
 
-const Text = styled('p', {
-  fontFamily: 'Inter',
-  fontStyle: 'normal',
-  fontWeight: 500,
-  fontSize: '1.25rem',
-  lineHeight: '140%',
-  letterSpacing: '-0.03em,',
-  zIndex: 1,
-});
+// export const Text = styled('p', {
+//   fontFamily: 'Inter',
+//   fontStyle: 'normal',
+//   fontWeight: 500,
+//   fontSize: '1.25rem',
+//   lineHeight: '140%',
+//   letterSpacing: '-0.03em,',
+//   zIndex: 1,
+// });
 
-const Title = styled('h1', {
-  fontFamily: 'Space Grotesk',
-  fontFeatureSettings: 'ss04',
-  fontStyle: 'normal',
-  fontWeight: 700,
-  fontSize: '5.5rem',
-  lineHeight: '95%',
-  textAlign: 'center',
-  letterSpacing: '-0.05em',
-  color: '#222222',
-  margin: '4rem 0 2rem',
-  zIndex: 1,
+// const Title = styled('h1', {
+//   fontFamily: 'Space Grotesk',
+//   fontFeatureSettings: 'ss04',
+//   fontStyle: 'normal',
+//   fontWeight: 700,
+//   fontSize: '5.5rem',
+//   lineHeight: '95%',
+//   textAlign: 'center',
+//   letterSpacing: '-0.05em',
+//   color: '#222222',
+//   margin: '4rem 0 2rem',
+//   zIndex: 1,
 
-  '@bp1': { marginTop: 0, maxWidth: '90vw', minWidth: '90vw', fontSize: '4rem' },
-  '@bp2': { maxWidth: 'unset', minWidth: 'unset', fontSize: '7rem' },
-});
+//   '@bp1': { marginTop: 0, maxWidth: '90vw', minWidth: '90vw', fontSize: '4rem' },
+//   '@bp2': { maxWidth: 'unset', minWidth: 'unset', fontSize: '7rem' },
+// });
 
 const Em = styled('em', {
   // fontFamily: 'Source Serif Pro',
@@ -73,7 +74,7 @@ const Subtitle = styled('h2', {
   zIndex: 1,
 });
 
-const Button = styled('button', {
+export const Button = styled('button', {
   fontFamily: 'Inter',
   padding: '1rem 2rem',
   fontStyle: 'normal',
@@ -105,10 +106,10 @@ const Section = styled('section', {
   justifyContent: 'center',
 });
 
-const Header = styled('header', {
+export const Header = styled('header', {
   display: 'flex',
-  alignItems: 'baseline',
-  justifyContent: 'stretch',
+  // alignItems: 'baseline',
+  // justifyContent: 'stretch',
   flex: 1,
   width: '90vw',
   padding: '0 5vw',
@@ -119,7 +120,7 @@ const Header = styled('header', {
   // '@bp1': { marginTop: '1rem', flexDirection: 'column', alignItems: 'flex-start' },
 });
 
-const Link = styled('a', {
+export const Link = styled('a', {
   fontSize: '1.25rem',
   textDecoration: 'none',
   color: 'black',
@@ -221,7 +222,7 @@ const FeatureGrid = styled(Grid, {
   },
 });
 
-function RequestDemoButton() {
+export function RequestDemoButton() {
   return (
     <Button
       onClick={() =>
@@ -230,50 +231,6 @@ function RequestDemoButton() {
     >
       Request a demo
     </Button>
-  );
-}
-
-function StickyHeader(props: { invertFilter?: number }) {
-  return (
-    <Header style={{ marginTop: '1rem', filter: `invert(${props.invertFilter ?? 0})` }}>
-      <div style={{ display: 'flex', flex: 1 }}>
-        <img
-          onClick={() =>
-            window.scrollTo({
-              top: 0,
-              left: 0,
-              behavior: 'smooth',
-            })
-          }
-          src={Logo}
-          style={{
-            height: '1.5rem',
-            position: 'relative',
-            cursor: 'pointer',
-            top: window.innerWidth > 640 ? '0.15rem' : 0,
-          }}
-        />
-      </div>
-      <div style={{ display: 'flex', flexDirection: 'row', gap: '4rem' }}>
-        {window.innerWidth > 640 ? (
-          <Text>
-            <Link
-              style={{ cursor: 'pointer' }}
-              onClick={() =>
-                document
-                  .getElementsByClassName('FooterLinks')[0]
-                  .scrollIntoView({ behavior: 'smooth' })
-              }
-            >
-              Contact us
-            </Link>
-          </Text>
-        ) : null}
-        <div style={{ position: 'relative', top: window.innerWidth > 640 ? '0.5rem' : 0 }}>
-          <RequestDemoButton />
-        </div>
-      </div>
-    </Header>
   );
 }
 
@@ -591,7 +548,30 @@ export function Home() {
   }, []);
   return (
     <VStack style={{ alignItems: 'center' }}>
-      <StickyHeader invertFilter={invertFilter} />
+      <StickyHeader
+        style={{ marginTop: '1rem' }}
+        invertFilter={invertFilter}
+        left={<Logo />}
+        right={
+          <HStack style={{ gap: '6rem', alignItems: 'center' }}>
+            {window.innerWidth > 640 ? (
+              <Link
+                style={{ fontWeight: '500', cursor: 'pointer' }}
+                onClick={() =>
+                  document
+                    .getElementsByClassName('FooterLinks')[0]
+                    .scrollIntoView({ behavior: 'smooth' })
+                }
+              >
+                Contact us
+              </Link>
+            ) : null}
+            <div style={{ position: 'relative' }}>
+              <RequestDemoButton />
+            </div>
+          </HStack>
+        }
+      />
       {Hero}
       {BoostActivation}
       {window.innerWidth > 640 ? TryItOut : null}
@@ -915,10 +895,12 @@ export function Home() {
               fontFamily: 'Inter',
               fontStyle: 'normal',
               fontWeight: 500,
+              boxSizing: 'border-box',
+              height: '4rem',
               fontSize: '1.25rem',
-              lineHeight: '110%',
-              padding: '1.25rem 2rem',
-              width: '11rem',
+              lineHeight: '150%',
+              padding: '1rem 2rem',
+              width: '16rem',
               textAlign: 'center',
               borderRadius: '100px',
               color: 'white',
@@ -935,9 +917,11 @@ export function Home() {
               fontStyle: 'normal',
               fontWeight: 500,
               fontSize: '1.25rem',
-              lineHeight: '110%',
-              padding: '1.25rem 2rem',
-              width: '11rem',
+              lineHeight: '100%',
+              boxSizing: 'border-box',
+              height: '4rem',
+              padding: '1rem 2rem',
+              width: '16rem',
               textAlign: 'center',
               borderRadius: '100px',
               color: 'white',
@@ -945,7 +929,7 @@ export function Home() {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              gap: '1rem',
+              gap: '0.5rem',
             }}
           >
             <DiscordLogo color="white" weight={'fill'} size={20} />

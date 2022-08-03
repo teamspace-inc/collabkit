@@ -11,6 +11,7 @@
     "@collabkit/react": "^0.0.0",
     "@stitches/react": "^1.2.8",
     "@types/chrome": "^0.0.193",
+    "firebase": "^9.9.1",
     "jwt-decode": "^3.1.2",
     "nanoid": "^4.0.0",
     "phosphor-react": "^1.4.1",
