@@ -9,10 +9,14 @@ export function SignedIn() {
   }, []);
 
   const { user } = useSnapshot(store);
+  if (!user?.email) {
+    return null;
+  }
 
   return (
     <div>
       <h1>Signed in {user?.email}</h1>
+      Todo show dashboard here
     </div>
   );
 }

@@ -1,10 +1,10 @@
 import { styled } from '@stitches/react';
 import * as CollabKit from '@collabkit/react';
 import { DemoUI } from './DemoUI';
-import dashUISvg from './dash-ui.svg';
-import DemoMobileImage from './image_03.png';
+import dashUISvg from '../assets/dash-ui.svg';
+import DemoMobileImage from '../assets/image_03.png';
 import { DemoImageMobileFallback } from './Home';
-import { createDemoStore, mentionableUsers } from './store';
+import { createDemoStore, mentionableUsers } from '../store';
 import { useWindowSize } from '@collabkit/react/src/hooks/useWindowSize';
 
 const defaultWorkspace: Partial<CollabKit.Workspace> = {

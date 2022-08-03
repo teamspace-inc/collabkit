@@ -1,16 +1,16 @@
 import { ReactNode, useEffect, useRef, useState } from 'react';
-import { styled } from './UIKit';
-import CommentAnything from './CommentAnything.svg';
-import AnyApp from './AnyApp.svg';
-import Realtime from './Realtime.svg';
-import Email from './Email.svg';
-import ChevronDown from './ChevronDown.svg';
-import RocketLaunchIcon from './RocketLaunch.svg';
-import HandPointingIcon from './HandPointing.svg';
-import Cursor from './Cursor.svg';
-import Logo from './Logo.svg';
-import ycLogoSvg from './yc-logo.svg';
-import checkmarkSvg from './checkmark.svg';
+import { styled } from '../UIKit';
+import CommentAnything from '../assets/CommentAnything.svg';
+import AnyApp from '../assets/AnyApp.svg';
+import Realtime from '../assets/Realtime.svg';
+import Email from '../assets/Email.svg';
+import ChevronDown from '../assets/ChevronDown.svg';
+import RocketLaunchIcon from '../assets/RocketLaunch.svg';
+import HandPointingIcon from '../assets/HandPointing.svg';
+import Cursor from '../assets/Cursor.svg';
+import Logo from '../assets/Logo.svg';
+import ycLogoSvg from '../assets/yc-logo.svg';
+import checkmarkSvg from '../assets/checkmark.svg';
 import { Demo } from './Demo';
 import { Demo1 } from './Demo1';
 import { Demo2 } from './Demo2';
@@ -815,6 +815,7 @@ export function Home() {
           background: '#FFEC6B',
           textAlign: 'center',
           paddingTop: '10rem',
+          paddingBottom: '5rem',
           minHeight: '80vh',
         }}
       >
