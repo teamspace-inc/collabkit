@@ -14,6 +14,7 @@ import checkmarkSvg from './checkmark.svg';
 import { Demo } from './Demo';
 import { Demo1 } from './Demo1';
 import { Demo2 } from './Demo2';
+import { DiscordLogo } from 'phosphor-react';
 
 const Grid = styled('div', {
   display: 'grid',
@@ -256,7 +257,16 @@ function StickyHeader(props: { invertFilter?: number }) {
       <div style={{ display: 'flex', flexDirection: 'row', gap: '4rem' }}>
         {window.innerWidth > 640 ? (
           <Text>
-            <Link href="https://discord.gg/UCA4CbZad4">Discord</Link>
+            <Link
+              style={{ cursor: 'pointer' }}
+              onClick={() =>
+                document
+                  .getElementsByClassName('FooterLinks')[0]
+                  .scrollIntoView({ behavior: 'smooth' })
+              }
+            >
+              Contact us
+            </Link>
           </Text>
         ) : null}
         <div style={{ position: 'relative', top: window.innerWidth > 640 ? '0.5rem' : 0 }}>
@@ -529,6 +539,23 @@ const JustAddInnerSection = styled(VStack, {
   '@bp2': {
     marginTop: '7rem',
   },
+});
+
+const FooterLink = styled('a', {
+  fontFamily: 'Inter',
+  fontStyle: 'normal',
+  fontWeight: 500,
+  fontSize: '1rem',
+  lineHeight: '120%',
+  /* or 19px */
+
+  textAlign: 'center',
+  letterSpacing: '-0.03em',
+
+  /* Grey 60 */
+
+  color: '#999999',
+  textDecoration: 'none',
 });
 
 export const DemoImageMobileFallback = styled('img', {
@@ -854,31 +881,103 @@ export function Home() {
             <RequestDemoButton />
           </Plan>
         </PlanGrid>
+      </Section>
+      <Section
+        style={{
+          paddingTop: '15rem',
+          paddingBottom: '5rem',
+          minHeight: '40vh',
+          background: '#222222',
+        }}
+      >
+        <Title style={{ color: 'white', marginBottom: '3.75rem' }}>Contact Us</Title>
+        <Text
+          style={{
+            color: 'white',
+            fontFamily: 'Inter',
+            fontStyle: 'normal',
+            fontWeight: 500,
+            fontSize: '1.25rem',
+            textAlign: 'center',
+            letterSpacing: '-0.03em',
+            margin: 0,
+            marginBottom: '4rem',
+          }}
+        >
+          Any questions? Email us or join our Discord.
+        </Text>
+        <HStack style={{ gap: '2rem', margin: 0 }}>
+          <a
+            href="mailto:info@collabkit.dev"
+            style={{
+              border: '1px solid white',
+              fontFamily: 'Inter',
+              fontStyle: 'normal',
+              fontWeight: 500,
+              fontSize: '1.25rem',
+              lineHeight: '110%',
+              padding: '1.25rem 2rem',
+              width: '11rem',
+              textAlign: 'center',
+              borderRadius: '100px',
+              color: 'white',
+              textDecoration: 'none',
+            }}
+          >
+            info@collabkit.dev
+          </a>
+          <a
+            href="https://discord.gg/UCA4CbZad4"
+            style={{
+              border: '1px solid white',
+              fontFamily: 'Inter',
+              fontStyle: 'normal',
+              fontWeight: 500,
+              fontSize: '1.25rem',
+              lineHeight: '110%',
+              padding: '1.25rem 2rem',
+              width: '11rem',
+              textAlign: 'center',
+              borderRadius: '100px',
+              color: 'white',
+              textDecoration: 'none',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '1rem',
+            }}
+          >
+            <DiscordLogo color="white" weight={'fill'} size={20} />
+            Discord
+          </a>
+        </HStack>
         <HStack
           style={{
-            marginTop: '6rem',
-            marginBottom: '4rem',
+            marginTop: '10rem',
+            marginBottom: '0rem',
             alignItems: 'center',
             gap: '0.625rem',
           }}
         >
           <img src={ycLogoSvg} style={{ width: '2rem', height: '2rem' }} />
-          <Small>Backed by Y Combinator</Small>
+          <Small style={{ color: 'white' }}>Backed by Y Combinator</Small>
+        </HStack>
+        <HStack className="FooterLinks" style={{ gap: '1rem', marginTop: '2rem' }}>
+          <FooterLink>Teamspace Inc. 2022</FooterLink>
+          <FooterLink target="_blank" href="https://www.iubenda.com/privacy-policy/17041190">
+            Privacy
+          </FooterLink>
+          <FooterLink
+            target="_blank"
+            href="https://www.iubenda.com/privacy-policy/17041190/cookie-policy"
+          >
+            Cookies
+          </FooterLink>
+          <FooterLink target="_blank" href="https://www.iubenda.com/terms-and-conditions/17041190">
+            Terms &amp; Conditions
+          </FooterLink>
         </HStack>
       </Section>
-      {/* <Section>
-        <Title>Contact Us</Title>
-        <Text>Any questions? Email us or join our Discord</Text>
-        <div>
-          <div>info@collabkit.dev</div>
-          <div>Discord</div>
-        </div>
-        <footer>
-          <a href="">Privacy</a>
-          <a href="">Cookies</a>
-          <a href="">Terms &amp; Conditions</a>
-        </footer>
-      </Section> */}
     </VStack>
   );
 }
