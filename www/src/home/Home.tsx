@@ -551,7 +551,17 @@ export function Home() {
       <StickyHeader
         style={{ marginTop: '1rem' }}
         invertFilter={invertFilter}
-        left={<Logo />}
+        left={
+          <Logo
+            onClick={(e) => {
+              window.scrollTo({
+                top: 0,
+                left: 0,
+                behavior: 'smooth',
+              });
+            }}
+          />
+        }
         right={
           <HStack style={{ gap: '6rem', alignItems: 'center' }}>
             {window.innerWidth > 640 ? (

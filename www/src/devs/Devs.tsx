@@ -42,7 +42,10 @@ export function Devs() {
 
   return (
     <div>
-      <StickyHeader style={{ marginTop: '1rem' }} left={<Logo />} />
+      <StickyHeader
+        style={{ marginTop: '1.5rem' }}
+        left={<Logo onClick={() => (window.location.href = '/')} />}
+      />
       {view[authState]}
     </div>
   );

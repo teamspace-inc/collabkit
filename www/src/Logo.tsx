@@ -1,16 +1,13 @@
 import React from 'react';
 import LogoSvg from './assets/Logo.svg';
 
-export function Logo(props: { style?: React.CSSProperties }) {
+export function Logo(props: {
+  style?: React.CSSProperties;
+  onClick?: (e: React.MouseEvent) => void;
+}) {
   return (
     <img
-      onClick={() =>
-        window.scrollTo({
-          top: 0,
-          left: 0,
-          behavior: 'smooth',
-        })
-      }
+      {...props}
       src={LogoSvg}
       style={{
         height: '1.5rem',
