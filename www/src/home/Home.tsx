@@ -14,120 +14,20 @@ import { HomeDemo2 } from './HomeDemo2';
 import { HomeDemo3 } from './HomeDemo3';
 import { DiscordLogo } from 'phosphor-react';
 import { StickyHeader } from '../StickyHeader';
-import { Text, VStack, HStack, styled, Title } from '../UIKit';
+import {
+  Link,
+  Section,
+  Button,
+  Grid,
+  Subtitle,
+  Em,
+  Text,
+  VStack,
+  HStack,
+  styled,
+  Title,
+} from '../UIKit';
 import { Logo } from '../Logo';
-
-const Grid = styled('div', {
-  display: 'grid',
-});
-
-// const VStack = styled('div', {
-//   display: 'flex',
-//   flexDirection: 'column',
-// });
-
-// const HStack = styled('div', {
-//   display: 'flex',
-//   flexDirection: 'row',
-// });
-
-// export const Text = styled('p', {
-//   fontFamily: 'Inter',
-//   fontStyle: 'normal',
-//   fontWeight: 500,
-//   fontSize: '1.25rem',
-//   lineHeight: '140%',
-//   letterSpacing: '-0.03em,',
-//   zIndex: 1,
-// });
-
-// const Title = styled('h1', {
-//   fontFamily: 'Space Grotesk',
-//   fontFeatureSettings: 'ss04',
-//   fontStyle: 'normal',
-//   fontWeight: 700,
-//   fontSize: '5.5rem',
-//   lineHeight: '95%',
-//   textAlign: 'center',
-//   letterSpacing: '-0.05em',
-//   color: '#222222',
-//   margin: '4rem 0 2rem',
-//   zIndex: 1,
-
-//   '@bp1': { marginTop: 0, maxWidth: '90vw', minWidth: '90vw', fontSize: '4rem' },
-//   '@bp2': { maxWidth: 'unset', minWidth: 'unset', fontSize: '7rem' },
-// });
-
-const Em = styled('em', {
-  // fontFamily: 'Source Serif Pro',
-  zIndex: 1,
-  fontStyle: 'normal',
-});
-
-const Subtitle = styled('h2', {
-  fontFamily: 'Space Grotesk',
-  fontStyle: 'normal',
-  fontWeight: 700,
-  fontSize: '2rem',
-  lineHeight: '116%',
-  letterSpacing: '-0.05em',
-  zIndex: 1,
-});
-
-export const Button = styled('button', {
-  fontFamily: 'Inter',
-  padding: '1rem 2rem',
-  fontStyle: 'normal',
-  fontWeight: 500,
-  fontSize: '1.25rem',
-  lineHeight: '100%',
-  textAlign: 'center',
-  letterSpacing: '-0.03em',
-  color: '#FFFFFF',
-  background: '#222222',
-  borderRadius: 100,
-  gap: '10px',
-  border: 'none',
-  zIndex: 1,
-  cursor: 'pointer',
-  '&:hover': {
-    background: 'black',
-  },
-});
-
-const Section = styled('section', {
-  minHeight: '100vh',
-  position: 'relative',
-  display: 'flex',
-  width: '100vw',
-  overflow: 'hidden',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
-});
-
-export const Header = styled('header', {
-  display: 'flex',
-  // alignItems: 'baseline',
-  // justifyContent: 'stretch',
-  flex: 1,
-  width: '90vw',
-  padding: '0 5vw',
-  position: 'fixed',
-  zIndex: 2,
-  maxWidth: '1352px',
-
-  // '@bp1': { marginTop: '1rem', flexDirection: 'column', alignItems: 'flex-start' },
-});
-
-export const Link = styled('a', {
-  fontSize: '1.25rem',
-  textDecoration: 'none',
-  color: 'black',
-  '&:hover': {
-    textDecoration: 'underline',
-  },
-});
 
 const Circle = styled('div', {
   aspectRatio: 1,
