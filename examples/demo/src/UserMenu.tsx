@@ -14,8 +14,8 @@ export function UserMenu({
     <div
       style={{
         position: 'fixed',
-        top: 16,
-        right: 16,
+        bottom: 16,
+        left: 16,
         height: 44,
         display: 'flex',
         justifyContent: 'flex-end',

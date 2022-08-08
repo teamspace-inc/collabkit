@@ -65,7 +65,7 @@ export default function App() {
         src="https://www.tella.tv/video/ckwyx03y6000509i62z4k2qfu/view"
       />
 
-      {/* <UserMenu user={user} onChangeUser={onChangeUser} /> */}
+      <UserMenu user={user} onChangeUser={onChangeUser} />
       {/* <CollabKit.FloatingButton /> */}
     </CollabKit.Provider>
   );
