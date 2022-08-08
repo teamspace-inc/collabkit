@@ -5,7 +5,6 @@
     "examples/*",
     "packages/@collabkit/*",
     "packages/@collabkit/react/src/__fixtures__",
-    "org/*",
     "www"
   ],
   "scripts": {
