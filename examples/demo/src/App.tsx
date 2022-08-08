@@ -1,12 +1,35 @@
 import * as CollabKit from '@collabkit/react';
 import { mentionableUsers } from './data';
 import './App.css';
-import { Chat } from './Chat';
 import { UserMenu } from './UserMenu';
 import { useCallback, useEffect, useState } from 'react';
 import { User } from './types';
 
 import jwtDecode from 'jwt-decode';
+
+function TellaDemo() {
+  return (
+    <>
+      <div
+        style={{
+          position: 'fixed',
+          right: 0,
+          top: 0,
+          width: 284,
+          margin: '0 0 0 0',
+          height: 'calc(100vh)',
+        }}
+      >
+        <CollabKit.Thread
+          showHeader={true}
+          composerPrompt="Add comment..."
+          style={{ borderRadius: 0 }}
+          threadId="demo-chat3"
+        />
+      </div>
+    </>
+  );
+}
 
 export default function App() {
   const [user, setUser] = useState<User | null>(() => {
@@ -54,7 +77,7 @@ export default function App() {
       mentionableUsers={mentionableUsers}
     >
       {/* <CollabKit.Commentable>{image}</CollabKit.Commentable> */}
-      <Chat />
+      <TellaDemo />
       <iframe
         style={{
           padding: '0 16px',

@@ -40,7 +40,7 @@ const StyledComposerSendButton = styled(Tooltip.Trigger, {
   width: '$sizes$sendButton',
   height: '$sizes$sendButton',
   position: 'absolute',
-  right: '$padding$composer',
+  right: 'calc($padding$composer + 4px)',
   top: '$padding$composer',
   borderRadius: '$sizes$sendButton',
   border: 'none',

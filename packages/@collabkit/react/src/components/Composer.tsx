@@ -16,6 +16,7 @@ import MentionsPlugin from './MentionsPlugin';
 import { MentionNode } from './MentionNode';
 import { useApp } from '../hooks/useApp';
 import { SendButton } from './composer/SendButton';
+import { Avatar } from './Avatar';
 
 const lexicalTheme = {
   ltr: 'ltr',
@@ -55,12 +56,27 @@ const ComposerContainer = styled('div', {
 });
 
 const StyledLexicalEditorContainer = styled('div', {
-  borderRadius: '$radii$1',
-  width: 'calc(100% - $sizes$sendButton - $padding$composer)', // take into account send button
+  borderRadius: '$radii$0',
+  width: 'calc(100% - $padding$composer - $sizes$avatar - 0px)', // take into account send button
   color: '$colors$primaryText',
-  marginLeft: 0,
+  marginLeft: 8,
   padding: '0px 0',
+  position: 'relative',
+  verticalAlign: 'top',
   background: '$colors$composerBackground',
+
+  fontSize: '$fontSize$2',
+  lineHeight: '$lineHeights$1',
+  fontWeight: '$fontWeights$0',
+  textAlign: 'left',
+});
+
+const StyledVisibleComposerArea = styled('div', {
+  borderRadius: '$radii$0',
+  width: 'calc(100% - $sizes$sendButton - 8px)', // take into account send button
+  color: '$colors$primaryText',
+  // marginLeft: 8,
+  padding: '0px 0',
   position: 'relative',
   verticalAlign: 'top',
   fontSize: '$fontSize$2',
@@ -113,6 +129,9 @@ export function Composer(props: {
 
   return (
     <ComposerContainer style={props.style}>
+      {props.profile ? (
+        <Avatar style={{ position: 'relative', top: 4, marginLeft: 8 }} profile={props.profile} />
+      ) : null}
       <LexicalComposer initialConfig={initialConfig}>
         <StyledLexicalEditorContainer
           className="editor-container"
@@ -120,10 +139,11 @@ export function Composer(props: {
           onFocus={(e) => events.onFocus(e, { target })}
           onBlur={(e) => events.onBlur(e, { target })}
         >
-          <style>
-            // todo move this to @stitches // copied from
-            https://codesandbox.io/s/lexical-plain-text-example-g932e?file=/src/styles.css:554-1383
-            {`
+          <StyledVisibleComposerArea>
+            <style>
+              // todo move this to @stitches // copied from
+              https://codesandbox.io/s/lexical-plain-text-example-g932e?file=/src/styles.css:554-1383
+              {`
 .ltr {
   text-align: left;
 }
@@ -162,20 +182,21 @@ export function Composer(props: {
   position: relative;
 }
 `}
-          </style>
-          <PlainTextPlugin
-            contentEditable={<ContentEditable className="editor-input" />}
-            placeholder={<Placeholder>{props.placeholder}</Placeholder>}
-          />
-          <OnChangePlugin
-            onChange={(editorState) => {
-              editorStateRef.current = editorState;
-              events.onComposerChange(target, editorState);
-            }}
-          />
-          <HistoryPlugin />
-          <MentionsPlugin />
-          {props.autoFocus ? <AutoFocusPlugin /> : null}
+            </style>
+            <PlainTextPlugin
+              contentEditable={<ContentEditable className="editor-input" />}
+              placeholder={<Placeholder>{props.placeholder}</Placeholder>}
+            />
+            <OnChangePlugin
+              onChange={(editorState) => {
+                editorStateRef.current = editorState;
+                events.onComposerChange(target, editorState);
+              }}
+            />
+            <HistoryPlugin />
+            <MentionsPlugin />
+            {props.autoFocus ? <AutoFocusPlugin /> : null}
+          </StyledVisibleComposerArea>
         </StyledLexicalEditorContainer>
       </LexicalComposer>
       <SendButton

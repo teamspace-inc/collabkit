@@ -78,6 +78,7 @@ const sizes = {
   threadWidth: '260px',
   threadPreviewWidth: '248px',
   pin: `${PIN_SIZE}px`,
+  avatar: '24px',
   pinBorderWidth: '1.5px',
 };
 
@@ -97,9 +98,9 @@ const colors = {
   badgeColor: '$red10',
 
   primaryButtonBackground: '$neutral1',
-  composerButtonBackground: '$neutral12',
+  composerButtonBackground: '$accent10',
   composerButtonIconColor: '$neutral1',
-  composerBackground: 'transparent',
+  composerBackground: '$neutral4',
 
   bubbleHoverBackground: '$neutral4',
   selectionBackground: '$neutral10',
