@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { mentionableUsers } from './data';
 import { User } from './types';
 
 export function UserMenu({
