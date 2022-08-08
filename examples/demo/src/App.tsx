@@ -24,7 +24,7 @@ function TellaDemo() {
           showHeader={true}
           composerPrompt="Add comment..."
           style={{ borderRadius: 0 }}
-          threadId="demo-chat3"
+          threadId="demo-chat4"
         />
       </div>
     </>
