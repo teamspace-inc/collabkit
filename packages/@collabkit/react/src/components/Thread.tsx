@@ -26,7 +26,7 @@ const StyledThreadContainer = styled('div', {
   position: 'relative',
   flex: 1,
   background: '$neutral1',
-  borderRadius: 11,
+  borderRadius: '$radii$1',
 });
 
 const StyledThreadHeader = styled('div', {
@@ -40,6 +40,7 @@ const StyledThreadHeader = styled('div', {
 export function Thread(props: {
   threadId: string;
   style?: React.CSSProperties;
+  composerPrompt?: string;
   showHeader?: boolean;
   onCloseButtonClick?: (e: React.MouseEvent) => void;
 }) {
@@ -114,7 +115,13 @@ export function Thread(props: {
                 borderTop: `1px solid ${theme.colors.borderColor.value.toString()}`,
               }}
               workspace={workspace}
-              placeholder={isEmpty ? 'Add a comment' : 'Reply to this comment'}
+              placeholder={
+                props.composerPrompt
+                  ? props.composerPrompt
+                  : isEmpty
+                  ? 'Add a comment'
+                  : 'Reply to this comment'
+              }
               workspaceId={workspaceId}
               onHeightChange={setComposerHeight}
               profile={profiles[userId]}

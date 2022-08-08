@@ -5,14 +5,14 @@ export function Chat() {
     <div
       style={{
         position: 'fixed',
-        left: 0,
+        right: 0,
         top: 0,
-        width: 300,
-        margin: 16,
-        height: 'calc(100vh - 2 * 16px)',
+        width: 284,
+        margin: '0 0 0 0',
+        height: 'calc(100vh)',
       }}
     >
-      <Thread threadId="demo-chat3" />
+      <Thread composerPrompt="Add comment..." style={{ borderRadius: 0 }} threadId="demo-chat3" />
     </div>
   );
 }

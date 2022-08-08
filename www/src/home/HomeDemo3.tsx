@@ -67,7 +67,7 @@ const config: CollabKit.Config = {
 
 const store = createDemoStore(config, 'collabkit-demo-2', defaultWorkspace);
 
-export function Demo2() {
+export function HomeDemo3() {
   const size = useWindowSize();
   return (size?.width ?? 0) > 1124 && window.chrome ? (
     <div style={{ width: '100vw' }}>

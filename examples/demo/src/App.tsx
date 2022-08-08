@@ -46,17 +46,22 @@ export default function App() {
 
   return (
     <CollabKit.Provider
+      colorScheme="dark"
       apiKey={import.meta.env.VITE_COLLABKIT_TOKEN}
       appId={import.meta.env.VITE_COLLABKIT_APP_ID}
       workspace={{ id: 'acme', name: 'ACME' }}
       user={user}
       mentionableUsers={mentionableUsers}
     >
-      <CollabKit.Commentable>{image}</CollabKit.Commentable>
+      {/* <CollabKit.Commentable>{image}</CollabKit.Commentable> */}
       <Chat />
+      <iframe
+        style={{ width: 'calc(100vw - 284px)', height: '100vh', border: 'none' }}
+        src="https://www.tella.tv/video/ckwyx03y6000509i62z4k2qfu/view"
+      />
 
-      <UserMenu user={user} onChangeUser={onChangeUser} />
-      <CollabKit.FloatingButton />
+      {/* <UserMenu user={user} onChangeUser={onChangeUser} /> */}
+      {/* <CollabKit.FloatingButton /> */}
     </CollabKit.Provider>
   );
 }

@@ -9,5 +9,5 @@ export const StyledThread = styled('div', {
   justifyItems: 'stretch',
   flex: 1,
   height: '100%',
-  borderRadius: '11px',
+  borderRadius: '$radii$1',
 });

@@ -9,9 +9,9 @@ import HandPointingIcon from '../assets/HandPointing.svg';
 import Cursor from '../assets/Cursor.svg';
 import ycLogoSvg from '../assets/yc-logo.svg';
 import checkmarkSvg from '../assets/checkmark.svg';
-import { Demo } from './Demo';
-import { Demo1 } from './Demo1';
-import { Demo2 } from './Demo2';
+import { HomeDemo1 } from './HomeDemo1';
+import { HomeDemo2 } from './HomeDemo2';
+import { HomeDemo3 } from './HomeDemo3';
 import { DiscordLogo } from 'phosphor-react';
 import { StickyHeader } from '../StickyHeader';
 import { Text, VStack, HStack, styled, Title } from '../UIKit';
@@ -586,7 +586,7 @@ export function Home() {
       {BoostActivation}
       {window.innerWidth > 640 ? TryItOut : null}
       {/* {ContextualConversations} */}
-      <Demo />
+      <HomeDemo1 />
       <Section
         style={{
           marginTop: '6rem',
@@ -780,7 +780,7 @@ export function Home() {
           </Text>
         </JustAddInnerSection>
         <DemoContainer>
-          <Demo1 />
+          <HomeDemo2 />
         </DemoContainer>
         <JustAddInnerSection>
           <Subtitle style={{ fontSize: '3rem', color: 'white', marginBottom: '3.75rem' }}>
@@ -797,7 +797,7 @@ export function Home() {
           </Text>
         </JustAddInnerSection>
         <DemoContainer style={{ marginBottom: '10rem' }}>
-          <Demo2 />
+          <HomeDemo3 />
         </DemoContainer>
       </Section>
       <Section
