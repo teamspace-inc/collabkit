@@ -12,7 +12,12 @@ export function Chat() {
         height: 'calc(100vh)',
       }}
     >
-      <Thread composerPrompt="Add comment..." style={{ borderRadius: 0 }} threadId="demo-chat3" />
+      <Thread
+        showHeader={true}
+        composerPrompt="Add comment..."
+        style={{ borderRadius: 0 }}
+        threadId="demo-chat3"
+      />
     </div>
   );
 }

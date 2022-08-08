@@ -20,7 +20,14 @@ export const devEvents = {
   },
 
   onAuthFormSubmit: () => {
-    devActions.sendMagicLink();
+    if (
+      devStore.authState === 'confirmEmailPrompt' &&
+      window.localStorage.getItem('emailForSignIn')! === devStore.email
+    ) {
+      devActions.signIn();
+    } else {
+      devActions.sendMagicLink();
+    }
   },
 
   onDeleteAppButtonClick: (props: { appId: string; e: React.MouseEvent }) => {

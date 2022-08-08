@@ -18,7 +18,6 @@ devStore.subs['user'] = onAuthStateChanged(auth, (user) => {
   if (user) {
     devStore.user = user;
     devStore.authState = 'signedIn';
-    // console.log('subscribing', user.uid);
     devStore.subs['adminAppAdded'] = onChildAdded(
       ref(database, `/adminApps/${user.uid}`),
       devEvents.onAdminAppAdded
@@ -30,7 +29,6 @@ devStore.subs['user'] = onAuthStateChanged(auth, (user) => {
   } else {
     devStore.user = null;
     devStore.authState = 'signedOut';
-    // console.log('unsubscribing');
     devStore.subs['adminAppAdded']?.();
     devStore.subs['adminAppRemoved']?.();
   }

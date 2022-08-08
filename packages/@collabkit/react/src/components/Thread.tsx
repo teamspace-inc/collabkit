@@ -1,5 +1,5 @@
 import { FlexCenter, styled } from './UIKit';
-import { IconContext, ChatCircle, X } from 'phosphor-react';
+import { IconContext, X } from 'phosphor-react';
 import React, { useState } from 'react';
 import { Composer } from './Composer';
 import { useWorkspace } from '../hooks/useWorkspace';
@@ -7,18 +7,7 @@ import { ScrollableCommentList } from './ScrollableCommentList';
 import { useApp } from '../hooks/useApp';
 import { useThread } from '../hooks/useThread';
 import { StyledThread } from './thread/StyledThread';
-
-const NullState = styled('div', {
-  fontWeight: '400',
-  fontSize: '$fontSize$1',
-  color: '$neutral10',
-  display: 'flex',
-  alignItems: 'center',
-  flexDirection: 'column',
-  // todo make this dynamic
-  // marginBottom: '40px', // composer height
-  gap: '$padding$0',
-});
+import { EmptyState } from './thread/EmptyState';
 
 const StyledThreadContainer = styled('div', {
   display: 'flex',
@@ -33,7 +22,7 @@ const StyledThreadHeader = styled('div', {
   fontSize: '16px',
   fontWeight: '700',
   color: '$neutral12',
-  padding: '28px 24px',
+  padding: '20px 24px',
   display: 'flex',
 });
 
@@ -42,6 +31,9 @@ export function Thread(props: {
   style?: React.CSSProperties;
   composerPrompt?: string;
   showHeader?: boolean;
+  header?: React.ReactNode;
+  showHeaderCloseIcon?: boolean;
+  emptyState?: React.ReactNode;
   onCloseButtonClick?: (e: React.MouseEvent) => void;
 }) {
   const { threadId } = props;
@@ -81,21 +73,16 @@ export function Thread(props: {
         />
       ) : null} */}
       <StyledThread>
-        {props.showHeader ? (
-          <StyledThreadHeader>
-            <div style={{ flex: '1' }}>Comments</div>
-            <X style={{ marginTop: '2' }}></X>
-          </StyledThreadHeader>
-        ) : null}
+        {props.showHeader || props.header
+          ? props.header || (
+              <StyledThreadHeader>
+                <div style={{ flex: '1' }}>Comments</div>
+                {props.showHeaderCloseIcon ? <X style={{ marginTop: '2' }}></X> : null}
+              </StyledThreadHeader>
+            )
+          : null}
         {!isConnected ? <FlexCenter /> : null}
-        {isConnected && isEmpty ? (
-          <FlexCenter>
-            <NullState>
-              <ChatCircle weight="fill" size={60} color={theme.colors.neutral8.toString()} />
-              No comments
-            </NullState>
-          </FlexCenter>
-        ) : null}
+        {isConnected && isEmpty ? <EmptyState /> : null}
         <IconContext.Provider value={{ size: '20px' }}>
           {!isEmpty && timeline && workspaceId && (
             <ScrollableCommentList

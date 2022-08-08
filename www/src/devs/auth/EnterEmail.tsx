@@ -1,5 +1,5 @@
-import { Button, HStack, LoadingButton, Section, Text, Title, VStack } from '../UIKit';
-import { devEvents } from './devEvents';
+import { HStack, LoadingButton, Section, Text, Title, VStack } from '../../UIKit';
+import { devEvents } from '../devEvents';
 
 export function EnterEmail(props: { isReentry?: boolean }) {
   return (

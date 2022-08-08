@@ -1,7 +1,7 @@
-import { LoadingButton, HStack, Section, Text, Title, VStack } from '../UIKit';
-import { devStore } from './devStore';
+import { LoadingButton, HStack, Section, Text, Title, VStack } from '../../UIKit';
+import { devStore } from '../devStore';
 import { useSnapshot } from 'valtio';
-import { devEvents } from './devEvents';
+import { devEvents } from '../devEvents';
 
 export function CheckEmail() {
   const { email } = useSnapshot(devStore);

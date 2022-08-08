@@ -2,8 +2,8 @@ import { devStore } from './devStore';
 import { AppList } from './AppList';
 
 import { useSnapshot } from 'valtio';
-import { EnterEmail } from './EnterEmail';
-import { CheckEmail } from './CheckEmail';
+import { EnterEmail } from './auth/EnterEmail';
+import { CheckEmail } from './auth/CheckEmail';
 import { StickyHeader } from '../StickyHeader';
 import { Logo } from '../Logo';
 import { useEffect } from 'react';
