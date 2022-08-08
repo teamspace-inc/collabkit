@@ -1,9 +1,4 @@
-import { onChildAdded, ref, onChildRemoved } from 'firebase/database';
-
-import { database, auth } from './database';
 import { devStore } from './devStore';
-import { devEvents } from './devEvents';
-import { onAuthStateChanged } from '@firebase/auth';
 import { AppList } from './AppList';
 
 import { useSnapshot } from 'valtio';
