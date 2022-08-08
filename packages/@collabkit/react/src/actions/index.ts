@@ -29,6 +29,7 @@ import { hover } from './hover';
 import { unhover } from './unhover';
 import { viewThread } from './viewThread';
 import { isTyping } from './isTyping';
+import { registerThread } from './registerThread';
 
 export type GenerateToken =
   | {
@@ -124,6 +125,8 @@ export const actions = {
   subscribePins,
 
   subscribeWorkspace,
+
+  registerThread,
 
   focus,
 

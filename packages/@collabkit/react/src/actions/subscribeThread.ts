@@ -26,6 +26,7 @@ export async function subscribeThread(
     threadId,
     subs: store.subs,
     onTimelineEventAdded: (event: TimelineChangeEvent) => {
+      console.log('event added');
       store.workspaces[event.workspaceId].timeline[event.threadId] ||= {};
       store.workspaces[event.workspaceId].timeline[event.threadId][event.eventId] ||= event.event;
     },

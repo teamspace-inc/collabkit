@@ -10,7 +10,7 @@ export function useThread(props: {
   workspace: Workspace;
 }) {
   const { threadId, workspaceId, workspace, store } = props;
-  const { profiles, appState, config, isConnected, reactingId } = useSnapshot(store);
+  const { isSignedIn, profiles, appState, config, isConnected, reactingId } = useSnapshot(store);
   // const profile = userId ? profiles[userId] : null;
   const timeline = workspace ? workspace.timeline[threadId] : null;
   const isEmpty = timeline ? Object.keys(timeline).length === 0 : true;
@@ -19,10 +19,10 @@ export function useThread(props: {
 
   // const intersection = useIntersectionObserver(ref, [props.threadId, props.type]);
   useEffect(() => {
-    if (workspace && workspaceId) {
+    if (workspace && workspaceId && isSignedIn) {
       actions.subscribeThread(store, { workspaceId, threadId });
     }
-  }, [workspaceId, threadId, appState]);
+  }, [workspaceId, threadId, isSignedIn]);
 
   if (!workspaceId) {
     throw new Error('no workspaceId while rendering thread');

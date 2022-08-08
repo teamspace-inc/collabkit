@@ -1,6 +1,6 @@
 import { FlexCenter, styled } from './UIKit';
 import { IconContext, X } from 'phosphor-react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Composer } from './Composer';
 import { useWorkspace } from '../hooks/useWorkspace';
 import { ScrollableCommentList } from './ScrollableCommentList';
@@ -8,6 +8,8 @@ import { useApp } from '../hooks/useApp';
 import { useThread } from '../hooks/useThread';
 import { StyledThread } from './thread/StyledThread';
 import { EmptyState } from './thread/EmptyState';
+import { actions } from '../actions';
+import { useSnapshot } from 'valtio';
 
 const StyledThreadContainer = styled('div', {
   display: 'flex',
@@ -22,7 +24,7 @@ const StyledThreadHeader = styled('div', {
   fontSize: '16px',
   fontWeight: '700',
   color: '$neutral12',
-  padding: '20px 24px',
+  padding: '20px 16px',
   display: 'flex',
 });
 
@@ -32,8 +34,8 @@ export function Thread(props: {
   composerPrompt?: string;
   showHeader?: boolean;
   header?: React.ReactNode;
-  showHeaderCloseIcon?: boolean;
   emptyState?: React.ReactNode;
+  showHeaderCloseIcon?: boolean;
   onCloseButtonClick?: (e: React.MouseEvent) => void;
 }) {
   const { threadId } = props;

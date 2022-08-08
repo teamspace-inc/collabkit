@@ -24,8 +24,10 @@ export async function authenticate(store: Store) {
 
       const result = await userCredential.user.getIdTokenResult();
       const mode = result.claims.mode;
+      store.isSignedIn = true;
 
       console.log('CollabKit authenticated', userCredential, mode);
+
       await actions.saveProfile(store);
       actions.subscribeProfiles(store);
       actions.subscribeWorkspace(store);

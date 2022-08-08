@@ -1,5 +1,5 @@
 import { Subscriptions } from '../../constants';
-import { onChildAdded } from 'firebase/database';
+import { limitToLast, onChildAdded, orderByChild, query } from 'firebase/database';
 import { timelineRef } from './refs';
 import { TimelineChangeEvent } from '../types';
 
@@ -13,20 +13,25 @@ export function subscribeTimeline({
   subs: Subscriptions;
   onTimelineEventAdded: (event: TimelineChangeEvent) => void;
 }) {
-  const timeline = timelineRef(props.appId, props.workspaceId, props.threadId);
+  const timelineQuery = query(
+    timelineRef(props.appId, props.workspaceId, props.threadId),
+    // limitToLast(50),
+    orderByChild('createdAt')
+  );
 
-  if (subs[timeline.toString()]) {
+  if (subs[timelineQuery.toString()]) {
+    console.log('subbed already');
     return;
   }
 
   try {
-    subs[timeline.toString()] = onChildAdded(timeline, (snapshot) => {
+    subs[timelineQuery.toString()] = onChildAdded(timelineQuery, (snapshot) => {
       const event = snapshot.val();
       const eventId = snapshot.key;
       const workspaceId = snapshot.ref.parent?.ref.parent?.key;
       const threadId = snapshot.ref.parent?.key;
 
-      // console.log('got event');
+      console.log('got event');
 
       // todo validate data here
       //

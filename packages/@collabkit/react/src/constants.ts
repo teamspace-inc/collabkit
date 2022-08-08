@@ -3,6 +3,7 @@ import { initializeApp } from '@firebase/app';
 import { Color } from './colors';
 import { LexicalEditor } from 'lexical';
 import { SyncAdapter } from './sync';
+import { User } from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyDYl8MwTEgsIzXO7EHgBlvuN5BLVJqPZ6k',
@@ -189,6 +190,7 @@ export interface Store {
   mode: 'demo' | undefined | null;
   isReadOnly: boolean;
   isConnected: boolean;
+  isSignedIn: boolean;
   token: string;
   selectedId: null | Target;
   focusedId: null | Target;

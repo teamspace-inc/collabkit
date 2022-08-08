@@ -35,6 +35,7 @@ export function createStore(config: Config, sync: SyncAdapter, skipCache = false
     mode: config.mode,
     isReadOnly: config.readOnly ?? false,
     isConnected: false,
+    isSignedIn: false,
     token: config.apiKey,
     appState: 'ready',
     uiState: 'idle',
