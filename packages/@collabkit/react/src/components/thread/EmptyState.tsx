@@ -1,6 +1,8 @@
+import { styled } from '@stitches/react';
 import { Lightbulb } from 'phosphor-react';
 import React from 'react';
-import { FlexCenter, styled, theme } from '../UIKit';
+import { useApp } from '../../hooks/useApp';
+import { FlexCenter } from '../UIKit';
 
 const NullState = styled('div', {
   fontWeight: '400',
@@ -15,6 +17,8 @@ const NullState = styled('div', {
 });
 
 export function EmptyState() {
+  const { theme } = useApp();
+
   return (
     <FlexCenter>
       <NullState>

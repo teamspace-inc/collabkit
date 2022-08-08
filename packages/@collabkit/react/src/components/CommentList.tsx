@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import React from 'react';
 import { Profile, Timeline } from '../constants';
-import { styled } from './UIKit';
+import { styled } from '@stitches/react';
 import equal from 'fast-deep-equal';
 import { CurrentlyTyping } from './comment/TypingIndicator';
 import { useTimeline } from '../hooks/useTimeline';

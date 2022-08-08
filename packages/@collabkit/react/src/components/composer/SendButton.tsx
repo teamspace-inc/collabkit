@@ -1,8 +1,8 @@
-import { styled } from '../UIKit';
 import * as Tooltip from '../Tooltip';
 import React from 'react';
 import { ArrowUp } from 'phosphor-react';
 import { useApp } from '../../hooks/useApp';
+import { styled } from '@stitches/react';
 
 export function SendButton(props: { bodyLength: number; workspaceId: string; threadId: string }) {
   const { events, theme } = useApp();
@@ -51,7 +51,7 @@ const StyledComposerSendButton = styled(Tooltip.Trigger, {
         opacity: 0,
       },
       false: {
-        backgroundColor: '$colors$composerButtonBackground',
+        backgroundColor: '$colors$sendButtonColor',
       },
     },
   },

@@ -1,5 +1,5 @@
 import * as ScrollArea from '@radix-ui/react-scroll-area';
-import { styled } from './UIKit';
+import { styled } from '@stitches/react';
 
 const SCROLLBAR_SIZE = 6;
 

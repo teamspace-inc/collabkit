@@ -1,8 +1,8 @@
 import React from 'react';
 import { CheckCircle, RadioButton } from 'phosphor-react';
-import { styled } from '../UIKit';
 import { Event } from '../../constants';
 import { useApp } from '../../hooks/useApp';
+import { styled } from '@stitches/react';
 
 const SystemMessageText = styled('span', {
   display: 'flex',

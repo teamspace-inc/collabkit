@@ -5,22 +5,18 @@ import { Events, createEvents } from '../events';
 import { AppContext } from '../hooks/useAppContext';
 import { createStore } from '../store';
 import { FirebaseSync } from '../sync';
-import { darkTheme, theme } from './UIKit';
+import { createThemes, DeepPartial, Theme } from './UIKit';
+import merge from 'lodash.merge';
 
 const systemDarkMode =
   window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-const themes = {
-  dark: darkTheme,
-  light: theme,
-  auto: systemDarkMode ? darkTheme : theme,
-};
 
 // Enable using multiple isolated App
 // instances in the same page.
 export function CollabKitProvider({
   children,
   colorScheme,
+  theme,
   ...config
 }: {
   appId: string;
@@ -30,11 +26,20 @@ export function CollabKitProvider({
   mentionableUsers: MentionProps;
   children: React.ReactNode;
   colorScheme?: 'light' | 'dark' | 'auto';
+  theme?: DeepPartial<Theme>;
   readOnly?: boolean;
   mode?: 'demo';
   _demoStore?: Store;
 }) {
   const [context, setContext] = useState<{ store: Store; events: Events } | null>(null);
+
+  const { darkTheme, lightTheme } = createThemes(theme);
+
+  const themes = {
+    dark: darkTheme,
+    light: lightTheme,
+    auto: systemDarkMode ? darkTheme : lightTheme,
+  };
 
   useLayoutEffect(() => {
     const sync = new FirebaseSync();
@@ -60,7 +65,7 @@ export function CollabKitProvider({
     return null;
   }
 
-  const theme = themes[colorScheme ?? 'auto'];
+  const baseTheme = themes[colorScheme ?? 'auto'];
 
   return (
     <AppContext.Provider
@@ -68,10 +73,10 @@ export function CollabKitProvider({
         store: context.store,
         events: context.events,
         workspaceId: config.workspace.id,
-        theme,
+        theme: theme ? merge(baseTheme, theme) : baseTheme,
       }}
     >
-      <span className={theme.className.toString()}>{children}</span>
+      <span className={baseTheme.className.toString()}>{children}</span>
     </AppContext.Provider>
   );
 }

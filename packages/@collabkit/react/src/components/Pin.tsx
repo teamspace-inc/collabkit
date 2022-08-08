@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { Avatar } from './Avatar';
-import { HStack, styled, VStack } from './UIKit';
+import { HStack, VStack } from './UIKit';
 import { useApp } from '../hooks/useApp';
 import { useSnapshot } from 'valtio';
 import { useWorkspace } from '../hooks/useWorkspace';
@@ -15,7 +15,7 @@ import {
   size,
   autoUpdate,
 } from '@floating-ui/react-dom-interactions';
-import { keyframes } from '@stitches/react';
+import { keyframes, styled } from '@stitches/react';
 import debounce from 'lodash.debounce';
 
 const StyledPin = styled('div', {

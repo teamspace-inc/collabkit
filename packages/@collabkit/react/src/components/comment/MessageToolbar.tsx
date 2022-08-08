@@ -1,5 +1,5 @@
-import React from 'react';
 import { styled } from '@stitches/react';
+import React from 'react';
 import { AddReactionButton } from './AddReactionButton';
 
 const StyledMessageToolbar = styled('div', {

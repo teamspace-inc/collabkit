@@ -1,7 +1,7 @@
+import { styled } from '@stitches/react';
 import { formatRelative } from 'date-fns';
 import React from 'react';
 import { Name } from '../profile/Name';
-import { styled } from '../UIKit';
 
 export const StyledMessageTimestamp = styled('span', {
   fontSize: '$fontSize$0',

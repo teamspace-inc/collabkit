@@ -1,4 +1,4 @@
-import { styled } from './UIKit';
+import { styled } from '@stitches/react';
 import { X, CheckCircle } from 'phosphor-react';
 import React from 'react';
 import { useApp } from '../hooks/useApp';

@@ -1,7 +1,7 @@
 import React from 'react';
-import { styled } from '../UIKit';
 import { useApp } from '../../hooks/useApp';
 import { Event } from '../../constants';
+import { styled } from '@stitches/react';
 
 const StyledReactions = styled('div', {
   background: 'white',

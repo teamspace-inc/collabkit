@@ -4,7 +4,7 @@ import { Target } from '../Target';
 import { Corner, Edge } from '../../hooks/useIntersectionObserver';
 import { useApp } from '../../hooks/useApp';
 import { TargetContext } from '../Target';
-import { styled } from '../UIKit';
+import { styled } from '@stitches/react';
 
 const emojiReacts = ['👍', '❤️', '😂', '😮', '😢', '🙏'];
 

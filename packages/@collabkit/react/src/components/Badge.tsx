@@ -1,5 +1,5 @@
+import { styled } from '@stitches/react';
 import React from 'react';
-import { styled } from './UIKit';
 
 const StyledBadge = styled('div', {
   backgroundColor: '$colors$badgeColor',

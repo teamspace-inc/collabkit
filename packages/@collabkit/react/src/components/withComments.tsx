@@ -1,6 +1,6 @@
 import React from 'react';
 import { useApp } from '../hooks/useApp';
-import { styled } from './UIKit';
+import { styled } from '@stitches/react';
 
 // Evan from LiveFlow suggested a HOC as a way to
 // create 'Commentable' things, this is a quick sketch

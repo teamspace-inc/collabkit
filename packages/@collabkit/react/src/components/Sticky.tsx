@@ -1,5 +1,5 @@
 import React, { useEffect, useLayoutEffect, useRef } from 'react';
-import { styled } from './UIKit';
+import { styled } from '@stitches/react';
 import { autoUpdate, computePosition, offset } from '@floating-ui/dom';
 
 export const StyledStickyContainer = styled('div', {

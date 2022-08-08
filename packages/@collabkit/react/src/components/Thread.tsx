@@ -1,6 +1,6 @@
-import { FlexCenter, styled } from './UIKit';
+import { FlexCenter } from './UIKit';
 import { IconContext, X } from 'phosphor-react';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Composer } from './Composer';
 import { useWorkspace } from '../hooks/useWorkspace';
 import { ScrollableCommentList } from './ScrollableCommentList';
@@ -8,21 +8,21 @@ import { useApp } from '../hooks/useApp';
 import { useThread } from '../hooks/useThread';
 import { StyledThread } from './thread/StyledThread';
 import { EmptyState } from './thread/EmptyState';
-import { actions } from '../actions';
-import { useSnapshot } from 'valtio';
+import { styled } from '@stitches/react';
 
 const StyledThreadContainer = styled('div', {
   display: 'flex',
   height: '100%',
   position: 'relative',
   flex: 1,
-  background: '$neutral1',
+  background: '$colors$backgroundColor',
   borderRadius: '$radii$1',
 });
 
 const StyledThreadHeader = styled('div', {
-  fontSize: '16px',
-  fontWeight: '700',
+  fontSize: '$fontSize$3',
+  fontWeight: '$fontWeights$3',
+  lineHeight: '$lineHeight$3',
   color: '$neutral12',
   padding: '20px 16px',
   display: 'flex',
@@ -39,14 +39,14 @@ export function Thread(props: {
   onCloseButtonClick?: (e: React.MouseEvent) => void;
 }) {
   const { threadId } = props;
-  const { store, theme } = useApp();
+  const { store } = useApp();
   const userId = store.config.identify?.userId!;
 
   const [composerHeight, setComposerHeight] = useState(0);
 
   const { workspace, workspaceId } = useWorkspace();
 
-  const { profiles, timeline, isConnected, isEmpty, target, ref, reactingId } = useThread({
+  const { profiles, timeline, isConnected, isEmpty, ref, reactingId } = useThread({
     ...props,
     store,
     workspaceId,

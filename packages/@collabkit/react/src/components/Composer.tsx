@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { Profile, Target, Workspace } from '../constants';
-import { styled } from './UIKit';
 import { EditorState } from 'lexical';
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import { PlainTextPlugin } from '@lexical/react/LexicalPlainTextPlugin';
@@ -17,6 +16,7 @@ import { MentionNode } from './MentionNode';
 import { useApp } from '../hooks/useApp';
 import { SendButton } from './composer/SendButton';
 import { Avatar } from './Avatar';
+import { styled } from '@stitches/react';
 
 const lexicalTheme = {
   ltr: 'ltr',
@@ -52,7 +52,7 @@ const ComposerContainer = styled('div', {
   borderBottomLeftRadius: '$radii$1',
   borderBottomRightRadius: '$radii$1',
   padding: '$padding$0 $padding$1',
-  background: '$neutral1',
+  background: '$colors$backgroundColor',
 });
 
 const StyledLexicalEditorContainer = styled('div', {

@@ -1,4 +1,4 @@
-import { createStitches, createTheme } from '@stitches/react';
+import { createTheme, styled } from '@stitches/react';
 import {
   gray,
   green,
@@ -20,6 +20,7 @@ import {
   grayDark,
   greenDark,
 } from '@radix-ui/colors';
+import merge from 'lodash.merge';
 
 export const PIN_SIZE = 28;
 
@@ -38,79 +39,156 @@ const neutral = {
   neutral12: '$gray12',
 };
 
-const fontSize = {
-  ['0']: '11px',
-  ['1']: '12px',
-  ['2']: '13px',
-  ['3']: '16px',
-};
+export interface Theme {
+  fontSize: {
+    0: string;
+    1: string;
+    2: string;
+    3: string;
+  };
+  lineHeights: {
+    0: string;
+    1: string;
+    2: string;
+    3: string;
+  };
+  fontWeights: {
+    0: number;
+    1: number;
+    2: number;
+    3: number;
+  };
+  radii: {
+    0: string;
+    1: string;
+    2: string;
+    pin: string;
+  };
+  padding: {
+    composer: string;
+    0: string;
+    1: string;
+    2: string;
+    3: string;
+    4: string;
+  };
+  sizes: {
+    sendButton: string;
+    threadWidth: string;
+    threadPreviewWidth: string;
+    pin: string;
+    avatar: string;
+    pinBorderWidth: string;
+  };
+  space: {
+    0: string;
+    1: string;
+    2: string;
+    3: string;
+    4: string;
+  };
+  colors: {
+    primaryText: string;
+    secondaryText: string;
+    typingDot: string;
+    badgeColor: string;
+    primaryButtonBackground: string;
+    composerButtonBackground: string;
+    composerButtonIconColor: string;
+    composerBackground: string;
+    bubbleHoverBackground: string;
+    selectionBackground: string;
+    borderColor: string;
+    pinBorderColor: string;
+    sendButtonColor: string;
+    backgroundColor: string;
+  };
+}
 
-const lineHeights = {
-  ['0']: '18px',
-  ['1']: '18px',
-  ['2']: '18px',
-};
+export type DeepPartial<T> = T extends object
+  ? {
+      [P in keyof T]?: DeepPartial<T[P]>;
+    }
+  : T;
 
-const fontWeights = {
-  ['0']: 400,
-  ['1']: 700,
-  ['2']: 700,
-};
+export function createThemes(customTheme?: DeepPartial<Theme>) {
+  const fontSize = {
+    ['0']: '11px',
+    ['1']: '12px',
+    ['2']: '13px',
+    ['3']: '16px',
+  };
 
-const radii = {
-  ['0']: '4px',
-  ['1']: '12px',
-  ['2']: '16px',
-  pin: '24px',
-};
+  const lineHeights = {
+    ['0']: '18px',
+    ['1']: '18px',
+    ['2']: '18px',
+    ['3']: '20px',
+  };
 
-const padding = {
-  composer: '12px',
-  ['0']: '6px',
-  ['1']: '8px',
-  ['2']: '16px',
-  ['3']: '24px',
-  ['4']: '32px',
-};
+  const fontWeights = {
+    ['0']: 400,
+    ['1']: 700,
+    ['2']: 700,
+    ['3']: 700,
+  };
 
-const sizes = {
-  sendButton: '20px',
-  threadWidth: '260px',
-  threadPreviewWidth: '248px',
-  pin: `${PIN_SIZE}px`,
-  avatar: '24px',
-  pinBorderWidth: '1.5px',
-};
+  const radii = {
+    ['0']: '4px',
+    ['1']: '12px',
+    ['2']: '16px',
+    pin: '24px',
+  };
 
-const space = {
-  ['0']: '0px',
-  ['1']: '4px',
-  ['2']: '8px',
-  ['3']: '12px',
-  ['4']: '16px',
-};
+  const padding = {
+    composer: '12px',
+    ['0']: '6px',
+    ['1']: '8px',
+    ['2']: '16px',
+    ['3']: '24px',
+    ['4']: '32px',
+  };
 
-const colors = {
-  primaryText: '$neutral12',
-  secondaryText: '$neutral9',
+  const sizes = {
+    sendButton: '20px',
+    threadWidth: '260px',
+    threadPreviewWidth: '248px',
+    pin: `${PIN_SIZE}px`,
+    avatar: '24px',
+    pinBorderWidth: '1.5px',
+  };
 
-  typingDot: '$neutral9',
-  badgeColor: '$red10',
+  const space = {
+    ['0']: '0px',
+    ['1']: '4px',
+    ['2']: '8px',
+    ['3']: '12px',
+    ['4']: '16px',
+  };
 
-  primaryButtonBackground: '$neutral1',
-  composerButtonBackground: '$accent10',
-  composerButtonIconColor: '$neutral1',
-  composerBackground: '$neutral4',
+  const colors = {
+    primaryText: '$neutral12',
+    secondaryText: '$neutral9',
 
-  bubbleHoverBackground: '$neutral4',
-  selectionBackground: '$neutral10',
+    typingDot: '$neutral9',
+    badgeColor: '$red10',
 
-  borderColor: '$neutral4',
-  pinBorderColor: '$neutral1',
-};
+    primaryButtonBackground: '$neutral1',
+    composerButtonBackground: '$accent10',
+    composerButtonIconColor: '$neutral1',
+    composerBackground: '$neutral4',
 
-export const { styled, css, theme } = createStitches({
-  theme: {
+    sendButtonColor: '$accent10',
+
+    bubbleHoverBackground: '$neutral4',
+    selectionBackground: '$neutral10',
+
+    borderColor: '$neutral4',
+    pinBorderColor: '$neutral1',
+    backgroundColor: '$neutral1',
+  };
+
+  let baseTheme = {
     fontSize,
     lineHeights,
     fontWeights,
@@ -118,6 +196,40 @@ export const { styled, css, theme } = createStitches({
     padding,
     sizes,
     space,
+  };
+
+  if (customTheme) {
+    merge(baseTheme, customTheme);
+  }
+
+  const darkTheme = createTheme({
+    ...baseTheme,
+    colors: {
+      ...redDark,
+      ...grayDark,
+      ...greenDark,
+
+      accent1: '$green1',
+      accent2: '$green2',
+      accent3: '$green3',
+      accent4: '$green4',
+      accent5: '$green5',
+      accent6: '$green6',
+      accent7: '$green7',
+      accent8: '$green8',
+      accent9: '$green9',
+      accent10: '$green10',
+      accent11: '$green11',
+      accent12: '$green12',
+
+      ...neutral,
+      ...colors,
+      ...customTheme?.['colors'],
+    },
+  });
+
+  const lightTheme = createTheme({
+    ...baseTheme,
     colors: {
       ...red,
       ...gray,
@@ -138,40 +250,12 @@ export const { styled, css, theme } = createStitches({
 
       ...neutral,
       ...colors,
+      ...customTheme?.['colors'],
     },
-  },
-});
+  });
 
-export const darkTheme = createTheme({
-  fontSize,
-  lineHeights,
-  fontWeights,
-  radii,
-  padding,
-  sizes,
-  space,
-  colors: {
-    ...redDark,
-    ...grayDark,
-    ...greenDark,
-
-    accent1: '$green1',
-    accent2: '$green2',
-    accent3: '$green3',
-    accent4: '$green4',
-    accent5: '$green5',
-    accent6: '$green6',
-    accent7: '$green7',
-    accent8: '$green8',
-    accent9: '$green9',
-    accent10: '$green10',
-    accent11: '$green11',
-    accent12: '$green12',
-
-    ...neutral,
-    ...colors,
-  },
-});
+  return { darkTheme, lightTheme };
+}
 
 export const tomatoTheme = createTheme({
   colors: {

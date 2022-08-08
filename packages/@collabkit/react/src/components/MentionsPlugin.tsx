@@ -23,8 +23,8 @@ import { $createMentionNode, MentionNode } from './MentionNode';
 import { snapshot } from 'valtio';
 import { Store } from '../constants';
 import { useApp } from '../hooks/useApp';
-import { styled } from './UIKit';
 import { Avatar } from './Avatar';
+import { styled } from '@stitches/react';
 
 type MentionMatch = {
   leadOffset: number;

@@ -3,7 +3,7 @@ import { useSnapshot } from 'valtio';
 
 import { CommentType, Event, Profile } from '../constants';
 import { Avatar } from './Avatar';
-import { HStack, styled, theme } from './UIKit';
+import { HStack } from './UIKit';
 import { TargetContext } from './Target';
 import { isSameComment } from '../utils/isSameComment';
 import { useApp } from '../hooks/useApp';
@@ -15,6 +15,7 @@ import { ReactionPicker } from './comment/ReactionPicker';
 import { MessageHeader } from './comment/MessageHeader';
 // import { hasReactions, Reactions } from './comment/Reactions';
 import reactStringReplace from 'react-string-replace';
+import { styled } from '@stitches/react';
 
 const StyledCommentMessage = styled(StyledMessage, {
   variants: {

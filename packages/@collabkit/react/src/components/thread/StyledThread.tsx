@@ -1,4 +1,4 @@
-import { styled } from '../UIKit';
+import { styled } from '@stitches/react';
 
 export const StyledThread = styled('div', {
   padding: 0,

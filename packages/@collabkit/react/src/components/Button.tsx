@@ -1,8 +1,9 @@
-import { styled, VStack } from './UIKit';
+import { VStack } from './UIKit';
 import React, { useRef, useState } from 'react';
 import { ChatCircle } from 'phosphor-react';
 import { PopoverThread } from './PopoverThread';
 import { useApp } from '../hooks/useApp';
+import { styled } from '@stitches/react';
 
 const StyledButton = styled('button', {
   padding: '9px 14px 9px 12px',

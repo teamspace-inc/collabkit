@@ -1,5 +1,4 @@
 import { createStitches, keyframes } from '@stitches/react';
-import React from 'react';
 export const { styled, css, theme } = createStitches({
   theme: {
     colors: {},
@@ -52,7 +51,6 @@ export const Title = styled('h1', {
 });
 
 export const Em = styled('em', {
-  // fontFamily: 'Source Serif Pro',
   zIndex: 1,
   fontStyle: 'normal',
 });

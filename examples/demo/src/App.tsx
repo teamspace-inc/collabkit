@@ -69,11 +69,19 @@ export default function App() {
 
   return (
     <CollabKit.Provider
-      colorScheme="dark"
+      colorScheme="light"
       apiKey={import.meta.env.VITE_COLLABKIT_TOKEN}
       appId={import.meta.env.VITE_COLLABKIT_APP_ID}
       workspace={{ id: 'acme', name: 'ACME' }}
       user={user}
+      theme={{
+        fontSize: { 3: '20px' },
+        fontWeights: { 3: 700, 2: 500 },
+        colors: {
+          sendButtonColor: 'rgb(94, 81, 248)',
+          backgroundColor: 'transparent',
+        },
+      }}
       mentionableUsers={mentionableUsers}
     >
       {/* <CollabKit.Commentable>{image}</CollabKit.Commentable> */}

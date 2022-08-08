@@ -1,4 +1,4 @@
-import { styled } from './UIKit';
+import { styled } from '@stitches/react';
 import { IconContext } from 'phosphor-react';
 import React, { useRef, useEffect, useLayoutEffect, useState } from 'react';
 import { Composer } from './Composer';

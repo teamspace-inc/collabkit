@@ -1,8 +1,8 @@
+import { styled } from '@stitches/react';
 import React, { useEffect } from 'react';
 import { useSnapshot } from 'valtio';
 import { actions } from '../actions';
 import { useApp } from '../hooks/useApp';
-import { styled } from './UIKit';
 import { useWorkspace } from '../hooks/useWorkspace';
 
 const unreadStyle = {

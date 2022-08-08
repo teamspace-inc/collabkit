@@ -1,6 +1,6 @@
 import React from 'react';
 import * as Tooltip from './Tooltip';
-import { styled } from './UIKit';
+import { styled } from '@stitches/react';
 
 const StyledIconButton = styled('div', {
   display: 'flex',

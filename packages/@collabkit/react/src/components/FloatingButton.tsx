@@ -1,8 +1,8 @@
 import React from 'react';
-import { styled, theme } from './UIKit';
 import { ChatText, X } from 'phosphor-react';
 import { useSnapshot } from 'valtio';
 import { useApp } from '../hooks/useApp';
+import { styled } from '@stitches/react';
 
 const StyledFloatingButtonContainer = styled('div', {
   position: 'fixed',
@@ -24,7 +24,7 @@ const StyledFloatingButton = styled('div', {
 });
 
 export function FloatingButton(props: { style?: React.CSSProperties }) {
-  const { store, events } = useApp();
+  const { store, events, theme } = useApp();
   const { uiState } = useSnapshot(store);
   const target = { type: 'floatingCommentButton' } as const;
   return (

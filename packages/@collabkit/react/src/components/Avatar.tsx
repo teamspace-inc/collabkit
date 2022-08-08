@@ -2,7 +2,7 @@ import { useState } from 'react';
 import React from 'react';
 import { getShade } from '../colors';
 import { Profile } from '../constants';
-import { css, styled } from './UIKit';
+import { css, styled } from '@stitches/react';
 
 export const avatarStyles = css({
   width: '24px',

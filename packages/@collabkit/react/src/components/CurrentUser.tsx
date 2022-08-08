@@ -1,8 +1,8 @@
+import { styled } from '@stitches/react';
 import React from 'react';
 import { useSnapshot } from 'valtio';
 import { useApp } from '../hooks/useApp';
 import { Avatar } from './Avatar';
-import { styled } from './UIKit';
 
 const StyledUser = styled('div', {
   display: 'flex',
