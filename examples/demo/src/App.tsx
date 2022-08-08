@@ -56,7 +56,12 @@ export default function App() {
       {/* <CollabKit.Commentable>{image}</CollabKit.Commentable> */}
       <Chat />
       <iframe
-        style={{ width: 'calc(100vw - 284px)', height: '100vh', border: 'none' }}
+        style={{
+          padding: '0 16px',
+          width: 'calc(100vw - 284px - 32px)',
+          height: '100vh',
+          border: 'none',
+        }}
         src="https://www.tella.tv/video/ckwyx03y6000509i62z4k2qfu/view"
       />
 
