@@ -75,7 +75,7 @@ export default function App() {
       workspace={{ id: 'acme', name: 'ACME' }}
       user={user}
       theme={{
-        fontSize: { 3: '20px' },
+        fontSize: { 2: '14px', 3: '20px' },
         fontWeights: { 3: 700, 2: 500 },
         colors: {
           sendButtonColor: 'rgb(94, 81, 248)',

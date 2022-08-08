@@ -94,6 +94,7 @@ export function Composer(props: {
   placeholder: React.ReactNode | string;
   style?: React.CSSProperties;
   autoFocus?: boolean;
+  hideAvatar?: boolean;
   onHeightChange?: (height: number) => void;
 }) {
   const { events, theme } = useApp();
@@ -129,7 +130,7 @@ export function Composer(props: {
 
   return (
     <ComposerContainer style={props.style}>
-      {props.profile ? (
+      {props.profile && !props.hideAvatar ? (
         <Avatar style={{ position: 'relative', top: 4, marginLeft: 8 }} profile={props.profile} />
       ) : null}
       <LexicalComposer initialConfig={initialConfig}>

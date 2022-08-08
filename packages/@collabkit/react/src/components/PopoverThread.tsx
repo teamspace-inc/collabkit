@@ -131,6 +131,7 @@ export function PopoverThread(props: {
             profile={profiles[userId]}
             threadId={props.threadId}
             isFloating={false}
+            hideAvatar={isEmpty}
             onHeightChange={(height) => setComposerHeight(height)}
           />
         )}
