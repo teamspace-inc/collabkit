@@ -19,7 +19,7 @@ export interface Store {
   subs: { [key: string]: Unsubscribe };
   adminApps: { [appId: string]: boolean };
   email: string;
-  authState: 'signedOut' | 'signedIn' | 'magicLinkSent';
+  authState: 'blank' | 'signedOut' | 'signedIn' | 'magicLinkSent' | 'confirmEmailPrompt';
 }
 
 export type CreateApp = {

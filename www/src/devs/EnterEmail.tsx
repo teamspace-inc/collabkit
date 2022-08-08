@@ -1,15 +1,13 @@
 import { Button, HStack, LoadingButton, Section, Text, Title, VStack } from '../UIKit';
 import { devEvents } from './devEvents';
 
-export function EnterEmail() {
+export function EnterEmail(props: { isReentry?: boolean }) {
   return (
     <div>
       <Section>
         <VStack style={{ alignItems: 'center' }}>
-          <Title>Enter your email</Title>
-          <Text>
-            We suggest using the <b>email address you use at work.</b>
-          </Text>
+          <Title>{props.isReentry ? 'Re-enter' : 'Enter'} your email</Title>
+          <Text>Please confirm the email you just entered to sign in.</Text>
           <form
             onSubmit={(e) => {
               e.preventDefault();

@@ -10,6 +10,7 @@ export default function App() {
     <Page>
       <Route path="/" component={Home} />
       <Route path="/devs" component={Devs} />
+      <Route path="/signedIn" component={Devs} />
     </Page>
   );
 }

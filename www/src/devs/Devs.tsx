@@ -11,33 +11,24 @@ import { EnterEmail } from './EnterEmail';
 import { CheckEmail } from './CheckEmail';
 import { StickyHeader } from '../StickyHeader';
 import { Logo } from '../Logo';
-
-devStore.subs['user'] = onAuthStateChanged(auth, (user) => {
-  devStore.user = user;
-  if (user) {
-    // console.log('subscribing', user.uid);
-    devStore.subs['adminAppAdded'] = onChildAdded(
-      ref(database, `/adminApps/${user.uid}`),
-      devEvents.onAdminAppAdded
-    );
-    devStore.subs['adminAppRemoved'] = onChildRemoved(
-      ref(database, `/adminApps/${user.uid}`),
-      devEvents.onAdminAppRemoved
-    );
-  } else {
-    // console.log('unsubscribing');
-    devStore.subs['adminAppAdded']?.();
-    devStore.subs['adminAppRemoved']?.();
-  }
-});
+import { useEffect } from 'react';
+import { devActions } from './devActions';
 
 export function Devs() {
   const { authState } = useSnapshot(devStore);
 
+  useEffect(() => {
+    if (window.location.href.includes('signedIn')) {
+      devActions.verifyEmailLink();
+    }
+  }, []);
+
   const view = {
+    blank: <></>,
     signedOut: <EnterEmail />,
     signedIn: <AppList />,
     magicLinkSent: <CheckEmail />,
+    confirmEmailPrompt: <EnterEmail isReentry={true} />,
   };
 
   return (
