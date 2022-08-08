@@ -79,7 +79,7 @@ export default function App() {
         fontWeights: { 3: 700, 2: 500 },
         colors: {
           sendButtonColor: 'rgb(94, 81, 248)',
-          backgroundColor: 'transparent',
+          backgroundColor: 'rgb(249,249,250)',
         },
       }}
       mentionableUsers={mentionableUsers}
