@@ -4,4 +4,5 @@ admin.initializeApp();
 
 import { createApp } from './createApp';
 import { generateToken } from './generateToken';
-export { createApp, generateToken };
+import { sendNotification } from './sendNotification';
+export { createApp, generateToken, sendNotification };

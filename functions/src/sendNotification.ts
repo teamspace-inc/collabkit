@@ -1,4 +1,5 @@
 import * as functions from 'firebase-functions';
+import * as admin from 'firebase-admin';
 
 // on a new event, writes to the notification log
 // the notification log is periodically processed and notifies other users
@@ -10,17 +11,43 @@ const mg = mailgun({
   domain: DOMAIN,
 });
 
-exports.sendNotification = functions.database
-  .ref('/timeline/{appId}/{workspaceId}/{roomId}/{eventId}')
+export const sendNotification = functions.database
+  .ref('/timeline/{appId}/{workspaceId}/{threadId}/{eventId}')
   .onCreate((snapshot, context) => {
     if (context.authType === 'ADMIN') {
       return;
     }
 
     const event = snapshot.val();
-    const { appId, workspaceId, eventId } = context.params;
+    const { appId, workspaceId, threadId, eventId } = context.params;
 
-    functions.database.ref(`/profiles/${appId}/${workspaceId}/${event.createdById}/${eventId}/`);
+    const isEmailDisabled = admin.database().ref(`/apps/${appId}/isEmailDisabled/`).get();
+
+    const creatorProfile = admin
+      .database()
+      .ref(`/profiles/${appId}/${workspaceId}/${event.createdById}/${eventId}/`)
+      .get();
+    const seenBy = admin
+      .database()
+      .ref(`/views/seenBy/${appId}/${workspaceId}/${threadId}/seenBy`)
+      .get();
+    const events = admin
+      .database()
+      .ref(`/timeline/${appId}/${workspaceId}/${threadId}`)
+      .orderByKey()
+      .startAfter(eventId)
+      .get();
+
+    Promise.all([isEmailDisabled, creatorProfile, seenBy, events])
+      .then(([isEmailDisabled, creatorProfile, seenBy, events]) => {
+        console.log('got data', isEmailDisabled);
+        console.log('got data', creatorProfile);
+        console.log('got data', seenBy);
+        console.log('got data', events);
+      })
+      .catch((err) => {
+        console.error('error retrieving data', err);
+      });
 
     const data = {
       from: 'Excited User <me@samples.mailgun.org>',
@@ -28,7 +55,10 @@ exports.sendNotification = functions.database
       subject: 'Hello',
       text: 'Testing some Mailgun awesomness!',
     };
-    mg.messages().send(data, function (_error, body) {
-      console.log(body);
-    });
+
+    // mg.messages().send(data, function (_error, body) {
+    //   console.log(body);
+    // });
   });
+
+// X left a comment for Y on Z
