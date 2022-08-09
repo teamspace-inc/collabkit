@@ -16,9 +16,11 @@
   "dependencies": {
     "firebase-admin": "^10.0.2",
     "firebase-functions": "^3.18.0",
+    "mailgun-js": "^0.22.0",
     "nanoid": "^4.0.0"
   },
   "devDependencies": {
+    "@types/mailgun-js": "^0.22.12",
     "@typescript-eslint/eslint-plugin": "^5.12.0",
     "@typescript-eslint/parser": "^5.12.0",
     "eslint": "^8.9.0",
