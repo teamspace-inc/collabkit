@@ -1,6 +1,5 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
-import { nanoid } from 'nanoid';
 import * as cors from 'cors';
 const corsHandler = cors({ origin: true });
 
@@ -20,7 +19,7 @@ export const createApp = functions.https.onRequest(async (request, response) => 
 
       const app = {
         keys: {
-          [nanoid()]: true,
+          [(await import('nanoid')).nanoid()]: true,
         },
         admins: {
           [uid]: true,
