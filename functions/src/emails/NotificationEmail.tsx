@@ -7,21 +7,27 @@ import { leadingTight, leadingRelaxed, textBase, textLg } from './components/the
 
 import { Mjml, MjmlBody, MjmlSection, MjmlColumn, MjmlText, MjmlSpacer } from 'mjml-react';
 
-type TextEmailProps = {
-  name: string;
+type NotificationEmailProps = {
+  // name: string;
   headline?: string;
   body: ReactElement;
   bulletedList?: ReactElement;
   ctaText?: string;
 };
 
-const TextEmail: React.FC<TextEmailProps> = ({ name, headline, body, bulletedList, ctaText }) => {
+const NotificationEmail: React.FC<NotificationEmailProps> = ({
+  // name,
+  headline,
+  body,
+  bulletedList,
+  ctaText,
+}) => {
   return (
     <Mjml>
       <Head />
       <MjmlBody width={600}>
-        <Header />
-        <MjmlSection padding="0 24px 0" cssClass="smooth">
+        {/* <Header /> */}
+        <MjmlSection padding="40px 24px 0" cssClass="smooth">
           <MjmlColumn>
             {headline && (
               <MjmlText
@@ -33,14 +39,14 @@ const TextEmail: React.FC<TextEmailProps> = ({ name, headline, body, bulletedLis
                 {headline}
               </MjmlText>
             )}
-            <MjmlText
+            {/* <MjmlText
               padding="16px 0 16px"
               fontSize={textBase}
               lineHeight={leadingRelaxed}
               cssClass="paragraph"
             >
               Hello {name},
-            </MjmlText>
+            </MjmlText> */}
             <MjmlText
               cssClass="paragraph"
               padding="0"
@@ -62,7 +68,7 @@ const TextEmail: React.FC<TextEmailProps> = ({ name, headline, body, bulletedLis
                 <MjmlSpacer height="8px" />
               </>
             )}
-            <MjmlText
+            {/* <MjmlText
               padding="16px 0"
               fontSize={textBase}
               lineHeight={leadingRelaxed}
@@ -71,7 +77,7 @@ const TextEmail: React.FC<TextEmailProps> = ({ name, headline, body, bulletedLis
               ♥,
               <br />
               Mailing
-            </MjmlText>
+            </MjmlText> */}
           </MjmlColumn>
         </MjmlSection>
         <Footer />
@@ -80,4 +86,4 @@ const TextEmail: React.FC<TextEmailProps> = ({ name, headline, body, bulletedLis
   );
 };
 
-export default TextEmail;
+export default NotificationEmail;

@@ -1,5 +1,5 @@
-import Welcome from "../Welcome";
-
+import React from 'react';
+import Welcome from '../Welcome';
 export function toAmelita() {
   return <Welcome name="Amelita" />;
 }

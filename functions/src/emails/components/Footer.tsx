@@ -1,19 +1,16 @@
-import { MjmlSection, MjmlColumn, MjmlText } from "mjml-react";
-import { grayDark, textSm } from "./theme";
+import React from 'react';
+
+import { MjmlSection, MjmlColumn, MjmlText } from 'mjml-react';
+import { grayDark, textSm } from './theme';
 
 export default function Footer() {
   return (
     <MjmlSection cssClass="smooth">
       <MjmlColumn>
-        <MjmlText
-          cssClass="footer"
-          padding="24px 24px 48px"
-          fontSize={textSm}
-          color={grayDark}
-        >
-          © 2022 Mailing&nbsp;&nbsp;·&nbsp;&nbsp;
+        <MjmlText cssClass="footer" padding="24px 24px 48px" fontSize={textSm} color={grayDark}>
+          © 2022 CollabKit&nbsp;&nbsp;·&nbsp;&nbsp;
           <a href="#" target="_blank">
-            Unsubscribe
+            Turn off notifications for this thread
           </a>
         </MjmlText>
       </MjmlColumn>

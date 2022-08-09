@@ -1,5 +1,7 @@
-import { MjmlText } from "mjml-react";
-import { leadingRelaxed, textBase } from "./theme";
+import React from 'react';
+
+import { MjmlText } from 'mjml-react';
+import { leadingRelaxed, textBase } from './theme';
 
 type BulletedListProps = {
   items: string[];

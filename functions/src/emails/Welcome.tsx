@@ -1,6 +1,7 @@
-import Head from "./components/Head";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
+import React from 'react';
+import Head from './components/Head';
+import Header from './components/Header';
+import Footer from './components/Footer';
 import {
   Mjml,
   MjmlBody,
@@ -9,15 +10,10 @@ import {
   MjmlText,
   MjmlImage,
   MjmlSpacer,
-} from "mjml-react";
-import BulletedList from "./components/BulletedList";
-import ButtonPrimary from "./components/ButtonPrimary";
-import {
-  leadingTight,
-  leadingRelaxed,
-  textBase,
-  textXl,
-} from "./components/theme";
+} from 'mjml-react';
+import BulletedList from './components/BulletedList';
+import ButtonPrimary from './components/ButtonPrimary';
+import { leadingTight, leadingRelaxed, textBase, textXl } from './components/theme';
 
 const MyFirstEmail: React.FC<{ name: string }> = ({ name }) => (
   <Mjml>
@@ -36,12 +32,7 @@ const MyFirstEmail: React.FC<{ name: string }> = ({ name }) => (
       </MjmlSection>
       <MjmlSection padding="0 24px 0" cssClass="smooth">
         <MjmlColumn>
-          <MjmlText
-            cssClass="paragraph"
-            padding="0"
-            fontSize={textXl}
-            lineHeight={leadingTight}
-          >
+          <MjmlText cssClass="paragraph" padding="0" fontSize={textXl} lineHeight={leadingTight}>
             Welcome, {name}!
           </MjmlText>
           <MjmlText
@@ -50,24 +41,24 @@ const MyFirstEmail: React.FC<{ name: string }> = ({ name }) => (
             lineHeight={leadingRelaxed}
             cssClass="paragraph"
           >
-            Mailing makes it easy to send great emails from your React app.
-            Here’s a bit about Mailing in a nutshell:
+            Mailing makes it easy to send great emails from your React app. Here’s a bit about
+            Mailing in a nutshell:
           </MjmlText>
           <BulletedList
             items={[
-              "Email templates with React components",
-              "MJML components that work across clients (Outlook!)",
-              "Preview server for quick development",
-              "Dev mode opens emails in your browser instead of sending",
-              "Test mode for ensuring emails send and have the correct content",
-              "Plays well with js frameworks like redwood.js, remix, next.js",
-              "Written in Typescript, inspired by Action Mailer from Ruby on Rails",
+              'Email templates with React components',
+              'MJML components that work across clients (Outlook!)',
+              'Preview server for quick development',
+              'Dev mode opens emails in your browser instead of sending',
+              'Test mode for ensuring emails send and have the correct content',
+              'Plays well with js frameworks like redwood.js, remix, next.js',
+              'Written in Typescript, inspired by Action Mailer from Ruby on Rails',
             ]}
           />
           <MjmlSpacer height="24px" />
           <ButtonPrimary
-            link={"https://github.com/psugihara/mailing"}
-            uiText={"View Github Repo"}
+            link={'https://github.com/psugihara/mailing'}
+            uiText={'View Github Repo'}
           />
           <MjmlSpacer height="24px" />
           <MjmlText
@@ -76,8 +67,8 @@ const MyFirstEmail: React.FC<{ name: string }> = ({ name }) => (
             fontSize={textBase}
             lineHeight={leadingRelaxed}
           >
-            Thank you for checking out our project. We’d love to hear your ideas
-            on how we can make sending great emails more fun and simple.
+            Thank you for checking out our project. We’d love to hear your ideas on how we can make
+            sending great emails more fun and simple.
           </MjmlText>
           <MjmlText
             padding="16px 0 0"

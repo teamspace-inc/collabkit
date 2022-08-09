@@ -13,7 +13,7 @@ const Head: React.FC<HeadProps> = ({ children }) => {
       </MjmlRaw>
       <MjmlFont
         name="Inter"
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900"
       />
       <MjmlStyle>{`
         .smooth {
