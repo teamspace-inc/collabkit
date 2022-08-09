@@ -162,14 +162,12 @@ export async function generateNotification(
           console.log('from:', actorName);
 
           let subject = '';
-          let body = '';
+          let body = `${actorName}: "${_event.body}" [View/Reply] [Unsubscribe]`;
 
           if (isFirstEvent) {
             subject = `${actorName} left a new comment in ${workspaceName}`;
-            body = `${actorName} has started a new thread in ${workspaceName} [View/Reply] [Unsubscribe]`;
           } else {
             subject = `${actorName} replied to a comment in ${workspaceName}`;
-            body = `${actorName}: "${_event.body}" [View/Reply] [Unsubscribe]`;
           }
 
           return {

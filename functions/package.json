@@ -17,16 +17,24 @@
     "firebase-admin": "^10.0.2",
     "firebase-functions": "^3.22.0",
     "mailgun-js": "^0.22.0",
-    "nanoid": "^4.0.0"
+    "mailing-core": "^0.6.5",
+    "mjml": "^4.13.0",
+    "mjml-react": "^2.0.8",
+    "nanoid": "^4.0.0",
+    "nodemailer": "^6.7.7"
   },
   "devDependencies": {
     "@types/mailgun-js": "^0.22.12",
+    "@types/mjml": "^4.7.0",
+    "@types/mjml-react": "^2.0.5",
+    "@types/nodemailer": "^6.4.5",
     "@typescript-eslint/eslint-plugin": "^5.12.0",
     "@typescript-eslint/parser": "^5.12.0",
     "eslint": "^8.9.0",
     "eslint-config-google": "^0.14.0",
     "eslint-plugin-import": "^2.25.4",
     "firebase-functions-test": "^0.2.0",
+    "mailing": "^0.6.5",
     "typescript": "^4.5.4"
   },
   "private": true
