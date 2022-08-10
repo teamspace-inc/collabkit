@@ -8,14 +8,11 @@ import { FirebaseSync } from '../sync';
 import { createThemes, DeepPartial, Theme } from './UIKit';
 import merge from 'lodash.merge';
 
-const systemDarkMode =
-  window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-
 // Enable using multiple isolated App
 // instances in the same page.
 export function CollabKitProvider({
   children,
-  colorScheme,
+  colorScheme = 'auto',
   theme,
   ...config
 }: {
@@ -38,7 +35,6 @@ export function CollabKitProvider({
   const themes = {
     dark: darkTheme,
     light: lightTheme,
-    auto: systemDarkMode ? darkTheme : lightTheme,
   };
 
   useLayoutEffect(() => {
@@ -61,11 +57,13 @@ export function CollabKitProvider({
     }
   }, [context]);
 
+  const preferredColorScheme = useColorScheme(colorScheme);
+
   if (!context) {
     return null;
   }
 
-  const baseTheme = themes[colorScheme ?? 'auto'];
+  const baseTheme = themes[preferredColorScheme];
 
   return (
     <AppContext.Provider
@@ -79,4 +77,26 @@ export function CollabKitProvider({
       <span className={baseTheme.className.toString()}>{children}</span>
     </AppContext.Provider>
   );
+}
+
+function useColorScheme(colorScheme: 'light' | 'dark' | 'auto') {
+  const [preferredColorScheme, setPreferredColorScheme] = useState<'light' | 'dark'>(
+    colorScheme === 'auto' ? 'dark' : colorScheme
+  );
+
+  useLayoutEffect(() => {
+    const onChange = (e: MediaQueryListEvent) => {
+      setPreferredColorScheme(e.matches ? 'dark' : 'light');
+    };
+
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    setPreferredColorScheme(mediaQuery.matches ? 'dark' : 'light');
+    mediaQuery.addEventListener('change', onChange);
+
+    return () => {
+      mediaQuery.removeEventListener('change', onChange);
+    };
+  }, []);
+
+  return preferredColorScheme;
 }
