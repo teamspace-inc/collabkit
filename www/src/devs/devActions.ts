@@ -72,12 +72,12 @@ export const devActions = {
   signIn: async () => {
     console.log('signIn');
     // The client SDK will parse the code from the link for you.
-    await signInWithEmailLink(auth, window.localStorage.getItem('emailForSignIn')!)
+    await signInWithEmailLink(auth, devStore.forms.enterEmail?.email!)
       .then((result) => {
         // Clear email from storage.
         devStore.user = result.user;
         devStore.authState = 'signedIn';
-        window.localStorage.removeItem('emailForSignIn');
+        // window.localStorage.removeItem('emailForSignIn');
         window.history.pushState({}, '', '/devs');
         // You can access the new user via result.user
         // Additional user info profile not available via:
