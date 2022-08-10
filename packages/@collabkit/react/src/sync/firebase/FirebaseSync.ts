@@ -18,7 +18,7 @@ import { Event, IdentifyProps, DB, Pin, Subscriptions } from '../../constants';
 import { subscribeThreadIsTyping } from './subscribeThreadIsTyping';
 import { subscribeThreadSeenBy } from './subscribeThreadSeenBy';
 import { subscribeTimeline } from './subscribeTimeline';
-import { typingRef, timelineRef } from './refs';
+import { typingRef, timelineRef, userTypingRef } from './refs';
 import {
   PinEventHandler,
   SeenEventHandler,
@@ -118,7 +118,7 @@ export class FirebaseSync implements SyncAdapter {
     workspaceId: string;
     threadId: string;
   }): Promise<void> {
-    await set(typingRef(appId, workspaceId, threadId, userId), true);
+    await set(userTypingRef(appId, workspaceId, threadId, userId), true);
   }
 
   async stopTyping({
@@ -132,7 +132,7 @@ export class FirebaseSync implements SyncAdapter {
     workspaceId: string;
     threadId: string;
   }): Promise<void> {
-    await remove(typingRef(appId, workspaceId, threadId, userId));
+    await remove(userTypingRef(appId, workspaceId, threadId, userId));
   }
 
   async sendMessage({
@@ -259,7 +259,7 @@ export class FirebaseSync implements SyncAdapter {
 
   subscribeThread(props: {
     appId: string;
-    userId: string;
+    userId?: string;
     workspaceId: string;
     threadId: string;
     subs: Subscriptions;

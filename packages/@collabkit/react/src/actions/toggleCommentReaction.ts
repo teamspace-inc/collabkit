@@ -6,7 +6,6 @@ export async function toggleCommentReaction(
   props: { target: CommentReactionTarget }
 ) {
   if (!store.config.identify) {
-    console.warn('[CollabKit] Did you forget to call CollabKit.identify?');
     return;
   }
 

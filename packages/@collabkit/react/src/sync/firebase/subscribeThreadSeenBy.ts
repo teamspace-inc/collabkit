@@ -4,7 +4,6 @@ import { ThreadSeenEvent } from '../types';
 
 export function subscribeThreadSeenBy(props: {
   appId: string;
-  userId: string;
   workspaceId: string;
   threadId: string;
   subs: Subscriptions;

@@ -19,9 +19,10 @@ export function CollabKitProvider({
   appId: string;
   apiKey: string;
   workspace: { id: string; name?: string };
-  user: IdentifyProps;
+  user?: IdentifyProps | null;
   mentionableUsers: MentionProps;
   children: React.ReactNode;
+  onAuthenticationRequired?: () => void;
   colorScheme?: 'light' | 'dark' | 'auto';
   theme?: DeepPartial<Theme>;
   readOnly?: boolean;
@@ -46,7 +47,7 @@ export function CollabKitProvider({
     return () => {
       events.onDestroy();
     };
-  }, [config.apiKey]);
+  }, [config.apiKey, config.user?.userId]);
 
   useEffect(() => {
     if (context) {

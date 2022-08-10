@@ -1,11 +1,11 @@
 import { Subscriptions } from '../../constants';
 import { onChildAdded, onChildRemoved, onDisconnect } from 'firebase/database';
 import { TypingEvent } from '../types';
-import { typingRef } from './refs';
+import { typingRef, userTypingRef } from './refs';
 
-export function subscribeThreadIsTyping(props: {
+export async function subscribeThreadIsTyping(props: {
   appId: string;
-  userId: string;
+  userId?: string;
   workspaceId: string;
   threadId: string;
   subs: Subscriptions;
@@ -17,8 +17,11 @@ export function subscribeThreadIsTyping(props: {
   const addedKey = `${key}-added`;
   const removedKey = `${key}-removed`;
 
-  const isTypingRef = typingRef(appId, workspaceId, threadId, userId);
-  onDisconnect(isTypingRef).remove();
+  if (userId) {
+    await onDisconnect(userTypingRef(appId, workspaceId, threadId, userId)).remove();
+  }
+
+  const isTypingRef = typingRef(appId, workspaceId, threadId);
 
   if (subs[addedKey] && subs[removedKey]) {
     return;

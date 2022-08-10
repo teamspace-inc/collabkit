@@ -6,10 +6,11 @@ export type Config = {
   appId: string;
   apiKey: string;
   workspace: { name?: string; id: string };
-  user: IdentifyProps;
+  user?: IdentifyProps | null;
   mentionableUsers: MentionProps;
   readOnly?: boolean;
   mode?: 'demo';
+  onAuthenticationRequired?: () => void;
 };
 
 export function createWorkspace(config: Config): Workspace {
@@ -26,10 +27,6 @@ export function createWorkspace(config: Config): Workspace {
 }
 
 export function createStore(config: Config, sync: SyncAdapter, skipCache = false): Store {
-  if (!skipCache && import.meta.env.DEV && _storeCache[config.apiKey]) {
-    console.warn('CollabKit: using cached store');
-    return _storeCache[config.apiKey];
-  }
   const store = proxy<Store>({
     sync: ref(sync),
     mode: config.mode,
@@ -48,6 +45,7 @@ export function createStore(config: Config, sync: SyncAdapter, skipCache = false
       },
       workspace: config.workspace,
       mentions: config.mentionableUsers,
+      onAuthenticationRequired: config.onAuthenticationRequired,
     },
     focusedId: null,
     selectedId: null,
@@ -61,10 +59,5 @@ export function createStore(config: Config, sync: SyncAdapter, skipCache = false
     profiles: {},
     subs: {},
   });
-  if (!skipCache && import.meta.env.DEV) {
-    _storeCache[config.apiKey] = store;
-  }
   return store;
 }
-
-const _storeCache: Record<string, Store> = {};

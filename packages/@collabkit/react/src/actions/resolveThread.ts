@@ -3,6 +3,11 @@ import { getConfig, actions } from './index';
 
 export async function resolveThread(store: Store, workspaceId: string, threadId: string) {
   const { appId, userId } = getConfig(store);
+  if (!userId) {
+    console.warn('CollabKit: cannot resolve thread, anonymous user');
+    return;
+  }
+
   if (store.isReadOnly) {
     console.warn('CollabKit: cannot resolve thread in read-only mode');
     return;

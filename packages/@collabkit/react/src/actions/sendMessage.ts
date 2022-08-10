@@ -1,9 +1,19 @@
 import { Store } from '../constants';
 import { $createTextNode, $getRoot } from 'lexical';
 import { writeMessageToFirebase } from './writeMessageToFirebase';
+import { getConfig } from '.';
 
 export async function sendMessage(store: Store, props: { workspaceId: string; threadId: string }) {
   const { workspaceId, threadId } = props;
+  const { userId } = getConfig(store);
+  if (!userId) {
+    console.warn('CollabKit: cannot send a message, anonymous user');
+    if (store.config.onAuthenticationRequired) {
+      store.config.onAuthenticationRequired();
+    }
+    return;
+  }
+
   if (store.isReadOnly) {
     console.warn('CollabKit: cannot send message in read-only mode');
     return;

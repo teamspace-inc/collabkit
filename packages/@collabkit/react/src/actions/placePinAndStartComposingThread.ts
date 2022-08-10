@@ -11,6 +11,10 @@ export async function placePinAndStartComposingThread(
   }
 ) {
   const { userId } = getConfig(store);
+  if (!userId) {
+    console.warn('CollabKit: cannot place a pin, anonymous user');
+    return;
+  }
   const { workspaceId, threadId } = props;
   subscribeThread(store, props);
   store.composingId = { type: 'thread', threadId, workspaceId };
