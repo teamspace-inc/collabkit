@@ -8,7 +8,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@code-hike/mdx": "^0.7.3",
     "@collabkit/react": "^0.0.0",
+    "@mdx-js/rollup": "^2.1.2",
     "@stitches/react": "^1.2.8",
     "@types/chrome": "^0.0.193",
     "firebase": "^9.9.1",

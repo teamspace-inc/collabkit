@@ -7,11 +7,12 @@ export default function Footer() {
   return (
     <MjmlSection cssClass="smooth">
       <MjmlColumn>
-        <MjmlText cssClass="footer" padding="24px 24px 48px" fontSize={textSm} color={grayDark}>
-          © 2022 CollabKit&nbsp;&nbsp;·&nbsp;&nbsp;
+        <MjmlText cssClass="footer" padding="12px 24px 48px" fontSize={textSm} color={grayDark}>
           <a href="#" target="_blank">
             Turn off notifications for this thread
           </a>
+          <br />
+          <br />© 2022 CollabKit
         </MjmlText>
       </MjmlColumn>
     </MjmlSection>

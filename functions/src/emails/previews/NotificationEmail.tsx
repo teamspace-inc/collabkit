@@ -1,12 +1,10 @@
 import React from 'react';
 
-import BulletedList from '../components/BulletedList';
 import NotificationEmail from '../NotificationEmail';
 
 export function newComment() {
   return (
     <NotificationEmail
-      // name="Amelita"
       body={
         <>
           <b style={{ fontSize: '14px', lineHeight: '16px', fontWeight: '700' }}>
@@ -18,7 +16,7 @@ export function newComment() {
               fontSize: '32px',
               fontWeight: '400',
               lineHeight: '38px',
-              marginBottom: 0,
+              marginBottom: '0px',
               marginTop: '16px',
             }}
           >
