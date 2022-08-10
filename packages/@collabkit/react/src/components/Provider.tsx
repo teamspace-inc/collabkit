@@ -47,7 +47,7 @@ export function CollabKitProvider({
     return () => {
       events.onDestroy();
     };
-  }, [config.apiKey]);
+  }, [config.apiKey, config.user?.userId]);
 
   useEffect(() => {
     if (context) {
