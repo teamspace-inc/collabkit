@@ -1,4 +1,4 @@
-import { LoadingButton, HStack, Text, Title, VStack, Page, H2, Auth } from '../../UIKit';
+import { LoadingButton, HStack, Text, VStack, Page, H2, Auth } from '../../UIKit';
 import { devStore } from '../devStore';
 import { useSnapshot } from 'valtio';
 import { devEvents } from '../devEvents';

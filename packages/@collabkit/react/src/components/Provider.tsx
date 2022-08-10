@@ -85,18 +85,20 @@ function useColorScheme(colorScheme: 'light' | 'dark' | 'auto') {
   );
 
   useLayoutEffect(() => {
-    const onChange = (e: MediaQueryListEvent) => {
-      setPreferredColorScheme(e.matches ? 'dark' : 'light');
-    };
+    if (colorScheme === 'auto') {
+      const onChange = (e: MediaQueryListEvent) => {
+        setPreferredColorScheme(e.matches ? 'dark' : 'light');
+      };
 
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    setPreferredColorScheme(mediaQuery.matches ? 'dark' : 'light');
-    mediaQuery.addEventListener('change', onChange);
+      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+      setPreferredColorScheme(mediaQuery.matches ? 'dark' : 'light');
+      mediaQuery.addEventListener('change', onChange);
 
-    return () => {
-      mediaQuery.removeEventListener('change', onChange);
-    };
-  }, []);
+      return () => {
+        mediaQuery.removeEventListener('change', onChange);
+      };
+    }
+  }, [colorScheme]);
 
   return preferredColorScheme;
 }
