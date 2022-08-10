@@ -4,7 +4,7 @@ import { useSnapshot } from 'valtio';
 import { devEvents } from '../devEvents';
 
 export function CheckEmail() {
-  const { email } = useSnapshot(devStore);
+  const { forms } = useSnapshot(devStore);
 
   return (
     <VStack>
@@ -13,7 +13,7 @@ export function CheckEmail() {
           <VStack style={{ alignItems: 'flex-start' }}>
             <H2>Check your email</H2>
             <Text>
-              We've sent a magic link to <b>{email}</b> click on it to continue.
+              We've sent a magic link to <b>{forms.enterEmail?.email}</b> click on it to continue.
             </Text>
             <HStack style={{ gap: '1rem' }}>
               <LoadingButton onClick={(e) => devEvents.onAuthFormSubmit()}>

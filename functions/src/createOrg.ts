@@ -16,7 +16,7 @@ export const createOrg = functions.https.onRequest(async (request, response) => 
       return;
     }
 
-    if (!request.query.name) {
+    if (!request.body.name) {
       response.status(400).send('No name');
       return;
     }
@@ -33,7 +33,7 @@ export const createOrg = functions.https.onRequest(async (request, response) => 
       };
 
       const org: Org = {
-        name: request.query.name.toString(),
+        name: request.body.name.toString(),
         admins,
         createdAt: admin.database.ServerValue.TIMESTAMP,
       };
@@ -66,9 +66,9 @@ export const createOrg = functions.https.onRequest(async (request, response) => 
           response.status(201).send({
             status: 201,
             data: {
-              org,
+              org: { ...org, id: orgId },
               orgApps,
-              app,
+              app: { ...app, id: appId },
             },
           });
         } catch (e) {

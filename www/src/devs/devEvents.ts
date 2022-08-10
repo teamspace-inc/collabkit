@@ -22,7 +22,7 @@ export const devEvents = {
   onAuthFormSubmit: () => {
     if (
       devStore.authState === 'confirmEmailPrompt' &&
-      window.localStorage.getItem('emailForSignIn')! === devStore.email
+      window.localStorage.getItem('emailForSignIn')! === devStore.forms.enterEmail?.email
     ) {
       devActions.signIn();
     } else {
@@ -34,10 +34,18 @@ export const devEvents = {
     devActions.deleteApp(props.appId);
   },
 
+  onOrgValue: (snapshot: DataSnapshot) => {
+    console.log('on org value');
+    if (snapshot.key) {
+      const org = { ...snapshot.val(), orgId: snapshot.key };
+      console.log('adding org', org);
+      devStore.org = org;
+    }
+  },
+
   onAdminAppAdded: (snapshot: DataSnapshot) => {
     console.log('admin app added', snapshot.key, snapshot.val());
     if (snapshot.key) {
-      devStore.adminApps[snapshot.key] = snapshot.val();
       devStore.subs[snapshot.key] = onValue(
         ref(database, `/apps/${snapshot.key}`),
         devEvents.onAppChanged
@@ -47,13 +55,20 @@ export const devEvents = {
 
   onAdminAppRemoved: (snapshot: DataSnapshot) => {
     if (snapshot.key) {
-      delete devStore.adminApps[snapshot.key];
       delete devStore.apps[snapshot.key];
     }
   },
 
   onCreateAppButtonClick: (e: React.MouseEvent) => {
     devActions.createApp();
+  },
+
+  onCreateOrgButtonClick: (e: React.MouseEvent) => {
+    devActions.createOrg();
+  },
+
+  onCreateOrgInputChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+    devStore.forms.createOrg = { name: e.target.value };
   },
 
   onAppNameChange: (props: { appId: string; e: React.ChangeEvent<HTMLInputElement> }) => {

@@ -1,9 +1,10 @@
 import { devStore } from './devStore';
-import { EntityName } from './AppList';
-
 import { useSnapshot } from 'valtio';
-import { EnterEmail } from './auth/EnterEmail';
-import { CheckEmail } from './auth/CheckEmail';
+
+import { CreateOrg } from './forms/CreateOrg';
+import { EnterEmail } from './forms/EnterEmail';
+import { CheckEmail } from './forms/CheckEmail';
+
 import { StickyHeader } from '../StickyHeader';
 import { Logo } from '../Logo';
 import { useEffect } from 'react';
@@ -14,7 +15,7 @@ import { auth } from './database';
 import { Link } from '../UIKit';
 
 export function Devs() {
-  const { authState } = useSnapshot(devStore);
+  const { authState, org } = useSnapshot(devStore);
 
   useEffect(() => {
     if (window.location.href.includes('signedIn')) {
@@ -25,7 +26,7 @@ export function Devs() {
   const view = {
     blank: <></>,
     signedOut: <EnterEmail />,
-    signedIn: <EntityName />,
+    signedIn: org ? <>You've got an org!</> : <CreateOrg />,
     magicLinkSent: <CheckEmail />,
     confirmEmailPrompt: <EnterEmail isReentry={true} />,
   };

@@ -1,5 +1,5 @@
-import { ref, set, onChildAdded, onChildRemoved, update } from 'firebase/database';
-import { CreateApp, FunctionResponse } from './devTypes';
+import { ref, set, onChildAdded, onChildRemoved, update, onValue } from 'firebase/database';
+import { CreateApp, CreateOrg, FunctionResponse } from './devTypes';
 import { database } from './database';
 import { devStore } from './devStore';
 import {
@@ -13,7 +13,7 @@ import { devEvents } from './devEvents';
 
 export const devActions = {
   setEmail: (email: string) => {
-    devStore.email = email;
+    devStore.forms.enterEmail = { email };
   },
 
   verifyEmailLink: async () => {
@@ -24,7 +24,7 @@ export const devActions = {
       // the sign-in operation.
       // Get the email if available. This should be available if the user completes
       // the flow on the same device where they started it.
-      let email = window.localStorage.getItem('emailForSignIn');
+      let email = devStore.forms.enterEmail?.email;
       if (!email) {
         // User opened the link on a different device. To prevent session fixation
         // attacks, ask the user to provide the associated email again. For example:
@@ -93,7 +93,12 @@ export const devActions = {
   },
 
   sendMagicLink: async () => {
-    const { email } = devStore;
+    const { forms } = devStore;
+    const email = forms.enterEmail?.email;
+    if (!email) {
+      console.warn('tried to send magic link without an email');
+      return;
+    }
 
     const actionCodeSettings = {
       url: window.location.origin + '/signedIn',
@@ -102,7 +107,6 @@ export const devActions = {
 
     try {
       await sendSignInLinkToEmail(auth, email, actionCodeSettings);
-      window.localStorage.setItem('emailForSignIn', email);
       devStore.authState = 'magicLinkSent';
     } catch (e) {
       console.error(e);
@@ -147,7 +151,46 @@ export const devActions = {
       const json = (await response.json()) as FunctionResponse<CreateApp>;
       if (json.status === 200 || json.status === 201) {
         devStore.apps[json.data.app.appId] = json.data.app;
-        devStore.adminApps[json.data.app.appId] = json.data.adminApp !== null;
+      }
+      return;
+    }
+
+    console.error('Failed to create app', response.status, await response.text());
+  },
+
+  subscribeOrg: (props: { orgId: string }) => {
+    devStore.subs[`org-${props.orgId}`] = onValue(
+      ref(database, `/orgs/${props.orgId}`),
+      devEvents.onOrgValue
+    );
+  },
+
+  createOrg: async () => {
+    if (!devStore.user) {
+      console.warn('tried to create org without a user');
+      return;
+    }
+    const name = devStore.forms.createOrg?.name;
+    if (!name) {
+      console.warn('tried to create org without a name');
+      return;
+    }
+    const idToken = await devStore.user.getIdToken(true);
+    const response = await fetch(`/api/createOrg`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${idToken}`,
+      },
+      body: JSON.stringify({ name }),
+    });
+
+    if (response.ok) {
+      const json = (await response.json()) as FunctionResponse<CreateOrg>;
+      if (json.status === 200 || json.status === 201) {
+        devStore.apps[json.data.app.appId] = json.data.app;
+        devStore.org = json.data.org;
+        devActions.subscribeOrg({ orgId: json.data.org.id });
       }
       return;
     }

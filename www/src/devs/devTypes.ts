@@ -15,16 +15,37 @@ export interface AdminApp {
 
 export interface Store {
   user: User | null;
+  org: Org | null;
   apps: { [appId: string]: App };
   subs: { [key: string]: Unsubscribe };
-  adminApps: { [appId: string]: boolean };
-  email: string;
+  forms: {
+    createOrg?: {
+      name: string;
+    };
+    enterEmail?: {
+      email: string;
+    };
+  };
   authState: 'blank' | 'signedOut' | 'signedIn' | 'magicLinkSent' | 'confirmEmailPrompt';
+}
+
+export interface Org {
+  name: string;
+  admins: {
+    [uid: string]: true;
+  };
+  createdAt: object | number;
 }
 
 export type CreateApp = {
   app: App;
   adminApp: AdminApp;
+};
+
+export type CreateOrg = {
+  app: App & { id: string };
+  org: Org & { id: string };
+  orgApps: { [orgId: string]: { [appId: string]: true } };
 };
 
 export type FunctionResponse<T> =

@@ -4,7 +4,8 @@ if (admin.apps.length === 0) {
 }
 
 import { createApp } from './createApp';
+import { createOrg } from './createOrg';
 import { generateToken } from './generateToken';
 import { sendNotification } from './sendNotification';
 
-export { createApp, generateToken, sendNotification };
+export { createOrg, createApp, generateToken, sendNotification };

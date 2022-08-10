@@ -1,18 +1,19 @@
-import { Button, HStack, Title, VStack, Text, Page, H2, Auth } from '../UIKit';
+import { Button, HStack, VStack, Text, Page, H2, Auth } from '../../UIKit';
+import { devEvents } from '../devEvents';
 
-export function EntityName() {
+export function CreateOrg() {
   return (
     <Page>
       <Auth>
         <VStack style={{ alignItems: 'flex-start' }}>
-          <H2>What's the name of your company or product?</H2>
+          <H2>What's the name of your product or company?</H2>
           <Text>
-            This is the name your users will see in email footers and other places.{' '}
+            This is the name your users and other admins will see. <br />
             <b>You can change this later.</b>
           </Text>
           <HStack style={{ gap: '1rem' }}>
             <input
-              placeholder="Ex. Acme or AwesomeDashboard"
+              placeholder="Ex. Acme or June Analytics"
               style={{
                 width: '30ch',
                 fontSize: '1.5rem',
@@ -20,9 +21,10 @@ export function EntityName() {
                 border: '2px solid #222',
                 borderRadius: '100px',
               }}
+              onChange={(e) => devEvents.onCreateOrgInputChange(e)}
               type="text/email"
             />
-            <Button>Continue</Button>
+            <Button onClick={(e) => devEvents.onCreateOrgButtonClick(e)}>Continue</Button>
           </HStack>
         </VStack>
       </Auth>

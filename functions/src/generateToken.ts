@@ -1,7 +1,7 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 import * as cors from 'cors';
-const corsHandler = cors({ origin: true });
+const corsHandler = cors.default({ origin: true });
 
 export const generateToken = functions.https.onRequest(async (request, response) =>
   corsHandler(request, response, async () => {
