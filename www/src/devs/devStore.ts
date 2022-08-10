@@ -1,8 +1,5 @@
-import { onAuthStateChanged } from 'firebase/auth';
-import { onChildAdded, ref, onChildRemoved } from 'firebase/database';
 import { proxy } from 'valtio';
-import { auth, database } from './database';
-import { devEvents } from './devEvents';
+import { devActions } from './devActions';
 import { Store } from './devTypes';
 
 export const devStore = proxy<Store>({
@@ -14,22 +11,4 @@ export const devStore = proxy<Store>({
   authState: 'blank',
 });
 
-devStore.subs['user'] = onAuthStateChanged(auth, (user) => {
-  if (user) {
-    devStore.user = user;
-    devStore.authState = 'signedIn';
-    devStore.subs['adminAppAdded'] = onChildAdded(
-      ref(database, `/adminApps/${user.uid}`),
-      devEvents.onAdminAppAdded
-    );
-    devStore.subs['adminAppRemoved'] = onChildRemoved(
-      ref(database, `/adminApps/${user.uid}`),
-      devEvents.onAdminAppRemoved
-    );
-  } else {
-    devStore.user = null;
-    devStore.authState = 'signedOut';
-    devStore.subs['adminAppAdded']?.();
-    devStore.subs['adminAppRemoved']?.();
-  }
-});
+devActions.subscribeAuthState();

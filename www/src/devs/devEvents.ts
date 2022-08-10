@@ -7,10 +7,10 @@ import { devStore } from './devStore';
 
 export const devEvents = {
   onAppChanged: (snapshot: DataSnapshot) => {
-    // console.log('onAppChanged');
+    console.log('onAppChanged');
     if (snapshot.key) {
       const app = { ...snapshot.val(), appId: snapshot.key };
-      // console.log('adding app', app);
+      console.log('adding app', app);
       devStore.apps[snapshot.key] = app;
     }
   },
@@ -35,7 +35,7 @@ export const devEvents = {
   },
 
   onAdminAppAdded: (snapshot: DataSnapshot) => {
-    // console.log('admin app added', snapshot.key, snapshot.val());
+    console.log('admin app added', snapshot.key, snapshot.val());
     if (snapshot.key) {
       devStore.adminApps[snapshot.key] = snapshot.val();
       devStore.subs[snapshot.key] = onValue(

@@ -50,12 +50,27 @@
         }
       }
     },
-    "adminApps": {
-      "$adminId": {
-        ".read": "auth.uid === $adminId",
+    "orgs": {
+      "$orgId": {
+        "name": {
+          ".read": true,
+          ".write": "root.child('apps').child($orgId).child('admins').child(auth.uid).exists()"
+        },
+        "admins": {
+          "$adminId": {
+            ".read": "root.child('apps').child($orgId).child('admins').child(auth.uid).exists()",
+            ".validate": "newData.isBoolean()",
+            ".write": "root.child('apps').child($orgId).child('admins').child(auth.uid).exists()" // 'Firebase Admin' can write the first one
+          }
+        }
+      }
+    },
+    "orgApps": {
+      "$orgId": {
+        ".read": "root.child('orgs').child($orgId).child('admins').child(auth.uid).exists()",
         "$appId": {
           ".read": true,
-          ".write": false // only 'Firebase Admin' can write this
+          ".write": false
         }
       }
     },
@@ -68,6 +83,7 @@
           ".write": "root.child('apps').child($appId).child('admins').child(auth.uid).exists()",
           ".validate": "newData.isString()"
         },
+        // mirror of org>admins for ease of checking
         "admins": {
           "$adminId": {
             ".read": "root.child('apps').child($appId).child('admins').child(auth.uid).exists()",
@@ -86,6 +102,11 @@
           ".read": true,
           ".write": "root.child('apps').child($appId).child('admins').child(auth.uid).exists()",
           ".validate": "newData.isString() && (newData.val() === 'SECURED' || newData.val() === 'UNSECURED')"
+        },
+        "isEmailDisabled": {
+          ".read": true,
+          ".write": "root.child('apps').child($appId).child('admins').child(auth.uid).exists()",
+          ".validate": "newData.isBoolean()"
         }
       }
     },
@@ -138,9 +159,9 @@
             "$threadId": {
               "$endUserId": {
                 ".read": "auth.token.appId === $appId",
-                ".write": "!newData.exists() && auth.token.appId === $appId && ((root.child('apps').child(auth.token.appId).child('mode').val() === 'UNSECURED' || (root.child('apps').child(auth.token.appId).child('mode').val() === 'SECURED' && $workspaceId === auth.token.workspaceId && $endUserId === auth.token.userId)))",
+                ".write": "auth.token.appId === $appId && ((root.child('apps').child(auth.token.appId).child('mode').val() === 'UNSECURED' || (root.child('apps').child(auth.token.appId).child('mode').val() === 'SECURED' && $workspaceId === auth.token.workspaceId && $endUserId === auth.token.userId)))",
                 "seenUntilId": {
-                  ".validate": "newData.exists() && root.child('timeline').child($appId).child($workspaceId).child($threadId).child(newData.val()).exists()"
+                  ".validate": "root.child('timeline').child($appId).child($workspaceId).child($threadId).child(newData.val()).exists()"
                 },
                 "seenAt": {
                   ".validate": "newData.isNumber()"
@@ -224,6 +245,22 @@
               },
               "system": {
                 ".validate": "newData.val() === 'resolve' || newData.val() === 'reopen'"
+              }
+            }
+          }
+        }
+      }
+    },
+    "notified": {
+      "$appId": {
+        "$workspaceId": {
+          ".read": "auth.token.appId === $appId",
+          "$threadId": {
+            "$eventId": {
+              "$endUserId": {
+                ".validate": "newData.isBoolean()",
+                ".read": true,
+                ".write": false // only 'Firebase Admin' can write
               }
             }
           }
