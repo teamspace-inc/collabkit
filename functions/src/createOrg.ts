@@ -4,7 +4,7 @@ import * as cors from 'cors';
 const corsHandler = cors.default({ origin: true });
 
 async function generateId() {
-  return (await import('nanoid')).nanoid();
+  return admin.firestore().collection('name').doc().id;
 }
 
 export const createOrg = functions.https.onRequest(async (request, response) => {
