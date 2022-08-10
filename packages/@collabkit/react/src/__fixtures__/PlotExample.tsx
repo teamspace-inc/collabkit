@@ -148,7 +148,7 @@ export default class Example extends React.Component<
   _updateButtonClicked = () => {
     const { series } = this.state;
     const totalValues = Math.random() * 50;
-    series.forEach((s) => {
+    series.forEach((s: any) => {
       s.data = getRandomSeriesData(totalValues);
     });
     this.setState({ series });
@@ -165,8 +165,8 @@ export default class Example extends React.Component<
         <div className="chart">
           <FlexibleWidthXYPlot
             animation
-            getX={(d) => d.left}
-            getY={(d) => d.top}
+            getX={(d: any) => d.left}
+            getY={(d: any) => d.top}
             onMouseLeave={this._mouseLeaveHandler}
             xDomain={[-0.5, series[0].data.length - 1]}
             height={300}
