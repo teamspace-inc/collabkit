@@ -72,7 +72,7 @@ const StyledLexicalEditorContainer = styled('div', {
 });
 
 // affects the text rendered inside the composer, so
-// there is room for the send button
+// there is room for the send
 const StyledVisibleComposerArea = styled('div', {
   borderRadius: '$radii$0',
   width: 'calc(100% - $sizes$sendButton - 8px)', // take into account send button

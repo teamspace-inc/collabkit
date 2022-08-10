@@ -1,13 +1,15 @@
 import { createContext } from 'react';
-import { darkTheme, theme } from '../components/UIKit';
 import type { Store } from '../constants';
 import type { Events } from '../events';
+import { createThemes } from '../components/UIKit';
+
+type Themes = ReturnType<typeof createThemes>;
 
 export type AppContextData = {
   store: Store;
   events: Events;
   workspaceId: string;
-  theme: typeof theme | typeof darkTheme;
+  theme: Themes['darkTheme'] | Themes['lightTheme'];
 };
 
 export const AppContext = createContext<AppContextData | null>(null);

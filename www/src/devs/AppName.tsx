@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { events } from './events';
-import { App } from './types';
+import { devEvents } from './devEvents';
+import { App } from './devTypes';
 
 export function AppName(props: { app: App }) {
   const [isEditing, setIsEditing] = useState(false);
@@ -13,7 +13,7 @@ export function AppName(props: { app: App }) {
             <input
               style={{ fontSize: '1rem' }}
               type="text"
-              onChange={(e) => events.onAppNameChange({ appId: props.app.appId, e })}
+              onChange={(e) => devEvents.onAppNameChange({ appId: props.app.appId, e })}
               value={props.app.name ?? ''}
               placeholder={'Unnamed'}
             />
