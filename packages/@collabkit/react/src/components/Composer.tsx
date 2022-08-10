@@ -57,7 +57,7 @@ const ComposerContainer = styled('div', {
 
 const StyledLexicalEditorContainer = styled('div', {
   borderRadius: '$radii$0',
-  width: 'calc(100% - $padding$composer - $sizes$avatar - 0px)', // take into account send button
+  width: 'calc(100% - $padding$composer - $sizes$avatar - 12px)', // take into account send button
   color: '$colors$primaryText',
   marginLeft: 8,
   padding: '0px 0',
@@ -71,6 +71,8 @@ const StyledLexicalEditorContainer = styled('div', {
   textAlign: 'left',
 });
 
+// affects the text rendered inside the composer, so
+// there is room for the send button
 const StyledVisibleComposerArea = styled('div', {
   borderRadius: '$radii$0',
   width: 'calc(100% - $sizes$sendButton - 8px)', // take into account send button

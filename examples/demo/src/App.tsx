@@ -17,7 +17,9 @@ function TellaDemo() {
           top: 0,
           width: 284,
           margin: '0 0 0 0',
-          height: 'calc(100vh)',
+          bottom: 0,
+          paddingBottom: 4,
+          background: 'rgb(249,249,250)',
         }}
       >
         <CollabKit.Thread
@@ -81,6 +83,7 @@ export default function App() {
         colors: {
           sendButtonColor: 'rgb(94, 81, 248)',
           backgroundColor: 'rgb(249,249,250)',
+          composerBackground: 'white',
         },
       }}
       mentionableUsers={mentionableUsers}
