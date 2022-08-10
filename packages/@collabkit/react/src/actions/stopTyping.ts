@@ -3,6 +3,10 @@ import { getConfig } from './index';
 
 export async function stopTyping(store: Store, props: { target: ComposerTarget }) {
   const { userId, appId } = getConfig(store);
+  if (!userId) {
+    return;
+  }
+
   if (store.isReadOnly) {
     console.warn('CollabKit: cannot stop typing in read-only mode');
     return;

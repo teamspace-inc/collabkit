@@ -4,6 +4,9 @@ import { getConfig } from './index';
 
 export async function saveProfile(store: Store) {
   const { appId, userId, workspaceId } = getConfig(store);
+  if (!userId) {
+    return;
+  }
   const { config } = store;
   if (store.isReadOnly) {
     console.warn('CollabKit: cannot save profile in read-only mode');

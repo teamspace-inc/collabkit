@@ -1,8 +1,13 @@
 import { Event, Store } from '../constants';
-import { getConfig, actions } from './index';
+import { actions, getConfig } from './index';
 
 export async function reopenThread(store: Store, workspaceId: string, threadId: string) {
   const { userId } = getConfig(store);
+  if (!userId) {
+    console.warn('CollabKit: cannot reopen thread, anonymous user');
+    return;
+  }
+
   if (store.isReadOnly) {
     console.warn('CollabKit: cannot reopen thread in read-only mode');
     return;

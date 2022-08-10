@@ -2,7 +2,7 @@ import * as CollabKit from '@collabkit/react';
 import { mentionableUsers } from './data';
 import './App.css';
 import { UserMenu } from './UserMenu';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { User } from './types';
 
 import jwtDecode from 'jwt-decode';
@@ -52,22 +52,15 @@ export default function App() {
     }
   }, []);
 
-  useEffect(() => {
-    if (user == null) {
-      showGoogleLogin((user) => onChangeUser(user));
-    }
+  const onAuthenticationRequired = useCallback(() => {
+    showGoogleLogin((user) => onChangeUser(user));
   }, []);
 
-  const image = (
-    <img
-      style={{ width: '100vw', maxHeight: '100vh', objectFit: 'cover' }}
-      src="https://images.unsplash.com/photo-1433838552652-f9a46b332c40"
-    />
-  );
-
-  if (!user) {
-    return image;
-  }
+  // useEffect(() => {
+  //   if (user == null) {
+  //     showGoogleLogin((user) => onChangeUser(user));
+  //   }
+  // }, []);
 
   return (
     <CollabKit.Provider
@@ -87,8 +80,8 @@ export default function App() {
         },
       }}
       mentionableUsers={mentionableUsers}
+      onAuthenticationRequired={onAuthenticationRequired}
     >
-      {/* <CollabKit.Commentable>{image}</CollabKit.Commentable> */}
       <TellaDemo />
       <iframe
         style={{

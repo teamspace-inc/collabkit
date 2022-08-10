@@ -68,28 +68,19 @@ export type FunctionResponse<T> =
 
 export function getConfig(store: Store) {
   const { config } = store;
-  // console.log('getConfig', config);
-  if (!config.setup) {
-    console.warn('Did you forget to call `CollabKit.setup`?', config.setup);
-    throw new Error('Did you forget to call `CollabKit.setup`?');
-  }
-
   const appId = config.setup.appId;
   const apiKey = config.setup.apiKey;
   const mode = config.setup.mode;
   const userId = config.identify?.userId;
-  const workspaceId = config.workspace?.id;
+  const workspaceId = config.workspace.id;
 
-  if (!appId || !apiKey || !mode || !userId || !workspaceId) {
-    console.log({
-      appId,
-      apiKey,
-      mode,
-      userId,
-      workspaceId,
-    });
-    throw new Error('Did you forget to call `CollabKit.setup`?');
+  if (!appId) {
+    throw new Error('Missing `appId`');
   }
+  if (!apiKey) {
+    throw new Error('Missing `apiKey`');
+  }
+
   return { appId, apiKey, mode, userId, workspaceId };
 }
 

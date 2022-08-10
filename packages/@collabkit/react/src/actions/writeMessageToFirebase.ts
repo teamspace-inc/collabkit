@@ -21,7 +21,6 @@ export async function writeMessageToFirebase(
   }
 
   if (!store.config.identify) {
-    console.warn('[CollabKit] Did you forget to call CollabKit.identify?');
     return;
   }
 

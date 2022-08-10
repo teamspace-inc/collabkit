@@ -75,7 +75,7 @@ export interface SyncAdapter {
 
   subscribeThread(props: {
     appId: string;
-    userId: string;
+    userId?: string;
     workspaceId: string;
     threadId: string;
     subs: Subscriptions;

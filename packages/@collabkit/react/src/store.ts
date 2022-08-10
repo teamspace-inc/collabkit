@@ -6,10 +6,11 @@ export type Config = {
   appId: string;
   apiKey: string;
   workspace: { name?: string; id: string };
-  user: IdentifyProps;
+  user?: IdentifyProps | null;
   mentionableUsers: MentionProps;
   readOnly?: boolean;
   mode?: 'demo';
+  onAuthenticationRequired?: () => void;
 };
 
 export function createWorkspace(config: Config): Workspace {
@@ -48,6 +49,7 @@ export function createStore(config: Config, sync: SyncAdapter, skipCache = false
       },
       workspace: config.workspace,
       mentions: config.mentionableUsers,
+      onAuthenticationRequired: config.onAuthenticationRequired,
     },
     focusedId: null,
     selectedId: null,

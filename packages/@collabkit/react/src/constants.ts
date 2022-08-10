@@ -200,9 +200,10 @@ export interface Store {
   viewingId: null | Target;
   config: {
     identify: IdentifyProps | null | undefined;
-    setup: SetupProps | null | undefined;
-    mentions: MentionProps | null | undefined;
-    workspace: { id: string; name?: string } | null | undefined;
+    setup: SetupProps;
+    mentions: MentionProps;
+    workspace: { id: string; name?: string };
+    onAuthenticationRequired?: () => void;
   };
   profiles: { [profileId: string]: Profile };
   workspaces: {

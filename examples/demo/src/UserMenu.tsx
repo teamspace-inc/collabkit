@@ -5,10 +5,13 @@ export function UserMenu({
   user,
   onChangeUser,
 }: {
-  user: User;
+  user: User | null;
   onChangeUser: (user: User | null) => void;
 }) {
   const [isOpen, setIsOpen] = useState(false);
+  if (!user) {
+    return null;
+  }
   return (
     <div
       style={{
@@ -28,7 +31,7 @@ export function UserMenu({
       {isOpen && (
         <button
           type="button"
-          style={{ position: 'absolute', top: 50, width: 100 }}
+          style={{ position: 'absolute', bottom: 50, width: 100 }}
           onClick={() => onChangeUser(null)}
         >
           Sign out
