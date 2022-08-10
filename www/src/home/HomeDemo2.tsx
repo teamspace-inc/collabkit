@@ -1,6 +1,6 @@
 import * as CollabKit from '@collabkit/react';
 import { styled } from '@stitches/react';
-import { useWindowSize } from '@collabkit/react/src/hooks/useWindowSize';
+import { useWindowSize } from '../hooks/useWindowSize';
 import { DemoUI } from './DemoUI';
 import { DemoImageMobileFallback } from './Home';
 import DemoMobileImage from '../assets/image_02.png';

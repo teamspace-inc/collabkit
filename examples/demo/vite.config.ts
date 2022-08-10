@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      '@collabkit/react': resolve(__dirname, '../../packages/@collabkit/react'),
+      '@collabkit/react': resolve(__dirname, '../../packages/@collabkit/react/src/index.ts'),
     },
   },
   build: {
