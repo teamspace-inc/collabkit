@@ -16,7 +16,8 @@
     "noEmit": false,
     "jsx": "react",
     "composite": true,
-    "outDir": "dist"
+    "outDir": "types",
+    "emitDeclarationOnly": true
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
