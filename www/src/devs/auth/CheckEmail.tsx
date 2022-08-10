@@ -1,4 +1,4 @@
-import { LoadingButton, HStack, Section, Text, Title, VStack } from '../../UIKit';
+import { LoadingButton, HStack, Text, Title, VStack, Page, H2, Auth } from '../../UIKit';
 import { devStore } from '../devStore';
 import { useSnapshot } from 'valtio';
 import { devEvents } from '../devEvents';
@@ -8,19 +8,21 @@ export function CheckEmail() {
 
   return (
     <VStack>
-      <Section>
-        <VStack style={{ alignItems: 'center' }}>
-          <Title>Check your email</Title>
-          <Text>
-            We've sent a magic link to <b>{email}</b> click on it to continue.
-          </Text>
-          <HStack style={{ gap: '1rem' }}>
-            <LoadingButton onClick={(e) => devEvents.onAuthFormSubmit()}>
-              Resend Magic Link
-            </LoadingButton>
-          </HStack>
-        </VStack>
-      </Section>
+      <Page>
+        <Auth>
+          <VStack style={{ alignItems: 'flex-start' }}>
+            <H2>Check your email</H2>
+            <Text>
+              We've sent a magic link to <b>{email}</b> click on it to continue.
+            </Text>
+            <HStack style={{ gap: '1rem' }}>
+              <LoadingButton onClick={(e) => devEvents.onAuthFormSubmit()}>
+                Resend Magic Link
+              </LoadingButton>
+            </HStack>
+          </VStack>
+        </Auth>
+      </Page>
     </VStack>
   );
 }

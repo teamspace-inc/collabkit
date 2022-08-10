@@ -55,7 +55,22 @@ export const Em = styled('em', {
   fontStyle: 'normal',
 });
 
-export const Subtitle = styled('h2', {
+export const Auth = styled('div', {
+  width: '480px',
+});
+
+export const H2 = styled('h2', {
+  fontFamily: 'Inter',
+  fontStyle: 'normal',
+  // fontWeight: 700,
+  fontSize: '3rem',
+  lineHeight: '116%',
+  marginBottom: 0,
+  // letterSpacing: '-0.05em',
+  zIndex: 1,
+});
+
+export const H3 = styled('h2', {
   fontFamily: 'Space Grotesk',
   fontStyle: 'normal',
   fontWeight: 700,
@@ -121,6 +136,16 @@ export const LoadingButton = styled(Button, {
       },
     },
   },
+});
+
+export const Page = styled('section', {
+  position: 'relative',
+  display: 'flex',
+  width: '100vw',
+  overflow: 'hidden',
+  flexDirection: 'column',
+  paddingTop: '8rem',
+  paddingLeft: '5vw',
 });
 
 export const Section = styled('section', {

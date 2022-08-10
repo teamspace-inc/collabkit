@@ -14,19 +14,7 @@ import { HomeDemo2 } from './HomeDemo2';
 import { HomeDemo3 } from './HomeDemo3';
 import { DiscordLogo } from 'phosphor-react';
 import { StickyHeader } from '../StickyHeader';
-import {
-  Link,
-  Section,
-  Button,
-  Grid,
-  Subtitle,
-  Em,
-  Text,
-  VStack,
-  HStack,
-  styled,
-  Title,
-} from '../UIKit';
+import { Link, Section, Button, Grid, H3, Em, Text, VStack, HStack, styled, Title } from '../UIKit';
 import { Logo } from '../Logo';
 
 const Circle = styled('div', {
@@ -149,11 +137,9 @@ const BoostActivation = (
     }}
   >
     <img style={{ width: '6rem', marginBottom: '2.5rem' }} src={RocketLaunchIcon} />
-    <Subtitle
-      style={{ fontSize: '3rem', lineHeight: '3.5rem', marginBottom: '2rem', marginTop: 0 }}
-    >
+    <H3 style={{ fontSize: '3rem', lineHeight: '3.5rem', marginBottom: '2rem', marginTop: 0 }}>
       Boost activation and retention
-    </Subtitle>
+    </H3>
     <Text
       style={{
         maxWidth: '40rem',
@@ -179,11 +165,9 @@ const TryItOut = (
     }}
   >
     <img style={{ width: '6rem', marginBottom: '2.5rem' }} src={HandPointingIcon} />
-    <Subtitle
-      style={{ fontSize: '3rem', lineHeight: '3.5rem', marginBottom: '2rem', marginTop: 0 }}
-    >
+    <H3 style={{ fontSize: '3rem', lineHeight: '3.5rem', marginBottom: '2rem', marginTop: 0 }}>
       Try it out
-    </Subtitle>
+    </H3>
     <Text style={{ maxWidth: '50rem', textAlign: 'center', marginTop: 0 }}>
       Click anywhere to leave a comment or reply to an existing one
     </Text>
@@ -537,7 +521,7 @@ export function Home() {
                 window.innerWidth > 640 ? { padding: '0 4rem 2rem' } : { padding: '0 2rem 2rem' }
               }
             >
-              <Subtitle>Comment on anything</Subtitle>
+              <H3>Comment on anything</H3>
               <Text>
                 Have discussions in context. Conversations about that sale, product, invoice or
                 customer all happen in the same place.
@@ -571,7 +555,7 @@ export function Home() {
               }
             >
               {' '}
-              <Subtitle>In any type of app</Subtitle>
+              <H3>In any type of app</H3>
               <Text>
                 CollabKit Works across all kinds of interfaces; CRMs, documents, analytics
                 dashboards, calendars and more...
@@ -605,7 +589,7 @@ export function Home() {
               }
             >
               {' '}
-              <Subtitle>All in real time</Subtitle>
+              <H3>All in real time</H3>
               <Text>
                 See who’s online, who’s typing and keep the conversation going without ever leaving
                 your product.
@@ -639,7 +623,7 @@ export function Home() {
               }
             >
               {' '}
-              <Subtitle>Get notified by email</Subtitle>
+              <H3>Get notified by email</H3>
               <Text>
                 New comments are sent straight to your inbox. Reply directly via email or click
                 through to the comment thread.
@@ -683,9 +667,9 @@ export function Home() {
           <HomeDemo2 />
         </DemoContainer>
         <JustAddInnerSection>
-          <Subtitle style={{ fontSize: '3rem', color: 'white', marginBottom: '3.75rem' }}>
+          <H3 style={{ fontSize: '3rem', color: 'white', marginBottom: '3.75rem' }}>
             Or add a {'<Thread />'}
-          </Subtitle>
+          </H3>
           <Text
             style={{
               marginBottom: 0,
