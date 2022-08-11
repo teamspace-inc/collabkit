@@ -12,7 +12,21 @@ import { devActions } from './devActions';
 
 import { signOut } from 'firebase/auth';
 import { auth } from './database';
-import { Link } from '../UIKit';
+import { H2, Link, Page, Text } from '../UIKit';
+import { AppListItem } from './AppListItem';
+
+function Org() {
+  const { org, apps } = useSnapshot(devStore);
+  return (
+    <Page>
+      <H2>{org?.name}</H2>
+      {Object.values(apps).map((app) => {
+        return <AppListItem app={app} />;
+        // return <Text key={app.appId}>{app.name}</Text>;
+      })}
+    </Page>
+  );
+}
 
 export function Devs() {
   const { authState, org } = useSnapshot(devStore);
@@ -26,7 +40,7 @@ export function Devs() {
   const view = {
     blank: <></>,
     signedOut: <EnterEmail />,
-    signedIn: org ? <>You've got an org!</> : <CreateOrg />,
+    signedIn: org ? <Org /> : <CreateOrg />,
     magicLinkSent: <CheckEmail />,
     confirmEmailPrompt: <EnterEmail isReentry={true} />,
   };

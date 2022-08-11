@@ -80,6 +80,17 @@ export const H3 = styled('h2', {
   zIndex: 1,
 });
 
+export const H4 = styled('h2', {
+  fontFamily: 'Inter',
+  fontStyle: 'normal',
+  // fontWeight: 700,
+  fontSize: '1.75rem',
+  lineHeight: '116%',
+  marginBottom: 0,
+  // letterSpacing: '-0.05em',
+  zIndex: 1,
+});
+
 export const Button = styled('button', {
   fontFamily: 'Inter',
   padding: '1rem 2rem',

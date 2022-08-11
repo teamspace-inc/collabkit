@@ -50,6 +50,15 @@
         }
       }
     },
+    "adminOrgs": {
+      "$uid": {
+        ".read": "auth.uid === $uid",
+        "$orgId": {
+          ".read": true,
+          ".write": "root.child('apps').child($orgId).child('admins').child(auth.uid).exists()"
+        }
+      }
+    },
     "orgs": {
       "$orgId": {
         "name": {

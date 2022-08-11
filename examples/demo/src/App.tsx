@@ -1,8 +1,7 @@
 import * as CollabKit from '@collabkit/react';
 import { mentionableUsers } from './data';
 import './App.css';
-import { UserMenu } from './UserMenu';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { User } from './types';
 
 import jwtDecode from 'jwt-decode';
@@ -52,21 +51,28 @@ export default function App() {
     }
   }, []);
 
-  const onAuthenticationRequired = useCallback(() => {
-    showGoogleLogin((user) => onChangeUser(user));
+  useEffect(() => {
+    if (user == null) {
+      showGoogleLogin((user) => onChangeUser(user));
+    }
   }, []);
 
-  // useEffect(() => {
-  //   if (user == null) {
-  //     showGoogleLogin((user) => onChangeUser(user));
-  //   }
-  // }, []);
+  const image = (
+    <img
+      style={{ width: '100vw', maxHeight: '100vh', objectFit: 'cover' }}
+      src="https://images.unsplash.com/photo-1433838552652-f9a46b332c40"
+    />
+  );
+
+  if (!user) {
+    return image;
+  }
 
   return (
     <CollabKit.Provider
       colorScheme="light"
-      apiKey={import.meta.env.VITE_COLLABKIT_TOKEN}
-      appId={import.meta.env.VITE_COLLABKIT_APP_ID}
+      apiKey={'Pypz0HVmJ1-t1KgT-mO02'}
+      appId={'c4CDewHrURgoKLIGyi_mf'}
       workspace={{ id: 'acme', name: 'ACME' }}
       user={user}
       theme={{
@@ -80,21 +86,13 @@ export default function App() {
         },
       }}
       mentionableUsers={mentionableUsers}
-      onAuthenticationRequired={onAuthenticationRequired}
     >
-      <TellaDemo />
-      <iframe
-        style={{
-          padding: '0 16px',
-          width: 'calc(100vw - 284px - 32px)',
-          height: '100vh',
-          border: 'none',
-        }}
-        src="https://www.tella.tv/video/ckwyx03y6000509i62z4k2qfu/view"
+      <CollabKit.Thread
+        showHeader={true}
+        composerPrompt="Write a comment"
+        style={{ borderRadius: 0 }}
+        threadId="your-thread-id"
       />
-
-      <UserMenu user={user} onChangeUser={onChangeUser} />
-      {/* <CollabKit.FloatingButton /> */}
     </CollabKit.Provider>
   );
 }

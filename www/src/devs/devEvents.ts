@@ -43,8 +43,8 @@ export const devEvents = {
     }
   },
 
-  onAdminAppAdded: (snapshot: DataSnapshot) => {
-    console.log('admin app added', snapshot.key, snapshot.val());
+  onOrgAppAdded: (snapshot: DataSnapshot) => {
+    console.log('org app added', snapshot.key, snapshot.val());
     if (snapshot.key) {
       devStore.subs[snapshot.key] = onValue(
         ref(database, `/apps/${snapshot.key}`),
@@ -53,8 +53,9 @@ export const devEvents = {
     }
   },
 
-  onAdminAppRemoved: (snapshot: DataSnapshot) => {
+  onOrgAppRemoved: (snapshot: DataSnapshot) => {
     if (snapshot.key) {
+      devStore.subs[snapshot.key]?.();
       delete devStore.apps[snapshot.key];
     }
   },

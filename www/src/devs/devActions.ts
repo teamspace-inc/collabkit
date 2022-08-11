@@ -59,14 +59,7 @@ export const devActions = {
       console.warn('tried to subscribe to apps without a user');
       return;
     }
-    devStore.subs['adminAppAdded'] = onChildAdded(
-      ref(database, `/adminApps/${devStore.user.uid}`),
-      devEvents.onAdminAppAdded
-    );
-    devStore.subs['adminAppRemoved'] = onChildRemoved(
-      ref(database, `/adminApps/${devStore.user.uid}`),
-      devEvents.onAdminAppRemoved
-    );
+    devActions.subscribeOrgs();
   },
 
   signIn: async () => {
@@ -158,10 +151,37 @@ export const devActions = {
     console.error('Failed to create app', response.status, await response.text());
   },
 
-  subscribeOrg: (props: { orgId: string }) => {
-    devStore.subs[`org-${props.orgId}`] = onValue(
-      ref(database, `/orgs/${props.orgId}`),
-      devEvents.onOrgValue
+  subscribeOrgs: () => {
+    if (!devStore.user) {
+      console.warn('tried to subscribe to org without a user');
+      return;
+    }
+    console.log('subscribing orgs');
+    devStore.subs.orgs = onChildAdded(
+      ref(database, `/adminOrgs/${devStore.user.uid}`),
+      (childSnapshot) => {
+        console.log('got org', childSnapshot.key);
+        if (childSnapshot.key) {
+          devStore.subs['orgAppAdded'] = onChildAdded(
+            ref(database, `/orgApps/${childSnapshot.key}`),
+            devEvents.onOrgAppAdded
+          );
+          devStore.subs['orgAppRemoved'] = onChildRemoved(
+            ref(database, `/orgApps/${childSnapshot.key}`),
+            devEvents.onOrgAppRemoved
+          );
+          devStore.subs[`org-${childSnapshot.key}`] = onValue(
+            ref(database, `/orgs/${childSnapshot.key}`),
+            (snapshot) => {
+              console.log('org', snapshot.val());
+              devStore.org = snapshot.val();
+            },
+            (error) => {
+              console.error(error);
+            }
+          );
+        }
+      }
     );
   },
 
@@ -190,7 +210,6 @@ export const devActions = {
       if (json.status === 200 || json.status === 201) {
         devStore.apps[json.data.app.appId] = json.data.app;
         devStore.org = json.data.org;
-        devActions.subscribeOrg({ orgId: json.data.org.id });
       }
       return;
     }

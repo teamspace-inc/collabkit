@@ -61,6 +61,7 @@ export const createOrg = functions.https.onRequest(async (request, response) => 
             [`orgs/${orgId}`]: org,
             [`apps/${appId}`]: app,
             [`orgApps/${orgId}/${appId}`]: true,
+            [`adminOrgs/${uid}/${orgId}`]: true,
           });
         try {
           response.status(201).send({
