@@ -23,6 +23,7 @@ export function createWorkspace(config: Config): Workspace {
     composers: {},
     seen: {},
     seenBy: {},
+    threadInfo: {},
   };
 }
 

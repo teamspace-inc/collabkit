@@ -18,7 +18,7 @@ import { Event, IdentifyProps, DB, Pin, Subscriptions } from '../../constants';
 import { subscribeThreadIsTyping } from './subscribeThreadIsTyping';
 import { subscribeThreadSeenBy } from './subscribeThreadSeenBy';
 import { subscribeTimeline } from './subscribeTimeline';
-import { typingRef, timelineRef, userTypingRef } from './refs';
+import { timelineRef, userTypingRef } from './refs';
 import {
   PinEventHandler,
   SeenEventHandler,
@@ -27,8 +27,24 @@ import {
   TimelineChangeEvent,
   TypingEvent,
 } from '../types';
+import { ThreadInfo } from '../../hooks/useThread';
 
 export class FirebaseSync implements SyncAdapter {
+  saveThreadInfo(data: {
+    appId: string;
+    workspaceId: string;
+    threadId: string;
+    info?: {
+      name?: string;
+      url?: string;
+    };
+  }): Promise<void> {
+    return set(
+      ref(DB, `/threadInfo/${data.appId}/${data.workspaceId}/${data.threadId}`),
+      data.info
+    );
+  }
+
   shouldAuthenticate(): boolean {
     return true;
   }

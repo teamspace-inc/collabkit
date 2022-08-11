@@ -30,6 +30,7 @@ import { unhover } from './unhover';
 import { viewThread } from './viewThread';
 import { isTyping } from './isTyping';
 import { registerThread } from './registerThread';
+import { saveThreadInfo } from './saveThreadInfo';
 
 export type GenerateToken =
   | {
@@ -144,4 +145,6 @@ export const actions = {
   unhover,
 
   viewThread,
+
+  saveThreadInfo,
 };

@@ -4,6 +4,7 @@ import { createEditorConfig } from '../components/Composer';
 import { ref as valtioRef } from 'valtio';
 import { getConfig } from './index';
 import { ThreadSeenEvent, TimelineChangeEvent, TypingEvent } from '../sync';
+import { ThreadInfo } from '../hooks/useThread';
 
 export function initComposer() {
   return {
@@ -18,6 +19,7 @@ export async function subscribeThread(
   props: {
     workspaceId: string;
     threadId: string;
+    info?: ThreadInfo;
   }
 ) {
   store.workspaces[props.workspaceId].composers[props.threadId] ||= initComposer();

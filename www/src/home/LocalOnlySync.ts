@@ -4,6 +4,9 @@ import { nanoid } from 'nanoid';
 
 export class LocalOnlySync implements SyncAdapter {
   constructor(public workspaceData: any) {}
+  saveThreadInfo(): Promise<void> {
+    return Promise.resolve();
+  }
 
   shouldAuthenticate(): boolean {
     return false;

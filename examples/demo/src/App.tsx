@@ -6,32 +6,6 @@ import { User } from './types';
 
 import jwtDecode from 'jwt-decode';
 
-function TellaDemo() {
-  return (
-    <>
-      <div
-        style={{
-          position: 'fixed',
-          right: 0,
-          top: 0,
-          width: 284,
-          margin: '0 0 0 0',
-          bottom: 0,
-          paddingBottom: 4,
-          background: 'rgb(249,249,250)',
-        }}
-      >
-        <CollabKit.Thread
-          showHeader={true}
-          composerPrompt="Add comment..."
-          style={{ borderRadius: 0 }}
-          threadId="demo-chat4"
-        />
-      </div>
-    </>
-  );
-}
-
 export default function App() {
   const [user, setUser] = useState<User | null>(() => {
     try {
@@ -69,31 +43,34 @@ export default function App() {
   }
 
   return (
-    <CollabKit.Provider
-      colorScheme="light"
-      apiKey={'Pypz0HVmJ1-t1KgT-mO02'}
-      appId={'c4CDewHrURgoKLIGyi_mf'}
-      workspace={{ id: 'acme', name: 'ACME' }}
-      user={user}
-      theme={{
-        radii: { 0: '0.5rem' },
-        fontSize: { 0: '12px', 2: '14px', 3: '20px' },
-        fontWeights: { 2: 500, 3: 700 },
-        colors: {
-          sendButtonColor: 'rgb(94, 81, 248)',
-          backgroundColor: 'rgb(249,249,250)',
-          composerBackground: 'white',
-        },
-      }}
-      mentionableUsers={mentionableUsers}
-    >
-      <CollabKit.Thread
-        showHeader={true}
-        composerPrompt="Write a comment"
-        style={{ borderRadius: 0 }}
-        threadId="your-thread-id"
-      />
-    </CollabKit.Provider>
+    <div style={{ position: 'fixed', inset: 0 }}>
+      <CollabKit.Provider
+        colorScheme="light"
+        apiKey={'Pypz0HVmJ1-t1KgT-mO02'}
+        appId={'c4CDewHrURgoKLIGyi_mf'}
+        workspace={{ id: 'acme', name: 'ACME' }}
+        user={user}
+        theme={{
+          radii: { 0: '0.5rem' },
+          fontSize: { 0: '12px', 2: '14px', 3: '20px' },
+          fontWeights: { 2: 500, 3: 700 },
+          colors: {
+            sendButtonColor: 'rgb(94, 81, 248)',
+            backgroundColor: 'rgb(249,249,250)',
+            composerBackground: 'white',
+          },
+        }}
+        mentionableUsers={mentionableUsers}
+      >
+        <CollabKit.Thread
+          info={{ name: 'Demo thread' }}
+          showHeader={true}
+          composerPrompt="Write a comment"
+          style={{ borderRadius: 0 }}
+          threadId="your-thread-id"
+        />
+      </CollabKit.Provider>
+    </div>
   );
 }
 

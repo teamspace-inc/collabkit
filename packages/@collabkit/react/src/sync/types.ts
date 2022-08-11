@@ -6,6 +6,16 @@ export interface SyncAdapter {
 
   serverTimestamp(): object;
 
+  saveThreadInfo(params: {
+    appId: string;
+    workspaceId: string;
+    threadId: string;
+    info?: {
+      name?: string;
+      url?: string;
+    };
+  }): Promise<void>;
+
   saveProfile(params: {
     appId: string;
     userId: string;

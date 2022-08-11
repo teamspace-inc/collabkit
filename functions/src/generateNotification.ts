@@ -46,6 +46,8 @@ export async function generateNotification(
 
   const eventsQuery = db.ref(`/timeline/${appId}/${workspaceId}/${threadId}`).orderByKey().get();
 
+  const threadInfoQuery = db.ref(`/threadInfo/${appId}/${workspaceId}/${threadId}`).get();
+
   try {
     const isConnected = await onConnect();
     if (isConnected) {
@@ -56,12 +58,14 @@ export async function generateNotification(
           seenBySnapshot,
           eventsSnapshot,
           notifiedSnapshot,
+          threadInfoSnapshot,
         ] = await Promise.all([
           isEmailDisabledQuery,
           workspaceQuery,
           seenByQuery,
           eventsQuery,
           notifiedQuery,
+          threadInfoQuery,
         ]);
 
         if (isEmailDisabledSnapshot.val()) {
@@ -89,6 +93,11 @@ export async function generateNotification(
 
         if (profileIds.length === 1) {
           console.log('workspace has only one profile, exiting');
+          return;
+        }
+
+        if (!threadInfoSnapshot.val()) {
+          console.log('no thread info, exiting');
           return;
         }
 
@@ -155,6 +164,14 @@ export async function generateNotification(
             return true;
           });
 
+          const threadInfo = threadInfoSnapshot.val();
+
+          if (!threadInfo.url) {
+            console.log('no thread url, exiting');
+            return;
+          }
+
+          const threadName = threadInfo.name;
           const actorName = actorProfile.name ?? actorProfile.email;
           const workspaceName = workspace.name;
 
@@ -165,9 +182,17 @@ export async function generateNotification(
           let body = `${actorName}: "${_event.body}" [View/Reply] [Unsubscribe]`;
 
           if (isFirstEvent) {
-            subject = `${actorName} left a new comment in ${workspaceName}`;
+            if (threadName) {
+              subject = `${actorName} left a new comment about ${threadName}`;
+            } else {
+              subject = `${actorName} left a new comment`;
+            }
           } else {
-            subject = `${actorName} replied to a comment in ${workspaceName}`;
+            if (threadName) {
+              subject = `${actorName} replied to a comment about ${threadName}`;
+            } else {
+              subject = `${actorName} replied to a comment`;
+            }
           }
 
           return {

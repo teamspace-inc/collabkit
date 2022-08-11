@@ -3,14 +3,20 @@ import { useSnapshot } from 'valtio';
 import { actions } from '../actions';
 import { Store, Workspace } from '../constants';
 
+export type ThreadInfo = {
+  name?: string | null;
+  url?: string | null;
+};
+
 export function useThread(props: {
   store: Store;
   threadId: string;
   workspaceId: string;
   workspace: Workspace;
+  info?: ThreadInfo;
 }) {
-  const { threadId, workspaceId, workspace, store } = props;
-  const { isSignedIn, profiles, appState, config, isConnected, reactingId } = useSnapshot(store);
+  const { threadId, workspaceId, workspace, store, info } = props;
+  const { isSignedIn, profiles, isConnected, reactingId } = useSnapshot(store);
   // const profile = userId ? profiles[userId] : null;
   const timeline = workspace ? workspace.timeline[threadId] : null;
   const isEmpty = timeline ? Object.keys(timeline).length === 0 : true;
@@ -20,9 +26,20 @@ export function useThread(props: {
   // const intersection = useIntersectionObserver(ref, [props.threadId, props.type]);
   useEffect(() => {
     if (workspace && workspaceId && isSignedIn) {
-      actions.subscribeThread(store, { workspaceId, threadId });
+      actions.subscribeThread(store, {
+        workspaceId,
+        threadId,
+      });
+      actions.saveThreadInfo(store, {
+        workspaceId,
+        threadId,
+        info: {
+          url: info?.url ?? window.location.href.toString(),
+          name: info?.name || null,
+        },
+      });
     }
-  }, [workspaceId, threadId, isSignedIn]);
+  }, [workspaceId, threadId, isSignedIn, info, info?.name]);
 
   if (!workspaceId) {
     throw new Error('no workspaceId while rendering thread');

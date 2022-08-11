@@ -183,6 +183,7 @@ export interface Workspace {
   composers: { [threadId: string]: Composer };
   seen: { [threadId: string]: string }; // lastSeenEventId
   seenBy: { [threadId: string]: SeenBy };
+  threadInfo: { [threadId: string]: { name?: string; url?: string } };
 }
 
 export interface Store {

@@ -1,5 +1,5 @@
 import { Subscriptions } from '../../constants';
-import { limitToLast, onChildAdded, orderByChild, query } from 'firebase/database';
+import { onChildAdded, orderByChild, query } from 'firebase/database';
 import { timelineRef } from './refs';
 import { TimelineChangeEvent } from '../types';
 

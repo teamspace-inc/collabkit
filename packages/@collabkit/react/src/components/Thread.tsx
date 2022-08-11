@@ -30,6 +30,10 @@ const StyledThreadHeader = styled('div', {
 
 export function Thread(props: {
   threadId: string;
+  info?: {
+    name?: string;
+    url?: string;
+  };
   style?: React.CSSProperties;
   composerPrompt?: string;
   showHeader?: boolean;
@@ -100,6 +104,7 @@ export function Thread(props: {
           )}
           {workspaceId && workspace ? (
             <Composer
+              style={{ paddingBottom: '12px' }}
               workspace={workspace}
               placeholder={
                 props.composerPrompt
