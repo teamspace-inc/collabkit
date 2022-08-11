@@ -86,6 +86,7 @@ export function HomeDemo3() {
                 <img src={dashUISvg} style={{ margin: '3.75rem' }} />
                 <CollabKit.Thread
                   showHeader={true}
+                  composerPrompt={'Write a comment'}
                   threadId={'demo2'}
                   style={{
                     borderRadius: 0,

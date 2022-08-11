@@ -118,12 +118,12 @@ export function PopoverThread(props: {
             placeholder={isEmpty ? 'Write a comment' : 'Reply to this comment'}
             style={{
               borderRadius: theme.radii['2'].value.toString(),
+              paddingBottom: '12px',
               ...(isEmpty
                 ? {}
                 : {
                     borderTopLeftRadius: 0,
                     borderTopRightRadius: 0,
-                    borderTop: `1px solid ${theme.colors.borderColor.toString()}`,
                   }),
             }}
             autoFocus={true}
