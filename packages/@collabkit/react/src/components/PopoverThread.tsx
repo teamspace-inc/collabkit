@@ -1,6 +1,6 @@
 import { styled } from '@stitches/react';
 import { IconContext } from 'phosphor-react';
-import React, { useRef, useEffect, useLayoutEffect, useState } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { Composer } from './Composer';
 import { useWorkspace } from '../hooks/useWorkspace';
 import { CommentList } from './CommentList';
@@ -115,7 +115,7 @@ export function PopoverThread(props: {
         {props.isPreview ? null : (
           <Composer
             workspace={workspace}
-            placeholder={isEmpty ? 'Add a comment' : 'Reply to this comment'}
+            placeholder={isEmpty ? 'Write a comment' : 'Reply to this comment'}
             style={{
               borderRadius: theme.radii['2'].value.toString(),
               ...(isEmpty

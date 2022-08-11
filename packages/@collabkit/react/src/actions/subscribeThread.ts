@@ -5,6 +5,14 @@ import { ref as valtioRef } from 'valtio';
 import { getConfig } from './index';
 import { ThreadSeenEvent, TimelineChangeEvent, TypingEvent } from '../sync';
 
+export function initComposer() {
+  return {
+    editor: valtioRef(createEditor(createEditorConfig())),
+    $$body: '',
+    isTyping: {},
+  };
+}
+
 export async function subscribeThread(
   store: Store,
   props: {
@@ -12,11 +20,7 @@ export async function subscribeThread(
     threadId: string;
   }
 ) {
-  store.workspaces[props.workspaceId].composers[props.threadId] ||= {
-    editor: valtioRef(createEditor(createEditorConfig())),
-    $$body: '',
-    isTyping: {},
-  };
+  store.workspaces[props.workspaceId].composers[props.threadId] ||= initComposer();
   const { workspaceId, threadId } = props;
   const { appId, userId } = getConfig(store);
   store.sync.subscribeThread({

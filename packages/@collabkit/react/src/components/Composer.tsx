@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { Profile, Target, Workspace } from '../constants';
 import { EditorState } from 'lexical';
@@ -17,6 +17,7 @@ import { useApp } from '../hooks/useApp';
 import { SendButton } from './composer/SendButton';
 import { Avatar } from './Avatar';
 import { styled } from '@stitches/react';
+import { initComposer } from '../actions/subscribeThread';
 
 const lexicalTheme = {
   ltr: 'ltr',
@@ -99,7 +100,7 @@ export function Composer(props: {
   hideAvatar?: boolean;
   onHeightChange?: (height: number) => void;
 }) {
-  const { events, theme } = useApp();
+  const { events, theme, store } = useApp();
 
   const editorStateRef = useRef<EditorState>();
 
@@ -125,8 +126,15 @@ export function Composer(props: {
     },
   });
 
+  // for some reason composer is not booted properly elsewhere
+  // so we recover from it here
+  useEffect(() => {
+    if (!composer) {
+      store.workspaces[props.workspaceId].composers[props.threadId] = initComposer();
+    }
+  }, [composer]);
+
   if (!composer) {
-    //console.warn('CollabKit: Failed to boot composer');
     return null;
   }
 
