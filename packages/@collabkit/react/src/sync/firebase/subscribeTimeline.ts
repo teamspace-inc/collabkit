@@ -31,8 +31,6 @@ export function subscribeTimeline({
       const workspaceId = snapshot.ref.parent?.ref.parent?.key;
       const threadId = snapshot.ref.parent?.key;
 
-      console.log('got event');
-
       // todo validate data here
       //
       if (threadId && workspaceId && eventId) {

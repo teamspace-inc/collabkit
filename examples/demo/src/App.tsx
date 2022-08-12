@@ -3,7 +3,6 @@ import { mentionableUsers } from './data';
 import './App.css';
 import { useCallback, useEffect, useState } from 'react';
 import { User } from './types';
-
 import jwtDecode from 'jwt-decode';
 
 export default function App() {
@@ -43,33 +42,52 @@ export default function App() {
   }
 
   return (
+    <CollabKit.Provider
+      colorScheme="light"
+      apiKey={'Pypz0HVmJ1-t1KgT-mO02'}
+      appId={'c4CDewHrURgoKLIGyi_mf'}
+      workspace={{ id: 'acme', name: 'ACME' }}
+      user={user}
+      theme={{
+        radii: { 0: '0.5rem' },
+        fontSize: { 0: '12px', 2: '14px', 3: '20px' },
+        fontWeights: { 2: 500, 3: 700 },
+        colors: {
+          sendButtonColor: 'rgb(94, 81, 248)',
+          backgroundColor: 'rgb(249,249,250)',
+          composerBackground: 'white',
+        },
+      }}
+      mentionableUsers={mentionableUsers}
+    >
+      <Home />
+    </CollabKit.Provider>
+  );
+}
+
+function Home() {
+  const threadId = 'your-thread-id';
+
+  const unreadCount = CollabKit.useUnreadCount({ threadId });
+  const unread = unreadCount > 0 ? ` (${unreadCount})` : '';
+  useDocumentTitle(`CollabKit Demo${unread}`);
+
+  const [hidden, setHidden] = useState(true);
+
+  return (
     <div style={{ position: 'fixed', inset: 0 }}>
-      <CollabKit.Provider
-        colorScheme="light"
-        apiKey={'Pypz0HVmJ1-t1KgT-mO02'}
-        appId={'c4CDewHrURgoKLIGyi_mf'}
-        workspace={{ id: 'acme', name: 'ACME' }}
-        user={user}
-        theme={{
-          radii: { 0: '0.5rem' },
-          fontSize: { 0: '12px', 2: '14px', 3: '20px' },
-          fontWeights: { 2: 500, 3: 700 },
-          colors: {
-            sendButtonColor: 'rgb(94, 81, 248)',
-            backgroundColor: 'rgb(249,249,250)',
-            composerBackground: 'white',
-          },
-        }}
-        mentionableUsers={mentionableUsers}
-      >
+      <button type="button" style={{ height: 44 }} onClick={() => setHidden((hidden) => !hidden)}>
+        {hidden ? 'Show' + unread : 'Hide'}
+      </button>
+      {hidden ? null : (
         <CollabKit.Thread
           info={{ name: 'Demo thread' }}
           showHeader={true}
           composerPrompt="Write a comment"
-          style={{ borderRadius: 0 }}
-          threadId="your-thread-id"
+          style={{ borderRadius: 0, height: 'calc(100% - 44px)' }}
+          threadId={threadId}
         />
-      </CollabKit.Provider>
+      )}
     </div>
   );
 }
@@ -92,4 +110,10 @@ function userFromGoogleToken(token: string) {
     email,
     avatar: picture,
   };
+}
+
+function useDocumentTitle(title: string) {
+  useEffect(() => {
+    document.title = title;
+  }, [title]);
 }
