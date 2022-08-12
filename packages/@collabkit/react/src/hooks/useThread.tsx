@@ -8,6 +8,23 @@ export type ThreadInfo = {
   url?: string | null;
 };
 
+export function useThreadSubscription(props: {
+  store: Store;
+  threadId: string;
+  workspaceId: string;
+}) {
+  const { store, threadId, workspaceId } = props;
+  const { isSignedIn } = useSnapshot(store);
+  useEffect(() => {
+    if (workspaceId && isSignedIn) {
+      actions.subscribeThread(store, {
+        workspaceId,
+        threadId,
+      });
+    }
+  }, [workspaceId, threadId, isSignedIn]);
+}
+
 export function useThread(props: {
   store: Store;
   threadId: string;
@@ -23,13 +40,11 @@ export function useThread(props: {
 
   const ref = useRef<HTMLDivElement>(null);
 
+  useThreadSubscription({ store, threadId, workspaceId });
+
   // const intersection = useIntersectionObserver(ref, [props.threadId, props.type]);
   useEffect(() => {
-    if (workspace && workspaceId && isSignedIn) {
-      actions.subscribeThread(store, {
-        workspaceId,
-        threadId,
-      });
+    if (workspaceId && isSignedIn) {
       actions.saveThreadInfo(store, {
         workspaceId,
         threadId,

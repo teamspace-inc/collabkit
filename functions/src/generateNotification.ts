@@ -126,7 +126,6 @@ export async function generateNotification(
           console.log('got seenBy', seenBy);
 
           const events = eventsSnapshot.val();
-          console.log('got events', events);
 
           let _event = events[eventId];
 

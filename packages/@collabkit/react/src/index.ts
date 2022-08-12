@@ -2,7 +2,6 @@ import { CollabKitProvider } from './components/Provider';
 import { Debug } from './components/Debug';
 import { Thread } from './components/Thread';
 import { Button } from './components/Button';
-import { withComments } from './components/withComments';
 import { Inbox } from './components/Inbox';
 import { CurrentUser } from './components/CurrentUser';
 import { FloatingButton } from './components/FloatingButton';
@@ -12,6 +11,7 @@ import { IdentifyProps, Mention, Store, Subscriptions, Workspace } from './const
 import { MentionProps } from './constants';
 import { PopoverThread } from './components/PopoverThread';
 import { Config, createStore, createWorkspace } from './store';
+import { useUnreadCount } from './hooks/public/useUnreadCount';
 
 export {
   CollabKitProvider as Provider,
@@ -24,7 +24,8 @@ export {
   Pin,
   Inbox,
   Debug,
-  withComments,
+  // withComments,
+  useUnreadCount,
   // pure components just render props passed
   PurePin as PurePin,
   createStore as internal_createStore,
