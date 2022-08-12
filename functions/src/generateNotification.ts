@@ -42,8 +42,6 @@ export async function generateNotification(
 
   const seenByQuery = db.ref(`/views/seenBy/${appId}/${workspaceId}/${threadId}/`).get();
 
-  const notifiedQuery = db.ref(`/notified/${appId}/${workspaceId}/${threadId}/${eventId}`).get();
-
   const eventsQuery = db.ref(`/timeline/${appId}/${workspaceId}/${threadId}`).orderByKey().get();
 
   const threadInfoQuery = db.ref(`/threadInfo/${appId}/${workspaceId}/${threadId}`).get();
@@ -57,14 +55,12 @@ export async function generateNotification(
           workspaceSnapshot,
           seenBySnapshot,
           eventsSnapshot,
-          notifiedSnapshot,
           threadInfoSnapshot,
         ] = await Promise.all([
           isEmailDisabledQuery,
           workspaceQuery,
           seenByQuery,
           eventsQuery,
-          notifiedQuery,
           threadInfoQuery,
         ]);
 
@@ -137,31 +133,49 @@ export async function generateNotification(
 
           console.log('got creator profile', actorProfile);
 
-          const notified = notifiedSnapshot.val();
-
           const isFirstEvent = Object.keys(events)[0] === eventId;
           console.log('isFirstEvent', isFirstEvent);
 
-          const toNotify = profileIds.filter((profileId) => {
-            const profile = profiles[profileId];
-            if (!profile) {
-              console.log('skip: no profile', profileId);
-              return false;
-            }
-            if (profile.id === _event.createdById) {
-              console.log('skip: isCreator', profileId);
-              return false;
-            }
-            if (seenBy[profileId] && seenBy[profileId] > eventId) {
-              console.log('skip: already seen', profileId);
-              return false;
-            }
-            if (notified && notified[profileId]) {
-              console.log('skip: already notified', profileId);
-              return false;
-            }
-            return true;
-          });
+          // for workspaces we want to notify everyone in the workspace for
+          // new comments
+
+          // note we probably want to auto-mute this at 50+ workspace members
+          // otherwise things could get a bit too spammy
+
+          const toNotify =
+            workspaceId === '.default'
+              ? []
+              : profileIds.filter(async (profileId) => {
+                  const profile = profiles[profileId];
+                  if (!profile) {
+                    console.log('skip: no profile', profileId);
+                    return false;
+                  }
+                  if (profile.id === _event.createdById) {
+                    console.log('skip: isCreator', profileId);
+                    return false;
+                  }
+                  if (seenBy[profileId] && seenBy[profileId] >= eventId) {
+                    console.log('skip: already seen', profileId);
+                    return false;
+                  }
+                  // todo batch fetch this, could get quite large
+                  try {
+                    const notifiedUntil = (
+                      await db
+                        .ref(`/notifiedUntil/${appId}/${workspaceId}/${threadId}/${profileId}`)
+                        .get()
+                    ).val();
+                    if (notifiedUntil && notifiedUntil >= eventId) {
+                      console.log('skip: already notified', profileId);
+                      return false;
+                    }
+                  } catch (e) {
+                    console.error('error getting notifiedUntil, aborting', e);
+                    return false;
+                  }
+                  return true;
+                });
 
           const threadInfo = threadInfoSnapshot.val();
 
@@ -213,12 +227,15 @@ export async function generateNotification(
   }
   return;
 }
-generateNotification(
-  {
-    eventId: '-N91Wvp6YREEB44pOULI',
-    threadId: 'demo-chat4',
-    workspaceId: 'acme',
-    appId: '-N4l4ZUeP5xdp79y7uAZ',
-  },
-  { createdById: '118153377351485973303' }
-).then(console.log);
+
+// used to test and develop locally
+//
+// generateNotification(
+//   {
+//     eventId: '-N91Wvp6YREEB44pOULI',
+//     threadId: 'demo-chat4',
+//     workspaceId: 'acme',
+//     appId: '-N4l4ZUeP5xdp79y7uAZ',
+//   },
+//   { createdById: '118153377351485973303' }
+// ).then(console.log);

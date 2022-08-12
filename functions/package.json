@@ -14,6 +14,7 @@
   },
   "main": "lib/index.js",
   "dependencies": {
+    "@google-cloud/tasks": "^3.0.0",
     "firebase-admin": "^10.0.2",
     "firebase-functions": "^3.22.0",
     "mailgun-js": "^0.22.0",
