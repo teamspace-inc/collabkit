@@ -51,9 +51,9 @@ export const scheduleNotification = functions.database
           'Content-Type': 'application/json',
         },
         body,
-        scheduleTime: {
-          seconds: Math.floor((Date.now() + 5 * 60 * 1000) / 1000),
-        },
+      },
+      scheduleTime: {
+        seconds: Math.floor((Date.now() + 5 * 60 * 1000) / 1000),
       },
     } as const;
 
@@ -61,7 +61,9 @@ export const scheduleNotification = functions.database
       try {
         // Send create task request.
         const [response] = await client.createTask({ parent, task });
-        console.log(`Created task ${response.name}`);
+        console.log(
+          `schedule: ${appId} ${workspaceId} ${threadId} ${eventId} ${snapshot.val().body}`
+        );
         return response.name;
       } catch (error: any) {
         // Construct error for Stackdriver Error Reporting
