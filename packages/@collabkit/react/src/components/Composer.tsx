@@ -16,14 +16,48 @@ import { MentionNode } from './MentionNode';
 import { useApp } from '../hooks/useApp';
 import { SendButton } from './composer/SendButton';
 import { Avatar } from './Avatar';
-import { styled } from '@stitches/react';
+import { css, styled } from '@stitches/react';
 import { initComposer } from '../actions/subscribeThread';
 
+const ltrStyles = css({
+  textAlign: 'left',
+});
+const rtlStyles = css({
+  textAlign: 'right',
+});
+const placeholderStyles = css({
+  color: '$colors$secondaryText',
+  overflow: 'hidden',
+  position: 'absolute',
+  textOverflow: 'ellipsis',
+  top: '$padding$1',
+  left: '$padding$1',
+  fontSize: '$fontSize$2',
+  lineHeight: '$lineHeights$0',
+  userSelect: 'none',
+  display: 'inline-block',
+  pointerEvents: 'none',
+});
+const editorInputStyles = css({
+  resize: 'none',
+  fontSize: '$fontSize$2',
+  lineHeight: '$lineHeights$0',
+  caretColor: '$colors$neutral12',
+  position: 'relative',
+  tabSize: 1,
+  outline: 0,
+  padding: '$padding$1 $padding$1',
+});
+const paragraphStyles = css({
+  margin: '0 0 0px 0',
+  position: 'relative',
+});
+
 const lexicalTheme = {
-  ltr: 'ltr',
-  rtl: 'rtl',
-  placeholder: 'editor-placeholder',
-  paragraph: 'editor-paragraph',
+  ltr: ltrStyles.toString(),
+  rtl: rtlStyles.toString(),
+  placeholder: placeholderStyles.toString(),
+  paragraph: paragraphStyles.toString(),
 };
 
 // Catch any errors that occur during Lexical updates and log them
@@ -33,9 +67,7 @@ function onError(error: any) {
   console.error(error);
 }
 
-function Placeholder(props: { children: React.ReactNode }) {
-  return <div className="editor-placeholder">{props.children}</div>;
-}
+const Placeholder = styled('div', placeholderStyles);
 
 export function createEditorConfig() {
   return {
@@ -100,7 +132,7 @@ export function Composer(props: {
   hideAvatar?: boolean;
   onHeightChange?: (height: number) => void;
 }) {
-  const { events, theme, store } = useApp();
+  const { events, store } = useApp();
 
   const editorStateRef = useRef<EditorState>();
 
@@ -145,57 +177,13 @@ export function Composer(props: {
       ) : null}
       <LexicalComposer initialConfig={initialConfig}>
         <StyledLexicalEditorContainer
-          className="editor-container"
           ref={editorContainerRef}
           onFocus={(e) => events.onFocus(e, { target })}
           onBlur={(e) => events.onBlur(e, { target })}
         >
           <StyledVisibleComposerArea>
-            <style>
-              // todo move this to @stitches // copied from
-              https://codesandbox.io/s/lexical-plain-text-example-g932e?file=/src/styles.css:554-1383
-              {`
-.ltr {
-  text-align: left;
-}
-
-.rtl {
-  text-align: right;
-}
-
-.editor-input {
-  resize: none;
-  font-size: ${theme.fontSize[2].toString()};
-  line-height: ${theme.lineHeights[0].toString()};
-  caret-color: ${theme.colors.neutral12};
-  position: relative;
-  tab-size: 1;
-  outline: 0;
-  padding: ${theme.padding[1].toString()} ${theme.padding[1].toString()};
-}
-
-.editor-placeholder {
-  color: ${theme.colors.secondaryText.toString()};
-  overflow: hidden;
-  position: absolute;
-  text-overflow: ellipsis;
-  top: ${theme.padding[1].toString()};
-  left:  ${theme.padding[1].toString()};
-  font-size: ${theme.fontSize[2].toString()};
-  line-height: ${theme.lineHeights[0].toString()};
-  user-select: none;
-  display: inline-block;
-  pointer-events: none;
-}
-
-.editor-paragraph {
-  margin: 0 0 0px 0;
-  position: relative;
-}
-`}
-            </style>
             <PlainTextPlugin
-              contentEditable={<ContentEditable className="editor-input" />}
+              contentEditable={<ContentEditable className={editorInputStyles.toString()} />}
               placeholder={<Placeholder>{props.placeholder}</Placeholder>}
             />
             <OnChangePlugin
