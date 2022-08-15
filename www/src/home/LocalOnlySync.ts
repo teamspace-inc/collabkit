@@ -1,4 +1,4 @@
-import { SyncAdapter } from '@collabkit/react/src/sync';
+import type { SyncAdapter } from '@collabkit/react/src/constants';
 
 import { nanoid } from 'nanoid';
 

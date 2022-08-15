@@ -1,13 +1,13 @@
 import { DB, Subscriptions } from '../../constants';
 import { ref, onChildMoved, orderByChild, query } from 'firebase/database';
-import { ThreadSeenEvent } from '../types';
+import type { Sync } from '@collabkit/core';
 
 export function subscribeThreadSeenBy(props: {
   appId: string;
   workspaceId: string;
   threadId: string;
   subs: Subscriptions;
-  onThreadSeenByUser: (event: ThreadSeenEvent) => void;
+  onThreadSeenByUser: (event: Sync.ThreadSeenEvent) => void;
 }) {
   const seenByQuery = query(
     ref(DB, `/views/seenBy/${props.appId}/${props.workspaceId}/${props.threadId}`),

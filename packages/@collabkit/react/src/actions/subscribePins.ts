@@ -1,11 +1,11 @@
 import { subscribeThread } from './subscribeThread';
 import { Store } from '../constants';
 import { getConfig } from './index';
-import { PinEventHandler } from '../sync';
+import type { Sync } from '@collabkit/core';
 
 export async function subscribePins(store: Store) {
   const { appId, workspaceId } = getConfig(store);
-  const onPinChange: PinEventHandler = ({ pinId, pin }) => {
+  const onPinChange: Sync.PinEventHandler = ({ pinId, pin }) => {
     store.workspaces[workspaceId].pins[pinId] = pin;
     switch (pin.state) {
       case 'resolved':

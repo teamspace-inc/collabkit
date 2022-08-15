@@ -1,5 +1,5 @@
 import { IdentifyProps, Store } from '../constants';
-import { Color, getRandomColor } from '../colors';
+import { Color, getRandomColor } from '@collabkit/colors';
 import { getConfig } from './index';
 
 export async function saveProfile(store: Store) {

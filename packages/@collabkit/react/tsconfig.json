@@ -1,4 +1,5 @@
 {
+  "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
     "target": "ESNext",
     "useDefineForClassFields": true,
@@ -17,8 +18,14 @@
     "jsx": "react",
     "composite": true,
     "outDir": "types",
-    "emitDeclarationOnly": true
+    "emitDeclarationOnly": true,
+    "paths": {
+      "@collabkit/colors": ["../colors/src"],
+      "@collabkit/core": ["../core/src"],
+      "@collabkit/theme": ["../theme/src"]
+    },
+    "rootDir": "../../../"
   },
-  "include": ["src"],
+  "include": ["src", "../colors/src", "../core/src", "../theme/src"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

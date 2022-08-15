@@ -6,23 +6,10 @@ import equal from 'fast-deep-equal';
 import { CurrentlyTyping } from './comment/TypingIndicator';
 import { useTimeline } from '../hooks/useTimeline';
 import { CommentGroup } from './CommentGroup';
+import { commentListStyles } from '@collabkit/theme';
 
-export const StyledCommentList = styled('div', {
-  padding: '8px 0',
-  display: 'flex',
-  gap: '8px',
-  flexDirection: 'column',
-  flex: 1,
-});
-
-const SeeAllRepliesLink = styled('div', {
-  fontSize: '13px',
-  display: 'flex',
-  marginTop: '0px',
-  paddingBottom: '8px',
-  marginLeft: 'calc(16px + 24px + 8px)',
-  color: '$colors$secondaryText',
-});
+const StyledCommentList = styled('div', commentListStyles.list);
+const SeeAllRepliesLink = styled('div', commentListStyles.seeAllRepliesLink);
 
 export const CommentList = React.memo(function CommentList(props: {
   isTyping?: { [endUserId: string]: boolean };

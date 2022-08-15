@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import React from 'react';
-import { getShade } from '../colors';
+import { getShade } from '@collabkit/colors';
 import { Profile } from '../constants';
 import { css, styled } from '@stitches/react';
+//import { avatarStyles } from '@collabkit/theme';
 
+// TODO: import from `@collabkit/theme`
 export const avatarStyles = css({
   width: '24px',
   height: '24px',
@@ -45,6 +47,8 @@ export const avatarStyles = css({
 
 export const StyledAvatar = styled('img', avatarStyles);
 
+export const StyledDefaultAvatar = styled('div', avatarStyles);
+
 export function Avatar(props: {
   profile: Profile;
   style?: React.CSSProperties;
@@ -60,13 +64,15 @@ export function Avatar(props: {
       }
     : props.style;
 
+  const size = props.size ?? 24;
+
   return noImage ? (
-    <div className={avatarStyles({ size: props.size ?? 24 }).className} style={styles}>
+    <StyledDefaultAvatar size={size} style={styles}>
       {props.children ? props.children : props.profile.name?.charAt(0)}
-    </div>
+    </StyledDefaultAvatar>
   ) : (
     <StyledAvatar
-      size={props.size ?? 24}
+      size={size}
       src={props.profile.avatar!}
       onError={() => setDidError(true)}
       style={styles}

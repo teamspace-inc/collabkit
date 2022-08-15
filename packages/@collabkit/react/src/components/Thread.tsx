@@ -6,27 +6,13 @@ import { useWorkspace } from '../hooks/useWorkspace';
 import { ScrollableCommentList } from './ScrollableCommentList';
 import { useApp } from '../hooks/useApp';
 import { useThread } from '../hooks/useThread';
-import { StyledThread } from './thread/StyledThread';
 import { EmptyState } from './thread/EmptyState';
 import { styled } from '@stitches/react';
+import { threadStyles } from '@collabkit/theme';
 
-const StyledThreadContainer = styled('div', {
-  display: 'flex',
-  height: '100%',
-  position: 'relative',
-  flex: 1,
-  background: '$colors$backgroundColor',
-  borderRadius: '$radii$1',
-});
-
-const StyledThreadHeader = styled('div', {
-  fontSize: '$fontSize$3',
-  fontWeight: '$fontWeights$3',
-  lineHeight: '$lineHeight$3',
-  color: '$neutral12',
-  padding: '20px 16px',
-  display: 'flex',
-});
+const StyledThreadContainer = styled('div', threadStyles.container);
+const StyledThread = styled('div', threadStyles.thread);
+const StyledThreadHeader = styled('div', threadStyles.header);
 
 export function Thread(props: {
   threadId: string;

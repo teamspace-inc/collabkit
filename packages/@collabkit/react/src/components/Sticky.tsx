@@ -1,22 +1,9 @@
 import React, { useEffect, useLayoutEffect, useRef } from 'react';
 import { styled } from '@stitches/react';
 import { autoUpdate, computePosition, offset } from '@floating-ui/dom';
+import { stickyStyles } from '@collabkit/theme';
 
-export const StyledStickyContainer = styled('div', {
-  position: 'absolute',
-  left: 0,
-  top: 0,
-  display: 'flex',
-  flexDirection: 'row',
-  gap: '8px',
-  variants: {
-    zTop: {
-      true: {
-        zIndex: 9999,
-      },
-    },
-  },
-});
+export const StyledStickyContainer = styled('div', stickyStyles.container);
 
 // positions children relative to the selector and point
 export function Sticky(props: {

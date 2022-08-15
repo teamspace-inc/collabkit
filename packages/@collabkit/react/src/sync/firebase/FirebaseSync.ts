@@ -13,23 +13,15 @@ import {
   set,
   update,
 } from 'firebase/database';
-import { Color } from '../../colors';
+import type { Color } from '@collabkit/colors';
 import { Event, IdentifyProps, DB, Pin, Subscriptions } from '../../constants';
 import { subscribeThreadIsTyping } from './subscribeThreadIsTyping';
 import { subscribeThreadSeenBy } from './subscribeThreadSeenBy';
 import { subscribeTimeline } from './subscribeTimeline';
 import { timelineRef, userTypingRef } from './refs';
-import {
-  PinEventHandler,
-  SeenEventHandler,
-  SyncAdapter,
-  ThreadSeenEvent,
-  TimelineChangeEvent,
-  TypingEvent,
-} from '../types';
-import { ThreadInfo } from '../../hooks/useThread';
+import type { Sync } from '@collabkit/core';
 
-export class FirebaseSync implements SyncAdapter {
+export class FirebaseSync implements Sync.SyncAdapter {
   saveThreadInfo(data: {
     appId: string;
     workspaceId: string;
@@ -216,7 +208,7 @@ export class FirebaseSync implements SyncAdapter {
       workspaceId: string;
       subs: Subscriptions;
     },
-    onSeenChange: SeenEventHandler
+    onSeenChange: Sync.SeenEventHandler
   ): void {
     const seenQuery = query(
       ref(DB, `/seen/${appId}/${userId}/${workspaceId}`),
@@ -251,7 +243,7 @@ export class FirebaseSync implements SyncAdapter {
       workspaceId: string;
       subs: Subscriptions;
     },
-    onPinChange: PinEventHandler
+    onPinChange: Sync.PinEventHandler
   ): void {
     // console.log('subscribePins');
     const onError = (e: Error) => {
@@ -279,9 +271,9 @@ export class FirebaseSync implements SyncAdapter {
     workspaceId: string;
     threadId: string;
     subs: Subscriptions;
-    onTimelineEventAdded: (event: TimelineChangeEvent) => void;
-    onThreadTypingChange: (event: TypingEvent) => void;
-    onThreadSeenByUser: (event: ThreadSeenEvent) => void;
+    onTimelineEventAdded: (event: Sync.TimelineChangeEvent) => void;
+    onThreadTypingChange: (event: Sync.TypingEvent) => void;
+    onThreadSeenByUser: (event: Sync.ThreadSeenEvent) => void;
   }) {
     subscribeTimeline(props);
     subscribeThreadIsTyping(props);

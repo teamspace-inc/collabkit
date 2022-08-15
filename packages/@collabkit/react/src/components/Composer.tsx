@@ -16,49 +16,9 @@ import { MentionNode } from './MentionNode';
 import { useApp } from '../hooks/useApp';
 import { SendButton } from './composer/SendButton';
 import { Avatar } from './Avatar';
-import { css, styled } from '@stitches/react';
+import { styled } from '@stitches/react';
 import { initComposer } from '../actions/subscribeThread';
-
-const ltrStyles = css({
-  textAlign: 'left',
-});
-const rtlStyles = css({
-  textAlign: 'right',
-});
-const placeholderStyles = css({
-  color: '$colors$secondaryText',
-  overflow: 'hidden',
-  position: 'absolute',
-  textOverflow: 'ellipsis',
-  top: '$padding$1',
-  left: '$padding$1',
-  fontSize: '$fontSize$2',
-  lineHeight: '$lineHeights$0',
-  userSelect: 'none',
-  display: 'inline-block',
-  pointerEvents: 'none',
-});
-const editorInputStyles = css({
-  resize: 'none',
-  fontSize: '$fontSize$2',
-  lineHeight: '$lineHeights$0',
-  caretColor: '$colors$neutral12',
-  position: 'relative',
-  tabSize: 1,
-  outline: 0,
-  padding: '$padding$1 $padding$1',
-});
-const paragraphStyles = css({
-  margin: '0 0 0px 0',
-  position: 'relative',
-});
-
-const lexicalTheme = {
-  ltr: ltrStyles.toString(),
-  rtl: rtlStyles.toString(),
-  placeholder: placeholderStyles.toString(),
-  paragraph: paragraphStyles.toString(),
-};
+import { composerStyles } from '@collabkit/theme';
 
 // Catch any errors that occur during Lexical updates and log them
 // or throw them as needed. If you don't throw them, Lexical will
@@ -67,58 +27,20 @@ function onError(error: any) {
   console.error(error);
 }
 
-const Placeholder = styled('div', placeholderStyles);
+const StyledContentEditable = styled(ContentEditable, composerStyles.contentEditable);
+const Placeholder = styled('div', composerStyles.placeholder);
+const ComposerContainer = styled('div', composerStyles.container);
+const StyledLexicalEditorContainer = styled('div', composerStyles.editorContainer);
+const StyledVisibleComposerArea = styled('div', composerStyles.visibleComposerArea);
 
 export function createEditorConfig() {
   return {
     namespace: 'Composer',
-    theme: lexicalTheme,
+    theme: composerStyles.lexicalTheme,
     nodes: [MentionNode],
     onError,
   };
 }
-
-const ComposerContainer = styled('div', {
-  position: 'relative',
-  display: 'flex',
-  flex: '0 1 auto',
-  borderBottomLeftRadius: '$radii$1',
-  borderBottomRightRadius: '$radii$1',
-  padding: '$padding$0 $padding$1',
-  background: '$colors$backgroundColor',
-});
-
-const StyledLexicalEditorContainer = styled('div', {
-  borderRadius: '$radii$0',
-  width: 'calc(100% - $padding$composer - $sizes$avatar - 12px)', // take into account send button
-  color: '$colors$primaryText',
-  marginLeft: 8,
-  padding: '0px 0',
-  position: 'relative',
-  verticalAlign: 'top',
-  background: '$colors$composerBackground',
-
-  fontSize: '$fontSize$2',
-  lineHeight: '$lineHeights$1',
-  fontWeight: '$fontWeights$0',
-  textAlign: 'left',
-});
-
-// affects the text rendered inside the composer, so
-// there is room for the send
-const StyledVisibleComposerArea = styled('div', {
-  borderRadius: '$radii$0',
-  width: 'calc(100% - $sizes$sendButton - 8px)', // take into account send button
-  color: '$colors$primaryText',
-  // marginLeft: 8,
-  padding: '0px 0',
-  position: 'relative',
-  verticalAlign: 'top',
-  fontSize: '$fontSize$2',
-  lineHeight: '$lineHeights$1',
-  fontWeight: '$fontWeights$0',
-  textAlign: 'left',
-});
 
 export function Composer(props: {
   profile?: Profile;
@@ -183,7 +105,7 @@ export function Composer(props: {
         >
           <StyledVisibleComposerArea>
             <PlainTextPlugin
-              contentEditable={<ContentEditable className={editorInputStyles.toString()} />}
+              contentEditable={<StyledContentEditable />}
               placeholder={<Placeholder>{props.placeholder}</Placeholder>}
             />
             <OnChangePlugin

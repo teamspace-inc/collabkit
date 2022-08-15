@@ -4,34 +4,9 @@ import { ChatCircle } from 'phosphor-react';
 import { PopoverThread } from './PopoverThread';
 import { useApp } from '../hooks/useApp';
 import { styled } from '@stitches/react';
+import { buttonStyles } from '@collabkit/theme';
 
-const StyledButton = styled('button', {
-  padding: '9px 14px 9px 12px',
-  border: '1px solid $neutral6',
-  background: 'white',
-  color: '$neutral12',
-  fontWeight: 700,
-  fontSize: '15px',
-  lineHeight: '20px',
-  borderRadius: 11,
-  cursor: 'pointer',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  gap: '8px',
-
-  variants: {
-    isHovering: {
-      true: {
-        backgroundColor: '$neutral3',
-      },
-    },
-    isOpen: {
-      true: {},
-      false: {},
-    },
-  },
-});
+const StyledButton = styled('button', buttonStyles.button);
 
 export function Button(props: {
   threadId: string;

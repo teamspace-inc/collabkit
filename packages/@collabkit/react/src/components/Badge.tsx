@@ -1,23 +1,8 @@
 import { styled } from '@stitches/react';
 import React from 'react';
+import { badgeStyles } from '@collabkit/theme';
 
-const StyledBadge = styled('div', {
-  backgroundColor: '$colors$badgeColor',
-  width: 6,
-  height: 6,
-  borderRadius: 8,
-  position: 'absolute',
-  border: '$sizes$pinBorderWidth solid $colors$pinBorderColor',
-  top: 'calc(-$sizes$pinBorderWidth)',
-  right: 'calc(-$sizes$pinBorderWidth)',
-  textAlign: 'center',
-  fontSize: '9px',
-  fontWeight: '700',
-  display: 'flex',
-  lineHeight: '6px',
-  justifyContent: 'center',
-  color: 'white',
-});
+const StyledBadge = styled('div', badgeStyles.badge);
 
 export function Badge(props: { size: number; number?: number; style?: React.CSSProperties }) {
   return (

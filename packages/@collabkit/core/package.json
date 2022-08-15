@@ -1,0 +1,13 @@
+{
+  "name": "@collabkit/core",
+  "version": "0.0.0",
+  "private": true,
+  "module": "src/index.ts",
+  "scripts": {
+    "clean": "rimraf dist types *.tsbuildinfo"
+  },
+  "dependencies": {
+    "@collabkit/colors": "0.0.0",
+    "lexical": "^0.3.5"
+  }
+}

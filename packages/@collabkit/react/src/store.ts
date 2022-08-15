@@ -1,6 +1,6 @@
 import { proxy, ref } from 'valtio';
 import { IdentifyProps, MentionProps, Store, Workspace } from './constants';
-import { SyncAdapter } from './sync';
+import type { SyncAdapter } from '@collabkit/core';
 
 export type Config = {
   appId: string;

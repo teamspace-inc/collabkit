@@ -3,14 +3,9 @@ import { CheckCircle, RadioButton } from 'phosphor-react';
 import { Event } from '../../constants';
 import { useApp } from '../../hooks/useApp';
 import { styled } from '@stitches/react';
+import { systemMessageStyles } from '@collabkit/theme';
 
-const SystemMessageText = styled('span', {
-  display: 'flex',
-  gap: '$padding$0',
-  padding: '0px 0 0px',
-  color: '$colors$primaryText',
-  alignItems: 'center',
-});
+const SystemMessageText = styled('span', systemMessageStyles.text);
 
 export function SystemBody(props: { event: Event }) {
   const { theme } = useApp();

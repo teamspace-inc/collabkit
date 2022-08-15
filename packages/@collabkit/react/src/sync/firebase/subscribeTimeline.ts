@@ -1,7 +1,7 @@
 import { Subscriptions } from '../../constants';
 import { onChildAdded, orderByChild, query } from 'firebase/database';
 import { timelineRef } from './refs';
-import { TimelineChangeEvent } from '../types';
+import type { Sync } from '@collabkit/core';
 
 export function subscribeTimeline({
   subs,
@@ -11,7 +11,7 @@ export function subscribeTimeline({
   workspaceId: string;
   threadId: string;
   subs: Subscriptions;
-  onTimelineEventAdded: (event: TimelineChangeEvent) => void;
+  onTimelineEventAdded: (event: Sync.TimelineChangeEvent) => void;
 }) {
   const timelineQuery = query(
     timelineRef(props.appId, props.workspaceId, props.threadId),

@@ -1,20 +1,9 @@
 import React from 'react';
 import * as Tooltip from './Tooltip';
 import { styled } from '@stitches/react';
+import { iconButtonStyles } from '@collabkit/theme';
 
-const StyledIconButton = styled('div', {
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  height: 32,
-  width: 32,
-  cursor: 'pointer',
-  pointerEvents: 'all',
-
-  '&:hover': {
-    cursor: 'pointer',
-  },
-});
+const StyledIconButton = styled('div', iconButtonStyles.button);
 
 export function IconButton(props: {
   children: React.ReactNode;
