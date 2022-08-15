@@ -8,8 +8,11 @@ import jwtDecode from 'jwt-decode';
 export default function App() {
   const [user, setUser] = useState<User | null>(() => {
     try {
-      return JSON.parse(localStorage.getItem('demoUser') || 'null') as User;
+      const _user = JSON.parse(localStorage.getItem('demoUser') || 'null') as User;
+      console.log('_user', _user);
+      return _user;
     } catch {
+      console.error('Failed to parse demoUser');
       return null;
     }
   });
@@ -46,8 +49,8 @@ export default function App() {
       colorScheme="light"
       apiKey={'oLsHFwp3uFYjgar37ygGc'}
       appId={'-N67qY-qlZoWmkQBPyZU'}
-      workspace={{ id: 'default' }}
-      user={{ userId: 'foo2' }}
+      workspace={{ id: 'acme' }}
+      user={{ ...user }}
       theme={{
         radii: { 0: '0.5rem' },
         fontSize: { 0: '12px', 2: '14px', 3: '20px' },
@@ -86,6 +89,7 @@ function Home() {
 }
 
 function showGoogleLogin(callback: (user: User) => void) {
+  console.log('showGoogleLogin');
   google.accounts.id.initialize({
     client_id: '913144916238-5301s2hqmurtvub2ic17529uh3ccsgqt.apps.googleusercontent.com',
     callback: (response) => {
