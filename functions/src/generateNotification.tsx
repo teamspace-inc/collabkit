@@ -1,12 +1,12 @@
 import React from 'react';
 import * as admin from 'firebase-admin';
 
-const serviceAccount = require('/Users/namitchadha/collabkit-dev-service-account.json');
+// const serviceAccount = require('/Users/namitchadha/collabkit-dev-service-account.json');
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: 'https://collabkit-dev-default-rtdb.europe-west1.firebasedatabase.app',
-});
+// admin.initializeApp({
+//   credential: admin.credential.cert(serviceAccount),
+//   databaseURL: 'https://collabkit-dev-default-rtdb.europe-west1.firebasedatabase.app',
+// });
 
 // used to test and develop locally
 
@@ -413,9 +413,9 @@ export async function generateNotification(props: {
   return null;
 }
 
-generateNotification({
-  eventId: '-N9GhLqDQi8utjnYBuJe',
-  threadId: 'your-thread-id',
-  workspaceId: 'acme',
-  appId: '-N67qY-qlZoWmkQBPyZU',
-}).then(console.log);
+// generateNotification({
+//   eventId: '-N9GhLqDQi8utjnYBuJe',
+//   threadId: 'your-thread-id',
+//   workspaceId: 'acme',
+//   appId: '-N67qY-qlZoWmkQBPyZU',
+// }).then(console.log);
