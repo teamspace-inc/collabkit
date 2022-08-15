@@ -1,6 +1,6 @@
 import { Subscriptions } from '../../constants';
 import { onChildAdded, onChildRemoved, onDisconnect } from 'firebase/database';
-import { TypingEvent } from '../types';
+import type { Sync } from '@collabkit/core';
 import { typingRef, userTypingRef } from './refs';
 
 export async function subscribeThreadIsTyping(props: {
@@ -9,7 +9,7 @@ export async function subscribeThreadIsTyping(props: {
   workspaceId: string;
   threadId: string;
   subs: Subscriptions;
-  onThreadTypingChange: (event: TypingEvent) => void;
+  onThreadTypingChange: (event: Sync.TypingEvent) => void;
 }) {
   const { appId, userId, workspaceId, threadId, subs } = props;
 

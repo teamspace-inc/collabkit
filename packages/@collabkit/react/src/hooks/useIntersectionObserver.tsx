@@ -1,31 +1,7 @@
 import { RefObject, useCallback, useEffect, useRef, useState } from 'react';
 import { css } from '@stitches/react';
 
-export enum Edge {
-  Top = 'top_edge',
-  Right = 'right_edge',
-  Bottom = 'bottom_edge',
-  Left = 'left_edge',
-}
-
-export enum Corner {
-  TopLeft = 'top_left_corner',
-  TopRight = 'top_right_corner',
-  BottomRight = 'bottom_right_corner',
-  BottomLeft = 'bottom_left_corner',
-}
-
-export type Intersection =
-  | Corner.TopLeft
-  | Corner.TopRight
-  | Corner.BottomRight
-  | Corner.BottomLeft
-  | Edge.Top
-  | Edge.Right
-  | Edge.Bottom
-  | Edge.Left
-  | 'none'
-  | 'pending';
+import { Edge, Corner, Intersection } from '@collabkit/core';
 
 export const intersectionStyles = css({
   variants: {

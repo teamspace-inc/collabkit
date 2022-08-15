@@ -16,29 +16,10 @@ import { MessageHeader } from './comment/MessageHeader';
 // import { hasReactions, Reactions } from './comment/Reactions';
 import reactStringReplace from 'react-string-replace';
 import { styled } from '@stitches/react';
+import { commentStyles } from '@collabkit/theme';
 
-const StyledCommentMessage = styled(StyledMessage, {
-  variants: {
-    // indents the comment
-    // to account for a profile
-    // image
-    profileIndent: {
-      true: {
-        marginLeft: '$padding$4',
-      },
-      false: {},
-    },
-  },
-});
-
-export const StyledCommentContainer = styled('div', {
-  display: 'flex',
-  flex: 1,
-  gap: '$space$2',
-  position: 'relative',
-  maxWidth: 'calc(100% - $padding$1)',
-  padding: '4px $padding$2',
-});
+const StyledCommentMessage = styled(StyledMessage, commentStyles.message);
+export const StyledCommentContainer = styled('div', commentStyles.container);
 
 function isElementInViewport(el: Element) {
   var rect = el.getBoundingClientRect();
@@ -52,19 +33,6 @@ function isElementInViewport(el: Element) {
       (window.innerWidth || document.documentElement.clientWidth) /* or $(window).width() */
   );
 }
-
-const StyledMessageFade = styled('span', {
-  '&::before': {
-    content: '""',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-    background: 'linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.9) 100%)',
-    opacity: 1,
-  },
-});
 
 function hasOverflow(ref: React.RefObject<HTMLDivElement>, deps: any[]) {
   const [isOverflowing, setIsOverflowing] = useState(false);

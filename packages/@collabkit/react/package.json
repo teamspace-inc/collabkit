@@ -16,6 +16,9 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "@collabkit/colors": "^0.0.0",
+    "@collabkit/core": "^0.0.0",
+    "@collabkit/theme": "^0.0.0",
     "@floating-ui/react-dom-interactions": "^0.7.0",
     "@ladle/react": "^2.0.0",
     "@lexical/react": "^0.3.5",

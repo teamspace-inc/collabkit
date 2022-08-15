@@ -1,6 +1,6 @@
 import { styled } from '@stitches/react';
 import React from 'react';
-import { AddReactionButton } from './AddReactionButton';
+import { ReactionButton } from './ReactionButton';
 
 const StyledMessageToolbar = styled('div', {
   position: 'absolute',
@@ -27,7 +27,7 @@ const StyledMessageToolbar = styled('div', {
 export function MessageToolbar(props: { isVisible: boolean }) {
   return (
     <StyledMessageToolbar isVisible={props.isVisible}>
-      <AddReactionButton />
+      <ReactionButton />
     </StyledMessageToolbar>
   );
 }

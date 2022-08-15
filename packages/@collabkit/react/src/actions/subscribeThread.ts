@@ -3,8 +3,8 @@ import { createEditor } from 'lexical';
 import { createEditorConfig } from '../components/Composer';
 import { ref as valtioRef } from 'valtio';
 import { getConfig } from './index';
-import { ThreadSeenEvent, TimelineChangeEvent, TypingEvent } from '../sync';
 import { ThreadInfo } from '../hooks/useThread';
+import type { Sync } from '@collabkit/core';
 
 export function initComposer() {
   return {
@@ -31,14 +31,14 @@ export async function subscribeThread(
     workspaceId,
     threadId,
     subs: store.subs,
-    onTimelineEventAdded: (event: TimelineChangeEvent) => {
+    onTimelineEventAdded: (event: Sync.TimelineChangeEvent) => {
       store.workspaces[event.workspaceId].timeline[event.threadId] ||= {};
       store.workspaces[event.workspaceId].timeline[event.threadId][event.eventId] ||= event.event;
     },
-    onThreadTypingChange: ({ workspaceId, threadId, userId, isTyping }: TypingEvent) => {
+    onThreadTypingChange: ({ workspaceId, threadId, userId, isTyping }: Sync.TypingEvent) => {
       store.workspaces[workspaceId].composers[threadId].isTyping[userId] = isTyping;
     },
-    onThreadSeenByUser: (event: ThreadSeenEvent) => {
+    onThreadSeenByUser: (event: Sync.ThreadSeenEvent) => {
       store.workspaces[event.workspaceId].seenBy[event.threadId] ||= {};
       store.workspaces[event.workspaceId].seenBy[event.threadId][event.userId] = event.data;
     },

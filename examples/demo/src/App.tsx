@@ -72,22 +72,15 @@ function Home() {
   const unread = unreadCount > 0 ? ` (${unreadCount})` : '';
   useDocumentTitle(`CollabKit Demo${unread}`);
 
-  const [hidden, setHidden] = useState(true);
-
   return (
     <div style={{ position: 'fixed', inset: 0 }}>
-      <button type="button" style={{ height: 44 }} onClick={() => setHidden((hidden) => !hidden)}>
-        {hidden ? 'Show' + unread : 'Hide'}
-      </button>
-      {hidden ? null : (
-        <CollabKit.Thread
-          info={{ name: 'Demo thread' }}
-          showHeader={true}
-          composerPrompt="Write a comment"
-          style={{ borderRadius: 0, height: 'calc(100% - 44px)' }}
-          threadId={threadId}
-        />
-      )}
+      <CollabKit.Thread
+        info={{ name: 'Demo thread' }}
+        showHeader={true}
+        composerPrompt="Write a comment"
+        style={{ borderRadius: 0, height: 'calc(100% - 44px)' }}
+        threadId={threadId}
+      />
     </div>
   );
 }

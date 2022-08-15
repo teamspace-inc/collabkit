@@ -1,20 +1,13 @@
+import { currentUserStyles } from '@collabkit/theme';
 import { styled } from '@stitches/react';
 import React from 'react';
 import { useSnapshot } from 'valtio';
 import { useApp } from '../hooks/useApp';
 import { Avatar } from './Avatar';
 
-const StyledUser = styled('div', {
-  display: 'flex',
-  gap: '$space$2',
-});
-const StyledUserName = styled('div', {
-  fontWeight: '$fontWeights$1',
-});
-
-const StyledUserEmail = styled('div', {
-  color: '$colors$secondaryText',
-});
+const StyledUser = styled('div', currentUserStyles.user);
+const StyledUserName = styled('div', currentUserStyles.name);
+const StyledUserEmail = styled('div', currentUserStyles.email);
 
 export function CurrentUser() {
   const { store } = useApp();

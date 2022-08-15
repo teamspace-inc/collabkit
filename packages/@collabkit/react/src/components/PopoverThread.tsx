@@ -7,19 +7,11 @@ import { CommentList } from './CommentList';
 import { useApp } from '../hooks/useApp';
 import { useThread } from '../hooks/useThread';
 import { ThreadHeader } from './ThreadHeader';
-import { StyledThread } from './thread/StyledThread';
 import { ScrollableCommentList } from './ScrollableCommentList';
 import { useWindowSize } from '../hooks/useWindowSize';
+import { popoverThreadStyles } from '@collabkit/theme';
 
-const StyledPopoverThread = styled(StyledThread, {
-  backgroundColor: '$neutral1',
-  borderRadius: '$radii$1',
-  display: 'flex',
-  flexDirection: 'column',
-  height: '100%',
-  zIndex: 9999,
-  position: 'relative',
-});
+const StyledPopoverThread = styled('div', popoverThreadStyles.thread);
 
 export const MODAL_Z_INDEX = 999999;
 

@@ -3,6 +3,7 @@ import { styled } from '@stitches/react';
 import { Profile } from '../../constants';
 import { StyledCommentContainer } from '../Comment';
 import { StyledMessage } from './MessageHeader';
+import { typingIndicatorStyles } from '@collabkit/theme';
 
 // renders a list of users who are
 // typing at the moment
@@ -26,9 +27,7 @@ export function CurrentlyTyping(props: {
   ) : null;
 }
 
-const StyledIsTypingText = styled('span', {
-  color: '$colors$secondaryText',
-});
+const StyledIsTypingText = styled('span', typingIndicatorStyles.typingText);
 
 function TypingIndicator(props: { profile: Profile }) {
   return (

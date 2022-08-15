@@ -3,6 +3,9 @@ import React from 'react';
 import { ArrowUp } from 'phosphor-react';
 import { useApp } from '../../hooks/useApp';
 import { styled } from '@stitches/react';
+import { sendButtonStyles } from '@collabkit/theme';
+
+const StyledComposerSendButton = styled(Tooltip.Trigger, sendButtonStyles.button);
 
 export function SendButton(props: { bodyLength: number; workspaceId: string; threadId: string }) {
   const { events, theme } = useApp();
@@ -31,28 +34,3 @@ export function SendButton(props: { bodyLength: number; workspaceId: string; thr
     </Tooltip.Root>
   );
 }
-
-const StyledComposerSendButton = styled(Tooltip.Trigger, {
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-
-  width: '$sizes$sendButton',
-  height: '$sizes$sendButton',
-  position: 'absolute',
-  right: 'calc($padding$composer + 12px)',
-  top: '$padding$composer',
-  borderRadius: '$sizes$sendButton',
-  border: 'none',
-
-  variants: {
-    disabled: {
-      true: {
-        opacity: 0,
-      },
-      false: {
-        backgroundColor: '$colors$sendButtonColor',
-      },
-    },
-  },
-});

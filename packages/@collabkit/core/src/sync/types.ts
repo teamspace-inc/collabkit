@@ -1,5 +1,5 @@
-import type { Color } from '../colors';
-import type { IdentifyProps, Event, Pin, Subscriptions } from '../constants';
+import type { Color } from '@collabkit/colors';
+import type { IdentifyProps, Event, Pin, Subscriptions } from '../types';
 
 export interface SyncAdapter {
   shouldAuthenticate(): boolean;

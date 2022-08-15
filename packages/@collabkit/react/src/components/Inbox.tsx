@@ -1,3 +1,4 @@
+import { inboxStyles } from '@collabkit/theme';
 import { styled } from '@stitches/react';
 import React, { useEffect } from 'react';
 import { useSnapshot } from 'valtio';
@@ -5,83 +6,10 @@ import { actions } from '../actions';
 import { useApp } from '../hooks/useApp';
 import { useWorkspace } from '../hooks/useWorkspace';
 
-const unreadStyle = {
-  variants: {
-    isUnread: {
-      true: {
-        fontWeight: 500,
-        color: '$neutral12',
-      },
-    },
-  },
-};
-
-const StyledInbox = styled('div', {
-  borderRadius: 11,
-  background: '$neutral1',
-  maxWidth: '320px',
-  border: '1px solid rgba(0,0,0,0.1)',
-});
-
-const StyledInboxItem = styled(
-  'div',
-  {
-    cursor: 'pointer',
-    padding: '10px 20px',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '2px',
-    borderBottom: '1px solid $neutral4',
-    fontSize: 14,
-    lineHeight: '20px',
-    '&:last-of-type': {
-      borderBottom: 0,
-    },
-    '&:hover': {
-      background: '$neutral3',
-      '&:first-of-type': {
-        borderTopLeftRadius: 11,
-        borderTopRightRadius: 11,
-      },
-      '&:last-of-type': {
-        borderBottomRightRadius: 11,
-        borderBottomLeftRadius: 11,
-      },
-    },
-  },
-  unreadStyle
-);
-
-const StyledThreadName = styled(
-  'div',
-  {
-    fontWeight: 500,
-    fontSize: 14,
-    lineHeight: '20px',
-    color: '$neutral11',
-    variants: {
-      isUnread: {
-        true: {
-          fontWeight: 700,
-        },
-      },
-    },
-  },
-  unreadStyle
-);
-
-const StyledThreadMessagePreview = styled(
-  'div',
-  {
-    color: '$neutral11',
-    overflow: 'hidden',
-    wordBreak: 'none',
-    characterBreak: 'none',
-    whiteSpace: 'nowrap',
-    textOverflow: 'ellipsis',
-  },
-  unreadStyle
-);
+const StyledInbox = styled('div', inboxStyles.inbox);
+const StyledInboxItem = styled('div', inboxStyles.inboxItem);
+const StyledThreadName = styled('div', inboxStyles.threadName);
+const StyledThreadMessagePreview = styled('div', inboxStyles.threadMessagePreview);
 
 export function Inbox() {
   const { store } = useApp();

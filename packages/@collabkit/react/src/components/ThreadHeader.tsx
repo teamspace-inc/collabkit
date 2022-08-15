@@ -5,22 +5,10 @@ import { useApp } from '../hooks/useApp';
 import { ThreadTarget } from '../constants';
 import { IconButton } from './IconButton';
 import * as Tooltip from '@radix-ui/react-tooltip';
+import { threadHeaderStyles } from '@collabkit/theme';
 
-const StyledThreadHeader = styled('div', {
-  height: 30,
-  display: 'flex',
-  gap: 0,
-  padding: '2px 0px',
-  alignItems: 'center',
-  pointerEvents: 'none',
-  borderBottom: '1px solid $borderColor',
-});
-
-const StyledHeaderLeftGroup = styled('div', {
-  display: 'flex',
-  flexGrow: 1,
-  gap: 0,
-});
+const StyledThreadHeader = styled('div', threadHeaderStyles.root);
+const StyledHeaderLeftGroup = styled('div', threadHeaderStyles.leftGroup);
 
 export function ThreadHeader(props: { isResolved: boolean; target: ThreadTarget }) {
   const { events, theme } = useApp();

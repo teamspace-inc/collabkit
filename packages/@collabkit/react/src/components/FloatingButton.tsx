@@ -3,25 +3,10 @@ import { ChatText, X } from 'phosphor-react';
 import { useSnapshot } from 'valtio';
 import { useApp } from '../hooks/useApp';
 import { styled } from '@stitches/react';
+import { floatingButtonStyles } from '@collabkit/theme';
 
-const StyledFloatingButtonContainer = styled('div', {
-  position: 'fixed',
-  right: 20,
-  bottom: 20,
-});
-
-const StyledFloatingButton = styled('div', {
-  background: '$colors$primaryButtonBackground',
-  cursor: 'pointer',
-  width: 60,
-  borderRadius: 60,
-  height: 60,
-  display: 'flex',
-  userSelect: 'none',
-  justifyContent: 'center',
-  alignItems: 'center',
-  boxShadow: '0 1px 6px 0 rgb(0 0 0 / 5%), 0 2px 32px 0 rgb(0 0 0 / 12%)',
-});
+const StyledFloatingButtonContainer = styled('div', floatingButtonStyles.container);
+const StyledFloatingButton = styled('div', floatingButtonStyles.button);
 
 export function FloatingButton(props: { style?: React.CSSProperties }) {
   const { store, events, theme } = useApp();
