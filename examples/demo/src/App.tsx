@@ -44,8 +44,8 @@ export default function App() {
   return (
     <CollabKit.Provider
       colorScheme="light"
-      apiKey={'Pypz0HVmJ1-t1KgT-mO02'}
-      appId={'c4CDewHrURgoKLIGyi_mf'}
+      apiKey={'oLsHFwp3uFYjgar37ygGc'}
+      appId={'-N67qY-qlZoWmkQBPyZU'}
       workspace={{ id: 'default' }}
       user={{ userId: 'foo2' }}
       theme={{
