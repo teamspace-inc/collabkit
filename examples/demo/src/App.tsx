@@ -49,7 +49,7 @@ export default function App() {
       colorScheme="light"
       apiKey={'oLsHFwp3uFYjgar37ygGc'}
       appId={'-N67qY-qlZoWmkQBPyZU'}
-      workspace={{ id: 'acme' }}
+      workspace={{ id: 'foobar' }}
       user={{ ...user }}
       theme={{
         radii: { 0: '0.5rem' },
