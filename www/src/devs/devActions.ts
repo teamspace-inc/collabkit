@@ -1,4 +1,4 @@
-import { ref, set, onChildAdded, onChildRemoved, update, onValue } from 'firebase/database';
+import { ref, set, onChildAdded, onChildRemoved, update, onValue, child } from 'firebase/database';
 import { CreateApp, CreateOrg, FunctionResponse } from './devTypes';
 import { database } from './database';
 import { devStore } from './devStore';

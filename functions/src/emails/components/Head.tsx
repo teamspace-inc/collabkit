@@ -22,6 +22,77 @@ const Head: React.FC<HeadProps> = ({ children }) => {
         .paragraph a {
           color: ${black} !important;
         }
+
+        .avatar > div {
+          width: 28px;
+          height: 28px;
+          background-color: #FBC858;
+          text-align: center !important;
+          line-height: 28px;
+          padding: 0;
+          font-size: 12px;
+          display: block;
+          border-radius: 14px;
+        }
+
+        .avatar.color.tomato > div  {
+          background-color: #E06346;
+        }
+        .avatar.color.red > div {
+          background-color: #E55D59;
+        }
+        .avatar.color.crimson > div {
+          background-color: #E25982;
+        }
+        .avatar.color.pink > div  {
+          background-color: #D556A1;
+        }
+        .avatar.color.plum > div  {
+          background-color: #AF5BBD;
+        }
+        .avatar.color.purple > div  {
+          background-color: #905EC9;
+        }
+        .avatar.color.violet > div  {
+          background-color: #7166D3;
+        }
+        .avatar.color.indigo > div  {
+          background-color: #4D71DF;
+        }
+        .avatar.color.blue > div  {
+          background-color: #419AF9;
+        }
+        .avatar.color.cyan > div  {
+          background-color: #3AAAC6;
+        }
+        .avatar.color.teal > div  {
+          background-color: #41AB9E;
+        }
+        .avatar.color.grass > div  {
+          background-color: #64AC69;
+        }
+        .avatar.color.brown > div  {
+          background-color: #B58760;
+        }
+        .avatar.color.orange > div  {
+          background-color: #F5813B;
+        }
+        .avatar.color.sky > div  {
+          background-color: #92E4FD;
+        }
+        .avatar.color.mint > div  {
+          background-color: #9FEFD7;
+        }
+        .avatar.color.lime > div  {
+          background-color: #C9EB59;
+        }
+        .avatar.color.yellow > div  {
+          background-color: #FFEC6B;
+        }
+        .avatar.color.amber > div  {
+          background-color: #FBC858;
+        }
+
         .li {
           text-indent: -18px;
           margin-left: 24px;
@@ -41,9 +112,6 @@ const Head: React.FC<HeadProps> = ({ children }) => {
           }
         }
         @media (prefers-color-scheme: dark) {
-          .logo > * {
-            filter: invert(1) !important;
-          }
           .paragraph > *, .paragraph a, .li > div {
             color: #fff !important;
           }

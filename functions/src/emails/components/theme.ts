@@ -12,4 +12,4 @@ export const leadingTight = '120%';
 export const leadingRelaxed = '160%';
 
 // Borders
-export const borderBase = 8;
+export const borderBase = 24;

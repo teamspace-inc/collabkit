@@ -718,7 +718,6 @@ export function Home() {
             <PlanFeatures>
               <PlanFeature>100 monthly active users</PlanFeature>
               <PlanFeature>Commenting</PlanFeature>
-              <PlanFeature>Presence</PlanFeature>
             </PlanFeatures>
             <RequestDemoButton />
           </Plan>
@@ -736,7 +735,7 @@ export function Home() {
               <PlanFeature>Slack &amp; Discord support</PlanFeature>
             </PlanFeatures>
             <PlanPricingSmall>
-              *Up to 5000 monthly active users, then $1 per 100 monthly active users thereafter.
+              *Up to 5000 monthly active users, then $0.08 per monthly active user thereafter.
             </PlanPricingSmall>
             <RequestDemoButton />
           </Plan>

@@ -44,10 +44,10 @@ export default function App() {
   return (
     <CollabKit.Provider
       colorScheme="light"
-      apiKey={'oLsHFwp3uFYjgar37ygGc'}
-      appId={'-N67qY-qlZoWmkQBPyZU'}
-      workspace={{ id: 'acme', name: 'ACME' }}
-      user={user}
+      apiKey={'Pypz0HVmJ1-t1KgT-mO02'}
+      appId={'c4CDewHrURgoKLIGyi_mf'}
+      workspace={{ id: 'default' }}
+      user={{ userId: 'foo2' }}
       theme={{
         radii: { 0: '0.5rem' },
         fontSize: { 0: '12px', 2: '14px', 3: '20px' },

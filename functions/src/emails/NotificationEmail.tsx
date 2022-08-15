@@ -1,83 +1,145 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import Head from './components/Head';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import ButtonPrimary from './components/ButtonPrimary';
-import { leadingTight, leadingRelaxed, textBase, textLg } from './components/theme';
 
 import { Mjml, MjmlBody, MjmlSection, MjmlColumn, MjmlText, MjmlSpacer } from 'mjml-react';
 
 type NotificationEmailProps = {
-  // name: string;
-  headline?: string;
-  body: ReactElement;
-  bulletedList?: ReactElement;
+  activity: string;
+  threadName?: string;
+  workspaceName?: string;
+  commentList: { createdById: string; createdAt: number; body: string; type: string }[][];
   ctaText?: string;
+  profiles: { [id: string]: { name?: string; avatar?: string; email?: string; color?: string } };
+  productName?: string;
 };
 
+const colors = [
+  'tomato',
+  'red',
+  'crimson',
+  'pink',
+  'plum',
+  'purple',
+  'violet',
+  'indigo',
+  'blue',
+  'cyan',
+  'teal',
+  'green',
+  'grasws',
+  'brown',
+  'orange',
+  'sky',
+  'mint',
+  'lime',
+  'yellow',
+  'amber',
+];
+
+const randomColor = () => colors[Math.floor(Math.random() * colors.length)];
+
+function Comment(props: { actorColor: string; actorName: string; commentBody: string[] }) {
+  return (
+    <MjmlSection textAlign="left" padding="0px 0px 40px">
+      <MjmlColumn width="44px" padding="0px">
+        <MjmlText
+          lineHeight={'28px'}
+          align={'left'}
+          fontWeight={800}
+          cssClass={`avatar color ${props.actorColor}`}
+        >
+          {props.actorName.slice(0, 1)}
+        </MjmlText>
+      </MjmlColumn>
+      <MjmlColumn padding={'0px'}>
+        <MjmlText color={'white'} fontWeight={700} fontSize={'18px'} lineHeight={'26px'}>
+          {props.actorName}
+        </MjmlText>
+        {props.commentBody.map((line) => (
+          <MjmlText
+            padding="16px 24px 0px"
+            color={'white'}
+            fontWeight={400}
+            fontSize={'18px'}
+            lineHeight={'26px'}
+          >
+            {line}
+          </MjmlText>
+        ))}
+      </MjmlColumn>
+    </MjmlSection>
+  );
+}
+
 const NotificationEmail: React.FC<NotificationEmailProps> = ({
-  // name,
-  headline,
-  body,
-  bulletedList,
-  ctaText,
+  activity,
+  threadName,
+  workspaceName,
+  productName,
+  profiles,
+  commentList,
 }) => {
+  const actorColors: { [actorId: string]: string } = {};
+
+  if (commentList.length === 0) {
+    return null;
+  }
+
+  if (commentList.length === 1) {
+    console.log('just one comment!');
+  }
+
+  const entityName = threadName ?? workspaceName ?? productName;
   return (
     <Mjml>
       <Head />
       <MjmlBody width={600}>
-        {/* <Header /> */}
+        <Header />
         <MjmlSection padding="40px 24px 0" cssClass="smooth">
           <MjmlColumn>
-            {headline && (
+            {
               <MjmlText
-                padding="24px 0 8px"
-                fontSize={textLg}
-                lineHeight={leadingTight}
+                padding="0 0 26px"
+                fontSize={'24px'}
+                lineHeight={'32px'}
                 cssClass="paragraph"
               >
-                {headline}
+                <b>{activity}</b>{' '}
+                {entityName ? (
+                  <span>
+                    in <b>{entityName}</b>
+                  </span>
+                ) : null}
               </MjmlText>
-            )}
-            {/* <MjmlText
-              padding="16px 0 16px"
-              fontSize={textBase}
-              lineHeight={leadingRelaxed}
-              cssClass="paragraph"
-            >
-              Hello {name},
-            </MjmlText> */}
-            <MjmlText
-              cssClass="paragraph"
-              padding="0"
-              fontSize={textBase}
-              lineHeight={leadingRelaxed}
-            >
-              {body}
-            </MjmlText>
-            {bulletedList && (
-              <>
-                <MjmlSpacer height="16px" />
-                {bulletedList}
-              </>
-            )}
-            {ctaText && (
-              <>
-                <MjmlSpacer height="24px" />
-                <ButtonPrimary link={'#'} uiText={ctaText} />
-                <MjmlSpacer height="8px" />
-              </>
-            )}
-            {/* <MjmlText
-              padding="16px 0"
-              fontSize={textBase}
-              lineHeight={leadingRelaxed}
-              cssClass="paragraph"
-            >
-              ♥,
-              <br />
-              Mailing
-            </MjmlText> */}
+            }
+          </MjmlColumn>
+        </MjmlSection>
+        {commentList.map((commentGroup) => (
+          <Comment
+            actorColor={
+              actorColors[commentGroup[0].createdById] ??
+              (() => {
+                const color = randomColor();
+                actorColors[commentGroup[0].createdById] = color;
+                return color;
+              })()
+            }
+            actorName={profiles[commentGroup[0].createdById].name ?? 'Anonymous'}
+            commentBody={commentGroup.map((comment) => comment.body)}
+          />
+        ))}
+        <MjmlSection padding="20px 24px 0" cssClass="smooth">
+          <MjmlColumn>
+            <>
+              <ButtonPrimary
+                link={'#'}
+                uiText={productName ? `Open ${productName}` : 'View Comment'}
+              />
+              <MjmlSpacer height="8px" />
+            </>
           </MjmlColumn>
         </MjmlSection>
         <Footer />

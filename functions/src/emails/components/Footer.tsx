@@ -12,7 +12,6 @@ export default function Footer() {
             Turn off notifications for this thread
           </a>
           <br />
-          <br />© 2022 CollabKit
         </MjmlText>
       </MjmlColumn>
     </MjmlSection>
