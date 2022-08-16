@@ -3,11 +3,11 @@
   "version": "0.1.5",
   "main": "dist/collabkit.umd.js",
   "module": "dist/collabkit.es.js",
-  "types": "types/src/index.d.ts",
+  "types": "types/packages/@collabkit/react/src/index.d.ts",
   "files": [
     "dist/collabkit.es.js",
     "dist/collabkit.umd.js",
-    "types/src"
+    "types/packages"
   ],
   "scripts": {
     "dev": "ladle serve",
