@@ -81,12 +81,18 @@ function Org() {
 
       <H4>3. Add a Provider</H4>
       <Desc>
-        Providers set up CollabKit and subscribe to new threads and comments. Create one Provider
-        that wraps your app.
-        <b> If you have a team or company </b>
+        Providers are responsible for authentication, configuration and efficient data syncing.
+        You'll typically want one provider that wraps your app.
+        <b>
+          {' '}
+          <br />
+          If you have the concept of teams, companies or organisations in your app you'll want to
+          configure the Workspace prop to point to the correct workspace for the logged in user.
+        </b>
       </Desc>
       <AddAProvider />
       <H4>4. Add a Thread</H4>
+      <Desc>Add a comment thread, all you need to do to create one is pass a new threadId.</Desc>
       <AddAThread />
 
       {Object.values(apps).map((app) => {
