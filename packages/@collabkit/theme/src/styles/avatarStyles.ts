@@ -1,6 +1,6 @@
 import { css } from '@stitches/react';
 
-export const avatarStyles = css({
+export const avatar = css({
   width: '24px',
   height: '24px',
   flexShrink: 0,
