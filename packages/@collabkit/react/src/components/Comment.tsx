@@ -134,7 +134,7 @@ export function Comment(props: {
       // onMouseOut={(e) => events.onMouseOver(e, { target })}
       ref={ref}
     >
-      {showProfile && <Avatar profile={props.profile} size={24} />}
+      {showProfile && <Avatar profile={props.profile} />}
       <HStack>
         <StyledCommentMessage profileIndent={!showProfile}>
           {showProfile && (

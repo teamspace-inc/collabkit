@@ -19,7 +19,7 @@ export function Avatar(props: {
   const styles = props.profile.color
     ? {
         backgroundColor: getShade(props.profile.color, 9),
-        ...(props.style || {}),
+        ...props.style,
       }
     : props.style;
 

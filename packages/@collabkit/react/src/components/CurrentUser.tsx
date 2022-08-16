@@ -19,7 +19,7 @@ export function CurrentUser() {
     const profile = profiles[userId];
     return profile ? (
       <StyledUser>
-        <Avatar style={{ width: 24, height: 24 }} profile={profile} />
+        <Avatar profile={profile} />
         <StyledUserName>{profile.name}</StyledUserName>
         <StyledUserEmail>{profile.email}</StyledUserEmail>
       </StyledUser>
