@@ -1,16 +1,10 @@
 import React from 'react';
 import * as admin from 'firebase-admin';
 
-// const serviceAccount = require('/Users/namitchadha/collabkit-dev-service-account.json');
-
-// admin.initializeApp({
-//   credential: admin.credential.cert(serviceAccount),
-//   databaseURL: 'https://collabkit-dev-default-rtdb.europe-west1.firebasedatabase.app',
-// });
-
-// used to test and develop locally
-
 const db = admin.database();
+const storage = admin.storage();
+const bucket = storage.bucket('collabkit-dev-emails');
+import { render } from 'mailing-core';
 
 const CONNECTION_TIMEOUT_MS = 2000;
 
@@ -232,7 +226,7 @@ export async function generateNotification(props: {
 
           const lastEventId = Object.keys(events)[Object.keys(events).length - 1];
 
-          console.log('lastEventId', lastEventId);
+          console.debug('lastEventId', lastEventId);
 
           const actorProfile = profiles[_event.createdById];
           if (!actorProfile) {
@@ -322,7 +316,7 @@ export async function generateNotification(props: {
                 const newerEventIds = eventIds.slice(eventIds.indexOf(notifiedUntil) + 1);
 
                 if (newerEventIds.length === 0) {
-                  console.log('no newer events, skipping');
+                  console.debug('no newer events, skipping');
                   continue;
                 }
 
@@ -379,6 +373,16 @@ export async function generateNotification(props: {
                 };
 
                 try {
+                  const file = bucket.file(
+                    `/emails/${appId}/${workspaceId}/${profileId}/${eventId}.html`
+                  );
+                  await file.save(render(mail.component).html, {
+                    gzip: true,
+                    contentType: 'text/html',
+                  });
+                  await db
+                    .ref(`/emails/${appId}/${workspaceId}/${threadId}/${profileId}/${eventId}`)
+                    .set({ subject, to, bodyFileId: file.id });
                   await sendMail(mail);
                 } catch (e) {
                   console.error('error sending mail', e);
