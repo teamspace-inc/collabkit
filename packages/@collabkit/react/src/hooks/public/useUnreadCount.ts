@@ -15,6 +15,10 @@ export function useUnreadCount(props: { threadId: string }): number {
   }
 
   return Object.keys(timeline).reduce((count, eventId) => {
+    // gotcha, this will include reactions and other events
+    // that are not messages, which is ok
+    // but might be a source of confusion
+    // around this number in the future
     if (eventId > seenUntilId) return count + 1;
     return count;
   }, 0);

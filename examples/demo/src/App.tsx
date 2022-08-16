@@ -73,6 +73,7 @@ function Home() {
 
   const unreadCount = CollabKit.useUnreadCount({ threadId });
   const unread = unreadCount > 0 ? ` (${unreadCount})` : '';
+  console.log(unreadCount);
   useDocumentTitle(`CollabKit Demo${unread}`);
 
   return (

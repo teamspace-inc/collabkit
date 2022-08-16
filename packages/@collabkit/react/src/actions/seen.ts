@@ -6,6 +6,9 @@ export async function seen(store: Store, target: CommentTarget) {
   if (!userId) {
     return;
   }
+  if (!document.hasFocus()) {
+    return;
+  }
 
   const { threadId, eventId } = target;
   const lastSeenId = store.workspaces[workspaceId].seen[threadId];

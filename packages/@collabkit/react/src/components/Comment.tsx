@@ -48,6 +48,25 @@ function hasOverflow(ref: React.RefObject<HTMLDivElement>, deps: any[]) {
   return isOverflowing;
 }
 
+function useWindowFocus() {
+  const [isFocused, setIsFocused] = useState(false);
+
+  useEffect(() => {
+    const onFocus = () => setIsFocused(true);
+    const onBlur = () => setIsFocused(false);
+
+    window.addEventListener('focus', onFocus);
+    window.addEventListener('blur', onBlur);
+
+    return () => {
+      window.removeEventListener('focus', onFocus);
+      window.removeEventListener('blur', onBlur);
+    };
+  }, []);
+
+  return isFocused;
+}
+
 export function Comment(props: {
   id: string;
   reactions: { [createdById: string]: Event };
@@ -70,6 +89,8 @@ export function Comment(props: {
     return null;
   }
 
+  const isWindowFocused = useWindowFocus();
+
   // note this means a Comment which has been passed a scrollRef
   // or not, cannot have this changed as it will violate the
   // rules of hook
@@ -79,7 +100,7 @@ export function Comment(props: {
 
   useEffect(() => {
     ref.current && isElementInViewport(ref.current) && events.onSeen({ target });
-  }, [isIntersecting]);
+  }, [isIntersecting, isWindowFocused]);
 
   const emojiReactionPicker = isSameComment(reactingId, target) ? (
     <ReactionPicker target={target} viewportRef={props.rootRef} />
