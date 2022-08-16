@@ -20,18 +20,18 @@ import { styled } from '@stitches/react';
 import { initComposer } from '../actions/subscribeThread';
 import { composerStyles } from '@collabkit/theme';
 
+const StyledContentEditable = styled(ContentEditable, composerStyles.contentEditable);
+const Placeholder = styled('div', composerStyles.placeholder);
+const ComposerContainer = styled('div', composerStyles.container);
+const StyledLexicalEditorContainer = styled('div', composerStyles.editorContainer);
+const StyledVisibleComposerArea = styled('div', composerStyles.visibleComposerArea);
+
 // Catch any errors that occur during Lexical updates and log them
 // or throw them as needed. If you don't throw them, Lexical will
 // try to recover gracefully without losing user data.
 function onError(error: any) {
   console.error(error);
 }
-
-const StyledContentEditable = styled(ContentEditable, composerStyles.contentEditable);
-const Placeholder = styled('div', composerStyles.placeholder);
-const ComposerContainer = styled('div', composerStyles.container);
-const StyledLexicalEditorContainer = styled('div', composerStyles.editorContainer);
-const StyledVisibleComposerArea = styled('div', composerStyles.visibleComposerArea);
 
 export function createEditorConfig() {
   return {

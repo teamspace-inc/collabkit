@@ -4,7 +4,10 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@collabkit/colors": ["../colors/src"],
+      "@collabkit/core": ["../core/src"],
+      "@collabkit/theme": ["../theme/src"]
     }
   },
 
