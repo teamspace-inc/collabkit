@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { Workspace } from '@collabkit/core';
-import { func } from 'prop-types';
 import Composer from './Composer.vue';
 
 const props = defineProps<{
