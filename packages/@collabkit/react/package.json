@@ -1,6 +1,6 @@
 {
   "name": "@collabkit/react",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "main": "dist/collabkit.umd.js",
   "module": "dist/collabkit.es.js",
   "types": "types/packages/@collabkit/react/src/index.d.ts",
@@ -13,7 +13,8 @@
     "dev": "ladle serve",
     "build": "yarn clean && tsc && vite build",
     "clean": "rimraf dist types *.tsbuildinfo src/**/*.js",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "prepublishOnly": "yarn build"
   },
   "devDependencies": {
     "@collabkit/colors": "^0.0.0",
