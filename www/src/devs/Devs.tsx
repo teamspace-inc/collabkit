@@ -10,21 +10,90 @@ import { Logo } from '../Logo';
 import { useEffect } from 'react';
 import { devActions } from './devActions';
 
-import { signOut } from 'firebase/auth';
-import { auth } from './database';
-import { H2, Link, Page, Text } from '../UIKit';
+// import { signOut } from 'firebase/auth';
+// import { auth } from './database';
+// authState === 'signedIn' ? (
+//   <Link style={{ fontSize: '1.25rem' }} href="#" onClick={() => signOut(auth)}>
+//     Sign out
+//   </Link>
+// ) : null;
+import { H2, styled } from '../UIKit';
 import { AppListItem } from './AppListItem';
+
+import AddAProvider from './code/AddAProvider.mdx';
+import AddAThread from './code/AddAThread.mdx';
+import ImportCollabKit from './code/ImportCollabKit.mdx';
+import InstallCollabKit from './code/InstallCollabKit.mdx';
+
+const H5 = styled('div', {
+  fontFamily: 'Inter',
+  fontStyle: 'normal',
+  fontWeight: 400,
+  fontSize: 20,
+  lineHeight: '32px',
+  margin: '40px 0',
+});
+
+const H4 = styled('div', {
+  fontFamily: 'Inter',
+  fontStyle: 'normal',
+  fontWeight: 700,
+  fontSize: 20,
+  lineHeight: '32px',
+  marginBottom: '20px',
+  marginTop: '20px',
+});
+
+const Desc = styled('div', {
+  fontFamily: 'Inter',
+  fontStyle: 'normal',
+  fontWeight: 400,
+  fontSize: 16,
+  lineHeight: '24px',
+  color: '#999999',
+});
 
 function Org() {
   const { org, apps } = useSnapshot(devStore);
   return (
-    <Page>
-      <H2>{org?.name}</H2>
+    <div style={{ padding: 60 }}>
+      <div>
+        Logo
+        <div>Projects</div>
+        <div>
+          <div>{org?.name}</div>
+        </div>
+      </div>
+
+      <div>
+        Project
+        <H2>{org?.name}</H2>
+      </div>
+
+      <H5>API credentials</H5>
+
+      <H5>How to get started</H5>
+      <H4>1. Install CollabKit</H4>
+      <InstallCollabKit />
+
+      <H4>2. Import CollabKit</H4>
+      <ImportCollabKit />
+
+      <H4>3. Add a Provider</H4>
+      <Desc>
+        Providers set up CollabKit and subscribe to new threads and comments. Create one Provider
+        that wraps your app.
+        <b> If you have a team or company </b>
+      </Desc>
+      <AddAProvider />
+      <H4>4. Add a Thread</H4>
+      <AddAThread />
+
       {Object.values(apps).map((app) => {
         return <AppListItem app={app} />;
         // return <Text key={app.appId}>{app.name}</Text>;
       })}
-    </Page>
+    </div>
   );
 }
 
@@ -48,15 +117,8 @@ export function Devs() {
   return (
     <div>
       <StickyHeader
-        style={{ marginTop: '1.5rem' }}
+        style={{ marginTop: '1.5rem', padding: 0 }}
         left={<Logo onClick={() => (window.location.href = '/')} />}
-        right={
-          authState === 'signedIn' ? (
-            <Link style={{ fontSize: '1.25rem' }} href="#" onClick={() => signOut(auth)}>
-              Sign out
-            </Link>
-          ) : null
-        }
       />
       {view[authState]}
     </div>

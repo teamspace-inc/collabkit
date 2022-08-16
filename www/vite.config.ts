@@ -2,7 +2,7 @@ import { resolve } from 'path';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { remarkCodeHike } from '@code-hike/mdx';
-const theme = require('shiki/themes/dracula.json');
+const theme = require('shiki/themes/github-dark.json');
 
 // https://vitejs.dev/config/
 // mdx configured as per

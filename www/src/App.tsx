@@ -2,6 +2,7 @@ import { styled } from '@stitches/react';
 import { Route } from 'wouter';
 import { Home } from './home/Home';
 import { Devs } from './devs/Devs';
+import '@code-hike/mdx/dist/index.css';
 
 const Page = styled('div', {});
 
