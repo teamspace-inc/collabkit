@@ -1,8 +1,8 @@
 <script setup lang="ts">
-// @ts-expect-error missing types
+// @ts-ignore
 import PhArrowUp from 'phosphor-vue/dist/esm/components/PhArrowUp.vue';
 
-import { sendButtonStyles } from '@collabkit/theme';
+import { sendButtonStyles, type Theme } from '@collabkit/theme';
 import { styled } from '../styled';
 import { inject } from 'vue';
 import { ThemeKey } from '../../constants';
@@ -15,7 +15,7 @@ const { bodyLength } = defineProps<{
 
 const StyledComposerSendButton = styled('button', sendButtonStyles.button);
 
-const theme = inject(ThemeKey);
+const theme = inject<Theme>(ThemeKey)!;
 
 function onClick() {
   if (bodyLength > 0) {

@@ -1,7 +1,7 @@
 import { defineComponent, h } from 'vue';
 import { css } from '@stitches/react';
 
-export function styled(type, ...args) {
+export function styled(type: any, ...args: any[]) {
   const cssComponent = css(...args);
 
   const styledComponent = defineComponent({
