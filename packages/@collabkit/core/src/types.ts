@@ -168,7 +168,7 @@ export interface Timeline {
 export interface Composer {
   editor: LexicalEditor;
   $$body: string;
-  isTypingTimeoutID?: number; // | NodeJS.Timeout;
+  isTypingTimeoutID?: ReturnType<typeof setTimeout>;
   isTyping: { [endUserId: string]: boolean };
 }
 
