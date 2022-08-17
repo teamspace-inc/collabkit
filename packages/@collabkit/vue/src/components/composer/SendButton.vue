@@ -1,6 +1,5 @@
 <script setup lang="ts">
-// @ts-ignore
-import PhArrowUp from 'phosphor-vue/dist/esm/components/PhArrowUp.vue';
+import { PhArrowUp } from 'phosphor-vue';
 
 import { sendButtonStyles, type Theme } from '@collabkit/theme';
 import { styled } from '../styled';
@@ -23,8 +22,6 @@ function onClick() {
     //events.onSend(workspaceId, threadId);
   }
 }
-
-console.log(theme.colors.composerButtonIconColor.toString());
 </script>
 
 <template>
