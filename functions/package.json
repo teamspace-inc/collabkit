@@ -15,6 +15,7 @@
   "main": "lib/index.js",
   "dependencies": {
     "@google-cloud/tasks": "^3.0.0",
+    "@types/node-fetch": "^2.6.2",
     "firebase-admin": "^10.0.2",
     "firebase-functions": "^3.22.0",
     "mailgun-js": "^0.22.0",
@@ -22,6 +23,7 @@
     "mjml": "^4.13.0",
     "mjml-react": "^2.0.8",
     "nanoid": "^4.0.0",
+    "node-fetch": "2",
     "nodemailer": "^6.7.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"

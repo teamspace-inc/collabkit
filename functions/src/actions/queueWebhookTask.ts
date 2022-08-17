@@ -26,7 +26,7 @@ export async function queueWebhookTask(props: {
 
   const response = await createTask({
     projectId,
-    url: 'https://us-central1-collabkit-dev.cloudfunctions.net/webbooks',
+    url: 'https://us-central1-collabkit-dev.cloudfunctions.net/triggerWebhook',
     queue: 'webhooks',
     payload: {
       url,

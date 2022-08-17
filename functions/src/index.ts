@@ -8,5 +8,6 @@ import { createOrg } from './createOrg';
 import { generateToken } from './generateToken';
 import { onEvent } from './onEvent';
 import { sendNotification } from './sendNotification';
+import { triggerWebhook } from './triggerWebhook';
 
-export { createOrg, createApp, generateToken, onEvent, sendNotification };
+export { createOrg, createApp, generateToken, onEvent, sendNotification, triggerWebhook };
