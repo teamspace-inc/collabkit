@@ -1,11 +1,15 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import {
   LexicalAutoFocusPlugin,
   LexicalComposer,
   LexicalContentEditable,
   LexicalHistoryPlugin,
+  LexicalOnChangePlugin,
   LexicalPlainTextPlugin,
 } from 'lexical-vue';
+import type { EditorState } from 'lexical';
+import { $getRoot } from 'lexical';
 import type { Profile, Workspace } from '@collabkit/core';
 import { composerStyles } from '@collabkit/theme';
 import Avatar from './Avatar.vue';
@@ -55,7 +59,8 @@ function onBlur() {
   // events.onBlur(e, { target })
 }
 
-const bodyLength = 0;
+function onChange(_editorState: EditorState) {}
+const content = ref('');
 </script>
 
 <template>
@@ -76,12 +81,12 @@ const bodyLength = 0;
               <Placeholder>{{ placeholder }}</Placeholder>
             </template>
           </LexicalPlainTextPlugin>
-
+          <LexicalOnChangePlugin v-model="content" @change="onChange" />
           <LexicalHistoryPlugin />
           <LexicalAutoFocusPlugin />
         </StyledVisibleComposerArea>
       </StyledLexicalEditorContainer>
     </LexicalComposer>
-    <SendButton :bodyLength="bodyLength" :workspaceId="workspaceId" :threadId="threadId" />
+    <SendButton :bodyLength="content.length" :workspaceId="workspaceId" :threadId="threadId" />
   </ComposerContainer>
 </template>

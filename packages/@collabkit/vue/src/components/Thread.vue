@@ -52,7 +52,6 @@ const profiles = {
     workspaceId: 'acme',
     name: 'Jenny',
     color: 'mint',
-    avatar: 'https://example.com/non-existent.png',
   },
 };
 const profile = profiles[userId];
