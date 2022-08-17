@@ -6,6 +6,68 @@ export * as Sync from './sync';
 
 export { SyncAdapter };
 
+export type SecureProps = {
+  appId: string;
+  token: string;
+};
+
+export type UserProps = {
+  id: string;
+  userId?: string;
+  name?: string | null;
+  email?: string | null;
+  avatar?: string | null;
+};
+
+export type WorkspaceProps = {
+  id: string;
+  name?: string | null;
+};
+
+export type UnsecureProps = {
+  apiKey: string;
+  appId: string;
+  user?: UserProps | null;
+  workspace?: WorkspaceProps | null;
+};
+
+export type ConfigProps = {
+  mentionableUsers: MentionProps;
+  onAuthenticationRequired?: () => void;
+  colorScheme?: 'light' | 'dark' | 'auto';
+  readOnly?: boolean;
+  _demoStore?: Store;
+  _isDemo?: boolean;
+};
+
+export type Config = (SecureProps | UnsecureProps) & ConfigProps;
+
+export enum Edge {
+  Top = 'top_edge',
+  Right = 'right_edge',
+  Bottom = 'bottom_edge',
+  Left = 'left_edge',
+}
+
+export enum Corner {
+  TopLeft = 'top_left_corner',
+  TopRight = 'top_right_corner',
+  BottomRight = 'bottom_right_corner',
+  BottomLeft = 'bottom_left_corner',
+}
+
+export type Intersection =
+  | Corner.TopLeft
+  | Corner.TopRight
+  | Corner.BottomRight
+  | Corner.BottomLeft
+  | Edge.Top
+  | Edge.Right
+  | Edge.Bottom
+  | Edge.Left
+  | 'none'
+  | 'pending';
+
 export type Target =
   | ComposerTarget
   | ThreadTarget
@@ -104,20 +166,6 @@ export type WithID<T> = T & {
   id: string;
 };
 
-export type IdentifyProps = {
-  workspaceId?: string;
-  userId: string;
-  name?: string | null;
-  email?: string | null;
-  avatar?: string | null;
-};
-
-export type SetupProps = {
-  appId: string;
-  apiKey: string;
-  mode: 'UNSECURED' | 'SECURED';
-};
-
 export type MentionProps = readonly Mention[];
 
 export interface Mention extends BasicProfile {
@@ -173,24 +221,20 @@ export interface Workspace {
 
 export interface Store {
   sync: SyncAdapter;
-  mode: 'demo' | undefined | null;
   isReadOnly: boolean;
   isConnected: boolean;
   isSignedIn: boolean;
-  token: string;
+  isDemo: boolean;
+  userId: string | null;
+  user: UserProps | null;
+  workspaceId: string | null;
   selectedId: null | Target;
   focusedId: null | Target;
   hoveringId: null | Target;
   reactingId: null | Target;
   composingId: null | ThreadTarget;
   viewingId: null | Target;
-  config: {
-    identify: IdentifyProps | null | undefined;
-    setup: SetupProps;
-    mentions: MentionProps;
-    workspace: { id: string; name?: string };
-    onAuthenticationRequired?: () => void;
-  };
+  config: Config;
   profiles: { [profileId: string]: Profile };
   workspaces: {
     [workspaceId: string]: Workspace;

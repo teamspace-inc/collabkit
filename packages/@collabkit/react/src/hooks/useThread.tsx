@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useSnapshot } from 'valtio';
 import { actions } from '../actions';
-import { Store, Workspace } from '../constants';
+import { Store } from '../constants';
 
 export type ThreadInfo = {
   name?: string | null;
@@ -11,7 +11,7 @@ export type ThreadInfo = {
 export function useThreadSubscription(props: {
   store: Store;
   threadId: string;
-  workspaceId: string;
+  workspaceId?: string | null;
 }) {
   const { store, threadId, workspaceId } = props;
   const { isSignedIn } = useSnapshot(store);
@@ -28,13 +28,13 @@ export function useThreadSubscription(props: {
 export function useThread(props: {
   store: Store;
   threadId: string;
-  workspaceId: string;
-  workspace: Workspace;
+  workspaceId?: string | null;
   info?: ThreadInfo;
 }) {
-  const { threadId, workspaceId, workspace, store, info } = props;
-  const { isSignedIn, profiles, isConnected, reactingId } = useSnapshot(store);
+  const { threadId, workspaceId, store, info } = props;
+  const { isSignedIn, profiles, workspaces, isConnected, reactingId } = useSnapshot(store);
   // const profile = userId ? profiles[userId] : null;
+  const workspace = workspaceId ? workspaces[workspaceId] : null;
   const timeline = workspace ? workspace.timeline[threadId] : null;
   const isEmpty = timeline ? Object.keys(timeline).length === 0 : true;
 
@@ -55,11 +55,7 @@ export function useThread(props: {
     }
   }, [workspaceId, threadId, isSignedIn, info, info?.name]);
 
-  if (!workspaceId) {
-    throw new Error('no workspaceId while rendering thread');
-  }
-
-  const target = { type: 'thread', threadId, workspaceId } as const;
+  const target = workspaceId ? ({ type: 'thread', threadId, workspaceId } as const) : null;
 
   const systemEventIds = timeline
     ? Object.keys(timeline).filter(

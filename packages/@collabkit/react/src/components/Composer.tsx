@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
-import { Profile, Target, Workspace } from '../constants';
-import { EditorState } from 'lexical';
+import { Profile, Target } from '../constants';
+import { EditorState, LexicalEditor } from 'lexical';
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import { PlainTextPlugin } from '@lexical/react/LexicalPlainTextPlugin';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable';
@@ -19,6 +19,7 @@ import { Avatar } from './Avatar';
 import { styled } from '@stitches/react';
 import { initComposer } from '../actions/subscribeThread';
 import { composerStyles } from '@collabkit/theme';
+import { useSnapshot } from 'valtio';
 
 const StyledContentEditable = styled(ContentEditable, composerStyles.contentEditable);
 const Placeholder = styled('div', composerStyles.placeholder);
@@ -42,12 +43,13 @@ export function createEditorConfig() {
   };
 }
 
+type DeepWriteable<T> = { -readonly [P in keyof T]: DeepWriteable<T[P]> };
+
 export function Composer(props: {
   profile?: Profile;
   workspaceId: string;
   threadId: string;
   isFloating: boolean;
-  workspace: Workspace;
   placeholder: React.ReactNode | string;
   style?: React.CSSProperties;
   autoFocus?: boolean;
@@ -55,6 +57,9 @@ export function Composer(props: {
   onHeightChange?: (height: number) => void;
 }) {
   const { events, store } = useApp();
+
+  const { workspaces } = useSnapshot(store);
+  const workspace = props.workspaceId ? workspaces[props.workspaceId] : null;
 
   const editorStateRef = useRef<EditorState>();
 
@@ -64,12 +69,12 @@ export function Composer(props: {
     workspaceId: props.workspaceId,
   } as Target;
 
-  const composer = props.workspace.composers[props.threadId];
+  const composer = workspace ? workspace.composers[props.threadId] : null;
   const bodyLength = composer?.$$body.trim().length ?? 0;
 
   const initialConfig = {
     ...createEditorConfig(),
-    editor__DEPRECATED: composer?.editor,
+    editor__DEPRECATED: composer?.editor as LexicalEditor,
   };
 
   const editorContainerRef = useRef(null);

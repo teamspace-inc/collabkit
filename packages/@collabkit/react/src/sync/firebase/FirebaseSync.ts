@@ -1,5 +1,6 @@
 import {
   DataSnapshot,
+  get,
   limitToLast,
   onChildAdded,
   onChildChanged,
@@ -14,12 +15,12 @@ import {
   update,
 } from 'firebase/database';
 import type { Color } from '@collabkit/colors';
-import { Event, IdentifyProps, DB, Pin, Subscriptions } from '../../constants';
+import { Event, DB, Pin, Subscriptions } from '../../constants';
 import { subscribeThreadIsTyping } from './subscribeThreadIsTyping';
 import { subscribeThreadSeenBy } from './subscribeThreadSeenBy';
 import { subscribeTimeline } from './subscribeTimeline';
 import { timelineRef, userTypingRef } from './refs';
-import type { Sync } from '@collabkit/core';
+import type { Sync, UserProps } from '@collabkit/core';
 
 export class FirebaseSync implements Sync.SyncAdapter {
   saveThreadInfo(data: {
@@ -49,7 +50,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
     appId: string;
     userId: string;
     workspaceId: string;
-    profile: Partial<IdentifyProps> & { color: Color };
+    profile: Partial<UserProps> & { color: Color };
   }): Promise<void> {
     const { appId, userId, workspaceId, profile } = data;
     try {
@@ -278,5 +279,9 @@ export class FirebaseSync implements Sync.SyncAdapter {
     subscribeTimeline(props);
     subscribeThreadIsTyping(props);
     subscribeThreadSeenBy(props);
+  }
+
+  getUser(props: { appId: string; workspaceId: string; userId: string }) {
+    return get(ref(DB, `/profiles/${props.appId}/${props.userId}`));
   }
 }

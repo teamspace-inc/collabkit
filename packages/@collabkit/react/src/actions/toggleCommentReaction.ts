@@ -5,7 +5,7 @@ export async function toggleCommentReaction(
   store: Store,
   props: { target: CommentReactionTarget }
 ) {
-  if (!store.config.identify) {
+  if (!store.userId) {
     return;
   }
 
@@ -21,9 +21,7 @@ export async function toggleCommentReaction(
   const thread = store.workspaces[workspaceId].timeline[threadId];
   const reactions = Object.keys(thread)
     .map((eventId) => thread[eventId])
-    .filter(
-      (event) => event.parentId === eventId && event.createdById === store.config.identify?.userId
-    );
+    .filter((event) => event.parentId === eventId && event.createdById === store.userId);
 
   const lastReaction = reactions.length > 0 ? reactions[reactions.length - 1] : null;
 

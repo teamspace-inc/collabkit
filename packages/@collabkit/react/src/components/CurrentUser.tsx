@@ -11,8 +11,7 @@ const StyledUserEmail = styled('div', currentUserStyles.email);
 
 export function CurrentUser() {
   const { store } = useApp();
-  const { config, profiles } = useSnapshot(store);
-  const userId = config.identify?.userId;
+  const { config, profiles, userId } = useSnapshot(store);
   if (!userId) {
     return <div>No Current User</div>;
   } else {

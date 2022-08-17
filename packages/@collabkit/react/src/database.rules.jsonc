@@ -43,6 +43,7 @@
           },
           "profiles": {
             "$endUserId": {
+              ".read": "auth.token.appId === $appId",
               ".validate": "newData.isBoolean()",
               ".write": "root.child('apps').child(auth.token.appId).child('mode').val() === 'UNSECURED' || (root.child('apps').child(auth.token.appId).child('mode').val() === 'SECURED' && $workspaceId === auth.token.workspaceId && $endUserId === auth.token.userId)"
             }
@@ -61,6 +62,7 @@
     },
     "orgs": {
       "$orgId": {
+        ".read": true,
         "name": {
           ".read": true,
           ".write": "root.child('apps').child($orgId).child('admins').child(auth.uid).exists()"
@@ -227,14 +229,29 @@
         }
       }
     },
-    "threadMeta": {
+    "emails": {
       "$appId": {
         "$workspaceId": {
           ".read": "auth.token.appId === $appId",
           "$threadId": {
             ".read": "auth.token.appId === $appId",
-            ".write": "newData.hasChildren(['name']) && (auth.token.appId === $appId) && ((root.child('apps').child(auth.token.appId).child('mode').val() === 'UNSECURED' || (root.child('apps').child(auth.token.appId).child('mode').val() === 'SECURED' && $workspaceId === auth.token.workspaceId",
+            ".write": "(auth.token.appId === $appId) && ((root.child('apps').child(auth.token.appId).child('mode').val() === 'UNSECURED' || (root.child('apps').child(auth.token.appId).child('mode').val() === 'SECURED' && $workspaceId === auth.token.workspaceId)))",
+            "$profileId": {}
+          }
+        }
+      }
+    },
+    "threadInfo": {
+      "$appId": {
+        "$workspaceId": {
+          ".read": "auth.token.appId === $appId",
+          "$threadId": {
+            ".read": "auth.token.appId === $appId",
+            ".write": "newData.hasChildren(['url']) && (auth.token.appId === $appId) && ((root.child('apps').child(auth.token.appId).child('mode').val() === 'UNSECURED' || (root.child('apps').child(auth.token.appId).child('mode').val() === 'SECURED' && $workspaceId === auth.token.workspaceId)))",
             "name": {
+              ".validate": "newData.isString()"
+            },
+            "url": {
               ".validate": "newData.isString()"
             }
           }
@@ -274,17 +291,15 @@
         }
       }
     },
-    "notified": {
+    "notifiedUntil": {
       "$appId": {
         "$workspaceId": {
           ".read": "auth.token.appId === $appId",
           "$threadId": {
-            "$eventId": {
-              "$endUserId": {
-                ".validate": "newData.isBoolean()",
-                ".read": true,
-                ".write": false // only 'Firebase Admin' can write
-              }
+            "$endUserId": {
+              ".validate": "!newData.exists() || (newData.exists() && root.child('timeline').child($appId).child($workspaceId).child($threadId).child(newData.val()).exists())",
+              ".read": true,
+              ".write": false // only 'Firebase Admin' can write
             }
           }
         }

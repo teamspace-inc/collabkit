@@ -7,10 +7,10 @@ import { CurrentUser } from './components/CurrentUser';
 import { FloatingButton } from './components/FloatingButton';
 import { Commentable } from './components/Commentable';
 import { Pin, PurePin } from './components/Pin';
-import { IdentifyProps, Mention, Store, Subscriptions, Workspace } from './constants';
+import { Config, Mention, Store, Subscriptions, Workspace } from './constants';
 import { MentionProps } from './constants';
 import { PopoverThread } from './components/PopoverThread';
-import { Config, createStore, createWorkspace } from './store';
+import { createStore, createWorkspace } from './store';
 import { useUnreadCount } from './hooks/public/useUnreadCount';
 
 export {
@@ -30,9 +30,9 @@ export {
   PurePin as PurePin,
   createStore as internal_createStore,
   createWorkspace as internal_createWorkspace,
-  type Config,
   type Store,
   type Workspace,
   type Subscriptions,
+  type Config,
 };
-export type { IdentifyProps, MentionProps, Mention };
+export type { MentionProps, Mention };

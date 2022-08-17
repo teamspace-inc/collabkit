@@ -20,18 +20,12 @@ export async function writeMessageToFirebase(
     return;
   }
 
-  if (!store.config.identify) {
-    return;
-  }
-
-  const userId = store.config.identify.userId;
-  const appId = store.config.setup?.appId;
+  const userId = store.userId;
+  const appId = store.config.appId;
 
   if (!appId || !userId) {
     return;
   }
-
-  // console.log('sending message', body);
 
   // close emoji picker on send
   store.reactingId = null;
@@ -40,7 +34,7 @@ export async function writeMessageToFirebase(
     type,
     body,
     createdAt: store.sync.serverTimestamp(),
-    createdById: store.config.identify.userId,
+    createdById: userId,
   };
 
   if (parentId) {

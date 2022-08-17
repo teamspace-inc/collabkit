@@ -1,8 +1,8 @@
 {
   "name": "@collabkit/react",
   "version": "0.1.6",
-  "main": "dist/collabkit.umd.js",
-  "module": "dist/collabkit.es.js",
+  "main": "src/index.ts",
+  "module": "src/index.ts",
   "types": "types/packages/@collabkit/react/src/index.d.ts",
   "files": [
     "dist/collabkit.es.js",

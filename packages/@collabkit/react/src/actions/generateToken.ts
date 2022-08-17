@@ -1,14 +1,15 @@
 import { API_HOST } from '../constants';
 import { FunctionResponse, GenerateToken } from './index';
 
-// todo make this work in secured mode
-export async function generateToken(appId: string, apiKey: string, mode: 'SECURED' | 'UNSECURED') {
+export async function generateToken(props: { appId: string; apiKey: string }) {
+  const { appId, apiKey } = props;
   try {
     const response = await fetch(
-      `${API_HOST}/generateToken?apiKey=${apiKey}&appId=${appId}&mode=${mode}`
+      `${API_HOST}/generateToken?apiKey=${apiKey}&appId=${appId}&mode=UNSECURED`
     );
 
     if (response.ok) {
+      // todo remove this cas
       const json = (await response.json()) as FunctionResponse<GenerateToken>;
       if (json.status === 200 || json.status === 201) {
         return json.data;

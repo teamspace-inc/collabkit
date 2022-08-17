@@ -1,12 +1,19 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { actions } from '../actions';
-import { IdentifyProps, MentionProps, Store } from '../constants';
+import { ConfigProps, SecureProps, Store, UnsecureProps } from '../constants';
 import { Events, createEvents } from '../events';
 import { AppContext } from '../hooks/useAppContext';
 import { createStore } from '../store';
 import { FirebaseSync } from '../sync';
 import { createThemes, DeepPartial, Theme } from './UIKit';
 import merge from 'lodash.merge';
+
+export type OtherProps = {
+  children: React.ReactNode;
+  theme?: DeepPartial<Theme>;
+};
+
+export type ProviderProps = (SecureProps | UnsecureProps) & ConfigProps & OtherProps;
 
 // Enable using multiple isolated App
 // instances in the same page.
@@ -15,20 +22,7 @@ export function CollabKitProvider({
   colorScheme = 'auto',
   theme,
   ...config
-}: {
-  appId: string;
-  apiKey: string;
-  workspace: { id: string; name?: string };
-  user?: IdentifyProps | null;
-  mentionableUsers: MentionProps;
-  children: React.ReactNode;
-  onAuthenticationRequired?: () => void;
-  colorScheme?: 'light' | 'dark' | 'auto';
-  theme?: DeepPartial<Theme>;
-  readOnly?: boolean;
-  mode?: 'demo';
-  _demoStore?: Store;
-}) {
+}: ProviderProps) {
   const [context, setContext] = useState<{ store: Store; events: Events } | null>(null);
 
   const { darkTheme, lightTheme } = createThemes(theme);
@@ -47,7 +41,7 @@ export function CollabKitProvider({
     return () => {
       events.onDestroy();
     };
-  }, [config.apiKey, config.user?.userId]);
+  }, [config.appId, 'token' in config ? config.token : config.apiKey]);
 
   useEffect(() => {
     if (context) {
@@ -71,7 +65,6 @@ export function CollabKitProvider({
       value={{
         store: context.store,
         events: context.events,
-        workspaceId: config.workspace.id,
         theme: theme ? merge(baseTheme, theme) : baseTheme,
       }}
     >
