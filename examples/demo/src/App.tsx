@@ -9,7 +9,6 @@ export default function App() {
   const [user, setUser] = useState<User | null>(() => {
     try {
       const _user = JSON.parse(localStorage.getItem('demoUser') || 'null') as User;
-      console.log('_user', _user);
       return _user;
     } catch {
       console.error('Failed to parse demoUser');
@@ -44,13 +43,17 @@ export default function App() {
     return image;
   }
 
+  if (!user.userId) {
+    return image;
+  }
+
   return (
     <CollabKit.Provider
       colorScheme="light"
       apiKey={'oLsHFwp3uFYjgar37ygGc'}
       appId={'-N67qY-qlZoWmkQBPyZU'}
       workspace={{ id: 'foobar' }}
-      user={{ ...user }}
+      user={{ ...user, id: user.userId }}
       theme={{
         radii: { 0: '0.5rem' },
         fontSize: { 0: '12px', 2: '14px', 3: '20px' },
@@ -73,7 +76,6 @@ function Home() {
 
   const unreadCount = CollabKit.useUnreadCount({ threadId });
   const unread = unreadCount > 0 ? ` (${unreadCount})` : '';
-  console.log(unreadCount);
   useDocumentTitle(`CollabKit Demo${unread}`);
 
   return (
@@ -103,7 +105,7 @@ function showGoogleLogin(callback: (user: User) => void) {
 function userFromGoogleToken(token: string) {
   const { sub, name, picture, email } = jwtDecode(token) as any;
   return {
-    userId: sub,
+    id: sub,
     name,
     email,
     avatar: picture,

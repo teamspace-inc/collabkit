@@ -3,7 +3,7 @@ import { ComposerTarget, Store } from '../constants';
 export async function isTyping(store: Store, props: { target: ComposerTarget }) {
   const { config } = store;
 
-  if (!config.setup || !config.identify?.userId) {
+  if (!store.userId) {
     return;
   }
 
@@ -15,10 +15,10 @@ export async function isTyping(store: Store, props: { target: ComposerTarget }) 
   }
 
   const params = {
-    appId: config.setup.appId,
+    appId: config.appId,
     workspaceId: props.target.workspaceId,
     threadId: props.target.threadId,
-    userId: config.identify.userId,
+    userId: store.userId,
   };
   await store.sync.startTyping(params);
 

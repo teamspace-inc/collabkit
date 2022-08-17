@@ -1,14 +1,15 @@
+import { useSnapshot } from 'valtio';
 import { useApp } from '../useApp';
 import { useThreadSubscription } from '../useThread';
-import { useWorkspace } from '../useWorkspace';
 
 export function useUnreadCount(props: { threadId: string }): number {
   const { store } = useApp();
-  const { workspace, workspaceId } = useWorkspace();
+  const { workspaceId, workspaces } = useSnapshot(store);
+  const workspace = workspaceId ? workspaces[workspaceId] : null;
   useThreadSubscription({ store, threadId: props.threadId, workspaceId });
 
-  const seenUntilId = workspace.seen[props.threadId];
-  const timeline = workspace.timeline[props.threadId] ?? {};
+  const seenUntilId = workspace?.seen[props.threadId];
+  const timeline = workspace?.timeline[props.threadId] ?? {};
 
   if (seenUntilId == null) {
     return Object.keys(timeline).length;

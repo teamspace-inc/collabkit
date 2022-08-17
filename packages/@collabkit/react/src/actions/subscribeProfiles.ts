@@ -13,11 +13,10 @@ export async function subscribeProfiles(store: Store) {
     if (child.key) {
       const id = child.key;
       const profileRef = ref(DB, `/profiles/${appId}/${id}`);
-      store.subs[profileRef.toString()] = onValue(
+      store.subs[profileRef.toString()] ||= onValue(
         profileRef,
         (profileSnapshot) => {
           const profile = profileSnapshot.val();
-          // console.log({ profile });
           if (profile) {
             store.profiles[id] = profile;
           }

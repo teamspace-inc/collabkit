@@ -22,7 +22,7 @@ export async function reopenThread(store: Store, workspaceId: string, threadId: 
       createdById: userId,
     };
     const { id } = await store.sync.saveEvent({
-      appId: store.config.setup!.appId,
+      appId: store.config.appId,
       workspaceId,
       threadId,
       event,

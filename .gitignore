@@ -7,6 +7,8 @@ node_modules
 packages/@collabkit/react/src/**/*.js
 packages/@collabkit/react/src/**/*.d.ts
 
+**/.next/*
+
 .env
 .env.*.local
 .DS_Store

@@ -53,12 +53,12 @@ const Modal = styled('div', {
 });
 
 const config: CollabKit.Config = {
-  mode: 'demo',
+  _isDemo: true,
   apiKey: 'DUMMY_API_KEY_FOR_DEMO',
   appId: 'DUMMY_APP_ID_FOR_DEMO',
   workspace: { id: 'acme', name: 'ACME' },
   user: {
-    userId: 'anon-1',
+    id: 'anon-1',
     name: 'Jane Doe',
     email: 'anon@example.com',
   },

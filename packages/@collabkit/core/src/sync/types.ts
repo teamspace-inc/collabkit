@@ -1,10 +1,13 @@
 import type { Color } from '@collabkit/colors';
-import type { IdentifyProps, Event, Pin, Subscriptions } from '../types';
+import type { Event, Pin, Subscriptions, UserProps } from '../types';
+import type { DataSnapshot } from 'firebase/database';
 
 export interface SyncAdapter {
   shouldAuthenticate(): boolean;
 
   serverTimestamp(): object;
+
+  getUser(params: { userId: string; appId: string }): Promise<DataSnapshot>;
 
   saveThreadInfo(params: {
     appId: string;
@@ -95,7 +98,7 @@ export interface SyncAdapter {
   }): void;
 }
 
-export type ServerProfile = Partial<IdentifyProps> & { color: Color };
+export type ServerProfile = Partial<UserProps> & { color: Color };
 export type SeenEventHandler = (event: { threadId: string; seenUntilId: string }) => void;
 export type PinEventHandler = (event: { pinId: string; pin: Pin }) => void;
 

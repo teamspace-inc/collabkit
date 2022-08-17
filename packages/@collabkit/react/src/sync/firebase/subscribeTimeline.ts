@@ -20,7 +20,6 @@ export function subscribeTimeline({
   );
 
   if (subs[timelineQuery.toString()]) {
-    console.log('subbed already');
     return;
   }
 

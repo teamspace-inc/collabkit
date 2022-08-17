@@ -14,10 +14,10 @@ export function createDemoStore(
 ) {
   const workspace = loadWorkspace(storageKey, defaultWorkspace);
   const sync = new LocalOnlySync(workspace);
-  const store = createStore(config, sync, true);
+  const store = createStore(config, sync);
 
   store.workspaces.acme = {
-    ...createWorkspace(config),
+    ...createWorkspace(),
     ...workspace,
   };
   store.profiles = profiles as any;

@@ -18,6 +18,7 @@ import {
 import { styled } from '@stitches/react';
 import debounce from 'lodash.debounce';
 import { pinStyles } from '@collabkit/theme';
+import { useUnreadCount } from '../hooks/public/useUnreadCount';
 
 const StyledPin = styled('div', pinStyles.pin);
 const StyledPinContainer = styled('div', pinStyles.pinContainer);
@@ -30,13 +31,13 @@ export function PurePin(props: {
   profile: Profile;
   onPointerDown?: (event: React.PointerEvent) => void;
   isTyping?: { [userId: string]: boolean };
-  currentUserId: string;
+  userId: string;
 }) {
-  // const isSomeoneTyping = props.isTyping
-  //   ? Object.keys(props.isTyping)
-  //       .filter((key) => key !== props.currentUserId)
-  //       .find((key) => props.isTyping?.[key])
-  //   : null;
+  const isSomeoneTyping = props.isTyping
+    ? Object.keys(props.isTyping)
+        .filter((key) => key !== props.userId)
+        .find((key) => props.isTyping?.[key])
+    : null;
   return (
     <StyledPin onPointerDown={props.onPointerDown}>
       {props.hasUnread ? <Badge size={6} /> : null}
@@ -56,65 +57,64 @@ export function PurePin(props: {
 export function Pin(props: { pinId: string }) {
   const { pinId } = props;
   const { store, events } = useApp();
-  const { viewingId, hoveringId, profiles, mode, config } = useSnapshot(store);
+  const { viewingId, hoveringId, profiles, isDemo, userId, workspaceId, workspaces } =
+    useSnapshot(store);
   const [maxAvailableSize, setMaxAvailableSize] = useState({ width: -1, height: -1 });
 
-  const currentUserId = config.identify?.userId;
+  const workspace = workspaceId ? workspaces[workspaceId] : null;
 
-  const { workspace, workspaceId } = useWorkspace();
-  const pin = workspace.pins[props.pinId];
+  const pin = workspace ? workspace.pins[props.pinId] : null;
   const profile = pin ? profiles[pin.createdById] : null;
 
-  const hasUnread = useHasUnread({ pinId, workspace });
+  const hasUnread = useUnreadCount({ threadId: pinId });
 
-  const target: PinTarget = {
-    type: 'pin',
-    pinId,
-    workspaceId,
-  };
+  const target = workspaceId
+    ? ({
+        type: 'pin',
+        pinId,
+        workspaceId,
+      } as const)
+    : null;
 
   const isViewing = viewingId?.type === 'pin' && viewingId.pinId === props.pinId;
 
   const isHovering = hoveringId?.type === 'pin' && hoveringId.pinId === props.pinId;
 
-  const open = !!(
-    (isViewing || isHovering) &&
-    profile &&
-    (pin.state === 'open' || pin.state === 'pending')
-  );
+  const open = pin
+    ? !!((isViewing || isHovering) && profile && (pin.state === 'open' || pin.state === 'pending'))
+    : false;
 
   const { x, y, reference, floating, strategy } = useFloating({
     whileElementsMounted: autoUpdate,
     strategy: 'fixed',
-    placement: mode === 'demo' ? 'bottom-start' : undefined,
+    placement: isDemo ? 'bottom-start' : undefined,
     open,
-    middleware:
-      mode === 'demo'
-        ? [
-            offset(() => {
-              return {
-                mainAxis: 6,
-              };
-            }),
-          ]
-        : [
-            autoPlacement({ alignment: 'start', padding: 14 }),
-            size({
-              apply({ availableWidth, availableHeight, elements }) {
-                // Do things with the data, e.g.
-                setMaxAvailableSize({ width: availableWidth, height: availableHeight });
-                Object.assign(elements.floating.style, {
-                  maxWidth: `${availableWidth}px`,
-                  maxHeight: `${availableHeight}px`,
-                });
-              },
-            }),
-            offset(() => {
-              return {
-                mainAxis: 6,
-              };
-            }),
-          ],
+    middleware: isDemo
+      ? [
+          offset(() => {
+            return {
+              mainAxis: 6,
+            };
+          }),
+        ]
+      : [
+          autoPlacement({ alignment: 'start', padding: 14 }),
+          size({
+            apply({ availableWidth, availableHeight, elements }) {
+              // Do things with the data, e.g.
+              setMaxAvailableSize({ width: availableWidth, height: availableHeight });
+              Object.assign(elements.floating.style, {
+                maxWidth: `${availableWidth}px`,
+                maxHeight: `${availableHeight}px`,
+              });
+            },
+          }),
+          offset(() => {
+            return {
+              mainAxis: 6,
+            };
+          }),
+        ],
   });
 
   const thread = open ? (
@@ -131,7 +131,9 @@ export function Pin(props: { pinId: string }) {
         if (isHovering && !isViewing) {
           e.stopPropagation();
           e.preventDefault();
-          events.onPointerDown(e, { target });
+          if (target) {
+            events.onPointerDown(e, { target });
+          }
         }
       }}
     >
@@ -147,14 +149,19 @@ export function Pin(props: { pinId: string }) {
     console.warn('Pin has no profile');
   }
 
-  if (!currentUserId) {
+  if (!userId) {
     return null;
   }
 
   const handleMouseLeave = debounce(
-    useCallback((e: React.MouseEvent) => {
-      events.onMouseOut(e, { target });
-    }, []),
+    useCallback(
+      (e: React.MouseEvent) => {
+        if (target) {
+          events.onMouseOut(e, { target });
+        }
+      },
+      [target]
+    ),
     // how long to wait before dismissing the tooltip
     150,
     { trailing: true }
@@ -163,7 +170,8 @@ export function Pin(props: { pinId: string }) {
   const handleMouseOver = useCallback(
     (e: React.MouseEvent) => {
       handleMouseLeave.cancel();
-      !open && events.onMouseOver(e, { target });
+
+      !open && target && events.onMouseOver(e, { target });
     },
     [handleMouseLeave, open, events.onMouseOver, target]
   );
@@ -186,14 +194,16 @@ export function Pin(props: { pinId: string }) {
           }}
         >
           <PurePin
-            currentUserId={currentUserId}
+            userId={userId}
             profile={profile}
-            hasUnread={hasUnread}
-            isTyping={workspace.composers[props.pinId]?.isTyping}
+            hasUnread={hasUnread > 0}
+            isTyping={workspace ? workspace.composers[props.pinId]?.isTyping : {}}
             onPointerDown={(e) => {
               e.stopPropagation();
               e.preventDefault();
-              events.onPointerDown(e, { target });
+              if (target) {
+                events.onPointerDown(e, { target });
+              }
             }}
           />
         </HStack>

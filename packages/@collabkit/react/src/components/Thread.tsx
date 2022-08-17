@@ -2,13 +2,13 @@ import { FlexCenter } from './UIKit';
 import { IconContext } from 'phosphor-react';
 import React, { useState } from 'react';
 import { Composer } from './Composer';
-import { useWorkspace } from '../hooks/useWorkspace';
 import { ScrollableCommentList } from './ScrollableCommentList';
 import { useApp } from '../hooks/useApp';
 import { useThread } from '../hooks/useThread';
 import { EmptyState } from './thread/EmptyState';
 import { styled } from '@stitches/react';
 import { threadStyles } from '@collabkit/theme';
+import { useSnapshot } from 'valtio';
 
 const StyledThreadContainer = styled('div', threadStyles.container);
 const StyledThread = styled('div', threadStyles.thread);
@@ -28,18 +28,22 @@ export function Thread(props: {
 }) {
   const { threadId } = props;
   const { store } = useApp();
-  const userId = store.config.identify?.userId!;
+
+  const { userId, workspaceId, workspaces } = useSnapshot(store);
 
   const [composerHeight, setComposerHeight] = useState(0);
 
-  const { workspace, workspaceId } = useWorkspace();
+  const workspace = workspaceId ? workspaces[workspaceId] : null;
 
   const { profiles, timeline, isConnected, isEmpty, ref, reactingId } = useThread({
     ...props,
     store,
     workspaceId,
-    workspace,
   });
+
+  if (!userId) {
+    return null;
+  }
 
   return (
     <StyledThreadContainer ref={ref} style={props.style} data-collabkit-internal="true">
@@ -83,10 +87,9 @@ export function Thread(props: {
               timeline={timeline}
             />
           )}
-          {workspaceId && workspace ? (
+          {workspaceId && workspace !== null ? (
             <Composer
               style={{ paddingBottom: '12px' }}
-              workspace={workspace}
               placeholder={
                 props.composerPrompt != null
                   ? props.composerPrompt

@@ -1,3 +1,3 @@
-import type { IdentifyProps } from '@collabkit/react';
+import type { UserProps } from '@collabkit/core';
 
-export type User = IdentifyProps;
+export type User = UserProps;

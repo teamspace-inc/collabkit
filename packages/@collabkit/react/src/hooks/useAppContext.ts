@@ -8,7 +8,6 @@ type Themes = ReturnType<typeof createThemes>;
 export type AppContextData = {
   store: Store;
   events: Events;
-  workspaceId: string;
   theme: Themes['darkTheme'] | Themes['lightTheme'];
 };
 

@@ -116,7 +116,7 @@ const dummyLookupService = {
 
     setTimeout(() => {
       // todo come up with a better search algorithm
-      const results = config.mentions?.filter(
+      const results = config.mentionableUsers?.filter(
         (mention) => mention.name && mention.name.toLowerCase().includes(string.toLowerCase())
       );
       if (results == null || results?.length === 0) {

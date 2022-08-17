@@ -38,8 +38,7 @@ export type {
   Event,
   WithName,
   WithID,
-  IdentifyProps,
-  SetupProps,
+  Config,
   MentionProps,
   Mention,
   BasicProfile,
@@ -51,4 +50,7 @@ export type {
   Workspace,
   Store,
   Subscriptions,
+  ConfigProps,
+  SecureProps,
+  UnsecureProps,
 } from '@collabkit/core';

@@ -1,9 +1,13 @@
 import type { SyncAdapter } from '@collabkit/react/src/constants';
+import { DataSnapshot } from 'firebase/database';
 
 import { nanoid } from 'nanoid';
 
 export class LocalOnlySync implements SyncAdapter {
   constructor(public workspaceData: any) {}
+  getUser(params: { userId: string; appId: string }): Promise<DataSnapshot> {
+    throw new Error('Method not implemented.');
+  }
   saveThreadInfo(): Promise<void> {
     return Promise.resolve();
   }

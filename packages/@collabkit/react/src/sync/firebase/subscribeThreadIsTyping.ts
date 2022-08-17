@@ -13,6 +13,8 @@ export async function subscribeThreadIsTyping(props: {
 }) {
   const { appId, userId, workspaceId, threadId, subs } = props;
 
+  console.log('subscribeThreadIsTyping', { appId, userId, workspaceId, threadId });
+
   const key = `isTyping-${workspaceId}/${threadId}`;
   const addedKey = `${key}-added`;
   const removedKey = `${key}-removed`;

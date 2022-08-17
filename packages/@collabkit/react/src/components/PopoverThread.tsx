@@ -2,7 +2,6 @@ import { styled } from '@stitches/react';
 import { IconContext } from 'phosphor-react';
 import React, { useRef, useEffect, useState } from 'react';
 import { Composer } from './Composer';
-import { useWorkspace } from '../hooks/useWorkspace';
 import { CommentList } from './CommentList';
 import { useApp } from '../hooks/useApp';
 import { useThread } from '../hooks/useThread';
@@ -10,6 +9,7 @@ import { ThreadHeader } from './ThreadHeader';
 import { ScrollableCommentList } from './ScrollableCommentList';
 import { useWindowSize } from '../hooks/useWindowSize';
 import { popoverThreadStyles } from '@collabkit/theme';
+import { useSnapshot } from 'valtio';
 
 const StyledPopoverThread = styled('div', popoverThreadStyles.thread);
 
@@ -25,14 +25,13 @@ export function PopoverThread(props: {
   const [didOverflowY, setDidOverflowY] = useState(false);
   const ref = useRef<HTMLDivElement | null>(null);
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
-  const userId = store.config.identify?.userId!;
   const [composerHeight, setComposerHeight] = useState(47); // default composer height
-  const { workspace, workspaceId } = useWorkspace();
+  const { workspaces, workspaceId, userId } = useSnapshot(store);
+  const workspace = workspaceId ? workspaces[workspaceId] : null;
   const { profiles, timeline, isResolved, isEmpty, target } = useThread({
     ...props,
     store,
     workspaceId,
-    workspace,
   });
 
   const windowSize = useWindowSize();
@@ -70,13 +69,15 @@ export function PopoverThread(props: {
   return (
     <StyledPopoverThread data-collabkit-internal="true" style={props.style} ref={ref}>
       <IconContext.Provider value={{ size: '20px' }}>
-        {!isEmpty && !props.isPreview && <ThreadHeader isResolved={isResolved} target={target} />}
+        {!isEmpty && !props.isPreview && target && (
+          <ThreadHeader isResolved={isResolved} target={target} />
+        )}
         {!isEmpty && timeline && (
           // nc: there's something causing a scrollbar to appear
           // without the extra 20px of height. need to investigate
           // furtheer.
           <div ref={scrollContainerRef}>
-            {!props.isPreview ? (
+            {!props.isPreview && userId && workspaceId ? (
               <ScrollableCommentList
                 isTyping={workspace?.composers[props.threadId]?.isTyping}
                 profiles={profiles}
@@ -86,7 +87,7 @@ export function PopoverThread(props: {
                 isPreview={props.isPreview}
                 timeline={timeline}
               />
-            ) : (
+            ) : userId && workspaceId ? (
               <CommentList
                 isTyping={workspace?.composers[props.threadId]?.isTyping}
                 profiles={profiles}
@@ -96,12 +97,11 @@ export function PopoverThread(props: {
                 isPreview={props.isPreview}
                 timeline={timeline}
               />
-            )}
+            ) : null}
           </div>
         )}
-        {props.isPreview ? null : (
+        {props.isPreview ? null : workspaceId && userId ? (
           <Composer
-            workspace={workspace}
             placeholder={isEmpty ? 'Write a comment' : 'Reply to this comment'}
             style={{
               borderRadius: theme.radii['2'].value.toString(),
@@ -121,7 +121,7 @@ export function PopoverThread(props: {
             hideAvatar={isEmpty}
             onHeightChange={(height) => setComposerHeight(height)}
           />
-        )}
+        ) : null}
       </IconContext.Provider>
     </StyledPopoverThread>
   );

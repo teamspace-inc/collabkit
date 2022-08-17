@@ -43,6 +43,7 @@ export type GenerateToken =
       mode: 'SECURED';
       token: string;
       userId: string;
+      workspaceId: string;
     };
 
 export type FunctionResponse<T> =
@@ -67,22 +68,33 @@ export type FunctionResponse<T> =
       error: string;
     };
 
+// normalises config across secure and unsecure modes for
+// safe access from actions
 export function getConfig(store: Store) {
   const { config } = store;
-  const appId = config.setup.appId;
-  const apiKey = config.setup.apiKey;
-  const mode = config.setup.mode;
-  const userId = config.identify?.userId;
-  const workspaceId = config.workspace.id;
+  const appId = config.appId;
+  const apiKey = 'apiKey' in config ? config.apiKey : null;
+  const token = 'token' in config ? config.token : null;
+  const mode = token ? 'SECURED' : 'UNSECURED';
+  const userId = store.userId;
+  const workspaceId = store.workspaceId;
 
   if (!appId) {
     throw new Error('Missing `appId`');
   }
-  if (!apiKey) {
+  if (mode === 'UNSECURED' && !apiKey) {
     throw new Error('Missing `apiKey`');
   }
 
-  return { appId, apiKey, mode, userId, workspaceId };
+  if (!userId) {
+    throw new Error('Missing `userId`');
+  }
+
+  if (!workspaceId) {
+    throw new Error('Missing `workspaceId`');
+  }
+
+  return { appId, apiKey, token, mode, userId, workspaceId };
 }
 
 export const actions = {

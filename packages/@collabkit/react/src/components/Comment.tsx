@@ -118,7 +118,7 @@ export function Comment(props: {
 
   const isOverflowing = hasOverflow(bodyRef, [props.body]);
 
-  return props.profile ? (
+  return typeof props.profile === 'object' ? (
     <StyledCommentContainer
       style={props.isPreview ? { overflow: 'hidden' } : {}}
       // onMouseOver={(e) => events.onMouseOver(e, { target })}
