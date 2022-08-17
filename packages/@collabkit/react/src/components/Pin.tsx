@@ -3,7 +3,6 @@ import { Avatar } from './Avatar';
 import { HStack, VStack } from './UIKit';
 import { useApp } from '../hooks/useApp';
 import { useSnapshot } from 'valtio';
-import { useWorkspace } from '../hooks/useWorkspace';
 import { PinTarget, Profile } from '../constants';
 import { Badge } from './Badge';
 import { PopoverThread } from './PopoverThread';
