@@ -7,30 +7,32 @@ import { styled } from '../styled';
 import { inject } from 'vue';
 import { ThemeKey } from '../../constants';
 
-const { bodyLength } = defineProps<{
+const props = defineProps<{
   bodyLength: number;
   workspaceId: string;
   threadId: string;
 }>();
 
 const StyledComposerSendButton = styled('button', sendButtonStyles.button);
+const StyledComposerSendButtonIcon = styled(PhArrowUp, sendButtonStyles.icon);
 
 const theme = inject<Theme>(ThemeKey)!;
 
 function onClick() {
-  if (bodyLength > 0) {
+  if (props.bodyLength > 0) {
     //events.onSend(workspaceId, threadId);
   }
 }
+
+console.log(theme.colors.composerButtonIconColor.toString());
 </script>
 
 <template>
   <StyledComposerSendButton :disabled="bodyLength === 0" @click="onClick" title="Post">
-    <PhArrowUp
-      size="13"
+    <StyledComposerSendButtonIcon
+      :size="13"
       :color="theme.colors.composerButtonIconColor.toString()"
       weight="bold"
-      :style="{ position: 'relative', cursor: 'pointer' }"
     />
   </StyledComposerSendButton>
 </template>

@@ -6,6 +6,7 @@ import { styled } from '@stitches/react';
 import { sendButtonStyles } from '@collabkit/theme';
 
 const StyledComposerSendButton = styled(Tooltip.Trigger, sendButtonStyles.button);
+const StyledComposerSendButtonIcon = styled(ArrowUp, sendButtonStyles.icon);
 
 export function SendButton(props: { bodyLength: number; workspaceId: string; threadId: string }) {
   const { events, theme } = useApp();
@@ -20,11 +21,10 @@ export function SendButton(props: { bodyLength: number; workspaceId: string; thr
           }
         }}
       >
-        <ArrowUp
+        <StyledComposerSendButtonIcon
           size={13}
           color={theme.colors.composerButtonIconColor.toString()}
-          weight={'bold'}
-          style={{ position: 'relative', cursor: 'pointer' }}
+          weight="bold"
         />
       </StyledComposerSendButton>
       <Tooltip.Content>

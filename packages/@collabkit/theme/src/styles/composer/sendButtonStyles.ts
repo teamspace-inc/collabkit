@@ -13,6 +13,10 @@ export const button = css({
   borderRadius: '$sizes$sendButton',
   border: 'none',
 
+  background: 'none',
+  padding: 0,
+  cursor: 'pointer',
+
   variants: {
     disabled: {
       true: {
@@ -23,4 +27,9 @@ export const button = css({
       },
     },
   },
+});
+
+export const icon = css({
+  position: 'relative',
+  cursor: 'pointer',
 });
