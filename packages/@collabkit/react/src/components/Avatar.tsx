@@ -1,38 +1,37 @@
-import { useState } from 'react';
-import React from 'react';
+import React, { useState } from 'react';
 import { getShade } from '@collabkit/colors';
-import { Profile } from '../constants';
-import { styled } from '@stitches/react';
+import type { Profile } from '../constants';
 import { avatarStyles } from '@collabkit/theme';
+import { styled } from '@stitches/react';
 
 export const StyledAvatar = styled('img', avatarStyles.avatar);
 export const StyledDefaultAvatar = styled('div', avatarStyles.avatar);
 
-export function Avatar(props: {
+export function Avatar({
+  profile,
+  size = 24,
+  style,
+}: {
   profile: Profile;
-  style?: React.CSSProperties;
   size?: 24 | 28 | 32;
-  children?: React.ReactNode;
+  style?: React.CSSProperties;
 }) {
   const [didError, setDidError] = useState(false);
-  const noImage = didError || !props.profile.avatar;
-  const styles = props.profile.color
+  const styles = profile.color
     ? {
-        backgroundColor: getShade(props.profile.color, 9),
-        ...props.style,
+        backgroundColor: getShade(profile.color, 9),
+        ...style,
       }
-    : props.style;
+    : style;
 
-  const size = props.size ?? 24;
-
-  return noImage ? (
+  return didError || !profile.avatar ? (
     <StyledDefaultAvatar size={size} style={styles}>
-      {props.profile.name?.charAt(0)}
+      {profile.name?.charAt(0)}
     </StyledDefaultAvatar>
   ) : (
     <StyledAvatar
       size={size}
-      src={props.profile.avatar!}
+      src={profile.avatar!}
       onError={() => setDidError(true)}
       style={styles}
     />

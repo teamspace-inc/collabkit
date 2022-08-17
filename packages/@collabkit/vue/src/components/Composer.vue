@@ -6,11 +6,12 @@ import {
   LexicalHistoryPlugin,
   LexicalPlainTextPlugin,
 } from 'lexical-vue';
+import type { Profile, Workspace } from '@collabkit/core';
+import { composerStyles } from '@collabkit/theme';
+import Avatar from './Avatar.vue';
 import { MentionNode } from './composer/MentionNode';
 import SendButton from './composer/SendButton.vue';
-import { composerStyles } from '@collabkit/theme';
 import { styled } from './styled';
-import type { Profile, Workspace } from '@collabkit/core';
 
 defineProps<{
   profile?: Profile;
@@ -59,9 +60,11 @@ const bodyLength = 0;
 
 <template>
   <ComposerContainer>
-    <!-- {props.profile && !props.hideAvatar ? (
-        <Avatar style={{ position: 'relative', top: 4, marginLeft: 8 }} profile={props.profile} />
-      ) : null} -->
+    <Avatar
+      v-if="profile && !hideAvatar"
+      :style="{ position: 'relative', top: '4px', marginLeft: '8px' }"
+      :profile="profile"
+    />
     <LexicalComposer :initial-config="config">
       <StyledLexicalEditorContainer @focus="onFocus" @blur="onBlur">
         <StyledVisibleComposerArea>

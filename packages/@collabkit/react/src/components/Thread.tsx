@@ -88,7 +88,7 @@ export function Thread(props: {
               style={{ paddingBottom: '12px' }}
               workspace={workspace}
               placeholder={
-                props.composerPrompt
+                props.composerPrompt != null
                   ? props.composerPrompt
                   : isEmpty
                   ? 'Add a comment'

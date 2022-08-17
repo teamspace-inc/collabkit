@@ -39,16 +39,20 @@ const workspace: Workspace = {
 const isConnected = true;
 const isEmpty = true;
 
-const placeholder = props.composerPrompt
-  ? props.composerPrompt
-  : isEmpty
-  ? 'Add a comment'
-  : 'Reply to this comment';
+const placeholder =
+  props.composerPrompt != null
+    ? props.composerPrompt
+    : isEmpty
+    ? 'Add a comment'
+    : 'Reply to this comment';
 
 const userId = 'jenny';
 const profiles = {
   [userId]: {
     workspaceId: 'acme',
+    name: 'Jenny',
+    color: 'mint',
+    avatar: 'https://example.com/non-existent.png',
   },
 };
 const profile = profiles[userId];

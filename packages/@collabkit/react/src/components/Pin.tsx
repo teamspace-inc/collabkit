@@ -22,8 +22,8 @@ import { pinStyles } from '@collabkit/theme';
 const StyledPin = styled('div', pinStyles.pin);
 const StyledPinContainer = styled('div', pinStyles.pinContainer);
 const StyledFloatingThreadContainer = styled('div', pinStyles.floatingThreadContainer);
-const TypingDot = styled('div', pinStyles.typingDot);
-const TypingDots = styled('div', pinStyles.typingDots);
+// const TypingDot = styled('div', pinStyles.typingDot);
+// const TypingDots = styled('div', pinStyles.typingDots);
 
 export function PurePin(props: {
   hasUnread: boolean;
@@ -32,23 +32,23 @@ export function PurePin(props: {
   isTyping?: { [userId: string]: boolean };
   currentUserId: string;
 }) {
-  const isSomeoneTyping = props.isTyping
-    ? Object.keys(props.isTyping)
-        .filter((key) => key !== props.currentUserId)
-        .find((key) => props.isTyping?.[key])
-    : null;
+  // const isSomeoneTyping = props.isTyping
+  //   ? Object.keys(props.isTyping)
+  //       .filter((key) => key !== props.currentUserId)
+  //       .find((key) => props.isTyping?.[key])
+  //   : null;
   return (
     <StyledPin onPointerDown={props.onPointerDown}>
       {props.hasUnread ? <Badge size={6} /> : null}
-      <Avatar profile={props.profile} size={28}>
-        {isSomeoneTyping ? (
+      <Avatar profile={props.profile} size={28} />
+      {/* {isSomeoneTyping ? (
           <TypingDots>
             <TypingDot />
             <TypingDot />
             <TypingDot />
           </TypingDots>
         ) : undefined}
-      </Avatar>
+      </Avatar> */}
     </StyledPin>
   );
 }

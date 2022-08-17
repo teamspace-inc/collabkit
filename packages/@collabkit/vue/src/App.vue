@@ -12,7 +12,7 @@ provide(ThemeKey, theme);
 
 <template>
   <main :className="theme.toString()">
-    <Thread threadId="vue-chat" showHeader />
+    <Thread threadId="vue-chat" showHeader composerPrompt="Write a comment" />
   </main>
 </template>
 
