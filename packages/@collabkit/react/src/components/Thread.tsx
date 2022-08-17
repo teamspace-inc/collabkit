@@ -1,5 +1,5 @@
 import { FlexCenter } from './UIKit';
-import { IconContext, X } from 'phosphor-react';
+import { IconContext } from 'phosphor-react';
 import React, { useState } from 'react';
 import { Composer } from './Composer';
 import { useWorkspace } from '../hooks/useWorkspace';
@@ -13,6 +13,7 @@ import { threadStyles } from '@collabkit/theme';
 const StyledThreadContainer = styled('div', threadStyles.container);
 const StyledThread = styled('div', threadStyles.thread);
 const StyledThreadHeader = styled('div', threadStyles.header);
+const StyledThreadHeaderTitle = styled('div', threadStyles.headerTitle);
 
 export function Thread(props: {
   threadId: string;
@@ -23,9 +24,6 @@ export function Thread(props: {
   style?: React.CSSProperties;
   composerPrompt?: string;
   showHeader?: boolean;
-  header?: React.ReactNode;
-  emptyState?: React.ReactNode;
-  showHeaderCloseIcon?: boolean;
   onCloseButtonClick?: (e: React.MouseEvent) => void;
 }) {
   const { threadId } = props;
@@ -65,14 +63,11 @@ export function Thread(props: {
         />
       ) : null} */}
       <StyledThread>
-        {props.showHeader || props.header
-          ? props.header || (
-              <StyledThreadHeader>
-                <div style={{ flex: '1' }}>Comments</div>
-                {props.showHeaderCloseIcon ? <X style={{ marginTop: '2' }}></X> : null}
-              </StyledThreadHeader>
-            )
-          : null}
+        {props.showHeader ? (
+          <StyledThreadHeader>
+            <StyledThreadHeaderTitle>Comments</StyledThreadHeaderTitle>
+          </StyledThreadHeader>
+        ) : null}
         {!isConnected ? <FlexCenter /> : null}
         {isConnected && isEmpty ? <EmptyState /> : null}
         <IconContext.Provider value={{ size: '20px' }}>

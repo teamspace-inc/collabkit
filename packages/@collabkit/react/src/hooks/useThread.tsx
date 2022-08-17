@@ -42,7 +42,6 @@ export function useThread(props: {
 
   useThreadSubscription({ store, threadId, workspaceId });
 
-  // const intersection = useIntersectionObserver(ref, [props.threadId, props.type]);
   useEffect(() => {
     if (workspaceId && isSignedIn) {
       actions.saveThreadInfo(store, {

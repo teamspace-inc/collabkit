@@ -29,3 +29,11 @@ export const header = css({
   padding: '20px 16px',
   display: 'flex',
 });
+
+export const headerTitle = css({
+  flex: 1,
+});
+
+export const headerCloseIcon = css({
+  marginTop: 2,
+});

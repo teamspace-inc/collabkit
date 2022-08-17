@@ -68,12 +68,7 @@ export function PopoverThread(props: {
   ]);
 
   return (
-    <StyledPopoverThread
-      data-collabkit-internal="true"
-      // intersection={intersection}
-      style={props.style}
-      ref={ref}
-    >
+    <StyledPopoverThread data-collabkit-internal="true" style={props.style} ref={ref}>
       <IconContext.Provider value={{ size: '20px' }}>
         {!isEmpty && !props.isPreview && <ThreadHeader isResolved={isResolved} target={target} />}
         {!isEmpty && timeline && (

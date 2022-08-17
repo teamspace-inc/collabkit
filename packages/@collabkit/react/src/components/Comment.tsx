@@ -7,7 +7,6 @@ import { HStack } from './UIKit';
 import { TargetContext } from './Target';
 import { isSameComment } from '../utils/isSameComment';
 import { useApp } from '../hooks/useApp';
-import { useIsIntersecting } from '../hooks/useIntersectionObserver';
 import { StyledMessage } from './comment/MessageHeader';
 // import { MessageToolbar } from './comment/MessageToolbar';
 import { ReactionPicker } from './comment/ReactionPicker';
@@ -75,7 +74,6 @@ export function Comment(props: {
   event: Event;
   profile: Profile;
   rootRef: React.RefObject<HTMLDivElement>;
-  scrollRef?: React.RefObject<HTMLDivElement>;
   type: CommentType;
   isPreview?: boolean;
 }) {
@@ -91,16 +89,9 @@ export function Comment(props: {
 
   const isWindowFocused = useWindowFocus();
 
-  // note this means a Comment which has been passed a scrollRef
-  // or not, cannot have this changed as it will violate the
-  // rules of hook
-  const isIntersecting = props.scrollRef
-    ? useIsIntersecting({ ref, root: props.scrollRef.current }, [])
-    : false;
-
   useEffect(() => {
     ref.current && isElementInViewport(ref.current) && events.onSeen({ target });
-  }, [isIntersecting, isWindowFocused]);
+  }, [isWindowFocused]);
 
   const emojiReactionPicker = isSameComment(reactingId, target) ? (
     <ReactionPicker target={target} viewportRef={props.rootRef} />

@@ -19,7 +19,6 @@ import { useLayoutEffect } from 'react';
 import { createPortal } from 'react-dom';
 
 import { $createMentionNode, MentionNode } from './MentionNode';
-// import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
 import { snapshot } from 'valtio';
 import { Store } from '../constants';
 import { useApp } from '../hooks/useApp';
@@ -341,9 +340,6 @@ function MentionsTypeahead({
       )
     );
   }, [applyCurrentSelected, close, editor, results, selectedIndex, updateSelectedIndex]);
-
-  // const intersects = useIntersectionObserver({ ref: divRef, root: null }, [results === null]);
-  // console.log({ intersects });
 
   if (results === null) {
     return null;
