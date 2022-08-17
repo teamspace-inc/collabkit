@@ -118,6 +118,11 @@
           ".read": true,
           ".write": "root.child('apps').child($appId).child('admins').child(auth.uid).exists()",
           ".validate": "newData.isBoolean()"
+        },
+        "webhookUrl": {
+          ".read": true,
+          ".write": "root.child('apps').child($appId).child('admins').child(auth.uid).exists()",
+          ".validate": "newData.isString()"
         }
       }
     },

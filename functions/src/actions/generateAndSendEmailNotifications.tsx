@@ -8,8 +8,8 @@ import { render } from 'mailing-core';
 
 const CONNECTION_TIMEOUT_MS = 2000;
 
-import { sendMail } from './emails';
-import NotificationEmail from './emails/NotificationEmail';
+import { sendMail } from '../emails';
+import NotificationEmail from '../emails/NotificationEmail';
 
 // export type TimelineEvent = {
 //   type: 'message' | 'reaction' | 'adminMessage' | 'system';
@@ -123,8 +123,7 @@ export function onConnect() {
 //     Object.values(o.profiles).every(isProfile)
 //   );
 // }
-
-export async function generateNotification(props: {
+export async function generateAndSendEmailNotifications(props: {
   appId: string;
   workspaceId: string;
   threadId: string;
