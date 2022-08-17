@@ -1,22 +1,19 @@
-import React from 'react';
+<script setup lang="ts">
 import { threadEmptyStateStyles } from '@collabkit/theme';
-import { Chats } from 'phosphor-react';
-import { styled } from '@stitches/react';
+import { PhChats } from 'phosphor-vue';
+import { styled } from '../styled';
 import { FlexCenter } from '../UIKit';
 
 const EmptyStateContainer = styled('div', threadEmptyStateStyles.container);
-const EmptyStateIcon = styled(Chats, threadEmptyStateStyles.icon);
+const EmptyStateIcon = styled(PhChats, threadEmptyStateStyles.icon);
 const EmptyStateText = styled('span', threadEmptyStateStyles.text);
+</script>
 
-const emptyState = (
+<template>
   <FlexCenter>
     <EmptyStateContainer>
-      <EmptyStateIcon weight="regular" size={32} />
+      <EmptyStateIcon weight="regular" :size="32" />
       <EmptyStateText>Write a comment</EmptyStateText>
     </EmptyStateContainer>
   </FlexCenter>
-);
-
-export function EmptyState() {
-  return emptyState;
-}
+</template>

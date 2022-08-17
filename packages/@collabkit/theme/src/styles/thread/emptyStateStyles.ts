@@ -1,6 +1,6 @@
 import { css } from '@stitches/react';
 
-export const nullState = css({
+export const container = css({
   fontWeight: '400',
   fontSize: '$fontSize$1',
   color: '$neutral10',
@@ -8,4 +8,12 @@ export const nullState = css({
   alignItems: 'center',
   flexDirection: 'column',
   gap: '$padding$1',
+});
+
+export const icon = css({
+  color: '$neutral9',
+});
+
+export const text = css({
+  fontWeight: '500',
 });
