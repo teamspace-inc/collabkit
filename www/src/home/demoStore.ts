@@ -20,6 +20,8 @@ export function createDemoStore(
     ...createWorkspace(),
     ...workspace,
   };
+  store.workspaceId = 'acme';
+  store.userId = 'demo';
   store.profiles = profiles as any;
   subscribe(store, (ops) => {
     if (ops.some(shouldPersistChange)) {
