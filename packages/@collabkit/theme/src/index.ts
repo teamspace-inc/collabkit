@@ -32,4 +32,5 @@ export * as inboxStyles from './styles/inboxStyles';
 export * as mentionsPluginStyles from './styles/mentionsPluginStyles';
 export * as pinStyles from './styles/pinStyles';
 export * as popoverThreadStyles from './styles/popoverThreadStyles';
+export * as scrollAreaStyles from './styles/scrollAreaStyles';
 export * as stickyStyles from './styles/stickyStyles';

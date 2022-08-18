@@ -13,46 +13,45 @@ export function CommentGroup(props: {
   isPreview?: boolean;
 }) {
   const { group, profiles, reactions, workspaceId, threadId } = props;
-
+  const comments = props.isPreview ? group.slice(0, 1) : group;
   return (
-    <div>
-      {(props.isPreview ? group.slice(0, 1) : group).map((event, j) => {
-        let type: CommentType = 'default';
-
-        if (group.length > 1) {
-          type = 'inline';
-
-          if (j === 0) {
-            type = 'inline-start';
-          }
-
-          if (j === group.length - 1) {
-            type = 'inline-end';
-          }
-        }
-
-        const profile = profiles[event.createdById];
-
-        return (
-          <Target
-            key={event.id}
-            target={{ type: 'comment', eventId: event.id, workspaceId, threadId }}
-          >
-            <Comment
-              id={event.id}
-              event={event}
-              reactions={reactions[event.id]}
-              type={type}
-              timestamp={event.createdAt}
-              key={`event-${event.id}`}
-              rootRef={props.rootRef}
-              body={event.body}
-              profile={profile}
-              isPreview={props.isPreview}
-            />
-          </Target>
-        );
-      })}
-    </div>
+    <>
+      {comments.map((event, index) => (
+        <Target
+          key={event.id}
+          target={{ type: 'comment', eventId: event.id, workspaceId, threadId }}
+        >
+          <Comment
+            id={event.id}
+            event={event}
+            reactions={reactions[event.id]}
+            type={getCommentType(group, index)}
+            timestamp={event.createdAt}
+            key={`event-${event.id}`}
+            rootRef={props.rootRef}
+            body={event.body}
+            profile={profiles[event.createdById]}
+            isPreview={props.isPreview}
+          />
+        </Target>
+      ))}
+    </>
   );
+}
+
+function getCommentType(group: Event[], index: number): CommentType {
+  let type: CommentType = 'default';
+
+  if (group.length > 1) {
+    type = 'inline';
+
+    if (index === 0) {
+      type = 'inline-start';
+    }
+
+    if (index === group.length - 1) {
+      type = 'inline-end';
+    }
+  }
+  return type;
 }

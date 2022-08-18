@@ -25,6 +25,7 @@ export const CommentList = React.memo(function CommentList(props: {
   const rootRef = useRef<HTMLDivElement>(null);
 
   const { reactions, list } = useTimeline(timeline);
+  const groups = props.isPreview ? list.slice(0, 1) : list;
 
   if (!workspaceId) {
     return null;
@@ -32,7 +33,7 @@ export const CommentList = React.memo(function CommentList(props: {
 
   return (
     <StyledCommentList>
-      {(props.isPreview ? list.slice(0, 1) : list).map((group, i) => (
+      {groups.map((group, i) => (
         <CommentGroup
           key={i}
           group={group}

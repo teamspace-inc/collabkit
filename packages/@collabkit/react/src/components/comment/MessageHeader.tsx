@@ -3,9 +3,8 @@ import { formatRelative } from 'date-fns';
 import React from 'react';
 import { messageHeaderStyles } from '@collabkit/theme';
 
-export const Name = styled('div', messageHeaderStyles.name);
-export const StyledMessageTimestamp = styled('span', messageHeaderStyles.timestamp);
-export const StyledMessage = styled('div', messageHeaderStyles.message);
+const Name = styled('div', messageHeaderStyles.name);
+const StyledMessageTimestamp = styled('span', messageHeaderStyles.timestamp);
 
 export function MessageHeader(props: { name: string; createdAt: number }) {
   return (

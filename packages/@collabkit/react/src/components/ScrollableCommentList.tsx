@@ -1,5 +1,11 @@
 import { useCallback, useEffect, useRef } from 'react';
-import ScrollArea from './ScrollArea';
+import {
+  ScrollAreaCorner,
+  ScrollAreaRoot,
+  ScrollAreaScrollbar,
+  ScrollAreaThumb,
+  ScrollAreaViewport,
+} from './ScrollArea';
 import React from 'react';
 import { Profile, Timeline } from '../constants';
 import equal from 'fast-deep-equal';
@@ -44,8 +50,8 @@ export const ScrollableCommentList = React.memo(function ScrollableCommentList(p
   }
 
   return (
-    <ScrollArea.Root ref={rootRef}>
-      <ScrollArea.Viewport onScroll={handleScroll} ref={scrollRef}>
+    <ScrollAreaRoot ref={rootRef}>
+      <ScrollAreaViewport onScroll={handleScroll} ref={scrollRef}>
         <CommentList
           isTyping={props.isTyping}
           profiles={profiles}
@@ -54,13 +60,13 @@ export const ScrollableCommentList = React.memo(function ScrollableCommentList(p
           workspaceId={workspaceId}
           isPreview={props.isPreview}
           timeline={timeline}
-        ></CommentList>
-      </ScrollArea.Viewport>
-      <ScrollArea.Scrollbar orientation="vertical">
-        <ScrollArea.Thumb />
-      </ScrollArea.Scrollbar>
-      <ScrollArea.Corner />
-    </ScrollArea.Root>
+        />
+      </ScrollAreaViewport>
+      <ScrollAreaScrollbar orientation="vertical">
+        <ScrollAreaThumb />
+      </ScrollAreaScrollbar>
+      <ScrollAreaCorner />
+    </ScrollAreaRoot>
   );
 },
 equal);

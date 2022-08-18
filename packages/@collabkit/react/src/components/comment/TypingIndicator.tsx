@@ -1,8 +1,7 @@
 import React from 'react';
 import { styled } from '@stitches/react';
 import { Profile } from '../../constants';
-import { StyledCommentContainer } from '../Comment';
-import { StyledMessage } from './MessageHeader';
+import { StyledCommentContainer, StyledCommentMessage } from '../Comment';
 import { typingIndicatorStyles } from '@collabkit/theme';
 
 // renders a list of users who are
@@ -33,11 +32,11 @@ function TypingIndicator(props: { profile: Profile }) {
   return (
     <StyledCommentContainer>
       <div style={{ display: 'flex', flexDirection: 'column', marginLeft: 32 }}>
-        <StyledMessage>
+        <StyledCommentMessage>
           <StyledIsTypingText>
             <span>{props.profile.name || props.profile.email}</span> is typing...
           </StyledIsTypingText>
-        </StyledMessage>
+        </StyledCommentMessage>
       </div>
     </StyledCommentContainer>
   );

@@ -7,7 +7,6 @@ import { HStack } from './UIKit';
 import { TargetContext } from './Target';
 import { isSameComment } from '../utils/isSameComment';
 import { useApp } from '../hooks/useApp';
-import { StyledMessage } from './comment/MessageHeader';
 // import { MessageToolbar } from './comment/MessageToolbar';
 import { ReactionPicker } from './comment/ReactionPicker';
 // import { SystemBody } from './comment/SystemBody';
@@ -17,8 +16,10 @@ import reactStringReplace from 'react-string-replace';
 import { styled } from '@stitches/react';
 import { commentStyles } from '@collabkit/theme';
 
-const StyledCommentMessage = styled(StyledMessage, commentStyles.message);
+export const StyledCommentMessage = styled('div', commentStyles.message);
 export const StyledCommentContainer = styled('div', commentStyles.container);
+const StyledCommentBody = styled('span', commentStyles.body);
+const StyledCommentBodyEllipsis = styled('span', commentStyles.bodyEllipsis);
 
 function isElementInViewport(el: Element) {
   var rect = el.getBoundingClientRect();
@@ -120,7 +121,7 @@ export function Comment(props: {
 
   return typeof props.profile === 'object' ? (
     <StyledCommentContainer
-      style={props.isPreview ? { overflow: 'hidden' } : {}}
+      isPreview={props.isPreview}
       // onMouseOver={(e) => events.onMouseOver(e, { target })}
       // onMouseOut={(e) => events.onMouseOver(e, { target })}
       ref={ref}
@@ -134,26 +135,10 @@ export function Comment(props: {
               createdAt={+props.timestamp}
             />
           )}
-          <span
-            ref={bodyRef}
-            style={
-              props.isPreview ? { position: 'relative', maxHeight: 54, display: 'inline-flex' } : {}
-            }
-          >
+          <StyledCommentBody ref={bodyRef} isPreview={props.isPreview}>
             {body}
-            {isOverflowing ? (
-              <span
-                style={{
-                  position: 'absolute',
-                  right: '0ch',
-                  bottom: 0,
-                  background: theme.colors.neutral1.value.toString(),
-                }}
-              >
-                {'...'}
-              </span>
-            ) : null}
-          </span>
+            {isOverflowing ? <StyledCommentBodyEllipsis>{'...'}</StyledCommentBodyEllipsis> : null}
+          </StyledCommentBody>
           {/* <Reactions reactions={props.reactions} /> */}
         </StyledCommentMessage>
         {/* <MessageToolbar isVisible={isHovering} /> */}

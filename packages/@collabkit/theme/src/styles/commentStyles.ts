@@ -1,6 +1,18 @@
 import { css } from '@stitches/react';
 
 export const message = css({
+  display: 'flex',
+  position: 'relative',
+  flexDirection: 'column',
+  flex: 0,
+  fontSize: '$fontSize$2',
+  lineHeight: '$lineHeights$0',
+  color: '$colors$primaryText',
+  wordBreak: 'break-word',
+  overflowWrap: 'break-word',
+  gap: '4px',
+  borderRadius: '$radii$1',
+
   variants: {
     // indents the comment
     // to account for a profile
@@ -21,4 +33,31 @@ export const container = css({
   position: 'relative',
   maxWidth: 'calc(100% - $padding$1)',
   padding: '4px $padding$2',
+
+  variants: {
+    isPreview: {
+      true: {
+        overflow: 'hidden',
+      },
+    },
+  },
+});
+
+export const body = css({
+  variants: {
+    isPreview: {
+      true: {
+        position: 'relative',
+        maxHeight: 54,
+        display: 'inline-flex',
+      },
+    },
+  },
+});
+
+export const bodyEllipsis = css({
+  position: 'absolute',
+  right: '0ch',
+  bottom: 0,
+  background: '$colors$neutral1',
 });
