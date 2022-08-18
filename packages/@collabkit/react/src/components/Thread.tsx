@@ -1,5 +1,4 @@
 import { FlexCenter } from './UIKit';
-import { IconContext } from 'phosphor-react';
 import React, { useState } from 'react';
 import { Composer } from './Composer';
 import { ScrollableCommentList } from './ScrollableCommentList';
@@ -74,37 +73,35 @@ export function Thread(props: {
         ) : null}
         {!isConnected ? <FlexCenter /> : null}
         {isConnected && isEmpty ? <EmptyState /> : null}
-        <IconContext.Provider value={{ size: '20px' }}>
-          {!isEmpty && timeline && workspaceId && (
-            <ScrollableCommentList
-              isTyping={workspace?.composers[threadId]?.isTyping}
-              profiles={profiles}
-              threadId={props.threadId}
-              userId={userId}
-              workspaceId={workspaceId}
-              // composerHeight={composerHeight}
-              // headerHeight={0}
-              timeline={timeline}
-            />
-          )}
-          {workspaceId && workspace !== null ? (
-            <Composer
-              style={{ paddingBottom: '12px' }}
-              placeholder={
-                props.composerPrompt != null
-                  ? props.composerPrompt
-                  : isEmpty
-                  ? 'Add a comment'
-                  : 'Reply to this comment'
-              }
-              workspaceId={workspaceId}
-              onHeightChange={setComposerHeight}
-              profile={profiles[userId]}
-              threadId={props.threadId}
-              isFloating={false}
-            />
-          ) : null}
-        </IconContext.Provider>
+        {!isEmpty && timeline && workspaceId && (
+          <ScrollableCommentList
+            isTyping={workspace?.composers[threadId]?.isTyping}
+            profiles={profiles}
+            threadId={props.threadId}
+            userId={userId}
+            workspaceId={workspaceId}
+            // composerHeight={composerHeight}
+            // headerHeight={0}
+            timeline={timeline}
+          />
+        )}
+        {workspaceId && workspace !== null ? (
+          <Composer
+            style={{ paddingBottom: '12px' }}
+            placeholder={
+              props.composerPrompt != null
+                ? props.composerPrompt
+                : isEmpty
+                ? 'Add a comment'
+                : 'Reply to this comment'
+            }
+            workspaceId={workspaceId}
+            onHeightChange={setComposerHeight}
+            profile={profiles[userId]}
+            threadId={props.threadId}
+            isFloating={false}
+          />
+        ) : null}
       </StyledThread>
     </StyledThreadContainer>
   );

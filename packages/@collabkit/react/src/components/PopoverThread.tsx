@@ -1,5 +1,4 @@
 import { styled } from '@stitches/react';
-import { IconContext } from 'phosphor-react';
 import React, { useRef, useEffect, useState } from 'react';
 import { Composer } from './Composer';
 import { CommentList } from './CommentList';
@@ -68,61 +67,59 @@ export function PopoverThread(props: {
 
   return (
     <StyledPopoverThread data-collabkit-internal="true" style={props.style} ref={ref}>
-      <IconContext.Provider value={{ size: '20px' }}>
-        {!isEmpty && !props.isPreview && target && (
-          <ThreadHeader isResolved={isResolved} target={target} />
-        )}
-        {!isEmpty && timeline && (
-          // nc: there's something causing a scrollbar to appear
-          // without the extra 20px of height. need to investigate
-          // furtheer.
-          <div ref={scrollContainerRef}>
-            {!props.isPreview && userId && workspaceId ? (
-              <ScrollableCommentList
-                isTyping={workspace?.composers[props.threadId]?.isTyping}
-                profiles={profiles}
-                threadId={props.threadId}
-                userId={userId}
-                workspaceId={workspaceId}
-                isPreview={props.isPreview}
-                timeline={timeline}
-              />
-            ) : userId && workspaceId ? (
-              <CommentList
-                isTyping={workspace?.composers[props.threadId]?.isTyping}
-                profiles={profiles}
-                threadId={props.threadId}
-                userId={userId}
-                workspaceId={workspaceId}
-                isPreview={props.isPreview}
-                timeline={timeline}
-              />
-            ) : null}
-          </div>
-        )}
-        {props.isPreview ? null : workspaceId && userId ? (
-          <Composer
-            placeholder={isEmpty ? 'Write a comment' : 'Reply to this comment'}
-            style={{
-              borderRadius: theme.radii['2'].value.toString(),
-              paddingBottom: '12px',
-              ...(isEmpty
-                ? {}
-                : {
-                    borderTopLeftRadius: 0,
-                    borderTopRightRadius: 0,
-                  }),
-            }}
-            autoFocus={true}
-            workspaceId={workspaceId}
-            profile={profiles[userId]}
-            threadId={props.threadId}
-            isFloating={false}
-            hideAvatar={isEmpty}
-            onHeightChange={(height) => setComposerHeight(height)}
-          />
-        ) : null}
-      </IconContext.Provider>
+      {!isEmpty && !props.isPreview && target && (
+        <ThreadHeader isResolved={isResolved} target={target} />
+      )}
+      {!isEmpty && timeline && (
+        // nc: there's something causing a scrollbar to appear
+        // without the extra 20px of height. need to investigate
+        // furtheer.
+        <div ref={scrollContainerRef}>
+          {!props.isPreview && userId && workspaceId ? (
+            <ScrollableCommentList
+              isTyping={workspace?.composers[props.threadId]?.isTyping}
+              profiles={profiles}
+              threadId={props.threadId}
+              userId={userId}
+              workspaceId={workspaceId}
+              isPreview={props.isPreview}
+              timeline={timeline}
+            />
+          ) : userId && workspaceId ? (
+            <CommentList
+              isTyping={workspace?.composers[props.threadId]?.isTyping}
+              profiles={profiles}
+              threadId={props.threadId}
+              userId={userId}
+              workspaceId={workspaceId}
+              isPreview={props.isPreview}
+              timeline={timeline}
+            />
+          ) : null}
+        </div>
+      )}
+      {props.isPreview ? null : workspaceId && userId ? (
+        <Composer
+          placeholder={isEmpty ? 'Write a comment' : 'Reply to this comment'}
+          style={{
+            borderRadius: theme.radii['2'].value.toString(),
+            paddingBottom: '12px',
+            ...(isEmpty
+              ? {}
+              : {
+                  borderTopLeftRadius: 0,
+                  borderTopRightRadius: 0,
+                }),
+          }}
+          autoFocus={true}
+          workspaceId={workspaceId}
+          profile={profiles[userId]}
+          threadId={props.threadId}
+          isFloating={false}
+          hideAvatar={isEmpty}
+          onHeightChange={(height) => setComposerHeight(height)}
+        />
+      ) : null}
     </StyledPopoverThread>
   );
 }
