@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { nextTick, onMounted, ref } from 'vue';
 import type { Profile, Timeline } from '@collabkit/core';
 import {
   ScrollAreaRoot,
@@ -24,7 +24,9 @@ const viewport = ref<{ element: HTMLDivElement } | null>(null);
 onMounted(async () => {
   if (viewport.value) {
     const { element } = viewport.value;
-    element.scrollTop = element.scrollHeight;
+    nextTick(() => {
+      element.scrollTop = element.scrollHeight;
+    });
   }
 });
 </script>
