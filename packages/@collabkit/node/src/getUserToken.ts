@@ -1,4 +1,5 @@
 import { UserProps, WorkspaceProps } from '@collabkit/core';
+import fetch from 'node-fetch';
 
 export async function getUserToken(props: {
   appId: string;
@@ -35,7 +36,7 @@ export async function getUserToken(props: {
   });
 
   if (response.ok) {
-    return await response.json();
+    return (await response.json()) as any;
   }
 
   return null;
