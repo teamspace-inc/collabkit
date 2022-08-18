@@ -1,12 +1,13 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react';
+import merge from 'lodash.merge';
+import { createThemes, Theme } from '@collabkit/theme';
+import { type DeepPartial } from '@collabkit/core';
 import { actions } from '../actions';
 import { ConfigProps, SecureProps, Store, UnsecureProps } from '../constants';
 import { Events, createEvents } from '../events';
 import { AppContext } from '../hooks/useAppContext';
 import { createStore } from '../store';
 import { FirebaseSync } from '../sync';
-import { createThemes, DeepPartial, Theme } from './UIKit';
-import merge from 'lodash.merge';
 
 export type OtherProps = {
   children: React.ReactNode;

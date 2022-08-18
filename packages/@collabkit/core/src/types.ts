@@ -4,6 +4,12 @@ import type { SyncAdapter } from './sync';
 
 export * as Sync from './sync';
 
+export type DeepPartial<T> = T extends object
+  ? {
+      [P in keyof T]?: DeepPartial<T[P]>;
+    }
+  : T;
+
 export { SyncAdapter };
 
 export type SecureProps = {
