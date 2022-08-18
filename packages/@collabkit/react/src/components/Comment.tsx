@@ -13,13 +13,12 @@ import { ReactionPicker } from './comment/ReactionPicker';
 import { MessageHeader } from './comment/MessageHeader';
 // import { hasReactions, Reactions } from './comment/Reactions';
 import reactStringReplace from 'react-string-replace';
-import { styled } from '@stitches/react';
-import { commentStyles } from '@collabkit/theme';
-
-export const StyledCommentMessage = styled('div', commentStyles.message);
-export const StyledCommentContainer = styled('div', commentStyles.container);
-const StyledCommentBody = styled('span', commentStyles.body);
-const StyledCommentBodyEllipsis = styled('span', commentStyles.bodyEllipsis);
+import {
+  StyledCommentContainer,
+  StyledCommentMessage,
+  StyledCommentBody,
+  StyledCommentBodyEllipsis,
+} from './comment/StyledComment';
 
 function isElementInViewport(el: Element) {
   var rect = el.getBoundingClientRect();

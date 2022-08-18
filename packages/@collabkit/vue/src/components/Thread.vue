@@ -5,7 +5,6 @@ import Composer from './Composer.vue';
 import EmptyState from './thread/EmptyState.vue';
 import ScrollableCommentList from './ScrollableCommentList.vue';
 import { styled } from './styled';
-import { provide } from 'vue';
 
 const StyledThreadContainer = styled('div', threadStyles.container);
 const StyledThread = styled('div', threadStyles.thread);

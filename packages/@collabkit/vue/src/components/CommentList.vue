@@ -3,7 +3,7 @@ import { type Profile, type Timeline, timelineUtils } from '@collabkit/core';
 import { commentListStyles } from '@collabkit/theme';
 import { computed } from '@vue/reactivity';
 import CommentGroup from './CommentGroup.vue';
-import CurrentlyTyping from './comment/TypingIndicator.vue';
+import CurrentlyTyping from './comment/CurrentlyTyping.vue';
 import { styled } from './styled';
 
 const StyledCommentList = styled('div', commentListStyles.list);

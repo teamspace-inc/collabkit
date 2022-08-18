@@ -1,43 +1,22 @@
 import React from 'react';
 import { styled } from '@stitches/react';
-import { Profile } from '../../constants';
-import { StyledCommentContainer, StyledCommentMessage } from '../Comment';
 import { typingIndicatorStyles } from '@collabkit/theme';
-
-// renders a list of users who are
-// typing at the moment
-export function CurrentlyTyping(props: {
-  profiles: { [userId: string]: Profile };
-  userId: string;
-  isTyping?: { [userId: string]: boolean };
-}) {
-  const { profiles, isTyping, userId } = props;
-  return isTyping ? (
-    <>
-      {Object.keys(isTyping).map((endUserId) =>
-        // skip current user
-        endUserId !== userId ? (
-          isTyping?.[endUserId] === true ? (
-            <TypingIndicator key={`typing-${endUserId}`} profile={profiles[endUserId]} />
-          ) : null
-        ) : null
-      )}
-    </>
-  ) : null;
-}
+import { Profile } from '../../constants';
+import { StyledCommentContainer, StyledCommentMessage } from './StyledComment';
+import { HStack } from '../UIKit';
 
 const StyledIsTypingText = styled('span', typingIndicatorStyles.typingText);
 
-function TypingIndicator(props: { profile: Profile }) {
+export function TypingIndicator(props: { profile: Profile }) {
   return (
     <StyledCommentContainer>
-      <div style={{ display: 'flex', flexDirection: 'column', marginLeft: 32 }}>
-        <StyledCommentMessage>
+      <HStack>
+        <StyledCommentMessage profileIndent>
           <StyledIsTypingText>
             <span>{props.profile.name || props.profile.email}</span> is typing...
           </StyledIsTypingText>
         </StyledCommentMessage>
-      </div>
+      </HStack>
     </StyledCommentContainer>
   );
 }

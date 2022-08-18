@@ -3,7 +3,7 @@ import React from 'react';
 import { Profile, Timeline } from '../constants';
 import { styled } from '@stitches/react';
 import equal from 'fast-deep-equal';
-import { CurrentlyTyping } from './comment/TypingIndicator';
+import { CurrentlyTyping } from './comment/CurrentlyTyping';
 import { useTimeline } from '../hooks/useTimeline';
 import { CommentGroup } from './CommentGroup';
 import { commentListStyles } from '@collabkit/theme';
