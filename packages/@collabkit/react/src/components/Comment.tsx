@@ -79,7 +79,7 @@ export function Comment(props: {
 }) {
   const ref = useRef(null);
   const bodyRef = useRef(null);
-  const { store, events, theme } = useApp();
+  const { store, events } = useApp();
   const { reactingId } = useSnapshot(store);
   const { target } = useContext(TargetContext);
 

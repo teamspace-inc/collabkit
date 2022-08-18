@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 import { Profile, Target } from '../constants';
-import { EditorState, LexicalEditor } from 'lexical';
+import { LexicalEditor } from 'lexical';
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import { PlainTextPlugin } from '@lexical/react/LexicalPlainTextPlugin';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable';
@@ -42,8 +42,6 @@ export function createEditorConfig() {
     onError,
   };
 }
-
-type DeepWriteable<T> = { -readonly [P in keyof T]: DeepWriteable<T[P]> };
 
 export function Composer(props: {
   profile?: Profile;

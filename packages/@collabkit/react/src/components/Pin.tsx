@@ -3,10 +3,9 @@ import { Avatar } from './Avatar';
 import { HStack, VStack } from './UIKit';
 import { useApp } from '../hooks/useApp';
 import { useSnapshot } from 'valtio';
-import { PinTarget, Profile } from '../constants';
+import { Profile } from '../constants';
 import { Badge } from './Badge';
 import { PopoverThread } from './PopoverThread';
-import { useHasUnread } from '../hooks/useHasUnread';
 import {
   autoPlacement,
   offset,
@@ -32,11 +31,11 @@ export function PurePin(props: {
   isTyping?: { [userId: string]: boolean };
   userId: string;
 }) {
-  const isSomeoneTyping = props.isTyping
-    ? Object.keys(props.isTyping)
-        .filter((key) => key !== props.userId)
-        .find((key) => props.isTyping?.[key])
-    : null;
+  // const isSomeoneTyping = props.isTyping
+  //   ? Object.keys(props.isTyping)
+  //       .filter((key) => key !== props.userId)
+  //       .find((key) => props.isTyping?.[key])
+  //   : null;
   return (
     <StyledPin onPointerDown={props.onPointerDown}>
       {props.hasUnread ? <Badge size={6} /> : null}

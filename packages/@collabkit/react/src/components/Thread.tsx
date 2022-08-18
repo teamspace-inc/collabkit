@@ -1,5 +1,5 @@
 import { FlexCenter } from './UIKit';
-import React, { useState } from 'react';
+import React from 'react';
 import { Composer } from './Composer';
 import { ScrollableCommentList } from './ScrollableCommentList';
 import { useApp } from '../hooks/useApp';
@@ -32,7 +32,7 @@ export function Thread(props: {
 
   const workspace = workspaceId ? workspaces[workspaceId] : null;
 
-  const { profiles, timeline, isConnected, isEmpty, ref, reactingId } = useThread({
+  const { profiles, timeline, isConnected, isEmpty, ref } = useThread({
     ...props,
     store,
     workspaceId,

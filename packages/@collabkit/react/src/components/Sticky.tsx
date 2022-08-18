@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef } from 'react';
+import React, { useLayoutEffect, useRef } from 'react';
 import { styled } from '@stitches/react';
 import { autoUpdate, computePosition, offset } from '@floating-ui/dom';
 import { stickyStyles } from '@collabkit/theme';
