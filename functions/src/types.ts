@@ -1,4 +1,4 @@
-interface Org {
+export interface Org {
   name: string;
   admins: {
     [uid: string]: true;
@@ -6,13 +6,13 @@ interface Org {
   createdAt: object | number;
 }
 
-interface OrgApps {
+export interface OrgApps {
   [orgId: string]: {
     [appId: string]: true;
   };
 }
 
-interface App {
+export interface App {
   name: string;
   keys: {
     [key: string]: true;

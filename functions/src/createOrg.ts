@@ -1,6 +1,7 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 import * as cors from 'cors';
+import { App, Org, OrgApps } from './types';
 const corsHandler = cors.default({ origin: true });
 
 async function generateId() {
