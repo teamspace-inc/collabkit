@@ -1,4 +1,4 @@
-import { UserProps, WorkspaceProps } from '@collabkit/core';
+import { OptionalUserProps, OptionalWorkspaceProps } from '@collabkit/core';
 import fetch from 'node-fetch';
 
 export async function getUserToken(props: {
@@ -6,8 +6,8 @@ export async function getUserToken(props: {
   apiKey: string;
   workspaceId: string;
   userId: string;
-  user: UserProps;
-  workspace: WorkspaceProps;
+  user: OptionalUserProps;
+  workspace: OptionalWorkspaceProps;
 }): Promise<
   | {
       status: 201;
@@ -37,6 +37,8 @@ export async function getUserToken(props: {
 
   if (response.ok) {
     return (await response.json()) as any;
+  } else {
+    console.error('Failed to getUserToken', response.status, await response.text());
   }
 
   return null;

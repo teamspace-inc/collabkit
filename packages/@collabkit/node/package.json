@@ -4,10 +4,17 @@
   "private": true,
   "module": "src/index.ts",
   "scripts": {
-    "clean": "rimraf dist types *.tsbuildinfo"
+    "clean": "rimraf dist types *.tsbuildinfo",
+    "test": "jest"
   },
   "dependencies": {
     "@collabkit/core": "0.0.0",
-    "node-fetch": "^3.2.10"
+    "node-fetch": "2"
+  },
+  "devDependencies": {
+    "@types/jest": "^28.1.7",
+    "@types/node-fetch": "^2.6.2",
+    "jest": "^28.1.3",
+    "ts-jest": "^28.0.8"
   }
 }

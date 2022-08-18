@@ -14,6 +14,9 @@ export type SecureProps = {
 export type UserProps = {
   id: string;
   userId?: string;
+} & OptionalUserProps;
+
+export type OptionalUserProps = {
   name?: string | null;
   email?: string | null;
   avatar?: string | null;
@@ -21,6 +24,9 @@ export type UserProps = {
 
 export type WorkspaceProps = {
   id: string;
+} & OptionalWorkspaceProps;
+
+export type OptionalWorkspaceProps = {
   name?: string | null;
 };
 
