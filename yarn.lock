@@ -1337,6 +1337,13 @@
     unist-util-visit "^2.0.0"
     unist-util-visit-parents "^3.0.0"
 
+"@collabkit/node@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@collabkit/node/-/node-0.1.0.tgz#5e5e49d8ecc05612bd507975947ef60efb36a132"
+  integrity sha512-tcphitS0ou9qmfWdnQchksq1GmPYZgjG4pD7R85l1qV8Zx31anKKGQ9cVUYCbs1yPt/9wgvl0h+W3/DePpk3+g==
+  dependencies:
+    node-fetch "2"
+
 "@cush/relative@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@cush/relative/-/relative-1.0.0.tgz#8cd1769bf9bde3bb27dac356b1bc94af40f6cc16"

@@ -3,6 +3,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import styles from '../styles/Home.module.css';
 import * as CollabKit from '../../../packages/@collabkit/react/src/index';
+import { getUserToken } from '@collabkit/node';
 
 export async function getServerSideProps(context: any) {
   console.log('SSR props');
@@ -17,26 +18,18 @@ export async function getServerSideProps(context: any) {
         name: 'Alice',
         email: 'alice@example.com',
       },
+      workspace: {
+        name: 'Default',
+      },
     };
 
-    const response = await fetch(`https://token.collabkit.dev`, {
-      method: 'POST',
-      body: JSON.stringify(credentials),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    if (response.ok) {
-      const json = await response.json();
-      if (json.status === 200 || json.status === 201) {
-        console.log(json.data);
-        return { props: { ...json.data } };
-      } else {
-        console.error(json);
-      }
-    } else {
-      console.error('Failed to generateToken', response.status, await response.text());
+    const response = await getUserToken(credentials);
+    if (response?.status === 201) {
+      return {
+        props: {
+          ...response.data,
+        },
+      };
     }
   } catch (e) {
     console.error('Failed to generateToken', e);

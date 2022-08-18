@@ -16,7 +16,7 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
-      "@collabkit/*": ["packages/@collabkit/*/src"]
+      // "@collabkit/*": ["packages/@collabkit/*/src"]
     }
   },
 
