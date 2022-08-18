@@ -30,8 +30,6 @@ export function Thread(props: {
 
   const { userId, workspaceId, workspaces } = useSnapshot(store);
 
-  const [composerHeight, setComposerHeight] = useState(0);
-
   const workspace = workspaceId ? workspaces[workspaceId] : null;
 
   const { profiles, timeline, isConnected, isEmpty, ref, reactingId } = useThread({
@@ -80,8 +78,6 @@ export function Thread(props: {
             threadId={props.threadId}
             userId={userId}
             workspaceId={workspaceId}
-            // composerHeight={composerHeight}
-            // headerHeight={0}
             timeline={timeline}
           />
         )}
@@ -96,7 +92,6 @@ export function Thread(props: {
                 : 'Reply to this comment'
             }
             workspaceId={workspaceId}
-            onHeightChange={setComposerHeight}
             profile={profiles[userId]}
             threadId={props.threadId}
             isFloating={false}

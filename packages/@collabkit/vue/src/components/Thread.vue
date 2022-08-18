@@ -21,8 +21,6 @@ const props = defineProps<{
   onCloseButtonClick?: (e: React.MouseEvent) => void;
 }>();
 
-function setComposerHeight() {}
-
 const workspaceId = 'acme';
 const workspace: Workspace = {
   profiles: {},
@@ -69,7 +67,6 @@ const profile = profiles[userId];
         :workspace="workspace"
         :placeholder="placeholder"
         :workspaceId="workspaceId"
-        @heightChange="setComposerHeight"
         :profile="profile"
         :threadId="threadId"
         :isFloating="false"

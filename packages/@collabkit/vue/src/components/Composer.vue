@@ -9,7 +9,6 @@ import {
   LexicalPlainTextPlugin,
 } from 'lexical-vue';
 import type { EditorState } from 'lexical';
-import { $getRoot } from 'lexical';
 import type { Profile, Workspace } from '@collabkit/core';
 import { composerStyles } from '@collabkit/theme';
 import Avatar from './Avatar.vue';
@@ -26,10 +25,6 @@ defineProps<{
   placeholder: string;
   autoFocus?: boolean;
   hideAvatar?: boolean;
-}>();
-
-defineEmits<{
-  (e: 'heightChange', height: number): void;
 }>();
 
 const StyledContentEditable = styled(LexicalContentEditable, composerStyles.contentEditable);

@@ -28,7 +28,6 @@ export const ScrollableCommentList = React.memo(function ScrollableCommentList(p
     scrollRef.current?.scrollTo(0, scrollRef.current?.scrollHeight);
   }, [
     messageEvents.length,
-    // props.composerHeight,
     // did react to last message
     reactionEvents[reactionEvents.length - 1]?.parentId ===
       messageEvents[messageEvents.length - 1]?.id,
