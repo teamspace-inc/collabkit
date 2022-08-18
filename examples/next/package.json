@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@collabkit/node": "^0.1.0",
+    "@collabkit/react": "^0.1.7",
     "next": "12.2.4",
     "react": "18.2.0",
     "react-dom": "18.2.0"
