@@ -61,8 +61,6 @@ export function Composer(props: {
   const { workspaces } = useSnapshot(store);
   const workspace = props.workspaceId ? workspaces[props.workspaceId] : null;
 
-  const editorStateRef = useRef<EditorState>();
-
   const target = {
     type: 'composer',
     threadId: props.threadId,
@@ -115,7 +113,6 @@ export function Composer(props: {
             />
             <OnChangePlugin
               onChange={(editorState) => {
-                editorStateRef.current = editorState;
                 events.onComposerChange(target, editorState);
               }}
             />
