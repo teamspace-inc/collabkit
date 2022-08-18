@@ -1,4 +1,4 @@
-import { createTheme, styled } from '@stitches/react';
+import { createTheme } from '@stitches/react';
 import {
   gray,
   green,
@@ -20,7 +20,6 @@ import {
   grayDark,
   greenDark,
 } from '@radix-ui/colors';
-import merge from 'lodash.merge';
 
 export const PIN_SIZE = 28;
 
@@ -189,18 +188,35 @@ export function createThemes(customTheme?: DeepPartial<Theme>) {
   };
 
   let baseTheme = {
-    fontSize,
-    lineHeights,
-    fontWeights,
-    radii,
-    padding,
-    sizes,
-    space,
+    fontSize: {
+      ...fontSize,
+      ...customTheme?.fontSize,
+    },
+    lineHeights: {
+      ...lineHeights,
+      ...customTheme?.lineHeights,
+    },
+    fontWeights: {
+      ...fontWeights,
+      ...customTheme?.fontWeights,
+    },
+    radii: {
+      ...radii,
+      ...customTheme?.radii,
+    },
+    padding: {
+      ...padding,
+      ...customTheme?.padding,
+    },
+    sizes: {
+      ...sizes,
+      ...customTheme?.sizes,
+    },
+    space: {
+      ...space,
+      ...customTheme?.space,
+    },
   };
-
-  if (customTheme) {
-    merge(baseTheme, customTheme);
-  }
 
   const darkTheme = createTheme({
     ...baseTheme,
@@ -576,22 +592,4 @@ export const themes = {
   brownTheme,
 };
 
-export const HStack = styled('div', {
-  display: 'flex',
-  flexDirection: 'column',
-});
-
-export const VStack = styled('div', {
-  display: 'flex',
-  flexDirection: 'row',
-});
-
 export const themeIds = Object.keys(themes) as (keyof typeof themes)[];
-
-export const FlexCenter = styled('div', {
-  display: 'flex',
-  flex: 1,
-  justifyContent: 'center',
-  alignItems: 'center',
-  flexDirection: 'column',
-});

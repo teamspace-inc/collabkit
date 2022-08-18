@@ -1,5 +1,4 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react';
-import merge from 'lodash.merge';
 import { createThemes, Theme } from '@collabkit/theme';
 import { type DeepPartial } from '@collabkit/core';
 import { actions } from '../actions';
@@ -59,17 +58,17 @@ export function CollabKitProvider({
     return null;
   }
 
-  const baseTheme = themes[preferredColorScheme];
+  const currentTheme = themes[preferredColorScheme];
 
   return (
     <AppContext.Provider
       value={{
         store: context.store,
         events: context.events,
-        theme: theme ? merge(baseTheme, theme) : baseTheme,
+        theme: currentTheme,
       }}
     >
-      <span className={baseTheme.className.toString()}>{children}</span>
+      <span className={currentTheme.className.toString()}>{children}</span>
     </AppContext.Provider>
   );
 }
