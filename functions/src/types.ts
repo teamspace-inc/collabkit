@@ -22,3 +22,13 @@ interface App {
   };
   mode: 'UNSECURED' | 'SECURED';
 }
+
+export type UserProps = {
+  name?: string | null;
+  email?: string | null;
+  avatar?: string | null;
+};
+
+export type WorkspaceProps = {
+  name?: string | null;
+};

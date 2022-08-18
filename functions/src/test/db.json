@@ -1,0 +1,28 @@
+{
+  "apps": {
+    "h9UlqR5HPxigSOoj--yL3": {
+      "admins": {
+        "FSYngynSD1QA1c8LqYGWq6YH9vf2": true
+      },
+      "emailBatchDelayMs": 300000,
+      "isEmailDisabled": true,
+      "keys": {
+        "ea7Q5CcwNTPYkZUVy9J5E": true
+      },
+      "mode": "UNSECURED",
+      "name": "Test App"
+    },
+    "QLVIR4HE-wvV_mTjoMJP5": {
+      "admins": {
+        "FSYngynSD1QA1c8LqYGWq6YH9vf2": true
+      },
+      "emailBatchDelayMs": 300000,
+      "isEmailDisabled": true,
+      "keys": {
+        "P7R7nNkFvykMKK17G4URU": true
+      },
+      "mode": "SECURED",
+      "name": "Test App (secure-mode)"
+    }
+  }
+}
