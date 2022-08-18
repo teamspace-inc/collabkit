@@ -7,6 +7,10 @@
     "clean": "rimraf dist types *.tsbuildinfo",
     "test": "jest"
   },
+  "files": [
+    "src",
+    "tsconfig.json"
+  ],
   "dependencies": {
     "@collabkit/core": "0.0.0",
     "node-fetch": "2"
