@@ -15,7 +15,10 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "baseUrl": "../../"
+    "baseUrl": "../../",
+    "paths": {
+      "@collabkit/*": ["packages/@collabkit/*/src"]
+    }
   },
   "include": ["src"]
 }
