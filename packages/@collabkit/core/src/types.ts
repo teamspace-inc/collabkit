@@ -4,6 +4,11 @@ import type { SyncAdapter } from './sync';
 
 export * as Sync from './sync';
 
+export type ThreadInfo = {
+  name?: string | null;
+  url?: string | null;
+};
+
 export type DeepPartial<T> = T extends object
   ? {
       [P in keyof T]?: DeepPartial<T[P]>;
@@ -231,8 +236,8 @@ export interface Workspace {
   threadInfo: { [threadId: string]: { name?: string; url?: string } };
 }
 
-export interface Store {
-  sync: SyncAdapter;
+export interface UnconfiguredStore {
+  sync: null | SyncAdapter;
   isReadOnly: boolean;
   isConnected: boolean;
   isSignedIn: boolean;
@@ -246,7 +251,7 @@ export interface Store {
   reactingId: null | Target;
   composingId: null | ThreadTarget;
   viewingId: null | Target;
-  config: Config;
+  config: null | Config;
   profiles: { [profileId: string]: Profile };
   workspaces: {
     [workspaceId: string]: Workspace;
@@ -254,6 +259,11 @@ export interface Store {
   appState: 'blank' | 'config' | 'ready';
   uiState: 'idle' | 'selecting' | 'continuous';
   subs: Subscriptions;
+}
+
+export interface Store extends UnconfiguredStore {
+  sync: SyncAdapter;
+  config: Config;
 }
 
 export type Unsubscribe = () => void;

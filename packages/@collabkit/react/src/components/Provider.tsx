@@ -1,12 +1,12 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { createThemes, Theme } from '@collabkit/theme';
 import { type DeepPartial } from '@collabkit/core';
-import { actions } from '../actions';
-import { ConfigProps, SecureProps, Store, UnsecureProps } from '../constants';
+import { actions } from '@collabkit/client';
+import { ConfigProps, SecureProps, Store, UnsecureProps } from '@collabkit/core';
 import { Events, createEvents } from '../events';
 import { AppContext } from '../hooks/useAppContext';
-import { createStore } from '../store';
-import { FirebaseSync } from '../sync';
+import { createValtioStore } from '../store';
+import { FirebaseSync } from '@collabkit/client';
 
 export type OtherProps = {
   children: React.ReactNode;
@@ -34,7 +34,7 @@ export function CollabKitProvider({
 
   useLayoutEffect(() => {
     const sync = new FirebaseSync();
-    const store = config._demoStore ?? createStore(config, sync);
+    const store = config._demoStore ?? createValtioStore(config, sync);
     const events = createEvents(store);
     actions.monitorConnection(store, events);
     setContext({ store, events });

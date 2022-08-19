@@ -2,7 +2,7 @@ import { inboxStyles } from '@collabkit/theme';
 import { styled } from '@stitches/react';
 import React, { useEffect } from 'react';
 import { useSnapshot } from 'valtio';
-import { actions } from '../actions';
+import { actions } from '@collabkit/client';
 import { useApp } from '../hooks/useApp';
 
 const StyledInbox = styled('div', inboxStyles.inbox);

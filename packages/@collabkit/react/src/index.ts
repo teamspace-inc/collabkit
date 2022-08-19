@@ -1,3 +1,4 @@
+import { createWorkspace } from '@collabkit/client';
 import { CollabKitProvider } from './components/Provider';
 import { Debug } from './components/Debug';
 import { Thread } from './components/Thread';
@@ -10,7 +11,7 @@ import { Pin, PurePin } from './components/Pin';
 import { Config, Mention, Store, Subscriptions, Workspace } from './constants';
 import { MentionProps } from './constants';
 import { PopoverThread } from './components/PopoverThread';
-import { createStore, createWorkspace } from './store';
+import { createValtioStore } from './store';
 import { useUnreadCount } from './hooks/public/useUnreadCount';
 
 export {
@@ -28,7 +29,7 @@ export {
   useUnreadCount,
   // pure components just render props passed
   PurePin as PurePin,
-  createStore as internal_createStore,
+  createValtioStore as internal_createStore,
   createWorkspace as internal_createWorkspace,
   type Store,
   type Workspace,
