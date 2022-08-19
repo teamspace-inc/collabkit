@@ -1,5 +1,4 @@
 {
-  "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
     "target": "ESNext",
     "useDefineForClassFields": true,
@@ -20,13 +19,11 @@
     "outDir": "types",
     "emitDeclarationOnly": true,
     "paths": {
-      "@collabkit/client": ["../client/src"],
       "@collabkit/colors": ["../colors/src"],
       "@collabkit/core": ["../core/src"],
       "@collabkit/theme": ["../theme/src"]
     },
     "rootDir": "../../../"
   },
-  "include": ["src", "../client/src", "../colors/src", "../core/src", "../theme/src"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "include": ["src", "../colors/src", "../core/src", "../theme/src"]
 }

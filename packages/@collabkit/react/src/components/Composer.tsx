@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 import { Profile, Target } from '../constants';
-import { LexicalEditor } from 'lexical';
+import { createEditor, LexicalEditor } from 'lexical';
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import { PlainTextPlugin } from '@lexical/react/LexicalPlainTextPlugin';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable';
@@ -17,9 +17,8 @@ import { useApp } from '../hooks/useApp';
 import { SendButton } from './composer/SendButton';
 import { Avatar } from './Avatar';
 import { styled } from '@stitches/react';
-import { initComposer } from '../actions/subscribeThread';
 import { composerStyles } from '@collabkit/theme';
-import { useSnapshot } from 'valtio';
+import { useSnapshot, ref as valtioRef } from 'valtio';
 
 const StyledContentEditable = styled(ContentEditable, composerStyles.contentEditable);
 const Placeholder = styled('div', composerStyles.placeholder);
@@ -34,7 +33,15 @@ function onError(error: any) {
   console.error(error);
 }
 
-export function createEditorConfig() {
+function initComposer() {
+  return {
+    editor: valtioRef(createEditor(createEditorConfig())),
+    $$body: '',
+    isTyping: {},
+  };
+}
+
+function createEditorConfig() {
   return {
     namespace: 'Composer',
     theme: composerStyles.lexicalTheme,

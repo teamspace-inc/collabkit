@@ -1,0 +1,165 @@
+import debounce from 'lodash.debounce';
+
+import type { Store } from '@collabkit/core';
+import { sendMessage } from './sendMessage';
+import { startSelecting } from './startSelecting';
+import { authenticate } from './authenticate';
+import { closeEmojiReactionPicker } from './closeEmojiReactionPicker';
+import { closeThread } from './closeThread';
+import { monitorConnection } from './monitorConnection';
+import { resolveThread } from './resolveThread';
+import { saveProfile } from './saveProfile';
+import { seen } from './seen';
+import { stopSelecting } from './stopSelecting';
+import { stopTyping } from './stopTyping';
+import { subscribeInbox } from './subscribeInbox';
+import { subscribeSeen } from './subscribeSeen';
+import { toggleCommentReaction } from './toggleCommentReaction';
+import { toggleEmojiReactionPicker } from './toggleEmojiReactionPicker';
+import { placePinAndStartComposingThread } from './placePinAndStartComposingThread';
+import { focus } from './focus';
+import { blur } from './blur';
+import { subscribeThread } from './subscribeThread';
+import { reopenThread } from './reopenThread';
+import { subscribePins } from './subscribePins';
+import { subscribeWorkspace } from './subscribeWorkspace';
+import { subscribeProfiles } from './subscribeProfiles';
+import { removePendingPins } from './removePendingPins';
+import { hover } from './hover';
+import { unhover } from './unhover';
+import { viewThread } from './viewThread';
+import { isTyping } from './isTyping';
+import { registerThread } from './registerThread';
+import { saveThreadInfo } from './saveThreadInfo';
+import { init } from './init';
+
+export type GenerateToken =
+  | {
+      appId: string;
+      mode: 'UNSECURED';
+      token: string;
+    }
+  | {
+      appId: string;
+      mode: 'SECURED';
+      token: string;
+      userId: string;
+      workspaceId: string;
+    };
+
+export type FunctionResponse<T> =
+  | {
+      status: 200;
+      data: T;
+    }
+  | {
+      status: 201;
+      data: T;
+    }
+  | {
+      status: 400;
+      error: string;
+    }
+  | {
+      status: 401;
+      error: string;
+    }
+  | {
+      status: 500;
+      error: string;
+    };
+
+// normalises config across secure and unsecure modes for
+// safe access from actions
+export function getConfig(store: Store) {
+  const { config } = store;
+  const appId = config.appId;
+  const apiKey = 'apiKey' in config ? config.apiKey : null;
+  const token = 'token' in config ? config.token : null;
+  const mode = token ? 'SECURED' : 'UNSECURED';
+  const userId = store.userId;
+  const workspaceId = store.workspaceId;
+
+  if (!appId) {
+    throw new Error('Missing `appId`');
+  }
+  if (mode === 'UNSECURED' && !apiKey) {
+    throw new Error('Missing `apiKey`');
+  }
+
+  if (!userId) {
+    throw new Error('Missing `userId`');
+  }
+
+  if (!workspaceId) {
+    throw new Error('Missing `workspaceId`');
+  }
+
+  return { appId, apiKey, token, mode, userId, workspaceId };
+}
+
+export const actions = {
+  init,
+
+  monitorConnection,
+
+  startThread: placePinAndStartComposingThread,
+
+  subscribeInbox,
+
+  stopTyping,
+
+  closeThread,
+
+  isTyping: debounce(isTyping, 1000, { leading: true, maxWait: 1000 }),
+
+  stopSelecting,
+
+  startSelecting,
+
+  subscribeThread,
+
+  seen,
+
+  subscribeSeen,
+
+  subscribeProfiles,
+
+  saveProfile,
+
+  authenticate,
+
+  subscribePins,
+
+  subscribeWorkspace,
+
+  registerThread,
+
+  focus,
+
+  blur,
+
+  toggleCommentReaction,
+
+  toggleEmojiReactionPicker,
+
+  closeEmojiReactionPicker,
+
+  reopenThread,
+
+  resolve: resolveThread,
+
+  sendMessage,
+
+  placePinAndStartComposingThread,
+
+  removePendingPins,
+
+  hover,
+
+  unhover,
+
+  viewThread,
+
+  saveThreadInfo,
+};

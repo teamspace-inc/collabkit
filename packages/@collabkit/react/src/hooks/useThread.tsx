@@ -1,12 +1,8 @@
 import { useEffect, useRef } from 'react';
 import { useSnapshot } from 'valtio';
-import { actions } from '../actions';
+import { actions } from '@collabkit/client';
+import type { ThreadInfo } from '@collabkit/core';
 import { Store } from '../constants';
-
-export type ThreadInfo = {
-  name?: string | null;
-  url?: string | null;
-};
 
 export function useThreadSubscription(props: {
   store: Store;
