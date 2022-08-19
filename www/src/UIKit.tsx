@@ -24,13 +24,23 @@ export const HStack = styled('div', {
 });
 
 export const Text = styled('p', {
+  // fontFamily: 'Inter',
+  // fontStyle: 'normal',
+  // fontWeight: 500,
+  // fontSize: '1.25rem',
+  // lineHeight: '140%',
+  // letterSpacing: '-0.03em,',
+  // zIndex: 1,
   fontFamily: 'Inter',
   fontStyle: 'normal',
-  fontWeight: 500,
-  fontSize: '1.25rem',
-  lineHeight: '140%',
-  letterSpacing: '-0.03em,',
-  zIndex: 1,
+  fontWeight: 400,
+  fontSize: '32px !important',
+  lineHeight: '44px !important',
+  /* or 138% */
+
+  textAlign: 'center',
+  letterSpacing: '-0.02em',
+  fontFeatureSettings: 'ss04 on',
 });
 
 export const Title = styled('h1', {
@@ -38,7 +48,7 @@ export const Title = styled('h1', {
   fontFeatureSettings: 'ss04',
   fontStyle: 'normal',
   fontWeight: 700,
-  fontSize: '5.5rem',
+  fontSize: '4.66rem',
   lineHeight: '95%',
   textAlign: 'center',
   letterSpacing: '-0.05em',
@@ -46,8 +56,8 @@ export const Title = styled('h1', {
   margin: '4rem 0 2rem',
   zIndex: 1,
 
-  '@bp1': { marginTop: 0, maxWidth: '90vw', minWidth: '90vw', fontSize: '4rem' },
-  '@bp2': { maxWidth: 'unset', minWidth: 'unset', fontSize: '7rem' },
+  '@bp1': { marginTop: 0, maxWidth: '90vw', minWidth: '90vw', fontSize: '4.66rem' },
+  '@bp2': { maxWidth: 'unset', minWidth: 'unset', fontSize: '112px', lineHeight: '100px' },
 });
 
 export const Em = styled('em', {
@@ -160,7 +170,7 @@ export const Page = styled('section', {
 });
 
 export const Section = styled('section', {
-  minHeight: '100vh',
+  // minHeight: '100vh',
   position: 'relative',
   display: 'flex',
   width: '100vw',
