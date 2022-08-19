@@ -1926,7 +1926,14 @@
     "@types/mime" "^1"
     "@types/node" "*"
 
-"@types/sinon@^10.0.13":
+"@types/sinon-stub-promise@^2.1.7":
+  version "2.1.7"
+  resolved "https://registry.yarnpkg.com/@types/sinon-stub-promise/-/sinon-stub-promise-2.1.7.tgz#68a55bf17a974424ca3d244dddfe81de85abf099"
+  integrity sha512-61bXEDKZLappXuD+G1BnmhugnCjZ7JfGZ9T43Ku9+34pz6cpjN3C3nILq+2tP5EqCvfz/8fGtBEmQjNOxF+r9Q==
+  dependencies:
+    "@types/sinon" "*"
+
+"@types/sinon@*", "@types/sinon@^10.0.13":
   version "10.0.13"
   resolved "https://registry.yarnpkg.com/@types/sinon/-/sinon-10.0.13.tgz#60a7a87a70d9372d0b7b38cc03e825f46981fb83"
   integrity sha512-UVjDqJblVNQYvVNUsj0PuYYw0ELRmgt1Nt5Vk0pT5f16ROGfcKJY8o1HVuMOJOpD727RrGB9EGvoaTQE5tgxZQ==
@@ -6867,6 +6874,11 @@ simple-swizzle@^0.2.2:
   integrity sha512-JA//kQgZtbuY83m+xT+tXJkmJncGMTFT+C+g2h2R9uxkYIrE2yy9sgmcLhCnw57/WSD+Eh3J97FPEDFnbXnDUg==
   dependencies:
     is-arrayish "^0.3.1"
+
+sinon-stub-promise@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/sinon-stub-promise/-/sinon-stub-promise-4.0.0.tgz#6d498ba1198557cd01e3466af92dc7df725192c2"
+  integrity sha512-89eBnPV781EXt0q90ystausgLjLwEFQStmh0Cp1xU98DovklkYYMmHk+h6gB+sjnb3BlDJ1RiV4ZKuXgcEZUjA==
 
 sinon@^14.0.0:
   version "14.0.0"

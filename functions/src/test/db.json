@@ -13,6 +13,7 @@
       "name": "Test App"
     },
     "QLVIR4HE-wvV_mTjoMJP5": {
+      "webhook": "https://example.com/webhook",
       "admins": {
         "FSYngynSD1QA1c8LqYGWq6YH9vf2": true
       },
@@ -23,6 +24,38 @@
       },
       "mode": "SECURED",
       "name": "Test App (secure-mode)"
+    }
+  },
+  "workspaces": {
+    "QLVIR4HE-wvV_mTjoMJP5": {
+      "acme": {
+        "name": "Test Workspace",
+        "profiles": {
+          "alice": true
+        }
+      }
+    }
+  },
+  "profiles": {
+    "QLVIR4HE-wvV_mTjoMJP5": {
+      "alice": {
+        "email": "alice@example.com",
+        "name": "Alice"
+      }
+    }
+  },
+  "timeline": {
+    "QLVIR4HE-wvV_mTjoMJP5": {
+      "acme": {
+        "thread-1": {
+          "event-1": {
+            "type": "message",
+            "body": "Hello, world!",
+            "createdById": "alice",
+            "createdAt": 1660844360801
+          }
+        }
+      }
     }
   }
 }

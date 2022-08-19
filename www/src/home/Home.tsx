@@ -722,9 +722,27 @@ export function Home() {
             <RequestDemoButton />
           </Plan>
           <Plan>
+            <PlanTitle>Startup</PlanTitle>
+            <PlanPrice>
+              $300 <Small>Per month*</Small>
+            </PlanPrice>
+            <PlanFeatures>
+              <PlanFeature>Up to 1,000 monthly active users</PlanFeature>
+              <PlanFeature>Commenting</PlanFeature>
+              <PlanFeature>Presence</PlanFeature>
+              <PlanFeature>Analytics dashboard</PlanFeature>
+              <PlanFeature>Customisability</PlanFeature>
+              <PlanFeature>Slack &amp; Discord support</PlanFeature>
+            </PlanFeatures>
+            <PlanPricingSmall>
+              *Up to 5000 monthly active users, then $0.08 per monthly active user thereafter.
+            </PlanPricingSmall>
+            <RequestDemoButton />
+          </Plan>
+          <Plan>
             <PlanTitle>Pro</PlanTitle>
             <PlanPrice>
-              $400 <Small>Per month*</Small>
+              $600 <Small>Per month*</Small>
             </PlanPrice>
             <PlanFeatures>
               <PlanFeature>Up to 5,000 monthly active users</PlanFeature>

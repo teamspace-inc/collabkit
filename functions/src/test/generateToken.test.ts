@@ -1,14 +1,8 @@
 import sinon from 'sinon';
-import * as admin from 'firebase-admin';
 
 import * as functions from 'firebase-functions';
 
 import { handleRequest } from '../generateToken';
-
-admin.initializeApp({
-  credential: admin.credential.cert('/Users/namitchadha/collabkit-test-service-account.json'),
-  databaseURL: 'https://collabkit-test-default-rtdb.europe-west1.firebasedatabase.app',
-});
 
 const mockHttp = (props: { query?: object; body?: object; headers?: object }) => {
   const req = { headers: { origin: '' }, query: {}, body: {}, ...props } as functions.https.Request;

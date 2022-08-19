@@ -2,6 +2,17 @@ import * as functions from 'firebase-functions';
 import { queueWebhookTask } from './actions/queueWebhookTask';
 import { scheduleNotificationTask } from './actions/scheduleNotificationTask';
 
+export async function handleCreate(props: {
+  appId: string;
+  workspaceId: string;
+  threadId: string;
+  eventId: string;
+  projectId: string;
+  event: object;
+}) {
+  await Promise.all([scheduleNotificationTask(props), queueWebhookTask(props)]);
+}
+
 export const onEvent = functions.database
   .ref('/timeline/{appId}/{workspaceId}/{threadId}/{eventId}')
   .onCreate((snapshot, context) => {
@@ -18,14 +29,13 @@ export const onEvent = functions.database
     }
 
     return (async () => {
-      const props = {
+      await handleCreate({
         appId,
         workspaceId,
         threadId,
         eventId,
         projectId,
         event: snapshot.val(),
-      };
-      await Promise.all([scheduleNotificationTask(props), queueWebhookTask(props)]);
+      });
     })();
   });
