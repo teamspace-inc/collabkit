@@ -1,12 +1,12 @@
-import { ref } from 'firebase/database';
-import { DB } from './setup';
+import { getApp } from 'firebase/app';
+import { getDatabase, ref } from 'firebase/database';
 
 export function timelineRef(appId: string, workspaceId: string, threadId: string) {
-  return ref(DB, `/timeline/${appId}/${workspaceId}/${threadId}/`);
+  return ref(getDatabase(getApp('CollabKit')), `/timeline/${appId}/${workspaceId}/${threadId}/`);
 }
 
 export function typingRef(appId: string, workspaceId: string, threadId: string) {
-  return ref(DB, `/isTyping/${appId}/${workspaceId}/${threadId}`);
+  return ref(getDatabase(getApp('CollabKit')), `/isTyping/${appId}/${workspaceId}/${threadId}`);
 }
 
 export function userTypingRef(
@@ -15,5 +15,8 @@ export function userTypingRef(
   threadId: string,
   userId: string
 ) {
-  return ref(DB, `/isTyping/${appId}/${workspaceId}/${threadId}/${userId}`);
+  return ref(
+    getDatabase(getApp('CollabKit')),
+    `/isTyping/${appId}/${workspaceId}/${threadId}/${userId}`
+  );
 }

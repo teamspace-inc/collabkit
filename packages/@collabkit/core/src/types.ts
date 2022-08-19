@@ -55,6 +55,17 @@ export type ConfigProps = {
   readOnly?: boolean;
   _demoStore?: Store;
   _isDemo?: boolean;
+  _firebaseConfig?: FirebaseConfig;
+};
+
+export type FirebaseConfig = {
+  apiKey: string;
+  authDomain: string;
+  databaseURL: string;
+  projectId: string;
+  storageBucket: string;
+  messagingSenderId: string;
+  appId: string;
 };
 
 export type Config = (SecureProps | UnsecureProps) & ConfigProps;

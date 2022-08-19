@@ -1,6 +1,6 @@
-import { ref, onChildMoved, orderByChild, query } from 'firebase/database';
 import type { Sync, Subscriptions } from '@collabkit/core';
-import { DB } from './setup';
+import { getApp } from 'firebase/app';
+import { ref, onChildMoved, orderByChild, query, getDatabase } from 'firebase/database';
 
 export function subscribeThreadSeenBy(props: {
   appId: string;
@@ -10,7 +10,10 @@ export function subscribeThreadSeenBy(props: {
   onThreadSeenByUser: (event: Sync.ThreadSeenEvent) => void;
 }) {
   const seenByQuery = query(
-    ref(DB, `/views/seenBy/${props.appId}/${props.workspaceId}/${props.threadId}`),
+    ref(
+      getDatabase(getApp('CollabKit')),
+      `/views/seenBy/${props.appId}/${props.workspaceId}/${props.threadId}`
+    ),
     orderByChild('seenUntilId')
   );
   if (props.subs[seenByQuery.toString()]) {

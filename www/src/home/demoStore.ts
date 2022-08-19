@@ -1,6 +1,6 @@
 import {
   internal_createStore as createStore,
-  internal_createWorkspace as createWorkspace,
+  // internal_createWorkspace as createWorkspace,
   Config,
   Workspace,
 } from '@collabkit/react';
@@ -17,7 +17,7 @@ export function createDemoStore(
   const store = createStore(config, sync);
 
   store.workspaces.acme = {
-    ...createWorkspace(),
+    // ...createWorkspace(),
     ...workspace,
   };
   store.workspaceId = 'acme';

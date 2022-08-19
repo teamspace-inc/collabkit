@@ -1,3 +1,4 @@
+import { getApp } from 'firebase/app';
 import {
   ref,
   onChildAdded,
@@ -6,9 +7,9 @@ import {
   orderByChild,
   limitToLast,
   onChildMoved,
+  getDatabase,
 } from 'firebase/database';
 import type { Store } from '@collabkit/core';
-import { DB } from '../sync/firebase/setup';
 import { getConfig } from './index';
 
 export async function subscribeInbox(store: Store) {
@@ -17,7 +18,7 @@ export async function subscribeInbox(store: Store) {
   // console.log('Subscribing to Inbox');
 
   const inboxRef = query(
-    ref(DB, `views/inbox/${appId}/${workspaceId}`),
+    ref(getDatabase(getApp('CollabKit')), `views/inbox/${appId}/${workspaceId}`),
     orderByChild('createdAt'),
     limitToLast(20)
   );

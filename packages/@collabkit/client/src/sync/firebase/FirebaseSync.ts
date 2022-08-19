@@ -1,6 +1,7 @@
 import {
   DataSnapshot,
   get,
+  getDatabase,
   limitToLast,
   onChildAdded,
   onChildChanged,
@@ -15,13 +16,13 @@ import {
   update,
 } from 'firebase/database';
 import type { Color } from '@collabkit/colors';
-import { DB } from './setup';
 import type { Event, Pin, Subscriptions } from '@collabkit/core';
 import { subscribeThreadIsTyping } from './subscribeThreadIsTyping';
 import { subscribeThreadSeenBy } from './subscribeThreadSeenBy';
 import { subscribeTimeline } from './subscribeTimeline';
 import { timelineRef, userTypingRef } from './refs';
 import type { Sync, UserProps } from '@collabkit/core';
+import { getApp } from 'firebase/app';
 
 export class FirebaseSync implements Sync.SyncAdapter {
   saveThreadInfo(data: {
@@ -34,7 +35,10 @@ export class FirebaseSync implements Sync.SyncAdapter {
     };
   }): Promise<void> {
     return set(
-      ref(DB, `/threadInfo/${data.appId}/${data.workspaceId}/${data.threadId}`),
+      ref(
+        getDatabase(getApp('CollabKit')),
+        `/threadInfo/${data.appId}/${data.workspaceId}/${data.threadId}`
+      ),
       data.info
     );
   }
@@ -55,13 +59,19 @@ export class FirebaseSync implements Sync.SyncAdapter {
   }): Promise<void> {
     const { appId, userId, workspaceId, profile } = data;
     try {
-      await set(ref(DB, `/profiles/${appId}/${userId}`), profile);
+      await set(ref(getDatabase(getApp('CollabKit')), `/profiles/${appId}/${userId}`), profile);
     } catch (e) {
       console.error('CollabKit: failed to set profile', e);
     }
 
     try {
-      await set(ref(DB, `/workspaces/${appId}/${workspaceId}/profiles/${userId}`), true);
+      await set(
+        ref(
+          getDatabase(getApp('CollabKit')),
+          `/workspaces/${appId}/${workspaceId}/profiles/${userId}`
+        ),
+        true
+      );
     } catch (e) {
       console.error('CollabKit: failed to join workspace', e);
     }
@@ -94,7 +104,10 @@ export class FirebaseSync implements Sync.SyncAdapter {
     workspaceId: string;
     threadId: string;
   }) {
-    await set(ref(DB, `pins/${appId}/${workspaceId}/${threadId}/state`), 'resolved');
+    await set(
+      ref(getDatabase(getApp('CollabKit')), `pins/${appId}/${workspaceId}/${threadId}/state`),
+      'resolved'
+    );
   }
 
   async markSeen({
@@ -111,7 +124,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
     eventId: string;
   }): Promise<void> {
     const data = { seenUntilId: eventId, seenAt: serverTimestamp() };
-    await update(ref(DB), {
+    await update(ref(getDatabase(getApp('CollabKit'))), {
       [`/seen/${appId}/${userId}/${workspaceId}/${threadId}/`]: data,
       [`/views/seenBy/${appId}/${workspaceId}/${threadId}/${userId}`]: data,
     });
@@ -189,7 +202,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
 
     // write the data to firebase
     try {
-      await update(ref(DB), data);
+      await update(ref(getDatabase(getApp('CollabKit'))), data);
     } catch (e: any) {
       const error = new Error('failed to write msg: ' + e.message);
       error.stack += e.stack;
@@ -213,7 +226,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
     onSeenChange: Sync.SeenEventHandler
   ): void {
     const seenQuery = query(
-      ref(DB, `/seen/${appId}/${userId}/${workspaceId}`),
+      ref(getDatabase(getApp('CollabKit')), `/seen/${appId}/${userId}/${workspaceId}`),
       orderByChild('seenUntilId'),
       limitToLast(100)
     );
@@ -261,7 +274,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
       }
     };
 
-    const pinsRef = ref(DB, `/pins/${appId}/${workspaceId}`);
+    const pinsRef = ref(getDatabase(getApp('CollabKit')), `/pins/${appId}/${workspaceId}`);
 
     subs[`${pinsRef.toString()}#added`] = onChildAdded(pinsRef, onChange, onError);
     subs[`${pinsRef.toString()}#changed`] = onChildChanged(pinsRef, onChange, onError);
@@ -283,6 +296,6 @@ export class FirebaseSync implements Sync.SyncAdapter {
   }
 
   getUser(props: { appId: string; workspaceId: string; userId: string }) {
-    return get(ref(DB, `/profiles/${props.appId}/${props.userId}`));
+    return get(ref(getDatabase(getApp('CollabKit')), `/profiles/${props.appId}/${props.userId}`));
   }
 }

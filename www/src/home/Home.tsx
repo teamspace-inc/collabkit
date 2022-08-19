@@ -9,9 +9,9 @@ import HandPointingIcon from '../assets/HandPointing.svg';
 import Cursor from '../assets/Cursor.svg';
 import ycLogoSvg from '../assets/yc-logo.svg';
 import checkmarkSvg from '../assets/checkmark.svg';
-import { HomeDemo1 } from './HomeDemo1';
-import { HomeDemo2 } from './HomeDemo2';
-import { HomeDemo3 } from './HomeDemo3';
+// import { HomeDemo1 } from './HomeDemo1';
+// import { HomeDemo2 } from './HomeDemo2';
+// import { HomeDemo3 } from './HomeDemo3';
 import { DiscordLogo } from 'phosphor-react';
 import { StickyHeader } from '../StickyHeader';
 import { Link, Section, Button, Grid, H3, Em, Text, VStack, HStack, styled, Title } from '../UIKit';
@@ -470,7 +470,7 @@ export function Home() {
       {BoostActivation}
       {window.innerWidth > 640 ? TryItOut : null}
       {/* {ContextualConversations} */}
-      <HomeDemo1 />
+      {/* <HomeDemo1 /> */}
       <Section
         style={{
           marginTop: '6rem',
@@ -663,9 +663,7 @@ export function Home() {
             {` attribute to ensure a canonical thread is created.`}
           </Text>
         </JustAddInnerSection>
-        <DemoContainer>
-          <HomeDemo2 />
-        </DemoContainer>
+        <DemoContainer>{/* <HomeDemo2 /> */}</DemoContainer>
         <JustAddInnerSection>
           <H3 style={{ fontSize: '3rem', color: 'white', marginBottom: '3.75rem' }}>
             Or add a {'<Thread />'}
@@ -680,9 +678,7 @@ export function Home() {
             {`Our flexible thread component can be include inline in your app. Great for detail views where your want to talk about a customer, product, invoice or sale.`}
           </Text>
         </JustAddInnerSection>
-        <DemoContainer style={{ marginBottom: '10rem' }}>
-          <HomeDemo3 />
-        </DemoContainer>
+        <DemoContainer style={{ marginBottom: '10rem' }}>{/* <HomeDemo3 /> */}</DemoContainer>
       </Section>
       <Section
         style={{

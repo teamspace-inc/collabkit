@@ -1,7 +1,14 @@
-import { DataSnapshot, onChildAdded, onChildChanged, ref, onValue } from 'firebase/database';
+import {
+  DataSnapshot,
+  onChildAdded,
+  onChildChanged,
+  ref,
+  onValue,
+  getDatabase,
+} from 'firebase/database';
 import type { Store } from '@collabkit/core';
-import { DB } from '../sync/firebase/setup';
 import { getConfig } from './index';
+import { getApp } from 'firebase/app';
 
 export async function subscribeProfiles(store: Store) {
   const { appId, workspaceId } = getConfig(store);
@@ -13,7 +20,7 @@ export async function subscribeProfiles(store: Store) {
   const onChange = (child: DataSnapshot) => {
     if (child.key) {
       const id = child.key;
-      const profileRef = ref(DB, `/profiles/${appId}/${id}`);
+      const profileRef = ref(getDatabase(getApp('CollabKit')), `/profiles/${appId}/${id}`);
       store.subs[profileRef.toString()] ||= onValue(
         profileRef,
         (profileSnapshot) => {
@@ -29,7 +36,10 @@ export async function subscribeProfiles(store: Store) {
     }
   };
 
-  const profilesRef = ref(DB, `/workspaces/${appId}/${workspaceId}/profiles`);
+  const profilesRef = ref(
+    getDatabase(getApp('CollabKit')),
+    `/workspaces/${appId}/${workspaceId}/profiles`
+  );
   const addedKey = `${profilesRef.toString()}#added`;
   const changedKey = `${profilesRef.toString()}#changed`;
   if (!store.subs[addedKey]) {
