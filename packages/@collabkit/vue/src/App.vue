@@ -1,18 +1,17 @@
 <script setup lang="ts">
-import { Thread } from './';
-import { createThemes } from '@collabkit/theme';
-import { provide } from 'vue';
-import { ThemeKey } from './constants';
+import { Provider, Thread } from '@collabkit/vue';
 
-// TODO: add something like CollabKit.Provider to inject these
-const themes = createThemes();
-const theme = themes.lightTheme;
-provide(ThemeKey, theme);
+const apiKey = 'oLsHFwp3uFYjgar37ygGc';
+const appId = '-N67qY-qlZoWmkQBPyZU';
+const workspace = { id: 'foobar' };
+const user = { id: '1', name: 'Anonymous', email: 'anon@example.com' };
 </script>
 
 <template>
-  <main :className="theme.toString()">
-    <Thread threadId="vue-chat" showHeader composerPrompt="Write a comment" />
+  <main>
+    <Provider :apiKey="apiKey" :appId="appId" :workspace="workspace" :user="user">
+      <Thread threadId="vue-chat" showHeader composerPrompt="Write a comment" />
+    </Provider>
   </main>
 </template>
 

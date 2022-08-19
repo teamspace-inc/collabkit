@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, markRaw, ref, watch, watchEffect } from 'vue';
 import {
   LexicalAutoFocusPlugin,
   LexicalComposer,
@@ -8,15 +8,17 @@ import {
   LexicalOnChangePlugin,
   LexicalPlainTextPlugin,
 } from 'lexical-vue';
-import type { EditorState } from 'lexical';
-import type { Profile, Workspace } from '@collabkit/core';
+import { createEditor, type EditorState } from 'lexical';
+import type { Profile, Target, Workspace } from '@collabkit/core';
 import { composerStyles } from '@collabkit/theme';
 import Avatar from './Avatar.vue';
 import { MentionNode } from './composer/MentionNode';
 import SendButton from './composer/SendButton.vue';
 import { styled } from './styled';
+import { useStore } from '../composables/useStore';
+import { useEvents } from '../composables/useEvents';
 
-defineProps<{
+const props = defineProps<{
   profile?: Profile;
   workspaceId: string;
   threadId: string;
@@ -33,6 +35,18 @@ const ComposerContainer = styled('div', composerStyles.container);
 const StyledLexicalEditorContainer = styled('div', composerStyles.editorContainer);
 const StyledVisibleComposerArea = styled('div', composerStyles.visibleComposerArea);
 
+const store = useStore();
+const composer = computed(() =>
+  store.workspaces[props.workspaceId]
+    ? store.workspaces[props.workspaceId].composers[props.threadId]
+    : null
+);
+watchEffect(() => {
+  if (composer.value == null && store.workspaces[props.workspaceId]) {
+    store.workspaces[props.workspaceId].composers[props.threadId] = initComposer();
+  }
+});
+
 // Catch any errors that occur during Lexical updates and log them
 // or throw them as needed. If you don't throw them, Lexical will
 // try to recover gracefully without losing user data.
@@ -40,11 +54,22 @@ function onError(error: any) {
   console.error(error);
 }
 
-const config = {
-  theme: composerStyles.lexicalTheme,
-  onError,
-  nodes: [MentionNode],
-};
+function initComposer() {
+  return {
+    editor: markRaw(createEditor(createEditorConfig())),
+    $$body: '',
+    isTyping: {},
+  };
+}
+
+function createEditorConfig() {
+  return {
+    namespace: 'Composer',
+    theme: composerStyles.lexicalTheme,
+    nodes: [MentionNode],
+    onError,
+  };
+}
 
 function onFocus() {
   // events.onFocus(e, { target })
@@ -54,18 +79,31 @@ function onBlur() {
   // events.onBlur(e, { target })
 }
 
-function onChange(_editorState: EditorState) {}
+const events = useEvents();
+
+const target = computed(
+  (): Target => ({
+    type: 'composer',
+    threadId: props.threadId,
+    workspaceId: props.workspaceId,
+  })
+);
+
+function onChange(editorState: EditorState) {
+  events.onComposerChange(target.value, editorState);
+}
+
 const content = ref('');
 </script>
 
 <template>
-  <ComposerContainer>
+  <ComposerContainer v-if="composer != null">
     <Avatar
       v-if="profile && !hideAvatar"
       :style="{ position: 'relative', top: '4px', marginLeft: '8px' }"
       :profile="profile"
     />
-    <LexicalComposer :initial-config="config">
+    <LexicalComposer :initial-config="createEditorConfig()">
       <StyledLexicalEditorContainer @focus="onFocus" @blur="onBlur">
         <StyledVisibleComposerArea>
           <LexicalPlainTextPlugin>

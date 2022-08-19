@@ -42,7 +42,7 @@ function getCommentType(group: Event[], index: number): CommentType {
     <Comment
       :id="event.id"
       :event="event"
-      :reactions="reactions[event.id]"
+      :reactions="reactions[event.id] ?? {}"
       :type="getCommentType(group, index)"
       :timestamp="event.createdAt"
       :key="`event-${event.id}`"

@@ -13,7 +13,7 @@ export async function authenticate(store: Store) {
   const { config } = store;
 
   // SECURED mode
-  if ('token' in config) {
+  if ('token' in config && config.token != null) {
     console.log(config);
     const userCredential = await signInWithCustomToken(getAuth(CollabKitFirebaseApp), config.token);
     const result = await userCredential.user.getIdTokenResult();
