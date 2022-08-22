@@ -1,5 +1,4 @@
 import React from 'react';
-import type { Profile } from '@collabkit/core';
 import { TypingIndicator } from './TypingIndicator';
 import { useSnapshot } from 'valtio';
 import { useApp } from '../../hooks/useApp';
