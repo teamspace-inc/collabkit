@@ -43,14 +43,16 @@ export function CollabKitProvider({
     };
   }, [config.appId, 'token' in config ? config.token : config.apiKey]);
 
-  useEffect(() => {
-    if (context) {
-      document.addEventListener('keydown', context.events.onKeyDown);
-      return () => {
-        document.removeEventListener('keydown', context.events.onKeyDown);
-      };
-    }
-  }, [context]);
+  if (typeof document !== 'undefined') {
+    useEffect(() => {
+      if (context) {
+        document.addEventListener('keydown', context.events.onKeyDown);
+        return () => {
+          document.removeEventListener('keydown', context.events.onKeyDown);
+        };
+      }
+    }, [context]);
+  }
 
   const preferredColorScheme = useColorScheme(colorScheme);
 
@@ -78,21 +80,23 @@ function useColorScheme(colorScheme: 'light' | 'dark' | 'auto') {
     colorScheme === 'auto' ? 'dark' : colorScheme
   );
 
-  useLayoutEffect(() => {
-    if (colorScheme === 'auto') {
-      const onChange = (e: MediaQueryListEvent) => {
-        setPreferredColorScheme(e.matches ? 'dark' : 'light');
-      };
+  if ('matchMedia' in globalThis) {
+    useLayoutEffect(() => {
+      if (colorScheme === 'auto') {
+        const onChange = (e: MediaQueryListEvent) => {
+          setPreferredColorScheme(e.matches ? 'dark' : 'light');
+        };
 
-      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-      setPreferredColorScheme(mediaQuery.matches ? 'dark' : 'light');
-      mediaQuery.addEventListener('change', onChange);
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        setPreferredColorScheme(mediaQuery.matches ? 'dark' : 'light');
+        mediaQuery.addEventListener('change', onChange);
 
-      return () => {
-        mediaQuery.removeEventListener('change', onChange);
-      };
-    }
-  }, [colorScheme]);
+        return () => {
+          mediaQuery.removeEventListener('change', onChange);
+        };
+      }
+    }, [colorScheme]);
+  }
 
   return preferredColorScheme;
 }

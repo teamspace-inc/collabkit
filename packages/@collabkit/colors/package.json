@@ -2,5 +2,6 @@
   "name": "@collabkit/colors",
   "version": "0.0.0",
   "private": true,
+  "main": "src/index.ts",
   "module": "src/index.ts"
 }

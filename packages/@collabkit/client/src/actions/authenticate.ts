@@ -1,6 +1,6 @@
 import { getAuth, signInWithCustomToken } from 'firebase/auth';
 import type { Store } from '@collabkit/core';
-import { CollabKitFirebaseApp } from '../sync/firebase/setup';
+import { getApp } from 'firebase/app';
 import { createWorkspace } from '../store';
 import { generateToken } from './generateToken';
 import { actions } from './';
@@ -15,7 +15,7 @@ export async function authenticate(store: Store) {
   // SECURED mode
   if ('token' in config && config.token != null) {
     console.log(config);
-    const userCredential = await signInWithCustomToken(getAuth(CollabKitFirebaseApp), config.token);
+    const userCredential = await signInWithCustomToken(getAuth(getApp('CollabKit')), config.token);
     const result = await userCredential.user.getIdTokenResult();
     console.log('claims', result.claims);
     const { appId, userId, workspaceId, mode } = result.claims;
@@ -85,7 +85,7 @@ export async function authenticate(store: Store) {
       throw new Error('Failed to auth');
     }
 
-    const userCredential = await signInWithCustomToken(getAuth(CollabKitFirebaseApp), auth.token);
+    const userCredential = await signInWithCustomToken(getAuth(getApp('CollabKit')), auth.token);
 
     const result = await userCredential.user.getIdTokenResult();
     const mode = result.claims.mode;

@@ -6,15 +6,12 @@ import '../src/index.css';
 
 export const Provider: GlobalProvider = ({ children, globalState }) => (
   <CollabKit.Provider
-    // @ts-expect-error
     apiKey={import.meta.env.VITE_COLLABKIT_TOKEN}
-    // @ts-expect-error
-    appId={import.meta.env!.VITE_COLLABKIT_APP_ID}
+    appId={import.meta.env.VITE_COLLABKIT_APP_ID}
     workspace={{ id: 'acme', name: 'ACME' }}
     user={{
-      workspaceId: 'acme',
       name: 'Alice',
-      userId: 'alice',
+      id: 'alice',
     }}
     mentionableUsers={[]}
     colorScheme={globalState.theme}

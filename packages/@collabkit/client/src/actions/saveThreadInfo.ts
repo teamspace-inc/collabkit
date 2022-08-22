@@ -1,7 +1,8 @@
 import { ref, update } from '@firebase/database';
+import { getApp } from 'firebase/app';
+import { getDatabase } from 'firebase/database';
 import { getConfig } from '.';
 import type { Store, ThreadInfo } from '@collabkit/core';
-import { DB } from '../sync/firebase/setup';
 
 export function saveThreadInfo(
   store: Store,
@@ -14,7 +15,10 @@ export function saveThreadInfo(
   const { appId } = getConfig(store);
   try {
     return update(
-      ref(DB, `/threadInfo/${appId}/${props.workspaceId}/${props.threadId}`),
+      ref(
+        getDatabase(getApp('CollabKit')),
+        `/threadInfo/${appId}/${props.workspaceId}/${props.threadId}`
+      ),
       props.info
     );
   } catch (e) {

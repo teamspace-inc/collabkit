@@ -26,11 +26,29 @@ export const HStack = styled('div', {
 export const Text = styled('p', {
   fontFamily: 'Inter',
   fontStyle: 'normal',
-  fontWeight: 500,
-  fontSize: '1.25rem',
-  lineHeight: '140%',
-  letterSpacing: '-0.03em,',
-  zIndex: 1,
+  fontWeight: 400,
+  fontSize: '32px',
+  lineHeight: '44px',
+  textAlign: 'center',
+  letterSpacing: '-0.02em',
+  fontFeatureSettings: 'ss04 on',
+  margin: 0,
+
+  '@bp1': {
+    textAlign: 'left',
+    marginTop: 0,
+    maxWidth: '90vw',
+    minWidth: '90vw',
+    fontSize: '24px',
+    lineHeight: '32px',
+  },
+  '@bp2': {
+    textAlign: 'center',
+    maxWidth: 'unset',
+    minWidth: 'unset',
+    fontSize: '24px',
+    lineHeight: '32px',
+  },
 });
 
 export const Title = styled('h1', {
@@ -38,16 +56,22 @@ export const Title = styled('h1', {
   fontFeatureSettings: 'ss04',
   fontStyle: 'normal',
   fontWeight: 700,
-  fontSize: '5.5rem',
+  fontSize: '4.66rem',
   lineHeight: '95%',
   textAlign: 'center',
   letterSpacing: '-0.05em',
   color: '#222222',
-  margin: '4rem 0 2rem',
+  margin: '0px',
   zIndex: 1,
 
-  '@bp1': { marginTop: 0, maxWidth: '90vw', minWidth: '90vw', fontSize: '4rem' },
-  '@bp2': { maxWidth: 'unset', minWidth: 'unset', fontSize: '7rem' },
+  '@bp1': { textAlign: 'left', marginTop: 0, maxWidth: '90vw', minWidth: '90vw', fontSize: '48px' },
+  '@bp2': {
+    maxWidth: 'unset',
+    minWidth: 'unset',
+    fontSize: '112px',
+    lineHeight: '100px',
+    textAlign: 'center',
+  },
 });
 
 export const Em = styled('em', {
@@ -112,6 +136,9 @@ export const Button = styled('button', {
   '&:hover': {
     background: 'black',
   },
+
+  '@bp1': { fontSize: '16px', padding: '0px 20px', height: '44px' },
+  '@bp2': { fontSize: '20px', lineHeight: '22px', padding: '0px 24px', height: '60px' },
 });
 
 export const loading = keyframes({
@@ -160,14 +187,18 @@ export const Page = styled('section', {
 });
 
 export const Section = styled('section', {
-  minHeight: '100vh',
   position: 'relative',
   display: 'flex',
   width: '100vw',
+  padding: '0px',
   overflow: 'hidden',
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
+  gap: '60px',
+
+  '@bp1': { padding: '100px 0px 100px', gap: '30px' },
+  '@bp2': { padding: '200px 0px', gap: '60px' },
 });
 
 export const Header = styled('header', {
