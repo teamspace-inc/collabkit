@@ -25,14 +25,12 @@ export function Thread(props: {
   showHeader?: boolean;
   onCloseButtonClick?: (e: React.MouseEvent) => void;
 }) {
-  const { threadId } = props;
   const { store } = useApp();
 
-  const { userId, workspaceId, workspaces } = useSnapshot(store);
-
+  const { userId, workspaceId, workspaces, isConnected } = useSnapshot(store);
   const workspace = workspaceId ? workspaces[workspaceId] : null;
 
-  const { timeline, isConnected, isEmpty, ref } = useThread({
+  const { timeline, isEmpty } = useThread({
     ...props,
     store,
     workspaceId,
@@ -43,7 +41,7 @@ export function Thread(props: {
   }
 
   return (
-    <StyledThreadContainer ref={ref} style={props.style} data-collabkit-internal="true">
+    <StyledThreadContainer style={props.style} data-collabkit-internal="true">
       {/* {reactingId ? (
         <div
           onClick={(e) => (reactingId ? events.onEmojiReactionPickerModalBackgroundClick(e) : null)}
@@ -73,7 +71,7 @@ export function Thread(props: {
         {isConnected && isEmpty ? <EmptyState /> : null}
         {!isEmpty && timeline && workspaceId && (
           <ScrollableCommentList
-            isTyping={workspace?.composers[threadId]?.isTyping}
+            isTyping={workspace?.composers[props.threadId]?.isTyping}
             threadId={props.threadId}
             userId={userId}
             workspaceId={workspaceId}

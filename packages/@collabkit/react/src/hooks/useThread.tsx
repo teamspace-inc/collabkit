@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { useSnapshot } from 'valtio';
 import { actions } from '@collabkit/client';
 import type { ThreadInfo } from '@collabkit/core';
@@ -28,13 +28,10 @@ export function useThread(props: {
   info?: ThreadInfo;
 }) {
   const { threadId, workspaceId, store, info } = props;
-  const { isSignedIn, workspaces, isConnected, reactingId } = useSnapshot(store);
-  // const profile = userId ? profiles[userId] : null;
+  const { isSignedIn, workspaces } = useSnapshot(store);
   const workspace = workspaceId ? workspaces[workspaceId] : null;
   const timeline = workspace ? workspace.timeline[threadId] : null;
   const isEmpty = timeline ? Object.keys(timeline).length === 0 : true;
-
-  const ref = useRef<HTMLDivElement>(null);
 
   useThreadSubscription({ store, threadId, workspaceId });
 
@@ -51,21 +48,26 @@ export function useThread(props: {
     }
   }, [workspaceId, threadId, isSignedIn, info, info?.name]);
 
-  const target = workspaceId ? ({ type: 'thread', threadId, workspaceId } as const) : null;
+  // const target = workspaceId ? ({ type: 'thread', threadId, workspaceId } as const) : null;
 
-  const systemEventIds = timeline
-    ? Object.keys(timeline).filter(
-        (eventId) =>
-          (timeline[eventId].type === 'system' && timeline[eventId].system === 'resolve') ||
-          timeline[eventId].system === 'reopen'
-      )
-    : [];
+  // const systemEventIds = timeline
+  //   ? Object.keys(timeline).filter(
+  //       (eventId) =>
+  //         (timeline[eventId].type === 'system' && timeline[eventId].system === 'resolve') ||
+  //         timeline[eventId].system === 'reopen'
+  //     )
+  //   : [];
 
-  const isResolved = !!(
-    timeline &&
-    systemEventIds.length > 0 &&
-    timeline[systemEventIds[systemEventIds.length - 1]].system === 'resolve'
-  );
+  // const isResolved = !!(
+  //   timeline &&
+  //   systemEventIds.length > 0 &&
+  //   timeline[systemEventIds[systemEventIds.length - 1]].system === 'resolve'
+  // );
 
-  return { timeline, isResolved, isEmpty, target, ref, isConnected, reactingId };
+  return {
+    timeline,
+    // isResolved,
+    isEmpty,
+    // target,
+  };
 }
