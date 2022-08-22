@@ -118,11 +118,6 @@
           ".read": true,
           ".write": "root.child('apps').child($appId).child('admins').child(auth.uid).exists()",
           ".validate": "newData.isBoolean()"
-        },
-        "webhookUrl": {
-          ".read": true,
-          ".write": "root.child('apps').child($appId).child('admins').child(auth.uid).exists()",
-          ".validate": "newData.isString()"
         }
       }
     },
@@ -139,6 +134,9 @@
           },
           "avatar": {
             ".validate": "newData.isString()"
+          },
+          "color": {
+            ".validate": "newData.isString()"
           }
         }
       }
@@ -149,7 +147,7 @@
           "$threadId": {
             ".read": "auth.token.appId === $appId",
             "$endUserId": {
-              ".write": "(auth.token.appId === $appId) && ((root.child('apps').child(auth.token.appId).child('mode').val() === 'UNSECURED' || (root.child('apps').child(auth.token.appId).child('mode').val() === 'SECURED' && $workspaceId === auth.token.workspaceId && newData.child('createdById').val() === auth.token.userId)))",
+              ".write": "(auth.token.appId === $appId) && ((root.child('apps').child(auth.token.appId).child('mode').val() === 'UNSECURED' || (root.child('apps').child(auth.token.appId).child('mode').val() === 'SECURED' && $workspaceId === auth.token.workspaceId)))",
               ".validate": "newData.isBoolean()"
             }
           }
