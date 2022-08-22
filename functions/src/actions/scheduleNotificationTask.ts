@@ -16,6 +16,7 @@ export async function scheduleNotificationTask(props: {
   const emailBatchDelayMs = (await db.ref(`/apps/${appId}/emailBatchDelayMs/`).get()).val();
 
   if (!emailBatchDelayMs || typeof emailBatchDelayMs !== 'number') {
+    console.log('[scheduleNotificationTask] no emailBatchDelayMs');
     return;
   }
 

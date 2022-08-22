@@ -52,7 +52,7 @@ export default function App() {
       colorScheme="light"
       apiKey={'oLsHFwp3uFYjgar37ygGc'}
       appId={'-N67qY-qlZoWmkQBPyZU'}
-      workspace={{ id: 'foobar' }}
+      workspace={{ id: 'foobar', name: 'Foo' }}
       callbacks={{
         onCommentSend: (data) => {
           console.log(data);

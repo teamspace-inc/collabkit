@@ -16,31 +16,6 @@ type NotificationEmailProps = {
   productName?: string;
 };
 
-const colors = [
-  'tomato',
-  'red',
-  'crimson',
-  'pink',
-  'plum',
-  'purple',
-  'violet',
-  'indigo',
-  'blue',
-  'cyan',
-  'teal',
-  'green',
-  'grasws',
-  'brown',
-  'orange',
-  'sky',
-  'mint',
-  'lime',
-  'yellow',
-  'amber',
-];
-
-const randomColor = () => colors[Math.floor(Math.random() * colors.length)];
-
 function Comment(props: { actorColor: string; actorName: string; commentBody: string[] }) {
   return (
     <MjmlSection textAlign="left" padding="0px 0px 40px">
@@ -82,8 +57,6 @@ const NotificationEmail: React.FC<NotificationEmailProps> = ({
   profiles,
   commentList,
 }) => {
-  const actorColors: { [actorId: string]: string } = {};
-
   if (commentList.length === 0) {
     return null;
   }
@@ -117,20 +90,15 @@ const NotificationEmail: React.FC<NotificationEmailProps> = ({
             }
           </MjmlColumn>
         </MjmlSection>
-        {commentList.map((commentGroup) => (
-          <Comment
-            actorColor={
-              actorColors[commentGroup[0].createdById] ??
-              (() => {
-                const color = randomColor();
-                actorColors[commentGroup[0].createdById] = color;
-                return color;
-              })()
-            }
-            actorName={profiles[commentGroup[0].createdById].name ?? 'Anonymous'}
-            commentBody={commentGroup.map((comment) => comment.body)}
-          />
-        ))}
+        {commentList.map((commentGroup) => {
+          return (
+            <Comment
+              actorColor={profiles[commentGroup[0].createdById].color ?? 'sky'}
+              actorName={profiles[commentGroup[0].createdById].name ?? 'Anonymous'}
+              commentBody={commentGroup.map((comment) => comment.body)}
+            />
+          );
+        })}
         <MjmlSection padding="20px 24px 0" cssClass="smooth">
           <MjmlColumn>
             <>
