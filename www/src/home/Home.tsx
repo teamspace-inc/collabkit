@@ -261,12 +261,11 @@ export function Home() {
             title={
               <div style={{ marginTop: '40px' }}>
                 {isSmallScreen ? (
-                  <span>Ship commenting in minutes</span>
+                  <span>Commenting made easy</span>
                 ) : (
                   <span>
-                    Ship
-                    <br /> commenting
-                    <br /> in minutes
+                    Commenting
+                    <br /> made easy
                   </span>
                 )}{' '}
               </div>
