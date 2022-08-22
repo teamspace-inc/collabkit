@@ -10,7 +10,8 @@
   "scripts": {
     "dev": "pnpm --recursive --parallel run dev",
     "server": "yarn workspace server dev",
-    "typecheck": "tsc -b examples/demo www"
+    "typecheck": "tsc -b examples/demo www",
+    "snapshots": "yarn workspace @collabkit/react playwright test"
   },
   "devDependencies": {
     "@types/chrome": "^0.0.193",

@@ -7,10 +7,18 @@ on:
     types: [opened, synchronize]
 
 jobs:
-  test:
+  typecheck:
     runs-on: buildjet-32vcpu-ubuntu-2004
     steps:
       - uses: actions/checkout@v2
       - name: Install dependencies
         run: yarn install --frozen-lockfile --prefer-offline
       - run: yarn typecheck
+
+  visual_snapshot:
+    runs-on: buildjet-32vcpu-ubuntu-2004
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile --prefer-offline
+      - run: yarn snapshots
