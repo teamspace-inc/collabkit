@@ -3,7 +3,7 @@ import * as admin from 'firebase-admin';
 import { updateUserAndWorkspace } from '../../../actions/helpers/updateUserAndWorkspace';
 
 describe('updateUserAndWorkspace', () => {
-  it('calls fetch with the right args', async () => {
+  it('creates a user and sets the right props', async () => {
     const userId = admin.firestore().collection('any').doc().id;
     const appId = 'QLVIR4HE-wvV_mTjoMJP5';
     await updateUserAndWorkspace({
