@@ -12,11 +12,19 @@ export async function saveProfile(store: Store) {
   // for UNSECURED mode
   if ('apiKey' in config) {
     try {
-      const color = getRandomColor();
-
       const userId = config.user?.userId ?? config.user?.id;
 
-      let profile: Partial<UserProps> & { color: Color } = { color, ...config.user };
+      if (!userId) {
+        return;
+      }
+
+      const existingProfile = await store.sync.getProfile({ appId: config.appId, userId });
+
+      let profile: Partial<UserProps> & { color?: Color } = { ...config.user };
+
+      if (!existingProfile) {
+        profile.color = getRandomColor();
+      }
 
       delete profile.userId;
 

@@ -51,7 +51,6 @@ function createEditorConfig() {
 }
 
 export function Composer(props: {
-  profile?: Profile;
   workspaceId: string;
   threadId: string;
   isFloating: boolean;
@@ -63,7 +62,8 @@ export function Composer(props: {
 }) {
   const { events, store } = useApp();
 
-  const { workspaces } = useSnapshot(store);
+  const { userId, profiles, workspaces } = useSnapshot(store);
+  const profile = userId ? profiles[userId] : null;
   const workspace = props.workspaceId ? workspaces[props.workspaceId] : null;
 
   const target = {
@@ -102,8 +102,8 @@ export function Composer(props: {
 
   return (
     <ComposerContainer style={props.style}>
-      {props.profile && !props.hideAvatar ? (
-        <Avatar style={{ position: 'relative', top: 4, marginLeft: 8 }} profile={props.profile} />
+      {profile && !props.hideAvatar ? (
+        <Avatar style={{ position: 'relative', top: 4, marginLeft: 8 }} profile={profile} />
       ) : null}
       <LexicalComposer initialConfig={initialConfig}>
         <StyledLexicalEditorContainer

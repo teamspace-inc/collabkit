@@ -7,14 +7,13 @@ import {
   ScrollAreaViewport,
 } from './ScrollArea';
 import React from 'react';
-import { Profile, Timeline } from '../constants';
+import { Timeline } from '../constants';
 import equal from 'fast-deep-equal';
 import { useTimeline } from '../hooks/useTimeline';
 import { CommentList } from './CommentList';
 
 export const ScrollableCommentList = React.memo(function ScrollableCommentList(props: {
   isTyping?: { [endUserId: string]: boolean };
-  profiles: { [profileId: string]: Profile };
   timeline: Timeline;
   workspaceId: string;
   userId: string;
@@ -25,7 +24,7 @@ export const ScrollableCommentList = React.memo(function ScrollableCommentList(p
 
   const rootRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const { profiles, timeline } = props;
+  const { timeline } = props;
 
   const { messageEvents, reactionEvents } = useTimeline(timeline);
 
@@ -38,6 +37,8 @@ export const ScrollableCommentList = React.memo(function ScrollableCommentList(p
     reactionEvents[reactionEvents.length - 1]?.parentId ===
       messageEvents[messageEvents.length - 1]?.id,
     // someone is typing
+    // this can be annoying, we should find a way to show that
+    // below the composer
     props.isTyping ? Object.keys(props.isTyping) : null,
   ]);
 
@@ -54,7 +55,6 @@ export const ScrollableCommentList = React.memo(function ScrollableCommentList(p
       <ScrollAreaViewport onScroll={handleScroll} ref={scrollRef}>
         <CommentList
           isTyping={props.isTyping}
-          profiles={profiles}
           threadId={props.threadId}
           userId={props.userId}
           workspaceId={workspaceId}

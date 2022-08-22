@@ -27,6 +27,7 @@ export type UserProps = {
   name?: string | null;
   email?: string | null;
   avatar?: string | null;
+  color?: string | null;
 };
 
 export type WorkspaceProps = {

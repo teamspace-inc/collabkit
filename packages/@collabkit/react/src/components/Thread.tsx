@@ -32,7 +32,7 @@ export function Thread(props: {
 
   const workspace = workspaceId ? workspaces[workspaceId] : null;
 
-  const { profiles, timeline, isConnected, isEmpty, ref } = useThread({
+  const { timeline, isConnected, isEmpty, ref } = useThread({
     ...props,
     store,
     workspaceId,
@@ -74,7 +74,6 @@ export function Thread(props: {
         {!isEmpty && timeline && workspaceId && (
           <ScrollableCommentList
             isTyping={workspace?.composers[threadId]?.isTyping}
-            profiles={profiles}
             threadId={props.threadId}
             userId={userId}
             workspaceId={workspaceId}
@@ -92,7 +91,6 @@ export function Thread(props: {
                 : 'Reply to this comment'
             }
             workspaceId={workspaceId}
-            profile={profiles[userId]}
             threadId={props.threadId}
             isFloating={false}
           />

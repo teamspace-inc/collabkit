@@ -2,17 +2,21 @@ import React from 'react';
 import { Comment } from './Comment';
 import { Event, CommentType, Profile, WithID } from '../constants';
 import { Target } from './Target';
+import equal from 'fast-deep-equal';
+import { useSnapshot } from 'valtio';
+import { useApp } from '../hooks/useApp';
 
-export function CommentGroup(props: {
+export const CommentGroup = React.memo(function (props: {
   group: WithID<Event>[];
-  profiles: { [profileId: string]: Profile };
   reactions: { [parentId: string]: { [createdById: string]: Event } };
   workspaceId: string;
   threadId: string;
   rootRef: React.RefObject<HTMLDivElement>;
   isPreview?: boolean;
 }) {
-  const { group, profiles, reactions, workspaceId, threadId } = props;
+  const { store } = useApp();
+  const { profiles } = useSnapshot(store);
+  const { group, reactions, workspaceId, threadId } = props;
   const comments = props.isPreview ? group.slice(0, 1) : group;
   return (
     <>
@@ -37,7 +41,8 @@ export function CommentGroup(props: {
       ))}
     </>
   );
-}
+},
+equal);
 
 function getCommentType(group: Event[], index: number): CommentType {
   let type: CommentType = 'default';

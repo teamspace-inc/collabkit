@@ -92,6 +92,13 @@ export class FirebaseSync implements Sync.SyncAdapter {
     }
   }
 
+  async getProfile(params: { appId: string; userId: string }) {
+    const snapshot = await get(
+      ref(getDatabase(getApp('CollabKit')), `/profiles/${params.appId}/${params.userId}`)
+    );
+    return snapshot.val();
+  }
+
   async saveEvent({
     appId,
     workspaceId,

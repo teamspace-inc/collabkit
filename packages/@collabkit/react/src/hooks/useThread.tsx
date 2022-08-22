@@ -28,7 +28,7 @@ export function useThread(props: {
   info?: ThreadInfo;
 }) {
   const { threadId, workspaceId, store, info } = props;
-  const { isSignedIn, profiles, workspaces, isConnected, reactingId } = useSnapshot(store);
+  const { isSignedIn, workspaces, isConnected, reactingId } = useSnapshot(store);
   // const profile = userId ? profiles[userId] : null;
   const workspace = workspaceId ? workspaces[workspaceId] : null;
   const timeline = workspace ? workspace.timeline[threadId] : null;
@@ -67,5 +67,5 @@ export function useThread(props: {
     timeline[systemEventIds[systemEventIds.length - 1]].system === 'resolve'
   );
 
-  return { profiles, timeline, isResolved, isEmpty, target, ref, isConnected, reactingId };
+  return { timeline, isResolved, isEmpty, target, ref, isConnected, reactingId };
 }

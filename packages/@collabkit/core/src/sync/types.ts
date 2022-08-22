@@ -19,6 +19,13 @@ export interface SyncAdapter {
     };
   }): Promise<void>;
 
+  getProfile(params: {
+    appId: string;
+    userId: string;
+  }): Promise<
+    undefined | null | { name?: string; email?: string; color?: string; avatar?: string }
+  >;
+
   saveProfile(params: {
     appId: string;
     userId: string;
@@ -98,7 +105,7 @@ export interface SyncAdapter {
   }): void;
 }
 
-export type ServerProfile = Partial<UserProps> & { color: Color };
+export type ServerProfile = Partial<UserProps> & { color?: Color };
 export type SeenEventHandler = (event: { threadId: string; seenUntilId: string }) => void;
 export type PinEventHandler = (event: { pinId: string; pin: Pin }) => void;
 

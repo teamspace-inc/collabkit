@@ -13,14 +13,13 @@ const SeeAllRepliesLink = styled('div', commentListStyles.seeAllRepliesLink);
 
 export const CommentList = React.memo(function CommentList(props: {
   isTyping?: { [endUserId: string]: boolean };
-  profiles: { [profileId: string]: Profile };
   timeline: Timeline;
   workspaceId: string;
   userId: string;
   threadId: string;
   isPreview?: boolean;
 }) {
-  const { userId, threadId, workspaceId, profiles, timeline, isTyping } = props;
+  const { userId, threadId, workspaceId, timeline, isTyping } = props;
 
   const rootRef = useRef<HTMLDivElement>(null);
 
@@ -37,7 +36,6 @@ export const CommentList = React.memo(function CommentList(props: {
         <CommentGroup
           key={i}
           group={group}
-          profiles={profiles}
           reactions={reactions}
           workspaceId={workspaceId}
           threadId={threadId}
@@ -45,9 +43,7 @@ export const CommentList = React.memo(function CommentList(props: {
           isPreview={props.isPreview}
         />
       ))}
-      {props.isPreview ? null : (
-        <CurrentlyTyping profiles={profiles} userId={userId} isTyping={isTyping} />
-      )}
+      {props.isPreview ? null : <CurrentlyTyping userId={userId} isTyping={isTyping} />}
       {props.isPreview ? (
         <SeeAllRepliesLink>
           {list.length > 1
