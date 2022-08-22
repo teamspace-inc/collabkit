@@ -1,14 +1,16 @@
-import { $getRoot, EditorState } from 'lexical';
+import { $getRoot, EditorState, LexicalEditor } from 'lexical';
 import { nanoid } from 'nanoid';
 import type { CommentReactionTarget, CommentTarget, Store, Target } from '@collabkit/core';
 import { actions } from './actions';
+import { ref } from 'valtio';
 
 export type Events = ReturnType<typeof createEvents>;
 
 export function createEvents(store: Store) {
   return {
-    onComposerChange: (target: Target, editorState: EditorState) => {
+    onComposerChange: (target: Target, editorState: EditorState, editor: LexicalEditor) => {
       if (target.type === 'composer') {
+        store.workspaces[target.workspaceId].composers[target.threadId].editor = ref(editor);
         editorState.read(() => {
           let newBody = '';
           const nodes = $getRoot().getAllTextNodes();

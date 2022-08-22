@@ -1,16 +1,5 @@
-// import { createEditor } from 'lexical';
-// import { createEditorConfig } from '../components/Composer';
-// import { ref as valtioRef } from 'valtio';
 import { getConfig } from './index';
 import type { Sync, ThreadInfo, Store } from '@collabkit/core';
-
-// export function initComposer() {
-//   return {
-//     editor: valtioRef(createEditor(createEditorConfig())),
-//     $$body: '',
-//     isTyping: {},
-//   };
-// }
 
 export async function subscribeThread(
   store: Store,
@@ -20,7 +9,11 @@ export async function subscribeThread(
     info?: ThreadInfo;
   }
 ) {
-  // store.workspaces[props.workspaceId].composers[props.threadId] ||= initComposer();
+  store.workspaces[props.workspaceId].composers[props.threadId] ||= {
+    $$body: '',
+    isTyping: {},
+    editor: null,
+  };
   const { workspaceId, threadId } = props;
   const { appId, userId } = getConfig(store);
   store.sync.subscribeThread({

@@ -231,7 +231,7 @@ export interface Timeline {
 }
 
 export interface Composer {
-  editor: LexicalEditor;
+  editor: LexicalEditor | null;
   $$body: string;
   isTypingTimeoutID?: ReturnType<typeof setTimeout>;
   isTyping: { [endUserId: string]: boolean };

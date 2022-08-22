@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
-import { Profile, Target } from '../constants';
-import { createEditor, LexicalEditor } from 'lexical';
+import { Target } from '../constants';
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import { PlainTextPlugin } from '@lexical/react/LexicalPlainTextPlugin';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable';
@@ -31,14 +30,6 @@ const StyledVisibleComposerArea = styled('div', composerStyles.visibleComposerAr
 // try to recover gracefully without losing user data.
 function onError(error: any) {
   console.error(error);
-}
-
-function initComposer() {
-  return {
-    editor: valtioRef(createEditor(createEditorConfig())),
-    $$body: '',
-    isTyping: {},
-  };
 }
 
 function createEditorConfig() {
@@ -77,7 +68,6 @@ export function Composer(props: {
 
   const initialConfig = {
     ...createEditorConfig(),
-    editor__DEPRECATED: composer?.editor as LexicalEditor,
   };
 
   const editorContainerRef = useRef(null);
@@ -87,14 +77,6 @@ export function Composer(props: {
       props.onHeightChange?.(info.height + 7);
     },
   });
-
-  // for some reason composer is not booted properly elsewhere
-  // so we recover from it here
-  useEffect(() => {
-    if (!composer) {
-      store.workspaces[props.workspaceId].composers[props.threadId] = initComposer();
-    }
-  }, [composer]);
 
   if (!composer) {
     return null;
@@ -117,8 +99,8 @@ export function Composer(props: {
               placeholder={<Placeholder>{props.placeholder}</Placeholder>}
             />
             <OnChangePlugin
-              onChange={(editorState) => {
-                events.onComposerChange(target, editorState);
+              onChange={(editorState, editor) => {
+                events.onComposerChange(target, editorState, editor);
               }}
             />
             <HistoryPlugin />
