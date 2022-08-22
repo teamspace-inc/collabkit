@@ -13,16 +13,16 @@ export async function scheduleNotificationTask(props: {
 }) {
   const { appId, workspaceId, threadId, eventId, projectId, event } = props;
 
-  const emailBatchDelayMs = (await db.ref(`/apps/${appId}/emailBatchDelayMs/`).get()).val();
+  const delayMs = (await db.ref(`/apps/${appId}/emailBatchDelayMs/`).get()).val();
 
-  if (!emailBatchDelayMs || typeof emailBatchDelayMs !== 'number') {
+  if (!delayMs || typeof delayMs !== 'number') {
     console.log('[scheduleNotificationTask] no emailBatchDelayMs');
     return;
   }
 
   const response = await createTask({
     projectId,
-    url: 'https://us-central1-collabkit-dev.cloudfunctions.net/sendNotifcation',
+    url: 'https://us-central1-collabkit-dev.cloudfunctions.net/sendNotification',
     queue: 'notifs',
     payload: {
       appId,
@@ -31,7 +31,12 @@ export async function scheduleNotificationTask(props: {
       eventId,
       event,
     },
-    delayMs: emailBatchDelayMs,
+    delayMs,
+  });
+
+  console.log('[scheduleNotificationTask] scheduled', {
+    payload: { appId, workspaceId, threadId, eventId },
+    delayMs,
   });
 
   return response.name;

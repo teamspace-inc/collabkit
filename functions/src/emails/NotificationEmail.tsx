@@ -7,13 +7,16 @@ import ButtonPrimary from './components/ButtonPrimary';
 import { Mjml, MjmlBody, MjmlSection, MjmlColumn, MjmlText, MjmlSpacer } from 'mjml-react';
 
 type NotificationEmailProps = {
+  appLogoUrl?: string;
   activity: string;
   threadName?: string;
   workspaceName?: string;
+  accentColor?: string;
   commentList: { createdById: string; createdAt: number; body: string; type: string }[][];
   ctaText?: string;
   profiles: { [id: string]: { name?: string; avatar?: string; email?: string; color?: string } };
   productName?: string;
+  openUrl: string;
 };
 
 function Comment(props: { actorColor: string; actorName: string; commentBody: string[] }) {
@@ -24,23 +27,18 @@ function Comment(props: { actorColor: string; actorName: string; commentBody: st
           lineHeight={'28px'}
           align={'left'}
           fontWeight={800}
+          color={'white'}
           cssClass={`avatar color ${props.actorColor}`}
         >
           {props.actorName.slice(0, 1)}
         </MjmlText>
       </MjmlColumn>
       <MjmlColumn padding={'0px'}>
-        <MjmlText color={'white'} fontWeight={700} fontSize={'18px'} lineHeight={'26px'}>
+        <MjmlText fontWeight={700} fontSize={'18px'} lineHeight={'26px'}>
           {props.actorName}
         </MjmlText>
         {props.commentBody.map((line) => (
-          <MjmlText
-            padding="16px 24px 0px"
-            color={'white'}
-            fontWeight={400}
-            fontSize={'18px'}
-            lineHeight={'26px'}
-          >
+          <MjmlText padding="16px 24px 0px" fontWeight={400} fontSize={'18px'} lineHeight={'26px'}>
             {line}
           </MjmlText>
         ))}
@@ -53,24 +51,24 @@ const NotificationEmail: React.FC<NotificationEmailProps> = ({
   activity,
   threadName,
   workspaceName,
+  accentColor,
   productName,
   profiles,
+  openUrl,
+  appLogoUrl,
   commentList,
 }) => {
+  const entityName = threadName ?? workspaceName ?? productName;
+
   if (commentList.length === 0) {
     return null;
   }
 
-  if (commentList.length === 1) {
-    console.log('just one comment!');
-  }
-
-  const entityName = threadName ?? workspaceName ?? productName;
   return (
     <Mjml>
       <Head />
       <MjmlBody width={600}>
-        <Header />
+        <Header logoUrl={appLogoUrl} />
         <MjmlSection padding="40px 24px 0" cssClass="smooth">
           <MjmlColumn>
             {
@@ -91,20 +89,25 @@ const NotificationEmail: React.FC<NotificationEmailProps> = ({
           </MjmlColumn>
         </MjmlSection>
         {commentList.map((commentGroup) => {
+          const profile = profiles[commentGroup[0].createdById];
+          if (!profile) {
+            return null;
+          }
           return (
             <Comment
-              actorColor={profiles[commentGroup[0].createdById].color ?? 'sky'}
-              actorName={profiles[commentGroup[0].createdById].name ?? 'Anonymous'}
+              actorColor={profile.color ?? 'sky'}
+              actorName={profile.name ?? 'Anonymous'}
               commentBody={commentGroup.map((comment) => comment.body)}
             />
           );
         })}
-        <MjmlSection padding="20px 24px 0" cssClass="smooth">
+        <MjmlSection padding="0 24px 0" cssClass="smooth">
           <MjmlColumn>
             <>
               <ButtonPrimary
-                link={'#'}
-                uiText={productName ? `Open ${productName}` : 'View Comment'}
+                color={accentColor ?? '#000'}
+                link={openUrl}
+                uiText={commentList.length === 1 ? 'View Comment' : 'View Comments'}
               />
               <MjmlSpacer height="8px" />
             </>

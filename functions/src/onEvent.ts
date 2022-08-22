@@ -10,11 +10,16 @@ export async function handleCreate(props: {
   projectId: string;
   event: object;
 }) {
-  await Promise.all([scheduleNotificationTask(props), queueWebhookTask(props)]);
+  try {
+    await Promise.all([scheduleNotificationTask(props), queueWebhookTask(props)]);
+  } catch (e) {
+    console.error('[onEvent] error', e);
+  }
 }
 
-export const onEvent = functions.database
-  .ref('/timeline/{appId}/{workspaceId}/{threadId}/{eventId}')
+export const onEvent = functions
+  .runWith({ minInstances: 1 })
+  .database.ref('/timeline/{appId}/{workspaceId}/{threadId}/{eventId}')
   .onCreate((snapshot, context) => {
     if (context.authType === 'ADMIN') {
       return;

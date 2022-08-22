@@ -1,8 +1,5 @@
 import * as admin from 'firebase-admin';
 
-const db = admin.database();
-const CONNECTION_TIMEOUT_MS = 2000;
-
 // export type TimelineEvent = {
 //   type: 'message' | 'reaction' | 'adminMessage' | 'system';
 //   body: string;
@@ -74,6 +71,8 @@ const CONNECTION_TIMEOUT_MS = 2000;
 // type Inbox = InApp<InWorkspace<InThread<InUser<string>>>>;
 
 export function onConnect() {
+  const db = admin.database();
+  const CONNECTION_TIMEOUT_MS = 2000;
   return new Promise((resolve, reject) => {
     let timeoutID = setTimeout(() => {
       reject('timed out');

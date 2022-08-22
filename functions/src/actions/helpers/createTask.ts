@@ -8,11 +8,13 @@ export async function createTask(props: {
   payload: any;
   delayMs?: number;
 }) {
-  const { url, payload, projectId } = props;
+  const { url, payload, projectId, delayMs } = props;
   const body = Buffer.from(JSON.stringify(payload)).toString('base64');
 
   const client = new v2.CloudTasksClient();
   const parent = client.queuePath(projectId, 'us-central1', 'notifs');
+  const seconds = delayMs ? Math.floor((Date.now() + delayMs) / 1000) : 0;
+  console.log('delayed task by seconds', seconds);
 
   const task = {
     httpRequest: {
@@ -27,11 +29,10 @@ export async function createTask(props: {
       },
       body,
     },
-    ...(props.delayMs
+    ...(typeof delayMs === 'number'
       ? {
           scheduleTime: {
-            // 5 minutes from now
-            seconds: Math.floor((Date.now() + props.delayMs) / 1000),
+            seconds,
           },
         }
       : {}),

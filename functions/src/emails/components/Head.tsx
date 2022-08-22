@@ -8,8 +8,8 @@ const Head: React.FC<HeadProps> = ({ children }) => {
   return (
     <MjmlHead>
       <MjmlRaw>
-        <meta name="color-scheme" content="light dark" />
-        <meta name="supported-color-schemes" content="light dark" />
+        <meta name="color-scheme" content="light" />
+        <meta name="supported-color-schemes" content="light" />
       </MjmlRaw>
       <MjmlFont
         name="Inter"
@@ -111,17 +111,6 @@ const Head: React.FC<HeadProps> = ({ children }) => {
             padding-right: 24px !important;
           }
         }
-        @media (prefers-color-scheme: dark) {
-          .paragraph > *, .paragraph a, .li > div {
-            color: #fff !important;
-          }
-          .dark-mode {
-            display: inherit;
-          }
-          .light-mode {
-            display: none;
-          }
-        }
       `}</MjmlStyle>
       <MjmlAttributes>
         <MjmlAll
@@ -135,3 +124,15 @@ const Head: React.FC<HeadProps> = ({ children }) => {
 };
 
 export default Head;
+
+// @media (prefers-color-scheme: dark) {
+//   .paragraph > *, .paragraph a, .li > div {
+//     color: #fff !important;
+//   }
+//   .dark-mode {
+//     display: inherit;
+//   }
+//   .light-mode {
+//     display: none;
+//   }
+// }

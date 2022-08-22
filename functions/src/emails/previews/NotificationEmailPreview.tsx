@@ -83,150 +83,150 @@ const sample = {
       },
       comments: {
         list: [
-          [
-            {
-              body: 'Hello',
-              createdAt: 1660248581769,
-              createdById: '118153377351485973303',
-              type: 'message',
-            },
-            // ],
-            // [
-            {
-              body: 'World',
-              createdAt: 1660248935109,
-              createdById: '118153377351485973303',
-              type: 'message',
-            },
-            // ],
-            // [
-            {
-              body: 'Again',
-              createdAt: 1660249519859,
-              createdById: '118153377351485973303',
-              type: 'message',
-            },
-            // ],
-            // [
-            {
-              body: 'Hey there, this stuff is live',
-              createdAt: 1660250457167,
-              createdById: '118153377351485973303',
-              type: 'message',
-            },
-            // ],
-            // [
-            {
-              body: 'Another message',
-              createdAt: 1660251097789,
-              createdById: '118153377351485973303',
-              type: 'message',
-            },
-            // ],
-            // [
-            {
-              body: 'Test!',
-              createdAt: 1660251734701,
-              createdById: '118153377351485973303',
-              type: 'message',
-            },
-            // ],
-            // [
-            {
-              body: 'Holo',
-              createdAt: 1660254686076,
-              createdById: '118153377351485973303',
-              type: 'message',
-            },
-            // ],
-            // [
-            {
-              body: 'Test again',
-              createdAt: 1660300080776,
-              createdById: '118153377351485973303',
-              type: 'message',
-            },
-            // ],
-            // [
-            {
-              body: 'There you go',
-              createdAt: 1660300452557,
-              createdById: '118153377351485973303',
-              type: 'message',
-            },
-            // ],
-            // [
-            {
-              body: 'Message',
-              createdAt: 1660300826390,
-              createdById: '118153377351485973303',
-              type: 'message',
-            },
-          ],
-          [
-            {
-              body: 'Write',
-              createdAt: 1660300978755,
-              createdById: '118153377351485973303',
-              type: 'message',
-            },
-          ],
-          [
-            {
-              body: 'A',
-              createdAt: 1660300992664,
-              createdById: '118153377351485973303',
-              type: 'message',
-            },
-          ],
-          [
-            {
-              body: 'Message',
-              createdAt: 1660301170768,
-              createdById: '118153377351485973303',
-              type: 'message',
-            },
-          ],
-          [
-            {
-              body: 'New',
-              createdAt: 1660301962626,
-              createdById: '118153377351485973303',
-              type: 'message',
-            },
-          ],
-          [
-            {
-              body: 'Yes',
-              createdAt: 1660302348077,
-              createdById: '118153377351485973303',
-              type: 'message',
-            },
-          ],
-          [
-            {
-              body: 'FINAL',
-              createdAt: 1660302871936,
-              createdById: '118153377351485973303',
-              type: 'message',
-            },
-          ],
-          [
-            {
-              body: 'Hello world',
-              createdAt: 1660323184746,
-              createdById: '105986699029334209805',
-              type: 'message',
-            },
-          ],
-          [
-            {
-              body: 'test',
-              createdAt: 1660379193289,
-              createdById: '112557620140515558394',
-              type: 'message',
-            },
-          ],
+          // [
+          //   {
+          //     body: 'Hello',
+          //     createdAt: 1660248581769,
+          //     createdById: '118153377351485973303',
+          //     type: 'message',
+          //   },
+          //   // ],
+          //   // [
+          //   {
+          //     body: 'World',
+          //     createdAt: 1660248935109,
+          //     createdById: '118153377351485973303',
+          //     type: 'message',
+          //   },
+          //   // ],
+          //   // [
+          //   {
+          //     body: 'Again',
+          //     createdAt: 1660249519859,
+          //     createdById: '118153377351485973303',
+          //     type: 'message',
+          //   },
+          //   // ],
+          //   // [
+          //   {
+          //     body: 'Hey there, this stuff is live',
+          //     createdAt: 1660250457167,
+          //     createdById: '118153377351485973303',
+          //     type: 'message',
+          //   },
+          //   // ],
+          //   // [
+          //   {
+          //     body: 'Another message',
+          //     createdAt: 1660251097789,
+          //     createdById: '118153377351485973303',
+          //     type: 'message',
+          //   },
+          //   // ],
+          //   // [
+          //   {
+          //     body: 'Test!',
+          //     createdAt: 1660251734701,
+          //     createdById: '118153377351485973303',
+          //     type: 'message',
+          //   },
+          //   // ],
+          //   // [
+          //   {
+          //     body: 'Holo',
+          //     createdAt: 1660254686076,
+          //     createdById: '118153377351485973303',
+          //     type: 'message',
+          //   },
+          //   // ],
+          //   // [
+          //   {
+          //     body: 'Test again',
+          //     createdAt: 1660300080776,
+          //     createdById: '118153377351485973303',
+          //     type: 'message',
+          //   },
+          //   // ],
+          //   // [
+          //   {
+          //     body: 'There you go',
+          //     createdAt: 1660300452557,
+          //     createdById: '118153377351485973303',
+          //     type: 'message',
+          //   },
+          //   // ],
+          //   // [
+          //   {
+          //     body: 'Message',
+          //     createdAt: 1660300826390,
+          //     createdById: '118153377351485973303',
+          //     type: 'message',
+          //   },
+          // ],
+          // [
+          //   {
+          //     body: 'Write',
+          //     createdAt: 1660300978755,
+          //     createdById: '118153377351485973303',
+          //     type: 'message',
+          //   },
+          // ],
+          // [
+          //   {
+          //     body: 'A',
+          //     createdAt: 1660300992664,
+          //     createdById: '118153377351485973303',
+          //     type: 'message',
+          //   },
+          // ],
+          // [
+          //   {
+          //     body: 'Message',
+          //     createdAt: 1660301170768,
+          //     createdById: '118153377351485973303',
+          //     type: 'message',
+          //   },
+          // ],
+          // [
+          //   {
+          //     body: 'New',
+          //     createdAt: 1660301962626,
+          //     createdById: '118153377351485973303',
+          //     type: 'message',
+          //   },
+          // ],
+          // [
+          //   {
+          //     body: 'Yes',
+          //     createdAt: 1660302348077,
+          //     createdById: '118153377351485973303',
+          //     type: 'message',
+          //   },
+          // ],
+          // [
+          //   {
+          //     body: 'FINAL',
+          //     createdAt: 1660302871936,
+          //     createdById: '118153377351485973303',
+          //     type: 'message',
+          //   },
+          // ],
+          // [
+          //   {
+          //     body: 'Hello world',
+          //     createdAt: 1660323184746,
+          //     createdById: '105986699029334209805',
+          //     type: 'message',
+          //   },
+          // ],
+          // [
+          //   {
+          //     body: 'test',
+          //     createdAt: 1660379193289,
+          //     createdById: '112557620140515558394',
+          //     type: 'message',
+          //   },
+          // ],
           [
             {
               body: 'it works!',
@@ -244,8 +244,13 @@ const sample = {
 export function newComments() {
   return (
     <NotificationEmail
-      activity={`${sample.body.data.comments.list?.length} new comments`}
-      productName="Mixpanel"
+      openUrl={sample.body.data.thread.info.url}
+      appLogoUrl={
+        'https://uploads-ssl.webflow.com/621c64f63b023c2de02255d3/621c65a1379d5f3a08216e47_logo_wide_black.png'
+      }
+      activity={`${sample.body.data.comments.list?.length} new comment`}
+      productName="Dart"
+      accentColor="#D73C56"
       commentList={sample.body.data.comments.list}
       profiles={sample.body.data.workspace.profiles}
     />
