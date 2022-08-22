@@ -8,7 +8,7 @@
     "www"
   ],
   "scripts": {
-    "dev": "pnpm --recursive --parallel run dev",
+    "dev": "pnpm --recursive --parallel --filter '!@collabkit/vue' run dev",
     "server": "yarn workspace server dev",
     "typecheck": "tsc -b examples/demo www",
     "snapshots": "yarn workspace @collabkit/react start-server-and-test dev http://localhost:61000 'playwright test'"
