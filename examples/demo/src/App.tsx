@@ -53,6 +53,11 @@ export default function App() {
       apiKey={'oLsHFwp3uFYjgar37ygGc'}
       appId={'-N67qY-qlZoWmkQBPyZU'}
       workspace={{ id: 'foobar' }}
+      callbacks={{
+        onCommentSend: (data) => {
+          console.log(data);
+        },
+      }}
       user={{ ...user, id: user.userId }}
       theme={{
         radii: { 0: '0.5rem' },

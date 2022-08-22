@@ -40,7 +40,6 @@ export async function authenticate(store: Store) {
     const userSnapshot = await store.sync.getUser({ appId, userId });
     // store.sync.getWorkspaceName({ workspaceId }),
 
-    console.log(userSnapshot.val());
     const user = userSnapshot.val();
     if (!user) {
       throw new Error('User not found');
@@ -63,7 +62,7 @@ export async function authenticate(store: Store) {
 
     // UNSECURED mode
   } else if ('apiKey' in config) {
-    console.log('authenticating in UNSECURED mode');
+    // console.log('authenticating in UNSECURED mode');
 
     const auth = await generateToken({
       appId: config.appId,
@@ -101,7 +100,7 @@ export async function authenticate(store: Store) {
 
     store.isSignedIn = true;
 
-    console.log('CollabKit authenticated', userCredential, mode);
+    // console.log('CollabKit authenticated', userCredential, mode);
 
     await actions.saveProfile(store);
     actions.subscribeProfiles(store);
