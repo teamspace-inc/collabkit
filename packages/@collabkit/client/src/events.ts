@@ -60,7 +60,7 @@ export function createEvents(store: Store) {
       store.reactingId = null;
     },
 
-    onFocus: (e: React.FocusEvent, props: { target: Target }) => {
+    onFocus: (e: React.FocusEvent | FocusEvent, props: { target: Target }) => {
       actions.focus(store, props.target);
     },
 
@@ -74,7 +74,7 @@ export function createEvents(store: Store) {
       actions.toggleEmojiReactionPicker(store, props);
     },
 
-    onBlur: (e: React.FocusEvent, props: { target: Target }) => {
+    onBlur: (e: React.FocusEvent | FocusEvent, props: { target: Target }) => {
       actions.blur(store, props.target);
     },
 
@@ -97,9 +97,9 @@ export function createEvents(store: Store) {
 
       if (store.focusedId?.type === 'composer') {
         if (e.key === 'Enter' && !e.shiftKey) {
-          actions.sendMessage(store, { ...store.focusedId });
           e.stopPropagation();
           e.preventDefault();
+          actions.sendMessage(store, { ...store.focusedId });
         }
       }
     },

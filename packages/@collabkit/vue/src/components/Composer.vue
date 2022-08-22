@@ -32,15 +32,25 @@ const props = defineProps<{
 const StyledContentEditable = styled(LexicalContentEditable, composerStyles.contentEditable);
 const Placeholder = styled('div', composerStyles.placeholder);
 const ComposerContainer = styled('div', composerStyles.container);
-const StyledLexicalEditorContainer = styled('div', composerStyles.editorContainer);
+const StyledLexicalEditorContainer = styled('divv', composerStyles.editorContainer);
 const StyledVisibleComposerArea = styled('div', composerStyles.visibleComposerArea);
 
 const store = useStore();
+const events = useEvents();
+
 const composer = computed(() =>
   store.workspaces[props.workspaceId]
     ? store.workspaces[props.workspaceId].composers[props.threadId]
     : null
 );
+const target = computed(
+  (): Target => ({
+    type: 'composer',
+    threadId: props.threadId,
+    workspaceId: props.workspaceId,
+  })
+);
+
 watchEffect(() => {
   if (composer.value == null && store.workspaces[props.workspaceId]) {
     store.workspaces[props.workspaceId].composers[props.threadId] = initComposer();
@@ -71,23 +81,13 @@ function createEditorConfig() {
   };
 }
 
-function onFocus() {
-  // events.onFocus(e, { target })
+function onFocus(e: FocusEvent) {
+  events.onFocus(e, { target: target.value });
 }
 
-function onBlur() {
-  // events.onBlur(e, { target })
+function onBlur(e: FocusEvent) {
+  events.onBlur(e, { target: target.value });
 }
-
-const events = useEvents();
-
-const target = computed(
-  (): Target => ({
-    type: 'composer',
-    threadId: props.threadId,
-    workspaceId: props.workspaceId,
-  })
-);
 
 function onChange(editorState: EditorState) {
   events.onComposerChange(target.value, editorState);
@@ -104,11 +104,11 @@ const content = ref('');
       :profile="profile"
     />
     <LexicalComposer :initial-config="createEditorConfig()">
-      <StyledLexicalEditorContainer @focus="onFocus" @blur="onBlur">
+      <StyledLexicalEditorContainer>
         <StyledVisibleComposerArea>
           <LexicalPlainTextPlugin>
             <template #contentEditable>
-              <StyledContentEditable />
+              <StyledContentEditable @focus="onFocus" @blur="onBlur" />
             </template>
             <template #placeholder>
               <Placeholder>{{ placeholder }}</Placeholder>

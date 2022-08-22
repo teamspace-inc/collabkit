@@ -4,8 +4,9 @@ import { createVueStore } from '../stores/store';
 import { actions, createEvents, FirebaseSync, initFirebase } from '@collabkit/client';
 import type { Config, DeepPartial, Store, UserProps, WorkspaceProps } from '@collabkit/core';
 import type { Theme } from '@collabkit/theme';
-import { onMounted, provide } from 'vue';
+import { onBeforeUnmount, onMounted, provide } from 'vue';
 import { useTheme } from '../composables/useTheme';
+import { func } from 'prop-types';
 
 initFirebase();
 
@@ -32,6 +33,17 @@ provide(StoreKey, { store, events });
 onMounted(() => {
   actions.monitorConnection(store, events);
 });
+
+// Set up keydown listener
+onMounted(() => {
+  document.addEventListener('keydown', onKeyDown);
+});
+onBeforeUnmount(() => {
+  document.removeEventListener('keydown', onKeyDown);
+});
+function onKeyDown(e: KeyboardEvent) {
+  events.onKeyDown(e);
+}
 </script>
 
 <template>
