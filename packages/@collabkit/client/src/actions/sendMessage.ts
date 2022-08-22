@@ -29,7 +29,9 @@ export async function sendMessage(store: Store, props: { workspaceId: string; th
     return;
   }
 
-  editor.update(() => $getRoot().getChildren()[0].replace($createTextNode('')));
+  editor.update(() => {
+    $getRoot().getChildren()[0].replace($createTextNode(''));
+  });
 
   // a pending pin is marked as 'open' on first message send
   const hasPendingPin = workspace.pins[threadId]?.state === 'pending';
