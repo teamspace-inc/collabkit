@@ -1,5 +1,4 @@
 import { createStitches, keyframes } from '@stitches/react';
-import React from 'react';
 export const { styled, css, theme } = createStitches({
   theme: {
     colors: {},
