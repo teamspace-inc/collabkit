@@ -24,12 +24,12 @@ export async function sendMessage(store: Store, props: { workspaceId: string; th
   const { editor, $$body: body } = workspace.composers[threadId];
 
   if (body.trim().length === 0) {
-    console.warn('tried to send an empty message');
+    console.warn('[CollabKit] tried to send an empty message');
     // can't send empty messages
     return;
   }
 
-  editor.update(() => {
+  editor?.update(() => {
     $getRoot().getChildren()[0].replace($createTextNode(''));
   });
 
