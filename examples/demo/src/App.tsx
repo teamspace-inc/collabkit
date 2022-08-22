@@ -60,13 +60,23 @@ export default function App() {
       }}
       user={{ ...user, id: user.userId }}
       theme={{
-        radii: { 0: '0.5rem' },
-        fontSize: { 0: '12px', 2: '14px', 3: '20px' },
+        radii: { 0: '4px' },
+        fontSize: { 0: '12px', 1: '14px', 2: '14px', 3: '20px' },
+        lineHeights: { 0: '20px', 1: '20px' },
         fontWeights: { 2: 500, 3: 700 },
+        borders: {
+          composer: '1px solid #404045',
+        },
         colors: {
-          sendButtonColor: 'rgb(94, 81, 248)',
-          backgroundColor: 'rgb(249,249,250)',
-          composerBackground: 'white',
+          sendButtonColor: '#414286',
+          backgroundColor: '#1e1e21',
+          composerBackground: '#1e1e21',
+          composerPlaceholder: '#515159',
+          primaryText: 'rgb(212,212,216)',
+          caretColor: 'rgb(212,212,216)',
+        },
+        offsets: {
+          composerSendButtonTop: '14px',
         },
       }}
       mentionableUsers={mentionableUsers}
@@ -87,7 +97,7 @@ function Home() {
     <div style={{ position: 'fixed', inset: 0 }}>
       <CollabKit.Thread
         info={{ name: 'Demo thread' }}
-        showHeader={true}
+        showHeader={false}
         composerPrompt="Write a comment"
         style={{ borderRadius: 0, height: 'calc(100% - 44px)' }}
         threadId={threadId}

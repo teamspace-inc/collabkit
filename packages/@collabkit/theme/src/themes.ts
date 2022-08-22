@@ -86,6 +86,13 @@ export interface Theme {
     3: string;
     4: string;
   };
+  borders: {
+    composer: string;
+  };
+  offsets: {
+    composerSendButtonTop: string;
+    composerSendButtonRight: string;
+  };
   colors: {
     primaryText: string;
     secondaryText: string;
@@ -95,12 +102,14 @@ export interface Theme {
     composerButtonBackground: string;
     composerButtonIconColor: string;
     composerBackground: string;
+    composerPlaceholder: string;
     bubbleHoverBackground: string;
     selectionBackground: string;
     borderColor: string;
     pinBorderColor: string;
     sendButtonColor: string;
     backgroundColor: string;
+    caretColor: string;
   };
 }
 
@@ -199,6 +208,12 @@ export function createThemes(customTheme?: DeepPartial<Theme>) {
     fontWeights: {
       ...fontWeights,
       ...customTheme?.fontWeights,
+    },
+    borders: {
+      ...customTheme?.borders,
+    },
+    offsets: {
+      ...customTheme?.offsets,
     },
     radii: {
       ...radii,

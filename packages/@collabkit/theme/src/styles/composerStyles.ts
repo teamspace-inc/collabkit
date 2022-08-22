@@ -37,11 +37,11 @@ export const contentEditable = css({
   resize: 'none',
   fontSize: '$fontSize$2',
   lineHeight: '$lineHeights$0',
-  caretColor: '$colors$neutral12',
   position: 'relative',
   tabSize: 1,
   outline: 0,
   padding: '$padding$1 $padding$1',
+  caretColor: '$colors$caretColor',
 });
 
 export const container = css({
@@ -63,11 +63,16 @@ export const editorContainer = css({
   position: 'relative',
   verticalAlign: 'top',
   background: '$colors$composerBackground',
+  border: '$borders$composer',
 
   fontSize: '$fontSize$2',
   lineHeight: '$lineHeights$1',
   fontWeight: '$fontWeights$0',
   textAlign: 'left',
+
+  '::placeholder': {
+    color: '$colors$composerPlaceholder',
+  },
 });
 
 // affects the text rendered inside the composer, so

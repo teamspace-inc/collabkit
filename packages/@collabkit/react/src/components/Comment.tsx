@@ -120,6 +120,7 @@ export function Comment(props: {
 
   return typeof props.profile === 'object' ? (
     <StyledCommentContainer
+      type={props.type ?? 'default'}
       isPreview={props.isPreview}
       // onMouseOver={(e) => events.onMouseOver(e, { target })}
       // onMouseOut={(e) => events.onMouseOver(e, { target })}

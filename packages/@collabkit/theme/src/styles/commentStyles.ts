@@ -7,12 +7,26 @@ export const container = css({
   position: 'relative',
   maxWidth: 'calc(100% - $padding$1)',
   padding: '4px $padding$2',
+  lineHeight: '$lineHeights$1',
 
   variants: {
     isPreview: {
       true: {
         overflow: 'hidden',
       },
+    },
+    type: {
+      inline: {
+        paddingTop: 0,
+        paddingBottom: 0,
+      },
+      'inline-start': {
+        paddingBottom: 0,
+      },
+      'inline-end': {
+        paddingTop: 0,
+      },
+      default: {},
     },
   },
 });

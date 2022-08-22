@@ -9,7 +9,7 @@ export const button = css({
   height: '$sizes$sendButton',
   position: 'absolute',
   right: 'calc($padding$composer + 12px)',
-  top: '$padding$composer',
+  top: '$offsets$composerSendButtonTop',
   borderRadius: '$sizes$sendButton',
   border: 'none',
 

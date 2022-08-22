@@ -1,6 +1,6 @@
 import React from 'react';
 import { Comment } from './Comment';
-import { Event, CommentType, Profile, WithID } from '../constants';
+import { Event, CommentType, WithID } from '../constants';
 import { Target } from './Target';
 import equal from 'fast-deep-equal';
 import { useSnapshot } from 'valtio';
@@ -58,5 +58,6 @@ function getCommentType(group: Event[], index: number): CommentType {
       type = 'inline-end';
     }
   }
+  // console.log('comment-type', type);
   return type;
 }
