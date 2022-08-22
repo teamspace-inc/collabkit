@@ -1,74 +1,25 @@
 import { ReactNode, useEffect, useRef, useState } from 'react';
-import CommentAnything from '../assets/CommentAnything.svg';
-import AnyApp from '../assets/AnyApp.svg';
-import Realtime from '../assets/Realtime.svg';
-import Email from '../assets/Email.svg';
 import ChevronDown from '../assets/ChevronDown.svg';
-import RocketLaunchIcon from '../assets/RocketLaunch.svg';
-import HandPointingIcon from '../assets/HandPointing.svg';
-import Cursor from '../assets/Cursor.svg';
 import ycLogoSvg from '../assets/yc-logo.svg';
 import checkmarkSvg from '../assets/checkmark.svg';
-// import { HomeDemo1 } from './HomeDemo1';
-// import { HomeDemo2 } from './HomeDemo2';
-// import { HomeDemo3 } from './HomeDemo3';
 import { DiscordLogo } from 'phosphor-react';
 import { StickyHeader } from '../StickyHeader';
-import { Link, Section, Button, Grid, H3, Em, Text, VStack, HStack, styled, Title } from '../UIKit';
+import { Link, Section, Button, Grid, Text, VStack, HStack, styled, Title } from '../UIKit';
 import { Logo } from '../Logo';
 
 import HeroExampleSvg from '../assets/HeroExample.svg';
 import WorksWithSvg from '../assets/WorksWith.svg';
 import HardWorkSvg from '../assets/HardWork.svg';
 import SnippetReactSvg from '../assets/SnippetReact.svg';
-import SnippetVueSvg from '../assets/SnippetVue.svg';
-import SnippetAngularSvg from '../assets/SnippetAngular.svg';
+// import SnippetVueSvg from '../assets/SnippetVue.svg';
+// import SnippetAngularSvg from '../assets/SnippetAngular.svg';
 import ReactLogoSvg from '../assets/react.svg';
 import VueLogoSvg from '../assets/vue.svg';
 import AngularLogoSvg from '../assets/angular.svg';
+import FeaturesSmallSvg from '../assets/FeaturesSmall.svg';
 import FeaturesSvg from '../assets/Features.svg';
-
-const Article = styled('article', {
-  display: 'grid',
-  alignItems: 'center',
-  justifyContent: 'center',
-  gridTemplateColumns: '20rem 27.5rem',
-  columnGap: '8rem',
-  border: '2px solid #222222',
-  borderRadius: '1.25rem',
-  maxWidth: '36rem',
-
-  img: {
-    maxWidth: '100%',
-  },
-
-  '@bp1': {
-    padding: '0rem',
-    gridTemplateColumns: '1fr',
-  },
-  '@bp2': {
-    padding: '0rem',
-    gridTemplateColumns: '1fr',
-  },
-});
-
-const FeatureGrid = styled(Grid, {
-  gridTemplateColumns: '1fr 1fr',
-  marginTop: '4rem',
-
-  '@bp1': {
-    padding: '2rem 2rem 8rem',
-    gridTemplateColumns: '1fr',
-    gap: '2rem',
-  },
-
-  '@bp2': {
-    padding: '4rem 4rem 8rem',
-    gridTemplateColumns: '1fr 1fr',
-    width: 'unset',
-    gap: '4rem',
-  },
-});
+import CustomisePng from '../assets/Customise.png';
+import { useWindowSize } from '../hooks/useWindowSize';
 
 export function RequestDemoButton() {
   return (
@@ -81,70 +32,6 @@ export function RequestDemoButton() {
     </Button>
   );
 }
-
-const Hero = (
-  <Section
-    style={{
-      paddingTop: '10rem',
-      paddingBottom: '10rem',
-      position: 'relative',
-      overflow: 'hidden',
-      background: '#FFEC6B',
-    }}
-  >
-    <Grid
-      style={{
-        alignItems: 'center',
-        justifyContent: 'center',
-        gridTemplateColumns: '1fr',
-        columnGap: '0',
-      }}
-    >
-      <VStack style={{ margin: '3rem -6rem 0' }}>
-        <Title>
-          Ship
-          <br /> commenting
-          <br /> in minutes
-        </Title>
-        <Text style={{ textAlign: 'center', fontSize: '1.5rem', letterSpacing: '-0.03em' }}>
-          Add real-time collaboration to your product
-          <br /> with our customisable React SDK.
-        </Text>
-      </VStack>
-    </Grid>
-    <img
-      role={'button'}
-      onClick={() =>
-        document.querySelector('#boost-activation')?.scrollIntoView({ behavior: 'smooth' })
-      }
-      src={ChevronDown}
-      style={{
-        width: '24px',
-        marginLeft: -12,
-        padding: '60px 0',
-      }}
-    />
-    <img src={HeroExampleSvg} style={{ width: 'calc(100vw - 10rem)', maxWidth: '1124px' }} />
-  </Section>
-);
-
-// const DemoContainer = styled('div', {
-//   maxWidth: '1352px',
-//   width: '90vw',
-//   maxHeight: '760px',
-//   marginTop: '8.75rem',
-//   display: 'flex',
-//   justifyContent: 'center',
-//   alignItems: 'center',
-
-//   '@bp1': {
-//     marginTop: '3rem',
-//     marginBottom: 0,
-//   },
-//   '@bp2': {
-//     marginTop: '8.75rem',
-//   },
-// });
 
 const PlanGrid = styled(Grid, {
   gridTemplateColumns: '1fr 1fr 1fr',
@@ -228,34 +115,14 @@ const PlanPricingSmall = styled('div', {
   marginBottom: '1.5rem',
 });
 
-const JustAddInnerSection = styled(VStack, {
-  textAlign: 'center',
-  maxWidth: '58rem',
-  width: '90vw',
-  justifyContent: 'center',
-  alignItems: 'center',
-
-  '@bp1': {
-    marginTop: '4rem',
-  },
-  '@bp2': {
-    marginTop: '7rem',
-  },
-});
-
 const FooterLink = styled('a', {
   fontFamily: 'Inter',
   fontStyle: 'normal',
   fontWeight: 500,
   fontSize: '1rem',
   lineHeight: '120%',
-  /* or 19px */
-
   textAlign: 'center',
   letterSpacing: '-0.03em',
-
-  /* Grey 60 */
-
   color: '#999999',
   textDecoration: 'none',
 });
@@ -277,6 +144,8 @@ function PlanFeature({ children }: { children: ReactNode }) {
 export function Home() {
   const [invertFilter, setInvertFilter] = useState(0);
   const examplesRef = useRef<HTMLDivElement>(null);
+  const windowSize = useWindowSize();
+  const isSmallScreen = (windowSize?.width ?? 1000) < 600;
   useEffect(() => {
     const listener = () => {
       if (examplesRef.current) {
@@ -327,11 +196,82 @@ export function Home() {
           </HStack>
         }
       />
-      {Hero}
       <Section
         style={{
-          paddingTop: '180px',
-          paddingBottom: '220px',
+          position: 'relative',
+          overflow: 'hidden',
+          background: '#FFEC6B',
+        }}
+      >
+        <Grid
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            gridTemplateColumns: '1fr',
+          }}
+        >
+          <VStack>
+            <Title>
+              {isSmallScreen ? (
+                <span>Ship commenting in minutes</span>
+              ) : (
+                <span>
+                  Ship
+                  <br /> commenting
+                  <br /> in minutes
+                </span>
+              )}
+            </Title>
+            <Text>
+              {isSmallScreen ? (
+                <span>
+                  Add real-time collaboration to your product with our customisable React SDK.
+                </span>
+              ) : (
+                <span>
+                  Add real-time collaboration to your product
+                  <br /> with our customisable React SDK.
+                </span>
+              )}
+            </Text>
+            {!isSmallScreen && (
+              <div
+                style={{
+                  height: 60,
+                  cursor: 'pointer',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+                onClick={() =>
+                  document
+                    .querySelector('#demo')
+                    ?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+                }
+              >
+                <img
+                  role={'button'}
+                  src={ChevronDown}
+                  style={{
+                    display: 'block',
+                    marginTop: '0px',
+                    width: '24px',
+                    marginLeft: -12,
+                    padding: '60px 0',
+                  }}
+                />
+              </div>
+            )}
+            <img
+              id="demo"
+              src={HeroExampleSvg}
+              style={{ marginTop: '30px', width: 'calc(100vw - 40px)', maxWidth: '1124px' }}
+            />
+          </VStack>
+        </Grid>
+      </Section>
+      <Section
+        style={{
           justifyContent: 'center',
           alignItems: 'center',
           background: '#BCF0E1',
@@ -341,13 +281,13 @@ export function Home() {
           style={{
             maxWidth: '50rem',
             width: '90vw',
-            textAlign: 'center',
+            textAlign: 'left',
             justifyContent: 'center',
             alignItems: 'center',
           }}
         >
           <img src={WorksWithSvg} />
-          <Title style={{ textAlign: 'center', marginBottom: '3rem' }}>
+          <Title style={{ marginBottom: '3rem' }}>
             Works with
             <br />
             everything
@@ -392,8 +332,6 @@ export function Home() {
         style={{
           background: 'white',
           color: 'white',
-          paddingTop: '4rem',
-          paddingBottom: '9rem',
         }}
       >
         <img src={HardWorkSvg} />
@@ -412,14 +350,38 @@ export function Home() {
         >
           Just add the features that are right for you.
         </Text>
-        <img src={FeaturesSvg} />
+        <img
+          style={{ width: '90vw', maxWidth: '898px' }}
+          src={isSmallScreen ? FeaturesSmallSvg : FeaturesSvg}
+        />
+      </Section>
+      <Section
+        style={{
+          background: '#F5F3EB',
+          color: 'white',
+        }}
+      >
+        <Title style={{ marginBottom: '60px' }}>
+          Customise to fit
+          <br />
+          your brand
+        </Title>
+        <Text
+          style={{
+            color: 'black',
+            marginBottom: '104px',
+            marginTop: 0,
+            ...(window.innerWidth > 640 ? {} : { padding: '0 2rem', textAlign: 'left' }),
+          }}
+        >
+          Tailor CollabKit to seamlessly integrate with your UI.
+        </Text>
+        <img style={{ maxWidth: '812px' }} src={CustomisePng} />
       </Section>
       <Section
         style={{
           background: '#FFEC6B',
           textAlign: 'center',
-          paddingTop: '10rem',
-          paddingBottom: '5rem',
           minHeight: '80vh',
         }}
       >
@@ -446,41 +408,23 @@ export function Home() {
             <PlanTitle>Starter</PlanTitle>
             <PlanPrice>Free</PlanPrice>
             <PlanFeatures>
-              <PlanFeature>50 monthly active users</PlanFeature>
+              <PlanFeature>100 monthly active users</PlanFeature>
               <PlanFeature>Commenting</PlanFeature>
             </PlanFeatures>
             <RequestDemoButton />
           </Plan>
-          {/* <Plan>
-            <PlanTitle>Startup</PlanTitle>
-            <PlanPrice>
-              $300 <Small>Per month*</Small>
-            </PlanPrice>
-            <PlanFeatures>
-              <PlanFeature>Up to 1,000 monthly active users</PlanFeature>
-              <PlanFeature>Commenting</PlanFeature>
-              <PlanFeature>Presence</PlanFeature>
-              <PlanFeature>Analytics dashboard</PlanFeature>
-              <PlanFeature>Customisability</PlanFeature>
-              <PlanFeature>Slack &amp; Discord support</PlanFeature>
-            </PlanFeatures>
-            <PlanPricingSmall>
-              *Up to 5000 monthly active users, then $0.08 per monthly active user thereafter.
-            </PlanPricingSmall>
-            <RequestDemoButton />
-          </Plan> */}
           <Plan>
             <PlanTitle>Pro</PlanTitle>
             <PlanPrice>
-              $600 <Small>Per month*</Small>
+              $550 <Small>Per month*</Small>
             </PlanPrice>
             <PlanFeatures>
-              <PlanFeature>Up to 5,000 monthly active users</PlanFeature>
+              <PlanFeature>Up to 2,500 monthly active users</PlanFeature>
               <PlanFeature>Commenting</PlanFeature>
               <PlanFeature>Presence</PlanFeature>
               <PlanFeature>Analytics dashboard</PlanFeature>
-              <PlanFeature>Customisability</PlanFeature>
-              <PlanFeature>Slack &amp; Discord support</PlanFeature>
+              <PlanFeature>Customize UI</PlanFeature>
+              <PlanFeature>Shared Slack Channel</PlanFeature>
             </PlanFeatures>
             <PlanPricingSmall>
               *Up to 5000 monthly active users, then $0.08 per monthly active user thereafter.
@@ -495,8 +439,8 @@ export function Home() {
               <PlanFeature>Commenting</PlanFeature>
               <PlanFeature>Presence</PlanFeature>
               <PlanFeature>Analytics dashboard</PlanFeature>
-              <PlanFeature>Customisability</PlanFeature>
-              <PlanFeature>Slack &amp; Discord support</PlanFeature>
+              <PlanFeature>Customize UI</PlanFeature>
+              <PlanFeature>Shared Slack Channel</PlanFeature>
               <PlanFeature>SLA</PlanFeature>
               <PlanFeature>API</PlanFeature>
             </PlanFeatures>
@@ -506,8 +450,6 @@ export function Home() {
       </Section>
       <Section
         style={{
-          paddingTop: '15rem',
-          paddingBottom: '5rem',
           minHeight: '40vh',
           background: '#222222',
         }}
@@ -516,19 +458,22 @@ export function Home() {
         <Text
           style={{
             color: 'white',
-            fontFamily: 'Inter',
-            fontStyle: 'normal',
-            fontWeight: 500,
-            fontSize: '1.25rem',
-            textAlign: 'center',
-            letterSpacing: '-0.03em',
-            margin: 0,
-            marginBottom: '4rem',
+            marginBottom: '70px',
           }}
         >
           Any questions? Email us or join our Discord.
         </Text>
-        <HStack style={{ gap: '2rem', margin: 0 }}>
+        <HStack
+          style={{
+            gap: '2rem',
+            margin: 0,
+            ...(isSmallScreen
+              ? {
+                  flexDirection: 'column',
+                }
+              : {}),
+          }}
+        >
           <a
             href="mailto:info@collabkit.dev"
             style={{
@@ -588,7 +533,20 @@ export function Home() {
           <img src={ycLogoSvg} style={{ width: '2rem', height: '2rem' }} />
           <Small style={{ color: 'white' }}>Backed by Y Combinator</Small>
         </HStack>
-        <HStack className="FooterLinks" style={{ gap: '1rem', marginTop: '2rem' }}>
+        <HStack
+          className="FooterLinks"
+          style={{
+            gap: '1rem',
+            marginTop: '2rem',
+            ...(isSmallScreen
+              ? {
+                  alignItems: 'center',
+                  flexDirection: 'column',
+                  gap: '32px',
+                }
+              : {}),
+          }}
+        >
           <FooterLink>Teamspace Inc. 2022</FooterLink>
           <FooterLink target="_blank" href="https://www.iubenda.com/privacy-policy/17041190">
             Privacy
