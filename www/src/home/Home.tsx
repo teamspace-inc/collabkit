@@ -22,9 +22,10 @@ import FeaturesSvg from '../assets/Features.svg';
 import CustomisePng from '../assets/Customise.png';
 import { useWindowSize } from '../hooks/useWindowSize';
 
-export function RequestDemoButton() {
+export function RequestDemoButton(props: { style?: React.CSSProperties }) {
   return (
     <Button
+      style={{ ...props.style }}
       onClick={() =>
         (window.location.href = 'https://calendly.com/namit-chadha/30min?month=2022-07')
       }
@@ -33,6 +34,30 @@ export function RequestDemoButton() {
     </Button>
   );
 }
+
+const FooterLinkButton = styled('a', {
+  border: '1px solid white',
+  fontFamily: 'Inter',
+  fontStyle: 'normal',
+  fontWeight: 500,
+  fontSize: '1.25rem',
+  lineHeight: '100%',
+  boxSizing: 'border-box',
+  height: '60px',
+  padding: '0 2rem',
+  width: '16rem',
+  textAlign: 'center',
+  borderRadius: '100px',
+  color: 'white',
+  textDecoration: 'none',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  gap: '16px',
+
+  '@bp1': { width: '90vw' },
+  '@bp2': { width: 'unset' },
+});
 
 const StyledSectionHeader = styled(VStack, {
   '@bp1': { gap: '30px', alignItems: 'flex-start' },
@@ -166,6 +191,8 @@ export function Home() {
   const examplesRef = useRef<HTMLDivElement>(null);
   const windowSize = useWindowSize();
   const isSmallScreen = (windowSize?.width ?? 1000) < 600;
+  const footerLinksDivider = isSmallScreen ? null : <span>|</span>;
+
   useEffect(() => {
     const listener = () => {
       if (examplesRef.current) {
@@ -436,7 +463,7 @@ export function Home() {
               <PlanFeature>100 monthly active users</PlanFeature>
               <PlanFeature>Commenting</PlanFeature>
             </PlanFeatures>
-            <RequestDemoButton />
+            <RequestDemoButton style={{ height: '60px' }} />
           </Plan>
           <Plan>
             <PlanTitle>Pro</PlanTitle>
@@ -454,7 +481,7 @@ export function Home() {
             <PlanPricingSmall>
               *Up to 5000 monthly active users, then $0.08 per monthly active user thereafter.
             </PlanPricingSmall>
-            <RequestDemoButton />
+            <RequestDemoButton style={{ height: '60px' }} />
           </Plan>
           <Plan>
             <PlanTitle>Scale</PlanTitle>
@@ -469,7 +496,7 @@ export function Home() {
               <PlanFeature>SLA</PlanFeature>
               <PlanFeature>API</PlanFeature>
             </PlanFeatures>
-            <RequestDemoButton />
+            <RequestDemoButton style={{ height: '60px' }} />
           </Plan>
         </PlanGrid>
       </Section>
@@ -496,53 +523,11 @@ export function Home() {
               : {}),
           }}
         >
-          <a
-            href="mailto:info@collabkit.dev"
-            style={{
-              border: '1px solid white',
-              fontFamily: 'Inter',
-              fontStyle: 'normal',
-              fontWeight: 500,
-              boxSizing: 'border-box',
-              height: '4rem',
-              fontSize: '1.25rem',
-              lineHeight: '150%',
-              padding: '1rem 2rem',
-              width: '16rem',
-              textAlign: 'center',
-              borderRadius: '100px',
-              color: 'white',
-              textDecoration: 'none',
-            }}
-          >
-            info@collabkit.dev
-          </a>
-          <a
-            href="https://discord.gg/UCA4CbZad4"
-            style={{
-              border: '1px solid white',
-              fontFamily: 'Inter',
-              fontStyle: 'normal',
-              fontWeight: 500,
-              fontSize: '1.25rem',
-              lineHeight: '100%',
-              boxSizing: 'border-box',
-              height: '4rem',
-              padding: '1rem 2rem',
-              width: '16rem',
-              textAlign: 'center',
-              borderRadius: '100px',
-              color: 'white',
-              textDecoration: 'none',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '0.5rem',
-            }}
-          >
-            <DiscordLogo color="white" weight={'fill'} size={20} />
+          <FooterLinkButton href="mailto:info@collabkit.dev">info@collabkit.dev</FooterLinkButton>
+          <FooterLinkButton href="https://discord.gg/UCA4CbZad4">
+            <DiscordLogo color="white" weight={'fill'} size={25} />
             Discord
-          </a>
+          </FooterLinkButton>
         </HStack>
         <HStack
           style={{
@@ -579,18 +564,19 @@ export function Home() {
               : {}),
           }}
         >
-          <FooterLink>Teamspace Inc. 2022</FooterLink>|
+          <FooterLink>Teamspace Inc. 2022</FooterLink>
+          {footerLinksDivider}
           <FooterLink target="_blank" href="https://www.iubenda.com/privacy-policy/17041190">
             Privacy
           </FooterLink>
-          |
+          {footerLinksDivider}
           <FooterLink
             target="_blank"
             href="https://www.iubenda.com/privacy-policy/17041190/cookie-policy"
           >
             Cookies
           </FooterLink>
-          |
+          {footerLinksDivider}
           <FooterLink target="_blank" href="https://www.iubenda.com/terms-and-conditions/17041190">
             Terms &amp; Conditions
           </FooterLink>
