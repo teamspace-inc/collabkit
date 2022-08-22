@@ -7,7 +7,7 @@ export async function sendMessage(store: Store, props: { workspaceId: string; th
   const { workspaceId, threadId } = props;
   const { userId } = getConfig(store);
   if (!userId) {
-    console.warn('CollabKit: cannot send a message, anonymous user');
+    console.warn('[CollabKit]: cannot send a message, anonymous user');
     if (store.config.onAuthenticationRequired) {
       store.config.onAuthenticationRequired();
     }
@@ -15,10 +15,10 @@ export async function sendMessage(store: Store, props: { workspaceId: string; th
   }
 
   if (store.isReadOnly) {
-    console.warn('CollabKit: cannot send message in read-only mode');
+    console.warn('[CollabKit]: cannot send message in read-only mode');
     return;
   }
-  console.log('sending message', workspaceId, threadId);
+  // console.log('sending message', workspaceId, threadId);
 
   const workspace = store.workspaces[workspaceId];
   const { editor, $$body: body } = workspace.composers[threadId];
@@ -51,8 +51,19 @@ export async function sendMessage(store: Store, props: { workspaceId: string; th
     if (hasPendingPin) {
       workspace.pins[threadId].state = 'open';
     }
+
+    const event = {
+      workspaceId,
+      threadId,
+      body,
+      createdById: userId,
+      createdAt: +Date.now(),
+      type: 'message',
+    } as const;
+
+    store.callbacks?.onCommentSend?.({ event });
   } catch (e) {
-    console.error(' failed to send message ', e);
+    console.error('[CollabKit]: failed to send message ', e);
     workspace.pins[threadId].state = 'pending';
     return;
   }

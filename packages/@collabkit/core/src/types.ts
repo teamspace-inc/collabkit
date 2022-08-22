@@ -48,10 +48,25 @@ export type UnsecureProps = {
   workspace?: WorkspaceProps | null;
 };
 
+export type Callbacks = {
+  onCommentSend?: (data: {
+    event: {
+      createdById: string;
+      createdAt: number;
+      body: string;
+      type: 'message';
+      threadId: string;
+      parentId?: string;
+      workspaceId: string;
+    };
+  }) => void;
+};
+
 export type ConfigProps = {
   mentionableUsers: MentionProps;
   onAuthenticationRequired?: () => void;
   colorScheme?: 'light' | 'dark' | 'auto';
+  callbacks?: Callbacks;
   readOnly?: boolean;
   _demoStore?: Store;
   _isDemo?: boolean;
@@ -270,6 +285,7 @@ export interface UnconfiguredStore {
   appState: 'blank' | 'config' | 'ready';
   uiState: 'idle' | 'selecting' | 'continuous';
   subs: Subscriptions;
+  callbacks?: Callbacks;
 }
 
 export interface Store extends UnconfiguredStore {

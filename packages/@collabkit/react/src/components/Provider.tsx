@@ -1,7 +1,7 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { createThemes, Theme } from '@collabkit/theme';
 import { type DeepPartial } from '@collabkit/core';
-import { actions } from '@collabkit/client';
+import { actions, initFirebase } from '@collabkit/client';
 import { ConfigProps, SecureProps, Store, UnsecureProps } from '@collabkit/core';
 import { Events, createEvents } from '../events';
 import { AppContext } from '../hooks/useAppContext';
@@ -14,6 +14,8 @@ export type OtherProps = {
 };
 
 export type ProviderProps = (SecureProps | UnsecureProps) & ConfigProps & OtherProps;
+
+initFirebase();
 
 // Enable using multiple isolated App
 // instances in the same page.

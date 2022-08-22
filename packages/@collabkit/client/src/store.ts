@@ -36,6 +36,7 @@ export function createStore(): UnconfiguredStore {
     workspaces: {},
     profiles: {},
     subs: {},
+    callbacks: {},
   };
   return store;
 }
