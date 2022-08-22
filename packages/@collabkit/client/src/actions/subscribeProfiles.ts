@@ -31,8 +31,6 @@ export async function subscribeProfiles(store: Store) {
         },
         onError
       );
-      const profile = child.val();
-      store.profiles[child.key] = profile;
     }
   };
 

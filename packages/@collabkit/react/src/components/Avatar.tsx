@@ -17,15 +17,19 @@ export function Avatar({
   style?: React.CSSProperties;
 }) {
   const [didError, setDidError] = useState(false);
-  const styles = profile.color
-    ? {
-        backgroundColor: getShade(profile.color, 9),
-        ...style,
-      }
-    : style;
 
   return didError || !profile.avatar ? (
-    <StyledDefaultAvatar size={size} style={styles}>
+    <StyledDefaultAvatar
+      size={size}
+      style={{
+        ...style,
+        ...(profile.color
+          ? {
+              backgroundColor: getShade(profile.color, 9),
+            }
+          : {}),
+      }}
+    >
       {profile.name?.charAt(0)}
     </StyledDefaultAvatar>
   ) : (
@@ -33,7 +37,7 @@ export function Avatar({
       size={size}
       src={profile.avatar!}
       onError={() => setDidError(true)}
-      style={styles}
+      style={style}
     />
   );
 }
