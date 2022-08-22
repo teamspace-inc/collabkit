@@ -1,8 +1,7 @@
 import { $getRoot, EditorState } from 'lexical';
 import { nanoid } from 'nanoid';
-import React from 'react';
-import { actions } from '@collabkit/client';
 import type { CommentReactionTarget, CommentTarget, Store, Target } from '@collabkit/core';
+import { actions } from './actions';
 
 export type Events = ReturnType<typeof createEvents>;
 

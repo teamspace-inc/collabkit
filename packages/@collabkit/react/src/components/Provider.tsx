@@ -1,9 +1,8 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { createThemes, Theme } from '@collabkit/theme';
 import { type DeepPartial } from '@collabkit/core';
-import { actions, initFirebase } from '@collabkit/client';
+import { actions, initFirebase, Events, createEvents } from '@collabkit/client';
 import { ConfigProps, SecureProps, Store, UnsecureProps } from '@collabkit/core';
-import { Events, createEvents } from '../events';
 import { AppContext } from '../hooks/useAppContext';
 import { createValtioStore } from '../store';
 import { FirebaseSync } from '@collabkit/client';

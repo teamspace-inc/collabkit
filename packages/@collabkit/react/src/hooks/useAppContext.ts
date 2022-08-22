@@ -1,7 +1,7 @@
 import { createContext } from 'react';
 import { createThemes } from '@collabkit/theme';
-import type { Store } from '../constants';
-import type { Events } from '../events';
+import type { Events } from '@collabkit/client';
+import type { Store } from '@collabkit/core';
 
 type Themes = ReturnType<typeof createThemes>;
 
