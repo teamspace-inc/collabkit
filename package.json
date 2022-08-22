@@ -11,7 +11,7 @@
     "dev": "pnpm --recursive --parallel run dev",
     "server": "yarn workspace server dev",
     "typecheck": "tsc -b examples/demo www",
-    "snapshots": "yarn workspace @collabkit/react playwright test"
+    "snapshots": "yarn workspace @collabkit/react start-server-and-test dev http://localhost:61000 'playwright test'"
   },
   "devDependencies": {
     "@types/chrome": "^0.0.193",

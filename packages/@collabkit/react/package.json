@@ -53,6 +53,7 @@
     "react-string-replace": "^1.1.0",
     "react-test-renderer": "^18.2.0",
     "rollup-plugin-visualizer": "^5.7.0",
+    "start-server-and-test": "^1.14.0",
     "sync-fetch": "^0.4.1",
     "valtio": "^1.6.1",
     "vite": "^2.9.9",
