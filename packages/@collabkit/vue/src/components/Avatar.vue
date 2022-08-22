@@ -20,7 +20,7 @@ const props = withDefaults(
 );
 
 const didError = ref(false);
-const styles = computed(() =>
+const style = computed(() =>
   props.profile.color
     ? {
         backgroundColor: getShade(props.profile.color, 9),
@@ -34,8 +34,8 @@ function onError() {
 </script>
 
 <template>
-  <StyledDefaultAvatar v-if="didError || !profile.avatar" :size="size" :style="styles">
+  <StyledDefaultAvatar v-if="didError || !profile.avatar" :size="size" :style="style">
     {{ profile.name?.charAt(0) }}
   </StyledDefaultAvatar>
-  <StyledAvatar v-else :size="size" :src="profile.avatar" @error="onError" :style="styles" />
+  <StyledAvatar v-else :size="size" :src="profile.avatar" @error="onError" />
 </template>

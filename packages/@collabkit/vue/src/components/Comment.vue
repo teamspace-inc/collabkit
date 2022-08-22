@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { computed, watch } from 'vue';
-import type { CommentType, Profile, Target as TargetType } from '@collabkit/core';
+import { computed } from 'vue';
+import type { CommentType, Profile } from '@collabkit/core';
 import Avatar from './Avatar.vue';
 import MessageHeader from './comment/MessageHeader.vue';
 import { HStack } from './UIKit';
-// import { TargetKey } from '../constants';
 import {
   StyledCommentContainer,
   StyledCommentMessage,
@@ -22,8 +21,6 @@ const props = defineProps<{
   type: CommentType;
   isPreview?: boolean;
 }>();
-
-// const target = inject(TargetKey);
 
 const showProfile = computed(() => props.type === 'default' || props.type === 'inline-start');
 

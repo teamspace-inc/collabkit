@@ -1,17 +1,19 @@
 <script setup lang="ts">
+import { computed } from 'vue';
 import type { Event, CommentType, Profile, WithID } from '@collabkit/core';
 import Comment from './Comment.vue';
 import Target from './Target.vue';
-import { computed } from '@vue/reactivity';
+import { useStore } from '../composables/useStore';
 
 const props = defineProps<{
   group: WithID<Event>[];
-  profiles: { [profileId: string]: Profile };
   reactions: { [parentId: string]: { [createdById: string]: Event } };
   workspaceId: string;
   threadId: string;
   isPreview?: boolean;
 }>();
+
+const store = useStore();
 
 const comments = computed(() => (props.isPreview ? props.group.slice(0, 1) : props.group));
 
@@ -40,6 +42,7 @@ function getCommentType(group: Event[], index: number): CommentType {
     :target="{ type: 'comment', eventId: event.id, workspaceId, threadId }"
   >
     <Comment
+      v-if="store.profiles[event.createdById]"
       :id="event.id"
       :event="event"
       :reactions="reactions[event.id] ?? {}"
@@ -47,7 +50,7 @@ function getCommentType(group: Event[], index: number): CommentType {
       :timestamp="event.createdAt"
       :key="`event-${event.id}`"
       :body="event.body"
-      :profile="profiles[event.createdById]"
+      :profile="store.profiles[event.createdById]"
       :isPreview="isPreview"
     />
   </Target>

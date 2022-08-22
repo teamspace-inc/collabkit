@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { StoreKey, ThemeKey } from '../constants';
 import { createVueStore } from '../stores/store';
-import { actions, createEvents, FirebaseSync } from '@collabkit/client';
+import { actions, createEvents, FirebaseSync, initFirebase } from '@collabkit/client';
 import type { Config, DeepPartial, Store, UserProps, WorkspaceProps } from '@collabkit/core';
 import type { Theme } from '@collabkit/theme';
 import { onMounted, provide } from 'vue';
 import { useTheme } from '../composables/useTheme';
+
+initFirebase();
 
 const props = defineProps<{
   colorScheme?: 'light' | 'dark' | 'auto';

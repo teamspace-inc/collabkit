@@ -10,7 +10,7 @@ const user = { id: '1', name: 'Anonymous', email: 'anon@example.com' };
 <template>
   <main>
     <Provider :apiKey="apiKey" :appId="appId" :workspace="workspace" :user="user">
-      <Thread threadId="vue-chat" showHeader composerPrompt="Write a comment" />
+      <Thread threadId="your-thread-id" showHeader composerPrompt="Write a comment" />
     </Provider>
   </main>
 </template>

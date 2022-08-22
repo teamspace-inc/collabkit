@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type Profile, type Timeline, timelineUtils } from '@collabkit/core';
+import { type Timeline, timelineUtils } from '@collabkit/core';
 import { commentListStyles } from '@collabkit/theme';
 import { computed } from '@vue/reactivity';
 import CommentGroup from './CommentGroup.vue';
@@ -11,7 +11,6 @@ const SeeAllRepliesLink = styled('div', commentListStyles.seeAllRepliesLink);
 
 const props = defineProps<{
   isTyping?: { [endUserId: string]: boolean };
-  profiles: { [profileId: string]: Profile };
   timeline: Timeline;
   workspaceId: string;
   userId: string;
@@ -29,13 +28,12 @@ const groups = computed(() => (props.isPreview ? list.value.slice(0, 1) : list.v
     <CommentGroup
       v-for="group in groups"
       :group="group"
-      :profiles="profiles"
       :reactions="reactions"
       :workspaceId="workspaceId"
       :threadId="threadId"
       :isPreview="isPreview"
     />
-    <CurrentlyTyping v-if="!isPreview" :profiles="profiles" :userId="userId" :isTyping="isTyping" />
+    <CurrentlyTyping v-if="!isPreview" :userId="userId" :isTyping="isTyping" />
     <SeeAllRepliesLink v-if="isPreview">
       <template v-if="list.length == 2">See 1 reply</template>
       <template v-else-if="list.length > 2"> See {{ list.length }} replies</template>

@@ -12,7 +12,6 @@ import CommentList from './CommentList.vue';
 
 defineProps<{
   isTyping?: { [endUserId: string]: boolean };
-  profiles: { [profileId: string]: Profile };
   timeline: Timeline;
   workspaceId: string;
   userId: string;
@@ -36,7 +35,6 @@ onMounted(async () => {
     <ScrollAreaViewport ref="viewport">
       <CommentList
         :isTyping="isTyping"
-        :profiles="profiles"
         :threadId="threadId"
         :userId="userId"
         :workspaceId="workspaceId"

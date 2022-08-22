@@ -1,18 +1,19 @@
 <script setup lang="ts">
-import type { Profile } from '@collabkit/core';
 import { computed } from '@vue/reactivity';
+import { useStore } from '../../composables/useStore';
 import TypingIndicator from './TypingIndicator.vue';
 
 const props = defineProps<{
-  profiles: { [userId: string]: Profile };
   userId: string;
   isTyping?: { [userId: string]: boolean };
 }>();
 
+const store = useStore();
+
 const currentlyTyping = computed(() =>
   Object.keys(props.isTyping ?? {})
     .filter((endUserId) => endUserId !== props.userId)
-    .map((endUserId) => [endUserId, props.profiles[endUserId]])
+    .map((endUserId) => [endUserId, store.profiles[endUserId]])
 );
 </script>
 
