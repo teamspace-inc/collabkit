@@ -51,8 +51,9 @@ export async function updateUserAndWorkspace(props: {
 
   const updates: { [path: string]: object | string | boolean } = {};
 
-  const isNewUser = !(await admin.database().ref(`/profiles/${appId}/${userId}`).get()).exists();
-  if (isNewUser) {
+  const hasColor = (await (await admin.database().ref(`/profiles/${appId}/${userId}`).get()).val())
+    ?.color;
+  if (!hasColor) {
     user.color = getRandomColor();
   }
 
