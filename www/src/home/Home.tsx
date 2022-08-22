@@ -11,6 +11,7 @@ import HeroExampleSvg from '../assets/HeroExample.svg';
 import WorksWithSvg from '../assets/WorksWith.svg';
 import HardWorkSvg from '../assets/HardWork.svg';
 import SnippetReactSvg from '../assets/SnippetReact.svg';
+import SnippetReactSmallSvg from '../assets/ReactSnippetSmall.svg';
 // import SnippetVueSvg from '../assets/SnippetVue.svg';
 // import SnippetAngularSvg from '../assets/SnippetAngular.svg';
 import ReactLogoSvg from '../assets/react.svg';
@@ -30,6 +31,25 @@ export function RequestDemoButton() {
     >
       Request a demo
     </Button>
+  );
+}
+
+const StyledSectionHeader = styled(VStack, {
+  '@bp1': { gap: '30px', alignItems: 'flex-start' },
+  '@bp2': { gap: '60px', alignItems: 'center' },
+});
+
+function SectionHeader(props: {
+  image?: ReactNode;
+  title: string | React.ReactNode | undefined | null;
+  description: string | React.ReactNode | undefined | null;
+}) {
+  return (
+    <StyledSectionHeader>
+      {props.image}
+      <Title>{props.title}</Title>
+      <Text>{props.description}</Text>
+    </StyledSectionHeader>
   );
 }
 
@@ -210,20 +230,22 @@ export function Home() {
             gridTemplateColumns: '1fr',
           }}
         >
-          <VStack>
-            <Title>
-              {isSmallScreen ? (
-                <span>Ship commenting in minutes</span>
-              ) : (
-                <span>
-                  Ship
-                  <br /> commenting
-                  <br /> in minutes
-                </span>
-              )}
-            </Title>
-            <Text>
-              {isSmallScreen ? (
+          <SectionHeader
+            title={
+              <div style={{ marginTop: '40px' }}>
+                {isSmallScreen ? (
+                  <span>Ship commenting in minutes</span>
+                ) : (
+                  <span>
+                    Ship
+                    <br /> commenting
+                    <br /> in minutes
+                  </span>
+                )}{' '}
+              </div>
+            }
+            description={
+              isSmallScreen ? (
                 <span>
                   Add real-time collaboration to your product with our customisable React SDK.
                 </span>
@@ -232,42 +254,42 @@ export function Home() {
                   Add real-time collaboration to your product
                   <br /> with our customisable React SDK.
                 </span>
-              )}
-            </Text>
-            {!isSmallScreen && (
-              <div
+              )
+            }
+          />
+          {!isSmallScreen && (
+            <div
+              style={{
+                height: 60,
+                cursor: 'pointer',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+              onClick={() =>
+                document
+                  .querySelector('#demo')
+                  ?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+              }
+            >
+              <img
+                role={'button'}
+                src={ChevronDown}
                 style={{
-                  height: 60,
-                  cursor: 'pointer',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
+                  display: 'block',
+                  marginTop: '0px',
+                  width: '24px',
+                  marginLeft: -12,
+                  padding: '60px 0',
                 }}
-                onClick={() =>
-                  document
-                    .querySelector('#demo')
-                    ?.scrollIntoView({ behavior: 'smooth', block: 'center' })
-                }
-              >
-                <img
-                  role={'button'}
-                  src={ChevronDown}
-                  style={{
-                    display: 'block',
-                    marginTop: '0px',
-                    width: '24px',
-                    marginLeft: -12,
-                    padding: '60px 0',
-                  }}
-                />
-              </div>
-            )}
-            <img
-              id="demo"
-              src={HeroExampleSvg}
-              style={{ marginTop: '30px', width: 'calc(100vw - 40px)', maxWidth: '1124px' }}
-            />
-          </VStack>
+              />
+            </div>
+          )}
+          <img
+            id="demo"
+            src={HeroExampleSvg}
+            style={{ marginTop: '30px', width: 'calc(100vw - 40px)', maxWidth: '1124px' }}
+          />
         </Grid>
       </Section>
       <Section
@@ -277,79 +299,97 @@ export function Home() {
           background: '#BCF0E1',
         }}
       >
-        <VStack
-          style={{
-            maxWidth: '50rem',
-            width: '90vw',
-            textAlign: 'left',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <img src={WorksWithSvg} />
-          <Title style={{ marginBottom: '3rem' }}>
-            Works with
-            <br />
-            everything
-          </Title>
-          <Text>
-            From spreadsheets to dashboards; work together
-            <br /> as a team in any kind of interface.
-          </Text>
-        </VStack>
+        <SectionHeader
+          image={<img style={{ width: isSmallScreen ? '160px' : '210px' }} src={WorksWithSvg} />}
+          title={
+            isSmallScreen ? (
+              <span>Works with everything</span>
+            ) : (
+              <span>
+                Works with
+                <br /> everything
+              </span>
+            )
+          }
+          description={
+            isSmallScreen ? (
+              <span>
+                From spreadsheets to dashboards; work together as a team in any kind of interface.
+              </span>
+            ) : (
+              <span>
+                From spreadsheets to dashboards; work together
+                <br /> as a team in any kind of interface.
+              </span>
+            )
+          }
+        />
       </Section>
       <Section
         ref={examplesRef}
         style={{
           background: '#35284A',
           color: 'white',
-          paddingTop: '220px',
-          paddingBottom: '220px',
         }}
       >
-        <Title style={{ color: 'white', marginBottom: '3.75rem' }}>
-          Just a few lines
-          <br />
-          of code
-        </Title>
-        <Text
+        <SectionHeader
+          title={
+            <span style={{ color: 'white' }}>
+              {isSmallScreen ? (
+                <span>Just a few lines of code</span>
+              ) : (
+                <span>
+                  Just a few lines
+                  <br /> of code
+                </span>
+              )}
+            </span>
+          }
+          description={
+            <span>
+              Just add <span style={{ color: '' }}>{`<CollabKit.Thread />`}</span>
+            </span>
+          }
+        />
+        <VStack
           style={{
-            marginBottom: '4rem',
-            marginTop: 0,
-            ...(window.innerWidth > 640 ? {} : { padding: '0 2rem', textAlign: 'left' }),
+            gap: isSmallScreen ? '32px' : '50px',
+            alignItems: isSmallScreen ? 'flex-start' : 'center',
           }}
         >
-          Just add <span style={{ color: '' }}>{`<CollabKit.Thread />`}</span>
-        </Text>
-        <img src={SnippetReactSvg} />
-        <HStack style={{ gap: '2.33rem', marginTop: '5rem' }}>
-          <img src={ReactLogoSvg} />
-          <img src={VueLogoSvg} />
-          <img src={AngularLogoSvg} />
-        </HStack>
+          <img
+            style={{ width: '90vw', maxWidth: '812px' }}
+            src={isSmallScreen ? SnippetReactSmallSvg : SnippetReactSvg}
+          />
+          <HStack style={{ gap: '24px' }}>
+            <img style={{ width: isSmallScreen ? '33px' : '44px' }} src={ReactLogoSvg} />
+            <img style={{ width: isSmallScreen ? '33px' : '44px' }} src={VueLogoSvg} />
+            <img style={{ width: isSmallScreen ? '33px' : '44px' }} src={AngularLogoSvg} />
+          </HStack>
+        </VStack>
       </Section>
       <Section
         style={{
           background: 'white',
-          color: 'white',
         }}
       >
-        <img src={HardWorkSvg} />
-        <Title style={{ marginBottom: '3.75rem' }}>
-          We've done
-          <br />
-          the hard work
-        </Title>
-        <Text
-          style={{
-            color: 'black',
-            marginBottom: '100px',
-            marginTop: 0,
-            ...(window.innerWidth > 640 ? {} : { padding: '0 2rem', textAlign: 'left' }),
-          }}
-        >
-          Just add the features that are right for you.
-        </Text>
+        <SectionHeader
+          image={<img style={{ width: isSmallScreen ? '160px' : '210px' }} src={HardWorkSvg} />}
+          title={
+            <span>
+              {isSmallScreen ? (
+                <span>We've done the hard work</span>
+              ) : (
+                <span>
+                  We've done
+                  <br />
+                  the hard work
+                </span>
+              )}
+            </span>
+          }
+          description={<span>Just add the features that are right for you.</span>}
+        />
         <img
           style={{ width: '90vw', maxWidth: '898px' }}
           src={isSmallScreen ? FeaturesSmallSvg : FeaturesSvg}
@@ -358,51 +398,36 @@ export function Home() {
       <Section
         style={{
           background: '#F5F3EB',
-          color: 'white',
         }}
       >
-        <Title style={{ marginBottom: '60px' }}>
-          Customise to fit
-          <br />
-          your brand
-        </Title>
-        <Text
-          style={{
-            color: 'black',
-            marginBottom: '104px',
-            marginTop: 0,
-            ...(window.innerWidth > 640 ? {} : { padding: '0 2rem', textAlign: 'left' }),
-          }}
-        >
-          Tailor CollabKit to seamlessly integrate with your UI.
-        </Text>
+        <SectionHeader
+          title={
+            <span>
+              {isSmallScreen ? (
+                <span>Customise to fit your brand</span>
+              ) : (
+                <span>
+                  Customise to fit
+                  <br />
+                  your brand
+                </span>
+              )}
+            </span>
+          }
+          description={<span>Tailor CollabKit to seamlessly integrate with your UI.</span>}
+        />
         <img style={{ maxWidth: '812px' }} src={CustomisePng} />
       </Section>
       <Section
         style={{
           background: '#FFEC6B',
           textAlign: 'center',
-          minHeight: '80vh',
         }}
       >
-        <VStack>
-          <Title
-            style={{
-              marginTop: 0,
-              marginBottom: '3.75rem',
-            }}
-          >
-            Pricing
-          </Title>
-          <Text
-            style={{
-              marginTop: 0,
-              marginBottom: '7.5rem',
-            }}
-          >
-            Choose a package that suits you.
-          </Text>
-        </VStack>
+        <SectionHeader
+          title={<span>Pricing</span>}
+          description={<span>Choose a package that suits you.</span>}
+        />
         <PlanGrid>
           <Plan>
             <PlanTitle>Starter</PlanTitle>
@@ -450,22 +475,19 @@ export function Home() {
       </Section>
       <Section
         style={{
-          minHeight: '40vh',
           background: '#222222',
+          paddingBottom: '60px',
         }}
       >
-        <Title style={{ color: 'white', marginBottom: '3.75rem' }}>Contact Us</Title>
-        <Text
-          style={{
-            color: 'white',
-            marginBottom: '70px',
-          }}
-        >
-          Any questions? Email us or join our Discord.
-        </Text>
+        <SectionHeader
+          title={<span style={{ color: 'white' }}>Contact Us</span>}
+          description={
+            <span style={{ color: 'white' }}>Any questions? Email us or join our Discord.</span>
+          }
+        />
         <HStack
           style={{
-            gap: '2rem',
+            gap: '30px',
             margin: 0,
             ...(isSmallScreen
               ? {
@@ -524,7 +546,7 @@ export function Home() {
         </HStack>
         <HStack
           style={{
-            marginTop: '10rem',
+            marginTop: '80px',
             marginBottom: '0rem',
             alignItems: 'center',
             gap: '0.625rem',
@@ -536,8 +558,18 @@ export function Home() {
         <HStack
           className="FooterLinks"
           style={{
-            gap: '1rem',
-            marginTop: '2rem',
+            alignItems: 'center',
+            color: '#999999',
+            fontFamily: 'Inter',
+            fontStyle: 'normal',
+            fontWeight: 500,
+            fontSize: 16,
+            lineHeight: '120%',
+            /* or 19px */
+
+            textAlign: 'center',
+            letterSpacing: '-0.03em',
+            gap: '24px',
             ...(isSmallScreen
               ? {
                   alignItems: 'center',
@@ -547,16 +579,18 @@ export function Home() {
               : {}),
           }}
         >
-          <FooterLink>Teamspace Inc. 2022</FooterLink>
+          <FooterLink>Teamspace Inc. 2022</FooterLink>|
           <FooterLink target="_blank" href="https://www.iubenda.com/privacy-policy/17041190">
             Privacy
           </FooterLink>
+          |
           <FooterLink
             target="_blank"
             href="https://www.iubenda.com/privacy-policy/17041190/cookie-policy"
           >
             Cookies
           </FooterLink>
+          |
           <FooterLink target="_blank" href="https://www.iubenda.com/terms-and-conditions/17041190">
             Terms &amp; Conditions
           </FooterLink>

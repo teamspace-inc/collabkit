@@ -1,4 +1,5 @@
 import { createStitches, keyframes } from '@stitches/react';
+import React from 'react';
 export const { styled, css, theme } = createStitches({
   theme: {
     colors: {},
@@ -32,6 +33,7 @@ export const Text = styled('p', {
   textAlign: 'center',
   letterSpacing: '-0.02em',
   fontFeatureSettings: 'ss04 on',
+  margin: 0,
 
   '@bp1': {
     textAlign: 'left',
@@ -60,10 +62,10 @@ export const Title = styled('h1', {
   textAlign: 'center',
   letterSpacing: '-0.05em',
   color: '#222222',
-  margin: '0 0 40px',
+  margin: '0px',
   zIndex: 1,
 
-  '@bp1': { textAlign: 'left', marginTop: 0, maxWidth: '90vw', minWidth: '90vw', fontSize: '64px' },
+  '@bp1': { textAlign: 'left', marginTop: 0, maxWidth: '90vw', minWidth: '90vw', fontSize: '48px' },
   '@bp2': {
     maxWidth: 'unset',
     minWidth: 'unset',
@@ -189,14 +191,15 @@ export const Section = styled('section', {
   position: 'relative',
   display: 'flex',
   width: '100vw',
-  padding: '200px 0',
+  padding: '0px',
   overflow: 'hidden',
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
+  gap: '60px',
 
-  '@bp1': { padding: '140px 0px 100px' },
-  '@bp2': { padding: '200px 0px' },
+  '@bp1': { padding: '100px 0px 100px', gap: '30px' },
+  '@bp2': { padding: '200px 0px', gap: '60px' },
 });
 
 export const Header = styled('header', {
