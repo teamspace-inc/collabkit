@@ -20,6 +20,5 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Install dependencies
-      - run: 
         run: yarn install --frozen-lockfile --prefer-offline
       - run: yarn snapshots
