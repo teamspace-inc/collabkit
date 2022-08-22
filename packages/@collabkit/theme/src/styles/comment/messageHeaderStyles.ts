@@ -4,7 +4,7 @@ export const name = css({
   fontSize: '$fontSize$2',
   fontWeight: '$fontWeights$1',
   lineHeight: '$lineHeights$0',
-  gap: '12px',
+  // gap: '12px',
   flexDirection: 'row',
   color: '$colors$primaryText',
   alignItems: 'baseline',
@@ -17,4 +17,5 @@ export const timestamp = css({
   fontWeight: '$fontWeights$0',
   overflow: 'hidden',
   textOverflow: 'ellipsis',
+  marginLeft: '4px',
 });
