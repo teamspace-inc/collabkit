@@ -18,6 +18,7 @@ import { Avatar } from './Avatar';
 import { styled } from '@stitches/react';
 import { composerStyles } from '@collabkit/theme';
 import { useSnapshot, ref as valtioRef } from 'valtio';
+import PasteTextPlugin from './PasteTextPlugin';
 
 const StyledContentEditable = styled(ContentEditable, composerStyles.contentEditable);
 const Placeholder = styled('div', composerStyles.placeholder);
@@ -94,6 +95,7 @@ export function Composer(props: {
           onBlur={(e) => events.onBlur(e, { target })}
         >
           <StyledVisibleComposerArea>
+            <PasteTextPlugin />
             <PlainTextPlugin
               contentEditable={<StyledContentEditable />}
               placeholder={<Placeholder>{props.placeholder}</Placeholder>}
