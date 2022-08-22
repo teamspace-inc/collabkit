@@ -5,6 +5,22 @@ import { nanoid } from 'nanoid';
 
 export class LocalOnlySync implements SyncAdapter {
   constructor(public workspaceData: any) {}
+  getProfile(params: {
+    appId: string;
+    userId: string;
+  }): Promise<
+    | {
+        name?: string | undefined;
+        email?: string | undefined;
+        color?: string | undefined;
+        avatar?: string | undefined;
+      }
+    | null
+    | undefined
+  > {
+    return Promise.resolve(null);
+  }
+
   getUser(params: { userId: string; appId: string }): Promise<DataSnapshot> {
     throw new Error('Method not implemented.');
   }
