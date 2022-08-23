@@ -44,13 +44,22 @@ export const contentEditable = css({
   caretColor: '$colors$caretColor',
 });
 
+export const outer = css({
+  display: 'flex',
+  flexDirection: 'column',
+});
+
+export const typingOffset = css({
+  marginLeft: 'calc($padding$1 + $sizes$avatar + 16px)',
+});
+
 export const container = css({
   position: 'relative',
   display: 'flex',
   flex: '0 1 auto',
   borderBottomLeftRadius: '$radii$1',
   borderBottomRightRadius: '$radii$1',
-  padding: '$padding$0 $padding$1',
+  padding: '$padding$0 $padding$1 0',
   background: '$colors$backgroundColor',
 });
 

@@ -17,8 +17,9 @@ import { SendButton } from './composer/SendButton';
 import { Avatar } from './Avatar';
 import { styled } from '@stitches/react';
 import { composerStyles } from '@collabkit/theme';
-import { useSnapshot, ref as valtioRef } from 'valtio';
+import { useSnapshot } from 'valtio';
 import PasteTextPlugin from './PasteTextPlugin';
+import { Typers } from './comment/Typers';
 
 const StyledContentEditable = styled(ContentEditable, composerStyles.contentEditable);
 const Placeholder = styled('div', composerStyles.placeholder);
@@ -42,9 +43,13 @@ function createEditorConfig() {
   };
 }
 
+const StyledTypingOffset = styled('div', composerStyles.typingOffset);
+
 export function Composer(props: {
   workspaceId: string;
   threadId: string;
+  userId: string;
+  isTyping?: { [userId: string]: boolean };
   isFloating: boolean;
   placeholder: React.ReactNode | string;
   style?: React.CSSProperties;
@@ -84,38 +89,43 @@ export function Composer(props: {
   }
 
   return (
-    <ComposerContainer style={props.style}>
-      {profile && !props.hideAvatar ? (
-        <Avatar style={{ position: 'relative', top: 4, marginLeft: 8 }} profile={profile} />
-      ) : null}
-      <LexicalComposer initialConfig={initialConfig}>
-        <StyledLexicalEditorContainer
-          ref={editorContainerRef}
-          onFocus={(e) => events.onFocus(e, { target })}
-          onBlur={(e) => events.onBlur(e, { target })}
-        >
-          <StyledVisibleComposerArea>
-            <PasteTextPlugin />
-            <PlainTextPlugin
-              contentEditable={<StyledContentEditable />}
-              placeholder={<Placeholder>{props.placeholder}</Placeholder>}
-            />
-            <OnChangePlugin
-              onChange={(editorState, editor) => {
-                events.onComposerChange(target, editorState, editor);
-              }}
-            />
-            <HistoryPlugin />
-            <MentionsPlugin />
-            {props.autoFocus ? <AutoFocusPlugin /> : null}
-          </StyledVisibleComposerArea>
-        </StyledLexicalEditorContainer>
-      </LexicalComposer>
-      <SendButton
-        bodyLength={bodyLength}
-        workspaceId={props.workspaceId}
-        threadId={props.threadId}
-      />
-    </ComposerContainer>
+    <div>
+      <ComposerContainer style={props.style}>
+        {profile && !props.hideAvatar ? (
+          <Avatar style={{ position: 'relative', top: 4, marginLeft: 8 }} profile={profile} />
+        ) : null}
+        <LexicalComposer initialConfig={initialConfig}>
+          <StyledLexicalEditorContainer
+            ref={editorContainerRef}
+            onFocus={(e) => events.onFocus(e, { target })}
+            onBlur={(e) => events.onBlur(e, { target })}
+          >
+            <StyledVisibleComposerArea>
+              <PasteTextPlugin />
+              <PlainTextPlugin
+                contentEditable={<StyledContentEditable />}
+                placeholder={<Placeholder>{props.placeholder}</Placeholder>}
+              />
+              <OnChangePlugin
+                onChange={(editorState, editor) => {
+                  events.onComposerChange(target, editorState, editor);
+                }}
+              />
+              <HistoryPlugin />
+              <MentionsPlugin />
+              {props.autoFocus ? <AutoFocusPlugin /> : null}
+            </StyledVisibleComposerArea>
+          </StyledLexicalEditorContainer>
+        </LexicalComposer>
+        <SendButton
+          bodyLength={bodyLength}
+          workspaceId={props.workspaceId}
+          threadId={props.threadId}
+        />
+      </ComposerContainer>
+      <StyledTypingOffset>
+        <Typers userId={props.userId} isTyping={props.isTyping} />
+      </StyledTypingOffset>
+    </div>
   );
 }

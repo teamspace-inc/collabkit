@@ -15,7 +15,6 @@ import { useSnapshot } from 'valtio';
 import { useApp } from '../hooks/useApp';
 
 export const ScrollableCommentList = React.memo(function ScrollableCommentList(props: {
-  isTyping?: { [endUserId: string]: boolean };
   timeline: Timeline;
   workspaceId: string;
   userId: string;
@@ -41,10 +40,7 @@ export const ScrollableCommentList = React.memo(function ScrollableCommentList(p
     // did react to last message
     reactionEvents[reactionEvents.length - 1]?.parentId ===
       messageEvents[messageEvents.length - 1]?.id,
-    // someone is typing
-    // this can be annoying, we should find a way to show that
-    // below the composer
-    props.isTyping ? Object.keys(props.isTyping) : null,
+    // check that all profiles are loaded
     messageEvents.map((event) => event.createdById).every((userId) => profiles[userId]),
   ]);
 
@@ -61,7 +57,6 @@ export const ScrollableCommentList = React.memo(function ScrollableCommentList(p
       <ScrollAreaViewport onScroll={handleScroll} ref={scrollRef}>
         <CommentList
           seenUntil={props.seenUntil}
-          isTyping={props.isTyping}
           threadId={props.threadId}
           userId={props.userId}
           workspaceId={workspaceId}

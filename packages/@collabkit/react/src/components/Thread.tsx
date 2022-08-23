@@ -8,6 +8,7 @@ import { EmptyState } from './thread/EmptyState';
 import { styled } from '@stitches/react';
 import { threadStyles } from '@collabkit/theme';
 import { useSnapshot } from 'valtio';
+import { Typers } from './comment/Typers';
 
 const StyledThreadContainer = styled('div', threadStyles.container);
 const StyledThread = styled('div', threadStyles.thread);
@@ -73,7 +74,6 @@ export function Thread(props: {
         {!isEmpty && timeline && workspaceId && (
           <ScrollableCommentList
             seenUntil={seenUntil}
-            isTyping={workspace?.composers[props.threadId]?.isTyping}
             threadId={props.threadId}
             userId={userId}
             workspaceId={workspaceId}
@@ -83,7 +83,6 @@ export function Thread(props: {
         {workspaceId && workspace !== null ? (
           <Composer
             autoFocus={props.autoFocus}
-            style={{ paddingBottom: '12px' }}
             placeholder={
               props.composerPrompt != null
                 ? props.composerPrompt
@@ -94,6 +93,8 @@ export function Thread(props: {
             workspaceId={workspaceId}
             threadId={props.threadId}
             isFloating={false}
+            userId={userId}
+            isTyping={workspace?.composers[props.threadId]?.isTyping}
           />
         ) : null}
       </StyledThread>

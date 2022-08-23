@@ -3,7 +3,7 @@ import React from 'react';
 import { Timeline } from '../constants';
 import { styled } from '@stitches/react';
 import equal from 'fast-deep-equal';
-import { CurrentlyTyping } from './comment/CurrentlyTyping';
+import { Typers } from './comment/Typers';
 import { useTimeline } from '../hooks/useTimeline';
 import { CommentGroup } from './CommentGroup';
 import { commentListStyles } from '@collabkit/theme';
@@ -45,7 +45,7 @@ export const CommentList = React.memo(function CommentList(props: {
           isPreview={props.isPreview}
         />
       ))}
-      {props.isPreview ? null : <CurrentlyTyping userId={userId} isTyping={isTyping} />}
+      {props.isPreview ? null : <Typers userId={userId} isTyping={isTyping} />}
       {props.isPreview ? (
         <SeeAllRepliesLink>
           {list.length > 1
