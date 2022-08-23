@@ -35,6 +35,7 @@ export const CommentList = React.memo(function CommentList(props: {
         <CommentGroup
           key={i}
           group={group}
+          userId={props.userId}
           seenUntil={props.seenUntil}
           reactions={reactions}
           workspaceId={workspaceId}

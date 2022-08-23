@@ -52,6 +52,7 @@ export async function writeMessageToFirebase(
       event,
     });
 
+    store.workspaces[workspaceId].seen[threadId] = id;
     store.workspaces[workspaceId].timeline[threadId] ||= {};
     store.workspaces[workspaceId].timeline[threadId][id] = {
       ...event,
@@ -59,7 +60,15 @@ export async function writeMessageToFirebase(
     };
 
     // stop typing indicator as we sent the message successfully
-    actions.stopTyping(store, { target: { type: 'composer', workspaceId, threadId } });
+    Promise.all([
+      actions.stopTyping(store, { target: { type: 'composer', workspaceId, threadId } }),
+      actions.seen(store, {
+        workspaceId,
+        threadId,
+        eventId: id,
+        type: 'comment',
+      }),
+    ]);
   } catch (e) {
     console.error(e);
     // handle failure here

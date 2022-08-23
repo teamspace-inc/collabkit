@@ -12,17 +12,18 @@ export const CommentGroup = React.memo(function (props: {
   workspaceId: string;
   threadId: string;
   seenUntil?: string;
+  userId: string;
   rootRef: React.RefObject<HTMLDivElement>;
   isPreview?: boolean;
 }) {
-  const { seenUntil, group, reactions, workspaceId, threadId } = props;
+  const { seenUntil, group, reactions, workspaceId, threadId, userId } = props;
   const { store } = useApp();
   const { profiles } = useSnapshot(store);
   const comments = props.isPreview ? group.slice(0, 1) : group;
   return (
     <>
       {comments.map((event, index) => {
-        const seen = seenUntil ? seenUntil >= event.id : false;
+        const seen = event.createdById === userId || (seenUntil ? seenUntil >= event.id : true);
         return (
           <Target
             key={event.id}
