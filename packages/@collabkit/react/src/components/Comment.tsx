@@ -20,18 +20,8 @@ import {
   StyledCommentBodyEllipsis,
 } from './comment/StyledComment';
 
-function isElementInViewport(el: Element) {
-  var rect = el.getBoundingClientRect();
-
-  return (
-    rect.top >= 0 &&
-    rect.left >= 0 &&
-    rect.bottom <=
-      (window.innerHeight || document.documentElement.clientHeight) /* or $(window).height() */ &&
-    rect.right <=
-      (window.innerWidth || document.documentElement.clientWidth) /* or $(window).width() */
-  );
-}
+import { useInView } from 'react-intersection-observer';
+import { useWindowFocus } from '../hooks/useWindowFocus';
 
 function hasOverflow(ref: React.RefObject<HTMLDivElement>, deps: any[]) {
   const [isOverflowing, setIsOverflowing] = useState(false);
@@ -47,37 +37,19 @@ function hasOverflow(ref: React.RefObject<HTMLDivElement>, deps: any[]) {
   return isOverflowing;
 }
 
-function useWindowFocus() {
-  const [isFocused, setIsFocused] = useState(false);
-
-  useEffect(() => {
-    const onFocus = () => setIsFocused(true);
-    const onBlur = () => setIsFocused(false);
-
-    window.addEventListener('focus', onFocus);
-    window.addEventListener('blur', onBlur);
-
-    return () => {
-      window.removeEventListener('focus', onFocus);
-      window.removeEventListener('blur', onBlur);
-    };
-  }, []);
-
-  return isFocused;
-}
-
 export function Comment(props: {
   id: string;
   reactions: { [createdById: string]: Event };
   timestamp: number | object;
   body: string;
+  seen?: boolean;
   event: Event;
   profile: Profile;
   rootRef: React.RefObject<HTMLDivElement>;
   type: CommentType;
   isPreview?: boolean;
 }) {
-  const ref = useRef(null);
+  // const ref = useRef<HTMLDivElement | null>(null);
   const bodyRef = useRef(null);
   const { store, events } = useApp();
   const { reactingId } = useSnapshot(store);
@@ -88,10 +60,12 @@ export function Comment(props: {
   }
 
   const isWindowFocused = useWindowFocus();
+  const { ref, inView } = useInView({ threshold: 0 });
 
   useEffect(() => {
-    ref.current && isElementInViewport(ref.current) && events.onSeen({ target });
-  }, [isWindowFocused]);
+    const shouldMarkSeen = isWindowFocused && inView;
+    shouldMarkSeen && events.onSeen({ target });
+  }, [isWindowFocused, inView]);
 
   const emojiReactionPicker = isSameComment(reactingId, target) ? (
     <ReactionPicker target={target} viewportRef={props.rootRef} />
@@ -108,8 +82,6 @@ export function Comment(props: {
     );
   });
 
-  // console.log(match);
-
   // const body = props.event.type === 'system' ? <SystemBody event={props.event} /> : rawBody;
 
   if (props.event.type === 'system') {
@@ -120,6 +92,7 @@ export function Comment(props: {
 
   return typeof props.profile === 'object' ? (
     <StyledCommentContainer
+      seen={props.seen}
       type={props.type ?? 'default'}
       isPreview={props.isPreview}
       // onMouseOver={(e) => events.onMouseOver(e, { target })}

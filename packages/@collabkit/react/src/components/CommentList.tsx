@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import React from 'react';
-import { Profile, Timeline } from '../constants';
+import { Timeline } from '../constants';
 import { styled } from '@stitches/react';
 import equal from 'fast-deep-equal';
 import { CurrentlyTyping } from './comment/CurrentlyTyping';
@@ -14,6 +14,7 @@ const SeeAllRepliesLink = styled('div', commentListStyles.seeAllRepliesLink);
 export const CommentList = React.memo(function CommentList(props: {
   isTyping?: { [endUserId: string]: boolean };
   timeline: Timeline;
+  seenUntil?: string;
   workspaceId: string;
   userId: string;
   threadId: string;
@@ -36,6 +37,7 @@ export const CommentList = React.memo(function CommentList(props: {
         <CommentGroup
           key={i}
           group={group}
+          seenUntil={props.seenUntil}
           reactions={reactions}
           workspaceId={workspaceId}
           threadId={threadId}

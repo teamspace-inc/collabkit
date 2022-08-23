@@ -6,8 +6,12 @@ export const container = css({
   gap: '$space$2',
   position: 'relative',
   maxWidth: 'calc(100% - $padding$1)',
-  padding: '4px $padding$2',
+  padding: '$padding$commentTop $padding$commentRight $padding$commentBottom $padding$commentLeft',
   lineHeight: '$lineHeights$1',
+
+  '&:hover': {
+    backgroundColor: '$colors$commentHoverBackgroundColor',
+  },
 
   variants: {
     isPreview: {
@@ -17,16 +21,27 @@ export const container = css({
     },
     type: {
       inline: {
-        paddingTop: 0,
-        paddingBottom: 0,
+        paddingTop: 'calc($padding$commentTop/2)',
+        paddingBottom: 'calc($padding$commentBottom/2)',
       },
       'inline-start': {
-        paddingBottom: 0,
+        paddingTop: 'calc($padding$commentTop/2)',
+        paddingBottom: 'calc($padding$commentTop/2)',
       },
       'inline-end': {
-        paddingTop: 0,
+        paddingTop: 'calc($padding$commentTop/2)',
+        paddingBottom: 'calc($padding$commentBottom/2)',
       },
       default: {},
+    },
+    seen: {
+      false: {
+        background: '$colors$commentUnseenBackgroundColor',
+        '&:hover': {
+          backgroundColor: '$colors$commentUnseenHoverBackgroundColor',
+        },
+      },
+      true: {},
     },
   },
 });
@@ -45,9 +60,8 @@ export const message = css({
   borderRadius: '$radii$1',
 
   variants: {
-    // indents the comment
-    // to account for a profile
-    // image
+    // indents the comment to account
+    // for a profile image
     profileIndent: {
       true: {
         marginLeft: '$padding$4',

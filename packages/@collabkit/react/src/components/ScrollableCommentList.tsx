@@ -18,6 +18,7 @@ export const ScrollableCommentList = React.memo(function ScrollableCommentList(p
   workspaceId: string;
   userId: string;
   threadId: string;
+  seenUntil?: string;
   isPreview?: boolean;
 }) {
   const { workspaceId } = props;
@@ -54,6 +55,7 @@ export const ScrollableCommentList = React.memo(function ScrollableCommentList(p
     <ScrollAreaRoot ref={rootRef}>
       <ScrollAreaViewport onScroll={handleScroll} ref={scrollRef}>
         <CommentList
+          seenUntil={props.seenUntil}
           isTyping={props.isTyping}
           threadId={props.threadId}
           userId={props.userId}

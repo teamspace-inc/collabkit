@@ -11,34 +11,39 @@ export const CommentGroup = React.memo(function (props: {
   reactions: { [parentId: string]: { [createdById: string]: Event } };
   workspaceId: string;
   threadId: string;
+  seenUntil?: string;
   rootRef: React.RefObject<HTMLDivElement>;
   isPreview?: boolean;
 }) {
+  const { seenUntil, group, reactions, workspaceId, threadId } = props;
   const { store } = useApp();
   const { profiles } = useSnapshot(store);
-  const { group, reactions, workspaceId, threadId } = props;
   const comments = props.isPreview ? group.slice(0, 1) : group;
   return (
     <>
-      {comments.map((event, index) => (
-        <Target
-          key={event.id}
-          target={{ type: 'comment', eventId: event.id, workspaceId, threadId }}
-        >
-          <Comment
-            id={event.id}
-            event={event}
-            reactions={reactions[event.id]}
-            type={getCommentType(group, index)}
-            timestamp={event.createdAt}
-            key={`event-${event.id}`}
-            rootRef={props.rootRef}
-            body={event.body}
-            profile={profiles[event.createdById]}
-            isPreview={props.isPreview}
-          />
-        </Target>
-      ))}
+      {comments.map((event, index) => {
+        const seen = seenUntil ? seenUntil >= event.id : false;
+        return (
+          <Target
+            key={event.id}
+            target={{ type: 'comment', eventId: event.id, workspaceId, threadId }}
+          >
+            <Comment
+              id={event.id}
+              event={event}
+              reactions={reactions[event.id]}
+              type={getCommentType(group, index)}
+              timestamp={event.createdAt}
+              key={`event-${event.id}`}
+              rootRef={props.rootRef}
+              body={event.body}
+              seen={seen}
+              profile={profiles[event.createdById]}
+              isPreview={props.isPreview}
+            />
+          </Target>
+        );
+      })}
     </>
   );
 },

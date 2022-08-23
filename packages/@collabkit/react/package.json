@@ -62,5 +62,8 @@
   "prettier": {
     "singleQuote": true,
     "printWidth": 100
+  },
+  "dependencies": {
+    "react-intersection-observer": "^9.4.0"
   }
 }

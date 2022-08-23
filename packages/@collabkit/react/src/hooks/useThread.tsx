@@ -48,6 +48,8 @@ export function useThread(props: {
     }
   }, [workspaceId, threadId, isSignedIn, info, info?.name]);
 
+  const seenUntil = workspace?.seen[threadId];
+
   // const target = workspaceId ? ({ type: 'thread', threadId, workspaceId } as const) : null;
 
   // const systemEventIds = timeline
@@ -66,6 +68,7 @@ export function useThread(props: {
 
   return {
     timeline,
+    seenUntil,
     // isResolved,
     isEmpty,
     // target,

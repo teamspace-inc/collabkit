@@ -65,6 +65,8 @@ export interface Theme {
   };
   padding: {
     composer: string;
+    commentVertical: string;
+    commentHorizontal: string;
     0: string;
     1: string;
     2: string;
@@ -101,6 +103,9 @@ export interface Theme {
     primaryButtonBackground: string;
     composerButtonBackground: string;
     composerButtonIconColor: string;
+    commentHoverBackgroundColor: string;
+    commentUnseenBackgroundColor: string;
+    commentUnseenHoverBackgroundColor: string;
     composerBackground: string;
     composerPlaceholder: string;
     bubbleHoverBackground: string;
@@ -150,6 +155,10 @@ export function createThemes(customTheme?: DeepPartial<Theme>) {
 
   const padding = {
     composer: '12px',
+    commentTop: '8px',
+    commentBottom: '8px',
+    commentLeft: '$padding$2',
+    commentRight: '$padding$2',
     ['0']: '6px',
     ['1']: '8px',
     ['2']: '16px',
@@ -187,6 +196,10 @@ export function createThemes(customTheme?: DeepPartial<Theme>) {
     composerBackground: '$neutral4',
 
     sendButtonColor: '$accent10',
+
+    commentHoverBackgroundColor: 'unset',
+    commentUnseenBackgroundColor: 'unset',
+    commentUnseenHoverBackgroundColor: 'unset',
 
     bubbleHoverBackground: '$neutral4',
     selectionBackground: '$neutral10',

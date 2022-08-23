@@ -30,7 +30,7 @@ export function Thread(props: {
   const { userId, workspaceId, workspaces, isConnected } = useSnapshot(store);
   const workspace = workspaceId ? workspaces[workspaceId] : null;
 
-  const { timeline, isEmpty } = useThread({
+  const { timeline, isEmpty, seenUntil } = useThread({
     ...props,
     store,
     workspaceId,
@@ -71,6 +71,7 @@ export function Thread(props: {
         {isConnected && isEmpty ? <EmptyState /> : null}
         {!isEmpty && timeline && workspaceId && (
           <ScrollableCommentList
+            seenUntil={seenUntil}
             isTyping={workspace?.composers[props.threadId]?.isTyping}
             threadId={props.threadId}
             userId={userId}
