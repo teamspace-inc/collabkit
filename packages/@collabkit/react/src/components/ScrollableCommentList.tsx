@@ -11,6 +11,8 @@ import { Timeline } from '../constants';
 import equal from 'fast-deep-equal';
 import { useTimeline } from '../hooks/useTimeline';
 import { CommentList } from './CommentList';
+import { useSnapshot } from 'valtio';
+import { useApp } from '../hooks/useApp';
 
 export const ScrollableCommentList = React.memo(function ScrollableCommentList(props: {
   isTyping?: { [endUserId: string]: boolean };
@@ -27,6 +29,8 @@ export const ScrollableCommentList = React.memo(function ScrollableCommentList(p
   const scrollRef = useRef<HTMLDivElement>(null);
   const { timeline } = props;
 
+  const { store } = useApp();
+  const { profiles } = useSnapshot(store);
   const { messageEvents, reactionEvents } = useTimeline(timeline);
 
   // todo this needs reworking anyway to show a 'new messages' button
@@ -41,6 +45,7 @@ export const ScrollableCommentList = React.memo(function ScrollableCommentList(p
     // this can be annoying, we should find a way to show that
     // below the composer
     props.isTyping ? Object.keys(props.isTyping) : null,
+    messageEvents.map((event) => event.createdById).every((userId) => profiles[userId]),
   ]);
 
   const handleScroll = useCallback((e: React.SyntheticEvent) => {
