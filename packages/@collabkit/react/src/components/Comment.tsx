@@ -64,7 +64,9 @@ export function Comment(props: {
 
   useEffect(() => {
     const shouldMarkSeen = isWindowFocused && inView;
-    shouldMarkSeen && events.onSeen({ target });
+    if (shouldMarkSeen) {
+      events.onSeen({ target });
+    }
   }, [isWindowFocused, inView]);
 
   const emojiReactionPicker = isSameComment(reactingId, target) ? (

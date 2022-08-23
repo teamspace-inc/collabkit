@@ -7,7 +7,7 @@ const props = defineProps<{
   target: TargetType;
 }>();
 
-provide(TargetKey, () => props.target);
+provide(TargetKey, props.target);
 </script>
 
 <template>

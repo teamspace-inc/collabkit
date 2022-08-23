@@ -30,6 +30,7 @@ const groups = computed(() => (props.isPreview ? list.value.slice(0, 1) : list.v
       v-for="group in groups"
       :group="group"
       :userId="userId"
+      :seenUntil="seenUntil"
       :reactions="reactions"
       :workspaceId="workspaceId"
       :threadId="threadId"

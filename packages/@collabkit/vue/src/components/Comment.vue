@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed } from 'vue';
-import type { CommentType, Profile } from '@collabkit/core';
+import { computed, inject, ref, watchEffect } from 'vue';
+import type { Target, CommentType, Profile, CommentTarget } from '@collabkit/core';
 import Avatar from './Avatar.vue';
 import MessageHeader from './comment/MessageHeader.vue';
 import { HStack } from './UIKit';
@@ -10,6 +10,9 @@ import {
   StyledCommentBody,
   StyledCommentBodyEllipsis,
 } from './comment/StyledComment';
+import { useIntersectionObserver, useWindowFocus } from '@vueuse/core';
+import { useEvents } from '../composables/useEvents';
+import { TargetKey } from '../constants';
 
 const props = defineProps<{
   id: string;
@@ -25,11 +28,37 @@ const props = defineProps<{
 
 const showProfile = computed(() => props.type === 'default' || props.type === 'inline-start');
 
+const events = useEvents();
+const isWindowFocused = useWindowFocus();
+const target = inject<Target>(TargetKey);
+const container = ref(null);
+const inView = ref(false);
+useIntersectionObserver(
+  container,
+  ([{ isIntersecting }]) => {
+    inView.value = isIntersecting;
+  },
+  {
+    threshold: 0,
+  }
+);
+watchEffect(() => {
+  const shouldMarkSeen = isWindowFocused.value && inView.value;
+  if (shouldMarkSeen) {
+    events.onSeen({ target: target as CommentTarget });
+  }
+});
+
 const isOverflowing = false;
 </script>
 
 <template>
-  <StyledCommentContainer :seen="seen" :type="props.type ?? 'default'" :isPreview="isPreview">
+  <StyledCommentContainer
+    ref="container"
+    :seen="seen"
+    :type="props.type ?? 'default'"
+    :isPreview="isPreview"
+  >
     <Avatar v-if="showProfile" :profile="profile" />
     <HStack>
       <StyledCommentMessage :profileIndent="!showProfile">
