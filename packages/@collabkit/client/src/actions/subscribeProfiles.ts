@@ -10,6 +10,18 @@ import type { Store } from '@collabkit/core';
 import { getConfig } from './index';
 import { getApp } from 'firebase/app';
 
+function setHasProfile(store: Store, userId: string) {
+  for (const workspaceId in store.workspaces) {
+    for (const threadId in store.workspaces[workspaceId].timeline) {
+      for (const eventId in store.workspaces[workspaceId].timeline[threadId]) {
+        if (store.workspaces[workspaceId].timeline[threadId][eventId].createdById === userId) {
+          store.workspaces[workspaceId].timeline[threadId][eventId].hasProfile = true;
+        }
+      }
+    }
+  }
+}
+
 export async function subscribeProfiles(store: Store) {
   const { appId, workspaceId } = getConfig(store);
 
@@ -27,6 +39,7 @@ export async function subscribeProfiles(store: Store) {
           const profile = profileSnapshot.val();
           if (profile) {
             store.profiles[id] = profile;
+            setHasProfile(store, id);
           }
         },
         onError

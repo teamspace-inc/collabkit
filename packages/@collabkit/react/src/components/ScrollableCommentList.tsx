@@ -11,8 +11,6 @@ import { Timeline } from '../constants';
 import equal from 'fast-deep-equal';
 import { useTimeline } from '../hooks/useTimeline';
 import { CommentList } from './CommentList';
-import { useSnapshot } from 'valtio';
-import { useApp } from '../hooks/useApp';
 
 export const ScrollableCommentList = React.memo(function ScrollableCommentList(props: {
   timeline: Timeline;
@@ -28,8 +26,6 @@ export const ScrollableCommentList = React.memo(function ScrollableCommentList(p
   const scrollRef = useRef<HTMLDivElement>(null);
   const { timeline } = props;
 
-  const { store } = useApp();
-  const { profiles } = useSnapshot(store);
   const { messageEvents, reactionEvents } = useTimeline(timeline);
 
   // todo this needs reworking anyway to show a 'new messages' button
@@ -41,7 +37,7 @@ export const ScrollableCommentList = React.memo(function ScrollableCommentList(p
     reactionEvents[reactionEvents.length - 1]?.parentId ===
       messageEvents[messageEvents.length - 1]?.id,
     // check that all profiles are loaded
-    messageEvents.map((event) => event.createdById).every((userId) => profiles[userId]),
+    messageEvents.every((event) => event.hasProfile),
   ]);
 
   const handleScroll = useCallback((e: React.SyntheticEvent) => {

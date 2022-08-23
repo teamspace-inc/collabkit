@@ -209,6 +209,10 @@ export type WithID<T> = T & {
   id: string;
 };
 
+export type WithHasProfile<T> = T & {
+  hasProfile?: boolean;
+};
+
 export type MentionProps = readonly Mention[];
 
 export interface Mention extends BasicProfile {
@@ -227,7 +231,7 @@ export interface Profile extends BasicProfile {
 }
 
 export interface Timeline {
-  [eventId: string]: Event;
+  [eventId: string]: WithHasProfile<Event>;
 }
 
 export interface Composer {
@@ -254,7 +258,7 @@ export interface Workspace {
   profiles: { [userId: string]: boolean };
   name: string;
   pins: { [threadId: string]: Pin };
-  inbox: { [threadId: string]: WithID<WithName<Event>> };
+  inbox: { [threadId: string]: WithHasProfile<WithID<WithName<Event>>> };
   timeline: { [threadId: string]: Timeline };
   composers: { [threadId: string]: Composer };
   seen: { [threadId: string]: string }; // lastSeenEventId

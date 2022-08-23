@@ -1,4 +1,4 @@
-import type { Event, Timeline, WithID } from './types';
+import type { Event, Timeline, WithHasProfile, WithID } from './types';
 
 export function groupedMessages(timeline: Timeline) {
   const eventIds = Object.keys(timeline);
@@ -66,7 +66,7 @@ export function reactions(timeline: Timeline) {
 
 export function groupedTimeline(timeline: Timeline) {
   const eventIds = Object.keys(timeline);
-  const events: WithID<Event>[] = eventIds.map((eventId) => ({
+  const events: WithHasProfile<WithID<Event>>[] = eventIds.map((eventId) => ({
     ...timeline[eventId],
     id: eventId,
   }));

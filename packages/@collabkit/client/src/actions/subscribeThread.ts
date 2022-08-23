@@ -25,6 +25,10 @@ export async function subscribeThread(
     onTimelineEventAdded: (event: Sync.TimelineChangeEvent) => {
       store.workspaces[event.workspaceId].timeline[event.threadId] ||= {};
       store.workspaces[event.workspaceId].timeline[event.threadId][event.eventId] ||= event.event;
+      if (store.profiles[event.event.createdById]) {
+        store.workspaces[event.workspaceId].timeline[event.threadId][event.eventId].hasProfile =
+          true;
+      }
     },
     onThreadTypingChange: ({ workspaceId, threadId, userId, isTyping }: Sync.TypingEvent) => {
       store.workspaces[workspaceId].composers[threadId].isTyping[userId] = isTyping;
