@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { nextTick, onMounted, ref } from 'vue';
-import type { Profile, Timeline } from '@collabkit/core';
+import { nextTick, onMounted, ref, computed, watch } from 'vue';
+import { timelineUtils, type Profile, type Timeline } from '@collabkit/core';
 import {
   ScrollAreaRoot,
   ScrollAreaViewport,
@@ -10,7 +10,7 @@ import {
 } from './ScrollArea';
 import CommentList from './CommentList.vue';
 
-defineProps<{
+const props = defineProps<{
   isTyping?: { [endUserId: string]: boolean };
   timeline: Timeline;
   workspaceId: string;
@@ -20,8 +20,24 @@ defineProps<{
   isPreview?: boolean;
 }>();
 
+const timelineEvents = computed(() => ({
+  messageEvents: timelineUtils.messageEvents(props.timeline),
+  reactionEvents: timelineUtils.reactionEvents(props.timeline),
+}));
 const viewport = ref<{ element: HTMLDivElement } | null>(null);
-onMounted(async () => {
+const scrollDependencies = computed(() => {
+  const { messageEvents, reactionEvents } = timelineEvents.value;
+  return [
+    viewport,
+    messageEvents.length,
+    // did react to last message
+    reactionEvents[reactionEvents.length - 1]?.parentId ===
+      messageEvents[messageEvents.length - 1]?.id,
+    // check that all profiles are loaded
+    messageEvents.every((event) => event.hasProfile),
+  ];
+});
+watch(scrollDependencies, () => {
   if (viewport.value) {
     const { element } = viewport.value;
     nextTick(() => {
