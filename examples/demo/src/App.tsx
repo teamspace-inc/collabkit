@@ -103,7 +103,7 @@ function Home() {
         info={{ name: 'Demo thread' }}
         showHeader={false}
         composerPrompt="Write a comment"
-        style={{ borderRadius: 0, height: 'calc(100% - 44px)' }}
+        style={{ borderRadius: 0, height: '100%' }}
         threadId={threadId}
       />
     </div>
