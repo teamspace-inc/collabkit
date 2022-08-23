@@ -10,6 +10,7 @@
     "@collabkit/colors": "^0.0.0",
     "@collabkit/core": "^0.0.0",
     "@types/lodash.debounce": "^4.0.7",
+    "@vue/reactivity": "3.2.37",
     "date-fns": "^2.28.0",
     "firebase": "^9.9.1",
     "lexical": "0.3.9",

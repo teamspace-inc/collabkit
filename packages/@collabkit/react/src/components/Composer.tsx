@@ -34,14 +34,12 @@ function onError(error: any) {
   console.error(error);
 }
 
-function createEditorConfig() {
-  return {
-    namespace: 'Composer',
-    theme: composerStyles.lexicalTheme,
-    nodes: [MentionNode],
-    onError,
-  };
-}
+const initialConfig = {
+  namespace: 'Composer',
+  theme: composerStyles.lexicalTheme,
+  nodes: [MentionNode],
+  onError,
+};
 
 const StyledTypingOffset = styled('div', composerStyles.typingOffset);
 
@@ -71,10 +69,6 @@ export function Composer(props: {
 
   const composer = workspace ? workspace.composers[props.threadId] : null;
   const bodyLength = composer?.$$body.trim().length ?? 0;
-
-  const initialConfig = {
-    ...createEditorConfig(),
-  };
 
   const editorContainerRef = useRef(null);
   useResizeObserver({

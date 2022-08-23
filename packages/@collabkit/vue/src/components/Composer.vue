@@ -8,7 +8,7 @@ import {
   LexicalOnChangePlugin,
   LexicalPlainTextPlugin,
 } from 'lexical-vue';
-import { createEditor, type EditorState } from 'lexical';
+import { createEditor, type EditorState, type LexicalEditor } from 'lexical';
 import type { Profile, Target, Workspace } from '@collabkit/core';
 import { composerStyles } from '@collabkit/theme';
 import Avatar from './Avatar.vue';
@@ -64,22 +64,12 @@ function onError(error: any) {
   console.error(error);
 }
 
-function initComposer() {
-  return {
-    editor: markRaw(createEditor(createEditorConfig())),
-    $$body: '',
-    isTyping: {},
-  };
-}
-
-function createEditorConfig() {
-  return {
-    namespace: 'Composer',
-    theme: composerStyles.lexicalTheme,
-    nodes: [MentionNode],
-    onError,
-  };
-}
+const initialConfig = {
+  namespace: 'Composer',
+  theme: composerStyles.lexicalTheme,
+  nodes: [MentionNode],
+  onError,
+};
 
 function onFocus(e: FocusEvent) {
   events.onFocus(e, { target: target.value });
@@ -89,8 +79,8 @@ function onBlur(e: FocusEvent) {
   events.onBlur(e, { target: target.value });
 }
 
-function onChange(editorState: EditorState) {
-  events.onComposerChange(target.value, editorState);
+function onChange(editorState: EditorState, editor: LexicalEditor) {
+  events.onComposerChange(target.value, editorState, editor);
 }
 
 const content = ref('');
@@ -103,7 +93,7 @@ const content = ref('');
       :style="{ position: 'relative', top: '4px', marginLeft: '8px' }"
       :profile="profile"
     />
-    <LexicalComposer :initial-config="createEditorConfig()">
+    <LexicalComposer :initial-config="initialConfig">
       <StyledLexicalEditorContainer>
         <StyledVisibleComposerArea>
           <LexicalPlainTextPlugin>
