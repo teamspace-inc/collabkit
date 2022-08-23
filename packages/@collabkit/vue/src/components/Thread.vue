@@ -21,6 +21,7 @@ const props = defineProps<{
   };
   composerPrompt?: string;
   showHeader?: boolean;
+  autoFocus?: boolean;
   onCloseButtonClick?: (e: React.MouseEvent) => void;
 }>();
 
@@ -72,6 +73,7 @@ const placeholder = computed(
         :timeline="timeline"
       />
       <Composer
+        :autoFocus="autoFocus"
         :style="{ paddingBottom: '12px' }"
         :workspace="workspace"
         :placeholder="placeholder"

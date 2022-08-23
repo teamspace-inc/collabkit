@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, markRaw, ref, watch, watchEffect } from 'vue';
+import { computed, ref, watchEffect } from 'vue';
 import {
   LexicalAutoFocusPlugin,
   LexicalComposer,
@@ -8,7 +8,7 @@ import {
   LexicalOnChangePlugin,
   LexicalPlainTextPlugin,
 } from 'lexical-vue';
-import { createEditor, type EditorState, type LexicalEditor } from 'lexical';
+import type { EditorState, LexicalEditor } from 'lexical';
 import type { Profile, Target, Workspace } from '@collabkit/core';
 import { composerStyles } from '@collabkit/theme';
 import Avatar from './Avatar.vue';
@@ -106,7 +106,7 @@ const content = ref('');
           </LexicalPlainTextPlugin>
           <LexicalOnChangePlugin v-model="content" @change="onChange" />
           <LexicalHistoryPlugin />
-          <LexicalAutoFocusPlugin />
+          <LexicalAutoFocusPlugin v-if="autoFocus" />
         </StyledVisibleComposerArea>
       </StyledLexicalEditorContainer>
     </LexicalComposer>
