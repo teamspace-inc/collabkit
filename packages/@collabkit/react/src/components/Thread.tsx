@@ -8,7 +8,6 @@ import { EmptyState } from './thread/EmptyState';
 import { styled } from '@stitches/react';
 import { threadStyles } from '@collabkit/theme';
 import { useSnapshot } from 'valtio';
-import { Typers } from './comment/Typers';
 
 const StyledThreadContainer = styled('div', threadStyles.container);
 const StyledThread = styled('div', threadStyles.thread);

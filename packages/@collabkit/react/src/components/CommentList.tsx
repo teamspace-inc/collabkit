@@ -3,13 +3,11 @@ import React from 'react';
 import { Timeline } from '../constants';
 import { styled } from '@stitches/react';
 import equal from 'fast-deep-equal';
-import { Typers } from './comment/Typers';
 import { useTimeline } from '../hooks/useTimeline';
 import { CommentGroup } from './CommentGroup';
 import { commentListStyles } from '@collabkit/theme';
 
 const StyledCommentList = styled('div', commentListStyles.list);
-const SeeAllRepliesLink = styled('div', commentListStyles.seeAllRepliesLink);
 
 export const CommentList = React.memo(function CommentList(props: {
   isTyping?: { [endUserId: string]: boolean };
@@ -20,7 +18,7 @@ export const CommentList = React.memo(function CommentList(props: {
   threadId: string;
   isPreview?: boolean;
 }) {
-  const { userId, threadId, workspaceId, timeline, isTyping } = props;
+  const { threadId, workspaceId, timeline } = props;
 
   const rootRef = useRef<HTMLDivElement>(null);
 
@@ -45,14 +43,14 @@ export const CommentList = React.memo(function CommentList(props: {
           isPreview={props.isPreview}
         />
       ))}
-      {props.isPreview ? null : <Typers userId={userId} isTyping={isTyping} />}
+      {/* {props.isPreview ? null : <Typers userId={userId} isTyping={isTyping} />}
       {props.isPreview ? (
         <SeeAllRepliesLink>
           {list.length > 1
             ? `See ${list.length - 1} ${list.length - 1 === 1 ? 'reply' : 'replies'}`
             : 'Reply'}
         </SeeAllRepliesLink>
-      ) : null}
+      ) : null} */}
     </StyledCommentList>
   );
 },
