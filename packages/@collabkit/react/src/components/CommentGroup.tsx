@@ -5,43 +5,44 @@ import { Target } from './Target';
 import equal from 'fast-deep-equal';
 import { useSnapshot } from 'valtio';
 import { useApp } from '../hooks/useApp';
+import { NewIndicator } from './NewIndicator';
 
 export const CommentGroup = React.memo(function (props: {
   group: WithID<Event>[];
   reactions: { [parentId: string]: { [createdById: string]: Event } };
   workspaceId: string;
   threadId: string;
-  seenUntil?: string;
+  newIndicatorId?: string | null;
   userId: string;
   rootRef: React.RefObject<HTMLDivElement>;
   isPreview?: boolean;
 }) {
-  const { seenUntil, group, reactions, workspaceId, threadId, userId } = props;
+  const { group, reactions, workspaceId, threadId } = props;
   const { store } = useApp();
   const { profiles } = useSnapshot(store);
+
   const comments = props.isPreview ? group.slice(0, 1) : group;
   return (
     <>
       {comments.map((event, index) => {
         return (
-          <Target
-            key={event.id}
-            target={{ type: 'comment', eventId: event.id, workspaceId, threadId }}
-          >
-            <Comment
-              id={event.id}
-              event={event}
-              reactions={reactions[event.id]}
-              type={getCommentType(group, index)}
-              timestamp={event.createdAt}
-              key={`event-${event.id}`}
-              rootRef={props.rootRef}
-              body={event.body}
-              seen={event.createdById === userId || (seenUntil ? seenUntil >= event.id : true)}
-              profile={profiles[event.createdById]}
-              isPreview={props.isPreview}
-            />
-          </Target>
+          <div key={event.id}>
+            {props.newIndicatorId === event.id ? <NewIndicator /> : null}
+            <Target target={{ type: 'comment', eventId: event.id, workspaceId, threadId }}>
+              <Comment
+                id={event.id}
+                event={event}
+                reactions={reactions[event.id]}
+                type={getCommentType(group, index)}
+                timestamp={event.createdAt}
+                key={`event-${event.id}`}
+                rootRef={props.rootRef}
+                body={event.body}
+                profile={profiles[event.createdById]}
+                isPreview={props.isPreview}
+              />
+            </Target>
+          </div>
         );
       })}
     </>

@@ -27,3 +27,4 @@ export * as composerStyles from './styles/composerStyles';
 export * as iconButtonStyles from './styles/iconButtonStyles';
 export * as mentionsPluginStyles from './styles/mentionsPluginStyles';
 export * as scrollAreaStyles from './styles/scrollAreaStyles';
+export * as newIndicatorStyles from './styles/newIndicatorStyles';

@@ -101,6 +101,7 @@ export interface Theme {
     typingDot: string;
     badgeColor: string;
     primaryButtonBackground: string;
+    indicatorLineColor: string;
     composerButtonBackground: string;
     composerButtonIconColor: string;
     commentHoverBackgroundColor: string;
@@ -196,6 +197,7 @@ export function createThemes(customTheme?: DeepPartial<Theme>) {
     composerBackground: '$neutral4',
 
     sendButtonColor: '$accent10',
+    indicatorLineColor: 'rgba(255,255,255,0.1)',
 
     commentHoverBackgroundColor: 'unset',
     commentUnseenBackgroundColor: 'unset',

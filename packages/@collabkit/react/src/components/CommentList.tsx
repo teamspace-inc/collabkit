@@ -17,12 +17,14 @@ export const CommentList = React.memo(function CommentList(props: {
   userId: string;
   threadId: string;
   isPreview?: boolean;
+  newIndicatorId?: string | null;
 }) {
-  const { threadId, workspaceId, timeline } = props;
+  const { threadId, workspaceId, timeline, newIndicatorId } = props;
 
   const rootRef = useRef<HTMLDivElement>(null);
 
-  const { reactions, list } = useTimeline(timeline);
+  const { reactions, list } = useTimeline(timeline, props.seenUntil, props.userId);
+
   const groups = props.isPreview ? list.slice(0, 1) : list;
 
   if (!workspaceId) {
@@ -31,27 +33,21 @@ export const CommentList = React.memo(function CommentList(props: {
 
   return (
     <StyledCommentList>
-      {groups.map((group, i) => (
-        <CommentGroup
-          key={i}
-          group={group}
-          userId={props.userId}
-          seenUntil={props.seenUntil}
-          reactions={reactions}
-          workspaceId={workspaceId}
-          threadId={threadId}
-          rootRef={rootRef}
-          isPreview={props.isPreview}
-        />
-      ))}
-      {/* {props.isPreview ? null : <Typers userId={userId} isTyping={isTyping} />}
-      {props.isPreview ? (
-        <SeeAllRepliesLink>
-          {list.length > 1
-            ? `See ${list.length - 1} ${list.length - 1 === 1 ? 'reply' : 'replies'}`
-            : 'Reply'}
-        </SeeAllRepliesLink>
-      ) : null} */}
+      {groups.map((group, i) => {
+        return (
+          <CommentGroup
+            key={i}
+            newIndicatorId={newIndicatorId}
+            group={group}
+            userId={props.userId}
+            reactions={reactions}
+            workspaceId={workspaceId}
+            threadId={threadId}
+            rootRef={rootRef}
+            isPreview={props.isPreview}
+          />
+        );
+      })}
     </StyledCommentList>
   );
 },

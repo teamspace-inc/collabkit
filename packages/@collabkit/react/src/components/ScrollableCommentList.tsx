@@ -11,6 +11,7 @@ import { Timeline } from '../constants';
 import equal from 'fast-deep-equal';
 import { useTimeline } from '../hooks/useTimeline';
 import { CommentList } from './CommentList';
+import { useNewIndicator } from './NewIndicator';
 
 export const ScrollableCommentList = React.memo(function ScrollableCommentList(props: {
   timeline: Timeline;
@@ -20,13 +21,15 @@ export const ScrollableCommentList = React.memo(function ScrollableCommentList(p
   seenUntil?: string;
   isPreview?: boolean;
 }) {
-  const { workspaceId } = props;
+  const { workspaceId, userId, seenUntil } = props;
 
   const rootRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const { timeline } = props;
 
   const { messageEvents, reactionEvents } = useTimeline(timeline);
+
+  const newIndicatorId = useNewIndicator({ messageEvents, userId, seenUntil });
 
   // todo this needs reworking anyway to show a 'new messages' button
   useEffect(() => {
@@ -38,6 +41,7 @@ export const ScrollableCommentList = React.memo(function ScrollableCommentList(p
       messageEvents[messageEvents.length - 1]?.id,
     // check that all profiles are loaded
     messageEvents.every((event) => event.hasProfile),
+    newIndicatorId,
   ]);
 
   const handleScroll = useCallback((e: React.SyntheticEvent) => {
@@ -52,6 +56,7 @@ export const ScrollableCommentList = React.memo(function ScrollableCommentList(p
     <ScrollAreaRoot ref={rootRef}>
       <ScrollAreaViewport onScroll={handleScroll} ref={scrollRef}>
         <CommentList
+          newIndicatorId={newIndicatorId}
           seenUntil={props.seenUntil}
           threadId={props.threadId}
           userId={props.userId}
