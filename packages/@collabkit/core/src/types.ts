@@ -264,6 +264,7 @@ export interface Workspace {
   seen: { [threadId: string]: string }; // lastSeenEventId
   seenBy: { [threadId: string]: SeenBy };
   threadInfo: { [threadId: string]: { name?: string; url?: string } };
+  likelyFetchedAllProfiles: boolean;
 }
 
 export interface UnconfiguredStore {

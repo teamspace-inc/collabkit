@@ -22,6 +22,7 @@ import {
 
 import { useInView } from 'react-intersection-observer';
 import { useWindowFocus } from '../hooks/useWindowFocus';
+import { WithHasProfile } from '@collabkit/core';
 
 function hasOverflow(ref: React.RefObject<HTMLDivElement>, deps: any[]) {
   const [isOverflowing, setIsOverflowing] = useState(false);
@@ -43,7 +44,7 @@ export function Comment(props: {
   timestamp: number | object;
   body: string;
   seen?: boolean;
-  event: Event;
+  event: WithHasProfile<Event>;
   profile: Profile;
   rootRef: React.RefObject<HTMLDivElement>;
   type: CommentType;
@@ -86,11 +87,15 @@ export function Comment(props: {
 
   // const body = props.event.type === 'system' ? <SystemBody event={props.event} /> : rawBody;
 
+  const isOverflowing = hasOverflow(bodyRef, [props.body]);
+
   if (props.event.type === 'system') {
     return null;
   }
 
-  const isOverflowing = hasOverflow(bodyRef, [props.body]);
+  if (!props.event.hasProfile) {
+    return null;
+  }
 
   return typeof props.profile === 'object' ? (
     <StyledCommentContainer

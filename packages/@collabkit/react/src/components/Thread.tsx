@@ -69,8 +69,8 @@ export function Thread(props: {
           </StyledThreadHeader>
         ) : null}
         {!isConnected ? <FlexCenter /> : null}
-        {isConnected && isEmpty ? <EmptyState /> : null}
-        {!isEmpty && timeline && workspaceId && (
+        {isConnected && (isEmpty || !workspace?.likelyFetchedAllProfiles) ? <EmptyState /> : null}
+        {!isEmpty && workspace?.likelyFetchedAllProfiles && timeline && workspaceId && (
           <ScrollableCommentList
             seenUntil={seenUntil}
             threadId={props.threadId}
