@@ -23,7 +23,6 @@ export const CommentGroup = React.memo(function (props: {
   return (
     <>
       {comments.map((event, index) => {
-        const seen = event.createdById === userId || (seenUntil ? seenUntil >= event.id : true);
         return (
           <Target
             key={event.id}
@@ -38,7 +37,7 @@ export const CommentGroup = React.memo(function (props: {
               key={`event-${event.id}`}
               rootRef={props.rootRef}
               body={event.body}
-              seen={seen}
+              seen={event.createdById === userId || (seenUntil ? seenUntil >= event.id : true)}
               profile={profiles[event.createdById]}
               isPreview={props.isPreview}
             />

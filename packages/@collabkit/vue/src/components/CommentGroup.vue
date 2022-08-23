@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import type { Event, CommentType, Profile, WithID } from '@collabkit/core';
+import type { Event, CommentType, WithID } from '@collabkit/core';
 import Comment from './Comment.vue';
 import Target from './Target.vue';
 import { useStore } from '../composables/useStore';
@@ -10,6 +10,8 @@ const props = defineProps<{
   reactions: { [parentId: string]: { [createdById: string]: Event } };
   workspaceId: string;
   threadId: string;
+  seenUntil?: string;
+  userId: string;
   isPreview?: boolean;
 }>();
 
@@ -50,6 +52,7 @@ function getCommentType(group: Event[], index: number): CommentType {
       :timestamp="event.createdAt"
       :key="`event-${event.id}`"
       :body="event.body"
+      :seen="event.createdById === userId || (seenUntil ? seenUntil >= event.id : true)"
       :profile="store.profiles[event.createdById]"
       :isPreview="isPreview"
     />

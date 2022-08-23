@@ -16,6 +16,7 @@ defineProps<{
   workspaceId: string;
   userId: string;
   threadId: string;
+  seenUntil?: string;
   isPreview?: boolean;
 }>();
 
@@ -34,6 +35,7 @@ onMounted(async () => {
   <ScrollAreaRoot>
     <ScrollAreaViewport ref="viewport">
       <CommentList
+        :seenUntil="seenUntil"
         :isTyping="isTyping"
         :threadId="threadId"
         :userId="userId"

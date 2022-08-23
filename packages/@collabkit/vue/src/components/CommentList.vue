@@ -12,6 +12,7 @@ const SeeAllRepliesLink = styled('div', commentListStyles.seeAllRepliesLink);
 const props = defineProps<{
   isTyping?: { [endUserId: string]: boolean };
   timeline: Timeline;
+  seenUntil?: string;
   workspaceId: string;
   userId: string;
   threadId: string;
@@ -28,6 +29,7 @@ const groups = computed(() => (props.isPreview ? list.value.slice(0, 1) : list.v
     <CommentGroup
       v-for="group in groups"
       :group="group"
+      :userId="userId"
       :reactions="reactions"
       :workspaceId="workspaceId"
       :threadId="threadId"

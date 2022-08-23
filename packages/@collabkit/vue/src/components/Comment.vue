@@ -16,6 +16,7 @@ const props = defineProps<{
   reactions: { [createdById: string]: Event };
   timestamp: number | object;
   body: string;
+  seen?: boolean;
   event: Event;
   profile: Profile;
   type: CommentType;
@@ -28,7 +29,7 @@ const isOverflowing = false;
 </script>
 
 <template>
-  <StyledCommentContainer :isPreview="isPreview">
+  <StyledCommentContainer :seen="seen" :type="props.type ?? 'default'" :isPreview="isPreview">
     <Avatar v-if="showProfile" :profile="profile" />
     <HStack>
       <StyledCommentMessage :profileIndent="!showProfile">

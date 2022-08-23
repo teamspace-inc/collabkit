@@ -31,6 +31,7 @@ const timeline = computed(() =>
   workspace.value ? workspace.value.timeline[props.threadId] : null
 );
 const isEmpty = computed(() => (timeline ? Object.keys(timeline).length === 0 : true));
+const seenUntil = computed(() => workspace.value?.seen[props.threadId]);
 
 watchEffect(() => {
   if (store.workspaceId && store.isSignedIn) {
@@ -63,6 +64,7 @@ const placeholder = computed(
       <EmptyState v-if="store.isConnected && isEmpty" />
       <ScrollableCommentList
         v-if="!isEmpty && timeline && store.workspaceId"
+        :seenUntil="seenUntil"
         :isTyping="workspace?.composers[threadId]?.isTyping"
         :threadId="threadId"
         :userId="store.userId"
