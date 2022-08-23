@@ -9,21 +9,22 @@ import {
   LexicalPlainTextPlugin,
 } from 'lexical-vue';
 import type { EditorState, LexicalEditor } from 'lexical';
-import type { Profile, Target, Workspace } from '@collabkit/core';
+import type { Target } from '@collabkit/core';
 import { composerStyles } from '@collabkit/theme';
 import Avatar from './Avatar.vue';
 import { MentionNode } from './composer/MentionNode';
 import SendButton from './composer/SendButton.vue';
+import Typers from './comment/Typers.vue';
 import { styled } from './styled';
 import { useStore } from '../composables/useStore';
 import { useEvents } from '../composables/useEvents';
 
 const props = defineProps<{
-  profile?: Profile;
   workspaceId: string;
   threadId: string;
+  userId: string;
+  isTyping?: { [userId: string]: boolean };
   isFloating: boolean;
-  workspace: Workspace;
   placeholder: string;
   autoFocus?: boolean;
   hideAvatar?: boolean;
@@ -34,10 +35,12 @@ const Placeholder = styled('div', composerStyles.placeholder);
 const ComposerContainer = styled('div', composerStyles.container);
 const StyledLexicalEditorContainer = styled('divv', composerStyles.editorContainer);
 const StyledVisibleComposerArea = styled('div', composerStyles.visibleComposerArea);
+const StyledTypingOffset = styled('div', composerStyles.typingOffset);
 
 const store = useStore();
 const events = useEvents();
 
+const profile = computed(() => () => store.profiles[props.userId]);
 const composer = computed(() =>
   store.workspaces[props.workspaceId]
     ? store.workspaces[props.workspaceId].composers[props.threadId]
@@ -112,4 +115,7 @@ const content = ref('');
     </LexicalComposer>
     <SendButton :bodyLength="content.length" :workspaceId="workspaceId" :threadId="threadId" />
   </ComposerContainer>
+  <StyledTypingOffset>
+    <Typers :userId="userId" :isTyping="isTyping" />
+  </StyledTypingOffset>
 </template>

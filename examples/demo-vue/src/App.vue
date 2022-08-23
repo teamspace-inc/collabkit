@@ -34,7 +34,7 @@ const theme = {
 <template>
   <main>
     <Provider :apiKey="apiKey" :appId="appId" :workspace="workspace" :user="user" :theme="theme">
-      <Thread threadId="your-thread-id" showHeader autoFocus composerPrompt="Write a comment" />
+      <Thread threadId="your-thread-id" autoFocus composerPrompt="Write a comment" />
     </Provider>
   </main>
 </template>

@@ -26,6 +26,7 @@ const Placeholder = styled('div', composerStyles.placeholder);
 const ComposerContainer = styled('div', composerStyles.container);
 const StyledLexicalEditorContainer = styled('div', composerStyles.editorContainer);
 const StyledVisibleComposerArea = styled('div', composerStyles.visibleComposerArea);
+const StyledTypingOffset = styled('div', composerStyles.typingOffset);
 
 // Catch any errors that occur during Lexical updates and log them
 // or throw them as needed. If you don't throw them, Lexical will
@@ -40,8 +41,6 @@ const initialConfig = {
   nodes: [MentionNode],
   onError,
 };
-
-const StyledTypingOffset = styled('div', composerStyles.typingOffset);
 
 export function Composer(props: {
   workspaceId: string;

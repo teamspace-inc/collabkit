@@ -74,13 +74,12 @@ const placeholder = computed(
       />
       <Composer
         :autoFocus="autoFocus"
-        :style="{ paddingBottom: '12px' }"
-        :workspace="workspace"
         :placeholder="placeholder"
         :workspaceId="store.workspaceId"
-        :profile="store.profiles[store.userId]"
         :threadId="threadId"
         :isFloating="false"
+        :userId="store.userId"
+        :isTyping="workspace?.composers[threadId]?.isTyping"
       />
     </StyledThread>
   </StyledThreadContainer>

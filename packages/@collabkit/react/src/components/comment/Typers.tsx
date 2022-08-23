@@ -3,46 +3,52 @@ import { typingIndicatorStyles } from '@collabkit/theme';
 import { useSnapshot } from 'valtio';
 import { useApp } from '../../hooks/useApp';
 import { styled } from '@stitches/react';
-import { Profile } from '@collabkit/core';
+import type { Profile } from '@collabkit/core';
 
 const StyledIsTypingContainer = styled('div', typingIndicatorStyles.container);
+const Name = styled('span', typingIndicatorStyles.name);
 
-const StyledTyperName = styled('span', typingIndicatorStyles.typerNameText);
+type Props = { userId: string; isTyping?: { [userId: string]: boolean } };
 
-function Typer(props: { profile: Profile }) {
-  return <StyledTyperName>{props.profile.name || props.profile.email}</StyledTyperName>;
-}
-
-export function Typers(props: { userId: string; isTyping?: { [userId: string]: boolean } }) {
+export function Typers(props: Props) {
   const { store } = useApp();
   const { profiles } = useSnapshot(store);
-  const { isTyping, userId } = props;
-  if (isTyping == null) {
-    return <StyledIsTypingContainer />;
-  }
+  const names = getNames(props, profiles);
 
-  const typerUserIds = Object.keys(isTyping).filter(
-    (_userId) => _userId !== userId && isTyping[_userId] === true
-  );
-
-  let component: React.ReactNode | null = null;
-
-  if (typerUserIds.length === 0) {
-  } else if (typerUserIds.length === 1) {
-    component = <Typer profile={profiles[typerUserIds[0]]} />;
-  } else if (typerUserIds.length > 1) {
-    component = (
-      <span>
-        {typerUserIds.map((userId) => (
-          <Typer key={`typer-${userId}`} profile={profiles[userId]} />
-        ))}
-      </span>
+  if (names.length === 0) return <StyledIsTypingContainer />;
+  if (names.length === 1)
+    return (
+      <StyledIsTypingContainer>
+        <Name>{names[0]}</Name> is typing…
+      </StyledIsTypingContainer>
     );
-  }
-
+  if (names.length === 2)
+    return (
+      <StyledIsTypingContainer>
+        <Name>{names[0]}</Name> and <Name>{names[1]}</Name> are typing…
+      </StyledIsTypingContainer>
+    );
+  if (names.length === 3)
+    return (
+      <StyledIsTypingContainer>
+        <Name>{names[0]}</Name>, <Name>{names[1]}</Name> and <Name>{names[2]}</Name> are typing…
+      </StyledIsTypingContainer>
+    );
   return (
     <StyledIsTypingContainer>
-      {component} {component ? 'is typing...' : null}
+      <Name>{names[0]}</Name>, <Name>{names[1]}</Name> and <Name>{names.length - 2} others</Name>{' '}
+      are typing…
     </StyledIsTypingContainer>
   );
+}
+
+function getNames(props: Props, profiles: { [profileId: string]: Profile }) {
+  const isTyping = props.isTyping;
+  if (isTyping == null) {
+    return [];
+  }
+  const ids = Object.keys(isTyping).filter((id) => id !== props.userId && isTyping[id] === true);
+  return ids
+    .map((id) => profiles[id]?.name || profiles[id]?.email)
+    .filter((name): name is string => typeof name === 'string' && !!name);
 }
