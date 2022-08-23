@@ -23,6 +23,7 @@ export function Thread(props: {
   style?: React.CSSProperties;
   composerPrompt?: string;
   showHeader?: boolean;
+  autoFocus?: boolean;
   onCloseButtonClick?: (e: React.MouseEvent) => void;
 }) {
   const { store } = useApp();
@@ -81,6 +82,7 @@ export function Thread(props: {
         )}
         {workspaceId && workspace !== null ? (
           <Composer
+            autoFocus={props.autoFocus}
             style={{ paddingBottom: '12px' }}
             placeholder={
               props.composerPrompt != null

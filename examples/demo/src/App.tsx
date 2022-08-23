@@ -99,6 +99,7 @@ function Home() {
   return (
     <div style={{ position: 'fixed', inset: 0 }}>
       <CollabKit.Thread
+        autoFocus={true}
         info={{ name: 'Demo thread' }}
         showHeader={false}
         composerPrompt="Write a comment"
