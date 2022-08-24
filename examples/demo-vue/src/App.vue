@@ -1,5 +1,8 @@
 <script setup lang="ts">
-import { Provider, Thread } from '@collabkit/vue';
+import { Provider, useUnreadCount } from '@collabkit/vue';
+import { computed } from '@vue/reactivity';
+import { useTitle } from '@vueuse/core';
+import Home from './Home.vue';
 
 const apiKey = 'oLsHFwp3uFYjgar37ygGc';
 const appId = '-N67qY-qlZoWmkQBPyZU';
@@ -34,7 +37,7 @@ const theme = {
 <template>
   <main>
     <Provider :apiKey="apiKey" :appId="appId" :workspace="workspace" :user="user" :theme="theme">
-      <Thread threadId="your-thread-id" autoFocus composerPrompt="Write a comment" />
+      <Home />
     </Provider>
   </main>
 </template>
