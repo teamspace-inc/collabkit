@@ -3,6 +3,7 @@
     {
       "source": "/api/:match*",
       "destination": "https://us-central1-collabkit-dev.cloudfunctions.net/:match*"
-    }
+    },
+    { "source": "/(.*)", "destination": "/" }
   ]
 }
