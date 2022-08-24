@@ -58,6 +58,9 @@ export default function App() {
           console.log(data);
         },
       }}
+      onAuthenticationRequired={() => {
+        console.log('authRequired');
+      }}
       user={{ ...user, id: user.userId }}
       theme={{
         radii: { 0: '4px' },
