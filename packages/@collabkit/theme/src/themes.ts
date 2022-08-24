@@ -197,7 +197,7 @@ export function createThemes(customTheme?: DeepPartial<Theme>) {
     composerBackground: '$neutral4',
 
     sendButtonColor: '$accent10',
-    indicatorLineColor: 'rgba(255,255,255,0.1)',
+    indicatorLineColor: 'rgba(0,0,0,0.1)',
 
     commentHoverBackgroundColor: 'unset',
     commentUnseenBackgroundColor: 'unset',

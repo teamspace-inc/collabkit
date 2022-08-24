@@ -79,6 +79,7 @@ export default function App() {
       commentHoverBackgroundColor: 'rgba(0,0,0,0.1)',
       commentUnseenBackgroundColor: '#3F3F45',
       commentUnseenHoverBackgroundColor: 'rgba(255,255,255,0.1)',
+      indicatorLineColor: 'rgba(0,0,0,0.1)',
     },
     offsets: {
       composerSendButtonTop: '14px',
