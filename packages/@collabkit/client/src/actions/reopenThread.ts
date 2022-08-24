@@ -1,4 +1,4 @@
-import { Event, Store } from '@collabkit/core';
+import type { Event, Store } from '@collabkit/core';
 import { actions, getConfig } from './index';
 
 export async function reopenThread(store: Store, workspaceId: string, threadId: string) {

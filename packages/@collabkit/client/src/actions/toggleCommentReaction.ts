@@ -1,4 +1,4 @@
-import { Store, CommentReactionTarget } from '@collabkit/core';
+import type { Store, CommentReactionTarget } from '@collabkit/core';
 import { writeMessageToFirebase } from './writeMessageToFirebase';
 
 export async function toggleCommentReaction(

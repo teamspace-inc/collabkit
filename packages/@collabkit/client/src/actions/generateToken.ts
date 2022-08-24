@@ -1,5 +1,5 @@
 import { API_HOST } from '../constants';
-import { FunctionResponse, GenerateToken } from './index';
+import type { FunctionResponse, GenerateToken } from './index';
 
 export async function generateToken(props: { appId: string; apiKey: string }) {
   const { appId, apiKey } = props;

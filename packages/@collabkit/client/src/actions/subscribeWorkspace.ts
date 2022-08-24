@@ -1,5 +1,5 @@
 import { actions } from '.';
-import { Store } from '@collabkit/core';
+import type { Store } from '@collabkit/core';
 
 export async function subscribeWorkspace(store: Store) {
   if (store.isReadOnly) {

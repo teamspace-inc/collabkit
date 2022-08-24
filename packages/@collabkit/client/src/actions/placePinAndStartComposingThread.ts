@@ -1,4 +1,4 @@
-import { BasicPinProps, Pin, Store } from '@collabkit/core';
+import type { BasicPinProps, Pin, Store } from '@collabkit/core';
 import { actions, getConfig } from './index';
 import { subscribeThread } from './subscribeThread';
 

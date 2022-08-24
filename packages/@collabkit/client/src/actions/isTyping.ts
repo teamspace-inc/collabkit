@@ -1,4 +1,4 @@
-import { ComposerTarget, Store } from '@collabkit/core';
+import type { ComposerTarget, Store } from '@collabkit/core';
 
 export async function isTyping(store: Store, props: { target: ComposerTarget }) {
   const { config } = store;

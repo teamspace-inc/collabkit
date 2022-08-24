@@ -1,4 +1,4 @@
-import { Store } from '@collabkit/core';
+import type { Store } from '@collabkit/core';
 import { $createTextNode, $getRoot } from 'lexical';
 import { writeMessageToFirebase } from './writeMessageToFirebase';
 import { getConfig } from '.';

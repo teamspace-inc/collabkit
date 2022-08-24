@@ -1,4 +1,4 @@
-import { CommentTarget, Store } from '@collabkit/core';
+import type { CommentTarget, Store } from '@collabkit/core';
 import { getConfig } from './index';
 
 export async function seen(store: Store, target: CommentTarget) {

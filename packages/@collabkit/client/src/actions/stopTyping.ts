@@ -1,4 +1,4 @@
-import { ComposerTarget, Store } from '@collabkit/core';
+import type { ComposerTarget, Store } from '@collabkit/core';
 import { getConfig } from './index';
 
 export async function stopTyping(store: Store, props: { target: ComposerTarget }) {

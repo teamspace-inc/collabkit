@@ -1,5 +1,5 @@
 import { subscribeThread } from './subscribeThread';
-import { Store } from '@collabkit/core';
+import type { Store } from '@collabkit/core';
 import { getConfig } from './index';
 import type { Sync } from '@collabkit/core';
 

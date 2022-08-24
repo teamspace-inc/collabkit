@@ -1,4 +1,4 @@
-import { Event, Store } from '@collabkit/core';
+import type { Event, Store } from '@collabkit/core';
 import { getConfig, actions } from './index';
 
 export async function resolveThread(store: Store, workspaceId: string, threadId: string) {

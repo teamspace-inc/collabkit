@@ -1,4 +1,4 @@
-import { Store } from '@collabkit/core';
+import type { Store } from '@collabkit/core';
 
 export function removePendingPins(store: Store) {
   for (const workspaceId in store.workspaces) {

@@ -1,5 +1,5 @@
 import { getConfig } from '.';
-import { Store } from '@collabkit/core';
+import type { Store } from '@collabkit/core';
 import { timelineRef } from '../sync/firebase/refs';
 
 export function unloadThread(store: Store, props: { workspaceId: string; threadId: string }) {
