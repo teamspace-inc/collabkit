@@ -1,6 +1,5 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react';
-import { createThemes, Theme } from '@collabkit/theme';
-import { type DeepPartial } from '@collabkit/core';
+import { createThemes, CustomTheme } from '@collabkit/theme';
 import { actions, initFirebase, Events, createEvents } from '@collabkit/client';
 import { ConfigProps, SecureProps, Store, UnsecureProps } from '@collabkit/core';
 import { AppContext } from '../hooks/useAppContext';
@@ -9,7 +8,7 @@ import { FirebaseSync } from '@collabkit/client';
 
 export type OtherProps = {
   children: React.ReactNode;
-  theme?: DeepPartial<Theme>;
+  theme?: CustomTheme;
 };
 
 export type ProviderProps = (SecureProps | UnsecureProps) & ConfigProps & OtherProps;

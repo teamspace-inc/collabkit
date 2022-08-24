@@ -1,3 +1,4 @@
+import type { CustomTheme } from '@collabkit/theme';
 import { CollabKitProvider } from './components/Provider';
 import { Debug } from './components/Debug';
 import { Thread } from './components/Thread';
@@ -14,9 +15,5 @@ export {
   useUnreadCount,
   // pure components just render props passed
   createValtioStore as internal_createStore,
-  type Store,
-  type Workspace,
-  type Subscriptions,
-  type Config,
 };
-export type { MentionProps, Mention };
+export type { Config, Mention, MentionProps, Store, Subscriptions, CustomTheme, Workspace };

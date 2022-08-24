@@ -1,5 +1,6 @@
 export * as theme from './themes';
-export { createThemes, type Theme } from './themes';
+export { createThemes } from './themes';
+export type { CustomTheme, Theme } from './themes';
 
 // comment
 export * as messageHeaderStyles from './styles/comment/messageHeaderStyles';

@@ -125,7 +125,9 @@ export type DeepPartial<T> = T extends object
     }
   : T;
 
-export function createThemes(customTheme?: DeepPartial<Theme>) {
+export type CustomTheme = DeepPartial<Theme>;
+
+export function createThemes(customTheme?: CustomTheme) {
   const fontSize = {
     ['0']: '11px',
     ['1']: '12px',
