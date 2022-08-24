@@ -14,10 +14,8 @@ export async function authenticate(store: Store) {
 
   // SECURED mode
   if ('token' in config && config.token != null) {
-    console.log(config);
     const userCredential = await signInWithCustomToken(getAuth(getApp('CollabKit')), config.token);
     const result = await userCredential.user.getIdTokenResult();
-    console.log('claims', result.claims);
     const { appId, userId, workspaceId, mode } = result.claims;
 
     if (!appId || !userId || !workspaceId || !mode) {

@@ -1,6 +1,5 @@
 import * as CollabKit from '@collabkit/react';
 import { mentionableUsers } from './data';
-import './App.css';
 import { useCallback, useEffect, useState } from 'react';
 import { User } from './types';
 import jwtDecode from 'jwt-decode';
@@ -50,10 +49,15 @@ const themes = {
   dart,
 } as const;
 
+const USER_STORAGE_KEY = 'demoUserV2';
+
 export default function App() {
   const [user, setUser] = useState<User | null>(() => {
     try {
-      const _user = JSON.parse(localStorage.getItem('demoUser') || 'null') as User;
+      const _user = JSON.parse(localStorage.getItem(USER_STORAGE_KEY) || 'null') as User;
+      if (!_user.id || typeof _user.id !== 'string') {
+        return null;
+      }
       return _user;
     } catch {
       console.error('Failed to parse demoUser');
@@ -62,11 +66,12 @@ export default function App() {
   });
 
   const onChangeUser = useCallback((user: User | null) => {
+    console.log('onChangeUser', user);
     setUser(user);
     if (user != null) {
-      localStorage.setItem('demoUser', JSON.stringify(user));
+      localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(user));
     } else {
-      localStorage.removeItem('demoUser');
+      localStorage.removeItem(USER_STORAGE_KEY);
       showGoogleLogin((user) => onChangeUser(user));
     }
   }, []);
@@ -84,17 +89,11 @@ export default function App() {
     />
   );
 
-  console.log();
-
   const name = location.pathname.slice(1);
   const theme: CollabKit.CustomTheme =
     name in themes ? themes[name as keyof typeof themes] : themes.default;
 
   if (!user) {
-    return image;
-  }
-
-  if (!user.userId) {
     return image;
   }
 
@@ -112,7 +111,7 @@ export default function App() {
       onAuthenticationRequired={() => {
         console.log('authRequired');
       }}
-      user={{ ...user, id: user.userId }}
+      user={user}
       theme={theme}
       mentionableUsers={mentionableUsers}
     >

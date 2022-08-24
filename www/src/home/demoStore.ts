@@ -36,7 +36,7 @@ function shouldPersistChange(op: Op) {
   return path[0] === 'workspaces' && path[1] === 'acme';
 }
 
-const VERSION = 'v4';
+const VERSION = 'v5';
 function saveWorkspace(storageKey: string, { pins, timeline, seen }: Workspace) {
   try {
     localStorage.setItem(
