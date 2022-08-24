@@ -15,9 +15,3 @@ useTitle(title);
   <Thread :threadId="threadId" autoFocus composerPrompt="Write a comment" />
 </template>
 
-<style scoped>
-main {
-  position: fixed;
-  inset: 0;
-}
-</style>
