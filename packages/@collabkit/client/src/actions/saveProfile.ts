@@ -1,6 +1,6 @@
-import type { Store } from '@collabkit/core';
-import { Color, getRandomColor } from '@collabkit/colors';
-import type { UserProps } from '@collabkit/core';
+import type { Store, UserProps } from '@collabkit/core';
+import type { Color } from '@collabkit/colors';
+import { getRandomColor } from '@collabkit/colors';
 
 export async function saveProfile(store: Store) {
   const { config } = store;

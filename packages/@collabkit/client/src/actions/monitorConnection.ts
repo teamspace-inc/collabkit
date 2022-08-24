@@ -1,6 +1,6 @@
 import { ref, onValue, getDatabase } from 'firebase/database';
 import type { Store } from '@collabkit/core';
-import { createEvents } from '../events';
+import type { createEvents } from '../events';
 import { getApp } from 'firebase/app';
 
 export function monitorConnection(store: Store, events: ReturnType<typeof createEvents>) {

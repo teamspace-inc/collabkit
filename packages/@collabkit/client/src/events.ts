@@ -1,4 +1,5 @@
-import { $getRoot, EditorState, LexicalEditor } from 'lexical';
+import { $getRoot } from 'lexical';
+import type { EditorState, LexicalEditor } from 'lexical';
 import { nanoid } from 'nanoid';
 import type { CommentReactionTarget, CommentTarget, Store, Target } from '@collabkit/core';
 import { actions } from './actions';
