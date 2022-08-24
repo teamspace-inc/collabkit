@@ -1,5 +1,6 @@
 export { actions } from './actions';
-export { createEvents, type Events } from './events';
+export { createEvents } from './events';
+export type { Events } from './events';
 export { createStore, createWorkspace, markRaw } from './store';
 export * from './constants';
 

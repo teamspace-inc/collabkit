@@ -1,5 +1,6 @@
 import type { DeepPartial } from '@collabkit/core';
-import { createThemes, type Theme } from '@collabkit/theme';
+import { createThemes } from '@collabkit/theme';
+import type { Theme } from '@collabkit/theme';
 import { computed } from '@vue/reactivity';
 import { usePreferredColorScheme } from '@vueuse/core';
 

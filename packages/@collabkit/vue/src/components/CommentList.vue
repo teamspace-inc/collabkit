@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { type Timeline, timelineUtils } from '@collabkit/core';
+import { timelineUtils } from '@collabkit/core';
+import type { Timeline } from '@collabkit/core';
 import { commentListStyles } from '@collabkit/theme';
 import { computed } from '@vue/reactivity';
 import CommentGroup from './CommentGroup.vue';
