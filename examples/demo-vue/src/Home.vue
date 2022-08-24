@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Thread, useUnreadCount } from '@collabkit/vue';
-import { computed } from '@vue/reactivity';
+import { computed } from 'vue';
 import { useTitle } from '@vueuse/core';
 
 const threadId = 'your-thread-id';
