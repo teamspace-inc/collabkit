@@ -32,7 +32,7 @@ export function CollabKitProvider({
     light: lightTheme,
   };
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const sync = new FirebaseSync();
     const store = config._demoStore ?? createValtioStore(config, sync);
     const events = createEvents(store);
@@ -43,16 +43,14 @@ export function CollabKitProvider({
     };
   }, [config.appId, 'token' in config ? config.token : config.apiKey]);
 
-  if (typeof document !== 'undefined') {
-    useEffect(() => {
-      if (context) {
-        document.addEventListener('keydown', context.events.onKeyDown);
-        return () => {
-          document.removeEventListener('keydown', context.events.onKeyDown);
-        };
-      }
-    }, [context]);
-  }
+  useEffect(() => {
+    if (context) {
+      document.addEventListener('keydown', context.events.onKeyDown);
+      return () => {
+        document.removeEventListener('keydown', context.events.onKeyDown);
+      };
+    }
+  }, [context]);
 
   const preferredColorScheme = useColorScheme(colorScheme);
 
