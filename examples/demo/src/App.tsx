@@ -66,7 +66,6 @@ export default function App() {
   });
 
   const onChangeUser = useCallback((user: User | null) => {
-    console.log('onChangeUser', user);
     setUser(user);
     if (user != null) {
       localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(user));
@@ -142,7 +141,6 @@ function Home() {
 }
 
 function showGoogleLogin(callback: (user: User) => void) {
-  console.log('showGoogleLogin');
   google.accounts.id.initialize({
     client_id: '913144916238-5301s2hqmurtvub2ic17529uh3ccsgqt.apps.googleusercontent.com',
     callback: (response) => {
