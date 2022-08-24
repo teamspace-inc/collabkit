@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Provider, Thread } from '@collabkit/vue';
+import { Provider, Thread } from './';
 
 const apiKey = 'oLsHFwp3uFYjgar37ygGc';
 const appId = '-N67qY-qlZoWmkQBPyZU';
