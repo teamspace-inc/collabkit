@@ -5,6 +5,49 @@ import { useCallback, useEffect, useState } from 'react';
 import { User } from './types';
 import jwtDecode from 'jwt-decode';
 
+const themes = {
+  default: {},
+
+  tella: {
+    radii: { 0: '0.5rem' },
+    fontSize: { 0: '12px', 2: '14px', 3: '20px' },
+    fontWeights: { 2: 500, 3: 700 },
+    colors: {
+      sendButtonColor: 'rgb(94, 81, 248)',
+      backgroundColor: 'rgb(249,249,250)',
+      composerBackground: 'white',
+    },
+    offsets: {
+      composerSendButtonTop: '13px',
+    },
+  },
+
+  dart: {
+    radii: { 0: '4px' },
+    fontSize: { 0: '12px', 1: '14px', 2: '14px', 3: '20px' },
+    lineHeights: { 0: '20px', 1: '20px' },
+    fontWeights: { 2: 500, 3: 700 },
+    borders: {
+      composer: '1px solid #404045',
+    },
+    colors: {
+      sendButtonColor: '#414286',
+      backgroundColor: '#1e1e21',
+      composerBackground: '#1e1e21',
+      composerPlaceholder: '#515159',
+      primaryText: 'rgb(212,212,216)',
+      caretColor: 'rgb(212,212,216)',
+      commentHoverBackgroundColor: 'rgba(0,0,0,0.1)',
+      commentUnseenBackgroundColor: '#3F3F45',
+      commentUnseenHoverBackgroundColor: 'rgba(255,255,255,0.1)',
+      indicatorLineColor: 'rgba(0,0,0,0.1)',
+    },
+    offsets: {
+      composerSendButtonTop: '14px',
+    },
+  },
+} as const;
+
 export default function App() {
   const [user, setUser] = useState<User | null>(() => {
     try {
@@ -39,6 +82,11 @@ export default function App() {
     />
   );
 
+  console.log();
+
+  const name = location.pathname.slice(1);
+  const theme = name in themes ? themes[name as keyof typeof themes] : themes.default;
+
   if (!user) {
     return image;
   }
@@ -46,45 +94,6 @@ export default function App() {
   if (!user.userId) {
     return image;
   }
-
-  const tella = {
-    radii: { 0: '0.5rem' },
-    fontSize: { 0: '12px', 2: '14px', 3: '20px' },
-    fontWeights: { 2: 500, 3: 700 },
-    colors: {
-      sendButtonColor: 'rgb(94, 81, 248)',
-      backgroundColor: 'rgb(249,249,250)',
-      composerBackground: 'white',
-    },
-    offsets: {
-      composerSendButtonTop: '13px',
-    },
-  };
-
-  const dart = {
-    radii: { 0: '4px' },
-    fontSize: { 0: '12px', 1: '14px', 2: '14px', 3: '20px' },
-    lineHeights: { 0: '20px', 1: '20px' },
-    fontWeights: { 2: 500, 3: 700 },
-    borders: {
-      composer: '1px solid #404045',
-    },
-    colors: {
-      sendButtonColor: '#414286',
-      backgroundColor: '#1e1e21',
-      composerBackground: '#1e1e21',
-      composerPlaceholder: '#515159',
-      primaryText: 'rgb(212,212,216)',
-      caretColor: 'rgb(212,212,216)',
-      commentHoverBackgroundColor: 'rgba(0,0,0,0.1)',
-      commentUnseenBackgroundColor: '#3F3F45',
-      commentUnseenHoverBackgroundColor: 'rgba(255,255,255,0.1)',
-      indicatorLineColor: 'rgba(0,0,0,0.1)',
-    },
-    offsets: {
-      composerSendButtonTop: '14px',
-    },
-  };
 
   return (
     <CollabKit.Provider
@@ -101,7 +110,7 @@ export default function App() {
         console.log('authRequired');
       }}
       user={{ ...user, id: user.userId }}
-      theme={tella}
+      theme={theme}
       mentionableUsers={mentionableUsers}
     >
       <Home />
