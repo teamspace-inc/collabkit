@@ -17,5 +17,6 @@ database-coverage.html
 *.log
 tsconfig.tsbuildinfo
 *.tsbuildinfo
+/examples/*/stats.html
 /packages/@collabkit/react/stats.html
 /packages/@collabkit/react/types
