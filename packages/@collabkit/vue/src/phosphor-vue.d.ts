@@ -1,13 +1,3 @@
-declare module 'phosphor-vue/dist/esm/components/PhArrowUp.vue' {
-  import { PhosphorIcon } from 'phosphor-vue';
-  const Icon: PhosphorIcon;
-  export default Icon;
-}
-declare module 'phosphor-vue/dist/esm/components/PhChats.vue' {
-  import { PhosphorIcon } from 'phosphor-vue';
-  const Icon: PhosphorIcon;
-  export default Icon;
-}
 declare module 'phosphor-vue' {
   import {
     AllowedComponentProps,
@@ -1100,6 +1090,5239 @@ declare module 'phosphor-vue' {
   export const PhXSquare: PhosphorIcon;
   export const PhYinYang: PhosphorIcon;
   export const PhYoutubeLogo: PhosphorIcon;
-
-  export const PhVille: PhosphorIcon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhActivity.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhAddressBook.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhAirplane.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhAirplaneInFlight.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhAirplaneLanding.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhAirplaneTakeoff.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhAirplaneTilt.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhAirplay.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhAlarm.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhAlien.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhAlignBottom.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhAlignBottomSimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhAlignCenterHorizontal.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhAlignCenterHorizontalSimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhAlignCenterVertical.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhAlignCenterVerticalSimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhAlignLeft.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhAlignLeftSimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhAlignRight.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhAlignRightSimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhAlignTop.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhAlignTopSimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhAnchor.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhAnchorSimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhAndroidLogo.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhAngularLogo.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhAperture.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhAppStoreLogo.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhAppWindow.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhAppleLogo.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhApplePodcastsLogo.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArchive.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArchiveBox.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArchiveTray.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArmchair.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowArcLeft.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowArcRight.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowBendDoubleUpLeft.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowBendDoubleUpRight.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowBendDownLeft.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowBendDownRight.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowBendLeftDown.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowBendLeftUp.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowBendRightDown.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowBendRightUp.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowBendUpLeft.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowBendUpRight.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowCircleDown.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowCircleDownLeft.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowCircleDownRight.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowCircleLeft.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowCircleRight.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowCircleUp.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowCircleUpLeft.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowCircleUpRight.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowClockwise.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowCounterClockwise.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowDown.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowDownLeft.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowDownRight.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowElbowDownLeft.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowElbowDownRight.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowElbowLeft.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowElbowLeftDown.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowElbowLeftUp.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowElbowRight.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowElbowRightDown.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowElbowRightUp.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowElbowUpLeft.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowElbowUpRight.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowFatDown.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowFatLeft.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowFatLineDown.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowFatLineLeft.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowFatLineRight.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowFatLineUp.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowFatLinesDown.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowFatLinesLeft.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowFatLinesRight.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowFatLinesUp.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowFatRight.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowFatUp.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowLeft.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowLineDown.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowLineDownLeft.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowLineDownRight.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowLineLeft.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowLineRight.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowLineUp.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowLineUpLeft.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowLineUpRight.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowRight.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowSquareDown.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowSquareDownLeft.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowSquareDownRight.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowSquareIn.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowSquareLeft.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowSquareOut.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowSquareRight.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowSquareUp.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowSquareUpLeft.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowSquareUpRight.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowUDownLeft.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowUDownRight.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowULeftDown.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowULeftUp.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowURightDown.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowURightUp.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowUUpLeft.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowUUpRight.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowUp.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowUpLeft.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowUpRight.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowsClockwise.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowsCounterClockwise.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowsDownUp.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowsHorizontal.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowsIn.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowsInCardinal.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowsInLineHorizontal.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowsInLineVertical.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowsInSimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowsLeftRight.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowsOut.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowsOutCardinal.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowsOutLineHorizontal.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowsOutLineVertical.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowsOutSimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArrowsVertical.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArticle.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArticleMedium.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhArticleNyTimes.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhAsterisk.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhAsteriskSimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhAt.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhAtom.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBaby.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBackpack.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBackspace.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBag.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBagSimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBalloon.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBandaids.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBank.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBarbell.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBarcode.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBarricade.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBaseball.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBasketball.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBathtub.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBatteryCharging.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBatteryChargingVertical.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBatteryEmpty.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBatteryFull.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBatteryHigh.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBatteryLow.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBatteryMedium.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBatteryPlus.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBatteryWarning.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBatteryWarningVertical.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBed.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBeerBottle.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBehanceLogo.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBell.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBellRinging.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBellSimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBellSimpleRinging.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBellSimpleSlash.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBellSimpleZ.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBellSlash.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBellZ.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBezierCurve.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBicycle.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBinoculars.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBird.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBluetooth.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBluetoothConnected.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBluetoothSlash.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBluetoothX.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBoat.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBook.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBookBookmark.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBookOpen.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBookmark.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBookmarkSimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBookmarks.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBookmarksSimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBooks.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBoundingBox.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBracketsAngle.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBracketsCurly.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBracketsRound.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBracketsSquare.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBrain.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBrandy.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBriefcase.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBriefcaseMetal.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBroadcast.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBrowser.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBrowsers.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBug.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBugBeetle.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBugDroid.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBuildings.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhBus.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhButterfly.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCactus.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCake.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCalculator.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCalendar.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCalendarBlank.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCalendarCheck.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCalendarPlus.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCalendarX.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCamera.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCameraRotate.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCameraSlash.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCampfire.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCar.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCarSimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCardholder.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCards.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCaretCircleDoubleDown.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCaretCircleDoubleLeft.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCaretCircleDoubleRight.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCaretCircleDoubleUp.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCaretCircleDown.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCaretCircleLeft.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCaretCircleRight.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCaretCircleUp.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCaretDoubleDown.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCaretDoubleLeft.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCaretDoubleRight.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCaretDoubleUp.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCaretDown.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCaretLeft.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCaretRight.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCaretUp.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCat.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCellSignalFull.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCellSignalHigh.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCellSignalLow.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCellSignalMedium.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCellSignalNone.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCellSignalSlash.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCellSignalX.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhChalkboard.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhChalkboardSimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhChalkboardTeacher.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhChartBar.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhChartBarHorizontal.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhChartLine.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhChartLineUp.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhChartPie.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhChartPieSlice.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhChat.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhChatCentered.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhChatCenteredDots.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhChatCenteredText.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhChatCircle.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhChatCircleDots.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhChatCircleText.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhChatDots.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhChatTeardrop.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhChatTeardropDots.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhChatTeardropText.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhChatText.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhChats.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhChatsCircle.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhChatsTeardrop.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCheck.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCheckCircle.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCheckSquare.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCheckSquareOffset.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhChecks.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCircle.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCircleDashed.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCircleHalf.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCircleHalfTilt.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCircleNotch.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCircleWavy.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCircleWavyCheck.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCircleWavyQuestion.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCircleWavyWarning.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCirclesFour.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCirclesThree.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCirclesThreePlus.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhClipboard.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhClipboardText.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhClock.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhClockAfternoon.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhClockClockwise.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhClockCounterClockwise.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhClosedCaptioning.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCloud.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCloudArrowDown.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCloudArrowUp.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCloudCheck.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCloudFog.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCloudLightning.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCloudMoon.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCloudRain.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCloudSlash.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCloudSnow.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCloudSun.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhClub.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCoatHanger.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCode.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCodeSimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCodepenLogo.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCodesandboxLogo.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCoffee.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCoin.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCoinVertical.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCoins.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhColumns.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCommand.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCompass.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhComputerTower.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhConfetti.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCookie.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCookingPot.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCopy.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCopySimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCopyleft.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCopyright.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCornersIn.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCornersOut.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCpu.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCreditCard.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCrop.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCrosshair.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCrosshairSimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCrown.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCrownSimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCube.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCurrencyBtc.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCurrencyCircleDollar.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCurrencyCny.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCurrencyDollar.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCurrencyDollarSimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCurrencyEth.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCurrencyEur.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCurrencyGbp.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCurrencyInr.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCurrencyJpy.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCurrencyKrw.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCurrencyKzt.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCurrencyNgn.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCurrencyRub.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCursor.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCursorText.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhCylinder.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhDatabase.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhDesktop.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhDesktopTower.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhDetective.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhDeviceMobile.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhDeviceMobileCamera.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhDeviceMobileSpeaker.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhDeviceTablet.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhDeviceTabletCamera.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhDeviceTabletSpeaker.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhDiamond.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhDiamondsFour.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhDiceFive.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhDiceFour.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhDiceOne.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhDiceSix.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhDiceThree.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhDiceTwo.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhDisc.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhDiscordLogo.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhDivide.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhDog.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhDoor.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhDotsNine.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhDotsSix.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhDotsSixVertical.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhDotsThree.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhDotsThreeCircle.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhDotsThreeCircleVertical.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhDotsThreeOutline.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhDotsThreeOutlineVertical.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhDotsThreeVertical.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhDownload.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhDownloadSimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhDribbbleLogo.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhDrop.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhDropHalf.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhDropHalfBottom.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhEar.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhEarSlash.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhEgg.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhEggCrack.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhEject.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhEjectSimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhEnvelope.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhEnvelopeOpen.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhEnvelopeSimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhEnvelopeSimpleOpen.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhEqualizer.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhEquals.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhEraser.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhExam.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhExport.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhEye.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhEyeClosed.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhEyeSlash.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhEyedropper.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhEyedropperSample.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhEyeglasses.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFaceMask.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFacebookLogo.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFactory.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFaders.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFadersHorizontal.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFastForward.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFastForwardCircle.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFigmaLogo.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFile.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFileArrowDown.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFileArrowUp.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFileAudio.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFileCloud.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFileCode.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFileCss.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFileCsv.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFileDoc.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFileDotted.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFileHtml.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFileImage.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFileJpg.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFileJs.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFileJsx.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFileLock.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFileMinus.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFilePdf.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFilePlus.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFilePng.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFilePpt.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFileRs.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFileSearch.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFileText.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFileTs.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFileTsx.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFileVideo.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFileVue.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFileX.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFileXls.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFileZip.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFiles.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFilmScript.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFilmSlate.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFilmStrip.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFingerprint.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFingerprintSimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFinnTheHuman.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFire.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFireSimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFirstAid.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFirstAidKit.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFish.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFishSimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFlag.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFlagBanner.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFlagCheckered.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFlame.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFlashlight.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFlask.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFloppyDisk.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFloppyDiskBack.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFlowArrow.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFlower.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFlowerLotus.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFlyingSaucer.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFolder.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFolderDotted.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFolderLock.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFolderMinus.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFolderNotch.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFolderNotchMinus.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFolderNotchOpen.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFolderNotchPlus.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFolderOpen.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFolderPlus.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFolderSimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFolderSimpleDotted.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFolderSimpleLock.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFolderSimpleMinus.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFolderSimplePlus.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFolderSimpleStar.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFolderSimpleUser.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFolderStar.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFolderUser.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFolders.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFootball.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhForkKnife.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFrameCorners.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFramerLogo.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFunction.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFunnel.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhFunnelSimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhGameController.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhGasPump.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhGauge.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhGear.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhGearSix.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhGenderFemale.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhGenderIntersex.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhGenderMale.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhGenderNeuter.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhGenderNonbinary.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhGenderTransgender.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhGhost.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhGif.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhGift.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhGitBranch.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhGitCommit.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhGitDiff.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhGitFork.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhGitMerge.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhGitPullRequest.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhGithubLogo.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhGitlabLogo.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhGitlabLogoSimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhGlobe.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhGlobeHemisphereEast.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhGlobeHemisphereWest.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhGlobeSimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhGlobeStand.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhGoogleChromeLogo.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhGoogleLogo.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhGooglePhotosLogo.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhGooglePlayLogo.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhGooglePodcastsLogo.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhGradient.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhGraduationCap.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhGraph.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhGridFour.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhHamburger.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhHand.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhHandEye.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhHandFist.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhHandGrabbing.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhHandPalm.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhHandPointing.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhHandSoap.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhHandWaving.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhHandbag.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhHandbagSimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhHandsClapping.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhHandshake.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhHardDrive.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhHardDrives.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhHash.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhHashStraight.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhHeadlights.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhHeadphones.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhHeadset.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhHeart.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhHeartBreak.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhHeartStraight.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhHeartStraightBreak.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhHeartbeat.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhHexagon.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhHighlighterCircle.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhHorse.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhHourglass.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhHourglassHigh.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhHourglassLow.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhHourglassMedium.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhHourglassSimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhHourglassSimpleHigh.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhHourglassSimpleLow.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhHourglassSimpleMedium.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhHouse.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhHouseLine.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhHouseSimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhIdentificationBadge.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhIdentificationCard.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhImage.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhImageSquare.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhInfinity.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhInfo.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhInstagramLogo.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhIntersect.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhJeep.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhKanban.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhKey.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhKeyReturn.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhKeyboard.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhKeyhole.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhKnife.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhLadder.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhLadderSimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhLamp.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhLaptop.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhLayout.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhLeaf.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhLifebuoy.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhLightbulb.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhLightbulbFilament.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhLightning.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhLightningSlash.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhLineSegment.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhLineSegments.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhLink.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhLinkBreak.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhLinkSimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhLinkSimpleBreak.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhLinkSimpleHorizontal.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhLinkSimpleHorizontalBreak.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhLinkedinLogo.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhLinuxLogo.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhList.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhListBullets.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhListChecks.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhListDashes.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhListNumbers.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhListPlus.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhLock.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhLockKey.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhLockKeyOpen.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhLockLaminated.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhLockLaminatedOpen.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhLockOpen.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhLockSimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhLockSimpleOpen.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhMagicWand.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhMagnet.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhMagnetStraight.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhMagnifyingGlass.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhMagnifyingGlassMinus.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhMagnifyingGlassPlus.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhMapPin.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhMapPinLine.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhMapTrifold.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhMarkerCircle.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhMartini.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhMaskHappy.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhMaskSad.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhMathOperations.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhMedal.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhMediumLogo.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhMegaphone.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhMegaphoneSimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhMessengerLogo.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhMicrophone.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhMicrophoneSlash.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhMicrophoneStage.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhMicrosoftExcelLogo.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhMicrosoftPowerpointLogo.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhMicrosoftTeamsLogo.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhMicrosoftWordLogo.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhMinus.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhMinusCircle.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhMoney.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhMonitor.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhMonitorPlay.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhMoon.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhMoonStars.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhMountains.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhMouse.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhMouseSimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhMusicNote.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhMusicNoteSimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhMusicNotes.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhMusicNotesPlus.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhMusicNotesSimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhNavigationArrow.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhNeedle.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhNewspaper.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhNewspaperClipping.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhNote.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhNoteBlank.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhNotePencil.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhNotebook.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhNotepad.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhNotification.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhNumberCircleEight.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhNumberCircleFive.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhNumberCircleFour.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhNumberCircleNine.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhNumberCircleOne.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhNumberCircleSeven.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhNumberCircleSix.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhNumberCircleThree.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhNumberCircleTwo.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhNumberCircleZero.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhNumberEight.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhNumberFive.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhNumberFour.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhNumberNine.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhNumberOne.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhNumberSeven.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhNumberSix.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhNumberSquareEight.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhNumberSquareFive.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhNumberSquareFour.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhNumberSquareNine.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhNumberSquareOne.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhNumberSquareSeven.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhNumberSquareSix.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhNumberSquareThree.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhNumberSquareTwo.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhNumberSquareZero.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhNumberThree.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhNumberTwo.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhNumberZero.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhNut.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhNyTimesLogo.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhOctagon.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhOption.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPackage.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPaintBrush.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPaintBrushBroad.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPaintBrushHousehold.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPaintBucket.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPaintRoller.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPalette.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPaperPlane.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPaperPlaneRight.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPaperPlaneTilt.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPaperclip.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPaperclipHorizontal.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhParachute.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPassword.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPath.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPause.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPauseCircle.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPawPrint.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPeace.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPen.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPenNib.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPenNibStraight.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPencil.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPencilCircle.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPencilLine.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPencilSimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPencilSimpleLine.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPercent.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPerson.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPersonSimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPersonSimpleRun.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPersonSimpleWalk.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPerspective.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPhone.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPhoneCall.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPhoneDisconnect.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPhoneIncoming.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPhoneOutgoing.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPhoneSlash.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPhoneX.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPhosphorLogo.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPianoKeys.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPictureInPicture.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPill.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPinterestLogo.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPinwheel.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPizza.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPlaceholder.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPlanet.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPlay.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPlayCircle.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPlaylist.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPlug.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPlugs.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPlugsConnected.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPlus.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPlusCircle.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPlusMinus.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPokerChip.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPoliceCar.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPolygon.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPopcorn.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPower.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPrescription.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPresentation.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPresentationChart.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPrinter.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhProhibit.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhProhibitInset.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhProjectorScreen.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhProjectorScreenChart.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPushPin.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPushPinSimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPushPinSimpleSlash.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPushPinSlash.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhPuzzlePiece.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhQrCode.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhQuestion.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhQueue.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhQuotes.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhRadical.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhRadio.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhRadioButton.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhRainbow.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhRainbowCloud.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhReceipt.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhRecord.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhRectangle.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhRecycle.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhRedditLogo.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhRepeat.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhRepeatOnce.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhRewind.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhRewindCircle.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhRobot.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhRocket.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhRocketLaunch.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhRows.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhRss.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhRssSimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhRug.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhRuler.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhScales.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhScan.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhScissors.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhScreencast.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhScribbleLoop.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhScroll.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSelection.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSelectionAll.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSelectionBackground.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSelectionForeground.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSelectionInverse.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSelectionPlus.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSelectionSlash.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhShare.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhShareNetwork.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhShield.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhShieldCheck.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhShieldCheckered.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhShieldChevron.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhShieldPlus.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhShieldSlash.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhShieldStar.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhShieldWarning.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhShoppingBag.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhShoppingBagOpen.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhShoppingCart.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhShoppingCartSimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhShower.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhShuffle.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhShuffleAngular.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhShuffleSimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSidebar.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSidebarSimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSignIn.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSignOut.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSignpost.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSimCard.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSketchLogo.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSkipBack.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSkipBackCircle.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSkipForward.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSkipForwardCircle.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSkull.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSlackLogo.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSliders.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSlidersHorizontal.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSmiley.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSmileyBlank.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSmileyMeh.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSmileyNervous.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSmileySad.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSmileySticker.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSmileyWink.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSmileyXEyes.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSnapchatLogo.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSnowflake.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSoccerBall.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSortAscending.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSortDescending.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSpade.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSparkle.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSpeakerHigh.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSpeakerLow.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSpeakerNone.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSpeakerSimpleHigh.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSpeakerSimpleLow.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSpeakerSimpleNone.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSpeakerSimpleSlash.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSpeakerSimpleX.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSpeakerSlash.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSpeakerX.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSpinner.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSpinnerGap.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSpiral.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSpotifyLogo.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSquare.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSquareHalf.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSquareHalfBottom.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSquareLogo.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSquaresFour.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhStack.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhStackOverflowLogo.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhStackSimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhStamp.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhStar.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhStarFour.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhStarHalf.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSticker.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhStop.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhStopCircle.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhStorefront.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhStrategy.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhStripeLogo.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhStudent.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSuitcase.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSuitcaseSimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSun.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSunDim.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSunHorizon.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSunglasses.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSwap.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSwatches.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSword.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhSyringe.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTShirt.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTable.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTabs.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTag.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTagChevron.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTagSimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTarget.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTaxi.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTelegramLogo.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTelevision.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTelevisionSimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTennisBall.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTerminal.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTerminalWindow.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTestTube.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTextAa.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTextAlignCenter.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTextAlignJustify.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTextAlignLeft.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTextAlignRight.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTextBolder.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTextH.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTextHFive.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTextHFour.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTextHOne.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTextHSix.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTextHThree.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTextHTwo.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTextIndent.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTextItalic.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTextOutdent.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTextStrikethrough.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTextT.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTextUnderline.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTextbox.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhThermometer.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhThermometerCold.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhThermometerHot.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhThermometerSimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhThumbsDown.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhThumbsUp.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTicket.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTiktokLogo.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTimer.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhToggleLeft.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhToggleRight.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhToilet.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhToiletPaper.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTote.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhToteSimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTrademarkRegistered.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTrafficCone.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTrafficSign.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTrafficSignal.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTrain.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTrainRegional.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTrainSimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTranslate.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTrash.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTrashSimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTray.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTree.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTreeEvergreen.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTreeStructure.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTrendDown.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTrendUp.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTriangle.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTrophy.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTruck.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTwitchLogo.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhTwitterLogo.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhUmbrella.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhUmbrellaSimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhUpload.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhUploadSimple.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhUser.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhUserCircle.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhUserCircleGear.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhUserCircleMinus.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhUserCirclePlus.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhUserFocus.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhUserGear.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhUserList.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhUserMinus.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhUserPlus.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhUserRectangle.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhUserSquare.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhUserSwitch.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhUsers.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhUsersFour.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhUsersThree.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhVault.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhVibrate.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhVideoCamera.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhVideoCameraSlash.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhVignette.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhVoicemail.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhVolleyball.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhWall.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhWallet.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhWarning.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhWarningCircle.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhWarningOctagon.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhWatch.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhWaveSawtooth.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhWaveSine.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhWaveSquare.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhWaveTriangle.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhWaves.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhWebcam.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhWhatsappLogo.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhWheelchair.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhWifiHigh.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhWifiLow.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhWifiMedium.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhWifiNone.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhWifiSlash.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhWifiX.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhWind.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhWindowsLogo.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhWine.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhWrench.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhX.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhXCircle.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhXSquare.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhYinYang.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
+}
+declare module 'phosphor-vue/dist/esm/components/PhYoutubeLogo.vue' {
+  import { PhosphorIcon } from 'phosphor-vue';
+  const Icon: PhosphorIcon;
+  export default Icon;
 }
