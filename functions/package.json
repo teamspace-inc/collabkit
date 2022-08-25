@@ -17,7 +17,6 @@
   "main": "lib/index.js",
   "dependencies": {
     "@google-cloud/tasks": "^3.0.0",
-    "@types/node-fetch": "^2.6.2",
     "firebase-admin": "^10.0.2",
     "firebase-functions": "^3.22.0",
     "lodash.shuffle": "^4.2.0",
@@ -33,9 +32,11 @@
   },
   "devDependencies": {
     "@types/jest": "^28.1.7",
+    "@types/lodash.shuffle": "^4.2.7",
     "@types/mailgun-js": "^0.22.12",
     "@types/mjml": "^4.7.0",
     "@types/mjml-react": "^2.0.5",
+    "@types/node-fetch": "^2.6.2",
     "@types/nodemailer": "^6.4.5",
     "@types/sinon": "^10.0.13",
     "@types/sinon-stub-promise": "^2.1.7",
