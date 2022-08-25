@@ -40,7 +40,7 @@ const StyledTypingOffset = styled('div', composerStyles.typingOffset);
 const store = useStore();
 const events = useEvents();
 
-const profile = computed(() => () => store.profiles[props.userId]);
+const profile = computed(() => store.profiles[props.userId]);
 const composer = computed(() =>
   store.workspaces[props.workspaceId]
     ? store.workspaces[props.workspaceId].composers[props.threadId]
