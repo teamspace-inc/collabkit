@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { Provider, useUnreadCount } from '@collabkit/vue';
-import { computed } from '@vue/reactivity';
-import { useTitle } from '@vueuse/core';
+import { CollabKitProvider } from '@collabkit/vue';
 import Home from './Home.vue';
 
 const apiKey = 'oLsHFwp3uFYjgar37ygGc';
@@ -36,9 +34,15 @@ const theme = {
 
 <template>
   <main>
-    <Provider :apiKey="apiKey" :appId="appId" :workspace="workspace" :user="user" :theme="theme">
+    <CollabKitProvider
+      :apiKey="apiKey"
+      :appId="appId"
+      :workspace="workspace"
+      :user="user"
+      :theme="theme"
+    >
       <Home />
-    </Provider>
+    </CollabKitProvider>
   </main>
 </template>
 

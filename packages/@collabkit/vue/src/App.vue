@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Provider, Thread } from './';
+import { CollabKitProvider, Thread } from './';
 
 const apiKey = 'oLsHFwp3uFYjgar37ygGc';
 const appId = '-N67qY-qlZoWmkQBPyZU';
@@ -9,9 +9,9 @@ const user = { id: '1', name: 'Anonymous', email: 'anon@example.com' };
 
 <template>
   <main>
-    <Provider :apiKey="apiKey" :appId="appId" :workspace="workspace" :user="user">
+    <CollabKitProvider :apiKey="apiKey" :appId="appId" :workspace="workspace" :user="user">
       <Thread threadId="your-thread-id" showHeader composerPrompt="Write a comment" />
-    </Provider>
+    </CollabKitProvider>
   </main>
 </template>
 
