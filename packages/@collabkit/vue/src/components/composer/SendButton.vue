@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { PhArrowUp } from 'phosphor-vue';
+import { ArrowUp } from '../icons';
 
 import { sendButtonStyles, type Theme } from '@collabkit/theme';
 import { styled } from '../styled';
@@ -14,7 +14,7 @@ const props = defineProps<{
 }>();
 
 const StyledComposerSendButton = styled('button', sendButtonStyles.button);
-const StyledComposerSendButtonIcon = styled(PhArrowUp, sendButtonStyles.icon);
+const StyledComposerSendButtonIcon = styled(ArrowUp, sendButtonStyles.icon);
 
 const theme = inject<Theme>(ThemeKey)!;
 const events = useEvents();
