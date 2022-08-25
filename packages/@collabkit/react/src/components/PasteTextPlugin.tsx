@@ -8,7 +8,7 @@ export default function PasteTextPlugin() {
   editor.registerCommand<ClipboardEvent>(
     PASTE_COMMAND,
     (event) => {
-      if (event.clipboardData !== null) {
+      if (event.clipboardData !== null && typeof event.clipboardData?.getData === 'function') {
         const selection = $getSelection();
         if ($isRangeSelection(selection)) {
           $insertDataTransferForPlainText(event.clipboardData, selection);

@@ -20,9 +20,9 @@ import { createPortal } from 'react-dom';
 
 import { $createMentionNode, MentionNode } from './MentionNode';
 import { snapshot } from 'valtio';
-import { Store } from '../constants';
-import { useApp } from '../hooks/useApp';
-import { Avatar } from './Avatar';
+import { Store } from '../../constants';
+import { useApp } from '../../hooks/useApp';
+import { Avatar } from './../Avatar';
 import { styled } from '@stitches/react';
 import { mentionsPluginStyles } from '@collabkit/theme';
 

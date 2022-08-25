@@ -23,6 +23,7 @@ import {
 import { useInView } from 'react-intersection-observer';
 import { useWindowFocus } from '../hooks/useWindowFocus';
 import { WithHasProfile } from '@collabkit/core';
+import { styled } from '@stitches/react';
 
 function hasOverflow(ref: React.RefObject<HTMLDivElement>, deps: any[]) {
   const [isOverflowing, setIsOverflowing] = useState(false);
@@ -37,6 +38,14 @@ function hasOverflow(ref: React.RefObject<HTMLDivElement>, deps: any[]) {
 
   return isOverflowing;
 }
+
+const MARKDOWN_LINK_REGEXP = /\[(.*)\]\((.*)\)/;
+
+const A = styled('a', {
+  fontWeight: '700',
+  color: '$colors$primaryText',
+  textDecoration: 'none',
+});
 
 export function Comment(props: {
   id: string;
@@ -75,7 +84,13 @@ export function Comment(props: {
 
   const showProfile = props.type === 'default' || props.type === 'inline-start';
 
-  const body = reactStringReplace(props.body, /\[([\w\d\s]*)\]\(\@[\w\d\s]*\)/g, (match, i) => {
+  const body = reactStringReplace(props.body, /(\[.*\]\(.*\))/g, (match, i) => {
+    // parse and render markdown as an A tag
+    const linkMatches = match.match(MARKDOWN_LINK_REGEXP);
+    if (linkMatches && linkMatches[0]) {
+      return <A href={linkMatches[2]}>{linkMatches[1]}</A>;
+    }
+
     // todo check if it matches a profile before bolding
     return (
       <span key={i} style={{ fontWeight: 'bold' }}>

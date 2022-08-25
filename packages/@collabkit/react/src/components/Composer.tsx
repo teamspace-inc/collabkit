@@ -10,8 +10,10 @@ import { useRef } from 'react';
 import { useResizeObserver } from '../hooks/useResizeObserver';
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
 
-import MentionsPlugin from './MentionsPlugin';
-import { MentionNode } from './MentionNode';
+import MentionsPlugin from './composer/MentionsPlugin';
+import { MentionNode } from './composer/MentionNode';
+import TimestampPlugin from './composer/TimestampPlugin';
+import { TimestampNode } from './composer/TimestampNode';
 import { useApp } from '../hooks/useApp';
 import { SendButton } from './composer/SendButton';
 import { Avatar } from './Avatar';
@@ -38,7 +40,7 @@ function onError(error: any) {
 const initialConfig = {
   namespace: 'Composer',
   theme: composerStyles.lexicalTheme,
-  nodes: [MentionNode],
+  nodes: [MentionNode, TimestampNode],
   onError,
 };
 
@@ -106,6 +108,7 @@ export function Composer(props: {
               />
               <HistoryPlugin />
               <MentionsPlugin />
+              <TimestampPlugin />
               {props.autoFocus ? <AutoFocusPlugin /> : null}
             </StyledVisibleComposerArea>
           </StyledLexicalEditorContainer>

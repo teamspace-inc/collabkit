@@ -10,36 +10,41 @@ export type Events = ReturnType<typeof createEvents>;
 export function createEvents(store: Store) {
   return {
     onComposerChange: (target: Target, editorState: EditorState, editor: LexicalEditor) => {
-      if (target.type === 'composer') {
-        store.workspaces[target.workspaceId].composers[target.threadId].editor = markRaw(editor);
-        editorState.read(() => {
-          let newBody = '';
-          const nodes = $getRoot().getAllTextNodes();
+      if (target.type !== 'composer') {
+        return;
+      }
 
-          nodes.forEach((node) => {
-            switch (node.__type) {
-              case 'text':
-                newBody += node.__text;
-                break;
-              case 'mention':
-                newBody += `[${node.__text}](@${node.__mention})`;
-                break;
-            }
-          });
+      store.workspaces[target.workspaceId].composers[target.threadId].editor = markRaw(editor);
+      editorState.read(() => {
+        let newBody = '';
+        const nodes = $getRoot().getAllTextNodes();
 
-          const body = store.workspaces[target.workspaceId].composers[target.threadId].$$body;
-          store.workspaces[target.workspaceId].composers[target.threadId].$$body = newBody;
-
-          if (newBody.length === 0) {
-            actions.isTyping.cancel();
-            setTimeout(() => {
-              actions.stopTyping(store, { target });
-            }, 100);
-          } else if (newBody.length !== body.length) {
-            actions.isTyping(store, { target });
+        nodes.forEach((node) => {
+          switch (node.__type) {
+            case 'text':
+              newBody += node.__text;
+              break;
+            case 'timestamp':
+              newBody += `[${node.__text}](timestamp://${node.__timestamp})`;
+              break;
+            case 'mention':
+              newBody += `[${node.__text}](mention://${node.__mention})`;
+              break;
           }
         });
-      }
+
+        const body = store.workspaces[target.workspaceId].composers[target.threadId].$$body;
+        store.workspaces[target.workspaceId].composers[target.threadId].$$body = newBody;
+
+        if (newBody.length === 0) {
+          actions.isTyping.cancel();
+          setTimeout(() => {
+            actions.stopTyping(store, { target });
+          }, 100);
+        } else if (newBody.length !== body.length) {
+          actions.isTyping(store, { target });
+        }
+      });
     },
 
     onDestroy: () => {

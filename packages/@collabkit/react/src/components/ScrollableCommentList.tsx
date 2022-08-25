@@ -40,7 +40,7 @@ export const ScrollableCommentList = React.memo(function ScrollableCommentList(p
       messageEvents[messageEvents.length - 1]?.id,
     // check that all profiles are loaded
     messageEvents.every((event) => event.hasProfile),
-    newIndicatorId,
+    typeof newIndicatorId === 'string',
   ]);
 
   const handleScroll = useCallback((e: React.SyntheticEvent) => {
