@@ -1,6 +1,18 @@
 {
   "name": "@collabkit/vue",
   "version": "0.0.0",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/collabkit-vue.umd.cjs",
+  "module": "./dist/collabkit-vue.js",
+  "exports": {
+    ".": {
+      "import": "./dist/collabkit-vue.js",
+      "require": "./dist/collabkit-vue.umd.cjs"
+    }
+  },
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check build-only",
