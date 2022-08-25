@@ -10,6 +10,7 @@
   "module": "./dist/collabkit-vue.js",
   "exports": {
     ".": {
+      "types": "./dist/collabkit-vue.d.ts",
       "import": "./dist/collabkit-vue.js",
       "require": "./dist/collabkit-vue.umd.cjs"
     }
