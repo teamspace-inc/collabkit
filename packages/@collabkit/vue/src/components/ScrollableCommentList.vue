@@ -2,6 +2,7 @@
 import { nextTick, onMounted, ref, computed, watch } from 'vue';
 import { timelineUtils } from '@collabkit/core';
 import type { Profile, Timeline } from '@collabkit/core';
+import { useNewIndicator } from '../composables/useNewIndicator';
 import {
   ScrollAreaRoot,
   ScrollAreaViewport,
@@ -25,6 +26,9 @@ const timelineEvents = computed(() => ({
   messageEvents: timelineUtils.messageEvents(props.timeline),
   reactionEvents: timelineUtils.reactionEvents(props.timeline),
 }));
+
+const newIndicatorId = useNewIndicator(props, timelineEvents);
+
 const viewport = ref<{ element: HTMLDivElement } | null>(null);
 const scrollDependencies = computed(() => {
   const { messageEvents, reactionEvents } = timelineEvents.value;
@@ -36,6 +40,7 @@ const scrollDependencies = computed(() => {
       messageEvents[messageEvents.length - 1]?.id,
     // check that all profiles are loaded
     messageEvents.every((event) => event.hasProfile),
+    newIndicatorId,
   ];
 });
 watch(scrollDependencies, () => {
@@ -52,6 +57,7 @@ watch(scrollDependencies, () => {
   <ScrollAreaRoot>
     <ScrollAreaViewport ref="viewport">
       <CommentList
+        :newIndicatorId="newIndicatorId"
         :seenUntil="seenUntil"
         :isTyping="isTyping"
         :threadId="threadId"

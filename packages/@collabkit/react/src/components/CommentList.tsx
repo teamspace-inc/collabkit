@@ -35,13 +35,13 @@ export const CommentList = React.memo(function CommentList(props: {
         return (
           <CommentGroup
             key={i}
-            newIndicatorId={newIndicatorId}
             group={group}
             userId={props.userId}
             reactions={reactions}
             workspaceId={workspaceId}
             threadId={threadId}
             isPreview={props.isPreview}
+            newIndicatorId={newIndicatorId}
           />
         );
       })}

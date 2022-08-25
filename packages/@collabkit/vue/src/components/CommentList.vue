@@ -16,6 +16,7 @@ const props = defineProps<{
   userId: string;
   threadId: string;
   isPreview?: boolean;
+  newIndicatorId?: string | null;
 }>();
 
 const reactions = computed(() => timelineUtils.reactions(props.timeline));
@@ -34,6 +35,7 @@ const groups = computed(() => (props.isPreview ? list.value.slice(0, 1) : list.v
       :workspaceId="workspaceId"
       :threadId="threadId"
       :isPreview="isPreview"
+      :newIndicatorId="newIndicatorId"
     />
   </StyledCommentList>
 </template>

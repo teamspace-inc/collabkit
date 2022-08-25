@@ -4,6 +4,7 @@ import type { Event, CommentType, WithID } from '@collabkit/core';
 import Comment from './Comment.vue';
 import Target from './Target.vue';
 import { useStore } from '../composables/useStore';
+import NewIndicator from './NewIndicator.vue';
 
 const props = defineProps<{
   group: WithID<Event>[];
@@ -13,6 +14,7 @@ const props = defineProps<{
   seenUntil?: string;
   userId: string;
   isPreview?: boolean;
+  newIndicatorId?: string | null;
 }>();
 
 const store = useStore();
@@ -43,6 +45,7 @@ function getCommentType(group: Event[], index: number): CommentType {
     v-for="(event, index) in comments"
     :target="{ type: 'comment', eventId: event.id, workspaceId, threadId }"
   >
+    <NewIndicator v-if="newIndicatorId && newIndicatorId === event.id" />
     <Comment
       v-if="store.profiles[event.createdById]"
       :id="event.id"

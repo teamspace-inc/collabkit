@@ -4,6 +4,10 @@ import { styled } from '@stitches/react';
 import React, { useEffect } from 'react';
 import { useWindowFocus } from '../hooks/useWindowFocus';
 
+const StyledNewIndicatorTextInlay = styled('span', newIndicatorStyles.textInlay);
+const StyledNewIndicator = styled('div', newIndicatorStyles.indicator);
+const StyledNewIndicatorLine = styled('div', newIndicatorStyles.line);
+
 export function useNewIndicator(props: {
   userId: string;
   messageEvents: WithHasProfile<WithID<Event>>[];
@@ -34,10 +38,6 @@ export function useNewIndicator(props: {
 
   return newIndicatorId;
 }
-
-const StyledNewIndicatorTextInlay = styled('span', newIndicatorStyles.textInlay);
-const StyledNewIndicator = styled('div', newIndicatorStyles.indicator);
-const StyledNewIndicatorLine = styled('div', newIndicatorStyles.line);
 
 export function NewIndicator() {
   return (

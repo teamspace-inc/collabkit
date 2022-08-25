@@ -12,9 +12,9 @@ export const CommentGroup = React.memo(function (props: {
   reactions: { [parentId: string]: { [createdById: string]: Event } };
   workspaceId: string;
   threadId: string;
-  newIndicatorId?: string | null;
   userId: string;
   isPreview?: boolean;
+  newIndicatorId?: string | null;
 }) {
   const { group, reactions, workspaceId, threadId } = props;
   const { store } = useApp();
