@@ -5,7 +5,7 @@ import Home from './Home.vue';
 const apiKey = 'oLsHFwp3uFYjgar37ygGc';
 const appId = '-N67qY-qlZoWmkQBPyZU';
 const workspace = { id: 'foobar' };
-const user = { id: '1', name: 'Anonymous', email: 'anon@example.com' };
+const user = { id: 'vueuser', name: 'Vue User', email: 'vue@example.com' };
 
 const theme = {
   radii: { 0: '4px' },
