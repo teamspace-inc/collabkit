@@ -29,7 +29,7 @@ import {
   yellow,
 } from '@radix-ui/colors';
 
-import shuffle from 'lodash.shuffle';
+import shuffle from './utils/shuffle';
 
 const colors = {
   amber,
