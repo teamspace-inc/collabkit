@@ -19,6 +19,7 @@
     "dev": "vite",
     "build": "yarn clean && run-p build-types build-only",
     "clean": "rimraf dist types",
+    "prepublishOnly": "yarn build",
     "preview": "vite preview --port 4173",
     "build-only": "vite build",
     "build-types": "vue-tsc && rollup --config rollup.config.js"
