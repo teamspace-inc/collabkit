@@ -14,7 +14,6 @@ export const CommentGroup = React.memo(function (props: {
   threadId: string;
   newIndicatorId?: string | null;
   userId: string;
-  rootRef: React.RefObject<HTMLDivElement>;
   isPreview?: boolean;
 }) {
   const { group, reactions, workspaceId, threadId } = props;
@@ -36,7 +35,6 @@ export const CommentGroup = React.memo(function (props: {
                 type={getCommentType(group, index)}
                 timestamp={event.createdAt}
                 key={`event-${event.id}`}
-                rootRef={props.rootRef}
                 body={event.body}
                 profile={profiles[event.createdById]}
                 isPreview={props.isPreview}

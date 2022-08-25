@@ -23,7 +23,6 @@ export const ScrollableCommentList = React.memo(function ScrollableCommentList(p
 }) {
   const { workspaceId, userId, seenUntil } = props;
 
-  const rootRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const { timeline } = props;
 
@@ -53,7 +52,7 @@ export const ScrollableCommentList = React.memo(function ScrollableCommentList(p
   }
 
   return (
-    <ScrollAreaRoot ref={rootRef}>
+    <ScrollAreaRoot>
       <ScrollAreaViewport onScroll={handleScroll} ref={scrollRef}>
         <CommentList
           newIndicatorId={newIndicatorId}

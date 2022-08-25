@@ -28,10 +28,7 @@ function EmojiReaction(props: { emoji: string }) {
   );
 }
 
-export function ReactionPicker(props: {
-  target: CommentTarget;
-  viewportRef: RefObject<HTMLDivElement>;
-}) {
+export function ReactionPicker(props: { target: CommentTarget }) {
   const ref = useRef(null);
   return (
     <StyledReactionPicker ref={ref}>

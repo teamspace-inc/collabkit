@@ -21,8 +21,6 @@ export const CommentList = React.memo(function CommentList(props: {
 }) {
   const { threadId, workspaceId, timeline, newIndicatorId } = props;
 
-  const rootRef = useRef<HTMLDivElement>(null);
-
   const { reactions, list } = useTimeline(timeline, props.seenUntil, props.userId);
 
   const groups = props.isPreview ? list.slice(0, 1) : list;
@@ -43,7 +41,6 @@ export const CommentList = React.memo(function CommentList(props: {
             reactions={reactions}
             workspaceId={workspaceId}
             threadId={threadId}
-            rootRef={rootRef}
             isPreview={props.isPreview}
           />
         );

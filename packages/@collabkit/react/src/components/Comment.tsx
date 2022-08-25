@@ -46,7 +46,6 @@ export function Comment(props: {
   seen?: boolean;
   event: WithHasProfile<Event>;
   profile: Profile;
-  rootRef: React.RefObject<HTMLDivElement>;
   type: CommentType;
   isPreview?: boolean;
 }) {
@@ -71,7 +70,7 @@ export function Comment(props: {
   }, [isWindowFocused, inView]);
 
   const emojiReactionPicker = isSameComment(reactingId, target) ? (
-    <ReactionPicker target={target} viewportRef={props.rootRef} />
+    <ReactionPicker target={target} />
   ) : null;
 
   const showProfile = props.type === 'default' || props.type === 'inline-start';
