@@ -4,7 +4,8 @@ const config = [
   {
     input: './types/vue/src/index.d.ts',
     output: [{ file: 'dist/collabkit-vue.d.ts', format: 'es' }],
-    plugins: [dts()],
+    plugins: [dts({ respectExternal: true })],
+    external: ['vue'],
   },
 ];
 
