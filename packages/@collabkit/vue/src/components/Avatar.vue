@@ -2,8 +2,7 @@
 import { getShade } from '@collabkit/colors';
 import type { Profile } from '@collabkit/core';
 import { avatarStyles } from '@collabkit/theme';
-import { computed } from '@vue/reactivity';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { styled } from './styled';
 
 const StyledAvatar = styled('img', avatarStyles.avatar);

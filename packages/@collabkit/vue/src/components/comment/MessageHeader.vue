@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { formatRelative } from 'date-fns';
 import { messageHeaderStyles } from '@collabkit/theme';
-import { computed } from '@vue/reactivity';
+import { computed } from 'vue';
 import { styled } from '../styled';
 
 const Name = styled('div', messageHeaderStyles.name);

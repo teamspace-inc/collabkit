@@ -2,7 +2,7 @@
 import { timelineUtils } from '@collabkit/core';
 import type { Timeline } from '@collabkit/core';
 import { commentListStyles } from '@collabkit/theme';
-import { computed } from '@vue/reactivity';
+import { computed } from 'vue';
 import CommentGroup from './CommentGroup.vue';
 import { styled } from './styled';
 
