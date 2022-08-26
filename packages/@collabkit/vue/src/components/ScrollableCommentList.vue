@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { nextTick, onMounted, ref, computed, watch } from 'vue';
+import { nextTick, ref, computed, onBeforeUpdate, onUpdated, onMounted } from 'vue';
 import { timelineUtils } from '@collabkit/core';
-import type { Profile, Timeline } from '@collabkit/core';
+import type { Timeline } from '@collabkit/core';
 import { useNewIndicator } from '../composables/useNewIndicator';
 import {
   ScrollAreaRoot,
@@ -29,25 +29,32 @@ const timelineEvents = computed(() => ({
 
 const newIndicatorId = useNewIndicator(props, timelineEvents);
 
-const viewport = ref<{ element: HTMLDivElement } | null>(null);
-const scrollDependencies = computed(() => {
-  const { messageEvents, reactionEvents } = timelineEvents.value;
-  return [
-    viewport,
-    messageEvents.length,
-    // did react to last message
-    reactionEvents[reactionEvents.length - 1]?.parentId ===
-      messageEvents[messageEvents.length - 1]?.id,
-    // check that all profiles are loaded
-    messageEvents.every((event) => event.hasProfile),
-    newIndicatorId,
-  ];
-});
-watch(scrollDependencies, () => {
-  if (viewport.value) {
-    const { element } = viewport.value;
+const viewportRef = ref<{ element: HTMLDivElement } | null>(null);
+let shouldScrollBottom = true;
+
+onMounted(() => {
+  let viewport = viewportRef.value?.element;
+  if (viewport != null) {
     nextTick(() => {
-      element.scrollTop = element.scrollHeight;
+      viewport = viewportRef.value?.element!;
+      viewport.scrollTop = viewport.scrollHeight;
+    });
+  }
+});
+
+onBeforeUpdate(() => {
+  const viewport = viewportRef.value?.element;
+  if (viewport != null) {
+    shouldScrollBottom = viewport.scrollTop + viewport.offsetHeight === viewport.scrollHeight;
+  }
+});
+
+onUpdated(() => {
+  let viewport = viewportRef.value?.element;
+  if (viewport != null && shouldScrollBottom) {
+    nextTick(() => {
+      viewport = viewportRef.value?.element!;
+      viewport.scrollTop = viewport.scrollHeight - viewport.offsetHeight;
     });
   }
 });
@@ -55,7 +62,7 @@ watch(scrollDependencies, () => {
 
 <template>
   <ScrollAreaRoot>
-    <ScrollAreaViewport ref="viewport">
+    <ScrollAreaViewport ref="viewportRef">
       <CommentList
         :newIndicatorId="newIndicatorId"
         :seenUntil="seenUntil"

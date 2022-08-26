@@ -46,8 +46,8 @@ export class ScrollableCommentList extends Component<Props> {
     // Adjust scroll so these new items don't push the old ones out of view.
     // (snapshot here is the value returned from getSnapshotBeforeUpdate)
     const viewport = this.viewportRef.current;
-    if (viewport && shouldScrollBottom) {
-      viewport.scrollTop = viewport.scrollHeight;
+    if (viewport != null && shouldScrollBottom) {
+      viewport.scrollTop = viewport.scrollHeight - viewport.offsetHeight;
     }
   }
 
