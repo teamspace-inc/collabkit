@@ -22,6 +22,7 @@ import { composerStyles } from '@collabkit/theme';
 import { useSnapshot } from 'valtio';
 import PasteTextPlugin from './PasteTextPlugin';
 import { Typers } from './comment/Typers';
+import { useOnTimestampClick } from '../hooks/useOnTimestampClick';
 
 const StyledContentEditable = styled(ContentEditable, composerStyles.contentEditable);
 const Placeholder = styled('div', composerStyles.placeholder);
@@ -79,13 +80,15 @@ export function Composer(props: {
     },
   });
 
+  const { onClick } = useOnTimestampClick({ ...props, eventId: null });
+
   if (!composer) {
     return null;
   }
 
   return (
     <div>
-      <ComposerContainer style={props.style}>
+      <ComposerContainer style={props.style} onClick={onClick}>
         {profile && !props.hideAvatar ? (
           <Avatar style={{ position: 'relative', top: 4, marginLeft: 8 }} profile={profile} />
         ) : null}

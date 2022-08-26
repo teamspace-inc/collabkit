@@ -24,6 +24,7 @@ import { useInView } from 'react-intersection-observer';
 import { useWindowFocus } from '../hooks/useWindowFocus';
 import { WithHasProfile } from '@collabkit/core';
 import { styled } from '@stitches/react';
+import { useOnTimestampClick } from '../hooks/useOnTimestampClick';
 
 function hasOverflow(ref: React.RefObject<HTMLDivElement>, deps: any[]) {
   const [isOverflowing, setIsOverflowing] = useState(false);
@@ -49,6 +50,9 @@ const A = styled('a', {
 
 export function Comment(props: {
   id: string;
+  workspaceId: string;
+  threadId: string;
+  createdById: string;
   reactions: { [createdById: string]: Event };
   timestamp: number | object;
   body: string;
@@ -83,13 +87,18 @@ export function Comment(props: {
   ) : null;
 
   const showProfile = props.type === 'default' || props.type === 'inline-start';
+  const { onClick } = useOnTimestampClick({
+    ...props,
+    userId: props.createdById,
+    eventId: props.id,
+  });
 
   const body = reactStringReplace(props.body, /(\[.*\]\(.*\))/g, (match, i) => {
     // parse and render markdown as an A tag
     const linkMatches = match.match(MARKDOWN_LINK_REGEXP);
     if (linkMatches && linkMatches[0]) {
       return (
-        <A key={i} href={linkMatches[2]}>
+        <A key={i} onClick={onClick} href={linkMatches[2]}>
           {linkMatches[1]}
         </A>
       );

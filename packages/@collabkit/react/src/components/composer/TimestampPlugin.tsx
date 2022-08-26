@@ -30,6 +30,7 @@ export default function TimestampPlugin() {
         nodeToReplace.replace(timestamp);
       }
     });
+
     return () => {
       removeTransform();
     };

@@ -60,6 +60,14 @@ export type Callbacks = {
       workspaceId: string;
     };
   }) => void;
+  onTimestampClick?: (data: {
+    userId: string;
+    workspaceId: string;
+    threadId: string;
+    createdById: string;
+    eventId: string | null;
+    timestamp: string;
+  }) => void;
 };
 
 export type ConfigProps = {

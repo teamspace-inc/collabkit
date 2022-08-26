@@ -38,6 +38,9 @@ export const CommentGroup = React.memo(function (props: {
                 body={event.body}
                 profile={profiles[event.createdById]}
                 isPreview={props.isPreview}
+                workspaceId={props.workspaceId}
+                threadId={props.threadId}
+                userId={event.createdById}
               />
             </Target>
           </div>

@@ -25,10 +25,10 @@ export function createEvents(store: Store) {
               newBody += node.__text;
               break;
             case 'timestamp':
-              newBody += `[${node.__text}](timestamp://${node.__timestamp})`;
+              newBody += `[${node.__text}](#T${node.__timestamp})`;
               break;
             case 'mention':
-              newBody += `[${node.__text}](mention://${node.__mention})`;
+              newBody += `[${node.__text}](#@${node.__mention})`;
               break;
           }
         });

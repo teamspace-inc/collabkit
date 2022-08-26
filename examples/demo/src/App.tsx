@@ -62,6 +62,9 @@ export default function App() {
         onCommentSend: (data) => {
           // console.log(data);
         },
+        onTimestampClick: (data) => {
+          console.log('timestamp, click', data);
+        },
       }}
       onAuthenticationRequired={() => {
         console.log('authRequired');
