@@ -40,7 +40,7 @@ export const CommentGroup = React.memo(function (props: {
                 isPreview={props.isPreview}
                 workspaceId={props.workspaceId}
                 threadId={props.threadId}
-                userId={event.createdById}
+                createdById={event.createdById}
               />
             </Target>
           </div>

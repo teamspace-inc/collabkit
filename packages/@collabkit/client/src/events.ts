@@ -1,7 +1,13 @@
-import { $getRoot } from 'lexical';
+import { $getRoot, $getSelection } from 'lexical';
 import type { EditorState, LexicalEditor } from 'lexical';
 import { nanoid } from 'nanoid';
-import type { CommentReactionTarget, CommentTarget, Store, Target } from '@collabkit/core';
+import type {
+  CommentReactionTarget,
+  CommentTarget,
+  Store,
+  Target,
+  ThreadTarget,
+} from '@collabkit/core';
 import { actions } from './actions';
 import { markRaw } from './store';
 
@@ -9,6 +15,19 @@ export type Events = ReturnType<typeof createEvents>;
 
 export function createEvents(store: Store) {
   return {
+    // @ville: what's the best way to expose this for clients to call
+    // i want to enable it so Tella can populate a timestamp in the editor
+    onInsertText: (target: ThreadTarget, text: string) => {
+      const editor = store.workspaces[target.workspaceId].composers[target.threadId].editor;
+      if (!editor) {
+        return;
+      }
+      editor.update(() => {
+        const selection = $getSelection();
+        selection?.insertRawText(text);
+      });
+    },
+
     onComposerChange: (target: Target, editorState: EditorState, editor: LexicalEditor) => {
       if (target.type !== 'composer') {
         return;
