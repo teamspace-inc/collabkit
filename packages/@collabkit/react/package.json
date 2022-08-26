@@ -1,10 +1,11 @@
 {
   "name": "@collabkit/react",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "type": "module",
   "files": [
-    "dist/collabkit.es.js",
-    "dist/collabkit.umd.js"
+    "dist/collabkit-react.d.ts",
+    "dist/collabkit-react.es.js",
+    "dist/collabkit-react.umd.js"
   ],
   "types": "./dist/collabkit-react.d.ts",
   "main": "./dist/collabkit-react.umd.js",
