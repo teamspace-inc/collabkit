@@ -88,7 +88,11 @@ export function Comment(props: {
     // parse and render markdown as an A tag
     const linkMatches = match.match(MARKDOWN_LINK_REGEXP);
     if (linkMatches && linkMatches[0]) {
-      return <A href={linkMatches[2]}>{linkMatches[1]}</A>;
+      return (
+        <A key={i} href={linkMatches[2]}>
+          {linkMatches[1]}
+        </A>
+      );
     }
 
     // todo check if it matches a profile before bolding
