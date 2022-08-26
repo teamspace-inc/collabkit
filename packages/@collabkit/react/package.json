@@ -1,17 +1,24 @@
 {
   "name": "@collabkit/react",
   "version": "0.1.11",
-  "main": "dist/collabkit.umd.js",
-  "module": "dist/collabkit.es.js",
-  "types": "types/packages/@collabkit/react/src/index.d.ts",
+  "type": "module",
   "files": [
     "dist/collabkit.es.js",
-    "dist/collabkit.umd.js",
-    "types/packages"
+    "dist/collabkit.umd.js"
   ],
+  "types": "./dist/collabkit-react.d.ts",
+  "main": "./dist/collabkit-react.umd.js",
+  "module": "./dist/collabkit-react.es.js",
+  "exports": {
+    ".": {
+      "types": "./dist/collabkit-react.d.ts",
+      "import": "./dist/collabkit-react.es.js",
+      "require": "./dist/collabkit-react.umd.js"
+    }
+  },
   "scripts": {
     "dev": "ladle serve",
-    "build": "yarn clean && tsc && vite build",
+    "build": "yarn clean && tsc && vite build && rollup --config rollup.config.js",
     "clean": "rimraf dist types *.tsbuildinfo src/**/*.js",
     "preview": "vite preview",
     "prepublishOnly": "yarn build",
@@ -51,6 +58,8 @@
     "react-intersection-observer": "^9.4.0",
     "react-string-replace": "^1.1.0",
     "react-test-renderer": "^18.2.0",
+    "rollup": "2.77.3",
+    "rollup-plugin-dts": "^4.2.2",
     "rollup-plugin-visualizer": "^5.7.0",
     "start-server-and-test": "^1.14.0",
     "sync-fetch": "^0.4.1",
