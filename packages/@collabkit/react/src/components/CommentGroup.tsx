@@ -31,7 +31,6 @@ export const CommentGroup = React.memo(function (props: {
               <Comment
                 id={event.id}
                 event={event}
-                reactions={reactions[event.id]}
                 type={getCommentType(group, index)}
                 timestamp={event.createdAt}
                 key={`event-${event.id}`}
@@ -41,6 +40,7 @@ export const CommentGroup = React.memo(function (props: {
                 workspaceId={props.workspaceId}
                 threadId={props.threadId}
                 createdById={event.createdById}
+                reactions={{}}
               />
             </Target>
           </div>
