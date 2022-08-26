@@ -36,10 +36,10 @@ export const container = css({
     },
     seen: {
       false: {
-        background: '$colors$commentUnseenBackgroundColor',
-        '&:hover': {
-          backgroundColor: '$colors$commentUnseenHoverBackgroundColor',
-        },
+        // background: '$colors$commentUnseenBackgroundColor',
+        // '&:hover': {
+        //   backgroundColor: '$colors$commentUnseenHoverBackgroundColor',
+        // },
       },
       true: {},
     },
