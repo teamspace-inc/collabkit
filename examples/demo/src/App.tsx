@@ -60,7 +60,7 @@ export default function App() {
       workspace={{ id: 'foobar', name: 'Foo' }}
       callbacks={{
         onCommentSend: (data) => {
-          console.log(data);
+          // console.log(data);
         },
       }}
       onAuthenticationRequired={() => {
