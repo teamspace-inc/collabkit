@@ -40,10 +40,20 @@ const scrollDependencies = computed(() => {
       messageEvents[messageEvents.length - 1]?.id,
     // check that all profiles are loaded
     messageEvents.every((event) => event.hasProfile),
-    newIndicatorId,
+    newIndicatorId.value === null,
   ];
 });
 watch(scrollDependencies, () => {
+  if (viewport.value) {
+    const { element } = viewport.value;
+    if (element.scrollTop + element.offsetHeight === element.scrollHeight) {
+      nextTick(() => {
+        element.scrollTop = element.scrollHeight;
+      });
+    }
+  }
+});
+onMounted(() => {
   if (viewport.value) {
     const { element } = viewport.value;
     nextTick(() => {
