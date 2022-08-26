@@ -8,6 +8,10 @@ export default defineConfig({
   resolve: {
     alias: {
       '@collabkit/react': resolve(__dirname, '../../packages/@collabkit/react/src/index.ts'),
+      '@collabkit/custom-themes': resolve(
+        __dirname,
+        '../../packages/@collabkit/custom-themes/src/index.ts'
+      ),
     },
   },
   build: {

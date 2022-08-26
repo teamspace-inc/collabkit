@@ -12,6 +12,10 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
       '@collabkit/vue': resolve(__dirname, '../../packages/@collabkit/vue/src/index.ts'),
+      '@collabkit/custom-themes': resolve(
+        __dirname,
+        '../../packages/@collabkit/custom-themes/src/index.ts'
+      ),
     },
   },
   server: {

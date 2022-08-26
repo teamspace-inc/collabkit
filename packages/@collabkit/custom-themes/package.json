@@ -1,0 +1,10 @@
+{
+  "name": "@collabkit/custom-themes",
+  "version": "0.0.0",
+  "private": true,
+  "main": "src/index.ts",
+  "module": "src/index.ts",
+  "dependencies": {
+    "@collabkit/theme": "^0.0.0"
+  }
+}

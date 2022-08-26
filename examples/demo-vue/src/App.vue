@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { CollabKitProvider } from '@collabkit/vue';
+import { CollabKitProvider, type CustomTheme } from '@collabkit/vue';
+import * as themes from '@collabkit/custom-themes';
 import Home from './Home.vue';
 
 const apiKey = 'oLsHFwp3uFYjgar37ygGc';
@@ -7,29 +8,9 @@ const appId = '-N67qY-qlZoWmkQBPyZU';
 const workspace = { id: 'foobar' };
 const user = { id: 'vueuser', name: 'Vue User', email: 'vue@example.com' };
 
-const theme = {
-  radii: { 0: '4px' },
-  fontSize: { 0: '12px', 1: '14px', 2: '14px', 3: '20px' },
-  lineHeights: { 0: '20px', 1: '20px' },
-  fontWeights: { 2: 500, 3: 700 },
-  borders: {
-    composer: '1px solid #404045',
-  },
-  colors: {
-    sendButtonColor: '#414286',
-    backgroundColor: '#1e1e21',
-    composerBackground: '#1e1e21',
-    composerPlaceholder: '#515159',
-    primaryText: 'rgb(212,212,216)',
-    caretColor: 'rgb(212,212,216)',
-    commentHoverBackgroundColor: 'rgba(0,0,0,0.1)',
-    commentUnseenBackgroundColor: '#3F3F45',
-    commentUnseenHoverBackgroundColor: 'rgba(255,255,255,0.1)',
-  },
-  offsets: {
-    composerSendButtonTop: '14px',
-  },
-};
+const name = location.pathname.slice(1);
+const theme: CustomTheme | undefined =
+  name in themes ? themes[name as keyof typeof themes] : undefined;
 </script>
 
 <template>
