@@ -5,6 +5,7 @@ import { ScrollableCommentList } from './ScrollableCommentList';
 import { useApp } from '../hooks/useApp';
 import { useThread } from '../hooks/useThread';
 import { EmptyState } from './thread/EmptyState';
+import { useNewIndicator } from './NewIndicator';
 import { styled } from '@stitches/react';
 import { threadStyles } from '@collabkit/theme';
 import { useSnapshot } from 'valtio';
@@ -36,6 +37,8 @@ export function Thread(props: {
     store,
     workspaceId,
   });
+
+  const newIndicatorId = useNewIndicator({ userId, timeline, seenUntil });
 
   if (!userId) {
     return null;
@@ -77,6 +80,7 @@ export function Thread(props: {
             userId={userId}
             workspaceId={workspaceId}
             timeline={timeline}
+            newIndicatorId={newIndicatorId}
           />
         )}
         {workspaceId && workspace !== null ? (

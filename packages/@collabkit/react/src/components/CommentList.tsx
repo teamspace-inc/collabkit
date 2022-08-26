@@ -1,4 +1,3 @@
-import { useRef } from 'react';
 import React from 'react';
 import { Timeline } from '../constants';
 import { styled } from '@stitches/react';
