@@ -22,7 +22,6 @@ const props = defineProps<{
   composerPrompt?: string;
   showHeader?: boolean;
   autoFocus?: boolean;
-  onCloseButtonClick?: (e: React.MouseEvent) => void;
 }>();
 
 const store = useStore();
