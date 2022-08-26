@@ -213,6 +213,10 @@ export function createThemes(customTheme?: CustomTheme) {
     backgroundColor: '$neutral1',
   };
 
+  const offsets = {
+    composerSendButtonTop: '13px',
+  };
+
   let baseTheme = {
     fontSize: {
       ...fontSize,
@@ -230,6 +234,7 @@ export function createThemes(customTheme?: CustomTheme) {
       ...customTheme?.borders,
     },
     offsets: {
+      ...offsets,
       ...customTheme?.offsets,
     },
     radii: {
