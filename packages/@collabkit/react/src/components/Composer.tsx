@@ -80,7 +80,7 @@ export function Composer(props: {
     },
   });
 
-  const { onClick } = useOnTimestampClick({ ...props, eventId: null });
+  const { onClick } = useOnTimestampClick({ ...props, createdById: props.userId, eventId: null });
 
   if (!composer) {
     return null;
