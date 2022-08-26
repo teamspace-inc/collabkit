@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from 'react';
+import React, { Component } from 'react';
 import {
   ScrollAreaCorner,
   ScrollAreaRoot,
@@ -6,69 +6,74 @@ import {
   ScrollAreaThumb,
   ScrollAreaViewport,
 } from './ScrollArea';
-import React from 'react';
-import { Timeline } from '../constants';
-import equal from 'fast-deep-equal';
-import { useTimeline } from '../hooks/useTimeline';
+import { Timeline } from '@collabkit/core';
 import { CommentList } from './CommentList';
-import { useNewIndicator } from './NewIndicator';
 
-export const ScrollableCommentList = React.memo(function ScrollableCommentList(props: {
+type Props = {
   timeline: Timeline;
   workspaceId: string;
   userId: string;
   threadId: string;
   seenUntil?: string;
   isPreview?: boolean;
-}) {
-  const { workspaceId, userId, seenUntil } = props;
+  newIndicatorId?: string | null;
+};
 
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const { timeline } = props;
+export class ScrollableCommentList extends Component<Props> {
+  viewportRef = React.createRef<HTMLDivElement>();
 
-  const { messageEvents, reactionEvents } = useTimeline(timeline);
-
-  const newIndicatorId = useNewIndicator({ messageEvents, userId, seenUntil });
-
-  // todo this needs reworking anyway to show a 'new messages' button
-  useEffect(() => {
-    scrollRef.current?.scrollTo(0, scrollRef.current?.scrollHeight);
-  }, [
-    messageEvents.length,
-    // did react to last message
-    reactionEvents[reactionEvents.length - 1]?.parentId ===
-      messageEvents[messageEvents.length - 1]?.id,
-    // check that all profiles are loaded
-    messageEvents.every((event) => event.hasProfile),
-    typeof newIndicatorId === 'string',
-  ]);
-
-  const handleScroll = useCallback((e: React.SyntheticEvent) => {
-    // todo use this to load more comments when scrolling to top / near the top
-  }, []);
-
-  if (!workspaceId) {
-    return null;
+  constructor(props: Props) {
+    super(props);
   }
 
-  return (
-    <ScrollAreaRoot>
-      <ScrollAreaViewport onScroll={handleScroll} ref={scrollRef}>
-        <CommentList
-          newIndicatorId={newIndicatorId}
-          seenUntil={props.seenUntil}
-          threadId={props.threadId}
-          userId={props.userId}
-          workspaceId={workspaceId}
-          isPreview={props.isPreview}
-          timeline={timeline}
-        />
-      </ScrollAreaViewport>
-      <ScrollAreaScrollbar orientation="vertical">
-        <ScrollAreaThumb />
-      </ScrollAreaScrollbar>
-      <ScrollAreaCorner />
-    </ScrollAreaRoot>
-  );
-},
-equal);
+  componentDidMount() {
+    const viewport = this.viewportRef.current;
+    if (viewport != null) {
+      viewport.scrollTop = viewport.scrollHeight;
+    }
+  }
+
+  getSnapshotBeforeUpdate(_prevProps: Props): boolean {
+    const viewport = this.viewportRef.current;
+    if (viewport != null) {
+      return viewport.scrollTop + viewport.offsetHeight === viewport.scrollHeight;
+    }
+    return false;
+  }
+
+  componentDidUpdate(_prevProps: Props, _prevState: {}, shouldScrollBottom: boolean) {
+    // If we have a snapshot value, we've just added new items.
+    // Adjust scroll so these new items don't push the old ones out of view.
+    // (snapshot here is the value returned from getSnapshotBeforeUpdate)
+    const viewport = this.viewportRef.current;
+    if (viewport && shouldScrollBottom) {
+      viewport.scrollTop = viewport.scrollHeight;
+    }
+  }
+
+  render() {
+    const props = this.props;
+    if (!props.workspaceId) {
+      return null;
+    }
+    return (
+      <ScrollAreaRoot>
+        <ScrollAreaViewport ref={this.viewportRef}>
+          <CommentList
+            seenUntil={props.seenUntil}
+            threadId={props.threadId}
+            userId={props.userId}
+            workspaceId={props.workspaceId}
+            isPreview={props.isPreview}
+            timeline={props.timeline}
+            newIndicatorId={props.newIndicatorId}
+          />
+        </ScrollAreaViewport>
+        <ScrollAreaScrollbar orientation="vertical">
+          <ScrollAreaThumb />
+        </ScrollAreaScrollbar>
+        <ScrollAreaCorner />
+      </ScrollAreaRoot>
+    );
+  }
+}
