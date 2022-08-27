@@ -5,8 +5,6 @@ node_modules
 **/docs/
 **/.idea/*
 packages/@collabkit/react/src/**/*.js
-packages/@collabkit/react/src/**/*.d.ts
-
 **/.next/*
 
 .env
