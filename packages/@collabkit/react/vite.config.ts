@@ -1,32 +1,42 @@
 import { resolve } from 'path';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import replace from '@rollup/plugin-replace';
 import { visualizer } from 'rollup-plugin-visualizer';
 
 // https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [react(), visualizer()],
+export default defineConfig(({ mode }) => {
+  const plugins = [react(), visualizer()];
 
-  build: {
-    lib: {
-      entry: resolve(__dirname, 'src/index.ts'),
-      name: 'CollabKit',
-      fileName: 'collabkit-react',
-    },
-    rollupOptions: {
-      external: ['react', 'react-dom'],
-      output: {
-        // Provide global variables to use in the UMD build
-        // for externalized deps
-        globals: {
-          react: 'React',
-          'react-dom': 'ReactDOM',
+  if (mode === 'production') {
+    plugins.push(
+      replace({ 'process.env.NODE_ENV': JSON.stringify('production'), preventAssignment: true })
+    );
+  }
+
+  return {
+    plugins,
+    build: {
+      lib: {
+        entry: resolve(__dirname, 'src/index.ts'),
+        name: 'CollabKit',
+        fileName: 'collabkit-react',
+      },
+      rollupOptions: {
+        external: ['react', 'react-dom'],
+        output: {
+          // Provide global variables to use in the UMD build
+          // for externalized deps
+          globals: {
+            react: 'React',
+            'react-dom': 'ReactDOM',
+          },
         },
       },
     },
-  },
 
-  server: {
-    port: 3003,
-  },
+    server: {
+      port: 3003,
+    },
+  };
 });
