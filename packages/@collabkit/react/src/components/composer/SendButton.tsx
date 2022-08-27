@@ -1,6 +1,6 @@
 import * as Tooltip from '../Tooltip';
 import React from 'react';
-import { ArrowUp } from 'phosphor-react';
+import { ArrowUp } from '../icons';
 import { useApp } from '../../hooks/useApp';
 import { styled } from '@stitches/react';
 import { sendButtonStyles } from '@collabkit/theme';

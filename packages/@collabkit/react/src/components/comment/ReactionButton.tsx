@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { styled } from '@stitches/react';
-import { Smiley } from 'phosphor-react';
+import { Smiley } from '../icons';
 import { reactionButtonStyles } from '@collabkit/theme';
 import { useApp } from '../../hooks/useApp';
 import { TargetContext } from '../Target';

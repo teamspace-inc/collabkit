@@ -1,6 +1,6 @@
 import React from 'react';
 import { threadEmptyStateStyles } from '@collabkit/theme';
-import { Chats } from 'phosphor-react';
+import { Chats } from '../icons';
 import { styled } from '@stitches/react';
 import { FlexCenter } from '../UIKit';
 

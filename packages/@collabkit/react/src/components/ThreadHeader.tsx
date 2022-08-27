@@ -1,5 +1,5 @@
 import { styled } from '@stitches/react';
-import { X, CheckCircle } from 'phosphor-react';
+import { X, CheckCircle } from './icons';
 import React from 'react';
 import { useApp } from '../hooks/useApp';
 import { ThreadTarget } from '../constants';

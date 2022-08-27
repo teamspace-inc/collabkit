@@ -1,5 +1,5 @@
 import React from 'react';
-import { CheckCircle, RadioButton } from 'phosphor-react';
+import { CheckCircle, RadioButton } from '../icons';
 import { Event } from '../../constants';
 import { useApp } from '../../hooks/useApp';
 import { styled } from '@stitches/react';
