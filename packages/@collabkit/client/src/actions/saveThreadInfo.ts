@@ -1,6 +1,5 @@
-import { ref, update } from '@firebase/database';
 import { getApp } from 'firebase/app';
-import { getDatabase } from 'firebase/database';
+import { getDatabase, ref, update } from 'firebase/database';
 import { getConfig } from '.';
 import type { Store, ThreadInfo } from '@collabkit/core';
 
