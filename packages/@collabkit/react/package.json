@@ -4,17 +4,17 @@
   "type": "module",
   "files": [
     "dist/collabkit-react.d.ts",
-    "dist/collabkit-react.es.js",
-    "dist/collabkit-react.umd.js"
+    "dist/collabkit-react.js",
+    "dist/collabkit-react.umd.cjs"
   ],
   "types": "./dist/collabkit-react.d.ts",
-  "main": "./dist/collabkit-react.umd.js",
-  "module": "./dist/collabkit-react.es.js",
+  "main": "./dist/collabkit-react.umd.cjs",
+  "module": "./dist/collabkit-react.js",
   "exports": {
     ".": {
       "types": "./dist/collabkit-react.d.ts",
-      "import": "./dist/collabkit-react.es.js",
-      "require": "./dist/collabkit-react.umd.js"
+      "import": "./dist/collabkit-react.js",
+      "require": "./dist/collabkit-react.umd.cjs"
     }
   },
   "scripts": {
