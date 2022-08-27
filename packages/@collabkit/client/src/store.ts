@@ -1,5 +1,5 @@
 import type { SyncAdapter, UnconfiguredStore, Workspace } from '@collabkit/core';
-import { ref as valtioRef } from 'valtio';
+import { ref as valtioRef } from 'valtio/vanilla';
 import { markRaw as vueMarkRaw } from '@vue/reactivity';
 
 export function markRaw<T extends object>(

@@ -25,4 +25,9 @@ export default defineConfig({
       },
     },
   },
+  resolve: {
+    alias: {
+      '@stitches/react': '@stitches/core',
+    },
+  },
 });
