@@ -1,5 +1,5 @@
-import { getAuth, signInWithCustomToken } from 'firebase/auth';
 import type { Store } from '@collabkit/core';
+import { signInWithCustomToken, initializeAuth, inMemoryPersistence } from 'firebase/auth';
 import { getApp } from 'firebase/app';
 import { createWorkspace } from '../store';
 import { generateToken } from './generateToken';
@@ -11,10 +11,14 @@ export async function authenticate(store: Store) {
   }
 
   const { config } = store;
+  const auth = initializeAuth(getApp('CollabKit'), {
+    persistence: inMemoryPersistence,
+    popupRedirectResolver: undefined,
+  });
 
   // SECURED mode
   if ('token' in config && config.token != null) {
-    const userCredential = await signInWithCustomToken(getAuth(getApp('CollabKit')), config.token);
+    const userCredential = await signInWithCustomToken(auth, config.token);
     const result = await userCredential.user.getIdTokenResult();
     const { appId, userId, workspaceId, mode } = result.claims;
 
@@ -62,7 +66,7 @@ export async function authenticate(store: Store) {
   } else if ('apiKey' in config) {
     // console.log('authenticating in UNSECURED mode');
 
-    const auth = await generateToken({
+    const tokenResponse = await generateToken({
       appId: config.appId,
       apiKey: config.apiKey,
     });
@@ -78,11 +82,11 @@ export async function authenticate(store: Store) {
       throw new Error('Missing `workspace.id`');
     }
 
-    if (!auth) {
+    if (!tokenResponse) {
       throw new Error('Failed to auth');
     }
 
-    const userCredential = await signInWithCustomToken(getAuth(getApp('CollabKit')), auth.token);
+    const userCredential = await signInWithCustomToken(auth, tokenResponse.token);
 
     const result = await userCredential.user.getIdTokenResult();
     const mode = result.claims.mode;
