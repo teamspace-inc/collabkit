@@ -1,4 +1,4 @@
-import { Timeline } from '../types';
+import { Timeline } from '../../types';
 import { isValidEvent } from './isValidEvent';
 
 export function isValidTimeline(data: any): data is Timeline {

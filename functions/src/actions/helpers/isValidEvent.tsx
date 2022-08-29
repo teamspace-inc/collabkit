@@ -1,4 +1,4 @@
-import { Event } from '../types';
+import { Event } from '../../types';
 
 export function isValidEvent(data: any): data is Event {
   if (typeof data !== 'object') {

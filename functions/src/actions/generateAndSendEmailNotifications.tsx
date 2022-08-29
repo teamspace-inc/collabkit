@@ -39,6 +39,7 @@ async function fetchProfileSpecificData(props: {
   profileId: string;
 }) {
   const { appId, workspaceId, profileId, data } = props;
+
   if (!data.profiles[profileId]) {
     console.debug('no profile found skipping', profileId);
     return null;
@@ -68,8 +69,8 @@ async function fetchProfileSpecificData(props: {
 
   const eventIds = Object.keys(data.timeline);
 
-  // if we've never notified this user, lets start
-  // from the first eventId
+  // if we've never notified this user,
+  // lets start from the first eventId
   if (!notifiedUntil) {
     notifyFrom = eventIds[0];
   } else if (notifiedUntil) {

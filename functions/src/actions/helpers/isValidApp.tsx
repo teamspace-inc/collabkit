@@ -1,4 +1,4 @@
-import { App } from '../types';
+import { App } from '../../types';
 
 export function isValidApp(data: any): data is App {
   if (typeof data !== 'object') {

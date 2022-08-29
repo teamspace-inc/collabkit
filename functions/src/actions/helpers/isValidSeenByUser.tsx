@@ -1,4 +1,4 @@
-import { SeenByUser } from '../types';
+import { SeenByUser } from '../../types';
 
 export function isValidSeenByUser(data: any): data is SeenByUser {
   return (

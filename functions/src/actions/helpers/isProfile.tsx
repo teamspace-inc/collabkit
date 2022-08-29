@@ -1,4 +1,4 @@
-import { Profile } from '../types';
+import { Profile } from '../../types';
 
 export function isProfile(data: any): data is Profile {
   return (

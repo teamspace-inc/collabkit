@@ -1,4 +1,4 @@
-import { Workspace } from '../types';
+import { Workspace } from '../../types';
 
 export function isValidWorkspace(data: any): data is Workspace {
   if (typeof data !== 'object') {
