@@ -1,4 +1,3 @@
-// import React, { ReactNode, useState, useCallback, useRef } from 'react';
 import React from 'react';
 import {
   autoUpdate,
@@ -18,7 +17,7 @@ import { tableCellStyles } from '@collabkit/theme';
 import { styled } from '@stitches/react';
 import { PopoverThread } from '../PopoverThread';
 import { useApp } from '../../hooks/useApp';
-import { useIsResolved, useThread, useThreadStatus } from '../../hooks/useThread';
+import { useThreadStatus } from '../../hooks/useThread';
 
 const Wrapper = styled('div', tableCellStyles.wrapper);
 const Indicator = styled('span', tableCellStyles.indicator);
