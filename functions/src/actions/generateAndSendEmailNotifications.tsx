@@ -301,7 +301,7 @@ export async function generateAndSendEmailNotifications(props: {
 
         console.debug('got profiles', profiles);
 
-        const seenBy = seenBySnapshot.val();
+        const seenBy = seenBySnapshot.val() ?? {};
         if (!isValidSeenBy(seenBy)) {
           console.debug('invalid seen by data, exiting', seenBy);
           return;
