@@ -79,7 +79,7 @@ export default function App() {
 }
 
 function Home() {
-  const threadId = 'your-thread-id';
+  const threadId = 'new-your-thread-id';
 
   const unreadCount = CollabKit.useUnreadCount({ threadId });
   const unread = unreadCount > 0 ? ` (${unreadCount})` : '';
