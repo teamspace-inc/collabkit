@@ -6,6 +6,199 @@ import { sendMail } from '../emails';
 import NotificationEmail from '../emails/NotificationEmail';
 import { onConnect } from '../actions/helpers/onConnect';
 
+type NotifiedUntilId = string | undefined;
+
+function isValidNotifiedUntilId(data: any): data is NotifiedUntilId {
+  return typeof data === 'string' || data === undefined;
+}
+
+type SeenBy = {
+  [userId: string]: SeenByUser;
+};
+
+type SeenByUser = {
+  seenUntilId: string;
+  seenAt: number;
+};
+
+function isValidSeenByUser(data: any): data is SeenByUser {
+  return (
+    typeof data === 'object' &&
+    'seenUntilId' in data &&
+    'seenAt' in data &&
+    typeof data.seenUntilId === 'string' &&
+    typeof data.seenAt === 'number'
+  );
+}
+
+function isValidSeenBy(data: any): data is SeenBy {
+  if (typeof data !== 'object') {
+    return false;
+  }
+
+  const userIdsValid = Object.keys(data).every((userId) => typeof userId === 'string');
+  const userIdsHaveSeenUntilIds = Object.values(data).every((seenByUser) =>
+    isValidSeenByUser(seenByUser)
+  );
+  return userIdsValid && userIdsHaveSeenUntilIds;
+}
+
+type App = {
+  name: string;
+  admins: {
+    [adminId: string]: boolean;
+  };
+  keys: {
+    [keyId: string]: boolean;
+  };
+  mode: 'SECURED' | 'UNSECURED';
+  isEmailDisabled?: boolean;
+  logoUrl?: string;
+  webhook?: string;
+  accentColor?: string;
+};
+
+type Event = {
+  type: 'message' | 'reaction' | 'adminMessage' | 'system';
+  body: string;
+  system?: 'resolve' | 'reopen';
+  createdAt: number;
+  createdById: string;
+  parentId?: string;
+};
+
+type Timeline = {
+  [eventId: string]: Event;
+};
+
+type TimelineWithEventId = {
+  [eventId: string]: Event & { id: string };
+};
+
+function isValidTimeline(data: any): data is Timeline {
+  if (typeof data !== 'object') {
+    return false;
+  }
+
+  const eventIdsValid = Object.keys(data).every((eventId) => typeof eventId === 'string');
+  const eventIdsHaveEvents = Object.values(data).every((event) => isValidEvent(event));
+  return eventIdsValid && eventIdsHaveEvents;
+}
+
+function isValidEvent(data: any): data is Event {
+  if (typeof data !== 'object') {
+    return false;
+  }
+
+  const typeValid =
+    'type' in data &&
+    typeof data.type === 'string' &&
+    ['message', 'reaction', 'adminMessage', 'system'].includes(data.type);
+  const bodyValid = 'body' in data && typeof data.body === 'string';
+  const systemValid =
+    'system' in data
+      ? typeof data.system === 'string' && ['resolve', 'reopen'].includes(data.system)
+      : true;
+  const createdAtValid = 'createdAt' in data && typeof data.createdAt === 'number';
+  const createdByIdValid = 'createdById' in data && typeof data.createdById === 'string';
+  const parentIdValid = 'parentId' in data ? typeof data.parentId === 'string' : true;
+  return (
+    typeValid && bodyValid && systemValid && createdAtValid && createdByIdValid && parentIdValid
+  );
+}
+
+function isValidApp(data: any): data is App {
+  if (typeof data !== 'object') {
+    return false;
+  }
+
+  const nameValid = 'name' in data ? typeof data.name === 'string' : true;
+  const isEmailDisabledValid =
+    'isEmailDisabled' in data ? typeof data.isEmailDisabled === 'boolean' : true;
+  const logoUrlValid = 'logoUrl' in data ? typeof data.logoUrl === 'string' : true;
+  const webhookValid = 'webhook' in data ? typeof data.webhook === 'string' : true;
+  const adminsValid = 'admins' in data && typeof data.admins === 'object';
+  const keysValid =
+    'keys' in data &&
+    typeof data.keys === 'object' &&
+    Object.keys(data.keys).length > 0 &&
+    Object.values(data.keys).every((value) => typeof value === 'boolean');
+  const modeValid =
+    'mode' in data &&
+    typeof data.mode === 'string' &&
+    (data.mode === 'SECURED' || data.mode === 'UNSECURED');
+
+  const accentColorValid = 'accentColor' in data ? typeof data.accentColor === 'string' : true;
+
+  return (
+    nameValid &&
+    isEmailDisabledValid &&
+    logoUrlValid &&
+    webhookValid &&
+    adminsValid &&
+    keysValid &&
+    modeValid &&
+    accentColorValid
+  );
+}
+
+type Profile = {
+  name?: string;
+  avatar?: string;
+  email?: string;
+  color?: string;
+};
+
+function isProfile(data: any): data is Profile {
+  return (
+    typeof data === 'object' &&
+    ('name' in data || 'avatar' in data || 'email' in data || 'color' in data)
+  );
+}
+
+type Workspace = {
+  name?: string;
+  profiles: {
+    [userId: string]: boolean;
+  };
+};
+
+function isValidWorkspace(data: any): data is Workspace {
+  if (typeof data !== 'object') {
+    return false;
+  }
+
+  const profilesValid =
+    'profiles' in data &&
+    Object.keys(data.profiles).every((userId) => typeof userId === 'string') &&
+    Object.values(data.profiles).every((value) => value === true);
+
+  const nameValid = 'name' in data ? typeof data.name === 'string' : true;
+
+  return profilesValid && nameValid;
+}
+
+type ThreadInfo = {
+  name?: string;
+  url?: string;
+};
+
+function isThreadInfo(data: any): data is ThreadInfo {
+  return typeof data === 'object' &&
+    'url' in data &&
+    'url' in data &&
+    typeof data.url === 'string' &&
+    'name' in data
+    ? typeof data.name === 'string'
+    : true;
+}
+
+function canSendEmail(profile: Profile) {
+  profile.email &&
+    typeof profile.email === 'string' &&
+    profile.email.match(/^[a-zA-Z0-9.! #$%&'*+/=? ^_`{|}~-]+@[a-zA-Z0-9-]+(?:\. [a-zA-Z0-9-]+)*$/);
+}
+
 export async function generateAndSendEmailNotifications(props: {
   appId: string;
   workspaceId: string;
@@ -28,7 +221,7 @@ export async function generateAndSendEmailNotifications(props: {
 
   const seenByQuery = db.ref(`/views/seenBy/${appId}/${workspaceId}/${threadId}/`).get();
 
-  const eventsQuery = db.ref(`/timeline/${appId}/${workspaceId}/${threadId}`).orderByKey().get();
+  const timelineQuery = db.ref(`/timeline/${appId}/${workspaceId}/${threadId}`).orderByKey().get();
 
   const threadInfoQuery = db.ref(`/threadInfo/${appId}/${workspaceId}/${threadId}`).get();
 
@@ -36,12 +229,12 @@ export async function generateAndSendEmailNotifications(props: {
   const isConnected = await onConnect();
   if (isConnected) {
     try {
-      const [appSnapshot, workspaceSnapshot, seenBySnapshot, eventsSnapshot, threadInfoSnapshot] =
-        await Promise.all([appQuery, workspaceQuery, seenByQuery, eventsQuery, threadInfoQuery]);
+      const [appSnapshot, workspaceSnapshot, seenBySnapshot, timelineSnapshot, threadInfoSnapshot] =
+        await Promise.all([appQuery, workspaceQuery, seenByQuery, timelineQuery, threadInfoQuery]);
 
       const app = appSnapshot.val();
-      if (!app) {
-        console.debug('could not find app, exiting');
+      if (!isValidApp(app)) {
+        console.debug('invalid app exiting', app);
         return;
       }
 
@@ -61,10 +254,8 @@ export async function generateAndSendEmailNotifications(props: {
       }
 
       const workspace = workspaceSnapshot.val();
-      console.log(workspace);
-
-      if (!workspace) {
-        console.debug('could not find workspace, exiting');
+      if (!isValidWorkspace(workspace)) {
+        console.debug('invalid workspace, exiting', workspace);
         return;
       }
 
@@ -111,20 +302,27 @@ export async function generateAndSendEmailNotifications(props: {
         console.debug('got profiles', profiles);
 
         const seenBy = seenBySnapshot.val();
-        if (!seenBy) {
-          // it should at least be seenBy the message creator
-          console.debug('could not find seenBy, exiting');
+        if (!isValidSeenBy(seenBy)) {
+          console.debug('invalid seen by data, exiting', seenBy);
           return;
         }
 
-        console.debug('got seenBy', seenBy);
+        const timeline = timelineSnapshot.val();
+        if (!isValidTimeline(timeline)) {
+          console.debug('invalid events data, exiting', timeline);
+          return;
+        }
 
-        const events = eventsSnapshot.val();
-        const eventIds = Object.keys(events);
+        const timelineWithEventIds: { [eventId: string]: Event & { id: string } } = {};
+        for (const eventId in timeline) {
+          timelineWithEventIds[eventId] = { ...timeline[eventId], id: eventId };
+        }
 
-        let _event = events[eventId];
+        const eventIds = Object.keys(timelineWithEventIds);
 
-        const lastEventId = Object.keys(events)[Object.keys(events).length - 1];
+        let _event = timelineWithEventIds[eventId];
+
+        const lastEventId = Object.keys(timelineWithEventIds)[Object.keys(timeline).length - 1];
 
         console.debug('lastEventId', lastEventId);
 
@@ -136,7 +334,7 @@ export async function generateAndSendEmailNotifications(props: {
 
         console.debug('got creator profile', actorProfile);
 
-        const isFirstEvent = Object.keys(events)[0] === eventId;
+        const isFirstEvent = Object.keys(timelineWithEventIds)[0] === eventId;
         console.debug('isFirstEvent', isFirstEvent);
 
         // for workspaces we want to notify everyone in the workspace for
@@ -179,8 +377,8 @@ export async function generateAndSendEmailNotifications(props: {
           // - anyone who has muted the thread
           const threadInfo = threadInfoSnapshot.val();
 
-          if (!threadInfo.url) {
-            console.debug('no thread url, exiting');
+          if (!isThreadInfo(threadInfo)) {
+            console.debug('invalid thread info, exiting', threadInfo);
             return;
           }
 
@@ -188,14 +386,17 @@ export async function generateAndSendEmailNotifications(props: {
 
           for (const profileId of profileIds) {
             if (!profiles[profileId]) {
+              console.debug('no profile found skipping', profileId);
               continue;
             }
 
             if (!profiles[profileId].email) {
+              console.debug('no profile email found skipping', profileId);
               continue;
             }
 
             if (profileId === actorProfile.createdById) {
+              console.debug('profileId === actorProfile.createdById skipping', profileId);
               continue;
             }
 
@@ -203,6 +404,11 @@ export async function generateAndSendEmailNotifications(props: {
               const notifiedUntil = (
                 await db.ref(`/notifiedUntil/${appId}/${workspaceId}/${profileId}`).get()
               ).val();
+
+              if (!isValidNotifiedUntilId(notifiedUntil)) {
+                console.debug('invalid notifiedUntil, skipping', notifiedUntil);
+                continue;
+              }
 
               let notifyFrom: string | null = null;
 
@@ -217,7 +423,7 @@ export async function generateAndSendEmailNotifications(props: {
                 continue;
               }
 
-              const newerEventIds = eventIds.slice(eventIds.indexOf(notifiedUntil) + 1);
+              const newerEventIds = eventIds.slice(eventIds.indexOf(notifyFrom) + 1);
 
               if (newerEventIds.length === 0) {
                 console.debug('no newer events, skipping');
@@ -225,7 +431,7 @@ export async function generateAndSendEmailNotifications(props: {
               }
 
               const to = profiles[profileId].email;
-              const from = 'reply@mail.collabkit.dev';
+              const from = 'noreply@mail.collabkit.dev';
               const subject =
                 newerEventIds.length === 1
                   ? `New comment on ${threadName}`
@@ -234,30 +440,39 @@ export async function generateAndSendEmailNotifications(props: {
               // TODO copy-paste from useTimeline
               // would be great to use the same logic here
               const messageEvents = newerEventIds
-                .map((eventId) => events[eventId])
+                .map((eventId) => timelineWithEventIds[eventId])
                 .filter((event) => event.type === 'message');
 
-              const list = messageEvents.reduce((groupedEvents, event, i) => {
-                const prevEvent = events[messageEvents.map((e) => e.id)[i - 1]];
-                if (prevEvent) {
-                  if (prevEvent.createdById === event.createdById) {
-                    if (
-                      typeof prevEvent.createdAt === 'number' &&
-                      typeof event.createdAt === 'number'
-                    ) {
-                      // 5 minutes before last message and same person results
-                      // in a grouped message.
-                      if (prevEvent.createdAt + 1000 * 60 * 5 > event.createdAt) {
-                        if (groupedEvents[groupedEvents.length - 1]) {
-                          groupedEvents[groupedEvents.length - 1].push(event);
-                          return groupedEvents;
+              const list = messageEvents.reduce<(Event & { id: string })[][]>(
+                (groupedEvents, event, i) => {
+                  const prevEvent = timelineWithEventIds[messageEvents.map((e) => e.id)[i - 1]];
+                  if (prevEvent) {
+                    if (prevEvent.createdById === event.createdById) {
+                      if (
+                        typeof prevEvent.createdAt === 'number' &&
+                        typeof event.createdAt === 'number'
+                      ) {
+                        // 5 minutes before last message and same person results
+                        // in a grouped message.
+                        if (prevEvent.createdAt + 1000 * 60 * 5 > event.createdAt) {
+                          if (groupedEvents[groupedEvents.length - 1]) {
+                            groupedEvents[groupedEvents.length - 1].push(event);
+                            return groupedEvents;
+                          }
                         }
                       }
                     }
                   }
-                }
-                return groupedEvents.concat([[event]]);
-              }, []);
+                  const toReturn = groupedEvents.concat([[event]]) as (Event & { id: string })[][];
+                  return toReturn;
+                },
+                []
+              );
+
+              if (!threadInfo.url) {
+                console.debug('no thread url, skipping', threadInfo);
+                continue;
+              }
 
               const component = (
                 <NotificationEmail
