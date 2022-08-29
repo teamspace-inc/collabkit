@@ -12,16 +12,62 @@ export interface OrgApps {
   };
 }
 
-export interface App {
+export type App = {
   name: string;
-  keys: {
-    [key: string]: true;
-  };
   admins: {
-    [uid: string]: true;
+    [adminId: string]: boolean;
   };
-  mode: 'UNSECURED' | 'SECURED';
-}
+  keys: {
+    [keyId: string]: boolean;
+  };
+  mode: 'SECURED' | 'UNSECURED';
+  isEmailDisabled?: boolean;
+  logoUrl?: string;
+  webhook?: string;
+  accentColor?: string;
+};
+
+export type NotifiedUntilId = string | undefined;
+
+export type SeenBy = {
+  [userId: string]: SeenByUser;
+};
+
+export type SeenByUser = {
+  seenUntilId: string;
+  seenAt: number;
+};
+
+export type Event = {
+  type: 'message' | 'reaction' | 'adminMessage' | 'system';
+  body: string;
+  system?: 'resolve' | 'reopen';
+  createdAt: number;
+  createdById: string;
+  parentId?: string;
+};
+
+export type Timeline = {
+  [eventId: string]: Event;
+};
+
+export type TimelineWithEventId = {
+  [eventId: string]: Event & { id: string };
+};
+
+export type Profile = {
+  name?: string;
+  avatar?: string;
+  email?: string;
+  color?: string;
+};
+
+export type Workspace = {
+  name?: string;
+  profiles: {
+    [userId: string]: boolean;
+  };
+};
 
 export type UserProps = {
   name?: string | null;
@@ -32,4 +78,9 @@ export type UserProps = {
 
 export type WorkspaceProps = {
   name?: string | null;
+};
+
+export type ThreadInfo = {
+  name?: string;
+  url?: string;
 };

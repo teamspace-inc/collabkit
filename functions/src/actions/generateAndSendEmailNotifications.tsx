@@ -1,232 +1,20 @@
 import React from 'react';
 import * as admin from 'firebase-admin';
-// import { render } from 'mailing-core';
 
 import { sendMail } from '../emails';
 import NotificationEmail from '../emails/NotificationEmail';
 import { onConnect } from '../actions/helpers/onConnect';
-// import { createTask } from './helpers/createTask';
 
-type NotifiedUntilId = string | undefined;
-
-function isValidNotifiedUntilId(data: any): data is NotifiedUntilId {
-  return typeof data === 'string' || data === undefined;
-}
-
-type SeenBy = {
-  [userId: string]: SeenByUser;
-};
-
-type SeenByUser = {
-  seenUntilId: string;
-  seenAt: number;
-};
-
-function isValidSeenByUser(data: any): data is SeenByUser {
-  return (
-    typeof data === 'object' &&
-    'seenUntilId' in data &&
-    'seenAt' in data &&
-    typeof data.seenUntilId === 'string' &&
-    typeof data.seenAt === 'number'
-  );
-}
-
-function isValidSeenBy(data: any): data is SeenBy {
-  if (typeof data !== 'object') {
-    return false;
-  }
-
-  const userIdsValid = Object.keys(data).every((userId) => typeof userId === 'string');
-  const userIdsHaveSeenUntilIds = Object.values(data).every((seenByUser) =>
-    isValidSeenByUser(seenByUser)
-  );
-  return userIdsValid && userIdsHaveSeenUntilIds;
-}
-
-type App = {
-  name: string;
-  admins: {
-    [adminId: string]: boolean;
-  };
-  keys: {
-    [keyId: string]: boolean;
-  };
-  mode: 'SECURED' | 'UNSECURED';
-  isEmailDisabled?: boolean;
-  logoUrl?: string;
-  webhook?: string;
-  accentColor?: string;
-};
-
-type Event = {
-  type: 'message' | 'reaction' | 'adminMessage' | 'system';
-  body: string;
-  system?: 'resolve' | 'reopen';
-  createdAt: number;
-  createdById: string;
-  parentId?: string;
-};
-
-type Timeline = {
-  [eventId: string]: Event;
-};
-
-type TimelineWithEventId = {
-  [eventId: string]: Event & { id: string };
-};
-
-function isValidTimeline(data: any): data is Timeline {
-  if (typeof data !== 'object') {
-    return false;
-  }
-
-  const eventIdsValid = Object.keys(data).every((eventId) => typeof eventId === 'string');
-  const eventIdsHaveEvents = Object.values(data).every((event) => isValidEvent(event));
-  return eventIdsValid && eventIdsHaveEvents;
-}
-
-function isValidEvent(data: any): data is Event {
-  if (typeof data !== 'object') {
-    return false;
-  }
-
-  const typeValid =
-    'type' in data &&
-    typeof data.type === 'string' &&
-    ['message', 'reaction', 'adminMessage', 'system'].includes(data.type);
-  const bodyValid = 'body' in data && typeof data.body === 'string';
-  const systemValid =
-    'system' in data
-      ? typeof data.system === 'string' && ['resolve', 'reopen'].includes(data.system)
-      : true;
-  const createdAtValid = 'createdAt' in data && typeof data.createdAt === 'number';
-  const createdByIdValid = 'createdById' in data && typeof data.createdById === 'string';
-  const parentIdValid = 'parentId' in data ? typeof data.parentId === 'string' : true;
-  return (
-    typeValid && bodyValid && systemValid && createdAtValid && createdByIdValid && parentIdValid
-  );
-}
-
-function isValidApp(data: any): data is App {
-  if (typeof data !== 'object') {
-    return false;
-  }
-
-  const nameValid = 'name' in data ? typeof data.name === 'string' : true;
-  const isEmailDisabledValid =
-    'isEmailDisabled' in data ? typeof data.isEmailDisabled === 'boolean' : true;
-  const logoUrlValid = 'logoUrl' in data ? typeof data.logoUrl === 'string' : true;
-  const webhookValid = 'webhook' in data ? typeof data.webhook === 'string' : true;
-  const adminsValid = 'admins' in data && typeof data.admins === 'object';
-  const keysValid =
-    'keys' in data &&
-    typeof data.keys === 'object' &&
-    Object.keys(data.keys).length > 0 &&
-    Object.values(data.keys).every((value) => typeof value === 'boolean');
-  const modeValid =
-    'mode' in data &&
-    typeof data.mode === 'string' &&
-    (data.mode === 'SECURED' || data.mode === 'UNSECURED');
-
-  const accentColorValid = 'accentColor' in data ? typeof data.accentColor === 'string' : true;
-
-  return (
-    nameValid &&
-    isEmailDisabledValid &&
-    logoUrlValid &&
-    webhookValid &&
-    adminsValid &&
-    keysValid &&
-    modeValid &&
-    accentColorValid
-  );
-}
-
-type Profile = {
-  name?: string;
-  avatar?: string;
-  email?: string;
-  color?: string;
-};
-
-function isProfile(data: any): data is Profile {
-  return (
-    typeof data === 'object' &&
-    ('name' in data || 'avatar' in data || 'email' in data || 'color' in data)
-  );
-}
-
-type Workspace = {
-  name?: string;
-  profiles: {
-    [userId: string]: boolean;
-  };
-};
-
-function isValidWorkspace(data: any): data is Workspace {
-  if (typeof data !== 'object') {
-    return false;
-  }
-
-  const profilesValid =
-    'profiles' in data &&
-    Object.keys(data.profiles).every((userId) => typeof userId === 'string') &&
-    Object.values(data.profiles).every((value) => value === true);
-
-  const nameValid = 'name' in data ? typeof data.name === 'string' : true;
-
-  return profilesValid && nameValid;
-}
-
-type ThreadInfo = {
-  name?: string;
-  url?: string;
-};
-
-function isThreadInfo(data: any): data is ThreadInfo {
-  return typeof data === 'object' &&
-    'url' in data &&
-    'url' in data &&
-    typeof data.url === 'string' &&
-    'name' in data
-    ? typeof data.name === 'string'
-    : true;
-}
-
-function canSendEmail(profile: Profile) {
-  return (
-    profile.email &&
-    typeof profile.email === 'string' &&
-    profile.email
-      .toLowerCase()
-      .match(
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-      )
-  );
-}
-
-function groupedEvents(messageEvents: (Event & { id: string })[], timeline: TimelineWithEventId) {
-  return messageEvents.reduce<(Event & { id: string })[][]>((groupedEvents, event, i) => {
-    const prevEvent = timeline[messageEvents.map((e) => e.id)[i - 1]];
-    if (prevEvent) {
-      if (prevEvent.createdById === event.createdById) {
-        if (typeof prevEvent.createdAt === 'number' && typeof event.createdAt === 'number') {
-          // 5 minutes before last message and same person results
-          // in a grouped message.
-          if (prevEvent.createdAt + 1000 * 60 * 5 > event.createdAt) {
-            if (groupedEvents[groupedEvents.length - 1]) {
-              groupedEvents[groupedEvents.length - 1].push(event);
-              return groupedEvents;
-            }
-          }
-        }
-      }
-    }
-    const toReturn = groupedEvents.concat([[event]]) as (Event & { id: string })[][];
-    return toReturn;
-  }, []);
-}
+import type { Event, Profile } from '../types';
+import { isValidNotifiedUntilId } from './helpers/isValidNotifiedUntilId';
+import { isValidSeenBy } from './helpers/isValidSeenBy';
+import { isValidTimeline } from './helpers/isValidTimeline';
+import { isValidApp } from './helpers/isValidApp';
+import { isProfile } from './helpers/isProfile';
+import { isValidWorkspace } from './helpers/isValidWorkspace';
+import { isThreadInfo } from './helpers/isThreadInfo';
+import { canSendEmail } from './helpers/canSendEmail';
+import { groupedEvents } from './helpers/groupedEvents';
 
 async function fetchData(props: {
   appId: string;
@@ -404,7 +192,7 @@ export async function generateAndSendEmailNotifications(props: {
 }) {
   const db = admin.database();
   const storage = admin.storage();
-  const bucket = storage.bucket('collabkit-dev-emails');
+  // const bucket = storage.bucket('collabkit-dev-emails');
   const { appId, workspaceId, threadId, eventId } = props;
 
   console.log('generateNotification', { appId, workspaceId, threadId, eventId });
