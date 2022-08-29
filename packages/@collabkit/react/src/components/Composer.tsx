@@ -122,9 +122,11 @@ export function Composer(props: {
           threadId={props.threadId}
         />
       </ComposerContainer>
-      <StyledTypingOffset>
-        <Typers userId={props.userId} isTyping={props.isTyping} />
-      </StyledTypingOffset>
+      {props.isTyping ? (
+        <StyledTypingOffset>
+          <Typers userId={props.userId} isTyping={props.isTyping} />
+        </StyledTypingOffset>
+      ) : null}
     </div>
   );
 }

@@ -14,6 +14,9 @@ export * as typingIndicatorStyles from './styles/comment/typingIndicatorStyles';
 // composer
 export * as sendButtonStyles from './styles/composer/sendButtonStyles';
 
+// table
+export * as tableCellStyles from './styles/table/tableCellStyles';
+
 // thread
 export * as threadStyles from './styles/thread/threadStyles';
 export * as threadEmptyStateStyles from './styles/thread/emptyStateStyles';
@@ -27,5 +30,6 @@ export * as commentListStyles from './styles/commentListStyles';
 export * as composerStyles from './styles/composerStyles';
 export * as iconButtonStyles from './styles/iconButtonStyles';
 export * as mentionsPluginStyles from './styles/mentionsPluginStyles';
-export * as scrollAreaStyles from './styles/scrollAreaStyles';
 export * as newIndicatorStyles from './styles/newIndicatorStyles';
+export * as popoverThreadStyles from './styles/popoverThreadStyles';
+export * as scrollAreaStyles from './styles/scrollAreaStyles';
