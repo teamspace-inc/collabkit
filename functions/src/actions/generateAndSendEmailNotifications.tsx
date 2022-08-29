@@ -5,6 +5,7 @@ import { render } from 'mailing-core';
 import { sendMail } from '../emails';
 import NotificationEmail from '../emails/NotificationEmail';
 import { onConnect } from '../actions/helpers/onConnect';
+import { createTask } from './helpers/createTask';
 
 type NotifiedUntilId = string | undefined;
 
@@ -286,16 +287,19 @@ export async function generateAndSendEmailNotifications(props: {
         return;
       }
 
+      // let tasks: { [profileId: string]: Promise<void>[] } = {};
+
       try {
         const profileSnapshots = await Promise.all(
           profileIds.map((profileId) => db.ref(`/profiles/${appId}/${profileId}/`).get())
         );
 
-        const profiles: { [id: string]: any } = {};
+        const profiles: { [id: string]: Profile } = {};
         for (const profileId of profileIds) {
           const profileSnapshot = profileSnapshots.find((snapshot) => snapshot.key === profileId);
-          if (profileSnapshot) {
-            profiles[profileId] = profileSnapshot.val();
+          const profile = profileSnapshot?.val();
+          if (isProfile(profile)) {
+            profiles[profileId] = profile;
           }
         }
 
@@ -395,8 +399,8 @@ export async function generateAndSendEmailNotifications(props: {
               continue;
             }
 
-            if (profileId === actorProfile.createdById) {
-              console.debug('profileId === actorProfile.createdById skipping', profileId);
+            if (profileId === _event.createdById) {
+              console.debug('profileId === _event.createdById skipping', profileId);
               continue;
             }
 
@@ -412,7 +416,8 @@ export async function generateAndSendEmailNotifications(props: {
 
               let notifyFrom: string | null = null;
 
-              // if we've never notified this user, lets
+              // if we've never notified this user, lets start
+              // from the first eventId
               if (!notifiedUntil) {
                 notifyFrom = eventIds[0];
               } else if (notifiedUntil) {
@@ -420,6 +425,7 @@ export async function generateAndSendEmailNotifications(props: {
               }
 
               if (!notifyFrom) {
+                console.log('no notifyFrom, skipping', profileId);
                 continue;
               }
 
@@ -474,6 +480,39 @@ export async function generateAndSendEmailNotifications(props: {
                 continue;
               }
 
+              // const projectId = process.env.GCLOUD_PROJECT;
+
+              // if (!projectId) {
+              //   throw new Error('GCLOUD_PROJECT environment variable is not set');
+              // }
+
+              // try {
+              //   await createTask({
+              //     projectId,
+              //     url: 'https://us-central1-collabkit-dev.cloudfunctions.net/sendMail',
+              //     queue: 'sendmail',
+              //     payload: {
+              //       subject,
+              //       to,
+              //       template: 'NotificationEmail',
+              //       props: {
+              //         openUrl: threadInfo.url,
+              //         accentColor: app.accentColor,
+              //         appLogoUrl: app.logoUrl,
+              //         ctaText: list.length === 1 ? 'View comment' : 'View comments',
+              //         activity: list.length === 1 ? 'New comment' : 'New comments',
+              //         threadName,
+              //         workspaceName: workspace.name,
+              //         productName: app.name,
+              //         commentList: list,
+              //         profiles,
+              //       },
+              //     },
+              //   });
+              // } catch (e) {
+              //   console.error('error sending email', e);
+              // }
+
               const component = (
                 <NotificationEmail
                   openUrl={threadInfo.url}
@@ -498,19 +537,21 @@ export async function generateAndSendEmailNotifications(props: {
               console.log(mail.subject, mail.to);
 
               try {
-                const file = bucket.file(
-                  `/emails/${appId}/${workspaceId}/${profileId}/${eventId}.html`
-                );
-                await file.save(render(mail.component).html, {
-                  gzip: true,
-                  contentType: 'text/html',
-                });
-                await db
-                  .ref(`/emails/${appId}/${workspaceId}/${threadId}/${profileId}/${eventId}`)
-                  .set({ subject, to, bodyFileId: file.id });
+                // const file = bucket.file(
+                //   `/emails/${appId}/${workspaceId}/${profileId}/${eventId}.html`
+                // );
+                // tasks[profileId] ||= [
+                // file.save(render(mail.component).html, {
+                //   gzip: true,
+                //   contentType: 'text/html',
+                // }),
+                // db
+                //   .ref(`/emails/${appId}/${workspaceId}/${threadId}/${profileId}/${eventId}`)
+                //   .set({ subject, to }),
                 await sendMail(mail);
+                // ];
               } catch (e) {
-                console.error('error sending mail', e);
+                console.error('error setting up mail promises', e);
                 return;
               }
 
