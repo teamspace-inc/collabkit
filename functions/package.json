@@ -9,7 +9,7 @@
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log",
     "test": "jest",
-    "build-and-test": "npm run build && npm run test"
+    "build-and-test": "yarn run build && yarn run test"
   },
   "engines": {
     "node": "16"
