@@ -12,23 +12,13 @@ import { fetchWorkspaceName } from './data/fetchWorkspaceName';
 import { fetchTimeline } from './data/fetchTimeline';
 import { fetchProfiles } from './data/fetchProfiles';
 import { fetchApp } from './data/fetchApp';
-import { App, Event, Profile, ThreadInfo, TimelineWithEventId } from '../types';
+import { App, Event, Profile, SeenBy, ThreadInfo, TimelineWithEventId } from '../types';
 import { isAppNotifiable } from './helpers/isAppNotifiable';
 import { canSendEmail } from './helpers/canSendEmail';
 import { fetchNotifiedUntilId } from './data/fetchNotifiedUntilId';
 import { groupedEvents } from './helpers/groupedEvents';
-
-// export type Data = Exclude<Awaited<ReturnType<typeof fetchData>>, null>;
-
-// TODO
-// make fetchData not fetch all profiles for default workspace
-// setups, and instead fetch all profiles for the timeline
-
-// const appQuery = db.ref(`/apps/${appId}/`).get();
-
-// const seenByQuery = db.ref(`/views/seenBy/${appId}/${workspaceId}/${threadId}/`).get();
-
-// const threadInfoQuery = db.ref(`/threadInfo/${appId}/${workspaceId}/${threadId}`).get();
+import { fetchIsMuted } from './data/fetchIsMuted';
+import { fetchSeenBy } from './data/fetchSeenBy';
 
 async function sendMailForProfile(props: {
   eventId: string;
@@ -42,6 +32,7 @@ async function sendMailForProfile(props: {
   profiles: { [userId: string]: Profile };
   timeline: TimelineWithEventId;
   event: Event;
+  seenBy: SeenBy;
 }) {
   const {
     eventId,
@@ -55,6 +46,7 @@ async function sendMailForProfile(props: {
     threadInfo,
     workspaceName,
     event,
+    seenBy,
   } = props;
   if (!profiles[profileId]) {
     console.debug('no profile found skipping', profileId);
@@ -71,6 +63,13 @@ async function sendMailForProfile(props: {
     return null;
   }
 
+  const isMuted = await fetchIsMuted({ appId, workspaceId, profileId, threadId });
+
+  if (isMuted) {
+    console.debug('muted', profileId);
+    return null;
+  }
+
   const notifiedUntilId = await fetchNotifiedUntilId({ appId, workspaceId, profileId, threadId });
 
   const eventIds = Object.keys(timeline);
@@ -83,6 +82,14 @@ async function sendMailForProfile(props: {
   }
 
   const notifyAboutEventIds = eventIds.slice(eventIds.indexOf(notifyFrom));
+
+  if (seenBy[profileId]?.seenUntilId) {
+    const index = notifyAboutEventIds.indexOf(seenBy[profileId]?.seenUntilId);
+    if (index > 0) {
+      // remove events that have been seen by the user
+      notifyAboutEventIds.splice(0, index);
+    }
+  }
 
   if (notifyAboutEventIds.length === 0) {
     console.debug('no events to notify about, skipping');
@@ -101,7 +108,7 @@ async function sendMailForProfile(props: {
       profileId,
       eventId
     );
-    await setNotifiedUntil({ appId, workspaceId, threadId, profileId, eventId });
+    await setNotifiedUntil({ appId, workspaceId, threadId, profileId, notifiedUntilId: eventId });
     return null;
   }
 
@@ -164,7 +171,7 @@ async function sendMailForProfile(props: {
     workspaceId,
     profileId,
     threadId,
-    eventId: newNotifiedUntilId,
+    notifiedUntilId: newNotifiedUntilId,
   });
 }
 
@@ -224,6 +231,8 @@ export async function generateAndSendEmailNotifications(props: {
 
     console.log('generateNotification', { appId, workspaceId, threadId, eventId });
 
+    const seenBy = await fetchSeenBy({ appId, workspaceId, threadId });
+
     await Promise.allSettled(
       profileIds.map((profileId) =>
         sendMailForProfile({
@@ -238,43 +247,10 @@ export async function generateAndSendEmailNotifications(props: {
           profiles,
           timeline,
           event,
+          seenBy,
         })
       )
     );
-
-    // // email notifs for tella go here
-    // if (workspaceId === 'default') {
-    //   // to notify:
-    //   // + everyone in the thread
-    //   // TODO:
-    //   // + everyone who has been mentioned
-    //   // - anyone who has muted the thread
-    // } else {
-    //   // to notify:
-    //   // + everyone in the workspace
-    //   // TODO:
-    //   // + everyone who has been mentioned
-    //   // - anyone who has muted the workspace
-    //   // - anyone who has muted the thread
-
-    //   await Promise.allSettled(
-    //     profileIds.map(async (profileId) => {
-    //       return sendMailForProfile({
-    //         appId,
-    //         eventId,
-    //         profileId,
-    //         threadId,
-    //         workspaceId,
-    //         app,
-    //         threadInfo,
-    //         workspaceName,
-    //         profiles,
-    //         timeline,
-    //         event,
-    //       });
-    //     })
-    //   );
-    // }
   }
 
   return null;

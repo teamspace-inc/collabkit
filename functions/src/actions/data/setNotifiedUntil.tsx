@@ -5,10 +5,10 @@ export function setNotifiedUntil(props: {
   workspaceId: string;
   threadId: string;
   profileId: string;
-  eventId: string;
+  notifiedUntilId: string;
 }) {
   const db = admin.database();
   return db
     .ref(`/notifiedUntil/${props.appId}/${props.workspaceId}/${props.threadId}/${props.profileId}`)
-    .set(props.eventId);
+    .set(props.notifiedUntilId);
 }
