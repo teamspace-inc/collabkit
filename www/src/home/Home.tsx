@@ -30,7 +30,7 @@ export function RequestDemoButton(props: { style?: React.CSSProperties }) {
         (window.location.href = 'https://calendly.com/namit-chadha/30min?month=2022-07')
       }
     >
-      Request a demo
+      Request demo
     </Button>
   );
 }
@@ -79,27 +79,32 @@ function SectionHeader(props: {
 }
 
 const PlanGrid = styled(Grid, {
-  gridTemplateColumns: '1fr 1fr 1fr',
-  columnGap: '3rem',
+  gridTemplateColumns: '1fr 1fr 1fr 1fr',
+  columnGap: '0px',
   padding: '0 4rem',
 
   '@bp1': { gridTemplateColumns: '1fr', rowGap: '2rem', width: 'calc(100% - 4rem)' },
-  '@bp2': { gridTemplateColumns: '1fr 1fr 1fr', width: 'calc(100% - 12rem)', maxWidth: '1352px' },
+  '@bp2': {
+    gridTemplateColumns: '1fr 1fr 1fr 1fr',
+    width: 'calc(100% - 100px)',
+    maxWidth: '1352px',
+  },
 });
 
 const Plan = styled(VStack, {
-  border: '2px solid #222222',
-  borderRadius: 24,
+  borderRight: '2px solid #222222',
+  '&:last-child': { borderRight: 'transparent' },
+  // borderRadius: 24,
   textAlign: 'initial',
-  '@bp1': { padding: '2.5rem 2rem' },
-  '@bp2': { padding: '2.5rem 3.5rem 2.5rem' },
+  '@bp1': { padding: '40px', borderRightColor: 'transparent' },
+  '@bp2': { padding: '0px 30px', borderRightColor: '#222222' },
 });
 
 const PlanTitle = styled('h3', {
   fontFamily: 'Space Grotesk',
   fontStyle: 'normal',
-  fontWeight: '400',
-  fontSize: '2rem',
+  fontWeight: '700',
+  fontSize: '20px',
   marginTop: 0,
   marginBottom: '1.25rem',
   lineHeight: '128.125%',
@@ -110,19 +115,21 @@ const PlanTitle = styled('h3', {
 const PlanPrice = styled('span', {
   fontFamily: 'Inter',
   fontStyle: 'normal',
-  fontWeight: '600',
-  fontSize: '3rem',
+  fontWeight: '700',
+  fontSize: '36px',
   lineHeight: '120%',
   letterSpacing: '-0.03em',
   color: '#222222',
+  marginBottom: '40px',
 });
 
 const Small = styled('span', {
   fontFamily: 'Inter',
   fontStyle: 'normal',
   fontWeight: 500,
-  fontSize: '1rem',
-  lineHeight: '118.75%',
+  fontSize: '14px',
+  lineHeight: '16px',
+  opacity: 0.5,
   whiteSpace: 'nowrap',
   letterSpacing: '0',
 });
@@ -130,7 +137,7 @@ const Small = styled('span', {
 const PlanFeatures = styled('ul', {
   paddingBlock: 0,
   paddingInline: 0,
-  marginBottom: '2.5rem',
+  marginBottom: '40px',
   listStyleType: 'none',
   flex: 1,
 });
@@ -139,8 +146,9 @@ const PlanFeatureItem = styled('li', {
   fontFamily: 'Inter',
   fontStyle: 'normal',
   fontWeight: '500',
-  fontSize: '1rem',
-  lineHeight: '250%',
+  fontSize: '16px',
+  lineHeight: '20px',
+  marginBottom: '20px',
   color: '#222222',
   display: 'flex',
   flexDirection: 'row',
@@ -180,7 +188,7 @@ export const DemoImageMobileFallback = styled('img', {
 function PlanFeature({ children }: { children: ReactNode }) {
   return (
     <PlanFeatureItem>
-      <img src={checkmarkSvg} style={{ width: '1rem', height: '1rem', marginTop: '0.75rem' }} />
+      <img src={checkmarkSvg} style={{ width: '1rem', height: '20px', marginTop: '0' }} />
       <PlanFeatureContent>{children}</PlanFeatureContent>
     </PlanFeatureItem>
   );
@@ -340,12 +348,13 @@ export function Home() {
           description={
             isSmallScreen ? (
               <span>
-                From spreadsheets to dashboards; work together as a team in any kind of interface.
+                From spreadsheets to dashboards; let your users work together as a team in any kind
+                of interface.
               </span>
             ) : (
               <span>
-                From spreadsheets to dashboards; work together
-                <br /> as a team in any kind of interface.
+                From spreadsheets to dashboards; let your users
+                <br /> work together as a team in any kind of interface.
               </span>
             )
           }
@@ -373,7 +382,7 @@ export function Home() {
           }
           description={
             <span>
-              Just add <span style={{ color: '' }}>{`<CollabKit.Thread />`}</span>
+              Simply add <span style={{ color: '' }}>{`<CollabKit.Thread />`}</span>
             </span>
           }
         />
@@ -414,7 +423,7 @@ export function Home() {
               )}
             </span>
           }
-          description={<span>Just add the features that are right for you.</span>}
+          description={<span>All the features you expect and more.</span>}
         />
         <img
           style={{ width: '90vw', maxWidth: '898px' }}
@@ -452,50 +461,79 @@ export function Home() {
       >
         <SectionHeader
           title={<span>Pricing</span>}
-          description={<span>Choose a package that suits you.</span>}
+          description={<span>Packages that grow with your business.</span>}
         />
         <PlanGrid>
           <Plan>
             <PlanTitle>Starter</PlanTitle>
-            <PlanPrice>Free</PlanPrice>
+            <PlanPrice>
+              $10 <br />
+              <Small>Per month</Small>
+            </PlanPrice>
             <PlanFeatures>
-              <PlanFeature>100 monthly active users</PlanFeature>
-              <PlanFeature>Commenting</PlanFeature>
+              <PlanFeature>All the essentials</PlanFeature>
+              <PlanFeature>
+                100 <br />
+                <Small>monthly active users</Small>
+              </PlanFeature>
             </PlanFeatures>
-            <RequestDemoButton style={{ height: '60px' }} />
+            <RequestDemoButton />
+          </Plan>
+          <Plan>
+            <PlanTitle>Startup</PlanTitle>
+            <PlanPrice>
+              $400 <br />
+              <Small>Per month</Small>
+            </PlanPrice>
+            <PlanFeatures>
+              <PlanFeature>All the essentials</PlanFeature>
+              <PlanFeature>
+                1,500 <br />
+                <Small>monthly active users</Small>
+              </PlanFeature>
+              <PlanFeature>Customize UI</PlanFeature>
+            </PlanFeatures>
+            <PlanPricingSmall>$0.10 per additonal user.</PlanPricingSmall>
+            <RequestDemoButton />
           </Plan>
           <Plan>
             <PlanTitle>Pro</PlanTitle>
             <PlanPrice>
-              $550 <Small>Per month*</Small>
+              $800 <br />
+              <Small>Per month</Small>
             </PlanPrice>
             <PlanFeatures>
-              <PlanFeature>Up to 2,500 monthly active users</PlanFeature>
-              <PlanFeature>Commenting</PlanFeature>
-              <PlanFeature>Presence</PlanFeature>
-              <PlanFeature>Analytics dashboard</PlanFeature>
+              <PlanFeature>All the essentials</PlanFeature>
+              <PlanFeature>
+                5,000 <br />
+                <Small>monthly active users</Small>
+              </PlanFeature>
               <PlanFeature>Customize UI</PlanFeature>
               <PlanFeature>Shared Slack Channel</PlanFeature>
             </PlanFeatures>
-            <PlanPricingSmall>
-              *Up to 5000 monthly active users, then $0.08 per monthly active user thereafter.
-            </PlanPricingSmall>
-            <RequestDemoButton style={{ height: '60px' }} />
+            <PlanPricingSmall>$0.10 per additonal user.</PlanPricingSmall>
+
+            <RequestDemoButton />
           </Plan>
           <Plan>
             <PlanTitle>Scale</PlanTitle>
-            <PlanPrice>Custom</PlanPrice>
+            <PlanPrice>
+              Custom
+              <br />
+              <br />
+            </PlanPrice>
             <PlanFeatures>
-              <PlanFeature>Unlimited monthly active users</PlanFeature>
-              <PlanFeature>Commenting</PlanFeature>
-              <PlanFeature>Presence</PlanFeature>
-              <PlanFeature>Analytics dashboard</PlanFeature>
+              <PlanFeature>All the essentials</PlanFeature>
+              <PlanFeature>
+                Unlimited <br />
+                <Small>monthly active users</Small>
+              </PlanFeature>
               <PlanFeature>Customize UI</PlanFeature>
               <PlanFeature>Shared Slack Channel</PlanFeature>
-              <PlanFeature>SLA</PlanFeature>
               <PlanFeature>API</PlanFeature>
+              <PlanFeature>SLA</PlanFeature>
             </PlanFeatures>
-            <RequestDemoButton style={{ height: '60px' }} />
+            <RequestDemoButton />
           </Plan>
         </PlanGrid>
       </Section>

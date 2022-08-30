@@ -117,10 +117,10 @@ export const H4 = styled('h2', {
 
 export const Button = styled('button', {
   fontFamily: 'Inter',
-  padding: '1rem 2rem',
+  padding: '12px 24px',
   fontStyle: 'normal',
   fontWeight: 500,
-  fontSize: '1.25rem',
+  fontSize: '20px',
   height: '4rem',
   boxSizing: 'border-box',
   lineHeight: '100%',
@@ -138,7 +138,7 @@ export const Button = styled('button', {
   },
 
   '@bp1': { fontSize: '16px', padding: '0px 20px', height: '44px' },
-  '@bp2': { fontSize: '20px', lineHeight: '22px', padding: '0px 24px', height: '60px' },
+  '@bp2': { fontSize: '19px', lineHeight: '22px', padding: '0px 24px', height: '60px' },
 });
 
 export const loading = keyframes({
