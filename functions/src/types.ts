@@ -12,6 +12,10 @@ export interface OrgApps {
   };
 }
 
+export type NotificationPreferences = {
+  isMuted: boolean | null | undefined;
+};
+
 export type App = {
   name: string;
   admins: {

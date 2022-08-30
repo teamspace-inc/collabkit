@@ -307,6 +307,29 @@
           }
         }
       }
+    },
+    "notificationPreferences": {
+      "$appId": {
+        "$workspaceId": {
+          ".read": "auth.token.appId === $appId",
+          "$threadId": {
+            "$endUserId": {
+              ".read": true,
+              ".write": false, // only 'Firebase Admin' can write
+
+              // mirrors Slack notification settings
+              // "notifyFor": {
+              //   ".validate": "newData.isString() && (newData.val() === 'allMessages' || newData.val() === 'onlyMentions' || newData.val() === 'off')"
+              // },
+
+              // overrides the above setting
+              "isMuted": {
+                ".validate": "newData.isBoolean()"
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
