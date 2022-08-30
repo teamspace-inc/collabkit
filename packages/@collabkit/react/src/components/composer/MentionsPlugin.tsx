@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactPortal } from 'react';
 import type { LexicalEditor, RangeSelection } from 'lexical';
 
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
@@ -618,7 +618,7 @@ function useMentions(editor: LexicalEditor) {
       );
 }
 
-export default function MentionsPlugin() {
+export default function MentionsPlugin(): ReactPortal | null {
   const [editor] = useLexicalComposerContext();
   return useMentions(editor);
 }

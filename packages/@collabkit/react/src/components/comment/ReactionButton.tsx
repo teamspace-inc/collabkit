@@ -16,7 +16,9 @@ export function ReactionButton() {
   }
   return target ? (
     <>
-      <StyledReactionButton onPointerDown={(e) => events.onEmojiReactPointerDown(e, { target })}>
+      <StyledReactionButton
+        onPointerDown={(e: React.PointerEvent) => events.onEmojiReactPointerDown(e, { target })}
+      >
         <Smiley weight="regular" size={18} color={theme.colors.neutral9.toString()} />
       </StyledReactionButton>
     </>

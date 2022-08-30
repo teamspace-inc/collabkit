@@ -1,3 +1,4 @@
+import type React from 'react';
 import { $getRoot, $getSelection } from 'lexical';
 import type { EditorState, LexicalEditor } from 'lexical';
 import { nanoid } from 'nanoid';

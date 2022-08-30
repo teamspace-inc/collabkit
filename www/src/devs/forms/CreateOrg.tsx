@@ -21,10 +21,10 @@ export function CreateOrg() {
                 border: '2px solid #222',
                 borderRadius: '100px',
               }}
-              onChange={(e) => devEvents.onCreateOrgInputChange(e)}
+              onChange={devEvents.onCreateOrgInputChange}
               type="text/email"
             />
-            <Button onClick={(e) => devEvents.onCreateOrgButtonClick(e)}>Continue</Button>
+            <Button onClick={devEvents.onCreateOrgButtonClick}>Continue</Button>
           </HStack>
         </VStack>
       </Auth>

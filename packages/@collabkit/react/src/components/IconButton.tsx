@@ -13,9 +13,7 @@ export function IconButton(props: {
   return (
     <Tooltip.Root>
       <Tooltip.Trigger>
-        <StyledIconButton onPointerDown={(e) => props.onPointerDown?.(e)}>
-          {props.children}
-        </StyledIconButton>
+        <StyledIconButton onPointerDown={props.onPointerDown}>{props.children}</StyledIconButton>
       </Tooltip.Trigger>
       <Tooltip.Content>
         {props.tooltip}

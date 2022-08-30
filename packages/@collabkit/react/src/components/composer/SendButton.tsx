@@ -15,7 +15,7 @@ export function SendButton(props: { bodyLength: number; workspaceId: string; thr
     <Tooltip.Root>
       <StyledComposerSendButton
         disabled={bodyLength === 0}
-        onClick={(e) => {
+        onClick={() => {
           if (bodyLength > 0) {
             events.onSend(workspaceId, threadId);
           }

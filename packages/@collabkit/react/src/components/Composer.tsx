@@ -95,8 +95,8 @@ export function Composer(props: {
         <LexicalComposer initialConfig={initialConfig}>
           <StyledLexicalEditorContainer
             ref={editorContainerRef}
-            onFocus={(e) => events.onFocus(e, { target })}
-            onBlur={(e) => events.onBlur(e, { target })}
+            onFocus={(e: React.FocusEvent) => events.onFocus(e, { target })}
+            onBlur={(e: React.FocusEvent) => events.onBlur(e, { target })}
           >
             <StyledVisibleComposerArea>
               <PasteTextPlugin />

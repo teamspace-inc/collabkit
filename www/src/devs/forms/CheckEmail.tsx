@@ -16,7 +16,7 @@ export function CheckEmail() {
               We've sent a magic link to <b>{forms.enterEmail?.email}</b> click on it to continue.
             </Text>
             <HStack style={{ gap: '1rem' }}>
-              <LoadingButton onClick={(e) => devEvents.onAuthFormSubmit()}>
+              <LoadingButton onClick={() => devEvents.onAuthFormSubmit()}>
                 Resend Magic Link
               </LoadingButton>
             </HStack>

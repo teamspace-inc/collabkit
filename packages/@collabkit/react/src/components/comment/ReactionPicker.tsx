@@ -1,4 +1,4 @@
-import React, { RefObject, useContext, useRef } from 'react';
+import React, { useContext, useRef } from 'react';
 import { CommentTarget } from '../../constants';
 import { Target } from '../Target';
 import { useApp } from '../../hooks/useApp';
@@ -22,7 +22,9 @@ function EmojiReaction(props: { emoji: string }) {
   }
 
   return (
-    <StyledEmojiReaction onClick={(e) => events.onEmojiReactionClick(e, { target })}>
+    <StyledEmojiReaction
+      onClick={(e: React.MouseEvent) => events.onEmojiReactionClick(e, { target })}
+    >
       {props.emoji}
     </StyledEmojiReaction>
   );

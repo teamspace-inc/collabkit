@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { AgGridReact } from 'ag-grid-react';
+import { AgGridReact as OrigAgGridReact } from 'ag-grid-react';
 import { TableCell } from '@collabkit/react';
 
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import { ICellRendererParams } from 'ag-grid-community';
 
-type Car = { make: string; model: string; price: number };
+const AgGridReact = OrigAgGridReact as any;
 
 export function GridExample() {
   const [rowData] = useState([
@@ -39,7 +39,7 @@ export function GridExample() {
 
   return (
     <div className="ag-theme-alpine" style={{ width: 650, height: 400 }}>
-      <AgGridReact rowData={rowData} columnDefs={columnDefs} suppressHorizontalScroll></AgGridReact>
+      <AgGridReact rowData={rowData} columnDefs={columnDefs}></AgGridReact>
     </div>
   );
 }
