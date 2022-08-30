@@ -1,82 +1,81 @@
 import React from 'react';
-import * as admin from 'firebase-admin';
 
 import { sendMail } from '../emails';
 import NotificationEmail from '../emails/NotificationEmail';
-import { onConnect } from '../actions/helpers/onConnect';
-
-import type { Event, Profile } from '../types';
-import { isValidNotifiedUntilId } from './helpers/isValidNotifiedUntilId';
-import { isValidSeenBy } from './helpers/isValidSeenBy';
-import { isValidTimeline } from './helpers/isValidTimeline';
-import { isValidApp } from './helpers/isValidApp';
-import { isProfile } from './helpers/isProfile';
-import { isValidWorkspace } from './helpers/isValidWorkspace';
-import { isThreadInfo } from './helpers/isThreadInfo';
+import { onConnect } from './data/onConnect';
+import { setNotifiedUntil } from './data/setNotifiedUntil';
+import { isDefaultWorkspace } from './helpers/isDefaultWorkspace';
+import { fetchWorkspaceProfiles } from './data/fetchWorkspaceProfiles';
+import { fetchThreadInfo } from './data/fetchThreadInfo';
+import { getThreadProfiles } from './helpers/getThreadProfiles';
+import { fetchWorkspaceName } from './data/fetchWorkspaceName';
+import { fetchTimeline } from './data/fetchTimeline';
+import { fetchProfiles } from './data/fetchProfiles';
+import { fetchApp } from './data/fetchApp';
+import { App, Event, Profile, ThreadInfo, TimelineWithEventId } from '../types';
+import { isAppNotifiable } from './helpers/isAppNotifiable';
 import { canSendEmail } from './helpers/canSendEmail';
+import { fetchNotifiedUntilId } from './data/fetchNotifiedUntilId';
 import { groupedEvents } from './helpers/groupedEvents';
-import uniq from 'lodash.uniq';
 
-type Data = Exclude<Awaited<ReturnType<typeof fetchData>>, null>;
+// export type Data = Exclude<Awaited<ReturnType<typeof fetchData>>, null>;
 
-function setNotifiedUntil(props: {
-  appId: string;
-  workspaceId: string;
-  threadId: string;
-  profileId: string;
+// TODO
+// make fetchData not fetch all profiles for default workspace
+// setups, and instead fetch all profiles for the timeline
+
+// const appQuery = db.ref(`/apps/${appId}/`).get();
+
+// const seenByQuery = db.ref(`/views/seenBy/${appId}/${workspaceId}/${threadId}/`).get();
+
+// const threadInfoQuery = db.ref(`/threadInfo/${appId}/${workspaceId}/${threadId}`).get();
+
+async function sendMailForProfile(props: {
   eventId: string;
-}) {
-  const db = admin.database();
-  return db
-    .ref(`/notifiedUntil/${props.appId}/${props.workspaceId}/${props.profileId}`)
-    .set(props.eventId);
-}
-
-async function fetchProfileSpecificData(props: {
-  data: Data;
   appId: string;
-  threadId: string;
   workspaceId: string;
   profileId: string;
+  threadId: string;
+  app: App;
+  threadInfo: ThreadInfo;
+  workspaceName: string | undefined;
+  profiles: { [userId: string]: Profile };
+  timeline: TimelineWithEventId;
+  event: Event;
 }) {
-  const { appId, workspaceId, profileId, data } = props;
-
-  if (!data.profiles[profileId]) {
+  const {
+    eventId,
+    appId,
+    workspaceId,
+    profileId,
+    threadId,
+    timeline,
+    profiles,
+    app,
+    threadInfo,
+    workspaceName,
+    event,
+  } = props;
+  if (!profiles[profileId]) {
     console.debug('no profile found skipping', profileId);
     return null;
   }
 
-  if (!data.profiles[profileId].email) {
+  if (!profiles[profileId].email) {
     console.debug('no profile email found skipping', profileId);
     return null;
   }
 
-  if (!canSendEmail(data.profiles[profileId])) {
+  if (!canSendEmail(profiles[profileId])) {
     console.debug('cant send email', profileId);
     return null;
   }
 
-  const db = admin.database();
-  const notifiedUntil = (
-    await db.ref(`/notifiedUntil/${appId}/${workspaceId}/${profileId}`).get()
-  ).val();
+  const notifiedUntilId = await fetchNotifiedUntilId({ appId, workspaceId, profileId, threadId });
 
-  if (!isValidNotifiedUntilId(notifiedUntil)) {
-    console.debug('invalid notifiedUntil, skipping', notifiedUntil);
-    return null;
-  }
+  const eventIds = Object.keys(timeline);
 
-  let notifyFrom: string | null = null;
-
-  const eventIds = Object.keys(data.timeline);
-
-  // if we've never notified this user,
-  // lets start from the first eventId
-  if (!notifiedUntil) {
-    notifyFrom = eventIds[0];
-  } else if (notifiedUntil) {
-    notifyFrom = eventIds[eventIds.indexOf(notifiedUntil) + 1];
-  }
+  let notifyFrom = !notifiedUntilId ? eventIds[0] : eventIds[eventIds.indexOf(notifiedUntilId) + 1];
 
   if (!notifyFrom) {
     console.log('no notifyFrom, skipping', profileId);
@@ -91,204 +90,12 @@ async function fetchProfileSpecificData(props: {
   }
 
   const messageEvents = notifyAboutEventIds
-    .map((eventId) => data.timeline[eventId])
+    .map((eventId) => timeline[eventId])
     .filter((event) => event.type === 'message');
 
-  const list = groupedEvents(messageEvents, data.timeline);
+  const list = groupedEvents(messageEvents, timeline);
 
-  return {
-    notifiedUntil,
-    notifyFrom,
-    list,
-    messageEvents,
-    notifyAboutEventIds,
-  };
-}
-
-async function fetchData(props: {
-  appId: string;
-  workspaceId: string;
-  threadId: string;
-  eventId: string;
-}) {
-  const db = admin.database();
-  const { appId, workspaceId, threadId, eventId } = props;
-
-  console.log('fetchData', { appId, workspaceId, threadId, eventId });
-
-  const appQuery = db.ref(`/apps/${appId}/`).get();
-
-  const workspaceQuery = db.ref(`/workspaces/${appId}/${workspaceId}/`).get();
-
-  const seenByQuery = db.ref(`/views/seenBy/${appId}/${workspaceId}/${threadId}/`).get();
-
-  const timelineQuery = db.ref(`/timeline/${appId}/${workspaceId}/${threadId}`).orderByKey().get();
-
-  const threadInfoQuery = db.ref(`/threadInfo/${appId}/${workspaceId}/${threadId}`).get();
-
-  try {
-    const isConnected = await onConnect();
-    if (isConnected) {
-      const [appSnapshot, workspaceSnapshot, seenBySnapshot, timelineSnapshot, threadInfoSnapshot] =
-        await Promise.all([appQuery, workspaceQuery, seenByQuery, timelineQuery, threadInfoQuery]);
-
-      const app = appSnapshot.val();
-      if (!isValidApp(app)) {
-        console.debug('invalid app exiting', app);
-        return null;
-      }
-
-      if (app.isEmailDisabled) {
-        console.debug('email disabled, exiting');
-        return null;
-      }
-
-      if (!app.name) {
-        console.debug('could not find app.name, exiting');
-        return null;
-      }
-
-      if (!app.accentColor) {
-        console.debug('could not find app.accentColor, exiting');
-        return null;
-      }
-
-      const workspace = workspaceSnapshot.val();
-      if (!isValidWorkspace(workspace)) {
-        console.debug('invalid workspace, exiting', workspace);
-        return null;
-      }
-
-      if (!workspace.profiles) {
-        console.debug('workspace has no profiles, exiting');
-        return null;
-      }
-
-      if (!app.logoUrl) {
-        console.debug('could not find app.logoUrl, exiting');
-        return null;
-      }
-
-      const profileIds = Object.keys(workspace.profiles);
-
-      if (profileIds.length === 0) {
-        console.debug('workspace has no profiles, exiting');
-        return null;
-      }
-
-      if (profileIds.length === 1) {
-        console.debug('workspace has only one profile, exiting');
-        return null;
-      }
-
-      const threadInfo = threadInfoSnapshot.val();
-
-      if (!isThreadInfo(threadInfo)) {
-        console.debug('invalid thread info, exiting', threadInfo);
-        return null;
-      }
-
-      if (!threadInfo.url) {
-        console.debug('no thread url, skipping', threadInfo);
-        return null;
-      }
-
-      // let tasks: { [profileId: string]: Promise<void>[] } = {};
-
-      const profileSnapshots = await Promise.all(
-        profileIds.map((profileId) => db.ref(`/profiles/${appId}/${profileId}/`).get())
-      );
-
-      const profiles: { [id: string]: Profile } = {};
-      for (const profileId of profileIds) {
-        const profileSnapshot = profileSnapshots.find((snapshot) => snapshot.key === profileId);
-        const profile = profileSnapshot?.val();
-        if (isProfile(profile)) {
-          profiles[profileId] = profile;
-        }
-      }
-
-      console.debug('fetched profiles', profiles);
-
-      const seenBy = seenBySnapshot.val() ?? {};
-      if (!isValidSeenBy(seenBy)) {
-        console.debug('invalid seen by data, exiting', seenBy);
-        return null;
-      }
-
-      const timeline = timelineSnapshot.val();
-      if (!isValidTimeline(timeline)) {
-        console.debug('invalid events data, exiting', timeline);
-        return null;
-      }
-
-      const timelineWithEventIds: { [eventId: string]: Event & { id: string } } = {};
-      for (const eventId in timeline) {
-        timelineWithEventIds[eventId] = { ...timeline[eventId], id: eventId };
-      }
-
-      let _event = timelineWithEventIds[eventId];
-
-      const lastEventId = Object.keys(timelineWithEventIds)[Object.keys(timeline).length - 1];
-
-      console.debug('lastEventId', lastEventId);
-
-      const creatorProfile = profiles[_event.createdById];
-      if (!creatorProfile) {
-        console.debug('could not find actor profile, exiting');
-        return null;
-      }
-
-      console.debug('fetched creator profile', creatorProfile);
-
-      const isFirstEvent = Object.keys(timelineWithEventIds)[0] === eventId;
-      console.debug('isFirstEvent', isFirstEvent);
-
-      return {
-        app,
-        workspace,
-        profiles,
-        seenBy,
-        timeline: timelineWithEventIds,
-        threadInfo,
-        eventId,
-        event: _event,
-        lastEventId,
-        profileIds,
-        isFirstEvent,
-      };
-    }
-  } catch (error) {
-    console.error('error fetching data', error);
-    return null;
-  }
-  return null;
-}
-
-async function sendMailForProfile(props: {
-  eventId: string;
-  appId: string;
-  workspaceId: string;
-  profileId: string;
-  threadId: string;
-  data: Data;
-}) {
-  const { eventId, appId, workspaceId, profileId, threadId, data } = props;
-  const profileData = await fetchProfileSpecificData({
-    appId,
-    workspaceId,
-    threadId,
-    profileId,
-    data,
-  });
-
-  if (!profileData) {
-    return null;
-  }
-
-  const { notifyAboutEventIds, list } = profileData;
-
-  if (profileId === data.event.createdById) {
+  if (profileId === event.createdById) {
     console.debug(
       'profileId === _event.createdById skipping and setting notifiedUntil',
       profileId,
@@ -298,35 +105,35 @@ async function sendMailForProfile(props: {
     return null;
   }
 
-  const to = data.profiles[profileId].email;
+  const to = profiles[profileId].email;
 
   let subject = notifyAboutEventIds.length > 1 ? 'New comments' : 'New comment';
   if (workspaceId.toLowerCase() === 'default') {
-    subject = `${subject} in ${data.app.name}`;
-  } else if (data.workspace.name) {
-    subject = `${subject} in ${data.workspace.name}`;
+    subject = `${subject} in ${app.name}`;
+  } else if (workspaceName) {
+    subject = `${subject} in ${workspaceName}`;
   }
 
-  if (data.threadInfo.name) {
-    subject = `${subject} on ${data.threadInfo.name}`;
+  if (threadInfo.name) {
+    subject = `${subject} on ${threadInfo.name}`;
   }
 
-  if (!data.threadInfo.url) {
+  if (!threadInfo.url) {
     return null;
   }
 
   const component = (
     <NotificationEmail
-      openUrl={data.threadInfo.url}
-      accentColor={data.app.accentColor}
-      appLogoUrl={data.app.logoUrl}
+      openUrl={threadInfo.url}
+      accentColor={app.accentColor}
+      appLogoUrl={app.logoUrl}
       ctaText={list.length === 1 ? 'View comment' : 'View comments'}
       activity={list.length === 1 ? 'New comment' : 'New comments'}
-      threadName={data.threadInfo.name}
-      workspaceName={data.workspace.name}
-      appName={data.app.name}
+      threadName={threadInfo.name}
+      workspaceName={workspaceName}
+      appName={app.name}
       commentList={list}
-      profiles={data.profiles}
+      profiles={profiles}
     />
   );
 
@@ -369,53 +176,105 @@ export async function generateAndSendEmailNotifications(props: {
 }) {
   const { appId, workspaceId, threadId, eventId } = props;
 
-  console.log('generateNotification', { appId, workspaceId, threadId, eventId });
+  console.log('fetchData', { appId, workspaceId, threadId, eventId });
 
-  const data = await fetchData(props);
-  if (data === null) {
-    return;
-  }
+  const isConnected = await onConnect();
+  if (isConnected) {
+    const { app } = await fetchApp({ appId });
 
-  const { profileIds } = data;
+    if (!isAppNotifiable({ app })) {
+      console.debug('app is not notifiable, exiting');
+      return null;
+    }
 
-  // for workspaces we want to notify everyone in the workspace for
-  // new comments note we probably want to auto-mute this at 50+ workspace members
-  // otherwise things could get a bit too spammy
+    const { workspaceName } = await fetchWorkspaceName({ appId, workspaceId });
 
-  // email notifs for tella go here
-  if (workspaceId === 'default') {
-    // to notify:
-    // + everyone in the thread
-    // TODO:
-    // + everyone who has been mentioned
-    // - anyone who has muted the thread
-    const profileIds = uniq(Object.values(data.timeline).map((event) => event.createdById));
+    const { timeline } = await fetchTimeline({ appId, workspaceId, threadId });
+
+    const profileIds = isDefaultWorkspace(workspaceId)
+      ? getThreadProfiles({ timeline })
+      : await fetchWorkspaceProfiles({
+          appId,
+          workspaceId,
+        });
+
+    if (profileIds.length === 0) {
+      console.debug('0 profileIds, exiting');
+      return null;
+    }
+
+    if (profileIds.length === 1) {
+      console.debug('1 profileIds, exiting');
+      return null;
+    }
+
+    const { threadInfo } = await fetchThreadInfo({ appId, workspaceId, threadId });
+
+    const { profiles } = await fetchProfiles({ appId, profileIds });
+
+    console.debug('fetched profiles', profiles);
+
+    let event = timeline[eventId];
+
+    const createdByProfile = profiles[event.createdById];
+    if (!createdByProfile) {
+      console.debug('could not find profiles[event.createdById], exiting');
+      return null;
+    }
+
+    console.log('generateNotification', { appId, workspaceId, threadId, eventId });
 
     await Promise.allSettled(
       profileIds.map((profileId) =>
-        sendMailForProfile({ appId, eventId, profileId, threadId, workspaceId, data })
-      )
-    );
-  } else {
-    // to notify:
-    // + everyone in the workspace
-    // TODO:
-    // + everyone who has been mentioned
-    // - anyone who has muted the workspace
-    // - anyone who has muted the thread
-
-    await Promise.allSettled(
-      profileIds.map(async (profileId) => {
-        return sendMailForProfile({
-          eventId,
+        sendMailForProfile({
           appId,
-          workspaceId,
+          eventId,
           profileId,
           threadId,
-          data,
-        });
-      })
+          workspaceId,
+          app,
+          threadInfo,
+          workspaceName,
+          profiles,
+          timeline,
+          event,
+        })
+      )
     );
+
+    // // email notifs for tella go here
+    // if (workspaceId === 'default') {
+    //   // to notify:
+    //   // + everyone in the thread
+    //   // TODO:
+    //   // + everyone who has been mentioned
+    //   // - anyone who has muted the thread
+    // } else {
+    //   // to notify:
+    //   // + everyone in the workspace
+    //   // TODO:
+    //   // + everyone who has been mentioned
+    //   // - anyone who has muted the workspace
+    //   // - anyone who has muted the thread
+
+    //   await Promise.allSettled(
+    //     profileIds.map(async (profileId) => {
+    //       return sendMailForProfile({
+    //         appId,
+    //         eventId,
+    //         profileId,
+    //         threadId,
+    //         workspaceId,
+    //         app,
+    //         threadInfo,
+    //         workspaceName,
+    //         profiles,
+    //         timeline,
+    //         event,
+    //       });
+    //     })
+    //   );
+    // }
   }
 
   return null;

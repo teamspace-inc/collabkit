@@ -2,7 +2,13 @@ import { SeenBy } from '../../types';
 import { isValidSeenByUser } from './isValidSeenByUser';
 
 export function isValidSeenBy(data: any): data is SeenBy {
+  if (typeof data === 'undefined') {
+    return false;
+  }
   if (typeof data !== 'object') {
+    return false;
+  }
+  if (data === null) {
     return false;
   }
 

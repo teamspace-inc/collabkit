@@ -41,9 +41,9 @@ export type SeenByUser = {
 export type Event = {
   type: 'message' | 'reaction' | 'adminMessage' | 'system';
   body: string;
-  system?: 'resolve' | 'reopen';
   createdAt: number;
   createdById: string;
+  system?: 'resolve' | 'reopen';
   parentId?: string;
 };
 
@@ -64,9 +64,11 @@ export type Profile = {
 
 export type Workspace = {
   name?: string;
-  profiles: {
-    [userId: string]: boolean;
-  };
+  profiles: WorkspaceProfiles;
+};
+
+export type WorkspaceProfiles = {
+  [userId: string]: boolean;
 };
 
 export type UserProps = {

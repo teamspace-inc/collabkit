@@ -1,7 +1,13 @@
 import { App } from '../../types';
 
 export function isValidApp(data: any): data is App {
+  if (typeof data === undefined) {
+    return false;
+  }
   if (typeof data !== 'object') {
+    return false;
+  }
+  if (data === null) {
     return false;
   }
 
