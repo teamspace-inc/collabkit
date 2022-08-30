@@ -249,7 +249,7 @@ export function newComments() {
         'https://uploads-ssl.webflow.com/621c64f63b023c2de02255d3/621c65a1379d5f3a08216e47_logo_wide_black.png'
       }
       activity={`${sample.body.data.comments.list?.length} new comment`}
-      productName="Dart"
+      appName="Dart"
       accentColor="#D73C56"
       commentList={sample.body.data.comments.list}
       profiles={sample.body.data.workspace.profiles}

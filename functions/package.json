@@ -20,6 +20,7 @@
     "firebase-admin": "^10.0.2",
     "firebase-functions": "^3.22.0",
     "lodash.shuffle": "^4.2.0",
+    "lodash.uniq": "^4.5.0",
     "mailgun-js": "^0.22.0",
     "mailing-core": "^0.6.5",
     "mjml": "^4.13.0",
@@ -33,6 +34,7 @@
   "devDependencies": {
     "@types/jest": "^28.1.7",
     "@types/lodash.shuffle": "^4.2.7",
+    "@types/lodash.uniq": "^4.5.7",
     "@types/mailgun-js": "^0.22.12",
     "@types/mjml": "^4.7.0",
     "@types/mjml-react": "^2.0.5",

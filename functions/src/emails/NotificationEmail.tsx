@@ -15,7 +15,7 @@ type NotificationEmailProps = {
   commentList: { createdById: string; createdAt: number; body: string; type: string }[][];
   ctaText?: string;
   profiles: { [id: string]: { name?: string; avatar?: string; email?: string; color?: string } };
-  productName?: string;
+  appName?: string;
   openUrl: string;
 };
 
@@ -52,13 +52,13 @@ const NotificationEmail: React.FC<NotificationEmailProps> = ({
   threadName,
   workspaceName,
   accentColor,
-  productName,
+  appName,
   profiles,
   openUrl,
   appLogoUrl,
   commentList,
 }) => {
-  const entityName = threadName ?? workspaceName ?? productName;
+  const entityName = threadName ?? workspaceName ?? appName;
 
   if (commentList.length === 0) {
     return null;

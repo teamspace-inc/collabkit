@@ -15,6 +15,7 @@ import { isValidWorkspace } from './helpers/isValidWorkspace';
 import { isThreadInfo } from './helpers/isThreadInfo';
 import { canSendEmail } from './helpers/canSendEmail';
 import { groupedEvents } from './helpers/groupedEvents';
+import uniq from 'lodash.uniq';
 
 type Data = Exclude<Awaited<ReturnType<typeof fetchData>>, null>;
 
@@ -207,7 +208,7 @@ async function fetchData(props: {
         }
       }
 
-      console.debug('got profiles', profiles);
+      console.debug('fetched profiles', profiles);
 
       const seenBy = seenBySnapshot.val() ?? {};
       if (!isValidSeenBy(seenBy)) {
@@ -232,13 +233,13 @@ async function fetchData(props: {
 
       console.debug('lastEventId', lastEventId);
 
-      const actorProfile = profiles[_event.createdById];
-      if (!actorProfile) {
+      const creatorProfile = profiles[_event.createdById];
+      if (!creatorProfile) {
         console.debug('could not find actor profile, exiting');
         return null;
       }
 
-      console.debug('got creator profile', actorProfile);
+      console.debug('fetched creator profile', creatorProfile);
 
       const isFirstEvent = Object.keys(timelineWithEventIds)[0] === eventId;
       console.debug('isFirstEvent', isFirstEvent);
@@ -254,7 +255,6 @@ async function fetchData(props: {
         event: _event,
         lastEventId,
         profileIds,
-        actorProfile,
         isFirstEvent,
       };
     }
@@ -299,15 +299,17 @@ async function sendMailForProfile(props: {
   }
 
   const to = data.profiles[profileId].email;
-  // const from = 'noreply@mail.collabkit.dev';
 
-  const threadName = data.threadInfo.name;
+  let subject = notifyAboutEventIds.length > 1 ? 'New comments' : 'New comment';
+  if (workspaceId.toLowerCase() === 'default') {
+    subject = `${subject} in ${data.app.name}`;
+  } else if (data.workspace.name) {
+    subject = `${subject} in ${data.workspace.name}`;
+  }
 
-  // there's a bug here.
-  const subject =
-    notifyAboutEventIds.length === 1
-      ? `New comment on ${threadName}`
-      : `New comments on ${threadName}`;
+  if (data.threadInfo.name) {
+    subject = `${subject} on ${data.threadInfo.name}`;
+  }
 
   if (!data.threadInfo.url) {
     return null;
@@ -322,7 +324,7 @@ async function sendMailForProfile(props: {
       activity={list.length === 1 ? 'New comment' : 'New comments'}
       threadName={data.threadInfo.name}
       workspaceName={data.workspace.name}
-      productName={data.app.name}
+      appName={data.app.name}
       commentList={list}
       profiles={data.profiles}
     />
@@ -381,42 +383,27 @@ export async function generateAndSendEmailNotifications(props: {
   // otherwise things could get a bit too spammy
 
   // email notifs for tella go here
-  if (workspaceId.toLowerCase() === 'default') {
+  if (workspaceId === 'default') {
     // to notify:
     // + everyone in the thread
+    // TODO:
     // + everyone who has been mentioned
     // - anyone who has muted the thread
-    //// TODO
-    // const toNotify: string[] = events
-    //   .map((event: { createdById: string }) => event.createdById)
-    //   // unique
-    //   .filter((v: any, i: any, a: string | any[]) => a.indexOf(v) === i)
-    //   // remove creator
-    //   .filter((id: string) => id !== actorProfile.id);
-    // console.debug('toNotify', toNotify);
-    // for (const profileId of toNotify) {
-    //   try {
-    //     const notifiedUntil = (
-    //       await db
-    //         .ref(`/notifiedUntil/${appId}/${workspaceId}/${threadId}/${profileId}`)
-    //         .get()
-    //     ).val();
-    //     if (notifiedUntil && notifiedUntil >= eventId) {
-    //       console.debug('skip: already notified', profileId);
-    //     }
-    //   } catch (e) {
-    //     console.error('error getting notifiedUntil, aborting', e);
-    //   }
-    // }
+    const profileIds = uniq(Object.values(data.timeline).map((event) => event.createdById));
+
+    await Promise.allSettled(
+      profileIds.map((profileId) =>
+        sendMailForProfile({ appId, eventId, profileId, threadId, workspaceId, data })
+      )
+    );
   } else {
     // to notify:
     // + everyone in the workspace
+    // TODO:
     // + everyone who has been mentioned
     // - anyone who has muted the workspace
     // - anyone who has muted the thread
 
-    // for all the profiles in this workspace,
-    // generate and send an email notification
     await Promise.allSettled(
       profileIds.map(async (profileId) => {
         return sendMailForProfile({
