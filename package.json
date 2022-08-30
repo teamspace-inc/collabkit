@@ -1,12 +1,15 @@
 {
   "private": true,
   "name": "collabkit-monorepo",
-  "workspaces": [
-    "examples/*",
-    "packages/@collabkit/*",
-    "packages/@collabkit/react/src/__fixtures__",
-    "www"
-  ],
+  "workspaces": {
+    "packages": [
+      "examples/*",
+      "packages/@collabkit/*",
+      "packages/@collabkit/react/src/__fixtures__",
+      "www"
+    ],
+    "nohoist": ["**/@types/react"]
+  },
   "scripts": {
     "dev": "pnpm --recursive --parallel --filter '!@collabkit/vue' run dev",
     "build": "pnpm --parallel --filter '@collabkit/react' --filter '@collabkit/vue' run build",
