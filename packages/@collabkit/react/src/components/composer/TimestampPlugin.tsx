@@ -5,7 +5,7 @@ import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext
 import { useEffect } from 'react';
 import { $createTimestampNode, TimestampNode } from './TimestampNode';
 
-const REGEX = /(([0-5]{1}[0-9]{1}:)?[0-5]{1}[0-9]{1}:[0-5]{1}[0-9]{1}) /i;
+const REGEX = /(([0-5]{0,1}[0-9]{1}:)?[0-5]{0,1}[0-9]{1}:[0-5]{1}[0-9]{1})\b/i;
 
 export default function TimestampPlugin() {
   const [editor] = useLexicalComposerContext();
@@ -43,11 +43,13 @@ export default function TimestampPlugin() {
       return null;
     }
 
-    const timestampLength = match[0].length - 1;
+    const hasTrailingSpace = match[0].slice(-1) === ' ';
+
+    const timestampLength = match[0].length - (hasTrailingSpace ? 1 : 0);
     const start = match.index;
     const end = start + timestampLength;
     return {
-      text: match[0].slice(0, -1),
+      text: hasTrailingSpace ? match[0].slice(0, -1) : match[0],
       end,
       start,
     };
