@@ -1,5 +1,5 @@
 import * as admin from 'firebase-admin';
-import { isThreadInfo } from '../helpers/isThreadInfo';
+import { isValidThreadInfo } from '../helpers/isValidThreadInfo';
 
 export async function fetchThreadInfo(props: {
   appId: string;
@@ -8,12 +8,11 @@ export async function fetchThreadInfo(props: {
 }) {
   const { appId, workspaceId, threadId } = props;
   const db = admin.database();
-  const threadInfoSnapshot = await (
+  const threadInfo = await (
     await db.ref(`/threadInfo/${appId}/${workspaceId}/${threadId}`).get()
   ).val();
-  const threadInfo = threadInfoSnapshot.val();
 
-  if (!isThreadInfo(threadInfo)) {
+  if (!isValidThreadInfo(threadInfo)) {
     console.debug('invalid thread info, exiting', threadInfo);
     throw new Error('invalid thread info');
   }

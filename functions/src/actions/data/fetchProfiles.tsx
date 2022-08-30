@@ -1,6 +1,6 @@
 import * as admin from 'firebase-admin';
 import { Profile } from '../../types';
-import { isProfile } from '../helpers/isProfile';
+import { isValidProfile } from '../helpers/isValidProfile';
 
 export async function fetchProfiles(props: { appId: string; profileIds: string[] }) {
   const db = admin.database();
@@ -13,8 +13,10 @@ export async function fetchProfiles(props: { appId: string; profileIds: string[]
   for (const profileId of props.profileIds) {
     const profileSnapshot = profileSnapshots.find((snapshot) => snapshot.key === profileId);
     const profile = profileSnapshot?.val();
-    if (isProfile(profile)) {
+    if (isValidProfile(profile)) {
       profiles[profileId] = profile;
+    } else {
+      console.debug('invalid profile, skipping', profile);
     }
   }
 

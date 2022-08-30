@@ -26,6 +26,16 @@
       "name": "Test App (secure-mode)"
     }
   },
+  "threadInfo": {
+    "QLVIR4HE-wvV_mTjoMJP5": {
+      "acme": {
+        "thread-1": {
+          "name": "Your first thread",
+          "url": "https://example.com"
+        }
+      }
+    }
+  },
   "workspaces": {
     "QLVIR4HE-wvV_mTjoMJP5": {
       "acme": {
@@ -40,7 +50,18 @@
     "QLVIR4HE-wvV_mTjoMJP5": {
       "alice": {
         "email": "alice@example.com",
-        "name": "Alice"
+        "name": "Alice",
+        "color": "sky"
+      },
+      "jane": {
+        "email": "jane@example.com",
+        "name": "Jane",
+        "color": "sky"
+      },
+      "bob": {
+        "name": "Bob",
+        "email": "bob@example.com",
+        "color": "tomato"
       }
     }
   },

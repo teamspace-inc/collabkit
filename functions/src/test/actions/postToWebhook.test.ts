@@ -33,6 +33,7 @@ describe('postToWebhook', () => {
         workspaceId: 'acme',
         threadId: 'thread-1',
         eventId: 'event-1',
+
         event: {
           type: 'message',
           body: 'Hello, world!',
@@ -40,8 +41,11 @@ describe('postToWebhook', () => {
           createdAt: 1660844360801,
         },
         context: {
-          threadInfo: null,
           seenBy: null,
+          threadInfo: {
+            name: 'Your first thread',
+            url: 'https://example.com',
+          },
         },
       },
     });
