@@ -53,7 +53,7 @@ export async function handleRequest(
 
           // tokens are valid for 1 hour
           // so we can safely cache it for a bit
-          response.set('Cache-Control', 'public, max-age=300, s-maxage=600').send({
+          response.set('Cache-Control', 'public, max-age=300, s-maxage=600').status(201).send({
             status: 201,
             data: {
               appId,
@@ -128,7 +128,7 @@ export async function handleRequest(
           workspaceId,
         });
 
-        response.set('Cache-Control', 'public, max-age=300, s-maxage=600').send({
+        response.set('Cache-Control', 'public, max-age=300, s-maxage=600').status(201).send({
           status: 201,
           data: {
             appId,
