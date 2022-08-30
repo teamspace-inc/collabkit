@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, inject, ref, watchEffect } from 'vue';
 import type { Target, CommentType, Profile, CommentTarget } from '@collabkit/core';
-import Avatar from './Avatar.vue';
+import Avatar from './Avatar';
 import MessageHeader from './comment/MessageHeader.vue';
 import { HStack } from './UIKit';
 import {

@@ -63,6 +63,11 @@ export const container = css({
   background: '$colors$backgroundColor',
 });
 
+export const avatarContainer = css({
+  paddingTop: 4,
+  paddingLeft: 8,
+});
+
 export const editorContainer = css({
   borderRadius: '$radii$0',
   width: 'calc(100% - $padding$composer - $sizes$avatar - 12px)', // take into account send button

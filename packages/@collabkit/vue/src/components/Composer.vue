@@ -11,7 +11,7 @@ import {
 import type { EditorState, LexicalEditor } from 'lexical';
 import type { Target } from '@collabkit/core';
 import { composerStyles } from '@collabkit/theme';
-import Avatar from './Avatar.vue';
+import Avatar from './Avatar';
 import { MentionNode } from './composer/MentionNode';
 import SendButton from './composer/SendButton.vue';
 import Typers from './comment/Typers.vue';
@@ -31,6 +31,7 @@ const props = defineProps<{
 }>();
 
 const StyledContentEditable = styled(LexicalContentEditable, composerStyles.contentEditable);
+const AvatarContainer = styled('div', composerStyles.avatarContainer);
 const Placeholder = styled('div', composerStyles.placeholder);
 const ComposerContainer = styled('div', composerStyles.container);
 const StyledLexicalEditorContainer = styled('divv', composerStyles.editorContainer);
@@ -85,11 +86,9 @@ const content = ref('');
 
 <template>
   <ComposerContainer v-if="composer != null">
-    <Avatar
-      v-if="profile && !hideAvatar"
-      :style="{ position: 'relative', top: '4px', marginLeft: '8px' }"
-      :profile="profile"
-    />
+    <AvatarContainer v-if="profile && !hideAvatar">
+      <Avatar :profile="profile" />
+    </AvatarContainer>
     <LexicalComposer :initial-config="initialConfig">
       <StyledLexicalEditorContainer>
         <StyledVisibleComposerArea>

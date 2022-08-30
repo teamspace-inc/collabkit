@@ -7,20 +7,11 @@ import { styled } from '@stitches/react';
 export const StyledAvatar = styled('img', avatarStyles.avatar);
 export const StyledDefaultAvatar = styled('div', avatarStyles.avatar);
 
-export function Avatar({
-  profile,
-  size = 24,
-  style,
-}: {
-  profile: Profile;
-  size?: 24 | 28 | 32;
-  style?: React.CSSProperties;
-}) {
+export function Avatar({ profile, style }: { profile: Profile; style?: React.CSSProperties }) {
   const [didError, setDidError] = useState(false);
 
   return didError || !profile.avatar ? (
     <StyledDefaultAvatar
-      size={size}
       style={{
         ...style,
         ...(profile.color
@@ -33,11 +24,6 @@ export function Avatar({
       {profile.name?.charAt(0)}
     </StyledDefaultAvatar>
   ) : (
-    <StyledAvatar
-      size={size}
-      src={profile.avatar!}
-      onError={() => setDidError(true)}
-      style={style}
-    />
+    <StyledAvatar src={profile.avatar!} onError={() => setDidError(true)} style={style} />
   );
 }

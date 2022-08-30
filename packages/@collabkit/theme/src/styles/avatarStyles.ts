@@ -15,26 +15,4 @@ export const avatar = css({
   userSelect: 'none',
   backgroundColor: '$accent10',
   color: '$neutral1',
-  variants: {
-    size: {
-      32: {
-        width: '32px',
-        height: '32px',
-        lineHeight: '32px',
-      },
-
-      28: {
-        width: '28px',
-        height: '28px',
-        lineHeight: '28px',
-        fontSize: '$fontSize$2',
-      },
-
-      24: {
-        width: '24px',
-        height: '24px',
-        lineHeight: '24px',
-      },
-    },
-  },
 });

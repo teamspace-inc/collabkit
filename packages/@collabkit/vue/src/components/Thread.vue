@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, watchEffect } from 'vue';
+import { computed, provide, useSlots, watchEffect } from 'vue';
 import { actions } from '@collabkit/client';
 import { threadStyles } from '@collabkit/theme';
 import { styled } from './styled';
@@ -7,6 +7,7 @@ import { useStore } from '../composables/useStore';
 import Composer from './Composer.vue';
 import EmptyState from './thread/EmptyState.vue';
 import ScrollableCommentList from './ScrollableCommentList.vue';
+import { ProvidedSlotsKey } from '../constants';
 
 const StyledThreadContainer = styled('div', threadStyles.container);
 const StyledThread = styled('div', threadStyles.thread);
@@ -53,10 +54,13 @@ watchEffect(() => {
 const placeholder = computed(
   () => props.composerPrompt ?? (isEmpty ? 'Add a comment' : 'Reply to this comment')
 );
+
+const slots = useSlots();
+provide(ProvidedSlotsKey, slots);
 </script>
 
 <template>
-  <StyledThreadContainer v-if="store.userId">
+  <StyledThreadContainer v-if="store.userId && store.workspaceId">
     <StyledThread>
       <StyledThreadHeader v-if="showHeader">
         <StyledThreadHeaderTitle>Comments</StyledThreadHeaderTitle>

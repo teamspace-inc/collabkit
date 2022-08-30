@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { nextTick, onMounted, ref, computed, watch } from 'vue';
 import { timelineUtils } from '@collabkit/core';
-import type { Profile, Timeline } from '@collabkit/core';
+import type { Timeline } from '@collabkit/core';
 import { useNewIndicator } from '../composables/useNewIndicator';
 import {
   ScrollAreaRoot,
