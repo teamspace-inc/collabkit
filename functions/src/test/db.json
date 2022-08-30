@@ -65,6 +65,15 @@
       }
     }
   },
+  "notifiedUntil": {
+    "QLVIR4HE-wvV_mTjoMJP5": {
+      "acme": {
+        "thread-1": {
+          "jane": "event-1"
+        }
+      }
+    }
+  },
   "timeline": {
     "QLVIR4HE-wvV_mTjoMJP5": {
       "acme": {

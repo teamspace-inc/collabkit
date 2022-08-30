@@ -13,6 +13,10 @@ export async function fetchNotifiedUntilId(props: {
     await db.ref(`/notifiedUntil/${appId}/${workspaceId}/${threadId}/${profileId}`).get()
   ).val();
 
+  if (notifiedUntil === null) {
+    return undefined;
+  }
+
   if (!isValidNotifiedUntilId(notifiedUntil)) {
     console.debug('invalid notifiedUntil, skipping', notifiedUntil);
     throw new Error('invalid notifiedUntil');

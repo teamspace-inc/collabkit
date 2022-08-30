@@ -27,7 +27,7 @@ export type App = {
   accentColor?: string;
 };
 
-export type NotifiedUntilId = string | undefined;
+export type NotifiedUntilId = string | undefined | null;
 
 export type SeenBy = {
   [userId: string]: SeenByUser;
