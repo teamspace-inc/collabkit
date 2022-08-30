@@ -22,5 +22,4 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile --prefer-offline
       - name: Run tests
-        working-directory: ./functions
-        run: yarn run build-and-test
+        run: yarn run test-functions
