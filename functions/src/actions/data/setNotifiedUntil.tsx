@@ -9,6 +9,6 @@ export function setNotifiedUntil(props: {
 }) {
   const db = admin.database();
   return db
-    .ref(`/notifiedUntil/${props.appId}/${props.workspaceId}/${props.profileId}`)
+    .ref(`/notifiedUntil/${props.appId}/${props.workspaceId}/${props.threadId}/${props.profileId}`)
     .set(props.eventId);
 }

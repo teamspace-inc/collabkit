@@ -25,6 +25,7 @@ export type App = {
   logoUrl?: string;
   webhook?: string;
   accentColor?: string;
+  emailBatchDelayMs?: number;
 };
 
 export type NotifiedUntilId = string | undefined | null;
