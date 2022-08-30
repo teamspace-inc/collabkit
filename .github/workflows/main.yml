@@ -23,4 +23,6 @@ jobs:
         run: yarn install --frozen-lockfile --prefer-offline
       - run: pwd
       - run: cd ./functions
-      - run: yarn run build-and-test
+      - run: pwd
+      - run: yarn run build
+      - run: yarn run test
