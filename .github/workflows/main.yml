@@ -15,3 +15,11 @@ jobs:
         run: yarn install --frozen-lockfile --prefer-offline
       - run: yarn typecheck
       - run: yarn build
+  test-functions:
+    runs-on: buildjet-32vcpu-ubuntu-2004
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile --prefer-offline
+      - run: cd ./functions
+      - run: yarn run build-and-test
