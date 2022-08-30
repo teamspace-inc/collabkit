@@ -10,7 +10,7 @@ import { useRef } from 'react';
 import { useResizeObserver } from '../hooks/useResizeObserver';
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
 
-import MentionsPlugin from './composer/MentionsPlugin';
+// import MentionsPlugin from './composer/MentionsPlugin';
 import { MentionNode } from './composer/MentionNode';
 import TimestampPlugin from './composer/TimestampPlugin';
 import { TimestampNode } from './composer/TimestampNode';
@@ -110,7 +110,7 @@ export function Composer(props: {
                 }}
               />
               <HistoryPlugin />
-              <MentionsPlugin />
+              {/* <MentionsPlugin /> */}
               <TimestampPlugin />
               {props.autoFocus ? <AutoFocusPlugin /> : null}
             </StyledVisibleComposerArea>

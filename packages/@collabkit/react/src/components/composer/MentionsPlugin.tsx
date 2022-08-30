@@ -156,38 +156,38 @@ function useMentionLookupService(mentionString: string) {
   return results;
 }
 
-function MentionsTypeaheadItem({
-  index,
-  isSelected,
-  onClick,
-  onMouseEnter,
-  result,
-}: {
-  index: number;
-  isSelected: boolean;
-  onClick: () => void;
-  onMouseEnter: () => void;
-  result: string;
-}) {
-  const liRef = useRef(null);
+// function MentionsTypeaheadItem({
+//   index,
+//   isSelected,
+//   onClick,
+//   onMouseEnter,
+//   result,
+// }: {
+//   index: number;
+//   isSelected: boolean;
+//   onClick: () => void;
+//   onMouseEnter: () => void;
+//   result: string;
+// }) {
+//   const liRef = useRef(null);
 
-  return (
-    <StyledMentionsTypeaheadLi
-      selected={isSelected}
-      key={result}
-      tabIndex={-1}
-      ref={liRef}
-      role="option"
-      aria-selected={isSelected}
-      id={'typeahead-item-' + index}
-      onMouseEnter={onMouseEnter}
-      onClick={onClick}
-    >
-      <Avatar profile={{ name: result }} />
-      {result}
-    </StyledMentionsTypeaheadLi>
-  );
-}
+//   return (
+//     <StyledMentionsTypeaheadLi
+//       selected={isSelected}
+//       key={result}
+//       tabIndex={-1}
+//       ref={liRef}
+//       role="option"
+//       aria-selected={isSelected}
+//       id={'typeahead-item-' + index}
+//       onMouseEnter={onMouseEnter}
+//       onClick={onClick}
+//     >
+//       <Avatar profile={{ name: result }} />
+//       {result}
+//     </StyledMentionsTypeaheadLi>
+//   );
+// }
 
 function MentionsTypeahead({
   close,
@@ -352,7 +352,7 @@ function MentionsTypeahead({
       role="listbox"
       // className={intersects}
     >
-      <StyledMentionsTypeaheadUl>
+      {/* <StyledMentionsTypeaheadUl>
         {results.slice(0, SUGGESTION_LIST_LENGTH_LIMIT).map((result, i) => (
           <MentionsTypeaheadItem
             index={i}
@@ -368,7 +368,7 @@ function MentionsTypeahead({
             result={result}
           />
         ))}
-      </StyledMentionsTypeaheadUl>
+      </StyledMentionsTypeaheadUl> */}
     </StyledMentionsTypeahead>
   );
 }
