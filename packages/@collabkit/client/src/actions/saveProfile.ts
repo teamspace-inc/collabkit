@@ -1,5 +1,5 @@
-import type { Store, UserProps } from '@collabkit/core';
-import type { Color } from '@collabkit/colors';
+import type { Profile, Store, UserProps } from '@collabkit/core';
+import { isColor } from '@collabkit/colors';
 import { getRandomColor } from '@collabkit/colors';
 
 export async function saveProfile(store: Store) {
@@ -19,32 +19,33 @@ export async function saveProfile(store: Store) {
       }
 
       const existingProfile = await store.sync.getProfile({ appId: config.appId, userId });
-
-      let profile: Partial<UserProps> & { color?: Color } = { ...config.user };
-
-      if (!existingProfile) {
-        profile.color = getRandomColor();
-      }
-
-      delete profile.userId;
-
-      if (!userId) {
-        console.log('missing userId');
-        return;
-      }
+      const partialProfile: Partial<UserProps> & { color?: string; id: string } = {
+        ...existingProfile,
+        ...config.user,
+        id: userId,
+      };
+      delete partialProfile.userId;
+      const profile = ensureColor(partialProfile);
 
       const workspaceId = store.workspaceId ?? config.workspace?.id;
-
       if (!workspaceId) {
         console.log('CollabKit: cannot save profile without workspaceId');
         return;
       }
 
       store.sync.saveProfile({ appId: config.appId, userId, workspaceId, profile });
-
       store.profiles[userId] = profile;
     } catch (e) {
       console.error('CollabKit: saveProfile failed', e);
     }
+  }
+}
+
+function ensureColor(profile: Partial<UserProps> & { color?: string; id: string }): Profile {
+  let color = profile.color;
+  if (isColor(color)) {
+    return { ...profile, color };
+  } else {
+    return { ...profile, color: getRandomColor() };
   }
 }

@@ -235,7 +235,8 @@ export type BasicProfile = {
 };
 
 export interface Profile extends BasicProfile {
-  color?: Color;
+  color: Color;
+  id: string;
 }
 
 export interface Timeline {

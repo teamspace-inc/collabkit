@@ -15,14 +15,14 @@ import {
   set,
   update,
 } from 'firebase/database';
-import type { Color } from '@collabkit/colors';
 import type { Event, Pin, Subscriptions } from '@collabkit/core';
 import { subscribeThreadIsTyping } from './subscribeThreadIsTyping';
 import { subscribeThreadSeenBy } from './subscribeThreadSeenBy';
 import { subscribeTimeline } from './subscribeTimeline';
 import { timelineRef, userTypingRef } from './refs';
-import type { Sync, UserProps } from '@collabkit/core';
+import type { Sync } from '@collabkit/core';
 import { getApp, initializeApp } from 'firebase/app';
+import type { ServerProfile } from '../types';
 
 export function initFirebase() {
   initializeApp(
@@ -70,7 +70,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
     appId: string;
     userId: string;
     workspaceId: string;
-    profile: Partial<UserProps> & { color: Color };
+    profile: ServerProfile;
   }): Promise<void> {
     const { appId, userId, workspaceId, profile } = data;
     try {

@@ -47,7 +47,7 @@ export async function subscribeProfiles(store: Store) {
           }
           const profile = profileSnapshot.val();
           if (profile) {
-            store.profiles[id] = profile;
+            store.profiles[id] = { ...profile, id };
             setHasProfile(store, id);
           }
         },

@@ -62,16 +62,18 @@ const colors = {
   yellow,
 };
 
-function getRandomColor(): Color {
+export function isColor(value: unknown): value is Color {
+  return value != null && typeof value === 'string' && value in colors;
+}
+
+export function getRandomColor(): Color {
   return shuffle(Object.keys(colors))[0] as Color;
 }
 
-function getShade(color: Color, shade: number) {
+export function getShade(color: Color, shade: number) {
   const colorKey = colors[color];
   const shadeKey = Object.keys(colorKey).find((shadeKey) => shadeKey.endsWith(`${shade}`));
   return colorKey[shadeKey as keyof typeof colorKey];
 }
 
 export type Color = keyof typeof colors;
-
-export { getRandomColor, getShade };
