@@ -39,9 +39,17 @@
   "workspaces": {
     "QLVIR4HE-wvV_mTjoMJP5": {
       "acme": {
-        "name": "Test Workspace",
+        "name": "Acme",
         "profiles": {
           "alice": true
+        }
+      }
+    },
+    "h9UlqR5HPxigSOoj--yL3": {
+      "ice": {
+        "name": "Ice",
+        "profiles": {
+          "ville": true
         }
       }
     }
@@ -62,6 +70,13 @@
         "name": "Bob",
         "email": "bob@example.com",
         "color": "tomato"
+      }
+    },
+    "h9UlqR5HPxigSOoj--yL3": {
+      "ville": {
+        "name": "Ville",
+        "email": "ville@example.com",
+        "color": "sky"
       }
     }
   },
