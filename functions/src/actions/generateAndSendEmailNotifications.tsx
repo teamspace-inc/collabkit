@@ -82,15 +82,14 @@ async function fetchProfileSpecificData(props: {
     return null;
   }
 
-  const newerEventIds = eventIds.slice(eventIds.indexOf(notifyFrom) + 1);
+  const notifyAboutEventIds = eventIds.slice(eventIds.indexOf(notifyFrom));
 
-  if (newerEventIds.length === 0) {
-    console.debug('no newer events, skipping');
+  if (notifyAboutEventIds.length === 0) {
+    console.debug('no events to notify about, skipping');
     return null;
   }
-  // TODO copy-paste from useTimeline
-  // would be great to use the same logic here
-  const messageEvents = newerEventIds
+
+  const messageEvents = notifyAboutEventIds
     .map((eventId) => data.timeline[eventId])
     .filter((event) => event.type === 'message');
 
@@ -101,7 +100,7 @@ async function fetchProfileSpecificData(props: {
     notifyFrom,
     list,
     messageEvents,
-    newerEventIds,
+    notifyAboutEventIds,
   };
 }
 
@@ -112,8 +111,6 @@ async function fetchData(props: {
   eventId: string;
 }) {
   const db = admin.database();
-  const storage = admin.storage();
-  const bucket = storage.bucket('collabkit-dev-emails');
   const { appId, workspaceId, threadId, eventId } = props;
 
   console.log('fetchData', { appId, workspaceId, threadId, eventId });
@@ -289,7 +286,7 @@ async function sendMailForProfile(props: {
     return null;
   }
 
-  const { newerEventIds, list } = profileData;
+  const { notifyAboutEventIds, list } = profileData;
 
   if (profileId === data.event.createdById) {
     console.debug(
@@ -308,7 +305,13 @@ async function sendMailForProfile(props: {
 
   // there's a bug here.
   const subject =
-    newerEventIds.length === 1 ? `New comment on ${threadName}` : `New comments on ${threadName}`;
+    notifyAboutEventIds.length === 1
+      ? `New comment on ${threadName}`
+      : `New comments on ${threadName}`;
+
+  if (!data.threadInfo.url) {
+    return null;
+  }
 
   const component = (
     <NotificationEmail
@@ -333,7 +336,7 @@ async function sendMailForProfile(props: {
 
   console.log(mail.subject, mail.to);
 
-  const newNotifiedUntilId = newerEventIds[newerEventIds.length - 1];
+  const newNotifiedUntilId = notifyAboutEventIds[notifyAboutEventIds.length - 1];
 
   if (!newNotifiedUntilId) {
     console.debug('no newNotifiedUntilId, exiting');

@@ -1,7 +1,7 @@
 export interface Org {
   name: string;
   admins: {
-    [uid: string]: true;
+    [uid: string]: boolean;
   };
   createdAt: object | number;
 }
