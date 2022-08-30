@@ -21,8 +21,6 @@ jobs:
       - uses: actions/checkout@v2
       - name: Install dependencies
         run: yarn install --frozen-lockfile --prefer-offline
-      - run: pwd
-      - run: cd ./functions
-      - run: pwd
-      - run: yarn run build
-      - run: yarn run test
+      - name: Run tests
+        working-directory: ./functions
+        run: yarn run build-and-test
