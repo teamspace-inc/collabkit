@@ -17,8 +17,7 @@
     "build": "pnpm --parallel --filter '@collabkit/react' --filter '@collabkit/vue' run build",
     "server": "yarn workspace server dev",
     "typecheck": "tsc -b examples/demo www",
-    "snapshots": "yarn workspace @collabkit/react start-server-and-test dev http://localhost:61000 'playwright test'",
-    "test-functions": "cd ./functions && yarn run build-and-test"
+    "snapshots": "yarn workspace @collabkit/react start-server-and-test dev http://localhost:61000 'playwright test'"
   },
   "devDependencies": {
     "@types/chrome": "^0.0.193",
