@@ -24,3 +24,5 @@ jobs:
       - run: yarn install --frozen-lockfile --prefer-offline
       - run: yarn build
       - run: yarn test
+        env:
+          FIREBASE_TEST_SERVICE_ACCOUNT: '${{ secrets.FIREBASE_TEST_SERVICE_ACCOUNT }}'
