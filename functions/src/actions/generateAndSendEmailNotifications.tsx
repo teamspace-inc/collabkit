@@ -194,7 +194,12 @@ export async function generateAndSendEmailNotifications(props: {
       return null;
     }
 
-    const { workspaceName } = await fetchWorkspaceName({ appId, workspaceId });
+    let workspaceName: string | null = null;
+    try {
+      workspaceName = await (await fetchWorkspaceName({ appId, workspaceId })).workspaceName;
+    } catch (e) {
+      console.error('fetchWorkspaceName failed', e);
+    }
 
     const { timeline } = await fetchTimeline({ appId, workspaceId, threadId });
 
