@@ -1,3 +1,4 @@
+import { OptionalWorkspaceProps } from '@collabkit/core';
 import type { SyncAdapter } from '@collabkit/react/src/constants';
 import { DataSnapshot } from 'firebase/database';
 
@@ -5,10 +6,14 @@ import { nanoid } from 'nanoid';
 
 export class LocalOnlySync implements SyncAdapter {
   constructor(public workspaceData: any) {}
-  getProfile(params: {
+  saveWorkspace(params: {
     appId: string;
-    userId: string;
-  }): Promise<
+    workspaceId: string;
+    workspace?: OptionalWorkspaceProps | null | undefined;
+  }): Promise<void> {
+    throw new Error('Method not implemented.');
+  }
+  getProfile(params: { appId: string; userId: string }): Promise<
     | {
         name?: string | undefined;
         email?: string | undefined;
