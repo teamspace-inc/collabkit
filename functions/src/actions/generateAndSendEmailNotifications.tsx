@@ -194,7 +194,7 @@ export async function generateAndSendEmailNotifications(props: {
       return null;
     }
 
-    let workspaceName: string | null = null;
+    let workspaceName: string | undefined = undefined;
     try {
       workspaceName = await (await fetchWorkspaceName({ appId, workspaceId })).workspaceName;
     } catch (e) {
