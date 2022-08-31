@@ -3,10 +3,15 @@ import type { LexicalEditor } from 'lexical';
 import type { SyncAdapter } from './sync';
 
 export * as Sync from './sync';
+export interface ThreadMeta {
+  viewId?: string;
+  cellId?: string;
+}
 
 export type ThreadInfo = {
   name?: string | null;
   url?: string | null;
+  meta?: ThreadMeta | null;
 };
 
 export type DeepPartial<T> = T extends object
@@ -266,13 +271,14 @@ export interface Pin {
 export interface Workspace {
   profiles: { [userId: string]: boolean };
   name: string;
+  openThreads: { [threadId: string]: { meta: ThreadMeta } };
   pins: { [threadId: string]: Pin };
   inbox: { [threadId: string]: WithHasProfile<WithID<WithName<Event>>> };
   timeline: { [threadId: string]: Timeline };
   composers: { [threadId: string]: Composer };
   seen: { [threadId: string]: string }; // lastSeenEventId
   seenBy: { [threadId: string]: SeenBy };
-  threadInfo: { [threadId: string]: { name?: string; url?: string } };
+  threadInfo: { [threadId: string]: ThreadInfo };
   likelyFetchedAllProfiles: boolean;
 }
 

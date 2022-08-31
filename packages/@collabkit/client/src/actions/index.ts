@@ -21,6 +21,7 @@ import { focus } from './focus';
 import { blur } from './blur';
 import { subscribeThread } from './subscribeThread';
 import { reopenThread } from './reopenThread';
+import { subscribeOpenThreads } from './subscribeOpenThreads';
 import { subscribePins } from './subscribePins';
 import { subscribeWorkspace } from './subscribeWorkspace';
 import { subscribeProfiles } from './subscribeProfiles';
@@ -29,7 +30,6 @@ import { hover } from './hover';
 import { unhover } from './unhover';
 import { viewThread } from './viewThread';
 import { isTyping } from './isTyping';
-import { registerThread } from './registerThread';
 import { saveThreadInfo } from './saveThreadInfo';
 import { init } from './init';
 
@@ -100,66 +100,35 @@ export function getConfig(store: Store) {
 
 export const actions = {
   init,
-
   monitorConnection,
-
   startThread: placePinAndStartComposingThread,
-
   subscribeInbox,
-
   stopTyping,
-
   closeThread,
-
   isTyping: debounce(isTyping, 1000, { leading: true, maxWait: 1000 }),
-
   stopSelecting,
-
   startSelecting,
-
   subscribeThread,
-
   seen,
-
   subscribeSeen,
-
+  subscribeOpenThreads,
   subscribeProfiles,
-
   saveProfile,
-
   authenticate,
-
   subscribePins,
-
   subscribeWorkspace,
-
-  registerThread,
-
   focus,
-
   blur,
-
   toggleCommentReaction,
-
   toggleEmojiReactionPicker,
-
   closeEmojiReactionPicker,
-
   reopenThread,
-
-  resolve: resolveThread,
-
+  resolveThread,
   sendMessage,
-
   placePinAndStartComposingThread,
-
   removePendingPins,
-
   hover,
-
   unhover,
-
   viewThread,
-
   saveThreadInfo,
 };

@@ -14,6 +14,7 @@ export function markRaw<T extends object>(
 export function createWorkspace(): Workspace {
   return {
     inbox: {},
+    openThreads: {},
     pins: {},
     profiles: {},
     name: '',

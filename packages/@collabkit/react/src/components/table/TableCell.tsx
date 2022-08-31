@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import {
   autoUpdate,
   useFloating,
@@ -10,44 +10,46 @@ import {
   FloatingFocusManager,
   FloatingPortal,
 } from '@floating-ui/react-dom-interactions';
+import { nanoid } from 'nanoid';
 import { useSnapshot } from 'valtio';
 import { actions } from '@collabkit/client';
-import type { ThreadTarget } from '@collabkit/core';
+import type { Target, ThreadTarget, Workspace } from '@collabkit/core';
 import { tableCellStyles } from '@collabkit/theme';
 import { styled } from '@stitches/react';
 import { PopoverThread } from '../PopoverThread';
 import { useApp } from '../../hooks/useApp';
-import { useThreadStatus } from '../../hooks/useThread';
 
 const Wrapper = styled('div', tableCellStyles.wrapper);
 const Indicator = styled('span', tableCellStyles.indicator);
 
 interface Props {
   children: JSX.Element;
+  name?: string;
+  viewId: string;
   cellId: string;
 }
 
-export const TableCell = ({ children, cellId }: Props) => {
+export const TableCell = ({ children, name, viewId, cellId }: Props) => {
   const { store, theme } = useApp();
-  const { viewingId, workspaceId } = useSnapshot(store);
+  const { viewingId, workspaceId, workspaces } = useSnapshot(store);
+  const openThreads = workspaceId ? workspaces[workspaceId]?.openThreads : {};
 
-  // TODO: find open thread
-  const threadId = cellId;
-  const { isResolved, isEmpty } = useThreadStatus({ store, threadId, workspaceId });
+  const threadId = Object.entries(openThreads).find(
+    ([_id, { meta }]) => meta.viewId === viewId && meta.cellId == cellId
+  )?.[0];
 
-  const open = viewingId?.type === 'thread' && viewingId.threadId === threadId;
+  const newThreadId = useRef<string>();
+  if (!newThreadId.current) {
+    newThreadId.current = nanoid();
+  }
+  const open = isThreadWithId(viewingId, threadId ?? newThreadId.current!);
   const { x, y, reference, floating, strategy, context } = useFloating({
     open,
     onOpenChange: (open) => {
-      console.log('onOpenChange', {
-        threadId,
-        workspaceId,
-        open,
-      });
-      if (threadId && workspaceId) {
+      if (workspaceId) {
         const target: ThreadTarget = {
           type: 'thread',
-          threadId,
+          threadId: threadId ?? newThreadId.current!,
           workspaceId,
         };
         if (open) {
@@ -75,7 +77,7 @@ export const TableCell = ({ children, cellId }: Props) => {
   return (
     <>
       <Wrapper {...getReferenceProps({ ref: reference })}>{children}</Wrapper>
-      {threadId && !isEmpty && !isResolved ? <Indicator /> : null}
+      {threadId ? <Indicator /> : null}
       <FloatingPortal>
         {open && (
           <FloatingFocusManager context={context}>
@@ -92,7 +94,14 @@ export const TableCell = ({ children, cellId }: Props) => {
               {...getFloatingProps()}
             >
               <PopoverThread
-                threadId={threadId}
+                threadId={threadId ?? newThreadId.current!}
+                info={{
+                  name,
+                  meta: {
+                    viewId,
+                    cellId,
+                  },
+                }}
                 style={{ minWidth: 250, border: '1px solid #ccc' }}
               />
             </div>
@@ -102,3 +111,7 @@ export const TableCell = ({ children, cellId }: Props) => {
     </>
   );
 };
+
+function isThreadWithId(target: Target | null, id: string): target is ThreadTarget {
+  return target != null && target.type === 'thread' && target.threadId === id;
+}

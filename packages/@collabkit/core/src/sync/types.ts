@@ -5,7 +5,8 @@ import type {
   Pin,
   Subscriptions,
   UserProps,
-  WorkspaceProps,
+  ThreadInfo,
+  ThreadMeta,
 } from '../types';
 import type { DataSnapshot } from 'firebase/database';
 
@@ -20,10 +21,8 @@ export interface SyncAdapter {
     appId: string;
     workspaceId: string;
     threadId: string;
-    info?: {
-      name?: string;
-      url?: string;
-    };
+    isOpen: boolean;
+    info?: ThreadInfo;
   }): Promise<void>;
 
   saveWorkspace(params: {
@@ -106,6 +105,15 @@ export interface SyncAdapter {
     onPinChange: PinEventHandler
   ): void;
 
+  subscribeOpenThreads(
+    params: {
+      appId: string;
+      workspaceId: string;
+      subs: Subscriptions;
+    },
+    onThreadChange: OpenThreadEventHandler
+  ): void;
+
   subscribeThread(props: {
     appId: string;
     userId?: string;
@@ -121,6 +129,10 @@ export interface SyncAdapter {
 export type ServerProfile = Partial<UserProps> & { color?: Color };
 export type SeenEventHandler = (event: { threadId: string; seenUntilId: string }) => void;
 export type PinEventHandler = (event: { pinId: string; pin: Pin }) => void;
+export type OpenThreadEventHandler = (event: {
+  threadId: string;
+  info: { meta: ThreadMeta } | null;
+}) => void;
 
 export type TimelineChangeEvent = {
   threadId: string;

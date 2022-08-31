@@ -23,8 +23,7 @@ export async function authenticate(store: Store) {
     const { appId, userId, workspaceId, mode } = result.claims;
 
     if (!appId || !userId || !workspaceId || !mode) {
-      console.log('invalid claims', result.claims);
-      throw new Error(JSON.stringify(result.claims));
+      throw new Error('invalid claims: ' + JSON.stringify(result.claims));
     }
 
     if (typeof appId !== 'string') {

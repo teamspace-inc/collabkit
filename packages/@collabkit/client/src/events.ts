@@ -152,7 +152,7 @@ export function createEvents(store: Store) {
               break;
             }
             case 'resolveThreadButton': {
-              actions.resolve(store, props.target.workspaceId, props.target.threadId);
+              actions.resolveThread(store, props.target.workspaceId, props.target.threadId);
               break;
             }
             case 'reopenThreadButton': {
@@ -182,7 +182,7 @@ export function createEvents(store: Store) {
               break;
             }
             case 'resolveThreadButton': {
-              actions.resolve(store, props.target.workspaceId, props.target.threadId);
+              actions.resolveThread(store, props.target.workspaceId, props.target.threadId);
               break;
             }
             case 'reopenThreadButton': {

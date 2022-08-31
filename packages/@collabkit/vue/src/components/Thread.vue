@@ -43,6 +43,7 @@ watchEffect(() => {
     actions.saveThreadInfo(store, {
       workspaceId: store.workspaceId,
       threadId: props.threadId,
+      isOpen: !isEmpty.value, // TODO: check if resolved
       info: {
         url: props.info?.url ?? window.location.href.toString(),
         name: props.info?.name || null,

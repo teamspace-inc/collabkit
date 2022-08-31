@@ -7,6 +7,7 @@ import React, {
   useImperativeHandle,
   RefObject,
 } from 'react';
+import type { ThreadInfo } from '@collabkit/core';
 import { Composer } from './Composer';
 import { CommentList } from './CommentList';
 import { useApp } from '../hooks/useApp';
@@ -23,6 +24,7 @@ export const MODAL_Z_INDEX = 999999;
 
 type PopoverThreadProps = {
   threadId: string;
+  info?: ThreadInfo;
   style?: React.CSSProperties;
   isPreview?: boolean;
   maxAvailableSize?: { width: number; height: number };

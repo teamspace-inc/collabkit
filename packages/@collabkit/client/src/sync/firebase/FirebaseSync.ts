@@ -15,14 +15,20 @@ import {
   set,
   update,
 } from 'firebase/database';
-import type { Event, OptionalWorkspaceProps, Pin, Subscriptions } from '@collabkit/core';
+import type {
+  Event,
+  OptionalWorkspaceProps,
+  Pin,
+  Subscriptions,
+  ThreadInfo,
+  ThreadMeta,
+} from '@collabkit/core';
 import { subscribeThreadIsTyping } from './subscribeThreadIsTyping';
 import { subscribeThreadSeenBy } from './subscribeThreadSeenBy';
 import { subscribeTimeline } from './subscribeTimeline';
 import { timelineRef, userTypingRef } from './refs';
 import type { Sync } from '@collabkit/core';
 import { getApp, initializeApp } from 'firebase/app';
-import type { ServerProfile } from '../types';
 
 export function initFirebase() {
   initializeApp(
@@ -44,18 +50,16 @@ export class FirebaseSync implements Sync.SyncAdapter {
     appId: string;
     workspaceId: string;
     threadId: string;
-    info?: {
-      name?: string;
-      url?: string;
-    };
+    isOpen: boolean;
+    info?: ThreadInfo;
   }): Promise<void> {
-    return set(
-      ref(
-        getDatabase(getApp('CollabKit')),
-        `/threadInfo/${data.appId}/${data.workspaceId}/${data.threadId}`
-      ),
-      data.info
-    );
+    const values = {
+      [`/threadInfo/${data.appId}/${data.workspaceId}/${data.threadId}`]: data.info,
+      [`/views/openThreads/${data.appId}/${data.workspaceId}/${data.threadId}`]: data.isOpen
+        ? { meta: data.info?.meta ?? null }
+        : null,
+    };
+    return update(ref(getDatabase(getApp('CollabKit'))), values);
   }
 
   saveWorkspace(params: {
@@ -93,7 +97,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
     appId: string;
     userId: string;
     workspaceId: string;
-    profile: ServerProfile;
+    profile: Sync.ServerProfile;
   }): Promise<void> {
     const { appId, userId, workspaceId, profile } = data;
     try {
@@ -149,10 +153,10 @@ export class FirebaseSync implements Sync.SyncAdapter {
     workspaceId: string;
     threadId: string;
   }) {
-    await set(
-      ref(getDatabase(getApp('CollabKit')), `pins/${appId}/${workspaceId}/${threadId}/state`),
-      'resolved'
-    );
+    await update(ref(getDatabase(getApp('CollabKit'))), {
+      [`/pins/${appId}/${workspaceId}/${threadId}/state`]: 'resolved',
+      [`/views/openThreads/${appId}/${workspaceId}/${threadId}`]: null,
+    });
   }
 
   async markSeen({
@@ -323,6 +327,37 @@ export class FirebaseSync implements Sync.SyncAdapter {
 
     subs[`${pinsRef.toString()}#added`] = onChildAdded(pinsRef, onChange, onError);
     subs[`${pinsRef.toString()}#changed`] = onChildChanged(pinsRef, onChange, onError);
+  }
+
+  subscribeOpenThreads(
+    {
+      appId,
+      workspaceId,
+      subs,
+    }: {
+      appId: string;
+      workspaceId: string;
+      subs: Subscriptions;
+    },
+    onThreadChange: Sync.OpenThreadEventHandler
+  ): void {
+    const onError = (e: Error) => {
+      console.error(e);
+    };
+
+    const onChange = (child: DataSnapshot) => {
+      const threadId = child.key;
+      const info = child.val() as { meta: ThreadMeta } | null;
+      if (threadId) {
+        onThreadChange({ threadId, info });
+      }
+    };
+    const viewRef = ref(
+      getDatabase(getApp('CollabKit')),
+      `/views/openThreads/${appId}/${workspaceId}`
+    );
+    subs[`${viewRef.toString()}#added`] = onChildAdded(viewRef, onChange, onError);
+    subs[`${viewRef.toString()}#changed`] = onChildChanged(viewRef, onChange, onError);
   }
 
   subscribeThread(props: {

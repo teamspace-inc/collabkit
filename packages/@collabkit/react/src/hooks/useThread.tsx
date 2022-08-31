@@ -26,6 +26,7 @@ export function useThread(props: {
   threadId: string;
   workspaceId?: string | null;
   info?: ThreadInfo;
+  meta?: unknown;
 }) {
   const { threadId, workspaceId, store, info } = props;
   const { isSignedIn, workspaces } = useSnapshot(store);
@@ -34,19 +35,6 @@ export function useThread(props: {
   const isEmpty = timeline ? Object.keys(timeline).length === 0 : true;
 
   useThreadSubscription({ store, threadId, workspaceId });
-
-  useEffect(() => {
-    if (workspaceId && isSignedIn) {
-      actions.saveThreadInfo(store, {
-        workspaceId,
-        threadId,
-        info: {
-          url: info?.url ?? window.location.href.toString(),
-          name: info?.name || null,
-        },
-      });
-    }
-  }, [workspaceId, threadId, isSignedIn, info, info?.name]);
 
   const seenUntil = workspace?.seen[threadId];
 
@@ -66,48 +54,26 @@ export function useThread(props: {
     timeline[systemEventIds[systemEventIds.length - 1]].system === 'resolve'
   );
 
+  useEffect(() => {
+    if (workspaceId && isSignedIn && !isEmpty) {
+      actions.saveThreadInfo(store, {
+        workspaceId,
+        threadId,
+        isOpen: !isEmpty && !isResolved,
+        info: {
+          url: info?.url ?? window.location.href.toString(),
+          name: info?.name || null,
+          meta: info?.meta || null,
+        },
+      });
+    }
+  }, [workspaceId, threadId, isSignedIn, info, info?.name, isEmpty, isResolved]);
+
   return {
     timeline,
     seenUntil,
     isResolved,
     isEmpty,
     target,
-  };
-}
-
-// Reads thread resolved status without saving a thread
-export function useThreadStatus({
-  store,
-  threadId,
-  workspaceId,
-}: {
-  store: Store;
-  threadId: string;
-  workspaceId: string | null;
-}) {
-  const { workspaces } = useSnapshot(store);
-  const workspace = workspaceId ? workspaces[workspaceId] : null;
-  const timeline = workspace ? workspace.timeline[threadId] : null;
-
-  useThreadSubscription({ store, threadId, workspaceId });
-
-  const isEmpty = Object.keys(timeline ?? {}).length === 0;
-
-  const systemEventIds = timeline
-    ? Object.keys(timeline).filter(
-        (eventId) =>
-          (timeline[eventId].type === 'system' && timeline[eventId].system === 'resolve') ||
-          timeline[eventId].system === 'reopen'
-      )
-    : [];
-
-  const isResolved = !!(
-    timeline &&
-    systemEventIds.length > 0 &&
-    timeline[systemEventIds[systemEventIds.length - 1]].system === 'resolve'
-  );
-  return {
-    isEmpty,
-    isResolved,
   };
 }

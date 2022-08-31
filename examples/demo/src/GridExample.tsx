@@ -26,20 +26,23 @@ export function GridExample() {
 
   const [columnDefs] = useState([
     { field: 'make' },
-    { field: 'model' },
-    {
-      field: 'price',
-      cellRenderer: (props: ICellRendererParams) => (
-        <TableCell cellId={props.data.id}>
-          <span>{props.value}</span>
-        </TableCell>
-      ),
-    },
+    { field: 'model', cellRenderer },
+    { field: 'price', cellRenderer },
   ]);
 
   return (
     <div className="ag-theme-alpine" style={{ width: 650, height: 400 }}>
       <AgGridReact rowData={rowData} columnDefs={columnDefs}></AgGridReact>
     </div>
+  );
+}
+
+function cellRenderer(props: ICellRendererParams) {
+  const name = `Cars / ${props.data.make} ${props.data.model}`;
+  const cellId = `${props.data.id}_${props.column!.getColId()}`;
+  return (
+    <TableCell name={name} viewId="cars" cellId={cellId}>
+      <span>{props.value}</span>
+    </TableCell>
   );
 }

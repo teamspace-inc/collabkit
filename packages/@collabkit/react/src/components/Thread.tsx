@@ -9,6 +9,7 @@ import { useNewIndicator } from './NewIndicator';
 import { styled } from '@stitches/react';
 import { threadStyles } from '@collabkit/theme';
 import { useSnapshot } from 'valtio';
+import type { ThreadInfo } from '@collabkit/core';
 
 const StyledThreadContainer = styled('div', threadStyles.container);
 const StyledThread = styled('div', threadStyles.thread);
@@ -17,10 +18,7 @@ const StyledThreadHeaderTitle = styled('div', threadStyles.headerTitle);
 
 export function Thread(props: {
   threadId: string;
-  info?: {
-    name?: string;
-    url?: string;
-  };
+  info?: ThreadInfo;
   style?: React.CSSProperties;
   composerPrompt?: string;
   showHeader?: boolean;
