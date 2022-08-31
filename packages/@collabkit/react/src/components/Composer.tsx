@@ -82,10 +82,6 @@ export function Composer(props: {
 
   const { onClick } = useOnTimestampClick({ ...props, createdById: props.userId, eventId: null });
 
-  if (!composer) {
-    return null;
-  }
-
   return (
     <div>
       <ComposerContainer style={props.style} onClick={onClick}>
@@ -101,7 +97,9 @@ export function Composer(props: {
             <StyledVisibleComposerArea>
               <PasteTextPlugin />
               <PlainTextPlugin
-                contentEditable={<StyledContentEditable />}
+                contentEditable={
+                  <StyledContentEditable tabIndex={props.autoFocus ? 1 : undefined} />
+                }
                 placeholder={<Placeholder>{props.placeholder}</Placeholder>}
               />
               <OnChangePlugin

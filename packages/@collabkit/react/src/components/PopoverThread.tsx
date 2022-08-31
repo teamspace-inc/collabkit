@@ -1,12 +1,5 @@
 import { styled } from '@stitches/react';
-import React, {
-  useRef,
-  useEffect,
-  useState,
-  forwardRef,
-  useImperativeHandle,
-  RefObject,
-} from 'react';
+import React, { useRef, forwardRef } from 'react';
 import type { ThreadInfo } from '@collabkit/core';
 import { Composer } from './Composer';
 import { CommentList } from './CommentList';
@@ -14,7 +7,6 @@ import { useApp } from '../hooks/useApp';
 import { useThread } from '../hooks/useThread';
 import { ThreadHeader } from './ThreadHeader';
 import { ScrollableCommentList } from './ScrollableCommentList';
-import { useWindowSize } from '../hooks/useWindowSize';
 import { popoverThreadStyles } from '@collabkit/theme';
 import { useSnapshot } from 'valtio';
 
