@@ -32,7 +32,6 @@ export async function saveProfile(store: Store) {
         console.log('CollabKit: cannot save profile without workspaceId');
         return;
       }
-
       store.sync.saveProfile({ appId: config.appId, userId, workspaceId, profile });
       store.profiles[userId] = profile;
     } catch (e) {

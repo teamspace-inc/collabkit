@@ -6,10 +6,6 @@ export async function fetchWorkspaceName(props: { appId: string; workspaceId: st
   const workspaceName = await (
     await db.ref(`/workspaces/${appId}/${workspaceId}/name`).get()
   ).val();
-  if (!workspaceName) {
-    console.debug('no workspace name, exiting', workspaceName);
-    throw new Error('no workspace name');
-  }
   if (typeof workspaceName !== 'string') {
     console.debug('invalid workspace name, exiting', workspaceName);
     throw new Error('invalid workspace name');

@@ -27,11 +27,13 @@ export async function handleRequest(
         const { appId, apiKey } = request.query;
 
         if (!appId) {
+          console.debug('"appId" not provided', appId);
           response.status(400).send({ status: 400, error: '"appId" not provided' });
           return;
         }
 
         if (!apiKey) {
+          console.debug('"apiKey" not provided', apiKey);
           response.status(400).send({ status: 400, error: '"apiKey" not provided' });
           return;
         }
@@ -42,6 +44,7 @@ export async function handleRequest(
           .once('value');
 
         if (!snapshot.exists()) {
+          console.debug('"apiKey" not found', appId);
           response.status(400).send({ status: 400, error: '"apiKey" invalid' });
           return;
         }
@@ -74,16 +77,19 @@ export async function handleRequest(
         const { appId, userId, workspaceId, apiKey, user, workspace } = request.body;
 
         if (!appId) {
+          console.debug('"appId" not provided', appId);
           response.status(400).send({ status: 400, error: '"appId" not provided', appId });
           return;
         }
 
         if (!apiKey) {
+          console.debug('"apiKey" not provided', apiKey);
           response.status(400).send({ status: 400, error: '"apiKey" not provided', apiKey });
           return;
         }
 
         if (!workspaceId || typeof workspaceId !== 'string') {
+          console.debug('"workspaceId" not provided', workspaceId);
           response
             .status(400)
             .send({ status: 400, error: '"workspaceId" not provided', workspaceId });
@@ -91,11 +97,13 @@ export async function handleRequest(
         }
 
         if (!userId) {
+          console.debug('"userId" not provided', userId);
           response.status(400).send({ status: 400, error: '"userId" not provided', userId });
           return;
         }
 
         if (!user) {
+          console.debug('"user" not provided', user);
           response
             .status(400)
             .send({ status: 400, error: '"user" not provided', userId, workspaceId, user });
@@ -104,6 +112,7 @@ export async function handleRequest(
 
         // default workspace has no props
         if (workspaceId.toLowerCase() !== 'default' && !workspace) {
+          console.debug('"default workspace"', workspace);
           response.status(400).send({ status: 400, error: '"workspace" not provided', workspace });
           return;
         }
@@ -114,6 +123,7 @@ export async function handleRequest(
           .once('value');
 
         if (!snapshot.exists()) {
+          console.debug('"apiKey" not found', appId);
           response.status(403).send({ status: 403, error: '"apiKey" invalid', appId, apiKey });
           return;
         }
@@ -142,6 +152,7 @@ export async function handleRequest(
       }
 
       default: {
+        console.debug('"mode" not supported', mode);
         response.status(400).send({ status: 400, error: '"mode" not supported' });
         return;
       }
