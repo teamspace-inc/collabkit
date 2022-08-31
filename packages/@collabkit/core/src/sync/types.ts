@@ -1,6 +1,7 @@
 import type { Color } from '@collabkit/colors';
 import type {
   Event,
+  MentionWithColor,
   OptionalWorkspaceProps,
   Pin,
   Subscriptions,

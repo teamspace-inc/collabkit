@@ -21,7 +21,9 @@ export async function sendMessage(store: Store, props: { workspaceId: string; th
   // console.log('sending message', workspaceId, threadId);
 
   const workspace = store.workspaces[workspaceId];
-  const { editor, $$body: body } = workspace.composers[threadId];
+  const { editor, $$body: body, $$mentions: mentions } = workspace.composers[threadId];
+
+  console.debug('[CollabKit]: sending message', workspaceId, threadId, body, mentions);
 
   if (body.trim().length === 0) {
     console.warn('[CollabKit] tried to send an empty message');
@@ -48,6 +50,7 @@ export async function sendMessage(store: Store, props: { workspaceId: string; th
             pin: { ...workspace.pins[threadId] },
           }
         : {}),
+      mentions,
     });
 
     if (hasPendingPin) {

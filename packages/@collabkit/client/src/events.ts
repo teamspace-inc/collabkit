@@ -5,6 +5,7 @@ import { nanoid } from 'nanoid';
 import type {
   CommentReactionTarget,
   CommentTarget,
+  MentionWithColor,
   Store,
   Target,
   ThreadTarget,
@@ -37,6 +38,7 @@ export function createEvents(store: Store) {
       store.workspaces[target.workspaceId].composers[target.threadId].editor = markRaw(editor);
       editorState.read(() => {
         let newBody = '';
+        let newMentions: MentionWithColor[] = [];
         const nodes = $getRoot().getAllTextNodes();
 
         nodes.forEach((node) => {
@@ -48,13 +50,16 @@ export function createEvents(store: Store) {
               newBody += `[${node.__text}](#T${node.__timestamp})`;
               break;
             case 'mention':
-              newBody += `[${node.__text}](#@${node.__mention})`;
+              newMentions.push(node.__mention);
+              newBody += `[${node.__text}](#@${node.__mention.id})`;
               break;
           }
         });
 
         const body = store.workspaces[target.workspaceId].composers[target.threadId].$$body;
         store.workspaces[target.workspaceId].composers[target.threadId].$$body = newBody;
+
+        store.workspaces[target.workspaceId].composers[target.threadId].$$mentions = newMentions;
 
         if (newBody.length === 0) {
           actions.isTyping.cancel();

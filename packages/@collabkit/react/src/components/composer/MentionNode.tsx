@@ -1,3 +1,4 @@
+import { MentionWithColor } from '@collabkit/core';
 import type { Spread } from 'lexical';
 import {
   DOMConversionMap,
@@ -12,7 +13,7 @@ import {
 
 export type SerializedMentionNode = Spread<
   {
-    mentionName: string;
+    mention: MentionWithColor;
     type: 'mention';
     version: 1;
   },
@@ -20,7 +21,12 @@ export type SerializedMentionNode = Spread<
 >;
 
 function convertMentionElement(domNode: Node): DOMConversionOutput {
-  const node = $createMentionNode(domNode.textContent ?? '');
+  if (domNode.nodeType !== Node.ELEMENT_NODE) {
+    throw new Error('Expected an element node');
+  }
+  const mention = JSON.parse((domNode as HTMLElement).getAttribute('data-lexical-mention') ?? '{}');
+  // todo check if validMention here
+  const node = $createMentionNode(mention);
   return {
     node,
   };
@@ -29,7 +35,7 @@ function convertMentionElement(domNode: Node): DOMConversionOutput {
 // find a way to hook this up to the Stitches theme
 const mentionStyle = `font-weight: 700`;
 export class MentionNode extends TextNode {
-  __mention: string;
+  __mention: MentionWithColor;
 
   static getType(): string {
     return 'mention';
@@ -39,7 +45,7 @@ export class MentionNode extends TextNode {
     return new MentionNode(node.__mention, node.__text, node.__key);
   }
   static importJSON(serializedNode: SerializedMentionNode): MentionNode {
-    const node = $createMentionNode(serializedNode.mentionName);
+    const node = $createMentionNode(serializedNode.mention);
     node.setTextContent(serializedNode.text);
     node.setFormat(serializedNode.format);
     node.setDetail(serializedNode.detail);
@@ -48,15 +54,15 @@ export class MentionNode extends TextNode {
     return node;
   }
 
-  constructor(mentionName: string, text?: string, key?: NodeKey) {
-    super(text ?? mentionName, key);
-    this.__mention = mentionName;
+  constructor(mention: MentionWithColor, text?: string, key?: NodeKey) {
+    super(text ?? mention?.name ?? '', key);
+    this.__mention = mention;
   }
 
   exportJSON(): SerializedMentionNode {
     return {
       ...super.exportJSON(),
-      mentionName: this.__mention,
+      mention: this.__mention,
       type: 'mention',
       version: 1,
     };
@@ -71,7 +77,7 @@ export class MentionNode extends TextNode {
 
   exportDOM(): DOMExportOutput {
     const element = document.createElement('span');
-    element.setAttribute('data-lexical-mention', 'true');
+    element.setAttribute('data-lexical-mention', JSON.stringify(this.__mention));
     element.textContent = this.__text;
     return { element };
   }
@@ -96,8 +102,8 @@ export class MentionNode extends TextNode {
   }
 }
 
-export function $createMentionNode(mentionName: string): MentionNode {
-  const mentionNode = new MentionNode(mentionName);
+export function $createMentionNode(mention: MentionWithColor): MentionNode {
+  const mentionNode = new MentionNode(mention);
   mentionNode.setMode('segmented').toggleDirectionless();
   return mentionNode;
 }

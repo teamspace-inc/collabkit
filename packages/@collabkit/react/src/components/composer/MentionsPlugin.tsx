@@ -25,6 +25,7 @@ import { useApp } from '../../hooks/useApp';
 import { Avatar } from './../Avatar';
 import { styled } from '@stitches/react';
 import { mentionsPluginStyles } from '@collabkit/theme';
+import { MentionWithColor } from '@collabkit/core';
 
 type MentionMatch = {
   leadOffset: number;
@@ -109,24 +110,21 @@ const SUGGESTION_LIST_LENGTH_LIMIT = 5;
 
 const mentionsCache = new Map();
 
-// todo remove this dummy service
-const dummyLookupService = {
-  search(store: Store, string: string, callback: (results: Array<string> | null) => void): void {
-    const { config } = snapshot(store);
-
-    setTimeout(() => {
-      // todo come up with a better search algorithm
-      const results = config.mentionableUsers?.filter(
-        (mention) => mention.name && mention.name.toLowerCase().includes(string.toLowerCase())
-      );
-      if (results == null || results?.length === 0) {
-        callback(null);
-      } else {
-        callback(results.map((mention) => mention.name!));
-      }
-    }, 0);
-  },
-};
+function searchMentionableUsers(
+  store: Store,
+  string: string,
+  callback: (results: MentionWithColor[] | null) => void
+) {
+  const { mentionableUsers } = snapshot(store);
+  const results: MentionWithColor[] = (Object.values(mentionableUsers ?? {}) ?? []).filter(
+    (mention) => mention.name && mention.name.toLowerCase().includes(string.toLowerCase())
+  );
+  if (results == null || results?.length === 0) {
+    callback(null);
+  } else {
+    callback(results);
+  }
+}
 
 function useMentionLookupService(mentionString: string) {
   const { store } = useApp();
@@ -134,7 +132,7 @@ function useMentionLookupService(mentionString: string) {
     return null;
   }
 
-  const [results, setResults] = useState<Array<string> | null>(null);
+  const [results, setResults] = useState<Array<MentionWithColor> | null>(null);
 
   useEffect(() => {
     const cachedResults = mentionsCache.get(mentionString);
@@ -147,7 +145,7 @@ function useMentionLookupService(mentionString: string) {
     }
 
     mentionsCache.set(mentionString, null);
-    dummyLookupService.search(store, mentionString, (newResults) => {
+    searchMentionableUsers(store, mentionString, (newResults) => {
       mentionsCache.set(mentionString, newResults);
       setResults(newResults);
     });
@@ -156,38 +154,35 @@ function useMentionLookupService(mentionString: string) {
   return results;
 }
 
-// function MentionsTypeaheadItem({
-//   index,
-//   isSelected,
-//   onClick,
-//   onMouseEnter,
-//   result,
-// }: {
-//   index: number;
-//   isSelected: boolean;
-//   onClick: () => void;
-//   onMouseEnter: () => void;
-//   result: string;
-// }) {
-//   const liRef = useRef(null);
-
-//   return (
-//     <StyledMentionsTypeaheadLi
-//       selected={isSelected}
-//       key={result}
-//       tabIndex={-1}
-//       ref={liRef}
-//       role="option"
-//       aria-selected={isSelected}
-//       id={'typeahead-item-' + index}
-//       onMouseEnter={onMouseEnter}
-//       onClick={onClick}
-//     >
-//       <Avatar profile={{ name: result }} />
-//       {result}
-//     </StyledMentionsTypeaheadLi>
-//   );
-// }
+function MentionsTypeaheadItem({
+  index,
+  isSelected,
+  onClick,
+  onMouseEnter,
+  result,
+}: {
+  index: number;
+  isSelected: boolean;
+  onClick: () => void;
+  onMouseEnter: () => void;
+  result: MentionWithColor;
+}) {
+  return (
+    <StyledMentionsTypeaheadLi
+      selected={isSelected}
+      key={result.id}
+      tabIndex={-1}
+      role="option"
+      aria-selected={isSelected}
+      id={'typeahead-item-' + index}
+      onMouseEnter={onMouseEnter}
+      onClick={onClick}
+    >
+      <Avatar profile={{ ...result, id: result.id }} />
+      {result.name}
+    </StyledMentionsTypeaheadLi>
+  );
+}
 
 function MentionsTypeahead({
   close,
@@ -207,10 +202,9 @@ function MentionsTypeahead({
     const div = divRef.current;
     const rootElement = editor.getRootElement();
     if (results !== null && div !== null && rootElement !== null) {
-      const range = resolution.range;
-      const { left, top, height } = range.getBoundingClientRect();
-      div.style.top = `${top + height + 2}px`;
-      div.style.left = `${left - 14}px`;
+      div.style.left = '50px';
+      div.style.right = '16px';
+      div.style.bottom = '0px';
       div.style.display = 'block';
       rootElement.setAttribute('aria-controls', 'mentions-typeahead');
 
@@ -352,7 +346,7 @@ function MentionsTypeahead({
       role="listbox"
       // className={intersects}
     >
-      {/* <StyledMentionsTypeaheadUl>
+      <StyledMentionsTypeaheadUl>
         {results.slice(0, SUGGESTION_LIST_LENGTH_LIMIT).map((result, i) => (
           <MentionsTypeaheadItem
             index={i}
@@ -364,11 +358,11 @@ function MentionsTypeahead({
             onMouseEnter={() => {
               setSelectedIndex(i);
             }}
-            key={result}
+            key={result.name}
             result={result}
           />
         ))}
-      </StyledMentionsTypeaheadUl> */}
+      </StyledMentionsTypeaheadUl>
     </StyledMentionsTypeahead>
   );
 }
@@ -497,12 +491,16 @@ function getMentionOffset(documentText: string, entryText: string, offset: numbe
  */
 function createMentionNodeFromSearchResult(
   editor: LexicalEditor,
-  entryText: string,
+  mention: MentionWithColor,
   match: MentionMatch
 ): void {
   editor.update(() => {
     const selection = $getSelection();
     if (!$isRangeSelection(selection) || !selection.isCollapsed()) {
+      return;
+    }
+    if (typeof mention.name !== 'string') {
+      console.error('CollabKit: Mention name must be a string');
       return;
     }
     const anchor = selection.anchor;
@@ -522,7 +520,7 @@ function createMentionNodeFromSearchResult(
 
     // Given a known offset for the mention match, look backward in the
     // text to see if there's a longer match to replace.
-    const mentionOffset = getMentionOffset(textContent, entryText, characterOffset);
+    const mentionOffset = getMentionOffset(textContent, mention.name, characterOffset);
     const startOffset = selectionOffset - mentionOffset;
     if (startOffset < 0) {
       return;
@@ -535,7 +533,7 @@ function createMentionNodeFromSearchResult(
       [, nodeToReplace] = anchorNode.splitText(startOffset, selectionOffset);
     }
 
-    const mentionNode = $createMentionNode(entryText);
+    const mentionNode = $createMentionNode(mention);
     nodeToReplace.replace(mentionNode);
     mentionNode.select();
   });
@@ -614,7 +612,7 @@ function useMentions(editor: LexicalEditor) {
     ? null
     : createPortal(
         <MentionsTypeahead close={closeTypeahead} resolution={resolution} editor={editor} />,
-        document.body
+        document.getElementById('#mentions')!
       );
 }
 

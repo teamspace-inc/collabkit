@@ -5,6 +5,7 @@ import { ConfigProps, SecureProps, Store, UnsecureProps } from '@collabkit/core'
 import { AppContext } from '../hooks/useAppContext';
 import { createValtioStore } from '../store';
 import { FirebaseSync } from '@collabkit/client';
+import { SaveMentionableUsers } from './SaveMentionableUsers';
 
 export type OtherProps = {
   children: React.ReactNode;
@@ -68,6 +69,7 @@ export function CollabKitProvider({
         theme: currentTheme,
       }}
     >
+      <SaveMentionableUsers mentionableUsers={config.mentionableUsers} />
       <span className={currentTheme.className.toString()}>{children}</span>
     </AppContext.Provider>
   );

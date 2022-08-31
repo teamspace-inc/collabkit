@@ -1,4 +1,4 @@
-import type { Event, Pin, Store } from '@collabkit/core';
+import type { Event, MentionWithColor, Pin, Store } from '@collabkit/core';
 import { actions } from './';
 
 export async function writeMessageToFirebase(
@@ -11,9 +11,10 @@ export async function writeMessageToFirebase(
     parentId?: string;
     type: 'message' | 'reaction';
     pin?: Pin;
+    mentions?: MentionWithColor[];
   }
 ) {
-  const { type, workspaceId, threadId, body, preview, pin, parentId } = props;
+  const { type, workspaceId, threadId, body, preview, pin, parentId, mentions } = props;
 
   if (store.isReadOnly) {
     console.warn('CollabKit: cannot send message in read-only mode');
@@ -30,11 +31,17 @@ export async function writeMessageToFirebase(
   // close emoji picker on send
   store.reactingId = null;
 
+  const mentionsMap: { [userId: string]: boolean } = {};
+  for (const mention of mentions || []) {
+    mentionsMap[mention.id] = true;
+  }
+
   const event: Event = {
     type,
     body,
     createdAt: store.sync.serverTimestamp(),
     createdById: userId,
+    mentions: mentionsMap,
   };
 
   if (parentId) {
@@ -72,6 +79,6 @@ export async function writeMessageToFirebase(
     ]);
   } catch (e) {
     console.error(e);
-    // handle failure here
+    // todo: handle failure here
   }
 }

@@ -212,6 +212,9 @@ export type Event = {
   createdAt: number | object;
   createdById: string;
   parentId?: string;
+  mentions?: {
+    [userId: string]: boolean;
+  } | null;
 };
 
 export type WithName<T> = T & {
@@ -230,7 +233,11 @@ export type MentionProps = readonly Mention[];
 
 export interface Mention extends BasicProfile {
   workspaceId: string;
-  userId: string;
+  id: string;
+}
+
+export interface MentionWithColor extends Mention {
+  color: Color;
 }
 
 export type BasicProfile = {
@@ -251,6 +258,7 @@ export interface Timeline {
 export interface Composer {
   editor: LexicalEditor | null;
   $$body: string;
+  $$mentions: MentionWithColor[];
   isTypingTimeoutID?: ReturnType<typeof setTimeout>;
   isTyping: { [endUserId: string]: boolean };
 }
@@ -302,6 +310,7 @@ export interface UnconfiguredStore {
   workspaces: {
     [workspaceId: string]: Workspace;
   };
+  mentionableUsers: { [userId: string]: MentionWithColor };
   appState: 'blank' | 'config' | 'ready';
   uiState: 'idle' | 'selecting' | 'continuous';
   subs: Subscriptions;

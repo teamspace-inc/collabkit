@@ -10,7 +10,6 @@ import { useRef } from 'react';
 import { useResizeObserver } from '../hooks/useResizeObserver';
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
 
-// import MentionsPlugin from './composer/MentionsPlugin';
 import { MentionNode } from './composer/MentionNode';
 import TimestampPlugin from './composer/TimestampPlugin';
 import { TimestampNode } from './composer/TimestampNode';
@@ -23,6 +22,7 @@ import { useSnapshot } from 'valtio';
 import PasteTextPlugin from './PasteTextPlugin';
 import { Typers } from './comment/Typers';
 import { useOnTimestampClick } from '../hooks/useOnTimestampClick';
+import MentionsPlugin from './composer/MentionsPlugin';
 
 const StyledContentEditable = styled(ContentEditable, composerStyles.contentEditable);
 const Placeholder = styled('div', composerStyles.placeholder);
@@ -84,6 +84,7 @@ export function Composer(props: {
 
   return (
     <div>
+      <div id="#mentions" style={{ position: 'relative' }}></div>
       <ComposerContainer style={props.style} onClick={onClick}>
         {profile && !props.hideAvatar ? (
           <Avatar style={{ position: 'relative', top: 4, marginLeft: 8 }} profile={profile} />
@@ -108,7 +109,7 @@ export function Composer(props: {
                 }}
               />
               <HistoryPlugin />
-              {/* <MentionsPlugin /> */}
+              <MentionsPlugin />
               <TimestampPlugin />
               {props.autoFocus ? <AutoFocusPlugin /> : null}
             </StyledVisibleComposerArea>

@@ -1,13 +1,13 @@
 import { css } from '@stitches/react';
 
 export const typeahead = css({
-  position: 'fixed',
+  position: 'absolute',
   background: '$neutral1',
-  boxShadow: '0px 5px 10px rgba(0, 0, 0, 0.3)',
   borderRadius: '$radii$0',
   zIndex: 9999,
   margin: '4px 0 0 -2px',
   padding: 0,
+  boxShadow: `6px 6px 10px rgba(0, 0, 0, 0.25)`,
 });
 
 export const typeaheadList = css({
@@ -16,15 +16,16 @@ export const typeaheadList = css({
   margin: 0,
   borderRadius: '$radii$0',
   zIndex: 9999,
+  width: '100%',
 });
 
 export const typeaheadListItem = css({
-  padding: '8px 12px',
+  padding: '8px',
   margin: 0,
   boxSizing: 'border-box',
   minWidth: '10ch',
   display: 'flex',
-  width: '$sizes$threadPreviewWidth',
+  width: '100%',
   fontSize: '$fontSize$2',
   lineHeight: '$lineHeights$0',
   justifyContent: 'left',
@@ -45,7 +46,7 @@ export const typeaheadListItem = css({
   variants: {
     selected: {
       true: {
-        background: '$neutral5',
+        background: '$accent5',
         color: '$neutral12',
       },
     },

@@ -12,7 +12,13 @@ type NotificationEmailProps = {
   threadName?: string;
   workspaceName?: string;
   accentColor?: string;
-  commentList: { createdById: string; createdAt: number; body: string; type: string }[][];
+  commentList: {
+    createdById: string;
+    createdAt: number;
+    body: string;
+    type: string;
+    mentions?: { [userId: string]: boolean };
+  }[][];
   ctaText?: string;
   profiles: { [id: string]: { name?: string; avatar?: string; email?: string; color?: string } };
   appName?: string;

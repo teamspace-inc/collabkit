@@ -50,6 +50,7 @@ export function createStore(): UnconfiguredStore {
     profiles: {},
     subs: {},
     callbacks: {},
+    mentionableUsers: {},
   };
   return store;
 }

@@ -32,6 +32,7 @@ import { viewThread } from './viewThread';
 import { isTyping } from './isTyping';
 import { saveThreadInfo } from './saveThreadInfo';
 import { init } from './init';
+import { saveMentionableUsers } from './saveMentionableUsers';
 
 export type GenerateToken =
   | {
@@ -131,4 +132,6 @@ export const actions = {
   unhover,
   viewThread,
   saveThreadInfo,
+
+  saveMentionableUsers,
 };

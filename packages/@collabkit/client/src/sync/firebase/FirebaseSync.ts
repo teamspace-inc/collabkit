@@ -237,6 +237,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
         ...event,
         body: preview,
         name: threadId,
+        mentions: event.mentions ?? null,
       },
     };
 

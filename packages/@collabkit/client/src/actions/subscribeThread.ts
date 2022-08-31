@@ -11,6 +11,7 @@ export async function subscribeThread(
 ) {
   store.workspaces[props.workspaceId].composers[props.threadId] ||= {
     $$body: '',
+    $$mentions: [],
     isTyping: {},
     editor: null,
   };
