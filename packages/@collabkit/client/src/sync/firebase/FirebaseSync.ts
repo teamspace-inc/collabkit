@@ -15,7 +15,7 @@ import {
   set,
   update,
 } from 'firebase/database';
-import type { Event, Pin, Subscriptions } from '@collabkit/core';
+import type { Event, OptionalWorkspaceProps, Pin, Subscriptions } from '@collabkit/core';
 import { subscribeThreadIsTyping } from './subscribeThreadIsTyping';
 import { subscribeThreadSeenBy } from './subscribeThreadSeenBy';
 import { subscribeTimeline } from './subscribeTimeline';
@@ -56,6 +56,29 @@ export class FirebaseSync implements Sync.SyncAdapter {
       ),
       data.info
     );
+  }
+
+  saveWorkspace(params: {
+    appId: string;
+    workspaceId: string;
+    workspace?: OptionalWorkspaceProps | null;
+  }) {
+    if (
+      params.workspace &&
+      params.workspace.name &&
+      // setting name to null deletes it
+      (typeof params.workspace.name === 'string' || params.workspace.name === null)
+    ) {
+      return set(
+        ref(
+          getDatabase(getApp('CollabKit')),
+          `/workspaces/${params.appId}/${params.workspaceId}/name/`
+        ),
+        params.workspace.name
+      );
+    } else {
+      return Promise.resolve();
+    }
   }
 
   shouldAuthenticate(): boolean {

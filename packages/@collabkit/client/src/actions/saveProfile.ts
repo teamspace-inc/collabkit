@@ -33,6 +33,9 @@ export async function saveProfile(store: Store) {
         return;
       }
       store.sync.saveProfile({ appId: config.appId, userId, workspaceId, profile });
+      if (config.workspace) {
+        store.sync.saveWorkspace({ appId: config.appId, workspaceId, workspace: config.workspace });
+      }
       store.profiles[userId] = profile;
     } catch (e) {
       console.error('CollabKit: saveProfile failed', e);

@@ -1,5 +1,12 @@
 import type { Color } from '@collabkit/colors';
-import type { Event, Pin, Subscriptions, UserProps } from '../types';
+import type {
+  Event,
+  OptionalWorkspaceProps,
+  Pin,
+  Subscriptions,
+  UserProps,
+  WorkspaceProps,
+} from '../types';
 import type { DataSnapshot } from 'firebase/database';
 
 export interface SyncAdapter {
@@ -17,6 +24,12 @@ export interface SyncAdapter {
       name?: string;
       url?: string;
     };
+  }): Promise<void>;
+
+  saveWorkspace(params: {
+    appId: string;
+    workspaceId: string;
+    workspace?: OptionalWorkspaceProps | null;
   }): Promise<void>;
 
   getProfile(params: {
