@@ -11,7 +11,18 @@ jobs:
     runs-on: buildjet-32vcpu-ubuntu-2004
     steps:
       - uses: actions/checkout@v2
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile --prefer-offline
+      - run: yarn install --frozen-lockfile --prefer-offline
       - run: yarn typecheck
       - run: yarn build
+  test-functions:
+    runs-on: buildjet-32vcpu-ubuntu-2004
+    defaults:
+      run:
+        working-directory: functions
+    steps:
+      - uses: actions/checkout@v2
+      - run: yarn install --frozen-lockfile --prefer-offline
+      - run: yarn build
+      - run: yarn test
+        env:
+          FIREBASE_TEST_SERVICE_ACCOUNT: '${{ secrets.FIREBASE_TEST_SERVICE_ACCOUNT }}'
