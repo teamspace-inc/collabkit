@@ -107,7 +107,7 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
           placeholder={isEmpty ? 'Write a comment' : 'Reply to this comment'}
           style={{
             borderRadius: theme.radii['2'].value.toString(),
-            paddingBottom: '12px',
+            paddingBottom: '6px',
             ...(isEmpty
               ? {}
               : {
