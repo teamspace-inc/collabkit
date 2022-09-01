@@ -26,6 +26,7 @@ import { Avatar } from './../Avatar';
 import { styled } from '@stitches/react';
 import { mentionsPluginStyles } from '@collabkit/theme';
 import { MentionWithColor } from '@collabkit/core';
+import { HStack, VStack } from '../UIKit';
 
 type MentionMatch = {
   leadOffset: number;
@@ -41,6 +42,8 @@ type Resolution = {
 const StyledMentionsTypeahead = styled('div', mentionsPluginStyles.typeahead);
 const StyledMentionsTypeaheadUl = styled('div', mentionsPluginStyles.typeaheadList);
 const StyledMentionsTypeaheadLi = styled('div', mentionsPluginStyles.typeaheadListItem);
+const StyledMentionsTypeaheadLiName = styled('div', mentionsPluginStyles.typeaheadListItemName);
+const StyledMentionsTypeaheadLiEmail = styled('div', mentionsPluginStyles.typeaheadListItemEmail);
 
 const PUNCTUATION = '\\.,\\+\\*\\?\\$\\@\\|#{}\\(\\)\\^\\-\\[\\]\\\\/!%\'"~=<>_:;';
 const NAME = '\\b[A-Z][^\\s' + PUNCTUATION + ']';
@@ -117,7 +120,8 @@ function searchMentionableUsers(
 ) {
   const { mentionableUsers } = snapshot(store);
   const results: MentionWithColor[] = (Object.values(mentionableUsers ?? {}) ?? []).filter(
-    (mention) => mention.name && mention.name.toLowerCase().includes(string.toLowerCase())
+    (mention) =>
+      mention.name && mention.name.toLowerCase().includes(string.toLowerCase()) && mention.email
   );
   if (results == null || results?.length === 0) {
     callback(null);
@@ -134,6 +138,7 @@ function useMentionLookupService(mentionString: string) {
 
   const [results, setResults] = useState<Array<MentionWithColor> | null>(null);
 
+  // we probably don't need this caching system
   useEffect(() => {
     const cachedResults = mentionsCache.get(mentionString);
 
@@ -179,7 +184,10 @@ function MentionsTypeaheadItem({
       onClick={onClick}
     >
       <Avatar profile={{ ...result, id: result.id }} />
-      {result.name}
+      <div>
+        <StyledMentionsTypeaheadLiName>{result.name}</StyledMentionsTypeaheadLiName>
+        <StyledMentionsTypeaheadLiEmail>{result.email}</StyledMentionsTypeaheadLiEmail>
+      </div>
     </StyledMentionsTypeaheadLi>
   );
 }

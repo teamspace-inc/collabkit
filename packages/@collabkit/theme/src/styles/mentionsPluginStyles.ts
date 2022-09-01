@@ -52,3 +52,9 @@ export const typeaheadListItem = css({
     },
   },
 });
+
+export const typeaheadListItemName = css({});
+
+export const typeaheadListItemEmail = css({
+  fontWeight: 'normal',
+});
