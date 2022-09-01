@@ -69,8 +69,8 @@ export function CollabKitProvider({
         theme: currentTheme,
       }}
     >
+      {children}
       <SaveMentionableUsers mentionableUsers={config.mentionableUsers} />
-      <span className={currentTheme.className.toString()}>{children}</span>
     </AppContext.Provider>
   );
 }

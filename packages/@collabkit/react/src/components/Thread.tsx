@@ -25,7 +25,7 @@ export function Thread(props: {
   autoFocus?: boolean;
   onCloseButtonClick?: (e: React.MouseEvent) => void;
 }) {
-  const { store } = useApp();
+  const { store, theme } = useApp();
 
   const { userId, workspaceId, workspaces, isConnected } = useSnapshot(store);
   const workspace = workspaceId ? workspaces[workspaceId] : null;
@@ -43,7 +43,11 @@ export function Thread(props: {
   }
 
   return (
-    <StyledThreadContainer style={props.style} data-collabkit-internal="true">
+    <StyledThreadContainer
+      className={theme.className}
+      style={props.style}
+      data-collabkit-internal="true"
+    >
       {/* {reactingId ? (
         <div
           onClick={(e) => (reactingId ? events.onEmojiReactionPickerModalBackgroundClick(e) : null)}
