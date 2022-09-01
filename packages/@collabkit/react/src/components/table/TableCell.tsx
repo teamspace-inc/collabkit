@@ -123,7 +123,11 @@ export function PopoverPortal(props: { popover: PopoverContext }) {
             <PopoverThread
               threadId={threadId ?? generateThreadId()}
               info={info}
-              style={{ minWidth: 250, border: '1px solid #ccc' }}
+              style={{
+                minWidth: 250,
+                border: '1px solid #E3E9ED',
+                boxShadow: '0px -12px 24px rgba(0, 0, 0, 0.02), 0px 12px 24px rgba(0, 0, 0, 0.06)',
+              }}
             />
           </div>
         </FloatingFocusManager>
