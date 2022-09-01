@@ -344,6 +344,7 @@ function MentionsTypeahead({
       <StyledMentionsTypeaheadUl>
         {results.slice(0, SUGGESTION_LIST_LENGTH_LIMIT).map((result, i) => (
           <MentionsTypeaheadItem
+            key={result.id}
             index={i}
             isSelected={i === selectedIndex}
             onClick={() => {
@@ -353,7 +354,6 @@ function MentionsTypeahead({
             onMouseEnter={() => {
               setSelectedIndex(i);
             }}
-            key={result.name}
             result={result}
           />
         ))}
