@@ -1,11 +1,11 @@
 import React from 'react';
 import type { GlobalProvider } from '@ladle/react';
-import * as CollabKit from '../src';
+import { CollabKitProvider } from '../src';
 
 import '../src/index.css';
 
 export const Provider: GlobalProvider = ({ children, globalState }) => (
-  <CollabKit.Provider
+  <CollabKitProvider
     apiKey={import.meta.env.VITE_COLLABKIT_TOKEN}
     appId={import.meta.env.VITE_COLLABKIT_APP_ID}
     workspace={{ id: 'acme', name: 'ACME' }}
@@ -17,5 +17,5 @@ export const Provider: GlobalProvider = ({ children, globalState }) => (
     colorScheme={globalState.theme}
   >
     {children}
-  </CollabKit.Provider>
+  </CollabKitProvider>
 );

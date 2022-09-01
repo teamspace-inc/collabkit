@@ -1,4 +1,4 @@
 import React from 'react';
-import * as CollabKit from '../';
+import { Thread } from '../';
 
-export const Thread = () => <CollabKit.Thread threadId="demo-chat2" />;
+export const Plain = () => <Thread threadId="demo-chat2" />;

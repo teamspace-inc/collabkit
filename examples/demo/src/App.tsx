@@ -1,4 +1,4 @@
-import * as CollabKit from '@collabkit/react';
+import { CollabKitProvider, CustomTheme, Thread, useUnreadCount } from '@collabkit/react';
 import * as themes from '@collabkit/custom-themes';
 import { mentionableUsers } from './data';
 import { useCallback, useEffect, useState } from 'react';
@@ -46,7 +46,7 @@ export default function App() {
   );
 
   const name = location.pathname.slice(1);
-  const theme: CollabKit.CustomTheme | undefined =
+  const theme: CustomTheme | undefined =
     name in themes ? themes[name as keyof typeof themes] : undefined;
 
   if (!user) {
@@ -54,7 +54,7 @@ export default function App() {
   }
 
   return (
-    <CollabKit.Provider
+    <CollabKitProvider
       colorScheme="light"
       apiKey={'oLsHFwp3uFYjgar37ygGc'}
       appId={'-N67qY-qlZoWmkQBPyZU'}
@@ -75,20 +75,20 @@ export default function App() {
       mentionableUsers={mentionableUsers}
     >
       {name === 'cashboard' ? <GridExample /> : <Home />}
-    </CollabKit.Provider>
+    </CollabKitProvider>
   );
 }
 
 function Home() {
   const threadId = 'new-your-thread-id';
 
-  const unreadCount = CollabKit.useUnreadCount({ threadId });
+  const unreadCount = useUnreadCount({ threadId });
   const unread = unreadCount > 0 ? ` (${unreadCount})` : '';
   useDocumentTitle(`CollabKit Demo${unread}`);
 
   return (
     <div style={{ position: 'fixed', inset: 0 }}>
-      <CollabKit.Thread
+      <Thread
         autoFocus={true}
         info={{ name: 'Demo thread' }}
         showHeader={false}

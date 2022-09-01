@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import styles from '../styles/Home.module.css';
-import * as CollabKit from '@collabkit/react';
+import { CollabKitProvider } from '@collabkit/react';
 import { getUserToken } from '@collabkit/node';
 
 export async function getServerSideProps(context: any) {
@@ -47,7 +47,7 @@ export default (props: {
   token: string;
 }) => {
   return (
-    <CollabKit.Provider
+    <CollabKitProvider
       colorScheme="light"
       appId={props.appId}
       token={props.token}
@@ -133,7 +133,7 @@ export default (props: {
             background: 'rgb(249,249,250)',
           }}
         >
-          <CollabKit.Thread
+          <Thread
             showHeader={true}
             composerPrompt="Add comment..."
             style={{ borderRadius: 0 }}
@@ -141,6 +141,6 @@ export default (props: {
           />
         </div>
       </div>
-    </CollabKit.Provider>
+    </CollabKitProvider>
   );
 };
