@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { ArrowUp } from '../icons';
 
-import { sendButtonStyles, type Theme } from '@collabkit/theme';
+import { sendButtonStyles } from '@collabkit/theme';
 import { styled } from '../styled';
 import { inject } from 'vue';
 import { ThemeKey } from '../../constants';
 import { useEvents } from '../../composables/useEvents';
+import type { ProvidedTheme } from '../../types';
 
 const props = defineProps<{
   bodyLength: number;
@@ -16,7 +17,7 @@ const props = defineProps<{
 const StyledComposerSendButton = styled('button', sendButtonStyles.button);
 const StyledComposerSendButtonIcon = styled(ArrowUp, sendButtonStyles.icon);
 
-const theme = inject<Theme>(ThemeKey)!;
+const theme = inject<ProvidedTheme>(ThemeKey)!;
 const events = useEvents();
 
 function onClick() {

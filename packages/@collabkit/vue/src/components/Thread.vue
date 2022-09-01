@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, provide, useSlots, watchEffect } from 'vue';
+import { computed, inject, provide, useSlots, watchEffect } from 'vue';
 import { actions } from '@collabkit/client';
 import { threadStyles } from '@collabkit/theme';
 import { styled } from './styled';
@@ -7,7 +7,8 @@ import { useStore } from '../composables/useStore';
 import Composer from './Composer.vue';
 import EmptyState from './thread/EmptyState.vue';
 import ScrollableCommentList from './ScrollableCommentList.vue';
-import { ProvidedSlotsKey } from '../constants';
+import { ProvidedSlotsKey, ThemeKey } from '../constants';
+import type { ProvidedTheme } from '../types';
 
 const StyledThreadContainer = styled('div', threadStyles.container);
 const StyledThread = styled('div', threadStyles.thread);
@@ -58,33 +59,37 @@ const placeholder = computed(
 
 const slots = useSlots();
 provide(ProvidedSlotsKey, slots);
+
+const theme = inject<ProvidedTheme>(ThemeKey)!;
 </script>
 
 <template>
-  <StyledThreadContainer v-if="store.userId && store.workspaceId">
-    <StyledThread>
-      <StyledThreadHeader v-if="showHeader">
-        <StyledThreadHeaderTitle>Comments</StyledThreadHeaderTitle>
-      </StyledThreadHeader>
-      <EmptyState v-if="store.isConnected && isEmpty" />
-      <ScrollableCommentList
-        v-if="!isEmpty && timeline && store.workspaceId"
-        :seenUntil="seenUntil"
-        :isTyping="workspace?.composers[threadId]?.isTyping"
-        :threadId="threadId"
-        :userId="store.userId"
-        :workspaceId="store.workspaceId"
-        :timeline="timeline"
-      />
-      <Composer
-        :autoFocus="autoFocus"
-        :placeholder="placeholder"
-        :workspaceId="store.workspaceId"
-        :threadId="threadId"
-        :isFloating="false"
-        :userId="store.userId"
-        :isTyping="workspace?.composers[threadId]?.isTyping"
-      />
-    </StyledThread>
-  </StyledThreadContainer>
+  <div :style="{ display: 'contents' }" :className="theme.className">
+    <StyledThreadContainer v-if="store.userId && store.workspaceId" data-vv>
+      <StyledThread>
+        <StyledThreadHeader v-if="showHeader">
+          <StyledThreadHeaderTitle>Comments</StyledThreadHeaderTitle>
+        </StyledThreadHeader>
+        <EmptyState v-if="store.isConnected && isEmpty" />
+        <ScrollableCommentList
+          v-if="!isEmpty && timeline && store.workspaceId"
+          :seenUntil="seenUntil"
+          :isTyping="workspace?.composers[threadId]?.isTyping"
+          :threadId="threadId"
+          :userId="store.userId"
+          :workspaceId="store.workspaceId"
+          :timeline="timeline"
+        />
+        <Composer
+          :autoFocus="autoFocus"
+          :placeholder="placeholder"
+          :workspaceId="store.workspaceId"
+          :threadId="threadId"
+          :isFloating="false"
+          :userId="store.userId"
+          :isTyping="workspace?.composers[threadId]?.isTyping"
+        />
+      </StyledThread>
+    </StyledThreadContainer>
+  </div>
 </template>

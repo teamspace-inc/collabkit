@@ -1,12 +1,12 @@
 <script setup lang="ts">
+import { onBeforeUnmount, onMounted, provide } from 'vue';
 import { StoreKey, ThemeKey } from '../constants';
 import { createVueStore } from '../stores/store';
 import { actions, createEvents, FirebaseSync, initFirebase } from '@collabkit/client';
 import type { Config, DeepPartial, Store, UserProps, WorkspaceProps } from '@collabkit/core';
 import type { Theme } from '@collabkit/theme';
-import { onBeforeUnmount, onMounted, provide } from 'vue';
+import type { ProvidedTheme } from '../types';
 import { useTheme } from '../composables/useTheme';
-import { func } from 'prop-types';
 
 initFirebase();
 
@@ -23,7 +23,7 @@ const props = defineProps<{
 }>();
 
 const currentTheme = useTheme(props);
-provide(ThemeKey, currentTheme);
+provide<ProvidedTheme>(ThemeKey, currentTheme);
 
 const store = createVueStore() as Store;
 actions.init(store, props as Config, new FirebaseSync());
@@ -47,5 +47,5 @@ function onKeyDown(e: KeyboardEvent) {
 </script>
 
 <template>
-  <span :className="currentTheme.className.toString()"><slot /></span>
+  <slot />
 </template>

@@ -43,12 +43,13 @@ export function Thread(props: {
   }
 
   return (
-    <StyledThreadContainer
-      className={theme.className}
-      style={props.style}
-      data-collabkit-internal="true"
-    >
-      {/* {reactingId ? (
+    <div style={{ display: 'contents' }} className={theme.className}>
+      <StyledThreadContainer
+        className={theme.className}
+        style={props.style}
+        data-collabkit-internal="true"
+      >
+        {/* {reactingId ? (
         <div
           onClick={(e) => (reactingId ? events.onEmojiReactionPickerModalBackgroundClick(e) : null)}
           style={{
@@ -67,42 +68,43 @@ export function Thread(props: {
           }}
         />
       ) : null} */}
-      <StyledThread>
-        {props.showHeader ? (
-          <StyledThreadHeader>
-            <StyledThreadHeaderTitle>Comments</StyledThreadHeaderTitle>
-          </StyledThreadHeader>
-        ) : null}
-        {!isConnected ? <FlexCenter /> : null}
-        {isConnected && (isEmpty || !workspace?.likelyFetchedAllProfiles) ? <EmptyState /> : null}
-        {!isEmpty && workspace?.likelyFetchedAllProfiles && timeline && workspaceId && (
-          <ScrollableCommentList
-            seenUntil={seenUntil}
-            threadId={props.threadId}
-            userId={userId}
-            workspaceId={workspaceId}
-            timeline={timeline}
-            newIndicatorId={newIndicatorId}
-          />
-        )}
-        {workspaceId && workspace !== null ? (
-          <Composer
-            autoFocus={props.autoFocus}
-            placeholder={
-              props.composerPrompt != null
-                ? props.composerPrompt
-                : isEmpty
-                ? 'Add a comment'
-                : 'Reply to this comment'
-            }
-            workspaceId={workspaceId}
-            threadId={props.threadId}
-            isFloating={false}
-            userId={userId}
-            isTyping={workspace?.composers[props.threadId]?.isTyping}
-          />
-        ) : null}
-      </StyledThread>
-    </StyledThreadContainer>
+        <StyledThread>
+          {props.showHeader ? (
+            <StyledThreadHeader>
+              <StyledThreadHeaderTitle>Comments</StyledThreadHeaderTitle>
+            </StyledThreadHeader>
+          ) : null}
+          {!isConnected ? <FlexCenter /> : null}
+          {isConnected && (isEmpty || !workspace?.likelyFetchedAllProfiles) ? <EmptyState /> : null}
+          {!isEmpty && workspace?.likelyFetchedAllProfiles && timeline && workspaceId && (
+            <ScrollableCommentList
+              seenUntil={seenUntil}
+              threadId={props.threadId}
+              userId={userId}
+              workspaceId={workspaceId}
+              timeline={timeline}
+              newIndicatorId={newIndicatorId}
+            />
+          )}
+          {workspaceId && workspace !== null ? (
+            <Composer
+              autoFocus={props.autoFocus}
+              placeholder={
+                props.composerPrompt != null
+                  ? props.composerPrompt
+                  : isEmpty
+                  ? 'Add a comment'
+                  : 'Reply to this comment'
+              }
+              workspaceId={workspaceId}
+              threadId={props.threadId}
+              isFloating={false}
+              userId={userId}
+              isTyping={workspace?.composers[props.threadId]?.isTyping}
+            />
+          ) : null}
+        </StyledThread>
+      </StyledThreadContainer>
+    </div>
   );
 }
