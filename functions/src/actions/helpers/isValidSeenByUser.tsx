@@ -1,6 +1,6 @@
 import { SeenByUser } from '../../types';
 
-export function isValidSeenByUser(data: any): data is SeenByUser {
+export function isValidSeenByUser(data: any): data is SeenByUser | null {
   return typeof data === 'object' && data === null
     ? true
     : typeof data === 'object' &&

@@ -3,7 +3,7 @@ import { isValidSeenBy } from '../../../actions/helpers/isValidSeenBy';
 describe('isValidSeenBy', () => {
   it('anything', () => {
     expect(isValidSeenBy(12345)).toBeFalsy();
-    expect(isValidSeenBy(null)).toBeFalsy();
+    expect(isValidSeenBy(null)).toBeTruthy();
   });
   it('undefined', () => {
     expect(isValidSeenBy(undefined)).toBeFalsy();

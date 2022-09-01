@@ -32,7 +32,7 @@ async function sendMailForProfile(props: {
   profiles: { [userId: string]: Profile };
   timeline: TimelineWithEventId;
   event: Event;
-  seenBy: SeenBy;
+  seenBy: SeenBy | null;
 }) {
   const {
     eventId,
@@ -83,7 +83,7 @@ async function sendMailForProfile(props: {
 
   const notifyAboutEventIds = eventIds.slice(eventIds.indexOf(notifyFrom));
 
-  if (seenBy[profileId]?.seenUntilId) {
+  if (seenBy?.[profileId]?.seenUntilId) {
     const index = notifyAboutEventIds.indexOf(seenBy[profileId]?.seenUntilId);
     if (index > 0) {
       // remove events that have been seen by the user

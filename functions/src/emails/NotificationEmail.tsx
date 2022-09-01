@@ -9,6 +9,8 @@ import { Mjml, MjmlBody, MjmlSection, MjmlColumn, MjmlText, MjmlSpacer } from 'm
 import reactStringReplace from 'react-string-replace';
 
 // todo refactor this so it's the same code as in the clients
+// except we use a MjmlText instead of a span to render
+// the mention
 export const MARKDOWN_LINK_REGEXP = /\[(.*)\]\((.*)\)/;
 
 export function MarkdownBody(props: { body: string; onLinkClick?: (e: React.MouseEvent) => void }) {
@@ -23,9 +25,9 @@ export function MarkdownBody(props: { body: string; onLinkClick?: (e: React.Mous
 
         // todo check if it matches a profile before bolding
         return (
-          <span key={i} style={{ fontWeight: 'bold' }}>
+          <MjmlText key={i} fontWeight={700}>
             {match}
-          </span>
+          </MjmlText>
         );
       })}
     </>

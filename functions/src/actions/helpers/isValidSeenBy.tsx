@@ -1,15 +1,17 @@
 import { SeenBy } from '../../types';
 import { isValidSeenByUser } from './isValidSeenByUser';
 
-export function isValidSeenBy(data: any): data is SeenBy {
+export function isValidSeenBy(data: any): data is SeenBy | null {
   if (typeof data === 'undefined') {
     return false;
   }
+
   if (typeof data !== 'object') {
     return false;
   }
+
   if (data === null) {
-    return false;
+    return true;
   }
 
   const userIdsValid = Object.keys(data).every((userId) => typeof userId === 'string');
