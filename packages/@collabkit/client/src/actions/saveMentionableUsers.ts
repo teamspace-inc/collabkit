@@ -1,4 +1,4 @@
-import { Mention, Store } from '@collabkit/core';
+import type { Mention, Store } from '@collabkit/core';
 import { getRandomColor } from '@collabkit/colors';
 
 export async function saveMentionableUsers(store: Store, mentionableUsers: readonly Mention[]) {
