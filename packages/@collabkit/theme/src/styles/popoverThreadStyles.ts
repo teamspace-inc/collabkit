@@ -2,7 +2,7 @@ import { css } from '@stitches/react';
 import { threadStyles } from '../';
 
 export const thread = css(threadStyles.thread, {
-  backgroundColor: '$neutral1',
+  backgroundColor: '$colors$backgroundColor',
   borderRadius: '$radii$1',
   display: 'flex',
   flexDirection: 'column',
