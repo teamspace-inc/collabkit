@@ -50,7 +50,7 @@ export async function subscribeProfiles(store: Store) {
           if (profile) {
             store.profiles[id] = { ...profile, id };
             if (store.config.mentionableUsers === 'allWorkspace') {
-              console.log('storing profile', id, profile);
+              // console.log('storing profile', id, profile);
               store.mentionableUsers[id] = { ...profile, id };
             }
             setHasProfile(store, id);
