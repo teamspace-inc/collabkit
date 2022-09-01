@@ -55,23 +55,24 @@ export type UnsecureProps = {
 
 export type Callbacks = {
   onCommentSend?: (data: {
-    event: {
-      createdById: string;
-      createdAt: number;
-      body: string;
-      type: 'message';
-      threadId: string;
-      parentId?: string;
-      workspaceId: string;
-    };
+    userId: string;
+    workspaceId: string;
+    threadId: string;
+    event: WithID<Event>;
   }) => void;
   onTimestampClick?: (data: {
     userId: string;
     workspaceId: string;
     threadId: string;
-    createdById: string;
-    eventId: string | null;
+    event: WithID<Event> | null;
     timestamp: string;
+  }) => void;
+  onMentionClick?: (data: {
+    userId: string;
+    workspaceId: string;
+    threadId: string;
+    event: WithID<Event> | null;
+    mention: MentionWithColor;
   }) => void;
 };
 
@@ -229,7 +230,7 @@ export type WithHasProfile<T> = T & {
   hasProfile?: boolean;
 };
 
-export type MentionProps = readonly Mention[];
+export type MentionProps = readonly Mention[] | 'allWorkspace';
 
 export interface Mention extends BasicProfile {
   workspaceId: string;

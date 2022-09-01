@@ -340,12 +340,7 @@ function MentionsTypeahead({
   }
 
   return (
-    <StyledMentionsTypeahead
-      aria-label="Suggested mentions"
-      ref={divRef}
-      role="listbox"
-      // className={intersects}
-    >
+    <StyledMentionsTypeahead aria-label="Suggested mentions" ref={divRef} role="listbox">
       <StyledMentionsTypeaheadUl>
         {results.slice(0, SUGGESTION_LIST_LENGTH_LIMIT).map((result, i) => (
           <MentionsTypeaheadItem
@@ -616,7 +611,7 @@ function useMentions(editor: LexicalEditor) {
       );
 }
 
-export default function MentionsPlugin(): ReactPortal | null {
+export function MentionsPlugin(): ReactPortal | null {
   const [editor] = useLexicalComposerContext();
   return useMentions(editor);
 }

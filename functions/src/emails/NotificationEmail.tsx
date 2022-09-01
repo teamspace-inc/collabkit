@@ -6,6 +6,8 @@ import ButtonPrimary from './components/ButtonPrimary';
 
 import { Mjml, MjmlBody, MjmlSection, MjmlColumn, MjmlText, MjmlSpacer } from 'mjml-react';
 
+function parseMarkdown(text: string) {}
+
 type NotificationEmailProps = {
   appLogoUrl?: string;
   activity: string;

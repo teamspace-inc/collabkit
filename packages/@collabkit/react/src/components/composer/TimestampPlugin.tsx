@@ -7,7 +7,7 @@ import { $createTimestampNode, TimestampNode } from './TimestampNode';
 
 const REGEX = /(([0-5]{0,1}[0-9]{1}:)?[0-5]{0,1}[0-9]{1}:[0-5]{1}[0-9]{1})\b/i;
 
-export default function TimestampPlugin() {
+export function TimestampPlugin() {
   const [editor] = useLexicalComposerContext();
   useEffect(() => {
     if (!editor.hasNodes([TimestampNode])) {

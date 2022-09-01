@@ -46,8 +46,13 @@ export async function subscribeProfiles(store: Store) {
             gotFirstProfile = true;
           }
           const profile = profileSnapshot.val();
+          // todo validate profile data here
           if (profile) {
             store.profiles[id] = { ...profile, id };
+            if (store.config.mentionableUsers === 'allWorkspace') {
+              console.log('storing profile', id, profile);
+              store.mentionableUsers[id] = { ...profile, id };
+            }
             setHasProfile(store, id);
           }
         },

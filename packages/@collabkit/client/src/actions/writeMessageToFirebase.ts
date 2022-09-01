@@ -1,4 +1,4 @@
-import type { Event, MentionWithColor, Pin, Store } from '@collabkit/core';
+import type { Event, MentionWithColor, Pin, Store, WithID } from '@collabkit/core';
 import { actions } from './';
 
 export async function writeMessageToFirebase(
@@ -77,6 +77,12 @@ export async function writeMessageToFirebase(
         type: 'comment',
       }),
     ]);
+    const eventWithId: WithID<Event> = {
+      id,
+      ...event,
+    };
+
+    return eventWithId;
   } catch (e) {
     console.error(e);
     // todo: handle failure here

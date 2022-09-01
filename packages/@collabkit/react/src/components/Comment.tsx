@@ -12,7 +12,6 @@ import { ReactionPicker } from './comment/ReactionPicker';
 // import { SystemBody } from './comment/SystemBody';
 import { MessageHeader } from './comment/MessageHeader';
 // import { hasReactions, Reactions } from './comment/Reactions';
-import reactStringReplace from 'react-string-replace';
 import {
   StyledCommentContainer,
   StyledCommentMessage,
@@ -23,8 +22,8 @@ import {
 import { useInView } from 'react-intersection-observer';
 import { useWindowFocus } from '../hooks/useWindowFocus';
 import { WithHasProfile } from '@collabkit/core';
-import { styled } from '@stitches/react';
-import { useOnTimestampClick } from '../hooks/useOnTimestampClick';
+import { useOnMarkdownLinkClick } from '../hooks/useOnMarkdownLinkClick';
+import { MarkdownBody } from './MarkdownBody';
 
 function hasOverflow(ref: React.RefObject<HTMLDivElement>, deps: any[]) {
   const [isOverflowing, setIsOverflowing] = useState(false);
@@ -39,14 +38,6 @@ function hasOverflow(ref: React.RefObject<HTMLDivElement>, deps: any[]) {
 
   return isOverflowing;
 }
-
-const MARKDOWN_LINK_REGEXP = /\[(.*)\]\((.*)\)/;
-
-const A = styled('a', {
-  fontWeight: '700',
-  color: '$colors$primaryText',
-  textDecoration: 'none',
-});
 
 export function Comment(props: {
   id: string;
@@ -87,32 +78,11 @@ export function Comment(props: {
   ) : null;
 
   const showProfile = props.type === 'default' || props.type === 'inline-start';
-  const { onClick } = useOnTimestampClick({
+  const { onClick } = useOnMarkdownLinkClick({
     ...props,
     userId: props.createdById,
-    eventId: props.id,
+    event: { ...props.event, id: props.id },
   });
-
-  const body = reactStringReplace(props.body, /(\[.*\]\(.*\))/g, (match, i) => {
-    // parse and render markdown as an A tag
-    const linkMatches = match.match(MARKDOWN_LINK_REGEXP);
-    if (linkMatches && linkMatches[0]) {
-      return (
-        <A key={i} onClick={onClick} href={linkMatches[2]}>
-          {linkMatches[1]}
-        </A>
-      );
-    }
-
-    // todo check if it matches a profile before bolding
-    return (
-      <span key={i} style={{ fontWeight: 'bold' }}>
-        {match}
-      </span>
-    );
-  });
-
-  // const body = props.event.type === 'system' ? <SystemBody event={props.event} /> : rawBody;
 
   const isOverflowing = hasOverflow(bodyRef, [props.body]);
 
@@ -143,7 +113,7 @@ export function Comment(props: {
             />
           )}
           <StyledCommentBody ref={bodyRef} isPreview={props.isPreview}>
-            {body}
+            <MarkdownBody body={props.body} onLinkClick={onClick} />
             {isOverflowing ? <StyledCommentBodyEllipsis>{'...'}</StyledCommentBodyEllipsis> : null}
           </StyledCommentBody>
           {/* <Reactions reactions={props.reactions} /> */}

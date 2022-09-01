@@ -3,7 +3,7 @@ import { $getSelection, $isRangeSelection, COMMAND_PRIORITY_EDITOR, PASTE_COMMAN
 import { $insertDataTransferForPlainText } from '@lexical/clipboard';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 
-export default function PasteTextPlugin() {
+export function PasteTextPlugin() {
   const [editor] = useLexicalComposerContext();
   editor.registerCommand<ClipboardEvent>(
     PASTE_COMMAND,

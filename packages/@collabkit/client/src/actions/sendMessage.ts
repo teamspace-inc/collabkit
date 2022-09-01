@@ -39,7 +39,7 @@ export async function sendMessage(store: Store, props: { workspaceId: string; th
   const hasPendingPin = workspace.pins[threadId]?.state === 'pending';
 
   try {
-    await writeMessageToFirebase(store, {
+    const event = await writeMessageToFirebase(store, {
       workspaceId,
       threadId,
       body,
@@ -53,20 +53,15 @@ export async function sendMessage(store: Store, props: { workspaceId: string; th
       mentions,
     });
 
+    if (!event) {
+      return;
+    }
+
     if (hasPendingPin) {
       workspace.pins[threadId].state = 'open';
     }
 
-    const event = {
-      workspaceId,
-      threadId,
-      body,
-      createdById: userId,
-      createdAt: +Date.now(),
-      type: 'message',
-    } as const;
-
-    store.callbacks?.onCommentSend?.({ event });
+    store.callbacks?.onCommentSend?.({ workspaceId, threadId, userId, event });
   } catch (e) {
     console.error('[CollabKit]: failed to send message ', e);
     workspace.pins[threadId].state = 'pending';

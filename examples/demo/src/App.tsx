@@ -66,13 +66,16 @@ export default function App() {
         onTimestampClick: (data) => {
           console.log('timestamp, click', data);
         },
+        onMentionClick: (data) => {
+          console.log('mention, click', data);
+        },
       }}
       onAuthenticationRequired={() => {
         console.log('authRequired');
       }}
       user={user}
       theme={theme}
-      mentionableUsers={mentionableUsers}
+      mentionableUsers={'allWorkspace'}
     >
       {name === 'cashboard' ? <GridExample /> : <Home />}
     </CollabKitProvider>

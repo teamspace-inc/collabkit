@@ -6,23 +6,26 @@ import { PlainTextPlugin } from '@lexical/react/LexicalPlainTextPlugin';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable';
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
-import { useRef } from 'react';
-import { useResizeObserver } from '../hooks/useResizeObserver';
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
+import { TimestampPlugin } from './composer/TimestampPlugin';
+import { MentionsPlugin } from './composer/MentionsPlugin';
+import { PasteTextPlugin } from './PasteTextPlugin';
 
 import { MentionNode } from './composer/MentionNode';
-import TimestampPlugin from './composer/TimestampPlugin';
 import { TimestampNode } from './composer/TimestampNode';
-import { useApp } from '../hooks/useApp';
+
 import { SendButton } from './composer/SendButton';
 import { Avatar } from './Avatar';
 import { styled } from '@stitches/react';
-import { composerStyles } from '@collabkit/theme';
 import { useSnapshot } from 'valtio';
-import PasteTextPlugin from './PasteTextPlugin';
 import { Typers } from './comment/Typers';
-import { useOnTimestampClick } from '../hooks/useOnTimestampClick';
-import MentionsPlugin from './composer/MentionsPlugin';
+
+import { useRef } from 'react';
+import { useResizeObserver } from '../hooks/useResizeObserver';
+import { useApp } from '../hooks/useApp';
+import { useOnMarkdownLinkClick } from '../hooks/useOnMarkdownLinkClick';
+
+import { composerStyles } from '@collabkit/theme';
 
 const StyledContentEditable = styled(ContentEditable, composerStyles.contentEditable);
 const Placeholder = styled('div', composerStyles.placeholder);
@@ -80,7 +83,7 @@ export function Composer(props: {
     },
   });
 
-  const { onClick } = useOnTimestampClick({ ...props, createdById: props.userId, eventId: null });
+  const { onClick } = useOnMarkdownLinkClick({ ...props, event: null });
 
   return (
     <div>
