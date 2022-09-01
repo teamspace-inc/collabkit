@@ -8,7 +8,7 @@ export function styled(type: any, ...args: any[]) {
     setup(props, { slots, attrs }) {
       return () => {
         const { props: forwardProps } = cssComponent({ ...props, ...attrs });
-        return h(type, forwardProps, slots.default?.());
+        return h(type, forwardProps, slots);
       };
     },
   });
