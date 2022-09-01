@@ -44,29 +44,35 @@ export interface Theme {
     1: string;
     2: string;
     3: string;
+    mentionDropdownItemFontSize: string;
   };
   lineHeights: {
     0: string;
     1: string;
     2: string;
     3: string;
+    mentionDropdownItemLineHeight: string;
   };
   fontWeights: {
     0: number;
     1: number;
     2: number;
     3: number;
+    mentionDropdownItemFontWeight: string;
   };
   radii: {
     0: string;
     1: string;
     2: string;
     pin: string;
+    mentionDropdownBorderRadius: string;
   };
   padding: {
     composer: string;
     commentVertical: string;
     commentHorizontal: string;
+    mentionDropdownItemPadding: string;
+
     0: string;
     1: string;
     2: string;
@@ -95,27 +101,52 @@ export interface Theme {
     composerSendButtonTop: string;
     composerSendButtonRight: string;
   };
+  shadows: {
+    mentionDropdownBoxShadow: string;
+  };
   colors: {
+    // text
     primaryText: string;
     secondaryText: string;
-    typingDot: string;
+
     badgeColor: string;
     primaryButtonBackground: string;
-    indicatorLineColor: string;
-    composerButtonBackground: string;
-    composerButtonIconColor: string;
-    commentHoverBackgroundColor: string;
-    commentUnseenBackgroundColor: string;
-    commentUnseenHoverBackgroundColor: string;
-    composerBackground: string;
-    composerPlaceholder: string;
+
     bubbleHoverBackground: string;
     selectionBackground: string;
     borderColor: string;
     pinBorderColor: string;
-    sendButtonColor: string;
     backgroundColor: string;
+
+    // unread indicator
+    indicatorLineColor: string;
+
+    // typing indicator
+    typingDot: string;
+
+    // comment
+    commentHoverBackgroundColor: string;
+    commentUnseenBackgroundColor: string;
+    commentUnseenHoverBackgroundColor: string;
     caretColor: string;
+    sendButtonColor: string;
+
+    // composer
+    composerBackground: string;
+    composerPlaceholder: string;
+    composerButtonBackground: string;
+    composerButtonIconColor: string;
+
+    // mentions
+    mentionDropdownBackgroundColor: string;
+
+    mentionDropdownTextColor: string;
+
+    mentionDropdownItemHoverBackgroundColor: string;
+    mentionDropdownItemHoverTextColor: string;
+
+    mentionDropdownItemSelectedBackgroundColor: string;
+    mentionDropdownItemSelectedTextColor: string;
   };
 }
 
@@ -129,6 +160,8 @@ export type CustomTheme = DeepPartial<Theme>;
 
 export function createThemes(customTheme?: CustomTheme) {
   const fontSize = {
+    mentionDropdownItemFontSize: '$fontSize$2',
+
     ['0']: '11px',
     ['1']: '12px',
     ['2']: '13px',
@@ -136,6 +169,8 @@ export function createThemes(customTheme?: CustomTheme) {
   };
 
   const lineHeights = {
+    mentionDropdownItemLineHeight: '$lineHeights$0',
+
     ['0']: '18px',
     ['1']: '18px',
     ['2']: '18px',
@@ -143,6 +178,8 @@ export function createThemes(customTheme?: CustomTheme) {
   };
 
   const fontWeights = {
+    mentionDropdownItemFontWeight: '$fontWeights$1',
+
     ['0']: 400,
     ['1']: 700,
     ['2']: 700,
@@ -150,10 +187,12 @@ export function createThemes(customTheme?: CustomTheme) {
   };
 
   const radii = {
+    pin: '24px',
+    mentionDropdownBorderRadius: '$radii$0',
+
     ['0']: '4px',
     ['1']: '12px',
     ['2']: '16px',
-    pin: '24px',
   };
 
   const padding = {
@@ -162,11 +201,17 @@ export function createThemes(customTheme?: CustomTheme) {
     commentBottom: '8px',
     commentLeft: '$padding$2',
     commentRight: '$padding$2',
+    mentionDropdownItemPadding: '$padding$1',
+
     ['0']: '6px',
     ['1']: '8px',
     ['2']: '16px',
     ['3']: '24px',
     ['4']: '32px',
+  };
+
+  const shadows = {
+    mentionDropdownBoxShadow: '6px 6px 10px rgba(0, 0, 0, 0.25)',
   };
 
   const sizes = {
@@ -211,6 +256,16 @@ export function createThemes(customTheme?: CustomTheme) {
     borderColor: '$neutral4',
     pinBorderColor: '$neutral1',
     backgroundColor: '$neutral1',
+
+    mentionDropdownBackgroundColor: '$neutral1',
+
+    mentionDropdownTextColor: '$neutral12',
+
+    mentionDropdownItemHoverBackgroundColor: '',
+    mentionDropdownItemHoverTextColor: '',
+
+    mentionDropdownItemSelectedBackgroundColor: '$accent5',
+    mentionDropdownItemSelectedTextColor: '$neutral12',
   };
 
   const offsets = {
@@ -252,6 +307,10 @@ export function createThemes(customTheme?: CustomTheme) {
     space: {
       ...space,
       ...customTheme?.space,
+    },
+    shadows: {
+      ...shadows,
+      ...customTheme?.shadows,
     },
   };
 

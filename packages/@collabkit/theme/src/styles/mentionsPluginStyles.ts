@@ -2,12 +2,12 @@ import { css } from '@stitches/react';
 
 export const typeahead = css({
   position: 'absolute',
-  background: '$neutral1',
-  borderRadius: '$radii$0',
+  background: '$colors$mentionDropdownBackgroundColor',
+  borderRadius: '$radii$mentionDropdownBorderRadius',
   zIndex: 9999,
   margin: '4px 0 0 -2px',
   padding: 0,
-  boxShadow: `6px 6px 10px rgba(0, 0, 0, 0.25)`,
+  boxShadow: `$shadows$mentionDropdownBoxShadow`,
 });
 
 export const typeaheadList = css({
@@ -20,21 +20,21 @@ export const typeaheadList = css({
 });
 
 export const typeaheadListItem = css({
-  padding: '8px',
+  padding: '$padding$mentionDropdownItemPadding',
   margin: 0,
   boxSizing: 'border-box',
   minWidth: '10ch',
   display: 'flex',
   width: '100%',
-  fontSize: '$fontSize$2',
-  lineHeight: '$lineHeights$0',
+  fontSize: '$fontSize$mentionDropdownItemFontSize',
+  lineHeight: '$lineHeights$mentionDropdownItemLineHeight',
   justifyContent: 'left',
   alignItems: 'center',
   gap: '6px',
   outline: 'none',
   cursor: 'pointer',
-  color: '$neutral12',
-  fontWeight: '$fontWeights$1',
+  color: '$colors$mentionDropdownTextColor',
+  fontWeight: '$fontWeights$mentionDropdownItemFontWeight',
   '&:first-of-type': {
     borderTopLeftRadius: '$radii$0',
     borderTopRightRadius: '$radii$0',
@@ -46,8 +46,8 @@ export const typeaheadListItem = css({
   variants: {
     selected: {
       true: {
-        background: '$accent5',
-        color: '$neutral12',
+        background: '$colors$mentionDropdownItemSelectedBackgroundColor',
+        color: '$colors$mentionDropdownItemSelectedTextColor',
       },
     },
   },
