@@ -19,7 +19,8 @@ export function ThreadHeader(props: { isResolved: boolean; target: ThreadTarget 
       <Tooltip.Provider delayDuration={0}>
         <StyledHeaderLeftGroup></StyledHeaderLeftGroup>
         <IconButton
-          tooltip={isResolved ? 'Re-open' : 'Mark as Resolved and Hide'}
+          // TODO: tooltip hijacks focus when used within a modal popover
+          // tooltip={isResolved ? 'Re-open' : 'Mark as Resolved and Hide'}
           onPointerDown={(e) =>
             events.onPointerDown(e, {
               target: {
@@ -36,7 +37,7 @@ export function ThreadHeader(props: { isResolved: boolean; target: ThreadTarget 
           )}
         </IconButton>
         <IconButton
-          tooltip="Close"
+          // tooltip="Close"
           onPointerDown={(e) => {
             events.onPointerDown(e, { target: { ...target, type: 'closeThreadButton' } });
           }}

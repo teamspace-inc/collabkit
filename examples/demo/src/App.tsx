@@ -4,7 +4,7 @@ import { mentionableUsers } from './data';
 import { useCallback, useEffect, useState } from 'react';
 import { User } from './types';
 import jwtDecode from 'jwt-decode';
-import { GridExample } from './GridExample';
+import { TableExample } from './TableExample';
 
 const USER_STORAGE_KEY = 'demoUserV2';
 
@@ -77,7 +77,7 @@ export default function App() {
       theme={theme}
       mentionableUsers={'allWorkspace'}
     >
-      {name === 'cashboard' ? <GridExample /> : <Home />}
+      {name === 'cashboard' ? <TableExample /> : <Home />}
     </CollabKitProvider>
   );
 }

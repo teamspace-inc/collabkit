@@ -7,13 +7,23 @@ const StyledIconButton = styled('div', iconButtonStyles.button);
 
 export function IconButton(props: {
   children: React.ReactNode;
-  tooltip: string;
+  tooltip?: string;
   onPointerDown?: (e: React.PointerEvent) => void;
+  tabIndex?: number;
 }) {
+  if (!props.tooltip) {
+    return (
+      <StyledIconButton onPointerDown={props.onPointerDown} tabIndex={props.tabIndex}>
+        {props.children}
+      </StyledIconButton>
+    );
+  }
   return (
     <Tooltip.Root>
       <Tooltip.Trigger>
-        <StyledIconButton onPointerDown={props.onPointerDown}>{props.children}</StyledIconButton>
+        <StyledIconButton onPointerDown={props.onPointerDown} tabIndex={props.tabIndex}>
+          {props.children}
+        </StyledIconButton>
       </Tooltip.Trigger>
       <Tooltip.Content>
         {props.tooltip}
