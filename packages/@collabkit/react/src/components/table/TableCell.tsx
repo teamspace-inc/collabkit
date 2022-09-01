@@ -11,20 +11,14 @@ import {
   FloatingPortal,
   offset,
   useHover,
+  safePolygon,
 } from '@floating-ui/react-dom-interactions';
 import { nanoid } from 'nanoid';
 import { useSnapshot } from 'valtio';
 import { actions } from '@collabkit/client';
-import type { Target, ThreadTarget, Workspace } from '@collabkit/core';
+import type { Target, ThreadTarget } from '@collabkit/core';
 import { PopoverThread } from '../PopoverThread';
 import { useApp } from '../../hooks/useApp';
-
-interface Props {
-  children: JSX.Element;
-  name?: string;
-  viewId: string;
-  cellId: string;
-}
 
 export function usePopoverThread({
   name,
@@ -72,8 +66,8 @@ export function usePopoverThread({
   const hasThread = threadId != null;
 
   const { getReferenceProps, getFloatingProps } = useInteractions([
-    useClick(context),
-    useHover(context, { enabled: hasThread }),
+    useClick(context, { enabled: !hasThread }),
+    useHover(context, { enabled: hasThread, handleClose: safePolygon() }),
     useRole(context),
     useDismiss(context),
   ]);
@@ -115,6 +109,7 @@ export function PopoverPortal(props: { popover: PopoverContext }) {
               position: context.strategy,
               top: y ?? 0,
               left: x ?? 0,
+              outline: 'none',
             }}
             aria-labelledby={labelId}
             aria-describedby={descriptionId}
@@ -123,6 +118,7 @@ export function PopoverPortal(props: { popover: PopoverContext }) {
             <PopoverThread
               threadId={threadId ?? generateThreadId()}
               info={info}
+              isPreview={!!threadId}
               style={{
                 minWidth: 250,
                 border: '1px solid #E3E9ED',
