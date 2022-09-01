@@ -6,7 +6,31 @@ import ButtonPrimary from './components/ButtonPrimary';
 
 import { Mjml, MjmlBody, MjmlSection, MjmlColumn, MjmlText, MjmlSpacer } from 'mjml-react';
 
-function parseMarkdown(text: string) {}
+import reactStringReplace from 'react-string-replace';
+
+// todo refactor this so it's the same code as in the clients
+export const MARKDOWN_LINK_REGEXP = /\[(.*)\]\((.*)\)/;
+
+export function MarkdownBody(props: { body: string; onLinkClick?: (e: React.MouseEvent) => void }) {
+  return (
+    <>
+      {reactStringReplace(props.body, /(\[.*\]\(.*\))/g, (match, i) => {
+        // parse and render markdown as an A tag
+        const linkMatches = match.match(MARKDOWN_LINK_REGEXP);
+        if (linkMatches && linkMatches[0]) {
+          return <span key={i}>{linkMatches[1]}</span>;
+        }
+
+        // todo check if it matches a profile before bolding
+        return (
+          <span key={i} style={{ fontWeight: 'bold' }}>
+            {match}
+          </span>
+        );
+      })}
+    </>
+  );
+}
 
 type NotificationEmailProps = {
   appLogoUrl?: string;
@@ -47,7 +71,7 @@ function Comment(props: { actorColor: string; actorName: string; commentBody: st
         </MjmlText>
         {props.commentBody.map((line) => (
           <MjmlText padding="16px 24px 0px" fontWeight={400} fontSize={'18px'} lineHeight={'26px'}>
-            {line}
+            <MarkdownBody body={line} />
           </MjmlText>
         ))}
       </MjmlColumn>

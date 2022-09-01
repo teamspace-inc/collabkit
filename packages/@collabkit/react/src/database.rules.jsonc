@@ -301,7 +301,7 @@
               },
               "mentions": {
                 "$userId": {
-                  ".validate": "newData.isString()"
+                  ".validate": "newData.isBoolean()"
                 }
               }
             }

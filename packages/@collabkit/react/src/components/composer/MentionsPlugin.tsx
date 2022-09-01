@@ -26,7 +26,6 @@ import { Avatar } from './../Avatar';
 import { styled } from '@stitches/react';
 import { mentionsPluginStyles } from '@collabkit/theme';
 import { MentionWithColor } from '@collabkit/core';
-import { HStack, VStack } from '../UIKit';
 
 type MentionMatch = {
   leadOffset: number;

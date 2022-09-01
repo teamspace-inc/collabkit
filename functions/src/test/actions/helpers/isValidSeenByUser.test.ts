@@ -3,7 +3,7 @@ import { isValidSeenByUser } from '../../../actions/helpers/isValidSeenByUser';
 describe('isValidSeenByUser', () => {
   it('anything', () => {
     expect(isValidSeenByUser(12345)).toBeFalsy();
-    expect(isValidSeenByUser(null)).toBeFalsy();
+    expect(isValidSeenByUser(null)).toBeTruthy();
     expect(isValidSeenByUser({})).toBeFalsy();
   });
   it('just seenUntil', () => {
