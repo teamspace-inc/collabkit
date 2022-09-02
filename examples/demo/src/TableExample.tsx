@@ -1,4 +1,4 @@
-import { usePopoverThread, PopoverPortal } from '@collabkit/react';
+import { usePopoverThread, PopoverTrigger } from '@collabkit/react';
 
 type CellProps = { value: number | string; row: Car; column: Column };
 
@@ -6,20 +6,20 @@ const Cell = ({ value, row, column }: CellProps) => {
   const name = `Cars / ${row.make} ${row.model}} `;
   const viewId = 'cars';
   const cellId = `${row.id}_${column.key}`;
-  const { popover, getProps, ref, hasThread, isOpen } = usePopoverThread({ name, viewId, cellId });
+  const { hasThread, popoverState, context } = usePopoverThread({ name, viewId, cellId });
 
   const classes = [];
   if (hasThread) classes.push('hasThread');
-  if (isOpen) classes.push('popoverOpen');
+  if (popoverState === 'previewOpen') classes.push('previewOpen');
+  if (popoverState === 'threadOpen') classes.push('threadOpen');
 
   return (
-    <>
-      <td {...getProps({ ref, className: classes.join(' ') })}>
+    <PopoverTrigger context={context}>
+      <td className={classes.join(' ')}>
         {value}
         {hasThread ? <ThreadIndicator /> : null}
       </td>
-      <PopoverPortal popover={popover} />
-    </>
+    </PopoverTrigger>
   );
 };
 

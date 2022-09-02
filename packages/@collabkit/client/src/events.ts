@@ -149,7 +149,7 @@ export function createEvents(store: Store) {
         case 'continuous': {
           switch (props.target.type) {
             case 'pin': {
-              actions.viewThread(store, props);
+              actions.viewThread(store, { ...props, isPreview: false });
               break;
             }
             case 'closeThreadButton': {
@@ -176,7 +176,7 @@ export function createEvents(store: Store) {
               break;
             }
             case 'pin': {
-              actions.viewThread(store, props);
+              actions.viewThread(store, { ...props, isPreview: false });
               break;
             }
             case 'commentButton': {
