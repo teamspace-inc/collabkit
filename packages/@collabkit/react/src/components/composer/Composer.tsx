@@ -13,13 +13,5 @@ export function Composer(props: {
   hideAvatar?: boolean;
   children: React.ReactNode;
 }) {
-  return (
-    <>
-      <div
-        id="mentions"
-        style={{ position: 'relative', width: 'calc(100% - 24px)', marginLeft: '12px' }}
-      />
-      <StyledComposerRoot>{props.children}</StyledComposerRoot>
-    </>
-  );
+  return <StyledComposerRoot>{props.children}</StyledComposerRoot>;
 }

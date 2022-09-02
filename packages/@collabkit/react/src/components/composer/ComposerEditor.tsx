@@ -60,6 +60,7 @@ export const ComposerEditor = React.memo(function ComposerEditor(props: {
         onFocus={(e: React.FocusEvent) => events.onFocus(e, { target })}
         onBlur={(e: React.FocusEvent) => events.onBlur(e, { target })}
       >
+        <div id="mentions" style={{ position: 'absolute', left: 0, right: 0 }} />
         <StyledVisibleComposerArea>
           <PasteTextPlugin />
           <PlainTextPlugin
