@@ -64,6 +64,7 @@ defineExpose({
 <template>
   <LexicalComposer :initial-config="initialConfig">
     <StyledLexicalEditorContainer>
+      <div id="#mentions" :style="{ position: 'relative' }"></div>
       <StyledVisibleComposerArea>
         <LexicalPlainTextPlugin>
           <template #contentEditable>

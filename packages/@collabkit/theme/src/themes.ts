@@ -72,6 +72,7 @@ export interface Theme {
     pin: string;
     mentionDropdownBorderRadius: string;
     avatar: string;
+    iconButton: string;
   };
   padding: {
     composer: string;
@@ -94,6 +95,7 @@ export interface Theme {
     avatar: string;
     pinBorderWidth: string;
     popoverThreadWidth: string;
+    iconButton: string;
   };
   space: {
     0: string;
@@ -221,6 +223,7 @@ export function createThemes(customTheme?: CustomTheme) {
     pin: '24px',
     mentionDropdownBorderRadius: '$radii$0',
     avatar: '24px',
+    iconButton: '24px',
 
     ['0']: '4px',
     ['1']: '12px',
@@ -256,6 +259,7 @@ export function createThemes(customTheme?: CustomTheme) {
     avatar: '24px',
     pinBorderWidth: '1.5px',
     popoverThreadWidth: '264px',
+    iconButton: '24px',
   };
 
   const space = {
@@ -283,6 +287,8 @@ export function createThemes(customTheme?: CustomTheme) {
     sendButtonDisabledColor: '$accent6',
     sendButtonTextColor: '$neutral1',
     sendButtonDisabledTextColor: '$neutral4',
+
+    buttonDisabledBackground: '$neutral4',
 
     buttonPrimaryBackground: '$accent10',
     buttonPrimaryHoverBackground: '$neutral2',

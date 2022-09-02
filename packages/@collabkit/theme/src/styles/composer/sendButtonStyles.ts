@@ -5,7 +5,7 @@ export const button = css({
   justifyContent: 'center',
   alignItems: 'center',
   fontSize: '$fontSize$sendButtonFontSize',
-
+  position: 'relative',
   border: 'none',
 
   background: 'none',
@@ -56,6 +56,5 @@ export const button = css({
 });
 
 export const icon = css({
-  position: 'relative',
   cursor: 'pointer',
 });

@@ -24,10 +24,7 @@ const composer = computed(() =>
 </script>
 
 <template>
-  <div>
-    <div id="#mentions" :style="{ position: 'relative' }"></div>
-    <ComposerRoot v-if="composer != null">
-      <slot></slot>
-    </ComposerRoot>
-  </div>
+  <ComposerRoot v-if="composer != null">
+    <slot></slot>
+  </ComposerRoot>
 </template>

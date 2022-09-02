@@ -19,6 +19,8 @@ export const button = css({
       true: {
         width: '$sizes$iconButton',
         height: '$sizes$iconButton',
+        padding: 0,
+        lineHeight: '$sizes$iconButton',
         borderRadius: '$radii$iconButton',
       },
     },
@@ -36,26 +38,26 @@ export const button = css({
       primary: {
         backgroundColor: '$colors$buttonPrimaryBackground',
         color: '$colors$buttonPrimaryText',
-        '&:hover': {
-          backgroundColor: '$colors$buttonPrimaryHoverBackground',
-          color: '$colors$buttonPrimaryHoverText',
-        },
-        '&:active': {
-          backgroundColor: '$colors$buttonPrimaryActiveBackground',
-          color: '$colors$buttonPrimaryActiveText',
-        },
+        // '&:hover': {
+        //   backgroundColor: '$colors$buttonPrimaryHoverBackground',
+        //   color: '$colors$buttonPrimaryHoverText',
+        // },
+        // '&:active': {
+        //   backgroundColor: '$colors$buttonPrimaryActiveBackground',
+        //   color: '$colors$buttonPrimaryActiveText',
+        // },
       },
       secondary: {
         backgroundColor: '$colors$buttonSecondaryBackground',
         color: '$colors$buttonSecondaryText',
-        '&:hover': {
-          backgroundColor: '$colors$buttonSecondaryHoverBackground',
-          color: '$colors$buttonSecondaryHoverText',
-        },
-        '&:active': {
-          backgroundColor: '$colors$buttonSecondaryActiveBackground',
-          color: '$colors$buttonSecondaryActiveText',
-        },
+        // '&:hover': {
+        //   backgroundColor: '$colors$buttonSecondaryHoverBackground',
+        //   color: '$colors$buttonSecondaryHoverText',
+        // },
+        // '&:active': {
+        //   backgroundColor: '$colors$buttonSecondaryActiveBackground',
+        //   color: '$colors$buttonSecondaryActiveText',
+        // },
       },
     },
     disabled: {

@@ -69,8 +69,6 @@ provide(ProvidedSlotsKey, slots);
 
 const theme = inject<ProvidedTheme>(ThemeKey)!;
 
-const AvatarContainer = styled('div', composerStyles.avatarContainer);
-
 const profile = computed(() => (userId.value === null ? null : store.profiles[userId.value]));
 const composer = computed(() => {
   if (workspaceId.value === null) return null;
@@ -110,9 +108,9 @@ const target = computed(
           :isFloating="false"
           :userId="store.userId"
         >
-          <AvatarContainer v-if="profile">
+          <div v-if="profile">
             <Avatar :profile="profile" />
-          </AvatarContainer>
+          </div>
           <ComposerEditor :target="target" :placeholder="placeholder" />
           <ComposerSendButton
             :bodyLength="composer?.$$body.length ?? 0"

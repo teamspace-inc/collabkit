@@ -56,14 +56,8 @@ export const typingOffset = css({
   marginLeft: 'calc($padding$1 + $sizes$avatar + 16px)',
 });
 
-export const avatarContainer = css({
-  display: 'flex',
-  flex: 1,
-  alignItems: 'flex-start',
-  justifyContent: 'center',
-});
-
 export const lexicalEditorContainer = css({
+  flex: 1,
   borderRadius: '$radii$0',
   color: '$colors$primaryText',
   width: '100%',
