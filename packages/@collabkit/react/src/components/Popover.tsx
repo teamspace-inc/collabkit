@@ -117,9 +117,10 @@ export function usePopoverThread({
   const { getReferenceProps: getPreviewReferenceProps, getFloatingProps: getPreviewFloatingProps } =
     useInteractions([
       useHover(previewContext, {
-        enabled: hasThread && !threadOpen,
+        enabled: false,
         handleClose: safePolygon(),
       }),
+      useDismiss(previewContext),
     ]);
   const { getReferenceProps: getThreadReferenceProps, getFloatingProps: getThreadFloatingProps } =
     useInteractions([useClick(threadContext), useDismiss(threadContext)]);
