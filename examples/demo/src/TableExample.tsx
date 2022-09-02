@@ -1,4 +1,4 @@
-import { usePopoverThread, PopoverPortal } from '@collabkit/react';
+import { usePopoverThread, PopoverTrigger } from '@collabkit/react';
 
 type CellProps = { value: number | string; row: Car; column: Column };
 
@@ -6,24 +6,26 @@ const Cell = ({ value, row, column }: CellProps) => {
   const name = `Cars / ${row.make} ${row.model}} `;
   const viewId = 'cars';
   const cellId = `${row.id}_${column.key}`;
-  const { popover, getProps, ref, hasThread, isOpen } = usePopoverThread({ name, viewId, cellId });
+  //const { popover, getProps, ref, hasThread, isOpen } = usePopoverThread({ name, viewId, cellId });
 
   const classes = [];
-  if (hasThread) classes.push('hasThread');
-  if (isOpen) classes.push('popoverOpen');
+  // if (hasThread) classes.push('hasThread');
+  // if (isOpen) classes.push('popoverOpen');
+
+  const context = usePopoverThread();
 
   return (
-    <>
-      <td {...getProps({ ref, className: classes.join(' ') })}>
+    <PopoverTrigger context={context}>
+      <td>
+        {/* <td {...getProps({ ref, className: classes.join(' ') })}> */}
         {value}
-        {hasThread ? <ThreadIndicator /> : null}
+        {/* {hasThread ? <ThreadIndicator /> : null} */}
       </td>
-      <PopoverPortal popover={popover} />
-    </>
+    </PopoverTrigger>
   );
 };
 
-const ThreadIndicator = () => <span className="ThreadIndicator" />;
+// const ThreadIndicator = () => <span className="ThreadIndicator" />;
 
 type Car = { id: string; make: string; model: string; price: number };
 type Column = { name: string; key: keyof Car; format: (value: any) => string };
