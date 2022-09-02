@@ -10,6 +10,7 @@ import {
   FloatingFocusManager,
   FloatingPortal,
   safePolygon,
+  shift,
 } from '@floating-ui/react-dom-interactions';
 import { mergeRefs } from 'react-merge-refs';
 import { PopoverThread } from './PopoverThread';
@@ -111,7 +112,7 @@ export function usePopoverThread({
     placement: 'right-start',
     open: threadOpen,
     onOpenChange: setThreadOpen,
-    middleware: [offset(5), flip()],
+    middleware: [offset(5), flip(), shift()],
   });
 
   const { getReferenceProps: getPreviewReferenceProps, getFloatingProps: getPreviewFloatingProps } =
