@@ -306,6 +306,7 @@ export interface UnconfiguredStore {
   reactingId: null | Target;
   composingId: null | ThreadTarget;
   viewingId: null | Target;
+  previewingId: null | Target;
   config: null | Config;
   profiles: { [profileId: string]: Profile };
   workspaces: {

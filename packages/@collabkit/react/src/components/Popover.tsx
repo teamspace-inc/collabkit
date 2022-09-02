@@ -16,7 +16,8 @@ import { PopoverThread } from './PopoverThread';
 import { useApp } from '../hooks/useApp';
 import { nanoid } from 'nanoid';
 import { useSnapshot } from 'valtio';
-import { ThreadInfo } from '@collabkit/core';
+import { ThreadInfo, ThreadTarget } from '@collabkit/core';
+import { actions } from '@collabkit/client';
 
 interface Props {
   children: JSX.Element;
@@ -61,8 +62,48 @@ export function usePopoverThread({
   const [newThreadId, _resetNewThreadId] = useStableId();
   const getNewThreadId = useCallback(() => newThreadId, [newThreadId]);
 
-  const [tooltipOpen, setTooltipOpen] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const { store } = useApp();
+  const { viewingId, previewingId, workspaceId } = useSnapshot(store);
+  const menuOpen = viewingId?.type === 'thread' && viewingId.threadId === (threadId ?? newThreadId);
+  const tooltipOpen =
+    previewingId?.type === 'thread' && previewingId.threadId === (threadId ?? newThreadId);
+
+  const target = useMemo<ThreadTarget | null>(
+    () =>
+      workspaceId
+        ? {
+            type: 'thread',
+            threadId: threadId ?? newThreadId,
+            workspaceId,
+          }
+        : null,
+    [threadId, newThreadId, workspaceId]
+  );
+
+  const setMenuOpen = useCallback(
+    (open: boolean) => {
+      if (target) {
+        if (open) {
+          actions.viewThread(store, { target, isPreview: false });
+        } else {
+          actions.closeThread(store, { isPreview: false });
+        }
+      }
+    },
+    [store, target]
+  );
+  const setTooltipOpen = useCallback(
+    (open: boolean) => {
+      if (target) {
+        if (open) {
+          actions.viewThread(store, { target, isPreview: true });
+        } else {
+          actions.closeThread(store, { isPreview: true });
+        }
+      }
+    },
+    [store, target]
+  );
 
   const { reference: tooltipReference, context: tooltipContext } = useFloating({
     placement: 'right-start',
