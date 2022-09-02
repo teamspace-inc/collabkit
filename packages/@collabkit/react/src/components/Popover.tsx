@@ -15,6 +15,7 @@ import {
   FloatingFocusManager,
   FloatingPortal,
   safePolygon,
+  autoPlacement,
 } from '@floating-ui/react-dom-interactions';
 import { mergeRefs } from 'react-merge-refs';
 import { PopoverThread } from './PopoverThread';
@@ -73,12 +74,14 @@ export function usePopoverThread({
     placement: 'right-start',
     open: tooltipOpen,
     onOpenChange: setTooltipOpen,
+    middleware: [offset(5), flip()],
   });
 
   const { reference: menuReference, context: menuContext } = useFloating({
     placement: 'right-start',
     open: menuOpen,
     onOpenChange: setMenuOpen,
+    middleware: [offset(5), flip()],
   });
 
   const { getReferenceProps: getTooltipReferenceProps, getFloatingProps: getTooltipFloatingProps } =
