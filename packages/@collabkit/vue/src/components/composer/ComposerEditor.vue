@@ -18,7 +18,6 @@ import { useEvents } from '../../composables/useEvents';
 const props = defineProps<{
   placeholder: string;
   autoFocus?: boolean;
-  hideAvatar?: boolean;
   target: Target;
 }>();
 
@@ -43,18 +42,16 @@ const initialConfig = {
   onError,
 };
 
-const { target } = props;
-
 function onFocus(e: FocusEvent) {
-  events.onFocus(e, { target });
+  events.onFocus(e, { target: props.target });
 }
 
 function onBlur(e: FocusEvent) {
-  events.onBlur(e, { target });
+  events.onBlur(e, { target: props.target });
 }
 
 function onChange(editorState: EditorState, editor: LexicalEditor) {
-  events.onComposerChange(target, editorState, editor);
+  events.onComposerChange(props.target, editorState, editor);
 }
 
 const content = ref('');

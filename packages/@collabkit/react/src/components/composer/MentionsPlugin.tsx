@@ -614,7 +614,7 @@ function useMentions(editor: LexicalEditor) {
     ? null
     : createPortal(
         <MentionsTypeahead close={closeTypeahead} resolution={resolution} editor={editor} />,
-        document.getElementById('#mentions')!
+        document.getElementById('mentions')!
       );
 }
 

@@ -15,7 +15,7 @@ export function Composer(props: {
 }) {
   return (
     <>
-      <div id="#mentions" style={{ position: 'relative' }} />
+      <div id="mentions" style={{ position: 'relative' }} />
       <StyledComposerRoot>{props.children}</StyledComposerRoot>
     </>
   );

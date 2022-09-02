@@ -6,7 +6,7 @@ export const thread = css(threadStyles.thread, {
   display: 'flex',
   flexDirection: 'column',
   height: '100%',
-  zIndex: '9999 !important',
+  zIndex: 9999,
   position: 'relative',
   width: '$sizes$popoverThreadWidth',
 });
