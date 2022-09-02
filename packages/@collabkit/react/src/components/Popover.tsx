@@ -1,4 +1,4 @@
-import React, { cloneElement, useMemo, useState } from 'react';
+import React, { cloneElement, useCallback, useMemo, useRef, useState } from 'react';
 import {
   Placement,
   offset,
@@ -19,33 +19,63 @@ import {
 import { mergeRefs } from 'react-merge-refs';
 import { PopoverThread } from './PopoverThread';
 import { useApp } from '../hooks/useApp';
+import { nanoid } from 'nanoid';
+import { useSnapshot } from 'valtio';
+import { ThreadInfo } from '@collabkit/core';
 
 interface Props {
   children: JSX.Element;
   context: ReturnType<typeof usePopoverThread>;
 }
 
-export function usePopoverThread() {
+function useStableId(): [string, () => void] {
+  const [id, setId] = useState<string>(() => nanoid());
+  const resetId = useCallback(() => {
+    setId(nanoid());
+  }, []);
+  return [id, resetId];
+}
+
+function useOpenThread({ viewId, cellId }: { viewId: string; cellId: string }) {
+  const { store } = useApp();
+  const { workspaceId, workspaces } = useSnapshot(store);
+  const openThreads = workspaceId ? workspaces[workspaceId]?.openThreads : {};
+
+  const threadId = Object.entries(openThreads).find(
+    ([, { meta }]) => meta.viewId === viewId && meta.cellId === cellId
+  )?.[0];
+
+  return threadId ?? null;
+}
+
+export function usePopoverThread({
+  name,
+  viewId,
+  cellId,
+}: {
+  name?: string;
+  viewId: string;
+  cellId: string;
+}) {
+  const threadInfo = useMemo<ThreadInfo>(
+    () => ({ name, meta: { viewId, cellId } }),
+    [name, viewId, cellId]
+  );
+  const threadId = useOpenThread({ viewId, cellId });
+  const hasThread = threadId != null;
+  const [newThreadId, resetNewThreadId] = useStableId();
+  const getNewThreadId = useCallback(() => newThreadId, [newThreadId]);
+
   const [tooltipOpen, setTooltipOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const {
-    reference: tooltipReference,
-    floating: tooltipFloating,
-    strategy: tooltipStrategy,
-    context: tooltipContext,
-  } = useFloating({
+  const { reference: tooltipReference, context: tooltipContext } = useFloating({
     placement: 'right-start',
     open: tooltipOpen,
     onOpenChange: setTooltipOpen,
   });
 
-  const {
-    reference: menuReference,
-    floating: menuFloating,
-    strategy: menuStrategy,
-    context: menuContext,
-  } = useFloating({
+  const { reference: menuReference, context: menuContext } = useFloating({
     placement: 'right-start',
     open: menuOpen,
     onOpenChange: setMenuOpen,
@@ -54,6 +84,7 @@ export function usePopoverThread() {
   const { getReferenceProps: getTooltipReferenceProps, getFloatingProps: getTooltipFloatingProps } =
     useInteractions([
       useHover(tooltipContext, {
+        enabled: hasThread,
         handleClose: safePolygon(),
       }),
       useDismiss(tooltipContext),
@@ -78,6 +109,10 @@ export function usePopoverThread() {
     getMenuFloatingProps,
     getTooltipFloatingProps,
     setMenuOpen,
+    threadId,
+    hasThread,
+    threadInfo,
+    getNewThreadId,
   };
 }
 
@@ -89,6 +124,9 @@ export const PopoverTrigger = ({ children, context }: Props) => {
     getMenuFloatingProps,
     getTooltipFloatingProps,
     setMenuOpen,
+    threadId,
+    threadInfo,
+    getNewThreadId,
   } = context;
   const { theme } = useApp();
   return (
@@ -109,8 +147,8 @@ export const PopoverTrigger = ({ children, context }: Props) => {
               {...getMenuFloatingProps()}
             >
               <PopoverThread
-                threadId={'table-cell-thread' /*threadId ?? generateThreadId()*/}
-                //info={info}
+                threadId={threadId ?? getNewThreadId()}
+                info={threadInfo}
                 isPreview={false}
                 style={{
                   width: 264,
@@ -137,8 +175,8 @@ export const PopoverTrigger = ({ children, context }: Props) => {
               {...getTooltipFloatingProps()}
             >
               <PopoverThread
-                threadId={'table-cell-thread' /*threadId ?? generateThreadId()*/}
-                //info={info}
+                threadId={threadId ?? getNewThreadId()}
+                info={threadInfo}
                 isPreview={true}
                 style={{
                   width: 264,

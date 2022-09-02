@@ -12,7 +12,7 @@ const Cell = ({ value, row, column }: CellProps) => {
   // if (hasThread) classes.push('hasThread');
   // if (isOpen) classes.push('popoverOpen');
 
-  const context = usePopoverThread();
+  const context = usePopoverThread({ name, viewId, cellId });
 
   return (
     <PopoverTrigger context={context}>
