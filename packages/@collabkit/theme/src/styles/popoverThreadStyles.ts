@@ -3,6 +3,7 @@ import { threadStyles } from '../';
 
 export const thread = css(threadStyles.thread, {
   backgroundColor: '$colors$popoverThreadBackgroundColor',
+  backgroundColor: '$colors$backgroundColor',
   display: 'flex',
   flexDirection: 'column',
   height: '100%',
