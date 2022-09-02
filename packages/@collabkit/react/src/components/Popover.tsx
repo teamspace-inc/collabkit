@@ -64,8 +64,9 @@ export function usePopoverThread({
 
   const { store } = useApp();
   const { viewingId, previewingId, workspaceId } = useSnapshot(store);
-  const menuOpen = viewingId?.type === 'thread' && viewingId.threadId === (threadId ?? newThreadId);
-  const tooltipOpen =
+  const threadOpen =
+    viewingId?.type === 'thread' && viewingId.threadId === (threadId ?? newThreadId);
+  const previewOpen =
     previewingId?.type === 'thread' && previewingId.threadId === (threadId ?? newThreadId);
 
   const target = useMemo<ThreadTarget | null>(
@@ -80,7 +81,7 @@ export function usePopoverThread({
     [threadId, newThreadId, workspaceId]
   );
 
-  const setMenuOpen = useCallback(
+  const setThreadOpen = useCallback(
     (open: boolean) => {
       if (target) {
         if (open) {
@@ -92,7 +93,7 @@ export function usePopoverThread({
     },
     [store, target]
   );
-  const setTooltipOpen = useCallback(
+  const setPreviewOpen = useCallback(
     (open: boolean) => {
       if (target) {
         if (open) {
@@ -105,50 +106,47 @@ export function usePopoverThread({
     [store, target]
   );
 
-  const { reference: tooltipReference, context: tooltipContext } = useFloating({
+  const { reference: previewReference, context: previewContext } = useFloating({
     placement: 'right-start',
-    open: tooltipOpen,
-    onOpenChange: setTooltipOpen,
+    open: previewOpen,
+    onOpenChange: setPreviewOpen,
+    middleware: [offset(5), flip()],
+  });
+  const { reference: threadReference, context: threadContext } = useFloating({
+    placement: 'right-start',
+    open: threadOpen,
+    onOpenChange: setThreadOpen,
     middleware: [offset(5), flip()],
   });
 
-  const { reference: menuReference, context: menuContext } = useFloating({
-    placement: 'right-start',
-    open: menuOpen,
-    onOpenChange: setMenuOpen,
-    middleware: [offset(5), flip()],
-  });
-
-  const { getReferenceProps: getTooltipReferenceProps, getFloatingProps: getTooltipFloatingProps } =
+  const { getReferenceProps: getPreviewReferenceProps, getFloatingProps: getPreviewFloatingProps } =
     useInteractions([
-      useHover(tooltipContext, {
+      useHover(previewContext, {
         enabled: hasThread,
         handleClose: safePolygon(),
       }),
-      useDismiss(tooltipContext),
+      useDismiss(previewContext),
     ]);
+  const { getReferenceProps: getThreadReferenceProps, getFloatingProps: getThreadFloatingProps } =
+    useInteractions([useClick(threadContext), useDismiss(threadContext)]);
 
-  const { getReferenceProps: getMenuReferenceProps, getFloatingProps: getMenuFloatingProps } =
-    useInteractions([useClick(menuContext), useDismiss(menuContext)]);
-
-  // Preserve the consumer's ref
   const ref = useMemo(
-    () => mergeRefs([tooltipReference, menuReference]),
-    [tooltipReference, menuReference]
+    () => mergeRefs([previewReference, threadReference]),
+    [previewReference, threadReference]
   );
 
   const getProps = (userProps: any) =>
-    getTooltipReferenceProps(getMenuReferenceProps({ ref, ...userProps }));
+    getPreviewReferenceProps(getThreadReferenceProps({ ref, ...userProps }));
 
-  const popoverState = menuOpen ? 'threadOpen' : tooltipOpen ? 'previewOpen' : 'closed';
+  const popoverState = threadOpen ? 'threadOpen' : previewOpen ? 'previewOpen' : 'closed';
 
   return {
     getProps,
-    menuContext,
-    tooltipContext,
-    getMenuFloatingProps,
-    getTooltipFloatingProps,
-    setMenuOpen,
+    threadContext,
+    previewContext,
+    getThreadFloatingProps,
+    getPreviewFloatingProps,
+    setThreadOpen,
     threadId,
     hasThread,
     threadInfo,
@@ -161,11 +159,11 @@ export function usePopoverThread({
 export const PopoverTrigger = ({ children, context }: Props) => {
   const {
     getProps,
-    menuContext,
-    tooltipContext,
-    getMenuFloatingProps,
-    getTooltipFloatingProps,
-    setMenuOpen,
+    threadContext,
+    previewContext,
+    getThreadFloatingProps,
+    getPreviewFloatingProps,
+    setThreadOpen,
     threadId,
     threadInfo,
     getNewThreadId,
@@ -175,18 +173,18 @@ export const PopoverTrigger = ({ children, context }: Props) => {
     <>
       {cloneElement(children, getProps(children.props))}
       <FloatingPortal>
-        {menuContext.open && (
-          <FloatingFocusManager context={menuContext}>
+        {threadContext.open && (
+          <FloatingFocusManager context={threadContext}>
             <div
-              ref={menuContext.floating}
+              ref={threadContext.floating}
               className={theme.className}
               style={{
-                position: menuContext.strategy,
-                top: menuContext.y ?? 0,
-                left: menuContext.x ?? 0,
+                position: threadContext.strategy,
+                top: threadContext.y ?? 0,
+                left: threadContext.x ?? 0,
                 outline: 'none',
               }}
-              {...getMenuFloatingProps()}
+              {...getThreadFloatingProps()}
             >
               <PopoverThread
                 threadId={threadId ?? getNewThreadId()}
@@ -202,19 +200,19 @@ export const PopoverTrigger = ({ children, context }: Props) => {
             </div>
           </FloatingFocusManager>
         )}
-        {!menuContext.open && tooltipContext.open && (
-          <FloatingFocusManager context={tooltipContext}>
+        {!threadContext.open && previewContext.open && (
+          <FloatingFocusManager context={previewContext}>
             <div
-              ref={tooltipContext.floating}
+              ref={previewContext.floating}
               className={theme.className}
               style={{
-                position: tooltipContext.strategy,
-                top: tooltipContext.y ?? 0,
-                left: tooltipContext.x ?? 0,
+                position: previewContext.strategy,
+                top: previewContext.y ?? 0,
+                left: previewContext.x ?? 0,
                 outline: 'none',
               }}
-              onClick={() => setMenuOpen(true)}
-              {...getTooltipFloatingProps()}
+              onClick={() => setThreadOpen(true)}
+              {...getPreviewFloatingProps()}
             >
               <PopoverThread
                 threadId={threadId ?? getNewThreadId()}
