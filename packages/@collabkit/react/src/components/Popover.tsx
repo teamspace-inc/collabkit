@@ -19,11 +19,6 @@ import { useSnapshot } from 'valtio';
 import { ThreadInfo, ThreadTarget } from '@collabkit/core';
 import { actions } from '@collabkit/client';
 
-interface Props {
-  children: JSX.Element;
-  context: ReturnType<typeof usePopoverThread>;
-}
-
 function useStableId(): [string, () => void] {
   const [id, setId] = useState<string>(() => nanoid());
   const resetId = useCallback(() => {
@@ -141,19 +136,26 @@ export function usePopoverThread({
   const popoverState = threadOpen ? 'threadOpen' : previewOpen ? 'previewOpen' : 'closed';
 
   return {
-    getProps,
-    threadContext,
-    previewContext,
-    getThreadFloatingProps,
-    getPreviewFloatingProps,
-    setThreadOpen,
-    threadId,
-    hasThread,
-    threadInfo,
-    getNewThreadId,
+    context: {
+      getProps,
+      threadContext,
+      previewContext,
+      getThreadFloatingProps,
+      getPreviewFloatingProps,
+      setThreadOpen,
+      threadId,
+      threadInfo,
+      getNewThreadId,
+    },
 
+    hasThread,
     popoverState,
   };
+}
+
+interface Props {
+  children: JSX.Element;
+  context: ReturnType<typeof usePopoverThread>['context'];
 }
 
 export const PopoverTrigger = ({ children, context }: Props) => {
