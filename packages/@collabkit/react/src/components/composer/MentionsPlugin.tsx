@@ -209,8 +209,8 @@ function MentionsTypeahead({
     const div = divRef.current;
     const rootElement = editor.getRootElement();
     if (results !== null && div !== null && rootElement !== null) {
-      div.style.left = '50px';
-      div.style.right = '16px';
+      div.style.left = '0px';
+      div.style.right = '0px';
       div.style.bottom = '0px';
       div.style.display = 'block';
       rootElement.setAttribute('aria-controls', 'mentions-typeahead');

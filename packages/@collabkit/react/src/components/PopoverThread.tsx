@@ -11,6 +11,8 @@ import { popoverThreadStyles } from '@collabkit/theme';
 import { useSnapshot } from 'valtio';
 import { ComposerEditor } from './composer/ComposerEditor';
 import { Button } from './Button';
+import { MessageHeader } from './comment/MessageHeader';
+import { Avatar } from './Avatar';
 
 const StyledPopoverThread = styled('div', popoverThreadStyles.thread);
 
@@ -34,7 +36,7 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
 ) {
   const { threadId } = props;
   const { store, events } = useApp();
-  const { workspaces, workspaceId, userId } = useSnapshot(store);
+  const { workspaces, workspaceId, profiles, userId } = useSnapshot(store);
   const workspace = workspaceId ? workspaces[workspaceId] : null;
   const { timeline, isResolved, isEmpty, target } = useThread({
     ...props,
@@ -45,6 +47,8 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
   const composer = workspace ? workspace.composers[threadId] : null;
 
   const bodyLength = composer?.$$body.trim().length ?? 0;
+
+  const profile = userId ? profiles[userId] : null;
 
   const commentList = userId && workspaceId && timeline && (
     <CommentList
@@ -61,6 +65,20 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
     <StyledPopoverThread data-collabkit-internal="true" style={props.style} ref={ref}>
       {!isEmpty && !props.isPreview && target && (
         <ThreadHeader isResolved={isResolved} target={target} />
+      )}
+      {isEmpty && !props.isPreview && (
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            gap: '12px',
+            padding: '16px 12px',
+            alignItems: 'center',
+          }}
+        >
+          {profile ? <Avatar profile={profile} /> : null}
+          {profile ? <MessageHeader name={profile.name ?? 'Anonymous'} /> : null}
+        </div>
       )}
       {!isEmpty && (
         // nc: there's something causing a scrollbar to appear
@@ -104,7 +122,7 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
                   ? 'Add a comment'
                   : 'Reply to this comment'
               }
-              autoFocus={props.autoFocus}
+              autoFocus={true}
             />
             <div style={{ display: 'flex', flexDirection: 'row', gap: '8px' }}>
               <Button
