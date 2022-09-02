@@ -1,14 +1,19 @@
 <script setup lang="ts">
 import { computed, inject, provide, useSlots, watchEffect } from 'vue';
 import { actions } from '@collabkit/client';
-import { threadStyles } from '@collabkit/theme';
+import { composerStyles, threadStyles } from '@collabkit/theme';
 import { styled } from './styled';
 import { useStore } from '../composables/useStore';
-import Composer from './Composer.vue';
+import Composer from './composer/Composer.vue';
 import EmptyState from './thread/EmptyState.vue';
 import ScrollableCommentList from './ScrollableCommentList.vue';
 import { ProvidedSlotsKey, ThemeKey } from '../constants';
 import type { ProvidedTheme } from '../types';
+import TypingIndicator from './TypingIndicator.vue';
+import ComposerEditor from './composer/ComposerEditor.vue';
+import Avatar from './Avatar';
+import type { Target } from '@collabkit/core';
+import ComposerSendButton from './composer/ComposerSendButton.vue';
 
 const StyledThreadContainer = styled('div', threadStyles.container);
 const StyledThread = styled('div', threadStyles.thread);
@@ -25,7 +30,6 @@ const props = defineProps<{
   showHeader?: boolean;
   autoFocus?: boolean;
 }>();
-
 const store = useStore();
 
 const workspace = computed(() => (store.workspaceId ? store.workspaces[store.workspaceId] : null));
@@ -34,6 +38,9 @@ const timeline = computed(() =>
 );
 const isEmpty = computed(() => (timeline ? Object.keys(timeline).length === 0 : true));
 const seenUntil = computed(() => workspace.value?.seen[props.threadId]);
+
+const userId = computed(() => store.userId);
+const workspaceId = computed(() => store.workspaceId);
 
 watchEffect(() => {
   if (store.workspaceId && store.isSignedIn) {
@@ -61,6 +68,21 @@ const slots = useSlots();
 provide(ProvidedSlotsKey, slots);
 
 const theme = inject<ProvidedTheme>(ThemeKey)!;
+
+const AvatarContainer = styled('div', composerStyles.avatarContainer);
+
+const profile = computed(() => (userId.value === null ? null : store.profiles[userId.value]));
+const composer = computed(() => {
+  if (workspaceId.value === null) return null;
+  return store.workspaces[workspaceId.value].composers[props.threadId];
+});
+const target = computed(
+  (): Target => ({
+    type: 'composer',
+    threadId: props.threadId,
+    workspaceId: workspaceId.value ?? '',
+  })
+);
 </script>
 
 <template>
@@ -86,6 +108,21 @@ const theme = inject<ProvidedTheme>(ThemeKey)!;
           :workspaceId="store.workspaceId"
           :threadId="threadId"
           :isFloating="false"
+          :userId="store.userId"
+        >
+          <AvatarContainer v-if="profile">
+            <Avatar :profile="profile" />
+          </AvatarContainer>
+          <ComposerEditor :target="target" :placeholder="placeholder" />
+          <ComposerSendButton
+            :bodyLength="composer?.$$body.length ?? 0"
+            :workspaceId="workspaceId"
+            :threadId="threadId"
+            :type="'icon'"
+          />
+        </Composer>
+
+        <TypingIndicator
           :userId="store.userId"
           :isTyping="workspace?.composers[threadId]?.isTyping"
         />

@@ -1,5 +1,5 @@
 import { styled } from '@stitches/react';
-import { X, CheckCircle } from './icons';
+import { X, Check } from './icons';
 import React from 'react';
 import { useApp } from '../hooks/useApp';
 import { ThreadTarget } from '../constants';
@@ -31,9 +31,9 @@ export function ThreadHeader(props: { isResolved: boolean; target: ThreadTarget 
           }
         >
           {!isResolved ? (
-            <CheckCircle size={19} weight={'thin'} color={theme.colors.neutral12.toString()} />
+            <Check size={19} weight={'thin'} color={theme.colors.neutral12.toString()} />
           ) : (
-            <CheckCircle size={18} weight={'fill'} color={theme.colors.neutral12.toString()} />
+            <Check size={18} weight={'fill'} color={theme.colors.neutral12.toString()} />
           )}
         </IconButton>
         <IconButton

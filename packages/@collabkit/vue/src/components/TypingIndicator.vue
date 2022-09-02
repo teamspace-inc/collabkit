@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { typingIndicatorStyles } from '@collabkit/theme';
-import { useStore } from '../../composables/useStore';
-import { styled } from '../styled';
+import { useStore } from '../composables/useStore';
+import { styled } from './styled';
 
 const StyledIsTypingContainer = styled('div', typingIndicatorStyles.container);
 const Name = styled('span', typingIndicatorStyles.name);

@@ -16,7 +16,7 @@ export const CommentGroup = React.memo(function (props: {
   isPreview?: boolean;
   newIndicatorId?: string | null;
 }) {
-  const { group, reactions, workspaceId, threadId } = props;
+  const { group, workspaceId, threadId } = props;
   const { store } = useApp();
   const { profiles } = useSnapshot(store);
 

@@ -6,24 +6,16 @@ import {
   ScrollAreaThumb,
   ScrollAreaViewport,
 } from './ScrollArea';
-import { Timeline } from '@collabkit/core';
-import { CommentList } from './CommentList';
 
 type Props = {
-  timeline: Timeline;
-  workspaceId: string;
-  userId: string;
-  threadId: string;
-  seenUntil?: string;
-  isPreview?: boolean;
-  newIndicatorId?: string | null;
+  children: React.ReactNode;
 };
 
 function toNearest(n: number, nearest: number) {
-  return Math.round(n / nearest) * nearest;
+  return Math.ceil(n / nearest) * nearest;
 }
 
-const STICKY_SCROLL_THRESHOLD_PX = 20;
+const STICKY_SCROLL_THRESHOLD_PX = 300;
 
 export class ScrollableCommentList extends Component<Props> {
   viewportRef = React.createRef<HTMLDivElement>();
@@ -60,32 +52,12 @@ export class ScrollableCommentList extends Component<Props> {
         viewport.scrollTop = viewport.scrollHeight;
       }
     }
-
-    // console.log({ scrollHeight: viewport?.scrollHeight, offsetTop: viewport?.scrollTop });
-    // console.log({ shouldScrollBottom });
-    // if (viewport && shouldScrollBottom) {
-    //   viewport.scrollTop = viewport.scrollHeight;
-    // }
   }
 
   render() {
-    const props = this.props;
-    if (!props.workspaceId) {
-      return null;
-    }
     return (
       <ScrollAreaRoot>
-        <ScrollAreaViewport ref={this.viewportRef}>
-          <CommentList
-            seenUntil={props.seenUntil}
-            threadId={props.threadId}
-            userId={props.userId}
-            workspaceId={props.workspaceId}
-            isPreview={props.isPreview}
-            timeline={props.timeline}
-            newIndicatorId={props.newIndicatorId}
-          />
-        </ScrollAreaViewport>
+        <ScrollAreaViewport ref={this.viewportRef}>{this.props.children}</ScrollAreaViewport>
         <ScrollAreaScrollbar orientation="vertical">
           <ScrollAreaThumb />
         </ScrollAreaScrollbar>

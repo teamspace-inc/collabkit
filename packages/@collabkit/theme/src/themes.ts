@@ -45,6 +45,8 @@ export interface Theme {
     2: string;
     3: string;
     mentionDropdownItemFontSize: string;
+    sendButtonFontSize: string;
+    button: string;
   };
   lineHeights: {
     0: string;
@@ -52,6 +54,7 @@ export interface Theme {
     2: string;
     3: string;
     mentionDropdownItemLineHeight: string;
+    button: string;
   };
   fontWeights: {
     0: number;
@@ -59,6 +62,8 @@ export interface Theme {
     2: number;
     3: number;
     mentionDropdownItemFontWeight: string;
+    sendButtonTextFontWeight: number;
+    button: number;
   };
   radii: {
     0: string;
@@ -66,12 +71,14 @@ export interface Theme {
     2: string;
     pin: string;
     mentionDropdownBorderRadius: string;
+    avatar: string;
   };
   padding: {
     composer: string;
     commentVertical: string;
     commentHorizontal: string;
     mentionDropdownItemPadding: string;
+    composerContainer: string;
 
     0: string;
     1: string;
@@ -86,6 +93,7 @@ export interface Theme {
     pin: string;
     avatar: string;
     pinBorderWidth: string;
+    popoverThreadWidth: string;
   };
   space: {
     0: string;
@@ -117,6 +125,7 @@ export interface Theme {
     borderColor: string;
     pinBorderColor: string;
     backgroundColor: string;
+    popoverThreadBackgroundColor: string;
 
     // unread indicator
     indicatorLineColor: string;
@@ -129,13 +138,33 @@ export interface Theme {
     commentUnseenBackgroundColor: string;
     commentUnseenHoverBackgroundColor: string;
     caretColor: string;
-    sendButtonColor: string;
 
     // composer
     composerBackground: string;
     composerPlaceholder: string;
     composerButtonBackground: string;
     composerButtonIconColor: string;
+
+    sendButtonDisabledColor: string;
+    sendButtonColor: string;
+    sendButtonTextColor: string;
+    sendButtonDisabledTextColor: string;
+
+    // button
+    buttonPrimaryBackground: string;
+    buttonPrimaryHoverBackground: string;
+    buttonPrimaryHoverText: string;
+    buttonPrimaryActiveBackground: string;
+    buttonPrimaryText: string;
+
+    buttonSecondaryBackground: string;
+    buttonSecondaryHoverBackground: string;
+    buttonSecondaryHoverText: string;
+    buttonSecondaryActiveBackground: string;
+    buttonSecondaryText: string;
+
+    buttonDisabledBackground: string;
+    buttonDisabledText: string;
 
     // mentions
     mentionDropdownBackgroundColor: string;
@@ -161,6 +190,7 @@ export type CustomTheme = DeepPartial<Theme>;
 export function createThemes(customTheme?: CustomTheme) {
   const fontSize = {
     mentionDropdownItemFontSize: '$fontSize$2',
+    sendButtonFontSize: '$fontSize$2',
 
     ['0']: '11px',
     ['1']: '12px',
@@ -179,6 +209,7 @@ export function createThemes(customTheme?: CustomTheme) {
 
   const fontWeights = {
     mentionDropdownItemFontWeight: '$fontWeights$1',
+    sendButtonTextFontWeight: '$fontWeights$0',
 
     ['0']: 400,
     ['1']: 700,
@@ -189,6 +220,7 @@ export function createThemes(customTheme?: CustomTheme) {
   const radii = {
     pin: '24px',
     mentionDropdownBorderRadius: '$radii$0',
+    avatar: '24px',
 
     ['0']: '4px',
     ['1']: '12px',
@@ -202,6 +234,8 @@ export function createThemes(customTheme?: CustomTheme) {
     commentLeft: '$padding$2',
     commentRight: '$padding$2',
     mentionDropdownItemPadding: '$padding$1',
+    composerContainer: '0 16px 0 16px',
+    thread: '$padding$2',
 
     ['0']: '6px',
     ['1']: '8px',
@@ -221,6 +255,7 @@ export function createThemes(customTheme?: CustomTheme) {
     pin: `${PIN_SIZE}px`,
     avatar: '24px',
     pinBorderWidth: '1.5px',
+    popoverThreadWidth: '264px',
   };
 
   const space = {
@@ -242,8 +277,23 @@ export function createThemes(customTheme?: CustomTheme) {
     composerButtonBackground: '$accent10',
     composerButtonIconColor: '$neutral1',
     composerBackground: '$neutral4',
+    popoverThreadBackgroundColor: 'white',
 
     sendButtonColor: '$accent10',
+    sendButtonDisabledColor: '$accent6',
+    sendButtonTextColor: '$neutral1',
+    sendButtonDisabledTextColor: '$neutral4',
+
+    buttonPrimaryBackground: '$accent10',
+    buttonPrimaryHoverBackground: '$neutral2',
+    buttonPrimaryActiveBackground: '$neutral3',
+    buttonPrimaryTextColor: '$neutral1',
+
+    buttonSecondaryBackground: '$neutral4',
+    buttonSecondaryHoverBackground: '$neutral5',
+    buttonSecondaryActiveBackground: '$neutral6',
+    buttonSecondaryTextColor: '$neutral0',
+
     indicatorLineColor: 'rgba(0,0,0,0.1)',
 
     commentHoverBackgroundColor: 'unset',
@@ -269,7 +319,8 @@ export function createThemes(customTheme?: CustomTheme) {
   };
 
   const offsets = {
-    composerSendButtonTop: '13px',
+    composerSendButtonTop: '7px',
+    composerSendButtonRight: '12px',
   };
 
   let baseTheme = {

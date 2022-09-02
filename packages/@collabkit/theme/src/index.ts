@@ -22,7 +22,6 @@ export * as threadStyles from './styles/thread/threadStyles';
 export * as threadEmptyStateStyles from './styles/thread/emptyStateStyles';
 export * as threadHeaderStyles from './styles/thread/threadHeaderStyles';
 
-// .
 export * as avatarStyles from './styles/avatarStyles';
 export * as badgeStyles from './styles/badgeStyles';
 export * as commentStyles from './styles/commentStyles';
@@ -33,3 +32,5 @@ export * as mentionsPluginStyles from './styles/mentionsPluginStyles';
 export * as newIndicatorStyles from './styles/newIndicatorStyles';
 export * as popoverThreadStyles from './styles/popoverThreadStyles';
 export * as scrollAreaStyles from './styles/scrollAreaStyles';
+
+export * as buttonStyles from './styles/buttonStyles';
