@@ -48,7 +48,6 @@ export const contentEditable = css({
 export const root = css({
   display: 'flex',
   flexDirection: 'row',
-  flex: 1,
   gap: '8px',
   padding: '0 16px',
 });
