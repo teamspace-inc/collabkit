@@ -44,6 +44,7 @@ export function createStore(): UnconfiguredStore {
     selectedId: null,
     reactingId: null,
     viewingId: null,
+    previewingId: null,
     composingId: null,
     hoveringId: null,
     workspaces: {},
