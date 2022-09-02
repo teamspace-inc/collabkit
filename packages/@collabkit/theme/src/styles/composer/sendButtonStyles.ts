@@ -4,13 +4,8 @@ export const button = css({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
+  fontSize: '$fontSize$sendButtonFontSize',
 
-  width: '$sizes$sendButton',
-  height: '$sizes$sendButton',
-  position: 'absolute',
-  right: 'calc($padding$composer + 12px)',
-  top: '$offsets$composerSendButtonTop',
-  borderRadius: '$sizes$sendButton',
   border: 'none',
 
   background: 'none',
@@ -18,15 +13,46 @@ export const button = css({
   cursor: 'pointer',
 
   variants: {
+    type: {
+      icon: {
+        width: '$sizes$sendButton',
+        height: '$sizes$sendButton',
+        borderRadius: '$sizes$sendButton',
+      },
+      text: {
+        padding: '8px 12px',
+        outline: 'none',
+        background: '$colors$sendButtonBackground',
+        borderRadius: '$radii$0',
+        color: '$colors$sendButtonTextColor',
+        fontWeight: '$fontWeights$sendButtonTextFontWeight',
+      },
+    },
+    inset: {
+      true: {
+        position: 'absolute',
+        right: '$offsets$composerSendButtonRight',
+        top: '$offsets$composerSendButtonTop',
+      },
+    },
     disabled: {
       true: {
-        opacity: 0,
+        backgroundColor: '$colors$sendButtonDisabledColor',
       },
       false: {
         backgroundColor: '$colors$sendButtonColor',
       },
     },
   },
+  compoundVariants: [
+    {
+      type: 'text',
+      disabled: true,
+      css: {
+        color: '$colors$sendButtonDisabledTextColor',
+      },
+    },
+  ],
 });
 
 export const icon = css({

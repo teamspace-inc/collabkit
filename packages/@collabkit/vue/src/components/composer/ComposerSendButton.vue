@@ -12,9 +12,10 @@ const props = defineProps<{
   bodyLength: number;
   workspaceId: string;
   threadId: string;
+  type: 'icon' | 'text';
 }>();
 
-const StyledComposerSendButton = styled('button', sendButtonStyles.button);
+const StyledComposerSendButton = styled('div', sendButtonStyles.button);
 const StyledComposerSendButtonIcon = styled(ArrowUp, sendButtonStyles.icon);
 
 const theme = inject<ProvidedTheme>(ThemeKey)!;
@@ -28,11 +29,20 @@ function onClick() {
 </script>
 
 <template>
-  <StyledComposerSendButton :disabled="bodyLength === 0" @click="onClick" title="Post">
-    <StyledComposerSendButtonIcon
-      :size="13"
-      :color="theme.colors.composerButtonIconColor.toString()"
-      weight="bold"
-    />
-  </StyledComposerSendButton>
+  <div :style="{ display: 'flex', alignItems: 'flex-start', marginTop: '6px' }">
+    <StyledComposerSendButton
+      :disabled="bodyLength === 0"
+      @click="onClick"
+      title="Send"
+      :type="props.type"
+    >
+      <StyledComposerSendButtonIcon
+        v-if="type === 'icon'"
+        :size="13"
+        :color="theme.colors.composerButtonIconColor.toString()"
+        weight="bold"
+      />
+      <span v-if="type === 'text'">Comment</span>
+    </StyledComposerSendButton>
+  </div>
 </template>

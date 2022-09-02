@@ -64,7 +64,7 @@ export const message = css({
     // for a profile image
     profileIndent: {
       true: {
-        marginLeft: '$padding$4',
+        marginLeft: 'calc($sizes$avatar + $padding$1)',
       },
       false: {},
     },

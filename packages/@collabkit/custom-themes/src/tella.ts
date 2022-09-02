@@ -8,6 +8,8 @@ export const tella: CustomTheme = {
     sendButtonColor: 'rgb(94, 81, 248)',
     backgroundColor: 'rgb(249,249,250)',
     composerBackground: 'white',
+    mentionDropdownItemSelectedBackgroundColor: 'rgb(94, 81, 248)',
+    mentionDropdownItemSelectedTextColor: 'white',
   },
   offsets: {
     composerSendButtonTop: '13px',

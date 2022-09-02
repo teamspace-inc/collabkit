@@ -5,7 +5,6 @@ export const typeahead = css({
   background: '$colors$mentionDropdownBackgroundColor',
   borderRadius: '$radii$mentionDropdownBorderRadius',
   zIndex: 9999,
-  margin: '4px 0 0 -2px',
   padding: 0,
   boxShadow: `$shadows$mentionDropdownBoxShadow`,
 });

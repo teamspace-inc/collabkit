@@ -39,41 +39,36 @@ export const contentEditable = css({
   lineHeight: '$lineHeights$0',
   position: 'relative',
   tabSize: 1,
+  height: '100%',
   outline: 0,
   padding: '$padding$1 $padding$1',
   caretColor: '$colors$caretColor',
 });
 
-export const outer = css({
+export const root = css({
   display: 'flex',
-  flexDirection: 'column',
+  flexDirection: 'row',
+  flex: 1,
+  gap: '8px',
+  padding: '0 16px',
 });
 
 export const typingOffset = css({
   marginLeft: 'calc($padding$1 + $sizes$avatar + 16px)',
 });
 
-export const container = css({
-  position: 'relative',
-  display: 'flex',
-  flex: '0 1 auto',
-  borderBottomLeftRadius: '$radii$1',
-  borderBottomRightRadius: '$radii$1',
-  padding: '$padding$0 $padding$1 0',
-  background: '$colors$backgroundColor',
-});
-
 export const avatarContainer = css({
-  paddingTop: 4,
-  paddingLeft: 8,
+  display: 'flex',
+  flex: 1,
+  alignItems: 'flex-start',
+  justifyContent: 'center',
 });
 
-export const editorContainer = css({
+export const lexicalEditorContainer = css({
   borderRadius: '$radii$0',
-  width: 'calc(100% - $padding$composer - $sizes$avatar - 12px)', // take into account send button
   color: '$colors$primaryText',
-  marginLeft: 8,
-  padding: '0px 0',
+  width: '100%',
+  padding: '0px',
   position: 'relative',
   verticalAlign: 'top',
   background: '$colors$composerBackground',
@@ -83,6 +78,24 @@ export const editorContainer = css({
   lineHeight: '$lineHeights$1',
   fontWeight: '$fontWeights$0',
   textAlign: 'left',
+
+  variants: {
+    floating: {
+      true: {
+        borderRadius: '',
+      },
+    },
+    // insetSendButton: {
+    //   true: {
+    //     width: 'calc(100% - ($padding$composer*2) - $sizes$sendButton)', // take into account send button
+    //   },
+    // },
+    // isFloating: {
+    //   true: {
+    //     border: '1px solid transparent',
+    //   },
+    // },
+  },
 
   '::placeholder': {
     color: '$colors$composerPlaceholder',
@@ -95,10 +108,9 @@ export const visibleComposerArea = css({
   borderRadius: '$radii$0',
   width: 'calc(100% - $sizes$sendButton - 8px)', // take into account send button
   color: '$colors$primaryText',
-  // marginLeft: 8,
-  padding: '0px 0',
+  padding: '0px',
   position: 'relative',
-  verticalAlign: 'top',
+  // verticalAlign: 'top',
   fontSize: '$fontSize$2',
   lineHeight: '$lineHeights$1',
   fontWeight: '$fontWeights$0',

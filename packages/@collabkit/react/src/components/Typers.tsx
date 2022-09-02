@@ -1,7 +1,7 @@
 import React from 'react';
 import { typingIndicatorStyles } from '@collabkit/theme';
 import { useSnapshot } from 'valtio';
-import { useApp } from '../../hooks/useApp';
+import { useApp } from '../hooks/useApp';
 import { styled } from '@stitches/react';
 import type { Profile } from '@collabkit/core';
 
