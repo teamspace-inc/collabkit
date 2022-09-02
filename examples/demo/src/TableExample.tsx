@@ -6,26 +6,24 @@ const Cell = ({ value, row, column }: CellProps) => {
   const name = `Cars / ${row.make} ${row.model}} `;
   const viewId = 'cars';
   const cellId = `${row.id}_${column.key}`;
-  //const { popover, getProps, ref, hasThread, isOpen } = usePopoverThread({ name, viewId, cellId });
+  const context = usePopoverThread({ name, viewId, cellId });
 
   const classes = [];
-  // if (hasThread) classes.push('hasThread');
-  // if (isOpen) classes.push('popoverOpen');
-
-  const context = usePopoverThread({ name, viewId, cellId });
+  if (context.hasThread) classes.push('hasThread');
+  if (context.popoverState === 'previewOpen') classes.push('previewOpen');
+  if (context.popoverState === 'threadOpen') classes.push('threadOpen');
 
   return (
     <PopoverTrigger context={context}>
-      <td>
-        {/* <td {...getProps({ ref, className: classes.join(' ') })}> */}
+      <td className={classes.join(' ')}>
         {value}
-        {/* {hasThread ? <ThreadIndicator /> : null} */}
+        {context.hasThread ? <ThreadIndicator /> : null}
       </td>
     </PopoverTrigger>
   );
 };
 
-// const ThreadIndicator = () => <span className="ThreadIndicator" />;
+const ThreadIndicator = () => <span className="ThreadIndicator" />;
 
 type Car = { id: string; make: string; model: string; price: number };
 type Column = { name: string; key: keyof Car; format: (value: any) => string };

@@ -1,21 +1,15 @@
-import React, { cloneElement, useCallback, useMemo, useRef, useState } from 'react';
+import React, { cloneElement, useCallback, useMemo, useState } from 'react';
 import {
-  Placement,
   offset,
   flip,
-  shift,
-  autoUpdate,
   useFloating,
   useInteractions,
-  useRole,
   useHover,
   useDismiss,
-  useId,
   useClick,
   FloatingFocusManager,
   FloatingPortal,
   safePolygon,
-  autoPlacement,
 } from '@floating-ui/react-dom-interactions';
 import { mergeRefs } from 'react-merge-refs';
 import { PopoverThread } from './PopoverThread';
@@ -64,7 +58,7 @@ export function usePopoverThread({
   );
   const threadId = useOpenThread({ viewId, cellId });
   const hasThread = threadId != null;
-  const [newThreadId, resetNewThreadId] = useStableId();
+  const [newThreadId, _resetNewThreadId] = useStableId();
   const getNewThreadId = useCallback(() => newThreadId, [newThreadId]);
 
   const [tooltipOpen, setTooltipOpen] = useState(false);
@@ -105,6 +99,8 @@ export function usePopoverThread({
   const getProps = (userProps: any) =>
     getTooltipReferenceProps(getMenuReferenceProps({ ref, ...userProps }));
 
+  const popoverState = menuOpen ? 'threadOpen' : tooltipOpen ? 'previewOpen' : 'closed';
+
   return {
     getProps,
     menuContext,
@@ -116,6 +112,8 @@ export function usePopoverThread({
     hasThread,
     threadInfo,
     getNewThreadId,
+
+    popoverState,
   };
 }
 

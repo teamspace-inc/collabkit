@@ -54,7 +54,7 @@ code {
   color: #2C915E;
 }
 
-.TableExample td.popoverOpen {
+.TableExample td.threadOpen {
   background: rgba(255, 221, 0, 0.15);
   outline: 2px solid #FFDD00;
   border-radius: 4px;
