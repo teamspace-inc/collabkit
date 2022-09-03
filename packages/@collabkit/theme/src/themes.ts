@@ -47,6 +47,7 @@ export interface Theme {
     mentionDropdownItemFontSize: string;
     sendButtonFontSize: string;
     button: string;
+    indicatorText: string;
   };
   lineHeights: {
     0: string;
@@ -55,6 +56,7 @@ export interface Theme {
     3: string;
     mentionDropdownItemLineHeight: string;
     button: string;
+    indicatorText: string;
   };
   fontWeights: {
     0: number;
@@ -63,6 +65,7 @@ export interface Theme {
     3: number;
     mentionDropdownItemFontWeight: string;
     sendButtonTextFontWeight: number;
+    indicatorText: number;
     button: number;
   };
   radii: {
@@ -76,8 +79,10 @@ export interface Theme {
   };
   padding: {
     composer: string;
-    commentVertical: string;
-    commentHorizontal: string;
+    commentTop: string;
+    commentLeft: string;
+    commentRight: string;
+    commentBottom: string;
     mentionDropdownItemPadding: string;
     composerContainer: string;
 
@@ -131,6 +136,7 @@ export interface Theme {
 
     // unread indicator
     indicatorLineColor: string;
+    indicatorText: string;
 
     // typing indicator
     typingDot: string;
@@ -193,6 +199,7 @@ export function createThemes(customTheme?: CustomTheme) {
   const fontSize = {
     mentionDropdownItemFontSize: '$fontSize$2',
     sendButtonFontSize: '$fontSize$2',
+    indicatorText: '$fontSize$1',
 
     ['0']: '11px',
     ['1']: '12px',
@@ -202,6 +209,7 @@ export function createThemes(customTheme?: CustomTheme) {
 
   const lineHeights = {
     mentionDropdownItemLineHeight: '$lineHeights$0',
+    indicatorText: '30px',
 
     ['0']: '18px',
     ['1']: '18px',
@@ -212,6 +220,7 @@ export function createThemes(customTheme?: CustomTheme) {
   const fontWeights = {
     mentionDropdownItemFontWeight: '$fontWeights$1',
     sendButtonTextFontWeight: '$fontWeights$0',
+    indicatorText: '$fontWeights$1',
 
     ['0']: 400,
     ['1']: 700,
@@ -300,7 +309,8 @@ export function createThemes(customTheme?: CustomTheme) {
     buttonSecondaryActiveBackground: '$neutral6',
     buttonSecondaryTextColor: '$neutral0',
 
-    indicatorLineColor: 'rgba(0,0,0,0.1)',
+    indicatorLineColor: '$red10',
+    indicatorText: '$red10',
 
     commentHoverBackgroundColor: 'unset',
     commentUnseenBackgroundColor: 'unset',
