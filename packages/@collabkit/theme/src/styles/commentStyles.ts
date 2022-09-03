@@ -44,6 +44,16 @@ export const container = css({
       true: {},
     },
   },
+
+  p: {
+    margin: 0,
+  },
+
+  a: {
+    fontWeight: '700',
+    color: '$colors$primaryText',
+    textDecoration: 'none',
+  },
 });
 
 export const message = css({

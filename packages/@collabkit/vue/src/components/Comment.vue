@@ -13,6 +13,7 @@ import {
 import { useIntersectionObserver, useWindowFocus } from '@vueuse/core';
 import { useEvents } from '../composables/useEvents';
 import { TargetKey } from '../constants';
+import Markdown from './Markdown.vue';
 
 const props = defineProps<{
   id: string;
@@ -68,7 +69,7 @@ const isOverflowing = false;
           :createdAt="+timestamp"
         />
         <StyledCommentBody :isPreview="isPreview">
-          {{ body }}
+          <Markdown :body="body" />
           <StyledCommentBodyEllipsis v-if="isOverflowing">...</StyledCommentBodyEllipsis>
         </StyledCommentBody>
       </StyledCommentMessage>

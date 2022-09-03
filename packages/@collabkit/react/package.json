@@ -71,5 +71,8 @@
   "prettier": {
     "singleQuote": true,
     "printWidth": 100
+  },
+  "dependencies": {
+    "react-remark": "^2.1.0"
   }
 }

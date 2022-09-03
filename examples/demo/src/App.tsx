@@ -1,6 +1,5 @@
 import { CollabKitProvider, CustomTheme, Thread, useUnreadCount } from '@collabkit/react';
 import * as themes from '@collabkit/custom-themes';
-import { mentionableUsers } from './data';
 import { useCallback, useEffect, useState } from 'react';
 import { User } from './types';
 import jwtDecode from 'jwt-decode';

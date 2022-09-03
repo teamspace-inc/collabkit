@@ -34,3 +34,4 @@ export * as popoverThreadStyles from './styles/popoverThreadStyles';
 export * as scrollAreaStyles from './styles/scrollAreaStyles';
 
 export * as buttonStyles from './styles/buttonStyles';
+export * as linkStyles from './styles/linkStyles';

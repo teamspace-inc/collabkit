@@ -23,7 +23,7 @@ import { useInView } from 'react-intersection-observer';
 import { useWindowFocus } from '../hooks/useWindowFocus';
 import { WithHasProfile } from '@collabkit/core';
 import { useOnMarkdownLinkClick } from '../hooks/useOnMarkdownLinkClick';
-import { MarkdownBody } from './MarkdownBody';
+import { Markdown } from './Markdown';
 
 function hasOverflow(ref: React.RefObject<HTMLDivElement>, deps: any[]) {
   const [isOverflowing, setIsOverflowing] = useState(false);
@@ -112,8 +112,8 @@ export function Comment(props: {
               createdAt={+props.timestamp}
             />
           )}
-          <StyledCommentBody ref={bodyRef} isPreview={props.isPreview}>
-            <MarkdownBody body={props.body} onLinkClick={onClick} />
+          <StyledCommentBody ref={bodyRef} isPreview={props.isPreview} onClick={onClick}>
+            <Markdown body={props.body} />
             {isOverflowing ? <StyledCommentBodyEllipsis>{'...'}</StyledCommentBodyEllipsis> : null}
           </StyledCommentBody>
           {/* <Reactions reactions={props.reactions} /> */}
