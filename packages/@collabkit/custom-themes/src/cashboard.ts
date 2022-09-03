@@ -28,6 +28,8 @@ export const cashboard: CustomTheme = {
     buttonSecondaryBackground: 'white',
     buttonSecondaryText: '#6A7278',
 
+    buttonDisabledText: '#B4BDC2',
+
     backgroundColor: 'white',
     composerBackground: 'white',
     composerPlaceholder: '#6A7278',
