@@ -8,12 +8,12 @@ import {
   useDismiss,
   useClick,
   FloatingFocusManager,
+  size,
   FloatingPortal,
   safePolygon,
-  shift,
 } from '@floating-ui/react-dom-interactions';
 import { mergeRefs } from 'react-merge-refs';
-import { PopoverThread } from './PopoverThread';
+import { PopoverThread, PreviewThread } from './PopoverThread';
 import { useApp } from '../hooks/useApp';
 import { nanoid } from 'nanoid';
 import { useSnapshot } from 'valtio';
@@ -57,6 +57,10 @@ export function usePopoverThread({
   const hasThread = threadId != null;
   const [newThreadId, _resetNewThreadId] = useStableId();
   const getNewThreadId = useCallback(() => newThreadId, [newThreadId]);
+  const [maxAvailableSize, setMaxAvailableSize] = useState<{
+    width: number;
+    height: number;
+  } | null>(null);
 
   const { store } = useApp();
   const { viewingId, previewingId, workspaceId } = useSnapshot(store);
@@ -112,7 +116,20 @@ export function usePopoverThread({
     placement: 'right-start',
     open: threadOpen,
     onOpenChange: setThreadOpen,
-    middleware: [offset(5), flip(), shift()],
+    middleware: [
+      offset(4),
+      flip(),
+      size({
+        padding: 12,
+        apply({ availableWidth, availableHeight, elements }) {
+          Object.assign(elements.floating.style, {
+            maxWidth: `${availableWidth}px`,
+            maxHeight: `${availableHeight}px`,
+          });
+          setMaxAvailableSize({ width: availableWidth, height: availableHeight });
+        },
+      }),
+    ],
   });
 
   const { getReferenceProps: getPreviewReferenceProps, getFloatingProps: getPreviewFloatingProps } =
@@ -147,6 +164,7 @@ export function usePopoverThread({
       threadId,
       threadInfo,
       getNewThreadId,
+      maxAvailableSize,
     },
 
     hasThread,
@@ -186,18 +204,22 @@ export const PopoverTrigger = ({ children, context }: Props) => {
                 top: threadContext.y ?? 0,
                 left: threadContext.x ?? 0,
                 outline: 'none',
+                boxSizing: 'border-box',
               }}
               {...getThreadFloatingProps()}
             >
               <PopoverThread
+                maxAvailableSize={context.maxAvailableSize}
                 threadId={threadId ?? getNewThreadId()}
                 info={threadInfo}
-                isPreview={false}
                 style={{
-                  width: 264,
-                  border: '1px solid #E3E9ED',
+                  // custom styles for cashboard
+                  // todo: extract them
                   boxShadow:
                     '0px -12px 24px rgba(0, 0, 0, 0.02), 0px 12px 24px rgba(0, 0, 0, 0.06)',
+                  borderRadius: '12px',
+                  width: 264,
+                  border: '1px solid #E3E9ED',
                 }}
               />
             </div>
@@ -217,11 +239,12 @@ export const PopoverTrigger = ({ children, context }: Props) => {
               onClick={() => setThreadOpen(true)}
               {...getPreviewFloatingProps()}
             >
-              <PopoverThread
+              <PreviewThread
                 threadId={threadId ?? getNewThreadId()}
                 info={threadInfo}
-                isPreview={true}
                 style={{
+                  // custom styles for cashboard
+                  // todo: extract them
                   width: 264,
                   border: '1px solid #E3E9ED',
                   boxShadow:

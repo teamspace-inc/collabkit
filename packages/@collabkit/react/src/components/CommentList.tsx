@@ -9,7 +9,6 @@ import { commentListStyles } from '@collabkit/theme';
 const StyledCommentList = styled('div', commentListStyles.list);
 
 export const CommentList = React.memo(function CommentList(props: {
-  isTyping?: { [endUserId: string]: boolean };
   timeline: Timeline;
   seenUntil?: string;
   workspaceId: string;
