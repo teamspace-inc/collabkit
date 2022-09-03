@@ -26,19 +26,21 @@ const names = computed(() => {
 </script>
 
 <template>
-  <StyledIsTypingContainer v-if="names.length === 0" />
-  <StyledIsTypingContainer v-if="names.length === 1">
-    <Name>{{ names[0] }}</Name> is typing…
-  </StyledIsTypingContainer>
-  <StyledIsTypingContainer v-if="names.length === 2">
-    <Name>{{ names[0] }}</Name> and <Name>{{ names[1] }}</Name> are typing…
-  </StyledIsTypingContainer>
-  <StyledIsTypingContainer v-if="names.length === 3">
-    <Name>{{ names[0] }}</Name
-    >, <Name>{{ names[1] }}</Name> and <Name>{{ names[2] }}</Name> are typing…
-  </StyledIsTypingContainer>
-  <StyledIsTypingContainer v-if="names.length > 3">
-    <Name>{{ names[0] }}</Name
-    >, <Name>{{ names[1] }}</Name> and <Name>{{ names.length - 2 }} others</Name> are typing…
-  </StyledIsTypingContainer>
+  <div :style="{ marginLeft: 52 }">
+    <StyledIsTypingContainer v-if="names.length === 0" />
+    <StyledIsTypingContainer v-if="names.length === 1">
+      <Name>{{ names[0] }}</Name> is typing…
+    </StyledIsTypingContainer>
+    <StyledIsTypingContainer v-if="names.length === 2">
+      <Name>{{ names[0] }}</Name> and <Name>{{ names[1] }}</Name> are typing…
+    </StyledIsTypingContainer>
+    <StyledIsTypingContainer v-if="names.length === 3">
+      <Name>{{ names[0] }}</Name
+      >, <Name>{{ names[1] }}</Name> and <Name>{{ names[2] }}</Name> are typing…
+    </StyledIsTypingContainer>
+    <StyledIsTypingContainer v-if="names.length > 3">
+      <Name>{{ names[0] }}</Name
+      >, <Name>{{ names[1] }}</Name> and <Name>{{ names.length - 2 }} others</Name> are typing…
+    </StyledIsTypingContainer>
+  </div>
 </template>

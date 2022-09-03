@@ -7,7 +7,7 @@ import { useThread } from '../hooks/useThread';
 import { EmptyState } from './thread/EmptyState';
 import { useNewIndicator } from './NewIndicator';
 import { styled } from '@stitches/react';
-import { sendButtonStyles, threadStyles } from '@collabkit/theme';
+import { commentStyles, sendButtonStyles, threadStyles } from '@collabkit/theme';
 import { useSnapshot } from 'valtio';
 import type { ThreadInfo } from '@collabkit/core';
 import { TypingIndicator } from './TypingIndicator';
@@ -17,6 +17,7 @@ import { CommentList } from './CommentList';
 import { Button } from './Button';
 import { ArrowUp } from './icons';
 
+const StyledMessageTextOffset = styled('div', commentStyles.messageTextOffset);
 const StyledComposerSendButtonIcon = styled(ArrowUp, sendButtonStyles.icon);
 
 const StyledThreadContainer = styled('div', threadStyles.container);
@@ -122,7 +123,9 @@ export function Thread(props: {
               />
             </Composer>
           ) : null}
-          <TypingIndicator workspaceId={workspaceId} threadId={props.threadId} />
+          <StyledMessageTextOffset>
+            <TypingIndicator workspaceId={workspaceId} threadId={props.threadId} />
+          </StyledMessageTextOffset>
         </StyledThread>
       </StyledThreadContainer>
     </div>

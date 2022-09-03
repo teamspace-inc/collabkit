@@ -56,6 +56,10 @@ export const container = css({
   },
 });
 
+export const messageTextOffset = css({
+  marginLeft: 'calc($padding$commentLeft + $sizes$avatar + $space$2)',
+});
+
 export const message = css({
   display: 'flex',
   position: 'relative',

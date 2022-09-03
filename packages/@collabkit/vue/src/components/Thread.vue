@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, inject, provide, useSlots, watchEffect } from 'vue';
 import { actions } from '@collabkit/client';
-import { composerStyles, threadStyles } from '@collabkit/theme';
+import { commentStyles, composerStyles, threadStyles } from '@collabkit/theme';
 import { styled } from './styled';
 import { useStore } from '../composables/useStore';
 import Composer from './composer/Composer.vue';
@@ -15,6 +15,7 @@ import Avatar from './Avatar';
 import type { Target } from '@collabkit/core';
 import ComposerSendButton from './composer/ComposerSendButton.vue';
 
+const StyledMessageTextOffset = styled('div', commentStyles.messageTextOffset);
 const StyledThreadContainer = styled('div', threadStyles.container);
 const StyledThread = styled('div', threadStyles.thread);
 const StyledThreadHeader = styled('div', threadStyles.header);
@@ -119,11 +120,12 @@ const target = computed(
             :type="'icon'"
           />
         </Composer>
-
-        <TypingIndicator
-          :userId="store.userId"
-          :isTyping="workspace?.composers[threadId]?.isTyping"
-        />
+        <StyledMessageTextOffset>
+          <TypingIndicator
+            :userId="store.userId"
+            :isTyping="workspace?.composers[threadId]?.isTyping"
+          />
+        </StyledMessageTextOffset>
       </StyledThread>
     </StyledThreadContainer>
   </div>
