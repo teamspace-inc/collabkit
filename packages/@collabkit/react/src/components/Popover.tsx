@@ -11,6 +11,7 @@ import {
   size,
   FloatingPortal,
   safePolygon,
+  autoUpdate,
 } from '@floating-ui/react-dom-interactions';
 import { mergeRefs } from 'react-merge-refs';
 import { PopoverThread, PreviewThread } from './PopoverThread';
@@ -115,6 +116,7 @@ export function usePopoverThread({
   const { reference: threadReference, context: threadContext } = useFloating({
     placement: 'right-start',
     open: threadOpen,
+    whileElementsMounted: autoUpdate,
     onOpenChange: setThreadOpen,
     middleware: [
       offset(4),
@@ -213,6 +215,7 @@ export const PopoverTrigger = ({ children, context }: Props) => {
                 threadId={threadId ?? getNewThreadId()}
                 info={threadInfo}
                 style={{
+                  boxSizing: 'border-box',
                   // custom styles for cashboard
                   // todo: extract them
                   boxShadow:

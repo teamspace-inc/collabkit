@@ -98,121 +98,119 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
       <Root data-collabkit-internal="true" style={props.style} ref={ref}>
         <ScrollAreaRoot>
           <ScrollAreaViewport style={{ maxHeight: props.maxAvailableSize?.height ?? 'unset' }}>
-            <div>
-              {!isEmpty && target && (
-                <ThreadHeader
-                  renderRight={() => (
-                    <>
-                      <IconButton
-                        // TODO: tooltip hijacks focus when used within a modal popover
-                        // tooltip={isResolved ? 'Re-open' : 'Mark as Resolved and Hide'}
-                        onPointerDown={(e) =>
-                          events.onPointerDown(e, {
-                            target: {
-                              ...target,
-                              type: isResolved ? 'reopenThreadButton' : 'resolveThreadButton',
-                            } as const,
-                          })
-                        }
-                      >
-                        {!isResolved ? (
-                          <Check
-                            size={19}
-                            weight={'thin'}
-                            color={theme.colors.neutral12.toString()}
-                          />
-                        ) : (
-                          <Check
-                            size={18}
-                            weight={'fill'}
-                            color={theme.colors.neutral12.toString()}
-                          />
-                        )}
-                      </IconButton>
-                      <IconButton
-                        // tooltip="Close"
-                        onPointerDown={(e) => {
-                          events.onPointerDown(e, {
-                            target: { ...target, type: 'closeThreadButton' },
-                          });
-                        }}
-                      >
-                        <X size="16" weight="regular" color={theme.colors.neutral12.toString()} />
-                      </IconButton>
-                    </>
-                  )}
-                />
-              )}
-              {isEmpty && (
-                <div
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    gap: '12px',
-                    padding: '16px 12px',
-                    alignItems: 'center',
-                  }}
-                >
-                  {profile ? <Avatar profile={profile} /> : null}
-                  {profile ? <MessageHeader name={profile.name ?? 'Anonymous'} /> : null}
-                </div>
-              )}
-              {!isEmpty && timeline && (
-                // nc: there's something causing a scrollbar to appear
-                // without the extra 20px of height. need to investigate
-                // furtheer.
-                <CommentList timeline={timeline} />
-              )}
-              <Composer>
-                {/* Some temporary styling for cashboard, we can abstract this out later */}
-                <div
-                  style={{
-                    padding: '0px 0 16px',
-                    flexDirection: 'column',
-                    display: 'flex',
-                    flex: 1,
-                    gap: '12px',
-                    alignItems: 'flex-end',
-                  }}
-                >
-                  <ComposerEditor
-                    placeholder={
-                      props.composerPrompt != null
-                        ? props.composerPrompt
-                        : isEmpty
-                        ? 'Add a comment'
-                        : 'Reply to this comment'
-                    }
-                    autoFocus={true}
-                  />
-                  <div style={{ display: 'flex', flexDirection: 'row', gap: '8px' }}>
-                    <Button
-                      type="secondary"
-                      text="Cancel"
+            {!isEmpty && target && (
+              <ThreadHeader
+                renderRight={() => (
+                  <>
+                    <IconButton
+                      // TODO: tooltip hijacks focus when used within a modal popover
+                      // tooltip={isResolved ? 'Re-open' : 'Mark as Resolved and Hide'}
                       onPointerDown={(e) =>
                         events.onPointerDown(e, {
                           target: {
-                            threadId,
-                            type: 'closeThreadButton',
-                            workspaceId,
-                          },
+                            ...target,
+                            type: isResolved ? 'reopenThreadButton' : 'resolveThreadButton',
+                          } as const,
                         })
                       }
-                    />
-                    <ComposerSendButton
-                      renderButton={({ disabled, onPointerDown }) => (
-                        <Button
-                          type="primary"
-                          disabled={disabled}
-                          onPointerDown={onPointerDown}
-                          text={'Comment'}
+                    >
+                      {!isResolved ? (
+                        <Check
+                          size={19}
+                          weight={'thin'}
+                          color={theme.colors.neutral12.toString()}
+                        />
+                      ) : (
+                        <Check
+                          size={18}
+                          weight={'fill'}
+                          color={theme.colors.neutral12.toString()}
                         />
                       )}
-                    />
-                  </div>
+                    </IconButton>
+                    <IconButton
+                      // tooltip="Close"
+                      onPointerDown={(e) => {
+                        events.onPointerDown(e, {
+                          target: { ...target, type: 'closeThreadButton' },
+                        });
+                      }}
+                    >
+                      <X size="16" weight="regular" color={theme.colors.neutral12.toString()} />
+                    </IconButton>
+                  </>
+                )}
+              />
+            )}
+            {isEmpty && (
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  gap: '12px',
+                  padding: '16px 12px',
+                  alignItems: 'center',
+                }}
+              >
+                {profile ? <Avatar profile={profile} /> : null}
+                {profile ? <MessageHeader name={profile.name ?? 'Anonymous'} /> : null}
+              </div>
+            )}
+            {!isEmpty && timeline && (
+              // nc: there's something causing a scrollbar to appear
+              // without the extra 20px of height. need to investigate
+              // furtheer.
+              <CommentList timeline={timeline} />
+            )}
+            <Composer>
+              {/* Some temporary styling for cashboard, we can abstract this out later */}
+              <div
+                style={{
+                  padding: '0px 0 16px',
+                  flexDirection: 'column',
+                  display: 'flex',
+                  flex: 1,
+                  gap: '12px',
+                  alignItems: 'flex-end',
+                }}
+              >
+                <ComposerEditor
+                  placeholder={
+                    props.composerPrompt != null
+                      ? props.composerPrompt
+                      : isEmpty
+                      ? 'Add a comment'
+                      : 'Reply to this comment'
+                  }
+                  autoFocus={true}
+                />
+                <div style={{ display: 'flex', flexDirection: 'row', gap: '8px' }}>
+                  <Button
+                    type="secondary"
+                    text="Cancel"
+                    onPointerDown={(e) =>
+                      events.onPointerDown(e, {
+                        target: {
+                          threadId,
+                          type: 'closeThreadButton',
+                          workspaceId,
+                        },
+                      })
+                    }
+                  />
+                  <ComposerSendButton
+                    renderButton={({ disabled, onPointerDown }) => (
+                      <Button
+                        type="primary"
+                        disabled={disabled}
+                        onPointerDown={onPointerDown}
+                        text={'Comment'}
+                      />
+                    )}
+                  />
                 </div>
-              </Composer>
-            </div>
+              </div>
+            </Composer>
           </ScrollAreaViewport>
           <ScrollAreaScrollbar orientation="vertical">
             <ScrollAreaThumb />
