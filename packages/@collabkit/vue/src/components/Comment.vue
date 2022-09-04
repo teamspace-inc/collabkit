@@ -1,6 +1,14 @@
 <script setup lang="ts">
 import { computed, inject, ref, watchEffect } from 'vue';
-import type { Target, CommentType, Profile, CommentTarget } from '@collabkit/core';
+import type {
+  Event,
+  Target,
+  CommentType,
+  Profile,
+  CommentTarget,
+  WithHasProfile,
+  WithID,
+} from '@collabkit/core';
 import Avatar from './Avatar';
 import MessageHeader from './comment/MessageHeader.vue';
 import { HStack } from './UIKit';
@@ -16,12 +24,9 @@ import { TargetKey } from '../constants';
 import Markdown from './Markdown.vue';
 
 const props = defineProps<{
-  id: string;
   reactions: { [createdById: string]: Event };
-  timestamp: number | object;
-  body: string;
   seen?: boolean;
-  event: Event;
+  event: WithID<WithHasProfile<Event>>;
   profile: Profile;
   type: CommentType;
   isPreview?: boolean;
@@ -66,10 +71,10 @@ const isOverflowing = false;
         <MessageHeader
           v-if="showProfile"
           :name="profile.name ?? profile.email ?? 'Anonymous'"
-          :createdAt="+timestamp"
+          :createdAt="+props.event.createdAt"
         />
         <StyledCommentBody :isPreview="isPreview">
-          <Markdown :body="body" />
+          <Markdown :body="props.event.body" />
           <StyledCommentBodyEllipsis v-if="isOverflowing">...</StyledCommentBodyEllipsis>
         </StyledCommentBody>
       </StyledCommentMessage>

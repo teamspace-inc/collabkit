@@ -25,12 +25,9 @@ export const CommentGroup = React.memo(function (props: {
           <div key={event.id}>
             {props.newIndicatorId === event.id ? <NewIndicator /> : null}
             <Comment
-              id={event.id}
               event={event}
               type={getCommentType(group, index)}
-              timestamp={event.createdAt}
               key={`event-${event.id}`}
-              body={event.body}
               profile={profiles[event.createdById]}
               isPreview={props.isPreview}
               reactions={{}}

@@ -5,7 +5,7 @@ import { HStack } from './UIKit';
 import { MessageHeader } from './comment/MessageHeader';
 import { commentStyles } from '@collabkit/theme';
 
-import { WithHasProfile } from '@collabkit/core';
+import { WithHasProfile, WithID } from '@collabkit/core';
 import { useOnMarkdownLinkClick } from '../hooks/useOnMarkdownLinkClick';
 import { Markdown } from './Markdown';
 import { useThreadContext } from '../hooks/useThreadContext';
@@ -19,12 +19,9 @@ const Body = styled('span', commentStyles.body);
 const BodyEllipsis = styled('span', commentStyles.bodyEllipsis);
 
 export function Comment(props: {
-  id: string;
   reactions: { [createdById: string]: Event };
-  timestamp: number | object;
-  body: string;
   seen?: boolean;
-  event: WithHasProfile<Event>;
+  event: WithID<WithHasProfile<Event>>;
   profile: Profile;
   type: CommentType;
   isPreview?: boolean;
@@ -36,7 +33,7 @@ export function Comment(props: {
     type: 'comment',
     workspaceId,
     threadId,
-    eventId: props.id,
+    eventId: props.event.id,
   } as const;
 
   const { ref } = useMarkAsSeen(target);
@@ -47,10 +44,10 @@ export function Comment(props: {
     workspaceId,
     threadId,
     userId,
-    event: { ...props.event, id: props.id },
+    event: props.event,
   });
 
-  const isOverflowing = useHasOverflow(bodyRef, [props.body]);
+  const isOverflowing = useHasOverflow(bodyRef, [props.event.body]);
 
   if (
     props.event.type === 'system' ||
@@ -68,11 +65,11 @@ export function Comment(props: {
           {showProfile && (
             <MessageHeader
               name={props.profile.name ?? props.profile.email ?? 'Anonymous'}
-              createdAt={+props.timestamp}
+              createdAt={+props.event.createdAt}
             />
           )}
           <Body ref={bodyRef} isPreview={props.isPreview} onClick={onClick}>
-            <Markdown body={props.body} />
+            <Markdown body={props.event.body} />
             {isOverflowing ? <BodyEllipsis>{'...'}</BodyEllipsis> : null}
           </Body>
         </Message>

@@ -48,13 +48,10 @@ function getCommentType(group: Event[], index: number): CommentType {
     <NewIndicator v-if="newIndicatorId && newIndicatorId === event.id" />
     <Comment
       v-if="store.profiles[event.createdById]"
-      :id="event.id"
       :event="event"
       :reactions="reactions[event.id] ?? {}"
       :type="getCommentType(group, index)"
-      :timestamp="event.createdAt"
       :key="`event-${event.id}`"
-      :body="event.body"
       :seen="event.createdById === userId || (seenUntil ? seenUntil >= event.id : true)"
       :profile="store.profiles[event.createdById]"
       :isPreview="isPreview"
