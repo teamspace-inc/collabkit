@@ -1,6 +1,6 @@
 import { css } from '@stitches/react';
 
-export const container = css({
+export const root = css({
   display: 'flex',
   flex: 1,
   gap: '$space$2',

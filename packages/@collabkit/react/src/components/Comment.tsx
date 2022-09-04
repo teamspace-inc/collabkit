@@ -13,7 +13,7 @@ import { styled } from '@stitches/react';
 import { useHasOverflow } from '../hooks/useHasOverflow';
 import { useMarkAsSeen } from '../hooks/useMarkAsSeen';
 
-const Root = styled('div', commentStyles.container);
+const Root = styled('div', commentStyles.root);
 const Message = styled('div', commentStyles.message);
 const Body = styled('span', commentStyles.body);
 const BodyEllipsis = styled('span', commentStyles.bodyEllipsis);

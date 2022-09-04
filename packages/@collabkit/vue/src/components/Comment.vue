@@ -12,16 +12,19 @@ import type {
 import Avatar from './Avatar';
 import MessageHeader from './comment/MessageHeader.vue';
 import { HStack } from './UIKit';
-import {
-  StyledCommentContainer,
-  StyledCommentMessage,
-  StyledCommentBody,
-  StyledCommentBodyEllipsis,
-} from './comment/StyledComment';
+import { commentStyles } from '@collabkit/theme';
+import { styled } from './styled';
+import { seen } from '../../../client/src/actions/seen';
+
 import { useIntersectionObserver, useWindowFocus } from '@vueuse/core';
 import { useEvents } from '../composables/useEvents';
 import { TargetKey } from '../constants';
 import Markdown from './Markdown.vue';
+
+const Root = styled('div', commentStyles.root);
+const Message = styled('div', commentStyles.message);
+const Body = styled('span', commentStyles.body);
+const BodyEllipsis = styled('span', commentStyles.bodyEllipsis);
 
 const props = defineProps<{
   reactions: { [createdById: string]: Event };
@@ -59,25 +62,20 @@ const isOverflowing = false;
 </script>
 
 <template>
-  <StyledCommentContainer
-    ref="container"
-    :seen="seen"
-    :type="props.type ?? 'default'"
-    :isPreview="isPreview"
-  >
+  <Root ref="container" :seen="seen" :type="props.type ?? 'default'" :isPreview="isPreview">
     <Avatar v-if="showProfile" :profile="profile" />
     <HStack>
-      <StyledCommentMessage :profileIndent="!showProfile">
+      <Message :profileIndent="!showProfile">
         <MessageHeader
           v-if="showProfile"
           :name="profile.name ?? profile.email ?? 'Anonymous'"
           :createdAt="+props.event.createdAt"
         />
-        <StyledCommentBody :isPreview="isPreview">
+        <Body :isPreview="isPreview">
           <Markdown :body="props.event.body" />
-          <StyledCommentBodyEllipsis v-if="isOverflowing">...</StyledCommentBodyEllipsis>
-        </StyledCommentBody>
-      </StyledCommentMessage>
+          <BodyEllipsis v-if="isOverflowing">...</BodyEllipsis>
+        </Body>
+      </Message>
     </HStack>
-  </StyledCommentContainer>
+  </Root>
 </template>
