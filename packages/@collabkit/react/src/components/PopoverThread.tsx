@@ -1,5 +1,5 @@
 import { styled } from '@stitches/react';
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useEffect } from 'react';
 import type { ThreadInfo } from '@collabkit/core';
 import { Composer } from './composer/Composer';
 import { CommentList } from './CommentList';
@@ -19,6 +19,7 @@ import {
   ScrollAreaThumb,
   ScrollAreaCorner,
 } from './ScrollArea';
+import { ThreadContext } from '../hooks/useThreadContext';
 
 const StyledPopoverThread = styled('div', popoverThreadStyles.thread);
 
@@ -64,6 +65,7 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
   ref
 ) {
   const { threadId } = props;
+  const [context, setContext] = React.useState<{ threadId: string }>({ threadId });
   const { store, events } = useApp();
   const { workspaces, workspaceId, profiles, userId } = useSnapshot(store);
   const workspace = workspaceId ? workspaces[workspaceId] : null;
@@ -83,91 +85,99 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
     <CommentList isPreview={false} timeline={timeline} />
   );
 
-  return (
-    <StyledPopoverThread data-collabkit-internal="true" style={props.style} ref={ref}>
-      <ScrollAreaRoot>
-        <ScrollAreaViewport style={{ maxHeight: props.maxAvailableSize?.height ?? 'unset' }}>
-          <div>
-            {!isEmpty && target && <ThreadHeader isResolved={isResolved} target={target} />}
-            {isEmpty && (
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  gap: '12px',
-                  padding: '16px 12px',
-                  alignItems: 'center',
-                }}
-              >
-                {profile ? <Avatar profile={profile} /> : null}
-                {profile ? <MessageHeader name={profile.name ?? 'Anonymous'} /> : null}
-              </div>
-            )}
-            {!isEmpty && (
-              // nc: there's something causing a scrollbar to appear
-              // without the extra 20px of height. need to investigate
-              // furtheer.
-              <div>{commentList}</div>
-            )}
+  useEffect(() => {
+    if (threadId) {
+      setContext({ threadId });
+    }
+  }, [threadId]);
 
-            {workspaceId && userId ? (
-              <Composer>
-                {/* Some temporary styling for cashboard, we can abstract this out later */}
+  return (
+    <ThreadContext.Provider value={context}>
+      <StyledPopoverThread data-collabkit-internal="true" style={props.style} ref={ref}>
+        <ScrollAreaRoot>
+          <ScrollAreaViewport style={{ maxHeight: props.maxAvailableSize?.height ?? 'unset' }}>
+            <div>
+              {!isEmpty && target && <ThreadHeader isResolved={isResolved} target={target} />}
+              {isEmpty && (
                 <div
                   style={{
-                    padding: '0px 0 16px',
-                    flexDirection: 'column',
                     display: 'flex',
-                    flex: 1,
+                    flexDirection: 'row',
                     gap: '12px',
-                    alignItems: 'flex-end',
+                    padding: '16px 12px',
+                    alignItems: 'center',
                   }}
                 >
-                  <ComposerEditor
-                    placeholder={
-                      props.composerPrompt != null
-                        ? props.composerPrompt
-                        : isEmpty
-                        ? 'Add a comment'
-                        : 'Reply to this comment'
-                    }
-                    autoFocus={true}
-                  />
-                  <div style={{ display: 'flex', flexDirection: 'row', gap: '8px' }}>
-                    <Button
-                      type="secondary"
-                      text="Cancel"
-                      onPointerDown={(e) =>
-                        events.onPointerDown(e, {
-                          target: {
-                            threadId,
-                            type: 'closeThreadButton',
-                            workspaceId,
-                          },
-                        })
-                      }
-                    />
-                    <Button
-                      type="primary"
-                      disabled={bodyLength === 0}
-                      onPointerDown={(e) => {
-                        if (bodyLength > 0) {
-                          events.onSend(workspaceId, threadId);
-                        }
-                      }}
-                      text={'Comment'}
-                    />
-                  </div>
+                  {profile ? <Avatar profile={profile} /> : null}
+                  {profile ? <MessageHeader name={profile.name ?? 'Anonymous'} /> : null}
                 </div>
-              </Composer>
-            ) : null}
-          </div>
-        </ScrollAreaViewport>
-        <ScrollAreaScrollbar orientation="vertical">
-          <ScrollAreaThumb />
-        </ScrollAreaScrollbar>
-        <ScrollAreaCorner />
-      </ScrollAreaRoot>
-    </StyledPopoverThread>
+              )}
+              {!isEmpty && (
+                // nc: there's something causing a scrollbar to appear
+                // without the extra 20px of height. need to investigate
+                // furtheer.
+                <div>{commentList}</div>
+              )}
+
+              {workspaceId && userId ? (
+                <Composer>
+                  {/* Some temporary styling for cashboard, we can abstract this out later */}
+                  <div
+                    style={{
+                      padding: '0px 0 16px',
+                      flexDirection: 'column',
+                      display: 'flex',
+                      flex: 1,
+                      gap: '12px',
+                      alignItems: 'flex-end',
+                    }}
+                  >
+                    <ComposerEditor
+                      placeholder={
+                        props.composerPrompt != null
+                          ? props.composerPrompt
+                          : isEmpty
+                          ? 'Add a comment'
+                          : 'Reply to this comment'
+                      }
+                      autoFocus={true}
+                    />
+                    <div style={{ display: 'flex', flexDirection: 'row', gap: '8px' }}>
+                      <Button
+                        type="secondary"
+                        text="Cancel"
+                        onPointerDown={(e) =>
+                          events.onPointerDown(e, {
+                            target: {
+                              threadId,
+                              type: 'closeThreadButton',
+                              workspaceId,
+                            },
+                          })
+                        }
+                      />
+                      <Button
+                        type="primary"
+                        disabled={bodyLength === 0}
+                        onPointerDown={(e) => {
+                          if (bodyLength > 0) {
+                            events.onSend(workspaceId, threadId);
+                          }
+                        }}
+                        text={'Comment'}
+                      />
+                    </div>
+                  </div>
+                </Composer>
+              ) : null}
+            </div>
+          </ScrollAreaViewport>
+          <ScrollAreaScrollbar orientation="vertical">
+            <ScrollAreaThumb />
+          </ScrollAreaScrollbar>
+          <ScrollAreaCorner />
+        </ScrollAreaRoot>
+      </StyledPopoverThread>
+    </ThreadContext.Provider>
   );
 });

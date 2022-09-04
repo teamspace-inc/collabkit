@@ -7,7 +7,7 @@ import { useThread } from '../hooks/useThread';
 import { EmptyState } from './thread/EmptyState';
 import { useNewIndicator } from './NewIndicator';
 import { styled } from '@stitches/react';
-import { commentStyles, sendButtonStyles, threadStyles } from '@collabkit/theme';
+import { commentStyles, threadStyles } from '@collabkit/theme';
 import { useSnapshot } from 'valtio';
 import type { ThreadInfo } from '@collabkit/core';
 import { TypingIndicator } from './TypingIndicator';
