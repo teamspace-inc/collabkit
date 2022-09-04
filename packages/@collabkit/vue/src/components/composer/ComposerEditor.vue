@@ -23,8 +23,8 @@ const props = defineProps<{
 
 const StyledContentEditable = styled(LexicalContentEditable, composerStyles.contentEditable);
 const Placeholder = styled('div', composerStyles.placeholder);
-const StyledLexicalEditorContainer = styled('div', composerStyles.lexicalEditorContainer);
-const StyledVisibleComposerArea = styled('div', composerStyles.visibleComposerArea);
+const Root = styled('div', composerStyles.editorRoot);
+const Content = styled('div', composerStyles.content);
 
 const events = useEvents();
 
@@ -63,9 +63,9 @@ defineExpose({
 
 <template>
   <LexicalComposer :initial-config="initialConfig">
-    <StyledLexicalEditorContainer>
+    <Root>
       <div id="#mentions" :style="{ position: 'relative' }"></div>
-      <StyledVisibleComposerArea>
+      <Content>
         <LexicalPlainTextPlugin>
           <template #contentEditable>
             <StyledContentEditable @focus="onFocus" @blur="onBlur" />
@@ -77,7 +77,7 @@ defineExpose({
         <LexicalOnChangePlugin v-model="content" @change="onChange" />
         <LexicalHistoryPlugin />
         <LexicalAutoFocusPlugin v-if="autoFocus" />
-      </StyledVisibleComposerArea>
-    </StyledLexicalEditorContainer>
+      </Content>
+    </Root>
   </LexicalComposer>
 </template>

@@ -15,11 +15,11 @@ import Avatar from './Avatar';
 import type { Target } from '@collabkit/core';
 import ComposerSendButton from './composer/ComposerSendButton.vue';
 
-const StyledMessageTextOffset = styled('div', commentStyles.messageTextOffset);
-const StyledThreadContainer = styled('div', threadStyles.container);
-const StyledThread = styled('div', threadStyles.thread);
-const StyledThreadHeader = styled('div', threadStyles.header);
-const StyledThreadHeaderTitle = styled('div', threadStyles.headerTitle);
+const Root = styled('div', threadStyles.root);
+const Content = styled('div', threadStyles.content);
+const Header = styled('div', threadStyles.header);
+const HeaderTitle = styled('div', threadStyles.headerTitle);
+const TextOffset = styled('div', commentStyles.messageTextOffset);
 
 const props = defineProps<{
   threadId: string;
@@ -86,11 +86,11 @@ const target = computed(
 
 <template>
   <div :style="{ display: 'contents' }" :className="theme.className">
-    <StyledThreadContainer v-if="store.userId && store.workspaceId" data-vv>
-      <StyledThread>
-        <StyledThreadHeader v-if="showHeader">
-          <StyledThreadHeaderTitle>Comments</StyledThreadHeaderTitle>
-        </StyledThreadHeader>
+    <Root v-if="store.userId && store.workspaceId" data-vv>
+      <Content>
+        <Header v-if="showHeader">
+          <HeaderTitle>Comments</HeaderTitle>
+        </Header>
         <EmptyState v-if="store.isConnected && isEmpty" />
         <ScrollableCommentList
           v-if="!isEmpty && timeline && store.workspaceId"
@@ -120,13 +120,13 @@ const target = computed(
             :type="'icon'"
           />
         </Composer>
-        <StyledMessageTextOffset>
+        <TextOffset>
           <TypingIndicator
             :userId="store.userId"
             :isTyping="workspace?.composers[threadId]?.isTyping"
           />
-        </StyledMessageTextOffset>
-      </StyledThread>
-    </StyledThreadContainer>
+        </TextOffset>
+      </Content>
+    </Root>
   </div>
 </template>

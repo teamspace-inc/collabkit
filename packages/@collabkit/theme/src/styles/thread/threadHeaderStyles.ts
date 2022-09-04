@@ -10,8 +10,14 @@ export const root = css({
   borderBottom: '1px solid $borderColor',
 });
 
-export const leftGroup = css({
+export const left = css({
   display: 'flex',
   flexGrow: 1,
+  gap: 0,
+});
+
+export const right = css({
+  display: 'flex',
+  flex: '0 0 auto',
   gap: 0,
 });

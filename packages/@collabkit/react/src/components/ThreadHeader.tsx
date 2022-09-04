@@ -1,50 +1,24 @@
 import { styled } from '@stitches/react';
-import { X, Check } from './icons';
 import React from 'react';
-import { useApp } from '../hooks/useApp';
-import { ThreadTarget } from '../constants';
-import { IconButton } from './IconButton';
 import * as Tooltip from '@radix-ui/react-tooltip';
 import { threadHeaderStyles } from '@collabkit/theme';
 
-const StyledThreadHeader = styled('div', threadHeaderStyles.root);
-const StyledHeaderLeftGroup = styled('div', threadHeaderStyles.leftGroup);
+const Root = styled('div', threadHeaderStyles.root);
+const Left = styled('div', threadHeaderStyles.left);
+const Right = styled('div', threadHeaderStyles.right);
 
-export function ThreadHeader(props: { isResolved: boolean; target: ThreadTarget }) {
-  const { events, theme } = useApp();
-  const { isResolved, target } = props;
-
+export function ThreadHeader(props: {
+  renderLeft?: () => React.ReactNode;
+  renderRight?: () => React.ReactNode;
+  children?: React.ReactNode;
+}) {
   return (
-    <StyledThreadHeader>
+    <Root>
       <Tooltip.Provider delayDuration={0}>
-        <StyledHeaderLeftGroup></StyledHeaderLeftGroup>
-        <IconButton
-          // TODO: tooltip hijacks focus when used within a modal popover
-          // tooltip={isResolved ? 'Re-open' : 'Mark as Resolved and Hide'}
-          onPointerDown={(e) =>
-            events.onPointerDown(e, {
-              target: {
-                ...target,
-                type: isResolved ? 'reopenThreadButton' : 'resolveThreadButton',
-              } as const,
-            })
-          }
-        >
-          {!isResolved ? (
-            <Check size={19} weight={'thin'} color={theme.colors.neutral12.toString()} />
-          ) : (
-            <Check size={18} weight={'fill'} color={theme.colors.neutral12.toString()} />
-          )}
-        </IconButton>
-        <IconButton
-          // tooltip="Close"
-          onPointerDown={(e) => {
-            events.onPointerDown(e, { target: { ...target, type: 'closeThreadButton' } });
-          }}
-        >
-          <X size="16" weight="regular" color={theme.colors.neutral12.toString()} />
-        </IconButton>
+        <Left>{props.renderLeft?.()}</Left>
+        {props.children}
+        <Right>{props.renderRight?.()}</Right>
       </Tooltip.Provider>
-    </StyledThreadHeader>
+    </Root>
   );
 }

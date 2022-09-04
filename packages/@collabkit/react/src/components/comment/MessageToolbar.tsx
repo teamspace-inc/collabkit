@@ -3,12 +3,12 @@ import { styled } from '@stitches/react';
 import { messageToolbarStyles } from '@collabkit/theme';
 import { ReactionButton } from './ReactionButton';
 
-const StyledMessageToolbar = styled('div', messageToolbarStyles.toolbar);
+const Root = styled('div', messageToolbarStyles.root);
 
 export function MessageToolbar(props: { isVisible: boolean }) {
   return (
-    <StyledMessageToolbar isVisible={props.isVisible}>
+    <Root isVisible={props.isVisible}>
       <ReactionButton />
-    </StyledMessageToolbar>
+    </Root>
   );
 }

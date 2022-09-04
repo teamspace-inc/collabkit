@@ -9,7 +9,7 @@ export const name = css({
   alignItems: 'baseline',
 });
 
-export const container = css({
+export const root = css({
   display: 'flex',
   flex: '1',
   gap: '4px',

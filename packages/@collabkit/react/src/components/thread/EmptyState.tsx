@@ -4,16 +4,16 @@ import { Chats } from '../icons';
 import { styled } from '@stitches/react';
 import { FlexCenter } from '../UIKit';
 
-const EmptyStateContainer = styled('div', threadEmptyStateStyles.container);
-const EmptyStateIcon = styled(Chats, threadEmptyStateStyles.icon);
-const EmptyStateText = styled('span', threadEmptyStateStyles.text);
+const Root = styled('div', threadEmptyStateStyles.root);
+const Icon = styled(Chats, threadEmptyStateStyles.icon);
+const Text = styled('span', threadEmptyStateStyles.text);
 
 const emptyState = (
   <FlexCenter>
-    <EmptyStateContainer>
-      <EmptyStateIcon weight="regular" size={32} />
-      <EmptyStateText>Write a comment</EmptyStateText>
-    </EmptyStateContainer>
+    <Root>
+      <Icon weight="regular" size={32} />
+      <Text>Write a comment</Text>
+    </Root>
   </FlexCenter>
 );
 

@@ -4,8 +4,8 @@ import React from 'react';
 import { messageHeaderStyles } from '@collabkit/theme';
 
 const Name = styled('div', messageHeaderStyles.name);
-const StyledMessageTimestamp = styled('span', messageHeaderStyles.timestamp);
-const StyledMessageHeaderContainer = styled('div', messageHeaderStyles.container);
+const Timestamp = styled('span', messageHeaderStyles.timestamp);
+const Root = styled('div', messageHeaderStyles.root);
 
 export function MessageHeader(props: {
   name: string;
@@ -13,16 +13,16 @@ export function MessageHeader(props: {
   layout?: 'inline' | 'block';
 }) {
   return (
-    <StyledMessageHeaderContainer layout={props.layout ?? 'inline'}>
+    <Root layout={props.layout ?? 'inline'}>
       <Name>{props.name}</Name>
       {props.createdAt ? (
-        <StyledMessageTimestamp>
+        <Timestamp>
           {formatRelative(props.createdAt, +Date.now())
             .replace(/yesterday at (.*)/, 'yesterday')
             .replace('today at', '')
             .replace(/(last Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday) .*/, '$1')}
-        </StyledMessageTimestamp>
+        </Timestamp>
       ) : null}
-    </StyledMessageHeaderContainer>
+    </Root>
   );
 }

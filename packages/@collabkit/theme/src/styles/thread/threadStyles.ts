@@ -1,6 +1,6 @@
 import { css } from '@stitches/react';
 
-export const container = css({
+export const root = css({
   display: 'flex',
   height: '100%',
   position: 'relative',
@@ -9,7 +9,7 @@ export const container = css({
   borderRadius: '$radii$1',
 });
 
-export const thread = css({
+export const content = css({
   padding: 0,
   gap: 0,
   display: 'flex',

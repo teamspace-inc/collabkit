@@ -8,22 +8,21 @@ import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
 import { TimestampPlugin } from './TimestampPlugin';
 import { MentionsPlugin } from './MentionsPlugin';
-import { PasteTextPlugin } from '../PasteTextPlugin';
+import { PasteTextPlugin } from './PasteTextPlugin';
 import { useApp } from '../../hooks/useApp';
 import { useOnMarkdownLinkClick } from '../../hooks/useOnMarkdownLinkClick';
 import equal from 'fast-deep-equal';
 import { composerStyles } from '@collabkit/theme';
 import { styled } from '@stitches/react';
 
-const StyledLexicalEditorContainer = styled('div', composerStyles.lexicalEditorContainer);
-const StyledVisibleComposerArea = styled('div', composerStyles.visibleComposerArea);
+const Root = styled('div', composerStyles.editorRoot);
+const Content = styled('div', composerStyles.content);
 const StyledContentEditable = styled(ContentEditable, composerStyles.contentEditable);
 const Placeholder = styled('div', composerStyles.placeholder);
 
 import { MentionNode } from './MentionNode';
 import { TimestampNode } from './TimestampNode';
 import { useThreadContext } from '../../hooks/useThreadContext';
-import { useSnapshot } from 'valtio';
 
 // Catch any errors that occur during Lexical updates and log them
 // or throw them as needed. If you don't throw them, Lexical will
@@ -43,13 +42,8 @@ export const ComposerEditor = React.memo(function ComposerEditor(props: {
   autoFocus?: boolean;
   placeholder: React.ReactNode | string;
 }) {
-  const { threadId } = useThreadContext();
-  const { events, store } = useApp();
-  const { workspaceId, userId } = useSnapshot(store);
-
-  if (!workspaceId || !userId) {
-    throw new Error('CollabKit: workspaceId and userId are required');
-  }
+  const { threadId, workspaceId, userId } = useThreadContext();
+  const { events } = useApp();
 
   const target: ComposerTarget = {
     workspaceId,
@@ -61,13 +55,13 @@ export const ComposerEditor = React.memo(function ComposerEditor(props: {
 
   return (
     <LexicalComposer initialConfig={initialConfig}>
-      <StyledLexicalEditorContainer
+      <Root
         onClick={onClick}
         onFocus={(e: React.FocusEvent) => events.onFocus(e, { target })}
         onBlur={(e: React.FocusEvent) => events.onBlur(e, { target })}
       >
         <div id="mentions" style={{ position: 'absolute', left: 0, right: 0 }} />
-        <StyledVisibleComposerArea>
+        <Content>
           <PasteTextPlugin />
           <PlainTextPlugin
             contentEditable={<StyledContentEditable tabIndex={props.autoFocus ? 1 : undefined} />}
@@ -82,8 +76,8 @@ export const ComposerEditor = React.memo(function ComposerEditor(props: {
           <MentionsPlugin />
           <TimestampPlugin />
           {props.autoFocus ? <AutoFocusPlugin /> : null}
-        </StyledVisibleComposerArea>
-      </StyledLexicalEditorContainer>
+        </Content>
+      </Root>
     </LexicalComposer>
   );
 },

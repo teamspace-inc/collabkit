@@ -1,7 +1,7 @@
 import { css } from '@stitches/react';
 import { threadStyles } from '../';
 
-export const thread = css(threadStyles.thread, {
+export const root = css(threadStyles.content, {
   backgroundColor: '$colors$popoverThreadBackgroundColor',
   display: 'flex',
   flexDirection: 'column',

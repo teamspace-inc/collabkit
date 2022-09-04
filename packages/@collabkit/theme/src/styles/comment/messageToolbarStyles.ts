@@ -1,6 +1,6 @@
 import { css } from '@stitches/react';
 
-export const toolbar = css({
+export const root = css({
   position: 'absolute',
   display: 'flex',
   height: '100%',

@@ -56,7 +56,7 @@ export const typingOffset = css({
   marginLeft: 'calc($padding$1 + $sizes$avatar + 16px)',
 });
 
-export const lexicalEditorContainer = css({
+export const editorRoot = css({
   flex: 1,
   borderRadius: '$radii$0',
   color: '$colors$primaryText',
@@ -97,7 +97,7 @@ export const lexicalEditorContainer = css({
 
 // affects the text rendered inside the composer, so
 // there is room for the send
-export const visibleComposerArea = css({
+export const content = css({
   borderRadius: '$radii$0',
   width: 'calc(100% - $sizes$sendButton - 8px)', // take into account send button
   color: '$colors$primaryText',

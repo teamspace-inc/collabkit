@@ -27,15 +27,12 @@ function getNames(props: {
 }
 
 export function TypingIndicator() {
-  const { threadId } = useThreadContext();
+  const { threadId, workspaceId, userId } = useThreadContext();
   const { store } = useApp();
-  const { profiles, workspaces, workspaceId, userId } = useSnapshot(store);
-  if (!workspaceId || !userId) {
-    throw new Error('CollabKit: workspaceId and userId are required');
-  }
+  const { profiles, workspaces } = useSnapshot(store);
   const workspace = workspaces[workspaceId];
   const isTyping = workspace?.composers[threadId]?.isTyping;
-  const names = userId ? getNames({ userId, isTyping, profiles }) : null;
+  const names = getNames({ userId, isTyping, profiles });
 
   if (names === null) return null;
   if (names.length === 0) return <StyledIsTypingContainer />;

@@ -2,6 +2,8 @@ import React from 'react';
 
 export const ThreadContext = React.createContext<{
   threadId: string;
+  userId: string;
+  workspaceId: string;
 } | null>(null);
 
 export function useThreadContext() {

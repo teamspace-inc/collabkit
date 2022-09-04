@@ -9,6 +9,9 @@ export const button = css({
   cursor: 'pointer',
   pointerEvents: 'all',
 
+  // temp fix for popover thread scrollbar clash
+  zIndex: 2,
+
   '&:hover': {
     cursor: 'pointer',
   },

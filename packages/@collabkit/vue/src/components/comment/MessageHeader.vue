@@ -4,8 +4,9 @@ import { messageHeaderStyles } from '@collabkit/theme';
 import { computed } from 'vue';
 import { styled } from '../styled';
 
+const Root = styled('div', messageHeaderStyles.root);
 const Name = styled('div', messageHeaderStyles.name);
-const StyledMessageTimestamp = styled('span', messageHeaderStyles.timestamp);
+const Timestamp = styled('span', messageHeaderStyles.timestamp);
 
 const props = defineProps<{ name: string; createdAt: number }>();
 
@@ -18,10 +19,12 @@ const timestamp = computed(() =>
 </script>
 
 <template>
-  <Name>
-    {{ name }}{{ ' ' }}
-    <StyledMessageTimestamp>
-      {{ timestamp }}
-    </StyledMessageTimestamp>
-  </Name>
+  <Root>
+    <Name>
+      {{ name }}{{ ' ' }}
+      <Timestamp>
+        {{ timestamp }}
+      </Timestamp>
+    </Name>
+  </Root>
 </template>

@@ -56,6 +56,8 @@ export async function authenticate(store: Store) {
     store.workspaceId = workspaceId;
     store.workspaces[workspaceId] = createWorkspace();
     // store.workspaces[workspaceId].name = workspaceName;
+
+    // todo we don't need this.
     store.isSignedIn = true;
 
     actions.subscribeProfiles(store);

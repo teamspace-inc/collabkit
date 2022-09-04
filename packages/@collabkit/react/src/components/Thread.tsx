@@ -7,7 +7,7 @@ import { useThread } from '../hooks/useThread';
 import { EmptyState } from './thread/EmptyState';
 import { useNewIndicator } from './NewIndicator';
 import { styled } from '@stitches/react';
-import { commentStyles, threadStyles } from '@collabkit/theme';
+import { commentStyles, sendButtonStyles, threadStyles } from '@collabkit/theme';
 import { useSnapshot } from 'valtio';
 import type { ThreadInfo } from '@collabkit/core';
 import { TypingIndicator } from './TypingIndicator';
@@ -16,13 +16,16 @@ import { Avatar } from './Avatar';
 import { CommentList } from './CommentList';
 import { ThreadContext } from '../hooks/useThreadContext';
 import { ComposerSendButton } from './composer/ComposerSendButton';
+import { Button } from './Button';
+import { ArrowUp } from './icons';
 
-const StyledMessageTextOffset = styled('div', commentStyles.messageTextOffset);
+const SendButtonIcon = styled(ArrowUp, sendButtonStyles.icon);
 
-const StyledThreadContainer = styled('div', threadStyles.container);
-const StyledThread = styled('div', threadStyles.thread);
-const StyledThreadHeader = styled('div', threadStyles.header);
-const StyledThreadHeaderTitle = styled('div', threadStyles.headerTitle);
+const Root = styled('div', threadStyles.root);
+const Content = styled('div', threadStyles.content);
+const Header = styled('div', threadStyles.header);
+const HeaderTitle = styled('div', threadStyles.headerTitle);
+const TextOffset = styled('div', commentStyles.messageTextOffset);
 
 export function Thread(props: {
   threadId: string;
@@ -36,6 +39,8 @@ export function Thread(props: {
   const { threadId } = props;
   const [context, setContext] = useState<{
     threadId: string;
+    userId: string;
+    workspaceId: string;
   } | null>(null);
   const { store, theme } = useApp();
 
@@ -55,63 +60,73 @@ export function Thread(props: {
   const canRenderCommentList = !isEmpty && workspace?.likelyFetchedAllProfiles && timeline;
 
   useEffect(() => {
-    if (threadId) {
-      setContext({ threadId });
+    if (threadId && userId && workspaceId) {
+      setContext({ threadId, userId, workspaceId });
     }
-  }, [threadId]);
+  }, [threadId, userId, workspaceId]);
 
-  if (!userId || !workspaceId) {
+  // render dummy thread here
+  if (userId == null || workspaceId == null) {
     return null;
   }
 
   const profile = profiles[userId];
 
   return (
-    <ThreadContext.Provider value={context}>
-      <div style={{ display: 'contents' }} className={theme.className}>
-        <StyledThreadContainer
-          className={theme.className}
-          style={props.style}
-          data-collabkit-internal="true"
-        >
-          <StyledThread>
-            {props.showHeader ? (
-              <StyledThreadHeader>
-                <StyledThreadHeaderTitle>Comments</StyledThreadHeaderTitle>
-              </StyledThreadHeader>
-            ) : null}
-            {shouldRenderEmptyState ? <EmptyState /> : <FlexCenter />}
-            {canRenderCommentList && (
-              <ScrollableCommentList>
-                <CommentList
-                  seenUntil={seenUntil}
-                  timeline={timeline}
-                  newIndicatorId={newIndicatorId}
-                />
-              </ScrollableCommentList>
-            )}
-            {
-              <Composer>
-                {profile ? <Avatar profile={profile} /> : null}
-                <ComposerEditor
-                  placeholder={
-                    props.composerPrompt != null
-                      ? props.composerPrompt
-                      : isEmpty
-                      ? 'Add a comment'
-                      : 'Reply to this comment'
-                  }
-                  autoFocus={props.autoFocus}
-                />
-                <ComposerSendButton />
-              </Composer>
-            }
-            <StyledMessageTextOffset>
-              <TypingIndicator />
-            </StyledMessageTextOffset>
-          </StyledThread>
-        </StyledThreadContainer>
-      </div>
+    <ThreadContext.Provider value={context ?? { threadId, userId, workspaceId }}>
+      <Root className={theme.className} style={props.style} data-collabkit-internal="true">
+        <Content>
+          {props.showHeader ? (
+            <Header>
+              <HeaderTitle>Comments</HeaderTitle>
+            </Header>
+          ) : null}
+          {shouldRenderEmptyState ? <EmptyState /> : <FlexCenter />}
+          {canRenderCommentList && (
+            <ScrollableCommentList>
+              <CommentList
+                seenUntil={seenUntil}
+                timeline={timeline}
+                newIndicatorId={newIndicatorId}
+              />
+            </ScrollableCommentList>
+          )}
+          {
+            <Composer>
+              {profile ? <Avatar profile={profile} /> : null}
+              <ComposerEditor
+                placeholder={
+                  props.composerPrompt != null
+                    ? props.composerPrompt
+                    : isEmpty
+                    ? 'Add a comment'
+                    : 'Reply to this comment'
+                }
+                autoFocus={props.autoFocus}
+              />
+              <ComposerSendButton
+                renderButton={({ disabled, onPointerDown }) => (
+                  <Button
+                    onPointerDown={onPointerDown}
+                    type="primary"
+                    icon={
+                      <SendButtonIcon
+                        size={13}
+                        color={theme.colors.composerButtonIconColor.toString()}
+                        weight="bold"
+                      />
+                    }
+                    disabled={disabled}
+                  />
+                )}
+              />
+            </Composer>
+          }
+          <TextOffset>
+            <TypingIndicator />
+          </TextOffset>
+        </Content>
+      </Root>
     </ThreadContext.Provider>
   );
 }
