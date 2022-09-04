@@ -11,21 +11,14 @@ const StyledCommentList = styled('div', commentListStyles.list);
 export const CommentList = React.memo(function CommentList(props: {
   timeline: Timeline;
   seenUntil?: string;
-  workspaceId: string;
-  userId: string;
-  threadId: string;
   isPreview?: boolean;
   newIndicatorId?: string | null;
 }) {
-  const { threadId, workspaceId, timeline, newIndicatorId } = props;
+  const { timeline, newIndicatorId } = props;
 
-  const { reactions, list } = useTimeline(timeline, props.seenUntil, props.userId);
+  const { reactions, list } = useTimeline(timeline, props.seenUntil);
 
   const groups = props.isPreview ? list.slice(0, 1) : list;
-
-  if (!workspaceId) {
-    return null;
-  }
 
   return (
     <StyledCommentList>
@@ -34,10 +27,7 @@ export const CommentList = React.memo(function CommentList(props: {
           <CommentGroup
             key={i}
             group={group}
-            userId={props.userId}
             reactions={reactions}
-            workspaceId={workspaceId}
-            threadId={threadId}
             isPreview={props.isPreview}
             newIndicatorId={newIndicatorId}
           />

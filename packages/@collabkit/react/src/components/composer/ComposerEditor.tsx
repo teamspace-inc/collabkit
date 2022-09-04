@@ -22,6 +22,8 @@ const Placeholder = styled('div', composerStyles.placeholder);
 
 import { MentionNode } from './MentionNode';
 import { TimestampNode } from './TimestampNode';
+import { useThreadContext } from '../../hooks/useThreadContext';
+import { useSnapshot } from 'valtio';
 
 // Catch any errors that occur during Lexical updates and log them
 // or throw them as needed. If you don't throw them, Lexical will
@@ -39,19 +41,23 @@ export const initialConfig = {
 
 export const ComposerEditor = React.memo(function ComposerEditor(props: {
   autoFocus?: boolean;
-  threadId: string;
-  workspaceId: string;
-  userId: string;
   placeholder: React.ReactNode | string;
 }) {
-  const { events } = useApp();
+  const { threadId } = useThreadContext();
+  const { events, store } = useApp();
+  const { workspaceId, userId } = useSnapshot(store);
+
+  if (!workspaceId || !userId) {
+    throw new Error('CollabKit: workspaceId and userId are required');
+  }
+
   const target: ComposerTarget = {
-    workspaceId: props.workspaceId,
-    threadId: props.threadId,
+    workspaceId,
+    threadId,
     type: 'composer',
   };
 
-  const { onClick } = useOnMarkdownLinkClick({ ...props, event: null });
+  const { onClick } = useOnMarkdownLinkClick({ threadId, workspaceId, userId, event: null });
 
   return (
     <LexicalComposer initialConfig={initialConfig}>

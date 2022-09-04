@@ -6,22 +6,21 @@ import equal from 'fast-deep-equal';
 import { useSnapshot } from 'valtio';
 import { useApp } from '../hooks/useApp';
 import { NewIndicator } from './NewIndicator';
+import { useThreadContext } from '../hooks/useThreadContext';
 
 export const CommentGroup = React.memo(function (props: {
   group: WithID<Event>[];
   reactions: { [parentId: string]: { [createdById: string]: Event } };
-  workspaceId: string;
-  threadId: string;
-  userId: string;
   isPreview?: boolean;
   newIndicatorId?: string | null;
 }) {
-  const { group, workspaceId, threadId } = props;
+  const { threadId } = useThreadContext();
+  const { group } = props;
   const { store } = useApp();
-  const { profiles } = useSnapshot(store);
+  const { profiles, workspaceId } = useSnapshot(store);
 
   const comments = props.isPreview ? group.slice(0, 1) : group;
-  return (
+  return workspaceId ? (
     <>
       {comments.map((event, index) => {
         return (
@@ -37,9 +36,6 @@ export const CommentGroup = React.memo(function (props: {
                 body={event.body}
                 profile={profiles[event.createdById]}
                 isPreview={props.isPreview}
-                workspaceId={props.workspaceId}
-                threadId={props.threadId}
-                createdById={event.createdById}
                 reactions={{}}
               />
             </Target>
@@ -47,7 +43,7 @@ export const CommentGroup = React.memo(function (props: {
         );
       })}
     </>
-  );
+  ) : null;
 },
 equal);
 

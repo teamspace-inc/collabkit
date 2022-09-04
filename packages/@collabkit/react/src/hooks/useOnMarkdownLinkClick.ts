@@ -1,7 +1,9 @@
 import { MentionWithColor } from '@collabkit/core';
 import React, { useCallback } from 'react';
+import { useSnapshot } from 'valtio';
 import { WithID, Event } from '../constants';
 import { useApp } from './useApp';
+import { useThreadContext } from './useThreadContext';
 
 // calls onTimestampClick and onMentionClick when a
 // user clicks on a timestamp or mention
@@ -14,8 +16,15 @@ export function useOnMarkdownLinkClick(props: {
   userId: string;
   event: WithID<Event> | null;
 }) {
-  const { threadId, workspaceId, userId, event } = props;
+  const { threadId } = useThreadContext();
+  const { event } = props;
   const { store } = useApp();
+  const { workspaceId, userId } = useSnapshot(store);
+
+  if (!workspaceId || !userId) {
+    throw new Error('CollabKit: workspaceId and userId are required');
+  }
+
   const triggerTimestampClick = useCallback(
     (timestamp: string) => {
       store.callbacks?.onTimestampClick?.({

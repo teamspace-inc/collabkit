@@ -48,13 +48,7 @@ export const PreviewThread = forwardRef<Handle, PopoverThreadProps>(function Pre
   });
 
   const commentList = userId && workspaceId && timeline && (
-    <CommentList
-      threadId={props.threadId}
-      userId={userId}
-      workspaceId={workspaceId}
-      isPreview={true}
-      timeline={timeline}
-    />
+    <CommentList isPreview={true} timeline={timeline} />
   );
   return (
     <div>
@@ -86,16 +80,8 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
   const profile = userId ? profiles[userId] : null;
 
   const commentList = userId && workspaceId && timeline && (
-    <CommentList
-      threadId={props.threadId}
-      userId={userId}
-      workspaceId={workspaceId}
-      isPreview={false}
-      timeline={timeline}
-    />
+    <CommentList isPreview={false} timeline={timeline} />
   );
-
-  console.log(props.maxAvailableSize?.height);
 
   return (
     <StyledPopoverThread data-collabkit-internal="true" style={props.style} ref={ref}>
@@ -125,12 +111,7 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
             )}
 
             {workspaceId && userId ? (
-              <Composer
-                workspaceId={workspaceId}
-                userId={userId}
-                threadId={threadId}
-                hideAvatar={isEmpty}
-              >
+              <Composer>
                 {/* Some temporary styling for cashboard, we can abstract this out later */}
                 <div
                   style={{
@@ -143,9 +124,6 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
                   }}
                 >
                   <ComposerEditor
-                    userId={userId}
-                    workspaceId={workspaceId}
-                    threadId={threadId}
                     placeholder={
                       props.composerPrompt != null
                         ? props.composerPrompt

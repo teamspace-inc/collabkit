@@ -6,6 +6,7 @@ import { useApp } from '../hooks/useApp';
 
 import { typingIndicatorStyles } from '@collabkit/theme';
 import type { Profile } from '@collabkit/core';
+import { useThreadContext } from '../hooks/useThreadContext';
 
 const StyledIsTypingContainer = styled('div', typingIndicatorStyles.container);
 const Name = styled('span', typingIndicatorStyles.name);
@@ -25,11 +26,15 @@ function getNames(props: {
     .filter((name): name is string => typeof name === 'string' && !!name);
 }
 
-export function TypingIndicator(props: { workspaceId: string | null; threadId: string }) {
+export function TypingIndicator() {
+  const { threadId } = useThreadContext();
   const { store } = useApp();
-  const { userId, profiles, workspaces } = useSnapshot(store);
-  const workspace = props.workspaceId ? workspaces[props.workspaceId] : null;
-  const isTyping = workspace?.composers[props.threadId]?.isTyping;
+  const { profiles, workspaces, workspaceId, userId } = useSnapshot(store);
+  if (!workspaceId || !userId) {
+    throw new Error('CollabKit: workspaceId and userId are required');
+  }
+  const workspace = workspaces[workspaceId];
+  const isTyping = workspace?.composers[threadId]?.isTyping;
   const names = userId ? getNames({ userId, isTyping, profiles }) : null;
 
   if (names === null) return null;

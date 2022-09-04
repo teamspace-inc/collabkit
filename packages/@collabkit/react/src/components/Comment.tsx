@@ -24,6 +24,7 @@ import { useWindowFocus } from '../hooks/useWindowFocus';
 import { WithHasProfile } from '@collabkit/core';
 import { useOnMarkdownLinkClick } from '../hooks/useOnMarkdownLinkClick';
 import { Markdown } from './Markdown';
+import { useThreadContext } from '../hooks/useThreadContext';
 
 function hasOverflow(ref: React.RefObject<HTMLDivElement>, deps: any[]) {
   const [isOverflowing, setIsOverflowing] = useState(false);
@@ -41,9 +42,6 @@ function hasOverflow(ref: React.RefObject<HTMLDivElement>, deps: any[]) {
 
 export function Comment(props: {
   id: string;
-  workspaceId: string;
-  threadId: string;
-  createdById: string;
   reactions: { [createdById: string]: Event };
   timestamp: number | object;
   body: string;
@@ -53,13 +51,14 @@ export function Comment(props: {
   type: CommentType;
   isPreview?: boolean;
 }) {
+  const { threadId } = useThreadContext();
   // const ref = useRef<HTMLDivElement | null>(null);
   const bodyRef = useRef(null);
   const { store, events } = useApp();
-  const { reactingId } = useSnapshot(store);
+  const { reactingId, workspaceId, userId } = useSnapshot(store);
   const { target } = useContext(TargetContext);
 
-  if (target == null || target.type !== 'comment') {
+  if (target == null || target.type !== 'comment' || !workspaceId || !userId) {
     return null;
   }
 
@@ -80,7 +79,9 @@ export function Comment(props: {
   const showProfile = props.type === 'default' || props.type === 'inline-start';
   const { onClick } = useOnMarkdownLinkClick({
     ...props,
-    userId: props.createdById,
+    workspaceId,
+    threadId,
+    userId,
     event: { ...props.event, id: props.id },
   });
 
