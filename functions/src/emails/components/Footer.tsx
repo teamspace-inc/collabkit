@@ -8,9 +8,9 @@ export default function Footer() {
     <MjmlSection cssClass="smooth">
       <MjmlColumn>
         <MjmlText cssClass="footer" padding="12px 24px 48px" fontSize={textSm} color={grayDark}>
-          <a href="#" target="_blank">
+          {/* <a href="#" target="_blank">
             Turn off notifications for this thread
-          </a>
+          </a> */}
           <br />
         </MjmlText>
       </MjmlColumn>

@@ -13,7 +13,7 @@ const Header: React.FC<HeaderProps> = ({ logoUrl }) => {
         <MjmlImage
           padding="0 0 0"
           width={'220px'}
-          align="center"
+          align="left"
           src={logoUrl}
           cssClass="logo light-mode"
         />
