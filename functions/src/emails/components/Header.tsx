@@ -8,11 +8,11 @@ type HeaderProps = {
 
 const Header: React.FC<HeaderProps> = ({ logoUrl }) => {
   return (
-    <MjmlSection padding={'48px 24px 0'}>
+    <MjmlSection padding={'36px 24px 0'}>
       <MjmlColumn>
         <MjmlImage
-          padding="0 24px 0"
-          width={'122px'}
+          padding="0 0 0"
+          width={'220px'}
           align="center"
           src={logoUrl}
           cssClass="logo light-mode"
