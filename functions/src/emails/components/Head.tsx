@@ -24,15 +24,15 @@ const Head: React.FC<HeadProps> = ({ children }) => {
         }
 
         .avatar > div {
-          width: 28px;
-          height: 28px;
+          width: 32px;
+          height: 32px;
           background-color: #FBC858;
           text-align: center !important;
-          line-height: 28px;
+          line-height: 32px;
           padding: 0;
           font-size: 12px;
           display: block;
-          border-radius: 14px;
+          border-radius: 32px;
         }
 
         .avatar.color.tomato > div  {

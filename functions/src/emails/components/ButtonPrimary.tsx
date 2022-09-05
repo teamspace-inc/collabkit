@@ -13,14 +13,14 @@ const ButtonPrimary: React.FC<ButtonPrimaryProps> = ({ link, uiText, color }) =>
     <>
       <MjmlButton
         lineHeight={'22px'}
-        fontSize={'20px'}
-        fontWeight={500}
-        height={32}
+        fontSize={'14px'}
+        fontWeight={600}
+        height={44}
         padding="20px 24px"
         align="left"
         href={link}
         backgroundColor={color}
-        borderRadius={'50px'}
+        borderRadius={'6px'}
         cssClass="light-mode"
       >
         {uiText}

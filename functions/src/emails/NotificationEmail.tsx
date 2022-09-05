@@ -55,10 +55,10 @@ type NotificationEmailProps = {
 
 function Comment(props: { actorColor: string; actorName: string; commentBody: string[] }) {
   return (
-    <MjmlSection textAlign="left" padding="0px 0px 40px">
+    <MjmlSection textAlign="left" padding="32px 0px 32px">
       <MjmlColumn width="44px" padding="0px">
         <MjmlText
-          lineHeight={'28px'}
+          lineHeight={'32px'}
           align={'left'}
           fontWeight={800}
           color={'white'}
@@ -68,11 +68,11 @@ function Comment(props: { actorColor: string; actorName: string; commentBody: st
         </MjmlText>
       </MjmlColumn>
       <MjmlColumn padding={'0px'}>
-        <MjmlText fontWeight={700} fontSize={'18px'} lineHeight={'26px'}>
+        <MjmlText fontWeight={500} fontSize={'18px'} lineHeight={'32px'}>
           {props.actorName}
         </MjmlText>
         {props.commentBody.map((line) => (
-          <MjmlText padding="16px 24px 0px" fontWeight={400} fontSize={'18px'} lineHeight={'26px'}>
+          <MjmlText padding="16px 24px 0px" fontWeight={400} fontSize={'18px'} lineHeight={'27px'}>
             <MarkdownBody body={line} />
           </MjmlText>
         ))}
@@ -103,13 +103,13 @@ const NotificationEmail: React.FC<NotificationEmailProps> = ({
       <Head />
       <MjmlBody width={600}>
         <Header logoUrl={appLogoUrl} />
-        <MjmlSection padding="40px 24px 0" cssClass="smooth">
+        <MjmlSection padding="0px 24px 0" cssClass="smooth">
           <MjmlColumn>
             {
               <MjmlText
-                padding="0 0 26px"
-                fontSize={'24px'}
-                lineHeight={'32px'}
+                padding="32px 0 32px"
+                fontSize={'28px'}
+                lineHeight={'35px'}
                 cssClass="paragraph"
               >
                 <b>{activity}</b>{' '}
@@ -135,7 +135,7 @@ const NotificationEmail: React.FC<NotificationEmailProps> = ({
             />
           );
         })}
-        <MjmlSection padding="0 24px 0" cssClass="smooth">
+        <MjmlSection padding="0 0 0" cssClass="smooth">
           <MjmlColumn>
             <>
               <ButtonPrimary
