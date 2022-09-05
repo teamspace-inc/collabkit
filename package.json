@@ -9,7 +9,9 @@
       "www"
     ],
     "nohoist": [
-      "**/@types/react"
+      "**/@types/react",
+      "**/mailing",
+      "**/mailing-core"
     ]
   },
   "scripts": {

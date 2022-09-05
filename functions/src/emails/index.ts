@@ -7,8 +7,8 @@ const transport = nodemailer.createTransport({
   port: 465,
   secure: true, // use TLS
   auth: {
-    user: functions.config().mailer.user ?? process.env.MAILER_USER,
-    pass: functions.config().mailer.pass ?? process.env.MAILER_PASSWORD,
+    user: functions.config().mailer?.user ?? process.env.MAILER_USER,
+    pass: functions.config().mailer?.pass ?? process.env.MAILER_PASSWORD,
   },
 });
 

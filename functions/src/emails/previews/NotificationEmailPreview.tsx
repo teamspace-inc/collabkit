@@ -246,7 +246,7 @@ export function newComments() {
     <NotificationEmail
       openUrl={sample.body.data.thread.info.url}
       appLogoUrl={
-        'https://uploads-ssl.webflow.com/621c64f63b023c2de02255d3/621c65a1379d5f3a08216e47_logo_wide_black.png'
+        'https://firebasestorage.googleapis.com/v0/b/collabkit-dev.appspot.com/o/apps%2Flogos%2FDart.png?alt=media&token=38a3536f-4035-494b-802c-7fd568f5a21f'
       }
       activity={`${sample.body.data.comments.list?.length} new comment`}
       appName="Dart"
