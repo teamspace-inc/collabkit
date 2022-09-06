@@ -58,11 +58,11 @@ const StyledCommentTimestamp = styled(Comment.Timestamp, messageHeaderStyles.tim
   lineHeight: '153%',
 });
 const StyledCommentRoot = styled(Comment.Root, commentStyles.root, {
-  padding: '16px 16px 0',
+  padding: '16px 16px 16px',
   gap: '12px',
 });
 const StyledCommentContent = styled(Comment.Content, commentStyles.message, {
-  padding: '0px 0px 16px',
+  padding: '0px 0px 0px',
 });
 const StyledCommentBody = styled(Comment.Body, commentStyles.body);
 
