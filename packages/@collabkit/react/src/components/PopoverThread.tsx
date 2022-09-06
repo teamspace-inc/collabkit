@@ -27,8 +27,7 @@ import {
   ScrollAreaCorner,
 } from './ScrollArea';
 import { ThreadContext } from '../hooks/useThreadContext';
-// import { IconButton } from './IconButton';
-// import { ArrowUp, Check, X } from './icons';
+
 import { useComposerSendButton } from '../hooks/useComposerSendButton';
 import { Base } from './Base';
 
@@ -226,13 +225,13 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
                                         {!isResolved ? (
                                           <Check
                                             size={19}
-                                            weight={'thin'}
+                                            weight={'regular'}
                                             color={theme.colors.neutral12.toString()}
                                           />
                                         ) : (
                                           <Check
                                             size={18}
-                                            weight={'fill'}
+                                            weight={'regular'}
                                             color={theme.colors.neutral12.toString()}
                                           />
                                         )}
