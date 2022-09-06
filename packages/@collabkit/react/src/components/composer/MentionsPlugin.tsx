@@ -651,7 +651,7 @@ function useMentions(editor: LexicalEditor) {
   );
 }
 
-export function MentionsPlugin(): React.ReactNode | null {
+export function MentionsPlugin(): JSX.Element | null {
   const [editor] = useLexicalComposerContext();
   return useMentions(editor);
 }
