@@ -17,8 +17,6 @@ export type Events = ReturnType<typeof createEvents>;
 
 export function createEvents(store: Store) {
   return {
-    // @ville: what's the best way to expose this for clients to call
-    // i want to enable it so Tella can populate a timestamp in the editor
     onInsertText: (target: ThreadTarget, text: string) => {
       const editor = store.workspaces[target.workspaceId].composers[target.threadId].editor;
       if (!editor) {
