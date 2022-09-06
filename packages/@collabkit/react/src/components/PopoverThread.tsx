@@ -45,6 +45,7 @@ import { Check } from './icons';
 const StyledPopoverThreadRoot = styled(Base, popoverThreadStyles.root);
 const StyledThreadContent = styled(Content, threadStyles.content);
 const StyledCommentList = styled(CommentList.Root, commentListStyles.list);
+// custom cashboard styling, we should refactor this
 const StyledCommentHeader = styled(Comment.Header, messageHeaderStyles.root, {
   flexDirection: 'row',
   gap: 12,
@@ -53,14 +54,20 @@ const StyledCommentHeader = styled(Comment.Header, messageHeaderStyles.root, {
   padding: '0px 0px 0px',
 });
 const StyledCommentCreatorName = styled(Comment.CreatorName, messageHeaderStyles.name);
+
+// custom cashboard styling, we should refactor this
 const StyledCommentTimestamp = styled(Comment.Timestamp, messageHeaderStyles.timestamp, {
   fontSize: '$fontSize$0',
   lineHeight: '153%',
 });
+
+// custom cashboard styling, we should refactor this
 const StyledCommentRoot = styled(Comment.Root, commentStyles.root, {
   padding: '16px 16px 16px',
   gap: '12px',
 });
+
+// custom cashboard styling, we should refactor this
 const StyledCommentContent = styled(Comment.Content, commentStyles.message, {
   padding: '0px 0px 0px',
 });
@@ -127,7 +134,7 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
   const { store, events, theme } = useApp();
   const { workspaceId, profiles, userId } = useSnapshot(store);
 
-  const { isResolved, isEmpty, target, list, disabled } = useThread({
+  const { isResolved, isEmpty, list, disabled } = useThread({
     ...props,
     store,
     workspaceId,
