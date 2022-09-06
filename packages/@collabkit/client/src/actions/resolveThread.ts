@@ -34,6 +34,7 @@ export async function resolveThread(store: Store, workspaceId: string, threadId:
   store.workspaces[workspaceId].timeline[threadId][id] = {
     ...event,
     createdAt: +Date.now(),
+    id,
   };
   try {
     await store.sync.markResolved({ appId, workspaceId, threadId });

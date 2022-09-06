@@ -82,7 +82,7 @@ export default function App() {
 }
 
 function Home() {
-  const threadId = 'new-your-thread-id';
+  const threadId = 'new-your-thread-id2';
 
   const unreadCount = useUnreadCount({ threadId });
   const unread = unreadCount > 0 ? ` (${unreadCount})` : '';

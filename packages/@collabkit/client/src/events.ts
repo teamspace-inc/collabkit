@@ -63,10 +63,12 @@ export function createEvents(store: Store) {
 
         if (newBody.length === 0) {
           actions.isTyping.cancel();
+          actions.disableSendButton(store, { target });
           setTimeout(() => {
             actions.stopTyping(store, { target });
           }, 100);
         } else if (newBody.length !== body.length) {
+          actions.enableSendButton(store, { target });
           actions.isTyping(store, { target });
         }
       });

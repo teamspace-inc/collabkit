@@ -79,10 +79,10 @@ export interface Theme {
   };
   padding: {
     composer: string;
-    commentTop: string;
-    commentLeft: string;
-    commentRight: string;
-    commentBottom: string;
+    commentTop: string | number;
+    commentLeft: string | number;
+    commentRight: string | number;
+    commentBottom: string | number;
     mentionDropdownItemPadding: string;
     composerContainer: string;
 

@@ -5,10 +5,10 @@ import type { Store } from '@collabkit/core';
 
 type Themes = ReturnType<typeof createThemes>;
 
-export type AppContextData = {
+export type AppContextValue = {
   store: Store;
   events: Events;
   theme: Themes['darkTheme'] | Themes['lightTheme'];
 };
 
-export const AppContext = createContext<AppContextData | null>(null);
+export const AppContext = createContext<AppContextValue | null>(null);

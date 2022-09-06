@@ -31,6 +31,7 @@ export async function reopenThread(store: Store, workspaceId: string, threadId: 
     store.workspaces[workspaceId].timeline[threadId][id] = {
       ...event,
       createdAt: +Date.now(),
+      id,
     };
     actions.stopTyping(store, { target: { type: 'composer', workspaceId, threadId } });
   } catch (e) {

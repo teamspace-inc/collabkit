@@ -65,6 +65,7 @@ export async function writeMessageToFirebase(
       ...event,
       hasProfile: true,
       createdAt: +Date.now(),
+      id,
     };
 
     // stop typing indicator as we sent the message successfully

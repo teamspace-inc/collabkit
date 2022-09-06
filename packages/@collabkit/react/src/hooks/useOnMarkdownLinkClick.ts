@@ -1,7 +1,6 @@
 import { MentionWithColor } from '@collabkit/core';
 import React, { useCallback } from 'react';
 import { useSnapshot } from 'valtio';
-import { WithID, Event } from '../constants';
 import { useApp } from './useApp';
 import { useThreadContext } from './useThreadContext';
 
@@ -14,16 +13,18 @@ export function useOnMarkdownLinkClick(props: {
   threadId: string;
   workspaceId: string;
   userId: string;
-  event: WithID<Event> | null;
+  eventId: string | null;
 }) {
   const { threadId } = useThreadContext();
-  const { event } = props;
+  const { eventId } = props;
   const { store } = useApp();
   const { workspaceId, userId } = useSnapshot(store);
 
   if (!workspaceId || !userId) {
     throw new Error('CollabKit: workspaceId and userId are required');
   }
+
+  const event = eventId ? store.workspaces[workspaceId].timeline[threadId]?.[eventId] : null;
 
   const triggerTimestampClick = useCallback(
     (timestamp: string) => {

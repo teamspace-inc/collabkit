@@ -33,6 +33,8 @@ import { isTyping } from './isTyping';
 import { saveThreadInfo } from './saveThreadInfo';
 import { init } from './init';
 import { saveMentionableUsers } from './saveMentionableUsers';
+import { enableSendButton } from './enableSendButton';
+import { disableSendButton } from './disableSendButton';
 
 export type GenerateToken =
   | {
@@ -100,38 +102,39 @@ export function getConfig(store: Store) {
 }
 
 export const actions = {
-  init,
-  monitorConnection,
-  startThread: placePinAndStartComposingThread,
-  subscribeInbox,
-  stopTyping,
-  closeThread,
-  isTyping: debounce(isTyping, 1000, { leading: true, maxWait: 1000 }),
-  stopSelecting,
-  startSelecting,
-  subscribeThread,
-  seen,
-  subscribeSeen,
-  subscribeOpenThreads,
-  subscribeProfiles,
-  saveProfile,
   authenticate,
-  subscribePins,
-  subscribeWorkspace,
-  focus,
   blur,
-  toggleCommentReaction,
-  toggleEmojiReactionPicker,
   closeEmojiReactionPicker,
-  reopenThread,
-  resolveThread,
-  sendMessage,
+  closeThread,
+  disableSendButton,
+  enableSendButton,
+  focus,
+  hover,
+  init,
+  isTyping: debounce(isTyping, 1000, { leading: true, maxWait: 1000 }),
+  monitorConnection,
   placePinAndStartComposingThread,
   removePendingPins,
-  hover,
+  reopenThread,
+  resolveThread,
+  saveMentionableUsers,
+  saveProfile,
+  saveThreadInfo,
+  seen,
+  sendMessage,
+  startSelecting,
+  startThread: placePinAndStartComposingThread,
+  stopSelecting,
+  stopTyping,
+  subscribeInbox,
+  subscribeOpenThreads,
+  subscribePins,
+  subscribeProfiles,
+  subscribeSeen,
+  subscribeThread,
+  subscribeWorkspace,
+  toggleCommentReaction,
+  toggleEmojiReactionPicker,
   unhover,
   viewThread,
-  saveThreadInfo,
-
-  saveMentionableUsers,
 };

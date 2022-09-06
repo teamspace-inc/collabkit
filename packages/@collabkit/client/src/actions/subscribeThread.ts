@@ -14,6 +14,7 @@ export async function subscribeThread(
     $$mentions: [],
     isTyping: {},
     editor: null,
+    sendButtonDisabled: true,
   };
   const { workspaceId, threadId } = props;
   const { appId, userId } = getConfig(store);
@@ -25,7 +26,10 @@ export async function subscribeThread(
     subs: store.subs,
     onTimelineEventAdded: (event: Sync.TimelineChangeEvent) => {
       store.workspaces[event.workspaceId].timeline[event.threadId] ||= {};
-      store.workspaces[event.workspaceId].timeline[event.threadId][event.eventId] ||= event.event;
+      store.workspaces[event.workspaceId].timeline[event.threadId][event.eventId] ||= {
+        ...event.event,
+        id: event.eventId,
+      };
       if (store.profiles[event.event.createdById]) {
         store.workspaces[event.workspaceId].timeline[event.threadId][event.eventId].hasProfile =
           true;

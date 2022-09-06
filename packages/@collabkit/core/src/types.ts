@@ -253,13 +253,14 @@ export interface Profile extends BasicProfile {
 }
 
 export interface Timeline {
-  [eventId: string]: WithHasProfile<Event>;
+  [eventId: string]: WithHasProfile<WithID<Event>>;
 }
 
 export interface Composer {
   editor: LexicalEditor | null;
   $$body: string;
   $$mentions: MentionWithColor[];
+  sendButtonDisabled: boolean;
   isTypingTimeoutID?: ReturnType<typeof setTimeout>;
   isTyping: { [endUserId: string]: boolean };
 }

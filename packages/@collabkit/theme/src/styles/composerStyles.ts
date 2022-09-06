@@ -15,7 +15,6 @@ export const placeholder = css({
   top: '$padding$1',
   left: '$padding$1',
   fontSize: '$fontSize$2',
-  lineHeight: '$lineHeights$0',
   userSelect: 'none',
   display: 'inline-block',
   pointerEvents: 'none',
@@ -39,8 +38,9 @@ export const contentEditable = css({
   lineHeight: '$lineHeights$0',
   position: 'relative',
   tabSize: 1,
-  height: '100%',
+  boxSizing: 'border-box',
   outline: 0,
+  width: '100%',
   padding: '$padding$1 $padding$1',
   caretColor: '$colors$caretColor',
 });
@@ -61,10 +61,10 @@ export const editorRoot = css({
   borderRadius: '$radii$0',
   color: '$colors$primaryText',
   width: '100%',
-  padding: '0px',
   position: 'relative',
   verticalAlign: 'top',
   background: '$colors$composerBackground',
+  boxSizing: 'border-box',
   border: '$borders$composer',
 
   fontSize: '$fontSize$2',
@@ -72,39 +72,16 @@ export const editorRoot = css({
   fontWeight: '$fontWeights$0',
   textAlign: 'left',
 
-  variants: {
-    floating: {
-      true: {
-        borderRadius: '',
-      },
-    },
-    // insetSendButton: {
-    //   true: {
-    //     width: 'calc(100% - ($padding$composer*2) - $sizes$sendButton)', // take into account send button
-    //   },
-    // },
-    // isFloating: {
-    //   true: {
-    //     border: '1px solid transparent',
-    //   },
-    // },
-  },
-
   '::placeholder': {
     color: '$colors$composerPlaceholder',
   },
 });
 
-// affects the text rendered inside the composer, so
-// there is room for the send
 export const content = css({
   borderRadius: '$radii$0',
-  width: 'calc(100% - $sizes$sendButton - 8px)', // take into account send button
   color: '$colors$primaryText',
   padding: '0px',
   position: 'relative',
-  // verticalAlign: 'top',
-  fontSize: '$fontSize$2',
   lineHeight: '$lineHeights$1',
   fontWeight: '$fontWeights$0',
   textAlign: 'left',

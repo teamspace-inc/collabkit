@@ -1,33 +1,66 @@
-import { FlexCenter } from './UIKit';
 import React, { useEffect, useState } from 'react';
-import { Composer } from './composer/Composer';
+import { FlexCenter } from './UIKit';
 import { ScrollableCommentList } from './ScrollableCommentList';
 import { useApp } from '../hooks/useApp';
 import { useThread } from '../hooks/useThread';
 import { EmptyState } from './thread/EmptyState';
-import { useNewIndicator } from './NewIndicator';
+import { NewIndicator, useNewIndicator } from './NewIndicator';
 import { styled } from '@stitches/react';
-import { commentStyles, sendButtonStyles, threadStyles } from '@collabkit/theme';
+import {
+  commentStyles,
+  messageHeaderStyles,
+  sendButtonStyles,
+  threadStyles,
+} from '@collabkit/theme';
 import { useSnapshot } from 'valtio';
 import type { ThreadInfo } from '@collabkit/core';
 import { TypingIndicator } from './TypingIndicator';
-import { ComposerEditor } from './composer/ComposerEditor';
 import { Avatar } from './Avatar';
-import { CommentList } from './CommentList';
-import { ThreadContext } from '../hooks/useThreadContext';
-import { ComposerSendButton } from './composer/ComposerSendButton';
+import { ThreadContext, ThreadContextValue } from '../hooks/useThreadContext';
 import { Button } from './Button';
 import { ArrowUp } from './icons';
+import { useComposerSendButton } from '../hooks/useComposerSendButton';
+import { composerStyles } from '@collabkit/theme';
+import { formatRelative } from 'date-fns';
+import { commentListStyles } from '@collabkit/theme';
+import { getCommentType } from '../utils/getCommentType';
+import { Markdown } from './Markdown';
+import { Base } from './Base';
+
+import * as Comment from './Comment';
+import * as CommentList from './CommentList';
+import * as Composer from './composer/Composer';
+
+const Content = Base;
 
 const SendButtonIcon = styled(ArrowUp, sendButtonStyles.icon);
+const StyledThreadRoot = styled(Base, threadStyles.root);
+const StyledThreadContent = styled(Content, threadStyles.content);
+const StyledHeader = styled(ThreadHeader, threadStyles.header);
+const StyledHeaderTitle = styled('div', threadStyles.headerTitle);
+const StyledTextOffset = styled('div', commentStyles.messageTextOffset);
+const StyledCommentList = styled(CommentList.Root, commentListStyles.list);
+const StyledCommentHeader = styled(Comment.Header, messageHeaderStyles.root);
+const StyledCommentCreatorName = styled(Comment.CreatorName, messageHeaderStyles.name);
+const StyledCommentTimestamp = styled(Comment.Timestamp, messageHeaderStyles.timestamp);
+const StyledCommentRoot = styled(Comment.Root, commentStyles.root);
+const StyledCommentContent = styled(Comment.Content, commentStyles.message);
+const StyledCommentBody = styled(Comment.Body, commentStyles.body);
 
-const Root = styled('div', threadStyles.root);
-const Content = styled('div', threadStyles.content);
-const Header = styled('div', threadStyles.header);
-const HeaderTitle = styled('div', threadStyles.headerTitle);
-const TextOffset = styled('div', commentStyles.messageTextOffset);
+const StyledComposerRoot = styled(Composer.Root, composerStyles.root);
+const StyledComposerContentEditable = styled(
+  Composer.ContentEditable,
+  composerStyles.contentEditable
+);
+const StyledComposerPlaceholder = styled('div', composerStyles.placeholder);
+const StyledComposerEditor = styled(Composer.Editor, composerStyles.editorRoot);
+const StyledComposerContent = styled(Composer.Content, composerStyles.content);
 
-export function Thread(props: {
+function ThreadHeader(props: { children?: React.ReactNode; className?: string }) {
+  return <div className={props.className}>{props.children}</div>;
+}
+
+export type ThreadProps = {
   threadId: string;
   info?: ThreadInfo;
   style?: React.CSSProperties;
@@ -35,98 +68,147 @@ export function Thread(props: {
   showHeader?: boolean;
   autoFocus?: boolean;
   onCloseButtonClick?: (e: React.MouseEvent) => void;
-}) {
-  const { threadId } = props;
-  const [context, setContext] = useState<{
-    threadId: string;
-    userId: string;
-    workspaceId: string;
-  } | null>(null);
+};
+
+function ThreadContextProvider(props: ThreadProps & { children: React.ReactNode }) {
+  const { threadId, info, composerPrompt, showHeader, autoFocus } = props;
+  const [context, setContext] = useState<ThreadContextValue | null>(null);
+  const { store, theme } = useApp();
+  const { userId, workspaceId } = useSnapshot(store);
+
+  useEffect(() => {
+    if (threadId && userId && workspaceId) {
+      setContext({ threadId, userId, workspaceId, showHeader, composerPrompt, autoFocus, info });
+    }
+  }, [threadId, userId, workspaceId, showHeader, autoFocus, composerPrompt, info]);
+
+  if (userId == null || workspaceId == null) {
+    return null;
+  }
+
+  return (
+    <ThreadContext.Provider value={context ?? { threadId, userId, workspaceId }}>
+      <div className={theme.className} data-collabkit-internal="true" style={{ height: '100%' }}>
+        {props.children}
+      </div>
+    </ThreadContext.Provider>
+  );
+}
+
+export function Thread(props: ThreadProps & { className?: string; children?: React.ReactNode }) {
   const { store, theme } = useApp();
 
-  const { userId, workspaceId, workspaces, profiles } = useSnapshot(store);
-  const workspace = workspaceId ? workspaces[workspaceId] : null;
+  const { threadId, autoFocus, composerPrompt } = props;
 
-  const { timeline, isEmpty, seenUntil } = useThread({
-    ...props,
+  const { profiles, userId, workspaceId } = useSnapshot(store);
+
+  const { timeline, isEmpty, seenUntil, list, disabled } = useThread({
     store,
+    threadId,
     workspaceId,
   });
 
   const newIndicatorId = useNewIndicator({ userId, timeline, seenUntil });
 
-  const shouldRenderEmptyState = isEmpty || !workspace?.likelyFetchedAllProfiles;
+  const profile = userId ? profiles[userId] : null;
 
-  const canRenderCommentList = !isEmpty && workspace?.likelyFetchedAllProfiles && timeline;
-
-  useEffect(() => {
-    if (threadId && userId && workspaceId) {
-      setContext({ threadId, userId, workspaceId });
-    }
-  }, [threadId, userId, workspaceId]);
-
-  // render dummy thread here
-  if (userId == null || workspaceId == null) {
-    return null;
-  }
-
-  const profile = profiles[userId];
+  const { onPointerDown } = useComposerSendButton({ workspaceId, threadId });
 
   return (
-    <ThreadContext.Provider value={context ?? { threadId, userId, workspaceId }}>
-      <Root className={theme.className} style={props.style} data-collabkit-internal="true">
-        <Content>
-          {props.showHeader ? (
-            <Header>
-              <HeaderTitle>Comments</HeaderTitle>
-            </Header>
-          ) : null}
-          {shouldRenderEmptyState ? <EmptyState /> : <FlexCenter />}
-          {canRenderCommentList && (
-            <ScrollableCommentList>
-              <CommentList
-                seenUntil={seenUntil}
-                timeline={timeline}
-                newIndicatorId={newIndicatorId}
-              />
-            </ScrollableCommentList>
-          )}
-          {
-            <Composer>
-              {profile ? <Avatar profile={profile} /> : null}
-              <ComposerEditor
-                placeholder={
-                  props.composerPrompt != null
-                    ? props.composerPrompt
-                    : isEmpty
-                    ? 'Add a comment'
-                    : 'Reply to this comment'
-                }
-                autoFocus={props.autoFocus}
-              />
-              <ComposerSendButton
-                renderButton={({ disabled, onPointerDown }) => (
-                  <Button
-                    onPointerDown={onPointerDown}
-                    type="primary"
-                    icon={
-                      <SendButtonIcon
-                        size={13}
-                        color={theme.colors.composerButtonIconColor.toString()}
-                        weight="bold"
-                      />
-                    }
-                    disabled={disabled}
-                  />
-                )}
-              />
-            </Composer>
-          }
-          <TextOffset>
-            <TypingIndicator />
-          </TextOffset>
-        </Content>
-      </Root>
-    </ThreadContext.Provider>
+    <ThreadContextProvider {...props}>
+      <div style={{ display: 'contents' }}>
+        <StyledThreadRoot>
+          <StyledThreadContent>
+            {props.showHeader ? (
+              <StyledHeader>
+                <StyledHeaderTitle>Comments</StyledHeaderTitle>
+              </StyledHeader>
+            ) : null}
+            {isEmpty ? <EmptyState /> : <FlexCenter />}
+            {!isEmpty && (
+              <ScrollableCommentList>
+                <StyledCommentList>
+                  {list?.map((group, i) => {
+                    return group.map((event, index) => {
+                      const profile = profiles[event.createdById];
+                      const type = getCommentType(group, index);
+                      const showProfile = type === 'default' || type === 'inline-start';
+                      return profile ? (
+                        <div key={event.id}>
+                          {newIndicatorId === event.id ? <NewIndicator /> : null}
+                          <StyledCommentRoot type={type} key={`event-${event.id}`}>
+                            {profile && showProfile ? <Avatar profile={profile} /> : null}
+                            <StyledCommentContent type={type} profileIndent={!showProfile}>
+                              <StyledCommentHeader>
+                                {showProfile ? (
+                                  <StyledCommentCreatorName>
+                                    {profile.name ?? profile.email ?? 'Anonymous'}
+                                  </StyledCommentCreatorName>
+                                ) : null}
+                                {showProfile ? (
+                                  <StyledCommentTimestamp>
+                                    {formatRelative(+event.createdAt, +Date.now())
+                                      .replace(/yesterday at (.*)/, 'yesterday')
+                                      .replace('today at', '')
+                                      .replace(
+                                        /(last Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday) .*/,
+                                        '$1'
+                                      )}
+                                  </StyledCommentTimestamp>
+                                ) : null}
+                              </StyledCommentHeader>
+                              <StyledCommentBody>
+                                <Markdown body={event.body} />
+                              </StyledCommentBody>
+                            </StyledCommentContent>
+                          </StyledCommentRoot>
+                        </div>
+                      ) : null;
+                    });
+                  })}
+                </StyledCommentList>
+              </ScrollableCommentList>
+            )}
+            {
+              <StyledComposerRoot>
+                {profile ? <Avatar profile={profile} /> : null}
+                <StyledComposerEditor
+                  contentEditable={(props: { autoFocus?: boolean }) => (
+                    <StyledComposerContent>
+                      <StyledComposerContentEditable {...props} />
+                    </StyledComposerContent>
+                  )}
+                  placeholder={
+                    <StyledComposerPlaceholder>
+                      {composerPrompt != null
+                        ? composerPrompt
+                        : isEmpty
+                        ? 'Add a comment'
+                        : 'Reply to this comment'}
+                    </StyledComposerPlaceholder>
+                  }
+                  autoFocus={autoFocus}
+                />
+                <Button
+                  onPointerDown={onPointerDown}
+                  type="primary"
+                  icon={
+                    <SendButtonIcon
+                      size={13}
+                      color={theme.colors.composerButtonIconColor.toString()}
+                      weight="bold"
+                    />
+                  }
+                  disabled={disabled}
+                />
+              </StyledComposerRoot>
+            }
+            <StyledTextOffset>
+              <TypingIndicator />
+            </StyledTextOffset>
+          </StyledThreadContent>
+        </StyledThreadRoot>
+      </div>
+    </ThreadContextProvider>
   );
 }

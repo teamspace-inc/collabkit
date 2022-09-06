@@ -13,17 +13,8 @@ export const root = css({
   display: 'flex',
   flex: '1',
   gap: '4px',
-  variants: {
-    layout: {
-      block: {
-        flexDirection: 'column',
-      },
-      inline: {
-        flexDirection: 'row',
-        alignItems: 'baseline',
-      },
-    },
-  },
+  flexDirection: 'row',
+  alignItems: 'baseline',
 });
 
 export const timestamp = css({

@@ -28,6 +28,7 @@ export const header = css({
   color: '$neutral12',
   padding: '20px 16px',
   display: 'flex',
+  flex: 1,
 });
 
 export const headerTitle = css({

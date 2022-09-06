@@ -64,13 +64,9 @@ export const message = css({
   display: 'flex',
   position: 'relative',
   flexDirection: 'column',
-  flex: 0,
-  fontSize: '$fontSize$2',
-  lineHeight: '$lineHeights$0',
-  color: '$colors$primaryText',
-  wordBreak: 'break-word',
-  overflowWrap: 'break-word',
-  gap: '4px',
+  flex: 1,
+
+  gap: '8px',
   borderRadius: '$radii$1',
 
   variants: {
@@ -86,6 +82,12 @@ export const message = css({
 });
 
 export const body = css({
+  wordBreak: 'break-word',
+  overflowWrap: 'break-word',
+  fontSize: '$fontSize$2',
+  lineHeight: '$lineHeights$0',
+  color: '$colors$primaryText',
+
   variants: {
     isPreview: {
       true: {

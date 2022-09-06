@@ -9,4 +9,11 @@ export const root = css(threadStyles.content, {
   zIndex: 9999,
   position: 'relative',
   width: '$sizes$popoverThreadWidth',
+  background: '#FFFFFF',
+  /* Neutral Shades/BG3 */
+
+  border: '1px solid #E3E9ED',
+  /* 📖 Elevation - Standard */
+  boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.05)',
+  borderRadius: 8,
 });

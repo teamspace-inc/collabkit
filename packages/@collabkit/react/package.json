@@ -40,7 +40,7 @@
     "@radix-ui/react-tooltip": "^0.1.7",
     "@stitches/react": "^1.2.8",
     "@types/lodash.debounce": "^4.0.7",
-    "@types/react": "^18.0.17",
+    "@types/react": "^18.0.18",
     "@types/react-dom": "^18.0.6",
     "@types/react-test-renderer": "^18.0.0",
     "@types/sync-fetch": "^0.4.0",
@@ -66,13 +66,12 @@
     "sync-fetch": "^0.4.1",
     "valtio": "^1.6.1",
     "vite": "^3.0.9",
-    "vitest": "^0.22.1"
+    "vitest": "^0.22.1",
+    "react-remark": "^2.1.0"
   },
   "prettier": {
     "singleQuote": true,
     "printWidth": 100
   },
-  "dependencies": {
-    "react-remark": "^2.1.0"
-  }
+  "dependencies": {}
 }

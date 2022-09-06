@@ -1,79 +1,72 @@
-import React, { useRef } from 'react';
-import { CommentType, Event, Profile } from '../constants';
-import { Avatar } from './Avatar';
-import { HStack } from './UIKit';
-import { MessageHeader } from './comment/MessageHeader';
-import { commentStyles } from '@collabkit/theme';
+import React from 'react';
 
-import { WithHasProfile, WithID } from '@collabkit/core';
+import { Base } from './Base';
+
+import { useMarkAsSeen } from '../hooks/useMarkAsSeen';
 import { useOnMarkdownLinkClick } from '../hooks/useOnMarkdownLinkClick';
-import { Markdown } from './Markdown';
 import { useThreadContext } from '../hooks/useThreadContext';
 import { styled } from '@stitches/react';
-import { useHasOverflow } from '../hooks/useHasOverflow';
-import { useMarkAsSeen } from '../hooks/useMarkAsSeen';
+import { commentStyles, messageHeaderStyles } from '@collabkit/theme';
+import { Event, Profile } from '@collabkit/core';
 
-const Root = styled('div', commentStyles.root);
-const Message = styled('div', commentStyles.message);
-const Body = styled('span', commentStyles.body);
-const BodyEllipsis = styled('span', commentStyles.bodyEllipsis);
-
-export function Comment(props: {
-  reactions: { [createdById: string]: Event };
-  seen?: boolean;
-  event: WithID<WithHasProfile<Event>>;
-  profile: Profile;
-  type: CommentType;
-  isPreview?: boolean;
+export function Root(props: {
+  children: React.ReactNode;
+  className?: string;
+  eventId: string;
+  style?: React.CSSProperties;
 }) {
   const { threadId, workspaceId, userId } = useThreadContext();
-  const bodyRef = useRef(null);
 
-  const target = {
-    type: 'comment',
-    workspaceId,
-    threadId,
-    eventId: props.event.id,
-  } as const;
+  const { eventId } = props;
 
-  const { ref } = useMarkAsSeen(target);
+  const { ref } = useMarkAsSeen({ threadId, workspaceId, eventId, type: 'comment' });
 
-  const showProfile = props.type === 'default' || props.type === 'inline-start';
   const { onClick } = useOnMarkdownLinkClick({
-    ...props,
     workspaceId,
     threadId,
     userId,
-    event: props.event,
+    eventId,
   });
 
-  const isOverflowing = useHasOverflow(bodyRef, [props.event.body]);
-
-  if (
-    props.event.type === 'system' ||
-    !props.event.hasProfile ||
-    typeof props.profile !== 'object'
-  ) {
-    return null;
-  }
+  // todo nc bring this check back, or resolved messages will show up in the thread
+  // if (event.type === 'system' || !event.hasProfile || typeof profile !== 'object') {
+  //   return null;
+  // }
 
   return (
-    <Root seen={props.seen} type={props.type ?? 'default'} isPreview={props.isPreview} ref={ref}>
-      {showProfile && <Avatar profile={props.profile} />}
-      <HStack>
-        <Message profileIndent={!showProfile}>
-          {showProfile && (
-            <MessageHeader
-              name={props.profile.name ?? props.profile.email ?? 'Anonymous'}
-              createdAt={+props.event.createdAt}
-            />
-          )}
-          <Body ref={bodyRef} isPreview={props.isPreview} onClick={onClick}>
-            <Markdown body={props.event.body} />
-            {isOverflowing ? <BodyEllipsis>{'...'}</BodyEllipsis> : null}
-          </Body>
-        </Message>
-      </HStack>
-    </Root>
+    <div className={props.className} onClick={onClick} ref={ref} style={props.style}>
+      {props.children}
+    </div>
+  );
+}
+
+export const Header = Base;
+export const Body = Base;
+export const CreatorName = Base;
+export const Timestamp = Base;
+export const Content = Base;
+
+// Anatomy
+
+const StyledCommentHeader = styled(Header, messageHeaderStyles.root);
+const StyledCommentCreatorName = styled(CreatorName, messageHeaderStyles.name);
+const StyledCommentTimestamp = styled(Timestamp, messageHeaderStyles.timestamp);
+const StyledCommentRoot = styled(Root, commentStyles.root);
+const StyledCommentContent = styled(Content, commentStyles.message);
+const StyledCommentBody = styled(Body, commentStyles.body);
+
+export default function Comment(props: { event: Event; profile: Profile }) {
+  return (
+    <StyledCommentRoot>
+      <StyledCommentHeader>
+        <StyledCommentCreatorName>
+          {props.profile.name ?? props.profile.email ?? 'Anonymous'}{' '}
+        </StyledCommentCreatorName>
+        <StyledCommentTimestamp>{props.event.createdAt}</StyledCommentTimestamp>
+      </StyledCommentHeader>
+      <StyledCommentBody>
+        <StyledCommentContent>{props.event.body}</StyledCommentContent>
+      </StyledCommentBody>
+    </StyledCommentRoot>
   );
 }

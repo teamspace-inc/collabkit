@@ -610,11 +610,13 @@ function useMentions(editor: LexicalEditor) {
     setResolution(null);
   }, []);
 
-  return resolution === null || editor === null
+  const mentionsEl = document.getElementById('mentions');
+
+  return resolution === null || editor === null || mentionsEl === null
     ? null
     : createPortal(
         <MentionsTypeahead close={closeTypeahead} resolution={resolution} editor={editor} />,
-        document.getElementById('mentions')!
+        mentionsEl
       );
 }
 

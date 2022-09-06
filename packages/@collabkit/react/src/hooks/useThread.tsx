@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useSnapshot } from 'valtio';
 import { actions } from '@collabkit/client';
-import type { ThreadInfo } from '@collabkit/core';
+import { ThreadInfo, timelineUtils } from '@collabkit/core';
 import { Store } from '../constants';
 
 export function useThreadSubscription(props: {
@@ -32,7 +32,10 @@ export function useThread(props: {
   const { isSignedIn, workspaces } = useSnapshot(store);
   const workspace = workspaceId ? workspaces[workspaceId] : null;
   const timeline = workspace ? workspace.timeline[threadId] : null;
-  const isEmpty = timeline ? Object.keys(timeline).length === 0 : true;
+
+  const isEmpty = timeline
+    ? Object.keys(timeline).length === 0
+    : workspace?.likelyFetchedAllProfiles;
 
   useThreadSubscription({ store, threadId, workspaceId });
 
@@ -48,11 +51,18 @@ export function useThread(props: {
       )
     : [];
 
+  // todo use data from view instead of calculating this from
+  // retreived eventsc
   const isResolved = !!(
     timeline &&
     systemEventIds.length > 0 &&
     timeline[systemEventIds[systemEventIds.length - 1]].system === 'resolve'
   );
+
+  const disabled =
+    workspaceId && threadId
+      ? workspaces[workspaceId]?.composers[threadId]?.sendButtonDisabled
+      : true;
 
   useEffect(() => {
     if (workspaceId && isSignedIn && !isEmpty) {
@@ -60,6 +70,8 @@ export function useThread(props: {
         workspaceId,
         threadId,
         isOpen: !isEmpty && !isResolved,
+        // todo only make this delete info if null is explicitly
+        // provided as a value, undefined should be a noop
         info: {
           url: info?.url ?? window.location.href.toString(),
           name: info?.name || null,
@@ -69,11 +81,15 @@ export function useThread(props: {
     }
   }, [workspaceId, threadId, isSignedIn, info, info?.name, isEmpty, isResolved]);
 
+  const groupedTimeline = timeline ? timelineUtils.groupedTimeline(timeline) : null;
+
   return {
     timeline,
     seenUntil,
     isResolved,
     isEmpty,
     target,
+    disabled,
+    ...groupedTimeline,
   };
 }

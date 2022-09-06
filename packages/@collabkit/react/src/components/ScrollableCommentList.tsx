@@ -9,6 +9,7 @@ import {
 
 type Props = {
   children: React.ReactNode;
+  className?: string;
 };
 
 function toNearest(n: number, nearest: number) {
@@ -57,7 +58,9 @@ export class ScrollableCommentList extends Component<Props> {
   render() {
     return (
       <ScrollAreaRoot>
-        <ScrollAreaViewport ref={this.viewportRef}>{this.props.children}</ScrollAreaViewport>
+        <ScrollAreaViewport ref={this.viewportRef} className={this.props.className}>
+          {this.props.children}
+        </ScrollAreaViewport>
         <ScrollAreaScrollbar orientation="vertical">
           <ScrollAreaThumb />
         </ScrollAreaScrollbar>

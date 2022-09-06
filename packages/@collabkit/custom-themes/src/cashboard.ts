@@ -8,6 +8,12 @@ export const cashboard: CustomTheme = {
   sizes: {
     avatar: '32px',
   },
+  padding: {
+    commentTop: 0,
+    commentBottom: 0,
+    commentLeft: 0,
+    commentRight: 0,
+  },
   borders: {
     composer: '1px solid #36B374',
   },
