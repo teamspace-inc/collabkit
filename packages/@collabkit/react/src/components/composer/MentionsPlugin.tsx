@@ -1,4 +1,4 @@
-import React, { ReactPortal } from 'react';
+import React from 'react';
 import type { LexicalEditor, RangeSelection } from 'lexical';
 
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
@@ -14,9 +14,8 @@ import {
   KEY_ESCAPE_COMMAND,
   KEY_TAB_COMMAND,
 } from 'lexical';
-import { startTransition, useCallback, useEffect, useRef, useState } from 'react';
+import { startTransition, useCallback, useEffect, useState } from 'react';
 import { useLayoutEffect } from 'react';
-import { createPortal } from 'react-dom';
 
 import { $createMentionNode, MentionNode } from './MentionNode';
 import { snapshot } from 'valtio';
@@ -26,6 +25,14 @@ import { Avatar } from './../Avatar';
 import { styled } from '@stitches/react';
 import { mentionsPluginStyles } from '@collabkit/theme';
 import { MentionWithColor } from '@collabkit/core';
+import {
+  autoUpdate,
+  flip,
+  FloatingFocusManager,
+  FloatingPortal,
+  size,
+  useFloating,
+} from '@floating-ui/react-dom-interactions';
 
 type MentionMatch = {
   leadOffset: number;
@@ -200,27 +207,40 @@ function MentionsTypeahead({
   editor: LexicalEditor;
   resolution: Resolution;
 }) {
-  const divRef = useRef<HTMLDivElement>(null);
   const match = resolution.match;
   const results = useMentionLookupService(match.matchingString);
   const [selectedIndex, setSelectedIndex] = useState<null | number>(null);
+  const { theme } = useApp();
+
+  const { reference, context } = useFloating({
+    placement: 'bottom-start',
+    open: (results?.length ?? 0) > 0,
+    whileElementsMounted: autoUpdate,
+    // onOpenChange: setThreadOpen,
+    middleware: [
+      // offset(4),
+      flip(),
+      size({
+        padding: 12,
+        apply({ availableWidth, availableHeight, elements }) {
+          Object.assign(elements.floating.style, {
+            maxWidth: `${availableWidth}px`,
+            maxHeight: `${availableHeight}px`,
+          });
+          // setMaxAvailableSize({ width: availableWidth, height: availableHeight });
+        },
+      }),
+    ],
+  });
 
   useEffect(() => {
-    const div = divRef.current;
     const rootElement = editor.getRootElement();
-    if (results !== null && div !== null && rootElement !== null) {
-      div.style.left = '0px';
-      div.style.right = '0px';
-      div.style.bottom = '0px';
-      div.style.display = 'block';
-      rootElement.setAttribute('aria-controls', 'mentions-typeahead');
-
-      return () => {
-        div.style.display = 'none';
-        rootElement.removeAttribute('aria-controls');
-      };
+    if (rootElement === null) {
+      return;
     }
-  }, [editor, resolution, results]);
+
+    reference(rootElement);
+  }, [editor]);
 
   const applyCurrentSelected = useCallback(() => {
     if (results === null || selectedIndex === null) {
@@ -347,25 +367,37 @@ function MentionsTypeahead({
   }
 
   return (
-    <StyledMentionsTypeahead aria-label="Suggested mentions" ref={divRef} role="listbox">
-      <StyledMentionsTypeaheadUl>
-        {results.slice(0, SUGGESTION_LIST_LENGTH_LIMIT).map((result, i) => (
-          <MentionsTypeaheadItem
-            key={result.id}
-            index={i}
-            isSelected={i === selectedIndex}
-            onClick={() => {
-              setSelectedIndex(i);
-              applyCurrentSelected();
-            }}
-            onMouseEnter={() => {
-              setSelectedIndex(i);
-            }}
-            result={result}
-          />
-        ))}
-      </StyledMentionsTypeaheadUl>
-    </StyledMentionsTypeahead>
+    <FloatingFocusManager context={context}>
+      <StyledMentionsTypeahead
+        aria-label="Suggested mentions"
+        role="listbox"
+        className={theme.className}
+        ref={context.floating}
+        style={{
+          position: context.strategy,
+          top: context.y ?? 0,
+          left: context.x ?? 0,
+        }}
+      >
+        <StyledMentionsTypeaheadUl>
+          {results.slice(0, SUGGESTION_LIST_LENGTH_LIMIT).map((result, i) => (
+            <MentionsTypeaheadItem
+              key={result.id}
+              index={i}
+              isSelected={i === selectedIndex}
+              onClick={() => {
+                setSelectedIndex(i);
+                applyCurrentSelected();
+              }}
+              onMouseEnter={() => {
+                setSelectedIndex(i);
+              }}
+              result={result}
+            />
+          ))}
+        </StyledMentionsTypeaheadUl>
+      </StyledMentionsTypeahead>
+    </FloatingFocusManager>
   );
 }
 
@@ -610,17 +642,16 @@ function useMentions(editor: LexicalEditor) {
     setResolution(null);
   }, []);
 
-  const mentionsEl = document.getElementById('mentions');
+  // const mentionsEl = document.getElementById('mentions');
 
-  return resolution === null || editor === null || mentionsEl === null
-    ? null
-    : createPortal(
-        <MentionsTypeahead close={closeTypeahead} resolution={resolution} editor={editor} />,
-        mentionsEl
-      );
+  return resolution === null || editor === null ? null : (
+    <FloatingPortal>
+      <MentionsTypeahead close={closeTypeahead} resolution={resolution} editor={editor} />
+    </FloatingPortal>
+  );
 }
 
-export function MentionsPlugin(): ReactPortal | null {
+export function MentionsPlugin(): React.ReactNode | null {
   const [editor] = useLexicalComposerContext();
   return useMentions(editor);
 }
