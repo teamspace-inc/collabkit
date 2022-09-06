@@ -3,7 +3,7 @@ import { usePopoverThread, PopoverTrigger } from '@collabkit/react';
 type CellProps = { value: number | string; row: Car; column: Column };
 
 const Cell = ({ value, row, column }: CellProps) => {
-  const name = `Cars / ${row.make} ${row.model}} `;
+  const name = `Cars / ${row.make} ${row.model}`;
   const viewId = 'cars';
   const cellId = `${row.id}_${column.key}`;
   const { hasThread, popoverState, context } = usePopoverThread({ name, viewId, cellId });
