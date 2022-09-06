@@ -1,6 +1,6 @@
 {
   "name": "@collabkit/react",
-  "version": "0.2.0-beta1",
+  "version": "0.2.1",
   "type": "module",
   "files": [
     "dist/collabkit-react.d.ts",
@@ -57,6 +57,7 @@
     "react-dom": "^18.0.0",
     "react-intersection-observer": "^9.4.0",
     "react-merge-refs": "^2.0.1",
+    "react-remark": "^2.1.0",
     "react-string-replace": "^1.1.0",
     "react-test-renderer": "^18.2.0",
     "rollup": "2.77.3",
@@ -66,8 +67,7 @@
     "sync-fetch": "^0.4.1",
     "valtio": "^1.6.1",
     "vite": "^3.0.9",
-    "vitest": "^0.22.1",
-    "react-remark": "^2.1.0"
+    "vitest": "^0.22.1"
   },
   "prettier": {
     "singleQuote": true,
