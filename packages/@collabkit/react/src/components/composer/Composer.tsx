@@ -19,7 +19,6 @@ import { TimestampNode } from './TimestampNode';
 import { useThreadContext } from '../../hooks/useThreadContext';
 import { Target } from '../Target';
 import { useTarget } from '../../hooks/useTarget';
-import { Base } from '../Base';
 
 // Catch any errors that occur during Lexical updates and log them
 // or throw them as needed. If you don't throw them, Lexical will
@@ -52,7 +51,25 @@ export function Root(props: { className?: string; children: React.ReactNode }) {
   );
 }
 
-export const Content = Base;
+export function Content(props: {
+  className?: string;
+  children: React.ReactNode;
+  style?: React.CSSProperties;
+}) {
+  const { events } = useApp();
+  const { target } = useTarget();
+
+  return (
+    <div
+      className={props.className}
+      style={props.style}
+      onFocus={(e) => events.onFocus(e, { target })}
+      onBlur={(e) => events.onBlur(e, { target })}
+    >
+      {props.children}
+    </div>
+  );
+}
 
 export function ContentEditable(props: { className?: string; autoFocus?: boolean }) {
   return <LexicalContentEditable className={props.className} tabIndex={props.autoFocus ? 1 : 0} />;
