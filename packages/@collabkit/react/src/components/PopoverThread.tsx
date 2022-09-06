@@ -76,7 +76,11 @@ const StyledCommentBody = styled(Comment.Body, commentStyles.body);
 const StyledComposerRoot = styled(Composer.Root, composerStyles.root, {});
 const StyledComposerContentEditable = styled(
   Composer.ContentEditable,
-  composerStyles.contentEditable
+  composerStyles.contentEditable,
+  {
+    minHeight: 40,
+    padding: '11px 8px',
+  }
 );
 const StyledComposerPlaceholder = styled('div', composerStyles.placeholder);
 const StyledComposerEditor = styled(Composer.Editor, composerStyles.editorRoot);

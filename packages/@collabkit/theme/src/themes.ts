@@ -76,6 +76,7 @@ export interface Theme {
     mentionDropdownBorderRadius: string;
     avatar: string;
     iconButton: string;
+    composer: string;
   };
   padding: {
     composer: string;
@@ -233,6 +234,7 @@ export function createThemes(customTheme?: CustomTheme) {
     mentionDropdownBorderRadius: '$radii$0',
     avatar: '24px',
     iconButton: '24px',
+    composer: '4px',
 
     ['0']: '4px',
     ['1']: '12px',

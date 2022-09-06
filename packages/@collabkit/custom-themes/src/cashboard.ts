@@ -1,7 +1,7 @@
 import type { CustomTheme } from '@collabkit/theme';
 
 export const cashboard: CustomTheme = {
-  radii: { 0: '4px' },
+  radii: { 0: '4px', composer: '8px' },
   fontSize: { 0: '12px', 1: '14px', 2: '14px', 3: '32px', button: '12px' },
   lineHeights: { 0: '18.36px', 1: '22.4px' },
   fontWeights: { 2: 500, 3: 700, button: 600 },

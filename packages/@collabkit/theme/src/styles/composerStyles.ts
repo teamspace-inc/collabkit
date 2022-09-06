@@ -12,7 +12,8 @@ export const placeholder = css({
   overflow: 'hidden',
   position: 'absolute',
   textOverflow: 'ellipsis',
-  top: '$padding$1',
+  top: '50%',
+  transform: 'translateY(-50%)',
   left: '$padding$1',
   fontSize: '$fontSize$2',
   userSelect: 'none',
@@ -43,6 +44,7 @@ export const contentEditable = css({
   width: '100%',
   padding: '$padding$1 $padding$1',
   caretColor: '$colors$caretColor',
+  borderRadius: '$radii$composer',
 });
 
 export const root = css({
@@ -58,7 +60,7 @@ export const typingOffset = css({
 
 export const editorRoot = css({
   flex: 1,
-  borderRadius: '$radii$0',
+  borderRadius: '$radii$composer',
   color: '$colors$primaryText',
   width: '100%',
   position: 'relative',
@@ -80,6 +82,7 @@ export const editorRoot = css({
 export const content = css({
   borderRadius: '$radii$0',
   color: '$colors$primaryText',
+  border: 'none',
   padding: '0px',
   position: 'relative',
   lineHeight: '$lineHeights$1',

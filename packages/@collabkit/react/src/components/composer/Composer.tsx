@@ -90,7 +90,7 @@ export const Editor = function ComposerEditor(props: {
         <div id="mentions" style={{ position: 'absolute', left: 0, right: 0 }} />
         <PasteTextPlugin />
         <PlainTextPlugin
-          contentEditable={props.contentEditable(props)}
+          contentEditable={props.contentEditable({ autoFocus: props.autoFocus })}
           placeholder={props.placeholder}
         />
         <OnChangePlugin
