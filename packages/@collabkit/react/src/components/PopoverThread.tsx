@@ -44,7 +44,9 @@ import { Check } from './icons';
 
 const StyledPopoverThreadRoot = styled(Base, popoverThreadStyles.root);
 const StyledThreadContent = styled(Content, threadStyles.content);
-const StyledCommentList = styled(CommentList.Root, commentListStyles.list);
+const StyledCommentList = styled(CommentList.Root, commentListStyles.list, {
+  padding: 0,
+});
 // custom cashboard styling, we should refactor this
 const StyledCommentHeader = styled(Comment.Header, messageHeaderStyles.root, {
   flexDirection: 'row',
@@ -73,13 +75,20 @@ const StyledCommentContent = styled(Comment.Content, commentStyles.message, {
 });
 const StyledCommentBody = styled(Comment.Body, commentStyles.body);
 
-const StyledComposerRoot = styled(Composer.Root, composerStyles.root, {});
+const StyledComposerRoot = styled(Composer.Root, composerStyles.root, {
+  borderTop: '1px solid #E3E9ED',
+  paddingTop: 16,
+});
 const StyledComposerContentEditable = styled(
   Composer.ContentEditable,
   composerStyles.contentEditable,
   {
+    border: '1px solid #E3E9ED',
     minHeight: 40,
     padding: '11px 8px',
+    '&:focus': {
+      borderColor: '#36B374',
+    },
   }
 );
 const StyledComposerPlaceholder = styled('div', composerStyles.placeholder);
@@ -195,6 +204,7 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
                       return profile ? (
                         <div key={event.id}>
                           <StyledCommentRoot
+                            eventId={event.id}
                             key={`event-${event.id}`}
                             style={{ paddingTop: showProfile ? '16px' : '0px' }}
                           >

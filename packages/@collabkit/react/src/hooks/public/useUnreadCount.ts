@@ -1,6 +1,8 @@
+import { Workspace } from '@collabkit/core';
 import { useSnapshot } from 'valtio';
 import { useApp } from '../useApp';
 import { useThreadSubscription } from '../useThread';
+import { countUnread } from '../../utils/countUnread';
 
 export function useUnreadCount(props: { threadId: string }): number {
   const { store } = useApp();
@@ -8,21 +10,7 @@ export function useUnreadCount(props: { threadId: string }): number {
   const workspace = workspaceId ? workspaces[workspaceId] : null;
   useThreadSubscription({ store, threadId: props.threadId, workspaceId });
 
-  const seenUntilId = workspace?.seen[props.threadId];
-  const timeline = workspace?.timeline[props.threadId] ?? {};
-
-  const messageEventIds = Object.keys(timeline).filter(
-    (eventId) => timeline[eventId].type === 'message'
-  );
-
-  if (seenUntilId == null) {
-    return messageEventIds.length;
-  }
-
-  return messageEventIds
-    .filter((eventId) => timeline[eventId].type === 'message')
-    .reduce((count, eventId) => {
-      if (eventId > seenUntilId) return count + 1;
-      return count;
-    }, 0);
+  return workspace
+    ? countUnread({ workspace: workspace as Workspace, threadId: props.threadId })
+    : 0;
 }

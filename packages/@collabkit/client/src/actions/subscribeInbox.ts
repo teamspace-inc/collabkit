@@ -10,10 +10,16 @@ import {
   getDatabase,
 } from 'firebase/database';
 import type { Store } from '@collabkit/core';
-import { getConfig } from './index';
+import { actions } from './index';
+import { createWorkspace } from '../store';
 
 export async function subscribeInbox(store: Store) {
-  const { appId, workspaceId } = getConfig(store);
+  const { userId, workspaceId, config } = store;
+  const appId = config.appId;
+
+  if (!userId || !workspaceId || !appId) {
+    return;
+  }
 
   // console.log('Subscribing to Inbox');
 
@@ -41,7 +47,12 @@ export async function subscribeInbox(store: Store) {
     // console.log('#inbox', threadId, prevChildName);
 
     const event = snapshot.val();
+    store.workspaces[workspaceId] ||= createWorkspace();
     store.workspaces[workspaceId].inbox[threadId] = { ...event, id: snapshot.key };
+
+    // also get all events and listen to this thread
+
+    actions.subscribeThread(store, { workspaceId, threadId });
   }
 
   store.subs[`${inboxRef.toString()}#added`] ||= onChildAdded(inboxRef, childCallback, onError);

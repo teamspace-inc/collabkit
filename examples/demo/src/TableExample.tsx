@@ -1,4 +1,4 @@
-import { usePopoverThread, PopoverTrigger } from '@collabkit/react';
+import { usePopoverThread, PopoverTrigger, Inbox } from '@collabkit/react';
 
 type CellProps = { value: number | string; row: Car; column: Column };
 
@@ -71,27 +71,32 @@ const rows: Car[] = [
 ];
 
 export const TableExample = () => (
-  <table className="TableExample">
-    <thead>
-      <tr>
-        <th>Make</th>
-        <th>Model</th>
-        <th>Price</th>
-      </tr>
-    </thead>
-    <tbody>
-      {rows.map((row) => (
-        <tr key={row.id}>
-          {columns.map((column) => (
-            <Cell
-              key={column.key}
-              value={column.format(row[column.key])}
-              row={row}
-              column={column}
-            />
-          ))}
+  <div>
+    <table className="TableExample">
+      <thead>
+        <tr>
+          <th>Make</th>
+          <th>Model</th>
+          <th>Price</th>
         </tr>
-      ))}
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        {rows.map((row) => (
+          <tr key={row.id}>
+            {columns.map((column) => (
+              <Cell
+                key={column.key}
+                value={column.format(row[column.key])}
+                row={row}
+                column={column}
+              />
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+    <div style={{ position: 'fixed', right: 0, top: 0, bottom: 0, width: 430 }}>
+      <Inbox></Inbox>
+    </div>
+  </div>
 );

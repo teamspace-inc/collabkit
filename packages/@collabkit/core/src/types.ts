@@ -134,6 +134,7 @@ export type Target =
   | ThreadResolveButtonTarget
   | ThreadCloseButtonTarget
   | ReopenThreadButtonTarget
+  | MoreActionsThreadButtonTarget
   | FloatingCommentButtonTarget
   | CommentableContainer
   | Commentable
@@ -189,6 +190,12 @@ export type ThreadResolveButtonTarget = {
 
 export type ReopenThreadButtonTarget = {
   type: 'reopenThreadButton';
+  threadId: string;
+  workspaceId: string;
+};
+
+export type MoreActionsThreadButtonTarget = {
+  type: 'moreActionsThreadButton';
   threadId: string;
   workspaceId: string;
 };

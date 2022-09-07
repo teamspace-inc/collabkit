@@ -8,6 +8,11 @@ import { useThreadContext } from '../hooks/useThreadContext';
 import { styled } from '@stitches/react';
 import { commentStyles, messageHeaderStyles } from '@collabkit/theme';
 import { Event, Profile } from '@collabkit/core';
+import { Markdown } from './Markdown';
+import { useSnapshot } from 'valtio';
+import { useCommentStore } from './useCommentStore';
+import { CommentContext } from '../hooks/useCommentContext';
+import { Timestamp as RawTimestamp } from './Timestamp';
 
 export function Root(props: {
   children: React.ReactNode;
@@ -34,16 +39,31 @@ export function Root(props: {
   // }
 
   return (
-    <div className={props.className} onClick={onClick} ref={ref} style={props.style}>
-      {props.children}
+    <CommentContext.Provider value={{ eventId }}>
+      <div className={props.className} onClick={onClick} ref={ref} style={props.style}>
+        {props.children}
+      </div>
+    </CommentContext.Provider>
+  );
+}
+
+export function Body(props: React.ComponentPropsWithoutRef<'div'>) {
+  const { body } = useSnapshot(useCommentStore());
+
+  return (
+    <div {...props}>
+      <Markdown body={body}></Markdown>
     </div>
   );
 }
 
+export function Timestamp(props: React.ComponentPropsWithoutRef<'span'>) {
+  const { createdAt } = useSnapshot(useCommentStore());
+  return <RawTimestamp timestamp={+createdAt} {...props} />;
+}
+
 export const Header = Base;
-export const Body = Base;
 export const CreatorName = Base;
-export const Timestamp = Base;
 export const Content = Base;
 
 // Anatomy

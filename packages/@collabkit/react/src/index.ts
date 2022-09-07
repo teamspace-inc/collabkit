@@ -13,12 +13,14 @@ import { PopoverTrigger, usePopoverThread } from './components/Popover';
 import { Thread } from './components/Thread';
 import { useUnreadCount } from './hooks/public/useUnreadCount';
 import { createValtioStore } from './store';
+import { Inbox } from './components/Inbox';
 
 export {
   CollabKitProvider as Provider,
   CollabKitProvider,
   Thread,
   PopoverTrigger,
+  Inbox,
   usePopoverThread,
   useUnreadCount,
   createValtioStore as internal_createStore,

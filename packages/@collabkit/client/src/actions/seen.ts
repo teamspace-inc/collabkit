@@ -25,6 +25,13 @@ export async function seen(store: Store, target: CommentTarget) {
     try {
       store.sync.markSeen({ appId, userId, workspaceId, threadId, eventId });
     } catch (e) {
+      console.log('CollabKit: error marking seen', {
+        appId,
+        userId,
+        workspaceId,
+        threadId,
+        eventId,
+      });
       console.error(e);
     }
   }
