@@ -75,6 +75,7 @@ export type Callbacks = {
     mention: MentionWithColor;
   }) => void;
   onInboxThreadClick?: (data: { userId: string; workspaceId: string; threadId: string }) => void;
+  onInboxCloseButtonClick?: (data: { userId: string; workspaceId: string }) => void;
 };
 
 export type ConfigProps = {

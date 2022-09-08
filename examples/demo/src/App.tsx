@@ -78,6 +78,9 @@ export default function App() {
         onInboxThreadClick: (data) => {
           console.log('inbox thread, click', data);
         },
+        onInboxCloseButtonClick: (data) => {
+          console.log('inbox close button, click', data);
+        },
       }}
       onAuthenticationRequired={() => {
         console.log('authRequired');

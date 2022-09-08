@@ -1,11 +1,5 @@
 import React from 'react';
 import { useSnapshot } from 'valtio';
-import { ThreadContext, useThreadContext } from '../hooks/useThreadContext';
-import { ResolveThreadButton } from './ResolveThreadButton';
-import { ThreadCommentersFacepile } from './ThreadCommentersFacepile';
-import { useInboxStore } from './useInboxStore';
-import { useWorkspaceStore } from './useWorkspaceStore';
-import { useReplyCount } from './useReplyCount';
 import {
   StyledInboxThreadRoot,
   StyledInboxThreadContent,
@@ -15,6 +9,13 @@ import {
   StyledCommentBody,
   StyledReplyCount,
 } from './Inbox';
+import { ThreadContext, useThreadContext } from '../hooks/useThreadContext';
+import { ResolveThreadButton } from './ResolveThreadButton';
+import { ThreadCommentersFacepile } from './ThreadCommentersFacepile';
+import { useInboxStore } from './useInboxStore';
+import { useWorkspaceStore } from './useWorkspaceStore';
+import { useReplyCount } from './useReplyCount';
+
 import { useApp } from '../hooks/useApp';
 
 import * as Comment from './Comment';
@@ -66,7 +67,6 @@ export function InboxItem() {
             <ResolveThreadButton />
           </div>
           <div style={{ padding: '12px 20px', background: '#eee' }}>Cell data placeholder</div>
-
           <Comment.Root eventId={firstCommentId}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
               <div style={{ display: 'flex', flexDirection: 'row', gap: '8px' }}>
