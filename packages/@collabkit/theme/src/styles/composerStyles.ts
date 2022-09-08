@@ -45,6 +45,7 @@ export const contentEditable = css({
   padding: '$padding$1 $padding$1',
   caretColor: '$colors$caretColor',
   borderRadius: '$radii$composer',
+  border: '$borders$composer',
 });
 
 export const root = css({
@@ -67,7 +68,6 @@ export const editorRoot = css({
   verticalAlign: 'top',
   background: '$colors$composerBackground',
   boxSizing: 'border-box',
-  border: '$borders$composer',
 
   fontSize: '$fontSize$2',
   lineHeight: '$lineHeights$1',

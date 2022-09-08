@@ -5,8 +5,8 @@ const SCROLLBAR_SIZE = 6;
 export const root = css({
   width: '100%',
   height: '100%',
-  borderTopRightRadius: 6,
-  borderTopLeftRadius: 6,
+  // borderTopRightRadius: 6,
+  // borderTopLeftRadius: 6,
   overflow: 'hidden',
 });
 

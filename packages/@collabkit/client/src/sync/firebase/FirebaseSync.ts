@@ -235,6 +235,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
       [`/timeline/${appId}/${workspaceId}/${threadId}/${eventRef.key}`]: event,
       [`/views/inbox/${appId}/${workspaceId}/${threadId}`]: {
         ...event,
+        id: eventRef.key,
         body: preview,
         name: threadId,
         mentions: event.mentions ?? null,

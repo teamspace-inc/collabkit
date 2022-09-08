@@ -1,50 +1,6 @@
 import { css } from '@stitches/react';
 
-export const root = css({
-  display: 'flex',
-  flex: 1,
-  gap: '$space$2',
-  position: 'relative',
-  maxWidth: 'calc(100% - $padding$1)',
-  padding: '$padding$commentTop $padding$commentRight $padding$commentBottom $padding$commentLeft',
-  lineHeight: '$lineHeights$1',
-
-  '&:hover': {
-    backgroundColor: '$colors$commentHoverBackgroundColor',
-  },
-
-  variants: {
-    isPreview: {
-      true: {
-        overflow: 'hidden',
-      },
-    },
-    type: {
-      inline: {
-        paddingTop: 'calc($padding$commentTop/2)',
-        paddingBottom: 'calc($padding$commentBottom/2)',
-      },
-      'inline-start': {
-        paddingTop: 'calc($padding$commentTop/2)',
-        paddingBottom: 'calc($padding$commentTop/2)',
-      },
-      'inline-end': {
-        paddingTop: 'calc($padding$commentTop/2)',
-        paddingBottom: 'calc($padding$commentBottom/2)',
-      },
-      default: {},
-    },
-    seen: {
-      false: {
-        // background: '$colors$commentUnseenBackgroundColor',
-        // '&:hover': {
-        //   backgroundColor: '$colors$commentUnseenHoverBackgroundColor',
-        // },
-      },
-      true: {},
-    },
-  },
-
+export const markdown = css({
   p: {
     margin: 0,
   },
@@ -55,6 +11,56 @@ export const root = css({
     textDecoration: 'none',
   },
 });
+
+export const root = css(
+  {
+    display: 'flex',
+    flex: 1,
+    gap: '$space$2',
+    position: 'relative',
+    maxWidth: 'calc(100% - $padding$1)',
+    padding:
+      '$padding$commentTop $padding$commentRight $padding$commentBottom $padding$commentLeft',
+    lineHeight: '$lineHeights$1',
+
+    '&:hover': {
+      backgroundColor: '$colors$commentHoverBackgroundColor',
+    },
+
+    variants: {
+      isPreview: {
+        true: {
+          overflow: 'hidden',
+        },
+      },
+      type: {
+        inline: {
+          paddingTop: 'calc($padding$commentTop/2)',
+          paddingBottom: 'calc($padding$commentBottom/2)',
+        },
+        'inline-start': {
+          paddingTop: 'calc($padding$commentTop/2)',
+          paddingBottom: 'calc($padding$commentTop/2)',
+        },
+        'inline-end': {
+          paddingTop: 'calc($padding$commentTop/2)',
+          paddingBottom: 'calc($padding$commentBottom/2)',
+        },
+        default: {},
+      },
+      seen: {
+        false: {
+          // background: '$colors$commentUnseenBackgroundColor',
+          // '&:hover': {
+          //   backgroundColor: '$colors$commentUnseenHoverBackgroundColor',
+          // },
+        },
+        true: {},
+      },
+    },
+  },
+  markdown
+);
 
 export const messageTextOffset = css({
   marginLeft: 'calc($padding$commentLeft + $sizes$avatar + $space$2)',

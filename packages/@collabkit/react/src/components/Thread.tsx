@@ -13,7 +13,7 @@ import {
   threadStyles,
 } from '@collabkit/theme';
 import { useSnapshot } from 'valtio';
-import type { ThreadInfo } from '@collabkit/core';
+import type { ReopenThreadButtonTarget, ThreadInfo } from '@collabkit/core';
 import { TypingIndicator } from './TypingIndicator';
 import { Avatar } from './Avatar';
 import { ThreadContext, ThreadContextValue } from '../hooks/useThreadContext';
@@ -21,7 +21,6 @@ import { Button } from './Button';
 import { ArrowUp } from './icons';
 import { useComposerSendButton } from '../hooks/useComposerSendButton';
 import { composerStyles } from '@collabkit/theme';
-import { formatRelative } from 'date-fns';
 import { commentListStyles } from '@collabkit/theme';
 import { getCommentType } from '../utils/getCommentType';
 import { Markdown } from './Markdown';
@@ -136,26 +135,16 @@ export function Thread(props: ThreadProps & { className?: string; children?: Rea
                       return profile ? (
                         <div key={event.id}>
                           {newIndicatorId === event.id ? <NewIndicator /> : null}
-                          <StyledCommentRoot type={type} key={`event-${event.id}`}>
+                          <StyledCommentRoot
+                            type={type}
+                            key={`event-${event.id}`}
+                            eventId={event.id}
+                          >
                             {profile && showProfile ? <Avatar profile={profile} /> : null}
                             <StyledCommentContent type={type} profileIndent={!showProfile}>
                               <StyledCommentHeader>
-                                {showProfile ? (
-                                  <StyledCommentCreatorName>
-                                    {profile.name ?? profile.email ?? 'Anonymous'}
-                                  </StyledCommentCreatorName>
-                                ) : null}
-                                {showProfile ? (
-                                  <StyledCommentTimestamp>
-                                    {formatRelative(+event.createdAt, +Date.now())
-                                      .replace(/yesterday at (.*)/, 'yesterday')
-                                      .replace('today at', '')
-                                      .replace(
-                                        /(last Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday) .*/,
-                                        '$1'
-                                      )}
-                                  </StyledCommentTimestamp>
-                                ) : null}
+                                {showProfile ? <StyledCommentCreatorName /> : null}
+                                {showProfile ? <StyledCommentTimestamp /> : null}
                               </StyledCommentHeader>
                               <StyledCommentBody>
                                 <Markdown body={event.body} />

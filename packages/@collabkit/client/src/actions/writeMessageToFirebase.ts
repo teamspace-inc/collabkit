@@ -69,15 +69,20 @@ export async function writeMessageToFirebase(
     };
 
     // stop typing indicator as we sent the message successfully
-    Promise.all([
-      actions.stopTyping(store, { target: { type: 'composer', workspaceId, threadId } }),
-      actions.seen(store, {
-        workspaceId,
-        threadId,
-        eventId: id,
-        type: 'comment',
-      }),
-    ]);
+    try {
+      await Promise.all([
+        actions.stopTyping(store, { target: { type: 'composer', workspaceId, threadId } }),
+        actions.seen(store, {
+          workspaceId,
+          threadId,
+          eventId: id,
+          type: 'comment',
+        }),
+      ]);
+    } catch (e) {
+      console.error('CollabKit: error stopping typing indicator', e);
+    }
+
     const eventWithId: WithID<Event> = {
       id,
       ...event,

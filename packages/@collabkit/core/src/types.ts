@@ -74,6 +74,8 @@ export type Callbacks = {
     event: WithID<Event> | null;
     mention: MentionWithColor;
   }) => void;
+  onInboxThreadClick?: (data: { userId: string; workspaceId: string; threadId: string }) => void;
+  onInboxCloseButtonClick?: (data: { userId: string; workspaceId: string }) => void;
 };
 
 export type ConfigProps = {
@@ -134,6 +136,7 @@ export type Target =
   | ThreadResolveButtonTarget
   | ThreadCloseButtonTarget
   | ReopenThreadButtonTarget
+  | MoreActionsThreadButtonTarget
   | FloatingCommentButtonTarget
   | CommentableContainer
   | Commentable
@@ -189,6 +192,12 @@ export type ThreadResolveButtonTarget = {
 
 export type ReopenThreadButtonTarget = {
   type: 'reopenThreadButton';
+  threadId: string;
+  workspaceId: string;
+};
+
+export type MoreActionsThreadButtonTarget = {
+  type: 'moreActionsThreadButton';
   threadId: string;
   workspaceId: string;
 };

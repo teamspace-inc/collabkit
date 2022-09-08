@@ -30,6 +30,7 @@ import {
   flip,
   FloatingFocusManager,
   FloatingPortal,
+  offset,
   size,
   useFloating,
 } from '@floating-ui/react-dom-interactions';
@@ -213,12 +214,12 @@ function MentionsTypeahead({
   const { theme } = useApp();
 
   const { reference, context } = useFloating({
-    placement: 'bottom-start',
+    placement: 'top-start',
     open: (results?.length ?? 0) > 0,
     whileElementsMounted: autoUpdate,
     // onOpenChange: setThreadOpen,
     middleware: [
-      // offset(4),
+      offset(4),
       flip(),
       size({
         padding: 12,

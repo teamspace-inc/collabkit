@@ -14,6 +14,7 @@ import {
   composerStyles,
   messageHeaderStyles,
   popoverThreadStyles,
+  profileStyles,
   threadStyles,
 } from '@collabkit/theme';
 import { useSnapshot } from 'valtio';
@@ -36,15 +37,18 @@ export const MODAL_Z_INDEX = 999999;
 const Content = Base;
 import * as Comment from './Comment';
 import * as Composer from './composer/Composer';
-import { Markdown } from './Markdown';
-import { formatRelative } from 'date-fns';
+import * as Profile from './Profile';
+
 import { getCommentType } from '../utils/getCommentType';
 import { IconButton } from './IconButton';
 import { Check } from './icons';
 
 const StyledPopoverThreadRoot = styled(Base, popoverThreadStyles.root);
 const StyledThreadContent = styled(Content, threadStyles.content);
-const StyledCommentList = styled(CommentList.Root, commentListStyles.list);
+const StyledCommentList = styled(CommentList.Root, commentListStyles.list, {
+  padding: 0,
+});
+
 // custom cashboard styling, we should refactor this
 const StyledCommentHeader = styled(Comment.Header, messageHeaderStyles.root, {
   flexDirection: 'row',
@@ -53,6 +57,7 @@ const StyledCommentHeader = styled(Comment.Header, messageHeaderStyles.root, {
   alignItems: 'unset',
   padding: '0px 0px 0px',
 });
+
 const StyledCommentCreatorName = styled(Comment.CreatorName, messageHeaderStyles.name);
 
 // custom cashboard styling, we should refactor this
@@ -73,18 +78,29 @@ const StyledCommentContent = styled(Comment.Content, commentStyles.message, {
 });
 const StyledCommentBody = styled(Comment.Body, commentStyles.body);
 
-const StyledComposerRoot = styled(Composer.Root, composerStyles.root, {});
+const StyledComposerRoot = styled(Composer.Root, composerStyles.root, {
+  borderTop: '1px solid #E3E9ED',
+  paddingTop: 16,
+});
+
 const StyledComposerContentEditable = styled(
   Composer.ContentEditable,
   composerStyles.contentEditable,
   {
+    border: '1px solid #E3E9ED',
     minHeight: 40,
     padding: '11px 8px',
+    '&:focus': {
+      borderColor: '#36B374',
+    },
   }
 );
 const StyledComposerPlaceholder = styled('div', composerStyles.placeholder);
 const StyledComposerEditor = styled(Composer.Editor, composerStyles.editorRoot);
 const StyledComposerContent = styled(Composer.Content, composerStyles.content);
+
+const StyledProfileName = styled(Profile.Name, profileStyles.name);
+const StyledProfileAvatar = styled(Profile.Avatar, profileStyles.avatar);
 
 type PopoverThreadProps = {
   threadId: string;
@@ -178,12 +194,20 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
             <ScrollAreaViewport style={{ maxHeight: props.maxAvailableSize?.height ?? 'unset' }}>
               {isEmpty &&
                 (profile ? (
-                  <StyledCommentRoot style={{ padding: '16px' }}>
-                    {profile ? <Avatar profile={profile} /> : null}
-                    <StyledCommentHeader style={{ alignItems: 'center' }}>
-                      <StyledCommentCreatorName>{profile.name}</StyledCommentCreatorName>
-                    </StyledCommentHeader>
-                  </StyledCommentRoot>
+                  <Profile.Provider profileId={userId}>
+                    <div
+                      style={{
+                        padding: '16px',
+                        display: 'flex',
+                        flexDirection: 'row',
+                        gap: '12px',
+                        alignItems: 'center',
+                      }}
+                    >
+                      <StyledProfileAvatar />
+                      <StyledProfileName />
+                    </div>
+                  </Profile.Provider>
                 ) : null)}
               {!isEmpty ? (
                 <StyledCommentList>
@@ -195,6 +219,7 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
                       return profile ? (
                         <div key={event.id}>
                           <StyledCommentRoot
+                            eventId={event.id}
                             key={`event-${event.id}`}
                             style={{ paddingTop: showProfile ? '16px' : '0px' }}
                           >
@@ -202,23 +227,11 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
                               {showProfile ? (
                                 <StyledCommentHeader>
                                   <Avatar profile={profile} />
-                                  <div style={{ flex: 1 }}>
-                                    {
-                                      <StyledCommentCreatorName>
-                                        {profile.name ?? profile.email ?? 'Anonymous'}
-                                      </StyledCommentCreatorName>
-                                    }
-                                    {
-                                      <StyledCommentTimestamp>
-                                        {formatRelative(+event.createdAt, +Date.now())
-                                          .replace(/yesterday at (.*)/, 'yesterday')
-                                          .replace('today at', '')
-                                          .replace(
-                                            /(last Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday) .*/,
-                                            '$1'
-                                          )}
-                                      </StyledCommentTimestamp>
-                                    }
+                                  <div
+                                    style={{ flex: 1, display: 'flex', flexDirection: 'column' }}
+                                  >
+                                    <StyledCommentCreatorName />
+                                    <StyledCommentTimestamp />
                                   </div>
                                   {i === 0 ? (
                                     <>
@@ -251,9 +264,7 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
                                   ) : null}
                                 </StyledCommentHeader>
                               ) : null}
-                              <StyledCommentBody>
-                                <Markdown body={event.body} />
-                              </StyledCommentBody>
+                              <StyledCommentBody />
                             </StyledCommentContent>
                           </StyledCommentRoot>
                         </div>
