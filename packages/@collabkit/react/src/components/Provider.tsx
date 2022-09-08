@@ -1,18 +1,19 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { ReactNode, useEffect, useLayoutEffect, useState } from 'react';
 import { createThemes, CustomTheme } from '@collabkit/theme';
 import { actions, initFirebase, Events, createEvents } from '@collabkit/client';
-import { ConfigProps, SecureProps, Store, UnsecureProps } from '@collabkit/core';
+import { ConfigProps, Profile, SecureProps, Store, UnsecureProps } from '@collabkit/core';
 import { AppContext } from '../hooks/useAppContext';
 import { createValtioStore } from '../store';
 import { FirebaseSync } from '@collabkit/client';
 import { SaveMentionableUsers } from './SaveMentionableUsers';
+import { AvatarProps } from '../types';
 
-export type OtherProps = {
+export type ProviderProps = {
   children: React.ReactNode;
   theme?: CustomTheme;
-};
-
-export type ProviderProps = (SecureProps | UnsecureProps) & ConfigProps & OtherProps;
+  renderAvatar?: (props: AvatarProps) => ReactNode;
+} & (SecureProps | UnsecureProps) &
+  ConfigProps;
 
 initFirebase();
 
@@ -22,6 +23,7 @@ export function CollabKitProvider({
   children,
   colorScheme = 'auto',
   theme,
+  renderAvatar,
   ...config
 }: ProviderProps) {
   const [context, setContext] = useState<{ store: Store; events: Events } | null>(null);
@@ -67,6 +69,7 @@ export function CollabKitProvider({
         store: context.store,
         events: context.events,
         theme: currentTheme,
+        renderAvatar,
       }}
     >
       {children}

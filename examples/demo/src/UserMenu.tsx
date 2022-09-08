@@ -41,7 +41,7 @@ export function UserMenu({
   );
 }
 
-function Avatar({ user }: { user: User }) {
+export function Avatar({ user }: { user: User }) {
   if (!user?.avatar) {
     let initials = '';
     if (user.name) {

@@ -1,9 +1,16 @@
-import { CollabKitProvider, CustomTheme, Thread, useUnreadCount } from '@collabkit/react';
+import {
+  AvatarProps,
+  CollabKitProvider,
+  CustomTheme,
+  Thread,
+  useUnreadCount,
+} from '@collabkit/react';
 import * as themes from '@collabkit/custom-themes';
 import { useCallback, useEffect, useState } from 'react';
 import { User } from './types';
 import jwtDecode from 'jwt-decode';
 import { TableExample } from './TableExample';
+import { Avatar } from './UserMenu';
 
 const USER_STORAGE_KEY = 'demoUserV2';
 
@@ -74,12 +81,17 @@ export default function App() {
       }}
       user={user}
       theme={theme}
+      // renderAvatar={CustomAvatar}
       mentionableUsers={'allWorkspace'}
     >
       {name === 'cashboard' ? <TableExample /> : <Home />}
     </CollabKitProvider>
   );
 }
+
+// function CustomAvatar(props: AvatarProps) {
+//   return <Avatar user={props.profile} />;
+// }
 
 function Home() {
   const threadId = 'new-your-thread-id2';
