@@ -37,7 +37,7 @@ export function Root(props: {
 
   const timeline = useSnapshot(useWorkspaceStore().timeline[threadId]);
   const event = timeline?.[eventId];
-  const createdById = event.createdById;
+  const createdById = event?.createdById;
 
   if (!createdById) {
     return null;

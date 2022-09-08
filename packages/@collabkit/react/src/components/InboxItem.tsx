@@ -2,7 +2,6 @@ import React from 'react';
 import { useSnapshot } from 'valtio';
 import { ThreadContext, useThreadContext } from '../hooks/useThreadContext';
 import { ResolveThreadButton } from './ResolveThreadButton';
-import { CommentContext } from '../hooks/useCommentContext';
 import { ThreadCommentersFacepile } from './ThreadCommentersFacepile';
 import { useInboxStore } from './useInboxStore';
 import { useWorkspaceStore } from './useWorkspaceStore';
@@ -17,6 +16,8 @@ import {
   StyledReplyCount,
 } from './Inbox';
 import { useApp } from '../hooks/useApp';
+
+import * as Comment from './Comment';
 
 export function InboxItem() {
   const { threadId, workspaceId, userId } = useThreadContext();
@@ -66,7 +67,7 @@ export function InboxItem() {
           </div>
           <div style={{ padding: '12px 20px', background: '#eee' }}>Cell data placeholder</div>
 
-          <CommentContext.Provider value={{ eventId: firstCommentId }}>
+          <Comment.Root eventId={firstCommentId}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
               <div style={{ display: 'flex', flexDirection: 'row', gap: '8px' }}>
                 <StyledCommentCreatorName />
@@ -74,15 +75,15 @@ export function InboxItem() {
               </div>
               <StyledCommentBody />
             </div>
-          </CommentContext.Provider>
-          <CommentContext.Provider value={{ eventId: lastComment.id }}>
+          </Comment.Root>
+          <Comment.Root eventId={lastComment.id}>
             {replyCount > 0 ? (
               <div style={{ display: 'flex', gap: '8px' }}>
                 <StyledReplyCount />
                 <StyledTimestamp timestamp={+lastComment?.createdAt} />
               </div>
             ) : null}
-          </CommentContext.Provider>
+          </Comment.Root>
         </StyledInboxThreadContent>
       </StyledInboxThreadRoot>
     </ThreadContext.Provider>
