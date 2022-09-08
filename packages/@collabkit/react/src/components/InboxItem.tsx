@@ -56,12 +56,6 @@ export function InboxItem() {
         onClick={() => {
           store.callbacks?.onInboxThreadClick?.({ threadId, userId, workspaceId });
         }}
-        style={
-          {
-            //hover
-            //#E3E9ED
-          }
-        }
       >
         <StyledInboxThreadContent>
           <div style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
