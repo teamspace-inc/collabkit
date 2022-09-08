@@ -6,18 +6,28 @@ const Cell = ({ value, row, column }: CellProps) => {
   const name = `Cars / ${row.make} ${row.model}`;
   const viewId = 'cars';
   const cellId = `${row.id}_${column.key}`;
-  const { hasThread, popoverState, context } = usePopoverThread({ name, viewId, cellId });
+  const { hasThread, popoverState, setPopoverState, context } = usePopoverThread({
+    name,
+    viewId,
+    cellId,
+  });
 
   const classes = [];
   if (hasThread) classes.push('hasThread');
-  if (popoverState === 'previewOpen') classes.push('previewOpen');
-  if (popoverState === 'threadOpen') classes.push('threadOpen');
+  if (popoverState === 'preview') classes.push('previewOpen');
+  if (popoverState === 'open') classes.push('threadOpen');
 
   return (
     <PopoverTrigger context={context}>
-      <td className={classes.join(' ')}>
+      <td
+        className={classes.join(' ')}
+        onContextMenu={(e) => {
+          e.preventDefault();
+          setPopoverState('open');
+        }}
+      >
         {value}
-        {hasThread ? <ThreadIndicator /> : null}
+        {hasThread && <ThreadIndicator />}
       </td>
     </PopoverTrigger>
   );

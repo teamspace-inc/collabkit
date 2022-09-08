@@ -214,5 +214,28 @@ export function createEvents(store: Store) {
     onSeen: (props: { target: CommentTarget }) => {
       actions.seen(store, props.target);
     },
+
+    onSetPopoverState: ({
+      target,
+      state,
+    }: {
+      target: ThreadTarget;
+      state: 'open' | 'preview' | 'closed';
+    }) => {
+      switch (state) {
+        case 'open':
+          actions.viewThread(store, { target, isPreview: false });
+          break;
+        case 'preview':
+          actions.viewThread(store, { target, isPreview: true });
+          break;
+        case 'closed':
+          actions.closeThread(store, { isPreview: true });
+          actions.closeThread(store, { isPreview: false });
+          break;
+        default:
+          throw new Error(`invalid popover state: ${state}`);
+      }
+    },
   };
 }

@@ -63,7 +63,7 @@ export function usePopoverThread({
     height: number;
   } | null>(null);
 
-  const { store } = useApp();
+  const { store, events } = useApp();
   const { viewingId, previewingId, workspaceId } = useSnapshot(store);
   const threadOpen =
     viewingId?.type === 'thread' && viewingId.threadId === (threadId ?? newThreadId);
@@ -80,6 +80,15 @@ export function usePopoverThread({
           }
         : null,
     [threadId, newThreadId, workspaceId]
+  );
+
+  const setPopoverState = useCallback(
+    (state: 'open' | 'preview' | 'closed') => {
+      if (target) {
+        events.onSetPopoverState({ target, state });
+      }
+    },
+    [target]
   );
 
   const setThreadOpen = useCallback(
@@ -143,7 +152,7 @@ export function usePopoverThread({
       useDismiss(previewContext),
     ]);
   const { getReferenceProps: getThreadReferenceProps, getFloatingProps: getThreadFloatingProps } =
-    useInteractions([useClick(threadContext), useDismiss(threadContext)]);
+    useInteractions([useDismiss(threadContext)]);
 
   const ref = useMemo(
     () => mergeRefs([previewReference, threadReference]),
@@ -153,7 +162,11 @@ export function usePopoverThread({
   const getProps = (userProps: any) =>
     getPreviewReferenceProps(getThreadReferenceProps({ ref, ...userProps }));
 
-  const popoverState = threadOpen ? 'threadOpen' : previewOpen ? 'previewOpen' : 'closed';
+  const popoverState: 'open' | 'preview' | 'closed' = threadOpen
+    ? 'open'
+    : previewOpen
+    ? 'preview'
+    : 'closed';
 
   return {
     context: {
@@ -171,6 +184,7 @@ export function usePopoverThread({
 
     hasThread,
     popoverState,
+    setPopoverState,
   };
 }
 
