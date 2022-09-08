@@ -6,13 +6,15 @@ import { useMarkAsSeen } from '../hooks/useMarkAsSeen';
 import { useOnMarkdownLinkClick } from '../hooks/useOnMarkdownLinkClick';
 import { useThreadContext } from '../hooks/useThreadContext';
 import { styled } from '@stitches/react';
-import { commentStyles, messageHeaderStyles } from '@collabkit/theme';
-import { Event, Profile } from '@collabkit/core';
+import { avatarStyles, commentStyles, messageHeaderStyles } from '@collabkit/theme';
 import { Markdown } from './Markdown';
 import { useSnapshot } from 'valtio';
 import { useCommentStore } from './useCommentStore';
 import { CommentContext } from '../hooks/useCommentContext';
 import { Timestamp as RawTimestamp } from './Timestamp';
+
+import * as Profile from './Profile';
+import { useWorkspaceStore } from './useWorkspaceStore';
 
 export function Root(props: {
   children: React.ReactNode;
@@ -33,16 +35,25 @@ export function Root(props: {
     eventId,
   });
 
-  // todo nc bring this check back, or resolved messages will show up in the thread
-  // if (event.type === 'system' || !event.hasProfile || typeof profile !== 'object') {
-  //   return null;
-  // }
+  const timeline = useSnapshot(useWorkspaceStore().timeline[threadId]);
+  const event = timeline?.[eventId];
+  const createdById = event.createdById;
+
+  if (!createdById) {
+    return null;
+  }
+
+  if (event.type === 'system' || !event.hasProfile) {
+    return null;
+  }
 
   return (
     <CommentContext.Provider value={{ eventId }}>
-      <div className={props.className} onClick={onClick} ref={ref} style={props.style}>
-        {props.children}
-      </div>
+      <Profile.Provider profileId={createdById}>
+        <div className={props.className} onClick={onClick} ref={ref} style={props.style}>
+          {props.children}
+        </div>
+      </Profile.Provider>
     </CommentContext.Provider>
   );
 }
@@ -62,8 +73,8 @@ export function Timestamp(props: React.ComponentPropsWithoutRef<'span'>) {
   return <RawTimestamp timestamp={+createdAt} {...props} />;
 }
 
+export const CreatorName = Profile.Name;
 export const Header = Base;
-export const CreatorName = Base;
 export const Content = Base;
 
 // Anatomy
@@ -74,19 +85,27 @@ const StyledCommentTimestamp = styled(Timestamp, messageHeaderStyles.timestamp);
 const StyledCommentRoot = styled(Root, commentStyles.root);
 const StyledCommentContent = styled(Content, commentStyles.message);
 const StyledCommentBody = styled(Body, commentStyles.body);
+const StyledCommentCreatorAvatar = styled(Profile.Avatar, avatarStyles.avatar);
 
-export default function Comment(props: { event: Event; profile: Profile }) {
+// No customisation = Dom's design. You just import Thread and Inbox, and it looks like what we provide (oh and yes you can set dark/light mode);
+
+// Set our theme props, and it customises our out of the box components for you to match your app. This will get you 95% of the way there.
+
+// If you want to change the layout, add/remove things, and generally go further you can take our unstyled components and assemble your own commenting UI using it.
+
+// Use the headless JS API and write whatever, use Angular or Ember or Backbone? You can do that too.
+
+export default function Comment(props: { eventId: string }) {
   return (
-    <StyledCommentRoot>
-      <StyledCommentHeader>
-        <StyledCommentCreatorName>
-          {props.profile.name ?? props.profile.email ?? 'Anonymous'}{' '}
-        </StyledCommentCreatorName>
-        <StyledCommentTimestamp>{props.event.createdAt}</StyledCommentTimestamp>
-      </StyledCommentHeader>
-      <StyledCommentBody>
-        <StyledCommentContent>{props.event.body}</StyledCommentContent>
-      </StyledCommentBody>
+    <StyledCommentRoot eventId={props.eventId}>
+      <StyledCommentContent>
+        <StyledCommentHeader>
+          <StyledCommentCreatorAvatar />
+          <StyledCommentCreatorName />
+          <StyledCommentTimestamp />
+        </StyledCommentHeader>
+        <StyledCommentBody />
+      </StyledCommentContent>
     </StyledCommentRoot>
   );
 }

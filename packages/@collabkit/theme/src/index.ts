@@ -35,3 +35,4 @@ export * as scrollAreaStyles from './styles/scrollAreaStyles';
 
 export * as buttonStyles from './styles/buttonStyles';
 export * as linkStyles from './styles/linkStyles';
+export * as profileStyles from './styles/profileStyles';

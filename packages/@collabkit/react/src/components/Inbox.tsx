@@ -13,7 +13,6 @@ import {
   ScrollAreaViewport,
 } from './ScrollArea';
 import { Timestamp } from './Timestamp';
-import { CommentCreatorName } from './CommentCreatorName';
 import { ReplyCount } from './ReplyCount';
 import { UnreadDot } from './UnreadDot';
 import * as Comment from './Comment';
@@ -80,7 +79,7 @@ export const StyledReplyCount = styled(ReplyCount, {
   color: '#2C915E',
 });
 
-export const StyledCommentCreatorName = styled(CommentCreatorName, {
+export const StyledCommentCreatorName = styled(Comment.CreatorName, {
   fontStyle: 'normal',
   fontWeight: 600,
   fontSize: 14,

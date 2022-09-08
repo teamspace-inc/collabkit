@@ -16,9 +16,11 @@ import {
   StyledCommentBody,
   StyledReplyCount,
 } from './Inbox';
+import { useApp } from '../hooks/useApp';
 
 export function InboxItem() {
   const { threadId, workspaceId, userId } = useThreadContext();
+  const { store } = useApp();
   const workspace = useSnapshot(useWorkspaceStore());
   const inbox = useSnapshot(useInboxStore());
   const timeline = workspace.timeline[threadId];
@@ -51,6 +53,9 @@ export function InboxItem() {
       key={`inboxThread-${threadId}`}
     >
       <StyledInboxThreadRoot
+        onClick={() => {
+          store.callbacks?.onInboxThreadClick?.({ threadId, userId, workspaceId });
+        }}
         style={
           {
             //hover

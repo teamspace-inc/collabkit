@@ -135,15 +135,15 @@ export function Thread(props: ThreadProps & { className?: string; children?: Rea
                       return profile ? (
                         <div key={event.id}>
                           {newIndicatorId === event.id ? <NewIndicator /> : null}
-                          <StyledCommentRoot type={type} key={`event-${event.id}`}>
+                          <StyledCommentRoot
+                            type={type}
+                            key={`event-${event.id}`}
+                            eventId={event.id}
+                          >
                             {profile && showProfile ? <Avatar profile={profile} /> : null}
                             <StyledCommentContent type={type} profileIndent={!showProfile}>
                               <StyledCommentHeader>
-                                {showProfile ? (
-                                  <StyledCommentCreatorName>
-                                    {profile?.name ?? profile?.email ?? 'Anonymous'}
-                                  </StyledCommentCreatorName>
-                                ) : null}
+                                {showProfile ? <StyledCommentCreatorName /> : null}
                                 {showProfile ? <StyledCommentTimestamp /> : null}
                               </StyledCommentHeader>
                               <StyledCommentBody>
