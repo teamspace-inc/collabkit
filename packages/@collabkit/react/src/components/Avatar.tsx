@@ -31,7 +31,7 @@ function DefaultAvatar({ profile }: AvatarProps) {
 export function Avatar(props: AvatarProps) {
   const { renderAvatar } = useApp();
   if (renderAvatar != null) {
-    return renderAvatar(props);
+    return <>{renderAvatar(props)}</>;
   }
   return <DefaultAvatar {...props} />;
 }
