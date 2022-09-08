@@ -70,7 +70,7 @@ export async function writeMessageToFirebase(
 
     // stop typing indicator as we sent the message successfully
     try {
-      Promise.all([
+      await Promise.all([
         actions.stopTyping(store, { target: { type: 'composer', workspaceId, threadId } }),
         actions.seen(store, {
           workspaceId,

@@ -8,7 +8,6 @@ export async function subscribeSeen(store: Store) {
   }
 
   const onSeenChange = (event: { threadId: string; seenUntilId: string }) => {
-    console.log('CollabKit: seen change', event);
     store.workspaces[workspaceId].seen[event.threadId] = event.seenUntilId;
   };
 

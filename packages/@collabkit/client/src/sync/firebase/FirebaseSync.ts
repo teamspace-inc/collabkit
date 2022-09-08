@@ -173,7 +173,6 @@ export class FirebaseSync implements Sync.SyncAdapter {
     eventId: string;
   }): Promise<void> {
     const data = { seenUntilId: eventId, seenAt: serverTimestamp() };
-    console.log(data);
     await update(ref(getDatabase(getApp('CollabKit'))), {
       [`/seen/${appId}/${userId}/${workspaceId}/${threadId}/`]: data,
       [`/views/seenBy/${appId}/${workspaceId}/${threadId}/${userId}`]: data,
