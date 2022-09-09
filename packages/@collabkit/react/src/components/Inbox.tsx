@@ -71,52 +71,9 @@ const StyledRoot = styled(Root, {
   borderRadius: 0,
 });
 
-export const StyledReplyCount = styled(ReplyCount, {
-  fontStyle: 'normal',
-  fontWeight: 600,
-  fontSize: 14,
-  lineHeight: '160%',
-  letterSpacing: -0.1,
-  color: '#2C915E',
-});
-
-export const StyledCommentCreatorName = styled(Comment.CreatorName, {
-  fontStyle: 'normal',
-  fontWeight: 600,
-  fontSize: 14,
-  lineHeight: '160%',
-  letterSpacing: -0.1,
-  color: '#000000',
-});
-
-export const StyledUnreadDot = styled(UnreadDot, {
-  width: 8,
-  height: 8,
-  borderRadius: 8,
-  background: '#007FF5',
-  position: 'absolute',
-  left: -16,
-});
-
-export const StyledTimestamp = styled(Comment.Timestamp, {
-  fontStyle: 'normal',
-  fontWeight: 400,
-  fontSize: 14,
-  lineHeight: '160%',
-  letterSpacing: -0.1,
-  color: '#6A7278',
-});
-
 export interface ButtonProps extends React.ComponentPropsWithoutRef<'button'> {
   specialProp?: string;
 }
-
-export const StyledCommentBody = styled(Comment.Body, {
-  p: {
-    padding: 0,
-    margin: 0,
-  },
-});
 
 function CloseSidebarButton() {
   const { store } = useApp();

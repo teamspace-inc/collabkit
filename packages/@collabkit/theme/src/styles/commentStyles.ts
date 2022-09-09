@@ -28,11 +28,6 @@ export const root = css(
     },
 
     variants: {
-      isPreview: {
-        true: {
-          overflow: 'hidden',
-        },
-      },
       type: {
         inline: {
           paddingTop: 'calc($padding$commentTop/2)',
@@ -93,16 +88,6 @@ export const body = css({
   fontSize: '$fontSize$2',
   lineHeight: '$lineHeights$0',
   color: '$colors$primaryText',
-
-  variants: {
-    isPreview: {
-      true: {
-        position: 'relative',
-        maxHeight: 54,
-        display: 'inline-flex',
-      },
-    },
-  },
 });
 
 export const bodyEllipsis = css({
