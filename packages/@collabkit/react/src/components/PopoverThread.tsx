@@ -264,7 +264,7 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
                                     </>
                                   ) : null}
 
-                                  <CommentMenu />
+                                  {event.createdById === userId && <CommentMenu />}
                                 </StyledCommentHeader>
                               ) : null}
                               <StyledCommentBody />
