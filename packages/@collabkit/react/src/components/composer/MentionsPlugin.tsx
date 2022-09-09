@@ -31,7 +31,6 @@ import {
   FloatingFocusManager,
   FloatingNode,
   FloatingPortal,
-  FloatingTree,
   offset,
   size,
   useFloating,
