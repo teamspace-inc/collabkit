@@ -116,7 +116,7 @@ export function InboxItem() {
             </div>
           </Comment.Root>
           <Comment.Root eventId={lastComment.id}>
-            {replyCount > 0 ? (
+            {/* {replyCount > 0 ? (
               <>
                 <div>Foo</div>
                 <div style={{ display: 'flex', gap: '8px' }}>
@@ -126,7 +126,7 @@ export function InboxItem() {
               </>
             ) : (
               <div>FooBaz</div>
-            )}
+            )} */}
           </Comment.Root>
         </StyledInboxThreadContent>
       </StyledInboxThreadRoot>
