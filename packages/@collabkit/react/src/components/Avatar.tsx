@@ -6,24 +6,24 @@ import { useApp } from '../hooks/useApp';
 import { AvatarProps } from '../types';
 
 export const StyledAvatar = styled('img', avatarStyles.avatar);
-export const StyledDefaultAvatar = styled('div', avatarStyles.avatar);
+export const StyledFallbackAvatar = styled('div', avatarStyles.avatar);
 
 function DefaultAvatar({ profile, size }: AvatarProps) {
   const [didError, setDidError] = useState(false);
 
   return didError || !profile.avatar ? (
-    <StyledDefaultAvatar
+    <StyledFallbackAvatar
       style={{
         ...(size ? { width: size, height: size } : {}),
         ...(profile.color
           ? {
               backgroundColor: getShade(profile.color, 9),
             }
-          : {}),
+          : null),
       }}
     >
       {profile.name?.charAt(0)}
-    </StyledDefaultAvatar>
+    </StyledFallbackAvatar>
   ) : (
     <StyledAvatar
       style={{ ...(size ? { width: size, height: size } : {}) }}

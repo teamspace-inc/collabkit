@@ -6,7 +6,7 @@ import { avatarStyles } from '@collabkit/theme';
 import { styled } from './styled';
 
 const StyledAvatar = styled('img', avatarStyles.avatar);
-const StyledDefaultAvatar = styled('div', avatarStyles.avatar);
+const StyledFallbackAvatar = styled('div', avatarStyles.avatar);
 
 const props = defineProps<{
   profile: Profile;
@@ -27,8 +27,8 @@ function onError() {
 </script>
 
 <template>
-  <StyledDefaultAvatar v-if="didError || !profile.avatar" :style="style">
+  <StyledFallbackAvatar v-if="didError || !profile.avatar" :style="style">
     {{ profile.name?.charAt(0) }}
-  </StyledDefaultAvatar>
+  </StyledFallbackAvatar>
   <StyledAvatar v-else :src="profile.avatar" @error="onError" />
 </template>
