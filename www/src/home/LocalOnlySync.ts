@@ -45,6 +45,8 @@ export class LocalOnlySync implements SyncAdapter {
     return { id: nanoid() };
   }
 
+  async deleteEvent(): Promise<void> {}
+
   async markResolved(): Promise<void> {
     // noop
   }

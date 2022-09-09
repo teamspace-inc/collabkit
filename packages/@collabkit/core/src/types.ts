@@ -237,6 +237,7 @@ export type Event = {
   mentions?: {
     [userId: string]: boolean;
   } | null;
+  isDeleted?: boolean;
 };
 
 export type WithName<T> = T & {

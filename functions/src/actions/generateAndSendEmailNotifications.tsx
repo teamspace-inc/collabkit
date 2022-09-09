@@ -98,7 +98,7 @@ async function sendMailForProfile(props: {
 
   const messageEvents = notifyAboutEventIds
     .map((eventId) => timeline[eventId])
-    .filter((event) => event.type === 'message');
+    .filter((event) => !event.isDeleted && event.type === 'message');
 
   const list = groupedEvents(messageEvents, timeline);
 

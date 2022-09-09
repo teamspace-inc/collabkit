@@ -52,6 +52,13 @@ export interface SyncAdapter {
     event: Event;
   }): Promise<{ id: string }>;
 
+  deleteEvent(params: {
+    appId: string;
+    workspaceId: string;
+    threadId: string;
+    eventId: string;
+  }): Promise<void>;
+
   markResolved(params: { appId: string; workspaceId: string; threadId: string }): Promise<void>;
 
   markSeen(params: {

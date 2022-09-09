@@ -104,7 +104,14 @@ export function createEvents(store: Store) {
     },
 
     onClick: <T extends Target>(e: React.MouseEvent, props: { target: T }) => {
-      console.log('events.onClick', props.target);
+      switch (props.target.type) {
+        case 'commentDeleteButton':
+          actions.deleteMessage(store, props.target.comment);
+          return;
+        case 'commentEditButton':
+          console.log('events.onClick', props.target);
+          return;
+      }
     },
 
     onEmojiReactionClick: (e: React.MouseEvent, props: { target: CommentReactionTarget }) => {

@@ -3,10 +3,12 @@ import type { Event, Timeline, WithHasProfile, WithID } from './types';
 export function groupedMessages(timeline: Timeline) {
   const eventIds = Object.keys(timeline);
 
-  const events: WithID<Event>[] = eventIds.map((eventId) => ({
-    ...timeline[eventId],
-    id: eventId,
-  }));
+  const events: WithID<Event>[] = eventIds
+    .map((eventId) => ({
+      ...timeline[eventId],
+      id: eventId,
+    }))
+    .filter((event) => !event.isDeleted);
 
   const messageEvents = events.filter(
     (event) => event.type === 'message' || event.type === 'system'
@@ -41,10 +43,12 @@ export function groupedMessages(timeline: Timeline) {
 export function reactions(timeline: Timeline) {
   const eventIds = Object.keys(timeline);
 
-  const events: WithID<Event>[] = eventIds.map((eventId) => ({
-    ...timeline[eventId],
-    id: eventId,
-  }));
+  const events: WithID<Event>[] = eventIds
+    .map((eventId) => ({
+      ...timeline[eventId],
+      id: eventId,
+    }))
+    .filter((event) => !event.isDeleted);
 
   const reactionEvents = events.filter((event) => event.type === 'reaction');
 
@@ -66,19 +70,23 @@ export function reactions(timeline: Timeline) {
 
 export function messageEvents(timeline: Timeline) {
   const eventIds = Object.keys(timeline);
-  const events: WithHasProfile<WithID<Event>>[] = eventIds.map((eventId) => ({
-    ...timeline[eventId],
-    id: eventId,
-  }));
+  const events: WithHasProfile<WithID<Event>>[] = eventIds
+    .map((eventId) => ({
+      ...timeline[eventId],
+      id: eventId,
+    }))
+    .filter((event) => !event.isDeleted);
   return events.filter((event) => event.type === 'message' || event.type === 'system');
 }
 
 export function reactionEvents(timeline: Timeline) {
   const eventIds = Object.keys(timeline);
-  const events: WithHasProfile<WithID<Event>>[] = eventIds.map((eventId) => ({
-    ...timeline[eventId],
-    id: eventId,
-  }));
+  const events: WithHasProfile<WithID<Event>>[] = eventIds
+    .map((eventId) => ({
+      ...timeline[eventId],
+      id: eventId,
+    }))
+    .filter((event) => !event.isDeleted);
   return events.filter((event) => event.type === 'reaction');
 }
 
