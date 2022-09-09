@@ -1,4 +1,8 @@
+import { useState } from 'react';
 import { usePopoverThread, PopoverTrigger, Inbox } from '@collabkit/react';
+import { MenuItem, ControlledMenu, useMenuState } from '@szhsin/react-menu';
+import '@szhsin/react-menu/dist/index.css';
+import '@szhsin/react-menu/dist/transitions/slide.css';
 
 type CellProps = { value: number | string; row: Car; column: Column };
 
@@ -12,6 +16,9 @@ const Cell = ({ value, row, column }: CellProps) => {
     cellId,
   });
 
+  const [menuProps, toggleMenu] = useMenuState();
+  const [anchorPoint, setAnchorPoint] = useState({ x: 0, y: 0 });
+
   const classes = [];
   if (hasThread) classes.push('hasThread');
   if (popoverState === 'preview') classes.push('previewOpen');
@@ -23,7 +30,8 @@ const Cell = ({ value, row, column }: CellProps) => {
         className={classes.join(' ')}
         onContextMenu={(e) => {
           e.preventDefault();
-          setPopoverState('open');
+          setAnchorPoint({ x: e.clientX, y: e.clientY });
+          toggleMenu(true);
         }}
         onClick={() => {
           if (hasThread) {
@@ -33,6 +41,10 @@ const Cell = ({ value, row, column }: CellProps) => {
       >
         {value}
         {hasThread && <ThreadIndicator />}
+
+        <ControlledMenu {...menuProps} anchorPoint={anchorPoint} onClose={() => toggleMenu(false)}>
+          <MenuItem onClick={() => setPopoverState('open')}>Comment</MenuItem>
+        </ControlledMenu>
       </td>
     </PopoverTrigger>
   );

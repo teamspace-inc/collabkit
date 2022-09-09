@@ -3079,6 +3079,14 @@
   dependencies:
     tslib "^2.4.0"
 
+"@szhsin/react-menu@^3.1.2":
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/@szhsin/react-menu/-/react-menu-3.1.2.tgz#3a791e7e6c672d113c298985bec5185e9c7aa8a7"
+  integrity sha512-NUnU429a3jXtRD4xxk8EsR4yRSuhZPWAkI+4P4K63LQPUZGVE7adVKtEmlyOpd8CRQ7aoUz1ZLr1VmR1nZi6GQ==
+  dependencies:
+    prop-types "^15.7.2"
+    react-transition-state "^1.1.4"
+
 "@tsconfig/node16@^1.0.3":
   version "1.0.3"
   resolved "https://registry.npmjs.org/@tsconfig/node16/-/node16-1.0.3.tgz"
@@ -3327,7 +3335,7 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-dom@18.0.6", "@types/react-dom@^18.0.6":
+"@types/react-dom@^18.0.6":
   version "18.0.6"
   resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-18.0.6.tgz#36652900024842b74607a17786b6662dd1e103a1"
   integrity sha512-/5OFZgfIPSwy+YuIBP/FgJnQnsxhZhjjrnxudMddeblOouIodEQ75X14Rr4wGSG/bknL+Omy9iWlLo1u/9GzAA==
@@ -3355,7 +3363,7 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@18.0.18", "@types/react@^18.0.17", "@types/react@^18.0.18":
+"@types/react@*", "@types/react@^18.0.17", "@types/react@^18.0.18":
   version "18.0.18"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-18.0.18.tgz#9f16f33d57bc5d9dca848d12c3572110ff9429ac"
   integrity sha512-6hI08umYs6NaiHFEEGioXnxJ+oEhY3eRz8VCUaudZmGdtvPviCJB8mgaMxaDWAdPSYd4eFavrPk2QIolwbLYrg==
@@ -8498,6 +8506,11 @@ react-transition-group@^4.4.0:
     dom-helpers "^5.0.1"
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
+
+react-transition-state@^1.1.4:
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/react-transition-state/-/react-transition-state-1.1.5.tgz#22accee21d0011b1d0245be24b6262ae67f494c3"
+  integrity sha512-ITY2mZqc2dWG2eitJkYNdcSFW8aKeOlkL2A/vowRrLL8GH3J6Re/SpD/BLvQzrVOTqjsP0b5S9N10vgNNzwMUQ==
 
 react-vis@^1.11.7:
   version "1.11.7"
