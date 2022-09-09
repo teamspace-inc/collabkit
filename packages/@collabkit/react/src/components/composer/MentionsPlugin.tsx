@@ -34,12 +34,8 @@ import {
   FloatingTree,
   offset,
   size,
-  useDismiss,
   useFloating,
   useFloatingNodeId,
-  useFloatingParentNodeId,
-  useFloatingTree,
-  useInteractions,
 } from '@floating-ui/react-dom-interactions';
 
 type MentionMatch = {
