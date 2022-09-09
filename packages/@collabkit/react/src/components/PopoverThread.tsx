@@ -42,6 +42,7 @@ import * as Profile from './Profile';
 import { getCommentType } from '../utils/getCommentType';
 import { IconButton } from './IconButton';
 import { Check } from './icons';
+import { CommentMenu } from './comment/CommentMenu';
 
 const StyledPopoverThreadRoot = styled(Base, popoverThreadStyles.root);
 const StyledThreadContent = styled(Content, threadStyles.content);
@@ -262,6 +263,8 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
                                       </IconButton>
                                     </>
                                   ) : null}
+
+                                  <CommentMenu />
                                 </StyledCommentHeader>
                               ) : null}
                               <StyledCommentBody />

@@ -318,6 +318,11 @@ export function createThemes(customTheme?: CustomTheme) {
     commentUnseenBackgroundColor: 'unset',
     commentUnseenHoverBackgroundColor: 'unset',
 
+    commentMenuItemText: '$neutral12',
+    commentMenuItemBackground: '$neutral1',
+    commentMenuItemHoverText: '$neutral12',
+    commentMenuItemHoverBackground: '$neutral4',
+
     bubbleHoverBackground: '$neutral4',
     selectionBackground: '$neutral10',
 

@@ -3,7 +3,7 @@ import * as Tooltip from './Tooltip';
 import { styled } from '@stitches/react';
 import { iconButtonStyles } from '@collabkit/theme';
 
-const StyledIconButton = styled('div', iconButtonStyles.button);
+export const StyledIconButton = styled('div', iconButtonStyles.button);
 
 export function IconButton(props: {
   children: React.ReactNode;

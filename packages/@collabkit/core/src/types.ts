@@ -140,7 +140,9 @@ export type Target =
   | FloatingCommentButtonTarget
   | CommentableContainer
   | Commentable
-  | PinTarget;
+  | PinTarget
+  | CommentEditButtonTarget
+  | CommentDeleteButtonTarget;
 
 export type Commentable = {
   type: 'commentable';
@@ -181,6 +183,16 @@ export type ClickedOutsidePinTarget = {
 export type CommentReactionTarget = {
   type: 'commentReaction';
   emoji: string;
+  comment: CommentTarget;
+};
+
+export type CommentEditButtonTarget = {
+  type: 'commentEditButton';
+  comment: CommentTarget;
+};
+
+export type CommentDeleteButtonTarget = {
+  type: 'commentDeleteButton';
   comment: CommentTarget;
 };
 

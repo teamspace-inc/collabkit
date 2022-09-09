@@ -103,7 +103,9 @@ export function createEvents(store: Store) {
       actions.focus(store, props.target);
     },
 
-    onClick: (e: React.MouseEvent, props: { target: Target }) => {},
+    onClick: <T extends Target>(e: React.MouseEvent, props: { target: T }) => {
+      console.log('events.onClick', props.target);
+    },
 
     onEmojiReactionClick: (e: React.MouseEvent, props: { target: CommentReactionTarget }) => {
       actions.toggleCommentReaction(store, props);
