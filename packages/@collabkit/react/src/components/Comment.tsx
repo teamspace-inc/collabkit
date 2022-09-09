@@ -9,12 +9,12 @@ import { styled } from '@stitches/react';
 import { avatarStyles, commentStyles, messageHeaderStyles } from '@collabkit/theme';
 import { Markdown } from './Markdown';
 import { useSnapshot } from 'valtio';
-import { useCommentStore } from './useCommentStore';
+import { useCommentStore } from '../hooks/useCommentStore';
 import { CommentContext } from '../hooks/useCommentContext';
 import { Timestamp as RawTimestamp } from './Timestamp';
 
 import * as Profile from './Profile';
-import { useWorkspaceStore } from './useWorkspaceStore';
+import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
 
 export function Root(props: {
   children: React.ReactNode;

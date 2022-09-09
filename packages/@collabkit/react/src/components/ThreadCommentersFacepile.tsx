@@ -2,7 +2,7 @@ import React from 'react';
 import { useSnapshot } from 'valtio';
 import { useApp } from '../hooks/useApp';
 import { Avatar } from './Avatar';
-import { useTimelineStore } from './useTimelineStore';
+import { useTimelineStore } from '../hooks/useTimelineStore';
 import { unique } from './Inbox';
 
 export function ThreadCommentersFacepile(props: React.ComponentPropsWithoutRef<'div'>) {

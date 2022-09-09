@@ -4,9 +4,9 @@ import { StyledInboxThreadRoot, StyledInboxThreadContent } from './Inbox';
 import { ThreadContext, useThreadContext } from '../hooks/useThreadContext';
 import { ResolveThreadButton } from './ResolveThreadButton';
 import { ThreadCommentersFacepile } from './ThreadCommentersFacepile';
-import { useInboxStore } from './useInboxStore';
-import { useWorkspaceStore } from './useWorkspaceStore';
-import { useReplyCount } from './useReplyCount';
+import { useInboxStore } from '../hooks/useInboxStore';
+import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
+import { useReplyCount } from '../hooks/useReplyCount';
 
 import { useApp } from '../hooks/useApp';
 

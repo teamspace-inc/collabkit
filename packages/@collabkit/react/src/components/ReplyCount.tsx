@@ -1,5 +1,5 @@
 import React from 'react';
-import { useReplyCount } from './useReplyCount';
+import { useReplyCount } from '../hooks/useReplyCount';
 
 export function ReplyCount(props: React.ComponentPropsWithoutRef<'button'>) {
   const replyCount = useReplyCount();
