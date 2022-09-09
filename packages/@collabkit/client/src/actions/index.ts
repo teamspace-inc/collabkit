@@ -35,6 +35,7 @@ import { init } from './init';
 import { saveMentionableUsers } from './saveMentionableUsers';
 import { enableSendButton } from './enableSendButton';
 import { disableSendButton } from './disableSendButton';
+import { deleteMessage } from './deleteMessage';
 
 export type GenerateToken =
   | {
@@ -106,6 +107,7 @@ export const actions = {
   blur,
   closeEmojiReactionPicker,
   closeThread,
+  deleteMessage,
   disableSendButton,
   enableSendButton,
   focus,

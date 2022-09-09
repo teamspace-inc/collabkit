@@ -16,7 +16,7 @@ export function isValidEvent(data: any): data is Event {
   const typeValid =
     'type' in data &&
     typeof data.type === 'string' &&
-    ['message', 'reaction', 'adminMessage', 'system'].includes(data.type);
+    ['message', 'reaction', 'adminMessage', 'system', 'delete'].includes(data.type);
   const bodyValid = 'body' in data && typeof data.body === 'string';
   const systemValid =
     data.type === 'system'

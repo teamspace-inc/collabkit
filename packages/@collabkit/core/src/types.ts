@@ -227,8 +227,9 @@ export type CommentTarget = {
   eventId: string;
 };
 
+// TODO: this should be a union of different message types
 export type Event = {
-  type: 'message' | 'reaction' | 'adminMessage' | 'system';
+  type: 'message' | 'reaction' | 'adminMessage' | 'system' | 'delete';
   body: string;
   system?: 'resolve' | 'reopen';
   createdAt: number | object;

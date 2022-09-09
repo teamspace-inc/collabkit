@@ -1,5 +1,15 @@
 import type { Event, Timeline, WithHasProfile, WithID } from './types';
 
+function deletedIds(events: WithHasProfile<WithID<Event>>[]): Readonly<Set<string>> {
+  const deleted = new Set<string>();
+  for (const event of events) {
+    if (event.type === 'delete' && event.parentId) {
+      deleted.add(event.parentId);
+    }
+  }
+  return deleted;
+}
+
 export function groupedMessages(timeline: Timeline) {
   const eventIds = Object.keys(timeline);
 
@@ -7,9 +17,9 @@ export function groupedMessages(timeline: Timeline) {
     ...timeline[eventId],
     id: eventId,
   }));
-
+  const deleted = deletedIds(events);
   const messageEvents = events.filter(
-    (event) => event.type === 'message' || event.type === 'system'
+    (event) => !deleted.has(event.id) && (event.type === 'message' || event.type === 'system')
   );
 
   // groups comments by createdById and createdAt chunks
@@ -70,7 +80,10 @@ export function messageEvents(timeline: Timeline) {
     ...timeline[eventId],
     id: eventId,
   }));
-  return events.filter((event) => event.type === 'message' || event.type === 'system');
+  const deleted = deletedIds(events);
+  return events.filter(
+    (event) => !deleted.has(event.id) && (event.type === 'message' || event.type === 'system')
+  );
 }
 
 export function reactionEvents(timeline: Timeline) {

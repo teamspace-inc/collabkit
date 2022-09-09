@@ -35,7 +35,7 @@ export function useThread(props: {
   const timeline = workspace ? workspace.timeline[threadId] : null;
 
   const isEmpty = timeline
-    ? Object.keys(timeline).length === 0
+    ? timelineUtils.messageEvents(timeline).length === 0
     : workspace?.likelyFetchedAllProfiles;
 
   useThreadSubscription({ store, threadId, workspaceId });
