@@ -1,17 +1,18 @@
 import React, { cloneElement, useCallback, useMemo, useState } from 'react';
 import {
-  offset,
-  flip,
-  useFloating,
-  useInteractions,
-  useHover,
-  useDismiss,
-  useClick,
-  FloatingFocusManager,
-  size,
-  FloatingPortal,
-  safePolygon,
   autoUpdate,
+  flip,
+  FloatingFocusManager,
+  FloatingNode,
+  FloatingPortal,
+  offset,
+  safePolygon,
+  size,
+  useDismiss,
+  useFloating,
+  useFloatingNodeId,
+  useHover,
+  useInteractions,
 } from '@floating-ui/react-dom-interactions';
 import { mergeRefs } from 'react-merge-refs';
 import { PopoverThread, PreviewThread } from './PopoverThread';
@@ -116,10 +117,13 @@ export function usePopoverThread({
     [store, target]
   );
 
+  const nodeId = useFloatingNodeId();
+
   const { reference: previewReference, context: previewContext } = useFloating({
     placement: 'right-start',
     open: previewOpen,
     onOpenChange: setPreviewOpen,
+    nodeId,
     middleware: [offset(5), flip()],
   });
   const { reference: threadReference, context: threadContext } = useFloating({
@@ -127,6 +131,7 @@ export function usePopoverThread({
     open: threadOpen,
     whileElementsMounted: autoUpdate,
     onOpenChange: setThreadOpen,
+    nodeId,
     middleware: [
       offset(4),
       flip(),
@@ -170,6 +175,7 @@ export function usePopoverThread({
 
   return {
     context: {
+      nodeId,
       getProps,
       threadContext,
       previewContext,
@@ -204,10 +210,11 @@ export const PopoverTrigger = ({ children, context }: Props) => {
     threadId,
     threadInfo,
     getNewThreadId,
+    nodeId,
   } = context;
   const { theme } = useApp();
   return (
-    <>
+    <FloatingNode id={nodeId}>
       {cloneElement(children, getProps(children.props))}
       <FloatingPortal>
         {threadContext.open && (
@@ -272,6 +279,6 @@ export const PopoverTrigger = ({ children, context }: Props) => {
           </FloatingFocusManager>
         )}
       </FloatingPortal>
-    </>
+    </FloatingNode>
   );
 };

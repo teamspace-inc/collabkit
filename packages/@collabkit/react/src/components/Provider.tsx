@@ -7,6 +7,7 @@ import { createValtioStore } from '../store';
 import { FirebaseSync } from '@collabkit/client';
 import { SaveMentionableUsers } from './SaveMentionableUsers';
 import { AvatarProps } from '../types';
+import { FloatingTree } from '@floating-ui/react-dom-interactions';
 
 export type ProviderProps = {
   children: React.ReactNode;
@@ -80,7 +81,7 @@ export function CollabKitProvider({
         renderThreadContextPreview,
       }}
     >
-      {children}
+      <FloatingTree>{children}</FloatingTree>
       <SaveMentionableUsers mentionableUsers={config.mentionableUsers} />
     </AppContext.Provider>
   );

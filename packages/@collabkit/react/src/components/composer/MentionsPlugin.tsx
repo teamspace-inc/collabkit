@@ -29,10 +29,17 @@ import {
   autoUpdate,
   flip,
   FloatingFocusManager,
+  FloatingNode,
   FloatingPortal,
+  FloatingTree,
   offset,
   size,
+  useDismiss,
   useFloating,
+  useFloatingNodeId,
+  useFloatingParentNodeId,
+  useFloatingTree,
+  useInteractions,
 } from '@floating-ui/react-dom-interactions';
 
 type MentionMatch = {
@@ -213,11 +220,13 @@ function MentionsTypeahead({
   const [selectedIndex, setSelectedIndex] = useState<null | number>(null);
   const { theme } = useApp();
 
+  const nodeId = useFloatingNodeId();
+
   const { reference, context } = useFloating({
+    nodeId,
     placement: 'top-start',
     open: (results?.length ?? 0) > 0,
     whileElementsMounted: autoUpdate,
-    // onOpenChange: setThreadOpen,
     middleware: [
       offset(4),
       flip(),
@@ -368,37 +377,39 @@ function MentionsTypeahead({
   }
 
   return (
-    <FloatingFocusManager context={context}>
-      <StyledMentionsTypeahead
-        aria-label="Suggested mentions"
-        role="listbox"
-        className={theme.className}
-        ref={context.floating}
-        style={{
-          position: context.strategy,
-          top: context.y ?? 0,
-          left: context.x ?? 0,
-        }}
-      >
-        <StyledMentionsTypeaheadUl>
-          {results.slice(0, SUGGESTION_LIST_LENGTH_LIMIT).map((result, i) => (
-            <MentionsTypeaheadItem
-              key={result.id}
-              index={i}
-              isSelected={i === selectedIndex}
-              onClick={() => {
-                setSelectedIndex(i);
-                applyCurrentSelected();
-              }}
-              onMouseEnter={() => {
-                setSelectedIndex(i);
-              }}
-              result={result}
-            />
-          ))}
-        </StyledMentionsTypeaheadUl>
-      </StyledMentionsTypeahead>
-    </FloatingFocusManager>
+    <FloatingNode id={nodeId}>
+      <FloatingFocusManager context={context}>
+        <StyledMentionsTypeahead
+          aria-label="Suggested mentions"
+          role="listbox"
+          className={theme.className}
+          ref={context.floating}
+          style={{
+            position: context.strategy,
+            top: context.y ?? 0,
+            left: context.x ?? 0,
+          }}
+        >
+          <StyledMentionsTypeaheadUl>
+            {results.slice(0, SUGGESTION_LIST_LENGTH_LIMIT).map((result, i) => (
+              <MentionsTypeaheadItem
+                key={result.id}
+                index={i}
+                isSelected={i === selectedIndex}
+                onClick={() => {
+                  setSelectedIndex(i);
+                  applyCurrentSelected();
+                }}
+                onMouseEnter={() => {
+                  setSelectedIndex(i);
+                }}
+                result={result}
+              />
+            ))}
+          </StyledMentionsTypeaheadUl>
+        </StyledMentionsTypeahead>
+      </FloatingFocusManager>
+    </FloatingNode>
   );
 }
 
@@ -590,7 +601,8 @@ function isSelectionOnEntityBoundary(editor: LexicalEditor, offset: number): boo
   });
 }
 
-function useMentions(editor: LexicalEditor) {
+export function MentionsPlugin(): JSX.Element | null {
+  const [editor] = useLexicalComposerContext();
   const [resolution, setResolution] = useState<Resolution | null>(null);
 
   useEffect(() => {
@@ -643,14 +655,10 @@ function useMentions(editor: LexicalEditor) {
     setResolution(null);
   }, []);
 
-  return resolution === null || editor === null ? null : (
-    <FloatingPortal>
+  const typeahead =
+    resolution != null && editor != null ? (
       <MentionsTypeahead close={closeTypeahead} resolution={resolution} editor={editor} />
-    </FloatingPortal>
-  );
-}
+    ) : null;
 
-export function MentionsPlugin(): JSX.Element | null {
-  const [editor] = useLexicalComposerContext();
-  return useMentions(editor);
+  return <FloatingPortal>{typeahead}</FloatingPortal>;
 }
