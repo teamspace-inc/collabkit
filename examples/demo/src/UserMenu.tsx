@@ -41,7 +41,7 @@ export function UserMenu({
   );
 }
 
-export function Avatar({ user }: { user: User }) {
+export function Avatar({ user, size }: { user: User; size?: number }) {
   if (!user?.avatar) {
     let initials = '';
     if (user.name) {
@@ -53,8 +53,8 @@ export function Avatar({ user }: { user: User }) {
     return (
       <div
         style={{
-          width: 44,
-          height: 44,
+          width: size ?? 44,
+          height: size ?? 44,
           borderRadius: '50%',
           background: 'rebeccapurple',
           display: 'flex',
@@ -68,5 +68,7 @@ export function Avatar({ user }: { user: User }) {
       </div>
     );
   }
-  return <img src={user.avatar} style={{ width: 44, height: 44, borderRadius: '50%' }} />;
+  return (
+    <img src={user.avatar} style={{ width: size ?? 44, height: size ?? 44, borderRadius: '50%' }} />
+  );
 }

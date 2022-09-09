@@ -95,9 +95,9 @@ export default function App() {
   );
 }
 
-// function CustomAvatar(props: AvatarProps) {
-//   return <Avatar user={props.profile} />;
-// }
+function CustomAvatar(props: AvatarProps) {
+  return <Avatar user={props.profile} />;
+}
 
 function Home() {
   const threadId = 'new-your-thread-id2';

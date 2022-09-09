@@ -8,23 +8,28 @@ import { AvatarProps } from '../types';
 export const StyledAvatar = styled('img', avatarStyles.avatar);
 export const StyledDefaultAvatar = styled('div', avatarStyles.avatar);
 
-function DefaultAvatar({ profile }: AvatarProps) {
+function DefaultAvatar({ profile, size }: AvatarProps) {
   const [didError, setDidError] = useState(false);
 
   return didError || !profile.avatar ? (
     <StyledDefaultAvatar
-      style={
-        profile.color
+      style={{
+        ...(size ? { width: size, height: size } : {}),
+        ...(profile.color
           ? {
               backgroundColor: getShade(profile.color, 9),
             }
-          : undefined
-      }
+          : {}),
+      }}
     >
       {profile.name?.charAt(0)}
     </StyledDefaultAvatar>
   ) : (
-    <StyledAvatar src={profile.avatar!} onError={() => setDidError(true)} />
+    <StyledAvatar
+      style={{ ...(size ? { width: size, height: size } : {}) }}
+      src={profile.avatar!}
+      onError={() => setDidError(true)}
+    />
   );
 }
 

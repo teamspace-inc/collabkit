@@ -16,21 +16,19 @@ export function ThreadCommentersFacepile(props: React.ComponentPropsWithoutRef<'
   const commenters = commenterIds.map((commenterId) => profiles[commenterId]);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'row', marginLeft: '6px' }}>
+    <div style={{ display: 'flex', flexDirection: 'row', marginLeft: '4px' }}>
       {commenters.map((commenter, index) => {
         return commenter ? (
-          <Avatar
-            key={`commenter-${commenter.id}`}
-            profile={commenter}
+          <div
             style={{
-              width: '24px',
-              height: '24px',
-              lineHeight: '24px',
               border: '2px solid white',
               marginLeft: '-6px',
               zIndex: 999 - index,
+              borderRadius: '50%',
             }}
-          />
+          >
+            <Avatar key={`commenter-${commenter.id}`} profile={commenter} size={24} />
+          </div>
         ) : null;
       })}
     </div>
