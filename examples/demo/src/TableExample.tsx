@@ -25,6 +25,11 @@ const Cell = ({ value, row, column }: CellProps) => {
           e.preventDefault();
           setPopoverState('open');
         }}
+        onClick={() => {
+          if (hasThread) {
+            setPopoverState('open');
+          }
+        }}
       >
         {value}
         {hasThread && <ThreadIndicator />}
