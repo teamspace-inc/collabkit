@@ -81,7 +81,14 @@ export function createEvents(store: Store) {
 
     onConnectionStateChange: async (isConnected: boolean) => {
       store.isConnected = isConnected;
-      await actions.authenticate(store);
+      try {
+        await actions.authenticate(store);
+
+        // todo make this configurable
+        actions.subscribeInbox(store);
+      } catch (e) {
+        console.error('[CollabKit] failed to authenticate', { e });
+      }
     },
 
     onSend: (workspaceId: string, threadId: string) => {
