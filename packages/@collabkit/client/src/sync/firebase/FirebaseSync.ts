@@ -30,7 +30,6 @@ import { subscribeTimeline } from './subscribeTimeline';
 import { timelineRef, userTypingRef } from './refs';
 import type { Sync } from '@collabkit/core';
 import { getApp, initializeApp } from 'firebase/app';
-import { ThreadInfoChangeEvent } from '@collabkit/core/src/sync';
 
 export function initFirebase() {
   initializeApp(
@@ -369,7 +368,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
     workspaceId: string;
     threadId: string;
     subs: Subscriptions;
-    onThreadInfo: (props: ThreadInfoChangeEvent) => void;
+    onThreadInfo: (props: Sync.ThreadInfoChangeEvent) => void;
   }) {
     const threadInfoRef = ref(
       getDatabase(getApp('CollabKit')),
@@ -390,7 +389,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
     onTimelineEventAdded: (event: Sync.TimelineChangeEvent) => void;
     onThreadTypingChange: (event: Sync.TypingEvent) => void;
     onThreadSeenByUser: (event: Sync.ThreadSeenEvent) => void;
-    onThreadInfo: (props: ThreadInfoChangeEvent) => void;
+    onThreadInfo: (props: Sync.ThreadInfoChangeEvent) => void;
   }) {
     subscribeTimeline(props);
     subscribeThreadIsTyping(props);
