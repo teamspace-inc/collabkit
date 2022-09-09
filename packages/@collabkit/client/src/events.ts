@@ -84,7 +84,7 @@ export function createEvents(store: Store) {
       try {
         await actions.authenticate(store);
 
-        // todo make this configurable
+        // todo make this server configurable
         actions.subscribeInbox(store);
       } catch (e) {
         console.error('[CollabKit] failed to authenticate', { e });
