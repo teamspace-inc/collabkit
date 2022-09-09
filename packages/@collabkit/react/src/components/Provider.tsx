@@ -1,7 +1,7 @@
 import React, { ReactNode, useEffect, useLayoutEffect, useState } from 'react';
 import { createThemes, CustomTheme } from '@collabkit/theme';
 import { actions, initFirebase, Events, createEvents } from '@collabkit/client';
-import { ConfigProps, Profile, SecureProps, Store, UnsecureProps } from '@collabkit/core';
+import { ConfigProps, SecureProps, Store, ThreadInfo, UnsecureProps } from '@collabkit/core';
 import { AppContext } from '../hooks/useAppContext';
 import { createValtioStore } from '../store';
 import { FirebaseSync } from '@collabkit/client';
@@ -12,6 +12,12 @@ export type ProviderProps = {
   children: React.ReactNode;
   theme?: CustomTheme;
   renderAvatar?: (props: AvatarProps) => ReactNode;
+  renderThreadContextPreview?: (props: {
+    threadId: string;
+    workspaceId: string;
+    userId: string;
+    info?: ThreadInfo;
+  }) => ReactNode;
 } & (SecureProps | UnsecureProps) &
   ConfigProps;
 
@@ -24,6 +30,7 @@ export function CollabKitProvider({
   colorScheme = 'auto',
   theme,
   renderAvatar,
+  renderThreadContextPreview,
   ...config
 }: ProviderProps) {
   const [context, setContext] = useState<{ store: Store; events: Events } | null>(null);
@@ -70,6 +77,7 @@ export function CollabKitProvider({
         events: context.events,
         theme: currentTheme,
         renderAvatar,
+        renderThreadContextPreview,
       }}
     >
       {children}

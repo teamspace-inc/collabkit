@@ -6,6 +6,7 @@ import {
   onChildAdded,
   onChildChanged,
   onChildMoved,
+  onValue,
   orderByChild,
   push,
   query,
@@ -29,6 +30,7 @@ import { subscribeTimeline } from './subscribeTimeline';
 import { timelineRef, userTypingRef } from './refs';
 import type { Sync } from '@collabkit/core';
 import { getApp, initializeApp } from 'firebase/app';
+import { ThreadInfoChangeEvent } from '@collabkit/core/src/sync';
 
 export function initFirebase() {
   initializeApp(
@@ -327,7 +329,9 @@ export class FirebaseSync implements Sync.SyncAdapter {
 
     const pinsRef = ref(getDatabase(getApp('CollabKit')), `/pins/${appId}/${workspaceId}`);
 
+    subs[`${pinsRef.toString()}#added`]?.();
     subs[`${pinsRef.toString()}#added`] = onChildAdded(pinsRef, onChange, onError);
+    subs[`${pinsRef.toString()}#changed`]?.();
     subs[`${pinsRef.toString()}#changed`] = onChildChanged(pinsRef, onChange, onError);
   }
 
@@ -358,23 +362,45 @@ export class FirebaseSync implements Sync.SyncAdapter {
       getDatabase(getApp('CollabKit')),
       `/views/openThreads/${appId}/${workspaceId}`
     );
+    subs[`${viewRef.toString()}#added`]?.();
     subs[`${viewRef.toString()}#added`] = onChildAdded(viewRef, onChange, onError);
+    subs[`${viewRef.toString()}#changed`]?.();
     subs[`${viewRef.toString()}#changed`] = onChildChanged(viewRef, onChange, onError);
+  }
+
+  subscribeThreadInfo(props: {
+    appId: string;
+    workspaceId: string;
+    threadId: string;
+    subs: Subscriptions;
+    onThreadInfo: (props: ThreadInfoChangeEvent) => void;
+  }) {
+    const threadInfoRef = ref(
+      getDatabase(getApp('CollabKit')),
+      `/threadInfo/${props.appId}/${props.workspaceId}/${props.threadId}`
+    );
+
+    props.subs[`${threadInfoRef.toString()}#onValue`]?.();
+    props.subs[`${threadInfoRef.toString()}#onValue`] = onValue(threadInfoRef, (snapshot) => {
+      const info = snapshot.val();
+      props.onThreadInfo({ workspaceId: props.workspaceId, threadId: props.threadId, info });
+    });
   }
 
   subscribeThread(props: {
     appId: string;
-    userId?: string;
     workspaceId: string;
     threadId: string;
     subs: Subscriptions;
     onTimelineEventAdded: (event: Sync.TimelineChangeEvent) => void;
     onThreadTypingChange: (event: Sync.TypingEvent) => void;
     onThreadSeenByUser: (event: Sync.ThreadSeenEvent) => void;
+    onThreadInfo: (props: ThreadInfoChangeEvent) => void;
   }) {
     subscribeTimeline(props);
     subscribeThreadIsTyping(props);
     subscribeThreadSeenBy(props);
+    this.subscribeThreadInfo(props);
   }
 
   getUser(props: { appId: string; workspaceId: string; userId: string }) {

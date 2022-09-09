@@ -123,6 +123,15 @@ export interface SyncAdapter {
     onTimelineEventAdded: (event: TimelineChangeEvent) => void;
     onThreadTypingChange: (event: TypingEvent) => void;
     onThreadSeenByUser: (event: ThreadSeenEvent) => void;
+    onThreadInfo: (props: ThreadInfoChangeEvent) => void;
+  }): void;
+
+  subscribeThreadInfo(props: {
+    appId: string;
+    workspaceId: string;
+    threadId: string;
+    subs: Subscriptions;
+    onThreadInfo: (props: ThreadInfoChangeEvent) => void;
   }): void;
 }
 
@@ -133,6 +142,12 @@ export type OpenThreadEventHandler = (event: {
   threadId: string;
   info: { meta: ThreadMeta } | null;
 }) => void;
+
+export type ThreadInfoChangeEvent = {
+  threadId: string;
+  info: { meta: ThreadMeta } | null;
+  workspaceId: string;
+};
 
 export type TimelineChangeEvent = {
   threadId: string;

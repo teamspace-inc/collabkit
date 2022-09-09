@@ -42,5 +42,12 @@ export async function subscribeThread(
       store.workspaces[event.workspaceId].seenBy[event.threadId] ||= {};
       store.workspaces[event.workspaceId].seenBy[event.threadId][event.userId] = event.data;
     },
+    onThreadInfo: (event: Sync.ThreadInfoChangeEvent) => {
+      if (event.info) {
+        store.workspaces[event.workspaceId].threadInfo[event.threadId] = event.info;
+      } else {
+        delete store.workspaces[event.workspaceId].threadInfo[event.threadId];
+      }
+    },
   });
 }

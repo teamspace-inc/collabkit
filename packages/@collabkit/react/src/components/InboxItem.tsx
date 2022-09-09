@@ -22,7 +22,7 @@ import * as Comment from './Comment';
 
 export function InboxItem() {
   const { threadId, workspaceId, userId } = useThreadContext();
-  const { store } = useApp();
+  const { store, renderThreadContextPreview } = useApp();
   const workspace = useSnapshot(useWorkspaceStore());
   const inbox = useSnapshot(useInboxStore());
   const timeline = workspace.timeline[threadId];
@@ -66,6 +66,7 @@ export function InboxItem() {
             <div style={{ flex: 1 }}></div>
             <ResolveThreadButton />
           </div>
+          {renderThreadContextPreview?.({ threadId, workspaceId, userId })}
           <div style={{ padding: '12px 20px', background: '#eee' }}>Cell data placeholder</div>
           <Comment.Root eventId={firstCommentId}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
