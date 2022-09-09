@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { usePopoverThread, PopoverTrigger, Inbox } from '@collabkit/react';
+import { usePopoverThread, PopoverTrigger, Inbox, InboxButton } from '@collabkit/react';
 import { MenuItem, ControlledMenu, useMenuState } from '@szhsin/react-menu';
 import '@szhsin/react-menu/dist/index.css';
 import '@szhsin/react-menu/dist/transitions/slide.css';
@@ -89,6 +89,8 @@ const rows: Car[] = [
 
 export const TableExample = () => (
   <div>
+    <InboxButton />
+
     <table className="TableExample">
       <thead>
         <tr>

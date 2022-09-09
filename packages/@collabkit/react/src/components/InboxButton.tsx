@@ -1,14 +1,9 @@
 import React from 'react';
-import { useSnapshot } from 'valtio';
-import { useApp } from '../hooks/useApp';
-import { useUserContext } from '../hooks/useUserContext';
-import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
+import { useUnreadThreadsCount } from '../hooks/public/useUnreadThreadsCount';
 import { Button } from './Button';
 
 export function InboxButton() {
-  const { store } = useApp();
-  const { workspaceId } = useUserContext();
-  const workspace = store.workspaces[workspaceId];
+  const unreadThreadsCount = useUnreadThreadsCount();
 
   return (
     <Button
@@ -16,7 +11,7 @@ export function InboxButton() {
       onPointerDown={function (e: React.PointerEvent<Element>): void {
         throw new Error('Function not implemented.');
       }}
-      text={'Comments'}
+      text={unreadThreadsCount > 0 ? `Inbox (${unreadThreadsCount})` : 'Inbox'}
     ></Button>
   );
 }

@@ -22,6 +22,8 @@ export async function seen(store: Store, target: CommentTarget) {
       return;
     }
 
+    console.log('marking as seen', target);
+
     try {
       store.sync.markSeen({ appId, userId, workspaceId, threadId, eventId });
     } catch (e) {
