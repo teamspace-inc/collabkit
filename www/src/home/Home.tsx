@@ -79,13 +79,13 @@ function SectionHeader(props: {
 }
 
 const PlanGrid = styled(Grid, {
-  gridTemplateColumns: '1fr 1fr 1fr 1fr',
+  gridTemplateColumns: '1fr 1fr 1fr',
   columnGap: '0px',
   padding: '0 4rem',
 
   '@bp1': { gridTemplateColumns: '1fr', rowGap: '2rem', width: 'calc(100% - 4rem)' },
   '@bp2': {
-    gridTemplateColumns: '1fr 1fr 1fr 1fr',
+    gridTemplateColumns: '1fr 1fr 1fr',
     width: 'calc(100% - 100px)',
     maxWidth: '1352px',
   },
