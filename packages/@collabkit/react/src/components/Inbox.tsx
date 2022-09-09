@@ -15,7 +15,7 @@ import {
 import { IconButton } from './IconButton';
 import { X } from './icons';
 import { InboxItem } from './InboxItem';
-import { UserContext, useUserContext } from '../hooks/useUserContext';
+import { useOptionalUserContext } from '../hooks/useUserContext';
 
 export function unique<T>(value: T, index: number, self: T[]) {
   return self.indexOf(value) === index;
@@ -73,11 +73,13 @@ export interface ButtonProps extends React.ComponentPropsWithoutRef<'button'> {
 
 function CloseSidebarButton() {
   const { store } = useApp();
-  const { workspaceId, userId } = useUserContext();
+  const userContext = useOptionalUserContext();
 
   return (
     <IconButton
-      onPointerDown={() => store.callbacks?.onInboxCloseButtonClick?.({ workspaceId, userId })}
+      onPointerDown={() =>
+        userContext ? store.callbacks?.onInboxCloseButtonClick?.(userContext) : null
+      }
     >
       <X></X>
     </IconButton>
@@ -130,35 +132,33 @@ export function Inbox() {
     : null;
 
   return (
-    <UserContext.Provider value={{ userId, workspaceId }}>
-      <StyledSidebar>
-        <SidebarTitle>
-          <div style={{ flex: 1 }}>All Comments</div>
-          <CloseSidebarButton />
-        </SidebarTitle>
-        <StyledRoot className={theme.className}>
-          <ScrollAreaRoot>
-            <ScrollAreaViewport>
-              <div style={{ height: 'calc(100% - 77px)' }}>
-                {recentsThreadIds?.map((threadId) => {
-                  return (
-                    <ThreadContext.Provider
-                      value={{ threadId, workspaceId, userId }}
-                      key={`inboxThread-${threadId}`}
-                    >
-                      <InboxItem />
-                    </ThreadContext.Provider>
-                  );
-                })}
-              </div>
-            </ScrollAreaViewport>
-            <ScrollAreaScrollbar orientation="vertical">
-              <ScrollAreaThumb />
-            </ScrollAreaScrollbar>
-            <ScrollAreaCorner />
-          </ScrollAreaRoot>
-        </StyledRoot>
-      </StyledSidebar>
-    </UserContext.Provider>
+    <StyledSidebar>
+      <SidebarTitle>
+        <div style={{ flex: 1 }}>All Comments</div>
+        <CloseSidebarButton />
+      </SidebarTitle>
+      <StyledRoot className={theme.className}>
+        <ScrollAreaRoot>
+          <ScrollAreaViewport>
+            <div style={{ height: 'calc(100% - 77px)' }}>
+              {recentsThreadIds?.map((threadId) => {
+                return (
+                  <ThreadContext.Provider
+                    value={{ threadId, workspaceId, userId }}
+                    key={`inboxThread-${threadId}`}
+                  >
+                    <InboxItem />
+                  </ThreadContext.Provider>
+                );
+              })}
+            </div>
+          </ScrollAreaViewport>
+          <ScrollAreaScrollbar orientation="vertical">
+            <ScrollAreaThumb />
+          </ScrollAreaScrollbar>
+          <ScrollAreaCorner />
+        </ScrollAreaRoot>
+      </StyledRoot>
+    </StyledSidebar>
   );
 }

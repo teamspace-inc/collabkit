@@ -1,9 +1,9 @@
 import { useApp } from '../hooks/useApp';
-import { useThreadContext } from '../hooks/useThreadContext';
+import { useUserContext } from './useUserContext';
 
 export function useWorkspaceStore() {
   const { store } = useApp();
-  const { workspaceId } = useThreadContext();
+  const { workspaceId } = useUserContext();
   const workspaceStore = store.workspaces[workspaceId];
   if (workspaceStore == null) {
     throw new Error('[useWorkspaceStore] Workspace not found');

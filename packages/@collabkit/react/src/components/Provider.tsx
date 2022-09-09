@@ -8,6 +8,7 @@ import { FirebaseSync } from '@collabkit/client';
 import { SaveMentionableUsers } from './SaveMentionableUsers';
 import { AvatarProps } from '../types';
 import { FloatingTree } from '@floating-ui/react-dom-interactions';
+import { UserContextProvider } from '../hooks/useUserContext';
 
 export type ProviderProps = {
   children: React.ReactNode;
@@ -81,8 +82,10 @@ export function CollabKitProvider({
         renderThreadContextPreview,
       }}
     >
-      <FloatingTree>{children}</FloatingTree>
-      <SaveMentionableUsers mentionableUsers={config.mentionableUsers} />
+      <UserContextProvider>
+        <FloatingTree>{children}</FloatingTree>
+        <SaveMentionableUsers mentionableUsers={config.mentionableUsers} />
+      </UserContextProvider>
     </AppContext.Provider>
   );
 }

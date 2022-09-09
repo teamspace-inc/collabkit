@@ -1,6 +1,5 @@
 import { useCommentContext } from '../hooks/useCommentContext';
 import { useThreadContext } from '../hooks/useThreadContext';
-import { useTimelineStore } from './useTimelineStore';
 import { useWorkspaceStore } from './useWorkspaceStore';
 
 export function useCommentStore() {

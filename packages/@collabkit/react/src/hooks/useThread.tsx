@@ -3,6 +3,7 @@ import { useSnapshot } from 'valtio';
 import { actions } from '@collabkit/client';
 import { ThreadInfo, timelineUtils } from '@collabkit/core';
 import { Store } from '../constants';
+import { computeIsResolved } from '../utils/computeIsResolved';
 
 export function useThreadSubscription(props: {
   store: Store;
@@ -43,21 +44,7 @@ export function useThread(props: {
 
   const target = workspaceId ? ({ type: 'thread', threadId, workspaceId } as const) : null;
 
-  const systemEventIds = timeline
-    ? Object.keys(timeline).filter(
-        (eventId) =>
-          (timeline[eventId].type === 'system' && timeline[eventId].system === 'resolve') ||
-          timeline[eventId].system === 'reopen'
-      )
-    : [];
-
-  // todo use data from view instead of calculating this from
-  // retreived eventsc
-  const isResolved = !!(
-    timeline &&
-    systemEventIds.length > 0 &&
-    timeline[systemEventIds[systemEventIds.length - 1]].system === 'resolve'
-  );
+  const isResolved = timeline ? computeIsResolved(timeline) : false;
 
   const disabled =
     workspaceId && threadId

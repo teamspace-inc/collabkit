@@ -27,6 +27,7 @@ export function ThreadCommentersFacepile(props: React.ComponentPropsWithoutRef<'
               zIndex: 999 - index,
               borderRadius: '50%',
             }}
+            key={commenter.id}
           >
             <Avatar profile={commenter} size={24} />
           </div>
