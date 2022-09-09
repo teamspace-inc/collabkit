@@ -12,10 +12,6 @@ import {
   ScrollAreaThumb,
   ScrollAreaViewport,
 } from './ScrollArea';
-import { Timestamp } from './Timestamp';
-import { ReplyCount } from './ReplyCount';
-import { UnreadDot } from './UnreadDot';
-import * as Comment from './Comment';
 import { IconButton } from './IconButton';
 import { X } from './icons';
 import { InboxItem } from './InboxItem';
@@ -103,7 +99,7 @@ const SidebarTitle = styled('h1', {
 
 export function Inbox() {
   const { store, theme } = useApp();
-  const { workspaceId, workspaces, profiles, userId } = useSnapshot(store);
+  const { workspaceId, workspaces, userId } = useSnapshot(store);
 
   const workspace = workspaceId ? workspaces[workspaceId] : null;
 
@@ -143,7 +139,7 @@ export function Inbox() {
         <StyledRoot className={theme.className}>
           <ScrollAreaRoot>
             <ScrollAreaViewport>
-              <div style={{ height: '100%' }}>
+              <div style={{ height: 'calc(100% - 77px)' }}>
                 {recentsThreadIds?.map((threadId) => {
                   return (
                     <ThreadContext.Provider
