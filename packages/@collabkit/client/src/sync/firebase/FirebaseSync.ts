@@ -228,7 +228,11 @@ export class FirebaseSync implements Sync.SyncAdapter {
     // generate an id for the message
     const eventRef = await push(timelineRef(appId, workspaceId, threadId));
 
-    if (!eventRef.key) {
+    const id = eventRef.key;
+
+    console.log(id);
+
+    if (!id) {
       throw new Error('failed to gen push ref to timeline');
     }
 
@@ -236,7 +240,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
       [`/timeline/${appId}/${workspaceId}/${threadId}/${eventRef.key}`]: event,
       [`/views/inbox/${appId}/${workspaceId}/${threadId}`]: {
         ...event,
-        id: eventRef.key,
+        id,
         body: preview,
         name: threadId,
         mentions: event.mentions ?? null,
@@ -260,7 +264,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
       error.stack += e.stack;
       throw error;
     }
-    return { id: eventRef.key };
+    return { id };
   }
 
   subscribeSeen(

@@ -116,17 +116,16 @@ export function InboxItem() {
             </div>
           </Comment.Root>
           <Comment.Root eventId={lastComment.id}>
-            {/* {replyCount > 0 ? (
-              <>
-                <div>Foo</div>
-                <div style={{ display: 'flex', gap: '8px' }}>
-                  <StyledReplyCount />
-                  <StyledCommentTimestamp />
-                </div>
-              </>
-            ) : (
-              <div>FooBaz</div>
-            )} */}
+            <div>
+              {replyCount > 0 ? (
+                <>
+                  <div style={{ display: 'flex', gap: '8px' }}>
+                    <StyledReplyCount />
+                    <StyledCommentTimestamp />
+                  </div>
+                </>
+              ) : null}
+            </div>
           </Comment.Root>
         </StyledInboxThreadContent>
       </StyledInboxThreadRoot>

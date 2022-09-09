@@ -48,7 +48,7 @@ export async function subscribeInbox(store: Store) {
 
     const event = snapshot.val();
     store.workspaces[workspaceId] ||= createWorkspace();
-    store.workspaces[workspaceId].inbox[threadId] = { ...event, id: snapshot.key };
+    store.workspaces[workspaceId].inbox[threadId] = { ...event };
 
     // also get all events and listen to this thread
 
