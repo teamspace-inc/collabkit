@@ -145,26 +145,6 @@ export class FirebaseSync implements Sync.SyncAdapter {
     return { id: eventRef.key };
   }
 
-  async deleteEvent({
-    appId,
-    workspaceId,
-    threadId,
-    eventId,
-  }: {
-    appId: string;
-    workspaceId: string;
-    threadId: string;
-    eventId: string;
-  }): Promise<void> {
-    await set(
-      ref(
-        getDatabase(getApp('CollabKit')),
-        `/timeline/${appId}/${workspaceId}/${threadId}/${eventId}/isDeleted`
-      ),
-      true
-    );
-  }
-
   async markResolved({
     appId,
     workspaceId,

@@ -299,9 +299,6 @@
               "system": {
                 ".validate": "newData.val() === 'resolve' || newData.val() === 'reopen'"
               },
-              "isDeleted": {
-                ".validate": "newData.isBoolean()"
-              },
               "mentions": {
                 "$userId": {
                   ".validate": "newData.isBoolean()"

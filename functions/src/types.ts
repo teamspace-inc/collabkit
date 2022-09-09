@@ -50,7 +50,6 @@ export type Event = {
   createdById: string;
   system?: 'resolve' | 'reopen';
   parentId?: string;
-  isDeleted?: boolean;
 };
 
 export type Timeline = {
