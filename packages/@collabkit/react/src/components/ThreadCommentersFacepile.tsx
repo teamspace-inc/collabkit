@@ -20,6 +20,7 @@ export function ThreadCommentersFacepile(props: React.ComponentPropsWithoutRef<'
       {commenters.map((commenter, index) => {
         return commenter ? (
           <div
+            key={commenter.id}
             style={{
               border: '2px solid white',
               marginLeft: '-6px',
@@ -27,7 +28,7 @@ export function ThreadCommentersFacepile(props: React.ComponentPropsWithoutRef<'
               borderRadius: '50%',
             }}
           >
-            <Avatar key={`commenter-${commenter.id}`} profile={commenter} size={24} />
+            <Avatar profile={commenter} size={24} />
           </div>
         ) : null;
       })}
