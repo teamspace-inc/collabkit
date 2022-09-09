@@ -329,10 +329,8 @@ export class FirebaseSync implements Sync.SyncAdapter {
 
     const pinsRef = ref(getDatabase(getApp('CollabKit')), `/pins/${appId}/${workspaceId}`);
 
-    subs[`${pinsRef.toString()}#added`]?.();
-    subs[`${pinsRef.toString()}#added`] = onChildAdded(pinsRef, onChange, onError);
-    subs[`${pinsRef.toString()}#changed`]?.();
-    subs[`${pinsRef.toString()}#changed`] = onChildChanged(pinsRef, onChange, onError);
+    subs[`${pinsRef.toString()}#added`] ||= onChildAdded(pinsRef, onChange, onError);
+    subs[`${pinsRef.toString()}#changed`] ||= onChildChanged(pinsRef, onChange, onError);
   }
 
   subscribeOpenThreads(
@@ -362,10 +360,8 @@ export class FirebaseSync implements Sync.SyncAdapter {
       getDatabase(getApp('CollabKit')),
       `/views/openThreads/${appId}/${workspaceId}`
     );
-    subs[`${viewRef.toString()}#added`]?.();
-    subs[`${viewRef.toString()}#added`] = onChildAdded(viewRef, onChange, onError);
-    subs[`${viewRef.toString()}#changed`]?.();
-    subs[`${viewRef.toString()}#changed`] = onChildChanged(viewRef, onChange, onError);
+    subs[`${viewRef.toString()}#added`] ||= onChildAdded(viewRef, onChange, onError);
+    subs[`${viewRef.toString()}#changed`] ||= onChildChanged(viewRef, onChange, onError);
   }
 
   subscribeThreadInfo(props: {
@@ -380,8 +376,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
       `/threadInfo/${props.appId}/${props.workspaceId}/${props.threadId}`
     );
 
-    props.subs[`${threadInfoRef.toString()}#onValue`]?.();
-    props.subs[`${threadInfoRef.toString()}#onValue`] = onValue(threadInfoRef, (snapshot) => {
+    props.subs[`${threadInfoRef.toString()}#onValue`] ||= onValue(threadInfoRef, (snapshot) => {
       const info = snapshot.val();
       props.onThreadInfo({ workspaceId: props.workspaceId, threadId: props.threadId, info });
     });
