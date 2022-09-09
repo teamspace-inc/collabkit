@@ -465,21 +465,6 @@ export function Home() {
         />
         <PlanGrid>
           <Plan>
-            <PlanTitle>Starter</PlanTitle>
-            <PlanPrice>
-              $10 <br />
-              <Small>Per month</Small>
-            </PlanPrice>
-            <PlanFeatures>
-              <PlanFeature>All the essentials</PlanFeature>
-              <PlanFeature>
-                100 <br />
-                <Small>monthly active users</Small>
-              </PlanFeature>
-            </PlanFeatures>
-            <RequestDemoButton />
-          </Plan>
-          <Plan>
             <PlanTitle>Startup</PlanTitle>
             <PlanPrice>
               $400 <br />
@@ -488,7 +473,7 @@ export function Home() {
             <PlanFeatures>
               <PlanFeature>All the essentials</PlanFeature>
               <PlanFeature>
-                1,500 <br />
+                1,000 <br />
                 <Small>monthly active users</Small>
               </PlanFeature>
               <PlanFeature>Customize UI</PlanFeature>
@@ -512,7 +497,6 @@ export function Home() {
               <PlanFeature>Shared Slack Channel</PlanFeature>
             </PlanFeatures>
             <PlanPricingSmall>$0.10 per additonal user.</PlanPricingSmall>
-
             <RequestDemoButton />
           </Plan>
           <Plan>
