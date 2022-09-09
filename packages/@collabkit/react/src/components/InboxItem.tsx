@@ -26,6 +26,7 @@ export function InboxItem() {
   const workspace = useSnapshot(useWorkspaceStore());
   const inbox = useSnapshot(useInboxStore());
   const timeline = workspace.timeline[threadId];
+  const info = workspace.threadInfo[threadId];
   const replyCount = useReplyCount();
 
   if (!timeline) {
@@ -66,8 +67,7 @@ export function InboxItem() {
             <div style={{ flex: 1 }}></div>
             <ResolveThreadButton />
           </div>
-          {renderThreadContextPreview?.({ threadId, workspaceId, userId })}
-          <div style={{ padding: '12px 20px', background: '#eee' }}>Cell data placeholder</div>
+          {renderThreadContextPreview?.({ threadId, workspaceId, userId, info })}
           <Comment.Root eventId={firstCommentId}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
               <div style={{ display: 'flex', flexDirection: 'row', gap: '8px' }}>
