@@ -45,7 +45,7 @@ export const StyledUnreadDot = styled(UnreadDot, {
   left: -16,
 });
 
-export const StyledTimestamp = styled(Comment.Timestamp, {
+export const StyledCommentTimestamp = styled(Comment.Timestamp, {
   fontStyle: 'normal',
   fontWeight: 400,
   fontSize: 14,
@@ -110,18 +110,23 @@ export function InboxItem() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
               <div style={{ display: 'flex', flexDirection: 'row', gap: '8px' }}>
                 <StyledCommentCreatorName />
-                <StyledTimestamp timestamp={+lastComment?.createdAt} />
+                <StyledCommentTimestamp />
               </div>
               <StyledCommentBody />
             </div>
           </Comment.Root>
           <Comment.Root eventId={lastComment.id}>
             {replyCount > 0 ? (
-              <div style={{ display: 'flex', gap: '8px' }}>
-                <StyledReplyCount />
-                <StyledTimestamp timestamp={+lastComment?.createdAt} />
-              </div>
-            ) : null}
+              <>
+                <div>Foo</div>
+                <div style={{ display: 'flex', gap: '8px' }}>
+                  <StyledReplyCount />
+                  <StyledCommentTimestamp />
+                </div>
+              </>
+            ) : (
+              <div>FooBaz</div>
+            )}
           </Comment.Root>
         </StyledInboxThreadContent>
       </StyledInboxThreadRoot>
