@@ -6,6 +6,7 @@ export async function seen(store: Store, target: CommentTarget) {
   if (!userId) {
     return;
   }
+
   if (!document.hasFocus()) {
     return;
   }
@@ -21,8 +22,6 @@ export async function seen(store: Store, target: CommentTarget) {
       console.warn('CollabKit: cannot set seen in read-only mode');
       return;
     }
-
-    console.log('marking as seen', target);
 
     try {
       store.sync.markSeen({ appId, userId, workspaceId, threadId, eventId });
