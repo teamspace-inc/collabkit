@@ -3,7 +3,7 @@ import { useSnapshot } from 'valtio';
 import { Workspace } from '../constants';
 import { useThreadContext } from '../hooks/useThreadContext';
 import { countUnread } from '../utils/countUnread';
-import { useWorkspaceStore } from './useWorkspaceStore';
+import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
 
 export function UnreadDot(props: React.ComponentPropsWithoutRef<'div'>) {
   const { threadId } = useThreadContext();
