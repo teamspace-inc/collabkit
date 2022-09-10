@@ -30,7 +30,7 @@ import * as Comment from './Comment';
 import * as CommentList from './CommentList';
 import * as Composer from './composer/Composer';
 
-const Content = Base;
+const Content = (props: React.ComponentProps<'div'>) => <div {...props} />;
 
 const SendButtonIcon = styled(ArrowUp, sendButtonStyles.icon);
 const StyledThreadRoot = styled(Base, threadStyles.root);

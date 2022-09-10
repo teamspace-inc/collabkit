@@ -74,8 +74,8 @@ export function Timestamp(props: React.ComponentPropsWithoutRef<'span'>) {
 }
 
 export const CreatorName = Profile.Name;
-export const Header = Base;
-export const Content = Base;
+export const Header = (props: React.ComponentProps<'div'>) => <div {...props} />;
+export const Content = (props: React.ComponentProps<'div'>) => <div {...props} />;
 
 // Anatomy
 

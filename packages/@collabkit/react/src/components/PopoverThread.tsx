@@ -28,21 +28,19 @@ import {
   ScrollAreaCorner,
 } from './ScrollArea';
 import { ThreadContext } from '../hooks/useThreadContext';
-
 import { useComposerSendButton } from '../hooks/useComposerSendButton';
 import { Base } from './Base';
-
-export const MODAL_Z_INDEX = 999999;
-
-const Content = Base;
 import * as Comment from './Comment';
 import * as Composer from './composer/Composer';
 import * as Profile from './Profile';
-
 import { getCommentType } from '../utils/getCommentType';
 import { IconButton } from './IconButton';
 import { Check } from './icons';
 import { CommentMenu } from './comment/CommentMenu';
+
+export const MODAL_Z_INDEX = 999999;
+
+const Content = (props: React.ComponentProps<'div'>) => <div {...props} />;
 
 const StyledPopoverThreadRoot = styled(Base, popoverThreadStyles.root);
 const StyledThreadContent = styled(Content, threadStyles.content);

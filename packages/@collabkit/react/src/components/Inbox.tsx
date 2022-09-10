@@ -48,9 +48,8 @@ export const StyledInboxThreadContent = styled(InboxThread.Content, {
   },
 });
 
-const Root = Base;
-
-const Sidebar = Base;
+const Root = (props: React.ComponentProps<'div'>) => <div {...props} />;
+const Sidebar = (props: React.ComponentProps<'div'>) => <div {...props} />;
 
 const StyledSidebar = styled(Sidebar, {
   boxSizing: 'border-box',
