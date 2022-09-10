@@ -17,6 +17,7 @@ import { UnreadDot } from './UnreadDot';
 
 import { commentStyles } from '@collabkit/theme';
 import { timelineUtils } from '@collabkit/core';
+import { countMessages } from '@collabkit/core/src/timelineUtils';
 
 export const StyledReplyCount = styled(ReplyCount, {
   fontStyle: 'normal',
@@ -86,9 +87,10 @@ export function InboxItem() {
   // inbox tracks most recent comment by default
   const lastComment = inbox[threadId];
 
+  const isEmpty = countMessages(timeline) === 0;
   const isResolved = timelineUtils.computeIsResolved(timeline);
 
-  return isResolved ? null : (
+  return isResolved || isEmpty ? null : (
     <ThreadContext.Provider
       value={{ threadId, workspaceId, userId }}
       key={`inboxThread-${threadId}`}

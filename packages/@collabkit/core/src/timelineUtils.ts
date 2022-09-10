@@ -87,6 +87,16 @@ export function messageEvents(timeline: Timeline) {
     (event) => !deleted.has(event.id) && (event.type === 'message' || event.type === 'system')
   );
 }
+export function countMessages(timeline: Timeline) {
+  let count = 0;
+  const deleted = deletedIds(timeline);
+  for (const eventId of Object.keys(timeline)) {
+    if (!deleted.has(eventId) && timeline[eventId].type === 'message') {
+      count++;
+    }
+  }
+  return count;
+}
 
 export function reactionEvents(timeline: Timeline) {
   const eventIds = Object.keys(timeline);
