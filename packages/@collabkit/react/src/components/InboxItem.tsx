@@ -16,7 +16,7 @@ import { ReplyCount } from './ReplyCount';
 import { UnreadDot } from './UnreadDot';
 
 import { commentStyles } from '@collabkit/theme';
-import { computeIsResolved } from '../utils/computeIsResolved';
+import { timelineUtils } from '@collabkit/core';
 
 export const StyledReplyCount = styled(ReplyCount, {
   fontStyle: 'normal',
@@ -86,7 +86,7 @@ export function InboxItem() {
   // inbox tracks most recent comment by default
   const lastComment = inbox[threadId];
 
-  const isResolved = computeIsResolved(timeline);
+  const isResolved = timelineUtils.computeIsResolved(timeline);
 
   return isResolved ? null : (
     <ThreadContext.Provider

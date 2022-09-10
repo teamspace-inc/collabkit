@@ -3,7 +3,6 @@ import { useSnapshot } from 'valtio';
 import { actions } from '@collabkit/client';
 import { ThreadInfo, timelineUtils } from '@collabkit/core';
 import { Store } from '../constants';
-import { computeIsResolved } from '../utils/computeIsResolved';
 
 export function useThreadSubscription(props: {
   store: Store;
@@ -44,7 +43,7 @@ export function useThread(props: {
 
   const target = workspaceId ? ({ type: 'thread', threadId, workspaceId } as const) : null;
 
-  const isResolved = timeline ? computeIsResolved(timeline) : false;
+  const isResolved = timeline ? timelineUtils.computeIsResolved(timeline) : false;
 
   const disabled =
     workspaceId && threadId

@@ -8,7 +8,6 @@ export function saveThreadInfo(
     workspaceId: string;
     threadId: string;
     isOpen: boolean;
-    meta?: unknown;
   }
 ) {
   const { appId } = getConfig(store);

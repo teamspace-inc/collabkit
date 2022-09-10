@@ -1,4 +1,5 @@
-import type { Event, Store } from '@collabkit/core';
+import { Event, Store, timelineUtils } from '@collabkit/core';
+import { messageEvents } from '@collabkit/core/src/timelineUtils';
 import { getConfig } from '.';
 
 export async function deleteMessage(
@@ -28,10 +29,18 @@ export async function deleteMessage(
     threadId,
     event,
   });
-  store.workspaces[workspaceId].timeline[threadId] ||= {};
-  store.workspaces[workspaceId].timeline[threadId][id] = {
+
+  const timeline = store.workspaces[workspaceId].timeline[threadId];
+  timeline[id] = {
     ...event,
     createdAt: +Date.now(),
     id,
   };
+  const isEmpty = messageEvents(timeline).length === 0;
+  const isResolved = timelineUtils.computeIsResolved(timeline);
+  const isOpen = !isEmpty && !isResolved;
+  if (!isOpen) {
+    delete store.workspaces[workspaceId].openThreads[threadId];
+    await store.sync.markResolved({ appId, workspaceId, threadId });
+  }
 }
