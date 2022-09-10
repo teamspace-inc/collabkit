@@ -2,7 +2,6 @@ import React from 'react';
 import { commentListStyles } from '@collabkit/theme';
 import { styled } from '@stitches/react';
 
-const CommentListRoot = (props: React.ComponentProps<'div'>) => <div {...props} />;
-export { CommentListRoot as Root };
+export const Root = (props: React.ComponentProps<'div'>) => <div {...props} />;
 
-export default styled(CommentListRoot, commentListStyles.list);
+export default styled(Root, commentListStyles.list);

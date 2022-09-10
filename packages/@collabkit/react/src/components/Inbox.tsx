@@ -16,6 +16,7 @@ import { IconButton } from './IconButton';
 import { X } from './icons';
 import { InboxItem } from './InboxItem';
 import { useOptionalUserContext } from '../hooks/useUserContext';
+import { timelineUtils } from '@collabkit/core';
 
 export function unique<T>(value: T, index: number, self: T[]) {
   return self.indexOf(value) === index;
@@ -98,6 +99,43 @@ const SidebarTitle = styled('h1', {
   borderBottom: '1px solid #E3E9ED',
 });
 
+const EmptyState = {
+  Root: Base,
+  Title: Base,
+  Body: Base,
+};
+
+const StyledEmptyStateRoot = styled(EmptyState.Root, {
+  display: 'flex',
+  flex: '1',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: '100%',
+  height: '100%',
+  gap: '11px',
+});
+
+const StyledEmptyStateTitle = styled(EmptyState.Title, {
+  fontStyle: 'normal',
+  fontWeight: 400,
+  fontSize: 24,
+  lineHeight: '135%',
+  textAlign: 'center',
+  letterSpacing: -0.1,
+  color: '#6A7278',
+});
+
+const StyledEmptyStateBody = styled(EmptyState.Body, {
+  fontStyle: 'normal',
+  fontWeight: 400,
+  fontSize: 14,
+  lineHeight: '160%',
+  textAlign: 'center',
+  letterSpacing: -0.1,
+  color: '#6A7278',
+});
+
 export function Inbox() {
   const { store, theme } = useApp();
   const { workspaceId, workspaces, userId } = useSnapshot(store);
@@ -130,6 +168,27 @@ export function Inbox() {
       })
     : null;
 
+  const inboxItems = recentsThreadIds
+    ?.filter(
+      (threadId) =>
+        !(
+          workspace.timeline?.[threadId] &&
+          timelineUtils.computeIsResolved(workspace.timeline?.[threadId])
+        )
+    )
+    .map((threadId) => {
+      return (
+        <ThreadContext.Provider
+          value={{ threadId, workspaceId, userId }}
+          key={`inboxThread-${threadId}`}
+        >
+          <InboxItem />
+        </ThreadContext.Provider>
+      );
+    });
+
+  const isEmpty = inboxItems?.filter((item) => item !== null).length === 0;
+
   return (
     <StyledSidebar>
       <SidebarTitle>
@@ -137,26 +196,23 @@ export function Inbox() {
         <CloseSidebarButton />
       </SidebarTitle>
       <StyledRoot className={theme.className}>
-        <ScrollAreaRoot>
-          <ScrollAreaViewport>
-            <div style={{ height: 'calc(100% - 77px)' }}>
-              {recentsThreadIds?.map((threadId) => {
-                return (
-                  <ThreadContext.Provider
-                    value={{ threadId, workspaceId, userId }}
-                    key={`inboxThread-${threadId}`}
-                  >
-                    <InboxItem />
-                  </ThreadContext.Provider>
-                );
-              })}
-            </div>
-          </ScrollAreaViewport>
-          <ScrollAreaScrollbar orientation="vertical">
-            <ScrollAreaThumb />
-          </ScrollAreaScrollbar>
-          <ScrollAreaCorner />
-        </ScrollAreaRoot>
+        {isEmpty ? (
+          <StyledEmptyStateRoot>
+            <StyledEmptyStateTitle>No comments</StyledEmptyStateTitle>
+            <StyledEmptyStateBody>Comments on this view will appear here.</StyledEmptyStateBody>
+          </StyledEmptyStateRoot>
+        ) : (
+          <ScrollAreaRoot>
+            <ScrollAreaViewport>
+              {/* custom styling for cashboard */}
+              <div style={{ height: 'calc(100% - 77px)', display: 'flex' }}>{inboxItems}</div>
+            </ScrollAreaViewport>
+            <ScrollAreaScrollbar orientation="vertical">
+              <ScrollAreaThumb />
+            </ScrollAreaScrollbar>
+            <ScrollAreaCorner />
+          </ScrollAreaRoot>
+        )}
       </StyledRoot>
     </StyledSidebar>
   );
