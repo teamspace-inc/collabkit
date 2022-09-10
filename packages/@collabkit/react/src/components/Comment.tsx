@@ -1,7 +1,4 @@
 import React from 'react';
-
-import { Base } from './Base';
-
 import { useMarkAsSeen } from '../hooks/useMarkAsSeen';
 import { useOnMarkdownLinkClick } from '../hooks/useOnMarkdownLinkClick';
 import { useThreadContext } from '../hooks/useThreadContext';
@@ -10,11 +7,13 @@ import { avatarStyles, commentStyles, messageHeaderStyles } from '@collabkit/the
 import { Markdown } from './Markdown';
 import { useSnapshot } from 'valtio';
 import { useCommentStore } from '../hooks/useCommentStore';
-import { CommentContext } from '../hooks/useCommentContext';
+import { CommentContext, useCommentContext } from '../hooks/useCommentContext';
 import { Timestamp as RawTimestamp } from './Timestamp';
 
 import * as Profile from './Profile';
 import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
+import { useApp } from '../hooks/useApp';
+import { CommentEditor } from './comment/CommentEditor';
 
 export function Root(props: {
   children: React.ReactNode;
@@ -58,12 +57,13 @@ export function Root(props: {
   );
 }
 
-export function Body(props: React.ComponentPropsWithoutRef<'div'>) {
+export function Body({ children, ...props }: React.ComponentPropsWithoutRef<'div'>) {
   const { body } = useSnapshot(useCommentStore());
 
   return (
     <div {...props}>
       <Markdown body={body}></Markdown>
+      {children}
     </div>
   );
 }
@@ -76,6 +76,7 @@ export function Timestamp(props: React.ComponentPropsWithoutRef<'span'>) {
 export const CreatorName = Profile.Name;
 export const Header = (props: React.ComponentProps<'div'>) => <div {...props} />;
 export const Content = (props: React.ComponentProps<'div'>) => <div {...props} />;
+export const Editor = CommentEditor;
 
 // Anatomy
 
@@ -86,6 +87,7 @@ const StyledCommentRoot = styled(Root, commentStyles.root);
 const StyledCommentContent = styled(Content, commentStyles.message);
 const StyledCommentBody = styled(Body, commentStyles.body);
 const StyledCommentCreatorAvatar = styled(Profile.Avatar, avatarStyles.avatar);
+const StyledCommentEditor = styled(CommentEditor, commentStyles.editor);
 
 // No customisation = Dom's design. You just import Thread and Inbox, and it looks like what we provide (oh and yes you can set dark/light mode);
 
@@ -104,7 +106,9 @@ export default function Comment(props: { eventId: string }) {
           <StyledCommentCreatorName />
           <StyledCommentTimestamp />
         </StyledCommentHeader>
-        <StyledCommentBody />
+        <StyledCommentBody>
+          <StyledCommentEditor />
+        </StyledCommentBody>
       </StyledCommentContent>
     </StyledCommentRoot>
   );

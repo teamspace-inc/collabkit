@@ -109,7 +109,7 @@ export function createEvents(store: Store) {
           actions.deleteMessage(store, props.target.comment);
           return;
         case 'commentEditButton':
-          console.log('events.onClick', props.target);
+          actions.startEditing(store, props.target.comment);
           return;
       }
     },

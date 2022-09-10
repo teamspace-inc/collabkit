@@ -330,6 +330,7 @@ export interface UnconfiguredStore {
   composingId: null | ThreadTarget;
   viewingId: null | Target;
   previewingId: null | Target;
+  editingId: null | CommentTarget;
   config: null | Config;
   profiles: { [profileId: string]: Profile };
   workspaces: {

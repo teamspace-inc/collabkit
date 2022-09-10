@@ -83,6 +83,7 @@ export const message = css({
 });
 
 export const body = css({
+  position: 'relative',
   wordBreak: 'break-word',
   overflowWrap: 'break-word',
   fontSize: '$fontSize$2',
@@ -95,4 +96,14 @@ export const bodyEllipsis = css({
   right: '0ch',
   bottom: 0,
   background: '$colors$neutral1',
+});
+
+export const editor = css({
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  right: 0,
+  background: '$colors$neutral2',
+  boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+  color: 'white',
 });

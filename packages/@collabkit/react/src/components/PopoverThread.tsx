@@ -74,6 +74,7 @@ const StyledCommentContent = styled(Comment.Content, commentStyles.message, {
   padding: '0px 0px 0px',
 });
 const StyledCommentBody = styled(Comment.Body, commentStyles.body);
+const StyledCommentEditor = styled(Comment.Editor, commentStyles.editor);
 
 const StyledComposerRoot = styled(Composer.Root, composerStyles.root, {
   borderTop: '1px solid #E3E9ED',
@@ -263,7 +264,9 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
                                   {event.createdById === userId && <CommentMenu />}
                                 </StyledCommentHeader>
                               ) : null}
-                              <StyledCommentBody />
+                              <StyledCommentBody>
+                                <StyledCommentEditor />
+                              </StyledCommentBody>
                             </StyledCommentContent>
                           </StyledCommentRoot>
                         </div>

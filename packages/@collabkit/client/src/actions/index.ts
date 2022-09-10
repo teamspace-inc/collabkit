@@ -36,6 +36,8 @@ import { saveMentionableUsers } from './saveMentionableUsers';
 import { enableSendButton } from './enableSendButton';
 import { disableSendButton } from './disableSendButton';
 import { deleteMessage } from './deleteMessage';
+import { startEditing } from './startEditing';
+import { stopEditing } from './stopEditing';
 
 export type GenerateToken =
   | {
@@ -124,9 +126,11 @@ export const actions = {
   saveThreadInfo,
   seen,
   sendMessage,
+  startEditing,
   startSelecting,
   startThread: placePinAndStartComposingThread,
   stopSelecting,
+  stopEditing,
   stopTyping,
   subscribeInbox,
   subscribeOpenThreads,

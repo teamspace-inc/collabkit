@@ -2,7 +2,7 @@ import React from 'react';
 
 import { ComposerTarget } from '../../constants';
 import { ContentEditable as LexicalContentEditable } from '@lexical/react/LexicalContentEditable';
-import { LexicalComposer } from '@lexical/react/LexicalComposer';
+import { LexicalComposer, InitialEditorStateType } from '@lexical/react/LexicalComposer';
 import { PlainTextPlugin } from '@lexical/react/LexicalPlainTextPlugin';
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
@@ -80,13 +80,14 @@ export const Editor = function ComposerEditor(props: {
   placeholder: React.ReactElement;
   className?: string;
   contentEditable: (props: { autoFocus?: boolean }) => JSX.Element;
+  initialEditorState?: InitialEditorStateType;
 }) {
   const { target } = useTarget();
   const { events } = useApp();
 
   return (
     <div className={props.className}>
-      <LexicalComposer initialConfig={initialConfig}>
+      <LexicalComposer initialConfig={{ ...initialConfig, editorState: props.initialEditorState }}>
         <div id="mentions" style={{ position: 'absolute', left: 0, right: 0 }} />
         <PasteTextPlugin />
         <PlainTextPlugin
