@@ -25,13 +25,11 @@ import {
   useFloatingNodeId,
   useFloatingParentNodeId,
   FloatingNode,
-  FloatingTree,
   FloatingFocusManager,
 } from '@floating-ui/react-dom-interactions';
 import { mergeRefs } from 'react-merge-refs';
 import { StyledIconButton } from '../IconButton';
 import { useApp } from '../../hooks/useApp';
-import { MODAL_Z_INDEX } from '../PopoverThread';
 
 export const MenuItem = forwardRef<
   HTMLButtonElement,
@@ -184,7 +182,6 @@ export const MenuComponent = forwardRef<
                   borderRadius: 6,
                   boxShadow: '2px 4px 12px rgba(0, 0, 0, 0.1)',
                   outline: 0,
-                  zIndex: MODAL_Z_INDEX + 1,
                 },
                 onKeyDown(event: React.KeyboardEvent) {
                   if (event.key === 'Tab') {

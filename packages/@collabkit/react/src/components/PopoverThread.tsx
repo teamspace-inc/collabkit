@@ -38,8 +38,6 @@ import { IconButton } from './IconButton';
 import { Check } from './icons';
 import { CommentMenu } from './comment/CommentMenu';
 
-export const MODAL_Z_INDEX = 999999;
-
 const Content = (props: React.ComponentProps<'div'>) => <div {...props} />;
 
 const StyledPopoverThreadRoot = styled(Base, popoverThreadStyles.root);

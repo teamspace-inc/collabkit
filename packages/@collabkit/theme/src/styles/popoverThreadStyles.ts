@@ -6,7 +6,6 @@ export const root = css(threadStyles.content, {
   display: 'flex',
   flexDirection: 'column',
   height: '100%',
-  zIndex: 9999,
   position: 'relative',
   width: '$sizes$popoverThreadWidth',
   background: '#FFFFFF',
