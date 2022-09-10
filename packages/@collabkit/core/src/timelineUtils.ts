@@ -1,8 +1,9 @@
 import type { Event, Timeline, WithHasProfile, WithID } from './types';
 
-function deletedIds(events: WithHasProfile<WithID<Event>>[]): Readonly<Set<string>> {
+export function deletedIds(timeline: Timeline): Readonly<Set<string>> {
   const deleted = new Set<string>();
-  for (const event of events) {
+  for (const eventId of Object.keys(timeline)) {
+    const event = timeline[eventId];
     if (event.type === 'delete' && event.parentId) {
       deleted.add(event.parentId);
     }
@@ -17,7 +18,8 @@ export function groupedMessages(timeline: Timeline) {
     ...timeline[eventId],
     id: eventId,
   }));
-  const deleted = deletedIds(events);
+
+  const deleted = deletedIds(timeline);
   const messageEvents = events.filter(
     (event) => !deleted.has(event.id) && (event.type === 'message' || event.type === 'system')
   );
@@ -80,7 +82,7 @@ export function messageEvents(timeline: Timeline) {
     ...timeline[eventId],
     id: eventId,
   }));
-  const deleted = deletedIds(events);
+  const deleted = deletedIds(timeline);
   return events.filter(
     (event) => !deleted.has(event.id) && (event.type === 'message' || event.type === 'system')
   );
@@ -118,4 +120,17 @@ export function computeIsResolved(timeline: Timeline) {
     systemEventIds.length > 0 &&
     timeline[systemEventIds[systemEventIds.length - 1]].system === 'resolve'
   );
+}
+
+export function getReplyCount(timeline: Timeline | undefined) {
+  if (!timeline) {
+    return 0;
+  }
+  const eventIds = Object.keys(timeline);
+  const deleted = deletedIds(timeline);
+  const commentCount = eventIds.filter(
+    (eventId) => !deleted.has(eventId) && timeline[eventId].type === 'message'
+  ).length;
+  const replyCount = commentCount - 1;
+  return replyCount;
 }
