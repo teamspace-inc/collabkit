@@ -1,4 +1,4 @@
-import { DotsThree } from 'phosphor-react';
+import { DotsThree } from '../icons';
 import { styled } from '@stitches/react';
 import React, { useCallback } from 'react';
 import { Menu, MenuItem } from './Menu';
