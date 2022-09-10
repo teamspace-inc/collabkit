@@ -205,7 +205,7 @@ export function Inbox() {
           <ScrollAreaRoot>
             <ScrollAreaViewport>
               {/* custom styling for cashboard */}
-              <div style={{ height: 'calc(100% - 77px)', display: 'flex' }}>{inboxItems}</div>
+              <div style={{ height: 'calc(100% - 77px)' }}>{inboxItems}</div>
             </ScrollAreaViewport>
             <ScrollAreaScrollbar orientation="vertical">
               <ScrollAreaThumb />
