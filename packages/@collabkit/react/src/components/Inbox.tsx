@@ -35,6 +35,7 @@ export const StyledInboxThreadRoot = styled(InboxThread.Root, {
   display: 'flex',
   borderBottom: '1px solid #E3E9ED',
   flexDirection: 'column',
+  flex: 1,
 });
 
 export const StyledInboxThreadContent = styled(InboxThread.Content, {
@@ -166,8 +167,10 @@ export function Inbox() {
       ) : (
         <ScrollAreaRoot>
           <ScrollAreaViewport>
-            {/* custom styling for cashboard */}
-            <div style={{ display: 'flex', flex: 1 }}>{inboxItems}</div>
+            {inboxItems}
+            {/* <div style={{ padding: '40px 20px', textAlign: 'center', color: '#6A7278' }}>
+              No more comments
+            </div> */}
           </ScrollAreaViewport>
           <ScrollAreaScrollbar orientation="vertical">
             <ScrollAreaThumb />

@@ -10,6 +10,11 @@ const StyledSidePane = styled('div', {
   height: '100%',
   background: 'white',
   boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.05)',
+  position: 'fixed',
+  top: 0,
+  width: 433,
+  right: 0,
+  bottom: 0,
 });
 
 const StyledSidePaneTitle = styled('h1', {
@@ -47,7 +52,7 @@ export function SidePane(props: { children: React.ReactNode }) {
         <div style={{ flex: 1 }}>All Comments</div>
         <CloseSidePaneButton />
       </StyledSidePaneTitle>
-      {props.children}
+      <div style={{ flex: 1, height: 'calc(100% - 77px)' }}>{props.children}</div>
     </StyledSidePane>
   );
 }
