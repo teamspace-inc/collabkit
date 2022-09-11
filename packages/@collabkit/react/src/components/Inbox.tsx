@@ -1,10 +1,12 @@
+import React, { useEffect } from 'react';
+
 import { actions } from '@collabkit/client';
 import { styled } from '@stitches/react';
-import React, { useEffect } from 'react';
 import { useSnapshot } from 'valtio';
 import { useApp } from '../hooks/useApp';
 import { ThreadContext } from '../hooks/useThreadContext';
 import { Base } from './Base';
+
 import {
   ScrollAreaCorner,
   ScrollAreaRoot,
@@ -12,10 +14,8 @@ import {
   ScrollAreaThumb,
   ScrollAreaViewport,
 } from './ScrollArea';
-import { IconButton } from './IconButton';
-import { X } from './icons';
+
 import { InboxItem } from './InboxItem';
-import { useOptionalUserContext } from '../hooks/useUserContext';
 import { timelineUtils } from '@collabkit/core';
 
 export function unique<T>(value: T, index: number, self: T[]) {
@@ -49,13 +49,6 @@ export const StyledInboxThreadContent = styled(InboxThread.Content, {
 });
 
 const Root = (props: React.ComponentProps<'div'>) => <div {...props} />;
-const Sidebar = (props: React.ComponentProps<'div'>) => <div {...props} />;
-
-const StyledSidebar = styled(Sidebar, {
-  boxSizing: 'border-box',
-  height: '100%',
-  boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.05)',
-});
 
 const StyledRoot = styled(Root, {
   display: 'flex',
@@ -69,34 +62,6 @@ const StyledRoot = styled(Root, {
 export interface ButtonProps extends React.ComponentPropsWithoutRef<'button'> {
   specialProp?: string;
 }
-
-function CloseSidebarButton() {
-  const { store } = useApp();
-  const userContext = useOptionalUserContext();
-
-  return (
-    <IconButton
-      onPointerDown={() =>
-        userContext ? store.callbacks?.onInboxCloseButtonClick?.(userContext) : null
-      }
-    >
-      <X></X>
-    </IconButton>
-  );
-}
-
-const SidebarTitle = styled('h1', {
-  fontStyle: 'normal',
-  fontWeight: 500,
-  fontSize: 18,
-  lineHeight: '153%',
-  letterSpacing: -0.25,
-  margin: 0,
-  display: 'flex',
-  alignItems: 'center',
-  padding: '22px 24px',
-  borderBottom: '1px solid #E3E9ED',
-});
 
 const EmptyState = {
   Root: Base,
@@ -192,30 +157,24 @@ export function Inbox() {
   const isEmpty = inboxItems?.filter((item) => item !== null).length === 0;
 
   return (
-    <StyledSidebar>
-      <SidebarTitle>
-        <div style={{ flex: 1 }}>All Comments</div>
-        <CloseSidebarButton />
-      </SidebarTitle>
-      <StyledRoot className={theme.className}>
-        {isEmpty ? (
-          <StyledEmptyStateRoot>
-            <StyledEmptyStateTitle>No comments</StyledEmptyStateTitle>
-            <StyledEmptyStateBody>Comments on this view will appear here.</StyledEmptyStateBody>
-          </StyledEmptyStateRoot>
-        ) : (
-          <ScrollAreaRoot>
-            <ScrollAreaViewport>
-              {/* custom styling for cashboard */}
-              <div style={{ height: 'calc(100% - 77px)' }}>{inboxItems}</div>
-            </ScrollAreaViewport>
-            <ScrollAreaScrollbar orientation="vertical">
-              <ScrollAreaThumb />
-            </ScrollAreaScrollbar>
-            <ScrollAreaCorner />
-          </ScrollAreaRoot>
-        )}
-      </StyledRoot>
-    </StyledSidebar>
+    <StyledRoot className={theme.className}>
+      {isEmpty ? (
+        <StyledEmptyStateRoot>
+          <StyledEmptyStateTitle>No comments</StyledEmptyStateTitle>
+          <StyledEmptyStateBody>Comments on this view will appear here.</StyledEmptyStateBody>
+        </StyledEmptyStateRoot>
+      ) : (
+        <ScrollAreaRoot>
+          <ScrollAreaViewport>
+            {/* custom styling for cashboard */}
+            <div style={{ display: 'flex', flex: 1 }}>{inboxItems}</div>
+          </ScrollAreaViewport>
+          <ScrollAreaScrollbar orientation="vertical">
+            <ScrollAreaThumb />
+          </ScrollAreaScrollbar>
+          <ScrollAreaCorner />
+        </ScrollAreaRoot>
+      )}
+    </StyledRoot>
   );
 }

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { usePopoverThread, PopoverTrigger, Inbox, InboxButton } from '@collabkit/react';
+import { usePopoverThread, PopoverTrigger, Inbox, InboxButton, SidePane } from '@collabkit/react';
 import { MenuItem, ControlledMenu, useMenuState } from '@szhsin/react-menu';
 import '@szhsin/react-menu/dist/index.css';
 import '@szhsin/react-menu/dist/transitions/slide.css';
@@ -117,7 +117,9 @@ export const TableExample = () => (
       </tbody>
     </table>
     <div style={{ position: 'fixed', right: 0, top: 0, bottom: 0, width: 430 }}>
-      <Inbox></Inbox>
+      <SidePane>
+        <Inbox />
+      </SidePane>
     </div>
   </div>
 );
