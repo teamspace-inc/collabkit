@@ -146,9 +146,7 @@ export function Thread(props: ThreadProps & { className?: string; children?: Rea
                                 {showProfile ? <StyledCommentCreatorName /> : null}
                                 {showProfile ? <StyledCommentTimestamp /> : null}
                               </StyledCommentHeader>
-                              <StyledCommentBody>
-                                <Markdown body={event.body} />
-                              </StyledCommentBody>
+                              <StyledCommentBody />
                             </StyledCommentContent>
                           </StyledCommentRoot>
                         </div>
