@@ -12,6 +12,7 @@ import type { AvatarProps } from './types';
 import { PopoverTrigger, usePopoverThread } from './components/Popover';
 import { Thread } from './components/Thread';
 import { useUnreadCount } from './hooks/public/useUnreadCount';
+import { useUnreadThreadsCount } from './hooks/public/useUnreadThreadsCount';
 import { createValtioStore } from './store';
 import { Inbox } from './components/Inbox';
 import { InboxButton } from './components/InboxButton';
@@ -24,6 +25,7 @@ export {
   PopoverTrigger,
   Inbox,
   usePopoverThread,
+  useUnreadThreadsCount,
   useUnreadCount,
   createValtioStore as internal_createStore,
 };
