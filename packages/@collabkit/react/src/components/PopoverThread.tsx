@@ -33,7 +33,7 @@ import { Base } from './Base';
 import * as Comment from './Comment';
 import * as Composer from './composer/Composer';
 import * as Profile from './Profile';
-import { getCommentType } from '../utils/getCommentType';
+// import { getCommentType } from '../utils/getCommentType';
 import { IconButton } from './IconButton';
 import { Check } from './icons';
 import { CommentMenu } from './comment/CommentMenu';
@@ -212,7 +212,7 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
                   {list?.map((group, i) => {
                     return group.map((event, index) => {
                       const profile = profiles[event.createdById];
-                      const type = getCommentType(group, index);
+                      // const type = getCommentType(group, index);
                       const showProfile = true; // type === 'default' || type === 'inline-start';
                       return profile ? (
                         <div key={event.id}>
