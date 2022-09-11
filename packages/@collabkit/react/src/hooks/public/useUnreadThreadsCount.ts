@@ -6,12 +6,15 @@ import { useEffect, useState } from 'react';
 
 export function useUnreadThreadsCount(): number {
   const { store } = useApp();
-  const { workspaceId, workspaces } = useSnapshot(store);
+  const { workspaceId, workspaces, userId } = useSnapshot(store);
   const workspace = workspaceId ? workspaces[workspaceId] : null;
   const [unreadThreadsCount, setUnreadThreadsCount] = useState<number>(0);
 
   useEffect(() => {
     if (!workspace) {
+      return;
+    }
+    if (!userId) {
       return;
     }
     let unreadCount = 0;
@@ -20,7 +23,11 @@ export function useUnreadThreadsCount(): number {
       if (isResolved) {
         continue;
       }
-      const threadUnreadCount = countUnread({ workspace: workspace as Workspace, threadId });
+      const threadUnreadCount = countUnread({
+        workspace: workspace as Workspace,
+        threadId,
+        userId,
+      });
       if (threadUnreadCount > 0) {
         unreadCount++;
       }
@@ -33,6 +40,7 @@ export function useUnreadThreadsCount(): number {
     (workspace ? Object.keys(workspace?.timeline) : null,
     // seenUntilId changed
     workspace?.seen ? Object.values(workspace?.seen) : null),
+    userId,
   ]);
 
   return unreadThreadsCount;

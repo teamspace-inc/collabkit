@@ -1,6 +1,14 @@
 import { timelineUtils, Workspace } from '@collabkit/core';
 
-export function countUnread({ workspace, threadId }: { workspace: Workspace; threadId: string }) {
+export function countUnread({
+  workspace,
+  threadId,
+  userId,
+}: {
+  workspace: Workspace;
+  threadId: string;
+  userId: string;
+}) {
   const seenUntilId = workspace?.seen[threadId];
   const timeline = workspace?.timeline[threadId] ?? {};
 
@@ -13,8 +21,13 @@ export function countUnread({ workspace, threadId }: { workspace: Workspace; thr
     return messageEventIds.length;
   }
 
-  return messageEventIds.reduce((count, eventId) => {
-    if (eventId > seenUntilId) return count + 1;
-    return count;
-  }, 0);
+  return (
+    messageEventIds
+      // we never want to count a users own messages as unread
+      .filter((eventId) => timeline[eventId].createdById !== userId)
+      .reduce((count, eventId) => {
+        if (eventId > seenUntilId) return count + 1;
+        return count;
+      }, 0)
+  );
 }

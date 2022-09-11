@@ -6,11 +6,17 @@ import { countUnread } from '../../utils/countUnread';
 
 export function useUnreadCount(props: { threadId: string }): number {
   const { store } = useApp();
-  const { workspaceId, workspaces } = useSnapshot(store);
+  const { workspaceId, workspaces, userId } = useSnapshot(store);
   const workspace = workspaceId ? workspaces[workspaceId] : null;
   useThreadSubscription({ store, threadId: props.threadId, workspaceId });
 
-  return workspace
-    ? countUnread({ workspace: workspace as Workspace, threadId: props.threadId })
-    : 0;
+  if (!userId) {
+    return 0;
+  }
+
+  if (!workspace) {
+    return 0;
+  }
+
+  return countUnread({ workspace: workspace as Workspace, threadId: props.threadId, userId });
 }
