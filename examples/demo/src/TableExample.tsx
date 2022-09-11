@@ -117,9 +117,9 @@ export const TableExample = () => (
       </tbody>
     </table>
     <div style={{ position: 'fixed', right: 0, top: 0, bottom: 0, width: 430 }}>
-      <SidePane>
-        <Inbox />
-      </SidePane>
+      {/* <SidePane> */}
+      <Inbox />
+      {/* </SidePane> */}
     </div>
   </div>
 );

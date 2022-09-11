@@ -5,7 +5,7 @@ import { useOptionalUserContext } from '../hooks/useUserContext';
 import { IconButton } from './IconButton';
 import { X } from './icons';
 
-const StyledSidePane = styled(SidePane, {
+const StyledSidePane = styled('div', {
   boxSizing: 'border-box',
   height: '100%',
   background: 'white',
