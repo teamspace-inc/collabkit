@@ -33,7 +33,6 @@ const InboxThread = {
 
 export const StyledInboxThreadRoot = styled(InboxThread.Root, {
   display: 'flex',
-
   borderBottom: '1px solid #E3E9ED',
   flexDirection: 'column',
 });
@@ -160,32 +159,35 @@ export function Inbox() {
     return null;
   }
 
-  const recentsThreadIds = inbox
-    ? Object.keys(inbox).sort((a, b) => {
-        const aTime = +inbox[a].createdAt ?? 0;
-        const bTime = +inbox[b].createdAt ?? 0;
-        return bTime - aTime;
-      })
-    : null;
-
-  const inboxItems = recentsThreadIds
-    ?.filter(
-      (threadId) =>
-        !(
-          workspace.timeline?.[threadId] &&
-          timelineUtils.computeIsResolved(workspace.timeline?.[threadId])
+  // todo this won't scale so we should add a view to load
+  // inboxResolved and inboxOpen
+  const inboxItems = inbox
+    ? // show threads with latest activity first
+      Object.keys(inbox)
+        .sort((a, b) => {
+          const aTime = +inbox[a].createdAt ?? 0;
+          const bTime = +inbox[b].createdAt ?? 0;
+          return bTime - aTime;
+        })
+        // filter out resolved threads
+        ?.filter(
+          (threadId) =>
+            !(
+              workspace.timeline?.[threadId] &&
+              timelineUtils.computeIsResolved(workspace.timeline?.[threadId])
+            )
         )
-    )
-    .map((threadId) => {
-      return (
-        <ThreadContext.Provider
-          value={{ threadId, workspaceId, userId }}
-          key={`inboxThread-${threadId}`}
-        >
-          <InboxItem />
-        </ThreadContext.Provider>
-      );
-    });
+        .map((threadId) => {
+          return (
+            <ThreadContext.Provider
+              value={{ threadId, workspaceId, userId }}
+              key={`inboxThread-${threadId}`}
+            >
+              <InboxItem />
+            </ThreadContext.Provider>
+          );
+        })
+    : [];
 
   const isEmpty = inboxItems?.filter((item) => item !== null).length === 0;
 
