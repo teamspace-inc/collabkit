@@ -6,8 +6,8 @@ import { countUnread } from '../utils/countUnread';
 import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
 
 export function UnreadDot(props: React.ComponentPropsWithoutRef<'div'>) {
-  const { threadId } = useThreadContext();
+  const { threadId, userId } = useThreadContext();
   const workspace = useSnapshot(useWorkspaceStore());
-  const count = countUnread({ workspace: workspace as Workspace, threadId });
+  const count = countUnread({ workspace: workspace as Workspace, threadId, userId });
   return count > 0 ? <div {...props} /> : null;
 }
