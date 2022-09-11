@@ -6,6 +6,7 @@ import {
   onChildAdded,
   onChildChanged,
   onChildMoved,
+  onChildRemoved,
   onValue,
   orderByChild,
   push,
@@ -355,16 +356,27 @@ export class FirebaseSync implements Sync.SyncAdapter {
     const onChange = (child: DataSnapshot) => {
       const threadId = child.key;
       const info = child.val() as { meta: ThreadMeta } | null;
+
       if (threadId) {
         onThreadChange({ threadId, info });
       }
     };
+
+    const onRemoved = (child: DataSnapshot) => {
+      const threadId = child.key;
+
+      if (threadId) {
+        onThreadChange({ threadId, info: null });
+      }
+    };
+
     const viewRef = ref(
       getDatabase(getApp('CollabKit')),
       `/views/openThreads/${appId}/${workspaceId}`
     );
     subs[`${viewRef.toString()}#added`] ||= onChildAdded(viewRef, onChange, onError);
     subs[`${viewRef.toString()}#changed`] ||= onChildChanged(viewRef, onChange, onError);
+    subs[`${viewRef.toString()}#removed`] ||= onChildRemoved(viewRef, onRemoved, onError);
   }
 
   subscribeThreadInfo(props: {
