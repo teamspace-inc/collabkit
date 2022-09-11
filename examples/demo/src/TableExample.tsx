@@ -98,7 +98,12 @@ const rows: Car[] = [
 export const TableExample = () => {
   return (
     <div>
-      <div style={{ display: 'flex', flex: 1, padding: '10px' }}>
+      <div style={{ display: 'flex', flex: 1, padding: '20px 20px', flexDirection: 'column' }}>
+        <h1 style={{ margin: 0 }}>Table</h1>
+        <p>Right click a table cell and click comment.</p>
+      </div>
+
+      <div style={{ display: 'flex', position: 'fixed', top: 20, right: 20 }}>
         <InboxButton />
       </div>
 

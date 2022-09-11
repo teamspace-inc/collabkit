@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import {
   AvatarProps,
   CollabKitProvider,
@@ -5,59 +7,73 @@ import {
   Thread,
   useUnreadCount,
 } from '@collabkit/react';
+
 import * as themes from '@collabkit/custom-themes';
-import { useCallback, useEffect, useState } from 'react';
+
 import { User } from './types';
+
 import jwtDecode from 'jwt-decode';
+
 import { TableExample } from './TableExample';
 import { Avatar } from './UserMenu';
 
-const USER_STORAGE_KEY = 'demoUserV2';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import { GoogleLogin } from '@react-oauth/google';
+
+import { proxy, useSnapshot, subscribe } from 'valtio';
+
+const store = proxy<{ user: User | null }>(
+  JSON.parse(localStorage.getItem('store') ?? '{ "user": null }') || { user: null }
+);
+
+subscribe(store, () => {
+  localStorage.setItem('store', JSON.stringify(store));
+});
 
 export default function App() {
-  const [user, setUser] = useState<User | null>(() => {
-    try {
-      const _user = JSON.parse(localStorage.getItem(USER_STORAGE_KEY) || 'null') as User;
-      if (!_user.id || typeof _user.id !== 'string') {
-        return null;
-      }
-      return _user;
-    } catch {
-      console.error('Failed to parse demoUser');
-      return null;
-    }
-  });
+  const { user } = useSnapshot(store);
 
-  const onChangeUser = useCallback((user: User | null) => {
-    setUser(user);
-    if (user != null) {
-      localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(user));
-    } else {
-      localStorage.removeItem(USER_STORAGE_KEY);
-      showGoogleLogin((user) => onChangeUser(user));
-    }
-  }, []);
-
-  useEffect(() => {
-    if (user == null) {
-      showGoogleLogin((user) => onChangeUser(user));
-    }
-  }, []);
-
-  const image = (
-    <img
-      style={{ width: '100vw', maxHeight: '100vh', objectFit: 'cover' }}
-      src="https://images.unsplash.com/photo-1433838552652-f9a46b332c40"
-    />
+  return (
+    <div>
+      {!user ? (
+        <GoogleOAuthProvider clientId="927079647438-3ug3d9s4pocobg9qve8eb6bk0bifpfrg.apps.googleusercontent.com">
+          <div
+            style={{
+              display: 'flex',
+              flex: 1,
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              height: '100vh',
+            }}
+          >
+            <h1>CollabKit Demo</h1>
+            <GoogleLogin
+              onSuccess={async (credentialResponse) => {
+                if (credentialResponse.credential) {
+                  store.user = userFromGoogleToken(credentialResponse.credential);
+                }
+              }}
+              onError={() => {
+                console.log('Login Failed');
+              }}
+              useOneTap
+            />
+          </div>
+        </GoogleOAuthProvider>
+      ) : (
+        <Demo />
+      )}
+    </div>
   );
+}
+
+function Header() {
+  const { user } = useSnapshot(store);
 
   const name = location.pathname.slice(1);
   const theme: CustomTheme | undefined =
     name in themes ? themes[name as keyof typeof themes] : undefined;
-
-  if (!user) {
-    return image;
-  }
 
   return (
     <CollabKitProvider
@@ -90,7 +106,52 @@ export default function App() {
       // renderAvatar={CustomAvatar}
       mentionableUsers={'allWorkspace'}
     >
-      {name === 'cashboard' ? <TableExample /> : <Home />}
+      <Home />
+    </CollabKitProvider>
+  );
+}
+
+function Demo() {
+  const { user } = useSnapshot(store);
+
+  const name = location.pathname.slice(1);
+  const theme: CustomTheme | undefined =
+    name in themes ? themes[name as keyof typeof themes] : undefined;
+
+  console.log('theme', theme);
+
+  return (
+    <CollabKitProvider
+      colorScheme="light"
+      apiKey={'oLsHFwp3uFYjgar37ygGc'}
+      appId={'-N67qY-qlZoWmkQBPyZU'}
+      workspace={{ id: 'publicdemo', name: 'Aspire' }}
+      callbacks={{
+        onCommentSend: (data) => {
+          console.log(data);
+        },
+        onTimestampClick: (data) => {
+          console.log('timestamp, click', data);
+        },
+        onMentionClick: (data) => {
+          console.log('mention, click', data);
+        },
+        onInboxThreadClick: (data) => {
+          console.log('inbox thread, click', data);
+        },
+        onInboxCloseButtonClick: (data) => {
+          console.log('inbox close button, click', data);
+        },
+      }}
+      onAuthenticationRequired={() => {
+        console.log('authRequired');
+      }}
+      user={user}
+      theme={theme}
+      // renderAvatar={CustomAvatar}
+      mentionableUsers={'allWorkspace'}
+    >
+      {name === 'cashboard' || name === 'table' ? <TableExample /> : <Home />}
     </CollabKitProvider>
   );
 }
@@ -118,16 +179,6 @@ function Home() {
       />
     </div>
   );
-}
-
-function showGoogleLogin(callback: (user: User) => void) {
-  google.accounts.id.initialize({
-    client_id: '913144916238-5301s2hqmurtvub2ic17529uh3ccsgqt.apps.googleusercontent.com',
-    callback: (response) => {
-      callback(userFromGoogleToken(response.credential));
-    },
-  });
-  google.accounts.id.prompt();
 }
 
 function userFromGoogleToken(token: string) {
