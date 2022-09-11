@@ -6,8 +6,8 @@ import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
 import { countUnread } from '../utils/countUnread';
 
 function UnreadCount(props: React.ComponentPropsWithoutRef<'span'>) {
-  const { threadId } = useThreadContext();
+  const { threadId, userId } = useThreadContext();
   const workspace = useSnapshot(useWorkspaceStore());
-  const count = countUnread({ workspace: workspace as Workspace, threadId });
+  const count = countUnread({ workspace: workspace as Workspace, threadId, userId });
   return <span {...props}>{count}</span>;
 }
