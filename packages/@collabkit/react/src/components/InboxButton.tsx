@@ -3,7 +3,8 @@ import React from 'react';
 import { useSnapshot } from 'valtio';
 import { useUnreadThreadsCount } from '../hooks/public/useUnreadThreadsCount';
 import { useApp } from '../hooks/useApp';
-import { Button } from './Button';
+
+// Cashboard icons
 import CommentIcon from './Comment.svg';
 import CommentNotificationIcon from './CommentNotification.svg';
 
@@ -34,6 +35,7 @@ export function InboxButton() {
 
   return (
     <div className={theme.className}>
+      {/* Cashboard specific styles */}
       <button
         style={{
           fontSize: '14px',
