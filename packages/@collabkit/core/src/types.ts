@@ -142,7 +142,8 @@ export type Target =
   | Commentable
   | PinTarget
   | CommentEditButtonTarget
-  | CommentDeleteButtonTarget;
+  | CommentDeleteButtonTarget
+  | InboxButtonTarget;
 
 export type Commentable = {
   type: 'commentable';
@@ -173,6 +174,8 @@ export type ComposerTarget = { type: 'composer'; threadId: string; workspaceId: 
 export type ThreadTarget = { type: 'thread'; threadId: string; workspaceId: string };
 
 export type CommentButtonTarget = { type: 'commentButton'; threadId: string; workspaceId: string };
+
+export type InboxButtonTarget = { type: 'inboxButton'; workspaceId: string };
 
 export type ClickedOutsidePinTarget = {
   type: 'clickedOutsidePin';

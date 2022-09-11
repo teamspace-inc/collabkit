@@ -89,7 +89,9 @@ const rows: Car[] = [
 
 export const TableExample = () => (
   <div>
-    <InboxButton />
+    <div style={{ display: 'flex', flex: 1, padding: '10px' }}>
+      <InboxButton />
+    </div>
 
     <table className="TableExample">
       <thead>

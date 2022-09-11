@@ -232,7 +232,7 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
                                     <StyledCommentTimestamp />
                                   </div>
                                   <div style={{ display: 'flex', gap: 0, flexDirection: 'row' }}>
-                                    {i === 0 ? (
+                                    {i === 0 && index === 0 ? (
                                       <>
                                         <IconButton
                                           // TODO: tooltip hijacks focus when used within a modal popover

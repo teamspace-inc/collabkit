@@ -14,7 +14,7 @@ function DefaultAvatar({ profile, size }: AvatarProps) {
   return didError || !profile.avatar ? (
     <StyledFallbackAvatar
       style={{
-        ...(size ? { width: size, height: size } : {}),
+        ...(size ? { width: size, height: size, lineHeight: `${size}px` } : {}),
         ...(profile.color
           ? {
               backgroundColor: getShade(profile.color, 9),
@@ -26,7 +26,7 @@ function DefaultAvatar({ profile, size }: AvatarProps) {
     </StyledFallbackAvatar>
   ) : (
     <StyledAvatar
-      style={{ ...(size ? { width: size, height: size } : {}) }}
+      style={{ ...(size ? { width: size, height: size, lineHeight: `${size}px` } : {}) }}
       src={profile.avatar!}
       onError={() => setDidError(true)}
     />
