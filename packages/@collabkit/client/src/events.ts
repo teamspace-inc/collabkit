@@ -187,6 +187,14 @@ export function createEvents(store: Store) {
         }
         case 'idle': {
           switch (props.target.type) {
+            case 'showInboxButton': {
+              actions.showInbox(store);
+              break;
+            }
+            case 'hideInboxButton': {
+              actions.hideInbox(store);
+              break;
+            }
             case 'floatingCommentButton': {
               actions.startSelecting(store);
               break;

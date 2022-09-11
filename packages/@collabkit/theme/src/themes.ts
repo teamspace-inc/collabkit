@@ -112,6 +112,17 @@ export interface Theme {
   };
   borders: {
     composer: string;
+    buttonPrimary: string;
+    buttonSecondary: string;
+    buttonTertiary: string;
+
+    buttonPrimaryActive: string;
+    buttonSecondaryActive: string;
+    buttonTertiaryActive: string;
+
+    buttonPrimaryHover: string;
+    buttonSecondaryHover: string;
+    buttonTertiaryHover: string;
   };
   offsets: {
     composerSendButtonTop: string;
@@ -171,6 +182,12 @@ export interface Theme {
     buttonSecondaryHoverText: string;
     buttonSecondaryActiveBackground: string;
     buttonSecondaryText: string;
+
+    buttonTertiaryBackground: string;
+    buttonTertiaryHoverBackground: string;
+    buttonTertiaryHoverText: string;
+    buttonTertiaryActiveBackground: string;
+    buttonTertiaryText: string;
 
     buttonDisabledBackground: string;
     buttonDisabledText: string;

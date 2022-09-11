@@ -143,7 +143,8 @@ export type Target =
   | PinTarget
   | CommentEditButtonTarget
   | CommentDeleteButtonTarget
-  | InboxButtonTarget;
+  | ShowInboxButtonTarget
+  | HideInboxButtonTarget;
 
 export type Commentable = {
   type: 'commentable';
@@ -175,7 +176,12 @@ export type ThreadTarget = { type: 'thread'; threadId: string; workspaceId: stri
 
 export type CommentButtonTarget = { type: 'commentButton'; threadId: string; workspaceId: string };
 
-export type InboxButtonTarget = { type: 'inboxButton'; workspaceId: string };
+export type ShowInboxButtonTarget = { type: 'showInboxButton'; workspaceId: string };
+
+export type HideInboxButtonTarget = {
+  type: 'hideInboxButton';
+  workspaceId: string;
+};
 
 export type ClickedOutsidePinTarget = {
   type: 'clickedOutsidePin';
@@ -322,6 +328,7 @@ export interface UnconfiguredStore {
   isReadOnly: boolean;
   isConnected: boolean;
   isSignedIn: boolean;
+  isInboxOpen: boolean;
   isDemo: boolean;
   userId: string | null;
   user: UserProps | null;

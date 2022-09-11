@@ -33,6 +33,7 @@ export function createStore(): UnconfiguredStore {
     isReadOnly: false,
     isConnected: false,
     isSignedIn: false,
+    isInboxOpen: false,
     appState: 'blank',
     uiState: 'idle',
     isDemo: false,

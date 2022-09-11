@@ -38,6 +38,8 @@ export const button = css({
       primary: {
         backgroundColor: '$colors$buttonPrimaryBackground',
         color: '$colors$buttonPrimaryText',
+        border: '$borders$buttonPrimary',
+
         // '&:hover': {
         //   backgroundColor: '$colors$buttonPrimaryHoverBackground',
         //   color: '$colors$buttonPrimaryHoverText',
@@ -50,6 +52,22 @@ export const button = css({
       secondary: {
         backgroundColor: '$colors$buttonSecondaryBackground',
         color: '$colors$buttonSecondaryText',
+        border: '$borders$buttonSecondary',
+
+        // '&:hover': {
+        //   backgroundColor: '$colors$buttonSecondaryHoverBackground',
+        //   color: '$colors$buttonSecondaryHoverText',
+        // },
+        // '&:active': {
+        //   backgroundColor: '$colors$buttonSecondaryActiveBackground',
+        //   color: '$colors$buttonSecondaryActiveText',
+        // },
+      },
+      tertiary: {
+        backgroundColor: '$colors$buttonSecondaryBackground',
+        color: '$colors$buttonSecondaryText',
+        border: '$borders$buttonTertiary',
+
         // '&:hover': {
         //   backgroundColor: '$colors$buttonSecondaryHoverBackground',
         //   color: '$colors$buttonSecondaryHoverText',

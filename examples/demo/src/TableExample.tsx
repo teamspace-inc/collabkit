@@ -1,8 +1,16 @@
 import { useState } from 'react';
-import { usePopoverThread, PopoverTrigger, Inbox, InboxButton, SidePane } from '@collabkit/react';
+import {
+  usePopoverThread,
+  PopoverTrigger,
+  Inbox,
+  InboxButton,
+  SidePane,
+  useUnreadThreadsCount,
+} from '@collabkit/react';
 import { MenuItem, ControlledMenu, useMenuState } from '@szhsin/react-menu';
 import '@szhsin/react-menu/dist/index.css';
 import '@szhsin/react-menu/dist/transitions/slide.css';
+import { Chat } from 'phosphor-react';
 
 type CellProps = { value: number | string; row: Car; column: Column };
 
@@ -87,37 +95,39 @@ const rows: Car[] = [
   { id: 'beetle', make: 'Volkswagen', model: 'Beetle', price: 21193 },
 ];
 
-export const TableExample = () => (
-  <div>
-    <div style={{ display: 'flex', flex: 1, padding: '10px' }}>
-      <InboxButton />
-    </div>
+export const TableExample = () => {
+  return (
+    <div>
+      <div style={{ display: 'flex', flex: 1, padding: '10px' }}>
+        <InboxButton />
+      </div>
 
-    <table className="TableExample">
-      <thead>
-        <tr>
-          <th>Make</th>
-          <th>Model</th>
-          <th>Price</th>
-        </tr>
-      </thead>
-      <tbody>
-        {rows.map((row) => (
-          <tr key={row.id}>
-            {columns.map((column) => (
-              <Cell
-                key={column.key}
-                value={column.format(row[column.key])}
-                row={row}
-                column={column}
-              />
-            ))}
+      <table className="TableExample">
+        <thead>
+          <tr>
+            <th>Make</th>
+            <th>Model</th>
+            <th>Price</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
-    <SidePane>
-      <Inbox />
-    </SidePane>
-  </div>
-);
+        </thead>
+        <tbody>
+          {rows.map((row) => (
+            <tr key={row.id}>
+              {columns.map((column) => (
+                <Cell
+                  key={column.key}
+                  value={column.format(row[column.key])}
+                  row={row}
+                  column={column}
+                />
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <SidePane>
+        <Inbox />
+      </SidePane>
+    </div>
+  );
+};

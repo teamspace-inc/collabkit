@@ -16,6 +16,18 @@ export const cashboard: CustomTheme = {
   },
   borders: {
     composer: '1px solid #36B374',
+
+    buttonPrimary: '',
+    buttonSecondary: '',
+    buttonTertiary: '',
+
+    buttonPrimaryActive: '',
+    buttonSecondaryActive: '',
+    buttonTertiaryActive: '',
+
+    buttonPrimaryHover: '',
+    buttonSecondaryHover: '',
+    buttonTertiaryHover: '',
   },
   shadows: {
     mentionDropdownBoxShadow:
@@ -31,8 +43,11 @@ export const cashboard: CustomTheme = {
     buttonPrimaryHoverBackground: '#36B374',
     buttonPrimaryHoverText: 'white',
 
-    buttonSecondaryBackground: 'white',
+    buttonSecondaryBackground: 'transparent',
     buttonSecondaryText: '#6A7278',
+
+    buttonTertiaryBackground: 'white',
+    buttonTertiaryText: '#6A7278',
 
     buttonDisabledText: '#B4BDC2',
 

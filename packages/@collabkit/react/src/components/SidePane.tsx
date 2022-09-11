@@ -1,5 +1,7 @@
+import { HideInboxButtonTarget } from '@collabkit/core';
 import { styled } from '@stitches/react';
 import React from 'react';
+import { useSnapshot } from 'valtio';
 import { useApp } from '../hooks/useApp';
 import { useOptionalUserContext } from '../hooks/useUserContext';
 import { IconButton } from './IconButton';
@@ -31,14 +33,24 @@ const StyledSidePaneTitle = styled('h1', {
 });
 
 function CloseSidePaneButton() {
-  const { store } = useApp();
+  const { store, events } = useApp();
   const userContext = useOptionalUserContext();
 
   return (
     <IconButton
-      onPointerDown={() =>
-        userContext ? store.callbacks?.onInboxCloseButtonClick?.(userContext) : null
-      }
+      onPointerDown={(e) => {
+        if (!userContext) {
+          return null;
+        }
+        store.callbacks?.onInboxCloseButtonClick?.(userContext);
+
+        const target: HideInboxButtonTarget = {
+          type: 'hideInboxButton',
+          workspaceId: userContext.workspaceId,
+        };
+
+        events.onPointerDown(e, { target });
+      }}
     >
       <X />
     </IconButton>
@@ -46,7 +58,10 @@ function CloseSidePaneButton() {
 }
 
 export function SidePane(props: { children: React.ReactNode }) {
-  return (
+  const { store } = useApp();
+  const { isInboxOpen } = useSnapshot(store);
+
+  return isInboxOpen ? (
     <StyledSidePane>
       <StyledSidePaneTitle>
         <div style={{ flex: 1 }}>All Comments</div>
@@ -54,5 +69,5 @@ export function SidePane(props: { children: React.ReactNode }) {
       </StyledSidePaneTitle>
       <div style={{ flex: 1, height: 'calc(100% - 77px)' }}>{props.children}</div>
     </StyledSidePane>
-  );
+  ) : null;
 }

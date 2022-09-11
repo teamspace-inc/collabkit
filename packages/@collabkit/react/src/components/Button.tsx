@@ -5,10 +5,11 @@ import React from 'react';
 const StyledButton = styled('div', buttonStyles.button);
 
 export function Button(props: {
-  type: 'primary' | 'secondary';
+  type: 'primary' | 'secondary' | 'tertiary';
   icon?: React.ReactNode;
   text?: React.ReactNode;
   disabled?: boolean;
+  style?: React.CSSProperties;
   onPointerDown: (e: React.PointerEvent) => void;
 }) {
   return (
@@ -18,6 +19,7 @@ export function Button(props: {
       hasIcon={!!props.icon}
       hasText={!!props.text}
       disabled={props.disabled}
+      style={props.style}
     >
       {props.icon}
       {props.text}

@@ -38,6 +38,8 @@ import { disableSendButton } from './disableSendButton';
 import { deleteMessage } from './deleteMessage';
 import { startEditing } from './startEditing';
 import { stopEditing } from './stopEditing';
+import { showInbox } from './showInbox';
+import { hideInbox } from './hideInbox';
 
 export type GenerateToken =
   | {
@@ -143,4 +145,6 @@ export const actions = {
   toggleEmojiReactionPicker,
   unhover,
   viewThread,
+  showInbox,
+  hideInbox,
 };
