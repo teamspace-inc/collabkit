@@ -155,40 +155,39 @@ export function Thread(props: ThreadProps & { className?: string; children?: Rea
                 </StyledCommentList>
               </ScrollableCommentList>
             )}
-            {
-              <StyledComposerRoot>
-                {profile ? <Avatar profile={profile} /> : null}
-                <StyledComposerEditor
-                  contentEditable={(props: { autoFocus?: boolean }) => (
-                    <StyledComposerContent>
-                      <StyledComposerContentEditable {...props} />
-                    </StyledComposerContent>
-                  )}
-                  placeholder={
-                    <StyledComposerPlaceholder>
-                      {composerPrompt != null
-                        ? composerPrompt
-                        : isEmpty
-                        ? 'Add a comment'
-                        : 'Reply to this comment'}
-                    </StyledComposerPlaceholder>
-                  }
-                  autoFocus={autoFocus}
-                />
-                <Button
-                  onPointerDown={onPointerDown}
-                  type="primary"
-                  icon={
-                    <SendButtonIcon
-                      size={13}
-                      color={theme.colors.composerButtonIconColor.toString()}
-                      weight="bold"
-                    />
-                  }
-                  disabled={disabled}
-                />
-              </StyledComposerRoot>
-            }
+            <StyledComposerRoot>
+              {profile ? <Avatar profile={profile} /> : null}
+              <StyledComposerEditor
+                contentEditable={(props: { autoFocus?: boolean }) => (
+                  <StyledComposerContent>
+                    <StyledComposerContentEditable {...props} />
+                  </StyledComposerContent>
+                )}
+                placeholder={
+                  <StyledComposerPlaceholder>
+                    {composerPrompt != null
+                      ? composerPrompt
+                      : isEmpty
+                      ? 'Add a comment'
+                      : 'Reply to this comment'}
+                  </StyledComposerPlaceholder>
+                }
+                autoFocus={autoFocus}
+              />
+              <Button
+                onPointerDown={onPointerDown}
+                type="primary"
+                icon={
+                  <SendButtonIcon
+                    size={13}
+                    color={theme.colors.composerButtonIconColor.toString()}
+                    weight="bold"
+                  />
+                }
+                disabled={disabled}
+              />
+            </StyledComposerRoot>
+
             <StyledTextOffset>
               <TypingIndicator />
             </StyledTextOffset>

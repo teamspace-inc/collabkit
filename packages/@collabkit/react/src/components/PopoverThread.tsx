@@ -213,7 +213,7 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
                     return group.map((event, index) => {
                       const profile = profiles[event.createdById];
                       const type = getCommentType(group, index);
-                      const showProfile = type === 'default' || type === 'inline-start';
+                      const showProfile = true; // type === 'default' || type === 'inline-start';
                       return profile ? (
                         <div key={event.id}>
                           <StyledCommentRoot
@@ -231,37 +231,38 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
                                     <StyledCommentCreatorName />
                                     <StyledCommentTimestamp />
                                   </div>
-                                  {i === 0 ? (
-                                    <>
-                                      <IconButton
-                                        // TODO: tooltip hijacks focus when used within a modal popover
-                                        // tooltip={isResolved ? 'Re-open' : 'Mark as Resolved and Hide'}
-                                        onPointerDown={(e) =>
-                                          events.onPointerDown(e, {
-                                            target: isResolved
-                                              ? reopenThreadTarget
-                                              : resolveThreadTarget,
-                                          })
-                                        }
-                                      >
-                                        {!isResolved ? (
-                                          <Check
-                                            size={19}
-                                            weight={'regular'}
-                                            color={theme.colors.neutral12.toString()}
-                                          />
-                                        ) : (
-                                          <Check
-                                            size={18}
-                                            weight={'regular'}
-                                            color={theme.colors.neutral12.toString()}
-                                          />
-                                        )}
-                                      </IconButton>
-                                    </>
-                                  ) : null}
-
-                                  {event.createdById === userId && <CommentMenu />}
+                                  <div style={{ display: 'flex', gap: 0, flexDirection: 'row' }}>
+                                    {i === 0 ? (
+                                      <>
+                                        <IconButton
+                                          // TODO: tooltip hijacks focus when used within a modal popover
+                                          // tooltip={isResolved ? 'Re-open' : 'Mark as Resolved and Hide'}
+                                          onPointerDown={(e) =>
+                                            events.onPointerDown(e, {
+                                              target: isResolved
+                                                ? reopenThreadTarget
+                                                : resolveThreadTarget,
+                                            })
+                                          }
+                                        >
+                                          {!isResolved ? (
+                                            <Check
+                                              size={19}
+                                              weight={'regular'}
+                                              color={theme.colors.neutral12.toString()}
+                                            />
+                                          ) : (
+                                            <Check
+                                              size={18}
+                                              weight={'regular'}
+                                              color={theme.colors.neutral12.toString()}
+                                            />
+                                          )}
+                                        </IconButton>
+                                      </>
+                                    ) : null}
+                                    {event.createdById === userId && <CommentMenu />}
+                                  </div>
                                 </StyledCommentHeader>
                               ) : null}
                               <StyledCommentBody>
