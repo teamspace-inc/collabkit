@@ -17,6 +17,7 @@ import {
   set,
   update,
 } from 'firebase/database';
+
 import type {
   Event,
   OptionalWorkspaceProps,
@@ -24,12 +25,14 @@ import type {
   Subscriptions,
   ThreadInfo,
   ThreadMeta,
+  Sync,
 } from '@collabkit/core';
+
 import { subscribeThreadIsTyping } from './subscribeThreadIsTyping';
 import { subscribeThreadSeenBy } from './subscribeThreadSeenBy';
 import { subscribeTimeline } from './subscribeTimeline';
 import { timelineRef, userTypingRef } from './refs';
-import type { Sync } from '@collabkit/core';
+
 import { getApp, initializeApp } from 'firebase/app';
 
 export function initFirebase() {
