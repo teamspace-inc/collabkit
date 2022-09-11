@@ -99,11 +99,11 @@ export const bodyEllipsis = css({
 });
 
 export const editor = css({
-  position: 'absolute',
-  top: 0,
-  left: 0,
-  right: 0,
-  background: '$colors$neutral2',
-  boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
-  color: 'white',
+  // position: 'absolute',
+  // top: 0,
+  // left: 0,
+  // right: 0,
+  // background: '$colors$neutral2',
+  // boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+  // color: 'white',
 });

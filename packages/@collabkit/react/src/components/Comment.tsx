@@ -12,8 +12,8 @@ import { Timestamp as RawTimestamp } from './Timestamp';
 
 import * as Profile from './Profile';
 import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
-import { useApp } from '../hooks/useApp';
 import { CommentEditor } from './comment/CommentEditor';
+import { useApp } from '../hooks/useApp';
 
 export function Root(props: {
   children: React.ReactNode;
@@ -59,10 +59,15 @@ export function Root(props: {
 
 export function Body({ children, ...props }: React.ComponentPropsWithoutRef<'div'>) {
   const { body } = useSnapshot(useCommentStore());
+  const { store } = useApp();
+
+  const { editingId } = useSnapshot(store);
+  const { eventId } = useCommentContext();
+  const isEditing = editingId && editingId.eventId === eventId;
 
   return (
     <div {...props}>
-      <Markdown body={body}></Markdown>
+      {!isEditing && <Markdown body={body} />}
       {children}
     </div>
   );

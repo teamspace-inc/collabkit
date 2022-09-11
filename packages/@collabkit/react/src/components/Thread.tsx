@@ -13,7 +13,7 @@ import {
   threadStyles,
 } from '@collabkit/theme';
 import { useSnapshot } from 'valtio';
-import type { ReopenThreadButtonTarget, ThreadInfo } from '@collabkit/core';
+import type { ThreadInfo } from '@collabkit/core';
 import { TypingIndicator } from './TypingIndicator';
 import { Avatar } from './Avatar';
 import { ThreadContext, ThreadContextValue } from '../hooks/useThreadContext';
@@ -23,7 +23,6 @@ import { useComposerSendButton } from '../hooks/useComposerSendButton';
 import { composerStyles } from '@collabkit/theme';
 import { commentListStyles } from '@collabkit/theme';
 import { getCommentType } from '../utils/getCommentType';
-import { Markdown } from './Markdown';
 import { Base } from './Base';
 
 import * as Comment from './Comment';
