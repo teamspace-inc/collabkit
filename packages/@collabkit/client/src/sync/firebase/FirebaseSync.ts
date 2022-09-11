@@ -231,8 +231,6 @@ export class FirebaseSync implements Sync.SyncAdapter {
 
     const id = eventRef.key;
 
-    console.log(id);
-
     if (!id) {
       throw new Error('failed to gen push ref to timeline');
     }
