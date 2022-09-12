@@ -38,5 +38,6 @@ export default defineConfig(({ mode }) => {
     server: {
       port: 3003,
     },
+    envDir: resolve(__dirname, '../../../env'),
   };
 });

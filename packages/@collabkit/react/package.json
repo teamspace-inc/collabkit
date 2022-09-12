@@ -31,7 +31,7 @@
     "@collabkit/core": "^0.0.0",
     "@collabkit/theme": "^0.0.0",
     "@floating-ui/react-dom-interactions": "^0.7.0",
-    "@ladle/react": "^2.0.0",
+    "@ladle/react": "^2.4.2",
     "@lexical/react": "^0.3.9",
     "@playwright/test": "^1.25.0",
     "@radix-ui/colors": "^0.1.8",

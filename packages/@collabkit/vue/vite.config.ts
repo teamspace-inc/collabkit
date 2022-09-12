@@ -41,5 +41,6 @@ export default defineConfig(({ mode }) => {
         '@stitches/react': '@stitches/core',
       },
     },
+    envDir: resolve(__dirname, '../../../env'),
   };
 });

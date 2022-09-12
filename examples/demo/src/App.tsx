@@ -1,25 +1,11 @@
 import { useEffect } from 'react';
-
-import {
-  AvatarProps,
-  CollabKitProvider,
-  CustomTheme,
-  Thread,
-  useUnreadCount,
-} from '@collabkit/react';
-
+import { CollabKitProvider, CustomTheme, Thread, useUnreadCount } from '@collabkit/react';
 import * as themes from '@collabkit/custom-themes';
-
 import { User } from './types';
-
 import jwtDecode from 'jwt-decode';
-
 import { TableExample } from './TableExample';
-import { Avatar } from './UserMenu';
-
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { GoogleLogin } from '@react-oauth/google';
-
 import { proxy, useSnapshot, subscribe } from 'valtio';
 
 const store = proxy<{ user: User | null }>(
@@ -68,48 +54,12 @@ export default function App() {
   );
 }
 
-function Header() {
-  const { user } = useSnapshot(store);
-
-  const name = location.pathname.slice(1);
-  const theme: CustomTheme | undefined =
-    name in themes ? themes[name as keyof typeof themes] : undefined;
-
-  return (
-    <CollabKitProvider
-      colorScheme="light"
-      apiKey={'oLsHFwp3uFYjgar37ygGc'}
-      appId={'-N67qY-qlZoWmkQBPyZU'}
-      workspace={{ id: 'foobar', name: 'Foo' }}
-      callbacks={{
-        onCommentSend: (data) => {
-          // console.log(data);
-        },
-        onTimestampClick: (data) => {
-          console.log('timestamp, click', data);
-        },
-        onMentionClick: (data) => {
-          console.log('mention, click', data);
-        },
-        onInboxThreadClick: (data) => {
-          console.log('inbox thread, click', data);
-        },
-        onInboxCloseButtonClick: (data) => {
-          console.log('inbox close button, click', data);
-        },
-      }}
-      onAuthenticationRequired={() => {
-        console.log('authRequired');
-      }}
-      user={user}
-      theme={theme}
-      // renderAvatar={CustomAvatar}
-      mentionableUsers={'allWorkspace'}
-    >
-      <Home />
-    </CollabKitProvider>
-  );
-}
+const apiKey = import.meta.env.VITE_COLLABKIT_API_KEY;
+const appId = import.meta.env.VITE_COLLABKIT_APP_ID;
+const workspace = {
+  id: import.meta.env.VITE_COLLABKIT_WORKSPACE_ID,
+  name: import.meta.env.VITE_COLLABKIT_WORKSPACE_NAME,
+};
 
 function Demo() {
   const { user } = useSnapshot(store);
@@ -123,9 +73,9 @@ function Demo() {
   return (
     <CollabKitProvider
       colorScheme="light"
-      apiKey={'oLsHFwp3uFYjgar37ygGc'}
-      appId={'-N67qY-qlZoWmkQBPyZU'}
-      workspace={{ id: 'publicdemo2', name: 'Aspire' }}
+      apiKey={apiKey}
+      appId={appId}
+      workspace={workspace}
       callbacks={{
         onCommentSend: (data) => {
           console.log(data);
@@ -156,9 +106,9 @@ function Demo() {
   );
 }
 
-function CustomAvatar(props: AvatarProps) {
-  return <Avatar user={props.profile} />;
-}
+// function CustomAvatar(props: AvatarProps) {
+//   return <Avatar user={props.profile} />;
+// }
 
 function Home() {
   const threadId = 'new-your-thread-id2';

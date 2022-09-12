@@ -267,7 +267,7 @@ export async function generateAndSendEmailNotifications(props: {
 // });
 
 // generateAndSendEmailNotifications({
-//   appId: '-N67qY-qlZoWmkQBPyZU',
+//   appId: '<your-app-id>',
 //   eventId: '-NA5tT6WrPFAZ6PVIVfo',
 //   threadId: 'your-thread-id',
 //   workspaceId: 'foobar',

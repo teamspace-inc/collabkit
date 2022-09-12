@@ -4,18 +4,27 @@ import { CollabKitProvider } from '../src';
 
 import '../src/index.css';
 
-export const Provider: GlobalProvider = ({ children, globalState }) => (
-  <CollabKitProvider
-    apiKey={import.meta.env.VITE_COLLABKIT_TOKEN}
-    appId={import.meta.env.VITE_COLLABKIT_APP_ID}
-    workspace={{ id: 'acme', name: 'ACME' }}
-    user={{
-      name: 'Alice',
-      id: 'alice',
-    }}
-    mentionableUsers={[]}
-    colorScheme={globalState.theme}
-  >
-    {children}
-  </CollabKitProvider>
-);
+const apiKey = import.meta.env.VITE_COLLABKIT_API_KEY;
+const appId = import.meta.env.VITE_COLLABKIT_APP_ID;
+const workspace = {
+  id: import.meta.env.VITE_COLLABKIT_WORKSPACE_ID,
+  name: import.meta.env.VITE_COLLABKIT_WORKSPACE_NAME,
+};
+
+export const Provider: GlobalProvider = ({ children, globalState }) => {
+  return (
+    <CollabKitProvider
+      apiKey={apiKey}
+      appId={appId}
+      workspace={workspace}
+      user={{
+        name: 'Alice',
+        id: 'alice',
+      }}
+      mentionableUsers={[]}
+      colorScheme={globalState.theme}
+    >
+      {children}
+    </CollabKitProvider>
+  );
+};

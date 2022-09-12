@@ -23,5 +23,6 @@ export default defineConfig(async () => {
     server: {
       port: 8000,
     },
+    envDir: resolve(__dirname, '../env'),
   };
 });

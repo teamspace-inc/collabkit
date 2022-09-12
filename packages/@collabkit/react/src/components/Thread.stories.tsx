@@ -1,4 +1,4 @@
 import React from 'react';
 import { Thread } from '../';
 
-export const Plain = () => <Thread threadId="demo-chat2" />;
+export const Plain = () => <Thread threadId="thread-stories" />;

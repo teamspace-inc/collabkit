@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { CollabKitProvider, Thread } from './';
 
-const apiKey = 'oLsHFwp3uFYjgar37ygGc';
-const appId = '-N67qY-qlZoWmkQBPyZU';
-const workspace = { id: 'foobar' };
-const user = { id: '1', name: 'Anonymous', email: 'anon@example.com' };
+const apiKey = import.meta.env.VITE_COLLABKIT_API_KEY;
+const appId = import.meta.env.VITE_COLLABKIT_APP_ID;
+const workspace = {
+  id: import.meta.env.VITE_COLLABKIT_WORKSPACE_ID,
+  name: import.meta.env.VITE_COLLABKIT_WORKSPACE_NAME,
+};
+const user = { id: 'vueuser', name: 'Vue User', email: 'vue@example.com' };
 </script>
 
 <template>
