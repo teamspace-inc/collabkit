@@ -11,7 +11,6 @@ import {
 import type { EditorState, LexicalEditor } from 'lexical';
 import type { Target } from '@collabkit/core';
 import { composerStyles } from '@collabkit/theme';
-import { MentionNode } from './MentionNode';
 import { styled } from '../styled';
 import { useEvents } from '../../composables/useEvents';
 
@@ -38,7 +37,7 @@ function onError(error: any) {
 const initialConfig = {
   namespace: 'Composer',
   theme: composerStyles.lexicalTheme,
-  nodes: [MentionNode],
+  nodes: [],
   onError,
 };
 
