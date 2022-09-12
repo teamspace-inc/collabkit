@@ -57,18 +57,20 @@ export function Root(props: {
   );
 }
 
-export function Body({ children, ...props }: React.ComponentPropsWithoutRef<'div'>) {
+export function Body({ ...props }: React.ComponentPropsWithoutRef<'div'>) {
   const { body } = useSnapshot(useCommentStore());
   const { store } = useApp();
 
   const { editingId } = useSnapshot(store);
   const { eventId } = useCommentContext();
   const isEditing = editingId && editingId.eventId === eventId;
+  if (isEditing) {
+    return null;
+  }
 
   return (
     <div {...props}>
-      {!isEditing && <Markdown body={body} />}
-      {children}
+      <Markdown body={body} />
     </div>
   );
 }

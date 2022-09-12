@@ -42,8 +42,9 @@ export const CommentEditor = (props: React.ComponentProps<'div'>) => {
           initialEditorState={initialEditorState}
         />
       </StyledComposerRoot>
-      <div style={{ display: 'flex', gap: '12px', marginRight: '16px' }}>
-        <div style={{ flex: 1 }}></div>
+      <div
+        style={{ display: 'flex', gap: '12px', marginRight: '16px', justifyContent: 'flex-end' }}
+      >
         <Button
           type="secondary"
           text="Cancel"
