@@ -35,6 +35,13 @@ describe('isValidTimeline', () => {
           createdAt: Date.now(),
           parentId: 'event2',
         },
+        event4: {
+          type: 'edit',
+          body: 'Hello friend',
+          createdById: 'user1',
+          createdAt: Date.now(),
+          parentId: 'event1',
+        },
       })
     ).toBeTruthy();
   });
