@@ -5,6 +5,7 @@ import {
   TextMatchTransformer,
 } from '@lexical/markdown';
 import { $createMentionNode, $isMentionNode, MentionNode } from './MentionNode';
+import { $createTimestampNode, $isTimestampNode, TimestampNode } from './TimestampNode';
 
 // Order of text transformers matters:
 //
@@ -30,7 +31,27 @@ const MENTION: TextMatchTransformer = {
   type: 'text-match',
 };
 
-const TEXT_MATCH_TRANSFORMERS: Array<TextMatchTransformer> = [MENTION];
+const TIMESTAMP: TextMatchTransformer = {
+  dependencies: [TimestampNode],
+  export: (node) => {
+    if (!$isTimestampNode(node)) {
+      return null;
+    }
+    const linkContent = `[${node.getTextContent()}](#T${node.__timestamp})`;
+    return linkContent;
+  },
+  importRegExp: /(?:\[([^[]+)\])(?:\(#T([^(]+)\))/,
+  regExp: /(?:\[([^[]+)\])(?:\(#T([^(]+)\))$/,
+  replace: (textNode, match) => {
+    const [, timestampText] = match;
+    const mentionNode = $createTimestampNode(timestampText);
+    textNode.replace(mentionNode);
+  },
+  trigger: ')',
+  type: 'text-match',
+};
+
+const TEXT_MATCH_TRANSFORMERS: Array<TextMatchTransformer> = [MENTION, TIMESTAMP];
 
 export const TRANSFORMERS: Array<Transformer> = [
   ...ELEMENT_TRANSFORMERS,
