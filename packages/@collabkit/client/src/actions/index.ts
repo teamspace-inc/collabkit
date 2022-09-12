@@ -38,6 +38,7 @@ import { disableSendButton } from './disableSendButton';
 import { deleteMessage } from './deleteMessage';
 import { startEditing } from './startEditing';
 import { stopEditing } from './stopEditing';
+import { updateComment } from './updateComment';
 import { showInbox } from './showInbox';
 import { hideInbox } from './hideInbox';
 
@@ -144,6 +145,7 @@ export const actions = {
   toggleCommentReaction,
   toggleEmojiReactionPicker,
   unhover,
+  updateComment,
   viewThread,
   showInbox,
   hideInbox,

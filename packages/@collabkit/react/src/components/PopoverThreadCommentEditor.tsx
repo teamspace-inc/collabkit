@@ -51,6 +51,7 @@ export const PopoverThreadCommentEditor = () => {
           text="Save"
           onPointerDown={(e) => {
             if (e.button === 0) {
+              actions.updateComment(store);
               actions.stopEditing(store);
             }
           }}

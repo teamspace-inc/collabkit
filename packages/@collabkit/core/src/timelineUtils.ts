@@ -144,3 +144,18 @@ export function getReplyCount(timeline: Timeline | undefined) {
   const replyCount = commentCount - 1;
   return replyCount;
 }
+
+export function findLatestEdit(timeline: Timeline, originalEventId: string): Event | null {
+  const originalEvent = timeline[originalEventId];
+  if (!originalEvent) {
+    return null;
+  }
+  const eventIds = Object.keys(timeline).reverse(); // start from latest
+  for (const eventId of eventIds) {
+    const event = timeline[eventId];
+    if (event.type === 'edit' && event.parentId === originalEventId) {
+      return event;
+    }
+  }
+  return null;
+}

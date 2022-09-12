@@ -9,7 +9,7 @@ export async function writeMessageToFirebase(
     body: string;
     preview: string;
     parentId?: string;
-    type: 'message' | 'reaction';
+    type: 'message' | 'reaction' | 'edit';
     pin?: Pin;
     mentions?: MentionWithColor[];
   }

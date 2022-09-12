@@ -79,7 +79,8 @@ export const Editor = (props: React.ComponentProps<'div'>) => {
   const { store } = useApp();
   const { editingId } = useSnapshot(store);
   const comment = useCommentStore();
-  const isEditing = editingId?.eventId === comment.id;
+  const { eventId } = useCommentContext();
+  const isEditing = editingId?.eventId === eventId;
 
   if (!isEditing) {
     return null;

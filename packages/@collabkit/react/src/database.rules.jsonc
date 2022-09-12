@@ -206,7 +206,7 @@
                 ".validate": "newData.isString()"
               },
               "type": {
-                ".validate": "newData.isString() && (newData.val() === 'message' || newData.val() ==='reaction' || newData.val() === 'adminMessage' || newData.val() === 'system' || newData.val() === 'delete')"
+                ".validate": "newData.isString() && (newData.val() === 'message' || newData.val() ==='reaction' || newData.val() === 'adminMessage' || newData.val() === 'system' || newData.val() === 'delete' || newData.val() === 'edit')"
               },
               "createdById": {
                 ".validate": "newData.isString() && root.child('workspaces').child($appId).child($workspaceId).child('profiles').child(newData.val()).exists()"
@@ -282,7 +282,7 @@
               ".write": "newData.hasChildren(['type', 'body', 'createdById', 'createdAt']) && (auth.token.appId === $appId) && ((root.child('apps').child(auth.token.appId).child('mode').val() === 'UNSECURED' || (root.child('apps').child(auth.token.appId).child('mode').val() === 'SECURED' && $workspaceId === auth.token.workspaceId && newData.child('createdById').val() === auth.token.userId))) && !root.child('timeline').child($appId).child($workspaceId).child($threadId).child($eventId).exists()",
               ".read": "auth.token.appId === $appId",
               "type": {
-                ".validate": "newData.isString() && (newData.val() === 'message' || newData.val() ==='reaction' || newData.val() === 'adminMessage' || newData.val() === 'system' || newData.val() === 'delete')"
+                ".validate": "newData.isString() && (newData.val() === 'message' || newData.val() ==='reaction' || newData.val() === 'adminMessage' || newData.val() === 'system' || newData.val() === 'delete' || newData.val() === 'edit')"
               },
               "body": {
                 ".validate": "newData.isString()"
