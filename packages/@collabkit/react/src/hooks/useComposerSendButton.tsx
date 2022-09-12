@@ -15,8 +15,10 @@ export function useComposerSendButton(props: {
   //     ? workspaces[workspaceId]?.composers[threadId]?.$$body.trim().length ?? 0
   //     : 0;
   return {
-    onPointerDown: (e: React.PointerEvent) =>
-      workspaceId && threadId ? events.onSend(workspaceId, threadId) : null,
-    // disabled: bodyLength === 0,
+    onPointerDown: (e: React.PointerEvent) => {
+      if (workspaceId && threadId && e.button === 0) {
+        events.onSend(workspaceId, threadId);
+      }
+    },
   };
 }

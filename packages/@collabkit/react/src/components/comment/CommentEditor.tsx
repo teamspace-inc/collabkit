@@ -44,8 +44,24 @@ export const CommentEditor = (props: React.ComponentProps<'div'>) => {
       </StyledComposerRoot>
       <div style={{ display: 'flex', gap: '12px', marginRight: '16px' }}>
         <div style={{ flex: 1 }}></div>
-        <Button type="secondary" text="Cancel" onPointerDown={() => actions.stopEditing(store)} />
-        <Button type="primary" text="Save" onPointerDown={() => actions.stopEditing(store)} />
+        <Button
+          type="secondary"
+          text="Cancel"
+          onPointerDown={(e) => {
+            if (e.button === 0) {
+              actions.stopEditing(store);
+            }
+          }}
+        />
+        <Button
+          type="primary"
+          text="Save"
+          onPointerDown={(e) => {
+            if (e.button === 0) {
+              actions.stopEditing(store);
+            }
+          }}
+        />
       </div>
     </div>
   );

@@ -161,6 +161,9 @@ export function createEvents(store: Store) {
     },
 
     onPointerDown: (e: React.PointerEvent, props: { target: Target }) => {
+      if (e.button !== 0) {
+        return;
+      }
       switch (store.uiState) {
         case 'continuous': {
           switch (props.target.type) {
