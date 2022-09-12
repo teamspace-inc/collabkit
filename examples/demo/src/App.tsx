@@ -125,7 +125,7 @@ function Demo() {
       colorScheme="light"
       apiKey={'oLsHFwp3uFYjgar37ygGc'}
       appId={'-N67qY-qlZoWmkQBPyZU'}
-      workspace={{ id: 'publicdemo', name: 'Aspire' }}
+      workspace={{ id: 'publicdemo2', name: 'Aspire' }}
       callbacks={{
         onCommentSend: (data) => {
           console.log(data);
