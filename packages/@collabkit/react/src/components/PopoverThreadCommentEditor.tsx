@@ -1,13 +1,16 @@
-import { composerStyles } from '@collabkit/theme';
+import { commentStyles, composerStyles } from '@collabkit/theme';
 import { styled } from '@stitches/react';
 import React from 'react';
-import { useSnapshot } from 'valtio';
-import { actions } from '../../../../client/src/actions';
-import { useApp } from '../../hooks/useApp';
-import { useCommentContext } from '../../hooks/useCommentContext';
-import { Button } from '../Button';
-import * as Composer from '../composer/Composer';
+import { actions } from '@collabkit/client';
+import { useApp } from '../hooks/useApp';
+import { Button } from './Button';
+import * as Comment from './Comment';
+import * as Composer from './composer/Composer';
 
+const StyledCommentEditor = styled(Comment.Editor, commentStyles.editor, {
+  fontSize: '$fontSize$2',
+  lineHeight: '$lineHeights$0',
+});
 const StyledComposerRoot = styled(Composer.Root, composerStyles.root);
 const StyledComposerEditor = styled(Composer.Editor, composerStyles.editorRoot);
 const StyledComposerContent = styled(Composer.Content, composerStyles.content);
@@ -16,20 +19,10 @@ const StyledComposerContentEditable = styled(
   composerStyles.contentEditable
 );
 
-export const CommentEditor = (props: React.ComponentProps<'div'>) => {
+export const PopoverThreadCommentEditor = () => {
   const { store } = useApp();
-  const { editingId } = useSnapshot(store);
-  const { eventId } = useCommentContext();
-  const isEditing = editingId?.eventId === eventId;
-  if (!isEditing) {
-    return null;
-  }
-  const initialEditorState = undefined; // TODO
   return (
-    <div
-      {...props}
-      style={{ display: 'flex', flexDirection: 'column', gap: '12px', margin: '0px -16px' }}
-    >
+    <StyledCommentEditor>
       <StyledComposerRoot>
         <StyledComposerEditor
           contentEditable={(props: { autoFocus?: boolean }) => (
@@ -39,7 +32,6 @@ export const CommentEditor = (props: React.ComponentProps<'div'>) => {
           )}
           placeholder={<span />}
           autoFocus={true}
-          initialEditorState={initialEditorState}
         />
       </StyledComposerRoot>
       <div
@@ -64,6 +56,6 @@ export const CommentEditor = (props: React.ComponentProps<'div'>) => {
           }}
         />
       </div>
-    </div>
+    </StyledCommentEditor>
   );
 };

@@ -48,8 +48,8 @@ export function createEvents(store: Store) {
               newBody += `[${node.__text}](#T${node.__timestamp})`;
               break;
             case 'mention':
-              newMentions.push(node.__mention);
-              newBody += `[${node.__text}](#@${node.__mention.id})`;
+              newMentions.push(node.__id);
+              newBody += `[${node.__text}](#@${node.__id})`;
               break;
           }
         });

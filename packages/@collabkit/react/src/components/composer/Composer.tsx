@@ -1,21 +1,20 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import { ComposerTarget } from '../../constants';
 import { ContentEditable as LexicalContentEditable } from '@lexical/react/LexicalContentEditable';
-import { LexicalComposer, InitialEditorStateType } from '@lexical/react/LexicalComposer';
+import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import { PlainTextPlugin } from '@lexical/react/LexicalPlainTextPlugin';
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
+import { $convertFromMarkdownString } from '@lexical/markdown';
+import { TRANSFORMERS, MentionNode, TimestampNode } from '../../editor';
 import { TimestampPlugin } from './TimestampPlugin';
 import { MentionsPlugin } from './MentionsPlugin';
 import { PasteTextPlugin } from './PasteTextPlugin';
 import { useApp } from '../../hooks/useApp';
 import { useOnMarkdownLinkClick } from '../../hooks/useOnMarkdownLinkClick';
 import { composerStyles } from '@collabkit/theme';
-
-import { MentionNode } from './MentionNode';
-import { TimestampNode } from './TimestampNode';
 import { useThreadContext } from '../../hooks/useThreadContext';
 import { Target } from '../Target';
 import { useTarget } from '../../hooks/useTarget';
@@ -27,12 +26,14 @@ function onError(error: any) {
   console.error(error);
 }
 
-export const initialConfig = {
+const initialConfigDefaults = {
   namespace: 'Composer',
   theme: composerStyles.lexicalTheme,
   nodes: [MentionNode, TimestampNode],
   onError,
 };
+
+export const ComposerContext = React.createContext<{ body: string }>({ body: '' });
 
 export function Root(props: { className?: string; children: React.ReactNode }) {
   const { threadId, workspaceId, userId } = useThreadContext();
@@ -80,14 +81,19 @@ export const Editor = function ComposerEditor(props: {
   placeholder: React.ReactElement;
   className?: string;
   contentEditable: (props: { autoFocus?: boolean }) => JSX.Element;
-  initialEditorState?: InitialEditorStateType;
 }) {
   const { target } = useTarget();
   const { events } = useApp();
+  const { body } = useContext(ComposerContext);
+
+  const initialConfig = {
+    ...initialConfigDefaults,
+    editorState: () => $convertFromMarkdownString(body, TRANSFORMERS),
+  };
 
   return (
     <div className={props.className}>
-      <LexicalComposer initialConfig={{ ...initialConfig, editorState: props.initialEditorState }}>
+      <LexicalComposer initialConfig={initialConfig}>
         <div id="mentions" style={{ position: 'absolute', left: 0, right: 0 }} />
         <PasteTextPlugin />
         <PlainTextPlugin

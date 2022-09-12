@@ -1,9 +1,9 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import { TextNode } from 'lexical';
 
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { useEffect } from 'react';
-import { $createTimestampNode, TimestampNode } from './TimestampNode';
+import { $createTimestampNode, TimestampNode } from '../../editor';
 
 const REGEX = /(([0-5]{0,1}[0-9]{1}:)?[0-5]{0,1}[0-9]{1}:[0-5]{1}[0-9]{1})\b/i;
 

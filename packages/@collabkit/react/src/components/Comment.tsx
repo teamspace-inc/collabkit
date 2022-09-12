@@ -12,8 +12,8 @@ import { Timestamp as RawTimestamp } from './Timestamp';
 
 import * as Profile from './Profile';
 import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
-import { CommentEditor } from './comment/CommentEditor';
 import { useApp } from '../hooks/useApp';
+import { ComposerContext } from './composer/Composer';
 
 export function Root(props: {
   children: React.ReactNode;
@@ -75,6 +75,32 @@ export function Body({ ...props }: React.ComponentPropsWithoutRef<'div'>) {
   );
 }
 
+// Catch any errors that occur during Lexical updates and log them
+// or throw them as needed. If you don't throw them, Lexical will
+// try to recover gracefully without losing user data.
+function onError(error: any) {
+  console.error(error);
+}
+
+export const Editor = (props: React.ComponentProps<'div'>) => {
+  const { store } = useApp();
+  const { editingId } = useSnapshot(store);
+  const comment = useCommentStore();
+  const isEditing = editingId?.eventId === comment.id;
+
+  if (!isEditing) {
+    return null;
+  }
+  return (
+    <ComposerContext.Provider value={comment}>
+      <div
+        {...props}
+        style={{ display: 'flex', flexDirection: 'column', gap: '12px', margin: '0px -16px' }}
+      />
+    </ComposerContext.Provider>
+  );
+};
+
 export function Timestamp(props: React.ComponentPropsWithoutRef<'span'>) {
   const { createdAt } = useSnapshot(useCommentStore());
   return <RawTimestamp timestamp={+createdAt} {...props} />;
@@ -83,7 +109,6 @@ export function Timestamp(props: React.ComponentPropsWithoutRef<'span'>) {
 export const CreatorName = Profile.Name;
 export const Header = (props: React.ComponentProps<'div'>) => <div {...props} />;
 export const Content = (props: React.ComponentProps<'div'>) => <div {...props} />;
-export const Editor = CommentEditor;
 
 // Anatomy
 
@@ -94,7 +119,6 @@ const StyledCommentRoot = styled(Root, commentStyles.root);
 const StyledCommentContent = styled(Content, commentStyles.message);
 const StyledCommentBody = styled(Body, commentStyles.body);
 const StyledCommentCreatorAvatar = styled(Profile.Avatar, avatarStyles.avatar);
-const StyledCommentEditor = styled(CommentEditor, commentStyles.editor);
 
 // No customisation = Dom's design. You just import Thread and Inbox, and it looks like what we provide (oh and yes you can set dark/light mode);
 
@@ -113,9 +137,7 @@ export default function Comment(props: { eventId: string }) {
           <StyledCommentCreatorName />
           <StyledCommentTimestamp />
         </StyledCommentHeader>
-        <StyledCommentBody>
-          <StyledCommentEditor />
-        </StyledCommentBody>
+        <StyledCommentBody />
       </StyledCommentContent>
     </StyledCommentRoot>
   );

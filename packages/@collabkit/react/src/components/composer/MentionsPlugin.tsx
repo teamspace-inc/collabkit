@@ -17,7 +17,7 @@ import {
 import { startTransition, useCallback, useEffect, useState } from 'react';
 import { useLayoutEffect } from 'react';
 
-import { $createMentionNode, MentionNode } from './MentionNode';
+import { $createMentionNode, MentionNode } from '../../editor';
 import { snapshot } from 'valtio';
 import { Store } from '../../constants';
 import { useApp } from '../../hooks/useApp';
@@ -574,7 +574,7 @@ function createMentionNodeFromSearchResult(
       [, nodeToReplace] = anchorNode.splitText(startOffset, selectionOffset);
     }
 
-    const mentionNode = $createMentionNode(mention);
+    const mentionNode = $createMentionNode(mention.id, mention.name);
     nodeToReplace.replace(mentionNode);
     mentionNode.select();
   });

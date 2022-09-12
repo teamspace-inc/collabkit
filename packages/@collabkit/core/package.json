@@ -9,6 +9,6 @@
   },
   "dependencies": {
     "@collabkit/colors": "0.0.0",
-    "lexical": "0.3.9"
+    "lexical": "0.4.1"
   }
 }

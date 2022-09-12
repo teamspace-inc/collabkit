@@ -37,6 +37,7 @@ import * as Profile from './Profile';
 import { IconButton } from './IconButton';
 import { Check } from './icons';
 import { CommentMenu } from './comment/CommentMenu';
+import { PopoverThreadCommentEditor } from './PopoverThreadCommentEditor';
 
 const Content = (props: React.ComponentProps<'div'>) => <div {...props} />;
 
@@ -74,10 +75,6 @@ const StyledCommentContent = styled(Comment.Content, commentStyles.message, {
   padding: '0px 0px 0px',
 });
 const StyledCommentBody = styled(Comment.Body, commentStyles.body);
-const StyledCommentEditor = styled(Comment.Editor, commentStyles.editor, {
-  fontSize: '$fontSize$2',
-  lineHeight: '$lineHeights$0',
-});
 
 const StyledComposerRoot = styled(Composer.Root, composerStyles.root, {
   borderTop: '1px solid #E3E9ED',
@@ -269,7 +266,7 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
                                 </StyledCommentHeader>
                               ) : null}
                               <StyledCommentBody />
-                              <StyledCommentEditor />
+                              <PopoverThreadCommentEditor />
                             </StyledCommentContent>
                           </StyledCommentRoot>
                         </div>
