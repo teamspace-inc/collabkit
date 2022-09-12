@@ -68,8 +68,6 @@ function Demo() {
   const theme: CustomTheme | undefined =
     name in themes ? themes[name as keyof typeof themes] : undefined;
 
-  console.log('theme', theme);
-
   return (
     <CollabKitProvider
       colorScheme="light"
