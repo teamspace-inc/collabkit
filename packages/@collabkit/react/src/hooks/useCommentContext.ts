@@ -1,10 +1,7 @@
 import React from 'react';
+import { CommentTarget } from '@collabkit/core';
 
-type CommentContextValue = {
-  eventId: string;
-};
-
-export const CommentContext = React.createContext<CommentContextValue | null>(null);
+export const CommentContext = React.createContext<CommentTarget | null>(null);
 
 export function useCommentContext() {
   const context = React.useContext(CommentContext);

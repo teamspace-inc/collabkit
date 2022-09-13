@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useId, useMemo } from 'react';
 import { useMarkAsSeen } from '../hooks/useMarkAsSeen';
 import { useOnMarkdownLinkClick } from '../hooks/useOnMarkdownLinkClick';
 import { useThreadContext } from '../hooks/useThreadContext';
@@ -14,6 +14,7 @@ import * as Profile from './Profile';
 import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
 import { useApp } from '../hooks/useApp';
 import { ComposerContext } from './composer/Composer';
+import { CommentTarget } from '@collabkit/core';
 
 export function Root(props: {
   children: React.ReactNode;
@@ -22,10 +23,15 @@ export function Root(props: {
   style?: React.CSSProperties;
 }) {
   const { threadId, workspaceId, userId } = useThreadContext();
-
   const { eventId } = props;
+  const treeId = useId();
 
-  const { ref } = useMarkAsSeen({ threadId, workspaceId, eventId, type: 'comment' });
+  const target = useMemo<CommentTarget>(
+    () => ({ type: 'comment', workspaceId, threadId, eventId, treeId }),
+    [workspaceId, threadId, eventId, treeId]
+  );
+
+  const { ref } = useMarkAsSeen(target);
 
   const { onClick } = useOnMarkdownLinkClick({
     workspaceId,
@@ -47,7 +53,7 @@ export function Root(props: {
   }
 
   return (
-    <CommentContext.Provider value={{ eventId }}>
+    <CommentContext.Provider value={target}>
       <Profile.Provider profileId={createdById}>
         <div className={props.className} onClick={onClick} ref={ref} style={props.style}>
           {props.children}
@@ -62,8 +68,8 @@ export function Body({ ...props }: React.ComponentPropsWithoutRef<'div'>) {
   const { store } = useApp();
 
   const { editingId } = useSnapshot(store);
-  const { eventId } = useCommentContext();
-  const isEditing = editingId && editingId.eventId === eventId;
+  const { eventId, treeId } = useCommentContext();
+  const isEditing = editingId?.eventId === eventId && editingId.treeId == treeId;
   if (isEditing) {
     return null;
   }
@@ -79,8 +85,8 @@ export const Editor = (props: React.ComponentProps<'div'>) => {
   const { store } = useApp();
   const { editingId } = useSnapshot(store);
   const comment = useCommentStore();
-  const { eventId } = useCommentContext();
-  const isEditing = editingId?.eventId === eventId;
+  const { eventId, treeId } = useCommentContext();
+  const isEditing = editingId?.eventId === eventId && editingId.treeId == treeId;
 
   if (!isEditing) {
     return null;

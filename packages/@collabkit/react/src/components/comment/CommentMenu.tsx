@@ -4,8 +4,6 @@ import React, { useCallback } from 'react';
 import { Menu, MenuItem } from './Menu';
 import { useApp } from '../../hooks/useApp';
 import { useCommentContext } from '../../hooks/useCommentContext';
-import { useThreadContext } from '../../hooks/useThreadContext';
-import { CommentTarget } from '@collabkit/core';
 
 const StyledMenu = styled(Menu, {
   display: 'flex',
@@ -44,14 +42,12 @@ const StyledMenuItem = styled(MenuItem, {
 
 export const CommentMenu = () => {
   const { events } = useApp();
-  const { eventId } = useCommentContext();
-  const { workspaceId, threadId } = useThreadContext();
+  const comment = useCommentContext();
   const onItemClick = useCallback(
     (e: React.MouseEvent, type: 'commentEditButton' | 'commentDeleteButton') => {
-      const comment: CommentTarget = { type: 'comment', eventId, workspaceId, threadId };
       events.onClick(e, { target: { type, comment } });
     },
-    [eventId, workspaceId, threadId]
+    [comment]
   );
 
   return (

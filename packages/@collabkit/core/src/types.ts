@@ -234,6 +234,7 @@ export type CommentTarget = {
   threadId: string;
   workspaceId: string;
   eventId: string;
+  treeId: string;
 };
 
 // TODO: this should be a union of different message types
