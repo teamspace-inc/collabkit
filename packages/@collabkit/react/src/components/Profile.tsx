@@ -35,15 +35,20 @@ export function Name(props: React.ComponentPropsWithoutRef<'span'>) {
 }
 
 export function Avatar(props: React.ComponentPropsWithoutRef<'div'>) {
-  const { store } = useApp();
+  const { store, renderAvatar } = useApp();
   const { profiles } = useSnapshot(store);
   const { profileId } = useProfile();
   const profile = profiles[profileId];
 
   const [didError, setDidError] = useState(false);
 
+  if (renderAvatar != null) {
+    return <>{renderAvatar({ profile })}</>;
+  }
+
   return didError || !profile.avatar ? (
     <div
+      {...props}
       style={{
         ...props.style,
         ...(profile.color
