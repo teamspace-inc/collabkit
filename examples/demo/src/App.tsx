@@ -7,6 +7,7 @@ import { TableExample } from './TableExample';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { GoogleLogin } from '@react-oauth/google';
 import { proxy, useSnapshot, subscribe } from 'valtio';
+import { Route, Switch, useLocation } from 'wouter';
 
 const store = proxy<{ user: User | null }>(
   JSON.parse(localStorage.getItem('store') ?? '{ "user": null }') || { user: null }
@@ -64,7 +65,8 @@ const workspace = {
 function Demo() {
   const { user } = useSnapshot(store);
 
-  const name = location.pathname.slice(1);
+  const [pathname] = useLocation();
+  const name = pathname.slice(1);
   const theme: CustomTheme | undefined =
     name in themes ? themes[name as keyof typeof themes] : undefined;
 
@@ -100,7 +102,11 @@ function Demo() {
       // renderAvatar={CustomAvatar}
       mentionableUsers={'allWorkspace'}
     >
-      {name === 'cashboard' || name === 'table' ? <TableExample /> : <Home />}
+      <Switch>
+        <Route path="/cashboard" component={TableExample} />
+        <Route path="/table" component={TableExample} />
+        <Route component={Home} />
+      </Switch>
     </CollabKitProvider>
   );
 }

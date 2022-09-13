@@ -10411,7 +10411,7 @@ word-wrap@^1.2.3:
 
 wouter@^2.8.0-alpha.2:
   version "2.8.0-alpha.2"
-  resolved "https://registry.npmjs.org/wouter/-/wouter-2.8.0-alpha.2.tgz"
+  resolved "https://registry.yarnpkg.com/wouter/-/wouter-2.8.0-alpha.2.tgz#d57dfbd23b964b8bd848f2ed3eb2b38cf3c00e00"
   integrity sha512-aPsL5m5rW9RiceClOmGj6t5gn9Ut2TJVr98UDi1u9MIRNYiYVflg6vFIjdDYJ4IAyH0JdnkSgGwfo0LQS3k2zg==
 
 wrap-ansi@^7.0.0:

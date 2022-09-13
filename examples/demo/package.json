@@ -14,7 +14,8 @@
     "phosphor-react": "^1.4.1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "react-router-dom": "^6.3.0"
+    "react-router-dom": "^6.3.0",
+    "wouter": "^2.8.0-alpha.2"
   },
   "devDependencies": {
     "@types/google.accounts": "^0.0.2",
