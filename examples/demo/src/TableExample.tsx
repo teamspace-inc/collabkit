@@ -1,26 +1,16 @@
 import { useState } from 'react';
-import {
-  usePopoverThread,
-  PopoverTrigger,
-  Inbox,
-  InboxButton,
-  SidePane,
-  useUnreadThreadsCount,
-} from '@collabkit/react';
+import { usePopoverThread, PopoverTrigger, Inbox, InboxButton, SidePane } from '@collabkit/react';
 import { MenuItem, ControlledMenu, useMenuState } from '@szhsin/react-menu';
 import '@szhsin/react-menu/dist/index.css';
 import '@szhsin/react-menu/dist/transitions/slide.css';
-import { Chat } from 'phosphor-react';
 
 type CellProps = { value: number | string; row: Car; column: Column };
 
 const Cell = ({ value, row, column }: CellProps) => {
   const name = `Cars / ${row.make} ${row.model}`;
-  const viewId = 'cars';
   const cellId = `${row.id}_${column.key}`;
   const { hasThread, popoverState, setPopoverState, context } = usePopoverThread({
     name,
-    viewId,
     cellId,
   });
 

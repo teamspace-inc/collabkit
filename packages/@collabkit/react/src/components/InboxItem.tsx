@@ -16,6 +16,8 @@ import { ReplyCount } from './ReplyCount';
 import { UnreadDot } from './UnreadDot';
 
 import { commentStyles } from '@collabkit/theme';
+import { actions } from '../../../client/src/actions';
+import { ThreadTarget } from '@collabkit/core';
 
 export const StyledReplyCount = styled(ReplyCount, {
   fontStyle: 'normal',
@@ -92,7 +94,18 @@ export function InboxItem() {
     >
       <StyledInboxThreadRoot
         onClick={() => {
-          store.callbacks?.onInboxThreadClick?.({ threadId, userId, workspaceId });
+          const onInboxThreadClick = store.callbacks?.onInboxThreadClick;
+          if (onInboxThreadClick) {
+            onInboxThreadClick({ threadId, userId, workspaceId, info });
+          } else {
+            const pathname = info && info.url && new URL(info.url).pathname;
+            if (pathname && pathname !== window.location.pathname) {
+              window.history.pushState(null, '', pathname);
+            } else {
+              const target: ThreadTarget = { type: 'thread', threadId, workspaceId };
+              actions.viewThread(store, { target, isPreview: false });
+            }
+          }
         }}
       >
         <StyledInboxThreadContent>

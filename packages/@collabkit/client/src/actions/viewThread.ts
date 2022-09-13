@@ -1,6 +1,6 @@
-import type { Store, Target } from '@collabkit/core';
+import type { Store, ThreadTarget } from '@collabkit/core';
 
-export function viewThread(store: Store, props: { target: Target; isPreview: boolean }) {
+export function viewThread(store: Store, props: { target: ThreadTarget; isPreview: boolean }) {
   if (props.isPreview) {
     store.previewingId = props.target;
   } else {

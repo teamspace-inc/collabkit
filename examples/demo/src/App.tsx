@@ -84,9 +84,10 @@ function Demo() {
         onMentionClick: (data) => {
           console.log('mention, click', data);
         },
-        onInboxThreadClick: (data) => {
-          console.log('inbox thread, click', data);
-        },
+        // onInboxThreadClick: (data) => {
+        //   // defining this overrides the default action for clicking an inbox item
+        //   console.log('inbox thread, click', data);
+        // },
         onInboxCloseButtonClick: (data) => {
           console.log('inbox close button, click', data);
         },

@@ -74,7 +74,12 @@ export type Callbacks = {
     event: WithID<Event> | null;
     mention: MentionWithColor;
   }) => void;
-  onInboxThreadClick?: (data: { userId: string; workspaceId: string; threadId: string }) => void;
+  onInboxThreadClick?: (data: {
+    userId: string;
+    workspaceId: string;
+    threadId: string;
+    info: ThreadInfo;
+  }) => void;
   onInboxCloseButtonClick?: (data: { userId: string; workspaceId: string }) => void;
 };
 

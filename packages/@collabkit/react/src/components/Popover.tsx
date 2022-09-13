@@ -1,4 +1,4 @@
-import React, { cloneElement, useCallback, useMemo, useState } from 'react';
+import React, { cloneElement, useCallback, useEffect, useMemo, useState } from 'react';
 import {
   autoUpdate,
   flip,
@@ -42,15 +42,9 @@ function useOpenThread({ viewId, cellId }: { viewId: string; cellId: string }) {
   return threadId ?? null;
 }
 
-export function usePopoverThread({
-  name,
-  viewId,
-  cellId,
-}: {
-  name?: string;
-  viewId: string;
-  cellId: string;
-}) {
+export function usePopoverThread({ name, cellId }: { name?: string; cellId: string }) {
+  const viewId = window?.location?.pathname || 'default';
+
   const threadInfo = useMemo<ThreadInfo>(
     () => ({ name, meta: { viewId, cellId } }),
     [name, viewId, cellId]
