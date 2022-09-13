@@ -54,19 +54,17 @@ export function useThread(props: {
     if (workspaceId && isSignedIn && !isEmpty) {
       // only make this delete info if null is explicitly
       // provided as a value, undefined should be a noop
-      if (typeof info !== 'undefined') {
-        actions.saveThreadInfo(store, {
-          workspaceId,
-          threadId,
-          isOpen: !isEmpty && !isResolved,
+      actions.saveThreadInfo(store, {
+        workspaceId,
+        threadId,
+        isOpen: !isEmpty && !isResolved,
 
-          info: {
-            url: info?.url ?? window.location.href.toString(),
-            name: info?.name || null,
-            meta: info?.meta || null,
-          },
-        });
-      }
+        info: {
+          url: info?.url ?? window.location.href.toString(),
+          ...(info?.name ? { name: info.name } : null),
+          ...(info?.meta ? { meta: info.meta } : null),
+        },
+      });
     }
   }, [workspaceId, threadId, isSignedIn, info, info?.name, isEmpty, isResolved]);
 
