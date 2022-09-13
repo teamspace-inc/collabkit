@@ -77,6 +77,7 @@ export async function writeMessageToFirebase(
           threadId,
           eventId: id,
           type: 'comment',
+          treeId: '',
         }),
       ]);
     } catch (e) {

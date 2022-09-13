@@ -167,10 +167,10 @@ export function createEvents(store: Store) {
       switch (store.uiState) {
         case 'continuous': {
           switch (props.target.type) {
-            case 'pin': {
-              actions.viewThread(store, { ...props, isPreview: false });
-              break;
-            }
+            // case 'pin': {
+            //   actions.viewThread(store, { ...props, isPreview: false });
+            //   break;
+            // }
             case 'closeThreadButton': {
               actions.closeThread(store);
               break;
@@ -202,10 +202,10 @@ export function createEvents(store: Store) {
               actions.startSelecting(store);
               break;
             }
-            case 'pin': {
-              actions.viewThread(store, { ...props, isPreview: false });
-              break;
-            }
+            // case 'pin': {
+            //   actions.viewThread(store, { ...props, isPreview: false });
+            //   break;
+            // }
             case 'commentButton': {
               break;
             }
