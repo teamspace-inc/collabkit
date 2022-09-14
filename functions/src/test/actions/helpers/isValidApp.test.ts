@@ -7,6 +7,23 @@ describe('isValidApp', () => {
     expect(isValidApp(undefined)).toBeFalsy();
     expect(isValidApp({})).toBeFalsy();
   });
+  it('cashboard (dev)', () => {
+    expect(
+      isValidApp({
+        accentColor: '#36B374',
+        emailBatchDelayMs: 1000,
+        isEmailDisabled: false,
+        keys: {
+          Pmma0nDwWysDH_MKdwrwf: true,
+          jUM4S6TvXxrdAN7Fi8Voq: true,
+        },
+        logoUrl:
+          'https://firebasestorage.googleapis.com/v0/b/collabkit-dev.appspot.com/o/apps%2Flogos%2FCashboard.png?alt=media&token=28572955-4e60-4fb9-b171-184944027ef8',
+        mode: 'UNSECURED',
+        name: 'Cashboard (dev)',
+      })
+    ).toBeTruthy();
+  });
   it('required', () => {
     expect(
       isValidApp({

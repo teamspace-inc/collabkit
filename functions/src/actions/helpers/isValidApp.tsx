@@ -16,7 +16,7 @@ export function isValidApp(data: any): data is App {
     'isEmailDisabled' in data ? typeof data.isEmailDisabled === 'boolean' : true;
   const logoUrlValid = 'logoUrl' in data ? typeof data.logoUrl === 'string' : true;
   const webhookValid = 'webhook' in data ? typeof data.webhook === 'string' : true;
-  const adminsValid = 'admins' in data && typeof data.admins === 'object';
+  const adminsValid = 'admins' in data ? typeof data.admins === 'object' : true;
   const keysValid =
     'keys' in data &&
     typeof data.keys === 'object' &&
