@@ -104,7 +104,6 @@ type PopoverThreadProps = {
   threadId: string;
   info?: ThreadInfo;
   style?: React.CSSProperties;
-  composerPrompt?: string;
   autoFocus?: boolean;
   maxAvailableSize?: { width: number; height: number } | null;
 };
@@ -296,11 +295,7 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
                     )}
                     placeholder={
                       <StyledComposerPlaceholder>
-                        {props.composerPrompt != null
-                          ? props.composerPrompt
-                          : isEmpty
-                          ? 'Add a comment'
-                          : 'Reply to this comment'}
+                        {isEmpty ? 'Add a comment' : 'Reply to this comment'}
                       </StyledComposerPlaceholder>
                     }
                     autoFocus={props.autoFocus}

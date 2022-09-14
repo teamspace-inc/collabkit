@@ -65,7 +65,6 @@ export type ThreadProps = {
   composerPrompt?: string;
   showHeader?: boolean;
   autoFocus?: boolean;
-  onCloseButtonClick?: (e: React.MouseEvent) => void;
 };
 
 function ThreadContextProvider(props: ThreadProps & { children: React.ReactNode }) {
@@ -165,11 +164,7 @@ export function Thread(props: ThreadProps & { className?: string; children?: Rea
                 )}
                 placeholder={
                   <StyledComposerPlaceholder>
-                    {composerPrompt != null
-                      ? composerPrompt
-                      : isEmpty
-                      ? 'Add a comment'
-                      : 'Reply to this comment'}
+                    {isEmpty ? 'Add a comment' : 'Reply to this comment'}
                   </StyledComposerPlaceholder>
                 }
                 autoFocus={autoFocus}
