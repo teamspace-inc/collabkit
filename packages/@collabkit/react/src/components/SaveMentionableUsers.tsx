@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Mention, MentionProps } from '@collabkit/core';
+import { MentionProps } from '@collabkit/core';
 import { useApp } from '../hooks/useApp';
 import { useSnapshot } from 'valtio';
 import { actions } from '../../../client/src/actions';
