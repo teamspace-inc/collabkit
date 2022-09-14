@@ -13,7 +13,7 @@ import type { AvatarProps } from './types';
 import { CollabKitProvider } from './components/Provider';
 import { PopoverTrigger, usePopoverThread } from './components/Popover';
 import { Thread } from './components/Thread';
-import { useUnreadCount } from './hooks/public/useUnreadCount';
+import { useUnreadCommentsCount } from './hooks/public/useUnreadCommentsCount';
 import { useUnreadThreadsCount } from './hooks/public/useUnreadThreadsCount';
 import { createValtioStore } from './store';
 import { Inbox } from './components/Inbox';
@@ -30,7 +30,7 @@ export {
   SidePane,
   usePopoverThread,
   useUnreadThreadsCount,
-  useUnreadCount,
+  useUnreadCommentsCount as useUnreadCount,
   createValtioStore as internal_createStore,
 };
 

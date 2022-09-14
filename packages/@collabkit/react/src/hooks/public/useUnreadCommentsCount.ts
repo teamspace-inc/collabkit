@@ -4,7 +4,7 @@ import { useApp } from '../useApp';
 import { useThreadSubscription } from '../useThread';
 import { countUnread } from '../../utils/countUnread';
 
-export function useUnreadCount(props: { threadId: string }): number {
+export function useUnreadCommentsCount(props: { threadId: string }): number {
   const { store } = useApp();
   const { workspaceId, workspaces, userId } = useSnapshot(store);
   const workspace = workspaceId ? workspaces[workspaceId] : null;
