@@ -22,7 +22,7 @@ export async function saveMentionableUsers(store: Store, mentionableUsers: Menti
       } else if ('apiKey' in store.config) {
         if (!store.mentionableUsers[mentionableUser.id]) {
           store.mentionableUsers[mentionableUser.id] = {
-            id: mentionableUser.id,
+            ...mentionableUser,
             color: getRandomColor(),
             workspaceId,
           };
