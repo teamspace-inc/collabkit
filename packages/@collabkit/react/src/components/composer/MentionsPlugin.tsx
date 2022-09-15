@@ -219,7 +219,7 @@ function MentionsTypeahead({
 
   const { reference, context } = useFloating({
     nodeId,
-    placement: 'top-start',
+    placement: 'bottom-start',
     open: (results?.length ?? 0) > 0,
     whileElementsMounted: autoUpdate,
     middleware: [
