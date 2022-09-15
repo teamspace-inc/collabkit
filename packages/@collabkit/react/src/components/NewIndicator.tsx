@@ -2,7 +2,6 @@ import { Timeline, timelineUtils } from '@collabkit/core';
 import { newIndicatorStyles } from '@collabkit/theme';
 import { styled } from '@stitches/react';
 import React, { useEffect, useState } from 'react';
-import { useThreadContext } from '../hooks/useThreadContext';
 import { useWindowFocus } from '../hooks/useWindowFocus';
 
 const StyledNewIndicatorTextInlay = styled('span', newIndicatorStyles.textInlay);
