@@ -23,7 +23,6 @@ export * as threadEmptyStateStyles from './styles/thread/emptyStateStyles';
 export * as threadHeaderStyles from './styles/thread/threadHeaderStyles';
 
 export * as avatarStyles from './styles/avatarStyles';
-export * as badgeStyles from './styles/badgeStyles';
 export * as commentStyles from './styles/commentStyles';
 export * as commentListStyles from './styles/commentListStyles';
 export * as composerStyles from './styles/composerStyles';
