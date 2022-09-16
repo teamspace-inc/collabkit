@@ -454,7 +454,7 @@ function checkForAtSignMentions(text: string, minMatchLength: number): MentionMa
 }
 
 function getPossibleMentionMatch(text: string): MentionMatch | null {
-  const match = checkForAtSignMentions(text, 1);
+  const match = checkForAtSignMentions(text, 0);
   return match === null ? checkForCapitalizedNameMentions(text, 3) : match;
 }
 
@@ -619,10 +619,7 @@ export function MentionsPlugin(): JSX.Element | null {
       }
       previousText = text;
 
-      if (text === null) {
-        return;
-      }
-      const match = getPossibleMentionMatch(text);
+      const match = getPossibleMentionMatch(text ?? '');
       if (match !== null && !isSelectionOnEntityBoundary(editor, match.leadOffset)) {
         const isRangePositioned = tryToPositionRange(match, range);
         if (isRangePositioned !== null) {
