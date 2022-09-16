@@ -5,7 +5,7 @@ const config = [
     input: './types/packages/@collabkit/react/src/index.d.ts',
     output: [{ file: 'dist/collabkit-react.d.ts', format: 'es' }],
     plugins: [dts({ respectExternal: true })],
-    external: ['react', 'react-dom'],
+    external: ['react', 'react-dom', 'date-fns', 'date-fns/locale'],
   },
 ];
 

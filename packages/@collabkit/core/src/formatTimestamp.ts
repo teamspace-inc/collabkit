@@ -1,5 +1,5 @@
 import { format, formatDistanceStrict, isSameYear } from 'date-fns';
-import enUS from 'date-fns/locale/en-US';
+import { enUS } from 'date-fns/locale';
 
 const millisecondsInDay = 86_400_000;
 const locale = {
@@ -22,7 +22,7 @@ const locale = {
  * same year   => Sep 15
  * other       => Dec 31, 2021
  */
-export function formatTimestamp(timestamp: number, now: number) {
+export function formatTimestamp(timestamp: number, now: number): string {
   if (Math.abs(timestamp - now) < millisecondsInDay) {
     return formatDistanceStrict(timestamp, now, { locale, roundingMethod: 'floor' });
   }
