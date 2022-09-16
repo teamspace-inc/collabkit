@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSnapshot } from 'valtio';
+import { differenceInHours, format, formatDistanceStrict, isSameDay, isSameMonth } from 'date-fns';
 import { StyledInboxThreadRoot, StyledInboxThreadContent } from './Inbox';
 import { ThreadContext, useThreadContext } from '../hooks/useThreadContext';
 import { ResolveThreadButton } from './ResolveThreadButton';
@@ -18,6 +19,26 @@ import { UnreadDot } from './UnreadDot';
 import { commentStyles } from '@collabkit/theme';
 import { actions } from '../../../client/src/actions';
 import { ThreadTarget } from '@collabkit/core';
+
+// Cashboard relative timestamp
+//
+// Spec:
+// If comment’s date is current date, display “Today at HH:MM AM/PM”.
+// If it isn’t current date, display “[h] hours ago” up until 48 hours,
+// and then display days (“[d] days ago”) up until the comment date’s
+// month isn’t the current month, then display “[m] months ago”.
+function formatTimestampRelative(timestamp: number, now: number) {
+  if (isSameDay(timestamp, now)) {
+    return format(timestamp, "'Today' 'at' p");
+  }
+  if (Math.abs(differenceInHours(timestamp, now)) <= 48) {
+    return formatDistanceStrict(timestamp, now, { unit: 'hour', addSuffix: true });
+  }
+  if (isSameMonth(timestamp, now)) {
+    return formatDistanceStrict(timestamp, now, { unit: 'day', addSuffix: true });
+  }
+  return formatDistanceStrict(timestamp, now, { unit: 'month', addSuffix: true });
+}
 
 export const StyledReplyCount = styled(ReplyCount, {
   fontStyle: 'normal',
@@ -120,7 +141,7 @@ export function InboxItem() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
               <div style={{ display: 'flex', flexDirection: 'row', gap: '8px' }}>
                 <StyledCommentCreatorName />
-                <StyledCommentTimestamp />
+                <StyledCommentTimestamp format={formatTimestampRelative} />
               </div>
               <StyledCommentBody />
             </div>
@@ -131,7 +152,7 @@ export function InboxItem() {
                 <>
                   <div style={{ display: 'flex', gap: '8px' }}>
                     <StyledReplyCount />
-                    <StyledCommentTimestamp />
+                    <StyledCommentTimestamp format={formatTimestampRelative} />
                   </div>
                 </>
               ) : null}

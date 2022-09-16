@@ -1,10 +1,6 @@
 import { styled } from '@stitches/react';
 import React, { forwardRef, useEffect } from 'react';
-import type {
-  ReopenThreadButtonTarget,
-  ThreadInfo,
-  ThreadResolveButtonTarget,
-} from '@collabkit/core';
+import { ReopenThreadButtonTarget, ThreadInfo, ThreadResolveButtonTarget } from '@collabkit/core';
 import * as CommentList from './CommentList';
 import { useApp } from '../hooks/useApp';
 import { useThread } from '../hooks/useThread';
@@ -18,6 +14,7 @@ import {
   threadStyles,
 } from '@collabkit/theme';
 import { useSnapshot } from 'valtio';
+import { format, isSameDay, isSameYear } from 'date-fns';
 import { Button } from './Button';
 import { Avatar } from './Avatar';
 import {
@@ -38,6 +35,22 @@ import { IconButton } from './IconButton';
 import { Check } from './icons';
 import { CommentMenu } from './comment/CommentMenu';
 import { PopoverThreadCommentEditor } from './PopoverThreadCommentEditor';
+
+// Cashboard exact timestamp
+//
+// Spec:
+// Display the time and date of the comment as HH:MM [AM/PM] Jun 23.
+// Display “Today” if the comment date is the current date.
+// Display the year (“June 23, 2021”) if the comment date is not the current year.
+function formatTimestampExact(timestamp: number, currentTimestamp: number) {
+  if (isSameDay(timestamp, currentTimestamp)) {
+    return format(timestamp, "p 'Today'");
+  }
+  if (isSameYear(timestamp, currentTimestamp)) {
+    return format(timestamp, 'p MMM d');
+  }
+  return format(timestamp, 'p MMM d, yyyy');
+}
 
 const Content = (props: React.ComponentProps<'div'>) => <div {...props} />;
 
@@ -228,7 +241,7 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
                                     style={{ flex: 1, display: 'flex', flexDirection: 'column' }}
                                   >
                                     <StyledCommentCreatorName />
-                                    <StyledCommentTimestamp />
+                                    <StyledCommentTimestamp format={formatTimestampExact} />
                                   </div>
                                   <div style={{ display: 'flex', gap: 0, flexDirection: 'row' }}>
                                     {i === 0 && index === 0 ? (
