@@ -15,6 +15,11 @@ export const button = css({
 
   '&:hover': {
     cursor: 'pointer',
-    background: 'linear-gradient(0deg, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)), #FFFFFF',
+    background: '$colors$buttonTertiaryHoverBackground',
+  },
+
+  '&:active': {
+    cursor: 'pointer',
+    background: '$colors$buttonTertiaryActiveBackground',
   },
 });
