@@ -36,6 +36,7 @@ import {
   useFloating,
   useFloatingNodeId,
 } from '@floating-ui/react-dom-interactions';
+import { escapeRegExp } from 'lodash';
 
 type MentionMatch = {
   leadOffset: number;
@@ -122,6 +123,23 @@ const SUGGESTION_LIST_LENGTH_LIMIT = 5;
 
 const mentionsCache = new Map();
 
+const Highlighted = ({ text = '', highlight = '' }) => {
+  if (!highlight.trim()) {
+    return <span>{text}</span>;
+  }
+  const regex = new RegExp(`(${escapeRegExp(highlight)})`, 'gi');
+  const parts = text.split(regex);
+  return (
+    <span>
+      {parts
+        .filter((part) => part)
+        .map((part, i) =>
+          regex.test(part) ? <mark key={i}>{part}</mark> : <span key={i}>{part}</span>
+        )}
+    </span>
+  );
+};
+
 function searchMentionableUsers(
   store: Store,
   string: string,
@@ -174,12 +192,14 @@ function MentionsTypeaheadItem({
   onClick,
   onMouseEnter,
   result,
+  query,
 }: {
   index: number;
   isSelected: boolean;
   onClick: () => void;
   onMouseEnter: () => void;
   result: MentionWithColor;
+  query: string;
 }) {
   return (
     <StyledMentionsTypeaheadLi
@@ -194,8 +214,12 @@ function MentionsTypeaheadItem({
     >
       <Avatar profile={{ ...result, id: result.id }} />
       <div>
-        <StyledMentionsTypeaheadLiName>{result.name}</StyledMentionsTypeaheadLiName>
-        <StyledMentionsTypeaheadLiEmail>{result.email}</StyledMentionsTypeaheadLiEmail>
+        <StyledMentionsTypeaheadLiName>
+          <Highlighted text={result.name ?? ''} highlight={query}></Highlighted>
+        </StyledMentionsTypeaheadLiName>
+        <StyledMentionsTypeaheadLiEmail>
+          <Highlighted text={result.email ?? ''} highlight={query}></Highlighted>
+        </StyledMentionsTypeaheadLiEmail>
       </div>
     </StyledMentionsTypeaheadLi>
   );
@@ -399,6 +423,7 @@ function MentionsTypeahead({
                   setSelectedIndex(i);
                 }}
                 result={result}
+                query={match.matchingString}
               />
             ))}
           </StyledMentionsTypeaheadUl>

@@ -52,9 +52,29 @@ export const typeaheadListItem = css({
   },
 });
 
-export const typeaheadListItemName = css({});
+export const typeaheadListItemName = css({
+  fontWeight: 'normal',
+
+  mark: {
+    background: '$colors$mentionDropdownMarkBackground',
+    color: '$colors$mentionDropdownMarkText',
+    fontWeight: '$fontWeights$mentionDropdownItemMark',
+  },
+});
 
 export const typeaheadListItemEmail = css({
   fontWeight: 'normal',
   fontSize: '$fontSize$0',
+
+  mark: {
+    background: '$colors$mentionDropdownMarkBackground',
+    color: '$colors$mentionDropdownItemMark',
+    fontWeight: '$fontWeights$mentionDropdownItemMark',
+  },
+});
+
+export const mentionStyle = css({
+  fontWeight: '$fontWeights$mention',
+  color: '$colors$mentionText',
+  background: '$colors$mentionTextBackground',
 });

@@ -64,9 +64,11 @@ export interface Theme {
     2: number;
     3: number;
     mentionDropdownItemFontWeight: string;
+    mentionDropdownItemMark: number;
     sendButtonTextFontWeight: number;
     indicatorText: number;
     button: number;
+    mention: number;
   };
   radii: {
     0: string;
@@ -194,9 +196,14 @@ export interface Theme {
     buttonDisabledText: string;
 
     // mentions
+    mentionText: string;
+    mentionTextBackground: string;
+
     mentionDropdownBackgroundColor: string;
 
     mentionDropdownTextColor: string;
+    mentionDropdownMarkText: string;
+    mentionDropdownMarkBackground: string;
 
     mentionDropdownItemHoverBackgroundColor: string;
     mentionDropdownItemHoverTextColor: string;

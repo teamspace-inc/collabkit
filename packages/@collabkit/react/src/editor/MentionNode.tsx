@@ -9,6 +9,7 @@ import {
   SerializedTextNode,
   TextNode,
 } from 'lexical';
+import { mentionStyle } from '../../../theme/src/styles/mentionsPluginStyles';
 
 export type SerializedMentionNode = Spread<
   {
@@ -35,7 +36,6 @@ function convertMentionElement(domNode: Node): DOMConversionOutput {
 }
 
 // find a way to hook this up to the Stitches theme
-const mentionStyle = `font-weight: 700`;
 
 export class MentionNode extends TextNode {
   __id: string;
@@ -73,8 +73,7 @@ export class MentionNode extends TextNode {
 
   createDOM(config: EditorConfig): HTMLElement {
     const dom = super.createDOM(config);
-    dom.style.cssText = mentionStyle;
-    dom.className = 'mention';
+    dom.className = 'mention ' + mentionStyle().className;
     return dom;
   }
 

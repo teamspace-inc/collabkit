@@ -6,9 +6,10 @@ export const markdown = css({
   },
 
   a: {
-    fontWeight: '700',
-    color: '$colors$primaryText',
     textDecoration: 'none',
+    fontWeight: '$fontWeights$mention',
+    color: '$colors$mentionText',
+    background: '$colors$mentionTextBackground',
 
     // hack for cashboard, the variant doesn't work for
     // nested selectors
