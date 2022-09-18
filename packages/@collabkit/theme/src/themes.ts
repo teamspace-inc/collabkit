@@ -176,6 +176,7 @@ export interface Theme {
     buttonPrimaryHoverText: string;
     buttonPrimaryActiveBackground: string;
     buttonPrimaryText: string;
+    buttonPrimaryActiveText: string;
 
     buttonSecondaryBackground: string;
     buttonSecondaryHoverBackground: string;

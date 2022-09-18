@@ -36,52 +36,52 @@ export const button = css({
     },
     type: {
       primary: {
-        backgroundColor: '$colors$buttonPrimaryBackground',
+        background: '$colors$buttonPrimaryBackground',
         color: '$colors$buttonPrimaryText',
         border: '$borders$buttonPrimary',
 
-        // '&:hover': {
-        //   backgroundColor: '$colors$buttonPrimaryHoverBackground',
-        //   color: '$colors$buttonPrimaryHoverText',
-        // },
-        // '&:active': {
-        //   backgroundColor: '$colors$buttonPrimaryActiveBackground',
-        //   color: '$colors$buttonPrimaryActiveText',
-        // },
+        '&:hover:not([disabled])': {
+          background: '$colors$buttonPrimaryHoverBackground',
+          color: '$colors$buttonPrimaryHoverText',
+        },
+        '&:active:not([disabled])': {
+          background: '$colors$buttonPrimaryActiveBackground',
+          color: '$colors$buttonPrimaryActiveText',
+        },
       },
       secondary: {
         backgroundColor: '$colors$buttonSecondaryBackground',
         color: '$colors$buttonSecondaryText',
         border: '$borders$buttonSecondary',
 
-        // '&:hover': {
-        //   backgroundColor: '$colors$buttonSecondaryHoverBackground',
-        //   color: '$colors$buttonSecondaryHoverText',
-        // },
-        // '&:active': {
-        //   backgroundColor: '$colors$buttonSecondaryActiveBackground',
-        //   color: '$colors$buttonSecondaryActiveText',
-        // },
+        '&:hover': {
+          backgroundColor: '$colors$buttonSecondaryHoverBackground',
+          color: '$colors$buttonSecondaryHoverText',
+        },
+        '&:active': {
+          backgroundColor: '$colors$buttonSecondaryActiveBackground',
+          color: '$colors$buttonSecondaryActiveText',
+        },
       },
       tertiary: {
-        backgroundColor: '$colors$buttonSecondaryBackground',
-        color: '$colors$buttonSecondaryText',
+        background: '$colors$buttonTertiaryBackground',
+        color: '$colors$buttonTertiaryText',
         border: '$borders$buttonTertiary',
 
-        // '&:hover': {
-        //   backgroundColor: '$colors$buttonSecondaryHoverBackground',
-        //   color: '$colors$buttonSecondaryHoverText',
-        // },
-        // '&:active': {
-        //   backgroundColor: '$colors$buttonSecondaryActiveBackground',
-        //   color: '$colors$buttonSecondaryActiveText',
-        // },
+        '&:hover': {
+          background: '$colors$buttonTertiaryHoverBackground',
+          color: '$colors$buttonTertiaryHoverText',
+        },
+        '&:active': {
+          background: '$colors$buttonTertiaryActiveBackground',
+          color: '$colors$buttonTertiaryActiveText',
+        },
       },
     },
     disabled: {
       true: {
-        backgroundColor: '$colors$buttonDisabledBackground',
-        color: '$colors$buttonDisabledText',
+        background: '$colors$buttonDisabledBackground !important',
+        color: '$colors$buttonDisabledText !important',
       },
     },
   },

@@ -20,6 +20,7 @@ export function Button(props: {
       hasText={!!props.text}
       disabled={props.disabled}
       style={props.style}
+      
     >
       {props.icon}
       {props.text}

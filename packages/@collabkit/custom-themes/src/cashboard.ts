@@ -39,9 +39,15 @@ export const cashboard: CustomTheme = {
     sendButtonTextColor: 'white',
     sendButtonDisabledTextColor: '#B4BDC2',
     buttonPrimaryBackground: '#36B374',
+
     buttonPrimaryText: 'white',
-    buttonPrimaryHoverBackground: '#36B374',
+    buttonPrimaryHoverBackground:
+      'linear-gradient(0deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), #36B374',
     buttonPrimaryHoverText: 'white',
+
+    buttonPrimaryActiveBackground:
+      'linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), #36B374',
+    buttonPrimaryActiveText: 'white',
 
     buttonSecondaryBackground: 'transparent',
     buttonSecondaryText: '#6A7278',
@@ -49,7 +55,11 @@ export const cashboard: CustomTheme = {
     buttonTertiaryBackground: 'white',
     buttonTertiaryText: '#6A7278',
 
+    buttonTertiaryHoverBackground: 'rgba(0, 0, 0, 0.05)',
+    buttonTertiaryActiveBackground: 'rgba(0, 0, 0, 0.1)',
+
     buttonDisabledText: '#B4BDC2',
+    buttonDisabledBackground: '#E3E9ED',
 
     backgroundColor: 'white',
     composerBackground: 'white',
