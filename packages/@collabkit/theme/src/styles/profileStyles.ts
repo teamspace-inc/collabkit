@@ -19,7 +19,7 @@ export const avatar = css({
 
 export const name = css({
   fontSize: '$fontSize$2',
-  fontWeight: '$fontWeights$1',
+  fontWeight: '$fontWeights$profileNameText',
   lineHeight: '$lineHeights$0',
   flexDirection: 'row',
   color: '$colors$primaryText',

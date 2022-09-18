@@ -68,12 +68,7 @@ export const root = css(
         default: {},
       },
       seen: {
-        false: {
-          // background: '$colors$commentUnseenBackgroundColor',
-          // '&:hover': {
-          //   backgroundColor: '$colors$commentUnseenHoverBackgroundColor',
-          // },
-        },
+        false: {},
         true: {},
       },
     },
@@ -91,7 +86,7 @@ export const message = css({
   flexDirection: 'column',
   flex: 1,
 
-  gap: '8px',
+  gap: '$space$commentHeaderBodyGap',
   borderRadius: '$radii$1',
 
   variants: {

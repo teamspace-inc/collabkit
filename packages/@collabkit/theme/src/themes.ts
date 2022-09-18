@@ -67,6 +67,7 @@ export interface Theme {
     mentionDropdownItemMark: number;
     sendButtonTextFontWeight: number;
     indicatorText: number;
+    profileNameText: number;
     button: number;
     mention: number;
   };
@@ -111,6 +112,7 @@ export interface Theme {
     2: string;
     3: string;
     4: string;
+    commentHeaderBodyGap: string;
   };
   borders: {
     composer: string;
@@ -247,6 +249,9 @@ export function createThemes(customTheme?: CustomTheme) {
     mentionDropdownItemFontWeight: '$fontWeights$1',
     sendButtonTextFontWeight: '$fontWeights$0',
     indicatorText: '$fontWeights$1',
+    profileNameText: '$fontWeights$2',
+    mentionDropdownItemMark: '$fontWeights$2',
+    mention: '$fontWeights$2',
 
     ['0']: 400,
     ['1']: 700,
@@ -304,6 +309,7 @@ export function createThemes(customTheme?: CustomTheme) {
     ['2']: '8px',
     ['3']: '12px',
     ['4']: '16px',
+    commentHeaderBodyGap: '8px',
   };
 
   const colors = {
