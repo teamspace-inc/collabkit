@@ -81,6 +81,7 @@ export const StyledCommentBody = styled(Comment.Body, commentStyles.markdown);
 export function InboxItem() {
   const { threadId, workspaceId, userId } = useThreadContext();
   const { store, renderThreadContextPreview } = useApp();
+  const { callbacks } = useSnapshot(store);
   const workspace = useSnapshot(useWorkspaceStore());
   const inbox = useSnapshot(useInboxStore());
   const timeline = workspace.timeline[threadId];
@@ -143,7 +144,7 @@ export function InboxItem() {
                 <StyledCommentCreatorName />
                 <StyledCommentTimestamp format={formatTimestampRelative} />
               </div>
-              <StyledCommentBody />
+              <StyledCommentBody canClickLinks={!!callbacks?.onMentionClick} />
             </div>
           </Comment.Root>
           <Comment.Root eventId={lastComment.id}>

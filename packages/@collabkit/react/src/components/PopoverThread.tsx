@@ -162,7 +162,7 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
     workspaceId: string;
   } | null>(null);
   const { store, events, theme } = useApp();
-  const { workspaceId, profiles, userId } = useSnapshot(store);
+  const { workspaceId, profiles, userId, callbacks } = useSnapshot(store);
 
   const { isResolved, isEmpty, list, disabled } = useThread({
     ...props,
@@ -195,6 +195,8 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
     workspaceId,
     type: 'reopenThreadButton',
   };
+
+  const canClickLinks = !!callbacks?.onMentionClick || !!callbacks?.onTimestampClick;
 
   return (
     <ThreadContext.Provider value={context ?? { userId, threadId, workspaceId }}>
@@ -277,7 +279,7 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
                                   </div>
                                 </StyledCommentHeader>
                               ) : null}
-                              <StyledCommentBody />
+                              <StyledCommentBody canClickLinks={canClickLinks} />
                               <PopoverThreadCommentEditor />
                             </StyledCommentContent>
                           </StyledCommentRoot>

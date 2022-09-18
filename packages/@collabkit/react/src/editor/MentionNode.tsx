@@ -36,6 +36,7 @@ function convertMentionElement(domNode: Node): DOMConversionOutput {
 
 // find a way to hook this up to the Stitches theme
 const mentionStyle = `font-weight: 700`;
+
 export class MentionNode extends TextNode {
   __id: string;
 

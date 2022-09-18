@@ -9,6 +9,29 @@ export const markdown = css({
     fontWeight: '700',
     color: '$colors$primaryText',
     textDecoration: 'none',
+
+    // hack for cashboard, the variant doesn't work for
+    // nested selectors
+    cursor: 'default !important',
+  },
+
+  variants: {
+    canClickLinks: {
+      true: {
+        a: {
+          '&:hover': {
+            cursor: 'pointer',
+          },
+        },
+        false: {
+          a: {
+            '&:hover': {
+              cursor: 'default',
+            },
+          },
+        },
+      },
+    },
   },
 });
 
@@ -82,14 +105,17 @@ export const message = css({
   },
 });
 
-export const body = css({
-  position: 'relative',
-  wordBreak: 'break-word',
-  overflowWrap: 'break-word',
-  fontSize: '$fontSize$2',
-  lineHeight: '$lineHeights$0',
-  color: '$colors$primaryText',
-});
+export const body = css(
+  {
+    position: 'relative',
+    wordBreak: 'break-word',
+    overflowWrap: 'break-word',
+    fontSize: '$fontSize$2',
+    lineHeight: '$lineHeights$0',
+    color: '$colors$primaryText',
+  },
+  markdown
+);
 
 export const bodyEllipsis = css({
   position: 'absolute',

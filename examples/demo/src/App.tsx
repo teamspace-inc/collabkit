@@ -76,24 +76,26 @@ function Demo() {
       apiKey={apiKey}
       appId={appId}
       workspace={workspace}
-      callbacks={{
-        onCommentSend: (data) => {
-          console.log(data);
-        },
-        onTimestampClick: (data) => {
-          console.log('timestamp, click', data);
-        },
-        onMentionClick: (data) => {
-          console.log('mention, click', data);
-        },
-        // onInboxThreadClick: (data) => {
-        //   // defining this overrides the default action for clicking an inbox item
-        //   console.log('inbox thread, click', data);
-        // },
-        onInboxCloseButtonClick: (data) => {
-          console.log('inbox close button, click', data);
-        },
-      }}
+      callbacks={
+        {
+          // onCommentSend: (data) => {
+          //   console.log(data);
+          // },
+          // onTimestampClick: (data) => {
+          //   console.log('timestamp, click', data);
+          // },
+          // onMentionClick: (data) => {
+          //   console.log('mention, click', data);
+          // },
+          // // onInboxThreadClick: (data) => {
+          // //   // defining this overrides the default action for clicking an inbox item
+          // //   console.log('inbox thread, click', data);
+          // // },
+          // onInboxCloseButtonClick: (data) => {
+          //   console.log('inbox close button, click', data);
+          // },
+        }
+      }
       onAuthenticationRequired={() => {
         console.log('authRequired');
       }}

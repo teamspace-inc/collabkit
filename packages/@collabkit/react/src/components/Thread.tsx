@@ -97,7 +97,7 @@ export function Thread(props: ThreadProps & { className?: string; children?: Rea
 
   const { threadId, autoFocus, composerPrompt } = props;
 
-  const { profiles, userId, workspaceId } = useSnapshot(store);
+  const { profiles, userId, workspaceId, callbacks } = useSnapshot(store);
 
   const { timeline, isEmpty, seenUntil, list, disabled } = useThread({
     store,
@@ -144,7 +144,11 @@ export function Thread(props: ThreadProps & { className?: string; children?: Rea
                                 {showProfile ? <StyledCommentCreatorName /> : null}
                                 {showProfile ? <StyledCommentTimestamp /> : null}
                               </StyledCommentHeader>
-                              <StyledCommentBody />
+                              <StyledCommentBody
+                                canClickLinks={
+                                  !!callbacks?.onMentionClick || !!callbacks?.onTimestampClick
+                                }
+                              />
                             </StyledCommentContent>
                           </StyledCommentRoot>
                         </div>
