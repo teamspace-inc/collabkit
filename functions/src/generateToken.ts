@@ -2,6 +2,7 @@ import * as functions from 'firebase-functions';
 import * as cors from 'cors';
 import * as admin from 'firebase-admin';
 import { updateUserAndWorkspace } from './actions/helpers/updateUserAndWorkspace';
+import { isValidUser } from './actions/helpers/isValidUser';
 
 const corsHandler = cors.default({ origin: true });
 
@@ -108,6 +109,10 @@ export async function handleRequest(
             .status(400)
             .send({ status: 400, error: '"user" not provided', userId, workspaceId, user });
           return;
+        }
+        if (!isValidUser(user)) {
+          console.debug('"user" object invalid', user);
+          response.status(400).send({ status: 400, error: '"user" object is invalid', user });
         }
 
         // default workspace has no props

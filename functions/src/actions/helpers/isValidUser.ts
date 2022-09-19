@@ -3,7 +3,7 @@ import { UserProps } from '../../types';
 import { isValidUrl } from './isValidUrl';
 
 export function isValidUser(o: unknown): o is UserProps {
-  if (typeof o !== 'object' || o == null) {
+  if (typeof o !== 'object' || o == null || Array.isArray(o)) {
     return false;
   }
   const nameValid = !has(o, 'name') || o.name === null || typeof o.name === 'string';
