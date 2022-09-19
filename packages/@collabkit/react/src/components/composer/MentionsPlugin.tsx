@@ -1,6 +1,5 @@
 import React from 'react';
 import type { LexicalEditor, RangeSelection } from 'lexical';
-
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { mergeRegister } from '@lexical/utils';
 import {
@@ -14,9 +13,8 @@ import {
   KEY_ESCAPE_COMMAND,
   KEY_TAB_COMMAND,
 } from 'lexical';
-import { startTransition, useCallback, useEffect, useState } from 'react';
-import { useLayoutEffect } from 'react';
-
+import { startTransition, useCallback, useEffect, useLayoutEffect, useState } from 'react';
+import escapeStringRegexp from 'escape-string-regexp';
 import { $createMentionNode, MentionNode } from '../../editor';
 import { snapshot } from 'valtio';
 import { Store } from '../../constants';
@@ -36,7 +34,6 @@ import {
   useFloating,
   useFloatingNodeId,
 } from '@floating-ui/react-dom-interactions';
-import { escapeRegExp } from 'lodash';
 
 type MentionMatch = {
   leadOffset: number;
@@ -127,7 +124,7 @@ const Highlighted = ({ text = '', highlight = '' }) => {
   if (!highlight.trim()) {
     return <span>{text}</span>;
   }
-  const regex = new RegExp(`(${escapeRegExp(highlight)})`, 'gi');
+  const regex = new RegExp(`(${escapeStringRegexp(highlight)})`, 'gi');
   const parts = text.split(regex);
   return (
     <span>
