@@ -35,10 +35,15 @@ export function MarkdownBody(props: { body: string; onLinkClick?: (e: React.Mous
 }
 
 type NotificationEmailProps = {
+  entity: string;
+  action: string;
+  preposition: string;
+  actor: string;
+
   appLogoUrl?: string;
   activity: string;
-  threadName?: string;
-  workspaceName?: string;
+  // threadName?: string;
+  // workspaceName?: string;
   accentColor?: string;
   commentList: {
     createdById: string;
@@ -83,20 +88,36 @@ function Comment(props: { actorColor: string; actorName: string; commentBody: st
 
 const NotificationEmail: React.FC<NotificationEmailProps> = ({
   activity,
-  threadName,
-  workspaceName,
   accentColor,
-  appName,
   profiles,
   openUrl,
   appLogoUrl,
   commentList,
+  actor,
+  action,
+  entity,
+  preposition,
 }) => {
-  const entityName = threadName ?? workspaceName ?? appName;
-
   if (commentList.length === 0) {
     return null;
   }
+
+  const subject =
+    actor.length > 0 ? (
+      <>
+        <b>{actor}</b>{' '}
+        <span>
+          {action} {preposition} <b>{entity}</b>
+        </span>
+      </>
+    ) : (
+      <>
+        <b>{action}</b>{' '}
+        <span>
+          {preposition} <b>{entity}</b>
+        </span>
+      </>
+    );
 
   return (
     <Mjml>
@@ -112,12 +133,7 @@ const NotificationEmail: React.FC<NotificationEmailProps> = ({
                 lineHeight={'35px'}
                 cssClass="paragraph"
               >
-                <b>{activity}</b>{' '}
-                {entityName ? (
-                  <span>
-                    in <b>{entityName}</b>
-                  </span>
-                ) : null}
+                {subject}
               </MjmlText>
             }
           </MjmlColumn>

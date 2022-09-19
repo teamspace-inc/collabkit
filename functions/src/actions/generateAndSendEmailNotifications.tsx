@@ -19,6 +19,7 @@ import { fetchNotifiedUntilId } from './data/fetchNotifiedUntilId';
 import { groupedEvents } from './helpers/groupedEvents';
 import { fetchIsMuted } from './data/fetchIsMuted';
 import { fetchSeenBy } from './data/fetchSeenBy';
+import uniq from 'lodash.uniq';
 
 async function sendMailForProfile(props: {
   eventId: string;
@@ -114,16 +115,56 @@ async function sendMailForProfile(props: {
 
   const to = profiles[profileId].email;
 
-  let subject = notifyAboutEventIds.length > 1 ? 'New comments' : 'New comment';
-  if (workspaceId.toLowerCase() === 'default') {
-    subject = `${subject} in ${app.name}`;
-  } else if (workspaceName) {
-    subject = `${subject} in ${workspaceName}`;
+  const mentionedInEventId = notifyAboutEventIds.find(
+    (eventId) => timeline[eventId]?.mentions?.[profileId]
+  );
+
+  const mentionedInEvent = mentionedInEventId ? timeline[mentionedInEventId] : null;
+
+  const mentionedBy = mentionedInEvent ? profiles[mentionedInEvent.createdById] : null;
+
+  const isReply = uniq(messageEvents.map((event) => event.createdById)).length > 1;
+
+  const eventCreator = profiles[event.createdById];
+
+  if (!eventCreator) {
+    console.debug('no eventCreator found, skipping', profileId);
+    return null;
   }
 
+  let entity = null;
+  let action = null;
+  let preposition = 'in';
+  let actor = null;
+
   if (threadInfo.name) {
-    subject = `${subject} on ${threadInfo.name}`;
+    preposition = 'on';
+    entity = threadInfo.name;
+  } else if (workspaceId.toLowerCase() === 'default') {
+    preposition = 'in';
+    entity = app.name;
+  } else if (workspaceName) {
+    preposition = 'in';
+    entity = workspaceName;
+  } else {
+    entity = '';
   }
+
+  if (mentionedBy && mentionedBy.name) {
+    action = 'mentioned you in a comment';
+    actor = mentionedBy.name;
+  } else if (isReply && eventCreator.name) {
+    action = 'replied to a comment';
+    actor = eventCreator.name;
+  } else if (eventCreator.name) {
+    actor = eventCreator.name;
+    action = 'added a comment';
+  } else {
+    actor = notifyAboutEventIds.length > 1 ? 'New comments' : 'New comment';
+    action = '';
+  }
+
+  const subject = [actor, action, preposition, entity].filter((part) => part.length > 0).join(' ');
 
   if (!threadInfo.url) {
     return null;
@@ -131,14 +172,15 @@ async function sendMailForProfile(props: {
 
   const component = (
     <NotificationEmail
+      actor={actor}
+      action={action}
+      entity={entity}
+      preposition={preposition}
       openUrl={threadInfo.url}
       accentColor={app.accentColor}
       appLogoUrl={app.logoUrl}
       ctaText={list.length === 1 ? 'View comment' : 'View comments'}
       activity={list.length === 1 ? 'New comment' : 'New comments'}
-      threadName={threadInfo.name}
-      workspaceName={workspaceName}
-      appName={app.name}
       commentList={list}
       profiles={profiles}
     />

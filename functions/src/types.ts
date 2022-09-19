@@ -50,6 +50,9 @@ export type Event = {
   createdById: string;
   system?: 'resolve' | 'reopen';
   parentId?: string;
+  mentions?: {
+    [userId: string]: boolean;
+  };
 };
 
 export type Timeline = {

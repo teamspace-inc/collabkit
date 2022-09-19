@@ -244,12 +244,15 @@ const sample = {
 export function newComments() {
   return (
     <NotificationEmail
+      action="mentioned you"
+      actor="Namit Chadha"
+      preposition="in"
+      entity="Foobar"
       openUrl={sample.body.data.thread.info.url}
       appLogoUrl={
         'https://firebasestorage.googleapis.com/v0/b/collabkit-dev.appspot.com/o/apps%2Flogos%2FDart.png?alt=media&token=38a3536f-4035-494b-802c-7fd568f5a21f'
       }
       activity={`${sample.body.data.comments.list?.length} new comment`}
-      appName="Dart"
       accentColor="#D73C56"
       commentList={sample.body.data.comments.list}
       profiles={sample.body.data.workspace.profiles}
