@@ -118,7 +118,20 @@ export function usePopoverThread({ name, cellId }: { name?: string; cellId: stri
     open: previewOpen,
     onOpenChange: setPreviewOpen,
     nodeId,
-    middleware: [offset(5), flip()],
+    middleware: [
+      offset(4),
+      flip(),
+      size({
+        padding: 12,
+        apply({ availableWidth, availableHeight, elements }) {
+          Object.assign(elements.floating.style, {
+            maxWidth: `${availableWidth}px`,
+            maxHeight: `${availableHeight}px`,
+          });
+          setMaxAvailableSize({ width: availableWidth, height: availableHeight });
+        },
+      }),
+    ],
   });
   const { reference: threadReference, context: threadContext } = useFloating({
     placement: 'right-start',
@@ -263,12 +276,14 @@ export const PopoverTrigger = ({ children, context }: Props) => {
                 threadId={threadId}
                 info={threadInfo}
                 style={{
+                  boxSizing: 'border-box',
                   // custom styles for cashboard
                   // todo: extract them
-                  width: 264,
-                  border: '1px solid #E3E9ED',
                   boxShadow:
                     '0px -12px 24px rgba(0, 0, 0, 0.02), 0px 12px 24px rgba(0, 0, 0, 0.06)',
+                  borderRadius: '12px',
+                  width: 264,
+                  border: '1px solid #E3E9ED',
                 }}
               />
             </div>
