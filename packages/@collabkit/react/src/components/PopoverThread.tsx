@@ -123,31 +123,66 @@ type PopoverThreadProps = {
 
 type Handle = HTMLDivElement | null;
 
-export const PreviewThread = forwardRef<Handle, PopoverThreadProps>(function PreviewThread(
+export const PreviewThread = forwardRef<Handle, PopoverThreadProps>(function PopoverThread(
   props: PopoverThreadProps,
   ref
 ) {
+  const { threadId } = props;
+  const [context, setContext] = React.useState<{
+    threadId: string;
+    userId: string;
+    workspaceId: string;
+  } | null>(null);
   const { store } = useApp();
-  const { workspaceId, userId } = useSnapshot(store);
-  const { timeline } = useThread({
+  const { workspaceId, profiles, userId } = useSnapshot(store);
+
+  const { isEmpty, messageEvents } = useThread({
     ...props,
     store,
     workspaceId,
   });
 
-  const commentList = userId && workspaceId && timeline && (
-    <StyledCommentList>
-      {/* <div>todo render preview here</div> */}
-      <div></div>
-    </StyledCommentList>
-  );
+  useEffect(() => {
+    if (threadId && userId && workspaceId) {
+      setContext({ threadId, userId, workspaceId });
+    }
+  }, [threadId, userId, workspaceId]);
+
+  const event = messageEvents?.[0];
+  const profile = event && profiles[event?.createdById];
+  if (!workspaceId || !userId || !event || !profile || isEmpty) {
+    return null;
+  }
 
   return (
-    <div>
+    <ThreadContext.Provider value={context ?? { userId, threadId, workspaceId }}>
       <StyledPopoverThreadRoot data-collabkit-internal="true" style={props.style} ref={ref}>
-        {commentList}
+        <StyledThreadContent>
+          <ScrollAreaRoot>
+            <ScrollAreaViewport style={{ maxHeight: props.maxAvailableSize?.height ?? 'unset' }}>
+              <StyledCommentList>
+                <StyledCommentRoot eventId={event.id} style={{ paddingTop: '16px' }}>
+                  <StyledCommentContent>
+                    <StyledCommentHeader>
+                      <Avatar profile={profile} />
+                      <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+                        <StyledCommentCreatorName />
+                        <StyledCommentTimestamp format={formatTimestampExact} />
+                      </div>
+                    </StyledCommentHeader>
+                    <StyledCommentBody />
+                  </StyledCommentContent>
+                </StyledCommentRoot>
+              </StyledCommentList>
+            </ScrollAreaViewport>
+            <ScrollAreaScrollbar orientation="vertical">
+              <ScrollAreaThumb />
+            </ScrollAreaScrollbar>
+            <ScrollAreaCorner />
+          </ScrollAreaRoot>
+        </StyledThreadContent>
       </StyledPopoverThreadRoot>
-    </div>
+    </ThreadContext.Provider>
   );
 });
 

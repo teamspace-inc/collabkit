@@ -251,9 +251,11 @@ export function createEvents(store: Store) {
     }) => {
       switch (state) {
         case 'open':
+          actions.closeThread(store, { isPreview: true });
           actions.viewThread(store, { target, isPreview: false });
           break;
         case 'preview':
+          actions.closeThread(store, { isPreview: false });
           actions.viewThread(store, { target, isPreview: true });
           break;
         case 'closed':

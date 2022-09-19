@@ -145,7 +145,7 @@ export function usePopoverThread({ name, cellId }: { name?: string; cellId: stri
   const { getReferenceProps: getPreviewReferenceProps, getFloatingProps: getPreviewFloatingProps } =
     useInteractions([
       useHover(previewContext, {
-        enabled: false,
+        enabled: hasThread && !viewingId,
         handleClose: safePolygon(),
       }),
       useDismiss(previewContext),
@@ -175,7 +175,7 @@ export function usePopoverThread({ name, cellId }: { name?: string; cellId: stri
       previewContext,
       getThreadFloatingProps,
       getPreviewFloatingProps,
-      setThreadOpen,
+      setPopoverState,
       threadId,
       threadInfo,
       getNewThreadId,
@@ -200,7 +200,7 @@ export const PopoverTrigger = ({ children, context }: Props) => {
     previewContext,
     getThreadFloatingProps,
     getPreviewFloatingProps,
-    setThreadOpen,
+    setPopoverState,
     threadId,
     threadInfo,
     getNewThreadId,
@@ -243,7 +243,7 @@ export const PopoverTrigger = ({ children, context }: Props) => {
             </div>
           </FloatingFocusManager>
         )}
-        {!threadContext.open && previewContext.open && (
+        {!threadContext.open && previewContext.open && threadId != null && (
           <FloatingFocusManager context={previewContext}>
             <div
               ref={previewContext.floating}
@@ -254,11 +254,13 @@ export const PopoverTrigger = ({ children, context }: Props) => {
                 left: previewContext.x ?? 0,
                 outline: 'none',
               }}
-              onClick={() => setThreadOpen(true)}
+              onClick={() => {
+                setPopoverState('open');
+              }}
               {...getPreviewFloatingProps()}
             >
               <PreviewThread
-                threadId={threadId ?? getNewThreadId()}
+                threadId={threadId}
                 info={threadInfo}
                 style={{
                   // custom styles for cashboard
