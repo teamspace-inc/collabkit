@@ -41,9 +41,7 @@ type NotificationEmailProps = {
   actor: string;
 
   appLogoUrl?: string;
-  activity: string;
-  // threadName?: string;
-  // workspaceName?: string;
+
   accentColor?: string;
   commentList: {
     createdById: string;
@@ -54,7 +52,6 @@ type NotificationEmailProps = {
   }[][];
   ctaText?: string;
   profiles: { [id: string]: { name?: string; avatar?: string; email?: string; color?: string } };
-  appName?: string;
   openUrl: string;
 };
 
@@ -87,7 +84,6 @@ function Comment(props: { actorColor: string; actorName: string; commentBody: st
 }
 
 const NotificationEmail: React.FC<NotificationEmailProps> = ({
-  activity,
   accentColor,
   profiles,
   openUrl,

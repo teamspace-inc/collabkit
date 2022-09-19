@@ -176,11 +176,10 @@ async function sendMailForProfile(props: {
       action={action}
       entity={entity}
       preposition={preposition}
+      ctaText={list.length === 1 ? 'View comment' : 'View comments'}
       openUrl={threadInfo.url}
       accentColor={app.accentColor}
       appLogoUrl={app.logoUrl}
-      ctaText={list.length === 1 ? 'View comment' : 'View comments'}
-      activity={list.length === 1 ? 'New comment' : 'New comments'}
       commentList={list}
       profiles={profiles}
     />
