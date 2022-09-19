@@ -52,9 +52,8 @@ export async function updateUserAndWorkspace(props: {
 
   const updates: { [path: string]: object | string | boolean } = {};
 
-  const hasColor = (await (await admin.database().ref(`/profiles/${appId}/${userId}`).get()).val())
-    ?.color;
-  if (!hasColor) {
+  const colorSnapshot = await admin.database().ref(`/profiles/${appId}/${userId}/color`).get();
+  if (!colorSnapshot.exists()) {
     user.color = getRandomColor();
   }
 
