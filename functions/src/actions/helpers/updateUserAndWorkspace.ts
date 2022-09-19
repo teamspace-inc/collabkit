@@ -1,4 +1,5 @@
 import * as admin from 'firebase-admin';
+import * as functions from 'firebase-functions';
 import { isValidUser } from './isValidUser';
 import { deleteUndefinedProps } from './deleteUndefinedProps';
 import { WorkspaceProps, UserProps } from '../../types';
@@ -69,6 +70,8 @@ export async function updateUserAndWorkspace(props: {
   if (isValidUser(user)) {
     updates[`/profiles/${appId}/${userId}/`] = deleteUndefinedProps(user);
     updates[`/workspaces/${appId}/${workspaceId}/profiles/${userId}/`] = true;
+  } else if (user != null) {
+    functions.logger.warn('Invalid profile. Skipping user profile update.', { user });
   }
 
   await admin.database().ref('/').update(updates);
