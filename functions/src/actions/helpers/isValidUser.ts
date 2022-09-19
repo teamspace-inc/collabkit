@@ -1,17 +1,13 @@
+import has from 'has';
 import { UserProps } from '../../types';
 import { isValidUrl } from './isValidUrl';
 
-export function isValidUser(o: any): o is UserProps {
-  if (o === undefined || o === null) {
+export function isValidUser(o: unknown): o is UserProps {
+  if (typeof o !== 'object' || o == null) {
     return false;
   }
-  return (
-    (typeof o === 'object' &&
-      // setting to null deletes the attribute
-      (('name' in o && typeof o.name === 'string') || o.name === null)) ||
-    ('email' in o && typeof o.email === 'string') ||
-    o.email === null ||
-    ('avatar' in o && typeof o.avatar === 'string' && isValidUrl(o.avatar)) ||
-    o.avatar === null
-  );
+  const nameValid = !has(o, 'name') || o.name === null || typeof o.name === 'string';
+  const emailValid = !has(o, 'email') || o.email === null || typeof o.email === 'string';
+  const avatarValid = !has(o, 'avatar') || o.avatar === null || isValidUrl(o.avatar);
+  return nameValid && emailValid && avatarValid;
 }

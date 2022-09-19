@@ -1160,6 +1160,11 @@
   dependencies:
     "@types/node" "*"
 
+"@types/has@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@types/has/-/has-1.0.0.tgz#8ab9a26dd8f08a75ec02c542e36105655889616b"
+  integrity sha512-1J4U6Ipq5B+ytzNa9XWYg+U5cI5nt12a+RiISbKD9a74QDoRVhoBd6GPtd+imkqQRaTGO1l6bvdP1cqsM6dCpw==
+
 "@types/html-minifier-terser@^6.1.0":
   version "6.1.0"
   resolved "https://registry.yarnpkg.com/@types/html-minifier-terser/-/html-minifier-terser-6.1.0.tgz#4fc33a00c1d0c16987b1a20cf92d20614c55ac35"

@@ -1,22 +1,40 @@
 import { isValidUser } from '../../../actions/helpers/isValidUser';
 
 describe('isValidUser', () => {
-  it('undefined', () => {
-    expect(isValidUser(undefined)).toBeFalsy();
+  test('undefined', () => {
+    expect(isValidUser(undefined)).toBe(false);
   });
-  it('null', () => {
-    expect(isValidUser(undefined)).toBeFalsy();
+  test('null', () => {
+    expect(isValidUser(undefined)).toBe(false);
   });
-  it('name', () => {
-    expect(isValidUser({ name: 'foo' })).toBeTruthy();
+
+  test('name', () => {
+    expect(isValidUser({ name: 'foo' })).toBe(true);
   });
-  it('email', () => {
-    expect(isValidUser({ email: 'foo@example.com' })).toBeTruthy();
+  test('name (undefined)', () => {
+    expect(isValidUser({ name: undefined })).toBe(false);
   });
-  it('avatar', () => {
-    expect(isValidUser({ avatar: 'https://example.com/foo.png' })).toBeTruthy();
+  test('name (object)', () => {
+    expect(isValidUser({ name: {} })).toBe(false);
   });
-  it('avatar invalid url', () => {
-    expect(isValidUser({ avatar: 'foo' })).toBeFalsy();
+
+  test('email', () => {
+    expect(isValidUser({ email: 'foo@example.com' })).toBe(true);
+  });
+  test('email (undefined)', () => {
+    expect(isValidUser({ email: undefined })).toBe(false);
+  });
+  test('email (object)', () => {
+    expect(isValidUser({ email: {} })).toBe(false);
+  });
+
+  test('avatar', () => {
+    expect(isValidUser({ avatar: 'https://example.com/foo.png' })).toBe(true);
+  });
+  test('avatar (undefined)', () => {
+    expect(isValidUser({ avatar: undefined })).toBe(false);
+  });
+  test('avatar (invalid url)', () => {
+    expect(isValidUser({ avatar: 'foo' })).toBe(false);
   });
 });

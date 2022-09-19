@@ -19,6 +19,7 @@
     "@google-cloud/tasks": "^3.0.0",
     "firebase-admin": "^10.0.2",
     "firebase-functions": "^3.22.0",
+    "has": "^1.0.3",
     "lodash.shuffle": "^4.2.0",
     "lodash.uniq": "^4.5.0",
     "mailing": "0.7.1",
@@ -33,6 +34,7 @@
     "react-string-replace": "^1.1.0"
   },
   "devDependencies": {
+    "@types/has": "^1.0.0",
     "@types/jest": "^28.1.7",
     "@types/lodash.shuffle": "^4.2.7",
     "@types/lodash.uniq": "^4.5.7",
