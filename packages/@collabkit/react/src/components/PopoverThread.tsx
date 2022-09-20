@@ -11,7 +11,6 @@ import {
   messageHeaderStyles,
   popoverThreadStyles,
   profileStyles,
-  threadStyles,
 } from '@collabkit/theme';
 import { useSnapshot } from 'valtio';
 import { format, isSameDay, isSameYear } from 'date-fns';
@@ -26,7 +25,6 @@ import {
 } from './ScrollArea';
 import { ThreadContext } from '../hooks/useThreadContext';
 import { useComposerSendButton } from '../hooks/useComposerSendButton';
-import { Base } from './Base';
 import * as Comment from './Comment';
 import * as Composer from './composer/Composer';
 import * as Profile from './Profile';
