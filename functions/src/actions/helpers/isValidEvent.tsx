@@ -1,3 +1,4 @@
+import has from 'has';
 import { Event } from '../../types';
 
 function isValidMentions(data: unknown): data is { [userId: string]: boolean } {
@@ -16,7 +17,7 @@ function isValidMentions(data: unknown): data is { [userId: string]: boolean } {
   return Object.values(data).every((value) => typeof value === 'boolean');
 }
 
-export function isValidEvent(data: any): data is Event {
+export function isValidEvent(data: unknown): data is Event {
   if (typeof data === undefined) {
     return false;
   }
@@ -30,20 +31,20 @@ export function isValidEvent(data: any): data is Event {
   }
 
   const typeValid =
-    'type' in data &&
+    has(data, 'type') &&
     typeof data.type === 'string' &&
     ['message', 'reaction', 'adminMessage', 'system', 'delete', 'edit'].includes(data.type);
-  const bodyValid = 'body' in data && typeof data.body === 'string';
+  const bodyValid = has(data, 'body') && typeof data.body === 'string';
   const systemValid =
-    data.type === 'system'
-      ? 'system' in data
+    has(data, 'type') && data.type === 'system'
+      ? has(data, 'system')
         ? typeof data.system === 'string' && ['resolve', 'reopen'].includes(data.system)
         : true
       : true;
-  const createdAtValid = 'createdAt' in data && typeof data.createdAt === 'number';
-  const createdByIdValid = 'createdById' in data && typeof data.createdById === 'string';
-  const parentIdValid = 'parentId' in data ? typeof data.parentId === 'string' : true;
-  const mentionsValid = 'mentions' in data ? isValidMentions(data.mentions) : true;
+  const createdAtValid = has(data, 'createdAt') && typeof data.createdAt === 'number';
+  const createdByIdValid = has(data, 'createdById') && typeof data.createdById === 'string';
+  const parentIdValid = has(data, 'parentId') ? typeof data.parentId === 'string' : true;
+  const mentionsValid = has(data, 'mentions') ? isValidMentions(data.mentions) : true;
 
   return (
     typeValid &&
@@ -53,6 +54,6 @@ export function isValidEvent(data: any): data is Event {
     createdByIdValid &&
     parentIdValid &&
     mentionsValid &&
-    (data.type === 'reaction' ? typeof data.parentId === 'string' : true)
+    (data.type === 'reaction' ? has(data, 'parentId') && typeof data.parentId === 'string' : true)
   );
 }

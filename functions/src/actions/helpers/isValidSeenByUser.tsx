@@ -1,7 +1,7 @@
 import { SeenByUser } from '../../types';
 import has from 'has';
 
-export function isValidSeenByUser(data: any): data is SeenByUser | null {
+export function isValidSeenByUser(data: unknown): data is SeenByUser | null {
   if (data === null) {
     return true;
   }
@@ -11,7 +11,7 @@ export function isValidSeenByUser(data: any): data is SeenByUser | null {
   }
 
   const userIdValid = has(data, 'seenUntilId') && typeof data.seenUntilId === 'string';
-  const seenAtValid = has(data, 'seenAtValid') && typeof data.seenAtValid === 'number';
+  const seenAtValid = has(data, 'seenAt') && typeof data.seenAt === 'number';
 
   return userIdValid && seenAtValid;
 }

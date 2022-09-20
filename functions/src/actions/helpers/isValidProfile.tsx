@@ -1,9 +1,10 @@
 import { Profile } from '../../types';
+import has from 'has';
 
 export function isValidProfile(data: unknown): data is Profile {
   return (
     typeof data === 'object' &&
     data !== null &&
-    ('name' in data || 'avatar' in data || 'email' in data || 'color' in data)
+    (has(data, 'name') || has(data, 'email') || has(data, 'avatar') || has(data, 'color'))
   );
 }

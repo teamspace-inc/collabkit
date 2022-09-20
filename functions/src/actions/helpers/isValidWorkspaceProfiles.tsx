@@ -1,7 +1,11 @@
 import { WorkspaceProfiles } from '../../types';
 
-export function isValidWorkspaceProfiles(data: any): data is WorkspaceProfiles {
+export function isValidWorkspaceProfiles(data: unknown): data is WorkspaceProfiles {
   if (typeof data !== 'object') {
+    return false;
+  }
+
+  if (data === null) {
     return false;
   }
 

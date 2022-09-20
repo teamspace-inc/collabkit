@@ -1,7 +1,7 @@
 import { Timeline } from '../../types';
 import { isValidEvent } from './isValidEvent';
 
-export function isValidTimeline(data: any): data is Timeline {
+export function isValidTimeline(data: unknown): data is Timeline {
   if (typeof data === 'undefined') {
     return false;
   }

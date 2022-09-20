@@ -1,13 +1,18 @@
+import has from 'has';
 import { Workspace } from '../../types';
 import { isValidWorkspaceProfiles } from './isValidWorkspaceProfiles';
 
-export function isValidWorkspace(data: any): data is Workspace {
+export function isValidWorkspace(data: unknown): data is Workspace {
   if (typeof data !== 'object') {
     return false;
   }
 
-  const profilesValid = 'profiles' in data ? isValidWorkspaceProfiles(data.profiles) : true;
-  const nameValid = 'name' in data ? typeof data.name === 'string' : true;
+  if (data === null) {
+    return false;
+  }
+
+  const profilesValid = has(data, 'profiles') ? isValidWorkspaceProfiles(data.profiles) : true;
+  const nameValid = has(data, 'name') ? typeof data.name === 'string' : true;
 
   return profilesValid && nameValid;
 }
