@@ -1,27 +1,24 @@
 import React from 'react';
 import type { StoryDecorator } from '@ladle/react';
-import { PopoverThread } from './PopoverThread';
+import { PopoverThread, PreviewThread } from './PopoverThread';
 import { useApp } from '../hooks/useApp';
+import { FlexCenter } from './UIKit';
 
-export const Thread = () => {
-  return (
-    <PopoverThread
-      threadId={'PopoverThread-stories'}
-      style={{
-        margin: '24px auto',
-      }}
-    />
-  );
-};
+const threadId = 'PopoverThread-stories';
+
+export const Preview = () => <PreviewThread threadId={threadId} />;
+export const Thread = () => <PopoverThread threadId={threadId} />;
 
 export default {
   decorators: [
     (Component) => {
       const { theme } = useApp();
       return (
-        <div className={theme.className}>
-          <Component />
-        </div>
+        <FlexCenter>
+          <div className={theme.className}>
+            <Component />
+          </div>
+        </FlexCenter>
       );
     },
   ] as StoryDecorator[],
