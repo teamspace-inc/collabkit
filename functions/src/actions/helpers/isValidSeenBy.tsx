@@ -1,7 +1,7 @@
 import { SeenBy } from '../../types';
 import { isValidSeenByUser } from './isValidSeenByUser';
 
-export function isValidSeenBy(data: any): data is SeenBy | null {
+export function isValidSeenBy(data: unknown): data is SeenBy | null {
   if (typeof data === 'undefined') {
     return false;
   }

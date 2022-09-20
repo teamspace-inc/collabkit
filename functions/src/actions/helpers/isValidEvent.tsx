@@ -1,6 +1,6 @@
 import { Event } from '../../types';
 
-function isValidMentions(data: any): data is { [userId: string]: boolean } {
+function isValidMentions(data: unknown): data is { [userId: string]: boolean } {
   if (typeof data === undefined) {
     return false;
   }

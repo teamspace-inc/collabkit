@@ -1,6 +1,6 @@
 import { Profile } from '../../types';
 
-export function isValidProfile(data: any): data is Profile {
+export function isValidProfile(data: unknown): data is Profile {
   return (
     typeof data === 'object' &&
     data !== null &&
