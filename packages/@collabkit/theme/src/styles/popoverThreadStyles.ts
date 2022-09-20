@@ -2,6 +2,7 @@ import { css } from '@stitches/react';
 import { threadStyles } from '../';
 
 export const root = css(threadStyles.content, {
+  boxSizing: 'border-box',
   backgroundColor: '$colors$popoverThreadBackgroundColor',
   display: 'flex',
   flexDirection: 'column',
