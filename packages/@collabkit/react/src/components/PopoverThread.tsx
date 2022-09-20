@@ -52,10 +52,9 @@ function formatTimestampExact(timestamp: number, currentTimestamp: number) {
   return format(timestamp, 'p MMM d, yyyy');
 }
 
-const Content = (props: React.ComponentProps<'div'>) => <div {...props} />;
+const Root = (props: React.ComponentProps<'div'>) => <div {...props} />;
 
-const StyledPopoverThreadRoot = styled(Base, popoverThreadStyles.root);
-const StyledThreadContent = styled(Content, threadStyles.content);
+const StyledThreadRoot = styled(Root, popoverThreadStyles.root);
 const StyledCommentList = styled(CommentList.Root, commentListStyles.list, {
   padding: 0,
 });
@@ -156,32 +155,30 @@ export const PreviewThread = forwardRef<Handle, PopoverThreadProps>(function Pop
 
   return (
     <ThreadContext.Provider value={context ?? { userId, threadId, workspaceId }}>
-      <StyledPopoverThreadRoot data-collabkit-internal="true" style={props.style} ref={ref}>
-        <StyledThreadContent>
-          <ScrollAreaRoot>
-            <ScrollAreaViewport style={{ maxHeight: props.maxAvailableSize?.height ?? 'unset' }}>
-              <StyledCommentList>
-                <StyledCommentRoot eventId={event.id} style={{ paddingTop: '16px' }}>
-                  <StyledCommentContent>
-                    <StyledCommentHeader>
-                      <Avatar profile={profile} />
-                      <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-                        <StyledCommentCreatorName />
-                        <StyledCommentTimestamp format={formatTimestampExact} />
-                      </div>
-                    </StyledCommentHeader>
-                    <StyledCommentBody />
-                  </StyledCommentContent>
-                </StyledCommentRoot>
-              </StyledCommentList>
-            </ScrollAreaViewport>
-            <ScrollAreaScrollbar orientation="vertical">
-              <ScrollAreaThumb />
-            </ScrollAreaScrollbar>
-            <ScrollAreaCorner />
-          </ScrollAreaRoot>
-        </StyledThreadContent>
-      </StyledPopoverThreadRoot>
+      <StyledThreadRoot data-collabkit-internal="true" style={props.style} ref={ref}>
+        <ScrollAreaRoot>
+          <ScrollAreaViewport style={{ maxHeight: props.maxAvailableSize?.height ?? 'unset' }}>
+            <StyledCommentList>
+              <StyledCommentRoot eventId={event.id} style={{ paddingTop: '16px' }}>
+                <StyledCommentContent>
+                  <StyledCommentHeader>
+                    <Avatar profile={profile} />
+                    <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+                      <StyledCommentCreatorName />
+                      <StyledCommentTimestamp format={formatTimestampExact} />
+                    </div>
+                  </StyledCommentHeader>
+                  <StyledCommentBody />
+                </StyledCommentContent>
+              </StyledCommentRoot>
+            </StyledCommentList>
+          </ScrollAreaViewport>
+          <ScrollAreaScrollbar orientation="vertical">
+            <ScrollAreaThumb />
+          </ScrollAreaScrollbar>
+          <ScrollAreaCorner />
+        </ScrollAreaRoot>
+      </StyledThreadRoot>
     </ThreadContext.Provider>
   );
 });
@@ -235,152 +232,148 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
 
   return (
     <ThreadContext.Provider value={context ?? { userId, threadId, workspaceId }}>
-      <StyledPopoverThreadRoot data-collabkit-internal="true" style={props.style} ref={ref}>
-        <StyledThreadContent>
-          <ScrollAreaRoot>
-            <ScrollAreaViewport style={{ maxHeight: props.maxAvailableSize?.height ?? 'unset' }}>
-              {isEmpty &&
-                (profile ? (
-                  <Profile.Provider profileId={userId}>
-                    <div
-                      style={{
-                        padding: '16px',
-                        display: 'flex',
-                        flexDirection: 'row',
-                        gap: '12px',
-                        alignItems: 'center',
-                      }}
-                    >
-                      <StyledProfileAvatar />
-                      <StyledProfileName />
-                    </div>
-                  </Profile.Provider>
-                ) : null)}
-              {!isEmpty ? (
-                <StyledCommentList>
-                  {list?.map((group, i) => {
-                    return group.map((event, index) => {
-                      const profile = profiles[event.createdById];
-                      // const type = getCommentType(group, index);
-                      const showProfile = true; // type === 'default' || type === 'inline-start';
-                      return profile ? (
-                        <div key={event.id}>
-                          <StyledCommentRoot
-                            eventId={event.id}
-                            key={`event-${event.id}`}
-                            style={{ paddingTop: showProfile ? '16px' : '0px' }}
-                          >
-                            <StyledCommentContent>
-                              {showProfile ? (
-                                <StyledCommentHeader>
-                                  <Avatar profile={profile} />
-                                  <div
-                                    style={{ flex: 1, display: 'flex', flexDirection: 'column' }}
-                                  >
-                                    <StyledCommentCreatorName />
-                                    <StyledCommentTimestamp format={formatTimestampExact} />
-                                  </div>
-                                  <div style={{ display: 'flex', gap: 0, flexDirection: 'row' }}>
-                                    {i === 0 && index === 0 ? (
-                                      <>
-                                        <IconButton
-                                          // TODO: tooltip hijacks focus when used within a modal popover
-                                          // tooltip={isResolved ? 'Re-open' : 'Mark as Resolved and Hide'}
-                                          onPointerDown={(e) =>
-                                            events.onPointerDown(e, {
-                                              target: isResolved
-                                                ? reopenThreadTarget
-                                                : resolveThreadTarget,
-                                            })
-                                          }
-                                        >
-                                          {!isResolved ? (
-                                            <Check
-                                              size={19}
-                                              weight={'regular'}
-                                              color={theme.colors.neutral12.toString()}
-                                            />
-                                          ) : (
-                                            <Check
-                                              size={18}
-                                              weight={'regular'}
-                                              color={theme.colors.neutral12.toString()}
-                                            />
-                                          )}
-                                        </IconButton>
-                                      </>
-                                    ) : null}
-                                    {event.createdById === userId && <CommentMenu />}
-                                  </div>
-                                </StyledCommentHeader>
-                              ) : null}
-                              <StyledCommentBody canClickLinks={canClickLinks} />
-                              <PopoverThreadCommentEditor />
-                            </StyledCommentContent>
-                          </StyledCommentRoot>
-                        </div>
-                      ) : null;
-                    });
-                  })}{' '}
-                </StyledCommentList>
-              ) : null}
-
-              <StyledComposerRoot>
-                {/* Some temporary styling for cashboard, we can abstract this out later */}
-                <div
-                  style={{
-                    padding: '0px 0 16px',
-                    flexDirection: 'column',
-                    display: 'flex',
-                    flex: 1,
-                    gap: '12px',
-                    alignItems: 'flex-end',
-                  }}
-                >
-                  <StyledComposerEditor
-                    contentEditable={(props: { autoFocus?: boolean }) => (
-                      <StyledComposerContent>
-                        <StyledComposerContentEditable {...props} />
-                      </StyledComposerContent>
-                    )}
-                    placeholder={
-                      <StyledComposerPlaceholder>
-                        {isEmpty ? 'Add a comment' : 'Reply to this comment'}
-                      </StyledComposerPlaceholder>
-                    }
-                    autoFocus={props.autoFocus}
-                  />
-                  <div style={{ display: 'flex', flexDirection: 'row', gap: '8px' }}>
-                    <Button
-                      type="secondary"
-                      text="Cancel"
-                      onPointerDown={(e) =>
-                        events.onPointerDown(e, {
-                          target: {
-                            threadId,
-                            type: 'closeThreadButton',
-                            workspaceId,
-                          },
-                        })
-                      }
-                    />
-                    <Button
-                      type="primary"
-                      disabled={disabled}
-                      onPointerDown={onPointerDown}
-                      text={'Comment'}
-                    />
+      <StyledThreadRoot data-collabkit-internal="true" style={props.style} ref={ref}>
+        <ScrollAreaRoot>
+          <ScrollAreaViewport style={{ maxHeight: props.maxAvailableSize?.height ?? 'unset' }}>
+            {isEmpty &&
+              (profile ? (
+                <Profile.Provider profileId={userId}>
+                  <div
+                    style={{
+                      padding: '16px',
+                      display: 'flex',
+                      flexDirection: 'row',
+                      gap: '12px',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <StyledProfileAvatar />
+                    <StyledProfileName />
                   </div>
+                </Profile.Provider>
+              ) : null)}
+            {!isEmpty ? (
+              <StyledCommentList>
+                {list?.map((group, i) => {
+                  return group.map((event, index) => {
+                    const profile = profiles[event.createdById];
+                    // const type = getCommentType(group, index);
+                    const showProfile = true; // type === 'default' || type === 'inline-start';
+                    return profile ? (
+                      <div key={event.id}>
+                        <StyledCommentRoot
+                          eventId={event.id}
+                          key={`event-${event.id}`}
+                          style={{ paddingTop: showProfile ? '16px' : '0px' }}
+                        >
+                          <StyledCommentContent>
+                            {showProfile ? (
+                              <StyledCommentHeader>
+                                <Avatar profile={profile} />
+                                <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+                                  <StyledCommentCreatorName />
+                                  <StyledCommentTimestamp format={formatTimestampExact} />
+                                </div>
+                                <div style={{ display: 'flex', gap: 0, flexDirection: 'row' }}>
+                                  {i === 0 && index === 0 ? (
+                                    <>
+                                      <IconButton
+                                        // TODO: tooltip hijacks focus when used within a modal popover
+                                        // tooltip={isResolved ? 'Re-open' : 'Mark as Resolved and Hide'}
+                                        onPointerDown={(e) =>
+                                          events.onPointerDown(e, {
+                                            target: isResolved
+                                              ? reopenThreadTarget
+                                              : resolveThreadTarget,
+                                          })
+                                        }
+                                      >
+                                        {!isResolved ? (
+                                          <Check
+                                            size={19}
+                                            weight={'regular'}
+                                            color={theme.colors.neutral12.toString()}
+                                          />
+                                        ) : (
+                                          <Check
+                                            size={18}
+                                            weight={'regular'}
+                                            color={theme.colors.neutral12.toString()}
+                                          />
+                                        )}
+                                      </IconButton>
+                                    </>
+                                  ) : null}
+                                  {event.createdById === userId && <CommentMenu />}
+                                </div>
+                              </StyledCommentHeader>
+                            ) : null}
+                            <StyledCommentBody canClickLinks={canClickLinks} />
+                            <PopoverThreadCommentEditor />
+                          </StyledCommentContent>
+                        </StyledCommentRoot>
+                      </div>
+                    ) : null;
+                  });
+                })}{' '}
+              </StyledCommentList>
+            ) : null}
+
+            <StyledComposerRoot>
+              {/* Some temporary styling for cashboard, we can abstract this out later */}
+              <div
+                style={{
+                  padding: '0px 0 16px',
+                  flexDirection: 'column',
+                  display: 'flex',
+                  flex: 1,
+                  gap: '12px',
+                  alignItems: 'flex-end',
+                }}
+              >
+                <StyledComposerEditor
+                  contentEditable={(props: { autoFocus?: boolean }) => (
+                    <StyledComposerContent>
+                      <StyledComposerContentEditable {...props} />
+                    </StyledComposerContent>
+                  )}
+                  placeholder={
+                    <StyledComposerPlaceholder>
+                      {isEmpty ? 'Add a comment' : 'Reply to this comment'}
+                    </StyledComposerPlaceholder>
+                  }
+                  autoFocus={props.autoFocus}
+                />
+                <div style={{ display: 'flex', flexDirection: 'row', gap: '8px' }}>
+                  <Button
+                    type="secondary"
+                    text="Cancel"
+                    onPointerDown={(e) =>
+                      events.onPointerDown(e, {
+                        target: {
+                          threadId,
+                          type: 'closeThreadButton',
+                          workspaceId,
+                        },
+                      })
+                    }
+                  />
+                  <Button
+                    type="primary"
+                    disabled={disabled}
+                    onPointerDown={onPointerDown}
+                    text={'Comment'}
+                  />
                 </div>
-              </StyledComposerRoot>
-            </ScrollAreaViewport>
-            <ScrollAreaScrollbar orientation="vertical">
-              <ScrollAreaThumb />
-            </ScrollAreaScrollbar>
-            <ScrollAreaCorner />
-          </ScrollAreaRoot>
-        </StyledThreadContent>
-      </StyledPopoverThreadRoot>
+              </div>
+            </StyledComposerRoot>
+          </ScrollAreaViewport>
+          <ScrollAreaScrollbar orientation="vertical">
+            <ScrollAreaThumb />
+          </ScrollAreaScrollbar>
+          <ScrollAreaCorner />
+        </ScrollAreaRoot>
+      </StyledThreadRoot>
     </ThreadContext.Provider>
   );
 });

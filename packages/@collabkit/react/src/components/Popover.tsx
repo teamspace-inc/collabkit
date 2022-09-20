@@ -234,7 +234,6 @@ export const PopoverTrigger = ({ children, context }: Props) => {
                 top: threadContext.y ?? 0,
                 left: threadContext.x ?? 0,
                 outline: 'none',
-                boxSizing: 'border-box',
               }}
               {...getThreadFloatingProps()}
             >
@@ -242,16 +241,6 @@ export const PopoverTrigger = ({ children, context }: Props) => {
                 maxAvailableSize={context.maxAvailableSize}
                 threadId={threadId ?? getNewThreadId()}
                 info={threadInfo}
-                style={{
-                  boxSizing: 'border-box',
-                  // custom styles for cashboard
-                  // todo: extract them
-                  boxShadow:
-                    '0px -12px 24px rgba(0, 0, 0, 0.02), 0px 12px 24px rgba(0, 0, 0, 0.06)',
-                  borderRadius: '12px',
-                  width: 264,
-                  border: '1px solid #E3E9ED',
-                }}
               />
             </div>
           </FloatingFocusManager>
@@ -272,20 +261,7 @@ export const PopoverTrigger = ({ children, context }: Props) => {
               }}
               {...getPreviewFloatingProps()}
             >
-              <PreviewThread
-                threadId={threadId}
-                info={threadInfo}
-                style={{
-                  boxSizing: 'border-box',
-                  // custom styles for cashboard
-                  // todo: extract them
-                  boxShadow:
-                    '0px -12px 24px rgba(0, 0, 0, 0.02), 0px 12px 24px rgba(0, 0, 0, 0.06)',
-                  borderRadius: '12px',
-                  width: 264,
-                  border: '1px solid #E3E9ED',
-                }}
-              />
+              <PreviewThread threadId={threadId} info={threadInfo} />
             </div>
           </FloatingFocusManager>
         )}

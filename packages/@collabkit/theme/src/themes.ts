@@ -80,6 +80,7 @@ export interface Theme {
     avatar: string;
     iconButton: string;
     composer: string;
+    popoverThread: string;
   };
   padding: {
     composer: string;
@@ -228,6 +229,7 @@ export function createThemes(customTheme?: CustomTheme) {
     mentionDropdownItemFontSize: '$fontSize$2',
     sendButtonFontSize: '$fontSize$2',
     indicatorText: '$fontSize$1',
+    button: '$fontSize$0',
 
     ['0']: '11px',
     ['1']: '12px',
@@ -265,6 +267,7 @@ export function createThemes(customTheme?: CustomTheme) {
     avatar: '24px',
     iconButton: '24px',
     composer: '4px',
+    popoverThread: '12px',
 
     ['0']: '4px',
     ['1']: '12px',

@@ -14,6 +14,6 @@ export const root = css(threadStyles.content, {
 
   border: '1px solid #E3E9ED',
   /* 📖 Elevation - Standard */
-  boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.05)',
-  borderRadius: 8,
+  boxShadow: '0px -12px 24px rgba(0, 0, 0, 0.02), 0px 12px 24px rgba(0, 0, 0, 0.06)',
+  borderRadius: '$radii$popoverThread',
 });
