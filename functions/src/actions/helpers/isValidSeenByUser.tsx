@@ -1,4 +1,5 @@
 import { SeenByUser } from '../../types';
+import has from 'has';
 
 export function isValidSeenByUser(data: any): data is SeenByUser | null {
   return typeof data === 'object' && data === null
