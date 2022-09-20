@@ -21,7 +21,7 @@ export const Provider: GlobalProvider = ({ children, globalState }) => {
         name: 'Alice',
         id: 'alice',
       }}
-      mentionableUsers={[]}
+      mentionableUsers="allWorkspace"
       colorScheme={globalState.theme}
     >
       {children}
