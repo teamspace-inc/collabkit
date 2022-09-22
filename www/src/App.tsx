@@ -1,10 +1,11 @@
 import { styled } from '@stitches/react';
 import { Route } from 'wouter';
-import { Home } from './home/Home';
 import { Devs } from './devs/Devs';
-import '@code-hike/mdx/dist/index.css';
 import { useEffect } from 'react';
-import { DataGridLandingPage } from './pages/DataGridLandingPage';
+
+import { DataGridPage } from './pages/DataGridPage';
+import { HomePage } from './pages/HomePage';
+import { Documentation } from './docs/Documentation';
 
 const Page = styled('div', {});
 
@@ -18,14 +19,15 @@ export default function App() {
 
     // @ts-expect-error
     window.Intercom('update');
-  });
+  }, []);
 
   return (
     <Page>
-      <Route path="/" component={Home} />
+      <Route path="/" component={HomePage} />
       <Route path="/devs" component={Devs} />
       <Route path="/signedIn" component={Devs} />
-      <Route path="/datagrid" component={DataGridLandingPage} />
+      <Route path="/datagrid" component={DataGridPage} />
+      <Documentation />
     </Page>
   );
 }

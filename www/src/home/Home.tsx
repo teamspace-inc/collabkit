@@ -57,20 +57,3 @@ export const DemoImageMobileFallback = styled('img', {
   width: '90vw',
   maxWidth: '90vw',
 });
-
-export function Home() {
-  const [invertFilter, setInvertFilter] = useState(0);
-
-  return (
-    <VStack style={{ alignItems: 'center' }}>
-      <Header invertFilter={invertFilter} />
-      <Hero />
-      <WorksWith />
-      <JustAFewLinesOfCode setInvertFilter={setInvertFilter} />
-      <HardWork />
-      <Customise />
-      <Plans />
-      <ContactUs />
-    </VStack>
-  );
-}

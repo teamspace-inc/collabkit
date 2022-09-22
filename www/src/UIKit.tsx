@@ -1,4 +1,6 @@
 import { createStitches, keyframes } from '@stitches/react';
+import * as ScrollArea from '@radix-ui/react-scroll-area';
+
 export const { styled, css, theme } = createStitches({
   theme: {
     colors: {},
@@ -8,6 +10,69 @@ export const { styled, css, theme } = createStitches({
     bp2: '(min-width: 720px)',
   },
 });
+
+const SCROLLBAR_SIZE = 6;
+
+const scrollAreaStyles = {
+  root: css({
+    width: '100%',
+    height: '100%',
+    // borderTopRightRadius: 6,
+    // borderTopLeftRadius: 6,
+    overflow: 'hidden',
+  }),
+
+  viewport: css({
+    width: '100%',
+    height: '100%',
+    borderRadius: 'inherit',
+  }),
+
+  scrollbar: css({
+    display: 'flex',
+    // ensures no selection
+    userSelect: 'none',
+    // disable browser handling of all panning and zooming gestures on touch devices
+    touchAction: 'none',
+    padding: 2,
+    transition: 'background 160ms ease-out',
+    '&:hover': { background: 'red' },
+    '&[data-orientation="vertical"]': { width: SCROLLBAR_SIZE },
+    '&[data-orientation="horizontal"]': {
+      flexDirection: 'column',
+      height: SCROLLBAR_SIZE,
+    },
+  }),
+
+  thumb: css({
+    flex: 1,
+    background: 'black',
+    borderRadius: SCROLLBAR_SIZE,
+    // increase target size for touch devices https://www.w3.org/WAI/WCAG21/Understanding/target-size.html
+    position: 'relative',
+    '&::before': {
+      content: '""',
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)',
+      width: '100%',
+      height: '100%',
+      minWidth: 44,
+      minHeight: 44,
+    },
+  }),
+
+  corner: css({
+    background: 'blue',
+  }),
+};
+
+export const ScrollAreaRoot = styled(ScrollArea.Root, scrollAreaStyles.root);
+export const ScrollAreaViewport = styled(ScrollArea.Viewport, scrollAreaStyles.viewport);
+export const ScrollAreaScrollbar = styled(ScrollArea.Scrollbar, scrollAreaStyles.scrollbar);
+export const ScrollAreaThumb = styled(ScrollArea.Thumb, scrollAreaStyles.thumb);
+export const ScrollAreaCorner = styled(ScrollArea.Corner, scrollAreaStyles.corner);
 
 export const Grid = styled('div', {
   display: 'grid',
