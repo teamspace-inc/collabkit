@@ -64,7 +64,7 @@ export function CodeEditor(props: {
   const [preview, setPreview] = useState(null);
   const [focused, setFocused] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const [height, setHeight] = useState(24 * 10);
+  const [height, setHeight] = useState(24 * 24);
   const id = useRef(nanoid());
 
   const size = useWindowSize();

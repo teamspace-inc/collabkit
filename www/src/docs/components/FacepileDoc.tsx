@@ -1,9 +1,8 @@
-import { Doc } from '../Doc';
 import { Markdown } from '../Markdown';
 
 export function FacepileDoc() {
   return (
-    <Doc title="Facepile">
+    <div>
       <p style={{ fontSize: 20, lineHeight: '28px' }}>Displays a facepile of user avatars.</p>
       <Markdown
         body={`### Demo
@@ -20,6 +19,6 @@ export function FacepileDoc() {
 
 Adjusts the size of the avatar`}
       />
-    </Doc>
+    </div>
   );
 }
