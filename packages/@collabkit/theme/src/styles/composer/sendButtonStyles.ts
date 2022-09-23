@@ -57,4 +57,5 @@ export const button = css({
 
 export const icon = css({
   cursor: 'pointer',
+  color: '$colors$composerButtonIconColor',
 });

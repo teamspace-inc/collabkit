@@ -1,24 +1,19 @@
 import React from 'react';
 import { useSnapshot } from 'valtio';
 import { differenceInHours, format, formatDistanceStrict, isSameDay, isSameMonth } from 'date-fns';
-import { StyledInboxThreadRoot, StyledInboxThreadContent } from './Inbox';
 import { ThreadContext, useThreadContext } from '../hooks/useThreadContext';
 import { ResolveThreadButton } from './ResolveThreadButton';
 import { ThreadCommentersFacepile } from './ThreadCommentersFacepile';
 import { useInboxStore } from '../hooks/useInboxStore';
 import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
 import { useReplyCount } from '../hooks/useReplyCount';
-
 import { useApp } from '../hooks/useApp';
-
 import * as Comment from './Comment';
-import { styled } from '@stitches/react';
 import { ReplyCount } from './ReplyCount';
 import { UnreadDot } from './UnreadDot';
-
-import { commentStyles } from '@collabkit/theme';
 import { actions } from '../../../client/src/actions';
 import { ThreadTarget } from '@collabkit/core';
+import * as styles from '../styles/InboxItem.css';
 
 // Cashboard relative timestamp
 //
@@ -40,48 +35,9 @@ function formatTimestampRelative(timestamp: number, now: number) {
   return formatDistanceStrict(timestamp, now, { unit: 'month', addSuffix: true });
 }
 
-export const StyledReplyCount = styled(ReplyCount, {
-  fontStyle: 'normal',
-  fontWeight: 600,
-  fontSize: 14,
-  lineHeight: '160%',
-  letterSpacing: -0.1,
-  color: '#2C915E',
-});
-
-export const StyledCommentCreatorName = styled(Comment.CreatorName, {
-  fontStyle: 'normal',
-  fontWeight: 600,
-  fontSize: 14,
-  lineHeight: '160%',
-  letterSpacing: -0.1,
-  color: '#000000',
-});
-
-export const StyledUnreadDot = styled(UnreadDot, {
-  width: 8,
-  height: 8,
-  borderRadius: 8,
-  background: '#007FF5',
-  position: 'absolute',
-  left: -16,
-});
-
-export const StyledCommentTimestamp = styled(Comment.Timestamp, {
-  fontStyle: 'normal',
-  fontWeight: 400,
-  fontSize: 14,
-  lineHeight: '160%',
-  letterSpacing: -0.1,
-  color: '#6A7278',
-});
-
-export const StyledCommentBody = styled(Comment.Body, commentStyles.markdown);
-
 export function InboxItem() {
   const { threadId, workspaceId, userId } = useThreadContext();
   const { store, renderThreadContextPreview } = useApp();
-  const { callbacks } = useSnapshot(store);
   const workspace = useSnapshot(useWorkspaceStore());
   const inbox = useSnapshot(useInboxStore());
   const timeline = workspace.timeline[threadId];
@@ -114,7 +70,8 @@ export function InboxItem() {
       value={{ threadId, workspaceId, userId }}
       key={`inboxThread-${threadId}`}
     >
-      <StyledInboxThreadRoot
+      <div
+        className={styles.thread.root}
         onClick={() => {
           const onInboxThreadClick = store.callbacks?.onInboxThreadClick;
           if (onInboxThreadClick) {
@@ -130,9 +87,9 @@ export function InboxItem() {
           }
         }}
       >
-        <StyledInboxThreadContent>
+        <div className={styles.thread.content}>
           <div style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
-            <StyledUnreadDot />
+            <UnreadDot className={styles.unreadDot} />
             <ThreadCommentersFacepile />
             <div style={{ flex: 1 }}></div>
             <ResolveThreadButton />
@@ -141,10 +98,13 @@ export function InboxItem() {
           <Comment.Root eventId={firstCommentId}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
               <div style={{ display: 'flex', flexDirection: 'row', gap: '8px' }}>
-                <StyledCommentCreatorName />
-                <StyledCommentTimestamp format={formatTimestampRelative} />
+                <Comment.CreatorName className={styles.commentCreatorName} />
+                <Comment.Timestamp
+                  className={styles.commentTimestamp}
+                  format={formatTimestampRelative}
+                />
               </div>
-              <StyledCommentBody canClickLinks={!!callbacks?.onMentionClick} />
+              <Comment.Body />
             </div>
           </Comment.Root>
           <Comment.Root eventId={lastComment.id}>
@@ -152,15 +112,18 @@ export function InboxItem() {
               {replyCount > 0 ? (
                 <>
                   <div style={{ display: 'flex', gap: '8px' }}>
-                    <StyledReplyCount />
-                    <StyledCommentTimestamp format={formatTimestampRelative} />
+                    <ReplyCount className={styles.replyCount} />
+                    <Comment.Timestamp
+                      className={styles.commentTimestamp}
+                      format={formatTimestampRelative}
+                    />
                   </div>
                 </>
               ) : null}
             </div>
           </Comment.Root>
-        </StyledInboxThreadContent>
-      </StyledInboxThreadRoot>
+        </div>
+      </div>
     </ThreadContext.Provider>
   );
 }

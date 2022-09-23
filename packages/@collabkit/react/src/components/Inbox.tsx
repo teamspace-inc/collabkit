@@ -1,12 +1,9 @@
 import React, { useEffect } from 'react';
-
 import { actions } from '@collabkit/client';
-import { styled } from '@stitches/react';
 import { useSnapshot } from 'valtio';
 import { useApp } from '../hooks/useApp';
 import { ThreadContext } from '../hooks/useThreadContext';
-import { Base } from './Base';
-
+import * as styles from '../styles/Inbox.css';
 import {
   ScrollAreaCorner,
   ScrollAreaRoot,
@@ -14,95 +11,20 @@ import {
   ScrollAreaThumb,
   ScrollAreaViewport,
 } from './ScrollArea';
-
 import { InboxItem } from './InboxItem';
 import { timelineUtils } from '@collabkit/core';
+import { ThemeWrapper } from './ThemeWrapper';
 
 export function unique<T>(value: T, index: number, self: T[]) {
   return self.indexOf(value) === index;
 }
 
-const InboxThread = {
-  Root: Base,
-  Content: Base,
-  Facepile: Base,
-  UnreadIndicator: Base,
-  CommentBody: Base,
-  CommentProfile: Base,
-};
-
-export const StyledInboxThreadRoot = styled(InboxThread.Root, {
-  display: 'flex',
-  borderBottom: '1px solid #E3E9ED',
-  flexDirection: 'column',
-  flex: 1,
-});
-
-export const StyledInboxThreadContent = styled(InboxThread.Content, {
-  background: 'white',
-  padding: '32px 24px',
-  display: 'flex',
-  gap: '16px',
-  flexDirection: 'column',
-  '&:hover': {
-    background: '#E3E9ED',
-  },
-});
-
-const Root = (props: React.ComponentProps<'div'>) => <div {...props} />;
-
-const StyledRoot = styled(Root, {
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '16px',
-  boxSizing: 'border-box',
-  height: '100%',
-  borderRadius: 0,
-});
-
 export interface ButtonProps extends React.ComponentPropsWithoutRef<'button'> {
   specialProp?: string;
 }
 
-const EmptyState = {
-  Root: Base,
-  Title: Base,
-  Body: Base,
-};
-
-const StyledEmptyStateRoot = styled(EmptyState.Root, {
-  display: 'flex',
-  flex: '1',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
-  width: '100%',
-  height: '100%',
-  gap: '11px',
-});
-
-const StyledEmptyStateTitle = styled(EmptyState.Title, {
-  fontStyle: 'normal',
-  fontWeight: 400,
-  fontSize: 24,
-  lineHeight: '135%',
-  textAlign: 'center',
-  letterSpacing: -0.1,
-  color: '#6A7278',
-});
-
-const StyledEmptyStateBody = styled(EmptyState.Body, {
-  fontStyle: 'normal',
-  fontWeight: 400,
-  fontSize: 14,
-  lineHeight: '160%',
-  textAlign: 'center',
-  letterSpacing: -0.1,
-  color: '#6A7278',
-});
-
 export function Inbox() {
-  const { store, theme } = useApp();
+  const { store } = useApp();
   const { workspaceId, workspaces, userId } = useSnapshot(store);
 
   const workspace = workspaceId ? workspaces[workspaceId] : null;
@@ -158,26 +80,28 @@ export function Inbox() {
   const isEmpty = inboxItems?.filter((item) => item !== null).length === 0;
 
   return (
-    <StyledRoot className={theme.className}>
-      {isEmpty ? (
-        <StyledEmptyStateRoot>
-          <StyledEmptyStateTitle>No comments</StyledEmptyStateTitle>
-          <StyledEmptyStateBody>Comments on this view will appear here.</StyledEmptyStateBody>
-        </StyledEmptyStateRoot>
-      ) : (
-        <ScrollAreaRoot>
-          <ScrollAreaViewport>
-            {inboxItems}
-            {/* <div style={{ padding: '40px 20px', textAlign: 'center', color: '#6A7278' }}>
+    <ThemeWrapper>
+      <div className={styles.root}>
+        {isEmpty ? (
+          <div className={styles.emptyState.root}>
+            <div className={styles.emptyState.title}>No comments</div>
+            <div className={styles.emptyState.body}>Comments on this view will appear here.</div>
+          </div>
+        ) : (
+          <ScrollAreaRoot>
+            <ScrollAreaViewport>
+              {inboxItems}
+              {/* <div style={{ padding: '40px 20px', textAlign: 'center', color: '#6A7278' }}>
               No more comments
             </div> */}
-          </ScrollAreaViewport>
-          <ScrollAreaScrollbar orientation="vertical">
-            <ScrollAreaThumb />
-          </ScrollAreaScrollbar>
-          <ScrollAreaCorner />
-        </ScrollAreaRoot>
-      )}
-    </StyledRoot>
+            </ScrollAreaViewport>
+            <ScrollAreaScrollbar orientation="vertical">
+              <ScrollAreaThumb />
+            </ScrollAreaScrollbar>
+            <ScrollAreaCorner />
+          </ScrollAreaRoot>
+        )}
+      </div>
+    </ThemeWrapper>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { ComponentProps, useContext } from 'react';
 
 import { ComposerTarget } from '../../constants';
 import { ContentEditable as LexicalContentEditable } from '@lexical/react/LexicalContentEditable';
@@ -18,6 +18,7 @@ import { composerStyles } from '@collabkit/theme';
 import { useThreadContext } from '../../hooks/useThreadContext';
 import { TargetContext } from '../Target';
 import { useTarget } from '../../hooks/useTarget';
+import * as styles from '../../styles/Composer.css';
 
 // Catch any errors that occur during Lexical updates and log them
 // or throw them as needed. If you don't throw them, Lexical will
@@ -35,7 +36,10 @@ const initialConfigDefaults = {
 
 export const ComposerContext = React.createContext<{ body: string }>({ body: '' });
 
-export function Root(props: { className?: string; children: React.ReactNode }) {
+export const Root = function ComposerRoot(props: {
+  className?: string;
+  children: React.ReactNode;
+}) {
   const { threadId, workspaceId, userId } = useThreadContext();
   const { onClick } = useOnMarkdownLinkClick({ threadId, workspaceId, userId, eventId: null });
 
@@ -46,35 +50,31 @@ export function Root(props: { className?: string; children: React.ReactNode }) {
   };
 
   return (
-    <div className={props.className} onClick={onClick}>
+    <div className={props.className ?? styles.root} onClick={onClick}>
       <TargetContext.Provider value={target}>{props.children}</TargetContext.Provider>
     </div>
   );
-}
+};
 
-export function Content(props: {
+export const ContentEditable = function ComposerContentEditable(props: {
   className?: string;
-  children: React.ReactNode;
-  style?: React.CSSProperties;
+  autoFocus?: boolean;
 }) {
   const { events } = useApp();
   const target = useTarget();
-
   return (
     <div
-      className={props.className}
-      style={props.style}
+      style={{ display: 'contents' }}
       onFocus={(e) => events.onFocus(e, { target })}
       onBlur={(e) => events.onBlur(e, { target })}
     >
-      {props.children}
+      <LexicalContentEditable
+        className={props.className ?? styles.contentEditable}
+        tabIndex={props.autoFocus ? 1 : 0}
+      />
     </div>
   );
-}
-
-export function ContentEditable(props: { className?: string; autoFocus?: boolean }) {
-  return <LexicalContentEditable className={props.className} tabIndex={props.autoFocus ? 1 : 0} />;
-}
+};
 
 export const Editor = function ComposerEditor(props: {
   autoFocus?: boolean;
@@ -92,9 +92,8 @@ export const Editor = function ComposerEditor(props: {
   };
 
   return (
-    <div className={props.className}>
+    <div className={props.className ?? styles.editor}>
       <LexicalComposer initialConfig={initialConfig}>
-        <div id="mentions" style={{ position: 'absolute', left: 0, right: 0 }} />
         <PasteTextPlugin />
         <PlainTextPlugin
           contentEditable={props.contentEditable({ autoFocus: props.autoFocus })}
@@ -112,4 +111,8 @@ export const Editor = function ComposerEditor(props: {
       </LexicalComposer>
     </div>
   );
+};
+
+export const Placeholder = function ComposerPlaceholder(props: ComponentProps<'span'>) {
+  return <span {...props} className={props.className ?? styles.placeholder} />;
 };

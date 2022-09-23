@@ -21,6 +21,7 @@ import { nanoid } from 'nanoid';
 import { useSnapshot } from 'valtio';
 import { ThreadInfo, ThreadTarget } from '@collabkit/core';
 import { actions } from '@collabkit/client';
+import { ThemeWrapper } from './ThemeWrapper';
 
 function useStableId(): [string, () => void] {
   const [id, setId] = useState<string>(() => nanoid());
@@ -226,7 +227,6 @@ export const PopoverTrigger = ({ children, context }: Props) => {
     getNewThreadId,
     nodeId,
   } = context;
-  const { theme } = useApp();
   return (
     <FloatingNode id={nodeId}>
       {cloneElement(children, getProps(children.props))}
@@ -235,7 +235,6 @@ export const PopoverTrigger = ({ children, context }: Props) => {
           <FloatingFocusManager context={threadContext}>
             <div
               ref={threadContext.floating}
-              className={theme.className}
               style={{
                 position: threadContext.strategy,
                 top: threadContext.y ?? 0,
@@ -256,8 +255,8 @@ export const PopoverTrigger = ({ children, context }: Props) => {
           <FloatingFocusManager context={previewContext}>
             <div
               ref={previewContext.floating}
-              className={theme.className}
               style={{
+                display: 'block',
                 position: previewContext.strategy,
                 top: previewContext.y ?? 0,
                 left: previewContext.x ?? 0,

@@ -1,30 +1,18 @@
 import React from 'react';
 import type { GlobalProvider } from '@ladle/react';
 import { CollabKitProvider } from '../src';
+import { config } from '../src/components/__stories__/constants';
+import { ProviderPropsContext } from '../src/components/__stories__/context';
 
 import '../src/index.css';
 
-const apiKey = import.meta.env.VITE_COLLABKIT_API_KEY;
-const appId = import.meta.env.VITE_COLLABKIT_APP_ID;
-const workspace = {
-  id: import.meta.env.VITE_COLLABKIT_WORKSPACE_ID,
-  name: import.meta.env.VITE_COLLABKIT_WORKSPACE_NAME,
-};
-
 export const Provider: GlobalProvider = ({ children, globalState }) => {
+  const theme: 'dark' | 'light' = globalState.theme === 'auto' ? 'light' : globalState.theme;
   return (
-    <CollabKitProvider
-      apiKey={apiKey}
-      appId={appId}
-      workspace={workspace}
-      user={{
-        name: 'Alice',
-        id: 'alice',
-      }}
-      mentionableUsers="allWorkspace"
-      colorScheme={globalState.theme}
-    >
-      {children}
+    <CollabKitProvider {...config} theme={theme}>
+      <ProviderPropsContext.Provider value={{ ...config, theme }}>
+        {children}
+      </ProviderPropsContext.Provider>
     </CollabKitProvider>
   );
 };

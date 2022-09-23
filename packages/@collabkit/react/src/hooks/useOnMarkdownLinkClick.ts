@@ -81,9 +81,10 @@ export function useOnMarkdownLinkClick(props: {
             if (!userId) {
               return;
             }
-            // this will need reworking for cross workspace communication
-            if (store.profiles[userId]) {
-              triggerMentionClick({ ...store.profiles[userId], workspaceId });
+            const profile = store.profiles[userId];
+            if (profile) {
+              // this will need reworking for cross workspace communication
+              triggerMentionClick({ ...profile, workspaceId });
             }
           }
         }

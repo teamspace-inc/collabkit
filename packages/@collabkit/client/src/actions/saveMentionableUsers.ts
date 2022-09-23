@@ -11,9 +11,10 @@ export async function saveMentionableUsers(store: Store, mentionableUsers: Menti
 
   if (typeof mentionableUsers === 'object') {
     mentionableUsers.forEach((mentionableUser) => {
-      if (store.profiles[mentionableUser.id]) {
+      const existingProfile = store.profiles[mentionableUser.id];
+      if (existingProfile) {
         store.mentionableUsers[mentionableUser.id] = {
-          ...store.profiles[mentionableUser.id],
+          ...existingProfile,
           workspaceId,
         };
 

@@ -1,9 +1,8 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useCallback } from 'react';
+import { css } from '@stitches/react';
 import { useMarkAsSeen } from '../hooks/useMarkAsSeen';
 import { useOnMarkdownLinkClick } from '../hooks/useOnMarkdownLinkClick';
 import { useThreadContext } from '../hooks/useThreadContext';
-import { styled } from '@stitches/react';
-import { avatarStyles, commentStyles, messageHeaderStyles } from '@collabkit/theme';
 import { Markdown } from './Markdown';
 import { useSnapshot } from 'valtio';
 import { useCommentStore } from '../hooks/useCommentStore';
@@ -14,12 +13,53 @@ import * as Profile from './Profile';
 import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
 import { useApp } from '../hooks/useApp';
 import { ComposerContext } from './composer/Composer';
-import { CommentTarget } from '@collabkit/core';
+import { CommentTarget, CommentType, timelineUtils } from '@collabkit/core';
+import * as styles from '../styles/Comment.css';
+import { Check, DotsThree } from './icons';
+import { Menu, MenuItem } from './Menu';
+import { IconButton } from './IconButton';
+
+const markdownStyle = css({
+  p: {
+    margin: 0,
+  },
+
+  a: {
+    textDecoration: 'none',
+    fontWeight: '$fontWeights$mention',
+    color: '$colors$mentionText',
+    background: '$colors$mentionTextBackground',
+
+    // hack for cashboard, the variant doesn't work for
+    // nested selectors
+    cursor: 'default !important',
+  },
+
+  variants: {
+    canClickLinks: {
+      true: {
+        a: {
+          '&:hover': {
+            cursor: 'pointer',
+          },
+        },
+        false: {
+          a: {
+            '&:hover': {
+              cursor: 'default',
+            },
+          },
+        },
+      },
+    },
+  },
+});
 
 export function Root(props: {
   children: React.ReactNode;
   className?: string;
   eventId: string;
+  type?: CommentType;
   style?: React.CSSProperties;
 }) {
   const { threadId, workspaceId, userId } = useThreadContext();
@@ -55,7 +95,12 @@ export function Root(props: {
   return (
     <CommentContext.Provider value={target}>
       <Profile.Provider profileId={createdById}>
-        <div className={props.className} onClick={onClick} ref={ref} style={props.style}>
+        <div
+          className={props.className ?? styles.root({ type: props.type })}
+          onClick={onClick}
+          ref={ref}
+          style={props.style}
+        >
           {props.children}
         </div>
       </Profile.Provider>
@@ -67,16 +112,19 @@ export function Body({ ...props }: React.ComponentPropsWithoutRef<'div'>) {
   const { body } = useSnapshot(useCommentStore());
   const { store } = useApp();
 
-  const { editingId } = useSnapshot(store);
+  const { callbacks, editingId } = useSnapshot(store);
   const { eventId, treeId } = useCommentContext();
   const isEditing = editingId?.eventId === eventId && editingId.treeId == treeId;
+
+  const canClickLinks = !!callbacks?.onMentionClick || !!callbacks?.onTimestampClick;
+
   if (isEditing) {
     return null;
   }
 
   return (
-    <div {...props}>
-      <Markdown body={body} />
+    <div {...props} className={props.className ?? styles.body}>
+      <Markdown className={markdownStyle({ canClickLinks })} body={body} />
     </div>
   );
 }
@@ -93,32 +141,87 @@ export const Editor = (props: React.ComponentProps<'div'>) => {
   }
   return (
     <ComposerContext.Provider value={comment}>
-      <div
-        {...props}
-        style={{ display: 'flex', flexDirection: 'column', gap: '12px', margin: '0px -16px' }}
-      />
+      <div {...props} className={props.className ?? styles.editor} />
     </ComposerContext.Provider>
   );
 };
 
-export function Timestamp(props: React.ComponentPropsWithoutRef<'span'>) {
+export function Timestamp(
+  props: React.ComponentProps<'time'> & { format?: (timestamp: number, now: number) => string }
+) {
   const { createdAt } = useSnapshot(useCommentStore());
-  return <RawTimestamp timestamp={+createdAt} {...props} />;
+  return (
+    <RawTimestamp
+      {...props}
+      className={props.className ?? styles.timestamp}
+      timestamp={+createdAt}
+    />
+  );
 }
 
 export const CreatorName = Profile.Name;
-export const Header = (props: React.ComponentProps<'div'>) => <div {...props} />;
-export const Content = (props: React.ComponentProps<'div'>) => <div {...props} />;
+export const Header = (props: React.ComponentProps<'div'>) => (
+  <div {...props} className={props.className ?? styles.header} />
+);
+export const Content = (props: { profileIndent?: boolean } & React.ComponentProps<'div'>) => {
+  const { profileIndent, ...forwardProps } = props;
+  return <div {...forwardProps} className={props.className ?? styles.content({ profileIndent })} />;
+};
+
+type CommentMenuItemType = 'commentEditButton' | 'commentDeleteButton';
+
+const CommentMenu = (props: { className?: string }) => {
+  const { events, store } = useApp();
+  const comment = useCommentContext();
+  const { createdById } = useCommentStore();
+  const { threadId, workspaceId, userId } = useThreadContext();
+
+  const { workspaces } = useSnapshot(store);
+  const workspace = workspaces[workspaceId];
+  const timeline = workspace.timeline[threadId];
+  const isResolved = timelineUtils.computeIsResolved(timeline);
+
+  const onItemClick = useCallback(
+    (e: React.MouseEvent, type: CommentMenuItemType) => {
+      events.onClick(e, { target: { type, comment } });
+    },
+    [comment]
+  );
+
+  return (
+    <div style={{ display: 'flex', gap: 0, flexDirection: 'row' }}>
+      <IconButton
+        // TODO: tooltip hijacks focus when used within a modal popover
+        // tooltip={isResolved ? 'Re-open' : 'Mark as Resolved and Hide'}
+        onPointerDown={(e) =>
+          events.onPointerDown(e, {
+            target: {
+              threadId,
+              workspaceId,
+              type: 'reopenThreadButton',
+            },
+          })
+        }
+      >
+        {!isResolved && <Check size={18} weight={'regular'} />}
+      </IconButton>
+      {createdById === userId && (
+        <Menu<CommentMenuItemType>
+          className={props.className ?? styles.menu}
+          icon={<DotsThree size={18} />}
+          onItemClick={onItemClick}
+        >
+          <MenuItem className={styles.menuItem} label="Edit" targetType="commentEditButton" />
+          <MenuItem className={styles.menuItem} label="Delete" targetType="commentDeleteButton" />
+        </Menu>
+      )}
+    </div>
+  );
+};
+
+export { CommentMenu as Menu };
 
 // Anatomy
-
-const StyledCommentHeader = styled(Header, messageHeaderStyles.root);
-const StyledCommentCreatorName = styled(CreatorName, messageHeaderStyles.name);
-const StyledCommentTimestamp = styled(Timestamp, messageHeaderStyles.timestamp);
-const StyledCommentRoot = styled(Root, commentStyles.root);
-const StyledCommentContent = styled(Content, commentStyles.message);
-const StyledCommentBody = styled(Body, commentStyles.body);
-const StyledCommentCreatorAvatar = styled(Profile.Avatar, avatarStyles.avatar);
 
 // No customisation = Dom's design. You just import Thread and Inbox, and it looks like what we provide (oh and yes you can set dark/light mode);
 
@@ -128,17 +231,16 @@ const StyledCommentCreatorAvatar = styled(Profile.Avatar, avatarStyles.avatar);
 
 // Use the headless JS API and write whatever, use Angular or Ember or Backbone? You can do that too.
 
-export default function Comment(props: { eventId: string }) {
-  return (
-    <StyledCommentRoot eventId={props.eventId}>
-      <StyledCommentContent>
-        <StyledCommentHeader>
-          <StyledCommentCreatorAvatar />
-          <StyledCommentCreatorName />
-          <StyledCommentTimestamp />
-        </StyledCommentHeader>
-        <StyledCommentBody />
-      </StyledCommentContent>
-    </StyledCommentRoot>
-  );
-}
+// export default function ExampleComment(props: { eventId: string }) {
+//   return (
+//     <Comment.Root eventId={props.eventId}>
+//       <Comment.Content>
+//         <Comment.Header>
+//           <Profile.Avatar />
+//           <Comment.Timestamp />
+//         </Comment.Header>
+//         <Comment.Body />
+//       </Comment.Content>
+//     </Comment.Root>
+//   );
+// }
