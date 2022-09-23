@@ -1,7 +1,6 @@
 import React from 'react';
 import { styled } from '@stitches/react';
 import { useApp } from '../hooks/useApp';
-import { tomato } from '@radix-ui/colors';
 
 const Heading = styled('h2', {
   color: '$colors$neutral12',
@@ -14,11 +13,11 @@ const Palette = styled('div', {
   flexWrap: 'wrap',
 });
 
-const Color = styled('div', {
-  width: 50,
-  height: 50,
-  borderRadius: '50%',
-});
+// const Color = styled('div', {
+//   width: 50,
+//   height: 50,
+//   borderRadius: '50%',
+// });
 
 export const Sheet = () => {
   const { theme } = useApp();
@@ -26,7 +25,7 @@ export const Sheet = () => {
     <div className={theme.className}>
       <Heading>Colors</Heading>
       <Palette>
-        <Color css={{ background: '$colors$neutral1' }} />
+        {/* <Color css={{ background: '$colors$neutral1' }} />
         <Color css={{ background: '$colors$neutral2' }} />
         <Color css={{ background: '$colors$neutral3' }} />
         <Color css={{ background: '$colors$neutral4' }} />
@@ -37,7 +36,7 @@ export const Sheet = () => {
         <Color css={{ background: '$colors$neutral9' }} />
         <Color css={{ background: '$colors$neutral10' }} />
         <Color css={{ background: '$colors$neutral11' }} />
-        <Color css={{ background: '$colors$neutral12' }} />
+        <Color css={{ background: '$colors$neutral12' }} /> */}
       </Palette>
     </div>
   );
