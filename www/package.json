@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@code-hike/mdx": "^0.7.3",
-    "@collabkit/react": "^0.4.1",
+    "@collabkit/react": "^0.4.2",
     "@mdx-js/rollup": "^2.1.2",
     "@radix-ui/react-switch": "^1.0.0",
     "@stitches/react": "^1.2.8",
