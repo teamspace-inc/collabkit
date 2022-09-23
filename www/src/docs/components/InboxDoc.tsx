@@ -9,19 +9,6 @@ export function InboxDoc() {
         are shown by default.
       </p>
 
-      <div
-        style={{
-          background: 'cyan',
-          height: '500px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        Live demo here
-        {/* <Thread threadId="1234"></Thread> */}
-      </div>
-
       <h3>Usage</h3>
       {renderCodeSnippet(`import { Inbox } from '@collabkit/react';
 

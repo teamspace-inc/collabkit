@@ -22,6 +22,10 @@ import { AdvancedCustomisationDoc } from './AdvancedCustomisationDoc';
 import has from 'has';
 import { Route } from 'wouter';
 import { CodeEditor } from './CodeEditor';
+import { Doc } from './Doc';
+import { Nav } from './Nav';
+import { PopoverThreadDemo } from './components/PopoverThreadDemo';
+import { CollabKitProvider } from '@collabkit/react';
 
 export function getDocHref(path: string[], key: string) {
   return `/${path.concat([key]).join('/').replace(' ', '').toLowerCase()}`;
@@ -33,11 +37,12 @@ function generateDocRoutes(docs: DocNode, path: string[] = ['docs']): React.Reac
   for (const key in docs) {
     if (has(docs, key)) {
       const value = docs[key];
-      console.log({ key, value });
       const pathString = getDocHref(path, key);
       routes.push(
         <Route key={pathString} path={pathString}>
-          {value.component}
+          <Doc title={key} demo={value.demo?.({})}>
+            {value.component({})}
+          </Doc>
         </Route>
       );
       if (value.children) {
@@ -47,6 +52,16 @@ function generateDocRoutes(docs: DocNode, path: string[] = ['docs']): React.Reac
   }
   return routes;
 }
+
+import { nanoid } from 'nanoid';
+import { ThreadDemo } from './components/ThreadDemo';
+
+const apiKey = import.meta.env.VITE_COLLABKIT_API_KEY;
+const appId = import.meta.env.VITE_COLLABKIT_APP_ID;
+const workspace = {
+  id: import.meta.env.VITE_COLLABKIT_WORKSPACE_ID,
+  name: import.meta.env.VITE_COLLABKIT_WORKSPACE_NAME,
+};
 
 const DocsProvider = createContext<DocNode | null>(null);
 
@@ -59,10 +74,50 @@ export function useDocs() {
 }
 
 export type DocNode = {
-  [key: string]: { component: React.FunctionComponent; children?: DocNode };
+  [key: string]: {
+    demo?: React.FunctionComponent;
+    component: React.FunctionComponent;
+    children?: DocNode;
+  };
 };
 
-export function Documentation() {
+// function getRelatedNodes(outline: OutlineNode, path: string[] | readonly string[]) {
+//   let node = outline;
+//   let keys = Object.keys(node);
+//   let next = null;
+//   let prev = null;
+
+//   for (const key of path) {
+//     const index = keys.indexOf(key);
+//     next = keys[index + 1] ?? next;
+//     prev = keys[index - 1] ?? prev;
+//     if (has(node, key)) {
+//       if (typeof node[key] === 'function') {
+//         // couldn't figure out cast here
+//         let component = node[key];
+//         return { next, prev, component };
+//       }
+//       node = node[key];
+//       keys = Object.keys(node);
+//     }
+//   }
+
+//   return { next, prev };
+// }
+
+// function Next() {
+//   const { path } = useSnapshot(store);
+//   const { next } = getRelatedNodes(getOutline(), path);
+//   return <div>Next {next}</div>;
+// }
+
+// function Prev() {
+//   const { path } = useSnapshot(store);
+//   const { prev } = getRelatedNodes(getOutline(), path);
+//   return <div>Previous {prev}</div>;
+// }
+
+export function Docs() {
   const docs = {
     Introduction: { component: IntroductionDoc },
     Patterns: {
@@ -79,8 +134,8 @@ export function Documentation() {
       component: ComponentsDoc,
       children: {
         Provider: { component: ProviderDoc },
-        Thread: { component: ThreadDoc },
-        PopoverThread: { component: PopoverThreadDoc },
+        Thread: { component: ThreadDoc, demo: ThreadDemo },
+        PopoverThread: { component: PopoverThreadDoc, demo: PopoverThreadDemo },
         Inbox: { component: InboxDoc },
         Avatar: { component: AvatarDoc },
         Facepile: { component: FacepileDoc },
@@ -100,8 +155,25 @@ export function Documentation() {
 
   return (
     <DocsProvider.Provider value={docs}>
-      {generateDocRoutes(docs)}
-      <Route path="/codeEditor" component={CodeEditor} />
+      <CollabKitProvider
+        apiKey={apiKey}
+        appId={appId}
+        workspace={workspace}
+        user={{ id: nanoid(), name: 'John Doe' }}
+        mentionableUsers={[]}
+      >
+        <Route path="/docs">
+          <Nav />
+        </Route>
+        <Route path="/docs/:name">
+          <Nav />
+        </Route>
+        <Route path="/docs/:name/:sub">
+          <Nav />
+        </Route>
+        {generateDocRoutes(docs)}
+        <Route path="/codeEditor" component={CodeEditor} />
+      </CollabKitProvider>
     </DocsProvider.Provider>
   );
 }

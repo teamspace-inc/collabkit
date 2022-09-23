@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 
 import { DataGridPage } from './pages/DataGridPage';
 import { HomePage } from './pages/HomePage';
-import { Documentation } from './docs/Documentation';
+import { Docs } from './docs/Docs';
 
 const Page = styled('div', {});
 
@@ -27,7 +27,7 @@ export default function App() {
       <Route path="/devs" component={Devs} />
       <Route path="/signedIn" component={Devs} />
       <Route path="/datagrid" component={DataGridPage} />
-      <Documentation />
+      <Docs />
     </Page>
   );
 }

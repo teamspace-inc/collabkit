@@ -15,7 +15,6 @@ const SCROLLBAR_SIZE = 6;
 
 const scrollAreaStyles = {
   root: css({
-    width: '100%',
     height: '100%',
     // borderTopRightRadius: 6,
     // borderTopLeftRadius: 6,
@@ -23,7 +22,6 @@ const scrollAreaStyles = {
   }),
 
   viewport: css({
-    width: '100%',
     height: '100%',
     borderRadius: 'inherit',
   }),

@@ -7,7 +7,7 @@ import {
   ScrollAreaViewport,
   styled,
 } from '../UIKit';
-import { DocNode, getDocHref, useDocs } from './Documentation';
+import { DocNode, getDocHref, useDocs } from './Docs';
 
 const StyledNavListOl = styled('ol', {
   listStyle: 'none',
@@ -89,6 +89,7 @@ export function Nav() {
         position: 'fixed',
         left: 0,
         top: 0,
+        zIndex: 1,
         bottom: 0,
         borderRight: '1px solid black',
       }}

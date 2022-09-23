@@ -1,3 +1,5 @@
+import { useWindowSize } from '../hooks/useWindowSize';
+
 import {
   ScrollAreaCorner,
   ScrollAreaRoot,
@@ -6,7 +8,6 @@ import {
   ScrollAreaViewport,
   styled,
 } from '../UIKit';
-import { Nav } from './Nav';
 
 const DocRoot = styled('div', {
   position: 'fixed',
@@ -18,9 +19,10 @@ const DocRoot = styled('div', {
 });
 
 const DocContent = styled('div', {
-  padding: 20,
-  maxWidth: 480,
   wordWrap: 'break-word',
+  flex: 1,
+  padding: 20,
+  boxSizing: 'border-box',
 
   blockquote: {
     borderLeft: '2px solid black',
@@ -34,51 +36,20 @@ const DocContent = styled('div', {
   },
 });
 
-// function getRelatedNodes(outline: OutlineNode, path: string[] | readonly string[]) {
-//   let node = outline;
-//   let keys = Object.keys(node);
-//   let next = null;
-//   let prev = null;
+export function Doc(props: { title: string; children: React.ReactNode; demo?: React.ReactNode }) {
+  const size = useWindowSize();
 
-//   for (const key of path) {
-//     const index = keys.indexOf(key);
-//     next = keys[index + 1] ?? next;
-//     prev = keys[index - 1] ?? prev;
-//     if (has(node, key)) {
-//       if (typeof node[key] === 'function') {
-//         // couldn't figure out cast here
-//         let component = node[key];
-//         return { next, prev, component };
-//       }
-//       node = node[key];
-//       keys = Object.keys(node);
-//     }
-//   }
+  const columns = props.demo ? ((size?.width ?? 0) > 1024 ? 2 : 1) : 1;
 
-//   return { next, prev };
-// }
-
-// function Next() {
-//   const { path } = useSnapshot(store);
-//   const { next } = getRelatedNodes(getOutline(), path);
-//   return <div>Next {next}</div>;
-// }
-
-// function Prev() {
-//   const { path } = useSnapshot(store);
-//   const { prev } = getRelatedNodes(getOutline(), path);
-//   return <div>Previous {prev}</div>;
-// }
-
-export function Doc(props: { title: string; children: React.ReactNode }) {
   return (
-    <DocRoot>
-      <Nav />
+    <DocRoot columns={columns}>
       <ScrollAreaRoot>
         <ScrollAreaViewport>
           <DocContent>
-            <h1>{props.title}</h1>
-            {props.children}
+            <div>
+              <h1>{props.title}</h1>
+              {props.children}
+            </div>
           </DocContent>
         </ScrollAreaViewport>
         <ScrollAreaScrollbar orientation="vertical">
