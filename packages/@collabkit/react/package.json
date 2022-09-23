@@ -17,6 +17,7 @@
       "require": "./dist/collabkit-react.umd.cjs"
     }
   },
+  "sideEffects": false,
   "scripts": {
     "dev": "ladle serve",
     "build": "yarn clean && tsc && vite build && rollup --config rollup.config.js",

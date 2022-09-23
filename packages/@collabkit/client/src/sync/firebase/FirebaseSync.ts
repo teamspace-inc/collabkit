@@ -51,6 +51,10 @@ export function initFirebase() {
 }
 
 export class FirebaseSync implements Sync.SyncAdapter {
+  constructor() {
+    initFirebase();
+  }
+
   saveThreadInfo(data: {
     appId: string;
     workspaceId: string;

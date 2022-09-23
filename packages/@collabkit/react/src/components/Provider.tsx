@@ -23,8 +23,6 @@ export type ProviderProps = {
 } & (SecureProps | UnsecureProps) &
   ConfigProps;
 
-initFirebase();
-
 // Enable using multiple isolated App
 // instances in the same page.
 export function CollabKitProvider({
