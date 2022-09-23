@@ -1,6 +1,6 @@
-import React, { ReactNode, useEffect, useLayoutEffect, useState } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import { createThemes, CustomTheme } from '@collabkit/theme';
-import { actions, initFirebase, Events, createEvents } from '@collabkit/client';
+import { actions, Events, createEvents } from '@collabkit/client';
 import { ConfigProps, SecureProps, Store, ThreadInfo, UnsecureProps } from '@collabkit/core';
 import { AppContext } from '../hooks/useAppContext';
 import { createValtioStore } from '../store';

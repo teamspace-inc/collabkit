@@ -95,7 +95,7 @@ function ThreadContextProvider(props: ThreadProps & { children: React.ReactNode 
 export function Thread(props: ThreadProps & { className?: string; children?: React.ReactNode }) {
   const { store, theme } = useApp();
 
-  const { threadId, autoFocus, composerPrompt } = props;
+  const { threadId, autoFocus } = props;
 
   const { profiles, userId, workspaceId, callbacks } = useSnapshot(store);
 

@@ -1,4 +1,4 @@
-import React, { cloneElement, useCallback, useEffect, useMemo, useState } from 'react';
+import React, { cloneElement, useCallback, useMemo, useState } from 'react';
 import {
   autoUpdate,
   flip,
