@@ -1,4 +1,5 @@
-import { CodeEditor } from './CodeEditor';
+import { H2, H3 } from '../UIKit';
+import { CodeEditor, renderCodeSnippet } from './CodeEditor';
 import { Doc } from './Doc';
 // import GettingStarted from './markdown/GettingStarted.mdx';
 
@@ -22,32 +23,17 @@ const threadCode = `import { Thread } from '@collabkit/react';
 
 <Thread threadId={'unique ID here'} />;`;
 
-function renderCode(code: string) {
-  return (
-    <CodeEditor
-      readOnly={true}
-      code={providerCode}
-      language={'typescript'}
-      style={{ borderRadius: '6px', width: 'calc(100% - 40px)' }}
-      scrollbar={false}
-    />
-  );
-}
-
 export function GettingStartedDoc() {
   return (
     <Doc title="Getting Started">
-      <p style={{ fontSize: 20, lineHeight: '28px' }}>
-        A quick tutorial to get you up and <br />
-        running with CollabKit.
-      </p>
-      <h3>Implementing a thread</h3>
-      <p>Install @collabkit/react</p>
-      {renderCode(installCode)}
-      <p>Wrap your app in a `Provider`</p>
-      {renderCode(providerCode)}
-      <p>Add a Thread to your app</p>
-      {renderCode(threadCode)}
+      <H2>A quick tutorial to get you up and running with CollabKit.</H2>
+      <H3>Implementing a thread</H3>
+      <p>1. Install @collabkit/react</p>
+      {renderCodeSnippet(installCode)}
+      <p>2. Wrap your app in a `Provider`</p>
+      {renderCodeSnippet(providerCode)}
+      <p>3. Add a Thread to your app</p>
+      {renderCodeSnippet(threadCode)}
     </Doc>
   );
 }

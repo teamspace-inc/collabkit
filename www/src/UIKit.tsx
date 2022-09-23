@@ -11,6 +11,24 @@ export const { styled, css, theme } = createStitches({
   },
 });
 
+export const DemoContainer = styled('div', {
+  flex: 1,
+  background: 'cyan',
+  display: 'flex',
+  padding: 20,
+  margin: '0 -20px',
+  justifyContent: 'center',
+  alignItems: 'center',
+});
+
+export const H2 = styled('h2', {
+  fontSize: 20,
+  lineHeight: '28px',
+  fontWeight: 'normal',
+});
+
+export const H3 = styled('h3', {});
+
 const SCROLLBAR_SIZE = 6;
 
 const scrollAreaStyles = {
@@ -146,26 +164,26 @@ export const Auth = styled('div', {
   width: '480px',
 });
 
-export const H2 = styled('h2', {
-  fontFamily: 'Inter',
-  fontStyle: 'normal',
-  // fontWeight: 700,
-  fontSize: '3rem',
-  lineHeight: '116%',
-  marginBottom: 0,
-  // letterSpacing: '-0.05em',
-  zIndex: 1,
-});
+// export const H2 = styled('h2', {
+//   fontFamily: 'Inter',
+//   fontStyle: 'normal',
+//   // fontWeight: 700,
+//   fontSize: '3rem',
+//   lineHeight: '116%',
+//   marginBottom: 0,
+//   // letterSpacing: '-0.05em',
+//   zIndex: 1,
+// });
 
-export const H3 = styled('h2', {
-  fontFamily: 'Space Grotesk',
-  fontStyle: 'normal',
-  fontWeight: 700,
-  fontSize: '2rem',
-  lineHeight: '116%',
-  letterSpacing: '-0.05em',
-  zIndex: 1,
-});
+// export const H3 = styled('h2', {
+//   fontFamily: 'Space Grotesk',
+//   fontStyle: 'normal',
+//   fontWeight: 700,
+//   fontSize: '2rem',
+//   lineHeight: '116%',
+//   letterSpacing: '-0.05em',
+//   zIndex: 1,
+// });
 
 export const H4 = styled('h2', {
   fontFamily: 'Inter',

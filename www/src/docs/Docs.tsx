@@ -155,25 +155,17 @@ export function Docs() {
 
   return (
     <DocsProvider.Provider value={docs}>
-      <CollabKitProvider
-        apiKey={apiKey}
-        appId={appId}
-        workspace={workspace}
-        user={{ id: nanoid(), name: 'John Doe' }}
-        mentionableUsers={[]}
-      >
-        <Route path="/docs">
-          <Nav />
-        </Route>
-        <Route path="/docs/:name">
-          <Nav />
-        </Route>
-        <Route path="/docs/:name/:sub">
-          <Nav />
-        </Route>
-        {generateDocRoutes(docs)}
-        <Route path="/codeEditor" component={CodeEditor} />
-      </CollabKitProvider>
+      <Route path="/docs">
+        <Nav />
+      </Route>
+      <Route path="/docs/:name">
+        <Nav />
+      </Route>
+      <Route path="/docs/:name/:sub">
+        <Nav />
+      </Route>
+      {generateDocRoutes(docs)}
+      <Route path="/codeEditor" component={CodeEditor} />
     </DocsProvider.Provider>
   );
 }

@@ -6,8 +6,17 @@ import { useEffect } from 'react';
 import { DataGridPage } from './pages/DataGridPage';
 import { HomePage } from './pages/HomePage';
 import { Docs } from './docs/Docs';
+import { CollabKitProvider } from '@collabkit/react';
+import { nanoid } from 'nanoid';
 
 const Page = styled('div', {});
+
+const apiKey = import.meta.env.VITE_COLLABKIT_API_KEY;
+const appId = import.meta.env.VITE_COLLABKIT_APP_ID;
+const workspace = {
+  id: import.meta.env.VITE_COLLABKIT_WORKSPACE_ID,
+  name: import.meta.env.VITE_COLLABKIT_WORKSPACE_NAME,
+};
 
 export default function App() {
   useEffect(() => {
@@ -22,12 +31,20 @@ export default function App() {
   }, []);
 
   return (
-    <Page>
-      <Route path="/" component={HomePage} />
-      <Route path="/devs" component={Devs} />
-      <Route path="/signedIn" component={Devs} />
-      <Route path="/datagrid" component={DataGridPage} />
-      <Docs />
-    </Page>
+    <CollabKitProvider
+      apiKey={apiKey}
+      appId={appId}
+      workspace={workspace}
+      user={{ id: nanoid(), name: 'John Doe' }}
+      mentionableUsers={[]}
+    >
+      <Page>
+        <Route path="/" component={HomePage} />
+        <Route path="/devs" component={Devs} />
+        <Route path="/signedIn" component={Devs} />
+        <Route path="/datagrid" component={DataGridPage} />
+        <Docs />
+      </Page>
+    </CollabKitProvider>
   );
 }

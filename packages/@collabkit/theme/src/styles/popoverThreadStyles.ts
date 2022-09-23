@@ -15,4 +15,5 @@ export const root = css(threadStyles.content, {
   /* 📖 Elevation - Standard */
   boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.05)',
   borderRadius: 8,
+  zIndex: 10,
 });

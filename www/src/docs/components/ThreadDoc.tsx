@@ -1,8 +1,8 @@
-import { styled } from '../../UIKit';
+import { styled, H2 } from '../../UIKit';
 import { renderCodeSnippet } from '../CodeEditor';
-import { Doc } from '../Doc';
 import { Markdown } from '../Markdown';
 import ThreadMarkdown from '../markdown/Thread.md?raw';
+import { ThreadDemo } from './ThreadDemo';
 
 const StyledMarkdown = styled(Markdown, {
   code: {
@@ -14,12 +14,10 @@ const StyledMarkdown = styled(Markdown, {
 
 export function ThreadDoc() {
   return (
-    <Doc title="Thread">
-      <p style={{ fontSize: 20, lineHeight: '28px' }}>
-        Shows comment threads visible to the authenticated user &amp; workspace. Only open threads
-        are shown by default.
-      </p>
-
+    <div>
+      <H2>A comment thread that lets users talk to each other.</H2>
+      <h3>Demo</h3>
+      <ThreadDemo />
       <h3>Usage</h3>
       {renderCodeSnippet(`import { Thread } from '@collabkit/react';
 
@@ -28,6 +26,6 @@ export function ThreadDoc() {
         <h3>Props</h3>
         <StyledMarkdown body={ThreadMarkdown}></StyledMarkdown>
       </div>
-    </Doc>
+    </div>
   );
 }

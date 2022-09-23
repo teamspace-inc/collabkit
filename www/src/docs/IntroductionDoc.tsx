@@ -3,7 +3,7 @@ import { Markdown } from './Markdown';
 
 export function IntroductionDoc() {
   return (
-    <Doc title="Introduction">
+    <div>
       <p style={{ fontSize: 20, lineHeight: '28px' }}>
         CollabKit is a drop-in React &amp; Vue SDK for adding commenting to your app with a focus on
         customisation, easy-integration, and increasing engagement of your product.
@@ -56,6 +56,6 @@ Our goal is to create a high-quality, easy-to-integrate commenting system, which
     
     To file issues, request features, and contribute, check out our Github.`}
       />
-    </Doc>
+    </div>
   );
 }
