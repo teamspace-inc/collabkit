@@ -1,8 +1,7 @@
 import React, { useContext, useRef } from 'react';
 import { CommentTarget } from '../../constants';
-import { Target } from '../Target';
-import { useApp } from '../../hooks/useApp';
 import { TargetContext } from '../Target';
+import { useApp } from '../../hooks/useApp';
 import { styled } from '@stitches/react';
 import { reactionPickerStyles } from '@collabkit/theme';
 
@@ -16,7 +15,7 @@ function EmojiReaction(props: { emoji: string }) {
   if (!events) {
     return null;
   }
-  const { target } = useContext(TargetContext);
+  const target = useContext(TargetContext);
   if (target == null || target.type !== 'commentReaction') {
     return null;
   }
@@ -35,12 +34,12 @@ export function ReactionPicker(props: { target: CommentTarget }) {
   return (
     <StyledReactionPicker ref={ref}>
       {emojiReacts.map((emoji) => (
-        <Target
+        <TargetContext.Provider
           key={emoji}
-          target={{ type: 'commentReaction', comment: props.target, emoji } as const}
+          value={{ type: 'commentReaction', comment: props.target, emoji } as const}
         >
           <EmojiReaction emoji={emoji} />
-        </Target>
+        </TargetContext.Provider>
       ))}
     </StyledReactionPicker>
   );

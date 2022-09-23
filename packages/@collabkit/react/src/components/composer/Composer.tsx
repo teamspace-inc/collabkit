@@ -16,7 +16,7 @@ import { useApp } from '../../hooks/useApp';
 import { useOnMarkdownLinkClick } from '../../hooks/useOnMarkdownLinkClick';
 import { composerStyles } from '@collabkit/theme';
 import { useThreadContext } from '../../hooks/useThreadContext';
-import { Target } from '../Target';
+import { TargetContext } from '../Target';
 import { useTarget } from '../../hooks/useTarget';
 
 // Catch any errors that occur during Lexical updates and log them
@@ -47,7 +47,7 @@ export function Root(props: { className?: string; children: React.ReactNode }) {
 
   return (
     <div className={props.className} onClick={onClick}>
-      <Target target={target}>{props.children}</Target>
+      <TargetContext.Provider value={target}>{props.children}</TargetContext.Provider>
     </div>
   );
 }
@@ -58,7 +58,7 @@ export function Content(props: {
   style?: React.CSSProperties;
 }) {
   const { events } = useApp();
-  const { target } = useTarget();
+  const target = useTarget();
 
   return (
     <div
@@ -82,7 +82,7 @@ export const Editor = function ComposerEditor(props: {
   className?: string;
   contentEditable: (props: { autoFocus?: boolean }) => JSX.Element;
 }) {
-  const { target } = useTarget();
+  const target = useTarget();
   const { events } = useApp();
   const { body } = useContext(ComposerContext);
 

@@ -10,7 +10,7 @@ const StyledReactionButton = styled('button', reactionButtonStyles);
 export function ReactionButton() {
   const { events, theme } = useApp();
   // todo create a hook that ensures a target is set
-  const { target } = useContext(TargetContext);
+  const target = useContext(TargetContext);
   if (target == null || target.type !== 'comment') {
     return null;
   }
