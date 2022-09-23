@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import { getShade } from '@collabkit/colors';
+import { getProfileColor } from '@collabkit/colors';
 import type { Profile } from '@collabkit/core';
 import { avatarStyles } from '@collabkit/theme';
 import { styled } from './styled';
@@ -16,7 +16,7 @@ const didError = ref(false);
 const style = computed(() =>
   props.profile.color
     ? {
-        backgroundColor: getShade(props.profile.color, 9),
+        backgroundColor: getProfileColor(props.profile.color),
       }
     : null
 );

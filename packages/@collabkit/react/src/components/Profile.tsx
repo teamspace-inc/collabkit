@@ -1,4 +1,4 @@
-import { getShade } from '@collabkit/colors';
+import { getProfileColor } from '@collabkit/colors';
 import React, { useState } from 'react';
 import { useSnapshot } from 'valtio';
 import { useApp } from '../hooks/useApp';
@@ -53,7 +53,7 @@ export function Avatar(props: React.ComponentPropsWithoutRef<'div'>) {
         ...props.style,
         ...(profile.color
           ? {
-              backgroundColor: getShade(profile.color, 9),
+              backgroundColor: getProfileColor(profile.color),
             }
           : {}),
       }}

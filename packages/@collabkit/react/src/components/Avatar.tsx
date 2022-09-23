@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { getShade } from '@collabkit/colors';
+import { getProfileColor } from '@collabkit/colors';
 import { avatarStyles } from '@collabkit/theme';
 import { styled } from '@stitches/react';
 import { useApp } from '../hooks/useApp';
@@ -17,7 +17,7 @@ function DefaultAvatar({ profile, size }: AvatarProps) {
         ...(size ? { width: size, height: size, lineHeight: `${size}px` } : {}),
         ...(profile.color
           ? {
-              backgroundColor: getShade(profile.color, 9),
+              backgroundColor: getProfileColor(profile.color),
             }
           : null),
       }}
