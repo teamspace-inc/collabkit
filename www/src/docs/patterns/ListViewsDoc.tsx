@@ -1,12 +1,15 @@
+import { H2 } from '../../UIKit';
+import { DocDemoContainer } from '../Doc';
 import { Markdown } from '../Markdown';
 
 export function ListViewsDoc() {
   return (
     <div>
-      <p style={{ fontSize: 20, lineHeight: '28px' }}>
+      <H2>
         For lists of things in your product. Ex. a list of customers, sales, tasks, different
         entities in your product.
-      </p>
+      </H2>
+      <DocDemoContainer />
       <Markdown
         body={`
 ### Examples

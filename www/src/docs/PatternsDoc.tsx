@@ -3,13 +3,11 @@ import { SidebarSimple, Rows, Table } from 'phosphor-react';
 import { DocTableOfContents } from './Doc';
 
 const items = [
-  { name: 'Detail Views', icon: SidebarSimple, href: '' },
-  { name: 'List Views', icon: Rows, href: '' },
-  { name: 'Table Views', icon: Table, href: '' },
+  { name: 'Detail Views', icon: SidebarSimple, href: '/docs/patterns/detailviews' },
+  { name: 'List Views', icon: Rows, href: '/docs/patterns/listviews' },
+  { name: 'Table Views', icon: Table, href: '/docs/patterns/tableviews' },
 ];
 
-// this is just a placeholder
-// needs design
 export function PatternsDoc() {
   return (
     <div>

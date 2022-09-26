@@ -55,28 +55,33 @@ const DocContentFormatting = styled('div', {
 });
 
 const DocTableOfContentsItem = styled('div', {
-  width: '100%',
   padding: 20,
+  border: '1px solid black',
+  marginBottom: 24,
   display: 'flex',
   flexDirection: 'column',
+  borderRadius: 6,
+  alignItems: 'center',
 });
 
 export function DocTableOfContents(props: {
   items: { name: string; icon: React.ComponentClass; href: string }[];
 }) {
   return (
-    <IconContext.Provider value={{ size: 64, weight: 'thin' }}>
-      {props.items.map((item) => (
-        <li key={item.name}>
-          <Link href={item.href}>
-            <DocTableOfContentsItem>
-              {<item.icon />}
-              {item.name}
-            </DocTableOfContentsItem>
-          </Link>
-        </li>
-      ))}
-    </IconContext.Provider>
+    <ol style={{ listStyle: 'none', padding: '0' }}>
+      <IconContext.Provider value={{ size: 64, weight: 'thin' }}>
+        {props.items.map((item) => (
+          <li key={item.name}>
+            <Link href={item.href}>
+              <DocTableOfContentsItem>
+                {<item.icon />}
+                {item.name}
+              </DocTableOfContentsItem>
+            </Link>
+          </li>
+        ))}
+      </IconContext.Provider>
+    </ol>
   );
 }
 

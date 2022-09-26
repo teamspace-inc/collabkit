@@ -23,7 +23,6 @@ import has from 'has';
 import { Route, Switch } from 'wouter';
 import { CodeEditor } from './CodeEditor';
 import { Doc } from './Doc';
-import { Nav } from './Nav';
 import { PopoverThreadDemo } from './components/PopoverThreadDemo';
 
 export function getDocHref(path: string[], key: string) {

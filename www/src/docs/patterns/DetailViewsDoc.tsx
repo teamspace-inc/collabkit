@@ -1,4 +1,5 @@
 import { H2 } from '../../UIKit';
+import { DocDemoContainer } from '../Doc';
 import { Markdown } from '../Markdown';
 
 export function DetailViewsDoc() {
@@ -8,6 +9,7 @@ export function DetailViewsDoc() {
         Add a comment thread to views in your product about a single object. Ex. For a CRM it would
         be a customer, for a task management app it would be a task.
       </H2>
+      <DocDemoContainer></DocDemoContainer>
       <Markdown
         body={`
           

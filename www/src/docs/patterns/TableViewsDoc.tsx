@@ -1,11 +1,12 @@
+import { H2 } from '../../UIKit';
+import { DocDemoContainer } from '../Doc';
 import { Markdown } from '../Markdown';
 
 export function TableViewsDoc() {
   return (
     <div>
-      <p style={{ fontSize: 20, lineHeight: '28px' }}>
-        For tables, data grids and spreadsheet-like interfaces.
-      </p>
+      <H2>For tables, data grids and spreadsheet-like interfaces.</H2>
+      <DocDemoContainer />
       <Markdown
         body={`
 ### Examples
