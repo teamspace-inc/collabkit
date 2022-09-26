@@ -1,5 +1,4 @@
 import { renderCodeSnippet } from '../CodeEditor';
-import { Doc } from '../Doc';
 
 export function UseUnreadThreadsCountDoc() {
   return (

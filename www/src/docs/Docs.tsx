@@ -73,7 +73,6 @@ function generateDocRoutes(docs: RootDocNode, path: string[] = []): React.ReactN
     if (has(docs, key)) {
       const value = docs[key];
       const pathString = getDocHref(path, key);
-      console.log({ pathString });
       routes.push(
         <Route key={pathString} path={pathString}>
           <Doc title={key} demo={value.demo?.({})} next={next} prev={prev}>

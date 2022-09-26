@@ -1,14 +1,13 @@
+import { H2 } from '../../UIKit';
 import { renderCodeSnippet } from '../CodeEditor';
-import { Doc } from '../Doc';
 
 export function InboxDoc() {
   return (
     <div>
-      <p style={{ fontSize: 20, lineHeight: '28px' }}>
+      <H2>
         Shows comment threads visible to the authenticated user &amp; workspace. Only open threads
         are shown by default.
-      </p>
-
+      </H2>
       <h3>Usage</h3>
       {renderCodeSnippet(`import { Inbox } from '@collabkit/react';
 

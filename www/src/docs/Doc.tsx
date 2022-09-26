@@ -46,9 +46,13 @@ const DocContent = styled('div', {
   },
 });
 
-export function DocCalloutLink(props: { href: string; children: React.ReactNode }) {
+export function DocCalloutLink(props: {
+  style?: React.CSSProperties;
+  href: string;
+  children: React.ReactNode;
+}) {
   return (
-    <StyledDocCalloutLink href={props.href}>
+    <StyledDocCalloutLink href={props.href} style={props.style}>
       <span style={{ flex: 1, display: 'flex' }}>{props.children}</span>
       <CaretRight size={24} />
     </StyledDocCalloutLink>
@@ -80,7 +84,7 @@ export const DocDemoContainer = styled('div', {
   backgroundColor: '#4158D0',
   backgroundImage: 'linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%)',
   display: 'flex',
-  padding: 20,
+  padding: '100px 20px',
   margin: '0 -20px',
   justifyContent: 'center',
   alignItems: 'center',
@@ -110,14 +114,6 @@ export function Doc(props: {
     <DocRoot>
       <DocNav />
       <DocContent>
-        <div
-          style={{
-            borderBottom: '1px solid black',
-            background: 'white',
-            boxSizing: 'border-box',
-            margin: 0,
-          }}
-        ></div>
         <ScrollAreaRoot>
           <ScrollAreaViewport>
             <DocScrollableContent>
@@ -125,6 +121,7 @@ export function Doc(props: {
               {props.children}
               {props.next ? (
                 <DocCalloutLink
+                  style={{ marginTop: '20px' }}
                   href={`${props.next
                     ?.map((part) => part.replace(' ', ''))
                     .join('>')

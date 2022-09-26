@@ -1,5 +1,4 @@
 import { renderCodeSnippet } from '../CodeEditor';
-import { Doc } from '../Doc';
 import { Markdown } from '../Markdown';
 
 export function UseUnreadCommentsCountDoc() {
