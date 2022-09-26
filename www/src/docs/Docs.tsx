@@ -32,6 +32,7 @@ export function getDocHref(path: string[], key: string) {
 
 const DOCS: RootDocNode = {
   Introduction: { component: IntroductionDoc },
+  'Getting Started': { component: GettingStartedDoc },
   Patterns: {
     component: PatternsDoc,
     children: {
@@ -40,7 +41,6 @@ const DOCS: RootDocNode = {
       'Table Views': { component: TableViewsDoc },
     },
   },
-  'Getting Started': { component: GettingStartedDoc },
   Concepts: { component: ConceptsDoc },
   Components: {
     component: ComponentsDoc,
