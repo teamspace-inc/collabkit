@@ -1,4 +1,3 @@
-import { Doc } from './Doc';
 import { Markdown } from './Markdown';
 import ConceptsMd from './markdown/Concepts.md?raw';
 

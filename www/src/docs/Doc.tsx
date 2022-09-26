@@ -1,4 +1,4 @@
-import { CaretRight } from 'phosphor-react';
+import { CaretRight, IconContext } from 'phosphor-react';
 import { Link } from 'wouter';
 import {
   ScrollAreaCorner,
@@ -10,10 +10,6 @@ import {
 } from '../UIKit';
 import { Nav } from './Nav';
 
-const DocRoot = styled('div', {
-  wordWrap: 'break-word',
-});
-
 const DocNav = styled(Nav, {
   position: 'fixed',
   inset: 0,
@@ -22,17 +18,23 @@ const DocNav = styled(Nav, {
   background: '#fafafa',
 });
 
-const DocContent = styled('div', {
-  wordWrap: 'break-word',
-  flex: 1,
-  boxSizing: 'border-box',
+const DocScrollAreaWrap = styled('div', {
   height: '100vh',
-  width: 'auto',
-
+  width: 'calc(100vw - 264px)',
   position: 'fixed',
   left: '264px',
   top: 0,
   bottom: 0,
+});
+
+export const DocContent = styled('div', {
+  flex: 1,
+});
+
+const DocContentFormatting = styled('div', {
+  wordWrap: 'break-word',
+  flex: 1,
+  boxSizing: 'border-box',
 
   blockquote: {
     borderLeft: '2px solid black',
@@ -41,10 +43,42 @@ const DocContent = styled('div', {
     marginLeft: 0,
   },
 
+  code: {
+    fontFamily: 'Monaco',
+    fontSize: 14,
+    color: '#a31515',
+  },
+
   h1: {
     marginTop: 0,
   },
 });
+
+const DocTableOfContentsItem = styled('div', {
+  width: '100%',
+  padding: 20,
+  display: 'flex',
+  flexDirection: 'column',
+});
+
+export function DocTableOfContents(props: {
+  items: { name: string; icon: React.ComponentClass; href: string }[];
+}) {
+  return (
+    <IconContext.Provider value={{ size: 64, weight: 'thin' }}>
+      {props.items.map((item) => (
+        <li key={item.name}>
+          <Link href={item.href}>
+            <DocTableOfContentsItem>
+              {<item.icon />}
+              {item.name}
+            </DocTableOfContentsItem>
+          </Link>
+        </li>
+      ))}
+    </IconContext.Provider>
+  );
+}
 
 export function DocCalloutLink(props: {
   style?: React.CSSProperties;
@@ -111,25 +145,27 @@ export function Doc(props: {
 }) {
   // const size = useWindowSize();
   return (
-    <DocRoot>
+    <div>
       <DocNav />
-      <DocContent>
-        <ScrollAreaRoot>
-          <ScrollAreaViewport>
+      <DocScrollAreaWrap>
+        <ScrollAreaRoot style={{ width: '100%' }}>
+          <ScrollAreaViewport style={{ width: '100%' }}>
             <DocScrollableContent>
-              <DocTitle>{props.title}</DocTitle>
-              {props.children}
-              {props.next ? (
-                <DocCalloutLink
-                  style={{ marginTop: '20px' }}
-                  href={`${props.next
-                    ?.map((part) => part.replace(' ', ''))
-                    .join('>')
-                    .toLowerCase()}`}
-                >
-                  {props.next.join(' ')}
-                </DocCalloutLink>
-              ) : null}
+              <DocContentFormatting>
+                <DocTitle>{props.title}</DocTitle>
+                <div style={{ flex: 1, width: '' }}>{props.children}</div>
+                {props.next ? (
+                  <DocCalloutLink
+                    style={{ marginTop: '20px' }}
+                    href={`${props.next
+                      ?.map((part) => part.replace(' ', ''))
+                      .join('>')
+                      .toLowerCase()}`}
+                  >
+                    {props.next.join(' ')}
+                  </DocCalloutLink>
+                ) : null}
+              </DocContentFormatting>
             </DocScrollableContent>
           </ScrollAreaViewport>
           <ScrollAreaScrollbar orientation="vertical">
@@ -137,7 +173,7 @@ export function Doc(props: {
           </ScrollAreaScrollbar>
           <ScrollAreaCorner />
         </ScrollAreaRoot>
-      </DocContent>
-    </DocRoot>
+      </DocScrollAreaWrap>
+    </div>
   );
 }

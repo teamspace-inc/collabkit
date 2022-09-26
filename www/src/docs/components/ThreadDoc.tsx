@@ -1,16 +1,8 @@
-import { styled, H2 } from '../../UIKit';
+import { H2 } from '../../UIKit';
 import { renderCodeSnippet } from '../CodeEditor';
 import { Markdown } from '../Markdown';
 import ThreadMarkdown from '../markdown/Thread.md?raw';
 import { ThreadDemo } from './ThreadDemo';
-
-const StyledMarkdown = styled(Markdown, {
-  code: {
-    fontFamily: 'Monaco',
-    fontSize: 14,
-    color: '#a31515',
-  },
-});
 
 export function ThreadDoc() {
   return (
@@ -24,7 +16,7 @@ export function ThreadDoc() {
 <Thread threadId={'my-thread-id'} />`)}
       <div>
         <h3>Props</h3>
-        <StyledMarkdown body={ThreadMarkdown}></StyledMarkdown>
+        <Markdown body={ThreadMarkdown} />
       </div>
     </div>
   );
