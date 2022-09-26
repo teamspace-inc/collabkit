@@ -11,16 +11,6 @@ export const { styled, css, theme } = createStitches({
   },
 });
 
-export const DemoContainer = styled('div', {
-  flex: 1,
-  background: 'cyan',
-  display: 'flex',
-  padding: 20,
-  margin: '0 -20px',
-  justifyContent: 'center',
-  alignItems: 'center',
-});
-
 export const H2 = styled('h2', {
   fontSize: 20,
   lineHeight: '28px',
@@ -50,9 +40,9 @@ const scrollAreaStyles = {
     userSelect: 'none',
     // disable browser handling of all panning and zooming gestures on touch devices
     touchAction: 'none',
-    padding: 2,
+    padding: '6px 6px 6px 4px',
     transition: 'background 160ms ease-out',
-    '&:hover': { background: 'red' },
+    '&:hover': { background: 'rgba(255,255,255,0.5)' },
     '&[data-orientation="vertical"]': { width: SCROLLBAR_SIZE },
     '&[data-orientation="horizontal"]': {
       flexDirection: 'column',

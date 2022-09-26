@@ -29,9 +29,20 @@ export function GettingStartedDoc() {
       <p>1. Install @collabkit/react</p>
       {renderCodeSnippet(installCode)}
       <p>2. Wrap your app in a `Provider`</p>
+      <p>Be sure to pass in `user` and `workspace` details.</p>
       {renderCodeSnippet(providerCode)}
       <p>3. Add a Thread to your app</p>
       {renderCodeSnippet(threadCode)}
+      <p>4. Try it out</p>
+      <p>
+        Load the page with the Thread on it, send some messages, invite your coworkers to try it out
+        too.
+      </p>
+      <p>5. Turn on secure mode</p>
+      <p>
+        Before going live, enable secure mode which requires generating a per user token for each
+        request.
+      </p>
     </div>
   );
 }

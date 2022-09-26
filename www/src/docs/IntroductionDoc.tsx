@@ -1,17 +1,20 @@
-import { Doc } from './Doc';
+import { Link } from 'wouter';
+import { DocCalloutLink, Doc, DocLink } from './Doc';
 import { Markdown } from './Markdown';
 
 export function IntroductionDoc() {
   return (
     <div>
       <p style={{ fontSize: 20, lineHeight: '28px' }}>
-        CollabKit is a drop-in React &amp; Vue SDK for adding commenting to your app with a focus on
-        customisation, easy-integration, and increasing engagement of your product.
+        CollabKit is a drop-in React &amp; Vue SDK for adding commenting to your app. It's fully
+        customisable, can be integrated in minutes, and helps increase engagement.
         <br />
         <br />
-        You can drop our components in and even use our building blocks to compose an entirely new
-        commenting or collaboration experience.
+        Add our flexible components to your app to help your users collaborate in context.
       </p>
+      <div>
+        <DocCalloutLink href="/docs/gettingstarted">Get started</DocCalloutLink>
+      </div>
       <Markdown
         body={`### Vision
 

@@ -1,5 +1,6 @@
 import { PopoverTrigger, usePopoverThread } from '@collabkit/react';
 import { nanoid } from 'nanoid';
+import { DocDemoContainer } from '../Doc';
 
 export function PopoverThreadDemo() {
   const cellId = nanoid();
@@ -9,17 +10,7 @@ export function PopoverThreadDemo() {
   });
 
   return (
-    <div
-      style={{
-        flex: 1,
-        margin: '0px -20px',
-        background: 'cyan',
-        display: 'flex',
-        alignItems: 'center',
-        padding: 20,
-        justifyContent: 'center',
-      }}
-    >
+    <DocDemoContainer>
       <div
         style={{
           height: '480px',
@@ -33,6 +24,6 @@ export function PopoverThreadDemo() {
           <div style={{ width: 100, padding: 20, background: 'white' }}>Test</div>
         </PopoverTrigger>
       </div>
-    </div>
+    </DocDemoContainer>
   );
 }

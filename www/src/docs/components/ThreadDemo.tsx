@@ -1,17 +1,17 @@
 import { Thread } from '@collabkit/react';
-import { DemoContainer } from '../../UIKit';
+import { DocDemoContainer } from '../Doc';
 
 export function ThreadDemo() {
   return (
-    <DemoContainer>
+    <DocDemoContainer>
       <div
         style={{
-          height: '480px',
-          width: '320px',
+          height: '360px',
+          width: '280px',
         }}
       >
         <Thread threadId={'test'} style={{ width: 320 }} />
       </div>
-    </DemoContainer>
+    </DocDemoContainer>
   );
 }

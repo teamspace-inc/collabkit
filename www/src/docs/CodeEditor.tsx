@@ -63,9 +63,9 @@ export function CodeEditor(props: {
   const monacoRef = useRef<any>(null);
   const [preview, setPreview] = useState(null);
   const [focused, setFocused] = useState(false);
-  const [mounted, setMounted] = useState(false);
+
   const [height, setHeight] = useState(24 * 24);
-  const id = useRef(nanoid());
+  const id = useState(() => nanoid());
 
   const size = useWindowSize();
 
@@ -79,7 +79,7 @@ export function CodeEditor(props: {
         const model = monaco.editor.createModel(
           codeString,
           language,
-          monaco.Uri.parse(`file:///${nanoid()}/index${id}.tsx`)
+          monaco.Uri.parse(`file:///${id}/index${id}.tsx`)
         );
 
         monaco.editor.defineTheme('collabkit', CollabKitMonacoTheme);
@@ -143,15 +143,9 @@ export function CodeEditor(props: {
             'file:///node_modules/react/index.d.ts'
           );
         }
-        setMounted(true);
       });
     }
   }, [id]);
-
-  useEffect(() => {
-    // console.log(monacoRef.current);
-    // monacoRef.current?.editor.layout();
-  }, [size?.width, size?.height, mounted]);
 
   useEffect(() => {
     if (props.showPreview) {
@@ -165,21 +159,12 @@ export function CodeEditor(props: {
     }
   }, [codeString, props.showPreview]);
 
-  // useEffect(() => {
-  //   const monaco = monacoRef.current;
-  //   if (monaco) {
-  //     if (!focused) {
-  //       // monaco.editor.setSelection(new monaco.Selection(0, 0, 0, 0));
-  //     }
-  //   }
-  // }, [focused]);
-
   useEffect(() => {
     const numLines = editorRef.current?.getElementsByClassName('view-line').length;
     if (numLines && numLines > 0) {
       setHeight(numLines * lineHeight + 0);
     }
-  }, [props.code.length, mounted]);
+  }, [props.code.length, id]);
 
   return (
     <div

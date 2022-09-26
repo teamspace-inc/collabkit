@@ -1,5 +1,7 @@
-import { useWindowSize } from '../hooks/useWindowSize';
+// import { useWindowSize } from '../hooks/useWindowSize';
 
+import { CaretRight } from 'phosphor-react';
+import { Link } from 'wouter';
 import {
   ScrollAreaCorner,
   ScrollAreaRoot,
@@ -12,21 +14,27 @@ import { Nav } from './Nav';
 
 const DocRoot = styled('div', {
   wordWrap: 'break-word',
-  display: 'grid',
-  gridTemplateColumns: '264px 1fr',
 });
 
 const DocNav = styled(Nav, {
-  position: 'sticky',
-  top: 0,
-  height: '100vh',
+  position: 'fixed',
+  inset: 0,
+  right: 'unset',
+  width: 264,
+  background: '#fafafa',
 });
 
 const DocContent = styled('div', {
   wordWrap: 'break-word',
   flex: 1,
-  padding: 20,
   boxSizing: 'border-box',
+  height: '100vh',
+  width: 'auto',
+
+  position: 'fixed',
+  left: '264px',
+  top: 0,
+  bottom: 0,
 
   blockquote: {
     borderLeft: '2px solid black',
@@ -40,6 +48,69 @@ const DocContent = styled('div', {
   },
 });
 
+export function DocCalloutLink(props: { href: string; children: string }) {
+  return (
+    <StyledDocCalloutLink href={props.href}>
+      <span style={{ flex: 1 }}>{props.children}</span>
+      <CaretRight size={24} />
+    </StyledDocCalloutLink>
+  );
+}
+
+export const StyledDocCalloutLink = styled(Link, {
+  display: 'flex',
+  color: 'black',
+  width: '100%',
+  alignItems: 'center',
+  boxSizing: 'border-box',
+  padding: '12px 20px',
+  border: '1px solid black',
+  borderRadius: '6px',
+  textDecoration: 'none',
+});
+
+export const DocLink = styled(Link, {
+  color: 'blue',
+  textDecoration: 'none',
+  '&:hover': {
+    textDecoration: 'underline',
+  },
+});
+
+export const DocDemoContainer = styled('div', {
+  flex: 1,
+  backgroundColor: '#4158D0',
+  backgroundImage: 'linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%)',
+  display: 'flex',
+  padding: 20,
+  margin: '0 -20px',
+  justifyContent: 'center',
+  alignItems: 'center',
+});
+
+const DocTitle = styled('h1', {
+  display: 'block',
+  margin: '48px 0px 0px',
+  padding: '20px 0px 10px',
+  boxSizing: 'border-box',
+  lineHeight: '24px',
+});
+
+const DocScrollableContent = styled('div', {
+  padding: 20,
+});
+
+const DocNextButtonRoot = styled('div', {
+  flex: 1,
+  padding: '20px',
+  background: 'green',
+  display: 'flex',
+});
+
+const HFill = styled('span', {
+  flex: 1,
+});
+
 export function Doc(props: {
   title: string;
   children: React.ReactNode;
@@ -47,78 +118,35 @@ export function Doc(props: {
   next: string[] | undefined;
   prev: string[] | undefined;
 }) {
-  const size = useWindowSize();
+  // const size = useWindowSize();
   return (
     <DocRoot>
       <DocNav />
       <DocContent>
         <div
           style={{
-            display: 'grid',
-            gridTemplateRows: '80px 1fr',
-            background: 'blue',
-            cursor: 'pointer',
+            borderBottom: '1px solid black',
+            background: 'white',
+            boxSizing: 'border-box',
+            margin: 0,
           }}
-        >
-          <div
-            style={{
-              borderBottom: '1px solid black',
-              // position: 'fixed',
-              background: 'white',
-              // left: 264,
-              // right: 0,
-              // top: 0,
-              // height: 64.5,
-              padding: 20,
-              boxSizing: 'border-box',
-              margin: 0,
-            }}
-          >
-            <h1 style={{ display: 'block', margin: 0, padding: 0, lineHeight: '24px' }}>
-              {props.title}
-            </h1>
-          </div>
-
-          <div>
-            <ScrollAreaRoot>
-              <ScrollAreaViewport>
-                <div style={{ paddingRight: '20px' }}>{props.children}</div>
-              </ScrollAreaViewport>
-              <ScrollAreaScrollbar orientation="vertical">
-                <ScrollAreaThumb />
-              </ScrollAreaScrollbar>
-              <ScrollAreaCorner />
-            </ScrollAreaRoot>
-          </div>
-          <div
-            style={{
-              // position: 'fixed',
-              // bottom: 0,
-              // height: 64.5,
-              // left: 264,
-              // right: 0,
-              borderTop: '1px solid black',
-            }}
-          >
-            <div
-              style={{
-                boxSizing: 'border-box',
-                // height: 64.5,
-                flex: 1,
-                alignItems: 'center',
-                display: 'flex',
-                padding: '0px',
-                // border: '1px solid black',
-                borderRadius: '6px',
-              }}
-            >
-              <div style={{ flex: 1, padding: '0 20px', display: 'flex' }}>
-                <span style={{ flex: 1 }}>Next</span>
-                <div>{props.next}</div>
-              </div>
-            </div>
-          </div>
-        </div>
+        ></div>
+        <ScrollAreaRoot>
+          <ScrollAreaViewport>
+            <DocScrollableContent>
+              <DocTitle>{props.title}</DocTitle>
+              {props.children}
+              <DocNextButtonRoot>
+                <HFill>Next</HFill>
+                <div>{props.next?.join(' > ')}</div>
+              </DocNextButtonRoot>
+            </DocScrollableContent>
+          </ScrollAreaViewport>
+          <ScrollAreaScrollbar orientation="vertical">
+            <ScrollAreaThumb />
+          </ScrollAreaScrollbar>
+          <ScrollAreaCorner />
+        </ScrollAreaRoot>
       </DocContent>
     </DocRoot>
   );

@@ -36,12 +36,12 @@ const StyledNavListItem = styled('div', {
   variants: {
     active: {
       true: {
-        background: 'blue',
+        background: 'black',
         color: 'white',
       },
       false: {
         '&:hover': {
-          background: 'red',
+          background: '#888',
           cursor: 'pointer',
           color: 'white',
         },
@@ -83,24 +83,7 @@ export function Nav(props: { className?: string }) {
   const { docs } = useDocs();
 
   return (
-    <div
-      className={props.className}
-      style={{
-        // width: '264px',
-        // position: 'fixed',
-        // left: 0,
-        // top: 0,
-        // zIndex: 1,
-        // bottom: 0,
-        borderRight: '1px solid black',
-      }}
-    >
-      <div style={{ padding: 20, borderBottom: '1px solid black' }}>
-        <img
-          style={{ position: 'relative', top: 2 }}
-          src={'http://localhost:8000/src/assets/Logo.svg'}
-        />
-      </div>
+    <div className={props.className}>
       <ScrollAreaRoot>
         <ScrollAreaViewport>
           <NavList node={docs} path={[]} />

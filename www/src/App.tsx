@@ -11,6 +11,8 @@ import { nanoid } from 'nanoid';
 
 const Page = styled('div', {});
 
+// todo generate a new workspace
+// for each docs user
 const apiKey = import.meta.env.VITE_COLLABKIT_API_KEY;
 const appId = import.meta.env.VITE_COLLABKIT_APP_ID;
 const workspace = {
