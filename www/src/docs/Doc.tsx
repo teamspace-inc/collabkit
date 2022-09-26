@@ -48,10 +48,10 @@ const DocContent = styled('div', {
   },
 });
 
-export function DocCalloutLink(props: { href: string; children: string }) {
+export function DocCalloutLink(props: { href: string; children: React.ReactNode }) {
   return (
     <StyledDocCalloutLink href={props.href}>
-      <span style={{ flex: 1 }}>{props.children}</span>
+      <span style={{ flex: 1, display: 'flex' }}>{props.children}</span>
       <CaretRight size={24} />
     </StyledDocCalloutLink>
   );
@@ -100,17 +100,6 @@ const DocScrollableContent = styled('div', {
   padding: 20,
 });
 
-const DocNextButtonRoot = styled('div', {
-  flex: 1,
-  padding: '20px',
-  background: 'green',
-  display: 'flex',
-});
-
-const HFill = styled('span', {
-  flex: 1,
-});
-
 export function Doc(props: {
   title: string;
   children: React.ReactNode;
@@ -136,10 +125,16 @@ export function Doc(props: {
             <DocScrollableContent>
               <DocTitle>{props.title}</DocTitle>
               {props.children}
-              <DocNextButtonRoot>
-                <HFill>Next</HFill>
-                <div>{props.next?.join(' > ')}</div>
-              </DocNextButtonRoot>
+              {props.next ? (
+                <DocCalloutLink
+                  href={`${props.next
+                    ?.map((part) => part.replace(' ', ''))
+                    .join('>')
+                    .toLowerCase()}`}
+                >
+                  {props.next.join(' ')}
+                </DocCalloutLink>
+              ) : null}
             </DocScrollableContent>
           </ScrollAreaViewport>
           <ScrollAreaScrollbar orientation="vertical">
