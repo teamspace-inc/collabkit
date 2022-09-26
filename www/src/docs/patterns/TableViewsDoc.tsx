@@ -3,7 +3,7 @@ import { Markdown } from '../Markdown';
 
 export function TableViewsDoc() {
   return (
-    <Doc title={'Table Views'}>
+    <div>
       <p style={{ fontSize: 20, lineHeight: '28px' }}>
         For tables, data grids and spreadsheet-like interfaces.
       </p>
@@ -22,6 +22,6 @@ export function TableViewsDoc() {
 1. Popover Thread
 2. Inbox`}
       />
-    </Doc>
+    </div>
   );
 }

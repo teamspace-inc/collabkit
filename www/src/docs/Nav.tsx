@@ -7,7 +7,7 @@ import {
   ScrollAreaViewport,
   styled,
 } from '../UIKit';
-import { DocNode, getDocHref, useDocs } from './Docs';
+import { getDocHref, RootDocNode, useDocs } from './Docs';
 
 const StyledNavListOl = styled('ol', {
   listStyle: 'none',
@@ -60,7 +60,7 @@ function NavListItem(props: { path: string[]; id: string }) {
   );
 }
 
-function NavList(props: { node: DocNode; path: string[] }) {
+function NavList(props: { node: RootDocNode; path: string[] }) {
   if (typeof props.node === 'function') {
     return null;
   }
@@ -79,18 +79,19 @@ function NavList(props: { node: DocNode; path: string[] }) {
   );
 }
 
-export function Nav() {
+export function Nav(props: { className?: string }) {
   const { docs } = useDocs();
 
   return (
     <div
+      className={props.className}
       style={{
-        width: '264px',
-        position: 'fixed',
-        left: 0,
-        top: 0,
-        zIndex: 1,
-        bottom: 0,
+        // width: '264px',
+        // position: 'fixed',
+        // left: 0,
+        // top: 0,
+        // zIndex: 1,
+        // bottom: 0,
         borderRight: '1px solid black',
       }}
     >
@@ -102,7 +103,7 @@ export function Nav() {
       </div>
       <ScrollAreaRoot>
         <ScrollAreaViewport>
-          <NavList node={docs} path={['docs']} />
+          <NavList node={docs} path={[]} />
         </ScrollAreaViewport>
         <ScrollAreaScrollbar orientation="vertical">
           <ScrollAreaThumb />

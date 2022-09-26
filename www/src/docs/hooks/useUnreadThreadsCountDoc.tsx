@@ -3,7 +3,7 @@ import { Doc } from '../Doc';
 
 export function UseUnreadThreadsCountDoc() {
   return (
-    <Doc title="useUnreadThreadsCount">
+    <div>
       <p style={{ fontSize: 20, lineHeight: '28px' }}>
         Gets the number of threads with unread comments for the authenticated user.
       </p>
@@ -16,6 +16,6 @@ export function UseUnreadThreadsCountDoc() {
 const count = useUnreadThreadsCount();
 
 // count is 1`)}
-    </Doc>
+    </div>
   );
 }

@@ -4,8 +4,8 @@ import ConceptsMd from './markdown/Concepts.md?raw';
 
 export function ConceptsDoc() {
   return (
-    <Doc title="Concepts">
+    <div>
       <Markdown body={ConceptsMd} />
-    </Doc>
+    </div>
   );
 }

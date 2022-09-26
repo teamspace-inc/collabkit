@@ -3,7 +3,7 @@ import { Markdown } from './Markdown';
 
 export function AdvancedCustomisationDoc() {
   return (
-    <Doc title="Advanced Customisation">
+    <div>
       <Markdown
         body={`[ later ]
 
@@ -15,7 +15,7 @@ export function AdvancedCustomisationDoc() {
     1. Tailwind
     2. Chakra
     3. Styled components or and other CSS-in-JS systems`}
-      ></Markdown>
-    </Doc>
+      />
+    </div>
   );
 }

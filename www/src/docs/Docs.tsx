@@ -7,8 +7,8 @@ import { TableViewsDoc } from './patterns/TableViewsDoc';
 import { GettingStartedDoc } from './GettingStartedDoc';
 import { ConceptsDoc } from './ConceptsDoc';
 import { ComponentsDoc } from './ComponentsDoc';
-import { AvatarDoc } from './components/AvatarDoc';
-import { FacepileDoc } from './components/FacepileDoc';
+// import { AvatarDoc } from './components/AvatarDoc';
+// import { FacepileDoc } from './components/FacepileDoc';
 import { InboxDoc } from './components/InboxDoc';
 import { PopoverThreadDoc } from './components/PopoverThreadDoc';
 import { ProviderDoc } from './components/ProviderDoc';
@@ -20,50 +20,78 @@ import { CustomisationDoc } from './CustomisationDoc';
 import { NotificationsDoc } from './NotificationsDoc';
 import { AdvancedCustomisationDoc } from './AdvancedCustomisationDoc';
 import has from 'has';
-import { Route } from 'wouter';
+import { Route, Switch } from 'wouter';
 import { CodeEditor } from './CodeEditor';
 import { Doc } from './Doc';
 import { Nav } from './Nav';
 import { PopoverThreadDemo } from './components/PopoverThreadDemo';
-import { CollabKitProvider } from '@collabkit/react';
 
 export function getDocHref(path: string[], key: string) {
-  return `/${path.concat([key]).join('/').replace(' ', '').toLowerCase()}`;
+  return `/docs/${path.concat([key]).join('/').replace(' ', '').toLowerCase()}`;
 }
 
-function generateDocRoutes(docs: DocNode, path: string[] = ['docs']): React.ReactNode[] {
-  const routes = [];
+const DOCS: RootDocNode = {
+  Introduction: { component: IntroductionDoc },
+  Patterns: {
+    component: PatternsDoc,
+    children: {
+      'Detail Views': { component: DetailViewsDoc },
+      'List Views': { component: ListViewsDoc },
+      'Table Views': { component: TableViewsDoc },
+    },
+  },
+  'Getting Started': { component: GettingStartedDoc },
+  Concepts: { component: ConceptsDoc },
+  Components: {
+    component: ComponentsDoc,
+    children: {
+      CollabKitProvider: { component: ProviderDoc },
+      Thread: { component: ThreadDoc, demo: ThreadDemo },
+      PopoverThread: { component: PopoverThreadDoc, demo: PopoverThreadDemo },
+      Inbox: { component: InboxDoc },
+      // Avatar: { component: AvatarDoc },
+      // Facepile: { component: FacepileDoc },
+    },
+  },
+  Hooks: {
+    component: HooksDoc,
+    children: {
+      useUnreadCommentsCount: { component: UseUnreadCommentsCountDoc },
+      useUnreadThreadsCount: { component: UseUnreadThreadsCountDoc },
+    },
+  },
+  Customisation: { component: CustomisationDoc },
+  Notifications: { component: NotificationsDoc },
+  'Advanced Customisation': { component: AdvancedCustomisationDoc },
+};
 
+function generateDocRoutes(docs: RootDocNode, path: string[] = []): React.ReactNode[] {
+  const routes = [];
   for (const key in docs) {
+    const { prev, next } = getRelatedNodes(DOCS, path.concat(key));
+
     if (has(docs, key)) {
       const value = docs[key];
       const pathString = getDocHref(path, key);
+      console.log({ pathString });
       routes.push(
         <Route key={pathString} path={pathString}>
-          <Doc title={key} demo={value.demo?.({})}>
+          <Doc title={key} demo={value.demo?.({})} next={next} prev={prev}>
             {value.component({})}
           </Doc>
         </Route>
       );
       if (value.children) {
-        routes.push(...generateDocRoutes(value.children, path.concat([key])));
+        routes.push(...generateDocRoutes(value.children, [key]));
       }
     }
   }
   return routes;
 }
 
-import { nanoid } from 'nanoid';
 import { ThreadDemo } from './components/ThreadDemo';
 
-const apiKey = import.meta.env.VITE_COLLABKIT_API_KEY;
-const appId = import.meta.env.VITE_COLLABKIT_APP_ID;
-const workspace = {
-  id: import.meta.env.VITE_COLLABKIT_WORKSPACE_ID,
-  name: import.meta.env.VITE_COLLABKIT_WORKSPACE_NAME,
-};
-
-const DocsProvider = createContext<DocNode | null>(null);
+const DocsProvider = createContext<RootDocNode | null>(null);
 
 export function useDocs() {
   const docs = React.useContext(DocsProvider);
@@ -73,98 +101,59 @@ export function useDocs() {
   return { docs };
 }
 
-export type DocNode = {
-  [key: string]: {
-    demo?: React.FunctionComponent;
-    component: React.FunctionComponent;
-    children?: DocNode;
-  };
+export type RootDocNode = {
+  [key: string]: DocNode;
 };
 
-// function getRelatedNodes(outline: OutlineNode, path: string[] | readonly string[]) {
-//   let node = outline;
-//   let keys = Object.keys(node);
-//   let next = null;
-//   let prev = null;
+export type DocNode = {
+  demo?: React.FunctionComponent;
+  component: React.FunctionComponent;
+  children?: RootDocNode;
+};
 
-//   for (const key of path) {
-//     const index = keys.indexOf(key);
-//     next = keys[index + 1] ?? next;
-//     prev = keys[index - 1] ?? prev;
-//     if (has(node, key)) {
-//       if (typeof node[key] === 'function') {
-//         // couldn't figure out cast here
-//         let component = node[key];
-//         return { next, prev, component };
-//       }
-//       node = node[key];
-//       keys = Object.keys(node);
-//     }
-//   }
+type RelatedNodeReturnValue = {
+  prev?: string[];
+  next?: string[];
+  node: DocNode;
+};
 
-//   return { next, prev };
-// }
+function getRelatedNodes(
+  root: RootDocNode,
+  path: string[],
+  prev: string[] | undefined = undefined,
+  next: string[] | undefined = undefined,
+  base: string[] | undefined = []
+): RelatedNodeReturnValue {
+  const key = path[0];
+  const node = root[path[0]];
+  const keys = Object.keys(root);
+  const index = keys.indexOf(key);
 
-// function Next() {
-//   const { path } = useSnapshot(store);
-//   const { next } = getRelatedNodes(getOutline(), path);
-//   return <div>Next {next}</div>;
-// }
+  const prevKey = keys[index - 1];
+  const nextKey = keys[index + 1];
 
-// function Prev() {
-//   const { path } = useSnapshot(store);
-//   const { prev } = getRelatedNodes(getOutline(), path);
-//   return <div>Previous {prev}</div>;
-// }
+  prev = prevKey ? base.concat(prevKey) : prev;
+  next = nextKey ? base.concat(nextKey) : next;
+
+  let value: RelatedNodeReturnValue;
+
+  if (node?.children && node.children[path[1]]) {
+    value = getRelatedNodes(node.children, path.slice(1), prev, next, [path[0]]);
+  } else {
+    value = {
+      prev,
+      next,
+      node,
+    };
+  }
+
+  return value;
+}
 
 export function Docs() {
-  const docs = {
-    Introduction: { component: IntroductionDoc },
-    Patterns: {
-      component: PatternsDoc,
-      children: {
-        'Detail Views': { component: DetailViewsDoc },
-        'List Views': { component: ListViewsDoc },
-        'Table Views': { component: TableViewsDoc },
-      },
-    },
-    'Getting Started': { component: GettingStartedDoc },
-    Concepts: { component: ConceptsDoc },
-    Components: {
-      component: ComponentsDoc,
-      children: {
-        Provider: { component: ProviderDoc },
-        Thread: { component: ThreadDoc, demo: ThreadDemo },
-        PopoverThread: { component: PopoverThreadDoc, demo: PopoverThreadDemo },
-        Inbox: { component: InboxDoc },
-        Avatar: { component: AvatarDoc },
-        Facepile: { component: FacepileDoc },
-      },
-    },
-    Hooks: {
-      component: HooksDoc,
-      children: {
-        useUnreadCommentsCount: { component: UseUnreadCommentsCountDoc },
-        useUnreadThreadsCount: { component: UseUnreadThreadsCountDoc },
-      },
-    },
-    Customisation: { component: CustomisationDoc },
-    Notifications: { component: NotificationsDoc },
-    'Advanced Customisation': { component: AdvancedCustomisationDoc },
-  };
-
   return (
-    <DocsProvider.Provider value={docs}>
-      <Route path="/docs">
-        <Nav />
-      </Route>
-      <Route path="/docs/:name">
-        <Nav />
-      </Route>
-      <Route path="/docs/:name/:sub">
-        <Nav />
-      </Route>
-      {generateDocRoutes(docs)}
+    <DocsProvider.Provider value={DOCS}>
+      <Switch>{generateDocRoutes(DOCS)}</Switch>
       <Route path="/codeEditor" component={CodeEditor} />
     </DocsProvider.Provider>
   );

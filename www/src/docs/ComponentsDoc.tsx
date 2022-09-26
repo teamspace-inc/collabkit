@@ -1,5 +1,5 @@
 import { Doc } from './Doc';
 
 export function ComponentsDoc() {
-  return <Doc title="Components">List of components</Doc>;
+  return <div>List of components</div>;
 }

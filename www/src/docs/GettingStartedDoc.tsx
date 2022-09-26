@@ -1,7 +1,5 @@
 import { H2, H3 } from '../UIKit';
-import { CodeEditor, renderCodeSnippet } from './CodeEditor';
-import { Doc } from './Doc';
-// import GettingStarted from './markdown/GettingStarted.mdx';
+import { renderCodeSnippet } from './CodeEditor';
 
 const installCode = `# with npm
 npm install @collabkit/react
@@ -25,7 +23,7 @@ const threadCode = `import { Thread } from '@collabkit/react';
 
 export function GettingStartedDoc() {
   return (
-    <Doc title="Getting Started">
+    <div>
       <H2>A quick tutorial to get you up and running with CollabKit.</H2>
       <H3>Implementing a thread</H3>
       <p>1. Install @collabkit/react</p>
@@ -34,6 +32,6 @@ export function GettingStartedDoc() {
       {renderCodeSnippet(providerCode)}
       <p>3. Add a Thread to your app</p>
       {renderCodeSnippet(threadCode)}
-    </Doc>
+    </div>
   );
 }

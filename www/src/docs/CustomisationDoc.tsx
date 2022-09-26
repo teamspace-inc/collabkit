@@ -3,7 +3,7 @@ import { Doc } from './Doc';
 
 export function CustomisationDoc() {
   return (
-    <Doc title="Customisation">
+    <div>
       <p style={{ fontSize: 20, lineHeight: '28px' }}>
         Customise the look and feel of CollabKit to entirely match you apps UI.
       </p>
@@ -28,6 +28,6 @@ const theme: CustomTheme = {
 }
 
 <Provider theme={theme} />`)}
-    </Doc>
+    </div>
   );
 }
