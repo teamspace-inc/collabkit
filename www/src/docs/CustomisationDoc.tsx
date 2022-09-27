@@ -1,12 +1,16 @@
+import { H2 } from '../UIKit';
 import { renderCodeSnippet } from './CodeEditor';
-import { Doc } from './Doc';
+import { DocDemoContainer } from './Doc';
 
 export function CustomisationDoc() {
   return (
     <div>
-      <p style={{ fontSize: 20, lineHeight: '28px' }}>
-        Customise the look and feel of CollabKit to entirely match you apps UI.
-      </p>
+      <H2>Customise the look and feel of CollabKit to entirely match your apps UI.</H2>
+      <DocDemoContainer>
+        <div>Light</div>
+        <div>Dark</div>
+        <div>Custom</div>
+      </DocDemoContainer>
       <p>
         Adjust style variables to change colours, typography, spacing, padding, margins and more.
       </p>
