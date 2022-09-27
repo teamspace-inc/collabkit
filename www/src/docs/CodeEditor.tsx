@@ -5,6 +5,7 @@ import { transform, registerPlugin } from '@babel/standalone';
 import CollabKitMonacoTheme from './CollabKitMonacoTheme.json';
 import { nanoid } from 'nanoid';
 import { useWindowSize } from '../hooks/useWindowSize';
+import Editor from '@monaco-editor/react';
 
 import reactTypes from './react.types.d.ts?raw';
 
@@ -79,7 +80,7 @@ export function CodeEditor(props: {
         const model = monaco.editor.createModel(
           codeString,
           language,
-          monaco.Uri.parse(`file:///${id}/index${id}.tsx`)
+          monaco.Uri.parse(`file:///index${id}.tsx`)
         );
 
         monaco.editor.defineTheme('collabkit', CollabKitMonacoTheme);
@@ -133,8 +134,9 @@ export function CodeEditor(props: {
         }
 
         editor.onDidChangeModelContent(() => {
-          setCodeString(editor.getValue());
-          console.log(editor.getModel().getLineCount());
+          // setCodeString(editor.getValue());
+          console.log('content chnged');
+          // console.log(editor.getModel().getLineCount());
         });
 
         if (language === 'typescript') {

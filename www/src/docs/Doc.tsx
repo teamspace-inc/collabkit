@@ -62,6 +62,12 @@ const DocTableOfContentsItem = styled('div', {
   flexDirection: 'column',
   borderRadius: 6,
   alignItems: 'center',
+  gap: '12px',
+
+  '&:hover': {
+    cursor: 'pointer',
+    background: 'rgba(0,0,0,0.1)',
+  },
 });
 
 export function DocTableOfContents(props: {
@@ -162,9 +168,9 @@ export function Doc(props: {
                 {props.next ? (
                   <DocCalloutLink
                     style={{ marginTop: '20px' }}
-                    href={`${props.next
+                    href={`/${props.next
                       ?.map((part) => part.replace(' ', ''))
-                      .join('>')
+                      .join('/')
                       .toLowerCase()}`}
                   >
                     {props.next.join(' ')}
