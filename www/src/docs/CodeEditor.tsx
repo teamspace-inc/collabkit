@@ -1,39 +1,14 @@
 import React, { useRef, useState, useLayoutEffect, useEffect } from 'react';
 import { loader } from '@monaco-editor/react';
 import type { Monaco } from '@monaco-editor/react';
-import { transform, registerPlugin } from '@babel/standalone';
 import CollabKitMonacoTheme from './CollabKitMonacoTheme.json';
 import { nanoid } from 'nanoid';
 import { useWindowSize } from '../hooks/useWindowSize';
+
 import Editor from '@monaco-editor/react';
 
 import reactTypes from './react.types.d.ts?raw';
-
-function plugin({ types: t }: { types: any }) {
-  return {
-    visitor: {
-      ExportDefaultDeclaration(path: any) {
-        path.replaceWith(t.returnStatement(path.node.declaration));
-      },
-    },
-  };
-}
-
-registerPlugin('plugin', plugin);
-
-function parseCode(codeString: string) {
-  try {
-    const { code } = transform(codeString, {
-      filename: 'index.tsx',
-      presets: ['typescript', 'react'],
-      plugins: ['plugin'],
-    });
-    return code;
-  } catch (err) {
-    console.error('Error parsing code: ', err);
-    return '';
-  }
-}
+import collabKitTypes from './types.d.ts?raw';
 
 export function renderCodeSnippet(code: string) {
   return (
@@ -49,14 +24,16 @@ export function renderCodeSnippet(code: string) {
 
 export function CodeEditor(props: {
   code: string;
-  showPreview?: boolean;
   readOnly?: boolean;
   scrollbar: boolean;
   language?: 'typescript' | 'shell';
   style?: React.CSSProperties;
   lineHeight?: number;
+  numLines?: number;
   fontSize?: number;
+  onChange?: (value: string) => void;
 }) {
+  const numLines = props.numLines ?? 24;
   const fontSize = props.fontSize ?? 14;
   const lineHeight = props.lineHeight ?? 24;
   const language = props.language ?? 'typescript';
@@ -65,7 +42,7 @@ export function CodeEditor(props: {
   const [preview, setPreview] = useState(null);
   const [focused, setFocused] = useState(false);
 
-  const [height, setHeight] = useState(24 * 24);
+  const [height, setHeight] = useState(() => lineHeight * numLines);
   const id = useState(() => nanoid());
 
   const size = useWindowSize();
@@ -94,8 +71,8 @@ export function CodeEditor(props: {
           scrollBeyondLastLine: false,
           scrollbar: {
             verticalScrollbarSize: props.scrollbar === false ? 0 : 6,
-            alwaysConsumeMouseWheel: false,
-            handleMouseWheel: false,
+            alwaysConsumeMouseWheel: props.scrollbar,
+            handleMouseWheel: props.scrollbar,
           },
           minimap: {
             enabled: false,
@@ -135,6 +112,7 @@ export function CodeEditor(props: {
 
         editor.onDidChangeModelContent(() => {
           // setCodeString(editor.getValue());
+          props.onChange?.(editor.getValue());
           console.log('content chnged');
           // console.log(editor.getModel().getLineCount());
         });
@@ -144,28 +122,36 @@ export function CodeEditor(props: {
             reactTypes,
             'file:///node_modules/react/index.d.ts'
           );
+          monaco.languages.typescript.typescriptDefaults.addExtraLib(
+            collabKitTypes,
+            'file:///node_modules/@collabkit/react/index.d.ts'
+          );
         }
       });
     }
   }, [id]);
 
-  useEffect(() => {
-    if (props.showPreview) {
-      try {
-        // eslint-disable-next-line
-        const result = new Function(`React`, parseCode(codeString)!);
-        setPreview(result(React));
-      } catch (err) {
-        console.error('Error compiling result: ', err);
-      }
-    }
-  }, [codeString, props.showPreview]);
+  // unpkg.com/@collabkit/react@:0.4.2
+
+  // useEffect(() => {
+  //   if (props.showPreview) {
+  //     try {
+  //       // eslint-disable-next-line
+  //       const result = new Function(`React`, parseCode(codeString)!);
+  //       setPreview(result(React));
+  //     } catch (err) {
+  //       console.error('Error compiling result: ', err);
+  //     }
+  //   }
+  // }, [codeString]);
 
   useEffect(() => {
+    // if (!props.showPreview) {
     const numLines = editorRef.current?.getElementsByClassName('view-line').length;
     if (numLines && numLines > 0) {
       setHeight(numLines * lineHeight + 0);
     }
+    // }
   }, [props.code.length, id]);
 
   return (
@@ -179,12 +165,11 @@ export function CodeEditor(props: {
         borderRadius: 8,
         height,
         padding: '10px 0',
-        gridTemplateColumns: props.showPreview ? '1fr 1fr' : '1fr',
+        gridTemplateColumns: '1fr',
         ...props.style,
       }}
     >
       <div ref={editorRef} style={{ height }} />
-      {props.showPreview ? <div>{preview}</div> : null}
     </div>
   );
 }

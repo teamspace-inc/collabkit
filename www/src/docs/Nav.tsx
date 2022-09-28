@@ -14,8 +14,13 @@ const StyledNavListOl = styled('ol', {
   boxSizing: 'borderBox',
   paddingLeft: '12px',
   paddingRight: '20px',
+  gap: '4px',
+  display: 'flex',
+  flexDirection: 'column',
 
   ol: {
+    marginTop: 4,
+    marginBottom: 12,
     paddingLeft: 0,
     textIndent: '24px',
     paddingRight: 0,

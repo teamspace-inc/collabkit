@@ -1,6 +1,5 @@
 import { H2, H3 } from '../UIKit';
 import { DocCalloutLink } from './Doc';
-import { Markdown } from './Markdown';
 
 // While apps like Slack and Microsoft Teams are where we chat they don’t really enable communication around a piece of content in your product well. People resort to taking screenshots and sharing them on other services, while describing the relevant context manually “See the fourth item from the top in this list”.
 
@@ -37,8 +36,8 @@ export function IntroductionDoc() {
       <H3>Key Features</H3>
       <ol>
         <li>
-          <b>Contextual Collaboration:</b>
           <p>
+            <b>Contextual Collaboration: </b>
             Comment on anything in your app, whether be it a table, chart, piece of text, or a sale,
             invoice, or product. CollabKit works with any interface, letting your users leave
             comments on the item in question.
@@ -46,14 +45,14 @@ export function IntroductionDoc() {
         </li>
         <li>
           <p>
-            <b>Easy to integrate</b> Drop-in our SDK and ship commenting in minutes. We take care of
-            all the hard bits like realtime, seen state, email notifications, rich text formatting,
-            emojis and more…
+            <b>Easy to integrate: </b> Drop-in our SDK and ship commenting in minutes. We take care
+            of all the hard bits like realtime, seen state, email notifications, rich text
+            formatting, emojis and more…
           </p>
         </li>
         <li>
           <p>
-            <b>Customisable</b>
+            <b>Customisable: </b>
             Fully customisable, pick the components that suit your apps interface and adjust the
             theme to set font size, line heights, spacing, padding, margins, typography and colours.
             Match your apps look and feel so it looks like you built it in-house. Or go all the way
@@ -63,7 +62,7 @@ export function IntroductionDoc() {
         </li>
         <li>
           <p>
-            <b>Human</b>
+            <b>Human: </b>
             Let your users work as a team in your product. With emojis, GIFs, file and photo
             sharing, and replies your users will feel right at home with our commenting system.
           </p>
