@@ -7,7 +7,7 @@ import {
   ScrollAreaViewport,
   styled,
 } from '../UIKit';
-import { getDocHref, RootDocNode, useDocs } from './Docs';
+import { DOCS, getDocHref, RootDocNode, useDocs } from './Docs';
 
 const StyledNavListOl = styled('ol', {
   listStyle: 'none',
@@ -103,13 +103,11 @@ function NavList(props: { node: RootDocNode; path: string[] }) {
 }
 
 export function Nav(props: { className?: string }) {
-  const { docs } = useDocs();
-
   return (
     <div className={props.className}>
       <ScrollAreaRoot style={{ width: '100%' }}>
         <ScrollAreaViewport>
-          <NavList node={docs} path={[]} />
+          <NavList node={DOCS} path={[]} />
         </ScrollAreaViewport>
         <ScrollAreaScrollbar orientation="vertical">
           <ScrollAreaThumb />

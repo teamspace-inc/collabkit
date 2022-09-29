@@ -1,4 +1,4 @@
-import React, { createContext } from 'react';
+import React from 'react';
 import { IntroductionDoc } from './IntroductionDoc';
 import { DetailViewsDoc } from './patterns/DetailViewsDoc';
 import { ListViewsDoc } from './patterns/ListViewsDoc';
@@ -19,13 +19,12 @@ import has from 'has';
 import { Route, Switch } from 'wouter';
 import { CodeEditor } from './CodeEditor';
 import { Doc } from './Doc';
-import { PopoverThreadDemo } from './components/PopoverThreadDemo';
 
 export function getDocHref(path: string[], key: string) {
   return `/docs/${path.concat([key]).join('/').replace(' ', '').toLowerCase()}`;
 }
 
-const DOCS: RootDocNode = {
+export const DOCS: RootDocNode = {
   Introduction: { component: IntroductionDoc },
   'Getting Started': { component: GettingStartedDoc },
   Patterns: {
@@ -85,18 +84,6 @@ function generateDocRoutes(docs: RootDocNode, path: string[] = []): React.ReactN
   return routes;
 }
 
-import { ThreadDemo } from './components/ThreadDemo';
-
-const DocsProvider = createContext<RootDocNode | null>(null);
-
-export function useDocs() {
-  const docs = React.useContext(DocsProvider);
-  if (docs === null) {
-    throw new Error('useDocs must be used within a DocsProvider');
-  }
-  return { docs };
-}
-
 export type RootDocNode = {
   [key: string]: DocNode;
 };
@@ -151,9 +138,9 @@ function getRelatedNodes(
 
 export function Docs() {
   return (
-    <DocsProvider.Provider value={DOCS}>
+    <>
       <Switch>{generateDocRoutes(DOCS)}</Switch>
       <Route path="/codeEditor" component={CodeEditor} />
-    </DocsProvider.Provider>
+    </>
   );
 }

@@ -6,6 +6,7 @@ import { nanoid } from 'nanoid';
 
 import reactTypes from './react.types.d.ts?raw';
 import collabKitTypes from './types.d.ts?raw';
+import { useCallback } from './react.types';
 
 export function renderCodeSnippet(code: string) {
   return (
@@ -36,6 +37,8 @@ export function CodeEditor(props: {
   const language = props.language ?? 'typescript';
   const editorRef = useRef<HTMLDivElement>(null);
   const monacoRef = useRef<any>(null);
+  const [codeString, setCodeString] = useState(() => props.code ?? ``);
+  const [didMount, setDidMount] = useState(false);
 
   const [height, setHeight] = useState(() => lineHeight * numLines);
   const id = useState(() => nanoid());
@@ -102,10 +105,7 @@ export function CodeEditor(props: {
         }
 
         editor.onDidChangeModelContent(() => {
-          // setCodeString(editor.getValue());
           props.onChange?.(editor.getValue());
-          console.log('content chnged');
-          // console.log(editor.getModel().getLineCount());
         });
 
         if (language === 'typescript') {
@@ -120,18 +120,19 @@ export function CodeEditor(props: {
         }
       });
     }
-  }, [id]);
+    setTimeout(() => setDidMount(true), 0);
+  }, [props.code, id]);
 
   useEffect(() => {
     const numLines = editorRef.current?.getElementsByClassName('view-line').length;
+    console.log({ numLines });
     if (numLines && numLines > 0) {
       setHeight(numLines * lineHeight);
     }
-  }, [props.code.length, id]);
+  }, [codeString.length, id, didMount]);
 
   return (
     <>
-      {' '}
       <style>
         {`
 .mtk42 {
