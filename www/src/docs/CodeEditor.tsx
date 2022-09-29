@@ -14,7 +14,7 @@ export function renderCodeSnippet(code: string) {
       readOnly={true}
       code={code}
       language={'typescript'}
-      style={{ borderRadius: '6px', width: 'calc(100% - 40px)' }}
+      style={{ borderRadius: '6px', width: 'calc(100% - 80px)' }}
       scrollbar={false}
     />
   );
@@ -166,8 +166,7 @@ color: #999999 !important;
           background: '#2B2B2B',
           borderRadius: 8,
           height,
-          // boxSizing: 'border-box',
-          padding: '40px 0px',
+          padding: '40px 40px',
           gridTemplateColumns: '1fr',
           ...props.style,
         }}
