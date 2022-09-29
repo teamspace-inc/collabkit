@@ -65,7 +65,7 @@ export const DOCS: RootDocNode = {
   'Advanced Customisation': { component: AdvancedCustomisationDoc },
 };
 
-function generateDocRoutes(docs: RootDocNode, path: string[] = []): React.ReactNode[] {
+function generateDocRoutes(docs: RootDocNode, path: string[] = []): JSX.Element[] {
   const routes = [
     <Route key="docs" path="/docs">
       <Redirect to="/docs/introduction" />
@@ -90,7 +90,6 @@ function generateDocRoutes(docs: RootDocNode, path: string[] = []): React.ReactN
               {value.component?.({})}
             </Doc>
           ) : null}
-          {/* */}
           {childPath ? <Redirect to={childPath} /> : null}
         </Route>
       );
