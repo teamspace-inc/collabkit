@@ -66,7 +66,11 @@ export const DOCS: RootDocNode = {
 };
 
 function generateDocRoutes(docs: RootDocNode, path: string[] = []): React.ReactNode[] {
-  const routes = [];
+  const routes = [
+    <Route key="docs" path="/docs">
+      <Redirect to="/docs/introduction" />
+    </Route>,
+  ];
   for (const key in docs) {
     const { prev, next } = getRelatedNodes(DOCS, path.concat(key));
 
