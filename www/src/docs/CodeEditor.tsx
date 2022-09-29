@@ -3,9 +3,6 @@ import { loader } from '@monaco-editor/react';
 import type { Monaco } from '@monaco-editor/react';
 import CollabKitMonacoTheme from './CollabKitMonacoTheme.json';
 import { nanoid } from 'nanoid';
-import { useWindowSize } from '../hooks/useWindowSize';
-
-import Editor from '@monaco-editor/react';
 
 import reactTypes from './react.types.d.ts?raw';
 import collabKitTypes from './types.d.ts?raw';
@@ -39,15 +36,9 @@ export function CodeEditor(props: {
   const language = props.language ?? 'typescript';
   const editorRef = useRef<HTMLDivElement>(null);
   const monacoRef = useRef<any>(null);
-  const [preview, setPreview] = useState(null);
-  const [focused, setFocused] = useState(false);
 
   const [height, setHeight] = useState(() => lineHeight * numLines);
   const id = useState(() => nanoid());
-
-  const size = useWindowSize();
-
-  const [codeString, setCodeString] = useState(props.code ?? ``);
 
   useLayoutEffect(() => {
     if (monacoRef.current === null) {
@@ -55,7 +46,7 @@ export function CodeEditor(props: {
         monacoRef.current = monaco;
 
         const model = monaco.editor.createModel(
-          codeString,
+          props.code ?? '',
           language,
           monaco.Uri.parse(`file:///index${id}.tsx`)
         );
@@ -131,45 +122,57 @@ export function CodeEditor(props: {
     }
   }, [id]);
 
-  // unpkg.com/@collabkit/react@:0.4.2
-
-  // useEffect(() => {
-  //   if (props.showPreview) {
-  //     try {
-  //       // eslint-disable-next-line
-  //       const result = new Function(`React`, parseCode(codeString)!);
-  //       setPreview(result(React));
-  //     } catch (err) {
-  //       console.error('Error compiling result: ', err);
-  //     }
-  //   }
-  // }, [codeString]);
-
   useEffect(() => {
-    // if (!props.showPreview) {
     const numLines = editorRef.current?.getElementsByClassName('view-line').length;
     if (numLines && numLines > 0) {
-      setHeight(numLines * lineHeight + 0);
+      setHeight(numLines * lineHeight);
     }
-    // }
   }, [props.code.length, id]);
 
   return (
-    <div
-      onFocus={() => setFocused(true)}
-      onBlur={() => setFocused(false)}
-      style={{
-        position: 'relative',
-        display: 'grid',
-        background: '#F8F8FF',
-        borderRadius: 8,
-        height,
-        padding: '10px 0',
-        gridTemplateColumns: '1fr',
-        ...props.style,
-      }}
-    >
-      <div ref={editorRef} style={{ height }} />
-    </div>
+    <>
+      {' '}
+      <style>
+        {`
+.mtk42 {
+color: #FFEC6B;
+}
+
+.mtk6, .mtk1 {
+color: #BBBBBB;
+font-style: normal;
+font-weight: normal !important;
+}
+
+.mtk39 {
+color: #9FEFD7;
+}
+
+.mtk16 {
+color: white;
+}
+
+.monaco-editor .cldr.codicon.codicon-folding-expanded, .monaco-editor .cldr.codicon.codicon-folding-collapsed {
+color: #999999 !important;
+}
+
+    `}
+      </style>
+      <div
+        style={{
+          position: 'relative',
+          display: 'grid',
+          background: '#2B2B2B',
+          borderRadius: 8,
+          height,
+          // boxSizing: 'border-box',
+          padding: '40px 0px',
+          gridTemplateColumns: '1fr',
+          ...props.style,
+        }}
+      >
+        <div ref={editorRef} style={{ height }} />
+      </div>
+    </>
   );
 }

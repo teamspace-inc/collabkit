@@ -14,6 +14,7 @@ export const { styled, css, theme } = createStitches({
 export const H2 = styled('h2', {
   fontSize: 24,
   lineHeight: '34px',
+  margin: 0,
   fontWeight: 400,
   color: '#BBBBBB',
 });
@@ -23,6 +24,7 @@ export const H3 = styled('h3', {
   fontStyle: 'normal',
   fontWeight: 700,
   fontSize: 24,
+  margin: '0 0 20px',
   lineHeight: '28px',
   color: 'white',
 });

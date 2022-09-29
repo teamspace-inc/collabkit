@@ -3,16 +3,16 @@
   "inherit": true,
   "rules": [
     {
-      "background": "F8F8FF",
+      "background": "2B2B2B",
       "token": ""
     },
     {
-      "foreground": "999988",
+      "foreground": "BBBBBB",
       "fontStyle": "italic",
       "token": "comment"
     },
     {
-      "foreground": "999999",
+      "foreground": "FFEC6B",
       "fontStyle": "bold",
       "token": "comment.block.preprocessor"
     },
@@ -62,11 +62,11 @@
       "token": "support.type"
     },
     {
-      "foreground": "008080",
+      "foreground": "FFEC6B",
       "token": "entity.other.attribute-name"
     },
     {
-      "foreground": "0086b3",
+      "foreground": "000000",
       "token": "variable.other"
     },
     {
@@ -89,11 +89,12 @@
       "token": "support.class"
     },
     {
-      "foreground": "008080",
+      "foreground": "FFEC6B",
+      "fontStyle": "bold",
       "token": "variable.other.constant"
     },
     {
-      "foreground": "800080",
+      "foreground": "FFEC6B",
       "token": "constant.character.entity"
     },
     {
@@ -117,15 +118,15 @@
       "token": "entity.name.section"
     },
     {
-      "foreground": "000080",
+      "foreground": "FFEC6B",
       "token": "entity.name.tag"
     },
     {
-      "foreground": "008080",
+      "foreground": "FFEC6B",
       "token": "variable.parameter"
     },
     {
-      "foreground": "008080",
+      "foreground": "FFEC6B",
       "token": "support.variable"
     },
     {
@@ -237,11 +238,12 @@
     }
   ],
   "colors": {
-    "editor.foreground": "#000000",
-    "editor.background": "#F8F8FF",
-    "editor.selectionBackground": "#B4D5FE",
-    "editor.lineHighlightBackground": "#FFFEEB",
-    "editorCursor.foreground": "#666666",
-    "editorWhitespace.foreground": "#BBBBBB"
+    "editor.foreground": "#ffffff",
+    "editor.background": "#2B2B2B",
+    "editor.selectionBackground": "#3D3D3D",
+    "editor.inactiveSelectionBackground": "#2B2B2B",
+    "editor.lineHighlightBackground": "#444444",
+    "editorCursor.foreground": "#FFEC6B",
+    "editorWhitespace.foreground": "#222222"
   }
 }
