@@ -135,6 +135,16 @@ const customTheme: CustomTheme = {
   return (
     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
       <CodeEditor code={code} scrollbar={true} onChange={setCode} />
+      <style>
+        {`
+.mtk1 {
+  color: #BBBBBB;
+}
+
+.mtk7 {
+  color: #FFEC6B;
+}`}
+      </style>
       <div>Preview here</div>
     </div>
   );
