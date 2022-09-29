@@ -156,7 +156,7 @@ export const DocLink = styled(Link, {
 
 export const DocDemoContainer = styled('div', {
   flex: 1,
-  backgroundColor: '#92E4FD',
+  backgroundColor: '#7166D3',
   display: 'flex',
   borderRadius: '8px',
   padding: '100px 20px',
