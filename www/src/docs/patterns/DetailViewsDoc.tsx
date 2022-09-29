@@ -4,7 +4,7 @@ import { Markdown } from '../Markdown';
 
 export function DetailViewsDoc() {
   return (
-    <div>
+    <>
       <H2>
         Add a comment thread to views in your product about a single object. Ex. For a CRM it would
         be a customer, for a task management app it would be a task.
@@ -31,6 +31,6 @@ export function DetailViewsDoc() {
   
   1. Thread`}
       />
-    </div>
+    </>
   );
 }

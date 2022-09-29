@@ -4,7 +4,7 @@ import { Markdown } from '../Markdown';
 
 export function TableViewsDoc() {
   return (
-    <div>
+    <>
       <H2>For tables, data grids and spreadsheet-like interfaces.</H2>
       <DocDemoContainer />
       <Markdown
@@ -22,6 +22,6 @@ export function TableViewsDoc() {
 1. Popover Thread
 2. Inbox`}
       />
-    </div>
+    </>
   );
 }

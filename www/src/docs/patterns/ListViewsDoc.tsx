@@ -4,7 +4,7 @@ import { Markdown } from '../Markdown';
 
 export function ListViewsDoc() {
   return (
-    <div>
+    <>
       <H2>
         For lists of things in your product. Ex. a list of customers, sales, tasks, different
         entities in your product.
@@ -23,6 +23,6 @@ export function ListViewsDoc() {
 1. Comment Button
 2. Popover Thread`}
       />
-    </div>
+    </>
   );
 }
