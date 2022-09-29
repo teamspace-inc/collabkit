@@ -1,5 +1,5 @@
 import { H2, H3 } from '../UIKit';
-import { DocLink, DocFooter } from './Doc';
+import { DocLink } from './Doc';
 
 // While apps like Slack and Microsoft Teams are where we chat they don’t really enable communication around a piece of content in your product well. People resort to taking screenshots and sharing them on other services, while describing the relevant context manually “See the fourth item from the top in this list”.
 

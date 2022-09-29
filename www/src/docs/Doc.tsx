@@ -10,27 +10,26 @@ import {
 } from '../UIKit';
 import { Nav } from './DocNav';
 
-const DocNav = styled(Nav, {
+const StyledDocNav = styled(Nav, {
   position: 'sticky',
-  height: '100vh',
   top: 0,
   background: '#222',
   borderRight: '1px solid #3D3D3D',
   color: 'white',
+  display: 'flex',
+  height: '100vh',
 
   variants: {
     breakpoint: {
-      small: {
-        position: 'unset',
-      },
-      medium: { background: '#222' },
-      large: { background: 'blue' },
-      xlarge: { background: 'green' },
+      small: { background: '#222', alignItems: 'flex-start' },
+      medium: { background: '#222', alignItems: 'flex-start' },
+      large: { height: '100vh', alignItems: 'flex-end' },
+      xlarge: { height: '100vh', alignItems: 'flex-end' },
     },
   },
 });
 
-const DocContentFormatting = styled('div', {
+const StyledDocContentFormatting = styled('div', {
   wordWrap: 'break-word',
   flex: 1,
   boxSizing: 'border-box',
@@ -123,21 +122,30 @@ export function DocFooter(props: { next?: string[]; prev?: string[] }) {
   );
 }
 
-const DocRoot = styled('div', {
-  height: '100vh',
+const StyledDocRoot = styled('div', {
   color: '#BBBBBB',
   background: '#222',
   position: 'fixed',
   inset: 0,
   alignItems: 'flex-start',
   display: 'grid',
-  gridTemplateColumns: 'minmax(400px, 1fr) minmax(780px, 3fr)',
 
   h1: {
     color: 'white',
   },
   h3: {
     color: 'white',
+  },
+
+  variants: {
+    breakpoint: {
+      small: {
+        gridTemplateRows: '1fr',
+      },
+      medium: { gridTemplateRows: '1fr' },
+      large: { gridTemplateColumns: 'minmax(400px, 1fr) minmax(780px, 3fr)' },
+      xlarge: { gridTemplateColumns: 'minmax(400px, 1fr) minmax(780px, 3fr)' },
+    },
   },
 });
 
@@ -198,18 +206,19 @@ export function Doc(props: {
   prev: string[] | undefined;
 }) {
   const size = useWindowSize();
+  console.log({ breakpoint: size?.breakpoint });
   return (
-    <DocRoot>
-      <DocNav breakpoint={size?.breakpoint} />
+    <StyledDocRoot breakpoint={size?.breakpoint}>
+      <StyledDocNav breakpoint={size?.breakpoint} />
       <div style={{ height: '100vh' }}>
         <ScrollAreaRoot style={{ width: '100%' }}>
           <ScrollAreaViewport>
             <DocScrollableContent>
-              <DocContentFormatting>
+              <StyledDocContentFormatting>
                 <DocTitle>{props.title}</DocTitle>
                 <DocContent>{props.children}</DocContent>
                 <DocFooter next={props.next} prev={props.prev} />
-              </DocContentFormatting>
+              </StyledDocContentFormatting>
             </DocScrollableContent>
           </ScrollAreaViewport>
           <ScrollAreaScrollbar orientation="vertical">
@@ -218,6 +227,6 @@ export function Doc(props: {
           <ScrollAreaCorner />
         </ScrollAreaRoot>
       </div>
-    </DocRoot>
+    </StyledDocRoot>
   );
 }

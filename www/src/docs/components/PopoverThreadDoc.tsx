@@ -6,8 +6,8 @@ export function PopoverThreadDoc() {
   return (
     <>
       <H2>
-        Shows comment threads visible to the authenticated user &amp; workspace. Only open threads
-        are shown by default.
+        A comment thread displayed in a popover, can be anchored to any component in your view
+        hierarchy.
       </H2>
       <PopoverThreadDemo />
       <div>

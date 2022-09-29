@@ -14,11 +14,16 @@ export function useWindowSize() {
 
     function updateWindowSize() {
       let breakpoint: Breakpoint = 'small';
+
       if (window.innerWidth > 500) {
         breakpoint = 'medium';
-      } else if (window.innerWidth > 1280) {
+      }
+
+      if (window.innerWidth > 1180) {
         breakpoint = 'large';
-      } else if (window.innerWidth > 1440) {
+      }
+
+      if (window.innerWidth > 1440) {
         breakpoint = 'xlarge';
       }
 

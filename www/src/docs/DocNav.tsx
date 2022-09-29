@@ -9,16 +9,16 @@ import {
 } from '../UIKit';
 import Logo from './Logo.svg';
 import { DOCS, getDocHref, RootDocNode } from './Docs';
+import { Breakpoint, useWindowSize } from '../hooks/useWindowSize';
+import { useEffect, useState } from 'react';
 
 const StyledNavListOl = styled('ol', {
   listStyle: 'none',
   boxSizing: 'borderBox',
-  paddingLeft: '12px',
-  paddingRight: '56px',
+  padding: '0px 12px',
   gap: '4px',
   display: 'flex',
   flexDirection: 'column',
-  alignItems: 'flex-end',
 
   ol: {
     marginTop: 0,
@@ -29,7 +29,19 @@ const StyledNavListOl = styled('ol', {
   },
 });
 
-const StyledNavListLi = styled('li', {});
+const StyledNavListLi = styled('li', {
+  display: 'flex',
+  flexDirection: 'column',
+
+  variants: {
+    breakpoint: {
+      small: { alignItems: 'flex-start' },
+      medium: { alignItems: 'flex-start' },
+      large: { alignItems: 'flex-end' },
+      xlarge: { alignItems: 'flex-end' },
+    },
+  },
+});
 
 const StyledNavListItem = styled('div', {
   fontSize: '16px',
@@ -37,7 +49,7 @@ const StyledNavListItem = styled('div', {
   boxSizing: 'border-box',
   padding: '4px 12px',
   userSelect: 'none',
-  width: '266px',
+  flex: 1,
 
   color: '#BBBBBB',
   textDecoration: 'none',
@@ -82,13 +94,13 @@ function NavListItem(props: { path: string[]; id: string }) {
   );
 }
 
-function NavList(props: { node: RootDocNode; path: string[] }) {
+function NavList(props: { node: RootDocNode; path: string[]; breakpoint?: Breakpoint }) {
   if (typeof props.node === 'function') {
     return null;
   }
 
   return (
-    <StyledNavListOl>
+    <StyledNavListOl breakpoint={props.breakpoint}>
       {Object.entries(props.node).map(([key, value], index) => {
         return (
           <StyledNavListLi key={`${key}-${index}`}>
@@ -105,23 +117,57 @@ function NavList(props: { node: RootDocNode; path: string[] }) {
   );
 }
 
+const NavWrap = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+  paddingBottom: '100px',
+
+  variants: {
+    small: {},
+    medium: {},
+    large: {},
+    xlarge: {},
+  },
+});
+
+const LogoRoot = styled('div', {
+  width: 310,
+  padding: '40px 24px 10px',
+});
+
+function shouldShowNav(breakpoint?: Breakpoint) {
+  return breakpoint && ['large', 'xlarge'].includes(breakpoint);
+}
+
 export function Nav(props: { className?: string }) {
+  const size = useWindowSize();
+  const [isOpen, setIsOpen] = useState(() => shouldShowNav(size?.breakpoint));
+
+  useEffect(() => {
+    setIsOpen(shouldShowNav(size?.breakpoint));
+  }, [size?.breakpoint]);
+
   return (
-    <div className={props.className}>
-      <ScrollAreaRoot style={{ width: '100%' }}>
-        <ScrollAreaViewport>
-          <div style={{ display: 'flex', alignItems: 'flex-end', flexDirection: 'column' }}>
-            <div style={{ width: 310, padding: '40px 0px 10px' }}>
-              <img src={Logo} />
-            </div>
-            <NavList node={DOCS} path={[]} />
-          </div>
-        </ScrollAreaViewport>
-        <ScrollAreaScrollbar orientation="vertical">
-          <ScrollAreaThumb />
-        </ScrollAreaScrollbar>
-        <ScrollAreaCorner />
-      </ScrollAreaRoot>
-    </div>
+    <>
+      <button onClick={() => setIsOpen(!isOpen)}>Open</button>
+      {isOpen ? (
+        <div className={props.className}>
+          <ScrollAreaRoot style={{ width: '100%' }}>
+            <ScrollAreaViewport>
+              <NavWrap breakpoint={size?.breakpoint}>
+                <LogoRoot>
+                  <img src={Logo} />
+                </LogoRoot>
+                <NavList node={DOCS} path={[]} breakpoint={size?.breakpoint} />
+              </NavWrap>
+            </ScrollAreaViewport>
+            <ScrollAreaScrollbar orientation="vertical">
+              <ScrollAreaThumb />
+            </ScrollAreaScrollbar>
+            <ScrollAreaCorner />
+          </ScrollAreaRoot>
+        </div>
+      ) : null}
+    </>
   );
 }

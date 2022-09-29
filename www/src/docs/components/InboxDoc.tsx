@@ -6,8 +6,8 @@ export function InboxDoc() {
   return (
     <>
       <H2>
-        Shows comment threads visible to the authenticated user &amp; workspace. Only open threads
-        are shown by default.
+        Shows open comment threads, so a user can see which conversations are happening and what
+        they need to respond to in one place.
       </H2>
       <DocDemoContainer />
       <div>
