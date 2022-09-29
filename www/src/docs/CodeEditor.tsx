@@ -121,7 +121,11 @@ export function CodeEditor(props: {
         }
       });
     }
+
+    // hack replace this...
     setTimeout(() => setDidMount(true), 0);
+    setTimeout(() => setDidMount(false), 100);
+    setTimeout(() => setDidMount(true), 1000);
   }, [props.code, id]);
 
   useEffect(() => {
