@@ -1,4 +1,3 @@
-import { CaretRight } from 'phosphor-react';
 import { Link } from 'wouter';
 import { useWindowSize } from '../hooks/useWindowSize';
 import {
