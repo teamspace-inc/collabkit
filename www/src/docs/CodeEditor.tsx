@@ -7,12 +7,12 @@ import { nanoid } from 'nanoid';
 import reactTypes from './react.types.d.ts?raw';
 import collabKitTypes from './types.d.ts?raw';
 
-export function renderCodeSnippet(code: string) {
+export function renderCodeSnippet(code: string, language: 'typescript' | 'shell' = 'typescript') {
   return (
     <CodeEditor
       readOnly={true}
       code={code}
-      language={'typescript'}
+      language={language}
       style={{ borderRadius: '6px', width: 'calc(100% - 80px)' }}
       scrollbar={false}
     />

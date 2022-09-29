@@ -33,7 +33,7 @@ export function GettingStartedDoc() {
       </div>
       <div>
         <H3>1. Install @collabkit/react</H3>
-        {renderCodeSnippet(installCode)}
+        {renderCodeSnippet(installCode, 'shell')}
       </div>
       <div>
         <H3>2. Wrap your app in a `Provider`</H3>
