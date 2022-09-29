@@ -144,10 +144,14 @@ export function CodeEditor(props: {
 color: #FFEC6B;
 }
 
-.mtk6, .mtk1 {
-color: #BBBBBB;
+.mtk6 {
+color: violet;
 font-style: normal;
 font-weight: normal !important;
+}
+
+.mtk1 {
+  color: red;
 }
 
 .mtk39 {

@@ -56,16 +56,71 @@ const DocContentFormatting = styled('div', {
   },
 });
 
-export function DocCalloutLink(props: {
-  style?: React.CSSProperties;
-  href: string;
+function pathToHref(path?: string[]) {
+  return path
+    ?.map((part) => part.replace(' ', ''))
+    .join('/')
+    .toLowerCase();
+}
+
+function DocFooterLink(props: {
+  path?: string[];
   children: React.ReactNode;
+  style?: React.CSSProperties;
 }) {
+  return props.path ? (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        cursor: 'pointer',
+        alignItems: 'flex-start',
+        flex: 1,
+        ...props.style,
+      }}
+    >
+      {props.children}
+      <DocLink href={pathToHref(props.path)}>
+        <span
+          style={{
+            color: '#FFEC6B',
+            fontWeight: '700',
+            textDecorationLine: 'underline',
+          }}
+        >
+          {props.path?.[props.path?.length - 1]}
+        </span>
+      </DocLink>
+    </div>
+  ) : null;
+}
+
+export function DocFooter(props: { next?: string[]; prev?: string[] }) {
   return (
-    <StyledDocCalloutLink href={props.href} style={props.style}>
-      <span style={{ flex: 1, display: 'flex' }}>{props.children}</span>
-      <CaretRight size={24} />
-    </StyledDocCalloutLink>
+    <div
+      style={{
+        marginTop: 60,
+        borderTop: '1px solid #3D3D3D',
+        paddingTop: 20,
+        paddingBottom: 100,
+        color: '#BBBBBB',
+        fontFamily: 'Inter',
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'flex-end',
+        fontStyle: 'normal',
+        fontWeight: 400,
+        fontSize: 16,
+        lineHeight: '28px',
+      }}
+    >
+      <DocFooterLink path={props.prev} style={{ alignItems: 'flex-start' }}>
+        Prev
+      </DocFooterLink>
+      <DocFooterLink path={props.next} style={{ alignItems: 'flex-end' }}>
+        Next
+      </DocFooterLink>
+    </div>
   );
 }
 
@@ -87,24 +142,17 @@ const DocRoot = styled('div', {
   },
 });
 
-export const StyledDocCalloutLink = styled(Link, {
-  display: 'flex',
-  color: 'black',
-  width: '100%',
-  alignItems: 'center',
-  boxSizing: 'border-box',
-  padding: '12px 20px',
-  border: '1px solid black',
+export const DocLink = styled(Link, {
   borderRadius: '6px',
   textDecoration: 'none',
-});
-
-export const DocLink = styled(Link, {
-  color: 'blue',
-  textDecoration: 'none',
-  '&:hover': {
-    textDecoration: 'underline',
-  },
+  fontFamily: 'Inter',
+  fontStyle: 'normal',
+  fontWeight: 600,
+  fontSize: 16,
+  lineHeight: '34px',
+  textDecorationLine: 'underline',
+  color: '#FFEC6B',
+  cursor: 'pointer !important',
 });
 
 export const DocDemoContainer = styled('div', {
@@ -161,17 +209,7 @@ export function Doc(props: {
               <DocContentFormatting>
                 <DocTitle>{props.title}</DocTitle>
                 <DocContent>{props.children}</DocContent>
-                {props.next ? (
-                  <DocCalloutLink
-                    style={{ marginTop: '20px' }}
-                    href={`/${props.next
-                      ?.map((part) => part.replace(' ', ''))
-                      .join('/')
-                      .toLowerCase()}`}
-                  >
-                    {props.next.join(' ')}
-                  </DocCalloutLink>
-                ) : null}
+                <DocFooter next={props.next} prev={props.prev} />
               </DocContentFormatting>
             </DocScrollableContent>
           </ScrollAreaViewport>

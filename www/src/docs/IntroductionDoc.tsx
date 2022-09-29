@@ -1,5 +1,5 @@
 import { H2, H3 } from '../UIKit';
-import { DocCalloutLink } from './Doc';
+import { DocLink, DocFooter } from './Doc';
 
 // While apps like Slack and Microsoft Teams are where we chat they don’t really enable communication around a piece of content in your product well. People resort to taking screenshots and sharing them on other services, while describing the relevant context manually “See the fourth item from the top in this list”.
 
@@ -13,7 +13,7 @@ export function IntroductionDoc() {
         <br />
         Add our flexible components to your app to help your users collaborate in context.
       </H2>
-      <DocCalloutLink href="/docs/gettingstarted">Get started</DocCalloutLink>
+      <DocLink href="/docs/gettingstarted">Getting started</DocLink>
       <div>
         <H3>Vision</H3>
         <p>
