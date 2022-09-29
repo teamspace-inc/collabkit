@@ -7,7 +7,7 @@ import {
   ScrollAreaViewport,
   styled,
 } from '../UIKit';
-import { DOCS, getDocHref, RootDocNode, useDocs } from './Docs';
+import { DOCS, getDocHref, RootDocNode } from './Docs';
 
 const StyledNavListOl = styled('ol', {
   listStyle: 'none',
@@ -20,8 +20,8 @@ const StyledNavListOl = styled('ol', {
   alignItems: 'flex-end',
 
   ol: {
-    marginTop: 4,
-    marginBottom: 12,
+    marginTop: 0,
+    marginBottom: 8,
     paddingLeft: 0,
     textIndent: '24px',
     paddingRight: 0,
@@ -32,24 +32,26 @@ const StyledNavListLi = styled('li', {});
 
 const StyledNavListItem = styled('div', {
   fontSize: '16px',
+  lineHeight: '32px',
   boxSizing: 'border-box',
-  padding: '8px 12px',
+  padding: '4px 12px',
   userSelect: 'none',
   width: '266px',
 
   color: '#BBBBBB',
   textDecoration: 'none',
-  borderRadius: '8px',
+  borderRadius: '4px',
 
   variants: {
     active: {
       true: {
-        background: 'black',
+        background: 'rgba(255, 255, 255, 0.08)',
         color: 'white',
+        fontWeight: 600,
       },
       false: {
         '&:hover': {
-          background: '#888',
+          background: 'rgba(255, 255, 255, 0.04)',
           cursor: 'pointer',
           color: 'white',
         },
@@ -62,11 +64,12 @@ const StyledNavListTitle = styled('div', {
   fontFamily: 'Inter',
   fontStyle: 'normal',
   fontWeight: 600,
-  fontSize: 14,
-  marginTop: '0px',
+  color: '#BBB',
+  fontSize: 12,
+  letterSpacing: '1px',
+  marginTop: '8px',
   paddingLeft: '12px',
   lineHeight: '32px',
-  color: '#FFFFFF',
 });
 
 function NavListItem(props: { path: string[]; id: string }) {

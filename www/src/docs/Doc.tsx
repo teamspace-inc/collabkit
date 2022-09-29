@@ -9,7 +9,7 @@ import {
   ScrollAreaViewport,
   styled,
 } from '../UIKit';
-import { Nav } from './Nav';
+import { Nav } from './DocNav';
 
 const DocNav = styled(Nav, {
   position: 'sticky',
@@ -36,6 +36,8 @@ const DocContentFormatting = styled('div', {
   flex: 1,
   boxSizing: 'border-box',
 
+  lineHeight: '28px',
+
   blockquote: {
     borderLeft: '2px solid black',
     textIndent: 0,
@@ -46,7 +48,7 @@ const DocContentFormatting = styled('div', {
   code: {
     fontFamily: 'Monaco',
     fontSize: 14,
-    color: '#a31515',
+    color: '#FFEC6B',
   },
 
   h1: {

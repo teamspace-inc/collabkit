@@ -28,7 +28,7 @@ export const DOCS: RootDocNode = {
   Introduction: { component: IntroductionDoc },
   'Getting Started': { component: GettingStartedDoc },
   Patterns: {
-    title: 'Patterns',
+    title: 'PATTERNS',
     children: {
       'Detail Views': { component: DetailViewsDoc },
       'List Views': { component: ListViewsDoc },
@@ -36,7 +36,7 @@ export const DOCS: RootDocNode = {
     },
   },
   Components: {
-    title: 'Components',
+    title: 'COMPONENTS',
     children: {
       CollabKitProvider: { component: ProviderDoc },
       Thread: { component: ThreadDoc },
@@ -47,7 +47,7 @@ export const DOCS: RootDocNode = {
     },
   },
   Hooks: {
-    title: 'Hooks',
+    title: 'HOOKS',
     children: {
       useUnreadCommentsCount: { component: UseUnreadCommentsCountDoc },
       useUnreadThreadsCount: { component: UseUnreadThreadsCountDoc },

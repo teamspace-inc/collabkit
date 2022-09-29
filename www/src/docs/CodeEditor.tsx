@@ -6,7 +6,6 @@ import { nanoid } from 'nanoid';
 
 import reactTypes from './react.types.d.ts?raw';
 import collabKitTypes from './types.d.ts?raw';
-import { useCallback } from './react.types';
 
 export function renderCodeSnippet(code: string) {
   return (
@@ -105,7 +104,9 @@ export function CodeEditor(props: {
         }
 
         editor.onDidChangeModelContent(() => {
-          props.onChange?.(editor.getValue());
+          const value = editor.getValue();
+          setCodeString(value);
+          props.onChange?.(value);
         });
 
         if (language === 'typescript') {
