@@ -7,6 +7,7 @@ import {
   ScrollAreaViewport,
   styled,
 } from '../UIKit';
+import Logo from './Logo.svg';
 import { DOCS, getDocHref, RootDocNode } from './Docs';
 
 const StyledNavListOl = styled('ol', {
@@ -64,9 +65,8 @@ const StyledNavListTitle = styled('div', {
   fontFamily: 'Inter',
   fontStyle: 'normal',
   fontWeight: 600,
-  color: '#BBB',
-  fontSize: 12,
-  letterSpacing: '1px',
+  color: '#fff',
+  fontSize: 14,
   marginTop: '8px',
   paddingLeft: '12px',
   lineHeight: '32px',
@@ -110,7 +110,12 @@ export function Nav(props: { className?: string }) {
     <div className={props.className}>
       <ScrollAreaRoot style={{ width: '100%' }}>
         <ScrollAreaViewport>
-          <NavList node={DOCS} path={[]} />
+          <div style={{ display: 'flex', alignItems: 'flex-end', flexDirection: 'column' }}>
+            <div style={{ width: 310, padding: '40px 0px 10px' }}>
+              <img src={Logo} />
+            </div>
+            <NavList node={DOCS} path={[]} />
+          </div>
         </ScrollAreaViewport>
         <ScrollAreaScrollbar orientation="vertical">
           <ScrollAreaThumb />

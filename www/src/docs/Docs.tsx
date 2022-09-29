@@ -15,20 +15,26 @@ import { UseUnreadThreadsCountDoc } from './hooks/useUnreadThreadsCountDoc';
 import { CustomisationDoc } from './CustomisationDoc';
 import { NotificationsDoc } from './NotificationsDoc';
 import { AdvancedCustomisationDoc } from './AdvancedCustomisationDoc';
+
 import has from 'has';
-import { Route, Switch } from 'wouter';
+
+import { Redirect, Route, Switch } from 'wouter';
 import { CodeEditor } from './CodeEditor';
 import { Doc } from './Doc';
 
 export function getDocHref(path: string[], key: string) {
-  return `/docs/${path.concat([key]).join('/').replace(' ', '').toLowerCase()}`;
+  return getPathHref(path.concat([key]));
+}
+
+export function getPathHref(path: string[]) {
+  return `/docs/${path.join('/').replace(' ', '').toLowerCase()}`;
 }
 
 export const DOCS: RootDocNode = {
   Introduction: { component: IntroductionDoc },
   'Getting Started': { component: GettingStartedDoc },
   Patterns: {
-    title: 'PATTERNS',
+    title: 'Patterns',
     children: {
       'Detail Views': { component: DetailViewsDoc },
       'List Views': { component: ListViewsDoc },
@@ -36,7 +42,7 @@ export const DOCS: RootDocNode = {
     },
   },
   Components: {
-    title: 'COMPONENTS',
+    title: 'Components',
     children: {
       CollabKitProvider: { component: ProviderDoc },
       Thread: { component: ThreadDoc },
@@ -47,7 +53,7 @@ export const DOCS: RootDocNode = {
     },
   },
   Hooks: {
-    title: 'HOOKS',
+    title: 'Hooks',
     children: {
       useUnreadCommentsCount: { component: UseUnreadCommentsCountDoc },
       useUnreadThreadsCount: { component: UseUnreadThreadsCountDoc },
@@ -67,6 +73,12 @@ function generateDocRoutes(docs: RootDocNode, path: string[] = []): React.ReactN
     if (has(docs, key)) {
       const value = docs[key];
       const pathString = getDocHref(path, key);
+
+      // if we are at /docs/patterns
+      // redirect to: /docs/patterns/detailviews
+      const childPath =
+        'children' in value ? getDocHref(path.concat([key]), Object.keys(value.children)[0]) : null;
+
       routes.push(
         <Route key={pathString} path={pathString}>
           {'component' in value ? (
@@ -74,6 +86,8 @@ function generateDocRoutes(docs: RootDocNode, path: string[] = []): React.ReactN
               {value.component?.({})}
             </Doc>
           ) : null}
+          {/* */}
+          {childPath ? <Redirect to={childPath} /> : null}
         </Route>
       );
       if ('children' in value) {

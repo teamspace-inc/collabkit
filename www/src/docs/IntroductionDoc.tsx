@@ -19,7 +19,7 @@ export function IntroductionDoc() {
         <p>
           Most SaaS apps need some form of collaboration. It’s the underlying activity we perform
           while working with others in a team, and the tools we use have the context about the work
-          we’re doing.{' '}
+          we’re doing.
         </p>
         <p>
           Purpose built collaboration apps like Notion, Figma and Google Docs have offered

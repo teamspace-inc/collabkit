@@ -56,10 +56,10 @@ const DocContentFormatting = styled('div', {
 });
 
 function pathToHref(path?: string[]) {
-  return path
+  return `/docs/${path
     ?.map((part) => part.replace(' ', ''))
     .join('/')
-    .toLowerCase();
+    .toLowerCase()}`;
 }
 
 function DocFooterLink(props: {
