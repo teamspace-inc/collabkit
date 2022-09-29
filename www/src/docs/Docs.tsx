@@ -21,6 +21,7 @@ import has from 'has';
 import { Redirect, Route, Switch } from 'wouter';
 import { CodeEditor } from './CodeEditor';
 import { Doc } from './Doc';
+import { WorkspacesDoc } from './WorkspacesDoc';
 
 export function getDocHref(path: string[], key: string) {
   return getPathHref(path.concat([key]));
@@ -59,7 +60,7 @@ export const DOCS: RootDocNode = {
       useUnreadThreadsCount: { component: UseUnreadThreadsCountDoc },
     },
   },
-  Workspaces: { component: CustomisationDoc },
+  Workspaces: { component: WorkspacesDoc },
   Customisation: { component: CustomisationDoc },
   Notifications: { component: NotificationsDoc },
   'Advanced Customisation': { component: AdvancedCustomisationDoc },

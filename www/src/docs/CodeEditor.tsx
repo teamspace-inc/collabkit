@@ -130,7 +130,6 @@ export function CodeEditor(props: {
 
   useEffect(() => {
     const numLines = editorRef.current?.getElementsByClassName('view-line').length;
-    console.log({ numLines });
     if (numLines && numLines > 0) {
       setHeight(numLines * lineHeight);
     }
