@@ -12,8 +12,8 @@ export function CustomisationDoc() {
       <div>
         <H3>Built-in themes</H3>
         <p>
-          CollabKit comes with two builtin themes. Light and Dark. Use these as a starting point for
-          your own theme.
+          CollabKit comes with two builtin themes. Light and Dark. <br />
+          Use these as a starting point for your own theme.
         </p>
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
