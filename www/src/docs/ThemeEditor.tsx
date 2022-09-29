@@ -133,9 +133,9 @@ const customTheme: CustomTheme = {
   }, [code]);
 
   return (
-    <div>
+    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
       <CodeEditor code={code} scrollbar={true} onChange={setCode} />
-      <div>{/* <CollabKitProvider theme={code} />{' '} */}</div>
+      <div>Preview here</div>
     </div>
   );
 }

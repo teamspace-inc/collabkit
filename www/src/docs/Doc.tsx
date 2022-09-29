@@ -1,5 +1,6 @@
-import { CaretRight, IconContext } from 'phosphor-react';
+import { CaretRight } from 'phosphor-react';
 import { Link } from 'wouter';
+import { useWindowSize } from '../hooks/useWindowSize';
 import {
   ScrollAreaCorner,
   ScrollAreaRoot,
@@ -11,24 +12,23 @@ import {
 import { Nav } from './Nav';
 
 const DocNav = styled(Nav, {
-  position: 'fixed',
-  inset: 0,
-  right: 'unset',
-  width: 264,
-  background: '#fafafa',
-});
-
-const DocScrollAreaWrap = styled('div', {
+  position: 'sticky',
   height: '100vh',
-  width: 'calc(100vw - 264px)',
-  position: 'fixed',
-  left: '264px',
   top: 0,
-  bottom: 0,
-});
+  background: '#222',
+  borderRight: '1px solid #3D3D3D',
+  color: 'white',
 
-export const DocContent = styled('div', {
-  flex: 1,
+  variants: {
+    breakpoint: {
+      small: {
+        position: 'unset',
+      },
+      medium: { background: '#222' },
+      large: { background: 'blue' },
+      xlarge: { background: 'green' },
+    },
+  },
 });
 
 const DocContentFormatting = styled('div', {
@@ -54,43 +54,6 @@ const DocContentFormatting = styled('div', {
   },
 });
 
-const DocTableOfContentsItem = styled('div', {
-  padding: 20,
-  border: '1px solid black',
-  marginBottom: 24,
-  display: 'flex',
-  flexDirection: 'column',
-  borderRadius: 6,
-  alignItems: 'center',
-  gap: '12px',
-
-  '&:hover': {
-    cursor: 'pointer',
-    background: 'rgba(0,0,0,0.1)',
-  },
-});
-
-export function DocTableOfContents(props: {
-  items: { name: string; icon: React.ComponentClass; href: string }[];
-}) {
-  return (
-    <ol style={{ listStyle: 'none', padding: '0' }}>
-      <IconContext.Provider value={{ size: 64, weight: 'thin' }}>
-        {props.items.map((item) => (
-          <li key={item.name}>
-            <Link href={item.href}>
-              <DocTableOfContentsItem>
-                {<item.icon />}
-                {item.name}
-              </DocTableOfContentsItem>
-            </Link>
-          </li>
-        ))}
-      </IconContext.Provider>
-    </ol>
-  );
-}
-
 export function DocCalloutLink(props: {
   style?: React.CSSProperties;
   href: string;
@@ -104,6 +67,23 @@ export function DocCalloutLink(props: {
   );
 }
 
+const DocRoot = styled('div', {
+  height: '100vh',
+  color: '#BBBBBB',
+  background: '#222',
+  position: 'fixed',
+  inset: 0,
+  alignItems: 'flex-start',
+  display: 'grid',
+  gridTemplateColumns: 'minmax(400px, 1fr) minmax(780px, 3fr)',
+
+  h1: {
+    color: 'white',
+  },
+  h3: {
+    color: 'white',
+  },
+});
 
 export const StyledDocCalloutLink = styled(Link, {
   display: 'flex',
@@ -130,42 +110,56 @@ export const DocDemoContainer = styled('div', {
   backgroundColor: '#4158D0',
   backgroundImage: 'linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%)',
   display: 'flex',
+  borderRadius: '8px',
   padding: '100px 20px',
-  margin: '0 -20px',
+  margin: '0',
   justifyContent: 'center',
   alignItems: 'center',
 });
 
 const DocTitle = styled('h1', {
   display: 'block',
-  margin: '48px 0px 0px',
-  padding: '20px 0px 10px',
+  margin: '0px !important',
+  padding: '64px 0px 40px',
   boxSizing: 'border-box',
   lineHeight: '24px',
 });
 
 const DocScrollableContent = styled('div', {
   padding: 20,
+  maxWidth: 760,
+  display: 'table',
+  margin: '0 auto',
+  height: '100vh',
+  position: 'sticky',
+  top: 0,
+  boxSizing: 'border-box',
+});
+
+const DocContent = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '40px',
+  flex: 1,
 });
 
 export function Doc(props: {
   title: string;
   children: React.ReactNode;
-  demo?: React.ReactNode;
   next: string[] | undefined;
   prev: string[] | undefined;
 }) {
-  // const size = useWindowSize();
+  const size = useWindowSize();
   return (
-    <div>
-      <DocNav />
-      <DocScrollAreaWrap>
+    <DocRoot>
+      <DocNav breakpoint={size?.breakpoint} />
+      <div style={{ height: '100vh' }}>
         <ScrollAreaRoot style={{ width: '100%' }}>
-          <ScrollAreaViewport style={{ width: '100%' }}>
+          <ScrollAreaViewport>
             <DocScrollableContent>
               <DocContentFormatting>
                 <DocTitle>{props.title}</DocTitle>
-                <div style={{ flex: 1, width: '' }}>{props.children}</div>
+                <DocContent>{props.children}</DocContent>
                 {props.next ? (
                   <DocCalloutLink
                     style={{ marginTop: '20px' }}
@@ -185,7 +179,7 @@ export function Doc(props: {
           </ScrollAreaScrollbar>
           <ScrollAreaCorner />
         </ScrollAreaRoot>
-      </DocScrollAreaWrap>
-    </div>
+      </div>
+    </DocRoot>
   );
 }

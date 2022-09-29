@@ -2,16 +2,27 @@ import React from 'react';
 
 const WINDOW_RESIZE_DEBOUNCE_WAIT_IN_MS = 100;
 
+export type Breakpoint = 'small' | 'medium' | 'large' | 'xlarge';
+
 export function useWindowSize() {
-  const [windowSize, setWindowSize] = React.useState<{ width: number; height: number } | undefined>(
-    undefined
-  );
+  const [windowSize, setWindowSize] = React.useState<
+    { width: number; height: number; breakpoint: Breakpoint } | undefined
+  >(undefined);
 
   React.useEffect(() => {
     let debounceTimerId: number;
 
     function updateWindowSize() {
-      setWindowSize({ width: window.innerWidth, height: window.innerHeight });
+      let breakpoint: Breakpoint = 'small';
+      if (window.innerWidth > 500) {
+        breakpoint = 'medium';
+      } else if (window.innerWidth > 1280) {
+        breakpoint = 'large';
+      } else if (window.innerWidth > 1440) {
+        breakpoint = 'xlarge';
+      }
+
+      setWindowSize({ width: window.innerWidth, height: window.innerHeight, breakpoint });
     }
 
     function handleResize() {

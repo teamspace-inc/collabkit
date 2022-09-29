@@ -13,10 +13,11 @@ const StyledNavListOl = styled('ol', {
   listStyle: 'none',
   boxSizing: 'borderBox',
   paddingLeft: '12px',
-  paddingRight: '20px',
+  paddingRight: '56px',
   gap: '4px',
   display: 'flex',
   flexDirection: 'column',
+  alignItems: 'flex-end',
 
   ol: {
     marginTop: 4,
@@ -30,11 +31,13 @@ const StyledNavListOl = styled('ol', {
 const StyledNavListLi = styled('li', {});
 
 const StyledNavListItem = styled('div', {
-  fontSize: '14px',
+  fontSize: '16px',
+  boxSizing: 'border-box',
   padding: '8px 12px',
   userSelect: 'none',
+  width: '266px',
 
-  color: 'black',
+  color: '#BBBBBB',
   textDecoration: 'none',
   borderRadius: '8px',
 
@@ -53,6 +56,17 @@ const StyledNavListItem = styled('div', {
       },
     },
   },
+});
+
+const StyledNavListTitle = styled('div', {
+  fontFamily: 'Inter',
+  fontStyle: 'normal',
+  fontWeight: 600,
+  fontSize: 14,
+  marginTop: '0px',
+  paddingLeft: '12px',
+  lineHeight: '32px',
+  color: '#FFFFFF',
 });
 
 function NavListItem(props: { path: string[]; id: string }) {
@@ -75,8 +89,12 @@ function NavList(props: { node: RootDocNode; path: string[] }) {
       {Object.entries(props.node).map(([key, value], index) => {
         return (
           <StyledNavListLi key={`${key}-${index}`}>
-            <NavListItem path={props.path} id={key} />
-            {value.children ? <NavList node={value.children} path={[...props.path, key]} /> : null}
+            {'component' in value ? <NavListItem path={props.path} id={key} /> : null}
+            {'title' in value ? <StyledNavListTitle>{value.title}</StyledNavListTitle> : null}
+
+            {'children' in value ? (
+              <NavList node={value.children} path={[...props.path, key]} />
+            ) : null}
           </StyledNavListLi>
         );
       })}
@@ -89,7 +107,7 @@ export function Nav(props: { className?: string }) {
 
   return (
     <div className={props.className}>
-      <ScrollAreaRoot>
+      <ScrollAreaRoot style={{ width: '100%' }}>
         <ScrollAreaViewport>
           <NavList node={docs} path={[]} />
         </ScrollAreaViewport>

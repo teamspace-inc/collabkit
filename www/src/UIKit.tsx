@@ -12,12 +12,20 @@ export const { styled, css, theme } = createStitches({
 });
 
 export const H2 = styled('h2', {
-  fontSize: 20,
-  lineHeight: '28px',
-  fontWeight: 'normal',
+  fontSize: 24,
+  lineHeight: '34px',
+  fontWeight: 400,
+  color: '#BBBBBB',
 });
 
-export const H3 = styled('h3', {});
+export const H3 = styled('h3', {
+  fontFamily: 'Inter',
+  fontStyle: 'normal',
+  fontWeight: 700,
+  fontSize: 24,
+  lineHeight: '28px',
+  color: 'white',
+});
 
 const SCROLLBAR_SIZE = 6;
 

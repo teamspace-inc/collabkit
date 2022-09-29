@@ -1,8 +1,9 @@
 import { Thread } from '@collabkit/react';
 import { H2, H3 } from '../UIKit';
-import { CodeEditor, renderCodeSnippet } from './CodeEditor';
 import { DocDemoContainer } from './Doc';
 import { ThemeEditor } from './ThemeEditor';
+
+const threadSize = { width: 320, height: 440 };
 
 export function CustomisationDoc() {
   return (
@@ -14,16 +15,40 @@ export function CustomisationDoc() {
         your own theme.
       </p>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
-        <DocDemoContainer>
-          Light
-          <div style={{ width: 320, height: 400 }}>
-            <Thread threadId={'bar'}></Thread>
+        <DocDemoContainer style={{ position: 'relative' }}>
+          <div
+            style={{
+              fontSize: 12,
+              padding: 20,
+              fontWeight: '700',
+              color: 'rgba(255,255,255,0.75)',
+              position: 'absolute',
+              left: 0,
+              top: 0,
+            }}
+          >
+            Light
+          </div>
+          <div style={threadSize}>
+            <Thread threadId={'bar'} />
           </div>
         </DocDemoContainer>
-        <DocDemoContainer>
-          Dark
-          <div style={{ width: 320, height: 400 }}>
-            <Thread threadId={'foo'}></Thread>
+        <DocDemoContainer style={{ position: 'relative' }}>
+          <div
+            style={{
+              fontSize: 12,
+              padding: 20,
+              fontWeight: '700',
+              color: 'rgba(255,255,255,0.75)',
+              position: 'absolute',
+              left: 0,
+              top: 0,
+            }}
+          >
+            Dark
+          </div>
+          <div style={threadSize}>
+            <Thread threadId={'foo'} />
           </div>
         </DocDemoContainer>
       </div>
@@ -37,8 +62,8 @@ export function CustomisationDoc() {
       <DocDemoContainer>
         <div style={{ display: 'flex', gap: '12px' }}>
           <span style={{ fontSize: '24px', color: 'white' }}>Custom</span>
-          <div style={{ width: 240, height: 320 }}>
-            <Thread threadId={'foo2'}></Thread>
+          <div style={threadSize}>
+            <Thread threadId={'foo2'} />
           </div>
         </div>
       </DocDemoContainer>
