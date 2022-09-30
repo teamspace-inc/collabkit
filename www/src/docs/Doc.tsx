@@ -14,7 +14,6 @@ const StyledDocNav = styled(Nav, {
   position: 'sticky',
   top: 0,
   background: '#222',
-  borderRight: '1px solid #3D3D3D',
   color: 'white',
   display: 'flex',
   height: '100vh',
@@ -205,10 +204,11 @@ export function Doc(props: {
   prev: string[] | undefined;
 }) {
   const size = useWindowSize();
+  const showBorder = ['large', 'xlarge'].includes(size?.breakpoint ?? '');
   return (
     <StyledDocRoot breakpoint={size?.breakpoint}>
       <StyledDocNav breakpoint={size?.breakpoint} />
-      <div style={{ height: '100vh' }}>
+      <div style={{ height: '100vh', borderLeft: showBorder ? '1px solid #3D3D3D' : false }}>
         <ScrollAreaRoot style={{ width: '100%' }}>
           <ScrollAreaViewport>
             <DocScrollableContent>
