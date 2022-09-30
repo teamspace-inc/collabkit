@@ -26,3 +26,12 @@ jobs:
       - run: yarn test
         env:
           FIREBASE_TEST_SERVICE_ACCOUNT: '${{ secrets.FIREBASE_TEST_SERVICE_ACCOUNT }}'
+  test-core:
+    runs-on: buildjet-32vcpu-ubuntu-2004
+    defaults:
+      run:
+        working-directory: packages/@collabkit/core
+    steps:
+      - uses: actions/checkout@v2
+      - run: yarn install --frozen-lockfile --prefer-offline
+      - run: yarn test
