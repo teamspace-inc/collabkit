@@ -13,7 +13,7 @@ import {
   KEY_ESCAPE_COMMAND,
   KEY_TAB_COMMAND,
 } from 'lexical';
-import { startTransition, useCallback, useEffect, useLayoutEffect, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useState } from 'react';
 import escapeStringRegexp from 'escape-string-regexp';
 import { $createMentionNode, MentionNode } from '../../editor';
 import { snapshot } from 'valtio';
@@ -645,16 +645,16 @@ export function MentionsPlugin(): JSX.Element | null {
       if (match !== null && !isSelectionOnEntityBoundary(editor, match.leadOffset)) {
         const isRangePositioned = tryToPositionRange(match, range);
         if (isRangePositioned !== null) {
-          startTransition(() =>
-            setResolution({
-              match,
-              range,
-            })
-          );
+          // startTransition(() =>
+          setResolution({
+            match,
+            range,
+          });
+          // );
           return;
         }
       }
-      startTransition(() => setResolution(null));
+      setResolution(null);
     };
 
     const removeUpdateListener = editor.registerUpdateListener(updateListener);

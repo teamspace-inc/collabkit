@@ -1,4 +1,4 @@
-import React, { useId, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { useMarkAsSeen } from '../hooks/useMarkAsSeen';
 import { useOnMarkdownLinkClick } from '../hooks/useOnMarkdownLinkClick';
 import { useThreadContext } from '../hooks/useThreadContext';
@@ -16,6 +16,9 @@ import { useApp } from '../hooks/useApp';
 import { ComposerContext } from './composer/Composer';
 import { CommentTarget } from '@collabkit/core';
 
+// alternative to useId
+let counter = 0;
+
 export function Root(props: {
   children: React.ReactNode;
   className?: string;
@@ -24,7 +27,7 @@ export function Root(props: {
 }) {
   const { threadId, workspaceId, userId } = useThreadContext();
   const { eventId } = props;
-  const treeId = useId();
+  const treeId = useMemo(() => `${counter++}`, []);
 
   const target = useMemo<CommentTarget>(
     () => ({ type: 'comment', workspaceId, threadId, eventId, treeId }),
