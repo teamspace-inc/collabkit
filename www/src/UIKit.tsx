@@ -50,9 +50,9 @@ const scrollAreaStyles = {
     userSelect: 'none',
     // disable browser handling of all panning and zooming gestures on touch devices
     touchAction: 'none',
-    padding: '6px 6px 6px 4px',
+    padding: '6px 4px 6px 4px',
     transition: 'background 160ms ease-out',
-    '&:hover': { background: 'rgba(255,255,255,0.5)' },
+    '&:hover': { background: 'rgba(255,255,255,0.04)' },
     '&[data-orientation="vertical"]': { width: SCROLLBAR_SIZE },
     '&[data-orientation="horizontal"]': {
       flexDirection: 'column',
@@ -62,7 +62,7 @@ const scrollAreaStyles = {
 
   thumb: css({
     flex: 1,
-    background: 'black',
+    background: 'rgba(255,255,255,0.16)',
     borderRadius: SCROLLBAR_SIZE,
     // increase target size for touch devices https://www.w3.org/WAI/WCAG21/Understanding/target-size.html
     position: 'relative',

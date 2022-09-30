@@ -11,11 +11,12 @@ import Logo from './Logo.svg';
 import { DOCS, getDocHref, RootDocNode } from './Docs';
 import { Breakpoint, useWindowSize } from '../hooks/useWindowSize';
 import { useEffect, useState } from 'react';
+import { List } from 'phosphor-react';
 
 const StyledNavListOl = styled('ol', {
   listStyle: 'none',
   boxSizing: 'borderBox',
-  padding: '0px 12px',
+  padding: '0px 24px 0px 12px',
   gap: '4px',
   display: 'flex',
   flexDirection: 'column',
@@ -84,17 +85,22 @@ const StyledNavListTitle = styled('div', {
   lineHeight: '32px',
 });
 
-function NavListItem(props: { path: string[]; id: string }) {
+function NavListItem(props: { path: string[]; id: string; onClick: () => void }) {
   const [location] = useLocation();
   const href = getDocHref(props.path, props.id);
   return (
-    <Link href={href}>
+    <Link href={href} onClick={props.onClick}>
       <StyledNavListItem active={href === location}>{props.id}</StyledNavListItem>
     </Link>
   );
 }
 
-function NavList(props: { node: RootDocNode; path: string[]; breakpoint?: Breakpoint }) {
+function NavList(props: {
+  node: RootDocNode;
+  path: string[];
+  breakpoint?: Breakpoint;
+  onClick: () => void;
+}) {
   if (typeof props.node === 'function') {
     return null;
   }
@@ -104,11 +110,12 @@ function NavList(props: { node: RootDocNode; path: string[]; breakpoint?: Breakp
       {Object.entries(props.node).map(([key, value], index) => {
         return (
           <StyledNavListLi key={`${key}-${index}`}>
-            {'component' in value ? <NavListItem path={props.path} id={key} /> : null}
+            {'component' in value ? (
+              <NavListItem onClick={props.onClick} path={props.path} id={key} />
+            ) : null}
             {'title' in value ? <StyledNavListTitle>{value.title}</StyledNavListTitle> : null}
-
             {'children' in value ? (
-              <NavList node={value.children} path={[...props.path, key]} />
+              <NavList onClick={props.onClick} node={value.children} path={[...props.path, key]} />
             ) : null}
           </StyledNavListLi>
         );
@@ -131,17 +138,54 @@ const NavWrap = styled('div', {
 });
 
 const LogoRoot = styled('div', {
-  width: 310,
-  padding: '40px 24px 10px',
+  flex: 1,
+  cursor: 'pointer',
+});
+
+const BurgerMenu = styled('button', {
+  border: 'none',
+  background: 'rgba(255, 255, 255, 0.02)',
+  borderRadius: '4px',
+  width: '40px',
+  height: '40px',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+
+  '&:hover': {
+    background: 'rgba(255, 255, 255, 0.04)',
+    cursor: 'pointer',
+  },
+
+  variants: {
+    active: {
+      true: {
+        background: 'rgba(255, 255, 255, 0.08)',
+        '&:hover': {
+          background: 'rgba(255, 255, 255, 0.08)',
+        },
+      },
+    },
+  },
 });
 
 function shouldShowNav(breakpoint?: Breakpoint) {
   return breakpoint && ['large', 'xlarge'].includes(breakpoint);
 }
 
+const NavHeader = styled('div', {
+  display: 'flex',
+  flexDirection: 'row',
+  height: '80px',
+  alignItems: 'center',
+  padding: '0px 24px',
+});
+
 export function Nav(props: { className?: string }) {
   const size = useWindowSize();
   const [isOpen, setIsOpen] = useState(() => shouldShowNav(size?.breakpoint));
+
+  const hasMenu = !shouldShowNav(size?.breakpoint);
 
   useEffect(() => {
     setIsOpen(shouldShowNav(size?.breakpoint));
@@ -149,25 +193,40 @@ export function Nav(props: { className?: string }) {
 
   return (
     <>
-      <button onClick={() => setIsOpen(!isOpen)}>Open</button>
-      {isOpen ? (
-        <div className={props.className}>
-          <ScrollAreaRoot style={{ width: '100%' }}>
-            <ScrollAreaViewport>
-              <NavWrap breakpoint={size?.breakpoint}>
-                <LogoRoot>
-                  <img src={Logo} />
-                </LogoRoot>
-                <NavList node={DOCS} path={[]} breakpoint={size?.breakpoint} />
-              </NavWrap>
-            </ScrollAreaViewport>
-            <ScrollAreaScrollbar orientation="vertical">
-              <ScrollAreaThumb />
-            </ScrollAreaScrollbar>
-            <ScrollAreaCorner />
-          </ScrollAreaRoot>
-        </div>
-      ) : null}
+      <div>
+        <NavHeader>
+          <LogoRoot>
+            <Link to="/docs">
+              <img src={Logo} />
+            </Link>
+          </LogoRoot>
+          {hasMenu ? (
+            <BurgerMenu active={isOpen} onClick={() => setIsOpen(!isOpen)}>
+              <List size={24} color="rgba(255,255,255,0.75)" />
+            </BurgerMenu>
+          ) : null}
+        </NavHeader>
+        {isOpen ? (
+          <div className={props.className}>
+            <ScrollAreaRoot style={{ width: '100%' }}>
+              <ScrollAreaViewport>
+                <NavWrap breakpoint={size?.breakpoint}>
+                  <NavList
+                    onClick={() => setIsOpen(false)}
+                    node={DOCS}
+                    path={[]}
+                    breakpoint={size?.breakpoint}
+                  />
+                </NavWrap>
+              </ScrollAreaViewport>
+              <ScrollAreaScrollbar orientation="vertical">
+                <ScrollAreaThumb />
+              </ScrollAreaScrollbar>
+              <ScrollAreaCorner />
+            </ScrollAreaRoot>
+          </div>
+        ) : null}
+      </div>
     </>
   );
 }

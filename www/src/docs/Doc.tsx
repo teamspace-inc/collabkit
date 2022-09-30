@@ -33,7 +33,6 @@ const StyledDocContentFormatting = styled('div', {
   wordWrap: 'break-word',
   flex: 1,
   boxSizing: 'border-box',
-
   lineHeight: '28px',
 
   blockquote: {
@@ -100,7 +99,7 @@ export function DocFooter(props: { next?: string[]; prev?: string[] }) {
         marginTop: 60,
         borderTop: '1px solid #3D3D3D',
         paddingTop: 20,
-        paddingBottom: 100,
+        paddingBottom: 200,
         color: '#BBBBBB',
         fontFamily: 'Inter',
         display: 'flex',
@@ -206,7 +205,6 @@ export function Doc(props: {
   prev: string[] | undefined;
 }) {
   const size = useWindowSize();
-  console.log({ breakpoint: size?.breakpoint });
   return (
     <StyledDocRoot breakpoint={size?.breakpoint}>
       <StyledDocNav breakpoint={size?.breakpoint} />

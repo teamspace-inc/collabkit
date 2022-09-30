@@ -19,7 +19,7 @@ export function useWindowSize() {
         breakpoint = 'medium';
       }
 
-      if (window.innerWidth > 1180) {
+      if (window.innerWidth > 600) {
         breakpoint = 'large';
       }
 
