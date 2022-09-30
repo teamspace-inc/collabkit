@@ -9,7 +9,7 @@ import {
 } from '../UIKit';
 import Logo from './Logo.svg';
 import { DOCS, getDocHref, RootDocNode } from './Docs';
-import { Breakpoint, useWindowSize } from '../hooks/useWindowSize';
+import { Breakpoint, useBreakpoint, useWindowSize } from '../hooks/useWindowSize';
 import { useEffect, useState } from 'react';
 import { List } from 'phosphor-react';
 
@@ -20,6 +20,15 @@ const StyledNavListOl = styled('ol', {
   gap: '4px',
   display: 'flex',
   flexDirection: 'column',
+
+  variants: {
+    breakpoint: {
+      small: {},
+      medium: {},
+      large: { paddingRight: '56px' },
+      xlarge: { paddingRight: '56px' },
+    },
+  },
 
   ol: {
     marginTop: 0,
@@ -128,18 +137,29 @@ const NavWrap = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   paddingBottom: '100px',
+  alignItems: 'flex-end',
 
   variants: {
-    small: {},
-    medium: {},
-    large: {},
-    xlarge: {},
+    breakpoint: {
+      small: {},
+      medium: {},
+      large: {},
+      xlarge: {},
+    },
   },
 });
 
 const LogoRoot = styled('div', {
   flex: 1,
   cursor: 'pointer',
+  variants: {
+    breakpoint: {
+      small: {},
+      medium: {},
+      large: {},
+      xlarge: {},
+    },
+  },
 });
 
 const BurgerMenu = styled('button', {
@@ -169,8 +189,8 @@ const BurgerMenu = styled('button', {
   },
 });
 
-function shouldShowNav(breakpoint?: Breakpoint) {
-  return breakpoint && ['large', 'xlarge'].includes(breakpoint);
+function shouldShowNav(breakpoint: Breakpoint) {
+  return ['large', 'xlarge'].includes(breakpoint);
 }
 
 const NavHeader = styled('div', {
@@ -182,26 +202,27 @@ const NavHeader = styled('div', {
 });
 
 export function Nav(props: { className?: string }) {
-  const size = useWindowSize();
-  const [isOpen, setIsOpen] = useState(() => shouldShowNav(size?.breakpoint));
+  const breakpoint = useBreakpoint();
 
-  const hasMenu = !shouldShowNav(size?.breakpoint);
+  const [isOpen, setIsOpen] = useState(() => shouldShowNav(breakpoint));
+
+  const hasMenu = !shouldShowNav(breakpoint);
 
   useEffect(() => {
-    setIsOpen(shouldShowNav(size?.breakpoint));
-  }, [size?.breakpoint]);
+    setIsOpen(shouldShowNav(breakpoint));
+  }, [breakpoint]);
 
   return (
     <>
       <div>
         <NavHeader>
-          <LogoRoot>
+          <LogoRoot breakpoint={breakpoint}>
             <Link to="/docs">
               <img src={Logo} />
             </Link>
           </LogoRoot>
           {hasMenu ? (
-            <BurgerMenu active={isOpen} onClick={() => setIsOpen(!isOpen)}>
+            <BurgerMenu active={isOpen} onClick={() => hasMenu && setIsOpen(!isOpen)}>
               <List size={24} color="rgba(255,255,255,0.75)" />
             </BurgerMenu>
           ) : null}
@@ -210,12 +231,12 @@ export function Nav(props: { className?: string }) {
           <div className={props.className}>
             <ScrollAreaRoot style={{ width: '100%' }}>
               <ScrollAreaViewport>
-                <NavWrap breakpoint={size?.breakpoint}>
+                <NavWrap breakpoint={breakpoint}>
                   <NavList
                     onClick={() => setIsOpen(false)}
                     node={DOCS}
                     path={[]}
-                    breakpoint={size?.breakpoint}
+                    breakpoint={breakpoint}
                   />
                 </NavWrap>
               </ScrollAreaViewport>

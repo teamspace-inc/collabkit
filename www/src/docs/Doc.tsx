@@ -1,5 +1,5 @@
 import { Link } from 'wouter';
-import { useWindowSize } from '../hooks/useWindowSize';
+import { useBreakpoint } from '../hooks/useWindowSize';
 import {
   ScrollAreaCorner,
   ScrollAreaRoot,
@@ -203,12 +203,12 @@ export function Doc(props: {
   next: string[] | undefined;
   prev: string[] | undefined;
 }) {
-  const size = useWindowSize();
-  const showBorder = ['large', 'xlarge'].includes(size?.breakpoint ?? '');
+  const breakpoint = useBreakpoint();
+  const showBorder = ['large', 'xlarge'].includes(breakpoint);
   return (
-    <StyledDocRoot breakpoint={size?.breakpoint}>
-      <StyledDocNav breakpoint={size?.breakpoint} />
-      <div style={{ height: '100vh', borderLeft: showBorder ? '1px solid #3D3D3D' : false }}>
+    <StyledDocRoot breakpoint={breakpoint}>
+      <StyledDocNav breakpoint={breakpoint} />
+      <div style={{ height: '100vh', borderLeft: showBorder ? '1px solid #3D3D3D' : 'none' }}>
         <ScrollAreaRoot style={{ width: '100%' }}>
           <ScrollAreaViewport>
             <DocScrollableContent>

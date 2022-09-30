@@ -8,6 +8,7 @@ import { HomePage } from './pages/HomePage';
 import { Docs } from './docs/Docs';
 import { CollabKitProvider } from '@collabkit/react';
 import { nanoid } from 'nanoid';
+import { SetBreakpointContext } from './hooks/useWindowSize';
 
 const Page = styled('div', {});
 
@@ -40,13 +41,15 @@ export default function App() {
       user={{ id: nanoid(), name: 'John Doe' }}
       mentionableUsers={[]}
     >
-      <Page>
-        <Route path="/" component={HomePage} />
-        <Route path="/devs" component={Devs} />
-        <Route path="/signedIn" component={Devs} />
-        <Route path="/datagrid" component={DataGridPage} />
-        <Docs />
-      </Page>
+      <SetBreakpointContext>
+        <Page>
+          <Route path="/" component={HomePage} />
+          <Route path="/devs" component={Devs} />
+          <Route path="/signedIn" component={Devs} />
+          <Route path="/datagrid" component={DataGridPage} />
+          <Docs />
+        </Page>
+      </SetBreakpointContext>
     </CollabKitProvider>
   );
 }

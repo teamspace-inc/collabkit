@@ -88,7 +88,7 @@ export function CodeEditor(props: {
         if (props.readOnly) {
           const messageContribution = editor.getContribution('editor.contrib.messageController');
           editor.onDidAttemptReadOnlyEdit(() => {
-            messageContribution.closeMessage();
+            messageContribution.dispose();
           });
         }
 
