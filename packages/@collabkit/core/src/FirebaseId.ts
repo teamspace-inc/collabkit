@@ -10,7 +10,7 @@
 export function encode(id: string) {
   // . is disallowed, but not escaped by encodeURIComponent, so it must be
   // handled separately.
-  return encodeURIComponent(id).replaceAll('.', '%2E');
+  return encodeURIComponent(id).replace(/\./g, '%2E');
 }
 
 /** Decodes an URL-encoded ID back to an arbitrary Unicode string. */
