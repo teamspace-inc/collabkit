@@ -13,8 +13,9 @@ import {
   KEY_ESCAPE_COMMAND,
   KEY_TAB_COMMAND,
 } from 'lexical';
-import { startTransition, useCallback, useEffect, useLayoutEffect, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useState } from 'react';
 import escapeStringRegexp from 'escape-string-regexp';
+import { startTransition } from '../../utils/startTransition';
 import { $createMentionNode, MentionNode } from '../../editor';
 import { snapshot } from 'valtio';
 import { Store } from '../../constants';
