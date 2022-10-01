@@ -1,4 +1,4 @@
-import { createVar, style } from '@vanilla-extract/css';
+import { style } from '@vanilla-extract/css';
 import { vars } from './themes.css';
 
 const ltr = style({

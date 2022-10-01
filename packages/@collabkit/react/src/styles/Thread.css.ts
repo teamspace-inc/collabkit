@@ -31,16 +31,18 @@ export const commentList = style({
 });
 
 const columnGap = createVar();
+const composerLeftRightPadding = createVar();
 
 export const composer = style({
   display: 'flex',
   flexDirection: 'row',
   flexWrap: 'wrap',
   columnGap: columnGap,
-  padding: `0 ${columnGap}`,
+  padding: `0 ${composerLeftRightPadding}`,
 
   vars: {
-    [columnGap]: vars.space[4],
+    [composerLeftRightPadding]: vars.space[4],
+    [columnGap]: vars.space[2],
   },
 });
 
