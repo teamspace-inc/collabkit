@@ -42,7 +42,14 @@ function useOpenThread({ viewId, cellId }: { viewId: string; cellId: string }) {
   return threadId ?? null;
 }
 
-export function usePopoverThread({ name, cellId }: { name?: string; cellId: string }) {
+export function usePopoverThread(props: {
+  name?: string;
+  cellId: string;
+  offset?: number;
+  padding?: number;
+}) {
+  const { name, cellId } = props;
+
   const viewId = window?.location?.pathname || 'default';
 
   const threadInfo = useMemo<ThreadInfo>(
@@ -119,10 +126,10 @@ export function usePopoverThread({ name, cellId }: { name?: string; cellId: stri
     onOpenChange: setPreviewOpen,
     nodeId,
     middleware: [
-      offset(4),
+      offset(props.offset ?? 4),
       flip(),
       size({
-        padding: 12,
+        padding: props.padding ?? 12,
         apply({ availableWidth, availableHeight, elements }) {
           Object.assign(elements.floating.style, {
             maxWidth: `${availableWidth}px`,
@@ -140,10 +147,10 @@ export function usePopoverThread({ name, cellId }: { name?: string; cellId: stri
     onOpenChange: setThreadOpen,
     nodeId,
     middleware: [
-      offset(4),
+      offset(props.offset ?? 4),
       flip(),
       size({
-        padding: 12,
+        padding: props.padding ?? 12,
         apply({ availableWidth, availableHeight, elements }) {
           Object.assign(elements.floating.style, {
             maxWidth: `${availableWidth}px`,

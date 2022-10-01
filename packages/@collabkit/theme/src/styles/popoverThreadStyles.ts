@@ -17,3 +17,7 @@ export const root = css(threadStyles.content, {
   boxShadow: '0px -12px 24px rgba(0, 0, 0, 0.02), 0px 12px 24px rgba(0, 0, 0, 0.06)',
   borderRadius: '$radii$popoverThread',
 });
+
+export const previewThreadRoot = css(root, {
+  boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.05)',
+});

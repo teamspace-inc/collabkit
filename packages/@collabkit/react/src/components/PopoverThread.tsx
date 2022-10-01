@@ -53,6 +53,7 @@ function formatTimestampExact(timestamp: number, currentTimestamp: number) {
 const Root = (props: React.ComponentProps<'div'>) => <div {...props} />;
 
 const StyledThreadRoot = styled(Root, popoverThreadStyles.root);
+const StyledPreviewThreadRoot = styled(Root, popoverThreadStyles.previewThreadRoot);
 const StyledCommentList = styled(CommentList.Root, commentListStyles.list, {
   padding: 0,
 });
@@ -153,7 +154,7 @@ export const PreviewThread = forwardRef<Handle, PopoverThreadProps>(function Pop
 
   return (
     <ThreadContext.Provider value={context ?? { userId, threadId, workspaceId }}>
-      <StyledThreadRoot data-collabkit-internal="true" style={props.style} ref={ref}>
+      <StyledPreviewThreadRoot data-collabkit-internal="true" style={props.style} ref={ref}>
         <ScrollAreaRoot>
           <ScrollAreaViewport style={{ maxHeight: props.maxAvailableSize?.height ?? 'unset' }}>
             <StyledCommentList>
@@ -176,7 +177,7 @@ export const PreviewThread = forwardRef<Handle, PopoverThreadProps>(function Pop
           </ScrollAreaScrollbar>
           <ScrollAreaCorner />
         </ScrollAreaRoot>
-      </StyledThreadRoot>
+      </StyledPreviewThreadRoot>
     </ThreadContext.Provider>
   );
 });
