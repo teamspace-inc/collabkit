@@ -31,17 +31,17 @@ export const commentList = style({
 });
 
 const columnGap = createVar();
-const composerLeftRightPadding = createVar();
+const composerHorizontalPadding = createVar();
 
 export const composer = style({
   display: 'flex',
   flexDirection: 'row',
   flexWrap: 'wrap',
   columnGap: columnGap,
-  padding: `0 ${composerLeftRightPadding}`,
+  padding: `0 ${composerHorizontalPadding}`,
 
   vars: {
-    [composerLeftRightPadding]: vars.space[4],
+    [composerHorizontalPadding]: vars.space[4],
     [columnGap]: vars.space[2],
   },
 });
