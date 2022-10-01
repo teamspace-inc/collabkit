@@ -156,13 +156,13 @@ export function CodeEditor(props: {
       <style>
         {`
 .mtk42 {
-color: #FFEC6B;
+  color: #FFEC6B;
 }
 
 .mtk6 {
-color: #BBBBBB;
-font-style: normal;
-font-weight: normal !important;
+  color: #BBBBBB;
+  font-style: normal;
+  font-weight: normal !important;
 }
 
 .mtk1 {
@@ -170,17 +170,16 @@ font-weight: normal !important;
 }
 
 .mtk39 {
-color: #9FEFD7;
+  color: #9FEFD7;
 }
 
 .mtk16 {
-color: white;
+  color: white;
 }
 
 .monaco-editor .cldr.codicon.codicon-folding-expanded, .monaco-editor .cldr.codicon.codicon-folding-collapsed {
-color: #999999 !important;
+  color: #999999 !important;
 }
-
     `}
       </style>
       <div
