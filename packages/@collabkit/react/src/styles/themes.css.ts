@@ -28,6 +28,7 @@ export const vars = createGlobalThemeContract(
     },
     // Default spacing
     space: {
+      0: 'space-0',
       1: 'space-1',
       2: 'space-2',
       3: 'space-3',
@@ -237,6 +238,7 @@ export const defaultTheme = {
     textSecondary: colors.grey30,
   },
   space: {
+    0: '0px',
     1: '4px',
     2: calc.multiply(vars.space[1], 2),
     3: calc.multiply(vars.space[1], 3),
@@ -368,11 +370,11 @@ export const defaultTheme = {
     border: 'none',
     borderRadius: vars.space[3],
     boxShadow: 'none',
-    width: '264px',
+    width: '264px', // make this customisable
     composer: {
       borderTop: `1px solid ${colors.opacity7}`,
       alignItems: 'flex-end',
-      padding: vars.space[4],
+      padding: `${vars.space[4]} ${vars.space[4]} ${vars.space[4]} ${vars.space[4]}`,
       gap: vars.space[3],
       contentEditable: {
         border: `1px solid ${colors.grey24}`,

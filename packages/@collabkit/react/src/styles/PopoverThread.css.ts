@@ -61,3 +61,11 @@ export const composerContentEditable = style([
     },
   },
 ]);
+
+export const actions = style({
+  display: 'flex',
+  flexDirection: 'row',
+  gap: '8px',
+  padding: '0 16px 16px',
+  justifyContent: 'flex-end',
+});

@@ -207,15 +207,7 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
                   autoFocus={props.autoFocus}
                 />
               </Composer.Root>
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  gap: '8px',
-                  padding: '0 16px 16px',
-                  justifyContent: 'flex-end',
-                }}
-              >
+              <div className={styles.actions}>
                 <Button
                   type="secondary"
                   text="Cancel"
