@@ -1,5 +1,4 @@
 import React, { createContext, useContext } from 'react';
-import { useEffect } from '../docs/react.types';
 
 const WINDOW_RESIZE_DEBOUNCE_WAIT_IN_MS = 100;
 
@@ -8,11 +7,11 @@ export type Breakpoint = 'small' | 'medium' | 'large' | 'xlarge';
 function getBreakpoint() {
   let breakpoint: Breakpoint = 'small';
 
-  if (window.innerWidth > 500) {
+  if (window.innerWidth > 640) {
     breakpoint = 'medium';
   }
 
-  if (window.innerWidth > 600) {
+  if (window.innerWidth > 960) {
     breakpoint = 'large';
   }
 
@@ -49,21 +48,11 @@ export function useWindowSize() {
     let debounceTimerId: number;
 
     function updateWindowSize() {
-      let breakpoint: Breakpoint = 'small';
-
-      if (window.innerWidth > 500) {
-        breakpoint = 'medium';
-      }
-
-      if (window.innerWidth > 600) {
-        breakpoint = 'large';
-      }
-
-      if (window.innerWidth > 1440) {
-        breakpoint = 'xlarge';
-      }
-
-      setWindowSize({ width: window.innerWidth, height: window.innerHeight, breakpoint });
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+        breakpoint: getBreakpoint(),
+      });
     }
 
     function handleResize() {

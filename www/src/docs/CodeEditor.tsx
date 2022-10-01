@@ -8,16 +8,26 @@ import reactTypes from './react.types.d.ts?raw';
 import collabKitTypes from './types.d.ts?raw';
 import { useBreakpoint } from '../hooks/useWindowSize';
 
-export function renderCodeSnippet(code: string, language: 'typescript' | 'shell' = 'typescript') {
+export function CodeSnippet(props: { code: string; language?: 'typescript' | 'shell' }) {
+  const breakpoint = useBreakpoint();
+  console.log({ breakpoint });
+
   return (
     <CodeEditor
       readOnly={true}
-      code={code}
-      language={language}
-      style={{ borderRadius: '6px', width: 'calc(100% - 80px)' }}
+      code={props.code}
+      language={props.language ?? 'typescript'}
+      style={{
+        borderRadius: '6px',
+        width: ['small', 'medium'].includes(breakpoint) ? 'calc(100% - 20px)' : 'calc(100% - 80px)',
+      }}
       scrollbar={false}
     />
   );
+}
+
+export function renderCodeSnippet(code: string, language: 'typescript' | 'shell' = 'typescript') {
+  return <CodeSnippet code={code} language={language} />;
 }
 
 export function CodeEditor(props: {
@@ -39,6 +49,7 @@ export function CodeEditor(props: {
   const language = props.language ?? 'typescript';
   const editorRef = useRef<HTMLDivElement>(null);
   const monacoRef = useRef<any>(null);
+  const editorInstanceRef = useRef<any>(null);
   const [codeString, setCodeString] = useState(() => props.code ?? ``);
   const [didMount, setDidMount] = useState(false);
 
@@ -58,7 +69,7 @@ export function CodeEditor(props: {
 
         monaco.editor.defineTheme('collabkit', CollabKitMonacoTheme);
 
-        const editor = monaco.editor.create(editorRef.current, {
+        editorInstanceRef.current = monaco.editor.create(editorRef.current, {
           model,
           fontSize,
           fontFamily: 'Monaco',
@@ -89,8 +100,10 @@ export function CodeEditor(props: {
         });
 
         if (props.readOnly) {
-          const messageContribution = editor.getContribution('editor.contrib.messageController');
-          editor.onDidAttemptReadOnlyEdit(() => {
+          const messageContribution = editorInstanceRef.current.getContribution(
+            'editor.contrib.messageController'
+          );
+          editorInstanceRef.current.onDidAttemptReadOnlyEdit(() => {
             messageContribution.dispose();
           });
         }
@@ -106,8 +119,8 @@ export function CodeEditor(props: {
           });
         }
 
-        editor.onDidChangeModelContent(() => {
-          const value = editor.getValue();
+        editorInstanceRef.current.onDidChangeModelContent(() => {
+          const value = editorInstanceRef.current.getValue();
           setCodeString(value);
           props.onChange?.(value);
         });
@@ -139,7 +152,7 @@ export function CodeEditor(props: {
   }, [codeString.length, id, didMount]);
 
   return (
-    <>
+    <div style={{ width: '100%' }}>
       <style>
         {`
 .mtk42 {
@@ -184,6 +197,6 @@ color: #999999 !important;
       >
         <div ref={editorRef} style={{ height }} />
       </div>
-    </>
+    </div>
   );
 }

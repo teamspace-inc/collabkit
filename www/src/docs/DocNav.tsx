@@ -9,7 +9,7 @@ import {
 } from '../UIKit';
 import Logo from './Logo.svg';
 import { DOCS, getDocHref, RootDocNode } from './Docs';
-import { Breakpoint, useBreakpoint, useWindowSize } from '../hooks/useWindowSize';
+import { Breakpoint, useBreakpoint } from '../hooks/useWindowSize';
 import { useEffect, useState } from 'react';
 import { List } from 'phosphor-react';
 
@@ -66,6 +66,12 @@ const StyledNavListItem = styled('div', {
   borderRadius: '4px',
 
   variants: {
+    breakpoint: {
+      small: {},
+      medium: {},
+      large: { width: 280 },
+      xlarge: { width: 280 },
+    },
     active: {
       true: {
         background: 'rgba(255, 255, 255, 0.08)',
@@ -96,10 +102,13 @@ const StyledNavListTitle = styled('div', {
 
 function NavListItem(props: { path: string[]; id: string; onClick: () => void }) {
   const [location] = useLocation();
+  const breakpoint = useBreakpoint();
   const href = getDocHref(props.path, props.id);
   return (
     <Link href={href} onClick={props.onClick}>
-      <StyledNavListItem active={href === location}>{props.id}</StyledNavListItem>
+      <StyledNavListItem breakpoint={breakpoint} active={href === location}>
+        {props.id}
+      </StyledNavListItem>
     </Link>
   );
 }
@@ -249,7 +258,7 @@ export function Nav(props: { className?: string }) {
               <ScrollAreaViewport>
                 <NavWrap breakpoint={breakpoint}>
                   <NavList
-                    onClick={() => setIsOpen(false)}
+                    onClick={() => hasMenu && setIsOpen(false)}
                     node={DOCS}
                     path={[]}
                     breakpoint={breakpoint}
