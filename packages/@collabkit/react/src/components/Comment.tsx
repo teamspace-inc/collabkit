@@ -192,7 +192,7 @@ const CommentMenu = (props: { className?: string }) => {
   );
 
   return (
-    <div style={{ display: 'flex', gap: 0, flexDirection: 'row' }}>
+    <div className={styles.actions}>
       {isFirstComment && createdById === userId && (
         <IconButton
           // TODO: tooltip hijacks focus when used within a modal popover

@@ -95,6 +95,12 @@ export const timestamp = style({
   lineHeight: vars.comment.timestamp.lineHeight,
 });
 
+export const actions = style({
+  display: 'flex',
+  gap: vars.space[1],
+  flexDirection: 'row',
+});
+
 export const menu = style({
   display: 'flex',
   flexDirection: 'column',
