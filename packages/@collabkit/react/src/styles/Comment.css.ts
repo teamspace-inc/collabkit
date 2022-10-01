@@ -41,6 +41,13 @@ export const root = recipe({
   },
 });
 
+export const nameAndTimestampWrapper = style({
+  flex: 1,
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '4px',
+});
+
 export const content = recipe({
   base: {
     display: 'flex',

@@ -94,10 +94,10 @@ export const PreviewThread = forwardRef<Handle, PopoverThreadProps>(function Pop
                   <Comment.Content>
                     <Comment.Header className={styles.commentHeader}>
                       <Profile.Avatar />
-                      <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+                      <Comment.NameAndTimestampWrapper>
                         <Comment.CreatorName />
                         <Comment.Timestamp format={formatTimestampExact} />
-                      </div>
+                      </Comment.NameAndTimestampWrapper>
                     </Comment.Header>
                     <Comment.Body />
                   </Comment.Content>
@@ -179,17 +179,10 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
                         <Comment.Content>
                           <Comment.Header className={styles.commentHeader}>
                             <Profile.Avatar />
-                            <div
-                              style={{
-                                flex: 1,
-                                display: 'flex',
-                                flexDirection: 'column',
-                                gap: '4px',
-                              }}
-                            >
+                            <Comment.NameAndTimestampWrapper>
                               <Comment.CreatorName />
                               <Comment.Timestamp format={formatTimestampExact} />
-                            </div>
+                            </Comment.NameAndTimestampWrapper>
                             <Comment.Menu />
                           </Comment.Header>
                           <Comment.Body />
