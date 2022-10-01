@@ -177,6 +177,19 @@ export const vars = createGlobalThemeContract(
       borderRadius: 'popover-thread-border-radius',
       boxShadow: 'popover-thread-box-shadow',
       width: 'popover-thread-width',
+      composer: {
+        borderTop: 'popover-thread-composer-border-top',
+        alignItems: 'popover-thread-composer-align-items',
+        padding: 'popover-thread-composer-padding',
+        gap: 'popover-thread-composer-gap',
+        contentEditable: {
+          border: 'popover-thread-composer-content-editable-border',
+          minHeight: 'popover-thread-composer-content-editable-min-height',
+          focus: {
+            border: 'popover-thread-composer-content-editable-focus-border',
+          },
+        },
+      },
     },
     profile: {
       avatar: {
@@ -356,6 +369,19 @@ export const defaultTheme = {
     borderRadius: vars.space[3],
     boxShadow: 'none',
     width: '264px',
+    composer: {
+      borderTop: `1px solid ${colors.opacity7}`,
+      alignItems: 'flex-end',
+      padding: vars.space[4],
+      gap: vars.space[3],
+      contentEditable: {
+        border: `1px solid ${colors.grey24}`,
+        minHeight: '40',
+        focus: {
+          border: `1px solid ${colors.grey24}`,
+        },
+      },
+    },
   },
   profile: {
     avatar: {

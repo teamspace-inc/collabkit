@@ -41,22 +41,22 @@ export const commentHeader = style({
 export const composer = style([
   composerStyles.root,
   {
-    borderTop: '1px solid #E3E9ED',
-    alignItems: 'flex-end',
-    padding: 16,
-    gap: '12px',
+    borderTop: vars.popoverThread.composer.borderTop,
+    alignItems: vars.popoverThread.composer.alignItems,
+    padding: vars.popoverThread.composer.padding,
+    gap: vars.popoverThread.composer.gap,
   },
 ]);
 
 export const composerContentEditable = style([
   composerStyles.contentEditable,
   {
-    border: '1px solid #E3E9ED',
-    minHeight: 40,
+    border: vars.popoverThread.composer.contentEditable.border,
+    minHeight: vars.popoverThread.composer.contentEditable.minHeight,
 
     selectors: {
       '&:focus': {
-        borderColor: '#36B374',
+        borderColor: vars.popoverThread.composer.contentEditable.focus.border,
       },
     },
   },
