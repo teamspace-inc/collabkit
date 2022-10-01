@@ -72,6 +72,7 @@ export const body = style({
   position: 'relative',
   wordBreak: 'break-word',
   overflowWrap: 'break-word',
+  minHeight: vars.comment.body.lineHeight, // prevents flicker
   color: vars.comment.body.color,
   fontSize: vars.comment.body.fontSize,
   lineHeight: vars.comment.body.lineHeight,
