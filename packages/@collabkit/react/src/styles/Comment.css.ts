@@ -106,6 +106,7 @@ export const actions = style({
   display: 'flex',
   gap: vars.space[1],
   flexDirection: 'row',
+  zIndex: 2, // higher than scrollbar
 });
 
 export const menu = style({
