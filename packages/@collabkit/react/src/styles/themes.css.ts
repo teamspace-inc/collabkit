@@ -54,6 +54,20 @@ export const vars = createGlobalThemeContract(
     },
 
     // Components
+    scrollbar: {
+      thumb: {
+        background: 'scrollbar-thumb-background',
+        width: 'scrollbar-thumb-width',
+        borderRadius: 'scrollbar-thumb-border-radius',
+      },
+      padding: 'scrollbar-padding',
+      background: 'scrollbar-background',
+      hover: {
+        background: 'scrollbar-hover-background',
+      },
+      borderRadius: 'scrollbar-border-radius',
+    },
+
     button: {
       fontSize: 'button-font-size',
       lineHeight: 'button-line-height',
@@ -220,6 +234,19 @@ export const defaultTheme = {
     small: { fontSize: '11px', lineHeight: '13px' },
     base: { fontSize: '13px', lineHeight: '18px' },
     large: { fontSize: '14px', lineHeight: '17px' },
+  },
+  scrollbar: {
+    thumb: {
+      background: colors.grey30,
+      width: '6px',
+      borderRadius: '12px',
+    },
+    padding: '4px',
+    background: 'transparent',
+    hover: {
+      background: colors.opacity7,
+    },
+    borderRadius: '0px 3px 3px 0px',
   },
   button: {
     fontSize: vars.text.base.fontSize,
