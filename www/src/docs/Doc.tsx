@@ -174,9 +174,19 @@ export const DocDemoContainer = styled('div', {
 const DocTitle = styled('h1', {
   display: 'block',
   margin: '0px !important',
-  padding: '64px 0px 40px',
+  padding: '56px 0px 32px',
   boxSizing: 'border-box',
-  lineHeight: '24px',
+  lineHeight: '34px',
+  wordBreak: 'break-word',
+
+  variants: {
+    breakpoint: {
+      small: { padding: '32px 0px 32px' },
+      medium: { padding: '32px 0px 32px' },
+      large: {},
+      xlarge: {},
+    },
+  },
 });
 
 const DocScrollableContent = styled('div', {

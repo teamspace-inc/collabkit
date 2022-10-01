@@ -137,14 +137,13 @@ const NavWrap = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   paddingBottom: '100px',
-  alignItems: 'flex-end',
 
   variants: {
     breakpoint: {
       small: {},
       medium: {},
-      large: {},
-      xlarge: {},
+      large: { alignItems: 'flex-end' },
+      xlarge: { alignItems: 'flex-end' },
     },
   },
 });
@@ -152,6 +151,8 @@ const NavWrap = styled('div', {
 const LogoRoot = styled('div', {
   flex: 1,
   cursor: 'pointer',
+  display: 'flex',
+
   variants: {
     breakpoint: {
       small: {},
@@ -193,6 +194,17 @@ function shouldShowNav(breakpoint: Breakpoint) {
   return ['large', 'xlarge'].includes(breakpoint);
 }
 
+const NavLogoWrap = styled('div', {
+  variants: {
+    breakpoint: {
+      small: {},
+      medium: {},
+      large: { width: 290 },
+      xlarge: { width: 290 },
+    },
+  },
+});
+
 const NavHeader = styled('div', {
   display: 'flex',
   flexDirection: 'row',
@@ -216,11 +228,15 @@ export function Nav(props: { className?: string }) {
     <>
       <div>
         <NavHeader>
-          <LogoRoot breakpoint={breakpoint}>
-            <Link to="/docs">
-              <img src={Logo} />
-            </Link>
-          </LogoRoot>
+          <Link to="/docs">
+            <LogoRoot breakpoint={breakpoint}>
+              {['large', 'xlarge'].includes(breakpoint) ? <div style={{ flex: 1 }} /> : null}
+              <NavLogoWrap breakpoint={breakpoint}>
+                <img src={Logo} />
+              </NavLogoWrap>
+            </LogoRoot>
+          </Link>
+
           {hasMenu ? (
             <BurgerMenu active={isOpen} onClick={() => hasMenu && setIsOpen(!isOpen)}>
               <List size={24} color="rgba(255,255,255,0.75)" />

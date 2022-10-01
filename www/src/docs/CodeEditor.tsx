@@ -6,6 +6,7 @@ import { nanoid } from 'nanoid';
 
 import reactTypes from './react.types.d.ts?raw';
 import collabKitTypes from './types.d.ts?raw';
+import { useBreakpoint } from '../hooks/useWindowSize';
 
 export function renderCodeSnippet(code: string, language: 'typescript' | 'shell' = 'typescript') {
   return (
@@ -30,6 +31,8 @@ export function CodeEditor(props: {
   fontSize?: number;
   onChange?: (value: string) => void;
 }) {
+  const breakpoint = useBreakpoint();
+
   const numLines = props.numLines ?? 24;
   const fontSize = props.fontSize ?? 14;
   const lineHeight = props.lineHeight ?? 24;
@@ -174,7 +177,7 @@ color: #999999 !important;
           background: '#2B2B2B',
           borderRadius: 8,
           height,
-          padding: '40px 40px',
+          padding: breakpoint === 'small' ? '20px 10px' : '40px',
           gridTemplateColumns: '1fr',
           ...props.style,
         }}
