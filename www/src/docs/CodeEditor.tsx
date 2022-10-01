@@ -160,13 +160,13 @@ color: #FFEC6B;
 }
 
 .mtk6 {
-color: violet;
+color: #BBBBBB;
 font-style: normal;
 font-weight: normal !important;
 }
 
 .mtk1 {
-  color: red;
+  color: #7166D3;
 }
 
 .mtk39 {
