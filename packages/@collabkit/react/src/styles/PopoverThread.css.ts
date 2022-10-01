@@ -34,7 +34,7 @@ export const commentHeader = style({
   display: 'flex',
   flex: '1',
   flexDirection: 'row',
-  gap: 12,
+  gap: vars.space[2],
   lineHeight: '160%',
 });
 

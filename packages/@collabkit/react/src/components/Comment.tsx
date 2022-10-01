@@ -173,12 +173,15 @@ type CommentMenuItemType = 'commentEditButton' | 'commentDeleteButton';
 const CommentMenu = (props: { className?: string }) => {
   const { events, store } = useApp();
   const comment = useCommentContext();
+
   const { createdById } = useCommentStore();
   const { threadId, workspaceId, userId } = useThreadContext();
 
   const { workspaces } = useSnapshot(store);
   const workspace = workspaces[workspaceId];
   const timeline = workspace.timeline[threadId];
+  const isFirstComment = Object.keys(timeline)[0] === comment.eventId;
+
   const isResolved = timelineUtils.computeIsResolved(timeline);
 
   const onItemClick = useCallback(
@@ -190,21 +193,23 @@ const CommentMenu = (props: { className?: string }) => {
 
   return (
     <div style={{ display: 'flex', gap: 0, flexDirection: 'row' }}>
-      <IconButton
-        // TODO: tooltip hijacks focus when used within a modal popover
-        // tooltip={isResolved ? 'Re-open' : 'Mark as Resolved and Hide'}
-        onPointerDown={(e) =>
-          events.onPointerDown(e, {
-            target: {
-              threadId,
-              workspaceId,
-              type: 'reopenThreadButton',
-            },
-          })
-        }
-      >
-        {!isResolved && <Check size={18} weight={'regular'} />}
-      </IconButton>
+      {isFirstComment && createdById === userId && (
+        <IconButton
+          // TODO: tooltip hijacks focus when used within a modal popover
+          // tooltip={isResolved ? 'Re-open' : 'Mark as Resolved and Hide'}
+          onPointerDown={(e) =>
+            events.onPointerDown(e, {
+              target: {
+                threadId,
+                workspaceId,
+                type: 'reopenThreadButton',
+              },
+            })
+          }
+        >
+          {!isResolved && <Check size={18} weight={'regular'} />}
+        </IconButton>
+      )}
       {createdById === userId && (
         <Menu<CommentMenuItemType>
           className={props.className ?? styles.menu}
