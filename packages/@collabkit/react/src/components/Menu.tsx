@@ -4,7 +4,6 @@ import React, {
   forwardRef,
   isValidElement,
   useEffect,
-  useMemo,
   useRef,
   useState,
 } from 'react';
@@ -27,13 +26,12 @@ import {
   FloatingNode,
   FloatingFocusManager,
 } from '@floating-ui/react-dom-interactions';
-import { mergeRefs } from 'react-merge-refs';
-import { StyledIconButton } from '../IconButton';
-import { useApp } from '../../hooks/useApp';
+import { IconButton } from './IconButton';
+import { ThemeWrapper } from './ThemeWrapper';
 
 export const MenuItem = forwardRef<
   HTMLButtonElement,
-  { label: string; disabled?: boolean; targetType: unknown }
+  { label: string; disabled?: boolean; targetType: unknown; className?: string }
 >(({ label, disabled, targetType, ...props }, ref) => {
   return (
     <button {...props} ref={ref} role="menuitem" disabled={disabled}>
@@ -42,19 +40,22 @@ export const MenuItem = forwardRef<
   );
 });
 
-interface Props {
+interface Props<ItemType> {
   icon?: React.ReactNode;
   label?: string;
   nested?: boolean;
   children?: React.ReactNode;
-  onItemClick: (e: React.MouseEvent, id: string) => void;
+  onItemClick: (e: React.MouseEvent, id: ItemType) => void;
+  className?: string;
 }
 
-export const MenuComponent = forwardRef<
-  HTMLButtonElement,
-  Props & React.HTMLProps<HTMLButtonElement>
->(({ children, label, onItemClick, ...props }, ref) => {
-  const { theme } = useApp();
+export function Menu<ItemType>({
+  children,
+  label,
+  onItemClick,
+  className,
+  ...props
+}: Props<ItemType>) {
   const [open, setOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [allowHover, setAllowHover] = useState(false);
@@ -140,14 +141,12 @@ export const MenuComponent = forwardRef<
     };
   }, [allowHover]);
 
-  const mergedReferenceRef = useMemo(() => mergeRefs([ref, reference]), [reference, ref]);
-
   return (
     <FloatingNode id={nodeId}>
-      <StyledIconButton
+      <IconButton
         {...getReferenceProps({
           ...props,
-          ref: mergedReferenceRef,
+          ref: reference,
           onClick(event: React.MouseEvent) {
             event.stopPropagation();
             (event.currentTarget as HTMLButtonElement).focus();
@@ -155,7 +154,7 @@ export const MenuComponent = forwardRef<
         })}
       >
         {props.icon}
-      </StyledIconButton>
+      </IconButton>
       <FloatingPortal>
         {open && (
           <FloatingFocusManager
@@ -168,75 +167,55 @@ export const MenuComponent = forwardRef<
             // is an alternative.
             order={['reference', 'content']}
           >
-            <div
-              {...getFloatingProps({
-                className: theme.className,
-                ref: floating,
-                style: {
-                  position: strategy,
-                  top: y ?? 0,
-                  left: x ?? 0,
-                  background: 'white',
-                  padding: '4px',
-                  border: '1px solid #d7dce5',
-                  borderRadius: 6,
-                  boxShadow: '2px 4px 12px rgba(0, 0, 0, 0.1)',
-                  outline: 0,
-                },
-                onKeyDown(event: React.KeyboardEvent) {
-                  if (event.key === 'Tab') {
-                    setOpen(false);
-                  }
-                },
-              })}
-            >
-              {Children.map(
-                children,
-                (child, index) =>
-                  isValidElement(child) &&
-                  cloneElement(
-                    child,
-                    getItemProps({
-                      role: 'menuitem',
-                      ref(node: HTMLButtonElement) {
-                        listItemsRef.current[index] = node;
-                      },
-                      onClick(e: React.MouseEvent) {
-                        onItemClick(e, child.props.targetType);
-                        tree?.events.emit('click');
-                      },
-                      // By default `focusItemOnHover` uses `mousemove` to sync focus,
-                      // but when a menu closes we want this to sync it on `enter`
-                      // even if the cursor didn't move. NB: Safari does not sync in
-                      // this case.
-                      onPointerEnter() {
-                        if (allowHover) {
-                          setActiveIndex(index);
-                        }
-                      },
-                    })
-                  )
-              )}
-            </div>
+            <ThemeWrapper>
+              <div
+                {...getFloatingProps({
+                  className,
+                  ref: floating,
+                  style: {
+                    position: strategy,
+                    top: y ?? 0,
+                    left: x ?? 0,
+                  },
+                  onKeyDown(event: React.KeyboardEvent) {
+                    if (event.key === 'Tab') {
+                      setOpen(false);
+                    }
+                  },
+                })}
+              >
+                {Children.map(
+                  children,
+                  (child, index) =>
+                    isValidElement(child) &&
+                    cloneElement(
+                      child,
+                      getItemProps({
+                        role: 'menuitem',
+                        ref(node: HTMLButtonElement) {
+                          listItemsRef.current[index] = node;
+                        },
+                        onClick(e: React.MouseEvent) {
+                          onItemClick(e, child.props.targetType);
+                          tree?.events.emit('click');
+                        },
+                        // By default `focusItemOnHover` uses `mousemove` to sync focus,
+                        // but when a menu closes we want this to sync it on `enter`
+                        // even if the cursor didn't move. NB: Safari does not sync in
+                        // this case.
+                        onPointerEnter() {
+                          if (allowHover) {
+                            setActiveIndex(index);
+                          }
+                        },
+                      })
+                    )
+                )}
+              </div>
+            </ThemeWrapper>
           </FloatingFocusManager>
         )}
       </FloatingPortal>
     </FloatingNode>
   );
-});
-
-export const Menu = forwardRef<HTMLButtonElement, Props & React.HTMLProps<HTMLButtonElement>>(
-  (props, ref) => {
-    // const parentId = useFloatingParentNodeId();
-
-    // if (parentId == null) {
-    //   return (
-    //     <FloatingTree>
-    //       <MenuComponent {...props} ref={ref} />
-    //     </FloatingTree>
-    //   );
-    // }
-
-    return <MenuComponent {...props} ref={ref} />;
-  }
-);
+}

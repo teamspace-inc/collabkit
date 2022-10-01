@@ -7,6 +7,7 @@ import { useApp } from '../hooks/useApp';
 // Cashboard icons
 import CommentIcon from './Comment.svg';
 import CommentNotificationIcon from './CommentNotification.svg';
+import { ThemeWrapper } from './ThemeWrapper';
 
 function useInboxButton() {
   const { store, events } = useApp();
@@ -28,13 +29,12 @@ function useInboxButton() {
 }
 
 export function InboxButton() {
-  const { theme } = useApp();
   const { onPointerDown } = useInboxButton();
   const unreadThreadCount = useUnreadThreadsCount();
   const showUnreadDot = unreadThreadCount > 0;
 
   return (
-    <div className={theme.className}>
+    <ThemeWrapper>
       {/* Cashboard specific styles */}
       <button
         style={{
@@ -60,6 +60,6 @@ export function InboxButton() {
         {showUnreadDot ? <img src={CommentNotificationIcon} /> : <img src={CommentIcon} />}
         All comments
       </button>
-    </div>
+    </ThemeWrapper>
   );
 }

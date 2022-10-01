@@ -1,34 +1,18 @@
-import React from 'react';
-import * as Tooltip from './Tooltip';
-import { styled } from '@stitches/react';
-import { iconButtonStyles } from '@collabkit/theme';
+import React, { forwardRef } from 'react';
+import * as styles from '../styles/IconButton.css';
 
-export const StyledIconButton = styled('div', iconButtonStyles.button);
-
-export function IconButton(props: {
+type Props = {
   children: React.ReactNode;
-  tooltip?: string;
   onPointerDown?: (e: React.PointerEvent) => void;
   tabIndex?: number;
-}) {
-  if (!props.tooltip) {
-    return (
-      <StyledIconButton onPointerDown={props.onPointerDown} tabIndex={props.tabIndex}>
-        {props.children}
-      </StyledIconButton>
-    );
-  }
+  className?: string;
+} & React.ComponentProps<'div'>;
+
+export const IconButton = forwardRef<HTMLDivElement, Props>(function IconButton(props: Props, ref) {
+  const className = props.className ?? styles.button;
   return (
-    <Tooltip.Root>
-      <Tooltip.Trigger>
-        <StyledIconButton onPointerDown={props.onPointerDown} tabIndex={props.tabIndex}>
-          {props.children}
-        </StyledIconButton>
-      </Tooltip.Trigger>
-      <Tooltip.Content>
-        {props.tooltip}
-        <Tooltip.Arrow />
-      </Tooltip.Content>
-    </Tooltip.Root>
+    <div {...props} className={className} ref={ref}>
+      {props.children}
+    </div>
   );
-}
+});

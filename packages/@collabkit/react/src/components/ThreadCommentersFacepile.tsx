@@ -1,9 +1,9 @@
 import React from 'react';
 import { useSnapshot } from 'valtio';
 import { useApp } from '../hooks/useApp';
-import { Avatar } from './Avatar';
 import { useTimelineStore } from '../hooks/useTimelineStore';
 import { unique } from './Inbox';
+import * as Profile from './Profile';
 
 export function ThreadCommentersFacepile(props: React.ComponentPropsWithoutRef<'div'>) {
   const timeline = useSnapshot(useTimelineStore());
@@ -28,7 +28,9 @@ export function ThreadCommentersFacepile(props: React.ComponentPropsWithoutRef<'
               borderRadius: '50%',
             }}
           >
-            <Avatar profile={commenter} size={24} />
+            <Profile.Provider profileId={commenter.id}>
+              <Profile.Avatar size={24} />
+            </Profile.Provider>
           </div>
         ) : null;
       })}

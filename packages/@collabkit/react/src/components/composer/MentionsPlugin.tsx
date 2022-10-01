@@ -20,7 +20,6 @@ import { $createMentionNode, MentionNode } from '../../editor';
 import { snapshot } from 'valtio';
 import { Store } from '../../constants';
 import { useApp } from '../../hooks/useApp';
-import { Avatar } from './../Avatar';
 import { styled } from '@stitches/react';
 import { mentionsPluginStyles } from '@collabkit/theme';
 import { MentionWithColor } from '@collabkit/core';
@@ -35,6 +34,8 @@ import {
   useFloating,
   useFloatingNodeId,
 } from '@floating-ui/react-dom-interactions';
+import { ThemeWrapper } from '../ThemeWrapper';
+import * as Profile from '../Profile';
 
 type MentionMatch = {
   leadOffset: number;
@@ -210,7 +211,9 @@ function MentionsTypeaheadItem({
       onMouseEnter={onMouseEnter}
       onClick={onClick}
     >
-      <Avatar profile={{ ...result, id: result.id }} />
+      <Profile.Provider profileId={result.id}>
+        <Profile.Avatar />
+      </Profile.Provider>
       <div>
         <StyledMentionsTypeaheadLiName>
           <Highlighted text={result.name ?? ''} highlight={query}></Highlighted>
@@ -235,7 +238,6 @@ function MentionsTypeahead({
   const match = resolution.match;
   const results = useMentionLookupService(match.matchingString);
   const [selectedIndex, setSelectedIndex] = useState<null | number>(null);
-  const { theme } = useApp();
 
   const nodeId = useFloatingNodeId();
 
@@ -396,36 +398,37 @@ function MentionsTypeahead({
   return (
     <FloatingNode id={nodeId}>
       <FloatingFocusManager context={context}>
-        <StyledMentionsTypeahead
-          aria-label="Suggested mentions"
-          role="listbox"
-          className={theme.className}
-          ref={context.floating}
-          style={{
-            position: context.strategy,
-            top: context.y ?? 0,
-            left: context.x ?? 0,
-          }}
-        >
-          <StyledMentionsTypeaheadUl>
-            {results.slice(0, SUGGESTION_LIST_LENGTH_LIMIT).map((result, i) => (
-              <MentionsTypeaheadItem
-                key={result.id}
-                index={i}
-                isSelected={i === selectedIndex}
-                onClick={() => {
-                  setSelectedIndex(i);
-                  applyCurrentSelected();
-                }}
-                onMouseEnter={() => {
-                  setSelectedIndex(i);
-                }}
-                result={result}
-                query={match.matchingString}
-              />
-            ))}
-          </StyledMentionsTypeaheadUl>
-        </StyledMentionsTypeahead>
+        <ThemeWrapper>
+          <StyledMentionsTypeahead
+            aria-label="Suggested mentions"
+            role="listbox"
+            ref={context.floating}
+            style={{
+              position: context.strategy,
+              top: context.y ?? 0,
+              left: context.x ?? 0,
+            }}
+          >
+            <StyledMentionsTypeaheadUl>
+              {results.slice(0, SUGGESTION_LIST_LENGTH_LIMIT).map((result, i) => (
+                <MentionsTypeaheadItem
+                  key={result.id}
+                  index={i}
+                  isSelected={i === selectedIndex}
+                  onClick={() => {
+                    setSelectedIndex(i);
+                    applyCurrentSelected();
+                  }}
+                  onMouseEnter={() => {
+                    setSelectedIndex(i);
+                  }}
+                  result={result}
+                  query={match.matchingString}
+                />
+              ))}
+            </StyledMentionsTypeaheadUl>
+          </StyledMentionsTypeahead>
+        </ThemeWrapper>
       </FloatingFocusManager>
     </FloatingNode>
   );

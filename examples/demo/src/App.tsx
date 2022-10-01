@@ -100,7 +100,8 @@ function Demo() {
         console.log('authRequired');
       }}
       user={user}
-      theme={theme}
+      // theme={theme}
+      theme="dark"
       // renderAvatar={CustomAvatar}
       mentionableUsers={'allWorkspace'}
     >

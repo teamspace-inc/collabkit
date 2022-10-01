@@ -1,5 +1,3 @@
-import { commentStyles, composerStyles } from '@collabkit/theme';
-import { styled } from '@stitches/react';
 import React from 'react';
 import { actions } from '@collabkit/client';
 import { useApp } from '../hooks/useApp';
@@ -7,33 +5,19 @@ import { Button } from './Button';
 import * as Comment from './Comment';
 import * as Composer from './composer/Composer';
 
-const StyledCommentEditor = styled(Comment.Editor, commentStyles.editor, {
-  fontSize: '$fontSize$2',
-  lineHeight: '$lineHeights$0',
-});
-const StyledComposerRoot = styled(Composer.Root, composerStyles.root);
-const StyledComposerEditor = styled(Composer.Editor, composerStyles.editorRoot);
-const StyledComposerContent = styled(Composer.Content, composerStyles.content);
-const StyledComposerContentEditable = styled(
-  Composer.ContentEditable,
-  composerStyles.contentEditable
-);
-
 export const PopoverThreadCommentEditor = () => {
   const { store } = useApp();
   return (
-    <StyledCommentEditor>
-      <StyledComposerRoot>
-        <StyledComposerEditor
+    <Comment.Editor>
+      <Composer.Root>
+        <Composer.Editor
           contentEditable={(props: { autoFocus?: boolean }) => (
-            <StyledComposerContent>
-              <StyledComposerContentEditable {...props} />
-            </StyledComposerContent>
+            <Composer.ContentEditable {...props} />
           )}
           placeholder={<span />}
           autoFocus={true}
         />
-      </StyledComposerRoot>
+      </Composer.Root>
       <div
         style={{ display: 'flex', gap: '12px', marginRight: '16px', justifyContent: 'flex-end' }}
       >
@@ -57,6 +41,6 @@ export const PopoverThreadCommentEditor = () => {
           }}
         />
       </div>
-    </StyledCommentEditor>
+    </Comment.Editor>
   );
 };
