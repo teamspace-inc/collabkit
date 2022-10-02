@@ -41,6 +41,7 @@ import { stopEditing } from './stopEditing';
 import { updateComment } from './updateComment';
 import { showInbox } from './showInbox';
 import { hideInbox } from './hideInbox';
+import { setAvatarError } from './setAvatarError';
 
 export type GenerateToken =
   | {
@@ -149,4 +150,5 @@ export const actions = {
   viewThread,
   showInbox,
   hideInbox,
+  setAvatarError,
 };

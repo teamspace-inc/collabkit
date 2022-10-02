@@ -1,4 +1,6 @@
+import { actions } from '@collabkit/client';
 import { getProfileColor } from '@collabkit/colors';
+import { Profile } from '@collabkit/core';
 import React, { useState } from 'react';
 import { useSnapshot } from 'valtio';
 import { useApp } from '../hooks/useApp';
@@ -40,26 +42,12 @@ export function Name(props: React.ComponentPropsWithoutRef<'span'>) {
   );
 }
 
-export function Avatar({
+function AvatarPlaceholder({
   size,
+  profile,
   ...props
-}: { size?: number } & React.ComponentPropsWithoutRef<'div'>) {
-  const { store, renderAvatar } = useApp();
-  const { profiles } = useSnapshot(store);
-  const { profileId } = useProfile();
-  const profile = profiles[profileId];
-
-  const [didError, setDidError] = useState(false);
-
-  if (profile == null) {
-    return null;
-  }
-
-  if (renderAvatar != null) {
-    return <>{renderAvatar({ profile, size })}</>;
-  }
-
-  return didError || !profile?.avatar ? (
+}: { size?: number; profile: Profile } & React.ComponentPropsWithoutRef<'div'>) {
+  return (
     <div
       {...props}
       className={props.className ?? styles.avatar}
@@ -74,13 +62,41 @@ export function Avatar({
     >
       {profile.name?.charAt(0)}
     </div>
+  );
+}
+
+export function Avatar({
+  size,
+  ...props
+}: { size?: number } & React.ComponentPropsWithoutRef<'div'>) {
+  const { store, renderAvatar } = useApp();
+  const { profiles, avatarErrors } = useSnapshot(store);
+  const { profileId } = useProfile();
+  const profile = profiles[profileId];
+
+  if (profile == null) {
+    return null;
+  }
+
+  if (renderAvatar != null) {
+    return <>{renderAvatar({ profile, size })}</>;
+  }
+
+  const avatar = profile.avatar;
+
+  if (!avatar) {
+    return <AvatarPlaceholder size={size} profile={profile} />;
+  }
+
+  return avatarErrors[avatar] ? (
+    <AvatarPlaceholder size={size} profile={profile} />
   ) : (
     <img
       src={profile.avatar}
       className={props.className ?? styles.avatar}
       {...props}
       style={{ ...(size ? { width: size, height: size, lineHeight: `${size}px` } : {}) }}
-      onError={() => setDidError(true)}
+      onError={() => actions.setAvatarError(store, { avatar })}
     />
   );
 }

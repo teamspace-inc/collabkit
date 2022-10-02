@@ -51,6 +51,7 @@ export function createStore(): UnconfiguredStore {
     hoveringId: null,
     workspaces: {},
     profiles: {},
+    avatarErrors: {},
     subs: {},
     callbacks: {},
     mentionableUsers: {},

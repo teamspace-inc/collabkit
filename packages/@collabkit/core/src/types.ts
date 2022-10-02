@@ -341,6 +341,7 @@ export interface UnconfiguredStore {
   previewingId: null | Target;
   editingId: null | CommentTarget;
   config: null | Config;
+  avatarErrors: { [avatar: string]: boolean };
   profiles: { [profileId: string]: Profile | undefined };
   workspaces: {
     [workspaceId: string]: Workspace;
