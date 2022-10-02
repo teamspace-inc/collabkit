@@ -5,7 +5,7 @@ import { MentionsTypeaheadItem } from './MentionsPlugin';
 export const Item = () => (
   <MentionsTypeaheadItem
     index={1}
-    isSelected={false}
+    active={false}
     onClick={() => {}}
     onMouseEnter={() => {}}
     query={'foo'}
@@ -22,7 +22,7 @@ export const Item = () => (
 export const SelectedItem = () => (
   <MentionsTypeaheadItem
     index={1}
-    isSelected={true}
+    active={true}
     onClick={() => {}}
     onMouseEnter={() => {}}
     query={'foo'}

@@ -17,7 +17,7 @@ export const mark = style({
   fontWeight: vars.mentions.typeahead.item.mark.fontWeight,
 });
 
-export const typeaheadList = style({
+export const list = style({
   padding: 0,
   listStyle: 'none',
   margin: 0,
@@ -26,46 +26,52 @@ export const typeaheadList = style({
   width: '100%',
 });
 
-export const typeaheadListItem = style({
-  padding: vars.mentions.typeahead.item.padding,
-  margin: 0,
-  boxSizing: 'border-box',
-  minWidth: '10ch',
-  display: 'flex',
-  width: '100%',
-  fontSize: vars.mentions.typeahead.item.fontSize,
-  lineHeight: vars.mentions.typeahead.item.lineHeight,
-  justifyContent: 'left',
-  alignItems: 'center',
-  gap: vars.mentions.typeahead.item.gap,
-  outline: 'none',
-  cursor: 'pointer',
-  color: vars.mentions.typeahead.item.color,
-  fontWeight: vars.mentions.typeahead.item.fontWeight,
+export const nameAndEmailWrapper = style({
+  gap: '',
+});
 
-  selectors: {
-    '&:first-of-type': {
-      borderTopLeftRadius: vars.mentions.typeahead.item.borderRadius,
-      borderTopRightRadius: vars.mentions.typeahead.item.borderRadius,
-    },
+export const item = recipe({
+  base: {
+    padding: vars.mentions.typeahead.item.padding,
+    margin: 0,
+    boxSizing: 'border-box',
+    minWidth: '10ch',
+    display: 'flex',
+    flexDirection: 'column',
+    width: '100%',
+    fontSize: vars.mentions.typeahead.item.fontSize,
+    lineHeight: vars.mentions.typeahead.item.lineHeight,
+    justifyContent: 'left',
+    alignItems: 'center',
+    gap: vars.mentions.typeahead.item.gap,
+    outline: 'none',
+    cursor: 'pointer',
+    color: vars.mentions.typeahead.item.color,
+    fontWeight: vars.mentions.typeahead.item.fontWeight,
+    selectors: {
+      '&:first-of-type': {
+        borderTopLeftRadius: vars.mentions.typeahead.item.borderRadius,
+        borderTopRightRadius: vars.mentions.typeahead.item.borderRadius,
+      },
 
-    '&:last-of-type': {
-      borderBottomLeftRadius: vars.mentions.typeahead.item.borderRadius,
-      borderBottomRightRadius: vars.mentions.typeahead.item.borderRadius,
+      '&:last-of-type': {
+        borderBottomLeftRadius: vars.mentions.typeahead.item.borderRadius,
+        borderBottomRightRadius: vars.mentions.typeahead.item.borderRadius,
+      },
     },
   },
 
-  // variants: {
-  //   active: {
-  //     true: {
-  //       background: vars.mentions.typeahead.item.active.background,
-  //       color: vars.mentions.typeahead.item.active.color,
-  //     },
-  //   },
-  // },
+  variants: {
+    active: {
+      true: {
+        background: vars.mentions.typeahead.item.active.background,
+        color: vars.mentions.typeahead.item.active.color,
+      },
+    },
+  },
 });
 
-export const typeaheadListItemName = style({
+export const name = style({
   fontWeight:
     vars.mentions.typeahead.item.name.fontWeight ?? vars.mentions.typeahead.item.fontWeight,
   fontSize: vars.mentions.typeahead.item.name.fontSize ?? vars.mentions.typeahead.item.fontSize,
@@ -73,7 +79,7 @@ export const typeaheadListItemName = style({
     vars.mentions.typeahead.item.name.lineHeight ?? vars.mentions.typeahead.item.lineHeight,
 });
 
-export const typeaheadListItemEmail = style({
+export const email = style({
   fontWeight:
     vars.mentions.typeahead.item.email.fontWeight ?? vars.mentions.typeahead.item.fontWeight,
   fontSize: vars.mentions.typeahead.item.email.fontSize ?? vars.mentions.typeahead.item.fontSize,

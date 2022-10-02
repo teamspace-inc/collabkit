@@ -187,14 +187,14 @@ function useMentionLookupService(mentionString: string) {
 
 export function MentionsTypeaheadItem({
   index,
-  isSelected,
+  active,
   onClick,
   onMouseEnter,
   result,
   query,
 }: {
   index: number;
-  isSelected: boolean;
+  active: boolean;
   onClick: () => void;
   onMouseEnter: () => void;
   result: MentionWithColor;
@@ -202,12 +202,11 @@ export function MentionsTypeaheadItem({
 }) {
   return (
     <div
-      className={styles.typeaheadListItem}
-      // selected={isSelected}
+      className={styles.item({ active })}
       key={result.id}
       tabIndex={-1}
       role="option"
-      aria-selected={isSelected}
+      aria-selected={active}
       id={'typeahead-item-' + index}
       onMouseEnter={onMouseEnter}
       onClick={onClick}
@@ -215,11 +214,11 @@ export function MentionsTypeaheadItem({
       <Profile.Provider profileId={result.id}>
         <Profile.Avatar />
       </Profile.Provider>
-      <div>
-        <div className={styles.typeaheadListItemName}>
+      <div className={styles.nameAndEmailWrapper}>
+        <div className={styles.name}>
           <Highlighted text={result.name ?? ''} highlight={query}></Highlighted>
         </div>
-        <div className={styles.typeaheadListItemEmail}>
+        <div className={styles.email}>
           <Highlighted text={result.email ?? ''} highlight={query}></Highlighted>
         </div>
       </div>
@@ -411,12 +410,12 @@ export function MentionsTypeahead({
               left: context.x ?? 0,
             }}
           >
-            <div className={styles.typeaheadList}>
+            <div className={styles.list}>
               {results.slice(0, SUGGESTION_LIST_LENGTH_LIMIT).map((result, i) => (
                 <MentionsTypeaheadItem
                   key={result.id}
                   index={i}
-                  isSelected={i === selectedIndex}
+                  active={i === selectedIndex}
                   onClick={() => {
                     setSelectedIndex(i);
                     applyCurrentSelected();
