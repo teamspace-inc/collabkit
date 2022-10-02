@@ -1,7 +1,7 @@
-import type { StoryDecorator, ThemeState } from '@ladle/react';
+import type { StoryDecorator } from '@ladle/react';
 import { nanoid } from 'nanoid';
 import React, { ReactNode } from 'react';
-import { CollabKitProvider, Thread } from '../';
+import { CollabKitProvider, ThemeProvider, Thread } from '../';
 import { ProviderPropsContext, DefaultProviderProps } from './__stories__/context';
 
 const FixedSize = ({ children }: { children: ReactNode }) => (
@@ -32,6 +32,17 @@ export const Threads = () => (
       </>
     )}
   </ProviderPropsContext.Consumer>
+);
+
+export const WithThemeProvider = () => (
+  <>
+    <ThemeProvider theme="dark">
+      <Thread threadId="thread-stories" />
+    </ThemeProvider>
+    <ThemeProvider theme="light">
+      <Thread threadId="thread-stories" />
+    </ThemeProvider>
+  </>
 );
 
 export const WithHeader = () => (

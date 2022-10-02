@@ -18,16 +18,17 @@ import { useUnreadThreadsCount } from './hooks/public/useUnreadThreadsCount';
 import { createValtioStore } from './store';
 import { Inbox } from './components/Inbox';
 import { InboxButton } from './components/InboxButton';
-import { SidePane } from './components/SidePane';
+import { ThemeProvider } from './components/ThemeContext';
 
 export {
   CollabKitProvider as Provider,
   CollabKitProvider,
+  ThemeProvider,
   Thread,
   InboxButton,
   PopoverTrigger,
   Inbox,
-  SidePane,
+  //SidePane,
   usePopoverThread,
   useUnreadThreadsCount,
   useUnreadCommentsCount as useUnreadCount,

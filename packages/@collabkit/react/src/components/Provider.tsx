@@ -1,27 +1,19 @@
 import React, { ReactNode, useEffect, useState } from 'react';
-import { createThemes } from '@collabkit/theme';
 import { actions, Events, createEvents } from '@collabkit/client';
-import {
-  ConfigProps,
-  SecureProps,
-  Store,
-  ThreadInfo,
-  UnsecureProps,
-  DeepPartial,
-} from '@collabkit/core';
+import { ConfigProps, SecureProps, Store, ThreadInfo, UnsecureProps } from '@collabkit/core';
 import { AppContext } from '../hooks/useAppContext';
 import { createValtioStore } from '../store';
 import { FirebaseSync } from '@collabkit/client';
 import { SaveMentionableUsers } from './SaveMentionableUsers';
 import { AvatarProps } from '../types';
 import { FloatingTree } from '@floating-ui/react-dom-interactions';
-import merge from 'deepmerge';
 import { UserContextProvider } from '../hooks/useUserContext';
-import * as themes from '../styles/themes.css';
+import { CustomTheme } from '../styles/themes.css';
+import { ThemeProvider } from './ThemeContext';
 
 export type ProviderProps = {
   children: React.ReactNode;
-  theme?: 'light' | 'dark' | themes.CustomTheme;
+  theme?: 'light' | 'dark' | CustomTheme;
   renderAvatar?: (props: AvatarProps) => ReactNode;
   renderThreadContextPreview?: (props: {
     threadId: string;
@@ -63,21 +55,6 @@ export function CollabKitProvider({
     }
   }, [context]);
 
-  let stitchesTheme: any;
-  let currentTheme = '';
-  let themeTokens = {};
-  if (theme === 'light') {
-    stitchesTheme = createThemes().lightTheme;
-  } else if (theme === 'dark') {
-    stitchesTheme = createThemes().darkTheme;
-    currentTheme = themes.dark;
-  } else {
-    stitchesTheme = createThemes().lightTheme;
-    if (theme) {
-      themeTokens = merge(themes.defaultTheme, theme);
-    }
-  }
-
   if (!context) {
     return null;
   }
@@ -87,17 +64,16 @@ export function CollabKitProvider({
       value={{
         store: context.store,
         events: context.events,
-        theme: stitchesTheme,
-        themeClassName: `${currentTheme} ${stitchesTheme}`,
-        themeTokens,
         renderAvatar,
         renderThreadContextPreview,
       }}
     >
-      <UserContextProvider>
-        <FloatingTree>{children}</FloatingTree>
-        <SaveMentionableUsers mentionableUsers={config.mentionableUsers} />
-      </UserContextProvider>
+      <ThemeProvider theme={theme}>
+        <UserContextProvider>
+          <FloatingTree>{children}</FloatingTree>
+          <SaveMentionableUsers mentionableUsers={config.mentionableUsers} />
+        </UserContextProvider>
+      </ThemeProvider>
     </AppContext.Provider>
   );
 }
