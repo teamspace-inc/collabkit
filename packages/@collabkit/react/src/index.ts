@@ -19,6 +19,7 @@ import { createValtioStore } from './store';
 import { Inbox } from './components/Inbox';
 import { InboxButton } from './components/InboxButton';
 import { ThemeProvider } from './components/ThemeContext';
+import { Sidebar } from './components/Sidebar';
 
 export {
   CollabKitProvider as Provider,
@@ -28,7 +29,7 @@ export {
   InboxButton,
   PopoverTrigger,
   Inbox,
-  //SidePane,
+  Sidebar,
   usePopoverThread,
   useUnreadThreadsCount,
   useUnreadCommentsCount as useUnreadCount,

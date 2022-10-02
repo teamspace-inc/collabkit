@@ -5,9 +5,9 @@ import { useApp } from '../hooks/useApp';
 import { useOptionalUserContext } from '../hooks/useUserContext';
 import { IconButton } from './IconButton';
 import { X } from './icons';
-import * as styles from '../styles/SidePane.css';
+import * as styles from '../styles/Sidebar.css';
 
-function CloseSidePaneButton() {
+function CloseSidebarButton() {
   const { store, events } = useApp();
   const userContext = useOptionalUserContext();
 
@@ -32,7 +32,7 @@ function CloseSidePaneButton() {
   );
 }
 
-export function SidePane(props: { children: React.ReactNode }) {
+export function Sidebar(props: { children: React.ReactNode }) {
   const { store } = useApp();
   const { isInboxOpen } = useSnapshot(store);
 
@@ -40,7 +40,7 @@ export function SidePane(props: { children: React.ReactNode }) {
     <div className={styles.root}>
       <h2 className={styles.title}>
         <div style={{ flex: 1 }}>All Comments</div>
-        <CloseSidePaneButton />
+        <CloseSidebarButton />
       </h2>
       <div style={{ flex: 1, height: 'calc(100% - 77px)' }}>{props.children}</div>
     </div>
