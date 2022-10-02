@@ -96,12 +96,6 @@ export const vars = createGlobalThemeContract(
           color: 'mentions-typeahead-item-color',
           gap: 'mentions-typeahead-item-gap',
 
-          highlight: {
-            fontWeight: 'mentions-typeahead-item-highlight-font-weight',
-            color: 'mentions-typeahead-item-highlight-color',
-            background: 'mentions-typeahead-item-highlight-background',
-          },
-
           hover: {
             background: 'mentions-typeahead-item-hover-background',
           },
@@ -109,11 +103,18 @@ export const vars = createGlobalThemeContract(
           mark: {
             color: 'mentions-typeahead-item-mark-color',
             fontWeight: 'mentions-typeahead-item-mark-font-weight',
+            background: 'mentions-typeahead-item-mark-background',
+            borderRadius: 'mentions-typeahead-item-mark-border-radius',
           },
 
           active: {
             background: 'mentions-typeahead-item-active-background',
             color: 'mentions-typeahead-item-active-color',
+          },
+
+          nameAndEmailWrapper: {
+            gap: 'mentions-typeahead-item-name-and-email-wrappper-gap',
+            flexDirection: 'mentions-typeahead-item-name-and-email-wrappper-flex-direction',
           },
 
           name: {
@@ -127,6 +128,7 @@ export const vars = createGlobalThemeContract(
           },
 
           email: {
+            display: 'mentions-typeahead-item-email-display',
             fontWeight: 'mentions-typeahead-item-email-font-weight',
             lineHeight: 'mentions-typeahead-item-email-line-height',
             fontSize: 'mentions-typeahead-item-email-font-size',
@@ -397,8 +399,10 @@ export const defaultTheme = {
         gap: vars.space[2],
 
         mark: {
-          color: colors.black10,
+          color: 'inherit',
           fontWeight: '700',
+          background: 'transparent',
+          borderRadius: '0',
         },
 
         active: {
@@ -410,14 +414,13 @@ export const defaultTheme = {
           background: colors.opacity7,
         },
 
-        highlight: {
-          color: colors.black10,
-          fontWeight: '700',
-          background: 'transparent',
+        nameAndEmailWrapper: {
+          gap: vars.space[1],
+          flexDirection: 'column',
         },
 
         name: {
-          color: vars.color.textSecondary,
+          color: vars.color.textPrimary,
           fontSize: vars.text.large.fontSize,
           lineHeight: vars.text.large.lineHeight,
           fontWeight: '700',
@@ -427,6 +430,7 @@ export const defaultTheme = {
         },
 
         email: {
+          display: 'inherit',
           color: vars.color.textSecondary,
           fontSize: vars.text.small.fontSize,
           lineHeight: vars.text.small.lineHeight,

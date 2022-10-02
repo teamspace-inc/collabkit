@@ -1,6 +1,5 @@
 import { style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
-import { calc } from '@vanilla-extract/css-utils';
 import { vars } from './themes.css';
 
 export const typeahead = style({
@@ -13,6 +12,8 @@ export const typeahead = style({
 });
 
 export const mark = style({
+  background: vars.mentions.typeahead.item.mark.background,
+  borderRadius: vars.mentions.typeahead.item.mark.borderRadius,
   color: vars.mentions.typeahead.item.mark.color,
   fontWeight: vars.mentions.typeahead.item.mark.fontWeight,
 });
@@ -27,7 +28,9 @@ export const list = style({
 });
 
 export const nameAndEmailWrapper = style({
-  gap: '',
+  gap: vars.mentions.typeahead.item.nameAndEmailWrapper.gap,
+  flexDirection: vars.mentions.typeahead.item.nameAndEmailWrapper.flexDirection,
+  display: 'flex',
 });
 
 export const item = recipe({
@@ -72,6 +75,7 @@ export const item = recipe({
 });
 
 export const name = style({
+  color: vars.mentions.typeahead.item.name.color,
   fontWeight:
     vars.mentions.typeahead.item.name.fontWeight ?? vars.mentions.typeahead.item.fontWeight,
   fontSize: vars.mentions.typeahead.item.name.fontSize ?? vars.mentions.typeahead.item.fontSize,
@@ -80,11 +84,13 @@ export const name = style({
 });
 
 export const email = style({
+  color: vars.mentions.typeahead.item.email.color,
   fontWeight:
     vars.mentions.typeahead.item.email.fontWeight ?? vars.mentions.typeahead.item.fontWeight,
   fontSize: vars.mentions.typeahead.item.email.fontSize ?? vars.mentions.typeahead.item.fontSize,
   lineHeight:
     vars.mentions.typeahead.item.email.lineHeight ?? vars.mentions.typeahead.item.lineHeight,
+  display: vars.mentions.typeahead.item.email.display,
 });
 
 export const mentionStyle = style({
