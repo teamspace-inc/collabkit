@@ -69,6 +69,76 @@ export const vars = createGlobalThemeContract(
       borderRadius: 'scrollbar-border-radius',
     },
 
+    mentions: {
+      pill: {
+        fontWeight: 'mentions-pill-font-weight',
+        fontSize: 'mentions-pill-font-size',
+        lineHeight: 'mentions-pill-line-height',
+        color: 'mentions-pill-color',
+        background: 'mentions-pill-background',
+        borderRadius: 'mentions-pill-border-radius',
+        padding: 'mentions-pill-padding',
+      },
+      typeahead: {
+        background: 'mentions-typeahead-background',
+        border: 'mentions-typeahead-border',
+        borderRadius: 'mentions-typeahead-border-radius',
+        boxShadow: 'mentions-typeahead-box-shadow',
+        padding: 'mentions-typeahead-padding',
+
+        item: {
+          borderRadius: 'mentions-typeahead-item-border-radius',
+          fontSize: 'mentions-typeahead-item-font-size',
+          fontWeight: 'mentions-typeahead-item-font-weight',
+          lineHeight: 'mentions-typeahead-item-line-height',
+          background: 'mentions-typeahead-item-background',
+          padding: 'mentions-typeahead-item-padding',
+          color: 'mentions-typeahead-item-color',
+          gap: 'mentions-typeahead-item-gap',
+
+          highlight: {
+            fontWeight: 'mentions-typeahead-item-highlight-font-weight',
+            color: 'mentions-typeahead-item-highlight-color',
+            background: 'mentions-typeahead-item-highlight-background',
+          },
+
+          hover: {
+            background: 'mentions-typeahead-item-hover-background',
+          },
+
+          mark: {
+            color: 'mentions-typeahead-item-mark-color',
+            fontWeight: 'mentions-typeahead-item-mark-font-weight',
+          },
+
+          active: {
+            background: 'mentions-typeahead-item-active-background',
+            color: 'mentions-typeahead-item-active-color',
+          },
+
+          name: {
+            fontWeight: 'mentions-typeahead-item-name-font-weight',
+            lineHeight: 'mentions-typeahead-item-name-line-height',
+            fontSize: 'mentions-typeahead-item-name-font-size',
+            color: 'mentions-typeahead-item-name-color',
+            active: {
+              color: 'mentions-typeahead-item-name-active-color',
+            },
+          },
+
+          email: {
+            fontWeight: 'mentions-typeahead-item-email-font-weight',
+            lineHeight: 'mentions-typeahead-item-email-line-height',
+            fontSize: 'mentions-typeahead-item-email-font-size',
+            color: 'mentions-typeahead-item-email-color',
+            active: {
+              color: 'mentions-typeahead-item-email-active-color',
+            },
+          },
+        },
+      },
+    },
+
     button: {
       fontSize: 'button-font-size',
       lineHeight: 'button-line-height',
@@ -296,6 +366,76 @@ export const defaultTheme = {
     disabled: {
       color: vars.color.textSecondary,
       background: 'transparent',
+    },
+  },
+  mentions: {
+    pill: {
+      fontWeight: '700',
+      fontSize: vars.text.base.fontSize,
+      lineHeight: vars.text.base.lineHeight,
+      color: colors.black10,
+      background: colors.grey30,
+      borderRadius: '6px',
+      padding: '0',
+    },
+
+    typeahead: {
+      background: 'red',
+      border: '1px solid #E0E0E0',
+      borderRadius: '6px',
+      boxShadow: '6px 6px 10px rgba(0, 0, 0, 0.25)',
+      padding: '0',
+
+      item: {
+        borderRadius: vars.space[1],
+        fontSize: vars.text.base.fontSize,
+        fontWeight: '400',
+        lineHeight: vars.text.base.lineHeight,
+        background: vars.color.surface,
+        padding: vars.space[2],
+        color: vars.color.textPrimary,
+        gap: vars.space[2],
+
+        mark: {
+          color: colors.black10,
+          fontWeight: '700',
+        },
+
+        active: {
+          background: colors.opacity7,
+          color: vars.color.textPrimary,
+        },
+
+        hover: {
+          background: colors.opacity7,
+        },
+
+        highlight: {
+          color: colors.black10,
+          fontWeight: '700',
+          background: 'transparent',
+        },
+
+        name: {
+          color: vars.color.textSecondary,
+          fontSize: vars.text.large.fontSize,
+          lineHeight: vars.text.large.lineHeight,
+          fontWeight: '700',
+          active: {
+            color: colors.black10,
+          },
+        },
+
+        email: {
+          color: vars.color.textSecondary,
+          fontSize: vars.text.small.fontSize,
+          lineHeight: vars.text.small.lineHeight,
+          fontWeight: '400',
+          active: {
+            color: colors.black10,
+          },
+        },
+      },
     },
   },
   comment: {

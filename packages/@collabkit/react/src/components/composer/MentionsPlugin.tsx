@@ -20,8 +20,8 @@ import { $createMentionNode, MentionNode } from '../../editor';
 import { snapshot } from 'valtio';
 import { Store } from '../../constants';
 import { useApp } from '../../hooks/useApp';
-import { styled } from '@stitches/react';
-import { mentionsPluginStyles } from '@collabkit/theme';
+import * as styles from '../../styles/MentionsPlugin.css';
+
 import { MentionWithColor } from '@collabkit/core';
 import {
   autoUpdate,
@@ -47,12 +47,6 @@ type Resolution = {
   match: MentionMatch;
   range: Range;
 };
-
-const StyledMentionsTypeahead = styled('div', mentionsPluginStyles.typeahead);
-const StyledMentionsTypeaheadUl = styled('div', mentionsPluginStyles.typeaheadList);
-const StyledMentionsTypeaheadLi = styled('div', mentionsPluginStyles.typeaheadListItem);
-const StyledMentionsTypeaheadLiName = styled('div', mentionsPluginStyles.typeaheadListItemName);
-const StyledMentionsTypeaheadLiEmail = styled('div', mentionsPluginStyles.typeaheadListItemEmail);
 
 const PUNCTUATION = '\\.,\\+\\*\\?\\$\\@\\|#{}\\(\\)\\^\\-\\[\\]\\\\/!%\'"~=<>_:;';
 const NAME = '\\b[A-Z][^\\s' + PUNCTUATION + ']';
@@ -133,7 +127,13 @@ const Highlighted = ({ text = '', highlight = '' }) => {
       {parts
         .filter((part) => part)
         .map((part, i) =>
-          regex.test(part) ? <mark key={i}>{part}</mark> : <span key={i}>{part}</span>
+          regex.test(part) ? (
+            <mark className={styles.mark} key={i}>
+              {part}
+            </mark>
+          ) : (
+            <span key={i}>{part}</span>
+          )
         )}
     </span>
   );
@@ -185,7 +185,7 @@ function useMentionLookupService(mentionString: string) {
   return results;
 }
 
-function MentionsTypeaheadItem({
+export function MentionsTypeaheadItem({
   index,
   isSelected,
   onClick,
@@ -201,8 +201,9 @@ function MentionsTypeaheadItem({
   query: string;
 }) {
   return (
-    <StyledMentionsTypeaheadLi
-      selected={isSelected}
+    <div
+      className={styles.typeaheadListItem}
+      // selected={isSelected}
       key={result.id}
       tabIndex={-1}
       role="option"
@@ -215,18 +216,18 @@ function MentionsTypeaheadItem({
         <Profile.Avatar />
       </Profile.Provider>
       <div>
-        <StyledMentionsTypeaheadLiName>
+        <div className={styles.typeaheadListItemName}>
           <Highlighted text={result.name ?? ''} highlight={query}></Highlighted>
-        </StyledMentionsTypeaheadLiName>
-        <StyledMentionsTypeaheadLiEmail>
+        </div>
+        <div className={styles.typeaheadListItemEmail}>
           <Highlighted text={result.email ?? ''} highlight={query}></Highlighted>
-        </StyledMentionsTypeaheadLiEmail>
+        </div>
       </div>
-    </StyledMentionsTypeaheadLi>
+    </div>
   );
 }
 
-function MentionsTypeahead({
+export function MentionsTypeahead({
   close,
   editor,
   resolution,
@@ -399,7 +400,8 @@ function MentionsTypeahead({
     <FloatingNode id={nodeId}>
       <FloatingFocusManager context={context}>
         <ThemeWrapper>
-          <StyledMentionsTypeahead
+          <div
+            className={styles.typeahead}
             aria-label="Suggested mentions"
             role="listbox"
             ref={context.floating}
@@ -409,7 +411,7 @@ function MentionsTypeahead({
               left: context.x ?? 0,
             }}
           >
-            <StyledMentionsTypeaheadUl>
+            <div className={styles.typeaheadList}>
               {results.slice(0, SUGGESTION_LIST_LENGTH_LIMIT).map((result, i) => (
                 <MentionsTypeaheadItem
                   key={result.id}
@@ -426,8 +428,8 @@ function MentionsTypeahead({
                   query={match.matchingString}
                 />
               ))}
-            </StyledMentionsTypeaheadUl>
-          </StyledMentionsTypeahead>
+            </div>
+          </div>
         </ThemeWrapper>
       </FloatingFocusManager>
     </FloatingNode>
