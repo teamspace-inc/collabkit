@@ -380,7 +380,7 @@ export const defaultTheme = {
     },
 
     typeahead: {
-      background: 'red',
+      background: vars.color.surface,
       border: '1px solid #E0E0E0',
       borderRadius: '6px',
       boxShadow: '6px 6px 10px rgba(0, 0, 0, 0.25)',

@@ -238,6 +238,7 @@ export function MentionsTypeahead({
   const match = resolution.match;
   const results = useMentionLookupService(match.matchingString);
   const [selectedIndex, setSelectedIndex] = useState<null | number>(null);
+  const [width, setWidth] = useState(0);
 
   const nodeId = useFloatingNodeId();
 
@@ -269,6 +270,7 @@ export function MentionsTypeahead({
     }
 
     reference(rootElement);
+    setWidth(rootElement.getBoundingClientRect().width);
   }, [editor]);
 
   const applyCurrentSelected = useCallback(() => {
@@ -408,6 +410,7 @@ export function MentionsTypeahead({
               position: context.strategy,
               top: context.y ?? 0,
               left: context.x ?? 0,
+              width,
             }}
           >
             <div className={styles.list}>

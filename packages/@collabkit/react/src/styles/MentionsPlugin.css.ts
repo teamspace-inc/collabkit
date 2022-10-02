@@ -37,7 +37,7 @@ export const item = recipe({
     boxSizing: 'border-box',
     minWidth: '10ch',
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'row',
     width: '100%',
     fontSize: vars.mentions.typeahead.item.fontSize,
     lineHeight: vars.mentions.typeahead.item.lineHeight,
