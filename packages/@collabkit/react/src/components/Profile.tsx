@@ -64,6 +64,28 @@ function AvatarPlaceholder({
   );
 }
 
+export function NumberdAvatarPlaceholder({
+  size,
+  number,
+  ...props
+}: {
+  number: number;
+  className?: string;
+  size: number;
+}) {
+  return (
+    <div
+      {...props}
+      className={props.className ?? styles.avatar}
+      style={{
+        ...(size ? { width: size, height: size, lineHeight: `${size}px` } : {}),
+      }}
+    >
+      {number}
+    </div>
+  );
+}
+
 export function Avatar({
   size,
   ...props
