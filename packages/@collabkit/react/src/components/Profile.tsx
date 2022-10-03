@@ -1,11 +1,10 @@
 import { actions } from '@collabkit/client';
 import { getProfileColor } from '@collabkit/colors';
 import { Profile } from '@collabkit/core';
-import React, { useState } from 'react';
+import React from 'react';
 import { useSnapshot } from 'valtio';
 import { useApp } from '../hooks/useApp';
 import * as styles from '../styles/Profile.css';
-import { AvatarProps } from '../types';
 
 type ProfileContextValue = {
   profileId: string;
@@ -14,7 +13,7 @@ type ProfileContextValue = {
 export const ProfileContext = React.createContext<ProfileContextValue | null>(null);
 
 function useProfile() {
-  const context = React.useContext(ProfileContext);
+  const context = React.useContext(ProfileContext); 
   if (context == null) {
     throw new Error('[useProfile] Profile context not found');
   }

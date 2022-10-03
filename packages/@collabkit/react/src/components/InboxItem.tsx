@@ -71,7 +71,7 @@ export function InboxItem() {
       key={`inboxThread-${threadId}`}
     >
       <div
-        className={styles.thread.root}
+        className={styles.root}
         onClick={() => {
           const onInboxThreadClick = store.callbacks?.onInboxThreadClick;
           if (onInboxThreadClick) {
@@ -87,34 +87,33 @@ export function InboxItem() {
           }
         }}
       >
-        <div className={styles.thread.content}>
-          <div style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
+        <div>
+          <div className={styles.header}>
             <UnreadDot className={styles.unreadDot} />
             <ThreadCommentersFacepile />
             <div style={{ flex: 1 }}></div>
             <ResolveThreadButton />
           </div>
           {renderThreadContextPreview?.({ threadId, workspaceId, userId, info })}
-          <Comment.Root eventId={firstCommentId}>
+          <Comment.Root eventId={firstCommentId} className={styles.commentRoot}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-              <div style={{ display: 'flex', flexDirection: 'row', gap: '8px' }}>
-                <Comment.CreatorName className={styles.commentCreatorName} />
-                <Comment.Timestamp
-                  className={styles.commentTimestamp}
-                  format={formatTimestampRelative}
-                />
+              <div
+                style={{ display: 'flex', flexDirection: 'row', gap: '8px', alignItems: 'center' }}
+              >
+                <Comment.CreatorName className={styles.name} />
+                <Comment.Timestamp className={styles.timestamp} format={formatTimestampRelative} />
               </div>
               <Comment.Body />
             </div>
           </Comment.Root>
-          <Comment.Root eventId={lastComment.id}>
+          <Comment.Root eventId={lastComment.id} className={styles.commentRoot}>
             <div>
               {replyCount > 0 ? (
                 <>
-                  <div style={{ display: 'flex', gap: '8px' }}>
+                  <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
                     <ReplyCount className={styles.replyCount} />
                     <Comment.Timestamp
-                      className={styles.commentTimestamp}
+                      className={styles.timestamp}
                       format={formatTimestampRelative}
                     />
                   </div>

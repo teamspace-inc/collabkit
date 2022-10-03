@@ -1,4 +1,7 @@
 import { style } from '@vanilla-extract/css';
+import { name as profileName } from './Profile.css';
+import { timestamp as commentTimestamp, root as commentRootBase } from './Comment.css';
+import { vars } from './themes.css';
 
 export const replyCount = style({
   fontStyle: 'normal',
@@ -9,14 +12,14 @@ export const replyCount = style({
   color: '#2C915E',
 });
 
-export const commentCreatorName = style({
-  fontStyle: 'normal',
-  fontWeight: 600,
-  fontSize: 14,
-  lineHeight: '160%',
-  letterSpacing: -0.1,
-  color: '#000000',
-});
+export const name = style([profileName, {}]);
+
+export const commentRoot = style([
+  commentRootBase(),
+  {
+    padding: 0,
+  },
+]);
 
 export const unreadDot = style({
   width: 8,
@@ -27,32 +30,36 @@ export const unreadDot = style({
   left: -16,
 });
 
-export const commentTimestamp = style({
-  fontStyle: 'normal',
-  fontWeight: 400,
-  fontSize: 14,
-  lineHeight: '160%',
-  letterSpacing: -0.1,
-  color: '#6A7278',
+export const header = style({
+  display: 'flex',
+  alignItems: 'center',
+  position: 'relative',
 });
 
-export const thread = {
-  root: style({
-    display: 'flex',
-    borderBottom: '1px solid #E3E9ED',
-    flexDirection: 'column',
-    flex: 1,
-  }),
-  content: style({
-    background: 'white',
-    padding: '32px 24px',
-    display: 'flex',
-    gap: '16px',
-    flexDirection: 'column',
-    selectors: {
-      '&:hover': {
-        background: '#E3E9ED',
-      },
+export const timestamp = style([
+  commentTimestamp,
+  {
+    // fontStyle: 'normal',
+    // fontWeight: 400,
+    // fontSize: 14,
+    // lineHeight: '160%',
+    // letterSpacing: -0.1,
+    // color: '#6A7278',
+  },
+]);
+
+export const root = style({
+  display: 'flex',
+  // borderBottom: `1px solid ${vars.color.surface}`,
+  flexDirection: 'column',
+  flex: 1,
+  boxSizing: 'border-box',
+  background: vars.color.background,
+  padding: '32px 24px',
+  gap: '16px',
+  selectors: {
+    '&:hover': {
+      background: vars.color.surfaceOverlay,
     },
-  }),
-};
+  },
+});

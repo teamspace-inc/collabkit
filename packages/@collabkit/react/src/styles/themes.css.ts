@@ -69,6 +69,44 @@ export const vars = createGlobalThemeContract(
       borderRadius: 'scrollbar-border-radius',
     },
 
+    facepile: {
+      gap: 'facepile-gap',
+      avatar: {
+        borderSize: 'facepile-avatar-border-size',
+      },
+    },
+
+    inbox: {
+      gap: 'inbox-gap',
+      background: 'inbox-background',
+
+      item: {
+        gap: 'inbox-item-gap',
+        padding: 'inbox-item-padding',
+        background: 'inbox-item-background',
+        borderBottom: 'inbox-item-border-bottom',
+
+        hover: {
+          background: 'inbox-item-hover-background',
+        },
+
+        replyCount: {
+          fontWeight: 'inbox-item-reply-count-font-weight',
+          fontSize: 'inbox-item-reply-count-font-size',
+          lineHeight: 'inbox-item-reply-count-line-height',
+          // letterSpacing: 'inbox-item-reply-count-letter-spacing',
+          color: 'inbox-item-reply-count-color',
+        },
+
+        unreadDot: {
+          width: 'inbox-item-unread-dot-width',
+          height: 'inbox-item-unread-dot-height',
+          borderRadius: 'inbox-item-unread-dot-border-radius',
+          background: 'inbox-item-unread-dot-background',
+        },
+      },
+    },
+
     mentions: {
       pill: {
         fontWeight: 'mentions-pill-font-weight',
@@ -184,7 +222,6 @@ export const vars = createGlobalThemeContract(
       hover: {
         background: 'comment-hover-background',
       },
-
       body: {
         color: 'comment-body-color',
         fontSize: 'comment-body-font-size',
@@ -322,6 +359,12 @@ export const defaultTheme = {
     base: { fontSize: '13px', lineHeight: '18px' },
     large: { fontSize: '14px', lineHeight: '17px' },
   },
+  facepile: {
+    gap: calc.negate('4px'),
+    avatar: {
+      borderSize: '2px',
+    },
+  },
   scrollbar: {
     thumb: {
       background: colors.grey30,
@@ -370,11 +413,38 @@ export const defaultTheme = {
       background: 'transparent',
     },
   },
+  inbox: {
+    gap: vars.space[2],
+    background: vars.color.background,
+    item: {
+      gap: vars.space[2],
+      padding: vars.space[2],
+      background: vars.color.surface,
+      borderBottom: '0px solid transparent',
+      hover: {
+        background: vars.color.surface,
+      },
+      replyCount: {
+        // todo extract out bold
+        fontWeight: '700',
+        color: vars.color.textSecondary,
+        fontSize: vars.text.small.fontSize,
+        lineHeight: vars.text.small.lineHeight,
+      },
+      unreadDot: {
+        width: vars.space[2],
+        height: vars.space[2],
+        borderRadius: '50%',
+        background: colors.red,
+      },
+    },
+  },
   mentions: {
     pill: {
       fontWeight: '700',
       fontSize: vars.text.base.fontSize,
       lineHeight: vars.text.base.lineHeight,
+      // todo make these use text colors
       color: colors.black10,
       background: colors.grey30,
       borderRadius: '6px',

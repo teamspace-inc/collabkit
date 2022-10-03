@@ -1,4 +1,5 @@
 import { style } from '@vanilla-extract/css';
+import { vars } from './themes.css';
 
 export const root = style({
   display: 'flex',
@@ -7,6 +8,7 @@ export const root = style({
   boxSizing: 'border-box',
   height: '100%',
   borderRadius: 0,
+  background: vars.color.background,
 });
 
 export const emptyState = {
