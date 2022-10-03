@@ -19,6 +19,7 @@ export const root = style({
 export const previewRoot = style([
   root,
   {
+    boxShadow: vars.popoverThread.preview.boxShadow,
     cursor: 'pointer',
   },
 ]);

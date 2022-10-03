@@ -299,6 +299,9 @@ export const vars = createGlobalThemeContract(
       borderRadius: 'popover-thread-border-radius',
       boxShadow: 'popover-thread-box-shadow',
       width: 'popover-thread-width',
+      preview: {
+        boxShadow: 'popover-thread-preview-box-shadow',
+      },
       composer: {
         borderTop: 'popover-thread-composer-border-top',
         alignItems: 'popover-thread-composer-align-items',
@@ -608,8 +611,11 @@ export const defaultTheme = {
     background: vars.color.background,
     border: 'none',
     borderRadius: vars.space[3],
-    boxShadow: 'none',
+    boxShadow: vars.shadow.high,
     width: '264px', // make this customisable
+    preview: {
+      boxShadow: vars.shadow.standard,
+    },
     composer: {
       borderTop: `1px solid ${colors.opacity7}`,
       alignItems: 'flex-end',
