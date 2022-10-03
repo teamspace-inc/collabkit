@@ -9,13 +9,14 @@ export function Facepile(
     hover?: boolean;
   } & React.ComponentPropsWithoutRef<'div'>
 ) {
+  const { hover, ...otherProps } = props;
   return (
-    <div className={styles.root} {...props}>
+    <div className={styles.root} {...otherProps}>
       {props.profiles.map((profile, index) => {
         return profile ? (
           <div
             key={profile.id}
-            className={styles.avatarWrap({ hover: !!props.hover })}
+            className={styles.avatarWrap({ hover: !!hover })}
             style={{
               zIndex: 999 - index,
             }}

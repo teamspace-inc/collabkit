@@ -82,7 +82,12 @@ export const PreviewThread = forwardRef<Handle, PopoverThreadProps>(function Pop
   return (
     <ThreadContext.Provider value={context ?? { userId, threadId, workspaceId }}>
       <ThemeWrapper>
-        <div className={styles.root} data-collabkit-internal="true" style={props.style} ref={ref}>
+        <div
+          className={styles.previewRoot}
+          data-collabkit-internal="true"
+          style={props.style}
+          ref={ref}
+        >
           <ScrollAreaRoot>
             <ScrollAreaViewport style={{ maxHeight: props.maxAvailableSize?.height ?? 'unset' }}>
               <CommentList.Root className={styles.commentList}>

@@ -320,6 +320,7 @@ export const vars = createGlobalThemeContract(
         borderRadius: 'profile-avatar-border-radius',
         fontSize: 'profile-avatar-font-size',
         color: 'profile-avatar-color',
+        background: 'profile-avatar-background',
       },
       name: {
         color: 'profile-name-color',
@@ -630,6 +631,7 @@ export const defaultTheme = {
       borderRadius: '50%',
       fontSize: vars.text.small.fontSize,
       color: vars.color.background,
+      background: colors.grey60,
     },
     name: {
       color: vars.color.textPrimary,

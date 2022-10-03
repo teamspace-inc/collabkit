@@ -16,6 +16,13 @@ export const root = style({
   borderRadius: vars.popoverThread.borderRadius,
 });
 
+export const previewRoot = style([
+  root,
+  {
+    cursor: 'pointer',
+  },
+]);
+
 export const commentList = style({
   display: 'flex',
   flexDirection: 'column',

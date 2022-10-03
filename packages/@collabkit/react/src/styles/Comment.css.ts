@@ -139,6 +139,7 @@ export const menuItem = style({
   outline: 0,
   padding: `${vars.space[1]} ${vars.space[2]}`,
   borderRadius: vars.space[1],
+  cursor: 'pointer',
   background: vars.comment.menu.background,
   color: vars.comment.menu.color,
   fontSize: vars.comment.menu.fontSize,

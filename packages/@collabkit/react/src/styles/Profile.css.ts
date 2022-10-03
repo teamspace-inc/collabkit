@@ -9,6 +9,7 @@ export const avatar = style({
   lineHeight: vars.profile.avatar.height,
   color: vars.profile.avatar.color,
   flexShrink: 0,
+  background: vars.profile.avatar.background,
   fontWeight: '700',
   textAlign: 'center',
   verticalAlign: 'middle',

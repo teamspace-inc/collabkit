@@ -23,16 +23,20 @@ import * as styles from '../styles/InboxItem.css';
 // and then display days (“[d] days ago”) up until the comment date’s
 // month isn’t the current month, then display “[m] months ago”.
 function formatTimestampRelative(timestamp: number, now: number) {
+  let string;
   if (isSameDay(timestamp, now)) {
-    return format(timestamp, "'Today' 'at' p");
+    string = format(timestamp, "'Today' 'at' p");
+  } else if (Math.abs(differenceInHours(timestamp, now)) <= 48) {
+    string = formatDistanceStrict(timestamp, now, { unit: 'hour', addSuffix: true });
+  } else if (isSameMonth(timestamp, now)) {
+    string = formatDistanceStrict(timestamp, now, { unit: 'day', addSuffix: true });
+  } else {
+    string = formatDistanceStrict(timestamp, now, { unit: 'month', addSuffix: true });
+    if (string.charAt(0) === '0') {
+      string = 'Last month';
+    }
   }
-  if (Math.abs(differenceInHours(timestamp, now)) <= 48) {
-    return formatDistanceStrict(timestamp, now, { unit: 'hour', addSuffix: true });
-  }
-  if (isSameMonth(timestamp, now)) {
-    return formatDistanceStrict(timestamp, now, { unit: 'day', addSuffix: true });
-  }
-  return formatDistanceStrict(timestamp, now, { unit: 'month', addSuffix: true });
+  return string;
 }
 
 export function InboxItem() {
