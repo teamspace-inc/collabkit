@@ -76,6 +76,9 @@ export const root = recipe({
       '&:hover': {
         background: vars.color.surfaceOverlay,
       },
+      '&:last-of-type': {
+        marginBottom: vars.inbox.item.paddingBottom,
+      },
     },
   },
 

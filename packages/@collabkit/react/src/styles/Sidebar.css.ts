@@ -19,6 +19,7 @@ export const scrollarea = style({
   height: `calc(100vh - ${calc(vars.sidebar.title.lineHeight)
     .add(vars.sidebar.title.paddingBottom)
     .add(vars.sidebar.title.paddingTop)
+    .add(vars.sidebar.title.paddingBottom)
     .toString()})`,
 });
 
