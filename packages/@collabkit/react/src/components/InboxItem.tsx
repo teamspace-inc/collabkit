@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSnapshot } from 'valtio';
 import { differenceInHours, format, formatDistanceStrict, isSameDay, isSameMonth } from 'date-fns';
 import { ThreadContext, useThreadContext } from '../hooks/useThreadContext';
@@ -43,6 +43,7 @@ export function InboxItem() {
   const timeline = workspace.timeline[threadId];
   const info = workspace.threadInfo[threadId];
   const replyCount = useReplyCount();
+  const [hover, setHover] = useState(false);
 
   if (!timeline) {
     return null;
@@ -71,6 +72,8 @@ export function InboxItem() {
       key={`inboxThread-${threadId}`}
     >
       <div
+        onMouseOver={() => setHover(true)}
+        onMouseOut={() => setHover(false)}
         className={styles.root}
         onClick={() => {
           const onInboxThreadClick = store.callbacks?.onInboxThreadClick;
@@ -87,41 +90,30 @@ export function InboxItem() {
           }
         }}
       >
-        <div>
-          <div className={styles.header}>
-            <UnreadDot className={styles.unreadDot} />
-            <ThreadCommentersFacepile />
-            <div style={{ flex: 1 }}></div>
-            <ResolveThreadButton />
+        <div className={styles.header}>
+          <UnreadDot className={styles.unreadDot} />
+          <ThreadCommentersFacepile hover={hover} />
+          <div style={{ flex: 1 }}></div>
+          <ResolveThreadButton />
+        </div>
+        {renderThreadContextPreview?.({ threadId, workspaceId, userId, info })}
+        <Comment.Root eventId={firstCommentId} className={styles.commentRoot}>
+          <div className={styles.nameAndTimestampWrapper}>
+            <Comment.CreatorName className={styles.name} />
+            <Comment.Timestamp className={styles.timestamp} format={formatTimestampRelative} />
           </div>
-          {renderThreadContextPreview?.({ threadId, workspaceId, userId, info })}
-          <Comment.Root eventId={firstCommentId} className={styles.commentRoot}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-              <div
-                style={{ display: 'flex', flexDirection: 'row', gap: '8px', alignItems: 'center' }}
-              >
-                <Comment.CreatorName className={styles.name} />
+          <Comment.Body />
+        </Comment.Root>
+        <Comment.Provider eventId={lastComment.id}>
+          {replyCount > 0 ? (
+            <div>
+              <div className={styles.nameAndTimestampWrapper}>
+                <ReplyCount className={styles.replyCount} />
                 <Comment.Timestamp className={styles.timestamp} format={formatTimestampRelative} />
               </div>
-              <Comment.Body />
             </div>
-          </Comment.Root>
-          <Comment.Root eventId={lastComment.id} className={styles.commentRoot}>
-            <div>
-              {replyCount > 0 ? (
-                <>
-                  <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                    <ReplyCount className={styles.replyCount} />
-                    <Comment.Timestamp
-                      className={styles.timestamp}
-                      format={formatTimestampRelative}
-                    />
-                  </div>
-                </>
-              ) : null}
-            </div>
-          </Comment.Root>
-        </div>
+          ) : null}
+        </Comment.Provider>
       </div>
     </ThreadContext.Provider>
   );

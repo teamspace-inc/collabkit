@@ -56,7 +56,6 @@ export const item = recipe({
         borderTopLeftRadius: vars.mentions.typeahead.item.borderRadius,
         borderTopRightRadius: vars.mentions.typeahead.item.borderRadius,
       },
-
       '&:last-of-type': {
         borderBottomLeftRadius: vars.mentions.typeahead.item.borderRadius,
         borderBottomRightRadius: vars.mentions.typeahead.item.borderRadius,

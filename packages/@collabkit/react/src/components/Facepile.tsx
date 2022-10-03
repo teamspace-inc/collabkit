@@ -6,6 +6,7 @@ import * as styles from '../styles/Facepile.css';
 export function Facepile(
   props: {
     profiles: ProfileType[] | readonly ProfileType[];
+    hover?: boolean;
   } & React.ComponentPropsWithoutRef<'div'>
 ) {
   return (
@@ -14,7 +15,7 @@ export function Facepile(
         return profile ? (
           <div
             key={profile.id}
-            className={styles.avatarWrap}
+            className={styles.avatarWrap({ hover: !!props.hover })}
             style={{
               zIndex: 999 - index,
             }}

@@ -1,5 +1,6 @@
 import { style } from '@vanilla-extract/css';
 import { calc } from '@vanilla-extract/css-utils';
+import { recipe } from '@vanilla-extract/recipes';
 import { vars } from './themes.css';
 
 export const root = style({
@@ -8,8 +9,17 @@ export const root = style({
   marginLeft: `${calc(vars.facepile.gap).negate()}`,
 });
 
-export const avatarWrap = style({
-  border: `${calc(vars.facepile.avatar.borderSize)} solid ${vars.color.background}`,
-  marginLeft: `${calc(vars.facepile.gap).subtract(vars.facepile.avatar.borderSize)}`,
-  borderRadius: '50%',
+export const avatarWrap = recipe({
+  base: {
+    border: `${calc(vars.facepile.avatar.borderSize)} solid ${vars.facepile.avatar.borderColor}`,
+    marginLeft: `${calc(vars.facepile.gap).subtract(vars.facepile.avatar.borderSize)}`,
+    borderRadius: '50%',
+  },
+  variants: {
+    hover: {
+      true: {
+        borderColor: vars.facepile.avatar.hover.borderColor,
+      },
+    },
+  },
 });

@@ -53,7 +53,11 @@ export const vars = createGlobalThemeContract(
         lineHeight: 'text-large-line-height',
       },
     },
-
+    // Default shadows
+    shadow: {
+      standard: 'shadow-standard',
+      high: 'shadow-high',
+    },
     // Components
     scrollbar: {
       thumb: {
@@ -73,16 +77,24 @@ export const vars = createGlobalThemeContract(
       gap: 'facepile-gap',
       avatar: {
         borderSize: 'facepile-avatar-border-size',
+        borderColor: 'facepile-avatar-border-color',
+        hover: {
+          borderColor: 'facepile-avatar-hover-border-color',
+        },
       },
     },
 
     inbox: {
       gap: 'inbox-gap',
       background: 'inbox-background',
+      width: 'inbox-width',
 
       item: {
         gap: 'inbox-item-gap',
-        padding: 'inbox-item-padding',
+        paddingTop: 'inbox-item-padding-top',
+        paddingBottom: 'inbox-item-padding-bottom',
+        paddingLeft: 'inbox-item-padding-left',
+        paddingRight: 'inbox-item-padding-right',
         background: 'inbox-item-background',
         borderBottom: 'inbox-item-border-bottom',
 
@@ -359,10 +371,18 @@ export const defaultTheme = {
     base: { fontSize: '13px', lineHeight: '18px' },
     large: { fontSize: '14px', lineHeight: '17px' },
   },
+  shadow: {
+    standard: '0px 1px 2px rgba(0, 0, 0, 0.1)',
+    high: '0px 2px 4px rgba(0, 0, 0, 0.1)',
+  },
   facepile: {
     gap: calc.negate('4px'),
     avatar: {
       borderSize: '2px',
+      borderColor: vars.color.background,
+      hover: {
+        borderColor: vars.color.surface,
+      },
     },
   },
   scrollbar: {
@@ -415,10 +435,14 @@ export const defaultTheme = {
   },
   inbox: {
     gap: vars.space[2],
+    width: '292px',
     background: vars.color.background,
     item: {
       gap: vars.space[2],
-      padding: vars.space[2],
+      paddingTop: vars.space[4],
+      paddingBottom: vars.space[4],
+      paddingLeft: vars.space[4],
+      paddingRight: vars.space[4],
       background: vars.color.surface,
       borderBottom: '0px solid transparent',
       hover: {
@@ -426,7 +450,7 @@ export const defaultTheme = {
       },
       replyCount: {
         // todo extract out bold
-        fontWeight: '700',
+        fontWeight: '400',
         color: vars.color.textSecondary,
         fontSize: vars.text.small.fontSize,
         lineHeight: vars.text.small.lineHeight,

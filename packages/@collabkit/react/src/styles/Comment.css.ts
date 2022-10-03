@@ -7,6 +7,7 @@ export const root = recipe({
   base: {
     display: 'flex',
     flex: '1',
+    flexDirection: 'row',
     gap: vars.space[2],
     position: 'relative',
     maxWidth: calc.subtract('100%', vars.space[2]),

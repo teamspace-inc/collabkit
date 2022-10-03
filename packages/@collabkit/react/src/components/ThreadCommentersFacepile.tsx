@@ -6,7 +6,9 @@ import { useTimelineStore } from '../hooks/useTimelineStore';
 import { Facepile } from './Facepile';
 import { unique } from './Inbox';
 
-export function ThreadCommentersFacepile(props: React.ComponentPropsWithoutRef<'div'>) {
+export function ThreadCommentersFacepile(
+  props: { hover: boolean } & React.ComponentPropsWithoutRef<'div'>
+) {
   const timeline = useSnapshot(useTimelineStore());
   const { profiles } = useSnapshot(useApp().store);
 

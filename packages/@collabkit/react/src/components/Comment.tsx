@@ -55,11 +55,40 @@ const markdownStyle = css({
   },
 });
 
+export function Provider(props: { children: React.ReactNode; eventId: string }) {
+  const { threadId, workspaceId } = useThreadContext();
+  const { eventId } = props;
+  const treeId = useId();
+
+  const target = useMemo<CommentTarget>(
+    () => ({ type: 'comment', workspaceId, threadId, eventId, treeId }),
+    [workspaceId, threadId, eventId, treeId]
+  );
+
+  const timeline = useSnapshot(useWorkspaceStore().timeline[threadId]);
+  const event = timeline?.[eventId];
+  const createdById = event?.createdById;
+
+  if (!createdById) {
+    return null;
+  }
+
+  if (event.type === 'system' || !event.hasProfile) {
+    return null;
+  }
+
+  return (
+    <CommentContext.Provider value={target}>
+      <Profile.Provider profileId={createdById}>{props.children}</Profile.Provider>
+    </CommentContext.Provider>
+  );
+}
+
 export function Root(props: {
   children: React.ReactNode;
   className?: string;
   eventId: string;
-  type?: CommentType;
+  type?: CommentType; // why don't we just fetch this from the store?
   style?: React.CSSProperties;
 }) {
   const { threadId, workspaceId, userId } = useThreadContext();

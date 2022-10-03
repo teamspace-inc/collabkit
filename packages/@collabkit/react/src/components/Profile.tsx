@@ -13,7 +13,7 @@ type ProfileContextValue = {
 export const ProfileContext = React.createContext<ProfileContextValue | null>(null);
 
 function useProfile() {
-  const context = React.useContext(ProfileContext); 
+  const context = React.useContext(ProfileContext);
   if (context == null) {
     throw new Error('[useProfile] Profile context not found');
   }

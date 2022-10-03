@@ -1,33 +1,42 @@
 import { style } from '@vanilla-extract/css';
 import { name as profileName } from './Profile.css';
-import { timestamp as commentTimestamp, root as commentRootBase } from './Comment.css';
+import { timestamp as commentTimestamp } from './Comment.css';
 import { vars } from './themes.css';
+import { calc } from '@vanilla-extract/css-utils';
 
 export const replyCount = style({
-  fontStyle: 'normal',
-  fontWeight: 600,
-  fontSize: 14,
-  lineHeight: '160%',
-  letterSpacing: -0.1,
-  color: '#2C915E',
+  color: vars.inbox.item.replyCount.color,
+  fontSize: vars.inbox.item.replyCount.fontSize,
+  lineHeight: vars.inbox.item.replyCount.lineHeight,
+  fontWeight: vars.inbox.item.replyCount.fontWeight,
 });
 
 export const name = style([profileName, {}]);
 
 export const commentRoot = style([
-  commentRootBase(),
+  // commentRootBase(),
   {
     padding: 0,
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '8px',
   },
 ]);
 
+export const nameAndTimestampWrapper = style({
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'baseline',
+  gap: '8px',
+});
+
 export const unreadDot = style({
-  width: 8,
-  height: 8,
-  borderRadius: 8,
-  background: '#007FF5',
+  width: vars.inbox.item.unreadDot.width,
+  height: vars.inbox.item.unreadDot.height,
+  borderRadius: vars.inbox.item.unreadDot.borderRadius,
+  background: vars.inbox.item.unreadDot.background,
   position: 'absolute',
-  left: -16,
+  left: `${calc(vars.inbox.item.paddingLeft).subtract(vars.inbox.item.unreadDot.width).negate()}`,
 });
 
 export const header = style({
@@ -50,13 +59,17 @@ export const timestamp = style([
 
 export const root = style({
   display: 'flex',
-  // borderBottom: `1px solid ${vars.color.surface}`,
+  borderBottom: vars.inbox.item.borderBottom,
   flexDirection: 'column',
   flex: 1,
+  cursor: 'pointer',
   boxSizing: 'border-box',
   background: vars.color.background,
-  padding: '32px 24px',
-  gap: '16px',
+  paddingTop: vars.inbox.item.paddingTop,
+  paddingBottom: vars.inbox.item.paddingBottom,
+  paddingLeft: vars.inbox.item.paddingLeft,
+  paddingRight: vars.inbox.item.paddingRight,
+  gap: '12px',
   selectors: {
     '&:hover': {
       background: vars.color.surfaceOverlay,
