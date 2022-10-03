@@ -79,7 +79,7 @@ export const root = recipe({
   },
 
   variants: {
-    isViewing: {
+    active: {
       true: {
         background: vars.color.surfaceOverlay,
       },

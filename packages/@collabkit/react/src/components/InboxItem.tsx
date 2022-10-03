@@ -71,7 +71,7 @@ export function InboxItem() {
   // inbox tracks most recent comment by default
   const lastComment = inbox[threadId];
 
-  const isViewing = !!(viewingId && viewingId.type === 'thread' && viewingId.threadId === threadId);
+  const active = !!(viewingId && viewingId.type === 'thread' && viewingId.threadId === threadId);
 
   return (
     <ThreadContext.Provider
@@ -81,7 +81,7 @@ export function InboxItem() {
       <div
         onMouseOver={() => setHover(true)}
         onMouseOut={() => setHover(false)}
-        className={styles.root({ isViewing })}
+        className={styles.root({ active })}
         onClick={() => {
           const onInboxThreadClick = store.callbacks?.onInboxThreadClick;
           if (onInboxThreadClick) {
