@@ -44,6 +44,7 @@ export function InboxItem() {
   const { store, renderThreadContextPreview } = useApp();
   const workspace = useSnapshot(useWorkspaceStore());
   const inbox = useSnapshot(useInboxStore());
+  const { viewingId } = useSnapshot(store);
   const timeline = workspace.timeline[threadId];
   const info = workspace.threadInfo[threadId];
   const replyCount = useReplyCount();
@@ -70,6 +71,8 @@ export function InboxItem() {
   // inbox tracks most recent comment by default
   const lastComment = inbox[threadId];
 
+  const isViewing = !!(viewingId && viewingId.type === 'thread' && viewingId.threadId === threadId);
+
   return (
     <ThreadContext.Provider
       value={{ threadId, workspaceId, userId }}
@@ -78,7 +81,7 @@ export function InboxItem() {
       <div
         onMouseOver={() => setHover(true)}
         onMouseOut={() => setHover(false)}
-        className={styles.root}
+        className={styles.root({ isViewing })}
         onClick={() => {
           const onInboxThreadClick = store.callbacks?.onInboxThreadClick;
           if (onInboxThreadClick) {

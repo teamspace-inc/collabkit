@@ -3,6 +3,7 @@ import { name as profileName } from './Profile.css';
 import { timestamp as commentTimestamp } from './Comment.css';
 import { vars } from './themes.css';
 import { calc } from '@vanilla-extract/css-utils';
+import { recipe } from '@vanilla-extract/recipes';
 
 export const replyCount = style({
   color: vars.inbox.item.replyCount.color,
@@ -14,7 +15,6 @@ export const replyCount = style({
 export const name = style([profileName, {}]);
 
 export const commentRoot = style([
-  // commentRootBase(),
   {
     padding: 0,
     display: 'flex',
@@ -57,22 +57,32 @@ export const timestamp = style([
   },
 ]);
 
-export const root = style({
-  display: 'flex',
-  borderBottom: vars.inbox.item.borderBottom,
-  flexDirection: 'column',
-  flex: 1,
-  cursor: 'pointer',
-  boxSizing: 'border-box',
-  background: vars.color.background,
-  paddingTop: vars.inbox.item.paddingTop,
-  paddingBottom: vars.inbox.item.paddingBottom,
-  paddingLeft: vars.inbox.item.paddingLeft,
-  paddingRight: vars.inbox.item.paddingRight,
-  gap: '12px',
-  selectors: {
-    '&:hover': {
-      background: vars.color.surfaceOverlay,
+export const root = recipe({
+  base: {
+    display: 'flex',
+    borderBottom: vars.inbox.item.borderBottom,
+    flexDirection: 'column',
+    flex: 1,
+    cursor: 'pointer',
+    boxSizing: 'border-box',
+    background: vars.color.background,
+    paddingTop: vars.inbox.item.paddingTop,
+    paddingBottom: vars.inbox.item.paddingBottom,
+    paddingLeft: vars.inbox.item.paddingLeft,
+    paddingRight: vars.inbox.item.paddingRight,
+    gap: '12px',
+    selectors: {
+      '&:hover': {
+        background: vars.color.surfaceOverlay,
+      },
+    },
+  },
+
+  variants: {
+    isViewing: {
+      true: {
+        background: vars.color.surfaceOverlay,
+      },
     },
   },
 });
