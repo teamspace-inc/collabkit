@@ -84,6 +84,22 @@ export const vars = createGlobalThemeContract(
       },
     },
 
+    sidebar: {
+      boxShadow: 'sidebar-box-shadow',
+      background: 'sidebar-background',
+
+      title: {
+        fontSize: 'sidebar-title-font-size',
+        lineHeight: 'sidebar-title-line-height',
+        letterSpacing: 'sidebar-title-letter-spacing',
+        color: 'sidebar-title-color',
+        fontWeight: 'sidebar-title-font-weight',
+        paddingTop: 'sidebar-title-padding-top',
+        paddingBottom: 'sidebar-title-padding-bottom',
+        borderBottom: 'sidebar-title-border-bottom',
+      },
+    },
+
     inbox: {
       gap: 'inbox-gap',
       background: 'inbox-background',
@@ -437,6 +453,23 @@ export const defaultTheme = {
       background: 'transparent',
     },
   },
+
+  sidebar: {
+    boxShadow: vars.shadow.high,
+    background: vars.color.background,
+
+    title: {
+      fontSize: vars.text.large.fontSize,
+      lineHeight: vars.text.large.lineHeight,
+      letterSpacing: '0px',
+      color: vars.color.textPrimary,
+      fontWeight: '700',
+      paddingTop: vars.space[4],
+      paddingBottom: vars.space[2],
+      borderBottom: `none`,
+    },
+  },
+
   inbox: {
     gap: vars.space[2],
     width: '292px',

@@ -45,8 +45,9 @@ export function Sidebar(props: { children: React.ReactNode }) {
           <CloseSidebarButton />
         </h2>
         {/* todo refactor */}
-        <div style={{ flex: 1, height: 'calc(100% - 77px)' }}>{props.children}</div>
+        <div className={styles.scrollarea}>{props.children}</div>
       </div>
     </ThemeWrapper>
   ) : null;
+  ``;
 }

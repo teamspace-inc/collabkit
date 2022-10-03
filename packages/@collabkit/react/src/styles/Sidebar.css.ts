@@ -1,32 +1,40 @@
 import { style } from '@vanilla-extract/css';
+import { calc } from '@vanilla-extract/css-utils';
 import { vars } from './themes.css';
 
 export const root = style({
   boxSizing: 'border-box',
   height: '100%',
-  background: vars.color.background,
-  boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.05)',
+  background: vars.sidebar.background,
+  boxShadow: vars.sidebar.boxShadow,
   position: 'fixed',
   top: 0,
   width: vars.inbox.width,
-  paddingTop: vars.space[4],
-  paddingBottom: vars.space[4],
   right: 0,
   bottom: 0,
 });
 
+export const scrollarea = style({
+  flex: 1,
+  height: `calc(100vh - ${calc(vars.sidebar.title.lineHeight)
+    .add(vars.sidebar.title.paddingBottom)
+    .add(vars.sidebar.title.paddingTop)
+    .toString()})`,
+});
+
 export const title = style({
-  fontStyle: 'normal',
-  fontWeight: '700',
-  fontSize: vars.text.large.fontSize,
-  color: vars.color.textPrimary,
-  lineHeight: '153%',
-  letterSpacing: -0.25,
+  fontWeight: vars.sidebar.title.fontWeight,
+  fontSize: vars.sidebar.title.fontSize,
+  color: vars.sidebar.title.color,
+  lineHeight: vars.sidebar.title.lineHeight,
+  letterSpacing: vars.sidebar.title.letterSpacing,
   margin: 0,
+  boxSizing: 'border-box',
   display: 'flex',
   alignItems: 'space-between',
+  paddingTop: vars.sidebar.title.paddingTop,
+  paddingBottom: vars.sidebar.title.paddingBottom,
   paddingLeft: vars.inbox.item.paddingLeft,
   paddingRight: vars.inbox.item.paddingRight,
-  paddingBottom: vars.space[3],
-  // borderBottom: '1px solid #E3E9ED',
+  borderBottom: vars.sidebar.title.borderBottom,
 });
