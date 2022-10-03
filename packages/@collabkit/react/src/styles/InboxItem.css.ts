@@ -70,6 +70,7 @@ export const root = recipe({
     paddingBottom: vars.inbox.item.paddingBottom,
     paddingLeft: vars.inbox.item.paddingLeft,
     paddingRight: vars.inbox.item.paddingRight,
+    userSelect: 'none',
     gap: '12px',
     selectors: {
       '&:hover': {

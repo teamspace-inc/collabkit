@@ -14,7 +14,7 @@ export function Facepile(
   const { hover, ...otherProps } = props;
   const profiles = props.profiles.slice(0, MAX_NUM_PROFILES - 1);
   const overflowsBy = props.profiles.length > 4 ? props.profiles.length - MAX_NUM_PROFILES : 0;
-  const overflowsWith = props.profiles.slice(MAX_NUM_PROFILES, -1);
+  // const overflowsWith = props.profiles.slice(MAX_NUM_PROFILES, -1);
 
   return (
     <div className={styles.root} {...otherProps}>
