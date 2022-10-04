@@ -25,6 +25,7 @@ export const vars = createGlobalThemeContract(
       surfaceOverlay: 'color-surface-overlay',
       textPrimary: 'color-text-primary',
       textSecondary: 'color-text-secondary',
+      textLink: 'color-text-link',
     },
     // Default spacing
     space: {
@@ -417,6 +418,7 @@ export const defaultTheme = {
     textPrimary: colors.black10,
     // TODO: use actual light mode colors, pending design
     textSecondary: colors.grey30,
+    textLink: colors.black10,
   },
   space: {
     0: '0px',
@@ -556,9 +558,9 @@ export const defaultTheme = {
       lineHeight: vars.text.base.lineHeight,
       letterSpacing: vars.text.base.letterSpacing,
       // todo make these use text colors
-      color: colors.black10,
-      background: colors.grey30,
-      borderRadius: '6px',
+      color: vars.color.textPrimary,
+      background: 'transparent',
+      borderRadius: '0px',
       padding: '0',
     },
 
@@ -603,10 +605,10 @@ export const defaultTheme = {
 
         name: {
           color: vars.color.textPrimary,
-          fontSize: vars.text.large.fontSize,
-          lineHeight: vars.text.large.lineHeight,
+          fontSize: vars.text.base.fontSize,
+          lineHeight: vars.text.base.lineHeight,
           fontWeight: vars.fontWeights.bold,
-          letterSpacing: vars.text.large.letterSpacing,
+          letterSpacing: vars.text.base.letterSpacing,
           active: {
             color: colors.black10,
           },
@@ -768,11 +770,12 @@ export const defaultTheme = {
 };
 
 export type Theme = MapLeafNodes<typeof vars, string>;
-export type CustomTheme = DeepPartial<Theme>;
+export type CustomTheme = Theme;
 
 const darkTheme = {
   ...defaultTheme,
   color: {
+    ...defaultTheme.color,
     background: colors.black13,
     surface: colors.grey24,
     surfaceOverlay: colors.opacity7,
@@ -782,6 +785,19 @@ const darkTheme = {
   composer: {
     ...defaultTheme.composer,
     border: 'none',
+  },
+  mentions: {
+    ...defaultTheme.mentions,
+    typeahead: {
+      ...defaultTheme.mentions.typeahead,
+      item: {
+        ...defaultTheme.mentions.typeahead.item,
+        email: {
+          ...defaultTheme.mentions.typeahead.item.email,
+          display: 'none',
+        },
+      },
+    },
   },
 };
 

@@ -1,5 +1,4 @@
 import React, { useMemo, useCallback } from 'react';
-import { css } from '@stitches/react';
 import { useMarkAsSeen } from '../hooks/useMarkAsSeen';
 import { useOnMarkdownLinkClick } from '../hooks/useOnMarkdownLinkClick';
 import { useThreadContext } from '../hooks/useThreadContext';
@@ -18,42 +17,6 @@ import * as styles from '../styles/Comment.css';
 import { Check, DotsThree } from './icons';
 import { Menu, MenuItem } from './Menu';
 import { IconButton } from './IconButton';
-
-const markdownStyle = css({
-  p: {
-    margin: 0,
-  },
-
-  a: {
-    textDecoration: 'none',
-    fontWeight: '$fontWeights$mention',
-    color: '$colors$mentionText',
-    background: '$colors$mentionTextBackground',
-
-    // hack for cashboard, the variant doesn't work for
-    // nested selectors
-    cursor: 'default !important',
-  },
-
-  variants: {
-    canClickLinks: {
-      true: {
-        a: {
-          '&:hover': {
-            cursor: 'pointer',
-          },
-        },
-        false: {
-          a: {
-            '&:hover': {
-              cursor: 'default',
-            },
-          },
-        },
-      },
-    },
-  },
-});
 
 export function Provider(props: { children: React.ReactNode; eventId: string }) {
   const { threadId, workspaceId } = useThreadContext();
@@ -153,7 +116,10 @@ export function Body({ ...props }: React.ComponentPropsWithoutRef<'div'>) {
 
   return (
     <div {...props} className={props.className ?? styles.body}>
-      <Markdown className={markdownStyle({ canClickLinks })} body={body} />
+      <Markdown
+        className={canClickLinks ? styles.markdown : styles.markdownLinksNotClickable}
+        body={body}
+      />
     </div>
   );
 }

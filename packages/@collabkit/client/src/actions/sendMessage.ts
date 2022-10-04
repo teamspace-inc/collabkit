@@ -23,7 +23,7 @@ export async function sendMessage(store: Store, props: { workspaceId: string; th
   const workspace = store.workspaces[workspaceId];
   const { editor, $$body: body, $$mentions: mentions } = workspace.composers[threadId];
 
-  console.debug('[CollabKit]: sending message', workspaceId, threadId, body, mentions);
+  // console.debug('[CollabKit]: sending message', workspaceId, threadId, body, mentions);
 
   if (body.trim().length === 0) {
     console.warn('[CollabKit] tried to send an empty message');

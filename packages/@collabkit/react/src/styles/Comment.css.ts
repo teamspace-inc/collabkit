@@ -1,4 +1,4 @@
-import { style } from '@vanilla-extract/css';
+import { globalStyle, style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
 import { calc } from '@vanilla-extract/css-utils';
 import { vars } from './themes.css';
@@ -167,4 +167,28 @@ export const menuItem = style({
       borderBottomRightRadius: 0,
     },
   },
+});
+
+export const markdown = style({});
+export const markdownLinksNotClickable = style({});
+
+globalStyle(`${markdown} p`, {
+  margin: 0,
+});
+
+globalStyle(`${markdown} a`, {
+  textDecoration: 'none',
+  fontWeight: vars.mentions.pill.fontWeight,
+  color: vars.mentions.pill.color,
+});
+
+globalStyle(`${markdownLinksNotClickable} p`, {
+  margin: 0,
+});
+
+globalStyle(`${markdownLinksNotClickable} a`, {
+  textDecoration: 'none',
+  fontWeight: vars.mentions.pill.fontWeight,
+  color: vars.mentions.pill.color,
+  cursor: 'default !important',
 });
