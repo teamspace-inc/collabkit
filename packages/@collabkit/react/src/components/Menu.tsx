@@ -3,6 +3,7 @@ import React, {
   cloneElement,
   forwardRef,
   isValidElement,
+  useCallback,
   useEffect,
   useRef,
   useState,
@@ -28,6 +29,8 @@ import {
 } from '@floating-ui/react-dom-interactions';
 import { IconButton } from './IconButton';
 import { ThemeWrapper } from './ThemeWrapper';
+import { useApp } from '../hooks/useApp';
+import { useSnapshot } from 'valtio';
 
 export const MenuItem = forwardRef<
   HTMLButtonElement,
@@ -56,7 +59,6 @@ export function Menu<ItemType>({
   className,
   ...props
 }: Props<ItemType>) {
-  const [open, setOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [allowHover, setAllowHover] = useState(false);
 
@@ -71,9 +73,22 @@ export function Menu<ItemType>({
   const nodeId = useFloatingNodeId();
   const parentId = useFloatingParentNodeId();
 
+  const { events, store } = useApp();
+  const { menuId } = useSnapshot(store);
+
+  const open = menuId?.type === 'menu' && menuId.nodeId === nodeId && menuId.parentId === parentId;
+
+  const onOpenChange = useCallback(
+    (open: boolean) => {
+      const fn = open ? events.onMenuOpen : events.onMenuClose;
+      fn({ target: { type: 'menu', nodeId, parentId } });
+    },
+    [nodeId, parentId]
+  );
+
   const { x, y, reference, floating, strategy, refs, context } = useFloating<HTMLButtonElement>({
     open,
-    onOpenChange: setOpen,
+    onOpenChange,
     middleware: [offset({ mainAxis: 4, alignmentAxis: 0 }), flip(), shift()],
     placement: 'bottom-end',
     nodeId,
@@ -87,7 +102,7 @@ export function Menu<ItemType>({
       ignoreMouse: false,
     }),
     useRole(context, { role: 'menu' }),
-    useDismiss(context),
+    useDismiss(context, { bubbles: false }),
     useListNavigation(context, {
       listRef: listItemsRef,
       activeIndex,
@@ -106,7 +121,7 @@ export function Menu<ItemType>({
   // in the tree.
   useEffect(() => {
     function onTreeClick() {
-      setOpen(false);
+      events.onMenuClose({ target: { type: 'menu', nodeId, parentId } });
       refs.reference.current?.focus();
     }
 
@@ -124,7 +139,7 @@ export function Menu<ItemType>({
       setAllowHover(true);
     }
 
-    function onKeyDown() {
+    function onKeyDown(e: KeyboardEvent) {
       setAllowHover(false);
     }
 
@@ -144,6 +159,7 @@ export function Menu<ItemType>({
   return (
     <FloatingNode id={nodeId}>
       <IconButton
+        active={open}
         {...getReferenceProps({
           ...props,
           ref: reference,
@@ -179,7 +195,7 @@ export function Menu<ItemType>({
                   },
                   onKeyDown(event: React.KeyboardEvent) {
                     if (event.key === 'Tab') {
-                      setOpen(false);
+                      events.onMenuClose({ target: { type: 'menu', nodeId, parentId } });
                     }
                   },
                 })}

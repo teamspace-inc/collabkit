@@ -6,12 +6,14 @@ type Props = {
   onPointerDown?: (e: React.PointerEvent) => void;
   tabIndex?: number;
   className?: string;
+  active?: boolean;
 } & React.ComponentProps<'div'>;
 
 export const IconButton = forwardRef<HTMLDivElement, Props>(function IconButton(props: Props, ref) {
-  const className = props.className ?? styles.button;
+  const { active, ...otherProps } = props;
+  const className = props.className ?? styles.button({ active });
   return (
-    <div {...props} className={className} ref={ref}>
+    <div {...otherProps} className={className} ref={ref}>
       {props.children}
     </div>
   );

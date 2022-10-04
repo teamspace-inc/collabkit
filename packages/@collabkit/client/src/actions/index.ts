@@ -43,6 +43,8 @@ import { updateComment } from './updateComment';
 import { showInbox } from './showInbox';
 import { hideInbox } from './hideInbox';
 import { setAvatarError } from './setAvatarError';
+import { closeMenu } from './closeMenu';
+import { openMenu } from './openMenu';
 
 export type GenerateToken =
   | {
@@ -121,6 +123,8 @@ export const actions = {
   focus,
   hover,
   init,
+  openMenu,
+  closeMenu,
   isTyping: debounce(isTyping, 1000, { leading: true, maxWait: 1000 }),
   monitorConnection,
   placePinAndStartComposingThread,

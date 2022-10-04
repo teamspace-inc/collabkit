@@ -6,6 +6,7 @@ import type {
   CommentReactionTarget,
   CommentTarget,
   MentionWithColor,
+  MenuTarget,
   Store,
   Target,
   ThreadTarget,
@@ -132,6 +133,14 @@ export function createEvents(store: Store) {
       actions.blur(store, props.target);
     },
 
+    onMenuOpen: (props: { target: MenuTarget }) => {
+      actions.openMenu(store, props);
+    },
+
+    onMenuClose: (props: { target: MenuTarget }) => {
+      actions.closeMenu(store);
+    },
+
     onKeyDown: (e: KeyboardEvent) => {
       if (store.editingId) {
         if (e.key === 'Enter' && !e.shiftKey) {
@@ -154,6 +163,15 @@ export function createEvents(store: Store) {
           if (store.focusedId.eventId === 'default') {
             actions.sendMessage(store, { ...store.focusedId });
           }
+        }
+      }
+
+      if (store.menuId) {
+        if (e.key === 'Escape') {
+          actions.closeMenu(store);
+          e.stopPropagation();
+          e.preventDefault();
+          return;
         }
       }
 
