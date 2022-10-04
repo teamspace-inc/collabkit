@@ -38,20 +38,29 @@ export const vars = createGlobalThemeContract(
     text: {
       tiny: {
         fontSize: 'text-tiny-font-size',
+        letterSpacing: 'text-tiny-letter-spacing',
         lineHeight: 'text-tiny-line-height',
       },
       small: {
         fontSize: 'text-small-font-size',
+        letterSpacing: 'text-small-letter-spacing',
         lineHeight: 'text-small-line-height',
       },
       base: {
         fontSize: 'text-base-font-size',
+        letterSpacing: 'text-base-letter-spacing',
         lineHeight: 'text-base-line-height',
       },
       large: {
         fontSize: 'text-large-font-size',
+        letterSpacing: 'text-large-letter-spacing',
         lineHeight: 'text-large-line-height',
       },
+    },
+    fontWeights: {
+      regular: 'font-weight-regular',
+      medium: 'font-weight-medium',
+      bold: 'font-weight-bold',
     },
     // Default shadows
     shadow: {
@@ -90,13 +99,14 @@ export const vars = createGlobalThemeContract(
 
       title: {
         fontSize: 'sidebar-title-font-size',
-        lineHeight: 'sidebar-title-line-height',
-        letterSpacing: 'sidebar-title-letter-spacing',
-        color: 'sidebar-title-color',
         fontWeight: 'sidebar-title-font-weight',
-        paddingTop: 'sidebar-title-padding-top',
-        paddingBottom: 'sidebar-title-padding-bottom',
+        letterSpacing: 'sidebar-title-letter-spacing',
+        lineHeight: 'sidebar-title-line-height',
+
         borderBottom: 'sidebar-title-border-bottom',
+        color: 'sidebar-title-color',
+        paddingBottom: 'sidebar-title-padding-bottom',
+        paddingTop: 'sidebar-title-padding-top',
       },
     },
 
@@ -106,13 +116,13 @@ export const vars = createGlobalThemeContract(
       width: 'inbox-width',
 
       item: {
-        gap: 'inbox-item-gap',
-        paddingTop: 'inbox-item-padding-top',
-        paddingBottom: 'inbox-item-padding-bottom',
-        paddingLeft: 'inbox-item-padding-left',
-        paddingRight: 'inbox-item-padding-right',
         background: 'inbox-item-background',
         borderBottom: 'inbox-item-border-bottom',
+        gap: 'inbox-item-gap',
+        paddingTop: 'inbox-item-padding-top',
+        paddingRight: 'inbox-item-padding-right',
+        paddingLeft: 'inbox-item-padding-left',
+        paddingBottom: 'inbox-item-padding-bottom',
 
         hover: {
           background: 'inbox-item-hover-background',
@@ -122,7 +132,8 @@ export const vars = createGlobalThemeContract(
           fontWeight: 'inbox-item-reply-count-font-weight',
           fontSize: 'inbox-item-reply-count-font-size',
           lineHeight: 'inbox-item-reply-count-line-height',
-          // letterSpacing: 'inbox-item-reply-count-letter-spacing',
+          letterSpacing: 'inbox-item-reply-count-letter-spacing',
+
           color: 'inbox-item-reply-count-color',
         },
 
@@ -137,13 +148,15 @@ export const vars = createGlobalThemeContract(
 
     mentions: {
       pill: {
-        fontWeight: 'mentions-pill-font-weight',
         fontSize: 'mentions-pill-font-size',
+        fontWeight: 'mentions-pill-font-weight',
+        letterSpacing: 'mentions-pill-letter-spacing',
         lineHeight: 'mentions-pill-line-height',
-        color: 'mentions-pill-color',
-        background: 'mentions-pill-background',
-        borderRadius: 'mentions-pill-border-radius',
+
         padding: 'mentions-pill-padding',
+        color: 'mentions-pill-color',
+        borderRadius: 'mentions-pill-border-radius',
+        background: 'mentions-pill-background',
       },
       typeahead: {
         background: 'mentions-typeahead-background',
@@ -153,22 +166,24 @@ export const vars = createGlobalThemeContract(
         padding: 'mentions-typeahead-padding',
 
         item: {
-          borderRadius: 'mentions-typeahead-item-border-radius',
           fontSize: 'mentions-typeahead-item-font-size',
           fontWeight: 'mentions-typeahead-item-font-weight',
+          letterSpacing: 'mentions-typeahead-item-letter-spacing',
           lineHeight: 'mentions-typeahead-item-line-height',
-          background: 'mentions-typeahead-item-background',
+
           padding: 'mentions-typeahead-item-padding',
-          color: 'mentions-typeahead-item-color',
           gap: 'mentions-typeahead-item-gap',
+          color: 'mentions-typeahead-item-color',
+          borderRadius: 'mentions-typeahead-item-border-radius',
+          background: 'mentions-typeahead-item-background',
 
           hover: {
             background: 'mentions-typeahead-item-hover-background',
           },
 
           mark: {
-            color: 'mentions-typeahead-item-mark-color',
             fontWeight: 'mentions-typeahead-item-mark-font-weight',
+            color: 'mentions-typeahead-item-mark-color',
             background: 'mentions-typeahead-item-mark-background',
             borderRadius: 'mentions-typeahead-item-mark-border-radius',
           },
@@ -184,9 +199,11 @@ export const vars = createGlobalThemeContract(
           },
 
           name: {
-            fontWeight: 'mentions-typeahead-item-name-font-weight',
-            lineHeight: 'mentions-typeahead-item-name-line-height',
             fontSize: 'mentions-typeahead-item-name-font-size',
+            fontWeight: 'mentions-typeahead-item-name-font-weight',
+            letterSpacing: 'mentions-typeahead-item-name-letter-spacing',
+            lineHeight: 'mentions-typeahead-item-name-line-height',
+
             color: 'mentions-typeahead-item-name-color',
             active: {
               color: 'mentions-typeahead-item-name-active-color',
@@ -194,10 +211,12 @@ export const vars = createGlobalThemeContract(
           },
 
           email: {
-            display: 'mentions-typeahead-item-email-display',
-            fontWeight: 'mentions-typeahead-item-email-font-weight',
-            lineHeight: 'mentions-typeahead-item-email-line-height',
             fontSize: 'mentions-typeahead-item-email-font-size',
+            fontWeight: 'mentions-typeahead-item-email-font-weight',
+            letterSpacing: 'mentions-typeahead-item-email-letter-spacing',
+            lineHeight: 'mentions-typeahead-item-email-line-height',
+
+            display: 'mentions-typeahead-item-email-display',
             color: 'mentions-typeahead-item-email-color',
             active: {
               color: 'mentions-typeahead-item-email-active-color',
@@ -210,11 +229,14 @@ export const vars = createGlobalThemeContract(
     button: {
       fontSize: 'button-font-size',
       lineHeight: 'button-line-height',
+      letterSpacing: 'button-letter-spacing',
+      fontWeight: 'button-font-weight',
       borderRadius: 'button-border-radius',
       primary: {
+        letterSpacing: 'button-primary-letter-spacing',
+        fontWeight: 'button-primary-font-weight',
         color: 'button-primary-color',
         background: 'button-primary-background',
-        fontWeight: 'button-primary-font-weight',
         active: {
           color: 'button-primary-active-color',
           background: 'button-primary-active-background',
@@ -225,9 +247,10 @@ export const vars = createGlobalThemeContract(
         },
       },
       secondary: {
+        fontWeight: 'button-secondary-font-weight',
+        letterSpacing: 'button-secondary-letter-spacing',
         color: 'button-secondary-color',
         background: 'button-secondary-background',
-        fontWeight: 'button-secondary-font-weight',
         active: {
           color: 'button-secondary-active-color',
           background: 'button-secondary-active-background',
@@ -244,9 +267,9 @@ export const vars = createGlobalThemeContract(
     },
     comment: {
       paddingTop: 'comment-padding-top',
-      paddingBottom: 'comment-padding-bottom',
-      paddingLeft: 'comment-padding-left',
       paddingRight: 'comment-padding-right',
+      paddingLeft: 'comment-padding-left',
+      paddingBottom: 'comment-padding-bottom',
       hover: {
         background: 'comment-hover-background',
       },
@@ -254,17 +277,23 @@ export const vars = createGlobalThemeContract(
         color: 'comment-body-color',
         fontSize: 'comment-body-font-size',
         lineHeight: 'comment-body-line-height',
+        fontWeight: 'comment-body-font-weight',
+        letterSpacing: 'comment-body-letter-spacing',
       },
       timestamp: {
         color: 'comment-timestamp-color',
         fontSize: 'comment-timestamp-font-size',
         lineHeight: 'comment-timestamp-line-height',
+        fontWeight: 'comment-timestamp-font-weight',
+        letterSpacing: 'comment-timestamp-letter-spacing',
       },
       menu: {
         background: 'comment-menu-background',
         color: 'comment-menu-color',
         fontSize: 'comment-menu-font-size',
         lineHeight: 'comment-menu-line-height',
+        fontWeight: 'comment-menu-font-weight',
+        letterSpacing: 'comment-menu-letter-spacing',
         active: {
           background: 'comment-menu-active-background',
           color: 'comment-menu-active-color',
@@ -280,12 +309,16 @@ export const vars = createGlobalThemeContract(
         color: 'composer-color',
         fontSize: 'composer-font-size',
         lineHeight: 'composer-line-height',
+        fontWeight: 'composer-font-weight',
+        letterSpacing: 'composer-letter-spacing',
         padding: 'composer-body-padding',
       },
       placeholder: {
         color: 'composer-placeholder-color',
         fontSize: 'composer-placeholder-font-size',
         lineHeight: 'composer-placeholder-line-height',
+        fontWeight: 'composer-placeholder-font-weight',
+        letterSpacing: 'composer-placeholder-letter-spacing',
       },
     },
     iconButton: {
@@ -302,6 +335,7 @@ export const vars = createGlobalThemeContract(
       fontSize: 'new-indicator-font-size',
       fontWeight: 'new-indicator-font-weight',
       lineHeight: 'new-indicator-line-height',
+      letterSpacing: 'new-indicator-letter-spacing',
       inlay: {
         background: 'new-indicator-inlay-background',
       },
@@ -338,6 +372,7 @@ export const vars = createGlobalThemeContract(
         height: 'profile-avatar-height',
         borderRadius: 'profile-avatar-border-radius',
         fontSize: 'profile-avatar-font-size',
+        fontWeight: 'profile-avatar-font-weight',
         color: 'profile-avatar-color',
         background: 'profile-avatar-background',
       },
@@ -346,6 +381,7 @@ export const vars = createGlobalThemeContract(
         fontSize: 'profile-name-font-size',
         fontWeight: 'profile-name-font-weight',
         lineHeight: 'profile-name-line-height',
+        letterSpacing: 'profile-name-letter-spacing',
       },
     },
     thread: {
@@ -358,11 +394,14 @@ export const vars = createGlobalThemeContract(
         fontSize: 'thread-header-font-size',
         fontWeight: 'thread-header-font-weight',
         lineHeight: 'thread-header-line-height',
+        letterSpacing: 'thread-header-letter-spacing',
       },
       typingIndicator: {
         color: 'thread-typing-indicator-color',
         fontSize: 'thread-typing-indicator-font-size',
         lineHeight: 'thread-typing-indicator-line-height',
+        fontWeight: 'thread-typing-indicator-font-weight',
+        letterSpacing: 'thread-typing-indicator-letter-spacing',
       },
     },
   },
@@ -386,10 +425,15 @@ export const defaultTheme = {
     4: calc.multiply(vars.space[1], 4),
   },
   text: {
-    tiny: { fontSize: '9px', lineHeight: '11px' },
-    small: { fontSize: '11px', lineHeight: '13px' },
-    base: { fontSize: '13px', lineHeight: '18px' },
-    large: { fontSize: '14px', lineHeight: '17px' },
+    tiny: { fontSize: '9px', lineHeight: '11px', letterSpacing: '0px' },
+    small: { fontSize: '11px', lineHeight: '13px', letterSpacing: '0px' },
+    base: { fontSize: '13px', lineHeight: '18px', letterSpacing: '0px' },
+    large: { fontSize: '14px', lineHeight: '17px', letterSpacing: '0px' },
+  },
+  fontWeights: {
+    regular: '400',
+    medium: '500',
+    bold: '700',
   },
   shadow: {
     standard: '0px 1px 2px rgba(0, 0, 0, 0.1)',
@@ -421,11 +465,14 @@ export const defaultTheme = {
   button: {
     fontSize: vars.text.base.fontSize,
     lineHeight: vars.text.base.lineHeight,
+    fontWeight: vars.fontWeights.regular,
+    letterSpacing: vars.text.base.letterSpacing,
     borderRadius: vars.space[1],
     primary: {
       color: vars.color.textPrimary,
       background: 'transparent',
-      fontWeight: '700',
+      letterSpacing: vars.text.base.letterSpacing,
+      fontWeight: vars.fontWeights.bold,
       active: {
         color: vars.button.primary.color,
         background: vars.button.primary.background,
@@ -438,7 +485,8 @@ export const defaultTheme = {
     secondary: {
       color: vars.color.textSecondary,
       background: 'transparent',
-      fontWeight: '400',
+      fontWeight: vars.fontWeights.regular,
+      letterSpacing: vars.text.base.letterSpacing,
       active: {
         color: vars.button.secondary.color,
         background: vars.button.secondary.background,
@@ -461,9 +509,9 @@ export const defaultTheme = {
     title: {
       fontSize: vars.text.large.fontSize,
       lineHeight: vars.text.large.lineHeight,
-      letterSpacing: '0px',
+      letterSpacing: vars.text.large.letterSpacing,
       color: vars.color.textPrimary,
-      fontWeight: '700',
+      fontWeight: vars.fontWeights.bold,
       paddingTop: vars.space[4],
       paddingBottom: vars.space[2],
       borderBottom: `none`,
@@ -486,8 +534,8 @@ export const defaultTheme = {
         background: vars.color.surface,
       },
       replyCount: {
-        // todo extract out bold
-        fontWeight: '400',
+        letterSpacing: vars.text.small.letterSpacing,
+        fontWeight: vars.fontWeights.regular,
         color: vars.color.textSecondary,
         fontSize: vars.text.small.fontSize,
         lineHeight: vars.text.small.lineHeight,
@@ -502,9 +550,10 @@ export const defaultTheme = {
   },
   mentions: {
     pill: {
-      fontWeight: '700',
+      fontWeight: vars.fontWeights.bold,
       fontSize: vars.text.base.fontSize,
       lineHeight: vars.text.base.lineHeight,
+      letterSpacing: vars.text.base.letterSpacing,
       // todo make these use text colors
       color: colors.black10,
       background: colors.grey30,
@@ -522,7 +571,8 @@ export const defaultTheme = {
       item: {
         borderRadius: vars.space[1],
         fontSize: vars.text.base.fontSize,
-        fontWeight: '400',
+        fontWeight: vars.fontWeights.regular,
+        letterSpacing: vars.text.base.letterSpacing,
         lineHeight: vars.text.base.lineHeight,
         background: vars.color.surface,
         padding: vars.space[2],
@@ -531,7 +581,7 @@ export const defaultTheme = {
 
         mark: {
           color: 'inherit',
-          fontWeight: '700',
+          fontWeight: vars.fontWeights.bold,
           background: 'transparent',
           borderRadius: '0',
         },
@@ -554,7 +604,8 @@ export const defaultTheme = {
           color: vars.color.textPrimary,
           fontSize: vars.text.large.fontSize,
           lineHeight: vars.text.large.lineHeight,
-          fontWeight: '700',
+          fontWeight: vars.fontWeights.bold,
+          letterSpacing: vars.text.large.letterSpacing,
           active: {
             color: colors.black10,
           },
@@ -565,7 +616,8 @@ export const defaultTheme = {
           color: vars.color.textSecondary,
           fontSize: vars.text.small.fontSize,
           lineHeight: vars.text.small.lineHeight,
-          fontWeight: '400',
+          fontWeight: vars.fontWeights.regular,
+          letterSpacing: vars.text.small.letterSpacing,
           active: {
             color: colors.black10,
           },
@@ -585,17 +637,23 @@ export const defaultTheme = {
       color: vars.color.textPrimary,
       fontSize: vars.text.base.fontSize,
       lineHeight: vars.text.base.lineHeight,
+      letterSpacing: vars.text.base.letterSpacing,
+      fontWeight: vars.fontWeights.regular,
     },
     timestamp: {
       color: vars.color.textSecondary,
       fontSize: vars.text.small.fontSize,
       lineHeight: vars.text.small.lineHeight,
+      letterSpacing: vars.text.small.letterSpacing,
+      fontWeight: vars.fontWeights.regular,
     },
     menu: {
       background: vars.color.surface,
       color: vars.color.textPrimary,
       fontSize: vars.text.base.fontSize,
       lineHeight: vars.text.base.lineHeight,
+      letterSpacing: vars.text.base.letterSpacing,
+      fontWeight: vars.fontWeights.regular,
       active: {
         color: vars.comment.menu.color,
         background: vars.color.surfaceOverlay,
@@ -611,12 +669,16 @@ export const defaultTheme = {
       color: vars.color.textPrimary,
       fontSize: vars.text.base.fontSize,
       lineHeight: vars.text.base.lineHeight,
+      letterSpacing: vars.text.base.letterSpacing,
+      fontWeight: vars.fontWeights.regular,
       padding: vars.space[2],
     },
     placeholder: {
       color: vars.color.textSecondary,
       fontSize: vars.text.base.fontSize,
       lineHeight: vars.text.base.lineHeight,
+      letterSpacing: vars.text.base.letterSpacing,
+      fontWeight: vars.fontWeights.regular,
     },
   },
   iconButton: {
@@ -632,7 +694,8 @@ export const defaultTheme = {
     color: vars.color.textPrimary,
     fontSize: vars.text.tiny.fontSize,
     lineHeight: '16px',
-    fontWeight: '700',
+    fontWeight: vars.fontWeights.bold,
+    letterSpacing: vars.text.tiny.letterSpacing,
     inlay: {
       background: colors.red,
     },
@@ -671,12 +734,14 @@ export const defaultTheme = {
       fontSize: vars.text.small.fontSize,
       color: vars.color.background,
       background: colors.grey60,
+      fontWeight: vars.fontWeights.bold,
     },
     name: {
       color: vars.color.textPrimary,
       fontSize: vars.text.base.fontSize,
-      fontWeight: '700',
+      fontWeight: vars.fontWeights.bold,
       lineHeight: vars.text.base.lineHeight,
+      letterSpacing: vars.text.base.letterSpacing,
     },
   },
   thread: {
@@ -687,13 +752,16 @@ export const defaultTheme = {
     header: {
       color: vars.color.textPrimary,
       fontSize: vars.text.large.fontSize,
-      fontWeight: '700',
+      fontWeight: vars.fontWeights.bold,
       lineHeight: vars.text.large.lineHeight,
+      letterSpacing: vars.text.large.letterSpacing,
     },
     typingIndicator: {
       color: vars.color.textSecondary,
       fontSize: vars.text.base.fontSize,
       lineHeight: vars.space[4],
+      fontWeight: vars.fontWeights.regular,
+      letterSpacing: vars.text.base.letterSpacing,
     },
   },
 };
