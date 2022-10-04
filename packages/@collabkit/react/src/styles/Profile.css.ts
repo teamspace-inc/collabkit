@@ -2,15 +2,15 @@ import { style } from '@vanilla-extract/css';
 import { vars } from './themes.css';
 
 export const avatar = style({
-  width: vars.profile.avatar.width,
-  height: vars.profile.avatar.height,
+  width: vars.profile.avatar.width ?? vars.avatar.size,
+  height: vars.profile.avatar.height ?? vars.avatar.size,
   borderRadius: vars.profile.avatar.borderRadius,
   fontSize: vars.profile.avatar.fontSize,
-  lineHeight: vars.profile.avatar.height,
+  lineHeight: vars.profile.avatar.height ?? vars.avatar.size,
   color: vars.profile.avatar.color,
   flexShrink: 0,
   background: vars.profile.avatar.background,
-  fontWeight: '700',
+  fontWeight: vars.fontWeights.bold,
   textAlign: 'center',
   verticalAlign: 'middle',
   cursor: 'inherit',

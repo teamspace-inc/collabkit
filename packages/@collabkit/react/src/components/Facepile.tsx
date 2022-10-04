@@ -28,7 +28,7 @@ export function Facepile(
             }}
           >
             <Profile.Provider profileId={profile.id}>
-              <Profile.Avatar size={24} />
+              <Profile.Avatar />
             </Profile.Provider>
           </div>
         ) : null;
@@ -40,7 +40,7 @@ export function Facepile(
             zIndex: 999 - profiles.length,
           }}
         >
-          <Profile.NumberdAvatarPlaceholder size={24} number={overflowsBy} />
+          <Profile.NumberdAvatarPlaceholder number={overflowsBy} />
         </div>
       ) : null}
     </div>

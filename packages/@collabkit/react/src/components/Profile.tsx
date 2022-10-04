@@ -71,7 +71,7 @@ export function NumberdAvatarPlaceholder({
 }: {
   number: number;
   className?: string;
-  size: number;
+  size?: number;
 }) {
   return (
     <div

@@ -84,9 +84,14 @@ export const vars = createGlobalThemeContract(
       borderRadius: 'scrollbar-border-radius',
     },
 
+    avatar: {
+      size: 'avatar-size',
+    },
+
     facepile: {
       gap: 'facepile-gap',
       avatar: {
+        size: 'facepile-avatar-size',
         borderSize: 'facepile-avatar-border-size',
         borderColor: 'facepile-avatar-border-color',
         hover: {
@@ -444,9 +449,13 @@ export const defaultTheme = {
     standard: '0px 1px 2px rgba(0, 0, 0, 0.1)',
     high: '0px 2px 4px rgba(0, 0, 0, 0.1)',
   },
+  avatar: {
+    size: '24px',
+  },
   facepile: {
     gap: calc.negate('4px'),
     avatar: {
+      size: vars.avatar.size,
       borderSize: '2px',
       borderColor: vars.color.background,
       hover: {
