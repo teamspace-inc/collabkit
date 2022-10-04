@@ -158,6 +158,10 @@ export const menuItem = style({
       color: vars.comment.menu.active.color,
       background: vars.comment.menu.active.background,
     },
+    '&:not(:first-of-type)': {
+      borderTopRightRadius: 0,
+      borderTopLeftRadius: 0,
+    },
     '&:not(:last-of-type)': {
       borderBottomLeftRadius: 0,
       borderBottomRightRadius: 0,
