@@ -174,7 +174,12 @@ export type CommentableContainer = { type: 'commentableContainer'; workspaceId: 
 
 export type FloatingCommentButtonTarget = { type: 'floatingCommentButton' };
 
-export type ComposerTarget = { type: 'composer'; threadId: string; workspaceId: string };
+export type ComposerTarget = {
+  type: 'composer';
+  threadId: string;
+  workspaceId: string;
+  eventId: string | 'default';
+};
 
 export type ThreadTarget = { type: 'thread'; threadId: string; workspaceId: string };
 
@@ -290,7 +295,7 @@ export interface Composer {
   editor: LexicalEditor | null;
   $$body: string;
   $$mentions: MentionWithColor[];
-  sendButtonDisabled: boolean;
+  enabled: { [eventId: string]: boolean; default: boolean };
   isTypingTimeoutID?: ReturnType<typeof setTimeout>;
   isTyping: { [endUserId: string]: boolean };
 }
@@ -336,7 +341,7 @@ export interface UnconfiguredStore {
   focusedId: null | Target;
   hoveringId: null | Target;
   reactingId: null | Target;
-  composingId: null | ThreadTarget;
+  // composingId: null | ThreadTarget;
   viewingId: null | Target;
   previewingId: null | Target;
   editingId: null | CommentTarget;

@@ -17,7 +17,7 @@ export async function placePinAndStartComposingThread(
   }
   const { workspaceId, threadId } = props;
   subscribeThread(store, props);
-  store.composingId = { type: 'thread', threadId, workspaceId };
+  // store.composingId = { type: 'thread', threadId, workspaceId };
 
   if (store.uiState === 'continuous') {
     actions.removePendingPins(store);

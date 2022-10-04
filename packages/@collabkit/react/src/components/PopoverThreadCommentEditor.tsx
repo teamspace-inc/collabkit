@@ -4,9 +4,17 @@ import { useApp } from '../hooks/useApp';
 import { Button } from './Button';
 import * as Comment from './Comment';
 import * as Composer from './composer/Composer';
+import { useComposer } from '../hooks/useComposer';
+import { useThreadContext } from '../hooks/useThreadContext';
+import { useCommentContext } from '../hooks/useCommentContext';
 
 export const PopoverThreadCommentEditor = () => {
+  const { threadId, workspaceId } = useThreadContext();
+  const { eventId } = useCommentContext();
+
   const { store } = useApp();
+  const { isEnabled, onPointerDown } = useComposer({ threadId, workspaceId, eventId });
+
   return (
     <Comment.Editor>
       <Composer.Root>
@@ -25,21 +33,13 @@ export const PopoverThreadCommentEditor = () => {
           type="secondary"
           text="Cancel"
           onPointerDown={(e) => {
+            // move this to events
             if (e.button === 0) {
               actions.stopEditing(store);
             }
           }}
         />
-        <Button
-          type="primary"
-          text="Save"
-          onPointerDown={(e) => {
-            if (e.button === 0) {
-              actions.updateComment(store);
-              actions.stopEditing(store);
-            }
-          }}
-        />
+        <Button type="primary" text="Save" disabled={!isEnabled} onPointerDown={onPointerDown} />
       </div>
     </Comment.Editor>
   );

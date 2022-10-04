@@ -19,6 +19,7 @@ import { useThreadContext } from '../../hooks/useThreadContext';
 import { TargetContext } from '../Target';
 import { useTarget } from '../../hooks/useTarget';
 import * as styles from '../../styles/Composer.css';
+import { useOptionalCommentContext } from '../../hooks/useCommentContext';
 
 // Catch any errors that occur during Lexical updates and log them
 // or throw them as needed. If you don't throw them, Lexical will
@@ -40,13 +41,18 @@ export const Root = function ComposerRoot(props: {
   className?: string;
   children: React.ReactNode;
 }) {
+  const commentContext = useOptionalCommentContext();
+
   const { threadId, workspaceId, userId } = useThreadContext();
-  const { onClick } = useOnMarkdownLinkClick({ threadId, workspaceId, userId, eventId: null });
+  const eventId = commentContext?.eventId ?? 'default';
+
+  const { onClick } = useOnMarkdownLinkClick({ threadId, workspaceId, userId, eventId });
 
   const target: ComposerTarget = {
     workspaceId,
     threadId,
     type: 'composer',
+    eventId,
   };
 
   return (

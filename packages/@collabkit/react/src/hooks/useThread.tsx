@@ -3,6 +3,7 @@ import { useSnapshot } from 'valtio';
 import { actions } from '@collabkit/client';
 import { ThreadInfo, timelineUtils } from '@collabkit/core';
 import { Store } from '../constants';
+import { useComposer } from './useComposer';
 
 export function useThreadSubscription(props: {
   store: Store;
@@ -45,11 +46,6 @@ export function useThread(props: {
 
   const isResolved = timeline ? timelineUtils.computeIsResolved(timeline) : false;
 
-  const disabled =
-    workspaceId && threadId
-      ? workspaces[workspaceId]?.composers[threadId]?.sendButtonDisabled
-      : true;
-
   useEffect(() => {
     if (workspaceId && isSignedIn && !isEmpty) {
       // only make this delete info if null is explicitly
@@ -76,7 +72,6 @@ export function useThread(props: {
     isResolved,
     isEmpty,
     target,
-    disabled,
     ...groupedTimeline,
   };
 }

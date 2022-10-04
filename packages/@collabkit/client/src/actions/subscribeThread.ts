@@ -14,7 +14,7 @@ export async function subscribeThread(
     $$mentions: [],
     isTyping: {},
     editor: null,
-    sendButtonDisabled: true,
+    enabled: { default: false },
   };
   const { workspaceId, threadId } = props;
   const { appId, userId } = getConfig(store);

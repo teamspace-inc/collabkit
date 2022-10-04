@@ -33,9 +33,11 @@ export async function reopenThread(store: Store, workspaceId: string, threadId: 
       createdAt: +Date.now(),
       id,
     };
-    actions.stopTyping(store, { target: { type: 'composer', workspaceId, threadId } });
   } catch (e) {
     console.error(e);
     // handle failure here
   }
+  actions.stopTyping(store, {
+    target: { type: 'composer', workspaceId, threadId, eventId: 'default' },
+  });
 }

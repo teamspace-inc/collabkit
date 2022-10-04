@@ -100,7 +100,7 @@ export function usePopoverThread(props: {
         if (open) {
           actions.viewThread(store, { target, isPreview: false });
         } else {
-          actions.closeThread(store, { isPreview: false });
+          actions.closeThread(store);
         }
       }
     },
@@ -112,7 +112,7 @@ export function usePopoverThread(props: {
         if (open) {
           actions.viewThread(store, { target, isPreview: true });
         } else {
-          actions.closeThread(store, { isPreview: true });
+          actions.closePreview(store);
         }
       }
     },
@@ -172,7 +172,11 @@ export function usePopoverThread(props: {
       useDismiss(previewContext),
     ]);
   const { getReferenceProps: getThreadReferenceProps, getFloatingProps: getThreadFloatingProps } =
-    useInteractions([useDismiss(threadContext)]);
+    useInteractions([
+      useDismiss(threadContext, {
+        escapeKey: false,
+      }),
+    ]);
 
   const ref = useMemo(
     () => mergeRefs([previewReference, threadReference]),

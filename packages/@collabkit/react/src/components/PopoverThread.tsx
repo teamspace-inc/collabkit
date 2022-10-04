@@ -14,13 +14,13 @@ import {
   ScrollAreaCorner,
 } from './ScrollArea';
 import { ThreadContext } from '../hooks/useThreadContext';
-import { useComposerSendButton } from '../hooks/useComposerSendButton';
 import * as Comment from './Comment';
 import * as Composer from './composer/Composer';
 import * as Profile from './Profile';
 import { PopoverThreadCommentEditor } from './PopoverThreadCommentEditor';
 import * as styles from '../styles/PopoverThread.css';
 import { ThemeWrapper } from './ThemeWrapper';
+import { useComposer } from '../hooks/useComposer';
 
 // Cashboard exact timestamp
 //
@@ -75,6 +75,7 @@ export const PreviewThread = forwardRef<Handle, PopoverThreadProps>(function Pop
 
   const event = messageEvents?.[0];
   const profile = event && profiles[event?.createdById];
+
   if (!workspaceId || !userId || !event || !profile || isEmpty) {
     return null;
   }
@@ -133,11 +134,13 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
   const { store, events } = useApp();
   const { workspaceId, profiles, userId } = useSnapshot(store);
 
-  const { isEmpty, list, disabled } = useThread({
+  const { isEmpty, list } = useThread({
     ...props,
     store,
     workspaceId,
   });
+
+  const { isEnabled, onPointerDown } = useComposer({ workspaceId, threadId });
 
   const profile = userId ? profiles[userId] : null;
 
@@ -146,8 +149,6 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
       setContext({ threadId, userId, workspaceId });
     }
   }, [threadId, userId, workspaceId]);
-
-  const { onPointerDown } = useComposerSendButton({ workspaceId, threadId });
 
   if (!workspaceId || !userId) {
     return null;
@@ -229,7 +230,7 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
                 <Button
                   type="primary"
                   text="Comment"
-                  disabled={disabled}
+                  disabled={!isEnabled}
                   onPointerDown={onPointerDown}
                 />
               </div>
