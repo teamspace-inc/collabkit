@@ -103,16 +103,6 @@ async function sendMailForProfile(props: {
 
   const list = groupedEvents(messageEvents, timeline);
 
-  if (profileId === event.createdById) {
-    console.debug(
-      'profileId === _event.createdById skipping and setting notifiedUntil',
-      profileId,
-      eventId
-    );
-    await setNotifiedUntil({ appId, workspaceId, threadId, profileId, notifiedUntilId: eventId });
-    return null;
-  }
-
   const to = profiles[profileId].email;
 
   const mentionedInEventId = notifyAboutEventIds.find(
@@ -122,6 +112,20 @@ async function sendMailForProfile(props: {
   const mentionedInEvent = mentionedInEventId ? timeline[mentionedInEventId] : null;
 
   const mentionedBy = mentionedInEvent ? profiles[mentionedInEvent.createdById] : null;
+
+  const didMentionSelf = mentionedInEventId && mentionedInEvent?.createdById === profileId;
+
+  if (profileId === event.createdById && !didMentionSelf) {
+    console.debug(
+      'profileId === _event.createdById skipping and setting notifiedUntil',
+      profileId,
+      eventId
+    );
+    await setNotifiedUntil({ appId, workspaceId, threadId, profileId, notifiedUntilId: eventId });
+    return null;
+  } else if (didMentionSelf) {
+    console.log('didMentionSelf', profileId);
+  }
 
   const isReply = uniq(messageEvents.map((event) => event.createdById)).length > 1;
 
