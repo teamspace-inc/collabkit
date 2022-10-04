@@ -26,6 +26,7 @@ export const vars = createGlobalThemeContract(
       textPrimary: 'color-text-primary',
       textSecondary: 'color-text-secondary',
       textLink: 'color-text-link',
+      border: 'color-border',
     },
     // Default spacing
     space: {
@@ -419,6 +420,7 @@ export const defaultTheme = {
     // TODO: use actual light mode colors, pending design
     textSecondary: colors.grey30,
     textLink: colors.black10,
+    border: colors.opacity7,
   },
   space: {
     0: '0px',
@@ -566,9 +568,9 @@ export const defaultTheme = {
 
     typeahead: {
       background: vars.color.surface,
-      border: '1px solid #E0E0E0',
+      border: `1px solid ${vars.color.border}`,
       borderRadius: '6px',
-      boxShadow: '6px 6px 10px rgba(0, 0, 0, 0.25)',
+      boxShadow: vars.shadow.standard,
       padding: '0',
 
       item: {
@@ -716,15 +718,15 @@ export const defaultTheme = {
       boxShadow: vars.shadow.standard,
     },
     composer: {
-      borderTop: `1px solid ${colors.opacity7}`,
+      borderTop: `1px solid ${vars.color.border}`,
       alignItems: 'flex-end',
       padding: `${vars.space[4]} ${vars.space[4]} ${vars.space[4]} ${vars.space[4]}`,
-      gap: vars.space[3],
+      gap: vars.space[2],
       contentEditable: {
-        border: `1px solid ${colors.grey24}`,
-        minHeight: '40',
+        border: `1px solid ${vars.color.border}`,
+        minHeight: '40px',
         focus: {
-          border: `1px solid ${colors.grey24}`,
+          border: `1px solid ${vars.color.border}`,
         },
       },
     },

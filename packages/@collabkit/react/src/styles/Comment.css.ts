@@ -49,6 +49,12 @@ export const nameAndTimestampWrapper = style({
   gap: '4px',
 });
 
+export const inlineModal = style({
+  background: vars.color.surface,
+  borderRadius: '6px',
+  // padding: `${vars.space[1]} ${vars.space[2]}`,
+});
+
 export const content = recipe({
   base: {
     display: 'flex',

@@ -5,7 +5,6 @@ import { useApp } from '../hooks/useApp';
 import { useThread } from '../hooks/useThread';
 import { useSnapshot } from 'valtio';
 import { format, isSameDay, isSameYear } from 'date-fns';
-import { Button } from './Button';
 import {
   ScrollAreaRoot,
   ScrollAreaViewport,
@@ -21,6 +20,7 @@ import { PopoverThreadCommentEditor } from './PopoverThreadCommentEditor';
 import * as styles from '../styles/PopoverThread.css';
 import { ThemeWrapper } from './ThemeWrapper';
 import { useComposer } from '../hooks/useComposer';
+import { ButtonGroup } from './ButtonGroup';
 
 // Cashboard exact timestamp
 //
@@ -213,27 +213,20 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
                   autoFocus={props.autoFocus}
                 />
               </Composer.Root>
-              <div className={styles.actions}>
-                <Button
-                  type="secondary"
-                  text="Cancel"
-                  onPointerDown={(e) =>
-                    events.onPointerDown(e, {
-                      target: {
-                        threadId,
-                        type: 'closeThreadButton',
-                        workspaceId,
-                      },
-                    })
-                  }
-                />
-                <Button
-                  type="primary"
-                  text="Comment"
-                  disabled={!isEnabled}
-                  onPointerDown={onPointerDown}
-                />
-              </div>
+              <ButtonGroup
+                onCancel={(e) =>
+                  events.onPointerDown(e, {
+                    target: {
+                      type: 'closeThreadButton',
+                      threadId,
+                      workspaceId,
+                    },
+                  })
+                }
+                onConfirm={onPointerDown}
+                confirmButtonEnabled={isEnabled}
+                confirmButtonText={'Comment'}
+              />
             </ScrollAreaViewport>
             <ScrollAreaScrollbar orientation="vertical">
               <ScrollAreaThumb />
