@@ -814,5 +814,5 @@ const darkTheme = {
 
 createGlobalTheme(':root', vars, defaultTheme);
 
-// export const dark = createTheme(vars, darkTheme);
+export const dark = createTheme(vars, darkTheme);
 // TODO: move to packages/@collabkit/custom-themes
