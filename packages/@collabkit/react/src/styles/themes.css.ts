@@ -12,7 +12,7 @@ const colors = {
   grey73: 'hsl(0, 0%, 73%)', // Grey 73
   grey89: 'hsl(0, 0%, 89%, 1)',
   white: 'hsl(0, 0%, 100%)', // White
-  opacity7: 'hsla(0, 0%, 100%, 0.08)', // White Opacity 7
+  opacity7: 'rgba(0, 0, 0, 0.08)', // White Opacity 7
   red: 'hsl(2, 73%, 62%)', // Red
 };
 
@@ -419,7 +419,7 @@ export const vars = createGlobalThemeContract(
 export const defaultTheme = {
   color: {
     background: colors.white,
-    surface: colors.white,
+    surface: '#EEEEEE',
     surfaceOverlay: colors.opacity7,
     textPrimary: colors.black10,
     // TODO: use actual light mode colors, pending design
@@ -489,11 +489,11 @@ export const defaultTheme = {
       fontWeight: vars.fontWeights.bold,
       active: {
         color: vars.button.primary.color,
-        background: vars.button.primary.background,
+        background: vars.color.surfaceOverlay,
       },
       hover: {
         color: vars.button.primary.color,
-        background: colors.opacity7,
+        background: vars.color.surfaceOverlay,
       },
     },
     secondary: {
@@ -503,11 +503,11 @@ export const defaultTheme = {
       letterSpacing: vars.text.base.letterSpacing,
       active: {
         color: vars.button.secondary.color,
-        background: vars.button.secondary.background,
+        background: vars.color.surfaceOverlay,
       },
       hover: {
         color: vars.button.secondary.color,
-        background: vars.button.secondary.background,
+        background: vars.color.surfaceOverlay,
       },
     },
     disabled: {
@@ -814,5 +814,5 @@ const darkTheme = {
 
 createGlobalTheme(':root', vars, defaultTheme);
 
-export const dark = createTheme(vars, darkTheme);
+// export const dark = createTheme(vars, darkTheme);
 // TODO: move to packages/@collabkit/custom-themes
