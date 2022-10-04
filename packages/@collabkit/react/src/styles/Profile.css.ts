@@ -22,4 +22,5 @@ export const name = style({
   fontSize: vars.profile.name.fontSize,
   lineHeight: vars.profile.name.lineHeight,
   fontWeight: vars.profile.name.fontWeight,
+  letterSpacing: vars.profile.name.letterSpacing,
 });

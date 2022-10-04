@@ -80,6 +80,8 @@ export const name = style({
   fontSize: vars.mentions.typeahead.item.name.fontSize ?? vars.mentions.typeahead.item.fontSize,
   lineHeight:
     vars.mentions.typeahead.item.name.lineHeight ?? vars.mentions.typeahead.item.lineHeight,
+  letterSpacing:
+    vars.mentions.typeahead.item.name.letterSpacing ?? vars.mentions.typeahead.item.letterSpacing,
 });
 
 export const email = style({
@@ -90,6 +92,8 @@ export const email = style({
   lineHeight:
     vars.mentions.typeahead.item.email.lineHeight ?? vars.mentions.typeahead.item.lineHeight,
   display: vars.mentions.typeahead.item.email.display,
+  letterSpacing:
+    vars.mentions.typeahead.item.email.letterSpacing ?? vars.mentions.typeahead.item.letterSpacing,
 });
 
 export const mentionStyle = style({
@@ -100,4 +104,5 @@ export const mentionStyle = style({
   padding: vars.mentions.pill.padding,
   fontSize: vars.mentions.pill.fontSize,
   lineHeight: vars.mentions.pill.lineHeight,
+  letterSpacing: vars.mentions.pill.letterSpacing,
 });

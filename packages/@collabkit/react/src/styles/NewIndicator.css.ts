@@ -27,6 +27,7 @@ export const textInlay = style({
   fontSize: vars.newIndicator.fontSize,
   fontWeight: vars.newIndicator.fontWeight,
   lineHeight: vars.newIndicator.lineHeight,
+  letterSpacing: vars.newIndicator.letterSpacing,
   padding: '0px 8px',
   position: 'relative',
   borderRadius: calc.divide(vars.newIndicator.lineHeight, 2),

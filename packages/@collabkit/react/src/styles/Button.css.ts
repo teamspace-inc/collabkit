@@ -7,6 +7,8 @@ export const button = recipe({
     justifyContent: 'center',
     alignItems: 'center',
     fontSize: vars.button.fontSize,
+    fontWeight: vars.button.fontWeight,
+    letterSpacing: vars.button.letterSpacing,
     lineHeight: vars.button.lineHeight,
     border: 'none',
     background: 'none',
@@ -21,6 +23,8 @@ export const button = recipe({
       primary: {
         background: vars.button.primary.background,
         color: vars.button.primary.color,
+        letterSpacing: vars.button.primary.letterSpacing,
+        fontWeight: vars.button.primary.fontWeight,
 
         selectors: {
           '&:active': {
@@ -36,6 +40,8 @@ export const button = recipe({
       secondary: {
         background: vars.button.secondary.background,
         color: vars.button.secondary.color,
+        letterSpacing: vars.button.secondary.letterSpacing,
+        fontWeight: vars.button.secondary.fontWeight,
 
         selectors: {
           '&:active': {

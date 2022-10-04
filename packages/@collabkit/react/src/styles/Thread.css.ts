@@ -54,6 +54,7 @@ export const typingIndicator = style({
   color: vars.thread.typingIndicator.color,
   fontSize: vars.thread.typingIndicator.fontSize,
   lineHeight: vars.thread.typingIndicator.lineHeight,
+  letterSpacing: vars.thread.typingIndicator.letterSpacing,
 });
 
 export const emptyState = style({
@@ -63,8 +64,9 @@ export const emptyState = style({
   alignItems: 'center',
   flexDirection: 'column',
   gap: vars.space[2],
-  fontWeight: '400',
+  fontWeight: vars.fontWeights.regular,
   fontSize: vars.text.small.fontSize,
   lineHeight: vars.text.small.lineHeight,
   color: vars.color.textSecondary,
+  letterSpacing: vars.text.small.letterSpacing,
 });

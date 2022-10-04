@@ -70,13 +70,16 @@ export const content = recipe({
 });
 
 export const body = style({
+  fontSize: vars.comment.body.fontSize,
+  fontWeight: vars.comment.body.fontWeight,
+  letterSpacing: vars.comment.body.letterSpacing,
+  lineHeight: vars.comment.body.lineHeight,
+
   position: 'relative',
   wordBreak: 'break-word',
   overflowWrap: 'break-word',
   minHeight: vars.comment.body.lineHeight, // prevents flicker
   color: vars.comment.body.color,
-  fontSize: vars.comment.body.fontSize,
-  lineHeight: vars.comment.body.lineHeight,
 });
 
 export const editor = style({
@@ -95,13 +98,15 @@ export const header = style({
 });
 
 export const timestamp = style({
+  fontSize: vars.comment.timestamp.fontSize,
+  fontWeight: vars.comment.timestamp.fontWeight,
+  letterSpacing: vars.comment.timestamp.letterSpacing,
+  lineHeight: vars.comment.timestamp.lineHeight,
+
   textDecoration: 'none',
-  fontWeight: '400',
   overflow: 'hidden',
   textOverflow: 'ellipsis',
   color: vars.comment.timestamp.color,
-  fontSize: vars.comment.timestamp.fontSize,
-  lineHeight: vars.comment.timestamp.lineHeight,
 });
 
 export const actions = style({
@@ -120,6 +125,7 @@ export const menu = style({
   minWidth: 110,
   borderRadius: vars.space[1],
   background: vars.comment.menu.background,
+  boxShadow: vars.shadow.standard,
   outline: 'none',
 
   selectors: {
@@ -144,6 +150,8 @@ export const menuItem = style({
   color: vars.comment.menu.color,
   fontSize: vars.comment.menu.fontSize,
   lineHeight: vars.comment.menu.lineHeight,
+  fontWeight: vars.comment.menu.fontWeight,
+  letterSpacing: vars.comment.menu.letterSpacing,
 
   selectors: {
     '&:focus, &:not([disabled]):active': {

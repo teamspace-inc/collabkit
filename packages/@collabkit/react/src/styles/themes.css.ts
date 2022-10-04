@@ -228,9 +228,10 @@ export const vars = createGlobalThemeContract(
 
     button: {
       fontSize: 'button-font-size',
-      lineHeight: 'button-line-height',
-      letterSpacing: 'button-letter-spacing',
       fontWeight: 'button-font-weight',
+      letterSpacing: 'button-letter-spacing',
+      lineHeight: 'button-line-height',
+
       borderRadius: 'button-border-radius',
       primary: {
         letterSpacing: 'button-primary-letter-spacing',

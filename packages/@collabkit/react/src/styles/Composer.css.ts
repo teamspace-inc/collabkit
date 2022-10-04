@@ -11,6 +11,8 @@ const rtl = style({
 export const placeholder = style({
   color: vars.composer.placeholder.color,
   fontSize: vars.composer.placeholder.fontSize,
+  fontWeight: vars.composer.placeholder.fontWeight,
+  letterSpacing: vars.composer.placeholder.letterSpacing,
   lineHeight: vars.composer.placeholder.lineHeight,
   overflow: 'hidden',
   position: 'absolute',
@@ -40,6 +42,8 @@ export const contentEditable = style({
   caretColor: vars.composer.body.caretColor,
   color: vars.composer.body.color,
   fontSize: vars.composer.body.fontSize,
+  fontWeight: vars.composer.body.fontWeight,
+  letterSpacing: vars.composer.body.letterSpacing,
   lineHeight: vars.composer.body.lineHeight,
   padding: vars.composer.body.padding,
   position: 'relative',

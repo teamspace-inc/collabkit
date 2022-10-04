@@ -10,6 +10,7 @@ export const replyCount = style({
   fontSize: vars.inbox.item.replyCount.fontSize,
   lineHeight: vars.inbox.item.replyCount.lineHeight,
   fontWeight: vars.inbox.item.replyCount.fontWeight,
+  letterSpacing: vars.inbox.item.replyCount.letterSpacing,
 });
 
 export const name = style([profileName, {}]);
