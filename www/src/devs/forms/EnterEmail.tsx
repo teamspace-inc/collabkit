@@ -1,4 +1,4 @@
-import { Auth, H2, HStack, LoadingButton, Page, Text, Title, VStack } from '../../UIKit';
+import { Auth, H2, LoadingButton, Page, Text } from '../../UIKit';
 import { devEvents } from '../devEvents';
 
 export function EnterEmail(props: { isReentry?: boolean }) {
