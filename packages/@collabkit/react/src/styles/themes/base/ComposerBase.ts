@@ -11,19 +11,19 @@ export const ComposerBase = {
     padding: vars.space[2],
     //
     background: vars.color.surface,
-    border: `1px solid ${vars.color.border}`,
+    border: `0px solid ${vars.color.border}`,
     borderRadius: vars.space[1],
     hover: {
       background: vars.color.surface,
-      border: `1px solid ${vars.color.border}`,
+      border: `0px solid ${vars.color.border}`,
     },
     active: {
       background: vars.color.surface,
-      border: `1px solid ${vars.color.border}`,
+      border: `0px solid ${vars.color.border}`,
     },
     disabled: {
       background: vars.color.surface,
-      border: `1px solid ${vars.color.border}`,
+      border: `0px solid ${vars.color.border}`,
       color: vars.color.textSecondary,
     },
     placeholder: {
