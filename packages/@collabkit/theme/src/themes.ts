@@ -45,7 +45,7 @@ export interface Theme {
     3: number;
     mentionDropdownItemFontWeight: string;
     mentionDropdownItemMark: number;
-    sendButtonTextFontWeight: number;
+    sendrTextFontWeight: number;
     indicatorText: number;
     profileNameText: number;
     button: number;

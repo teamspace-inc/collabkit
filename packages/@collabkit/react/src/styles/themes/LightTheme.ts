@@ -1,5 +1,6 @@
 import { calc } from '@vanilla-extract/css-utils';
 import { vars } from '../theme';
+import { CommentLightTheme } from './light/CommentLightTheme';
 
 const colors = {
   black10: 'hsl(0, 0%, 10%)', // Black 10
@@ -20,7 +21,6 @@ export const LightTheme = {
     surface: '#EEEEEE',
     surfaceOverlay: colors.opacity7,
     textPrimary: colors.black10,
-    // TODO: use actual light mode colors, pending design
     textSecondary: colors.grey30,
     textLink: colors.black10,
     border: colors.opacity7,
@@ -93,7 +93,7 @@ export const LightTheme = {
       color: vars.color.textPrimary,
       background: 'transparent',
       letterSpacing: vars.button.letterSpacing,
-      fontWeight: vars.button.fontWeight,
+      fontWeight: vars.fontWeights.bold,
       fontSize: vars.button.fontSize,
       lineHeight: vars.button.lineHeight,
       active: {
@@ -176,6 +176,9 @@ export const LightTheme = {
       background: vars.color.surface,
       borderBottom: '0px solid transparent',
       hover: {
+        background: vars.color.surface,
+      },
+      active: {
         background: vars.color.surface,
       },
       replyCount: {
@@ -275,6 +278,7 @@ export const LightTheme = {
       background: colors.grey60,
       fontWeight: vars.fontWeights.bold,
     },
+
     name: {
       color: vars.color.textPrimary,
       fontSize: vars.text.base.fontSize,
@@ -283,50 +287,7 @@ export const LightTheme = {
       letterSpacing: vars.text.base.letterSpacing,
     },
   },
-
-  comment: {
-    paddingTop: vars.space[2],
-    paddingBottom: vars.space[2],
-    paddingLeft: vars.space[4],
-    paddingRight: vars.space[4],
-    hover: {
-      background: 'unset',
-    },
-    header: {
-      gap: vars.space[1],
-      display: 'flex',
-      flexDirection: 'row',
-      alignItems: 'baseline',
-      justifyContent: 'space-between',
-      nameAndTimestamp: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'baseline',
-        gap: vars.space[1],
-      },
-      profile: {
-        gap: vars.space[2],
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-      },
-    },
-
-    body: {
-      color: vars.color.textPrimary,
-      fontSize: vars.text.base.fontSize,
-      lineHeight: vars.text.base.lineHeight,
-      letterSpacing: vars.text.base.letterSpacing,
-      fontWeight: vars.fontWeights.regular,
-    },
-    timestamp: {
-      color: vars.color.textSecondary,
-      fontSize: vars.text.small.fontSize,
-      lineHeight: vars.text.small.lineHeight,
-      letterSpacing: vars.text.small.letterSpacing,
-      fontWeight: vars.fontWeights.regular,
-    },
-  },
+  ...CommentLightTheme,
 
   menu: {
     background: vars.color.surface,
@@ -360,22 +321,21 @@ export const LightTheme = {
     padding: vars.space[2],
     //
     background: vars.color.surface,
-    border: `1px solid ${colors.grey89}`,
+    border: `1px solid ${vars.color.border}`,
     borderRadius: vars.space[1],
     hover: {
       background: vars.color.surface,
-      border: `1px solid ${colors.grey89}`,
+      border: `1px solid ${vars.color.border}`,
     },
     active: {
-      background: 'white',
-      border: `1px solid ${colors.grey89}`,
+      background: vars.color.surface,
+      border: `1px solid ${vars.color.border}`,
     },
     disabled: {
       background: vars.color.surface,
-      border: `1px solid ${colors.grey89}`,
+      border: `1px solid ${vars.color.border}`,
       color: vars.color.textSecondary,
     },
-
     placeholder: {
       color: vars.color.textSecondary,
     },
@@ -383,13 +343,13 @@ export const LightTheme = {
 
   iconButton: {
     background: 'transparent',
-    color: 'red',
+    color: colors.grey89,
     size: '24px',
     active: {
-      background: colors.opacity7,
+      background: vars.color.surfaceOverlay,
     },
     hover: {
-      background: colors.opacity7,
+      background: vars.color.surfaceOverlay,
     },
   },
 

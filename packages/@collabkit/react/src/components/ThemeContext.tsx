@@ -27,7 +27,7 @@ export function ThemeProvider({ theme, children }: ThemeProviderProps) {
     themeClassName = '';
   } else if (theme === 'dark') {
     themeClassName = dark;
-    // themeTokens = merge(defaultTheme, CashboardTheme);
+    themeTokens = merge(defaultTheme, DarkTheme);
   } else {
     themeTokens = merge(defaultTheme, theme);
   }

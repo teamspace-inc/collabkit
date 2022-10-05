@@ -10,7 +10,7 @@ const colors = {
   grey73: 'hsl(0, 0%, 73%)', // Grey 73
   grey89: 'hsl(0, 0%, 89%, 1)',
   white: 'hsl(0, 0%, 100%)', // White
-  opacity7: 'rgba(0, 0, 0, 0.08)', // White Opacity 7
+  opacity7: 'hsla(0, 0%, 100%, 0.08)', // White Opacity 7
   red: 'hsl(2, 73%, 62%)', // Red
 };
 
@@ -22,9 +22,7 @@ export const DarkTheme = merge(LightTheme, {
     textPrimary: colors.white,
     textSecondary: colors.grey60,
   },
-  composer: {
-    border: 'none',
-  },
+  composer: {},
   mentions: {
     typeahead: {
       item: {

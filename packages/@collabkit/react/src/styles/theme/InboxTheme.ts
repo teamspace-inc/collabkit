@@ -31,6 +31,10 @@ export const inboxTheme = {
         background: 'inbox-item-hover-background',
       },
 
+      active: {
+        background: 'inbox-item-active-background',
+      },
+
       replyCount: {
         fontWeight: 'inbox-item-reply-count-font-weight',
         fontSize: 'inbox-item-reply-count-font-size',

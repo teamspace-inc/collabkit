@@ -26,7 +26,9 @@ export const commentTheme = {
         alignItems: 'comment-header-profile-align-items',
       },
     },
-
+    content: {
+      gap: 'comment-content-gap',
+    },
     body: {
       color: 'comment-body-color',
       fontSize: 'comment-body-font-size',
