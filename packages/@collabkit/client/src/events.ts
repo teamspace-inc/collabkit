@@ -6,6 +6,7 @@ import type {
   CommentReactionTarget,
   CommentTarget,
   MentionWithColor,
+  MenuTarget,
   Store,
   Target,
   ThreadTarget,
@@ -61,12 +62,12 @@ export function createEvents(store: Store) {
 
         if (newBody.length === 0) {
           actions.isTyping.cancel();
-          actions.disableSendButton(store, { target });
+          actions.disableComposerCommentButton(store, { target });
           setTimeout(() => {
             actions.stopTyping(store, { target });
           }, 100);
         } else if (newBody.length !== body.length) {
-          actions.enableSendButton(store, { target });
+          actions.enableComposerCommentButton(store, { target });
           actions.isTyping(store, { target });
         }
       });
@@ -91,8 +92,14 @@ export function createEvents(store: Store) {
       }
     },
 
+    // make this fetch workspaceId and threadId from store
     onSend: (workspaceId: string, threadId: string) => {
       actions.sendMessage(store, { workspaceId, threadId });
+    },
+
+    onEdit: () => {
+      actions.updateComment(store);
+      actions.stopEditing(store);
     },
 
     onEmojiReactionPickerModalBackgroundClick: (e: React.MouseEvent) => {
@@ -126,7 +133,48 @@ export function createEvents(store: Store) {
       actions.blur(store, props.target);
     },
 
+    onMenuOpen: (props: { target: MenuTarget }) => {
+      actions.openMenu(store, props);
+    },
+
+    onMenuClose: (props: { target: MenuTarget }) => {
+      actions.closeMenu(store);
+    },
+
     onKeyDown: (e: KeyboardEvent) => {
+      if (store.editingId) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.stopPropagation();
+          e.preventDefault();
+          actions.updateComment(store);
+          actions.stopEditing(store);
+        }
+
+        if (e.key === 'Escape') {
+          actions.stopEditing(store);
+          e.stopPropagation();
+          e.preventDefault();
+          return;
+        }
+      } else if (store.focusedId?.type === 'composer') {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.stopPropagation();
+          e.preventDefault();
+          if (store.focusedId.eventId === 'default') {
+            actions.sendMessage(store, { ...store.focusedId });
+          }
+        }
+      }
+
+      if (store.menuId) {
+        if (e.key === 'Escape') {
+          actions.closeMenu(store);
+          e.stopPropagation();
+          e.preventDefault();
+          return;
+        }
+      }
+
       if (store.uiState === 'selecting') {
         if (e.key === 'Escape') {
           actions.stopSelecting(store);
@@ -140,14 +188,6 @@ export function createEvents(store: Store) {
           actions.closeThread(store);
           e.stopPropagation();
           e.preventDefault();
-        }
-      }
-
-      if (store.focusedId?.type === 'composer') {
-        if (e.key === 'Enter' && !e.shiftKey) {
-          e.stopPropagation();
-          e.preventDefault();
-          actions.sendMessage(store, { ...store.focusedId });
         }
       }
     },
@@ -251,16 +291,16 @@ export function createEvents(store: Store) {
     }) => {
       switch (state) {
         case 'open':
-          actions.closeThread(store, { isPreview: true });
+          actions.closePreview(store);
           actions.viewThread(store, { target, isPreview: false });
           break;
         case 'preview':
-          actions.closeThread(store, { isPreview: false });
+          actions.closeThread(store);
           actions.viewThread(store, { target, isPreview: true });
           break;
         case 'closed':
-          actions.closeThread(store, { isPreview: true });
-          actions.closeThread(store, { isPreview: false });
+          actions.closePreview(store);
+          actions.closeThread(store);
           break;
         default:
           throw new Error(`invalid popover state: ${state}`);

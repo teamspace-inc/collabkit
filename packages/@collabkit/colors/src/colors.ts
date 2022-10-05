@@ -1,65 +1,24 @@
-import {
-  amber,
-  blue,
-  bronze,
-  brown,
-  crimson,
-  cyan,
-  gold,
-  grass,
-  gray,
-  green,
-  indigo,
-  lime,
-  mauve,
-  mint,
-  olive,
-  orange,
-  pink,
-  plum,
-  purple,
-  red,
-  sage,
-  sand,
-  sky,
-  slate,
-  teal,
-  tomato,
-  violet,
-  yellow,
-} from '@radix-ui/colors';
-
-import shuffle from './utils/shuffle';
-
 const colors = {
-  amber,
-  blue,
-  bronze,
-  brown,
-  crimson,
-  cyan,
-  gold,
-  grass,
-  gray,
-  green,
-  indigo,
-  lime,
-  mint,
-  olive,
-  orange,
-  pink,
-  plum,
-  purple,
-  mauve,
-  red,
-  sage,
-  sand,
-  sky,
-  slate,
-  teal,
-  tomato,
-  violet,
-  yellow,
+  amber: 'hsla(41, 95%, 66%, 1)',
+  blue: 'hsla(211, 94%, 62%, 1)',
+  brown: 'hsla(28, 36%, 54%, 1)',
+  crimson: 'hsla(342, 70%, 62%, 1)',
+  cyan: 'hsla(192, 55%, 50%, 1)',
+  grass: 'hsla(124, 30%, 53%, 1)',
+  green: 'hsla(146, 34%, 49%, 1)',
+  indigo: 'hsla(225, 70%, 59%, 1)',
+  lime: 'hsla(74, 78%, 64%, 1)',
+  mint: 'hsla(162, 71%, 78%, 1)',
+  orange: 'hsla(23, 90%, 60%, 1)',
+  pink: 'hsla(325, 60%, 59%, 1)',
+  plum: 'hsla(291, 43%, 55%, 1)',
+  purple: 'hsla(268, 50%, 58%, 1)',
+  red: 'hsla(2, 73%, 62%, 1)',
+  sky: 'hsla(194, 96%, 78%, 1)',
+  teal: 'hsla(173, 45%, 46%, 1)',
+  tomato: 'hsla(11, 71%, 58%, 1)',
+  violet: 'hsla(11, 71%, 58%, 1)',
+  yellow: 'hsla(52, 100%, 71%, 1)',
 };
 
 export function isColor(value: unknown): value is Color {
@@ -67,13 +26,12 @@ export function isColor(value: unknown): value is Color {
 }
 
 export function getRandomColor(): Color {
-  return shuffle(Object.keys(colors))[0] as Color;
+  const names = Object.keys(colors);
+  return names[Math.floor(Math.random() * names.length)] as Color;
 }
 
-export function getShade(color: Color, shade: number) {
-  const colorKey = colors[color];
-  const shadeKey = Object.keys(colorKey).find((shadeKey) => shadeKey.endsWith(`${shade}`));
-  return colorKey[shadeKey as keyof typeof colorKey];
+export function getProfileColor(color: Color) {
+  return colors[color as Color];
 }
 
 export type Color = keyof typeof colors;

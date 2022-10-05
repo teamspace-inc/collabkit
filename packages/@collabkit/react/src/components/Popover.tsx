@@ -1,4 +1,4 @@
-import React, { cloneElement, useCallback, useEffect, useMemo, useState } from 'react';
+import React, { cloneElement, useCallback, useMemo, useState } from 'react';
 import {
   autoUpdate,
   flip,
@@ -21,6 +21,7 @@ import { nanoid } from 'nanoid';
 import { useSnapshot } from 'valtio';
 import { ThreadInfo, ThreadTarget } from '@collabkit/core';
 import { actions } from '@collabkit/client';
+// import { ThemeWrapper } from './ThemeWrapper';
 
 function useStableId(): [string, () => void] {
   const [id, setId] = useState<string>(() => nanoid());
@@ -42,7 +43,14 @@ function useOpenThread({ viewId, cellId }: { viewId: string; cellId: string }) {
   return threadId ?? null;
 }
 
-export function usePopoverThread({ name, cellId }: { name?: string; cellId: string }) {
+export function usePopoverThread(props: {
+  name?: string;
+  cellId: string;
+  offset?: number;
+  padding?: number;
+}) {
+  const { name, cellId } = props;
+
   const viewId = window?.location?.pathname || 'default';
 
   const threadInfo = useMemo<ThreadInfo>(
@@ -92,7 +100,7 @@ export function usePopoverThread({ name, cellId }: { name?: string; cellId: stri
         if (open) {
           actions.viewThread(store, { target, isPreview: false });
         } else {
-          actions.closeThread(store, { isPreview: false });
+          actions.closeThread(store);
         }
       }
     },
@@ -104,7 +112,7 @@ export function usePopoverThread({ name, cellId }: { name?: string; cellId: stri
         if (open) {
           actions.viewThread(store, { target, isPreview: true });
         } else {
-          actions.closeThread(store, { isPreview: true });
+          actions.closePreview(store);
         }
       }
     },
@@ -119,10 +127,10 @@ export function usePopoverThread({ name, cellId }: { name?: string; cellId: stri
     onOpenChange: setPreviewOpen,
     nodeId,
     middleware: [
-      offset(4),
+      offset(props.offset ?? 4),
       flip(),
       size({
-        padding: 12,
+        padding: props.padding ?? 12,
         apply({ availableWidth, availableHeight, elements }) {
           Object.assign(elements.floating.style, {
             maxWidth: `${availableWidth}px`,
@@ -140,10 +148,10 @@ export function usePopoverThread({ name, cellId }: { name?: string; cellId: stri
     onOpenChange: setThreadOpen,
     nodeId,
     middleware: [
-      offset(4),
+      offset(props.offset ?? 4),
       flip(),
       size({
-        padding: 12,
+        padding: props.padding ?? 12,
         apply({ availableWidth, availableHeight, elements }) {
           Object.assign(elements.floating.style, {
             maxWidth: `${availableWidth}px`,
@@ -164,7 +172,11 @@ export function usePopoverThread({ name, cellId }: { name?: string; cellId: stri
       useDismiss(previewContext),
     ]);
   const { getReferenceProps: getThreadReferenceProps, getFloatingProps: getThreadFloatingProps } =
-    useInteractions([useDismiss(threadContext)]);
+    useInteractions([
+      useDismiss(threadContext, {
+        escapeKey: false,
+      }),
+    ]);
 
   const ref = useMemo(
     () => mergeRefs([previewReference, threadReference]),
@@ -219,7 +231,6 @@ export const PopoverTrigger = ({ children, context }: Props) => {
     getNewThreadId,
     nodeId,
   } = context;
-  const { theme } = useApp();
   return (
     <FloatingNode id={nodeId}>
       {cloneElement(children, getProps(children.props))}
@@ -228,13 +239,11 @@ export const PopoverTrigger = ({ children, context }: Props) => {
           <FloatingFocusManager context={threadContext}>
             <div
               ref={threadContext.floating}
-              className={theme.className}
               style={{
                 position: threadContext.strategy,
                 top: threadContext.y ?? 0,
                 left: threadContext.x ?? 0,
                 outline: 'none',
-                boxSizing: 'border-box',
               }}
               {...getThreadFloatingProps()}
             >
@@ -242,16 +251,6 @@ export const PopoverTrigger = ({ children, context }: Props) => {
                 maxAvailableSize={context.maxAvailableSize}
                 threadId={threadId ?? getNewThreadId()}
                 info={threadInfo}
-                style={{
-                  boxSizing: 'border-box',
-                  // custom styles for cashboard
-                  // todo: extract them
-                  boxShadow:
-                    '0px -12px 24px rgba(0, 0, 0, 0.02), 0px 12px 24px rgba(0, 0, 0, 0.06)',
-                  borderRadius: '12px',
-                  width: 264,
-                  border: '1px solid #E3E9ED',
-                }}
               />
             </div>
           </FloatingFocusManager>
@@ -260,8 +259,8 @@ export const PopoverTrigger = ({ children, context }: Props) => {
           <FloatingFocusManager context={previewContext}>
             <div
               ref={previewContext.floating}
-              className={theme.className}
               style={{
+                display: 'block',
                 position: previewContext.strategy,
                 top: previewContext.y ?? 0,
                 left: previewContext.x ?? 0,
@@ -272,20 +271,7 @@ export const PopoverTrigger = ({ children, context }: Props) => {
               }}
               {...getPreviewFloatingProps()}
             >
-              <PreviewThread
-                threadId={threadId}
-                info={threadInfo}
-                style={{
-                  boxSizing: 'border-box',
-                  // custom styles for cashboard
-                  // todo: extract them
-                  boxShadow:
-                    '0px -12px 24px rgba(0, 0, 0, 0.02), 0px 12px 24px rgba(0, 0, 0, 0.06)',
-                  borderRadius: '12px',
-                  width: 264,
-                  border: '1px solid #E3E9ED',
-                }}
-              />
+              <PreviewThread threadId={threadId} info={threadInfo} />
             </div>
           </FloatingFocusManager>
         )}

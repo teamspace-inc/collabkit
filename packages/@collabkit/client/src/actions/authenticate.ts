@@ -91,6 +91,9 @@ export async function authenticate(store: Store) {
 
     const result = await userCredential.user.getIdTokenResult();
     const mode = result.claims.mode;
+    if (mode !== 'UNSECURED') {
+      throw new Error('invalid claims: ' + JSON.stringify(result.claims));
+    }
 
     store.userId = userId;
     store.user = { ...config.user, id: userId };

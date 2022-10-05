@@ -10,6 +10,7 @@ export const container = css({
   border: 'none',
   overflow: 'hidden',
   lineHeight: '12px',
+  flexBasis: '100%',
 });
 
 export const name = css({

@@ -9,7 +9,7 @@ import {
   SerializedTextNode,
   TextNode,
 } from 'lexical';
-import { mentionStyle } from '../../../theme/src/styles/mentionsPluginStyles';
+import { mentionStyle } from '../styles/components/MentionsPlugin.css';
 
 export type SerializedMentionNode = Spread<
   {
@@ -73,7 +73,7 @@ export class MentionNode extends TextNode {
 
   createDOM(config: EditorConfig): HTMLElement {
     const dom = super.createDOM(config);
-    dom.className = 'mention ' + mentionStyle().className;
+    dom.className = 'mention ' + mentionStyle;
     return dom;
   }
 

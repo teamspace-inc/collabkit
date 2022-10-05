@@ -9,3 +9,11 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
+
+:root {
+  --ladle-bg-color-primary: #f5f5f5;
+}
+
+[data-theme="dark"] {
+  --ladle-bg-color-primary: #3d3d3d;
+}

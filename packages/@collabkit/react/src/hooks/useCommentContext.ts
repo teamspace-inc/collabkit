@@ -3,6 +3,10 @@ import { CommentTarget } from '@collabkit/core';
 
 export const CommentContext = React.createContext<CommentTarget | null>(null);
 
+export function useOptionalCommentContext() {
+  return React.useContext(CommentContext);
+}
+
 export function useCommentContext() {
   const context = React.useContext(CommentContext);
   if (!context) {

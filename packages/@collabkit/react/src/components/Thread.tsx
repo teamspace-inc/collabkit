@@ -1,62 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { FlexCenter } from './UIKit';
 import { ScrollableCommentList } from './ScrollableCommentList';
 import { useApp } from '../hooks/useApp';
 import { useThread } from '../hooks/useThread';
-import { EmptyState } from './thread/EmptyState';
 import { NewIndicator, useNewIndicator } from './NewIndicator';
-import { styled } from '@stitches/react';
-import {
-  commentStyles,
-  messageHeaderStyles,
-  sendButtonStyles,
-  threadStyles,
-} from '@collabkit/theme';
 import { useSnapshot } from 'valtio';
 import type { ThreadInfo } from '@collabkit/core';
 import { TypingIndicator } from './TypingIndicator';
-import { Avatar } from './Avatar';
 import { ThreadContext, ThreadContextValue } from '../hooks/useThreadContext';
-import { Button } from './Button';
-import { ArrowUp } from './icons';
-import { useComposerSendButton } from '../hooks/useComposerSendButton';
-import { composerStyles } from '@collabkit/theme';
-import { commentListStyles } from '@collabkit/theme';
 import { getCommentType } from '../utils/getCommentType';
-import { Base } from './Base';
-
+import * as Profile from './Profile';
 import * as Comment from './Comment';
-import * as CommentList from './CommentList';
 import * as Composer from './composer/Composer';
-
-const Content = (props: React.ComponentProps<'div'>) => <div {...props} />;
-
-const SendButtonIcon = styled(ArrowUp, sendButtonStyles.icon);
-const StyledThreadRoot = styled(Base, threadStyles.root);
-const StyledThreadContent = styled(Content, threadStyles.content);
-const StyledHeader = styled(ThreadHeader, threadStyles.header);
-const StyledHeaderTitle = styled('div', threadStyles.headerTitle);
-const StyledTextOffset = styled('div', commentStyles.messageTextOffset);
-const StyledCommentList = styled(CommentList.Root, commentListStyles.list);
-const StyledCommentHeader = styled(Comment.Header, messageHeaderStyles.root);
-const StyledCommentCreatorName = styled(Comment.CreatorName, messageHeaderStyles.name);
-const StyledCommentTimestamp = styled(Comment.Timestamp, messageHeaderStyles.timestamp);
-const StyledCommentRoot = styled(Comment.Root, commentStyles.root);
-const StyledCommentContent = styled(Comment.Content, commentStyles.message);
-const StyledCommentBody = styled(Comment.Body, commentStyles.body);
-
-const StyledComposerRoot = styled(Composer.Root, composerStyles.root);
-const StyledComposerContentEditable = styled(
-  Composer.ContentEditable,
-  composerStyles.contentEditable
-);
-const StyledComposerPlaceholder = styled('div', composerStyles.placeholder);
-const StyledComposerEditor = styled(Composer.Editor, composerStyles.editorRoot);
-const StyledComposerContent = styled(Composer.Content, composerStyles.content);
-
-function ThreadHeader(props: { children?: React.ReactNode; className?: string }) {
-  return <div className={props.className}>{props.children}</div>;
-}
+import { ThemeWrapper } from './ThemeWrapper';
+import * as styles from '../styles/components/Thread.css';
+import { ChatCentered } from './icons';
 
 export type ThreadProps = {
   threadId: string;
@@ -70,7 +27,7 @@ export type ThreadProps = {
 function ThreadContextProvider(props: ThreadProps & { children: React.ReactNode }) {
   const { threadId, info, composerPrompt, showHeader, autoFocus } = props;
   const [context, setContext] = useState<ThreadContextValue | null>(null);
-  const { store, theme } = useApp();
+  const { store } = useApp();
   const { userId, workspaceId } = useSnapshot(store);
 
   useEffect(() => {
@@ -85,114 +42,85 @@ function ThreadContextProvider(props: ThreadProps & { children: React.ReactNode 
 
   return (
     <ThreadContext.Provider value={context ?? { threadId, userId, workspaceId }}>
-      <div className={theme.className} data-collabkit-internal="true" style={{ height: '100%' }}>
-        {props.children}
-      </div>
+      {props.children}
     </ThreadContext.Provider>
   );
 }
 
 export function Thread(props: ThreadProps & { className?: string; children?: React.ReactNode }) {
-  const { store, theme } = useApp();
-
-  const { threadId, autoFocus, composerPrompt } = props;
-
-  const { profiles, userId, workspaceId, callbacks } = useSnapshot(store);
-
-  const { timeline, isEmpty, seenUntil, list, disabled } = useThread({
+  const { threadId } = props;
+  const { store } = useApp();
+  const { userId, workspaceId } = useSnapshot(store);
+  const { timeline, isEmpty, seenUntil, list } = useThread({
     store,
     threadId,
     workspaceId,
   });
-
   const newIndicatorId = useNewIndicator({ userId, timeline, seenUntil });
 
-  const profile = userId ? profiles[userId] : null;
-
-  const { onPointerDown } = useComposerSendButton({ workspaceId, threadId });
+  if (!userId) {
+    return null;
+  }
 
   return (
     <ThreadContextProvider {...props}>
-      <div style={{ display: 'contents' }}>
-        <StyledThreadRoot>
-          <StyledThreadContent>
-            {props.showHeader ? (
-              <StyledHeader>
-                <StyledHeaderTitle>Comments</StyledHeaderTitle>
-              </StyledHeader>
-            ) : null}
-            {isEmpty ? <EmptyState /> : <FlexCenter />}
-            {!isEmpty && (
+      <Profile.Provider profileId={userId}>
+        <ThemeWrapper>
+          <div className={styles.root}>
+            {props.showHeader && <div className={styles.header}>Comments</div>}
+            {isEmpty ? (
+              <EmptyState />
+            ) : (
               <ScrollableCommentList>
-                <StyledCommentList>
-                  {list?.map((group, i) => {
+                <div className={styles.commentList}>
+                  {list?.map((group) => {
                     return group.map((event, index) => {
-                      const profile = profiles[event.createdById];
-                      const type = getCommentType(group, index);
-                      const showProfile = type === 'default' || type === 'inline-start';
-                      return profile ? (
-                        <div key={event.id}>
+                      const showProfile = index === 0;
+                      return (
+                        <React.Fragment key={event.id}>
                           {newIndicatorId === event.id ? <NewIndicator /> : null}
-                          <StyledCommentRoot
-                            type={type}
-                            key={`event-${event.id}`}
-                            eventId={event.id}
-                          >
-                            {profile && showProfile ? <Avatar profile={profile} /> : null}
-                            <StyledCommentContent type={type} profileIndent={!showProfile}>
-                              <StyledCommentHeader>
-                                {showProfile ? <StyledCommentCreatorName /> : null}
-                                {showProfile ? <StyledCommentTimestamp /> : null}
-                              </StyledCommentHeader>
-                              <StyledCommentBody
-                                canClickLinks={
-                                  !!callbacks?.onMentionClick || !!callbacks?.onTimestampClick
-                                }
-                              />
-                            </StyledCommentContent>
-                          </StyledCommentRoot>
-                        </div>
-                      ) : null;
+                          <Comment.Root eventId={event.id} type={getCommentType(group, index)}>
+                            {showProfile && <Profile.Avatar />}
+                            <Comment.Content profileIndent={!showProfile}>
+                              {showProfile && (
+                                <Comment.Header>
+                                  <Comment.CreatorName />
+                                  <Comment.Timestamp />
+                                </Comment.Header>
+                              )}
+                              <Comment.Body />
+                            </Comment.Content>
+                          </Comment.Root>
+                        </React.Fragment>
+                      );
                     });
                   })}
-                </StyledCommentList>
+                </div>
               </ScrollableCommentList>
             )}
-            <StyledComposerRoot>
-              {profile ? <Avatar profile={profile} /> : null}
-              <StyledComposerEditor
-                contentEditable={(props: { autoFocus?: boolean }) => (
-                  <StyledComposerContent>
-                    <StyledComposerContentEditable {...props} />
-                  </StyledComposerContent>
-                )}
-                placeholder={
-                  <StyledComposerPlaceholder>
-                    {isEmpty ? 'Add a comment' : 'Reply to this comment'}
-                  </StyledComposerPlaceholder>
-                }
-                autoFocus={autoFocus}
+            <Composer.Root className={styles.composer}>
+              <Profile.Avatar />
+              <Composer.Editor
+                contentEditable={(props) => <Composer.ContentEditable {...props} />}
+                placeholder={<Composer.Placeholder>Write a comment</Composer.Placeholder>}
+                autoFocus={props.autoFocus}
               />
-              <Button
-                onPointerDown={onPointerDown}
-                type="primary"
-                icon={
-                  <SendButtonIcon
-                    size={13}
-                    color={theme.colors.composerButtonIconColor.toString()}
-                    weight="bold"
-                  />
-                }
-                disabled={disabled}
-              />
-            </StyledComposerRoot>
-
-            <StyledTextOffset>
-              <TypingIndicator />
-            </StyledTextOffset>
-          </StyledThreadContent>
-        </StyledThreadRoot>
-      </div>
+              <TypingIndicator className={styles.typingIndicator} />
+            </Composer.Root>
+          </div>
+        </ThemeWrapper>
+      </Profile.Provider>
     </ThreadContextProvider>
   );
+}
+
+const emptyState = (
+  <div className={styles.emptyState}>
+    <ChatCentered weight="thin" size={32} />
+    <span>No comments yet</span>
+  </div>
+);
+
+export function EmptyState() {
+  return emptyState;
 }

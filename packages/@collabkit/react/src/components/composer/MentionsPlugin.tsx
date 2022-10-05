@@ -13,15 +13,15 @@ import {
   KEY_ESCAPE_COMMAND,
   KEY_TAB_COMMAND,
 } from 'lexical';
-import { startTransition, useCallback, useEffect, useLayoutEffect, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useState } from 'react';
 import escapeStringRegexp from 'escape-string-regexp';
+import { startTransition } from '../../utils/startTransition';
 import { $createMentionNode, MentionNode } from '../../editor';
 import { snapshot } from 'valtio';
 import { Store } from '../../constants';
 import { useApp } from '../../hooks/useApp';
-import { Avatar } from './../Avatar';
-import { styled } from '@stitches/react';
-import { mentionsPluginStyles } from '@collabkit/theme';
+import * as styles from '../../styles/components/MentionsPlugin.css';
+
 import { MentionWithColor } from '@collabkit/core';
 import {
   autoUpdate,
@@ -34,6 +34,8 @@ import {
   useFloating,
   useFloatingNodeId,
 } from '@floating-ui/react-dom-interactions';
+import { ThemeWrapper } from '../ThemeWrapper';
+import * as Profile from '../Profile';
 
 type MentionMatch = {
   leadOffset: number;
@@ -45,12 +47,6 @@ type Resolution = {
   match: MentionMatch;
   range: Range;
 };
-
-const StyledMentionsTypeahead = styled('div', mentionsPluginStyles.typeahead);
-const StyledMentionsTypeaheadUl = styled('div', mentionsPluginStyles.typeaheadList);
-const StyledMentionsTypeaheadLi = styled('div', mentionsPluginStyles.typeaheadListItem);
-const StyledMentionsTypeaheadLiName = styled('div', mentionsPluginStyles.typeaheadListItemName);
-const StyledMentionsTypeaheadLiEmail = styled('div', mentionsPluginStyles.typeaheadListItemEmail);
 
 const PUNCTUATION = '\\.,\\+\\*\\?\\$\\@\\|#{}\\(\\)\\^\\-\\[\\]\\\\/!%\'"~=<>_:;';
 const NAME = '\\b[A-Z][^\\s' + PUNCTUATION + ']';
@@ -131,7 +127,13 @@ const Highlighted = ({ text = '', highlight = '' }) => {
       {parts
         .filter((part) => part)
         .map((part, i) =>
-          regex.test(part) ? <mark key={i}>{part}</mark> : <span key={i}>{part}</span>
+          regex.test(part) ? (
+            <mark className={styles.mark} key={i}>
+              {part}
+            </mark>
+          ) : (
+            <span key={i}>{part}</span>
+          )
         )}
     </span>
   );
@@ -183,46 +185,48 @@ function useMentionLookupService(mentionString: string) {
   return results;
 }
 
-function MentionsTypeaheadItem({
+export function MentionsTypeaheadItem({
   index,
-  isSelected,
+  active,
   onClick,
   onMouseEnter,
   result,
   query,
 }: {
   index: number;
-  isSelected: boolean;
+  active: boolean;
   onClick: () => void;
   onMouseEnter: () => void;
   result: MentionWithColor;
   query: string;
 }) {
   return (
-    <StyledMentionsTypeaheadLi
-      selected={isSelected}
+    <div
+      className={styles.item({ active })}
       key={result.id}
       tabIndex={-1}
       role="option"
-      aria-selected={isSelected}
+      aria-selected={active}
       id={'typeahead-item-' + index}
       onMouseEnter={onMouseEnter}
       onClick={onClick}
     >
-      <Avatar profile={{ ...result, id: result.id }} />
-      <div>
-        <StyledMentionsTypeaheadLiName>
+      <Profile.Provider profileId={result.id}>
+        <Profile.Avatar />
+      </Profile.Provider>
+      <div className={styles.nameAndEmailWrapper}>
+        <div className={styles.name}>
           <Highlighted text={result.name ?? ''} highlight={query}></Highlighted>
-        </StyledMentionsTypeaheadLiName>
-        <StyledMentionsTypeaheadLiEmail>
+        </div>
+        <div className={styles.email}>
           <Highlighted text={result.email ?? ''} highlight={query}></Highlighted>
-        </StyledMentionsTypeaheadLiEmail>
+        </div>
       </div>
-    </StyledMentionsTypeaheadLi>
+    </div>
   );
 }
 
-function MentionsTypeahead({
+export function MentionsTypeahead({
   close,
   editor,
   resolution,
@@ -234,7 +238,7 @@ function MentionsTypeahead({
   const match = resolution.match;
   const results = useMentionLookupService(match.matchingString);
   const [selectedIndex, setSelectedIndex] = useState<null | number>(null);
-  const { theme } = useApp();
+  const [width, setWidth] = useState(0);
 
   const nodeId = useFloatingNodeId();
 
@@ -266,6 +270,7 @@ function MentionsTypeahead({
     }
 
     reference(rootElement);
+    setWidth(rootElement.getBoundingClientRect().width);
   }, [editor]);
 
   const applyCurrentSelected = useCallback(() => {
@@ -395,36 +400,39 @@ function MentionsTypeahead({
   return (
     <FloatingNode id={nodeId}>
       <FloatingFocusManager context={context}>
-        <StyledMentionsTypeahead
-          aria-label="Suggested mentions"
-          role="listbox"
-          className={theme.className}
-          ref={context.floating}
-          style={{
-            position: context.strategy,
-            top: context.y ?? 0,
-            left: context.x ?? 0,
-          }}
-        >
-          <StyledMentionsTypeaheadUl>
-            {results.slice(0, SUGGESTION_LIST_LENGTH_LIMIT).map((result, i) => (
-              <MentionsTypeaheadItem
-                key={result.id}
-                index={i}
-                isSelected={i === selectedIndex}
-                onClick={() => {
-                  setSelectedIndex(i);
-                  applyCurrentSelected();
-                }}
-                onMouseEnter={() => {
-                  setSelectedIndex(i);
-                }}
-                result={result}
-                query={match.matchingString}
-              />
-            ))}
-          </StyledMentionsTypeaheadUl>
-        </StyledMentionsTypeahead>
+        <ThemeWrapper>
+          <div
+            className={styles.typeahead}
+            aria-label="Suggested mentions"
+            role="listbox"
+            ref={context.floating}
+            style={{
+              position: context.strategy,
+              top: context.y ?? 0,
+              left: context.x ?? 0,
+              width,
+            }}
+          >
+            <div className={styles.list}>
+              {results.slice(0, SUGGESTION_LIST_LENGTH_LIMIT).map((result, i) => (
+                <MentionsTypeaheadItem
+                  key={result.id}
+                  index={i}
+                  active={i === selectedIndex}
+                  onClick={() => {
+                    setSelectedIndex(i);
+                    applyCurrentSelected();
+                  }}
+                  onMouseEnter={() => {
+                    setSelectedIndex(i);
+                  }}
+                  result={result}
+                  query={match.matchingString}
+                />
+              ))}
+            </div>
+          </div>
+        </ThemeWrapper>
       </FloatingFocusManager>
     </FloatingNode>
   );

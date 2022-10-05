@@ -6,7 +6,7 @@ import { Check } from './icons';
 import { IconButton } from './IconButton';
 
 export function ResolveThreadButton(props: { className?: string; style?: React.CSSProperties }) {
-  const { theme, events } = useApp();
+  const { events } = useApp();
   const { threadId, workspaceId } = useThreadContext();
 
   const target: ThreadResolveButtonTarget = {
@@ -25,7 +25,7 @@ export function ResolveThreadButton(props: { className?: string; style?: React.C
         })
       }
     >
-      <Check size={19} weight={'regular'} color={theme.colors.neutral12.toString()} />
+      <Check size={19} weight={'regular'} />
     </IconButton>
   );
 }

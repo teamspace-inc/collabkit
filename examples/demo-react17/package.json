@@ -1,0 +1,29 @@
+{
+  "name": "demo-react17",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@react-oauth/google": "^0.2.6",
+    "@szhsin/react-menu": "^3.1.2",
+    "jwt-decode": "^3.1.2",
+    "phosphor-react": "^1.4.1",
+    "react": "17",
+    "react-dom": "17",
+    "react-router-dom": "^6.3.0",
+    "wouter": "^2.8.0-alpha.2"
+  },
+  "devDependencies": {
+    "@types/google.accounts": "^0.0.2",
+    "@types/react": "17",
+    "@types/react-dom": "17",
+    "@vitejs/plugin-react": "^2.0.1",
+    "rollup-plugin-visualizer": "^5.8.0",
+    "terser": "^5.14.2",
+    "vite": "^3.0.9"
+  }
+}

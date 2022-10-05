@@ -1,7 +1,10 @@
-import { getShade } from '@collabkit/colors';
-import React, { useState } from 'react';
+import { actions } from '@collabkit/client';
+import { getProfileColor } from '@collabkit/colors';
+import { Profile } from '@collabkit/core';
+import React from 'react';
 import { useSnapshot } from 'valtio';
 import { useApp } from '../hooks/useApp';
+import * as styles from '../styles/components/Profile.css';
 
 type ProfileContextValue = {
   profileId: string;
@@ -31,36 +34,90 @@ export function Name(props: React.ComponentPropsWithoutRef<'span'>) {
   const { profiles } = useSnapshot(store);
   const { profileId } = useProfile();
   const profile = profiles[profileId];
-  return <span {...props}>{profile?.name ?? profile?.email ?? 'Anonymous'}</span>;
+  return (
+    <span {...props} className={props.className ?? styles.name}>
+      {profile?.name ?? profile?.email ?? 'Anonymous'}
+    </span>
+  );
 }
 
-export function Avatar(props: React.ComponentPropsWithoutRef<'div'>) {
-  const { store, renderAvatar } = useApp();
-  const { profiles } = useSnapshot(store);
-  const { profileId } = useProfile();
-  const profile = profiles[profileId];
-
-  const [didError, setDidError] = useState(false);
-
-  if (renderAvatar != null) {
-    return <>{renderAvatar({ profile })}</>;
-  }
-
-  return didError || !profile.avatar ? (
+function AvatarPlaceholder({
+  size,
+  profile,
+  ...props
+}: { size?: number; profile: Profile } & React.ComponentPropsWithoutRef<'div'>) {
+  return (
     <div
       {...props}
+      className={props.className ?? styles.avatar}
       style={{
-        ...props.style,
+        ...(size ? { width: size, height: size, lineHeight: `${size}px` } : {}),
         ...(profile.color
           ? {
-              backgroundColor: getShade(profile.color, 9),
+              backgroundColor: getProfileColor(profile.color),
             }
           : {}),
       }}
     >
       {profile.name?.charAt(0)}
     </div>
+  );
+}
+
+export function NumberdAvatarPlaceholder({
+  size,
+  number,
+  ...props
+}: {
+  number: number;
+  className?: string;
+  size?: number;
+}) {
+  return (
+    <div
+      {...props}
+      className={props.className ?? styles.avatar}
+      style={{
+        ...(size ? { width: size, height: size, lineHeight: `${size}px` } : {}),
+      }}
+    >
+      {number}
+    </div>
+  );
+}
+
+export function Avatar({
+  size,
+  ...props
+}: { size?: number } & React.ComponentPropsWithoutRef<'div'>) {
+  const { store, renderAvatar } = useApp();
+  const { profiles, avatarErrors } = useSnapshot(store);
+  const { profileId } = useProfile();
+  const profile = profiles[profileId];
+
+  if (profile == null) {
+    return null;
+  }
+
+  if (renderAvatar != null) {
+    return <>{renderAvatar({ profile, size })}</>;
+  }
+
+  const avatar = profile.avatar;
+
+  if (!avatar) {
+    return <AvatarPlaceholder size={size} profile={profile} />;
+  }
+
+  return avatarErrors[avatar] ? (
+    <AvatarPlaceholder size={size} profile={profile} />
   ) : (
-    <img src={profile.avatar} {...props} onError={() => setDidError(true)} />
+    <img
+      src={profile.avatar}
+      className={props.className ?? styles.avatar}
+      {...props}
+      style={{ ...(size ? { width: size, height: size, lineHeight: `${size}px` } : {}) }}
+      onError={() => actions.setAvatarError(store, { avatar })}
+    />
   );
 }

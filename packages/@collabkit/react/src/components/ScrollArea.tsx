@@ -1,9 +1,33 @@
-import { scrollAreaStyles } from '@collabkit/theme';
+import React, { forwardRef } from 'react';
 import * as ScrollArea from '@radix-ui/react-scroll-area';
-import { styled } from '@stitches/react';
+import * as styles from '../styles/components/ScrollArea.css';
 
-export const ScrollAreaRoot = styled(ScrollArea.Root, scrollAreaStyles.root);
-export const ScrollAreaViewport = styled(ScrollArea.Viewport, scrollAreaStyles.viewport);
-export const ScrollAreaScrollbar = styled(ScrollArea.Scrollbar, scrollAreaStyles.scrollbar);
-export const ScrollAreaThumb = styled(ScrollArea.Thumb, scrollAreaStyles.thumb);
-export const ScrollAreaCorner = styled(ScrollArea.Corner, scrollAreaStyles.corner);
+export const ScrollAreaRoot: React.ForwardRefExoticComponent<
+  ScrollArea.ScrollAreaProps & React.RefAttributes<HTMLDivElement>
+> = forwardRef((props, ref) => (
+  <ScrollArea.Root {...props} ref={ref} className={props.className ?? styles.root} />
+));
+
+export const ScrollAreaViewport: React.ForwardRefExoticComponent<
+  ScrollArea.ScrollAreaViewportProps & React.RefAttributes<HTMLDivElement>
+> = forwardRef((props, ref) => (
+  <ScrollArea.Viewport {...props} ref={ref} className={props.className ?? styles.viewport} />
+));
+
+export const ScrollAreaScrollbar: React.ForwardRefExoticComponent<
+  ScrollArea.ScrollAreaScrollbarProps & React.RefAttributes<HTMLDivElement>
+> = forwardRef((props, ref) => (
+  <ScrollArea.Scrollbar {...props} ref={ref} className={props.className ?? styles.scrollbar} />
+));
+
+export const ScrollAreaThumb: React.ForwardRefExoticComponent<
+  ScrollArea.ScrollAreaThumbProps & React.RefAttributes<HTMLDivElement>
+> = forwardRef((props, ref) => (
+  <ScrollArea.Thumb {...props} ref={ref} className={props.className ?? styles.thumb} />
+));
+
+export const ScrollAreaCorner: React.ForwardRefExoticComponent<
+  ScrollArea.ScrollAreaCornerProps & React.RefAttributes<HTMLDivElement>
+> = forwardRef((props, ref) => (
+  <ScrollArea.Corner {...props} ref={ref} className={props.className ?? styles.corner} />
+));

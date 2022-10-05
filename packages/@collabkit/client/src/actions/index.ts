@@ -6,6 +6,7 @@ import { startSelecting } from './startSelecting';
 import { authenticate } from './authenticate';
 import { closeEmojiReactionPicker } from './closeEmojiReactionPicker';
 import { closeThread } from './closeThread';
+import { closePreview } from './closePreview';
 import { monitorConnection } from './monitorConnection';
 import { resolveThread } from './resolveThread';
 import { saveProfile } from './saveProfile';
@@ -33,14 +34,17 @@ import { isTyping } from './isTyping';
 import { saveThreadInfo } from './saveThreadInfo';
 import { init } from './init';
 import { saveMentionableUsers } from './saveMentionableUsers';
-import { enableSendButton } from './enableSendButton';
-import { disableSendButton } from './disableSendButton';
+import { enableComposerCommentButton } from './enableComposerCommentButton';
+import { disableComposerCommentButton } from './disableComposerCommentButton';
 import { deleteMessage } from './deleteMessage';
 import { startEditing } from './startEditing';
 import { stopEditing } from './stopEditing';
 import { updateComment } from './updateComment';
 import { showInbox } from './showInbox';
 import { hideInbox } from './hideInbox';
+import { setAvatarError } from './setAvatarError';
+import { closeMenu } from './closeMenu';
+import { openMenu } from './openMenu';
 
 export type GenerateToken =
   | {
@@ -112,12 +116,15 @@ export const actions = {
   blur,
   closeEmojiReactionPicker,
   closeThread,
+  closePreview,
   deleteMessage,
-  disableSendButton,
-  enableSendButton,
+  disableComposerCommentButton,
+  enableComposerCommentButton,
   focus,
   hover,
   init,
+  openMenu,
+  closeMenu,
   isTyping: debounce(isTyping, 1000, { leading: true, maxWait: 1000 }),
   monitorConnection,
   placePinAndStartComposingThread,
@@ -149,4 +156,5 @@ export const actions = {
   viewThread,
   showInbox,
   hideInbox,
+  setAvatarError,
 };

@@ -13,7 +13,7 @@ export function useOnMarkdownLinkClick(props: {
   threadId: string;
   workspaceId: string;
   userId: string;
-  eventId: string | null;
+  eventId: string | 'default';
 }) {
   const { threadId } = useThreadContext();
   const { eventId } = props;
@@ -24,7 +24,8 @@ export function useOnMarkdownLinkClick(props: {
     throw new Error('CollabKit: workspaceId and userId are required');
   }
 
-  const event = eventId ? store.workspaces[workspaceId].timeline[threadId]?.[eventId] : null;
+  const event =
+    eventId !== 'default' ? store.workspaces[workspaceId].timeline[threadId]?.[eventId] : null;
 
   const triggerTimestampClick = useCallback(
     (timestamp: string) => {
@@ -81,9 +82,10 @@ export function useOnMarkdownLinkClick(props: {
             if (!userId) {
               return;
             }
-            // this will need reworking for cross workspace communication
-            if (store.profiles[userId]) {
-              triggerMentionClick({ ...store.profiles[userId], workspaceId });
+            const profile = store.profiles[userId];
+            if (profile) {
+              // this will need reworking for cross workspace communication
+              triggerMentionClick({ ...profile, workspaceId });
             }
           }
         }

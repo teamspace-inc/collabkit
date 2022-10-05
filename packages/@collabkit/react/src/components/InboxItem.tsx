@@ -1,24 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSnapshot } from 'valtio';
 import { differenceInHours, format, formatDistanceStrict, isSameDay, isSameMonth } from 'date-fns';
-import { StyledInboxThreadRoot, StyledInboxThreadContent } from './Inbox';
 import { ThreadContext, useThreadContext } from '../hooks/useThreadContext';
 import { ResolveThreadButton } from './ResolveThreadButton';
 import { ThreadCommentersFacepile } from './ThreadCommentersFacepile';
 import { useInboxStore } from '../hooks/useInboxStore';
 import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
 import { useReplyCount } from '../hooks/useReplyCount';
-
 import { useApp } from '../hooks/useApp';
-
 import * as Comment from './Comment';
-import { styled } from '@stitches/react';
 import { ReplyCount } from './ReplyCount';
 import { UnreadDot } from './UnreadDot';
-
-import { commentStyles } from '@collabkit/theme';
 import { actions } from '../../../client/src/actions';
 import { ThreadTarget } from '@collabkit/core';
+import * as styles from '../styles/components/InboxItem.css';
 
 // Cashboard relative timestamp
 //
@@ -28,65 +23,32 @@ import { ThreadTarget } from '@collabkit/core';
 // and then display days (“[d] days ago”) up until the comment date’s
 // month isn’t the current month, then display “[m] months ago”.
 function formatTimestampRelative(timestamp: number, now: number) {
+  let string;
   if (isSameDay(timestamp, now)) {
-    return format(timestamp, "'Today' 'at' p");
+    string = format(timestamp, "'Today' 'at' p");
+  } else if (Math.abs(differenceInHours(timestamp, now)) <= 48) {
+    string = formatDistanceStrict(timestamp, now, { unit: 'hour', addSuffix: true });
+  } else if (isSameMonth(timestamp, now)) {
+    string = formatDistanceStrict(timestamp, now, { unit: 'day', addSuffix: true });
+  } else {
+    string = formatDistanceStrict(timestamp, now, { unit: 'month', addSuffix: true });
+    if (string.charAt(0) === '0') {
+      string = 'Last month';
+    }
   }
-  if (Math.abs(differenceInHours(timestamp, now)) <= 48) {
-    return formatDistanceStrict(timestamp, now, { unit: 'hour', addSuffix: true });
-  }
-  if (isSameMonth(timestamp, now)) {
-    return formatDistanceStrict(timestamp, now, { unit: 'day', addSuffix: true });
-  }
-  return formatDistanceStrict(timestamp, now, { unit: 'month', addSuffix: true });
+  return string;
 }
-
-export const StyledReplyCount = styled(ReplyCount, {
-  fontStyle: 'normal',
-  fontWeight: 600,
-  fontSize: 14,
-  lineHeight: '160%',
-  letterSpacing: -0.1,
-  color: '#2C915E',
-});
-
-export const StyledCommentCreatorName = styled(Comment.CreatorName, {
-  fontStyle: 'normal',
-  fontWeight: 600,
-  fontSize: 14,
-  lineHeight: '160%',
-  letterSpacing: -0.1,
-  color: '#000000',
-});
-
-export const StyledUnreadDot = styled(UnreadDot, {
-  width: 8,
-  height: 8,
-  borderRadius: 8,
-  background: '#007FF5',
-  position: 'absolute',
-  left: -16,
-});
-
-export const StyledCommentTimestamp = styled(Comment.Timestamp, {
-  fontStyle: 'normal',
-  fontWeight: 400,
-  fontSize: 14,
-  lineHeight: '160%',
-  letterSpacing: -0.1,
-  color: '#6A7278',
-});
-
-export const StyledCommentBody = styled(Comment.Body, commentStyles.markdown);
 
 export function InboxItem() {
   const { threadId, workspaceId, userId } = useThreadContext();
   const { store, renderThreadContextPreview } = useApp();
-  const { callbacks } = useSnapshot(store);
   const workspace = useSnapshot(useWorkspaceStore());
   const inbox = useSnapshot(useInboxStore());
+  const { viewingId } = useSnapshot(store);
   const timeline = workspace.timeline[threadId];
   const info = workspace.threadInfo[threadId];
   const replyCount = useReplyCount();
+  const [hover, setHover] = useState(false);
 
   if (!timeline) {
     return null;
@@ -109,12 +71,17 @@ export function InboxItem() {
   // inbox tracks most recent comment by default
   const lastComment = inbox[threadId];
 
+  const active = !!(viewingId && viewingId.type === 'thread' && viewingId.threadId === threadId);
+
   return (
     <ThreadContext.Provider
       value={{ threadId, workspaceId, userId }}
       key={`inboxThread-${threadId}`}
     >
-      <StyledInboxThreadRoot
+      <div
+        onMouseOver={() => setHover(true)}
+        onMouseOut={() => setHover(false)}
+        className={styles.root({ active })}
         onClick={() => {
           const onInboxThreadClick = store.callbacks?.onInboxThreadClick;
           if (onInboxThreadClick) {
@@ -130,37 +97,31 @@ export function InboxItem() {
           }
         }}
       >
-        <StyledInboxThreadContent>
-          <div style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
-            <StyledUnreadDot />
-            <ThreadCommentersFacepile />
-            <div style={{ flex: 1 }}></div>
-            <ResolveThreadButton />
+        <div className={styles.header}>
+          <UnreadDot className={styles.unreadDot} />
+          <ThreadCommentersFacepile hover={hover} />
+          <div style={{ flex: 1 }}></div>
+          <ResolveThreadButton />
+        </div>
+        {renderThreadContextPreview?.({ threadId, workspaceId, userId, info })}
+        <Comment.Root eventId={firstCommentId} className={styles.commentRoot}>
+          <div className={styles.nameAndTimestampWrapper}>
+            <Comment.CreatorName className={styles.name} />
+            <Comment.Timestamp className={styles.timestamp} format={formatTimestampRelative} />
           </div>
-          {renderThreadContextPreview?.({ threadId, workspaceId, userId, info })}
-          <Comment.Root eventId={firstCommentId}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-              <div style={{ display: 'flex', flexDirection: 'row', gap: '8px' }}>
-                <StyledCommentCreatorName />
-                <StyledCommentTimestamp format={formatTimestampRelative} />
-              </div>
-              <StyledCommentBody canClickLinks={!!callbacks?.onMentionClick} />
-            </div>
-          </Comment.Root>
-          <Comment.Root eventId={lastComment.id}>
+          <Comment.Body />
+        </Comment.Root>
+        <Comment.Provider eventId={lastComment.id}>
+          {replyCount > 0 ? (
             <div>
-              {replyCount > 0 ? (
-                <>
-                  <div style={{ display: 'flex', gap: '8px' }}>
-                    <StyledReplyCount />
-                    <StyledCommentTimestamp format={formatTimestampRelative} />
-                  </div>
-                </>
-              ) : null}
+              <div className={styles.nameAndTimestampWrapper}>
+                <ReplyCount className={styles.replyCount} />
+                <Comment.Timestamp className={styles.timestamp} format={formatTimestampRelative} />
+              </div>
             </div>
-          </Comment.Root>
-        </StyledInboxThreadContent>
-      </StyledInboxThreadRoot>
+          ) : null}
+        </Comment.Provider>
+      </div>
     </ThreadContext.Provider>
   );
 }

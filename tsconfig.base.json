@@ -19,9 +19,9 @@
     "outDir": "types",
     "emitDeclarationOnly": true,
     "paths": {
-      "@collabkit/colors": ["packages/@collabkit/colors/src"],
-      "@collabkit/core": ["packages/@collabkit/core/src"],
-      "@collabkit/theme": ["packages/@collabkit/theme/src"]
+      "@collabkit/colors": ["./packages/@collabkit/colors/src"],
+      "@collabkit/core": ["./packages/@collabkit/core/src"],
+      "@collabkit/theme": ["./packages/@collabkit/theme/src"]
     },
     "rootDir": "."
   },

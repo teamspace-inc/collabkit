@@ -1,29 +1,26 @@
-import { buttonStyles } from '@collabkit/theme';
-import { styled } from '@stitches/react';
 import React from 'react';
-
-const StyledButton = styled('div', buttonStyles.button);
+import * as styles from '../styles/components/Button.css';
 
 export function Button(props: {
-  type: 'primary' | 'secondary' | 'tertiary';
-  icon?: React.ReactNode;
+  type: 'primary' | 'secondary';
   text?: React.ReactNode;
   disabled?: boolean;
-  style?: React.CSSProperties;
   onPointerDown: (e: React.PointerEvent) => void;
+  className?: string;
 }) {
   return (
-    <StyledButton
+    <div
+      className={
+        props.className ??
+        styles.button({
+          type: props.type,
+          disabled: props.disabled,
+        })
+      }
+      role="button"
       onPointerDown={props.onPointerDown}
-      type={props.type}
-      hasIcon={!!props.icon}
-      hasText={!!props.text}
-      disabled={props.disabled}
-      style={props.style}
-      
     >
-      {props.icon}
       {props.text}
-    </StyledButton>
+    </div>
   );
 }

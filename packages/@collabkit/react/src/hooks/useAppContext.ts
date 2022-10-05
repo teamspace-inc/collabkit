@@ -1,15 +1,12 @@
 import { createContext, ReactNode } from 'react';
-import { createThemes } from '@collabkit/theme';
 import type { Events } from '@collabkit/client';
-import type { Profile, Store, ThreadInfo } from '@collabkit/core';
-
-type Themes = ReturnType<typeof createThemes>;
+import type { Store, ThreadInfo } from '@collabkit/core';
+import { AvatarProps } from '../types';
 
 export type AppContextValue = {
   store: Store;
   events: Events;
-  theme: Themes['darkTheme'] | Themes['lightTheme'];
-  renderAvatar?: (props: { profile: Profile }) => ReactNode;
+  renderAvatar?: (props: AvatarProps) => ReactNode;
   renderThreadContextPreview?: (props: {
     threadId: string;
     workspaceId: string;

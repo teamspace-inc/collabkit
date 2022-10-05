@@ -1,0 +1,10 @@
+{
+  "rewrites": [{ "source": "/(.*)", "destination": "/" }],
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/table",
+      "permanent": false
+    }
+  ]
+}

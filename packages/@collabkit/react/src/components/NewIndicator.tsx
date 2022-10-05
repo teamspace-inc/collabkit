@@ -1,12 +1,7 @@
 import { Timeline, timelineUtils } from '@collabkit/core';
-import { newIndicatorStyles } from '@collabkit/theme';
-import { styled } from '@stitches/react';
 import React, { useEffect, useState } from 'react';
 import { useWindowFocus } from '../hooks/useWindowFocus';
-
-const StyledNewIndicatorTextInlay = styled('span', newIndicatorStyles.textInlay);
-const StyledNewIndicator = styled('div', newIndicatorStyles.indicator);
-const StyledNewIndicatorLine = styled('div', newIndicatorStyles.line);
+import * as styles from '../styles/components/NewIndicator.css';
 
 export function useNewIndicator(props: {
   userId?: string | null;
@@ -45,9 +40,9 @@ export function useNewIndicator(props: {
 
 export function NewIndicator() {
   return (
-    <StyledNewIndicator>
-      <StyledNewIndicatorTextInlay>New</StyledNewIndicatorTextInlay>
-      <StyledNewIndicatorLine />
-    </StyledNewIndicator>
+    <div className={styles.root}>
+      <div className={styles.line} />
+      <span className={styles.textInlay}>New</span>
+    </div>
   );
 }

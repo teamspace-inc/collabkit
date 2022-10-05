@@ -44,5 +44,7 @@ export async function resolveThread(store: Store, workspaceId: string, threadId:
   } catch (e) {
     console.error('failed to set thread state', e);
   }
-  actions.stopTyping(store, { target: { type: 'composer', workspaceId, threadId } });
+  actions.stopTyping(store, {
+    target: { type: 'composer', workspaceId, threadId, eventId: 'default' },
+  });
 }

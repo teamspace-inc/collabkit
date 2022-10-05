@@ -1,6 +1,5 @@
-import React, { ReactNode, useEffect, useLayoutEffect, useState } from 'react';
-import { createThemes, CustomTheme } from '@collabkit/theme';
-import { actions, initFirebase, Events, createEvents } from '@collabkit/client';
+import React, { ReactNode, useEffect, useState } from 'react';
+import { actions, Events, createEvents } from '@collabkit/client';
 import { ConfigProps, SecureProps, Store, ThreadInfo, UnsecureProps } from '@collabkit/core';
 import { AppContext } from '../hooks/useAppContext';
 import { createValtioStore } from '../store';
@@ -9,10 +8,12 @@ import { SaveMentionableUsers } from './SaveMentionableUsers';
 import { AvatarProps } from '../types';
 import { FloatingTree } from '@floating-ui/react-dom-interactions';
 import { UserContextProvider } from '../hooks/useUserContext';
+import { CustomTheme } from '../styles/themes.css';
+import { ThemeProvider } from './ThemeContext';
 
 export type ProviderProps = {
   children: React.ReactNode;
-  theme?: CustomTheme;
+  theme?: 'light' | 'dark' | CustomTheme;
   renderAvatar?: (props: AvatarProps) => ReactNode;
   renderThreadContextPreview?: (props: {
     threadId: string;
@@ -23,26 +24,16 @@ export type ProviderProps = {
 } & (SecureProps | UnsecureProps) &
   ConfigProps;
 
-initFirebase();
-
 // Enable using multiple isolated App
 // instances in the same page.
 export function CollabKitProvider({
   children,
-  colorScheme = 'auto',
   theme,
   renderAvatar,
   renderThreadContextPreview,
   ...config
 }: ProviderProps) {
   const [context, setContext] = useState<{ store: Store; events: Events } | null>(null);
-
-  const { darkTheme, lightTheme } = createThemes(theme);
-
-  const themes = {
-    dark: darkTheme,
-    light: lightTheme,
-  };
 
   useEffect(() => {
     const sync = new FirebaseSync();
@@ -64,54 +55,25 @@ export function CollabKitProvider({
     }
   }, [context]);
 
-  const preferredColorScheme = useColorScheme(colorScheme);
-
   if (!context) {
     return null;
   }
-
-  const currentTheme = themes[preferredColorScheme];
 
   return (
     <AppContext.Provider
       value={{
         store: context.store,
         events: context.events,
-        theme: currentTheme,
         renderAvatar,
         renderThreadContextPreview,
       }}
     >
-      <UserContextProvider>
-        <FloatingTree>{children}</FloatingTree>
-        <SaveMentionableUsers mentionableUsers={config.mentionableUsers} />
-      </UserContextProvider>
+      <ThemeProvider theme={theme}>
+        <UserContextProvider>
+          <FloatingTree>{children}</FloatingTree>
+          <SaveMentionableUsers mentionableUsers={config.mentionableUsers} />
+        </UserContextProvider>
+      </ThemeProvider>
     </AppContext.Provider>
   );
-}
-
-function useColorScheme(colorScheme: 'light' | 'dark' | 'auto') {
-  const [preferredColorScheme, setPreferredColorScheme] = useState<'light' | 'dark'>(
-    colorScheme === 'auto' ? 'dark' : colorScheme
-  );
-
-  if ('matchMedia' in globalThis) {
-    useLayoutEffect(() => {
-      if (colorScheme === 'auto') {
-        const onChange = (e: MediaQueryListEvent) => {
-          setPreferredColorScheme(e.matches ? 'dark' : 'light');
-        };
-
-        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-        setPreferredColorScheme(mediaQuery.matches ? 'dark' : 'light');
-        mediaQuery.addEventListener('change', onChange);
-
-        return () => {
-          mediaQuery.removeEventListener('change', onChange);
-        };
-      }
-    }, [colorScheme]);
-  }
-
-  return preferredColorScheme;
 }
