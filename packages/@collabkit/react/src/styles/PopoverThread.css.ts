@@ -1,5 +1,5 @@
 import { style } from '@vanilla-extract/css';
-import { vars } from './themes.css';
+import { vars } from './theme';
 import * as composerStyles from './Composer.css';
 import * as commentStyles from './Comment.css';
 
@@ -57,7 +57,7 @@ export const composer = style([
 ]);
 
 export const composerContentEditable = style([
-  composerStyles.contentEditable,
+  composerStyles.contentEditable({ disabled: false }),
   {
     border: vars.popoverThread.composer.contentEditable.border,
     minHeight: vars.popoverThread.composer.contentEditable.minHeight,

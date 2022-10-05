@@ -1,7 +1,7 @@
 import { style } from '@vanilla-extract/css';
 import { name as profileName } from './Profile.css';
 import { timestamp as commentTimestamp } from './Comment.css';
-import { vars } from './themes.css';
+import { vars } from './theme';
 import { calc } from '@vanilla-extract/css-utils';
 import { recipe } from '@vanilla-extract/recipes';
 

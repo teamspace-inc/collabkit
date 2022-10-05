@@ -3,6 +3,9 @@ import merge from 'deepmerge';
 import type { CustomTheme } from '../styles/themes.css';
 import { defaultTheme, dark } from '../styles/themes.css';
 
+import { DarkTheme } from '../styles/themes/DarkTheme';
+import { CashboardTheme } from '../styles/themes/CashboardTheme';
+
 export type ThemeContextValue = {
   themeClassName: string;
   themeTokens: CustomTheme | null;
@@ -24,6 +27,7 @@ export function ThemeProvider({ theme, children }: ThemeProviderProps) {
     themeClassName = '';
   } else if (theme === 'dark') {
     themeClassName = dark;
+    // themeTokens = merge(defaultTheme, CashboardTheme);
   } else {
     themeTokens = merge(defaultTheme, theme);
   }

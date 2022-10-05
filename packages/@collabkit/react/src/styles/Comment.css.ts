@@ -1,7 +1,7 @@
 import { globalStyle, style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
 import { calc } from '@vanilla-extract/css-utils';
-import { vars } from './themes.css';
+import { vars } from './theme';
 
 export const root = recipe({
   base: {
@@ -139,7 +139,7 @@ export const menu = style({
   pointerEvents: 'all',
   minWidth: 110,
   borderRadius: vars.space[1],
-  background: vars.comment.menu.background,
+  background: vars.menu.background,
   boxShadow: vars.shadow.standard,
   outline: 'none',
 
@@ -161,17 +161,17 @@ export const menuItem = style({
   padding: `${vars.space[1]} ${vars.space[2]}`,
   borderRadius: vars.space[1],
   cursor: 'pointer',
-  background: vars.comment.menu.background,
-  color: vars.comment.menu.color,
-  fontSize: vars.comment.menu.fontSize,
-  lineHeight: vars.comment.menu.lineHeight,
-  fontWeight: vars.comment.menu.fontWeight,
-  letterSpacing: vars.comment.menu.letterSpacing,
+  background: vars.menu.background,
+  color: vars.menu.item.color,
+  fontSize: vars.menu.item.fontSize,
+  lineHeight: vars.menu.item.lineHeight,
+  fontWeight: vars.menu.item.fontWeight,
+  letterSpacing: vars.menu.item.letterSpacing,
 
   selectors: {
     '&:focus, &:not([disabled]):active': {
-      color: vars.comment.menu.active.color,
-      background: vars.comment.menu.active.background,
+      color: vars.menu.item.active.color,
+      background: vars.menu.item.active.background,
     },
     '&:not(:first-of-type)': {
       borderTopRightRadius: 0,

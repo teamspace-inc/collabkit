@@ -28,7 +28,7 @@ function CloseSidebarButton() {
         events.onPointerDown(e, { target });
       }}
     >
-      <X />
+      <X weight={'bold'} />
     </IconButton>
   );
 }

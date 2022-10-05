@@ -1,7 +1,8 @@
 import React, { ComponentProps } from 'react';
 import { assignInlineVars } from '@vanilla-extract/dynamic';
-import { Theme, vars } from '../styles/themes.css';
+import { Theme } from '../styles/themes.css';
 import { useTheme } from './ThemeContext';
+import { vars } from '../styles/theme';
 
 export function ThemeWrapper(props: ComponentProps<'div'>) {
   const { themeClassName, themeTokens } = useTheme();

@@ -1,13 +1,13 @@
 import { recipe } from '@vanilla-extract/recipes';
-import { vars } from './themes.css';
+import { vars } from './theme';
 
 export const button = recipe({
   base: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    height: 24,
-    width: 24,
+    height: vars.iconButton.size,
+    width: vars.iconButton.size,
     cursor: 'pointer',
     userSelect: 'none',
     pointerEvents: 'all',

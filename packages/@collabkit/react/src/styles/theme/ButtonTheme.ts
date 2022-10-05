@@ -1,6 +1,8 @@
 export const buttonTheme = {
   iconButton: {
     background: 'icon-button-background',
+    color: 'icon-button-color',
+    size: 'icon-button-size',
     active: {
       background: 'icon-button-active-background',
     },
@@ -30,6 +32,10 @@ export const buttonTheme = {
         color: 'button-primary-hover-color',
         background: 'button-primary-hover-background',
       },
+      disabled: {
+        color: 'button-primary-disabled-color',
+        background: 'button-primary-disabled-background',
+      },
     },
     secondary: {
       fontWeight: 'button-secondary-font-weight',
@@ -45,6 +51,10 @@ export const buttonTheme = {
       hover: {
         color: 'button-secondary-hover-color',
         background: 'button-secondary-hover-background',
+      },
+      disabled: {
+        color: 'button-secondary-disabled-color',
+        background: 'button-secondary-disabled-background',
       },
     },
     disabled: {

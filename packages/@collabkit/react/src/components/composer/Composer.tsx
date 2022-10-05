@@ -20,6 +20,7 @@ import { TargetContext } from '../Target';
 import { useTarget } from '../../hooks/useTarget';
 import * as styles from '../../styles/Composer.css';
 import { useOptionalCommentContext } from '../../hooks/useCommentContext';
+import { useSnapshot } from 'valtio';
 
 // Catch any errors that occur during Lexical updates and log them
 // or throw them as needed. If you don't throw them, Lexical will
@@ -75,7 +76,7 @@ export const ContentEditable = function ComposerContentEditable(props: {
       onBlur={(e) => events.onBlur(e, { target })}
     >
       <LexicalContentEditable
-        className={props.className ?? styles.contentEditable}
+        className={props.className ?? styles.contentEditable()}
         tabIndex={props.autoFocus ? 1 : 0}
       />
     </div>
@@ -89,8 +90,16 @@ export const Editor = function ComposerEditor(props: {
   contentEditable: (props: { autoFocus?: boolean }) => JSX.Element;
 }) {
   const target = useTarget();
-  const { events } = useApp();
+  const { events, store } = useApp();
   const { body } = useContext(ComposerContext);
+  const { focusedId, hoveringId } = useSnapshot(store);
+  const active = !!(
+    focusedId &&
+    focusedId.type === 'composer' &&
+    target.type === 'composer' &&
+    focusedId.threadId === target.threadId &&
+    focusedId.eventId === target.eventId
+  );
 
   const initialConfig = {
     ...initialConfigDefaults,
@@ -98,7 +107,7 @@ export const Editor = function ComposerEditor(props: {
   };
 
   return (
-    <div className={props.className ?? styles.editor}>
+    <div className={props.className ?? styles.editor({ active })}>
       <LexicalComposer initialConfig={initialConfig}>
         <PasteTextPlugin />
         <PlainTextPlugin

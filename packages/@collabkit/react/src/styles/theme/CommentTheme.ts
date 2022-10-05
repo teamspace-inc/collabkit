@@ -41,17 +41,5 @@ export const commentTheme = {
       fontWeight: 'comment-timestamp-font-weight',
       letterSpacing: 'comment-timestamp-letter-spacing',
     },
-    menu: {
-      background: 'comment-menu-background',
-      color: 'comment-menu-color',
-      fontSize: 'comment-menu-font-size',
-      lineHeight: 'comment-menu-line-height',
-      fontWeight: 'comment-menu-font-weight',
-      letterSpacing: 'comment-menu-letter-spacing',
-      active: {
-        background: 'comment-menu-active-background',
-        color: 'comment-menu-active-color',
-      },
-    },
   },
 };
