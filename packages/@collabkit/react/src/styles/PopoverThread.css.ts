@@ -39,11 +39,11 @@ export const comment = style([
 ]);
 
 export const commentHeader = style({
-  display: 'flex',
+  display: vars.comment.header.display,
   flex: '1',
-  flexDirection: 'row',
-  gap: vars.space[2],
-  lineHeight: '160%',
+  flexDirection: vars.comment.header.flexDirection,
+  gap: vars.comment.header.gap,
+  alignItems: vars.comment.header.alignItems,
 });
 
 export const composer = style([

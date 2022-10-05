@@ -44,9 +44,9 @@ export const root = recipe({
 
 export const nameAndTimestampWrapper = style({
   flex: 1,
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '4px',
+  display: vars.comment.header.nameAndTimestamp.display,
+  flexDirection: vars.comment.header.nameAndTimestamp.flexDirection,
+  gap: vars.comment.header.nameAndTimestamp.gap,
 });
 
 export const inlineModal = style({
@@ -96,12 +96,21 @@ export const editor = style({
 });
 
 export const header = style({
-  display: 'flex',
   flex: '1',
-  gap: '4px',
-  flexDirection: 'row',
-  alignItems: 'baseline',
+  gap: vars.comment.header.gap,
+  display: vars.comment.header.display,
+  flexDirection: vars.comment.header.flexDirection,
+  alignItems: vars.comment.header.alignItems,
+  justifyContent: vars.comment.header.justifyContent,
 });
+
+// export const headerProfile = style({
+//   display: vars.comment.header.profile.display,
+//   flexDirection: vars.comment.header.profile.flexDirection,
+//   gap: vars.comment.header.profile.gap,
+//   alignItems: vars.comment.header.profile.alignItems,
+//   flex: 1,
+// });
 
 export const timestamp = style({
   fontSize: vars.comment.timestamp.fontSize,

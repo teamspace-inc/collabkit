@@ -4,7 +4,7 @@ import { vars } from './themes.css';
 
 export const root = style({
   minWidth: 40,
-  height: vars.newIndicator.lineHeight,
+  height: vars.inbox.newIndicator.lineHeight,
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -12,7 +12,7 @@ export const root = style({
 });
 
 export const line = style({
-  background: vars.newIndicator.line.background,
+  background: vars.inbox.newIndicator.line.background,
   height: '1px',
   position: 'absolute',
   left: vars.comment.paddingLeft,
@@ -21,14 +21,14 @@ export const line = style({
 });
 
 export const textInlay = style({
-  background: vars.newIndicator.inlay.background,
+  background: vars.inbox.newIndicator.inlay.background,
   display: 'inline-block',
-  color: vars.newIndicator.color,
-  fontSize: vars.newIndicator.fontSize,
-  fontWeight: vars.newIndicator.fontWeight,
-  lineHeight: vars.newIndicator.lineHeight,
-  letterSpacing: vars.newIndicator.letterSpacing,
+  color: vars.inbox.newIndicator.color,
+  fontSize: vars.inbox.newIndicator.fontSize,
+  fontWeight: vars.inbox.newIndicator.fontWeight,
+  lineHeight: vars.inbox.newIndicator.lineHeight,
+  letterSpacing: vars.inbox.newIndicator.letterSpacing,
   padding: '0px 8px',
   position: 'relative',
-  borderRadius: calc.divide(vars.newIndicator.lineHeight, 2),
+  borderRadius: calc.divide(vars.inbox.newIndicator.lineHeight, 2),
 });

@@ -14,6 +14,7 @@ export const avatar = style({
   textAlign: 'center',
   verticalAlign: 'middle',
   cursor: 'inherit',
+  boxSizing: 'border-box',
   userSelect: 'none',
 });
 
