@@ -7,7 +7,7 @@ export const PopoverThreadBase = {
     borderRadius: vars.space[3],
     boxShadow: vars.shadow.high,
     width: '264px',
-    padding: '0px 0 16px',
+    padding: '0px',
     preview: {
       boxShadow: vars.shadow.standard,
     },

@@ -4,7 +4,7 @@ import { Profile } from '@collabkit/core';
 import React from 'react';
 import { useSnapshot } from 'valtio';
 import { useApp } from '../hooks/useApp';
-import * as styles from '../styles/Profile.css';
+import * as styles from '../styles/components/Profile.css';
 
 type ProfileContextValue = {
   profileId: string;

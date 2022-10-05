@@ -3,7 +3,7 @@ import { actions } from '@collabkit/client';
 import { useSnapshot } from 'valtio';
 import { useApp } from '../hooks/useApp';
 import { ThreadContext } from '../hooks/useThreadContext';
-import * as styles from '../styles/Inbox.css';
+import * as styles from '../styles/components/Inbox.css';
 import {
   ScrollAreaCorner,
   ScrollAreaRoot,

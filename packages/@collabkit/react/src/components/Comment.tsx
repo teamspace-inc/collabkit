@@ -13,7 +13,7 @@ import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
 import { useApp } from '../hooks/useApp';
 import { ComposerContext } from './composer/Composer';
 import { CommentTarget, CommentType, timelineUtils } from '@collabkit/core';
-import * as styles from '../styles/Comment.css';
+import * as styles from '../styles/components/Comment.css';
 import { Check, DotsThree } from './icons';
 import { Menu, MenuItem } from './Menu';
 import { IconButton } from './IconButton';

@@ -1,6 +1,5 @@
 import { style } from '@vanilla-extract/css';
-import { vars } from './theme';
-
+import { vars } from '../theme';
 export const avatar = style({
   width: vars.profile.avatar.width ?? vars.avatar.size,
   height: vars.profile.avatar.height ?? vars.avatar.size,

@@ -5,7 +5,7 @@ import { useApp } from '../hooks/useApp';
 import { useOptionalUserContext } from '../hooks/useUserContext';
 import { IconButton } from './IconButton';
 import { X } from './icons';
-import * as styles from '../styles/Sidebar.css';
+import * as styles from '../styles/components/Sidebar.css';
 import { ThemeWrapper } from './ThemeWrapper';
 
 function CloseSidebarButton() {

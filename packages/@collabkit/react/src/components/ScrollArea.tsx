@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import * as ScrollArea from '@radix-ui/react-scroll-area';
-import * as styles from '../styles/ScrollArea.css';
+import * as styles from '../styles/components/ScrollArea.css';
 
 export const ScrollAreaRoot: React.ForwardRefExoticComponent<
   ScrollArea.ScrollAreaProps & React.RefAttributes<HTMLDivElement>

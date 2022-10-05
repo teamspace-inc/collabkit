@@ -18,7 +18,7 @@ import { composerStyles } from '@collabkit/theme';
 import { useThreadContext } from '../../hooks/useThreadContext';
 import { TargetContext } from '../Target';
 import { useTarget } from '../../hooks/useTarget';
-import * as styles from '../../styles/Composer.css';
+import * as styles from '../../styles/components/Composer.css';
 import { useOptionalCommentContext } from '../../hooks/useCommentContext';
 import { useSnapshot } from 'valtio';
 

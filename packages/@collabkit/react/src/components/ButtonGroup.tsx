@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from './Button';
-import { root } from '../styles/ButtonGroup.css';
+import { root } from '../styles/components/ButtonGroup.css';
 
 export function ButtonGroup(props: {
   onCancel: (e: React.PointerEvent) => void;

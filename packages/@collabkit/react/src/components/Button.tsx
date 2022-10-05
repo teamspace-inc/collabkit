@@ -1,5 +1,5 @@
 import React from 'react';
-import * as styles from '../styles/Button.css';
+import * as styles from '../styles/components/Button.css';
 
 export function Button(props: {
   type: 'primary' | 'secondary';

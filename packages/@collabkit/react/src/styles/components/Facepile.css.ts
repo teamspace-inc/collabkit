@@ -1,8 +1,7 @@
 import { style } from '@vanilla-extract/css';
 import { calc } from '@vanilla-extract/css-utils';
 import { recipe } from '@vanilla-extract/recipes';
-import { vars } from './theme';
-
+import { vars } from '../theme';
 export const root = style({
   display: 'flex',
   flexDirection: 'row',

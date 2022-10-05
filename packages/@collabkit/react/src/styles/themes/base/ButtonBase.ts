@@ -14,7 +14,7 @@ export const ButtonBase = {
   },
   buttonGroup: {
     gap: vars.space[1],
-    padding: `0px ${vars.space[4]}`,
+    padding: `0px ${vars.space[4]} ${vars.space[4]}`,
   },
   button: {
     fontSize: vars.text.base.fontSize,

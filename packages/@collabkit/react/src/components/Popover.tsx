@@ -21,7 +21,7 @@ import { nanoid } from 'nanoid';
 import { useSnapshot } from 'valtio';
 import { ThreadInfo, ThreadTarget } from '@collabkit/core';
 import { actions } from '@collabkit/client';
-import { ThemeWrapper } from './ThemeWrapper';
+// import { ThemeWrapper } from './ThemeWrapper';
 
 function useStableId(): [string, () => void] {
   const [id, setId] = useState<string>(() => nanoid());

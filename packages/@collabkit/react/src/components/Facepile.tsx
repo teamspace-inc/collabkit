@@ -1,7 +1,7 @@
 import React from 'react';
 import { Profile as ProfileType } from '@collabkit/core';
 import * as Profile from './Profile';
-import * as styles from '../styles/Facepile.css';
+import * as styles from '../styles/components/Facepile.css';
 
 const MAX_NUM_PROFILES = 4;
 

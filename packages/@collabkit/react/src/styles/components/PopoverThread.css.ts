@@ -1,5 +1,5 @@
 import { style } from '@vanilla-extract/css';
-import { vars } from './theme';
+import { vars } from '../theme';
 import * as composerStyles from './Composer.css';
 import * as commentStyles from './Comment.css';
 

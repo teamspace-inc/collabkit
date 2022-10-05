@@ -17,7 +17,7 @@ import * as Comment from './Comment';
 import * as Composer from './composer/Composer';
 import * as Profile from './Profile';
 import { PopoverThreadCommentEditor } from './PopoverThreadCommentEditor';
-import * as styles from '../styles/PopoverThread.css';
+import * as styles from '../styles/components/PopoverThread.css';
 import { ThemeWrapper } from './ThemeWrapper';
 import { useComposer } from '../hooks/useComposer';
 import { ButtonGroup } from './ButtonGroup';

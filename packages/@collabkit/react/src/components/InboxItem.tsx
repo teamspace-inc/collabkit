@@ -13,7 +13,7 @@ import { ReplyCount } from './ReplyCount';
 import { UnreadDot } from './UnreadDot';
 import { actions } from '../../../client/src/actions';
 import { ThreadTarget } from '@collabkit/core';
-import * as styles from '../styles/InboxItem.css';
+import * as styles from '../styles/components/InboxItem.css';
 
 // Cashboard relative timestamp
 //

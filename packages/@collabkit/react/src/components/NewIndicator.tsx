@@ -1,7 +1,7 @@
 import { Timeline, timelineUtils } from '@collabkit/core';
 import React, { useEffect, useState } from 'react';
 import { useWindowFocus } from '../hooks/useWindowFocus';
-import * as styles from '../styles/NewIndicator.css';
+import * as styles from '../styles/components/NewIndicator.css';
 
 export function useNewIndicator(props: {
   userId?: string | null;

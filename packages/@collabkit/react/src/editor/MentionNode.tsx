@@ -9,7 +9,7 @@ import {
   SerializedTextNode,
   TextNode,
 } from 'lexical';
-import { mentionStyle } from '../styles/MentionsPlugin.css';
+import { mentionStyle } from '../styles/components/MentionsPlugin.css';
 
 export type SerializedMentionNode = Spread<
   {

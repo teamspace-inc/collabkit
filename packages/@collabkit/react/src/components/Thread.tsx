@@ -12,7 +12,7 @@ import * as Profile from './Profile';
 import * as Comment from './Comment';
 import * as Composer from './composer/Composer';
 import { ThemeWrapper } from './ThemeWrapper';
-import * as styles from '../styles/Thread.css';
+import * as styles from '../styles/components/Thread.css';
 import { ChatCentered } from './icons';
 
 export type ThreadProps = {

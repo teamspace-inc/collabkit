@@ -1,7 +1,6 @@
 import { style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
-import { vars } from './theme';
-
+import { vars } from '../theme';
 const ltr = style({
   textAlign: 'left',
 });

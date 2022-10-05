@@ -1,7 +1,6 @@
 import { style } from '@vanilla-extract/css';
 import { calc } from '@vanilla-extract/css-utils';
-import { vars } from './theme';
-
+import { vars } from '../theme';
 export const root = style({
   boxSizing: 'border-box',
   height: '100%',

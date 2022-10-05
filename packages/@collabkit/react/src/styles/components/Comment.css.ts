@@ -1,8 +1,7 @@
 import { globalStyle, style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
 import { calc } from '@vanilla-extract/css-utils';
-import { vars } from './theme';
-
+import { vars } from '../theme';
 export const root = recipe({
   base: {
     display: 'flex',

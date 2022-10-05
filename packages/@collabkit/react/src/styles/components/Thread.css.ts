@@ -1,7 +1,6 @@
 import { createVar, style } from '@vanilla-extract/css';
 import { calc } from '@vanilla-extract/css-utils';
-import { vars } from './theme';
-
+import { vars } from '../theme';
 export const root = style({
   display: 'flex',
   height: '100%',
