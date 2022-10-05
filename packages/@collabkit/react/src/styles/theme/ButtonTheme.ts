@@ -1,4 +1,4 @@
-export const buttonTheme = {
+export const ButtonTheme = {
   iconButton: {
     background: 'icon-button-background',
     color: 'icon-button-color',
@@ -10,12 +10,15 @@ export const buttonTheme = {
       background: 'icon-button-hover-background',
     },
   },
+  buttonGroup: {
+    gap: 'button-group-gap',
+    padding: 'button-group-padding',
+  },
   button: {
     fontSize: 'button-font-size',
     fontWeight: 'button-font-weight',
     letterSpacing: 'button-letter-spacing',
     lineHeight: 'button-line-height',
-
     borderRadius: 'button-border-radius',
     primary: {
       letterSpacing: 'button-primary-letter-spacing',

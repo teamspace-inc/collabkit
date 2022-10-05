@@ -1,5 +1,5 @@
 import merge from 'deepmerge';
-import { LightTheme } from './LightTheme';
+import { BaseTheme } from './BaseTheme';
 
 const colors = {
   black10: 'hsl(0, 0%, 10%)', // Black 10
@@ -14,13 +14,14 @@ const colors = {
   red: 'hsl(2, 73%, 62%)', // Red
 };
 
-export const DarkTheme = merge(LightTheme, {
+export const DarkTheme = merge(BaseTheme, {
   color: {
     background: colors.black13,
     surface: colors.grey24,
     surfaceOverlay: colors.opacity7,
     textPrimary: colors.white,
     textSecondary: colors.grey60,
+    border: colors.opacity7,
   },
   composer: {},
   mentions: {

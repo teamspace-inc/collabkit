@@ -1,4 +1,4 @@
-export const composerTheme = {
+export const ComposerTheme = {
   composer: {
     background: 'composer-background',
     border: 'composer-border',

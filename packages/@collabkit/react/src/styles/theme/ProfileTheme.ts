@@ -1,4 +1,4 @@
-export const profileTheme = {
+export const ProfileTheme = {
   profile: {
     avatar: {
       width: 'profile-avatar-width',

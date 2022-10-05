@@ -1,4 +1,4 @@
-export const mentionsTheme = {
+export const MentionsTheme = {
   mentions: {
     pill: {
       fontSize: 'mentions-pill-font-size',

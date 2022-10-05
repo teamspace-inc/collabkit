@@ -1,4 +1,4 @@
-export const sidebarTheme = {
+export const SidebarTheme = {
   sidebar: {
     boxShadow: 'sidebar-box-shadow',
     background: 'sidebar-background',

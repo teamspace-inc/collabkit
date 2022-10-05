@@ -1,6 +1,6 @@
 import { vars } from '../../theme';
 
-export const CommentLightTheme = {
+export const CommentBase = {
   comment: {
     paddingTop: vars.space[2],
     paddingBottom: vars.space[2],

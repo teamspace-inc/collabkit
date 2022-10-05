@@ -1,23 +1,4 @@
-export const baseTheme = {
-  // Default colors
-  color: {
-    background: 'color-background',
-    surface: 'color-surface',
-    surfaceOverlay: 'color-surface-overlay',
-    textPrimary: 'color-text-primary',
-    textSecondary: 'color-text-secondary',
-    textLink: 'color-text-link',
-    border: 'color-border',
-  },
-  // Default spacing
-  space: {
-    0: 'space-0',
-    1: 'space-1',
-    2: 'space-2',
-    3: 'space-3',
-    4: 'space-4',
-  },
-  // Default typography
+export const TextTheme = {
   text: {
     tiny: {
       fontSize: 'text-tiny-font-size',
@@ -44,10 +25,5 @@ export const baseTheme = {
     regular: 'font-weight-regular',
     medium: 'font-weight-medium',
     bold: 'font-weight-bold',
-  },
-  // Default shadows
-  shadow: {
-    standard: 'shadow-standard',
-    high: 'shadow-high',
   },
 };

@@ -1,4 +1,4 @@
-export const scrollBarTheme = {
+export const ScrollbarTheme = {
   scrollbar: {
     thumb: {
       background: 'scrollbar-thumb-background',

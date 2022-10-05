@@ -1,4 +1,4 @@
-export const inboxTheme = {
+export const InboxTheme = {
   inbox: {
     gap: 'inbox-gap',
     background: 'inbox-background',

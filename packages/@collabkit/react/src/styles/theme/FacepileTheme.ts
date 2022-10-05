@@ -1,4 +1,4 @@
-export const facepileTheme = {
+export const FacepileTheme = {
   facepile: {
     gap: 'facepile-gap',
     avatar: {

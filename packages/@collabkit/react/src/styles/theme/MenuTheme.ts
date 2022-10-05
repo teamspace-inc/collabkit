@@ -1,4 +1,4 @@
-export const menuTheme = {
+export const MenuTheme = {
   menu: {
     background: 'menu-background',
     border: 'menu-border',

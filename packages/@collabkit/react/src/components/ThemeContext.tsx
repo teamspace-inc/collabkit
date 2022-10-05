@@ -4,7 +4,8 @@ import type { CustomTheme } from '../styles/themes.css';
 import { defaultTheme, dark } from '../styles/themes.css';
 
 import { DarkTheme } from '../styles/themes/DarkTheme';
-import { CashboardTheme } from '../styles/themes/CashboardTheme';
+// import { CashboardTheme } from '../styles/themes/CashboardTheme';
+import { BaseTheme } from '../styles/themes/BaseTheme';
 
 export type ThemeContextValue = {
   themeClassName: string;
@@ -25,6 +26,7 @@ export function ThemeProvider({ theme, children }: ThemeProviderProps) {
   let themeTokens = null;
   if (theme == null || theme === 'light') {
     themeClassName = '';
+    themeTokens = merge(defaultTheme, BaseTheme);
   } else if (theme === 'dark') {
     themeClassName = dark;
     themeTokens = merge(defaultTheme, DarkTheme);

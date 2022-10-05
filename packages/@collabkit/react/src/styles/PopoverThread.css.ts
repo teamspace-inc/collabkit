@@ -10,6 +10,7 @@ export const root = style({
   flexDirection: 'column',
   height: '100%',
   position: 'relative',
+  padding: vars.popoverThread.padding,
   width: vars.popoverThread.width,
   border: vars.popoverThread.border,
   boxShadow: vars.popoverThread.boxShadow,

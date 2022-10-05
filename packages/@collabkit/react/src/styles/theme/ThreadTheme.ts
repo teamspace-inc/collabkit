@@ -1,4 +1,4 @@
-export const threadTheme = {
+export const ThreadTheme = {
   thread: {
     background: 'thread-background',
     border: 'thread-border',

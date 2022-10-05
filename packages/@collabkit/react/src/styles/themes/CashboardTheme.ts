@@ -1,7 +1,7 @@
 import merge from 'deepmerge';
-import { LightTheme } from './LightTheme';
+import { BaseTheme } from './BaseTheme';
 
-export const CashboardTheme = merge(LightTheme, {
+export const CashboardTheme = merge(BaseTheme, {
   avatar: {
     size: '32px',
     fontSize: '14px',

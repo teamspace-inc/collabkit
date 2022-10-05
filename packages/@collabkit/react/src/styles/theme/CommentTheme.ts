@@ -1,4 +1,4 @@
-export const commentTheme = {
+export const CommentTheme = {
   comment: {
     paddingTop: 'comment-padding-top',
     paddingRight: 'comment-padding-right',

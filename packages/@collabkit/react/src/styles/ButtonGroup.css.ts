@@ -1,9 +1,10 @@
 import { style } from '@vanilla-extract/css';
+import { vars } from './theme';
 
 export const root = style({
   display: 'flex',
   flexDirection: 'row',
-  gap: '8px',
-  padding: '0 16px 16px',
+  gap: vars.buttonGroup.gap,
+  padding: vars.buttonGroup.padding,
   justifyContent: 'flex-end',
 });
