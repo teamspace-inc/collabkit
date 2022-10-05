@@ -1,5 +1,6 @@
 import { createStitches, keyframes } from '@stitches/react';
 import * as ScrollArea from '@radix-ui/react-scroll-area';
+import * as ui from './styles/UIKit.css';
 
 export const { styled, css, theme } = createStitches({
   theme: {
@@ -11,23 +12,13 @@ export const { styled, css, theme } = createStitches({
   },
 });
 
-export const H2 = styled('h2', {
-  fontSize: 24,
-  lineHeight: '34px',
-  margin: 0,
-  fontWeight: 400,
-  color: '#BBBBBB',
-});
+export const H2 = (props: React.ComponentPropsWithoutRef<'h2'>) => (
+  <h2 className={ui.h2} {...props} />
+);
 
-export const H3 = styled('h3', {
-  fontFamily: 'Inter',
-  fontStyle: 'normal',
-  fontWeight: 700,
-  fontSize: 24,
-  margin: '0 0 20px',
-  lineHeight: '28px',
-  color: 'white',
-});
+export const H3 = (props: React.ComponentPropsWithoutRef<'h3'>) => (
+  <h3 className={ui.h3} {...props} />
+);
 
 const SCROLLBAR_SIZE = 6;
 
@@ -89,20 +80,6 @@ export const ScrollAreaViewport = styled(ScrollArea.Viewport, scrollAreaStyles.v
 export const ScrollAreaScrollbar = styled(ScrollArea.Scrollbar, scrollAreaStyles.scrollbar);
 export const ScrollAreaThumb = styled(ScrollArea.Thumb, scrollAreaStyles.thumb);
 export const ScrollAreaCorner = styled(ScrollArea.Corner, scrollAreaStyles.corner);
-
-export const Grid = styled('div', {
-  display: 'grid',
-});
-
-export const VStack = styled('div', {
-  display: 'flex',
-  flexDirection: 'column',
-});
-
-export const HStack = styled('div', {
-  display: 'flex',
-  flexDirection: 'row',
-});
 
 export const Text = styled('p', {
   fontFamily: 'Inter',

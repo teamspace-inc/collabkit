@@ -1,14 +1,5 @@
-import { ReactNode, useState } from 'react';
-import { Button, Text, VStack, styled, Title } from '../UIKit';
-
-import { Header } from './Header';
-import { Hero } from './Hero';
-import { WorksWith } from './WorksWith';
-import { HardWork } from './HardWork';
-import { Customise } from './Customise';
-import { ContactUs } from './ContactUs';
-import { Plans } from './Plans';
-import { JustAFewLinesOfCode } from './JustAFewLinesOfCode';
+import { ReactNode } from 'react';
+import { Button, Text, styled, Title } from '../UIKit';
 
 export function RequestDemoButton(props: { style?: React.CSSProperties }) {
   return (
@@ -23,7 +14,7 @@ export function RequestDemoButton(props: { style?: React.CSSProperties }) {
   );
 }
 
-const StyledSectionHeader = styled(VStack, {
+const StyledSectionHeader = styled('div', {
   '@bp1': { gap: '30px', alignItems: 'flex-start' },
   '@bp2': { gap: '60px', alignItems: 'center' },
 });
@@ -34,7 +25,7 @@ export function SectionHeader(props: {
   description: string | React.ReactNode | undefined | null;
 }) {
   return (
-    <StyledSectionHeader>
+    <StyledSectionHeader style={{ display: 'flex', flexDirection: 'column' }}>
       {props.image}
       <Title>{props.title}</Title>
       <Text>{props.description}</Text>

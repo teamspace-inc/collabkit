@@ -1,17 +1,17 @@
-import { Button, HStack, VStack, Text, Page, H2, Auth } from '../../UIKit';
+import { Button, Text, Page, H2, Auth } from '../../UIKit';
 import { devEvents } from '../devEvents';
 
 export function CreateOrg() {
   return (
     <Page>
       <Auth>
-        <VStack style={{ alignItems: 'flex-start' }}>
+        <div style={{ alignItems: 'flex-start' }}>
           <H2>What's the name of your product or company?</H2>
           <Text>
             This is the name your users and other admins will see. <br />
             <b>You can change this later.</b>
           </Text>
-          <HStack style={{ gap: '1rem' }}>
+          <div style={{ gap: '1rem' }}>
             <input
               placeholder="Ex. Acme or June Analytics"
               style={{
@@ -25,8 +25,8 @@ export function CreateOrg() {
               type="text/email"
             />
             <Button onClick={devEvents.onCreateOrgButtonClick}>Continue</Button>
-          </HStack>
-        </VStack>
+          </div>
+        </div>
       </Auth>
     </Page>
   );

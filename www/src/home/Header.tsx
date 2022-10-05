@@ -1,5 +1,5 @@
 import { StickyHeader } from '../StickyHeader';
-import { Link, HStack } from '../UIKit';
+import { Link } from '../UIKit';
 import { Logo } from '../Logo';
 import { RequestDemoButton } from './Home';
 
@@ -20,7 +20,7 @@ export function Header(props: { invertFilter: number }) {
         />
       }
       right={
-        <HStack style={{ gap: '6rem', alignItems: 'center' }}>
+        <div style={{ display: 'flex', flexDirection: 'row', gap: '6rem', alignItems: 'center' }}>
           {window.innerWidth > 640 ? (
             <Link
               style={{ fontWeight: '500', cursor: 'pointer' }}
@@ -36,7 +36,7 @@ export function Header(props: { invertFilter: number }) {
           <div style={{ position: 'relative' }}>
             <RequestDemoButton />
           </div>
-        </HStack>
+        </div>
       }
     />
   );

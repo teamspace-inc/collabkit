@@ -7,13 +7,12 @@ import { Hero } from '../home/Hero';
 import { JustAFewLinesOfCode } from '../home/JustAFewLinesOfCode';
 import { Plans } from '../home/Plans';
 import { WorksWith } from '../home/WorksWith';
-import { VStack } from '../UIKit';
 
 export function HomePage() {
   const [invertFilter, setInvertFilter] = useState(0);
 
   return (
-    <VStack style={{ alignItems: 'center' }}>
+    <div style={{ alignItems: 'center' }}>
       <Header invertFilter={invertFilter} />
       <Hero />
       <WorksWith />
@@ -22,6 +21,6 @@ export function HomePage() {
       <Customise />
       <Plans />
       <ContactUs />
-    </VStack>
+    </div>
   );
 }
