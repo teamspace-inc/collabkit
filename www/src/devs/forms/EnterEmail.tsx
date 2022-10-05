@@ -1,4 +1,4 @@
-import { Auth, H2, HStack, LoadingButton, Page, Text, Title, VStack } from '../../UIKit';
+import { Auth, H2, LoadingButton, Page, Text } from '../../UIKit';
 import { devEvents } from '../devEvents';
 
 export function EnterEmail(props: { isReentry?: boolean }) {
@@ -6,7 +6,7 @@ export function EnterEmail(props: { isReentry?: boolean }) {
     <div>
       <Page>
         <Auth>
-          <VStack style={{ alignItems: 'flex-start' }}>
+          <div style={{ alignItems: 'flex-start' }}>
             <H2>{props.isReentry ? 'Re-enter' : 'Enter'} your email</H2>
             <Text>
               We recommend using your <b>work email address</b>.
@@ -18,7 +18,7 @@ export function EnterEmail(props: { isReentry?: boolean }) {
                 devEvents.onAuthFormSubmit();
               }}
             >
-              <HStack style={{ gap: '1rem' }}>
+              <div style={{ gap: '1rem' }}>
                 <input
                   placeholder="name@work-email.com"
                   style={{
@@ -34,9 +34,9 @@ export function EnterEmail(props: { isReentry?: boolean }) {
                 <LoadingButton isLoading={false} onClick={() => devEvents.onAuthFormSubmit()}>
                   Continue
                 </LoadingButton>
-              </HStack>
+              </div>
             </form>
-          </VStack>
+          </div>
         </Auth>
       </Page>
     </div>

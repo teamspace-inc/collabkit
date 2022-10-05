@@ -1,5 +1,5 @@
 import { Switch, SwitchThumb } from './Switch';
-import { Grid, H4, HStack } from '../UIKit';
+import { H4 } from '../UIKit';
 import { App } from './devTypes';
 import { useState } from 'react';
 import { devEvents } from './devEvents';
@@ -45,9 +45,10 @@ function Keys(props: { keys: { [key: string]: boolean } }) {
 export function AppListItem(props: { app: App }) {
   const { app } = props;
   return (
-    <HStack style={{ padding: '1rem 0', fontSize: '1.25rem' }}>
-      <Grid
+    <div style={{ padding: '1rem 0', fontSize: '1.25rem' }}>
+      <div
         style={{
+          display: 'grid',
           gridTemplateColumns: '1fr 1fr 1fr 48px 48px',
           background: 'rgba(0,0,0,0.02)',
           padding: '4rem',
@@ -57,15 +58,15 @@ export function AppListItem(props: { app: App }) {
         <AppName app={app} />
         <H4>AppId: {app.appId}</H4>
         <Keys keys={app.keys} />
-        <HStack style={{ alignItems: 'center', gap: '0.5rem' }}>
+        <div style={{ alignItems: 'center', gap: '0.5rem' }}>
           <Switch checked={app.mode === 'SECURED'} id="s1">
             <SwitchThumb />
           </Switch>
-        </HStack>
+        </div>
         <button>
           <Trash />
         </button>
-      </Grid>
-    </HStack>
+      </div>
+    </div>
   );
 }

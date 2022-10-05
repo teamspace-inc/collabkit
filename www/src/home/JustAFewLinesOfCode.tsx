@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { Section, VStack, HStack } from '../UIKit';
+import { Section } from '../UIKit';
 import SnippetReactSvg from '../assets/SnippetReact.svg';
 import SnippetReactSmallSvg from '../assets/ReactSnippetSmall.svg';
 import ReactLogoSvg from '../assets/react.svg';
@@ -52,7 +52,7 @@ export function JustAFewLinesOfCode(props: { setInvertFilter: (invert: number) =
           </span>
         }
       />
-      <VStack
+      <div
         style={{
           gap: isSmallScreen ? '32px' : '50px',
           alignItems: isSmallScreen ? 'flex-start' : 'center',
@@ -62,12 +62,21 @@ export function JustAFewLinesOfCode(props: { setInvertFilter: (invert: number) =
           style={{ width: '90vw', maxWidth: '812px' }}
           src={isSmallScreen ? SnippetReactSmallSvg : SnippetReactSvg}
         />
-        <HStack style={{ gap: '24px' }}>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            gap: '24px',
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginTop: '40px',
+          }}
+        >
           <img style={{ width: isSmallScreen ? '33px' : '44px' }} src={ReactLogoSvg} />
           <img style={{ width: isSmallScreen ? '33px' : '44px' }} src={VueLogoSvg} />
           <img style={{ width: isSmallScreen ? '33px' : '44px' }} src={AngularLogoSvg} />
-        </HStack>
-      </VStack>
+        </div>
+      </div>
     </Section>
   );
 }

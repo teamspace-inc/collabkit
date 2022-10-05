@@ -20,10 +20,10 @@ import { devActions } from './devActions';
 import { H2, styled } from '../UIKit';
 import { AppListItem } from './AppListItem';
 
-import AddAProvider from './code/AddAProvider.mdx';
-import AddAThread from './code/AddAThread.mdx';
-import ImportCollabKit from './code/ImportCollabKit.mdx';
-import InstallCollabKit from './code/InstallCollabKit.mdx';
+// import AddAProvider from './code/AddAProvider.mdx';
+// import AddAThread from './code/AddAThread.mdx';
+// import ImportCollabKit from './code/ImportCollabKit.mdx';
+// import InstallCollabKit from './code/InstallCollabKit.mdx';
 
 const H5 = styled('div', {
   fontFamily: 'Inter',
@@ -72,7 +72,7 @@ function Org() {
 
       <H5>API credentials</H5>
 
-      <H5>How to get started</H5>
+      {/* <H5>How to get started</H5>
       <H4>1. Install CollabKit</H4>
       <InstallCollabKit />
 
@@ -93,7 +93,7 @@ function Org() {
       <AddAProvider />
       <H4>4. Add a Thread</H4>
       <Desc>Add a comment thread, all you need to do to create one is pass a new threadId.</Desc>
-      <AddAThread />
+      <AddAThread /> */}
 
       {Object.values(apps).map((app) => {
         return <AppListItem app={app} />;

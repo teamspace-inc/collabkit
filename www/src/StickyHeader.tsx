@@ -1,4 +1,4 @@
-import { Header, HStack } from './UIKit';
+import { Header } from './UIKit';
 
 export function StickyHeader(props: {
   invertFilter?: number;
@@ -10,7 +10,7 @@ export function StickyHeader(props: {
     <Header style={{ filter: `invert(${props.invertFilter ?? 0})`, ...props.style }}>
       <div>{props.left}</div>
       <div style={{ display: 'flex', flex: 1 }}></div>
-      <HStack>{props.right}</HStack>
+      <div style={{ display: 'flex' }}>{props.right}</div>
     </Header>
   );
 }

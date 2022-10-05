@@ -1,16 +1,11 @@
 import { resolve } from 'path';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import { remarkCodeHike } from '@code-hike/mdx';
-const theme = require('shiki/themes/github-dark.json');
+import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin';
 
-// https://vitejs.dev/config/
-// mdx configured as per
-// https://github.com/brillout/vite-plugin-mdx/issues/44#issuecomment-1106448872
-export default defineConfig(async () => {
-  const mdx = await import('@mdx-js/rollup');
+export default defineConfig(() => {
   return {
-    plugins: [react(), mdx.default({ remarkPlugins: [[remarkCodeHike, { theme }]] })],
+    plugins: [react(), vanillaExtractPlugin()],
     resolve: {
       alias: {
         '@collabkit/react': resolve(__dirname, '../packages/@collabkit/react/src/index.ts'),

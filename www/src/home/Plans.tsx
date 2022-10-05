@@ -1,8 +1,9 @@
-import { Grid, Section, styled, VStack } from '../UIKit';
+import { Section, styled } from '../UIKit';
 import { SectionHeader, RequestDemoButton, Small } from './Home';
 import checkmarkSvg from '../assets/checkmark.svg';
 
-export const PlanGrid = styled(Grid, {
+export const PlanGrid = styled('div', {
+  display: 'grid',
   gridTemplateColumns: '1fr 1fr 1fr',
   columnGap: '0px',
   padding: '0 4rem',
@@ -15,7 +16,9 @@ export const PlanGrid = styled(Grid, {
   },
 });
 
-export const Plan = styled(VStack, {
+export const Plan = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
   borderRight: '2px solid #222222',
   '&:last-child': { borderRight: 'transparent' },
   // borderRadius: 24,

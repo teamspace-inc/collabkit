@@ -1,5 +1,5 @@
 import ChevronDown from '../assets/ChevronDown.svg';
-import { Section, Grid } from '../UIKit';
+import { Section } from '../UIKit';
 import HeroExampleSvg from '../assets/HeroExample.svg';
 import { useIsSmallScreen } from './useIsSmallScreen';
 import { SectionHeader } from './Home';
@@ -15,8 +15,9 @@ export function Hero() {
         background: '#FFEC6B',
       }}
     >
-      <Grid
+      <div
         style={{
+          display: 'grid',
           alignItems: 'center',
           justifyContent: 'center',
           gridTemplateColumns: '1fr',
@@ -81,7 +82,7 @@ export function Hero() {
           src={HeroExampleSvg}
           style={{ marginTop: '30px', width: 'calc(100vw - 40px)', maxWidth: '1124px' }}
         />
-      </Grid>
+      </div>
     </Section>
   );
 }

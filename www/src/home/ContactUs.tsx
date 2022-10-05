@@ -1,44 +1,10 @@
 import ycLogoSvg from '../assets/yc-logo.svg';
 import { DiscordLogo } from 'phosphor-react';
-import { Section, HStack, styled } from '../UIKit';
+import { Section } from '../UIKit';
 import { useIsSmallScreen } from './useIsSmallScreen';
 import { SectionHeader, Small } from './Home';
 
-const FooterLinkButton = styled('a', {
-  border: '1px solid white',
-  fontFamily: 'Inter',
-  fontStyle: 'normal',
-  fontWeight: 500,
-  fontSize: '1.25rem',
-  lineHeight: '100%',
-  boxSizing: 'border-box',
-  height: '60px',
-  padding: '0 2rem',
-  width: '16rem',
-  textAlign: 'center',
-  borderRadius: '100px',
-  color: 'white',
-  textDecoration: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  gap: '16px',
-
-  '@bp1': { width: '90vw' },
-  '@bp2': { width: 'unset' },
-});
-
-const FooterLink = styled('a', {
-  fontFamily: 'Inter',
-  fontStyle: 'normal',
-  fontWeight: 500,
-  fontSize: '1rem',
-  lineHeight: '120%',
-  textAlign: 'center',
-  letterSpacing: '-0.03em',
-  color: '#999999',
-  textDecoration: 'none',
-});
+import * as styles from '../styles/ContactUs.css';
 
 export function ContactUs() {
   const isSmallScreen = useIsSmallScreen();
@@ -57,8 +23,10 @@ export function ContactUs() {
           <span style={{ color: 'white' }}>Any questions? Email us or join our Discord.</span>
         }
       />
-      <HStack
+      <div
         style={{
+          display: 'flex',
+          flexDirection: 'row',
           gap: '30px',
           margin: 0,
           ...(isSmallScreen
@@ -68,14 +36,18 @@ export function ContactUs() {
             : {}),
         }}
       >
-        <FooterLinkButton href="mailto:info@collabkit.dev">info@collabkit.dev</FooterLinkButton>
-        <FooterLinkButton href="https://discord.gg/UCA4CbZad4">
+        <a className={styles.footerLinkButton} href="mailto:info@collabkit.dev">
+          info@collabkit.dev
+        </a>
+        <a className={styles.footerLinkButton} href="https://discord.gg/UCA4CbZad4">
           <DiscordLogo color="white" weight={'fill'} size={25} />
           Discord
-        </FooterLinkButton>
-      </HStack>
-      <HStack
+        </a>
+      </div>
+      <div
         style={{
+          display: 'flex',
+          flexDirection: 'row',
           marginTop: '80px',
           marginBottom: '0rem',
           alignItems: 'center',
@@ -84,10 +56,12 @@ export function ContactUs() {
       >
         <img src={ycLogoSvg} style={{ width: '2rem', height: '2rem' }} />
         <Small style={{ color: 'white' }}>Backed by Y Combinator</Small>
-      </HStack>
-      <HStack
+      </div>
+      <div
         className="FooterLinks"
         style={{
+          display: 'flex',
+          flexDirection: 'row',
           alignItems: 'center',
           color: '#999999',
           fontFamily: 'Inter',
@@ -108,7 +82,7 @@ export function ContactUs() {
             : {}),
         }}
       >
-        <FooterLink>Teamspace Inc. 2022</FooterLink>
+        {/* <FooterLink>Teamspace Inc. 2022</FooterLink>
         {footerLinksDivider}
         <FooterLink target="_blank" href="https://www.iubenda.com/privacy-policy/17041190">
           Privacy
@@ -123,8 +97,8 @@ export function ContactUs() {
         {footerLinksDivider}
         <FooterLink target="_blank" href="https://www.iubenda.com/terms-and-conditions/17041190">
           Terms &amp; Conditions
-        </FooterLink>
-      </HStack>
+        </FooterLink> */}
+      </div>
     </Section>
   );
 }
