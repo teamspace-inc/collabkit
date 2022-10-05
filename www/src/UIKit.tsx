@@ -1,4 +1,6 @@
 import { createStitches, keyframes } from '@stitches/react';
+import * as ScrollArea from '@radix-ui/react-scroll-area';
+
 export const { styled, css, theme } = createStitches({
   theme: {
     colors: {},
@@ -8,6 +10,85 @@ export const { styled, css, theme } = createStitches({
     bp2: '(min-width: 720px)',
   },
 });
+
+export const H2 = styled('h2', {
+  fontSize: 24,
+  lineHeight: '34px',
+  margin: 0,
+  fontWeight: 400,
+  color: '#BBBBBB',
+});
+
+export const H3 = styled('h3', {
+  fontFamily: 'Inter',
+  fontStyle: 'normal',
+  fontWeight: 700,
+  fontSize: 24,
+  margin: '0 0 20px',
+  lineHeight: '28px',
+  color: 'white',
+});
+
+const SCROLLBAR_SIZE = 6;
+
+const scrollAreaStyles = {
+  root: css({
+    height: '100%',
+    // borderTopRightRadius: 6,
+    // borderTopLeftRadius: 6,
+    overflow: 'hidden',
+  }),
+
+  viewport: css({
+    height: '100%',
+    borderRadius: 'inherit',
+  }),
+
+  scrollbar: css({
+    display: 'flex',
+    // ensures no selection
+    userSelect: 'none',
+    // disable browser handling of all panning and zooming gestures on touch devices
+    touchAction: 'none',
+    padding: '6px 4px 6px 4px',
+    transition: 'background 160ms ease-out',
+    '&:hover': { background: 'rgba(255,255,255,0.04)' },
+    '&[data-orientation="vertical"]': { width: SCROLLBAR_SIZE },
+    '&[data-orientation="horizontal"]': {
+      flexDirection: 'column',
+      height: SCROLLBAR_SIZE,
+    },
+  }),
+
+  thumb: css({
+    flex: 1,
+    background: 'rgba(255,255,255,0.16)',
+    borderRadius: SCROLLBAR_SIZE,
+    // increase target size for touch devices https://www.w3.org/WAI/WCAG21/Understanding/target-size.html
+    position: 'relative',
+    '&::before': {
+      content: '""',
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)',
+      width: '100%',
+      height: '100%',
+      minWidth: 44,
+      minHeight: 44,
+    },
+  }),
+
+  corner: css({
+    background: 'blue',
+  }),
+};
+
+export const ScrollAreaRoot = styled(ScrollArea.Root, scrollAreaStyles.root);
+export const ScrollAreaViewport = styled(ScrollArea.Viewport, scrollAreaStyles.viewport);
+export const ScrollAreaScrollbar = styled(ScrollArea.Scrollbar, scrollAreaStyles.scrollbar);
+export const ScrollAreaThumb = styled(ScrollArea.Thumb, scrollAreaStyles.thumb);
+export const ScrollAreaCorner = styled(ScrollArea.Corner, scrollAreaStyles.corner);
 
 export const Grid = styled('div', {
   display: 'grid',
@@ -83,26 +164,26 @@ export const Auth = styled('div', {
   width: '480px',
 });
 
-export const H2 = styled('h2', {
-  fontFamily: 'Inter',
-  fontStyle: 'normal',
-  // fontWeight: 700,
-  fontSize: '3rem',
-  lineHeight: '116%',
-  marginBottom: 0,
-  // letterSpacing: '-0.05em',
-  zIndex: 1,
-});
+// export const H2 = styled('h2', {
+//   fontFamily: 'Inter',
+//   fontStyle: 'normal',
+//   // fontWeight: 700,
+//   fontSize: '3rem',
+//   lineHeight: '116%',
+//   marginBottom: 0,
+//   // letterSpacing: '-0.05em',
+//   zIndex: 1,
+// });
 
-export const H3 = styled('h2', {
-  fontFamily: 'Space Grotesk',
-  fontStyle: 'normal',
-  fontWeight: 700,
-  fontSize: '2rem',
-  lineHeight: '116%',
-  letterSpacing: '-0.05em',
-  zIndex: 1,
-});
+// export const H3 = styled('h2', {
+//   fontFamily: 'Space Grotesk',
+//   fontStyle: 'normal',
+//   fontWeight: 700,
+//   fontSize: '2rem',
+//   lineHeight: '116%',
+//   letterSpacing: '-0.05em',
+//   zIndex: 1,
+// });
 
 export const H4 = styled('h2', {
   fontFamily: 'Inter',
