@@ -6,9 +6,7 @@ export function RequestDemoButton(props: { style?: React.CSSProperties }) {
     <button
       className={styles.button({ type: 'primary', size: 'large' })}
       style={{ ...props.style }}
-      onClick={() =>
-        (window.location.href = 'https://calendly.com/namit-chadha/30min?month=2022-07')
-      }
+      onClick={() => window.open('https://calendly.com/namit-chadha/30min?month=2022-07', '_blank')}
     >
       Request demo
     </button>
