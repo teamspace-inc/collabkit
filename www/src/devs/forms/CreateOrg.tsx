@@ -1,4 +1,4 @@
-import { Button, Text, Page, H2, Auth } from '../../UIKit';
+import { Page, H2, Auth } from '../../UIKit';
 import { devEvents } from '../devEvents';
 
 export function CreateOrg() {
@@ -7,10 +7,10 @@ export function CreateOrg() {
       <Auth>
         <div style={{ alignItems: 'flex-start' }}>
           <H2>What's the name of your product or company?</H2>
-          <Text>
+          <div>
             This is the name your users and other admins will see. <br />
             <b>You can change this later.</b>
-          </Text>
+          </div>
           <div style={{ gap: '1rem' }}>
             <input
               placeholder="Ex. Acme or June Analytics"
@@ -22,9 +22,9 @@ export function CreateOrg() {
                 borderRadius: '100px',
               }}
               onChange={devEvents.onCreateOrgInputChange}
-              type="text/email"
+              type="div/email"
             />
-            <Button onClick={devEvents.onCreateOrgButtonClick}>Continue</Button>
+            <button onClick={devEvents.onCreateOrgButtonClick}>Continue</button>
           </div>
         </div>
       </Auth>

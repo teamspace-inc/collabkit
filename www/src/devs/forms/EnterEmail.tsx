@@ -1,4 +1,4 @@
-import { Auth, H2, LoadingButton, Page, Text } from '../../UIKit';
+import { Auth, H2, Page } from '../../UIKit';
 import { devEvents } from '../devEvents';
 
 export function EnterEmail(props: { isReentry?: boolean }) {
@@ -8,9 +8,9 @@ export function EnterEmail(props: { isReentry?: boolean }) {
         <Auth>
           <div style={{ alignItems: 'flex-start' }}>
             <H2>{props.isReentry ? 'Re-enter' : 'Enter'} your email</H2>
-            <Text>
+            <div>
               We recommend using your <b>work email address</b>.
-            </Text>
+            </div>
             <form
               onSubmit={(e) => {
                 e.preventDefault();
@@ -31,9 +31,8 @@ export function EnterEmail(props: { isReentry?: boolean }) {
                   type="email"
                   onChange={(e) => devEvents.onEmailInputChange(e)}
                 />
-                <LoadingButton isLoading={false} onClick={() => devEvents.onAuthFormSubmit()}>
-                  Continue
-                </LoadingButton>
+                {/* isLoading={false} */}
+                <div onClick={() => devEvents.onAuthFormSubmit()}>Continue</div>
               </div>
             </form>
           </div>

@@ -1,5 +1,5 @@
 import { Switch, SwitchThumb } from './Switch';
-import { H4 } from '../UIKit';
+// import { H4 } from '../UIKit';
 import { App } from './devTypes';
 import { useState } from 'react';
 import { devEvents } from './devEvents';
@@ -56,7 +56,7 @@ export function AppListItem(props: { app: App }) {
         }}
       >
         <AppName app={app} />
-        <H4>AppId: {app.appId}</H4>
+        {/* <H4>AppId: {app.appId}</H4> */}
         <Keys keys={app.keys} />
         <div style={{ alignItems: 'center', gap: '0.5rem' }}>
           <Switch checked={app.mode === 'SECURED'} id="s1">
