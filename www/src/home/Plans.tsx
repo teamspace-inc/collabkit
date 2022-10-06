@@ -2,6 +2,7 @@ import React from 'react';
 import { RequestDemoButton } from './Home';
 import checkmarkSvg from '../assets/checkmark.svg';
 import { card, li, ul } from '../styles/Home.css';
+import { V12 } from '../UIKit';
 
 function FeatureList(props: { children: React.ReactNode }) {
   return (
@@ -18,10 +19,6 @@ function FeatureList(props: { children: React.ReactNode }) {
   );
 }
 
-const Spacing = (props: { h: number }) => <div style={{ height: props.h }} />;
-const S12 = () => <Spacing h={12} />;
-const S24 = () => <Spacing h={24} />;
-
 export function Plans() {
   return (
     <section>
@@ -30,11 +27,13 @@ export function Plans() {
       <div style={{ display: 'flex', gap: '40px', flexDirection: 'row' }}>
         <div className={card}>
           <h4>Startup</h4>
-          <S12 />
+          <V12 />
           <h2>
             $400 <br />
-            <small>Per month</small>
           </h2>
+          <V12 />
+          <small>Per month</small>
+          <V12 />
           <FeatureList>
             <h5>All the essentials</h5>
             <h5>
@@ -44,16 +43,18 @@ export function Plans() {
             <h5>Customize UI</h5>
           </FeatureList>
           <small>$0.10 per additonal user.</small>
-          <S12 />
+          <V12 />
           <RequestDemoButton style={{ display: 'flex', width: '100%' }} />
         </div>
         <div className={card}>
           <h4>Pro</h4>
-          <S12 />
+          <V12 />
           <h2>
             $800 <br />
-            <small>Per month</small>
           </h2>
+          <V12 />
+          <small>Per month</small>
+          <V12 />
           <FeatureList>
             <h5>All the essentials</h5>
             <h5>
@@ -64,12 +65,12 @@ export function Plans() {
             <h5>Shared Slack Channel</h5>
           </FeatureList>
           <small>$0.10 per additonal user.</small>
-          <S12 />
+          <V12 />
           <RequestDemoButton style={{ width: '100%', textAlign: 'center' }} />
         </div>
         <div className={card}>
           <h4>Scale</h4>
-          <S12 />
+          <V12 />
           <h2>
             Custom
             <br />
@@ -86,7 +87,7 @@ export function Plans() {
             <h5>API</h5>
             <h5>SLA</h5>
           </FeatureList>
-          <S12 />
+          <V12 />
           <RequestDemoButton style={{ width: '100%', textAlign: 'center' }} />
         </div>
       </div>

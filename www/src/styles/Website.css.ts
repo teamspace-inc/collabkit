@@ -119,7 +119,7 @@ globalStyle(`${website} section`, {
   textAlign: 'center',
   justifyContent: 'center',
   padding: '140px 0px 160px',
-  gap: '40px',
+  gap: '60px',
   '@media': {
     'screen and (max-width: 720px)': {
       gap: '30px',
@@ -382,28 +382,6 @@ export const button = recipe({
         textAlign: 'center',
         letterSpacing: '-0.03em',
       },
-    },
-  },
-});
-
-globalStyle('h4', {
-  fontFamily: 'Inter',
-  fontStyle: 'normal',
-  fontWeight: 400,
-  letterSpacing: '-0.02em',
-  fontFeatureSettings: 'ss04 on',
-  margin: 0,
-  fontSize: '24px',
-  lineHeight: '32px',
-
-  '@media': {
-    'screen and (max-width: 720px)': {
-      textAlign: 'left',
-      marginTop: 0,
-      maxWidth: '90vw',
-      minWidth: '90vw',
-      fontSize: '24px',
-      lineHeight: '32px',
     },
   },
 });
