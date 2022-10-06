@@ -37,7 +37,7 @@ export function Hero() {
   );
 
   return (
-    <section style={{ background: vars.color.yellow }}>
+    <section style={{ background: vars.color.yellow, paddingTop: 240 }}>
       <h1>{title}</h1>
       <h3>{description}</h3>
       <div className={styles.center}>
