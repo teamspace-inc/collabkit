@@ -34,14 +34,14 @@ export function getPathHref(path: string[]) {
 export const DOCS: RootDocNode = {
   Introduction: { component: IntroductionDoc },
   'Getting Started': { component: GettingStartedDoc },
-  Patterns: {
-    title: 'Patterns',
-    children: {
-      'Detail Views': { component: DetailViewsDoc },
-      'List Views': { component: ListViewsDoc },
-      'Table Views': { component: TableViewsDoc },
-    },
-  },
+  // Patterns: {
+  //   title: 'Patterns',
+  //   children: {
+  //     'Detail Views': { component: DetailViewsDoc },
+  //     'List Views': { component: ListViewsDoc },
+  //     'Table Views': { component: TableViewsDoc },
+  //   },
+  // },
   Components: {
     title: 'Components',
     children: {
