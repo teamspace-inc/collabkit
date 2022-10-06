@@ -9,6 +9,7 @@ import { Docs } from './docs/Docs';
 import { CollabKitProvider } from '@collabkit/react';
 import { nanoid } from 'nanoid';
 import { SetBreakpointContext } from './hooks/useWindowSize';
+import { UIPage } from './pages/UIPage';
 
 const Page = styled('div', {});
 
@@ -43,6 +44,7 @@ export default function App() {
     >
       <SetBreakpointContext>
         <Page>
+          <Route path="/ui" component={UIPage} />
           <Route path="/" component={HomePage} />
           <Route path="/devs" component={Devs} />
           <Route path="/signedIn" component={Devs} />

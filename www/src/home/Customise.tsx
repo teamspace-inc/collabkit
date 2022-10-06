@@ -1,33 +1,20 @@
-import { Section } from '../UIKit';
 import CustomisePng from '../assets/Customise.png';
 import { useIsSmallScreen } from './useIsSmallScreen';
-import { SectionHeader } from './Home';
 
 export function Customise() {
   const isSmallScreen = useIsSmallScreen();
   return (
-    <Section
+    <section
       style={{
         background: '#F5F3EB',
       }}
     >
-      <SectionHeader
-        title={
-          <span>
-            {isSmallScreen ? (
-              <span>Customise to fit your brand</span>
-            ) : (
-              <span>
-                Customise to fit
-                <br />
-                your brand
-              </span>
-            )}
-          </span>
-        }
-        description={<span>Tailor CollabKit to seamlessly integrate with your UI.</span>}
-      />
+      <h1>
+        Customise to fit
+        {!isSmallScreen && <br />} your brand
+      </h1>
+      <h3>Tailor CollabKit to seamlessly integrate with your UI.</h3>
       <img style={{ maxWidth: '812px' }} src={CustomisePng} />
-    </Section>
+    </section>
   );
 }

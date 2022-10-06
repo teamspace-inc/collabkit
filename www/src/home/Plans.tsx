@@ -1,166 +1,95 @@
-import { Section, styled } from '../UIKit';
-import { SectionHeader, RequestDemoButton, Small } from './Home';
+import React from 'react';
+import { RequestDemoButton } from './Home';
 import checkmarkSvg from '../assets/checkmark.svg';
+import { card, li, ul } from '../styles/Home.css';
 
-export const PlanGrid = styled('div', {
-  display: 'grid',
-  gridTemplateColumns: '1fr 1fr 1fr',
-  columnGap: '0px',
-  padding: '0 4rem',
-
-  '@bp1': { gridTemplateColumns: '1fr', rowGap: '2rem', width: 'calc(100% - 4rem)' },
-  '@bp2': {
-    gridTemplateColumns: '1fr 1fr 1fr',
-    width: 'calc(100% - 100px)',
-    maxWidth: '1352px',
-  },
-});
-
-export const Plan = styled('div', {
-  display: 'flex',
-  flexDirection: 'column',
-  borderRight: '2px solid #222222',
-  '&:last-child': { borderRight: 'transparent' },
-  // borderRadius: 24,
-  textAlign: 'initial',
-  '@bp1': { padding: '40px', borderRightColor: 'transparent' },
-  '@bp2': { padding: '0px 30px', borderRightColor: '#222222' },
-});
-
-export const PlanTitle = styled('h3', {
-  fontFamily: 'Space Grotesk',
-  fontStyle: 'normal',
-  fontWeight: '700',
-  fontSize: '20px',
-  marginTop: 0,
-  marginBottom: '1.25rem',
-  lineHeight: '128.125%',
-  letterSpacing: '-0.05em',
-  color: '#222222',
-});
-
-export const PlanPrice = styled('span', {
-  fontFamily: 'Inter',
-  fontStyle: 'normal',
-  fontWeight: '700',
-  fontSize: '36px',
-  lineHeight: '120%',
-  letterSpacing: '-0.03em',
-  color: '#222222',
-  marginBottom: '40px',
-});
-
-export const PlanFeatures = styled('ul', {
-  paddingBlock: 0,
-  paddingInline: 0,
-  marginBottom: '40px',
-  listStyleType: 'none',
-  flex: 1,
-});
-
-const PlanFeatureItem = styled('li', {
-  fontFamily: 'Inter',
-  fontStyle: 'normal',
-  fontWeight: '500',
-  fontSize: '16px',
-  lineHeight: '20px',
-  marginBottom: '20px',
-  color: '#222222',
-  display: 'flex',
-  flexDirection: 'row',
-});
-
-const PlanFeatureContent = styled('div', {
-  marginLeft: '0.625rem',
-});
-
-export const PlanPricingSmall = styled('div', {
-  fontFamily: 'Inter',
-  fontStyle: 'normal',
-  fontWeight: 500,
-  fontSize: 12,
-  lineHeight: '15px',
-  marginTop: '0rem',
-  marginBottom: '1.5rem',
-});
-
-export function PlanFeature({ children }: { children: React.ReactNode }) {
+function FeatureList(props: { children: React.ReactNode }) {
   return (
-    <PlanFeatureItem>
-      <img src={checkmarkSvg} style={{ width: '1rem', height: '20px', marginTop: '0' }} />
-      <PlanFeatureContent>{children}</PlanFeatureContent>
-    </PlanFeatureItem>
+    <ul className={ul}>
+      {React.Children.map(props.children, (child) => {
+        return (
+          <li className={li}>
+            <img src={checkmarkSvg} style={{ width: '1rem', height: '20px', marginTop: '0' }} />
+            {child}
+          </li>
+        );
+      })}
+    </ul>
   );
 }
+
+const Spacing = (props: { h: number }) => <div style={{ height: props.h }} />;
+const S12 = () => <Spacing h={12} />;
+const S24 = () => <Spacing h={24} />;
+
 export function Plans() {
   return (
-    <Section
-      style={{
-        background: '#FFEC6B',
-        textAlign: 'center',
-      }}
-    >
-      <SectionHeader
-        title={<span>Pricing</span>}
-        description={<span>Packages that grow with your business.</span>}
-      />
-      <PlanGrid>
-        <Plan>
-          <PlanTitle>Startup</PlanTitle>
-          <PlanPrice>
+    <section>
+      <h1>Pricing</h1>
+      <h3>Packages that grow with your business.</h3>
+      <div style={{ display: 'flex', gap: '40px', flexDirection: 'row' }}>
+        <div className={card}>
+          <h4>Startup</h4>
+          <S12 />
+          <h2>
             $400 <br />
-            <Small>Per month</Small>
-          </PlanPrice>
-          <PlanFeatures>
-            <PlanFeature>All the essentials</PlanFeature>
-            <PlanFeature>
+            <small>Per month</small>
+          </h2>
+          <FeatureList>
+            <h5>All the essentials</h5>
+            <h5>
               1,000 <br />
-              <Small>monthly active users</Small>
-            </PlanFeature>
-            <PlanFeature>Customize UI</PlanFeature>
-          </PlanFeatures>
-          <PlanPricingSmall>$0.10 per additonal user.</PlanPricingSmall>
-          <RequestDemoButton />
-        </Plan>
-        <Plan>
-          <PlanTitle>Pro</PlanTitle>
-          <PlanPrice>
+              <small>monthly active users</small>
+            </h5>
+            <h5>Customize UI</h5>
+          </FeatureList>
+          <small>$0.10 per additonal user.</small>
+          <S12 />
+          <RequestDemoButton style={{ display: 'flex', width: '100%' }} />
+        </div>
+        <div className={card}>
+          <h4>Pro</h4>
+          <S12 />
+          <h2>
             $800 <br />
-            <Small>Per month</Small>
-          </PlanPrice>
-          <PlanFeatures>
-            <PlanFeature>All the essentials</PlanFeature>
-            <PlanFeature>
+            <small>Per month</small>
+          </h2>
+          <FeatureList>
+            <h5>All the essentials</h5>
+            <h5>
               5,000 <br />
-              <Small>monthly active users</Small>
-            </PlanFeature>
-            <PlanFeature>Customize UI</PlanFeature>
-            <PlanFeature>Shared Slack Channel</PlanFeature>
-          </PlanFeatures>
-          <PlanPricingSmall>$0.10 per additonal user.</PlanPricingSmall>
-          <RequestDemoButton />
-        </Plan>
-        <Plan>
-          <PlanTitle>Scale</PlanTitle>
-          <PlanPrice>
+              <small>monthly active users</small>
+            </h5>
+            <h5>Customize UI</h5>
+            <h5>Shared Slack Channel</h5>
+          </FeatureList>
+          <small>$0.10 per additonal user.</small>
+          <S12 />
+          <RequestDemoButton style={{ width: '100%', textAlign: 'center' }} />
+        </div>
+        <div className={card}>
+          <h4>Scale</h4>
+          <S12 />
+          <h2>
             Custom
             <br />
             <br />
-          </PlanPrice>
-          <PlanFeatures>
-            <PlanFeature>All the essentials</PlanFeature>
-            <PlanFeature>
+          </h2>
+          <FeatureList>
+            <h5>All the essentials</h5>
+            <h5>
               Unlimited <br />
-              <Small>monthly active users</Small>
-            </PlanFeature>
-            <PlanFeature>Customize UI</PlanFeature>
-            <PlanFeature>Shared Slack Channel</PlanFeature>
-            <PlanFeature>API</PlanFeature>
-            <PlanFeature>SLA</PlanFeature>
-          </PlanFeatures>
-          <RequestDemoButton />
-        </Plan>
-      </PlanGrid>
-    </Section>
+              <small>monthly active users</small>
+            </h5>
+            <h5>Customize UI</h5>
+            <h5>Shared Slack Channel</h5>
+            <h5>API</h5>
+            <h5>SLA</h5>
+          </FeatureList>
+          <S12 />
+          <RequestDemoButton style={{ width: '100%', textAlign: 'center' }} />
+        </div>
+      </div>
+    </section>
   );
 }

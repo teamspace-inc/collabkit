@@ -1,12 +1,11 @@
 import { useEffect, useRef } from 'react';
-import { Section } from '../UIKit';
 import SnippetReactSvg from '../assets/SnippetReact.svg';
 import SnippetReactSmallSvg from '../assets/ReactSnippetSmall.svg';
 import ReactLogoSvg from '../assets/react.svg';
 import VueLogoSvg from '../assets/vue.svg';
 import AngularLogoSvg from '../assets/angular.svg';
 import { useIsSmallScreen } from './useIsSmallScreen';
-import { SectionHeader } from './Home';
+import { dark } from '../styles/Website.css';
 
 export function JustAFewLinesOfCode(props: { setInvertFilter: (invert: number) => void }) {
   const examplesRef = useRef<HTMLDivElement>(null);
@@ -26,32 +25,19 @@ export function JustAFewLinesOfCode(props: { setInvertFilter: (invert: number) =
   }, []);
   const isSmallScreen = useIsSmallScreen();
   return (
-    <Section
+    <section
       ref={examplesRef}
+      className={dark}
       style={{
         background: '#35284A',
         color: 'white',
       }}
     >
-      <SectionHeader
-        title={
-          <span style={{ color: 'white' }}>
-            {isSmallScreen ? (
-              <span>Just a few lines of code</span>
-            ) : (
-              <span>
-                Just a few lines
-                <br /> of code
-              </span>
-            )}
-          </span>
-        }
-        description={
-          <span>
-            Simply add <span style={{ color: '' }}>{`<CollabKit.Thread />`}</span>
-          </span>
-        }
-      />
+      <h1>
+        Just a few lines
+        {!isSmallScreen && <br />} of code
+      </h1>
+      <h3>Simply add {'<CollabKit.Thread />'}</h3>
       <div
         style={{
           gap: isSmallScreen ? '32px' : '50px',
@@ -77,6 +63,6 @@ export function JustAFewLinesOfCode(props: { setInvertFilter: (invert: number) =
           <img style={{ width: isSmallScreen ? '33px' : '44px' }} src={AngularLogoSvg} />
         </div>
       </div>
-    </Section>
+    </section>
   );
 }

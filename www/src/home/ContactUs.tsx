@@ -1,28 +1,24 @@
 import ycLogoSvg from '../assets/yc-logo.svg';
 import { DiscordLogo } from 'phosphor-react';
-import { Section } from '../UIKit';
 import { useIsSmallScreen } from './useIsSmallScreen';
-import { SectionHeader, Small } from './Home';
 
 import * as styles from '../styles/ContactUs.css';
+import { dark, vars } from '../styles/Website.css';
 
 export function ContactUs() {
   const isSmallScreen = useIsSmallScreen();
   const footerLinksDivider = isSmallScreen ? null : <span>|</span>;
 
   return (
-    <Section
+    <section
+      className={dark}
       style={{
-        background: '#222222',
+        background: vars.color.bgContrastLowest,
         paddingBottom: '60px',
       }}
     >
-      <SectionHeader
-        title={<span style={{ color: 'white' }}>Contact Us</span>}
-        description={
-          <span style={{ color: 'white' }}>Any questions? Email us or join our Discord.</span>
-        }
-      />
+      <h1>Contact Us</h1>
+      <h3>Any questions? Email us or join our Discord.</h3>
       <div
         style={{
           display: 'flex',
@@ -55,7 +51,7 @@ export function ContactUs() {
         }}
       >
         <img src={ycLogoSvg} style={{ width: '2rem', height: '2rem' }} />
-        <Small style={{ color: 'white' }}>Backed by Y Combinator</Small>
+        <small style={{ color: 'white' }}>Backed by Y Combinator</small>
       </div>
       <div
         className="FooterLinks"
@@ -99,6 +95,6 @@ export function ContactUs() {
           Terms &amp; Conditions
         </FooterLink> */}
       </div>
-    </Section>
+    </section>
   );
 }

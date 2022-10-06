@@ -1,9 +1,9 @@
-import { Page, H2, Auth } from '../../UIKit';
+import { H2, Auth } from '../../UIKit';
 import { devEvents } from '../devEvents';
 
 export function CreateOrg() {
   return (
-    <Page>
+    <div>
       <Auth>
         <div style={{ alignItems: 'flex-start' }}>
           <H2>What's the name of your product or company?</H2>
@@ -28,6 +28,6 @@ export function CreateOrg() {
           </div>
         </div>
       </Auth>
-    </Page>
+    </div>
   );
 }

@@ -25,8 +25,6 @@ const SCROLLBAR_SIZE = 6;
 const scrollAreaStyles = {
   root: css({
     height: '100%',
-    // borderTopRightRadius: 6,
-    // borderTopLeftRadius: 6,
     overflow: 'hidden',
   }),
 
@@ -125,30 +123,15 @@ export const loading = keyframes({
 //   },
 // });
 
-export const Page = styled('section', {
-  position: 'relative',
-  display: 'flex',
-  width: '100vw',
-  overflow: 'hidden',
-  flexDirection: 'column',
-  paddingTop: '8rem',
-  paddingLeft: '5vw',
-});
-
-export const Section = styled('section', {
-  position: 'relative',
-  display: 'flex',
-  width: '100vw',
-  padding: '0px',
-  overflow: 'hidden',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
-  gap: '60px',
-
-  '@bp1': { padding: '100px 0px 100px', gap: '30px' },
-  '@bp2': { padding: '200px 0px', gap: '60px' },
-});
+// export const Page = styled('section', {
+//   position: 'relative',
+//   display: 'flex',
+//   width: '100vw',
+//   overflow: 'hidden',
+//   flexDirection: 'column',
+//   paddingTop: '8rem',
+//   paddingLeft: '5vw',
+// });
 
 export const Header = styled('header', {
   display: 'flex',

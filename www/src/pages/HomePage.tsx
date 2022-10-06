@@ -7,12 +7,13 @@ import { Hero } from '../home/Hero';
 import { JustAFewLinesOfCode } from '../home/JustAFewLinesOfCode';
 import { Plans } from '../home/Plans';
 import { WorksWith } from '../home/WorksWith';
+import { light, website } from '../styles/Website.css';
 
 export function HomePage() {
   const [invertFilter, setInvertFilter] = useState(0);
 
   return (
-    <div style={{ alignItems: 'center' }}>
+    <div style={{ alignItems: 'center' }} className={`${website} ${light}`}>
       <Header invertFilter={invertFilter} />
       <Hero />
       <WorksWith />
