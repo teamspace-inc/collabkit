@@ -19,7 +19,7 @@ export function CodeSnippet(props: { code: string; language?: 'typescript' | 'sh
       language={props.language ?? 'typescript'}
       style={{
         borderRadius: '6px',
-        width: ['small', 'medium'].includes(breakpoint) ? 'calc(100% - 20px)' : 'calc(100% - 80px)',
+        width: ['small', 'medium'].includes(breakpoint) ? 'auto' : 'calc(100% - 80px)',
       }}
       scrollbar={false}
     />

@@ -1,8 +1,8 @@
 import React from 'react';
 import { IntroductionDoc } from './IntroductionDoc';
-import { DetailViewsDoc } from './patterns/DetailViewsDoc';
-import { ListViewsDoc } from './patterns/ListViewsDoc';
-import { TableViewsDoc } from './patterns/TableViewsDoc';
+// import { DetailViewsDoc } from './patterns/DetailViewsDoc';
+// import { ListViewsDoc } from './patterns/ListViewsDoc';
+// import { TableViewsDoc } from './patterns/TableViewsDoc';
 import { GettingStartedDoc } from './GettingStartedDoc';
 // import { AvatarDoc } from './components/AvatarDoc';
 // import { FacepileDoc } from './components/FacepileDoc';
