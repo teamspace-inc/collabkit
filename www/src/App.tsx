@@ -7,7 +7,7 @@ import { DataGridPage } from './pages/DataGridPage';
 import { HomePage } from './pages/HomePage';
 import { Docs } from './docs/Docs';
 import { CollabKitProvider } from '@collabkit/react';
-import { nanoid } from 'nanoid';
+// import { nanoid } from 'nanoid';
 import { SetBreakpointContext } from './hooks/useWindowSize';
 import { UIPage } from './pages/UIPage';
 
@@ -39,7 +39,8 @@ export default function App() {
       apiKey={apiKey}
       appId={appId}
       workspace={workspace}
-      user={{ id: nanoid(), name: 'John Doe' }}
+      // todo generate a per user token on the client
+      user={{ id: 'johndoe', name: 'John Doe' }}
       mentionableUsers={[]}
     >
       <SetBreakpointContext>

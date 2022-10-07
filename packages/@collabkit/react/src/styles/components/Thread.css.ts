@@ -1,6 +1,7 @@
 import { createVar, style } from '@vanilla-extract/css';
 import { calc } from '@vanilla-extract/css-utils';
 import { vars } from '../theme';
+
 export const root = style({
   display: 'flex',
   height: '100%',
@@ -14,10 +15,11 @@ export const root = style({
   border: vars.thread.border,
   borderRadius: vars.thread.borderRadius,
   boxShadow: vars.thread.boxShadow,
+  paddingTop: '16px',
 });
 
 export const header = style({
-  padding: '20px 16px',
+  padding: '0px 16px 20px',
   display: 'flex',
   color: vars.thread.header.color,
   fontSize: vars.thread.header.fontSize,

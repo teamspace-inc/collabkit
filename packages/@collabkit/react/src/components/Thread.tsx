@@ -84,8 +84,17 @@ export function Thread(props: ThreadProps & { className?: string; children?: Rea
                             <Comment.Content profileIndent={!showProfile}>
                               {showProfile && (
                                 <Comment.Header>
-                                  <Comment.CreatorName />
-                                  <Comment.Timestamp />
+                                  <div
+                                    style={{
+                                      gap: '8px',
+                                      display: 'flex',
+                                      flexDirection: 'row',
+                                      alignItems: 'baseline',
+                                    }}
+                                  >
+                                    <Comment.CreatorName />
+                                    <Comment.Timestamp />
+                                  </div>
                                 </Comment.Header>
                               )}
                               <Comment.Body />
