@@ -49,7 +49,6 @@ function DocFooterLink(props: {
           style={{
             color: vars.color.yellow,
             fontWeight: '700',
-            // textDecorationLine: 'underline',
           }}
         >
           {props.path?.[props.path?.length - 1]}
@@ -76,19 +75,6 @@ export const DocLink = (props: React.ComponentPropsWithoutRef<'div'> & { href?: 
   <Link {...props} className={docLink} />
 );
 
-// export const DocLink = styled(Link, {
-//   borderRadius: '6px',
-//   textDecoration: 'none',
-//   fontFamily: 'Inter',
-//   fontStyle: 'normal',
-//   fontWeight: 600,
-//   fontSize: 16,
-//   lineHeight: '34px',
-//   textDecorationLine: 'underline',
-//   color: '#FFEC6B',
-//   cursor: 'pointer !important',
-// });
-
 export const DocDemoContainer = (props: React.ComponentPropsWithoutRef<'div'>) => (
   <div {...props} className={docDemoContainer} />
 );
@@ -109,22 +95,24 @@ export function Doc(props: {
     window.scrollTo(0, 0);
   }, []);
   return (
-    <div className={`${docs} ${dark} ${docRoot}`}>
-      <Nav className={docNav} />
-      <div style={{ height: '100vh', borderLeft: showBorder ? '1px solid #3D3D3D' : 'none' }}>
-        <ScrollAreaRoot style={{ width: '100%' }}>
-          <ScrollAreaViewport>
-            <div className={docScrollableContent}>
-              <h1 className={docTitle}>{props.title}</h1>
-              <div className={docContent}>{props.children}</div>
-              <DocFooter next={props.next} prev={props.prev} />
-            </div>
-          </ScrollAreaViewport>
-          <ScrollAreaScrollbar orientation="vertical">
-            <ScrollAreaThumb />
-          </ScrollAreaScrollbar>
-          <ScrollAreaCorner />
-        </ScrollAreaRoot>
+    <div className={`${docs} ${dark}`}>
+      <div className={docRoot}>
+        <Nav className={docNav} />
+        <div style={{ height: '100vh', borderLeft: showBorder ? '1px solid #3D3D3D' : 'none' }}>
+          <ScrollAreaRoot style={{ width: '100%' }}>
+            <ScrollAreaViewport>
+              <div className={docScrollableContent}>
+                <h1 className={docTitle}>{props.title}</h1>
+                <div className={docContent}>{props.children}</div>
+                <DocFooter next={props.next} prev={props.prev} />
+              </div>
+            </ScrollAreaViewport>
+            <ScrollAreaScrollbar orientation="vertical">
+              <ScrollAreaThumb />
+            </ScrollAreaScrollbar>
+            <ScrollAreaCorner />
+          </ScrollAreaRoot>
+        </div>
       </div>
     </div>
   );

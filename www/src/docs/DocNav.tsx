@@ -81,7 +81,6 @@ export function Nav(props: { className?: string }) {
         <div className={navHeader}>
           <Link to="/docs">
             <div className={navLogoOuter}>
-              {['large', 'xlarge'].includes(breakpoint) ? <div style={{ flex: 1 }} /> : null}
               <div className={navLogoInner}>
                 <img src={Logo} />
               </div>
