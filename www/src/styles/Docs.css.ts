@@ -153,6 +153,11 @@ export const docScrollableContent = style({
   wordWrap: 'break-word',
   flex: 1,
   lineHeight: '28px',
+  '@media': {
+    'screen and (max-width: 768px)': {
+      width: '100%',
+    },
+  },
 });
 
 export const docNav = style({
@@ -225,7 +230,7 @@ export const docRoot = style({
   gridTemplateColumns: 'minmax(400px, 1fr) minmax(780px, 3fr)',
   '@media': {
     'screen and (max-width: 768px)': {
-      gridTemplateRows: '1fr',
+      display: 'unset',
     },
   },
 });
@@ -275,7 +280,7 @@ export const navLi = style({
   flex: 1,
   '@media': {
     'screen and (max-width: 768px)': {
-      alignItems: 'flex-end',
+      alignItems: 'stretch',
     },
   },
 });
