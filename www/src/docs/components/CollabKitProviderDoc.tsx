@@ -1,4 +1,3 @@
-import { vars } from 'www/src/styles/Theme.css';
 import { renderCodeSnippet } from '../CodeEditor';
 import { DocLink } from '../Doc';
 

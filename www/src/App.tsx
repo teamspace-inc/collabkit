@@ -10,6 +10,7 @@ import { CollabKitProvider } from '@collabkit/react';
 // import { nanoid } from 'nanoid';
 import { SetBreakpointContext } from './hooks/useWindowSize';
 import { UIPage } from './pages/UIPage';
+import { ThemeEditorPage } from './pages/ThemeEditorPage';
 
 const Page = styled('div', {});
 
@@ -50,6 +51,7 @@ export default function App() {
           <Route path="/devs" component={Devs} />
           <Route path="/signedIn" component={Devs} />
           <Route path="/datagrid" component={DataGridPage} />
+          <Route path="/themeEditor" component={ThemeEditorPage} />
           <Docs />
         </Page>
       </SetBreakpointContext>

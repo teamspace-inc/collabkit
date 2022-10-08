@@ -129,7 +129,7 @@ export const docDemoOverlay = style({
 
 export const docDemoContainer = style({
   flex: 1,
-  backgroundColor: '#7166D3',
+  backgroundColor: vars.color.violet,
   display: 'flex',
   borderRadius: '6px',
   padding: '100px 20px',

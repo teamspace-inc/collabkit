@@ -68,7 +68,7 @@ export const DOCS: RootDocNode = {
   'Secure Mode': { component: SecureModeDoc },
   Workspaces: { component: WorkspacesDoc },
   Customisation: { component: CustomisationDoc },
-  Notifications: { component: NotificationsDoc },
+  // Notifications: { component: NotificationsDoc },
   // 'Advanced Customisation': { component: AdvancedCustomisationDoc },
 };
 
