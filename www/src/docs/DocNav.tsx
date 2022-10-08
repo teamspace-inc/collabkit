@@ -5,110 +5,30 @@ import {
   ScrollAreaScrollbar,
   ScrollAreaThumb,
   ScrollAreaViewport,
-  styled,
 } from '../UIKit';
 import Logo from './Logo.svg';
 import { DOCS, getDocHref, RootDocNode } from './Docs';
 import { Breakpoint, useBreakpoint } from '../hooks/useWindowSize';
 import { useEffect, useState } from 'react';
 import { List } from 'phosphor-react';
-
-const StyledNavListOl = styled('ol', {
-  listStyle: 'none',
-  boxSizing: 'borderBox',
-  padding: '0px 24px 0px 12px',
-  gap: '4px',
-  display: 'flex',
-  flexDirection: 'column',
-
-  variants: {
-    breakpoint: {
-      small: {},
-      medium: {},
-      large: { paddingRight: '56px' },
-      xlarge: { paddingRight: '56px' },
-    },
-  },
-
-  ol: {
-    marginTop: 0,
-    marginBottom: 8,
-    paddingLeft: 0,
-    textIndent: '24px',
-    paddingRight: 0,
-  },
-});
-
-const StyledNavListLi = styled('li', {
-  display: 'flex',
-  flexDirection: 'column',
-
-  variants: {
-    breakpoint: {
-      small: { alignItems: 'flex-start' },
-      medium: { alignItems: 'flex-start' },
-      large: { alignItems: 'flex-end' },
-      xlarge: { alignItems: 'flex-end' },
-    },
-  },
-});
-
-const StyledNavListItem = styled('div', {
-  fontSize: '16px',
-  lineHeight: '32px',
-  boxSizing: 'border-box',
-  padding: '4px 12px',
-  userSelect: 'none',
-  flex: 1,
-
-  color: '#BBBBBB',
-  textDecoration: 'none',
-  borderRadius: '4px',
-
-  variants: {
-    breakpoint: {
-      small: {},
-      medium: {},
-      large: { width: 280 },
-      xlarge: { width: 280 },
-    },
-    active: {
-      true: {
-        background: 'rgba(255, 255, 255, 0.08)',
-        color: 'white',
-        fontWeight: 600,
-      },
-      false: {
-        '&:hover': {
-          background: 'rgba(255, 255, 255, 0.04)',
-          cursor: 'pointer',
-          color: 'white',
-        },
-      },
-    },
-  },
-});
-
-const StyledNavListTitle = styled('div', {
-  fontFamily: 'Inter',
-  fontStyle: 'normal',
-  fontWeight: 600,
-  color: '#fff',
-  fontSize: 14,
-  marginTop: '8px',
-  paddingLeft: '12px',
-  lineHeight: '32px',
-});
+import {
+  navBurgerToggle,
+  navHeader,
+  navLi,
+  navListItem,
+  navListTitle,
+  navLogoInner,
+  navLogoOuter,
+  navOl,
+  navWrap,
+} from '../styles/Docs.css';
 
 function NavListItem(props: { path: string[]; id: string; onClick: () => void }) {
   const [location] = useLocation();
-  const breakpoint = useBreakpoint();
   const href = getDocHref(props.path, props.id);
   return (
     <Link href={href} onClick={props.onClick}>
-      <StyledNavListItem breakpoint={breakpoint} active={href === location}>
-        {props.id}
-      </StyledNavListItem>
+      <div className={navListItem({ active: href === location })}>{props.id}</div>
     </Link>
   );
 }
@@ -124,103 +44,25 @@ function NavList(props: {
   }
 
   return (
-    <StyledNavListOl breakpoint={props.breakpoint}>
-      {Object.entries(props.node).map(([key, value], index) => {
-        return (
-          <StyledNavListLi key={`${key}-${index}`}>
-            {'component' in value ? (
-              <NavListItem onClick={props.onClick} path={props.path} id={key} />
-            ) : null}
-            {'title' in value ? <StyledNavListTitle>{value.title}</StyledNavListTitle> : null}
-            {'children' in value ? (
-              <NavList onClick={props.onClick} node={value.children} path={[...props.path, key]} />
-            ) : null}
-          </StyledNavListLi>
-        );
-      })}
-    </StyledNavListOl>
+    <ol className={navOl}>
+      {Object.entries(props.node).map(([key, value], index) => (
+        <li className={navLi} key={`${key}-${index}`}>
+          {'component' in value ? (
+            <NavListItem onClick={props.onClick} path={props.path} id={key} />
+          ) : null}
+          {'title' in value ? <div className={navListTitle}>{value.title}</div> : null}
+          {'children' in value ? (
+            <NavList onClick={props.onClick} node={value.children} path={[...props.path, key]} />
+          ) : null}
+        </li>
+      ))}
+    </ol>
   );
 }
-
-const NavWrap = styled('div', {
-  display: 'flex',
-  flexDirection: 'column',
-  paddingBottom: '100px',
-
-  variants: {
-    breakpoint: {
-      small: {},
-      medium: {},
-      large: { alignItems: 'flex-end' },
-      xlarge: { alignItems: 'flex-end' },
-    },
-  },
-});
-
-const LogoRoot = styled('div', {
-  flex: 1,
-  cursor: 'pointer',
-  display: 'flex',
-
-  variants: {
-    breakpoint: {
-      small: {},
-      medium: {},
-      large: {},
-      xlarge: {},
-    },
-  },
-});
-
-const BurgerMenu = styled('button', {
-  border: 'none',
-  background: 'rgba(255, 255, 255, 0.02)',
-  borderRadius: '4px',
-  width: '40px',
-  height: '40px',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-
-  '&:hover': {
-    background: 'rgba(255, 255, 255, 0.04)',
-    cursor: 'pointer',
-  },
-
-  variants: {
-    active: {
-      true: {
-        background: 'rgba(255, 255, 255, 0.08)',
-        '&:hover': {
-          background: 'rgba(255, 255, 255, 0.08)',
-        },
-      },
-    },
-  },
-});
 
 function shouldShowNav(breakpoint: Breakpoint) {
   return ['large', 'xlarge'].includes(breakpoint);
 }
-
-const NavLogoWrap = styled('div', {
-  variants: {
-    breakpoint: {
-      small: {},
-      medium: {},
-      large: { width: 290 },
-      xlarge: { width: 290 },
-    },
-  },
-});
-
-const NavHeader = styled('div', {
-  display: 'flex',
-  flexDirection: 'row',
-  height: '80px',
-  alignItems: 'center',
-  padding: '0px 24px',
-});
 
 export function Nav(props: { className?: string }) {
   const breakpoint = useBreakpoint();
@@ -236,34 +78,37 @@ export function Nav(props: { className?: string }) {
   return (
     <>
       <div>
-        <NavHeader>
+        <div className={navHeader}>
           <Link to="/docs">
-            <LogoRoot breakpoint={breakpoint}>
+            <div className={navLogoOuter}>
               {['large', 'xlarge'].includes(breakpoint) ? <div style={{ flex: 1 }} /> : null}
-              <NavLogoWrap breakpoint={breakpoint}>
+              <div className={navLogoInner}>
                 <img src={Logo} />
-              </NavLogoWrap>
-            </LogoRoot>
+              </div>
+            </div>
           </Link>
 
           {hasMenu ? (
-            <BurgerMenu active={isOpen} onClick={() => hasMenu && setIsOpen(!isOpen)}>
+            <div
+              className={navBurgerToggle({ active: isOpen })}
+              onClick={() => hasMenu && setIsOpen(!isOpen)}
+            >
               <List size={24} color="rgba(255,255,255,0.75)" />
-            </BurgerMenu>
+            </div>
           ) : null}
-        </NavHeader>
+        </div>
         {isOpen ? (
           <div className={props.className}>
             <ScrollAreaRoot style={{ width: '100%' }}>
               <ScrollAreaViewport>
-                <NavWrap breakpoint={breakpoint}>
+                <div className={navWrap}>
                   <NavList
                     onClick={() => hasMenu && setIsOpen(false)}
                     node={DOCS}
                     path={[]}
                     breakpoint={breakpoint}
                   />
-                </NavWrap>
+                </div>
               </ScrollAreaViewport>
               <ScrollAreaScrollbar orientation="vertical">
                 <ScrollAreaThumb />

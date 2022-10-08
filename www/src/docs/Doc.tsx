@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Link } from 'wouter';
 import { useBreakpoint } from '../hooks/useWindowSize';
 import {
@@ -5,7 +6,9 @@ import {
   docDemoContainer,
   docFooter,
   docFooterLink,
+  docLink,
   docNav,
+  docRoot,
   docs,
   docScrollableContent,
   docTitle,
@@ -69,45 +72,22 @@ export function DocFooter(props: { next?: string[]; prev?: string[] }) {
   );
 }
 
-const StyledDocRoot = styled('div', {
-  color: '#BBBBBB',
-  background: '#222',
-  position: 'fixed',
-  inset: 0,
-  alignItems: 'flex-start',
-  display: 'grid',
+export const DocLink = (props: React.ComponentPropsWithoutRef<'div'> & { href?: string }) => (
+  <Link {...props} className={docLink} />
+);
 
-  h1: {
-    color: 'white',
-  },
-  h3: {
-    color: 'white',
-  },
-
-  variants: {
-    breakpoint: {
-      small: {
-        gridTemplateRows: '1fr',
-      },
-      medium: { gridTemplateRows: '1fr' },
-      large: { gridTemplateColumns: 'minmax(400px, 1fr) minmax(780px, 3fr)' },
-      xlarge: { gridTemplateColumns: 'minmax(400px, 1fr) minmax(780px, 3fr)' },
-    },
-  },
-});
-
-export const DocLink = styled(Link, {
-  borderRadius: '6px',
-  textDecoration: 'none',
-  fontFamily: 'Inter',
-  fontStyle: 'normal',
-  fontWeight: 600,
-  fontSize: 16,
-  lineHeight: '34px',
-  textDecorationLine: 'underline',
-  color: '#FFEC6B',
-  cursor: 'pointer !important',
-});
+// export const DocLink = styled(Link, {
+//   borderRadius: '6px',
+//   textDecoration: 'none',
+//   fontFamily: 'Inter',
+//   fontStyle: 'normal',
+//   fontWeight: 600,
+//   fontSize: 16,
+//   lineHeight: '34px',
+//   textDecorationLine: 'underline',
+//   color: '#FFEC6B',
+//   cursor: 'pointer !important',
+// });
 
 export const DocDemoContainer = (props: React.ComponentPropsWithoutRef<'div'>) => (
   <div {...props} className={docDemoContainer} />
@@ -117,13 +97,6 @@ export const DocTitle = (props: React.ComponentPropsWithoutRef<'h1'>) => (
   <h1 {...props} className={docTitle} />
 );
 
-const DocContent = styled('div', {
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '40px',
-  flex: 1,
-});
-
 export function Doc(props: {
   title: string;
   children: React.ReactNode;
@@ -132,8 +105,11 @@ export function Doc(props: {
 }) {
   const breakpoint = useBreakpoint();
   const showBorder = ['large', 'xlarge'].includes(breakpoint);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
-    <StyledDocRoot breakpoint={breakpoint} className={`${docs} ${dark}`}>
+    <div className={`${docs} ${dark} ${docRoot}`}>
       <Nav className={docNav} />
       <div style={{ height: '100vh', borderLeft: showBorder ? '1px solid #3D3D3D' : 'none' }}>
         <ScrollAreaRoot style={{ width: '100%' }}>
@@ -150,6 +126,6 @@ export function Doc(props: {
           <ScrollAreaCorner />
         </ScrollAreaRoot>
       </div>
-    </StyledDocRoot>
+    </div>
   );
 }

@@ -5,7 +5,7 @@ export function SecureModeDoc() {
   return (
     <>
       <div>
-        <h2>Secure your app</h2>
+        <h2>Don't leak your apiKey</h2>
         <p>
           In this tutorial we'll show you how to generate a per-user token for your app. Set aside
           15-20 minutes to get it done.

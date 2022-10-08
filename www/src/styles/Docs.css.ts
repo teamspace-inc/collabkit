@@ -1,4 +1,5 @@
 import { globalStyle, style } from '@vanilla-extract/css';
+import { recipe } from '@vanilla-extract/recipes';
 import { vars } from './Theme.css';
 
 globalStyle('code', {});
@@ -61,6 +62,7 @@ globalStyle(`${docs} code`, {
 
 globalStyle(`${docs} h1`, {
   marginTop: 0,
+  color: vars.color.textContrastHigh,
 });
 
 globalStyle(`${docs} p`, {
@@ -213,6 +215,21 @@ export const docContent = style({
   flex: 1,
 });
 
+export const docRoot = style({
+  color: '#BBBBBB',
+  background: '#222',
+  position: 'fixed',
+  inset: 0,
+  alignItems: 'flex-start',
+  display: 'grid',
+  gridTemplateColumns: 'minmax(400px, 1fr) minmax(780px, 3fr)',
+  '@media': {
+    'screen and (max-width: 768px)': {
+      gridTemplateRows: '1fr',
+    },
+  },
+});
+
 export const docTitle = style({
   display: 'block',
   margin: '0px !important',
@@ -226,4 +243,133 @@ export const docTitle = style({
       padding: '32px 0px 32px',
     },
   },
+});
+
+globalStyle(`${docs} ol ol`, {
+  marginTop: 0,
+  marginBottom: 8,
+  paddingLeft: 0,
+  textIndent: '20px',
+  paddingRight: 0,
+  display: 'flex',
+  flex: 1,
+});
+
+export const navOl = style({
+  listStyle: 'none',
+  boxSizing: 'border-box',
+  padding: '0px 56px 0px 12px',
+  gap: '4px',
+  display: 'flex',
+  flexDirection: 'column',
+  '@media': {
+    'screen and (max-width: 768px)': {
+      paddingRight: '24px',
+    },
+  },
+});
+
+export const navLi = style({
+  display: 'flex',
+  flexDirection: 'column',
+  flex: 1,
+  '@media': {
+    'screen and (max-width: 768px)': {
+      alignItems: 'flex-end',
+    },
+  },
+});
+
+export const navListItem = recipe({
+  base: {
+    fontSize: '16px',
+    lineHeight: '32px',
+    boxSizing: 'border-box',
+    padding: '4px 12px',
+    userSelect: 'none',
+    display: 'flex',
+    flex: 1,
+    color: vars.color.textContrastHigh,
+    textDecoration: 'none',
+    borderRadius: '4px',
+  },
+  variants: {
+    active: {
+      true: {
+        background: 'rgba(255, 255, 255, 0.08)',
+        color: 'white',
+        fontWeight: 600,
+      },
+      false: {
+        ':hover': {
+          background: 'rgba(255, 255, 255, 0.04)',
+          cursor: 'pointer',
+          color: 'white',
+        },
+      },
+    },
+  },
+});
+
+export const navLogoOuter = style({
+  flex: 1,
+  cursor: 'pointer',
+  display: 'flex',
+});
+
+export const navLogoInner = style({
+  width: 290,
+});
+
+export const navBurgerToggle = recipe({
+  base: {
+    border: 'none',
+    background: 'rgba(255, 255, 255, 0.02)',
+    borderRadius: '4px',
+    width: '40px',
+    height: '40px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+
+    ':hover': {
+      background: 'rgba(255, 255, 255, 0.04)',
+      cursor: 'pointer',
+    },
+  },
+  variants: {
+    active: {
+      true: {
+        background: 'rgba(255, 255, 255, 0.08)',
+        ':hover': {
+          background: 'rgba(255, 255, 255, 0.08)',
+        },
+      },
+    },
+  },
+});
+
+export const navWrap = style({
+  display: 'flex',
+  flexDirection: 'column',
+  paddingBottom: '100px',
+});
+
+export const navHeader = style({
+  display: 'flex',
+  flexDirection: 'row',
+  height: '80px',
+  alignItems: 'center',
+  padding: '0px 24px',
+});
+
+export const navListTitle = style({
+  fontFamily: 'Inter',
+  fontStyle: 'normal',
+  fontWeight: 600,
+  color: '#fff',
+  fontSize: 14,
+  marginTop: '8px',
+  paddingLeft: '12px',
+  lineHeight: '32px',
 });
