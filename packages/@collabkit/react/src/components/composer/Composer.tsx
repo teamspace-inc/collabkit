@@ -107,7 +107,9 @@ export const Editor = function ComposerEditor(props: {
   };
 
   return (
-    <div className={props.className ?? styles.editor({ active })}>
+    <div
+      className={props.className ?? `${styles.editor({ active })} ${styles.composerGlobalStyles}`}
+    >
       <LexicalComposer initialConfig={initialConfig}>
         <PasteTextPlugin />
         <PlainTextPlugin

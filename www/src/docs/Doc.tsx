@@ -1,6 +1,17 @@
 import { Link } from 'wouter';
 import { useBreakpoint } from '../hooks/useWindowSize';
 import {
+  docContent,
+  docDemoContainer,
+  docFooter,
+  docFooterLink,
+  docNav,
+  docs,
+  docScrollableContent,
+  docTitle,
+} from '../styles/Docs.css';
+import { dark, vars } from '../styles/Theme.css';
+import {
   ScrollAreaCorner,
   ScrollAreaRoot,
   ScrollAreaScrollbar,
@@ -9,48 +20,6 @@ import {
   styled,
 } from '../UIKit';
 import { Nav } from './DocNav';
-
-const StyledDocNav = styled(Nav, {
-  position: 'sticky',
-  top: 0,
-  background: '#222',
-  color: 'white',
-  display: 'flex',
-  height: '100vh',
-
-  variants: {
-    breakpoint: {
-      small: { background: '#222', alignItems: 'flex-start' },
-      medium: { background: '#222', alignItems: 'flex-start' },
-      large: { height: '100vh', alignItems: 'flex-end' },
-      xlarge: { height: '100vh', alignItems: 'flex-end' },
-    },
-  },
-});
-
-const StyledDocContentFormatting = styled('div', {
-  wordWrap: 'break-word',
-  flex: 1,
-  boxSizing: 'border-box',
-  lineHeight: '28px',
-
-  blockquote: {
-    borderLeft: '2px solid black',
-    textIndent: 0,
-    paddingLeft: 20,
-    marginLeft: 0,
-  },
-
-  code: {
-    fontFamily: 'Monaco',
-    fontSize: 14,
-    color: '#FFEC6B',
-  },
-
-  h1: {
-    marginTop: 0,
-  },
-});
 
 function pathToHref(path?: string[]) {
   return `/docs/${path
@@ -66,12 +35,8 @@ function DocFooterLink(props: {
 }) {
   return props.path ? (
     <div
+      className={docFooterLink}
       style={{
-        display: 'flex',
-        flexDirection: 'column',
-        cursor: 'pointer',
-        alignItems: 'flex-start',
-        flex: 1,
         ...props.style,
       }}
     >
@@ -79,9 +44,9 @@ function DocFooterLink(props: {
       <DocLink href={pathToHref(props.path)}>
         <span
           style={{
-            color: '#FFEC6B',
+            color: vars.color.yellow,
             fontWeight: '700',
-            textDecorationLine: 'underline',
+            // textDecorationLine: 'underline',
           }}
         >
           {props.path?.[props.path?.length - 1]}
@@ -93,23 +58,7 @@ function DocFooterLink(props: {
 
 export function DocFooter(props: { next?: string[]; prev?: string[] }) {
   return (
-    <div
-      style={{
-        marginTop: 60,
-        borderTop: '1px solid #3D3D3D',
-        paddingTop: 20,
-        paddingBottom: 200,
-        color: '#BBBBBB',
-        fontFamily: 'Inter',
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'flex-end',
-        fontStyle: 'normal',
-        fontWeight: 400,
-        fontSize: 16,
-        lineHeight: '28px',
-      }}
-    >
+    <div className={docFooter}>
       <DocFooterLink path={props.prev} style={{ alignItems: 'flex-start' }}>
         Prev
       </DocFooterLink>
@@ -160,45 +109,13 @@ export const DocLink = styled(Link, {
   cursor: 'pointer !important',
 });
 
-export const DocDemoContainer = styled('div', {
-  flex: 1,
-  backgroundColor: '#7166D3',
-  display: 'flex',
-  borderRadius: '8px',
-  padding: '100px 20px',
-  margin: '0',
-  justifyContent: 'center',
-  alignItems: 'center',
-});
+export const DocDemoContainer = (props: React.ComponentPropsWithoutRef<'div'>) => (
+  <div {...props} className={docDemoContainer} />
+);
 
-const DocTitle = styled('h1', {
-  display: 'block',
-  margin: '0px !important',
-  padding: '56px 0px 32px',
-  boxSizing: 'border-box',
-  lineHeight: '34px',
-  wordBreak: 'break-word',
-
-  variants: {
-    breakpoint: {
-      small: { padding: '32px 0px 32px' },
-      medium: { padding: '32px 0px 32px' },
-      large: {},
-      xlarge: {},
-    },
-  },
-});
-
-const DocScrollableContent = styled('div', {
-  padding: 20,
-  maxWidth: 760,
-  display: 'table',
-  margin: '0 auto',
-  height: '100vh',
-  position: 'sticky',
-  top: 0,
-  boxSizing: 'border-box',
-});
+export const DocTitle = (props: React.ComponentPropsWithoutRef<'h1'>) => (
+  <h1 {...props} className={docTitle} />
+);
 
 const DocContent = styled('div', {
   display: 'flex',
@@ -216,18 +133,16 @@ export function Doc(props: {
   const breakpoint = useBreakpoint();
   const showBorder = ['large', 'xlarge'].includes(breakpoint);
   return (
-    <StyledDocRoot breakpoint={breakpoint}>
-      <StyledDocNav breakpoint={breakpoint} />
+    <StyledDocRoot breakpoint={breakpoint} className={`${docs} ${dark}`}>
+      <Nav className={docNav} />
       <div style={{ height: '100vh', borderLeft: showBorder ? '1px solid #3D3D3D' : 'none' }}>
         <ScrollAreaRoot style={{ width: '100%' }}>
           <ScrollAreaViewport>
-            <DocScrollableContent>
-              <StyledDocContentFormatting>
-                <DocTitle>{props.title}</DocTitle>
-                <DocContent>{props.children}</DocContent>
-                <DocFooter next={props.next} prev={props.prev} />
-              </StyledDocContentFormatting>
-            </DocScrollableContent>
+            <div className={docScrollableContent}>
+              <h1 className={docTitle}>{props.title}</h1>
+              <div className={docContent}>{props.children}</div>
+              <DocFooter next={props.next} prev={props.prev} />
+            </div>
           </ScrollAreaViewport>
           <ScrollAreaScrollbar orientation="vertical">
             <ScrollAreaThumb />

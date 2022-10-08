@@ -7,14 +7,16 @@ import { GettingStartedDoc } from './GettingStartedDoc';
 // import { AvatarDoc } from './components/AvatarDoc';
 // import { FacepileDoc } from './components/FacepileDoc';
 import { InboxDoc } from './components/InboxDoc';
+import { InboxButtonDoc } from './components/InboxButtonDoc';
 import { PopoverThreadDoc } from './components/PopoverThreadDoc';
-import { ProviderDoc } from './components/ProviderDoc';
+import { CollabKitProviderDoc } from './components/CollabKitProviderDoc';
 import { ThreadDoc } from './components/ThreadDoc';
 import { UseUnreadCommentsCountDoc } from './hooks/useUnreadCommentsCountDoc';
 import { UseUnreadThreadsCountDoc } from './hooks/useUnreadThreadsCountDoc';
+import { UsePopoverThreadDoc } from './hooks/usePopoverThreadDoc';
 import { CustomisationDoc } from './CustomisationDoc';
 import { NotificationsDoc } from './NotificationsDoc';
-import { AdvancedCustomisationDoc } from './AdvancedCustomisationDoc';
+// import { AdvancedCustomisationDoc } from './AdvancedCustomisationDoc';
 
 import has from 'has';
 
@@ -22,6 +24,7 @@ import { Redirect, Route, Switch } from 'wouter';
 import { CodeEditor } from './CodeEditor';
 import { Doc } from './Doc';
 import { WorkspacesDoc } from './WorkspacesDoc';
+import { SecureModeDoc } from './SecureModeDoc';
 
 export function getDocHref(path: string[], key: string) {
   return getPathHref(path.concat([key]));
@@ -45,10 +48,11 @@ export const DOCS: RootDocNode = {
   Components: {
     title: 'Components',
     children: {
-      CollabKitProvider: { component: ProviderDoc },
+      CollabKitProvider: { component: CollabKitProviderDoc },
       Thread: { component: ThreadDoc },
       PopoverThread: { component: PopoverThreadDoc },
       Inbox: { component: InboxDoc },
+      InboxButton: { component: InboxButtonDoc },
       // Avatar: { component: AvatarDoc },
       // Facepile: { component: FacepileDoc },
     },
@@ -58,12 +62,14 @@ export const DOCS: RootDocNode = {
     children: {
       useUnreadCommentsCount: { component: UseUnreadCommentsCountDoc },
       useUnreadThreadsCount: { component: UseUnreadThreadsCountDoc },
+      usePopoverThread: { component: UsePopoverThreadDoc },
     },
   },
+  'Secure Mode': { component: SecureModeDoc },
   Workspaces: { component: WorkspacesDoc },
   Customisation: { component: CustomisationDoc },
   Notifications: { component: NotificationsDoc },
-  'Advanced Customisation': { component: AdvancedCustomisationDoc },
+  // 'Advanced Customisation': { component: AdvancedCustomisationDoc },
 };
 
 function generateDocRoutes(docs: RootDocNode, path: string[] = []): JSX.Element[] {

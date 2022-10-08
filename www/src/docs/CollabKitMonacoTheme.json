@@ -3,7 +3,7 @@
   "inherit": true,
   "rules": [
     {
-      "background": "2B2B2B",
+      "background": "2C2C2C",
       "token": ""
     },
     {
@@ -239,9 +239,9 @@
   ],
   "colors": {
     "editor.foreground": "#ffffff",
-    "editor.background": "#2B2B2B",
+    "editor.background": "#2C2C2C",
     "editor.selectionBackground": "#3D3D3D",
-    "editor.inactiveSelectionBackground": "#2B2B2B",
+    "editor.inactiveSelectionBackground": "#2C2C2C",
     "editor.lineHighlightBackground": "#444444",
     "editorCursor.foreground": "#FFEC6B",
     "editorWhitespace.foreground": "#222222"

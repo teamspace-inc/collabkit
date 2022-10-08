@@ -12,9 +12,9 @@ export const PopoverThreadBase = {
       boxShadow: vars.shadow.standard,
     },
     composer: {
-      borderTop: `1px solid ${vars.color.border}`,
+      borderTop: `0px solid ${vars.color.border}`,
       alignItems: 'flex-end',
-      padding: `${vars.space[4]} ${vars.space[4]} ${vars.space[4]} ${vars.space[4]}`,
+      padding: `0px ${vars.space[4]} ${vars.space[4]} ${vars.space[4]}`,
       gap: vars.space[2],
       contentEditable: {
         border: `1px solid ${vars.color.border}`,

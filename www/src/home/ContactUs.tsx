@@ -3,7 +3,7 @@ import { DiscordLogo } from 'phosphor-react';
 import { useIsSmallScreen } from './useIsSmallScreen';
 
 import * as styles from '../styles/ContactUs.css';
-import { dark, vars } from '../styles/Website.css';
+import { dark, vars } from '../styles/Theme.css';
 
 export function ContactUs() {
   const isSmallScreen = useIsSmallScreen();

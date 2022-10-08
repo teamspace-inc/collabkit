@@ -1,5 +1,6 @@
 import { recipe } from '@vanilla-extract/recipes';
 import { vars } from '../theme';
+
 export const button = recipe({
   base: {
     display: 'flex',

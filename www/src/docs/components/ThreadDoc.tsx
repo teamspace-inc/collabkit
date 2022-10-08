@@ -7,14 +7,29 @@ import { ThreadDemo } from './ThreadDemo';
 export function ThreadDoc() {
   return (
     <>
-      <H2>A comment thread that lets users talk to each other.</H2>
+      <H2>A comment thread that can be rendered anywhere in your app.</H2>
       <ThreadDemo />
       <div>
         <H3>Usage</H3>
+        <p>
+          Render a comment thread in your app with <code>{'<Thread />'}</code>. Pass a unique{' '}
+          <code>threadId</code> to identify the thread.
+        </p>
         {renderCodeSnippet(`import { Thread } from '@collabkit/react';
 
-<Thread threadId={'my-thread-id'} />`)}
+export function App() {
+  return <Thread threadId={'my-thread-id'} />;
+}`)}
+        <h4>Sizing</h4>
+        <p>
+          Threads fill the container they are given. Wrap your <code>{'<Thread />'}</code> in a{' '}
+          <code>{'<div />'}</code> to control its size.
+        </p>
+        {renderCodeSnippet(`<div style={{ width: '280px', height: '320px' }}>
+  <Thread threadId={'my-thread-id'} />
+</div>`)}
       </div>
+
       <div>
         <H3>Props</H3>
         <Markdown body={ThreadMarkdown} />

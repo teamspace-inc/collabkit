@@ -5,7 +5,7 @@ import { Markdown } from '../Markdown';
 export function UseUnreadCommentsCountDoc() {
   return (
     <>
-      <H2>Gets the number of unread comments in a thread for the authenticated user.</H2>
+      <H2>Returns the number of unread comments for a thread.</H2>
       <div>
         <H3>Usage</H3>
         <p>
@@ -19,9 +19,9 @@ const count = useUnreadCommentsCount({ threadId: 'unique-thread-id' });
       </div>
 
       <Markdown
-        body={`## Props
+        body={`### Props
 
-### threadId: string
+#### threadId: string
 
 The thread ID to retrieve unread count for.`}
       />

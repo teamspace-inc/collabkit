@@ -1,4 +1,4 @@
-import { style } from '@vanilla-extract/css';
+import { globalStyle, style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
 import { vars } from '../theme';
 const ltr = style({
@@ -36,6 +36,18 @@ export const lexicalTheme = {
   placeholder,
   paragraph,
 };
+
+export const composerGlobalStyles = style({});
+
+globalStyle(`${composerGlobalStyles} p`, {
+  margin: '0 !important',
+  padding: '0 !important',
+  fontSize: `${vars.comment.body.fontSize} !important`,
+  fontWeight: `${vars.comment.body.fontWeight} !important`,
+  color: `${vars.comment.body.color} !important`,
+  lineHeight: `${vars.comment.body.lineHeight} !important`,
+  letterSpacing: `${vars.comment.body.letterSpacing} !important`,
+});
 
 export const contentEditable = recipe({
   base: {

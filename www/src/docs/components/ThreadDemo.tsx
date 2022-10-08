@@ -6,7 +6,7 @@ export function ThreadDemo() {
     <DocDemoContainer>
       <div
         style={{
-          height: '360px',
+          height: '320px',
           width: '280px',
         }}
       >

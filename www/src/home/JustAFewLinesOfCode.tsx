@@ -5,7 +5,7 @@ import ReactLogoSvg from '../assets/react.svg';
 import VueLogoSvg from '../assets/vue.svg';
 import AngularLogoSvg from '../assets/angular.svg';
 import { useIsSmallScreen } from './useIsSmallScreen';
-import { dark } from '../styles/Website.css';
+import { dark } from '../styles/Theme.css';
 
 export function JustAFewLinesOfCode(props: { setInvertFilter: (invert: number) => void }) {
   const examplesRef = useRef<HTMLDivElement>(null);

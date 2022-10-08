@@ -1,4 +1,5 @@
-import { a, bg, button, dark, light, tab, tabs, website } from '../styles/Website.css';
+import { dark, light } from '../styles/Theme.css';
+import { a, bg, button, tab, tabs, website } from '../styles/Website.css';
 
 function renderPage() {
   return (
@@ -44,31 +45,21 @@ function renderPage() {
   );
 }
 
+const style: React.CSSProperties = {
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '40px',
+  alignItems: 'flex-start',
+  padding: 100,
+};
+
 export function UIPage() {
   return (
     <div>
-      <div
-        className={`${website} ${dark} ${bg}`}
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '40px',
-          alignItems: 'flex-start',
-          padding: 100,
-        }}
-      >
+      <div className={`${website} ${bg} ${dark}`} style={style}>
         {renderPage()}
       </div>
-      <div
-        className={`${website}  ${light} ${bg}`}
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '40px',
-          alignItems: 'flex-start',
-          padding: 100,
-        }}
-      >
+      <div className={`${website} ${bg} ${light} `} style={style}>
         {renderPage()}
       </div>
     </div>

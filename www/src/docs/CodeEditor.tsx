@@ -7,10 +7,10 @@ import { nanoid } from 'nanoid';
 import reactTypes from './react.types.d.ts?raw';
 import collabKitTypes from './types.d.ts?raw';
 import { useBreakpoint } from '../hooks/useWindowSize';
+import { codeEditor } from '../styles/Docs.css';
 
 export function CodeSnippet(props: { code: string; language?: 'typescript' | 'shell' }) {
   const breakpoint = useBreakpoint();
-  console.log({ breakpoint });
 
   return (
     <CodeEditor
@@ -43,7 +43,7 @@ export function CodeEditor(props: {
 }) {
   const breakpoint = useBreakpoint();
 
-  const numLines = props.numLines ?? 24;
+  const numLines = props.numLines ?? 40;
   const fontSize = props.fontSize ?? 14;
   const lineHeight = props.lineHeight ?? 24;
   const language = props.language ?? 'typescript';
@@ -153,44 +153,11 @@ export function CodeEditor(props: {
 
   return (
     <div style={{ width: '100%' }}>
-      <style>
-        {`
-.mtk42 {
-  color: #FFEC6B;
-}
-
-.mtk6 {
-  color: #BBBBBB;
-  font-style: normal;
-  font-weight: normal !important;
-}
-
-.mtk1 {
-  color: #7166D3;
-}
-
-.mtk39 {
-  color: #9FEFD7;
-}
-
-.mtk16 {
-  color: white;
-}
-
-.monaco-editor .cldr.codicon.codicon-folding-expanded, .monaco-editor .cldr.codicon.codicon-folding-collapsed {
-  color: #999999 !important;
-}
-    `}
-      </style>
       <div
+        className={codeEditor}
         style={{
-          position: 'relative',
-          display: 'grid',
-          background: '#2B2B2B',
-          borderRadius: 8,
           height,
           padding: breakpoint === 'small' ? '20px 10px' : '40px',
-          gridTemplateColumns: '1fr',
           ...props.style,
         }}
       >

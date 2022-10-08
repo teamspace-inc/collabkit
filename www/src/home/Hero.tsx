@@ -2,7 +2,7 @@ import ChevronDown from '../assets/ChevronDown.svg';
 import HeroExampleSvg from '../assets/HeroExample.svg';
 import { useIsSmallScreen } from './useIsSmallScreen';
 import * as styles from '../styles/Hero.css';
-import { vars } from '../styles/Website.css';
+import { vars } from '../styles/Theme.css';
 
 function Chevron() {
   return (

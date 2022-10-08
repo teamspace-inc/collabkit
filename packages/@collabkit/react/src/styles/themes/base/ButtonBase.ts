@@ -63,7 +63,7 @@ export const ButtonBase = {
       },
     },
     disabled: {
-      color: vars.color.textSecondary,
+      color: vars.color.textDisabled,
       background: 'transparent',
     },
   },

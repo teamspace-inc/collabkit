@@ -1,18 +1,42 @@
-import { H2, H3 } from '../../UIKit';
 import { renderCodeSnippet } from '../CodeEditor';
 import { PopoverThreadDemo } from './PopoverThreadDemo';
 
 export function PopoverThreadDoc() {
   return (
     <>
-      <H2>
-        A comment thread displayed in a popover, can be anchored to any component in your view
-        hierarchy.
-      </H2>
+      <h2>A comment thread that anchors to a component in your app.</h2>
       <PopoverThreadDemo />
       <div>
-        <H3>Usage</H3>
-        {renderCodeSnippet(`import { } from '@collabkit/react'`)}
+        <h3>Usage</h3>
+        {renderCodeSnippet(`import { PopoverTrigger, usePopoverThread } from '@collabkit/react'
+
+function YourComponent(props: { onClick: () => void}) {
+  return <div 
+    onClick={props.onClick} 
+    style={
+      { 
+        padding: 20, 
+        background: 'white',
+        cursor: 'pointer'
+      }
+    }>
+    Component
+  </div>
+}
+
+export function App() {
+  const { setPopoverState, context } = usePopoverThread({
+    cellId: 'unique-thread-id-here'
+    name: 'Name of the thread';
+  });
+
+  return <div>
+    <PopoverTrigger context={context}>
+      <YourComponent onClick={() => setPopoverState('open')} />
+    </PopoverTrigger>
+  </div>
+}
+`)}
       </div>
     </>
   );

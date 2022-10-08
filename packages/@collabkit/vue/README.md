@@ -1,3 +1,3 @@
-# `@collabkit/vue`
+Cod# `@collabkit/vue`
 
 CollabKit for Vue applications.

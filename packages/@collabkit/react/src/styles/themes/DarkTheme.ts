@@ -21,6 +21,7 @@ export const DarkTheme = merge(BaseTheme, {
     surfaceOverlay: colors.opacity7,
     textPrimary: colors.white,
     textSecondary: colors.grey60,
+    textDisabled: colors.grey24,
     border: colors.opacity7,
   },
   composer: {},

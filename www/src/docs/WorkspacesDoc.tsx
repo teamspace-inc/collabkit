@@ -4,14 +4,11 @@ import { DocDemoContainer } from './Doc';
 export function WorkspacesDoc() {
   return (
     <>
-      <H2>
-        Workspaces map to your users team or company. They are privacy &amp; visibility containers.
-      </H2>
+      <H2>A way to group comment threads by team or company.</H2>
       <div>
         <DocDemoContainer>illustration showing the concept of workspaces</DocDemoContainer>
       </div>
       <div>
-        <H3>Mental model</H3>
         <p>
           Workspaces group comment threads by team/company name. e.g. if some of our users belong to
           the company ACME.

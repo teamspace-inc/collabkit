@@ -1,61 +1,94 @@
-import { H2, H3 } from '../UIKit';
+import { docStep } from '../styles/Docs.css';
 import { renderCodeSnippet } from './CodeEditor';
-
-const installCode = `# with npm
-npm install @collabkit/react
-        
-# or with yarn
-yarn add @collabkit/react`;
-
-const providerCode = `import { Provider } from '@collabkit/react';
-
-export default function App() {
-  return (
-    <Provider appId={'your APP ID here'} apiKey={'your API Key here'}>
-      {/* your app code here */}
-    </Provider>
-  );
-}`;
-
-const threadCode = `import { Thread } from '@collabkit/react';
-
-<Thread threadId={'unique ID here'} />;`;
+import { ThreadDemo } from './components/ThreadDemo';
+import { DocLink } from './Doc';
 
 export function GettingStartedDoc() {
   return (
     <>
       <div>
-        <H2>A quick tutorial to get you up and running with CollabKit.</H2>
+        <h2>A quick tutorial to get you up and running with CollabKit.</h2>
         <p>
           In this tutorial we'll show you how to add a comment thread to your app. Set aside 5 to 10
           minutes to get this done.
         </p>
       </div>
       <div>
-        <H3>1. Install @collabkit/react</H3>
-        {renderCodeSnippet(installCode, 'shell')}
+        <h3 data-step-number="1" className={docStep}>
+          Install @collabkit/react
+        </h3>
+        {renderCodeSnippet(
+          `# with npm
+npm install @collabkit/react
+        
+# or with yarn
+yarn add @collabkit/react`,
+          'shell'
+        )}
       </div>
       <div>
-        <H3>2. Wrap your app in a `Provider`</H3>
-        <p>Be sure to pass in `user` and `workspace` details.</p>
-        {renderCodeSnippet(providerCode)}
-      </div>
-      <div>
-        <H3>3. Add a Thread to your app</H3>
-        {renderCodeSnippet(threadCode)}
-      </div>
-      <div>
-        <H3>4. Try it out</H3>
+        <h3 data-step-number="2" className={docStep}>
+          Wrap your app in a CollabKitProvider
+        </h3>
         <p>
-          Load the page with the Thread on it, send some messages, invite your coworkers to try it
-          out too.
+          Be sure to pass in <code>user</code> and <code>workspace</code> details.
+        </p>
+        {renderCodeSnippet(`import { CollabKitProvider } from '@collabkit/react';
+
+export default function App() {
+  return (
+    <CollabKitProvider 
+      appId={'your APP ID here'} 
+      apiKey={'your API Key here'}
+      user={{
+        id: 'jane',
+        name: 'Jane Doe',
+        email: 'jane@example.com'
+      }}
+      workspace={{
+        id: 'acme',
+        name: 'ACME Corporation'
+      }}>
+      mentionableUsers={[]}
+      {/* your app code here */}
+    </CollabKitProvider>
+  );
+}`)}
+      </div>
+      <div>
+        <h3 data-step-number="3" className={docStep}>
+          Add a Thread to your app
+        </h3>
+        {renderCodeSnippet(`import { Thread } from '@collabkit/react';
+
+<div style={{ width: 280, height: 320 }}>
+  <Thread threadId={'unique ID here'} />
+</div>;`)}
+        <div>
+          <br />
+          <p>
+            You should see a <code>{'<Thread />'}</code>
+          </p>
+          <ThreadDemo />
+        </div>
+      </div>
+
+      <div>
+        <h3 data-step-number="4" className={docStep}>
+          Try it out!
+        </h3>
+        <p>
+          Load the page with the <code>{'<Thread />'}</code> on it and send some messages. Deploy to
+          staging and share a link with your coworkers so they can try it out.
         </p>
       </div>
       <div>
-        <H3>5. Turn on secure mode</H3>
+        <h3 data-step-number="5" className={docStep}>
+          Turn on Secure Mode
+        </h3>
         <p>
-          Before going live, enable secure mode which requires generating a per user token for each
-          request.
+          Before going live, enable <DocLink href="/docs/securemode">Secure Mode</DocLink> which
+          requires generating a per user token for each request.
         </p>
       </div>
     </>

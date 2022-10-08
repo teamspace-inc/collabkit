@@ -186,23 +186,37 @@ export const menuItem = style({
 export const markdown = style({});
 export const markdownLinksNotClickable = style({});
 
+// since we are using a globalStyle we need to override any
+// app specific styles
 globalStyle(`${markdown} p`, {
-  margin: 0,
+  margin: '0 !important',
+  padding: '0 !important',
+  fontSize: `${vars.comment.body.fontSize} !important`,
+  fontWeight: `${vars.comment.body.fontWeight} !important`,
+  color: `${vars.comment.body.color} !important`,
+  lineHeight: `${vars.comment.body.lineHeight} !important`,
+  letterSpacing: `${vars.comment.body.letterSpacing} !important`,
 });
 
 globalStyle(`${markdown} a`, {
-  textDecoration: 'none',
-  fontWeight: vars.mentions.pill.fontWeight,
-  color: vars.mentions.pill.color,
+  textDecoration: 'none !important',
+  fontWeight: `${vars.mentions.pill.fontWeight} !important`,
+  color: `${vars.mentions.pill.color} !important`,
 });
 
 globalStyle(`${markdownLinksNotClickable} p`, {
-  margin: 0,
+  margin: '0 !important',
+  padding: '0 !important',
+  fontSize: `${vars.comment.body.fontSize} !important`,
+  fontWeight: `${vars.comment.body.fontWeight} !important`,
+  color: `${vars.comment.body.color} !important`,
+  lineHeight: `${vars.comment.body.lineHeight} !important`,
+  letterSpacing: `${vars.comment.body.letterSpacing} !important`,
 });
 
 globalStyle(`${markdownLinksNotClickable} a`, {
-  textDecoration: 'none',
-  fontWeight: vars.mentions.pill.fontWeight,
-  color: vars.mentions.pill.color,
+  textDecoration: 'none !important',
+  fontWeight: `${vars.mentions.pill.fontWeight} !important`,
+  color: `${vars.mentions.pill.color} !important`,
   cursor: 'default !important',
 });

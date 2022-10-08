@@ -3,6 +3,7 @@ import React from 'react';
 import { useSnapshot } from 'valtio';
 import { useUnreadThreadsCount } from '../hooks/public/useUnreadThreadsCount';
 import { useApp } from '../hooks/useApp';
+import { inboxButton } from '../styles/components/InboxButton.css';
 
 // Cashboard icons
 import CommentIcon from './Comment.svg';
@@ -28,7 +29,10 @@ function useInboxButton() {
   };
 }
 
-export function InboxButton() {
+export function InboxButton(props: {
+  customIcon?: React.ReactNode;
+  customUnreadIcon?: React.ReactNode;
+}) {
   const { onPointerDown } = useInboxButton();
   const unreadThreadCount = useUnreadThreadsCount();
   const showUnreadDot = unreadThreadCount > 0;
@@ -37,24 +41,25 @@ export function InboxButton() {
     <ThemeWrapper>
       {/* Cashboard specific styles */}
       <button
-        style={{
-          fontSize: '14px',
-          border: '1px solid #B4BDC2',
-          borderRadius: '6px',
-          fontWeight: 600,
-          lineHeight: '160%',
-          letterSpacing: -0.1,
-          color: '#6A7278',
-          background: 'transparent',
-          padding: '8px 16px',
-          boxSizing: 'border-box',
-          height: 40,
-          display: 'flex',
-          gap: '8px',
-          alignItems: 'center',
-          justifyContent: 'center',
-          cursor: 'pointer',
-        }}
+        className={inboxButton}
+        // style={{
+        //   fontSize: '14px',
+        //   border: '1px solid #B4BDC2',
+        //   borderRadius: '6px',
+        //   fontWeight: 600,
+        //   lineHeight: '160%',
+        //   letterSpacing: -0.1,
+        //   color: '#6A7278',
+        //   background: 'transparent',
+        //   padding: '8px 16px',
+        //   boxSizing: 'border-box',
+        //   height: 40,
+        //   display: 'flex',
+        //   gap: '8px',
+        //   alignItems: 'center',
+        //   justifyContent: 'center',
+        //   cursor: 'pointer',
+        // }}
         onPointerDown={onPointerDown}
       >
         {showUnreadDot ? <img src={CommentNotificationIcon} /> : <img src={CommentIcon} />}

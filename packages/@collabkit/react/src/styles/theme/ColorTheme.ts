@@ -5,6 +5,7 @@ export const ColorTheme = {
     surfaceOverlay: 'color-surface-overlay',
     textPrimary: 'color-text-primary',
     textSecondary: 'color-text-secondary',
+    textDisabled: 'color-text-disabled',
     textLink: 'color-text-link',
     border: 'color-border',
     icon: 'color-icon',

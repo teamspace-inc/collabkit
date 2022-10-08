@@ -19,10 +19,10 @@ export const ColorBase = {
     surfaceOverlay: colors.opacity7,
     textPrimary: colors.black10,
     textSecondary: colors.grey30,
+    textDisabled: colors.grey60,
     textLink: colors.black10,
     border: colors.grey7,
-    icon: colors.grey89,
-
+    icon: colors.grey24,
     attention: colors.red,
   },
 };

@@ -7,7 +7,8 @@ import { Hero } from '../home/Hero';
 import { JustAFewLinesOfCode } from '../home/JustAFewLinesOfCode';
 import { Plans } from '../home/Plans';
 import { WorksWith } from '../home/WorksWith';
-import { light, website } from '../styles/Website.css';
+import { light } from '../styles/Theme.css';
+import { website } from '../styles/Website.css';
 
 export function HomePage() {
   const [invertFilter, setInvertFilter] = useState(0);
