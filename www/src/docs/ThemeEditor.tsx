@@ -1,10 +1,10 @@
 import { CodeEditor } from './CodeEditor';
 import { useEffect, useState } from 'react';
-import { themeCodeEditor, themeEditorRoot } from '../styles/Docs.css';
+import { themeCodeEditor, themeDemoContainer, themeEditorRoot } from '../styles/Docs.css';
 import ExampleThemeRaw from './ExampleTheme.json?raw';
 import { ThemeWrapper, ThemeProvider } from '@collabkit/react';
 import { Theme } from 'packages/@collabkit/react/src/styles/theme';
-import { ThreadDemo } from './components/ThreadDemo';
+import { ThreadDemo } from './demos/ThreadDemo';
 
 export function ThemeEditor() {
   const [code, setCode] = useState(() => ExampleThemeRaw);
@@ -30,7 +30,7 @@ export function ThemeEditor() {
       />
       <ThemeProvider theme={theme ?? {}}>
         <ThemeWrapper>
-          <ThreadDemo />
+          <ThreadDemo className={themeDemoContainer} />
         </ThemeWrapper>
       </ThemeProvider>
     </div>

@@ -1,6 +1,6 @@
-import { docStep } from '../styles/Docs.css';
+import { docDemoContainer, docStep } from '../styles/Docs.css';
 import { renderCodeSnippet } from './CodeEditor';
-import { ThreadDemo } from './components/ThreadDemo';
+import { ThreadDemo } from './demos/ThreadDemo';
 import { DocLink } from './Doc';
 
 export function GettingStartedDoc() {
@@ -69,7 +69,7 @@ export default function App() {
           <p>
             You should see a <code>{'<Thread />'}</code>
           </p>
-          <ThreadDemo />
+          <ThreadDemo className={docDemoContainer} />
         </div>
       </div>
 

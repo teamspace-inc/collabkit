@@ -152,6 +152,13 @@ export const docDemoContainer = style({
   alignItems: 'center',
 });
 
+export const themeDemoContainer = style([
+  docDemoContainer,
+  {
+    borderRadius: '0px',
+  },
+]);
+
 export const docScrollableContent = style({
   padding: 20,
   width: 760,

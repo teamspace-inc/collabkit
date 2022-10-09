@@ -1,9 +1,8 @@
 import { Thread } from '@collabkit/react';
-import { DocDemoContainer } from '../Doc';
 
-export function ThreadDemo() {
+export function ThreadDemo(props: { className?: string }) {
   return (
-    <DocDemoContainer>
+    <div className={props.className}>
       <div
         style={{
           height: '320px',
@@ -12,6 +11,6 @@ export function ThreadDemo() {
       >
         <Thread threadId={'test'} style={{ width: 320 }} autoFocus={false} />
       </div>
-    </DocDemoContainer>
+    </div>
   );
 }

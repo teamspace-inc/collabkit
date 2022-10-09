@@ -1,14 +1,15 @@
+import { docDemoContainer } from '../../styles/Docs.css';
 import { H2, H3 } from '../../UIKit';
 import { renderCodeSnippet } from '../CodeEditor';
+import { ThreadDemo } from '../demos/ThreadDemo';
 import { Markdown } from '../Markdown';
 import ThreadMarkdown from '../markdown/Thread.md?raw';
-import { ThreadDemo } from './ThreadDemo';
 
 export function ThreadDoc() {
   return (
     <>
       <H2>A comment thread that can be rendered anywhere in your app.</H2>
-      <ThreadDemo />
+      <ThreadDemo className={docDemoContainer} />
       <div>
         <H3>Usage</H3>
         <p>
