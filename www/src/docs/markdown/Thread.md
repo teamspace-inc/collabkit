@@ -1,4 +1,4 @@
-e#### threadId: string
+#### threadId: string
 
 A unique ID that represents this thread.
 

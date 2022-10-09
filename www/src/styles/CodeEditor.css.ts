@@ -6,9 +6,10 @@ export const codeEditor = style({
   position: 'relative',
   display: 'grid',
   padding: '20px',
-  background: vars.color.bgContrastLow,
+  background: vars.color.bgContrastLowest,
   borderRadius: 8,
   gridTemplateColumns: '1fr',
+  border: `1px solid ${vars.color.bgContrastMedium}`,
 });
 
 globalStyle(`${docs} .monaco-editor .lines-content .core-guide-indent`, {
@@ -30,17 +31,18 @@ globalStyle(`${docs} a`, {
 
 globalStyle(`${docs} .mtk42`, {
   fontWeight: '700',
-  color: vars.color.sky,
+  color: '#6BD1C7',
 });
 
 globalStyle(`${docs} .mtk6`, {
-  color: vars.color.textContrastMedium,
+  color: vars.color.teal,
   fontStyle: 'normal',
   fontWeight: 'normal !important',
 });
 
 globalStyle(`${docs} .mtk7`, { color: vars.color.yellow });
-globalStyle(`${docs} .mtk1`, { color: vars.color.textContrastLow });
-globalStyle(`${docs} .mtk39`, { color: vars.color.yellow });
+globalStyle(`${docs} .mtk1`, { color: vars.color.mint });
 globalStyle(`${docs} .mtk16`, { color: 'white' });
-globalStyle(`${docs} .mtk5`, { color: vars.color.textContrastMedium });
+globalStyle(`${docs} .mtk5`, { color: vars.color.orange });
+
+globalStyle(`${docs} .mtk39`, { color: vars.color.yellow });

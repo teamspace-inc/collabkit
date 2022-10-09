@@ -239,9 +239,9 @@
   ],
   "colors": {
     "editor.foreground": "#ffffff",
-    "editor.background": "#2C2C2C",
+    "editor.background": "#222222",
     "editor.selectionBackground": "#3D3D3D",
-    "editor.inactiveSelectionBackground": "#2C2C2C",
+    "editor.inactiveSelectionBackground": "#222222",
     "editor.lineHighlightBackground": "#444444",
     "editorCursor.foreground": "#FFEC6B",
     "editorWhitespace.foreground": "#222222"

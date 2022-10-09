@@ -19,7 +19,7 @@ globalStyle(`${docs} code`, {
   background: vars.color.bgContrastLow,
   padding: '4px 6px',
   borderRadius: '6px',
-  color: vars.color.sky,
+  color: vars.color.mint,
 });
 
 globalStyle(`${docs} h1`, {
@@ -235,7 +235,7 @@ globalStyle(`${docs} ol ol`, {
 export const navOl = style({
   listStyle: 'none',
   boxSizing: 'border-box',
-  padding: '0px 56px 0px 12px',
+  padding: '0px 12px 0px 12px',
   gap: '4px',
   display: 'flex',
   flexDirection: 'column',
