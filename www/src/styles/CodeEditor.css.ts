@@ -12,6 +12,24 @@ export const codeEditor = style({
   border: `1px solid ${vars.color.bgContrastMedium}`,
 });
 
+export const copyButton = style({
+  position: 'absolute',
+  zIndex: 1,
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  top: 16,
+  right: 16,
+  width: 32,
+  height: 32,
+  borderRadius: '50%',
+  background: vars.color.bgContrastLow,
+  cursor: 'pointer',
+  ':hover': {
+    background: vars.color.bgContrastMedium,
+  },
+});
+
 globalStyle(`${docs} .monaco-editor .lines-content .core-guide-indent`, {
   boxShadow: `1px 0 0 0 ${vars.color.bgContrastHigh} inset`,
 });

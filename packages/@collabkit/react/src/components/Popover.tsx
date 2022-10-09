@@ -43,13 +43,23 @@ function useOpenThread({ viewId, cellId }: { viewId: string; cellId: string }) {
   return threadId ?? null;
 }
 
-export function usePopoverThread(props: {
+type DeprecatedPopoverProps = {
   name?: string;
   cellId: string;
   offset?: number;
   padding?: number;
-}) {
-  const { name, cellId } = props;
+};
+
+type PopoverProps = {
+  name?: string;
+  threadId: string;
+  offset?: number;
+  padding?: number;
+};
+
+export function usePopoverThread(props: DeprecatedPopoverProps | PopoverProps) {
+  const { name } = props;
+  const cellId = 'cellId' in props ? props.cellId : props.threadId;
 
   const viewId = window?.location?.pathname || 'default';
 

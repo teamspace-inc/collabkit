@@ -8,10 +8,11 @@ export function IntroductionDoc() {
     <>
       <H2>
         CollabKit is a drop-in React &amp; Vue SDK for adding commenting to your app. It's fully
-        customisable, can be integrated in minutes, and helps increase engagement.
+        customisable, can be integrated in minutes.
         <br />
         <br />
-        Add our flexible components to your app to help your users collaborate in context.
+        Add our components to your app to help your users collaborate in context, and work as a
+        team.
       </H2>
       <DocLink href="/docs/gettingstarted">Getting started</DocLink>
       <div>

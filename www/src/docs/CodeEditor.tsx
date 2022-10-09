@@ -7,7 +7,21 @@ import { nanoid } from 'nanoid';
 import reactTypes from './react.types.d.ts?raw';
 import collabKitTypes from './types.d.ts?raw';
 import { useBreakpoint } from '../hooks/useWindowSize';
-import { codeEditor } from '../styles/CodeEditor.css';
+import { codeEditor, copyButton } from '../styles/CodeEditor.css';
+import { Copy } from 'phosphor-react';
+
+function CopyButton({ codeString }: { codeString: string }) {
+  return (
+    <div
+      className={copyButton}
+      onClick={() => {
+        navigator.clipboard.writeText(codeString);
+      }}
+    >
+      <Copy />
+    </div>
+  );
+}
 
 export function CodeSnippet(props: { code: string; language?: 'typescript' | 'shell' }) {
   const breakpoint = useBreakpoint();
@@ -15,6 +29,7 @@ export function CodeSnippet(props: { code: string; language?: 'typescript' | 'sh
   return (
     <CodeEditor
       readOnly={true}
+      copyButton={true}
       code={props.code}
       language={props.language ?? 'typescript'}
       style={{
@@ -34,6 +49,7 @@ export function CodeEditor(props: {
   code: string;
   readOnly?: boolean;
   scrollbar: boolean;
+  copyButton?: boolean;
   fixedSize?: boolean;
   language?: 'typescript' | 'shell' | 'json';
   style?: React.CSSProperties;
@@ -160,6 +176,7 @@ export function CodeEditor(props: {
         ...(props.fixedSize ? {} : { height }),
       }}
     >
+      {props.copyButton ? <CopyButton codeString={codeString} /> : null}
       <div ref={editorRef} style={{ ...(props.fixedSize ? {} : { height }) }} />
     </div>
   );

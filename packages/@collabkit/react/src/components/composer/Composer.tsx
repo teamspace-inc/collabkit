@@ -21,6 +21,7 @@ import { useTarget } from '../../hooks/useTarget';
 import * as styles from '../../styles/components/Composer.css';
 import { useOptionalCommentContext } from '../../hooks/useCommentContext';
 import { useSnapshot } from 'valtio';
+import { $setSelection } from 'lexical';
 
 // Catch any errors that occur during Lexical updates and log them
 // or throw them as needed. If you don't throw them, Lexical will
@@ -103,7 +104,10 @@ export const Editor = function ComposerEditor(props: {
 
   const initialConfig = {
     ...initialConfigDefaults,
-    editorState: () => $convertFromMarkdownString(body, TRANSFORMERS),
+    editorState: () => {
+      $convertFromMarkdownString(body, TRANSFORMERS);
+      $setSelection(null);
+    },
   };
 
   return (
@@ -121,10 +125,10 @@ export const Editor = function ComposerEditor(props: {
             events.onComposerChange(target, editorState, editor);
           }}
         />
+        {props.autoFocus ? <AutoFocusPlugin /> : <></>}
         <HistoryPlugin />
         <MentionsPlugin />
         <TimestampPlugin />
-        {props.autoFocus ? <AutoFocusPlugin /> : ''}
       </LexicalComposer>
     </div>
   );

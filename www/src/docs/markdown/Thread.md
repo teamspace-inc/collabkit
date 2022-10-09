@@ -8,11 +8,9 @@ A name for the thread. Used in email notifications to refer to the thread. e.g. 
 
 #### url?: string
 
-The URL of the page containing the thread. Used in email notifications and Inbox to take the user to the thread on click.
+The URL of the webpage this thread is rendered on. Used in email notifications and the [Inbox](/docs/inbox) to help a user get back to a thread.
 
 Defaults to `window.location.href`
-
-Set this to a custom value if you are rendering the same thread (i.e. they have the same `threadId` in multiple pages and one of them is the source of truth. e.g. if you are rendering the same Thread in [staging.your-app.com/task1](http://staging.your-app.com/task1) and your-app.com/task1 you should set it to the appropriate URL so Rendering the thread in one environment does not affect another.
 
 #### showHeader?: boolean
 

@@ -26,7 +26,7 @@ function YourComponent(props: { onClick: () => void}) {
 
 export function App() {
   const { setPopoverState, context } = usePopoverThread({
-    cellId: 'unique-thread-id-here'
+    threadId: 'unique-thread-id-here'
     name: 'Name of the thread';
   });
 
@@ -35,8 +35,7 @@ export function App() {
       <YourComponent onClick={() => setPopoverState('open')} />
     </PopoverTrigger>
   </div>
-}
-`)}
+}`)}
       </div>
     </>
   );
