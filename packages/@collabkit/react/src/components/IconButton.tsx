@@ -16,7 +16,7 @@ export const IconButton = forwardRef<HTMLDivElement, Props>(function IconButton(
   const { themeTokens } = useTheme();
   const className = props.className ?? styles.button({ active });
   const iconContextValue = useMemo(
-    () => ({ color: themeTokens?.iconButton.color, weight: 'bold', size: 16 }),
+    () => ({ color: themeTokens?.iconButton?.color, weight: 'bold', size: 16 }),
     [themeTokens]
   );
 

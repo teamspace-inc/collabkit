@@ -34,15 +34,15 @@ export function CodeEditor(props: {
   code: string;
   readOnly?: boolean;
   scrollbar: boolean;
-  language?: 'typescript' | 'shell';
+  fixedSize?: boolean;
+  language?: 'typescript' | 'shell' | 'json';
   style?: React.CSSProperties;
   lineHeight?: number;
   numLines?: number;
+  className?: string;
   fontSize?: number;
   onChange?: (value: string) => void;
 }) {
-  const breakpoint = useBreakpoint();
-
   const numLines = props.numLines ?? 40;
   const fontSize = props.fontSize ?? 14;
   const lineHeight = props.lineHeight ?? 24;
@@ -88,7 +88,7 @@ export function CodeEditor(props: {
           wordWrap: 'on',
           readOnly: props.readOnly ?? false,
           domReadOnly: props.readOnly ?? false,
-          automaticLayout: true,
+          automaticLayout: true, // !props.fixedSize,
           renderLineHighlight: false,
           renderLineHighlightOnlyWhenFocus: true,
           suggest: {},
@@ -145,24 +145,22 @@ export function CodeEditor(props: {
   }, [props.code, id]);
 
   useEffect(() => {
-    const numLines = editorRef.current?.getElementsByClassName('view-line').length;
-    if (numLines && numLines > 0) {
-      setHeight(numLines * lineHeight);
+    if (!props.fixedSize) {
+      const numLines = editorRef.current?.getElementsByClassName('view-line').length;
+      if (numLines && numLines > 0) {
+        setHeight(numLines * lineHeight);
+      }
     }
-  }, [codeString.length, id, didMount]);
+  }, [props.fixedSize, codeString.length, id, didMount]);
 
   return (
-    <div style={{ width: '100%' }}>
-      <div
-        className={codeEditor}
-        style={{
-          height,
-          padding: breakpoint === 'small' ? '20px 10px' : '40px',
-          ...props.style,
-        }}
-      >
-        <div ref={editorRef} style={{ height }} />
-      </div>
+    <div
+      className={props.className ?? codeEditor}
+      style={{
+        ...(props.fixedSize ? {} : { height }),
+      }}
+    >
+      <div ref={editorRef} style={{ ...(props.fixedSize ? {} : { height }) }} />
     </div>
   );
 }

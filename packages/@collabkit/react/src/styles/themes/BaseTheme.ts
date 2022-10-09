@@ -17,9 +17,11 @@ import { TextBase } from './base/TextBase';
 import { ThreadBase } from './base/ThreadBase';
 
 export const BaseTheme = {
-  ...AvatarBase,
-  ...ButtonBase,
   ...ColorBase,
+  ...TextBase,
+  ...SpaceBase,
+  ...ButtonBase,
+  ...AvatarBase,
   ...CommentBase,
   ...ComposerBase,
   ...FacepileBase,
@@ -31,7 +33,5 @@ export const BaseTheme = {
   ...ScrollbarBase,
   ...ShadowBase,
   ...SidebarBase,
-  ...SpaceBase,
-  ...TextBase,
   ...ThreadBase,
 };

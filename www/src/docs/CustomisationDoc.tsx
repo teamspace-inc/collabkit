@@ -1,7 +1,6 @@
 import { Thread, ThemeProvider } from '@collabkit/react';
 import { docDemoOverlay } from '../styles/Docs.css';
-import { DocDemoContainer } from './Doc';
-import { ThemeEditor } from './ThemeEditor';
+import { DocDemoContainer, DocLink } from './Doc';
 
 const threadSize = { width: 280, height: 320 };
 
@@ -59,12 +58,16 @@ export function CustomisationDoc() {
       <div>
         <h3>Custom themes</h3>
         <p>
-          Try editing this custom theme to see how you can customise CollabKit. Note theme variables
-          are all type-safe making it easy to edit. You can adjust style variables to change
-          colours, typography, spacing, padding, margins and more.
+          Use our <DocLink href="/themeeditor">Theme Editor</DocLink> to to match your apps look and
+          feel entirely.
+        </p>
+        <p>
+          You can change almost every aspect of CollabKit, including the fonts, colors, and spacing.
+          Contact us if you'd like help with putting a custom theme together. We can assist you in
+          creating one or create one for you.
         </p>
       </div>
-      <ThemeEditor />
+      {/* <ThemeEditor /> */}
       {/* <blockquote>
         Note: If you want to completely customise CollabKit, have a look at the @Advanced
         Customisation API. It makes it possible to consume, recombine and replace the individual

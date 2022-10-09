@@ -10,7 +10,7 @@ export function ThreadDemo() {
           width: '280px',
         }}
       >
-        <Thread threadId={'test'} style={{ width: 320 }} />
+        <Thread threadId={'test'} style={{ width: 320 }} autoFocus={false} />
       </div>
     </DocDemoContainer>
   );

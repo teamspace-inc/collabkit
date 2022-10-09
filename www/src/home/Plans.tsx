@@ -26,6 +26,26 @@ export function Plans() {
       <h3>Packages that grow with your business.</h3>
       <div style={{ display: 'flex', gap: '40px', flexDirection: 'row' }}>
         <div className={card}>
+          <h4>Free</h4>
+          <V12 />
+          <h2>
+            Free <br />
+          </h2>
+          <V12 />
+          <V12 />
+          <FeatureList>
+            <h5>All the essentials</h5>
+            <h5>
+              250 <br />
+              <small>monthly active users</small>
+            </h5>
+            <h5>Customize UI</h5>
+          </FeatureList>
+          <small>$0.10 per additonal user.</small>
+          <V12 />
+          <RequestDemoButton style={{ display: 'flex', width: '100%' }} />
+        </div>
+        <div className={card}>
           <h4>Startup</h4>
           <V12 />
           <h2>
@@ -40,6 +60,7 @@ export function Plans() {
               1,000 <br />
               <small>monthly active users</small>
             </h5>
+            <h5>Remove CollabKit branding</h5>
             <h5>Customize UI</h5>
           </FeatureList>
           <small>$0.10 per additonal user.</small>
@@ -61,6 +82,7 @@ export function Plans() {
               5,000 <br />
               <small>monthly active users</small>
             </h5>
+            <h5>Remove CollabKit branding</h5>
             <h5>Customize UI</h5>
             <h5>Shared Slack Channel</h5>
           </FeatureList>

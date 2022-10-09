@@ -15,8 +15,19 @@ export const codeEditor = style({
   gridTemplateColumns: '1fr',
 });
 
+export const themeCodeEditor = style({
+  position: 'relative',
+  display: 'grid',
+  background: vars.color.bgContrastLow,
+  gridTemplateColumns: '1fr',
+});
+
 globalStyle(`${docs} .monaco-editor .lines-content .core-guide-indent`, {
   boxShadow: `1px 0 0 0 ${vars.color.bgContrastHigh} inset`,
+});
+
+globalStyle(`${docs} .monaco-editor .scroll-decoration`, {
+  boxShadow: `${vars.color.bgContrastLowest} 0 6px 6px -6px inset`,
 });
 
 globalStyle(
@@ -43,6 +54,7 @@ globalStyle(`${docs} .mtk7`, { color: vars.color.yellow });
 globalStyle(`${docs} .mtk1`, { color: vars.color.textContrastLow });
 globalStyle(`${docs} .mtk39`, { color: vars.color.yellow });
 globalStyle(`${docs} .mtk16`, { color: 'white' });
+globalStyle(`${docs} .mtk5`, { color: vars.color.textContrastMedium });
 
 globalStyle(`${docs} blockquote`, {
   borderLeft: `5px solid ${vars.color.sky}`,
@@ -377,4 +389,11 @@ export const navListTitle = style({
   marginTop: '8px',
   paddingLeft: '12px',
   lineHeight: '32px',
+});
+
+export const themeEditorRoot = style({
+  display: 'grid',
+  gridTemplateColumns: '1fr 1fr',
+  width: '100vw',
+  height: '100%',
 });

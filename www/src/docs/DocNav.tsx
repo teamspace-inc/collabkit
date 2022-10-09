@@ -6,7 +6,6 @@ import {
   ScrollAreaThumb,
   ScrollAreaViewport,
 } from '../UIKit';
-import Logo from './Logo.svg';
 import { DOCS, getDocHref, RootDocNode } from './Docs';
 import { Breakpoint, useBreakpoint } from '../hooks/useWindowSize';
 import { useEffect, useState } from 'react';
@@ -17,11 +16,10 @@ import {
   navLi,
   navListItem,
   navListTitle,
-  navLogoInner,
-  navLogoOuter,
   navOl,
   navWrap,
 } from '../styles/Docs.css';
+import { Logo } from './Logo';
 
 function NavListItem(props: { path: string[]; id: string; onClick: () => void }) {
   const [location] = useLocation();
@@ -80,11 +78,7 @@ export function Nav(props: { className?: string }) {
       <div>
         <div className={navHeader}>
           <Link to="/docs">
-            <div className={navLogoOuter}>
-              <div className={navLogoInner}>
-                <img src={Logo} />
-              </div>
-            </div>
+            <Logo />
           </Link>
 
           {hasMenu ? (

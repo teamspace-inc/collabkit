@@ -6,9 +6,10 @@ import { vars } from './theme';
 // import { CashboardTheme } from './themes/CashboardTheme';
 import { DarkTheme } from './themes/DarkTheme';
 import { BaseTheme } from './themes/BaseTheme';
+import { DeepPartial } from '@collabkit/core';
 
 export type Theme = MapLeafNodes<typeof vars, string>;
-export type CustomTheme = Theme;
+export type CustomTheme = DeepPartial<Theme>;
 
 const theme = createTheme(vars, BaseTheme);
 

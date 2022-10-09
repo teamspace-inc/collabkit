@@ -20,7 +20,6 @@ import {
   ScrollAreaScrollbar,
   ScrollAreaThumb,
   ScrollAreaViewport,
-  styled,
 } from '../UIKit';
 import { Nav } from './DocNav';
 

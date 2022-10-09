@@ -4,8 +4,8 @@ import type { CustomTheme } from '../styles/themes.css';
 import { defaultTheme, dark } from '../styles/themes.css';
 
 import { DarkTheme } from '../styles/themes/DarkTheme';
-// import { CashboardTheme } from '../styles/themes/CashboardTheme';
 import { BaseTheme } from '../styles/themes/BaseTheme';
+import { assignInlineVars } from '@vanilla-extract/dynamic';
 
 export type ThemeContextValue = {
   themeClassName: string;
