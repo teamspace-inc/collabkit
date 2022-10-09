@@ -7,7 +7,7 @@ import { nanoid } from 'nanoid';
 import reactTypes from './react.types.d.ts?raw';
 import collabKitTypes from './types.d.ts?raw';
 import { useBreakpoint } from '../hooks/useWindowSize';
-import { codeEditor } from '../styles/Docs.css';
+import { codeEditor } from '../styles/CodeEditor.css';
 
 export function CodeSnippet(props: { code: string; language?: 'typescript' | 'shell' }) {
   const breakpoint = useBreakpoint();
