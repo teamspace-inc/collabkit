@@ -15,10 +15,6 @@
       "**/mailing-core"
     ]
   },
-  "resolutions": {
-    "@types/react": "18.0.18",
-    "@types/react-dom": "18.0.6"
-  },
   "scripts": {
     "dev": "pnpm --recursive --parallel --filter '!@collabkit/vue' run dev",
     "build": "pnpm --parallel --filter '@collabkit/react' --filter '@collabkit/vue' run build",
