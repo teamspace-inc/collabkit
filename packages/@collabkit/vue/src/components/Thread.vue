@@ -80,6 +80,7 @@ const target = computed(
     type: 'composer',
     threadId: props.threadId,
     workspaceId: workspaceId.value ?? '',
+    eventId: 'default',
   })
 );
 </script>
