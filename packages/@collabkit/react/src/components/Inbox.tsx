@@ -14,6 +14,8 @@ import {
 import { InboxItem } from './InboxItem';
 import { timelineUtils } from '@collabkit/core';
 import { ThemeWrapper } from './ThemeWrapper';
+import { ChatCentered } from './icons';
+import { emptyState } from '../styles/components/Thread.css';
 
 export function unique<T>(value: T, index: number, self: T[]) {
   return self.indexOf(value) === index;
@@ -21,6 +23,31 @@ export function unique<T>(value: T, index: number, self: T[]) {
 
 export interface ButtonProps extends React.ComponentPropsWithoutRef<'button'> {
   specialProp?: string;
+}
+
+// export function EmptyState() {
+//   return (
+//     <div className={styles.emptyState.root}>
+//       <div className={styles.emptyState.title}>No comments</div>
+//       <div className={styles.emptyState.body}>Comments on this view will appear here.</div>
+//     </div>
+//   );
+// }
+
+// const emptyState = (
+//   <div className={styles.emptyState}>
+//     <ChatCentered weight="thin" size={32} />
+//     <span>No comments yet</span>
+//   </div>
+// );
+
+export function EmptyState() {
+  return (
+    <div className={emptyState}>
+      <ChatCentered weight="thin" size={32} />
+      <span>No comments yet</span>
+    </div>
+  );
 }
 
 export function Inbox() {
@@ -83,10 +110,7 @@ export function Inbox() {
     <ThemeWrapper>
       <div className={styles.root}>
         {isEmpty ? (
-          <div className={styles.emptyState.root}>
-            <div className={styles.emptyState.title}>No comments</div>
-            <div className={styles.emptyState.body}>Comments on this view will appear here.</div>
-          </div>
+          <EmptyState />
         ) : (
           <ScrollAreaRoot>
             <ScrollAreaViewport>

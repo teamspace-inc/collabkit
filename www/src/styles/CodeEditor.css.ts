@@ -64,3 +64,12 @@ globalStyle(`${docs} .mtk16`, { color: 'white' });
 globalStyle(`${docs} .mtk5`, { color: vars.color.orange });
 
 globalStyle(`${docs} .mtk39`, { color: vars.color.yellow });
+
+globalStyle(`${docs} .monaco-editor .monaco-hover`, {
+  background: vars.color.bgContrastLow,
+  border: 'none',
+});
+
+globalStyle(`${docs} .monaco-editor .goto-definition-link`, {
+  color: `${vars.color.purple} !important`,
+});
