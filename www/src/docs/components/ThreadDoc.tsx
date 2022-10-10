@@ -1,5 +1,4 @@
 import { docDemoContainer } from '../../styles/Docs.css';
-import { H2, H3 } from '../../UIKit';
 import { renderCodeSnippet } from '../CodeEditor';
 import { ThreadDemo } from '../demos/ThreadDemo';
 import { Markdown } from '../Markdown';
@@ -8,10 +7,10 @@ import ThreadMarkdown from '../markdown/Thread.md?raw';
 export function ThreadDoc() {
   return (
     <>
-      <H2>A comment thread that can be rendered anywhere in your app.</H2>
+      <h2>A comment thread that can be rendered anywhere in your app.</h2>
       <ThreadDemo className={docDemoContainer} />
       <div>
-        <H3>Usage</H3>
+        <h3>Usage</h3>
         <p>
           Render a comment thread in your app with <code>{'<Thread />'}</code>. Pass a unique{' '}
           <code>threadId</code> to identify the thread.
@@ -32,7 +31,7 @@ export function App() {
       </div>
 
       <div>
-        <H3>Props</H3>
+        <h2>Props</h2>
         <Markdown body={ThreadMarkdown} />
       </div>
     </>
