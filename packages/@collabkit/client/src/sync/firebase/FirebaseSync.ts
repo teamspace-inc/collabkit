@@ -1,4 +1,5 @@
 import {
+  child,
   DataSnapshot,
   get,
   getDatabase,
@@ -34,6 +35,7 @@ import { subscribeTimeline } from './subscribeTimeline';
 import { timelineRef, userTypingRef } from './refs';
 
 import { getApp, initializeApp } from 'firebase/app';
+import { InboxChangeEventHandler } from '@collabkit/core/src/sync';
 
 export function initFirebase() {
   initializeApp(
@@ -399,6 +401,38 @@ export class FirebaseSync implements Sync.SyncAdapter {
     props.subs[`${threadInfoRef.toString()}#onValue`] ||= onValue(threadInfoRef, (snapshot) => {
       const info = snapshot.val();
       props.onThreadInfo({ workspaceId: props.workspaceId, threadId: props.threadId, info });
+    });
+  }
+
+  subscribeInbox(props: {
+    appId: string;
+    workspaceId: string;
+    subs: Subscriptions;
+    onInboxChange: InboxChangeEventHandler;
+  }) {
+    const inboxRef = query(
+      ref(getDatabase(getApp('CollabKit')), `views/inbox/${props.appId}/${props.workspaceId}`),
+      orderByChild('createdAt'),
+      limitToLast(20)
+    );
+
+    function childCallback(snapshot: DataSnapshot) {
+      const threadId = snapshot.key;
+
+      if (!threadId) {
+        return;
+      }
+
+      // console.log('#inbox', threadId, prevChildName);
+      props.onInboxChange({ event: snapshot.val(), threadId });
+    }
+
+    props.subs[`${inboxRef.toString()}#added`] ||= onChildAdded(inboxRef, childCallback, (e) => {
+      console.error(e);
+    });
+
+    props.subs[`${inboxRef.toString()}#moved`] ||= onChildMoved(inboxRef, childCallback, (e) => {
+      console.error(e);
     });
   }
 

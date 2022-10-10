@@ -247,9 +247,11 @@ export type CommentTarget = {
   treeId: string;
 };
 
+export type EventType = 'message' | 'reaction' | 'adminMessage' | 'system' | 'delete' | 'edit';
+
 // TODO: this should be a union of different message types
 export type Event = {
-  type: 'message' | 'reaction' | 'adminMessage' | 'system' | 'delete' | 'edit';
+  type: EventType;
   body: string;
   system?: 'resolve' | 'reopen';
   createdAt: number | object;
@@ -325,7 +327,7 @@ export interface Workspace {
   name: string;
   openThreads: { [threadId: string]: { meta: ThreadMeta } };
   pins: { [threadId: string]: Pin };
-  inbox: { [threadId: string]: WithHasProfile<WithID<WithName<Event>>> };
+  inbox: { [threadId: string]: WithID<Event> };
   timeline: { [threadId: string]: Timeline };
   composers: { [threadId: string]: Composer };
   seen: { [threadId: string]: string }; // lastSeenEventId

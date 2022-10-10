@@ -1,15 +1,4 @@
-import { getApp } from 'firebase/app';
-import {
-  ref,
-  onChildAdded,
-  DataSnapshot,
-  query,
-  orderByChild,
-  limitToLast,
-  onChildMoved,
-  getDatabase,
-} from 'firebase/database';
-import type { Store } from '@collabkit/core';
+import type { Event, Store, WithID } from '@collabkit/core';
 import { actions } from './index';
 import { createWorkspace } from '../store';
 
@@ -23,39 +12,62 @@ export async function subscribeInbox(store: Store) {
 
   // console.log('Subscribing to Inbox');
 
-  const inboxRef = query(
-    ref(getDatabase(getApp('CollabKit')), `views/inbox/${appId}/${workspaceId}`),
-    orderByChild('createdAt'),
-    limitToLast(20)
-  );
+  // store.sync.subscribeInbox({ })
 
-  function onError(e: Error) {
-    console.error('subscribing to inbox', { e });
-  }
+  // const inboxRef = query(
+  //   ref(getDatabase(getApp('CollabKit')), `views/inbox/${appId}/${workspaceId}`),
+  //   orderByChild('createdAt'),
+  //   limitToLast(20)
+  // );
 
-  function childCallback(snapshot: DataSnapshot) {
-    if (!workspaceId) {
+  // function onError(e: Error) {
+  //   console.error('subscribing to inbox', { e });
+  // }
+
+  // function childCallback(snapshot: DataSnapshot) {
+  //   if (!workspaceId) {
+  //     return;
+  //   }
+
+  //   const threadId = snapshot.key;
+
+  //   if (!threadId) {
+  //     return;
+  //   }
+
+  //   // console.log('#inbox', threadId, prevChildName);
+
+  //   const event = snapshot.val();
+  //   store.workspaces[workspaceId] ||= createWorkspace();
+  //   store.workspaces[workspaceId].inbox[threadId] = { ...event };
+
+  //   // also get all events and listen to this thread
+
+  //   actions.subscribeThread(store, { workspaceId, threadId });
+  // }
+
+  function onInboxChange(props: { threadId: string; event: WithID<Event> }) {
+    if (!props.threadId) {
       return;
     }
 
-    const threadId = snapshot.key;
-
-    if (!threadId) {
+    if (!workspaceId) {
       return;
     }
 
     // console.log('#inbox', threadId, prevChildName);
 
-    const event = snapshot.val();
     store.workspaces[workspaceId] ||= createWorkspace();
-    store.workspaces[workspaceId].inbox[threadId] = { ...event };
+    store.workspaces[workspaceId].inbox[props.threadId] = props.event;
 
     // also get all events and listen to this thread
 
-    actions.subscribeThread(store, { workspaceId, threadId });
+    actions.subscribeThread(store, { workspaceId, threadId: props.threadId });
   }
 
-  store.subs[`${inboxRef.toString()}#added`] ||= onChildAdded(inboxRef, childCallback, onError);
+  store.sync.subscribeInbox({ appId, workspaceId, subs: store.subs, onInboxChange });
 
-  store.subs[`${inboxRef.toString()}#moved`] ||= onChildMoved(inboxRef, childCallback, onError);
+  // store.subs[`${inboxRef.toString()}#added`] ||= onChildAdded(inboxRef, childCallback, onError);
+
+  // store.subs[`${inboxRef.toString()}#moved`] ||= onChildMoved(inboxRef, childCallback, onError);
 }

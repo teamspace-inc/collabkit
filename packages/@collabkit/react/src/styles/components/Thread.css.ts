@@ -16,6 +16,8 @@ export const root = style({
   borderRadius: vars.thread.borderRadius,
   boxShadow: vars.thread.boxShadow,
   paddingTop: '16px',
+  textAlign: 'left',
+  minWidth: '240px',
 });
 
 export const header = style({

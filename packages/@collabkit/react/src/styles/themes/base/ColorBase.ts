@@ -21,7 +21,7 @@ export const ColorBase = {
     textSecondary: colors.grey30,
     textDisabled: colors.grey60,
     textLink: colors.black10,
-    border: colors.grey7,
+    border: colors.grey89,
     icon: colors.grey24,
     attention: colors.red,
   },

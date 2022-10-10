@@ -43,17 +43,6 @@ export type SeenByUser = {
   seenAt: number;
 };
 
-export type Event = {
-  type: 'message' | 'reaction' | 'adminMessage' | 'system';
-  body: string;
-  createdAt: number;
-  createdById: string;
-  system?: 'resolve' | 'reopen';
-  parentId?: string;
-  mentions?: {
-    [userId: string]: boolean;
-  };
-};
 
 export type Timeline = {
   [eventId: string]: Event;

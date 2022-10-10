@@ -3,6 +3,7 @@ import HeroExampleSvg from '../assets/HeroExample.svg';
 import { useIsSmallScreen } from './useIsSmallScreen';
 import * as styles from '../styles/Hero.css';
 import { vars } from '../styles/Theme.css';
+// import { ThemeProvider, ThemeWrapper, Thread } from '@collabkit/react';
 
 function Chevron() {
   return (
@@ -42,7 +43,14 @@ export function Hero() {
       <h3>{description}</h3>
       <div className={styles.center}>
         {!isSmallScreen ? <Chevron /> : null}
-        <img id="demo" src={HeroExampleSvg} className={styles.heroImage} />
+        <div style={{ position: 'relative' }}>
+          <img id="demo" src={HeroExampleSvg} className={styles.heroImage} />
+          {/* <div style={{ position: 'absolute', right: 0, top: 0, bottom: 0, width: 200 }}>
+            <ThemeProvider theme="dark">
+              <Thread threadId="thread3" />
+            </ThemeProvider>
+          </div> */}
+        </div>
       </div>
     </section>
   );

@@ -62,6 +62,8 @@ export function Thread(props: ThreadProps & { className?: string; children?: Rea
     return null;
   }
 
+  console.log(timeline);
+
   return (
     <ThreadContextProvider {...props}>
       <Profile.Provider profileId={userId}>

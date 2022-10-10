@@ -7,6 +7,8 @@ import type {
   UserProps,
   ThreadInfo,
   ThreadMeta,
+  EventType,
+  WithID,
 } from '../types';
 import type { DataSnapshot } from 'firebase/database';
 
@@ -114,6 +116,13 @@ export interface SyncAdapter {
     onThreadChange: OpenThreadEventHandler
   ): void;
 
+  subscribeInbox(props: {
+    appId: string;
+    workspaceId: string;
+    subs: Subscriptions;
+    onInboxChange: InboxChangeEventHandler;
+  }): void;
+
   subscribeThread(props: {
     appId: string;
     userId?: string;
@@ -142,11 +151,16 @@ export type OpenThreadEventHandler = (event: {
   threadId: string;
   info: { meta: ThreadMeta } | null;
 }) => void;
+export type InboxChangeEventHandler = (props: { event: WithID<Event>; threadId: string }) => void;
 
 export type ThreadInfoChangeEvent = {
   threadId: string;
   info: { meta: ThreadMeta } | null;
   workspaceId: string;
+};
+
+export type InboxChangeEvent = {
+  event: WithID<Event>;
 };
 
 export type TimelineChangeEvent = {

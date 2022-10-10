@@ -6,7 +6,7 @@ export const InboxBase = {
     width: '292px',
     background: vars.color.background,
     newIndicator: {
-      color: vars.color.textPrimary,
+      color: 'white',
       fontSize: vars.text.tiny.fontSize,
       lineHeight: '16px',
       fontWeight: vars.fontWeights.bold,

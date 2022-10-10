@@ -2,7 +2,7 @@ import type { Subscriptions, SyncAdapter } from '@collabkit/react/src/constants'
 import { DataSnapshot } from 'firebase/database';
 
 import { nanoid } from 'nanoid';
-import { ThreadInfoChangeEvent } from 'packages/@collabkit/core/src/sync';
+import { InboxChangeEventHandler, ThreadInfoChangeEvent } from 'packages/@collabkit/core/src/sync';
 
 export class LocalOnlySync implements SyncAdapter {
   constructor(public workspaceData: any) {}
@@ -78,6 +78,15 @@ export class LocalOnlySync implements SyncAdapter {
   }
 
   subscribeThread(): void {
+    // noop
+  }
+
+  subscribeInbox(props: {
+    appId: string;
+    workspaceId: string;
+    subs: Subscriptions;
+    onInboxChange: InboxChangeEventHandler;
+  }) {
     // noop
   }
 
