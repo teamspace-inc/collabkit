@@ -1,14 +1,12 @@
 import { useEffect } from 'react';
 import { PopoverTrigger, usePopoverThread } from '@collabkit/react';
-import { nanoid } from 'nanoid';
 import { DocDemoContainer } from '../Doc';
-
-const cellId = nanoid();
 
 export function PopoverThreadDemo() {
   const { setPopoverState, context } = usePopoverThread({
     name: 'test',
-    cellId,
+    threadId: 'thread4',
+    _viewId: 'demo',
   });
 
   useEffect(() => {

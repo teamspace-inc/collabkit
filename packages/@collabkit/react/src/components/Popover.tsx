@@ -14,6 +14,7 @@ import {
   useHover,
   useInteractions,
 } from '@floating-ui/react-dom-interactions';
+
 import { mergeRefs } from 'react-merge-refs';
 import { PopoverThread, PreviewThread } from './PopoverThread';
 import { useApp } from '../hooks/useApp';
@@ -21,7 +22,6 @@ import { nanoid } from 'nanoid';
 import { useSnapshot } from 'valtio';
 import { ThreadInfo, ThreadTarget } from '@collabkit/core';
 import { actions } from '@collabkit/client';
-// import { ThemeWrapper } from './ThemeWrapper';
 
 function useStableId(): [string, () => void] {
   const [id, setId] = useState<string>(() => nanoid());
@@ -53,6 +53,8 @@ type DeprecatedPopoverProps = {
 type PopoverProps = {
   name?: string;
   threadId: string;
+  // for demo
+  _viewId?: string;
   offset?: number;
   padding?: number;
 };
@@ -61,7 +63,8 @@ export function usePopoverThread(props: DeprecatedPopoverProps | PopoverProps) {
   const { name } = props;
   const cellId = 'cellId' in props ? props.cellId : props.threadId;
 
-  const viewId = window?.location?.pathname || 'default';
+  const viewId =
+    '_viewId' in props && props._viewId ? props._viewId : window?.location?.pathname || 'default';
 
   const threadInfo = useMemo<ThreadInfo>(
     () => ({ name, meta: { viewId, cellId } }),

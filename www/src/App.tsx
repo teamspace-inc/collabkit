@@ -51,14 +51,41 @@ const defaultWorkspace: Partial<Workspace> = {
   //     url: '/',
   //   },
   // },
+  openThreads: {
+    thread1: {
+      meta: {
+        cellId: 'thread1',
+        viewId: 'demo',
+      },
+    },
+    thread2: {
+      meta: {
+        cellId: 'thread2',
+        viewId: 'demo',
+      },
+    },
+    thread3: {
+      meta: {
+        cellId: 'thread3',
+        viewId: 'demo',
+      },
+    },
+    thread4: {
+      meta: {
+        cellId: 'thread4',
+        viewId: 'demo',
+      },
+    },
+  },
   timeline: {
     thread1: {
       event1: {
         id: 'event1',
         body: 'Orders are holding strong. Must be an ACV problem.',
         createdAt: 1658843343088,
-        createdById: 'alicia-1',
+        createdById: 'alicia',
         type: 'message',
+        hasProfile: true,
       },
     },
     thread2: {
@@ -66,30 +93,69 @@ const defaultWorkspace: Partial<Workspace> = {
         id: 'event1',
         body: 'Revenue looks great here, any ideas on the downturn afterwards?',
         createdAt: 1658843169471,
-        createdById: 'dom-1',
+        createdById: 'dom',
         type: 'message',
+        hasProfile: true,
       },
       event2: {
         id: 'event2',
         body: 'I think it might have been a stock issue!',
         createdAt: 1658843196463,
-        createdById: 'greta-1',
+        createdById: 'greta',
         type: 'message',
+        hasProfile: true,
       },
     },
     thread3: {
       event1: {
         id: 'event1',
-        body: "I'm so glad we're tracking this, great work setting up this dashboard.",
+        body: 'Hey, [Dom](#@dom) have you looked at this order? I think the label is wrong.',
         createdAt: 1658842883088,
-        createdById: 'ville-1',
+        createdById: 'alicia',
+        type: 'message',
+        hasProfile: true,
+      },
+      event2: {
+        id: 'event2',
+        body: 'I think you are right, I will look into it.',
+        createdAt: 1658842883088,
+        createdById: 'dom',
+        type: 'message',
+        hasProfile: true,
+      },
+      event3: {
+        id: 'event3',
+        body: "I found the problem! It's a typo in the label.",
+        createdAt: 1658842883088,
+        createdById: 'greta',
+        type: 'message',
+        hasProfile: true,
+      },
+    },
+    thread4: {
+      event1: {
+        id: 'event1',
+        body: `Is this the final cash balance? I think we need to add the cash from the Illinois bank account.`,
+        createdAt: 1658842883088,
+        createdById: 'alicia',
+        type: 'message',
+        hasProfile: true,
+      },
+      event2: {
+        id: 'event2',
+        body: `Yup that's included in the total.`,
+        createdAt: 1658842883088,
+        createdById: 'dom',
         type: 'message',
         hasProfile: true,
       },
     },
   },
   seen: {
-    thread3: 'event1',
+    thread1: 'event2',
+    thread2: 'event1',
+    thread3: 'event3',
+    thread4: 'event2',
     // IdNMQ8uP07YfJtxyNqH28: '-N7ukV90v5j3inGLNQt3',
     // B0ENawPadDHvTyyILKWz2: '-N7ul9YUhGqMcZnBhpUh',
     // sxG87Sq0t3HHG0ghJMaXu: '-N84KobQKUnix1nNkMH-',
@@ -102,7 +168,7 @@ const config: Config = {
   appId: 'DUMMY_APP_ID_FOR_DEMO',
   workspace: { id: 'acme', name: 'ACME' },
   user: {
-    id: 'anon-1',
+    id: 'anon',
     name: 'Jane Doe',
     email: 'anon@example.com',
   },
@@ -129,8 +195,7 @@ export default function App() {
       appId={appId}
       _demoStore={store}
       workspace={workspace}
-      // todo generate a per user token on the client
-      user={{ id: 'johndoe', name: 'John Doe' }}
+      user={{ id: 'anon', name: 'Anonymous' }}
       mentionableUsers={[]}
     >
       <SetBreakpointContext>

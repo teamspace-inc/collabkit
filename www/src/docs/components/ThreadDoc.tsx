@@ -31,7 +31,7 @@ export function App() {
       </div>
 
       <div>
-        <h2>Props</h2>
+        <h3>Props</h3>
         <Markdown body={ThreadMarkdown} />
       </div>
     </>

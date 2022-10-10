@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useRemark } from 'react-remark';
 
 export function Markdown(props: {
@@ -6,8 +6,13 @@ export function Markdown(props: {
   body: string;
   onLinkClick?: (e: React.MouseEvent) => void;
 }) {
+  const mountedRef = useRef(false);
   const [reactContent, setMarkdownSource] = useRemark();
+
+  // prevent flickr on initial render
+  !mountedRef.current && setMarkdownSource(props.body);
   useEffect(() => {
+    mountedRef.current = true;
     setMarkdownSource(props.body);
   }, [props.body]);
 

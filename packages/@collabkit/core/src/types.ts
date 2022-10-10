@@ -5,7 +5,7 @@ import type { SyncAdapter } from './sync';
 export * as Sync from './sync';
 export interface ThreadMeta {
   viewId?: string;
-  cellId?: string;
+  cellId?: string; // todo rename to threadId
 }
 
 export type ThreadInfo = {

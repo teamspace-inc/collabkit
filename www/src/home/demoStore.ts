@@ -12,41 +12,40 @@ export function createDemoStore(config: Config, defaultWorkspace: Partial<Worksp
   Object.keys(defaultWorkspace).forEach((k) => (workspaceStore[k] = defaultWorkspace[k]));
 
   store.isSignedIn = true;
-  console.log(workspaceStore);
   store.workspaces.acme = workspaceStore;
   store.workspaceId = 'acme';
-  store.userId = 'anon-1';
+  store.userId = 'anon';
   store.profiles = profiles as any;
   return store;
 }
 
 const profiles = {
-  'anon-1': {
-    id: 'anon-1',
+  anon: {
+    id: 'anon',
     color: 'slate',
     email: 'anon@example.com',
-    name: 'Jane Doe',
+    name: 'Anonymous',
   },
-  'alicia-1': {
-    id: 'alicia-1',
+  alicia: {
+    id: 'alicia',
     color: 'orange',
     email: 'alicia@example.com',
     name: 'Alicia Baker',
   },
-  'dom-1': {
-    id: 'dom-1',
+  dom: {
+    id: 'dom',
     color: 'sky',
     email: 'dom@example.com',
     name: 'Dominic Burt',
   },
-  'greta-1': {
-    id: 'greta-1',
+  greta: {
+    id: 'greta',
     color: 'violet',
     email: 'greta@example.com',
     name: 'Greta Aziz',
   },
-  'ville-1': {
-    id: 'ville-1',
+  ville: {
+    id: 'ville',
     color: 'green',
     email: 'ville@example.com',
     name: 'Ville Deckard',

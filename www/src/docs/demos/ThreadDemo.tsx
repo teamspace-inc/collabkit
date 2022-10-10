@@ -9,7 +9,7 @@ export function ThreadDemo(props: { className?: string }) {
           width: '280px',
         }}
       >
-        <Thread threadId={'test'} style={{ width: 320 }} autoFocus={false} />
+        <Thread threadId={'thread3'} style={{ width: 320 }} autoFocus={false} />
       </div>
     </div>
   );
