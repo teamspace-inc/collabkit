@@ -171,6 +171,25 @@ globalStyle(`${website} code`, {
   color: vars.color.textContrastHigh,
 });
 
+export const header = style({
+  width: '90vw',
+  padding: '0 5vw',
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  right: 0,
+  zIndex: 2,
+  display: 'flex',
+  justifyContent: 'center',
+});
+
+export const headerInner = style({
+  display: 'flex',
+  flex: 1,
+  alignItems: 'center',
+  maxWidth: '1352px',
+});
+
 export const a = style({
   color: vars.color.textContrastHigh,
 });

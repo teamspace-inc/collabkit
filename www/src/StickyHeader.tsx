@@ -1,4 +1,4 @@
-import { Header } from './UIKit';
+import { header, headerInner } from './styles/Website.css';
 
 export function StickyHeader(props: {
   invertFilter?: number;
@@ -7,10 +7,15 @@ export function StickyHeader(props: {
   style?: React.CSSProperties;
 }) {
   return (
-    <Header style={{ filter: `invert(${props.invertFilter ?? 0})`, ...props.style }}>
-      <div>{props.left}</div>
-      <div style={{ display: 'flex', flex: 1 }}></div>
-      <div style={{ display: 'flex' }}>{props.right}</div>
-    </Header>
+    <div
+      className={header}
+      style={{ filter: `invert(${props.invertFilter ?? 0})`, ...props.style }}
+    >
+      <div className={headerInner}>
+        <div>{props.left}</div>
+        <div style={{ display: 'flex', flex: 1 }}></div>
+        <div style={{ display: 'flex' }}>{props.right}</div>
+      </div>
+    </div>
   );
 }
