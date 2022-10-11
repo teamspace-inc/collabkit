@@ -4,6 +4,7 @@ import React from 'react';
 import { useSnapshot } from 'valtio';
 import { useApp } from '../hooks/useApp';
 import * as styles from '../styles/components/Profile.css';
+import { vars } from '../styles/theme';
 import { useTheme } from './ThemeContext';
 
 type ProfileContextValue = {
@@ -46,7 +47,6 @@ function AvatarPlaceholder({
   profile,
   ...props
 }: { size?: number; profile: Profile } & React.ComponentPropsWithoutRef<'div'>) {
-  const { themeTokens } = useTheme();
   return (
     <div
       {...props}
@@ -55,7 +55,7 @@ function AvatarPlaceholder({
         ...(size ? { width: size, height: size, lineHeight: `${size}px` } : {}),
         ...(profile.color
           ? {
-              backgroundColor: themeTokens?.avatar?.colors?.[profile.color],
+              backgroundColor: vars.avatar.colors[profile.color],
             }
           : {}),
       }}

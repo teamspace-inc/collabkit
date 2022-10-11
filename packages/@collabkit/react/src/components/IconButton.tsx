@@ -1,7 +1,7 @@
 import { IconContext } from 'phosphor-react';
-import React, { forwardRef, useMemo } from 'react';
+import React, { forwardRef } from 'react';
 import * as styles from '../styles/components/IconButton.css';
-import { useTheme } from './ThemeContext';
+import { vars } from '../styles/theme';
 
 type Props = {
   children: React.ReactNode;
@@ -11,14 +11,11 @@ type Props = {
   active?: boolean;
 } & React.ComponentProps<'div'>;
 
+const iconContextValue = { color: vars.iconButton.color, weight: 'bold', size: 16 };
+
 export const IconButton = forwardRef<HTMLDivElement, Props>(function IconButton(props: Props, ref) {
   const { active, ...otherProps } = props;
-  const { themeTokens } = useTheme();
   const className = props.className ?? styles.button({ active });
-  const iconContextValue = useMemo(
-    () => ({ color: themeTokens?.iconButton?.color, weight: 'bold', size: 16 }),
-    [themeTokens]
-  );
 
   return (
     <div {...otherProps} className={className} ref={ref}>
