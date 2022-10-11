@@ -98,7 +98,7 @@ export const PreviewThread = forwardRef<Handle, PopoverThreadProps>(function Pop
                   style={{ paddingTop: '16px' }}
                 >
                   <Comment.Content>
-                    <Comment.Header className={styles.commentHeader}>
+                    <Comment.Header className={styles.commentHeader()}>
                       <Profile.Avatar />
                       <Comment.NameAndTimestampWrapper>
                         <Comment.CreatorName />
@@ -179,11 +179,11 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
                 ) : null)}
               {!isEmpty && list ? (
                 <CommentList.Root className={styles.commentList}>
-                  {list.map((group, i) =>
+                  {list.map((group) =>
                     group.map((event) => (
                       <Comment.Root className={styles.comment} eventId={event.id} key={event.id}>
                         <Comment.Content>
-                          <Comment.Header className={styles.commentHeader}>
+                          <Comment.Header className={styles.commentHeader()}>
                             <Profile.Avatar />
                             <Comment.NameAndTimestampWrapper>
                               <Comment.CreatorName />

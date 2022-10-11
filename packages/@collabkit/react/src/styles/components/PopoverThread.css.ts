@@ -2,6 +2,7 @@ import { style } from '@vanilla-extract/css';
 import { vars } from '../theme';
 import * as composerStyles from './Composer.css';
 import * as commentStyles from './Comment.css';
+import { recipe } from '@vanilla-extract/recipes';
 
 export const root = style({
   boxSizing: 'border-box',
@@ -39,12 +40,15 @@ export const comment = style([
   },
 ]);
 
-export const commentHeader = style({
-  display: vars.comment.header.display,
-  flex: '1',
-  flexDirection: vars.comment.header.flexDirection,
-  gap: vars.comment.header.gap,
-  alignItems: vars.comment.header.alignItems,
+export const commentHeader = recipe({
+  base: {
+    display: 'flex',
+    flex: '1',
+    flexDirection: 'row',
+    gap: vars.comment.header.gap,
+    alignItems: 'baseline',
+  },
+  variants: {},
 });
 
 export const composer = style([

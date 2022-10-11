@@ -9,21 +9,11 @@ export const CommentTheme = {
     },
     header: {
       gap: 'comment-header-gap',
-      display: 'comment-header-display',
-      flexDirection: 'comment-header-flex-direction',
-      alignItems: 'comment-header-align-items',
-      justifyContent: 'comment-header-justify-content',
       nameAndTimestamp: {
         gap: 'comment-header-name-and-timestamp-gap',
-        display: 'comment-header-name-and-timestamp-display',
-        flexDirection: 'comment-header-name-and-timestamp-flex-direction',
-        alignItems: 'comment-header-name-and-timestamp-align-items',
       },
       profile: {
         gap: 'comment-header-profile-gap',
-        display: 'comment-header-profile-display',
-        flexDirection: 'comment-header-profile-flex-direction',
-        alignItems: 'comment-header-profile-align-items',
       },
     },
     content: {

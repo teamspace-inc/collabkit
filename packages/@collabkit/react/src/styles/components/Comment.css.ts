@@ -2,6 +2,7 @@ import { globalStyle, style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
 import { calc } from '@vanilla-extract/css-utils';
 import { vars } from '../theme';
+
 export const root = recipe({
   base: {
     display: 'flex',
@@ -43,15 +44,15 @@ export const root = recipe({
 
 export const nameAndTimestampWrapper = style({
   flex: 1,
-  display: vars.comment.header.nameAndTimestamp.display,
-  flexDirection: vars.comment.header.nameAndTimestamp.flexDirection,
-  gap: vars.comment.header.nameAndTimestamp.gap,
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'baseline',
+  gap: vars.space[1],
 });
 
 export const inlineModal = style({
   background: vars.color.surface,
   borderRadius: '6px',
-  // padding: `${vars.space[1]} ${vars.space[2]}`,
 });
 
 export const content = recipe({
@@ -97,19 +98,11 @@ export const editor = style({
 export const header = style({
   flex: '1',
   gap: vars.comment.header.gap,
-  display: vars.comment.header.display,
-  flexDirection: vars.comment.header.flexDirection,
-  alignItems: vars.comment.header.alignItems,
-  justifyContent: vars.comment.header.justifyContent,
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'flex-start',
+  justifyContent: 'space-between',
 });
-
-// export const headerProfile = style({
-//   display: vars.comment.header.profile.display,
-//   flexDirection: vars.comment.header.profile.flexDirection,
-//   gap: vars.comment.header.profile.gap,
-//   alignItems: vars.comment.header.profile.alignItems,
-//   flex: 1,
-// });
 
 export const timestamp = style({
   fontSize: vars.comment.timestamp.fontSize,

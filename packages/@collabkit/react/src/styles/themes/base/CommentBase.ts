@@ -11,21 +11,11 @@ export const CommentBase = {
     },
     header: {
       gap: vars.space[2],
-      display: 'flex',
-      flexDirection: 'row',
-      alignItems: 'flex-start',
-      justifyContent: 'space-between',
       nameAndTimestamp: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'baseline',
         gap: vars.space[1],
       },
       profile: {
         gap: vars.space[2],
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
       },
     },
     content: {
