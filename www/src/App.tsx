@@ -203,6 +203,7 @@ export default function App() {
       apiKey={apiKey}
       appId={appId}
       _demoStore={store}
+      _isDemo={true}
       workspace={workspace}
       user={{ id: 'anon', name: 'Anonymous' }}
       mentionableUsers={[]}

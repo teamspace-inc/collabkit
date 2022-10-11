@@ -44,14 +44,14 @@ export function CustomisationDoc() {
       <DocDemoContainer style={{ position: 'relative' }}>
         <ThemeName>Light Theme</ThemeName>
         <div style={threadSize}>
-          <Thread threadId={'bar'} />
+          <Thread threadId={'thread1'} />
         </div>
       </DocDemoContainer>
       <DocDemoContainer style={{ position: 'relative' }}>
         <ThemeName>Dark Theme</ThemeName>
         <div style={threadSize}>
           <ThemeProvider theme="dark">
-            <Thread threadId={'bar'} />
+            <Thread threadId={'thread1'} />
           </ThemeProvider>
         </div>
       </DocDemoContainer>
