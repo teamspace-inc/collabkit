@@ -1,70 +1,72 @@
-import { vars } from '../../theme';
-
 export const ButtonBase = {
   iconButton: {
-    background: 'transparent',
-    color: vars.color.icon,
-    size: '24px',
+    background: 'initial',
+    color: 'initial',
+    size: 'initial',
     active: {
-      background: vars.color.surfaceOverlay,
+      background: 'initial',
     },
     hover: {
-      background: vars.color.surfaceOverlay,
+      background: 'initial',
     },
   },
   buttonGroup: {
-    gap: vars.space[1],
-    padding: `0px ${vars.space[4]} ${vars.space[4]}`,
+    gap: 'initial',
+    padding: 'initial',
   },
   button: {
-    fontSize: vars.text.base.fontSize,
-    lineHeight: vars.text.base.lineHeight,
-    fontWeight: vars.fontWeights.regular,
-    letterSpacing: vars.text.base.letterSpacing,
-    borderRadius: vars.space[1],
+    fontSize: 'initial',
+    lineHeight: 'initial',
+    fontWeight: 'initial',
+    letterSpacing: 'initial',
+    borderRadius: 'initial',
     primary: {
-      color: vars.color.textPrimary,
-      background: 'transparent',
-      letterSpacing: vars.button.letterSpacing,
-      fontWeight: vars.fontWeights.bold,
-      fontSize: vars.button.fontSize,
-      lineHeight: vars.button.lineHeight,
+      color: 'initial',
+      background: 'initial',
+      letterSpacing: 'initial',
+      fontWeight: 'initial',
+      fontSize: 'initial',
+      lineHeight: 'initial',
       active: {
-        color: vars.button.primary.color,
-        background: vars.color.surfaceOverlay,
+        color: 'initial',
+        background: 'initial',
       },
       hover: {
-        color: vars.button.primary.color,
-        background: vars.color.surfaceOverlay,
+        color: 'initial',
+        background: 'initial',
       },
+
+      // these are unused atm
       disabled: {
-        color: vars.button.disabled.color,
-        background: vars.button.disabled.background,
+        color: 'initial',
+        background: 'initial',
       },
     },
     secondary: {
-      color: vars.color.textSecondary,
-      background: 'transparent',
-      fontWeight: vars.button.fontWeight,
-      letterSpacing: vars.button.letterSpacing,
-      fontSize: vars.button.fontSize,
-      lineHeight: vars.button.lineHeight,
+      color: 'initial',
+      background: 'initial',
+      fontWeight: 'initial',
+      letterSpacing: 'initial',
+      fontSize: 'initial',
+      lineHeight: 'initial',
       active: {
-        color: vars.button.secondary.color,
-        background: vars.color.surfaceOverlay,
+        color: 'initial',
+        background: 'initial',
       },
       hover: {
-        color: vars.button.secondary.color,
-        background: vars.color.surfaceOverlay,
+        color: 'initial',
+        background: 'initial',
       },
+
+      // these are unused atm
       disabled: {
-        color: vars.button.disabled.color,
-        background: vars.button.disabled.background,
+        color: 'initial',
+        background: 'initial',
       },
     },
     disabled: {
-      color: vars.color.textDisabled,
-      background: 'transparent',
+      color: 'initial',
+      background: 'initial',
     },
   },
 };

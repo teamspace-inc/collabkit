@@ -1,39 +1,37 @@
-import { vars } from '../../theme';
-
 export const CommentBase = {
   comment: {
-    paddingTop: vars.space[2],
-    paddingBottom: vars.space[2],
-    paddingLeft: vars.space[4],
-    paddingRight: vars.space[4],
+    paddingTop: 'initial',
+    paddingBottom: 'initial',
+    paddingLeft: 'initial',
+    paddingRight: 'initial',
     hover: {
-      background: 'unset',
+      background: 'initial',
     },
     header: {
-      gap: vars.space[2],
+      gap: 'initial',
       nameAndTimestamp: {
-        gap: vars.space[1],
+        gap: 'initial',
       },
       profile: {
-        gap: vars.space[2],
+        gap: 'initial',
       },
     },
     content: {
-      gap: vars.space[2],
+      gap: 'initial',
     },
     body: {
-      color: vars.color.textPrimary,
-      fontSize: vars.text.base.fontSize,
-      lineHeight: vars.text.base.lineHeight,
-      letterSpacing: vars.text.base.letterSpacing,
-      fontWeight: vars.fontWeights.regular,
+      color: 'initial',
+      fontSize: 'initial',
+      lineHeight: 'initial',
+      letterSpacing: 'initial',
+      fontWeight: 'initial',
     },
     timestamp: {
-      color: vars.color.textSecondary,
-      fontSize: vars.text.small.fontSize,
-      lineHeight: vars.text.small.lineHeight,
-      letterSpacing: vars.text.small.letterSpacing,
-      fontWeight: vars.fontWeights.regular,
+      color: 'initial',
+      fontSize: 'initial',
+      lineHeight: 'initial',
+      letterSpacing: 'initial',
+      fontWeight: 'initial',
     },
   },
 };

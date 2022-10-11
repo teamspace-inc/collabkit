@@ -1,4 +1,4 @@
-import { globalStyle, style } from '@vanilla-extract/css';
+import { fallbackVar, globalStyle, style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
 import { calc } from '@vanilla-extract/css-utils';
 import { vars } from '../theme';
@@ -11,14 +11,14 @@ export const root = recipe({
     gap: vars.space[2],
     position: 'relative',
     maxWidth: calc.subtract('100%', vars.space[2]),
-    paddingTop: vars.comment.paddingTop,
-    paddingBottom: vars.comment.paddingBottom,
-    paddingLeft: vars.comment.paddingLeft,
-    paddingRight: vars.comment.paddingBottom,
+    paddingTop: fallbackVar(vars.comment.paddingTop, vars.space[2]),
+    paddingBottom: fallbackVar(vars.comment.paddingBottom, vars.space[2]),
+    paddingLeft: fallbackVar(vars.comment.paddingLeft, vars.space[4]),
+    paddingRight: fallbackVar(vars.comment.paddingBottom, vars.space[4]),
 
     selectors: {
       '&:hover': {
-        backgroundColor: vars.comment.hover.background,
+        backgroundColor: fallbackVar(vars.comment.hover.background, 'none'),
       },
     },
   },
@@ -26,16 +26,16 @@ export const root = recipe({
   variants: {
     type: {
       inline: {
-        paddingTop: calc.divide(vars.comment.paddingTop, 2),
-        paddingBottom: calc.divide(vars.comment.paddingBottom, 2),
+        paddingTop: fallbackVar(vars.comment.paddingTop, vars.space[1]),
+        paddingBottom: fallbackVar(vars.comment.paddingBottom, vars.space[1]),
       },
       'inline-start': {
-        paddingTop: calc.divide(vars.comment.paddingTop, 2),
-        paddingBottom: calc.divide(vars.comment.paddingBottom, 2),
+        paddingTop: fallbackVar(vars.comment.paddingTop, vars.space[1]),
+        paddingBottom: fallbackVar(vars.comment.paddingBottom, vars.space[1]),
       },
       'inline-end': {
-        paddingTop: calc.divide(vars.comment.paddingTop, 2),
-        paddingBottom: calc.divide(vars.comment.paddingBottom, 2),
+        paddingTop: fallbackVar(vars.comment.paddingTop, vars.space[1]),
+        paddingBottom: fallbackVar(vars.comment.paddingBottom, vars.space[1]),
       },
       default: {},
     },
@@ -47,7 +47,7 @@ export const nameAndTimestampWrapper = style({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'baseline',
-  gap: vars.comment.header.nameAndTimestamp.gap,
+  gap: fallbackVar(vars.comment.header.nameAndTimestamp.gap, vars.space[1]),
 });
 
 export const inlineModal = style({
@@ -61,7 +61,7 @@ export const content = recipe({
     position: 'relative',
     flexDirection: 'column',
     flex: '1',
-    gap: vars.comment.content.gap,
+    gap: fallbackVar(vars.comment.content.gap, vars.space[1]),
   },
   variants: {
     // indents the comment to account
@@ -76,16 +76,16 @@ export const content = recipe({
 });
 
 export const body = style({
-  fontSize: vars.comment.body.fontSize,
-  fontWeight: vars.comment.body.fontWeight,
-  letterSpacing: vars.comment.body.letterSpacing,
-  lineHeight: vars.comment.body.lineHeight,
+  fontSize: fallbackVar(vars.comment.body.fontSize, vars.text.base.fontSize),
+  fontWeight: fallbackVar(vars.comment.body.fontWeight, vars.fontWeights.regular),
+  letterSpacing: fallbackVar(vars.comment.body.letterSpacing, vars.text.base.letterSpacing),
+  lineHeight: fallbackVar(vars.comment.body.lineHeight, vars.text.base.lineHeight),
 
   position: 'relative',
   wordBreak: 'break-word',
   overflowWrap: 'break-word',
-  minHeight: vars.comment.body.lineHeight, // prevents flicker
-  color: vars.comment.body.color,
+  minHeight: fallbackVar(vars.comment.body.lineHeight, vars.text.base.lineHeight), // prevents flicker
+  color: fallbackVar(vars.comment.body.color, vars.color.textPrimary),
 });
 
 export const editor = style({
@@ -97,7 +97,7 @@ export const editor = style({
 
 export const header = style({
   flex: '1',
-  gap: vars.comment.header.gap,
+  gap: fallbackVar(vars.comment.header.gap, vars.space[2]),
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'flex-start',
@@ -105,15 +105,15 @@ export const header = style({
 });
 
 export const timestamp = style({
-  fontSize: vars.comment.timestamp.fontSize,
-  fontWeight: vars.comment.timestamp.fontWeight,
-  letterSpacing: vars.comment.timestamp.letterSpacing,
-  lineHeight: vars.comment.timestamp.lineHeight,
+  fontSize: fallbackVar(vars.comment.timestamp.fontSize, vars.text.small.fontSize),
+  fontWeight: fallbackVar(vars.comment.timestamp.fontWeight, vars.fontWeights.regular),
+  letterSpacing: fallbackVar(vars.comment.timestamp.letterSpacing, vars.text.small.letterSpacing),
+  lineHeight: fallbackVar(vars.comment.timestamp.lineHeight, vars.text.small.lineHeight),
 
   textDecoration: 'none',
   overflow: 'hidden',
   textOverflow: 'ellipsis',
-  color: vars.comment.timestamp.color,
+  color: fallbackVar(vars.comment.timestamp.color, vars.color.textSecondary),
 });
 
 export const actions = style({
@@ -130,9 +130,9 @@ export const menu = style({
   cursor: 'pointer',
   pointerEvents: 'all',
   minWidth: 110,
-  borderRadius: vars.space[1],
-  background: vars.menu.background,
-  boxShadow: vars.shadow.standard,
+  borderRadius: fallbackVar(vars.menu.borderRadius, vars.space[1]),
+  background: fallbackVar(vars.menu.background, vars.color.surface),
+  boxShadow: fallbackVar(vars.menu.boxShadow, vars.shadow.standard),
   outline: 'none',
 
   selectors: {
@@ -153,17 +153,17 @@ export const menuItem = style({
   padding: `${vars.space[1]} ${vars.space[2]}`,
   borderRadius: vars.space[1],
   cursor: 'pointer',
-  background: vars.menu.background,
-  color: vars.menu.item.color,
-  fontSize: vars.menu.item.fontSize,
-  lineHeight: vars.menu.item.lineHeight,
-  fontWeight: vars.menu.item.fontWeight,
-  letterSpacing: vars.menu.item.letterSpacing,
+  background: fallbackVar(vars.menu.background, vars.color.surface),
+  color: fallbackVar(vars.menu.item.color, vars.color.textPrimary),
+  fontSize: fallbackVar(vars.menu.item.fontSize, vars.text.small.fontSize),
+  lineHeight: fallbackVar(vars.menu.item.lineHeight, vars.text.small.lineHeight),
+  fontWeight: fallbackVar(vars.menu.item.fontWeight, vars.fontWeights.regular),
+  letterSpacing: fallbackVar(vars.menu.item.letterSpacing, vars.text.small.letterSpacing),
 
   selectors: {
     '&:focus, &:not([disabled]):active': {
-      color: vars.menu.item.active.color,
-      background: vars.menu.item.active.background,
+      color: fallbackVar(vars.menu.item.active.color, vars.color.textPrimary),
+      background: fallbackVar(vars.menu.item.active.background, vars.color.surfaceOverlay),
     },
     '&:not(:first-of-type)': {
       borderTopRightRadius: 0,
@@ -184,32 +184,38 @@ export const markdownLinksNotClickable = style({});
 globalStyle(`${markdown} p`, {
   margin: '0 !important',
   padding: '0 !important',
-  fontSize: `${vars.comment.body.fontSize} !important`,
-  fontWeight: `${vars.comment.body.fontWeight} !important`,
-  color: `${vars.comment.body.color} !important`,
-  lineHeight: `${vars.comment.body.lineHeight} !important`,
-  letterSpacing: `${vars.comment.body.letterSpacing} !important`,
+  fontSize: `${fallbackVar(vars.comment.body.fontSize, vars.text.base.fontSize)} !important`,
+  fontWeight: `${fallbackVar(vars.comment.body.fontWeight, vars.fontWeights.regular)} !important`,
+  color: `${fallbackVar(vars.comment.body.color, vars.color.textPrimary)} !important`,
+  lineHeight: `${fallbackVar(vars.comment.body.lineHeight, vars.text.base.lineHeight)} !important`,
+  letterSpacing: `${fallbackVar(
+    vars.comment.body.letterSpacing,
+    vars.text.base.letterSpacing
+  )} !important`,
 });
 
 globalStyle(`${markdown} a`, {
   textDecoration: 'none !important',
-  fontWeight: `${vars.mentions.pill.fontWeight} !important`,
-  color: `${vars.mentions.pill.color} !important`,
+  fontWeight: `${fallbackVar(vars.mentions.pill.fontWeight, vars.fontWeights.bold)} !important`,
+  color: `${fallbackVar(vars.mentions.pill.color, vars.color.textPrimary)} !important`,
 });
 
 globalStyle(`${markdownLinksNotClickable} p`, {
   margin: '0 !important',
   padding: '0 !important',
-  fontSize: `${vars.comment.body.fontSize} !important`,
-  fontWeight: `${vars.comment.body.fontWeight} !important`,
-  color: `${vars.comment.body.color} !important`,
-  lineHeight: `${vars.comment.body.lineHeight} !important`,
-  letterSpacing: `${vars.comment.body.letterSpacing} !important`,
+  fontSize: `${fallbackVar(vars.comment.body.fontSize, vars.text.base.fontSize)} !important`,
+  fontWeight: `${fallbackVar(vars.comment.body.fontWeight, vars.fontWeights.regular)} !important`,
+  color: fallbackVar(vars.comment.body.color, vars.color.textPrimary),
+  lineHeight: `${fallbackVar(vars.comment.body.lineHeight, vars.text.base.lineHeight)} !important`,
+  letterSpacing: `${fallbackVar(
+    vars.comment.body.letterSpacing,
+    vars.text.base.letterSpacing
+  )} !important`,
 });
 
 globalStyle(`${markdownLinksNotClickable} a`, {
   textDecoration: 'none !important',
-  fontWeight: `${vars.mentions.pill.fontWeight} !important`,
-  color: `${vars.mentions.pill.color} !important`,
+  fontWeight: `${fallbackVar(vars.mentions.pill.fontWeight, vars.fontWeights.bold)} !important`,
+  color: `${fallbackVar(vars.mentions.pill.color, vars.color.textPrimary)} !important`,
   cursor: 'default !important',
 });

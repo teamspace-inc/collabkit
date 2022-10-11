@@ -1,25 +1,27 @@
+import { fallbackVar } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
 import { vars } from '../theme';
+
 export const button = recipe({
   base: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    height: vars.iconButton.size,
-    width: vars.iconButton.size,
+    height: fallbackVar(vars.iconButton.size, '24px'),
+    width: fallbackVar(vars.iconButton.size, '24px'),
     cursor: 'pointer',
     userSelect: 'none',
     pointerEvents: 'all',
     borderRadius: '4px',
-    color: vars.color.textPrimary,
-    background: vars.iconButton.background,
+    color: fallbackVar(vars.iconButton.color, vars.color.icon),
+    background: fallbackVar(vars.iconButton.background, 'transparent'),
 
     selectors: {
       '&:active': {
-        background: vars.iconButton.active.background,
+        background: fallbackVar(vars.iconButton.active.background, vars.color.surfaceOverlay),
       },
       '&:hover': {
-        background: vars.iconButton.hover.background,
+        background: fallbackVar(vars.iconButton.hover.background, vars.color.surfaceOverlay),
       },
     },
   },

@@ -1,4 +1,4 @@
-import { style } from '@vanilla-extract/css';
+import { fallbackVar, style } from '@vanilla-extract/css';
 import { name as profileName } from './Profile.css';
 import { timestamp as commentTimestamp } from './Comment.css';
 import { vars } from '../theme';
@@ -6,11 +6,14 @@ import { calc } from '@vanilla-extract/css-utils';
 import { recipe } from '@vanilla-extract/recipes';
 
 export const replyCount = style({
-  color: vars.inbox.item.replyCount.color,
-  fontSize: vars.inbox.item.replyCount.fontSize,
-  lineHeight: vars.inbox.item.replyCount.lineHeight,
-  fontWeight: vars.inbox.item.replyCount.fontWeight,
-  letterSpacing: vars.inbox.item.replyCount.letterSpacing,
+  color: fallbackVar(vars.inbox.item.replyCount.color, vars.color.textSecondary),
+  fontSize: fallbackVar(vars.inbox.item.replyCount.fontSize, vars.text.small.fontSize),
+  lineHeight: fallbackVar(vars.inbox.item.replyCount.lineHeight, vars.text.small.lineHeight),
+  fontWeight: fallbackVar(vars.inbox.item.replyCount.fontWeight, vars.fontWeights.regular),
+  letterSpacing: fallbackVar(
+    vars.inbox.item.replyCount.letterSpacing,
+    vars.text.small.letterSpacing
+  ),
 });
 
 export const name = style([profileName, {}]);
@@ -32,10 +35,10 @@ export const nameAndTimestampWrapper = style({
 });
 
 export const unreadDot = style({
-  width: vars.inbox.item.unreadDot.width,
-  height: vars.inbox.item.unreadDot.height,
-  borderRadius: vars.inbox.item.unreadDot.borderRadius,
-  background: vars.inbox.item.unreadDot.background,
+  width: fallbackVar(vars.inbox.item.unreadDot.width, vars.space[2]),
+  height: fallbackVar(vars.inbox.item.unreadDot.height, vars.space[2]),
+  borderRadius: fallbackVar(vars.inbox.item.unreadDot.borderRadius, '50%'),
+  background: fallbackVar(vars.inbox.item.unreadDot.background, vars.color.attention),
   position: 'absolute',
   left: `${calc(vars.inbox.item.paddingLeft).subtract(vars.inbox.item.unreadDot.width).negate()}`,
 });
@@ -61,24 +64,24 @@ export const timestamp = style([
 export const root = recipe({
   base: {
     display: 'flex',
-    borderBottom: vars.inbox.item.borderBottom,
+    borderBottom: fallbackVar(vars.inbox.item.borderBottom, `none`),
     flexDirection: 'column',
     flex: 1,
     cursor: 'pointer',
     boxSizing: 'border-box',
-    background: vars.color.background,
-    paddingTop: vars.inbox.item.paddingTop,
-    paddingBottom: vars.inbox.item.paddingBottom,
-    paddingLeft: vars.inbox.item.paddingLeft,
-    paddingRight: vars.inbox.item.paddingRight,
+    background: fallbackVar(vars.color.background, vars.color.background),
+    paddingTop: fallbackVar(vars.inbox.item.paddingTop, vars.space[4]),
+    paddingBottom: fallbackVar(vars.inbox.item.paddingBottom, vars.space[4]),
+    paddingLeft: fallbackVar(vars.inbox.item.paddingLeft, vars.space[4]),
+    paddingRight: fallbackVar(vars.inbox.item.paddingRight, vars.space[4]),
     userSelect: 'none',
     gap: '12px',
     selectors: {
       '&:hover': {
-        background: vars.color.surfaceOverlay,
+        background: fallbackVar(vars.color.surfaceOverlay, vars.color.surface),
       },
       '&:last-of-type': {
-        marginBottom: vars.inbox.item.paddingBottom,
+        marginBottom: fallbackVar(vars.inbox.item.paddingBottom, vars.color.surface),
       },
     },
   },
@@ -86,7 +89,7 @@ export const root = recipe({
   variants: {
     active: {
       true: {
-        background: vars.color.surfaceOverlay,
+        background: fallbackVar(vars.inbox.item.active.background, vars.color.surfaceOverlay),
       },
     },
   },

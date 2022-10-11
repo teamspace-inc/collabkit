@@ -11,7 +11,6 @@ export const PopoverThreadTheme = {
     },
     composer: {
       borderTop: 'popover-thread-composer-border-top',
-      alignItems: 'popover-thread-composer-align-items',
       padding: 'popover-thread-composer-padding',
       gap: 'popover-thread-composer-gap',
       contentEditable: {

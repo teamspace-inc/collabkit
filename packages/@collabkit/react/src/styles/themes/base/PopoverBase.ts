@@ -1,26 +1,23 @@
-import { vars } from '../../theme';
-
 export const PopoverThreadBase = {
   popoverThread: {
-    background: vars.color.background,
-    border: 'none',
-    borderRadius: vars.space[3],
-    boxShadow: vars.shadow.high,
-    width: '264px',
-    padding: '0px',
+    background: 'initial',
+    border: 'initial',
+    borderRadius: 'initial',
+    boxShadow: 'initial',
+    width: 'initial',
+    padding: 'initial',
     preview: {
-      boxShadow: vars.shadow.standard,
+      boxShadow: 'initial',
     },
     composer: {
-      borderTop: `0px solid ${vars.color.border}`,
-      alignItems: 'flex-end',
-      padding: `0px ${vars.space[4]} ${vars.space[4]} ${vars.space[4]}`,
-      gap: vars.space[2],
+      borderTop: 'initial',
+      padding: 'initial',
+      gap: 'initial',
       contentEditable: {
-        border: `1px solid ${vars.color.border}`,
-        minHeight: '40px',
+        border: 'initial',
+        minHeight: 'initial',
         focus: {
-          border: `1px solid ${vars.color.border}`,
+          border: 'initial',
         },
       },
     },

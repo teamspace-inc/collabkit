@@ -1,15 +1,15 @@
-import { style } from '@vanilla-extract/css';
+import { fallbackVar, style } from '@vanilla-extract/css';
 import { vars } from '../theme';
 
 export const root = style({
   display: 'flex',
   flexDirection: 'column',
-  gap: '16px',
+  gap: fallbackVar(vars.inbox.gap, vars.space[4]),
   boxSizing: 'border-box',
   height: '100%',
-  width: vars.inbox.width,
+  width: fallbackVar(vars.inbox.width, '292px'),
   borderRadius: 0,
-  background: vars.color.background,
+  background: fallbackVar(vars.color.background, vars.color.background),
 });
 
 // export const emptyState = {
