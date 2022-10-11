@@ -1,21 +1,19 @@
-import { vars } from '../../theme';
-
 export const ProfileBase = {
   profile: {
     avatar: {
       borderRadius: '50%',
-      fontSize: vars.avatar.fontSize,
-      color: vars.color.background,
+      fontSize: 'initial',
+      color: 'initial',
       background: 'hsl(0, 0%, 60%)',
-      fontWeight: vars.fontWeights.bold,
+      fontWeight: 'initial',
     },
 
     name: {
-      color: vars.color.textPrimary,
-      fontSize: vars.text.base.fontSize,
-      fontWeight: vars.fontWeights.bold,
-      lineHeight: vars.text.base.lineHeight,
-      letterSpacing: vars.text.base.letterSpacing,
+      color: 'initial',
+      fontSize: 'initial',
+      fontWeight: 'initial',
+      lineHeight: 'initial',
+      letterSpacing: 'initial',
     },
   },
 };

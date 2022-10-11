@@ -1,16 +1,16 @@
-import { style } from '@vanilla-extract/css';
+import { fallbackVar, style } from '@vanilla-extract/css';
 import { vars } from '../theme';
 
 export const avatar = style({
   width: vars.avatar.size,
   height: vars.avatar.size,
   borderRadius: vars.profile.avatar.borderRadius,
-  fontSize: vars.profile.avatar.fontSize,
+  fontSize: fallbackVar(vars.profile.avatar.fontSize, vars.avatar.fontSize),
   lineHeight: vars.avatar.size,
-  color: vars.profile.avatar.color,
+  color: fallbackVar(vars.profile.avatar.color, vars.color.background),
   flexShrink: 0,
   background: vars.profile.avatar.background,
-  fontWeight: vars.fontWeights.bold,
+  fontWeight: fallbackVar(vars.profile.avatar.fontWeight, vars.fontWeights.bold),
   textAlign: 'center',
   verticalAlign: 'middle',
   cursor: 'inherit',
@@ -19,9 +19,9 @@ export const avatar = style({
 });
 
 export const name = style({
-  color: vars.profile.name.color,
-  fontSize: vars.profile.name.fontSize,
-  lineHeight: vars.profile.name.lineHeight,
-  fontWeight: vars.profile.name.fontWeight,
-  letterSpacing: vars.profile.name.letterSpacing,
+  color: fallbackVar(vars.profile.name.color, vars.color.textPrimary),
+  fontSize: fallbackVar(vars.profile.name.fontSize, vars.text.base.fontSize),
+  fontWeight: fallbackVar(vars.profile.name.fontWeight, vars.fontWeights.bold),
+  lineHeight: fallbackVar(vars.profile.name.lineHeight, vars.text.base.lineHeight),
+  letterSpacing: fallbackVar(vars.profile.name.letterSpacing, vars.text.base.letterSpacing),
 });
