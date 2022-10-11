@@ -37,12 +37,17 @@ export const commentList = style({
 const columnGap = createVar();
 const composerHorizontalPadding = createVar();
 
+const typingIndicatorLineHeight = fallbackVar(
+  vars.thread.typingIndicator.lineHeight,
+  vars.text.small.lineHeight
+);
+
 export const composer = style({
   display: 'flex',
   flexDirection: 'row',
   flexWrap: 'wrap',
   columnGap: columnGap,
-  padding: `0 ${composerHorizontalPadding} ${calc(vars.thread.typingIndicator.lineHeight)}`,
+  padding: `0 ${composerHorizontalPadding} ${typingIndicatorLineHeight}`,
 
   vars: {
     [composerHorizontalPadding]: vars.space[4],
@@ -58,7 +63,7 @@ export const typingIndicator = style({
   flexBasis: '100%',
   color: fallbackVar(vars.thread.typingIndicator.color, vars.color.textSecondary),
   fontSize: fallbackVar(vars.thread.typingIndicator.fontSize, vars.text.small.fontSize),
-  lineHeight: fallbackVar(vars.thread.typingIndicator.lineHeight, vars.text.small.lineHeight),
+  lineHeight: typingIndicatorLineHeight,
   letterSpacing: fallbackVar(
     vars.thread.typingIndicator.letterSpacing,
     vars.text.small.letterSpacing
