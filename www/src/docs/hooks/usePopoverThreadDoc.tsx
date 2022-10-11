@@ -1,15 +1,16 @@
-import { H2, H3 } from '../../UIKit';
 import { renderCodeSnippet } from '../CodeEditor';
 import { Markdown } from '../Markdown';
 
 export function UsePopoverThreadDoc() {
   return (
     <>
-      <H2>Open or close a Popover Thread.</H2>
+      <h2>Open or close a Popover Thread.</h2>
       <div>
-        <H3>Usage</H3>
+        <h3>Usage</h3>
         <p>
-          <code>usePopoverThread</code> lets you
+          <code>usePopoverThread</code> lets you control a popover thread. It returns{' '}
+          <code>setPopoverState</code> which can be used to <code>open</code> or <code>close</code>{' '}
+          a thread or show its <code>preview</code>.
         </p>
         <p>
           Must be called within a <code>CollabKit.Provider</code>
