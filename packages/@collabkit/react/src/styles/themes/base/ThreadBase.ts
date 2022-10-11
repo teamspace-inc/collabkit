@@ -15,10 +15,10 @@ export const ThreadBase = {
     },
     typingIndicator: {
       color: vars.color.textSecondary,
-      fontSize: vars.text.base.fontSize,
-      lineHeight: vars.space[4],
+      fontSize: vars.text.small.fontSize,
+      lineHeight: vars.text.small.lineHeight,
       fontWeight: vars.fontWeights.regular,
-      letterSpacing: vars.text.base.letterSpacing,
+      letterSpacing: vars.text.small.letterSpacing,
     },
   },
 };

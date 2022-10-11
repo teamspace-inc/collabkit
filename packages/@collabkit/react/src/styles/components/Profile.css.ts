@@ -2,11 +2,11 @@ import { style } from '@vanilla-extract/css';
 import { vars } from '../theme';
 
 export const avatar = style({
-  width: vars.profile.avatar.width ?? vars.avatar.size,
-  height: vars.profile.avatar.height ?? vars.avatar.size,
+  width: vars.avatar.size,
+  height: vars.avatar.size,
   borderRadius: vars.profile.avatar.borderRadius,
   fontSize: vars.profile.avatar.fontSize,
-  lineHeight: vars.profile.avatar.height ?? vars.avatar.size,
+  lineHeight: vars.avatar.size,
   color: vars.profile.avatar.color,
   flexShrink: 0,
   background: vars.profile.avatar.background,

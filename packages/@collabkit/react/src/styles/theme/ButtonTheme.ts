@@ -21,12 +21,14 @@ export const ButtonTheme = {
     lineHeight: 'button-line-height',
     borderRadius: 'button-border-radius',
     primary: {
-      letterSpacing: 'button-primary-letter-spacing',
+      fontSize: 'button-primary-font-size',
       fontWeight: 'button-primary-font-weight',
+      lineHeight: 'button-primary-line-height',
+      letterSpacing: 'button-primary-letter-spacing',
+
       color: 'button-primary-color',
       background: 'button-primary-background',
-      fontSize: 'button-primary-font-size',
-      lineHeight: 'button-primary-line-height',
+
       active: {
         color: 'button-primary-active-color',
         background: 'button-primary-active-background',

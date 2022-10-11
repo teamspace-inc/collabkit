@@ -47,7 +47,7 @@ export const nameAndTimestampWrapper = style({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'baseline',
-  gap: vars.space[1],
+  gap: vars.comment.header.nameAndTimestamp.gap,
 });
 
 export const inlineModal = style({
@@ -68,7 +68,7 @@ export const content = recipe({
     // for a profile image
     profileIndent: {
       true: {
-        marginLeft: calc.add(vars.profile.avatar.width, vars.space[2]),
+        marginLeft: calc.add(vars.avatar.size, vars.space[2]),
       },
       false: {},
     },

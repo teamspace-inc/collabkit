@@ -3,8 +3,6 @@ import { vars } from '../../theme';
 export const ProfileBase = {
   profile: {
     avatar: {
-      width: vars.avatar.size,
-      height: vars.avatar.size,
       borderRadius: '50%',
       fontSize: vars.avatar.fontSize,
       color: vars.color.background,

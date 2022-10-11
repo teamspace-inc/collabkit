@@ -134,7 +134,7 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
   const { store, events } = useApp();
   const { workspaceId, profiles, userId } = useSnapshot(store);
 
-  const { isEmpty, list, timeline } = useThread({
+  const { isEmpty, list } = useThread({
     ...props,
     store,
     workspaceId,

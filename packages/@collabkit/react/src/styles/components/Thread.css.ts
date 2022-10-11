@@ -15,7 +15,7 @@ export const root = style({
   border: vars.thread.border,
   borderRadius: vars.thread.borderRadius,
   boxShadow: vars.thread.boxShadow,
-  paddingTop: '16px',
+  paddingTop: vars.space[2],
   textAlign: 'left',
   minWidth: '240px',
 });
@@ -41,7 +41,7 @@ export const composer = style({
   flexDirection: 'row',
   flexWrap: 'wrap',
   columnGap: columnGap,
-  padding: `0 ${composerHorizontalPadding}`,
+  padding: `0 ${composerHorizontalPadding} ${calc(vars.thread.typingIndicator.lineHeight)}`,
 
   vars: {
     [composerHorizontalPadding]: vars.space[4],
@@ -51,7 +51,8 @@ export const composer = style({
 
 export const typingIndicator = style({
   height: vars.thread.typingIndicator.lineHeight,
-  paddingLeft: calc.add(vars.profile.avatar.width, columnGap),
+  paddingLeft: calc.add(vars.avatar.size, columnGap),
+  paddingTop: calc.divide(vars.space[1]),
   overflow: 'hidden',
   flexBasis: '100%',
   color: vars.thread.typingIndicator.color,

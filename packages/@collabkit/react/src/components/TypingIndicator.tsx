@@ -3,8 +3,8 @@ import { useSnapshot } from 'valtio';
 import { useApp } from '../hooks/useApp';
 import type { Profile } from '@collabkit/core';
 import { useThreadContext } from '../hooks/useThreadContext';
-import { transitionClassNames } from '../styles/components/TypingIndicator.css';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
+// import { transitionClassNames } from '../styles/components/TypingIndicator.css';
+// import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 function getNames(props: {
   userId: string;
@@ -59,16 +59,19 @@ export function TypingIndicator(props: { className?: string }) {
   const nodeRef = React.useRef(null);
 
   return (
-    <TransitionGroup style={{ flexBasis: '100%', height: 18 }}>
-      {names.length
-        ? [
-            <CSSTransition key="" timeout={300} classNames={transitionClassNames} nodeRef={nodeRef}>
-              <div ref={nodeRef} className={props.className}>
-                <TypingIndicatorText names={names} />
-              </div>
-            </CSSTransition>,
-          ]
-        : []}
-    </TransitionGroup>
+    // <TransitionGroup style={{ flexBasis: '100%', height: 18 }}>
+    //   {names.length
+    //     ? [
+    //         <CSSTransition key="" timeout={300} classNames={transitionClassNames} nodeRef={nodeRef}>
+    //           <div ref={nodeRef} className={props.className}>
+    //             <TypingIndicatorText names={names} />
+    //           </div>
+    //         </CSSTransition>,
+    //       ]
+    //     : []}
+    // </TransitionGroup>
+    <div ref={nodeRef} className={props.className}>
+      <TypingIndicatorText names={names} />
+    </div>
   );
 }

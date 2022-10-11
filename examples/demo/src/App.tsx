@@ -70,6 +70,7 @@ function Demo() {
   const theme: CustomTheme | undefined =
     name in themes ? themes[name as keyof typeof themes] : undefined;
 
+  console.log(name, themes, theme);
   return (
     <CollabKitProvider
       colorScheme="light"
@@ -100,8 +101,8 @@ function Demo() {
         console.log('authRequired');
       }}
       user={user}
-      // theme={theme}
-      theme="dark"
+      theme={theme}
+      // theme="dark"
       // renderAvatar={CustomAvatar}
       mentionableUsers={'allWorkspace'}
     >

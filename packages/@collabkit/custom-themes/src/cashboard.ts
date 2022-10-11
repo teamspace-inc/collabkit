@@ -1,4 +1,24 @@
-export default {
+import { CustomTheme } from '@collabkit/react';
+
+export const cashboard: CustomTheme = {
+  text: {
+    base: {
+      fontSize: '14px',
+      lineHeight: '22px',
+    },
+    small: {
+      fontSize: '14px',
+      lineHeight: '22px',
+    },
+    large: {
+      fontSize: '14px',
+      lineHeight: '22px',
+    },
+    tiny: {
+      fontSize: '12px',
+      lineHeight: '18px',
+    },
+  },
   avatar: {
     size: '32px',
     fontSize: '14px',
@@ -35,6 +55,10 @@ export default {
         background: 'linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), #36B374',
       },
     },
+    disabled: {
+      color: '#B4BDC2',
+      background: '#E3E9ED',
+    },
   },
   profile: {
     name: {
@@ -46,14 +70,11 @@ export default {
   comment: {
     header: {
       gap: '12px',
-      alignItems: 'center',
-      justifyContent: 'center',
       profile: {
-        alignItems: 'center',
         gap: '12px',
       },
       nameAndTimestamp: {
-        gap: 0,
+        gap: '0px',
       },
     },
     content: {
@@ -80,6 +101,7 @@ export default {
       border: '1px solid #E3E9ED',
     },
     active: {
+      background: 'white',
       border: '1px solid #36B374',
     },
     borderRadius: '8px',
