@@ -5,7 +5,8 @@
   "files": [
     "dist/collabkit-react.d.ts",
     "dist/collabkit-react.js",
-    "dist/collabkit-react.umd.cjs"
+    "dist/collabkit-react.umd.cjs",
+    "dist/style.css"
   ],
   "types": "./dist/collabkit-react.d.ts",
   "main": "./dist/collabkit-react.umd.cjs",
