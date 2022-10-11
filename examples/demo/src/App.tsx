@@ -73,7 +73,6 @@ function Demo() {
   console.log(name, themes, theme);
   return (
     <CollabKitProvider
-      colorScheme="light"
       apiKey={apiKey}
       appId={appId}
       workspace={workspace}
