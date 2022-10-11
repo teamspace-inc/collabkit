@@ -5,7 +5,6 @@ import { useSnapshot } from 'valtio';
 import { useApp } from '../hooks/useApp';
 import * as styles from '../styles/components/Profile.css';
 import { vars } from '../styles/theme';
-import { useTheme } from './ThemeContext';
 
 type ProfileContextValue = {
   profileId: string;

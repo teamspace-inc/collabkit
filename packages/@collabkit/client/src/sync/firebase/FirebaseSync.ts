@@ -35,7 +35,6 @@ import { subscribeTimeline } from './subscribeTimeline';
 import { timelineRef, userTypingRef } from './refs';
 
 import { getApp, initializeApp } from 'firebase/app';
-import { InboxChangeEventHandler } from '@collabkit/core/src/sync';
 
 export function initFirebase() {
   initializeApp(
@@ -408,7 +407,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
     appId: string;
     workspaceId: string;
     subs: Subscriptions;
-    onInboxChange: InboxChangeEventHandler;
+    onInboxChange: Sync.InboxChangeEventHandler;
   }) {
     const inboxRef = query(
       ref(getDatabase(getApp('CollabKit')), `views/inbox/${props.appId}/${props.workspaceId}`),
