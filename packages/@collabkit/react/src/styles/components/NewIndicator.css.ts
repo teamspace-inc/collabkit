@@ -1,9 +1,10 @@
-import { style } from '@vanilla-extract/css';
+import { fallbackVar, style } from '@vanilla-extract/css';
 import { calc } from '@vanilla-extract/css-utils';
 import { vars } from '../theme';
+
 export const root = style({
   minWidth: 40,
-  height: vars.inbox.newIndicator.lineHeight,
+  height: fallbackVar(vars.newIndicator.lineHeight, '16px'),
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -11,7 +12,7 @@ export const root = style({
 });
 
 export const line = style({
-  background: vars.inbox.newIndicator.line.background,
+  background: fallbackVar(vars.newIndicator.line.background, vars.color.border),
   height: '1px',
   position: 'absolute',
   left: vars.comment.paddingLeft,
@@ -20,14 +21,14 @@ export const line = style({
 });
 
 export const textInlay = style({
-  background: vars.inbox.newIndicator.inlay.background,
+  background: fallbackVar(vars.newIndicator.inlay.background, vars.color.attention),
   display: 'inline-block',
-  color: vars.inbox.newIndicator.color,
-  fontSize: vars.inbox.newIndicator.fontSize,
-  fontWeight: vars.inbox.newIndicator.fontWeight,
-  lineHeight: vars.inbox.newIndicator.lineHeight,
-  letterSpacing: vars.inbox.newIndicator.letterSpacing,
-  padding: '0px 8px',
+  color: fallbackVar(vars.newIndicator.color, 'white'),
+  fontSize: fallbackVar(vars.newIndicator.fontSize, vars.text.tiny.fontSize),
+  fontWeight: fallbackVar(vars.newIndicator.fontWeight, vars.fontWeight.bold),
+  lineHeight: fallbackVar(vars.newIndicator.lineHeight, '16px'),
+  letterSpacing: fallbackVar(vars.newIndicator.letterSpacing, vars.text.tiny.letterSpacing),
+  padding: fallbackVar(vars.newIndicator.padding, '0px 8px'),
   position: 'relative',
-  borderRadius: calc.divide(vars.inbox.newIndicator.lineHeight, 2),
+  borderRadius: calc.divide(vars.newIndicator.lineHeight, 2),
 });

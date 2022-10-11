@@ -1,23 +1,8 @@
-import { vars } from '../../theme';
-
 export const InboxBase = {
   inbox: {
-    gap: vars.space[2],
-    width: '292px',
-    background: vars.color.background,
-    newIndicator: {
-      color: 'white',
-      fontSize: vars.text.tiny.fontSize,
-      lineHeight: '16px',
-      fontWeight: vars.fontWeight.bold,
-      letterSpacing: vars.text.tiny.letterSpacing,
-      inlay: {
-        background: vars.color.attention,
-      },
-      line: {
-        background: vars.color.border,
-      },
-    },
+    gap: 'initial',
+    width: 'initial',
+    background: 'initial',
     item: {
       gap: 'initial',
       paddingTop: 'initial',

@@ -4,12 +4,12 @@ import { vars } from '../theme';
 export const root = style({
   display: 'flex',
   flexDirection: 'column',
-  gap: fallbackVar(vars.inbox.gap, vars.space[4]),
+  gap: fallbackVar(vars.inbox.gap, vars.space[2]),
   boxSizing: 'border-box',
   height: '100%',
   width: fallbackVar(vars.inbox.width, '292px'),
   borderRadius: 0,
-  background: fallbackVar(vars.color.background, vars.color.background),
+  background: fallbackVar(vars.inbox.background, vars.color.background),
 });
 
 // export const emptyState = {

@@ -1,8 +1,7 @@
 export const FacepileTheme = {
   facepile: {
-    gap: 'facepile-gap',
+    overlap: 'facepile-overlap',
     avatar: {
-      size: 'facepile-avatar-size',
       borderSize: 'facepile-avatar-border-size',
       borderColor: 'facepile-avatar-border-color',
       hover: {

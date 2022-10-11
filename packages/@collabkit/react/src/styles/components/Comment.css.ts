@@ -61,7 +61,7 @@ export const content = recipe({
     position: 'relative',
     flexDirection: 'column',
     flex: '1',
-    gap: fallbackVar(vars.comment.content.gap, vars.space[1]),
+    gap: fallbackVar(vars.comment.content.gap, vars.space[2]),
   },
   variants: {
     // indents the comment to account

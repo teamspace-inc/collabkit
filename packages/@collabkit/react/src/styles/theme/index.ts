@@ -8,6 +8,7 @@ import { FacepileTheme } from './FacepileTheme';
 import { InboxTheme } from './InboxTheme';
 import { MentionsTheme } from './MentionsTheme';
 import { MenuTheme } from './MenuTheme';
+import { NewIndicatorTheme } from './NewIndicatorTheme';
 import { PopoverThreadTheme } from './PopoverThreadTheme';
 import { ProfileTheme } from './ProfileTheme';
 import { ScrollbarTheme } from './ScrollbarTheme';
@@ -36,6 +37,7 @@ export const vars = createGlobalThemeContract(
     ...SpaceTheme,
     ...TextTheme,
     ...ThreadTheme,
+    ...NewIndicatorTheme,
   },
   (value) => `collabkit-${value}`
 );

@@ -4,20 +4,6 @@ export const InboxTheme = {
     background: 'inbox-background',
     width: 'inbox-width',
 
-    newIndicator: {
-      color: 'inbox-new-indicator-color',
-      fontSize: 'inbox-new-indicator-font-size',
-      fontWeight: 'inbox-new-indicator-font-weight',
-      lineHeight: 'inbox-new-indicator-line-height',
-      letterSpacing: 'inbox-new-indicator-letter-spacing',
-      inlay: {
-        background: 'inbox-new-indicator-inlay-background',
-      },
-      line: {
-        background: 'inbox-new-indicator-line-background',
-      },
-    },
-
     item: {
       background: 'inbox-item-background',
       borderBottom: 'inbox-item-border-bottom',

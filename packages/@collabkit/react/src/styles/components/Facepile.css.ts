@@ -1,4 +1,4 @@
-import { style } from '@vanilla-extract/css';
+import { style, fallbackVar } from '@vanilla-extract/css';
 import { calc } from '@vanilla-extract/css-utils';
 import { recipe } from '@vanilla-extract/recipes';
 import { vars } from '../theme';
@@ -6,19 +6,24 @@ import { vars } from '../theme';
 export const root = style({
   display: 'flex',
   flexDirection: 'row',
-  marginLeft: `${calc(vars.facepile.gap).negate()}`,
+  marginLeft: `${calc(fallbackVar(vars.facepile.overlap, '4px'))}`,
 });
 
 export const avatarWrap = recipe({
   base: {
-    border: `${calc(vars.facepile.avatar.borderSize)} solid ${vars.facepile.avatar.borderColor}`,
-    marginLeft: `${calc(vars.facepile.gap).subtract(vars.facepile.avatar.borderSize)}`,
+    border: `${calc(fallbackVar(vars.facepile.avatar.borderSize, '2px'))} solid ${fallbackVar(
+      vars.facepile.avatar.borderColor,
+      vars.color.background
+    )}`,
+    marginLeft: `${calc(fallbackVar(vars.facepile.overlap, '4px'))
+      .negate()
+      .subtract(fallbackVar(vars.facepile.avatar.borderSize, '2px'))}`,
     borderRadius: '50%',
   },
   variants: {
     hover: {
       true: {
-        borderColor: vars.facepile.avatar.hover.borderColor,
+        borderColor: fallbackVar(vars.facepile.avatar.hover.borderColor, vars.color.surface),
       },
     },
   },

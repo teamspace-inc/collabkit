@@ -1,9 +1,9 @@
 export const ThreadBase = {
   thread: {
     background: 'initial',
-    border: 'none',
+    border: 'initial',
     borderRadius: 'initial',
-    boxShadow: 'none',
+    boxShadow: 'initial',
     header: {
       color: 'initial',
       fontSize: 'initial',

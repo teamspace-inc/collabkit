@@ -7,6 +7,7 @@ import { FacepileBase } from './base/FacepileBase';
 import { InboxBase } from './base/InboxBase';
 import { MentionsBase } from './base/MentionsBase';
 import { MenuBase } from './base/MenuBase';
+import { NewIndicatorBase } from './base/NewIndicatorBase';
 import { PopoverThreadBase } from './base/PopoverBase';
 import { ProfileBase } from './base/ProfileBase';
 import { ScrollbarBase } from './base/ScrollbarBase';
@@ -17,6 +18,7 @@ import { TextBase } from './base/TextBase';
 import { ThreadBase } from './base/ThreadBase';
 
 export const BaseTheme = {
+  ...NewIndicatorBase,
   ...ColorBase,
   ...TextBase,
   ...SpaceBase,
