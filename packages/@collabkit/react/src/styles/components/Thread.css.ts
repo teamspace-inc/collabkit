@@ -1,4 +1,4 @@
-import { createVar, style } from '@vanilla-extract/css';
+import { createVar, fallbackVar, style } from '@vanilla-extract/css';
 import { calc } from '@vanilla-extract/css-utils';
 import { vars } from '../theme';
 
@@ -11,9 +11,9 @@ export const root = style({
   alignItems: 'stretch',
   justifyItems: 'stretch',
   overflow: 'hidden',
-  background: vars.thread.background,
+  background: fallbackVar(vars.thread.background, vars.color.background),
   border: vars.thread.border,
-  borderRadius: vars.thread.borderRadius,
+  borderRadius: fallbackVar(vars.thread.borderRadius, vars.space[3]),
   boxShadow: vars.thread.boxShadow,
   paddingTop: vars.space[2],
   textAlign: 'left',
@@ -23,10 +23,11 @@ export const root = style({
 export const header = style({
   padding: '0px 16px 20px',
   display: 'flex',
-  color: vars.thread.header.color,
-  fontSize: vars.thread.header.fontSize,
-  fontWeight: vars.thread.header.fontWeight,
-  lineHeight: vars.thread.header.lineHeight,
+  color: fallbackVar(vars.thread.header.color, vars.color.textPrimary),
+  fontSize: fallbackVar(vars.thread.header.fontSize, vars.text.large.fontSize),
+  fontWeight: fallbackVar(vars.thread.header.fontWeight, vars.fontWeights.bold),
+  lineHeight: fallbackVar(vars.thread.header.lineHeight, vars.text.large.lineHeight),
+  letterSpacing: fallbackVar(vars.thread.header.letterSpacing, vars.text.large.letterSpacing),
 });
 
 export const commentList = style({
@@ -50,15 +51,18 @@ export const composer = style({
 });
 
 export const typingIndicator = style({
-  height: vars.thread.typingIndicator.lineHeight,
+  height: fallbackVar(vars.thread.typingIndicator.lineHeight),
   paddingLeft: calc.add(vars.avatar.size, columnGap),
   paddingTop: calc.divide(vars.space[1]),
   overflow: 'hidden',
   flexBasis: '100%',
-  color: vars.thread.typingIndicator.color,
-  fontSize: vars.thread.typingIndicator.fontSize,
-  lineHeight: vars.thread.typingIndicator.lineHeight,
-  letterSpacing: vars.thread.typingIndicator.letterSpacing,
+  color: fallbackVar(vars.thread.typingIndicator.color, vars.color.textSecondary),
+  fontSize: fallbackVar(vars.thread.typingIndicator.fontSize, vars.text.small.fontSize),
+  lineHeight: fallbackVar(vars.thread.typingIndicator.lineHeight, vars.text.small.lineHeight),
+  letterSpacing: fallbackVar(
+    vars.thread.typingIndicator.letterSpacing,
+    vars.text.small.letterSpacing
+  ),
 });
 
 export const emptyState = style({
