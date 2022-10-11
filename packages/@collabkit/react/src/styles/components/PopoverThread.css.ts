@@ -46,7 +46,7 @@ export const commentHeader = recipe({
     flex: '1',
     flexDirection: 'row',
     gap: vars.comment.header.gap,
-    alignItems: 'baseline',
+    alignItems: 'flex-start',
   },
   variants: {},
 });
