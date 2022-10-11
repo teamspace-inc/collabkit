@@ -1,10 +1,10 @@
 import { actions } from '@collabkit/client';
-import { getProfileColor } from '@collabkit/colors';
 import { Profile } from '@collabkit/core';
 import React from 'react';
 import { useSnapshot } from 'valtio';
 import { useApp } from '../hooks/useApp';
 import * as styles from '../styles/components/Profile.css';
+import { useTheme } from './ThemeContext';
 
 type ProfileContextValue = {
   profileId: string;
@@ -46,6 +46,7 @@ function AvatarPlaceholder({
   profile,
   ...props
 }: { size?: number; profile: Profile } & React.ComponentPropsWithoutRef<'div'>) {
+  const { themeTokens } = useTheme();
   return (
     <div
       {...props}
@@ -54,7 +55,7 @@ function AvatarPlaceholder({
         ...(size ? { width: size, height: size, lineHeight: `${size}px` } : {}),
         ...(profile.color
           ? {
-              backgroundColor: getProfileColor(profile.color),
+              backgroundColor: themeTokens?.avatar?.colors?.[profile.color],
             }
           : {}),
       }}
