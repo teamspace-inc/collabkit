@@ -39,4 +39,3 @@ export function ThemeProvider({ theme, children }: ThemeProviderProps) {
     </ThemeContext.Provider>
   );
 }
-export const useTheme = () => useContext(ThemeContext);

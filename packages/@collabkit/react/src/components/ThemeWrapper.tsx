@@ -1,11 +1,11 @@
-import React, { ComponentProps } from 'react';
+import React, { ComponentProps, useContext } from 'react';
 import { assignInlineVars } from '@vanilla-extract/dynamic';
 import { Theme } from '../styles/themes.css';
-import { useTheme } from './ThemeContext';
 import { vars } from '../styles/theme';
+import { ThemeContext } from './ThemeContext';
 
 export function ThemeWrapper(props: ComponentProps<'div'>) {
-  const { themeClassName, themeTokens } = useTheme();
+  const { themeClassName, themeTokens } = useContext(ThemeContext);
   return (
     <div
       {...props}
