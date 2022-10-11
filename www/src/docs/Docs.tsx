@@ -15,7 +15,7 @@ import { UseUnreadCommentsCountDoc } from './hooks/useUnreadCommentsCountDoc';
 import { UseUnreadThreadsCountDoc } from './hooks/useUnreadThreadsCountDoc';
 import { UsePopoverThreadDoc } from './hooks/usePopoverThreadDoc';
 import { CustomisationDoc } from './CustomisationDoc';
-import { NotificationsDoc } from './NotificationsDoc';
+// import { NotificationsDoc } from './NotificationsDoc';
 // import { AdvancedCustomisationDoc } from './AdvancedCustomisationDoc';
 
 import has from 'has';

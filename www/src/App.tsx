@@ -10,6 +10,7 @@ import { CollabKitProvider, Config, Workspace } from '@collabkit/react';
 import { SetBreakpointContext } from './hooks/useWindowSize';
 import { UIPage } from './pages/UIPage';
 import { ThemeEditorPage } from './pages/ThemeEditorPage';
+import { subHours } from 'date-fns/fp';
 
 const Page = styled('div', {});
 
@@ -51,6 +52,7 @@ const defaultWorkspace: Partial<Workspace> = {
   //     url: '/',
   //   },
   // },
+  inbox: {},
   openThreads: {
     thread1: {
       meta: {
@@ -82,7 +84,7 @@ const defaultWorkspace: Partial<Workspace> = {
       event1: {
         id: 'event1',
         body: 'Orders are holding strong. Must be an ACV problem.',
-        createdAt: 1658843343088,
+        createdAt: subHours(1)(Date.now()),
         createdById: 'alicia',
         type: 'message',
         hasProfile: true,
@@ -92,7 +94,7 @@ const defaultWorkspace: Partial<Workspace> = {
       event1: {
         id: 'event1',
         body: 'Revenue looks great here, any ideas on the downturn afterwards?',
-        createdAt: 1658843169471,
+        createdAt: subHours(3)(Date.now()),
         createdById: 'dom',
         type: 'message',
         hasProfile: true,
@@ -100,7 +102,7 @@ const defaultWorkspace: Partial<Workspace> = {
       event2: {
         id: 'event2',
         body: 'I think it might have been a stock issue!',
-        createdAt: 1658843196463,
+        createdAt: subHours(2)(Date.now()),
         createdById: 'greta',
         type: 'message',
         hasProfile: true,
@@ -110,7 +112,7 @@ const defaultWorkspace: Partial<Workspace> = {
       event1: {
         id: 'event1',
         body: 'Hey, [Dom](#@dom) have you looked at this order? I think the label is wrong.',
-        createdAt: 1658842883088,
+        createdAt: subHours(2)(Date.now()),
         createdById: 'alicia',
         type: 'message',
         hasProfile: true,
@@ -118,7 +120,7 @@ const defaultWorkspace: Partial<Workspace> = {
       event2: {
         id: 'event2',
         body: 'I think you are right, I will look into it.',
-        createdAt: 1658842883088,
+        createdAt: subHours(1.4)(Date.now()),
         createdById: 'dom',
         type: 'message',
         hasProfile: true,
@@ -126,7 +128,7 @@ const defaultWorkspace: Partial<Workspace> = {
       event3: {
         id: 'event3',
         body: "I found the problem! It's a typo in the label.",
-        createdAt: 1658842883088,
+        createdAt: subHours(0.2)(Date.now()),
         createdById: 'greta',
         type: 'message',
         hasProfile: true,
@@ -136,7 +138,7 @@ const defaultWorkspace: Partial<Workspace> = {
       event1: {
         id: 'event1',
         body: `Is this the final cash balance? I think we need to add the cash from the Illinois bank account.`,
-        createdAt: 1658842883088,
+        createdAt: subHours(0.2)(Date.now()),
         createdById: 'alicia',
         type: 'message',
         hasProfile: true,
@@ -144,7 +146,7 @@ const defaultWorkspace: Partial<Workspace> = {
       event2: {
         id: 'event2',
         body: `Yup that's included in the total.`,
-        createdAt: 1658842883088,
+        createdAt: subHours(0.1)(Date.now()),
         createdById: 'dom',
         type: 'message',
         hasProfile: true,
@@ -161,6 +163,13 @@ const defaultWorkspace: Partial<Workspace> = {
     // sxG87Sq0t3HHG0ghJMaXu: '-N84KobQKUnix1nNkMH-',
   },
 };
+
+for (const threadId in defaultWorkspace.timeline) {
+  const timeline = defaultWorkspace.timeline[threadId];
+  const eventIds = Object.keys(timeline);
+  const lastEventId = eventIds[eventIds.length - 1];
+  defaultWorkspace.inbox![threadId] = defaultWorkspace.timeline[threadId][lastEventId];
+}
 
 const config: Config = {
   _isDemo: true,
