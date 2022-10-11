@@ -9,7 +9,7 @@ export const MenuBase = {
     item: {
       color: vars.color.textPrimary,
       fontSize: vars.text.base.fontSize,
-      fontWeight: vars.fontWeights.regular,
+      fontWeight: vars.fontWeight.regular,
       letterSpacing: vars.text.base.letterSpacing,
       lineHeight: vars.text.base.lineHeight,
       active: {

@@ -13,7 +13,7 @@ const rtl = style({
 export const placeholder = style({
   color: fallbackVar(vars.composer.placeholder.color, vars.color.textSecondary),
   fontSize: fallbackVar(vars.composer.fontSize, vars.text.base.fontSize),
-  fontWeight: fallbackVar(vars.composer.fontWeight, vars.fontWeights.regular),
+  fontWeight: fallbackVar(vars.composer.fontWeight, vars.fontWeight.regular),
   letterSpacing: fallbackVar(vars.composer.letterSpacing, vars.text.base.letterSpacing),
   lineHeight: fallbackVar(vars.composer.lineHeight, vars.text.base.lineHeight),
   overflow: 'hidden',
@@ -45,7 +45,7 @@ globalStyle(`${composerGlobalStyles} p`, {
   margin: '0 !important',
   padding: '0 !important',
   fontSize: `${fallbackVar(vars.comment.body.fontSize, vars.text.base.fontSize)} !important`,
-  fontWeight: `${fallbackVar(vars.comment.body.fontWeight, vars.fontWeights.regular)} !important`,
+  fontWeight: `${fallbackVar(vars.comment.body.fontWeight, vars.fontWeight.regular)} !important`,
   color: `${fallbackVar(vars.comment.body.color, vars.color.textPrimary)} !important`,
   lineHeight: `${fallbackVar(vars.comment.body.lineHeight, vars.text.base.lineHeight)} !important`,
   letterSpacing: `${fallbackVar(
@@ -62,7 +62,7 @@ export const contentEditable = recipe({
     fontSize: fallbackVar(vars.composer.fontSize, vars.text.base.fontSize),
     lineHeight: fallbackVar(vars.composer.lineHeight, vars.text.base.lineHeight),
     letterSpacing: fallbackVar(vars.composer.letterSpacing, vars.text.base.letterSpacing),
-    fontWeight: fallbackVar(vars.composer.fontWeight, vars.fontWeights.regular),
+    fontWeight: fallbackVar(vars.composer.fontWeight, vars.fontWeight.regular),
     padding: fallbackVar(vars.composer.padding, vars.space[2]),
     position: 'relative',
     tabSize: 1,

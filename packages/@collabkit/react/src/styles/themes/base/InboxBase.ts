@@ -9,7 +9,7 @@ export const InboxBase = {
       color: 'white',
       fontSize: vars.text.tiny.fontSize,
       lineHeight: '16px',
-      fontWeight: vars.fontWeights.bold,
+      fontWeight: vars.fontWeight.bold,
       letterSpacing: vars.text.tiny.letterSpacing,
       inlay: {
         background: vars.color.attention,

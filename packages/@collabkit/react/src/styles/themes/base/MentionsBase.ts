@@ -3,7 +3,7 @@ import { vars } from '../../theme';
 export const MentionsBase = {
   mentions: {
     pill: {
-      fontWeight: vars.fontWeights.bold,
+      fontWeight: vars.fontWeight.bold,
       fontSize: vars.text.base.fontSize,
       lineHeight: vars.text.base.lineHeight,
       letterSpacing: vars.text.base.letterSpacing,
@@ -23,7 +23,7 @@ export const MentionsBase = {
       item: {
         borderRadius: vars.space[1],
         fontSize: vars.text.base.fontSize,
-        fontWeight: vars.fontWeights.regular,
+        fontWeight: vars.fontWeight.regular,
         letterSpacing: vars.text.base.letterSpacing,
         lineHeight: vars.text.base.lineHeight,
         background: vars.color.surface,
@@ -32,7 +32,7 @@ export const MentionsBase = {
         gap: vars.space[2],
         mark: {
           color: 'inherit',
-          fontWeight: vars.fontWeights.bold,
+          fontWeight: vars.fontWeight.bold,
           background: 'transparent',
           borderRadius: '0',
         },
@@ -51,7 +51,7 @@ export const MentionsBase = {
           color: vars.color.textPrimary,
           fontSize: vars.text.base.fontSize,
           lineHeight: vars.text.base.lineHeight,
-          fontWeight: vars.fontWeights.bold,
+          fontWeight: vars.fontWeight.bold,
           letterSpacing: vars.text.base.letterSpacing,
           active: {
             color: vars.color.textPrimary,
@@ -62,7 +62,7 @@ export const MentionsBase = {
           color: vars.color.textSecondary,
           fontSize: vars.text.small.fontSize,
           lineHeight: vars.text.small.lineHeight,
-          fontWeight: vars.fontWeights.regular,
+          fontWeight: vars.fontWeight.regular,
           letterSpacing: vars.text.small.letterSpacing,
           active: {
             color: vars.color.textPrimary,

@@ -9,7 +9,7 @@ export const SidebarBase = {
       lineHeight: vars.text.large.lineHeight,
       letterSpacing: vars.text.large.letterSpacing,
       color: vars.color.textPrimary,
-      fontWeight: vars.fontWeights.bold,
+      fontWeight: vars.fontWeight.bold,
       paddingTop: vars.space[4],
       paddingBottom: vars.space[2],
       borderBottom: `none`,

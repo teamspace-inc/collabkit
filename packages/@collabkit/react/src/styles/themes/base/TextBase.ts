@@ -6,7 +6,7 @@ export const TextBase = {
     large: { fontSize: '14px', lineHeight: '17px', letterSpacing: '0px' },
   },
 
-  fontWeights: {
+  fontWeight: {
     regular: '400',
     medium: '500',
     bold: '700',

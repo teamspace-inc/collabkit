@@ -9,7 +9,7 @@ export const replyCount = style({
   color: fallbackVar(vars.inbox.item.replyCount.color, vars.color.textSecondary),
   fontSize: fallbackVar(vars.inbox.item.replyCount.fontSize, vars.text.small.fontSize),
   lineHeight: fallbackVar(vars.inbox.item.replyCount.lineHeight, vars.text.small.lineHeight),
-  fontWeight: fallbackVar(vars.inbox.item.replyCount.fontWeight, vars.fontWeights.regular),
+  fontWeight: fallbackVar(vars.inbox.item.replyCount.fontWeight, vars.fontWeight.regular),
   letterSpacing: fallbackVar(
     vars.inbox.item.replyCount.letterSpacing,
     vars.text.small.letterSpacing

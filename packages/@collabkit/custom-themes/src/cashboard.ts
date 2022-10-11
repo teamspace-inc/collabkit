@@ -23,7 +23,7 @@ export const cashboard: CustomTheme = {
     size: '32px',
     fontSize: '14px',
   },
-  fontWeights: {
+  fontWeight: {
     bold: '600',
   },
   shadow: {

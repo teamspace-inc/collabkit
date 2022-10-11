@@ -10,7 +10,7 @@ export const avatar = style({
   color: fallbackVar(vars.profile.avatar.color, vars.color.background),
   flexShrink: 0,
   background: vars.profile.avatar.background,
-  fontWeight: fallbackVar(vars.profile.avatar.fontWeight, vars.fontWeights.bold),
+  fontWeight: fallbackVar(vars.profile.avatar.fontWeight, vars.fontWeight.bold),
   textAlign: 'center',
   verticalAlign: 'middle',
   cursor: 'inherit',
@@ -21,7 +21,7 @@ export const avatar = style({
 export const name = style({
   color: fallbackVar(vars.profile.name.color, vars.color.textPrimary),
   fontSize: fallbackVar(vars.profile.name.fontSize, vars.text.base.fontSize),
-  fontWeight: fallbackVar(vars.profile.name.fontWeight, vars.fontWeights.bold),
+  fontWeight: fallbackVar(vars.profile.name.fontWeight, vars.fontWeight.bold),
   lineHeight: fallbackVar(vars.profile.name.lineHeight, vars.text.base.lineHeight),
   letterSpacing: fallbackVar(vars.profile.name.letterSpacing, vars.text.base.letterSpacing),
 });

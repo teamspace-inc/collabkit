@@ -25,7 +25,7 @@ export const header = style({
   display: 'flex',
   color: fallbackVar(vars.thread.header.color, vars.color.textPrimary),
   fontSize: fallbackVar(vars.thread.header.fontSize, vars.text.large.fontSize),
-  fontWeight: fallbackVar(vars.thread.header.fontWeight, vars.fontWeights.bold),
+  fontWeight: fallbackVar(vars.thread.header.fontWeight, vars.fontWeight.bold),
   lineHeight: fallbackVar(vars.thread.header.lineHeight, vars.text.large.lineHeight),
   letterSpacing: fallbackVar(vars.thread.header.letterSpacing, vars.text.large.letterSpacing),
 });
@@ -72,7 +72,7 @@ export const emptyState = style({
   alignItems: 'center',
   flexDirection: 'column',
   gap: vars.space[2],
-  fontWeight: vars.fontWeights.regular,
+  fontWeight: vars.fontWeight.regular,
   fontSize: vars.text.small.fontSize,
   lineHeight: vars.text.small.lineHeight,
   color: vars.color.textSecondary,

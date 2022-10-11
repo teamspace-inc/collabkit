@@ -8,7 +8,7 @@ export const button = recipe({
     justifyContent: 'center',
     alignItems: 'center',
     fontSize: fallbackVar(vars.button.fontSize, vars.text.base.fontSize),
-    fontWeight: fallbackVar(vars.button.fontWeight, vars.fontWeights.regular),
+    fontWeight: fallbackVar(vars.button.fontWeight, vars.fontWeight.regular),
     letterSpacing: fallbackVar(vars.button.letterSpacing, vars.text.base.letterSpacing),
     lineHeight: fallbackVar(vars.button.lineHeight, vars.text.base.lineHeight),
     border: 'none',
@@ -25,7 +25,7 @@ export const button = recipe({
         background: fallbackVar(vars.button.primary.background, vars.color.background),
         color: fallbackVar(vars.button.primary.color, vars.color.textPrimary),
         letterSpacing: fallbackVar(vars.button.primary.letterSpacing, vars.text.base.letterSpacing),
-        fontWeight: fallbackVar(vars.button.primary.fontWeight, vars.fontWeights.bold),
+        fontWeight: fallbackVar(vars.button.primary.fontWeight, vars.fontWeight.bold),
 
         selectors: {
           '&:active': {
@@ -59,7 +59,7 @@ export const button = recipe({
           vars.button.secondary.letterSpacing,
           vars.text.base.letterSpacing
         ),
-        fontWeight: fallbackVar(vars.button.secondary.fontWeight, vars.fontWeights.medium),
+        fontWeight: fallbackVar(vars.button.secondary.fontWeight, vars.fontWeight.medium),
 
         selectors: {
           '&:active': {

@@ -21,7 +21,7 @@ export const TextTheme = {
       lineHeight: 'text-large-line-height',
     },
   },
-  fontWeights: {
+  fontWeight: {
     regular: 'font-weight-regular',
     medium: 'font-weight-medium',
     bold: 'font-weight-bold',

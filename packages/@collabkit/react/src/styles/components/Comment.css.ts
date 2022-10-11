@@ -77,7 +77,7 @@ export const content = recipe({
 
 export const body = style({
   fontSize: fallbackVar(vars.comment.body.fontSize, vars.text.base.fontSize),
-  fontWeight: fallbackVar(vars.comment.body.fontWeight, vars.fontWeights.regular),
+  fontWeight: fallbackVar(vars.comment.body.fontWeight, vars.fontWeight.regular),
   letterSpacing: fallbackVar(vars.comment.body.letterSpacing, vars.text.base.letterSpacing),
   lineHeight: fallbackVar(vars.comment.body.lineHeight, vars.text.base.lineHeight),
 
@@ -106,7 +106,7 @@ export const header = style({
 
 export const timestamp = style({
   fontSize: fallbackVar(vars.comment.timestamp.fontSize, vars.text.small.fontSize),
-  fontWeight: fallbackVar(vars.comment.timestamp.fontWeight, vars.fontWeights.regular),
+  fontWeight: fallbackVar(vars.comment.timestamp.fontWeight, vars.fontWeight.regular),
   letterSpacing: fallbackVar(vars.comment.timestamp.letterSpacing, vars.text.small.letterSpacing),
   lineHeight: fallbackVar(vars.comment.timestamp.lineHeight, vars.text.small.lineHeight),
 
@@ -157,7 +157,7 @@ export const menuItem = style({
   color: fallbackVar(vars.menu.item.color, vars.color.textPrimary),
   fontSize: fallbackVar(vars.menu.item.fontSize, vars.text.small.fontSize),
   lineHeight: fallbackVar(vars.menu.item.lineHeight, vars.text.small.lineHeight),
-  fontWeight: fallbackVar(vars.menu.item.fontWeight, vars.fontWeights.regular),
+  fontWeight: fallbackVar(vars.menu.item.fontWeight, vars.fontWeight.regular),
   letterSpacing: fallbackVar(vars.menu.item.letterSpacing, vars.text.small.letterSpacing),
 
   selectors: {
@@ -185,7 +185,7 @@ globalStyle(`${markdown} p`, {
   margin: '0 !important',
   padding: '0 !important',
   fontSize: `${fallbackVar(vars.comment.body.fontSize, vars.text.base.fontSize)} !important`,
-  fontWeight: `${fallbackVar(vars.comment.body.fontWeight, vars.fontWeights.regular)} !important`,
+  fontWeight: `${fallbackVar(vars.comment.body.fontWeight, vars.fontWeight.regular)} !important`,
   color: `${fallbackVar(vars.comment.body.color, vars.color.textPrimary)} !important`,
   lineHeight: `${fallbackVar(vars.comment.body.lineHeight, vars.text.base.lineHeight)} !important`,
   letterSpacing: `${fallbackVar(
@@ -196,7 +196,7 @@ globalStyle(`${markdown} p`, {
 
 globalStyle(`${markdown} a`, {
   textDecoration: 'none !important',
-  fontWeight: `${fallbackVar(vars.mentions.pill.fontWeight, vars.fontWeights.bold)} !important`,
+  fontWeight: `${fallbackVar(vars.mentions.pill.fontWeight, vars.fontWeight.bold)} !important`,
   color: `${fallbackVar(vars.mentions.pill.color, vars.color.textPrimary)} !important`,
 });
 
@@ -204,7 +204,7 @@ globalStyle(`${markdownLinksNotClickable} p`, {
   margin: '0 !important',
   padding: '0 !important',
   fontSize: `${fallbackVar(vars.comment.body.fontSize, vars.text.base.fontSize)} !important`,
-  fontWeight: `${fallbackVar(vars.comment.body.fontWeight, vars.fontWeights.regular)} !important`,
+  fontWeight: `${fallbackVar(vars.comment.body.fontWeight, vars.fontWeight.regular)} !important`,
   color: fallbackVar(vars.comment.body.color, vars.color.textPrimary),
   lineHeight: `${fallbackVar(vars.comment.body.lineHeight, vars.text.base.lineHeight)} !important`,
   letterSpacing: `${fallbackVar(
@@ -215,7 +215,7 @@ globalStyle(`${markdownLinksNotClickable} p`, {
 
 globalStyle(`${markdownLinksNotClickable} a`, {
   textDecoration: 'none !important',
-  fontWeight: `${fallbackVar(vars.mentions.pill.fontWeight, vars.fontWeights.bold)} !important`,
+  fontWeight: `${fallbackVar(vars.mentions.pill.fontWeight, vars.fontWeight.bold)} !important`,
   color: `${fallbackVar(vars.mentions.pill.color, vars.color.textPrimary)} !important`,
   cursor: 'default !important',
 });
