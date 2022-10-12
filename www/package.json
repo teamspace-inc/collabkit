@@ -8,6 +8,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ag-grid-community/client-side-row-model": "^28.2.0",
+    "@ag-grid-community/core": "^28.2.0",
+    "@ag-grid-community/react": "^28.2.0",
+    "@ag-grid-community/styles": "^28.2.0",
     "@babel/standalone": "^7.19.2",
     "@code-hike/mdx": "^0.7.3",
     "@codesandbox/sandpack-react": "^1.8.0",
