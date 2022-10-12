@@ -1,3 +1,4 @@
+import { fallbackVar } from '@vanilla-extract/css';
 import { IconContext } from 'phosphor-react';
 import React, { forwardRef } from 'react';
 import * as styles from '../styles/components/IconButton.css';
@@ -11,7 +12,12 @@ type Props = {
   active?: boolean;
 } & React.ComponentProps<'div'>;
 
-const iconContextValue = { color: vars.iconButton.color, weight: 'bold', size: 16 };
+const iconContextValue = {
+  color: fallbackVar(vars.iconButton.color, vars.color.icon),
+  weight: 'bold',
+  size: 16,
+};
+console.log(iconContextValue);
 
 export const IconButton = forwardRef<HTMLDivElement, Props>(function IconButton(props: Props, ref) {
   const { active, ...otherProps } = props;
