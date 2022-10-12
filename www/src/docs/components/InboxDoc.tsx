@@ -1,15 +1,18 @@
 import { docDemoContainer } from '../../styles/Docs.css';
-import { H2, H3 } from '../../UIKit';
 import { renderCodeSnippet } from '../CodeEditor';
 import { InboxDemo } from '../demos/InboxDemo';
 
 export function InboxDoc() {
   return (
     <>
-      <H2>See all comment threads in one place.</H2>
+      <h2>See all comment threads in one place.</h2>
       <InboxDemo className={docDemoContainer} />
       <div>
-        <H3>Usage</H3>
+        <h3>Usage</h3>
+        <p>
+          A users inbox of all recent comments in their workspace. Clicking on a comment thread from
+          the inbox navigates the user to the URL of that thread.
+        </p>
         {renderCodeSnippet(`import { Inbox } from '@collabkit/react';
 
 export function App() {

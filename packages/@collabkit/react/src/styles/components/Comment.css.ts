@@ -47,7 +47,7 @@ export const nameAndTimestampWrapper = style({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'baseline',
-  gap: fallbackVar(vars.comment.header.nameAndTimestamp.gap, vars.space[1]),
+  gap: fallbackVar(vars.comment.header.nameAndTimestamp.gap, `${calc(vars.space[1]).divide(2)}`),
 });
 
 export const inlineModal = style({
@@ -61,7 +61,7 @@ export const content = recipe({
     position: 'relative',
     flexDirection: 'column',
     flex: '1',
-    gap: fallbackVar(vars.comment.content.gap, vars.space[2]),
+    gap: fallbackVar(vars.comment.content.gap, vars.space[3]),
   },
   variants: {
     // indents the comment to account
