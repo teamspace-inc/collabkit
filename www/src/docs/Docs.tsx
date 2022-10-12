@@ -21,10 +21,13 @@ import { CustomisationDoc } from './CustomisationDoc';
 import has from 'has';
 
 import { Redirect, Route, Switch } from 'wouter';
+
 import { CodeEditor } from './CodeEditor';
 import { Doc } from './Doc';
+
 import { WorkspacesDoc } from './WorkspacesDoc';
 import { SecureModeDoc } from './SecureModeDoc';
+import { NotificationsDoc } from './NotificationsDoc';
 
 export function getDocHref(path: string[], key: string) {
   return getPathHref(path.concat([key]));
@@ -68,7 +71,7 @@ export const DOCS: RootDocNode = {
   'Secure Mode': { component: SecureModeDoc },
   Workspaces: { component: WorkspacesDoc },
   Customisation: { component: CustomisationDoc },
-  // Notifications: { component: NotificationsDoc },
+  Notifications: { component: NotificationsDoc },
   // 'Advanced Customisation': { component: AdvancedCustomisationDoc },
 };
 

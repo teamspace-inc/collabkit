@@ -3,6 +3,7 @@ export const ButtonBase = {
     background: 'initial',
     color: 'initial',
     size: 'initial',
+    borderRadius: 'initial',
     active: {
       background: 'initial',
     },

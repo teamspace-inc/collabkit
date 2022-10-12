@@ -3,6 +3,7 @@ export const ButtonTheme = {
     background: 'icon-button-background',
     color: 'icon-button-color',
     size: 'icon-button-size',
+    borderRadius: 'icon-button-border-radius',
     active: {
       background: 'icon-button-active-background',
     },

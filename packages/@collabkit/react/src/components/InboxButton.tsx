@@ -1,8 +1,6 @@
-import { ShowInboxButtonTarget } from '@collabkit/core';
 import React from 'react';
-import { useSnapshot } from 'valtio';
+import { useInboxButton } from '../hooks/public/useInboxButton';
 import { useUnreadThreadsCount } from '../hooks/public/useUnreadThreadsCount';
-import { useApp } from '../hooks/useApp';
 import { inboxButton } from '../styles/components/InboxButton.css';
 
 // Cashboard icons
@@ -10,29 +8,7 @@ import CommentIcon from './Comment.svg';
 import CommentNotificationIcon from './CommentNotification.svg';
 import { ThemeWrapper } from './ThemeWrapper';
 
-function useInboxButton() {
-  const { store, events } = useApp();
-  const { workspaceId } = useSnapshot(store);
-
-  return {
-    onPointerDown: (e: React.PointerEvent) => {
-      if (workspaceId) {
-        const target: ShowInboxButtonTarget = {
-          type: 'showInboxButton',
-          workspaceId,
-        };
-        events.onPointerDown(e, { target });
-      } else {
-        console.error('[CollabKit] Workspace ID not found');
-      }
-    },
-  };
-}
-
-export function InboxButton(props: {
-  customIcon?: React.ReactNode;
-  customUnreadIcon?: React.ReactNode;
-}) {
+export function InboxButton() {
   const { onPointerDown } = useInboxButton();
   const unreadThreadCount = useUnreadThreadsCount();
   const showUnreadDot = unreadThreadCount > 0;

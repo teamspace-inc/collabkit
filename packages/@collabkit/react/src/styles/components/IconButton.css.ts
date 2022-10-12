@@ -12,7 +12,7 @@ export const button = recipe({
     cursor: 'pointer',
     userSelect: 'none',
     pointerEvents: 'all',
-    borderRadius: '4px',
+    borderRadius: fallbackVar(vars.iconButton.borderRadius, '4px'),
     color: fallbackVar(vars.iconButton.color, vars.color.icon),
     background: fallbackVar(vars.iconButton.background, 'transparent'),
 
