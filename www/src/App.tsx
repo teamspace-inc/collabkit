@@ -213,9 +213,9 @@ export default function App() {
           <Route path="/ui" component={UIPage} />
           <Route path="/" component={HomePage} />
           <Route path="/devs" component={Devs} />
-          <Route path="/signedIn" component={Devs} />
+          <Route path="/signedin" component={Devs} />
           <Route path="/datagrid" component={DataGridPage} />
-          <Route path="/themeEditor" component={ThemeEditorPage} />
+          <Route path="/theme-editor" component={ThemeEditorPage} />
           <Docs />
         </Page>
       </SetBreakpointContext>

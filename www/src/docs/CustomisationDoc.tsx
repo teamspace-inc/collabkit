@@ -58,8 +58,8 @@ export function CustomisationDoc() {
       <div>
         <h3>Custom themes</h3>
         <p>
-          Use our <DocLink href="/themeeditor">Theme Editor</DocLink> to to match your apps look and
-          feel entirely.
+          Use our <DocLink href="/theme-editor">Theme Editor</DocLink> to to match your apps look
+          and feel entirely.
         </p>
         <p>
           You can change almost every aspect of CollabKit, including the fonts, colors, and spacing.
