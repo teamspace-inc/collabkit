@@ -40,8 +40,6 @@ export async function toggleCommentReaction(
       : emoji
     : emoji;
 
-  //console.log('reacting with emoji', { body });
-
   try {
     writeMessageToFirebase(store, {
       workspaceId,

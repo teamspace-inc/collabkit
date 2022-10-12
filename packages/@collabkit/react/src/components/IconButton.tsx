@@ -17,7 +17,6 @@ const iconContextValue = {
   weight: 'bold',
   size: 16,
 };
-console.log(iconContextValue);
 
 export const IconButton = forwardRef<HTMLDivElement, Props>(function IconButton(props: Props, ref) {
   const { active, ...otherProps } = props;

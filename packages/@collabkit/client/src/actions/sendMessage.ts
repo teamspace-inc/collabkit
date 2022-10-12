@@ -18,8 +18,6 @@ export async function sendMessage(store: Store, props: { workspaceId: string; th
     console.warn('[CollabKit]: cannot send message in read-only mode');
     return;
   }
-  // console.log('sending message', workspaceId, threadId);
-
   const workspace = store.workspaces[workspaceId];
   const { editor, $$body: body, $$mentions: mentions } = workspace.composers[threadId];
 

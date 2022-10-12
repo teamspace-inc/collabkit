@@ -323,13 +323,11 @@ export class FirebaseSync implements Sync.SyncAdapter {
     },
     onPinChange: Sync.PinEventHandler
   ): void {
-    // console.log('subscribePins');
     const onError = (e: Error) => {
       console.error({ e });
     };
 
     const onChange = (child: DataSnapshot) => {
-      // console.log('onPin');
       const pin = child.val() as Pin;
       const pinId = child.key;
       if (pinId) {
@@ -422,7 +420,6 @@ export class FirebaseSync implements Sync.SyncAdapter {
         return;
       }
 
-      // console.log('#inbox', threadId, prevChildName);
       props.onInboxChange({ event: snapshot.val(), threadId });
     }
 
