@@ -6,14 +6,14 @@ globalStyle('code', {});
 
 export const docs = style({});
 
-globalStyle(`${docs} blockquote`, {
+globalStyle(`blockquote`, {
   borderLeft: `5px solid ${vars.color.sky}`,
   textIndent: 0,
   paddingLeft: 20,
   marginLeft: 0,
 });
 
-globalStyle(`${docs} code`, {
+globalStyle(`code`, {
   fontFamily: 'Monaco',
   fontSize: 14,
   background: vars.color.bgContrastLow,
@@ -22,12 +22,12 @@ globalStyle(`${docs} code`, {
   color: vars.color.mint,
 });
 
-globalStyle(`${docs} h1`, {
+globalStyle(`h1`, {
   marginTop: 0,
   color: vars.color.textContrastHigh,
 });
 
-globalStyle(`${docs} p`, {
+globalStyle(`p`, {
   fontStyle: 'normal',
   fontWeight: 400,
   fontSize: '16px',
@@ -35,7 +35,7 @@ globalStyle(`${docs} p`, {
   color: vars.color.textContrastMedium,
 });
 
-globalStyle(`${docs} h2`, {
+globalStyle(`h2`, {
   fontStyle: 'normal',
   fontWeight: 400,
   fontSize: 24,
@@ -43,7 +43,7 @@ globalStyle(`${docs} h2`, {
   color: vars.color.textContrastMedium,
 });
 
-globalStyle(`${docs} h3`, {
+globalStyle(`h3`, {
   marginTop: '12px',
   marginBottom: '20px',
   fontStyle: 'normal',
@@ -54,7 +54,7 @@ globalStyle(`${docs} h3`, {
   position: 'relative',
 });
 
-globalStyle(`${docs} h4`, {
+globalStyle(`h4`, {
   marginTop: '32px',
   marginBottom: '8px',
   fontStyle: 'normal',
@@ -222,7 +222,7 @@ export const docTitle = style({
   },
 });
 
-globalStyle(`${docs} ol ol`, {
+globalStyle(`ol ol`, {
   marginTop: 0,
   marginBottom: 8,
   paddingLeft: 0,
