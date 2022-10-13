@@ -27,12 +27,6 @@ export const MentionsTheme = {
         padding: 'mentions-typeahead-item-padding',
         gap: 'mentions-typeahead-item-gap',
         color: 'mentions-typeahead-item-color',
-        borderRadius: 'mentions-typeahead-item-border-radius',
-        background: 'mentions-typeahead-item-background',
-
-        hover: {
-          background: 'mentions-typeahead-item-hover-background',
-        },
 
         mark: {
           fontWeight: 'mentions-typeahead-item-mark-font-weight',
@@ -56,11 +50,7 @@ export const MentionsTheme = {
           fontWeight: 'mentions-typeahead-item-name-font-weight',
           letterSpacing: 'mentions-typeahead-item-name-letter-spacing',
           lineHeight: 'mentions-typeahead-item-name-line-height',
-
           color: 'mentions-typeahead-item-name-color',
-          active: {
-            color: 'mentions-typeahead-item-name-active-color',
-          },
         },
 
         email: {
@@ -68,12 +58,8 @@ export const MentionsTheme = {
           fontWeight: 'mentions-typeahead-item-email-font-weight',
           letterSpacing: 'mentions-typeahead-item-email-letter-spacing',
           lineHeight: 'mentions-typeahead-item-email-line-height',
-
           display: 'mentions-typeahead-item-email-display',
           color: 'mentions-typeahead-item-email-color',
-          active: {
-            color: 'mentions-typeahead-item-email-active-color',
-          },
         },
       },
     },
