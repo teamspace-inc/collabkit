@@ -1,4 +1,4 @@
-import { style } from '@vanilla-extract/css';
+import { fallbackVar, style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
 import { vars } from '../theme';
 export const typeahead = style({
@@ -74,25 +74,43 @@ export const item = recipe({
 
 export const name = style({
   color: vars.mentions.typeahead.item.name.color,
-  fontWeight:
-    vars.mentions.typeahead.item.name.fontWeight ?? vars.mentions.typeahead.item.fontWeight,
-  fontSize: vars.mentions.typeahead.item.name.fontSize ?? vars.mentions.typeahead.item.fontSize,
-  lineHeight:
-    vars.mentions.typeahead.item.name.lineHeight ?? vars.mentions.typeahead.item.lineHeight,
-  letterSpacing:
-    vars.mentions.typeahead.item.name.letterSpacing ?? vars.mentions.typeahead.item.letterSpacing,
+  fontWeight: fallbackVar(
+    vars.mentions.typeahead.item.name.fontWeight,
+    vars.mentions.typeahead.item.fontWeight
+  ),
+  fontSize: fallbackVar(
+    vars.mentions.typeahead.item.name.fontSize,
+    vars.mentions.typeahead.item.fontSize
+  ),
+  lineHeight: fallbackVar(
+    vars.mentions.typeahead.item.name.lineHeight,
+    vars.mentions.typeahead.item.lineHeight
+  ),
+  letterSpacing: fallbackVar(
+    vars.mentions.typeahead.item.name.letterSpacing,
+    vars.mentions.typeahead.item.letterSpacing
+  ),
 });
 
 export const email = style({
   color: vars.mentions.typeahead.item.email.color,
-  fontWeight:
-    vars.mentions.typeahead.item.email.fontWeight ?? vars.mentions.typeahead.item.fontWeight,
-  fontSize: vars.mentions.typeahead.item.email.fontSize ?? vars.mentions.typeahead.item.fontSize,
-  lineHeight:
-    vars.mentions.typeahead.item.email.lineHeight ?? vars.mentions.typeahead.item.lineHeight,
+  fontWeight: fallbackVar(
+    vars.mentions.typeahead.item.email.fontWeight,
+    vars.mentions.typeahead.item.fontWeight
+  ),
+  fontSize: fallbackVar(
+    vars.mentions.typeahead.item.email.fontSize,
+    vars.mentions.typeahead.item.fontSize
+  ),
+  lineHeight: fallbackVar(
+    vars.mentions.typeahead.item.email.lineHeight,
+    vars.mentions.typeahead.item.lineHeight
+  ),
   display: vars.mentions.typeahead.item.email.display,
-  letterSpacing:
-    vars.mentions.typeahead.item.email.letterSpacing ?? vars.mentions.typeahead.item.letterSpacing,
+  letterSpacing: fallbackVar(
+    vars.mentions.typeahead.item.email.letterSpacing,
+    vars.mentions.typeahead.item.letterSpacing
+  ),
 });
 
 export const mentionStyle = style({
