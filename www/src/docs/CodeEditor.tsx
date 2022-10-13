@@ -1,7 +1,7 @@
 import React, { useRef, useState, useLayoutEffect, useEffect } from 'react';
 import { loader } from '@monaco-editor/react';
 import type { Monaco } from '@monaco-editor/react';
-import CollabKitMonacoTheme from './CollabKitMonacoTheme.json';
+import { CollabKitMonacoTheme } from './CollabKitMonacoTheme';
 import { nanoid } from 'nanoid';
 
 import reactTypes from './react.types.d.ts?raw';
@@ -85,7 +85,7 @@ export function CodeEditor(props: {
 
         monaco.editor.defineTheme('collabkit', CollabKitMonacoTheme);
 
-        editorInstanceRef.current = monaco.editor.create(editorRef.current, {
+        editorInstanceRef.current = monaco.editor.create(editorRef.current!, {
           model,
           fontSize,
           fontFamily: 'Monaco',
@@ -105,11 +105,11 @@ export function CodeEditor(props: {
           readOnly: props.readOnly ?? false,
           domReadOnly: props.readOnly ?? false,
           automaticLayout: true, // !props.fixedSize,
-          renderLineHighlight: false,
+          renderLineHighlight: 'none',
           renderLineHighlightOnlyWhenFocus: true,
           suggest: {},
-          lineNumbers: false,
-          renderFinalNewLine: false,
+          lineNumbers: 'off',
+          renderFinalNewline: false,
           codeLens: false,
           definitionLinkOpensInPeek: false,
           contextmenu: false,
@@ -126,7 +126,7 @@ export function CodeEditor(props: {
 
         if (language === 'typescript') {
           monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
-            jsx: 'react',
+            jsx: monaco.languages.typescript.JsxEmit.React,
           });
 
           monaco.languages.typescript.typescriptDefaults.setDiagnosticsOptions({
