@@ -64,9 +64,11 @@ export const timestamp = style([
 export const root = recipe({
   base: {
     display: 'flex',
+    border: '1px solid transparent',
     borderBottom: fallbackVar(vars.inbox.item.borderBottom, `none`),
     flexDirection: 'column',
     flex: 1,
+
     cursor: 'pointer',
     boxSizing: 'border-box',
     background: fallbackVar(vars.color.background, vars.color.background),
@@ -90,6 +92,11 @@ export const root = recipe({
     active: {
       true: {
         background: fallbackVar(vars.inbox.item.active.background, vars.color.surfaceOverlay),
+
+        border: '1px solid #ddd',
+        borderRadius: '8px',
+        margin: '0px',
+        boxShadow: vars.shadow.standard,
       },
     },
   },

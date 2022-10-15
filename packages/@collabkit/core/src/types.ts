@@ -137,6 +137,7 @@ export type Target =
   | ThreadTarget
   | CommentButtonTarget
   | CommentTarget
+  | TextThreadTarget
   | CommentReactionTarget
   | ThreadResolveButtonTarget
   | ThreadCloseButtonTarget
@@ -165,6 +166,7 @@ export type Commentable = {
 
 export type CommentType = 'default' | 'inline-start' | 'inline' | 'inline-end';
 
+// todo make this part View['url'] and part Selector['offset': { x, y }, 'text': string]
 export type BasicPinProps = {
   selector: string;
   url: string;
@@ -245,6 +247,13 @@ export type CommentTarget = {
   workspaceId: string;
   eventId: string;
   treeId: string;
+};
+
+export type TextThreadTarget = {
+  type: 'textThread';
+  threadId: string;
+  workspaceId: string;
+  viewId: string;
 };
 
 export type EventType = 'message' | 'reaction' | 'adminMessage' | 'system' | 'delete' | 'edit';

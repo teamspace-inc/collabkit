@@ -24,7 +24,7 @@ export type ThreadProps = {
   autoFocus?: boolean;
 };
 
-function ThreadContextProvider(props: ThreadProps & { children: React.ReactNode }) {
+export function ThreadContextProvider(props: ThreadProps & { children: React.ReactNode }) {
   const { threadId, info, composerPrompt, showHeader, autoFocus } = props;
   const [context, setContext] = useState<ThreadContextValue | null>(null);
   const { store } = useApp();

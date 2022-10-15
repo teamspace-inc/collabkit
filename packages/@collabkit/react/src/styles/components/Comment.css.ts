@@ -85,7 +85,7 @@ export const body = style({
   wordBreak: 'break-word',
   overflowWrap: 'break-word',
   minHeight: fallbackVar(vars.comment.body.lineHeight, vars.text.base.lineHeight), // prevents flicker
-  color: fallbackVar(vars.comment.body.color, vars.color.textPrimary),
+  color: `${fallbackVar(vars.comment.body.color, vars.color.textPrimary)} !important`,
 });
 
 export const editor = style({
@@ -205,7 +205,7 @@ globalStyle(`${markdownLinksNotClickable} p`, {
   padding: '0 !important',
   fontSize: `${fallbackVar(vars.comment.body.fontSize, vars.text.base.fontSize)} !important`,
   fontWeight: `${fallbackVar(vars.comment.body.fontWeight, vars.fontWeight.regular)} !important`,
-  color: fallbackVar(vars.comment.body.color, vars.color.textPrimary),
+  color: `${fallbackVar(vars.comment.body.color, vars.color.textPrimary)} !important`,
   lineHeight: `${fallbackVar(vars.comment.body.lineHeight, vars.text.base.lineHeight)} !important`,
   letterSpacing: `${fallbackVar(
     vars.comment.body.letterSpacing,

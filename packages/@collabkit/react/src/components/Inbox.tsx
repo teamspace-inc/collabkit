@@ -50,7 +50,7 @@ export function EmptyState() {
   );
 }
 
-export function Inbox() {
+export function Inbox(props: { viewId?: string }) {
   const { store } = useApp();
   const { workspaceId, workspaces, userId } = useSnapshot(store);
 

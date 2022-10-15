@@ -2,6 +2,7 @@ import type React from 'react';
 import { $getRoot, $getSelection } from 'lexical';
 import type { EditorState, LexicalEditor } from 'lexical';
 import { nanoid } from 'nanoid';
+
 import type {
   CommentReactionTarget,
   CommentTarget,
@@ -11,6 +12,7 @@ import type {
   Target,
   ThreadTarget,
 } from '@collabkit/core';
+
 import { actions } from './actions';
 import { markRaw } from './store';
 
@@ -306,5 +308,23 @@ export function createEvents(store: Store) {
           throw new Error(`invalid popover state: ${state}`);
       }
     },
+
+    onCommentMarkNodeSelect: (props: { workspaceId: string; threadIds: string[] }) => {
+      if (props.threadIds.length > 0) {
+        actions.select(store, {
+          target: {
+            type: 'thread',
+            threadId: props.threadIds[0],
+            workspaceId: props.workspaceId,
+          },
+        });
+      } else {
+        actions.deselect(store);
+      }
+    },
+    onCommentMarkNodeDelete: (props: { workspaceId: string; threadId: string }) => {
+      actions.resolveThread(store, props.workspaceId, props.threadId);
+    },
+    onCommentMarkNodeAdd: (props: { workspaceId: string; threadId: string }) => {},
   };
 }

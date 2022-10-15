@@ -24,6 +24,8 @@ const workspace = {
 };
 
 import { createDemoStore, mentionableUsers } from './home/demoStore';
+import { TextEditDemo } from './components/TextEditDemo';
+import { TextEditPage } from './pages/TextEditPage';
 
 const defaultWorkspace: Partial<Workspace> = {
   // pins: {
@@ -204,6 +206,7 @@ export default function App() {
       appId={appId}
       _demoStore={store}
       _isDemo={true}
+      theme={'light'}
       workspace={workspace}
       user={{ id: 'anon', name: 'Anonymous' }}
       mentionableUsers={[]}
@@ -215,6 +218,8 @@ export default function App() {
           <Route path="/devs" component={Devs} />
           <Route path="/signedin" component={Devs} />
           <Route path="/datagrid" component={DataGridPage} />
+          <Route path="/textedit" component={TextEditPage} />
+
           <Route path="/theme-editor" component={ThemeEditorPage} />
           <Docs />
         </Page>

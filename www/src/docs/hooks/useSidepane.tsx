@@ -6,7 +6,7 @@ import { renderCodeSnippet } from '../CodeEditor';
 export function UseSidepane() {
   return (
     <>
-      <h2>.</h2>
+      <h2>Sidepane</h2>
       <div>
         <h3>Usage</h3>
         <p>

@@ -3,7 +3,6 @@ import { useSnapshot } from 'valtio';
 import { actions } from '@collabkit/client';
 import { ThreadInfo, timelineUtils } from '@collabkit/core';
 import { Store } from '../constants';
-import { useComposer } from './useComposer';
 
 export function useThreadSubscription(props: {
   store: Store;

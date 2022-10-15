@@ -21,10 +21,12 @@ import { InboxButton } from './components/InboxButton';
 import { ThemeProvider } from './components/ThemeContext';
 import { Sidebar } from './components/Sidebar';
 import { ThemeWrapper } from './components/ThemeWrapper';
+import { CommentPlugin } from './components/lexical/CommentPlugin';
 
 export {
   CollabKitProvider as Provider,
   CollabKitProvider,
+  CommentPlugin as LexicalCommentPlugin,
   ThemeProvider,
   Thread,
   InboxButton,

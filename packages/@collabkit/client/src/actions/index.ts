@@ -45,6 +45,9 @@ import { hideInbox } from './hideInbox';
 import { setAvatarError } from './setAvatarError';
 import { closeMenu } from './closeMenu';
 import { openMenu } from './openMenu';
+import { select } from './select';
+import { deselect } from './deselect';
+import { startThread } from './startThread';
 
 export type GenerateToken =
   | {
@@ -115,18 +118,20 @@ export const actions = {
   authenticate,
   blur,
   closeEmojiReactionPicker,
-  closeThread,
+  closeMenu,
   closePreview,
+  closeThread,
   deleteMessage,
+  deselect,
   disableComposerCommentButton,
   enableComposerCommentButton,
   focus,
+  hideInbox,
   hover,
   init,
-  openMenu,
-  closeMenu,
   isTyping: debounce(isTyping, 1000, { leading: true, maxWait: 1000 }),
   monitorConnection,
+  openMenu,
   placePinAndStartComposingThread,
   removePendingPins,
   reopenThread,
@@ -135,12 +140,15 @@ export const actions = {
   saveProfile,
   saveThreadInfo,
   seen,
+  select,
   sendMessage,
+  setAvatarError,
+  showInbox,
   startEditing,
   startSelecting,
-  startThread: placePinAndStartComposingThread,
-  stopSelecting,
+  startThread,
   stopEditing,
+  stopSelecting,
   stopTyping,
   subscribeInbox,
   subscribeOpenThreads,
@@ -154,7 +162,4 @@ export const actions = {
   unhover,
   updateComment,
   viewThread,
-  showInbox,
-  hideInbox,
-  setAvatarError,
 };

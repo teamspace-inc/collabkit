@@ -13,7 +13,7 @@ export async function stopTyping(store: Store, props: { target: ComposerTarget }
   }
 
   const timeoutID =
-    store.workspaces[props.target.workspaceId].composers[props.target.threadId].isTypingTimeoutID;
+    store.workspaces[props.target.workspaceId].composers[props.target.threadId]?.isTypingTimeoutID;
 
   if (timeoutID) {
     clearTimeout(timeoutID);
