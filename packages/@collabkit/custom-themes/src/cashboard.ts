@@ -117,15 +117,23 @@ export const cashboard: CustomTheme = {
     typeahead: {
       background: 'white',
       item: {
+        padding: '12px',
         fontWeight: '400',
-        hover: {
+        nameAndEmailWrapper: {
+          gap: '0px',
+        },
+        active: {
           background: `rgba(0, 0, 0, 0.05)`,
         },
         email: {
           color: '#000000',
+          fontSize: '12px',
+          lineHeight: '18px',
         },
         name: {
           fontWeight: '400',
+          fontSize: '14px',
+          lineHeight: '20px',
         },
         mark: {
           fontWeight: '600',
