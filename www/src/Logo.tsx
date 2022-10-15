@@ -1,5 +1,5 @@
 import React from 'react';
-import LogoSvg from './assets/Logo.svg';
+import LogoSvg from './Logo.svg';
 
 export function Logo(props: {
   style?: React.CSSProperties;

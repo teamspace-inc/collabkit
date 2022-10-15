@@ -1,12 +1,11 @@
 import { InboxButton } from '@collabkit/react';
-import { H2, H3 } from '../../UIKit';
 import { renderCodeSnippet } from '../CodeEditor';
 import { DocDemoContainer } from '../Doc';
 
 export function InboxButtonDoc() {
   return (
     <>
-      <H2>A button with an unread indicator.</H2>
+      <h2>A button with an unread indicator.</h2>
       <DocDemoContainer
         style={{
           padding: 0,
@@ -21,7 +20,7 @@ export function InboxButtonDoc() {
         </div>
       </DocDemoContainer>
       <div>
-        <H3>Usage</H3>
+        <h3>Usage</h3>
         {renderCodeSnippet(`import { InboxButton } from '@collabkit/react';
 
 export function App() {

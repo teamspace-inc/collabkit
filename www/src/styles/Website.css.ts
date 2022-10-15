@@ -27,22 +27,20 @@ globalStyle(`${website} section`, {
 });
 
 globalStyle(`${website} small`, {
-  fontFamily: 'Inter',
+  fontFamily: 'Satoshi',
   fontStyle: 'normal',
   fontWeight: 500,
   fontSize: '14px',
   lineHeight: '16px',
   opacity: 0.5,
   whiteSpace: 'nowrap',
-  letterSpacing: '0',
 });
 
 globalStyle(`${website} h1`, {
-  fontFamily: 'Space Grotesk',
+  fontFamily: 'Clash Display',
   fontFeatureSettings: 'ss04',
   fontStyle: 'normal',
   fontWeight: 700,
-  letterSpacing: '-0.05em',
   color: vars.color.textContrastHigh,
   margin: '0px',
   zIndex: 1,
@@ -60,12 +58,11 @@ globalStyle(`${website} h1`, {
 });
 
 globalStyle(`${website} h2`, {
-  fontFamily: 'Inter',
+  fontFamily: 'Clash Display',
   fontStyle: 'normal',
   fontWeight: 700,
   fontSize: '36px',
   lineHeight: '44px',
-  letterSpacing: '-0.03em',
   color: vars.color.textContrastHigh,
   margin: '0px',
 
@@ -78,12 +75,11 @@ globalStyle(`${website} h2`, {
 });
 
 globalStyle(`${website} h3`, {
-  fontFamily: 'Inter',
+  fontFamily: 'Satoshi',
   fontStyle: 'normal',
   fontWeight: 400,
   fontSize: '32px',
   lineHeight: '44px',
-  letterSpacing: '-0.02em',
   fontFeatureSettings: 'ss04 on',
   color: vars.color.textContrastHigh,
   margin: '0px',
@@ -97,51 +93,47 @@ globalStyle(`${website} h3`, {
 });
 
 globalStyle(`${website} h4`, {
-  fontFamily: 'Space Grotesk',
+  fontFamily: 'Clash Display',
   fontStyle: 'normal',
   fontWeight: 700,
   fontSize: '20px',
   lineHeight: '26px',
-  letterSpacing: '-0.05em',
   color: vars.color.textContrastHigh,
   margin: '0px',
 
   '@media': {
     'screen and (max-width: 720px)': {
-      fontFamily: 'Space Grotesk',
+      fontFamily: 'Clash Display',
       fontStyle: 'normal',
       fontWeight: 700,
       fontSize: 20,
       lineHeight: '26px',
-      letterSpacing: '-0.05em',
     },
   },
 });
 
 globalStyle(`${website} h5`, {
-  fontFamily: 'Inter',
+  fontFamily: 'Satoshi',
   fontStyle: 'normal',
   fontWeight: 500,
   fontSize: 16,
   lineHeight: '19px',
-  letterSpacing: '-0.03em',
   color: vars.color.textContrastHigh,
   margin: '0px',
 
   '@media': {
     'screen and (max-width: 720px)': {
-      fontFamily: 'Inter',
+      fontFamily: 'Satoshi',
       fontStyle: 'normal',
       fontWeight: 500,
       fontSize: 16,
       lineHeight: '19px',
-      letterSpacing: '-0.03em',
     },
   },
 });
 
 globalStyle('body', {
-  fontFamily: 'Inter',
+  fontFamily: 'Satoshi',
   fontWeight: 400,
   fontSize: 14,
   lineHeight: '18px',
@@ -149,7 +141,7 @@ globalStyle('body', {
 });
 
 globalStyle(`${website} p`, {
-  fontFamily: 'Inter',
+  fontFamily: 'Satoshi',
   fontStyle: 'normal',
   fontWeight: 400,
   fontSize: 14,
@@ -203,14 +195,16 @@ export const tabs = style({
 
 export const tab = recipe({
   base: {
-    fontFamily: 'Inter',
+    fontFamily: 'Satoshi',
     fontStyle: 'normal',
+    width: '120px',
     fontSize: 16,
-    lineHeight: '20px',
-    padding: '20px 32px',
+    lineHeight: '18px',
+    padding: '16px',
     color: vars.color.textContrastHigh,
-    borderRadius: '12px',
-    height: '60px',
+    borderRadius: '32px',
+    height: '50px',
+    fontWeight: '500',
     cursor: 'pointer',
     boxSizing: 'border-box',
     ':hover': {
@@ -229,11 +223,10 @@ export const tab = recipe({
 
 export const button = recipe({
   base: {
-    fontFamily: 'Inter',
+    fontFamily: 'Satoshi',
     fontStyle: 'normal',
-    fontWeight: 500,
+    fontWeight: 700,
     boxSizing: 'border-box',
-    letterSpacing: '-0.03em',
     color: vars.color.textContrastHigh,
     background: vars.color.bgContrastMedium,
     borderRadius: 100,
@@ -245,7 +238,7 @@ export const button = recipe({
     ':hover': {
       background: vars.color.highlight,
     },
-    border: '2px solid transparent',
+    border: '0px solid transparent',
   },
   variants: {
     type: {
@@ -270,7 +263,7 @@ export const button = recipe({
         padding: '0px 16px',
         height: '36px',
 
-        fontFamily: 'Inter',
+        fontFamily: 'Satoshi',
         fontStyle: 'normal',
         fontWeight: 500,
         fontSize: '14px',
@@ -280,25 +273,23 @@ export const button = recipe({
         height: '40px',
         padding: '0px 20px',
 
-        fontFamily: 'Inter',
+        fontFamily: 'Satoshi',
         fontStyle: 'normal',
         fontWeight: 500,
         fontSize: '16px',
         lineHeight: '19px',
         textAlign: 'center',
-        letterSpacing: '-0.03em',
       },
       large: {
-        height: '60px',
+        height: '50px',
         padding: '0px 28px',
 
-        fontFamily: 'Inter',
+        fontFamily: 'Satoshi',
         fontStyle: 'normal',
-        fontWeight: 500,
-        fontSize: '20px',
+        fontWeight: 700,
+        fontSize: '16px',
         lineHeight: '110%',
         textAlign: 'center',
-        letterSpacing: '-0.03em',
       },
     },
   },

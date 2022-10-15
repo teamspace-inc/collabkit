@@ -1,4 +1,4 @@
-import { Auth, H2 } from '../../UIKit';
+import { Auth } from '../../UIKit';
 import { devEvents } from '../devEvents';
 
 export function EnterEmail(props: { isReentry?: boolean }) {
@@ -6,7 +6,7 @@ export function EnterEmail(props: { isReentry?: boolean }) {
     <div>
       <Auth>
         <div style={{ alignItems: 'flex-start' }}>
-          <H2>{props.isReentry ? 'Re-enter' : 'Enter'} your email</H2>
+          <h2>{props.isReentry ? 'Re-enter' : 'Enter'} your email</h2>
           <div>
             We recommend using your <b>work email address</b>.
           </div>

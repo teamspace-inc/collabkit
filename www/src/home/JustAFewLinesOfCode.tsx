@@ -3,7 +3,6 @@ import SnippetReactSvg from '../assets/SnippetReact.svg';
 import SnippetReactSmallSvg from '../assets/ReactSnippetSmall.svg';
 import ReactLogoSvg from '../assets/react.svg';
 import VueLogoSvg from '../assets/vue.svg';
-import AngularLogoSvg from '../assets/angular.svg';
 import { useIsSmallScreen } from './useIsSmallScreen';
 import { dark } from '../styles/Theme.css';
 
@@ -34,8 +33,8 @@ export function JustAFewLinesOfCode(props: { setInvertFilter: (invert: number) =
       }}
     >
       <h1>
-        Just a few lines
-        {!isSmallScreen && <br />} of code
+        Get it running
+        {!isSmallScreen && <br />} in minutes
       </h1>
       <h3>Simply add {'<CollabKit.Thread />'}</h3>
       <div
@@ -60,7 +59,6 @@ export function JustAFewLinesOfCode(props: { setInvertFilter: (invert: number) =
         >
           <img style={{ width: isSmallScreen ? '33px' : '44px' }} src={ReactLogoSvg} />
           <img style={{ width: isSmallScreen ? '33px' : '44px' }} src={VueLogoSvg} />
-          <img style={{ width: isSmallScreen ? '33px' : '44px' }} src={AngularLogoSvg} />
         </div>
       </div>
     </section>

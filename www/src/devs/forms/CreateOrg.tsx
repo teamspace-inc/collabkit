@@ -1,4 +1,4 @@
-import { H2, Auth } from '../../UIKit';
+import { Auth } from '../../UIKit';
 import { devEvents } from '../devEvents';
 
 export function CreateOrg() {
@@ -6,7 +6,7 @@ export function CreateOrg() {
     <div>
       <Auth>
         <div style={{ alignItems: 'flex-start' }}>
-          <H2>What's the name of your product or company?</H2>
+          <h2>What's the name of your product or company?</h2>
           <div>
             This is the name your users and other admins will see. <br />
             <b>You can change this later.</b>

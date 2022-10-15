@@ -24,6 +24,7 @@ const workspace = {
 };
 
 import { createDemoStore, mentionableUsers } from './home/demoStore';
+import { HomePageV2 } from './pages/HomePagev2';
 
 const defaultWorkspace: Partial<Workspace> = {
   // pins: {
@@ -216,6 +217,7 @@ export default function App() {
           <Route path="/signedin" component={Devs} />
           <Route path="/datagrid" component={DataGridPage} />
           <Route path="/theme-editor" component={ThemeEditorPage} />
+          <Route path="/v2" component={HomePageV2} />
           <Docs />
         </Page>
       </SetBreakpointContext>

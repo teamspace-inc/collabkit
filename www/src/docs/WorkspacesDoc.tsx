@@ -1,14 +1,9 @@
-import { H2, H3 } from '../UIKit';
 import { renderCodeSnippet } from './CodeEditor';
-import { DocDemoContainer } from './Doc';
 
 export function WorkspacesDoc() {
   return (
     <>
-      <H2>A way to group comment threads by team or company.</H2>
-      {/* <div>
-        <DocDemoContainer>illustration showing the concept of workspaces</DocDemoContainer>
-      </div> */}
+      <h2>A way to group comment threads by team or company.</h2>
       <div>
         <p>
           Workspaces group comment threads by team/company name. e.g. if some of our users belong to
