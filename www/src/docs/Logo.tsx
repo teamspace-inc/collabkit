@@ -4,7 +4,7 @@ export function Logo() {
   return (
     <div className={navLogoOuter}>
       <div className={navLogoInner}>
-        <img src={LogoSvg} />
+        <img src={LogoSvg} style={{ filter: 'invert(1)' }} />
       </div>
     </div>
   );
