@@ -1,9 +1,6 @@
 import { renderCodeSnippet } from '../CodeEditor';
 
-// this should show and hide the inbox side pane
-// maybe a better name is SidepaneButton
-
-export function UseSidepane() {
+export function UseSidebarDoc() {
   return (
     <>
       <h2>.</h2>
@@ -12,7 +9,7 @@ export function UseSidepane() {
         <p>
           Must be called within a <code>CollabKit.Provider</code>
         </p>
-        {renderCodeSnippet(`import { useSidepane } from '@collabkit/react';
+        {renderCodeSnippet(`import { useSidebar } from '@collabkit/react';
 
 const { sidepaneState, setSidepaneState } = useSidepane();
 

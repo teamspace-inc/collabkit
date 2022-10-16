@@ -33,18 +33,21 @@ function CloseSidebarButton() {
   );
 }
 
-export function Sidebar(props: { children: React.ReactNode }) {
+export function Sidebar(props: {
+  title?: React.ReactNode;
+  children: React.ReactNode;
+  strategy?: 'fixed' | 'absolute';
+}) {
   const { store } = useApp();
   const { isInboxOpen } = useSnapshot(store);
 
   return isInboxOpen ? (
     <ThemeWrapper>
-      <div className={styles.root}>
+      <div className={styles.root} style={{ position: props.strategy ?? 'fixed' }}>
         <h2 className={styles.title}>
-          <div style={{ flex: 1 }}>Comments</div>
+          <div style={{ flex: 1 }}>{props.title ?? 'Comments'}</div>
           <CloseSidebarButton />
         </h2>
-        {/* todo refactor */}
         <div className={styles.scrollarea}>{props.children}</div>
       </div>
     </ThemeWrapper>

@@ -21,6 +21,12 @@ export function InboxButtonDoc() {
       </DocDemoContainer>
       <div>
         <h3>Usage</h3>
+        <p>
+          Handle <code>onClick</code> and display the users <code>{'<Inbox>'}</code> component.
+          <br />
+          Alternatively if you have rendered a <code>{'<Sidebar />'}</code> clicking this button
+          will show the sidebar.
+        </p>
         {renderCodeSnippet(`import { InboxButton } from '@collabkit/react';
 
 export function App() {

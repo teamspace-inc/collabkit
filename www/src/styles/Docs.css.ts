@@ -162,7 +162,7 @@ export const docFooter = style({
   paddingTop: 20,
   paddingBottom: 200,
   color: '#BBBBBB',
-  fontFamily: 'Inter',
+  fontFamily: 'Satoshi',
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'flex-end',
@@ -175,7 +175,7 @@ export const docFooter = style({
 export const docLink = style({
   borderRadius: '6px',
   textDecoration: 'none',
-  fontFamily: 'Inter',
+  fontFamily: 'Satoshi',
   fontStyle: 'normal',
   fontWeight: 600,
   fontSize: 16,

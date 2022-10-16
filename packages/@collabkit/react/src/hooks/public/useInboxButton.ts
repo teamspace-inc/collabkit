@@ -2,7 +2,7 @@ import { ShowInboxButtonTarget } from '@collabkit/core';
 import { useSnapshot } from 'valtio';
 import { useApp } from '../useApp';
 
-export function useInboxButton() {
+export function useInboxButton(props: { onClick?: () => void }) {
   const { store, events } = useApp();
   const { workspaceId } = useSnapshot(store);
 
@@ -13,7 +13,12 @@ export function useInboxButton() {
           type: 'showInboxButton',
           workspaceId,
         };
-        events.onPointerDown(e, { target });
+        if (e.button === 0) {
+          events.onPointerDown(e, { target });
+          if (props.onClick) {
+            props.onClick();
+          }
+        }
       } else {
         console.error('[CollabKit] Workspace ID not found');
       }

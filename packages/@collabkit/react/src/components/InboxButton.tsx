@@ -7,8 +7,8 @@ import CommentIcon from './Comment.svg';
 import CommentNotificationIcon from './CommentNotification.svg';
 import { ThemeWrapper } from './ThemeWrapper';
 
-export function InboxButton() {
-  const { onPointerDown } = useInboxButton();
+export function InboxButton(props: { onClick?: () => void }) {
+  const { onPointerDown } = useInboxButton(props);
   const unreadThreadCount = useUnreadThreadsCount();
   const showUnreadDot = unreadThreadCount > 0;
 
