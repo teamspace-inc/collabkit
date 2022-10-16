@@ -3,9 +3,9 @@ import {
   usePopoverThread,
   PopoverTrigger,
   Inbox,
-  InboxButton,
   Sidebar,
   ThemeProvider,
+  SidebarInboxButton,
 } from '@collabkit/react';
 import { MenuItem, ControlledMenu, useMenuState } from '@szhsin/react-menu';
 import '@szhsin/react-menu/dist/index.css';
@@ -102,7 +102,7 @@ export const TableExample = () => {
 
       <div style={{ display: 'flex', position: 'fixed', top: 20, right: 20 }}>
         <ThemeProvider theme="light">
-          <InboxButton />
+          <SidebarInboxButton />
         </ThemeProvider>
       </div>
 
