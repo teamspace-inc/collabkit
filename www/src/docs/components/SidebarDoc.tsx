@@ -30,6 +30,12 @@ export function App() {
 
       <div>
         <h3>Props</h3>
+        <h4>children?: React.ReactNode</h4>
+        <p>What to render in the Sidebar.</p>
+        <h4>title?: string</h4>
+        <p>
+          Title of the Sidebar. Defaults to <code>'Comments'</code>.
+        </p>
         <h4>strategy?: 'fixed' | 'absolute'</h4>
         <p>
           How the sidebar is positioned. Defaults to <code>fixed</code>. Set this to{' '}
