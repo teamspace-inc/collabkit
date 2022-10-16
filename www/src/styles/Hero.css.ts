@@ -17,6 +17,7 @@ export const h1 = style({
   fontSize: 144,
   textAlign: 'left',
   lineHeight: '90%',
+  marginLeft: '-40px',
 });
 
 export const center = style({

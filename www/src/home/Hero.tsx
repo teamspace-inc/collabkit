@@ -12,6 +12,7 @@ import {
 import alicia from '../assets/alicia.png';
 import julia from '../assets/julia.png';
 import james from '../assets/james.png';
+import { GetStartedButton } from './GetStartedButton';
 
 const messages = {
   0: {
@@ -78,10 +79,7 @@ export function Hero() {
     placement: 'right-start',
     open: true,
     whileElementsMounted: autoUpdate,
-    middleware: [],
   });
-
-  console.log(context);
 
   return (
     <section
@@ -93,10 +91,13 @@ export function Hero() {
         height: '982px',
       }}
     >
-      <h1 ref={reference} className={styles.h1}>
+      <h1 ref={reference} className={styles.h1} style={{ paddingRight: '300px' }}>
         {title}
       </h1>
-      <h3 style={{ padding: '0px 80px' }}>{description}</h3>
+      <h3 style={{ padding: '0px 80px', marginLeft: '-480px', textAlign: 'left' }}>
+        {description}
+      </h3>
+      <GetStartedButton style={{ marginLeft: '-900px', marginTop: '0px' }} />
       <div
         ref={floating}
         style={{
@@ -104,7 +105,7 @@ export function Hero() {
           left: context.x ?? 0,
           top: context.y ?? 0,
           marginTop: -115,
-          marginLeft: -80,
+          marginLeft: -360,
         }}
       >
         <Message message={messages[0]} />

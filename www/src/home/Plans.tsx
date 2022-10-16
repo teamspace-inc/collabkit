@@ -30,10 +30,10 @@ export function Plans() {
           <h4>Free</h4>
           <V12 />
           <h2>
-            $0 <br />
+            $0
+            <br />
+            <br />
           </h2>
-          <V12 />
-          <V12 />
           <FeatureList>
             <h5>All the essentials</h5>
             <h5>
@@ -96,10 +96,11 @@ export function Plans() {
               <small>monthly active users</small>
             </h5>
             <h5>Customize UI</h5>
-            <h5>Shared Slack Channel</h5>
+            <h5>Slack Support</h5>
             <h5>API</h5>
-            <h5>SLA</h5>
           </FeatureList>
+          <br />
+          <br />
           <V12 />
           <GetStartedButton
             style={{

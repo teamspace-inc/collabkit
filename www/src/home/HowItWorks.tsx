@@ -63,6 +63,7 @@ export function HowItWorks() {
           }}
         >
           {Object.keys(scenarios).map((scenario) => (
+            // @ts-expect-error
             <img src={scenarios[scenario]} style={{ maxWidth: demoMaxWidth }} />
           ))}
         </div>
