@@ -7,7 +7,7 @@ export const root = style({
   height: '100%',
   background: fallbackVar(vars.sidebar.background, vars.color.background),
   boxShadow: fallbackVar(vars.sidebar.boxShadow, vars.shadow.high),
-  position: 'absolute',
+  position: 'fixed',
   top: 0,
   width: fallbackVar(vars.inbox.width, '292px'),
   right: 0,

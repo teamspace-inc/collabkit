@@ -16,6 +16,7 @@ import { timelineUtils } from '@collabkit/core';
 import { ThemeWrapper } from './ThemeWrapper';
 import { ChatCentered } from './icons';
 import { emptyState } from '../styles/components/Thread.css';
+import { useOptionalSidebarContext } from './Sidebar';
 
 export function unique<T>(value: T, index: number, self: T[]) {
   return self.indexOf(value) === index;
@@ -24,22 +25,6 @@ export function unique<T>(value: T, index: number, self: T[]) {
 export interface ButtonProps extends React.ComponentPropsWithoutRef<'button'> {
   specialProp?: string;
 }
-
-// export function EmptyState() {
-//   return (
-//     <div className={styles.emptyState.root}>
-//       <div className={styles.emptyState.title}>No comments</div>
-//       <div className={styles.emptyState.body}>Comments on this view will appear here.</div>
-//     </div>
-//   );
-// }
-
-// const emptyState = (
-//   <div className={styles.emptyState}>
-//     <ChatCentered weight="thin" size={32} />
-//     <span>No comments yet</span>
-//   </div>
-// );
 
 export function EmptyState() {
   return (
@@ -106,19 +91,20 @@ export function Inbox() {
 
   const isEmpty = inboxItems?.filter((item) => item !== null).length === 0;
 
+  // account for sidebar title height
+  const sidebarContext = useOptionalSidebarContext();
+  const style = sidebarContext?.titleHeight
+    ? { height: `calc(100% - ${sidebarContext.titleHeight}px)` }
+    : {};
+
   return (
     <ThemeWrapper>
-      <div className={styles.root}>
+      <div className={styles.root} style={style}>
         {isEmpty ? (
           <EmptyState />
         ) : (
           <ScrollAreaRoot>
-            <ScrollAreaViewport>
-              {inboxItems}
-              {/* <div style={{ padding: '40px 20px', textAlign: 'center', color: '#6A7278' }}>
-              No more comments
-            </div> */}
-            </ScrollAreaViewport>
+            <ScrollAreaViewport>{inboxItems}</ScrollAreaViewport>
             <ScrollAreaScrollbar orientation="vertical">
               <ScrollAreaThumb />
             </ScrollAreaScrollbar>

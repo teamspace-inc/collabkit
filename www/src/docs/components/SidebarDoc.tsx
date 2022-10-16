@@ -5,10 +5,8 @@ import { SidebarDemo } from '../demos/SidebarDemo';
 export function SidebarDoc() {
   return (
     <>
-      <div>
-        <h2>A sidebar you can use to show and hide the Inbox easily.</h2>
-        <SidebarDemo className={docDemoContainer} />
-      </div>
+      <h2>A sidebar you can use to show and hide the Inbox easily.</h2>
+      <SidebarDemo className={docDemoContainer} />
       <div>
         <h3>Usage</h3>
         <p>
