@@ -341,7 +341,7 @@ export const navHeader = style({
 });
 
 export const navListTitle = style({
-  fontFamily: 'Inter',
+  fontFamily: 'Satoshi',
   fontStyle: 'normal',
   fontWeight: 600,
   color: '#fff',

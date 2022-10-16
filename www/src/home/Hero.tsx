@@ -1,9 +1,21 @@
 import { useIsSmallScreen } from './useIsSmallScreen';
 import * as styles from '../styles/Hero.css';
 import { vars } from '../styles/Theme.css';
+import {
+  useFloatingNodeId,
+  useFloating,
+  autoUpdate,
+  offset,
+  size,
+} from '@floating-ui/react-dom-interactions';
+
+import alicia from '../assets/alicia.png';
+import julia from '../assets/julia.png';
+import james from '../assets/james.png';
 
 const messages = {
   0: {
+    avatar: alicia,
     name: 'Alicia Baker',
     timeAgo: '10m',
     message: (
@@ -13,11 +25,13 @@ const messages = {
     ),
   },
   1: {
+    avatar: julia,
     name: 'Julia Efes',
     timeAgo: '5m',
     message: <>Looks great! Maybe we should change it to ‘commenting’?</>,
   },
   2: {
+    avatar: james,
     name: 'James Hanson',
     timeAgo: 'Just now',
     message: <>Agreed, I think it describes the product better</>,
@@ -27,7 +41,7 @@ const messages = {
 function Message(props: { message: typeof messages[keyof typeof messages] }) {
   return (
     <div className={styles.message}>
-      <div className={styles.avatar}></div>
+      <img src={props.message.avatar} className={styles.avatar} />
       <div>
         <div className={styles.name}>
           {props.message.name} <span className={styles.timeAgo}>{props.message.timeAgo}</span>
@@ -57,13 +71,48 @@ export function Hero() {
     </>
   );
 
+  const nodeId = useFloatingNodeId();
+  const { floating, reference, context } = useFloating({
+    nodeId,
+    strategy: 'fixed',
+    placement: 'right-start',
+    open: true,
+    whileElementsMounted: autoUpdate,
+    middleware: [],
+  });
+
+  console.log(context);
+
   return (
-    <section style={{ background: vars.color.yellow, paddingTop: 240 }}>
-      <h1 className={styles.h1}>{title}</h1>
-      <h3>{description}</h3>
-      <Message message={messages[0]} />
-      <Message message={messages[1]} />
-      <Message message={messages[2]} />
+    <section
+      style={{
+        background: vars.color.yellow,
+        paddingTop: 240,
+        boxSizing: 'border-box',
+        position: 'relative',
+        height: '982px',
+      }}
+    >
+      <h1 ref={reference} className={styles.h1}>
+        {title}
+      </h1>
+      <h3 style={{ padding: '0px 80px' }}>{description}</h3>
+      <div
+        ref={floating}
+        style={{
+          position: context.strategy,
+          left: context.x ?? 0,
+          top: context.y ?? 0,
+          marginTop: -115,
+          marginLeft: -80,
+        }}
+      >
+        <Message message={messages[0]} />
+        <div style={{ margin: '150px 0' }} />
+        <Message message={messages[1]} />
+        <div style={{ margin: '16px 0' }} />
+        <Message message={messages[2]} />
+      </div>
     </section>
   );
 }
