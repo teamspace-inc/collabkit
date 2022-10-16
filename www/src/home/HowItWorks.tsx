@@ -11,16 +11,16 @@ const scenarios = {
   Tables: TableSvg,
   Charts: ChartSvg,
   Text: TextSvg,
-  Lists: TextSvg,
-  Canvas: TextSvg,
-  Anywhere: TextSvg,
-  Video: TextSvg,
+  // Lists: TextSvg,
+  // Canvas: TextSvg,
+  // Anywhere: TextSvg,
+  // Video: TextSvg,
 };
 
 type scenarioNames = keyof typeof scenarios;
 
 export function HowItWorks() {
-  const [activeScenario, setActiveScenario] = useState('Pages');
+  const [activeScenario, setActiveScenario] = useState<scenarioNames>('Pages');
   const demoMaxWidth = window.innerWidth - 200;
 
   return (
@@ -47,7 +47,7 @@ export function HowItWorks() {
         <div className={tabs}>
           {Object.keys(scenarios).map((scenario) => (
             <div
-              onClick={() => setActiveScenario(scenario)}
+              onClick={() => setActiveScenario(scenario as scenarioNames)}
               className={tab({ active: scenario === activeScenario })}
             >
               {scenario}
@@ -62,10 +62,7 @@ export function HowItWorks() {
             gap: '40px',
           }}
         >
-          {Object.keys(scenarios).map((scenario) => (
-            // @ts-expect-error
-            <img src={scenarios[scenario]} style={{ maxWidth: demoMaxWidth }} />
-          ))}
+          <img src={scenarios[activeScenario]} style={{ maxWidth: demoMaxWidth }} />
         </div>
       </div>
     </section>
