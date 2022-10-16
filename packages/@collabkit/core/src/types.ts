@@ -148,8 +148,8 @@ export type Target =
   | PinTarget
   | CommentEditButtonTarget
   | CommentDeleteButtonTarget
-  | ShowInboxButtonTarget
-  | HideInboxButtonTarget;
+  | ShowSidebarButtonTarget
+  | HideSidebarButtonTarget;
 
 export type MenuTarget = {
   type: 'menu';
@@ -192,10 +192,10 @@ export type ThreadTarget = { type: 'thread'; threadId: string; workspaceId: stri
 
 export type CommentButtonTarget = { type: 'commentButton'; threadId: string; workspaceId: string };
 
-export type ShowInboxButtonTarget = { type: 'showInboxButton'; workspaceId: string };
+export type ShowSidebarButtonTarget = { type: 'showSidebarButton'; workspaceId: string };
 
-export type HideInboxButtonTarget = {
-  type: 'hideInboxButton';
+export type HideSidebarButtonTarget = {
+  type: 'hideSidebarButton';
   workspaceId: string;
 };
 
@@ -341,7 +341,7 @@ export interface UnconfiguredStore {
   isReadOnly: boolean;
   isConnected: boolean;
   isSignedIn: boolean;
-  isInboxOpen: boolean;
+  isSidebarOpen: boolean;
   isDemo: boolean;
   userId: string | null;
   user: UserProps | null;

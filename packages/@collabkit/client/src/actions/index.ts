@@ -40,8 +40,8 @@ import { deleteMessage } from './deleteMessage';
 import { startEditing } from './startEditing';
 import { stopEditing } from './stopEditing';
 import { updateComment } from './updateComment';
-import { showInbox } from './showInbox';
-import { hideInbox } from './hideInbox';
+import { showSidebar } from './showSidebar';
+import { hideSidebar } from './hideSidebar';
 import { setAvatarError } from './setAvatarError';
 import { closeMenu } from './closeMenu';
 import { openMenu } from './openMenu';
@@ -154,7 +154,7 @@ export const actions = {
   unhover,
   updateComment,
   viewThread,
-  showInbox,
-  hideInbox,
+  showSidebar,
+  hideSidebar,
   setAvatarError,
 };

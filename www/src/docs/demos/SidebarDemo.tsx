@@ -1,4 +1,4 @@
-import { Inbox, InboxButton, Sidebar } from '@collabkit/react';
+import { Inbox, SidebarInboxButton, Sidebar } from '@collabkit/react';
 
 export function SidebarDemo(props: { className?: string }) {
   return (
@@ -16,7 +16,7 @@ export function SidebarDemo(props: { className?: string }) {
       }}
     >
       <div style={{ position: 'absolute', top: 12, left: 12 }}>
-        <InboxButton />
+        <SidebarInboxButton />
       </div>
       <Sidebar strategy="absolute">
         <Inbox />

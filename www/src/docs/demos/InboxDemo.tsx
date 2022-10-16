@@ -1,4 +1,4 @@
-import { Inbox, InboxButton } from '@collabkit/react';
+import { Inbox } from '@collabkit/react';
 
 export function InboxDemo(props: { className?: string }) {
   return (

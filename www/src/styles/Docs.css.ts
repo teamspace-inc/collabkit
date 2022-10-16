@@ -188,7 +188,7 @@ export const docLink = style({
 export const docContent = style({
   display: 'flex',
   flexDirection: 'column',
-  gap: '40px',
+  gap: '30px',
   flex: 1,
 });
 

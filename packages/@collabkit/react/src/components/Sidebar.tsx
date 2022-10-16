@@ -1,5 +1,5 @@
-import { HideInboxButtonTarget } from '@collabkit/core';
-import React, { useEffect, useLayoutEffect } from 'react';
+import { HideSidebarButtonTarget } from '@collabkit/core';
+import React, { useLayoutEffect } from 'react';
 import { useSnapshot } from 'valtio';
 import { useApp } from '../hooks/useApp';
 import { useOptionalUserContext } from '../hooks/useUserContext';
@@ -20,8 +20,8 @@ function CloseSidebarButton() {
         }
         store.callbacks?.onInboxCloseButtonClick?.(userContext);
 
-        const target: HideInboxButtonTarget = {
-          type: 'hideInboxButton',
+        const target: HideSidebarButtonTarget = {
+          type: 'hideSidebarButton',
           workspaceId: userContext.workspaceId,
         };
 
@@ -45,8 +45,10 @@ export function Sidebar(props: {
 }) {
   const titleRef = React.useRef<HTMLDivElement>(null);
   const { store } = useApp();
-  const { isInboxOpen } = useSnapshot(store);
+  const { isSidebarOpen: isInboxOpen } = useSnapshot(store);
 
+  // set the title height so we can adjust the inbox scrollbar accordingly
+  // we need to do this because the inbox scrollbar is a child of the inbox
   const [titleHeight, setTitleHeight] = React.useState(0);
 
   useLayoutEffect(() => {

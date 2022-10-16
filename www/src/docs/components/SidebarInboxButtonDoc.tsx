@@ -1,8 +1,8 @@
-import { InboxButton } from '@collabkit/react';
+import { SidebarInboxButton } from '@collabkit/react';
 import { renderCodeSnippet } from '../CodeEditor';
 import { DocDemoContainer } from '../Doc';
 
-export function InboxButtonDoc() {
+export function SidebarInboxButtonDoc() {
   return (
     <>
       <h2>A button with an unread indicator.</h2>
@@ -16,33 +16,27 @@ export function InboxButtonDoc() {
         }}
       >
         <div style={{ background: 'white', borderRadius: '8px' }}>
-          <InboxButton
-            onClick={function (): void {
-              throw new Error('Function not implemented.');
-            }}
-          />
+          <SidebarInboxButton />
         </div>
       </DocDemoContainer>
       <div>
         <h3>Usage</h3>
         <p>
-          A button that displays the number of unread comments in the users inbox. Handle{' '}
-          <code>onClick</code> to show the user's inbox yourself by rendering the
-          <code>{'<Inbox>'}</code> component.
+          A button that displays the number of unread comments in the users inbox. Clicking the
+          button will show the inbox using a <code>{'<Sidebar />'}</code> component. <br />
+          <br />
+          Ensure you have rendered the <code>{'<Sidebar />'}</code> component in your app already.
         </p>
-        {renderCodeSnippet(`import { InboxButton } from '@collabkit/react';
+        {renderCodeSnippet(`import { SidebarInboxButton } from '@collabkit/react';
 
 export function App() {
   return <div>
-    <InboxButton onClick={() => { /* handle showing the users inbox here */ }} />
+    <SidebarInboxButton />
   </div>;
 }`)}
       </div>
       <div>
         <h3>Props</h3>
-        <h4>{'onClick: (e: React.MouseEvent) => void'}</h4>
-        <p>Handle the button click event.</p>
-        <br />
         <h4>children?: React.ReactNode</h4>
         <p>Replace the contents of the button with other elements.</p>
       </div>
