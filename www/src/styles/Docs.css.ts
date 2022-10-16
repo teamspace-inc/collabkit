@@ -117,7 +117,7 @@ export const themeDemoContainer = style([
 
 export const docScrollableContent = style({
   padding: 20,
-  maxWidth: 760,
+  width: 720,
   display: 'table',
   margin: '0 auto',
   height: '100vh',

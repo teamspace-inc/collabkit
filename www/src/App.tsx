@@ -188,16 +188,16 @@ const config: Config = {
 const store = createDemoStore(config, defaultWorkspace);
 
 export default function App() {
-  useEffect(() => {
-    // @ts-expect-error
-    window.Intercom('boot', {
-      api_base: 'https://api-iam.intercom.io',
-      app_id: 'cwr7lgni',
-    });
+  // useEffect(() => {
+  //   // @ts-expect-error
+  //   window.Intercom('boot', {
+  //     api_base: 'https://api-iam.intercom.io',
+  //     app_id: 'cwr7lgni',
+  //   });
 
-    // @ts-expect-error
-    window.Intercom('update');
-  }, []);
+  //   // @ts-expect-error
+  //   window.Intercom('update');
+  // }, []);
 
   return (
     <CollabKitProvider
