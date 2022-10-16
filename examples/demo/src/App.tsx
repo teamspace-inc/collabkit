@@ -129,7 +129,7 @@ function Home() {
       <Thread
         autoFocus={true}
         info={{ name: 'Demo thread' }}
-        showHeader={false}
+        showHeader={true}
         composerPrompt="Write a comment"
         style={{ borderRadius: 0, height: '100%' }}
         threadId={threadId}

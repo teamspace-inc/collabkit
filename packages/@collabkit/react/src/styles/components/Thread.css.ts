@@ -20,7 +20,7 @@ export const root = style({
 });
 
 export const header = style({
-  padding: '0px 16px 20px',
+  padding: `${vars.space[4]} ${vars.space[4]} ${vars.space[4]}`,
   display: 'flex',
   color: fallbackVar(vars.thread.header.color, vars.color.textPrimary),
   fontSize: fallbackVar(vars.thread.header.fontSize, vars.text.large.fontSize),
