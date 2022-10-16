@@ -31,12 +31,7 @@ function NavListItem(props: { path: string[]; id: string; onClick: () => void })
   );
 }
 
-function NavList(props: {
-  node: RootDocNode;
-  path: string[];
-  breakpoint?: Breakpoint;
-  onClick: () => void;
-}) {
+function NavList(props: { node: RootDocNode; path: string[]; onClick: () => void }) {
   if (typeof props.node === 'function') {
     return null;
   }
@@ -80,27 +75,16 @@ export function Nav(props: { className?: string }) {
           <Link to="/docs">
             <Logo />
           </Link>
-
-          {hasMenu ? (
-            <div
-              className={navBurgerToggle({ active: isOpen })}
-              onClick={() => hasMenu && setIsOpen(!isOpen)}
-            >
-              <List size={24} color="rgba(255,255,255,0.75)" />
-            </div>
-          ) : null}
+          <div className={navBurgerToggle({ active: isOpen })} onClick={() => setIsOpen(!isOpen)}>
+            <List size={24} color="rgba(255,255,255,0.75)" />
+          </div>
         </div>
         {isOpen ? (
           <div className={props.className}>
             <ScrollAreaRoot style={{ width: '100%' }}>
               <ScrollAreaViewport>
                 <div className={navWrap}>
-                  <NavList
-                    onClick={() => hasMenu && setIsOpen(false)}
-                    node={DOCS}
-                    path={[]}
-                    breakpoint={breakpoint}
-                  />
+                  <NavList onClick={() => hasMenu && setIsOpen(false)} node={DOCS} path={[]} />
                 </div>
               </ScrollAreaViewport>
               <ScrollAreaScrollbar orientation="vertical">

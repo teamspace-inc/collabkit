@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { Link } from 'wouter';
-import { useBreakpoint } from '../hooks/useWindowSize';
 import {
   docContent,
   docDemoContainer,
@@ -11,6 +10,7 @@ import {
   docRoot,
   docs,
   docScrollableContent,
+  docScrollableContentWrap,
   docTitle,
 } from '../styles/Docs.css';
 import { dark, vars } from '../styles/Theme.css';
@@ -88,8 +88,6 @@ export function Doc(props: {
   next: string[] | undefined;
   prev: string[] | undefined;
 }) {
-  const breakpoint = useBreakpoint();
-  const showBorder = ['large', 'xlarge'].includes(breakpoint);
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -97,7 +95,7 @@ export function Doc(props: {
     <div className={`${docs} ${dark}`}>
       <div className={docRoot}>
         <Nav className={docNav} />
-        <div style={{ height: '100vh', borderLeft: showBorder ? '1px solid #3D3D3D' : 'none' }}>
+        <div className={docScrollableContentWrap}>
           <ScrollAreaRoot style={{ width: '100%' }}>
             <ScrollAreaViewport>
               <div className={docScrollableContent}>

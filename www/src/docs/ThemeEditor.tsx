@@ -12,6 +12,7 @@ import { InboxButtonDemo } from './demos/InboxButtonDemo';
 import { dark } from '../styles/Theme.css';
 import { bg } from '../styles/Website.css';
 import { Logo } from './Logo';
+
 import {
   codeEditor,
   componentList,
@@ -20,6 +21,7 @@ import {
   header,
   root,
 } from '../styles/ThemeEditor.css';
+
 import { SidebarDemo } from './demos/SidebarDemo';
 
 const components = [
