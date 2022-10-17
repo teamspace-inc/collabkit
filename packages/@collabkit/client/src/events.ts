@@ -118,6 +118,10 @@ export function createEvents(store: Store) {
         case 'commentEditButton':
           actions.startEditing(store, props.target.comment);
           return;
+        case 'reopenThreadButton': {
+          actions.reopenThread(store, props.target.workspaceId, props.target.threadId);
+          break;
+        }
       }
     },
 

@@ -166,7 +166,7 @@ export const Content = (props: { profileIndent?: boolean } & React.ComponentProp
   return <div {...forwardProps} className={props.className ?? styles.content({ profileIndent })} />;
 };
 
-type CommentMenuItemType = 'commentEditButton' | 'commentDeleteButton';
+type CommentMenuItemType = 'commentEditButton' | 'commentDeleteButton' | 'reopenThreadButton';
 
 const CommentMenu = (props: { className?: string }) => {
   const { events, store } = useApp();
@@ -184,14 +184,16 @@ const CommentMenu = (props: { className?: string }) => {
 
   const onItemClick = useCallback(
     (e: React.MouseEvent, type: CommentMenuItemType) => {
-      events.onClick(e, { target: { type, comment } });
+      events.onClick(e, {
+        target: type === 'reopenThreadButton' ? { type, threadId, workspaceId } : { type, comment },
+      });
     },
-    [comment]
+    [comment, threadId, workspaceId]
   );
 
   return (
     <div className={styles.actions}>
-      {isFirstComment && createdById === userId && (
+      {isFirstComment && createdById === userId && !isResolved && (
         <IconButton
           // TODO: tooltip hijacks focus when used within a modal popover
           // tooltip={isResolved ? 'Re-open' : 'Mark as Resolved and Hide'}
@@ -200,12 +202,12 @@ const CommentMenu = (props: { className?: string }) => {
               target: {
                 threadId,
                 workspaceId,
-                type: 'reopenThreadButton',
+                type: 'resolveThreadButton',
               },
             })
           }
         >
-          {!isResolved && <Check size={18} weight={'regular'} />}
+          <Check size={18} weight={'regular'} />
         </IconButton>
       )}
       {createdById === userId && (
@@ -216,6 +218,9 @@ const CommentMenu = (props: { className?: string }) => {
         >
           <MenuItem className={styles.menuItem} label="Edit" targetType="commentEditButton" />
           <MenuItem className={styles.menuItem} label="Delete" targetType="commentDeleteButton" />
+          {isResolved && (
+            <MenuItem className={styles.menuItem} label="Re-open" targetType="reopenThreadButton" />
+          )}
         </Menu>
       )}
     </div>
