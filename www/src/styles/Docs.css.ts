@@ -239,16 +239,6 @@ export const docTitle = style({
   },
 });
 
-globalStyle(`ol ol`, {
-  marginTop: 0,
-  marginBottom: 8,
-  paddingLeft: 0,
-  textIndent: '20px',
-  paddingRight: 0,
-  display: 'flex',
-  flex: 1,
-});
-
 export const navOl = style({
   listStyle: 'none',
   boxSizing: 'border-box',
@@ -261,6 +251,17 @@ export const navOl = style({
       paddingRight: '24px',
     },
   },
+});
+
+globalStyle(`${navOl} ol`, {
+  marginTop: 0,
+  marginBottom: 8,
+  marginLeft: '0',
+  paddingLeft: 0,
+  textIndent: '20px',
+  paddingRight: 0,
+  display: 'flex',
+  flex: 1,
 });
 
 export const navLi = style({
