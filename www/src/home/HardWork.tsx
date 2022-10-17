@@ -1,7 +1,7 @@
 import HardWorkSvg from '../assets/HardWork.svg';
 import FeaturesSmallSvg from '../assets/FeaturesSmall.svg';
 import FeaturesSvg from '../assets/Features.svg';
-import { useIsSmallScreen } from './useIsSmallScreen';
+import { useIsSmallScreen } from '../hooks/useIsSmallScreen';
 
 export function HardWork() {
   const isSmallScreen = useIsSmallScreen();
