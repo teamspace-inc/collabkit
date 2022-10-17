@@ -3,28 +3,33 @@ import PagesSvg from '../assets/Pages.svg';
 import TableSvg from '../assets/Table.svg';
 import ChartSvg from '../assets/Chart.svg';
 import TextSvg from '../assets/Text.svg';
-// import { DataGridDemo } from '../components/DataGridDemo';
 import { dark } from '../styles/Theme.css';
 import { tab, tabs } from '../styles/Website.css';
 import { useInvertFilter } from '../hooks/useInvertFilter';
 
-const scenarios = {
-  Pages: () => <img src={PagesSvg} style={{ maxWidth: 'calc(100vw - 200px)' }} />,
-  Tables: () => <img src={TableSvg} style={{ maxWidth: 'calc(100vw - 200px)' }} />, // <DataGridDemo />,
-  Charts: () => <img src={ChartSvg} style={{ maxWidth: 'calc(100vw - 200px)' }} />,
-  Text: () => <img src={TextSvg} style={{ maxWidth: 'calc(100vw - 200px)' }} />,
-  // Lists: TextSvg,
-  // Canvas: TextSvg,
-  // Anywhere: TextSvg,
-  // Video: TextSvg,
-};
+const scenarios = ['Pages', 'Tables', 'Charts', 'Text'] as const;
+type ScenarioName = typeof scenarios[number];
 
-type scenarioNames = keyof typeof scenarios;
+function Scenario({ scenario }: { scenario: ScenarioName }) {
+  const imgStyle = { maxWidth: 'calc(100vw - 200px)' };
+  switch (scenario) {
+    case 'Pages':
+      return <img src={PagesSvg} style={imgStyle} />;
+    case 'Tables':
+      // return <DataGridDemo />
+      return <img src={TableSvg} style={imgStyle} />;
+    case 'Charts':
+      return <img src={ChartSvg} style={imgStyle} />;
+    case 'Text':
+      return <img src={TextSvg} style={imgStyle} />;
+    default:
+      return null;
+  }
+}
 
 export function HowItWorks(props: { setInvertFilter: (invert: number) => void }) {
-  const [activeScenario, setActiveScenario] = useState<scenarioNames>('Pages');
+  const [activeScenario, setActiveScenario] = useState<ScenarioName>('Pages');
   const { ref } = useInvertFilter(props);
-  const Scenario = scenarios[activeScenario];
   return (
     <section
       ref={ref}
@@ -48,10 +53,10 @@ export function HowItWorks(props: { setInvertFilter: (invert: number) => void })
           }}
         >
           <div className={tabs}>
-            {Object.keys(scenarios).map((scenario) => (
+            {scenarios.map((scenario) => (
               <div
                 key={scenario}
-                onClick={() => setActiveScenario(scenario as scenarioNames)}
+                onClick={() => setActiveScenario(scenario as ScenarioName)}
                 className={tab({ active: scenario === activeScenario })}
               >
                 {scenario}
@@ -63,7 +68,7 @@ export function HowItWorks(props: { setInvertFilter: (invert: number) => void })
               gap: '40px',
             }}
           >
-            <Scenario />
+            <Scenario scenario={activeScenario} />
           </div>
         </div>
       </div>
