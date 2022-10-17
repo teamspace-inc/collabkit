@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AgGridReact, AgGridReactProps } from '@ag-grid-community/react';
 import type { ICellRendererParams } from '@ag-grid-community/core';
 import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-model';
@@ -28,12 +28,17 @@ type RowData = {
 
 function CellRenderer(props: ICellRendererParams<RowData>) {
   const cellId = props.data!.id + '_' + props.colDef!.field;
-  const { hasThread, popoverState, context } = usePopoverThread({
+  const { hasThread, popoverState, setPopoverState, context } = usePopoverThread({
     name: props.colDef!.headerName,
     cellId,
     _viewId: 'table-demo',
     openOnClick: true,
   });
+  useEffect(() => {
+    if (cellId === 'row003_budget') {
+      setPopoverState('open');
+    }
+  }, []);
   return (
     <PopoverTrigger context={context}>
       <div
