@@ -7,6 +7,7 @@ export function createDemoStore(config: Config, defaultWorkspace: Partial<Worksp
   const store = createStore(config, sync);
 
   const workspaceStore = createWorkspace();
+  workspaceStore.likelyFetchedAllProfiles = true;
 
   // @ts-ignore
   Object.keys(defaultWorkspace).forEach((k) => (workspaceStore[k] = defaultWorkspace[k]));

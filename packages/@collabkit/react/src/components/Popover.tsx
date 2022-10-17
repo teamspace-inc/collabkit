@@ -8,6 +8,7 @@ import {
   offset,
   safePolygon,
   size,
+  useClick,
   useDismiss,
   useFloating,
   useFloatingNodeId,
@@ -43,25 +44,25 @@ function useOpenThread({ viewId, cellId }: { viewId: string; cellId: string }) {
   return threadId ?? null;
 }
 
-type DeprecatedPopoverProps = {
-  name?: string;
-  cellId: string;
-  offset?: number;
-  padding?: number;
-};
+// type DeprecatedPopoverProps = {
+//   name?: string;
+//   cellId: string;
+//   offset?: number;
+//   padding?: number;
+// };
 
 type PopoverProps = {
   name?: string;
-  threadId: string;
-  // for demo
+  cellId: string;
   _viewId?: string;
+  openOnClick?: boolean;
+
   offset?: number;
   padding?: number;
 };
 
-export function usePopoverThread(props: DeprecatedPopoverProps | PopoverProps) {
-  const { name } = props;
-  const cellId = 'cellId' in props ? props.cellId : props.threadId;
+export function usePopoverThread(props: PopoverProps) {
+  const { name, cellId } = props;
 
   const viewId =
     '_viewId' in props && props._viewId ? props._viewId : window?.location?.pathname || 'default';
@@ -187,6 +188,10 @@ export function usePopoverThread(props: DeprecatedPopoverProps | PopoverProps) {
     ]);
   const { getReferenceProps: getThreadReferenceProps, getFloatingProps: getThreadFloatingProps } =
     useInteractions([
+      useClick(threadContext, {
+        // TODO: allow disabling this, if more control is needed
+        enabled: props.openOnClick ?? false,
+      }),
       useDismiss(threadContext, {
         escapeKey: false,
       }),

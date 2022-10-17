@@ -5,7 +5,7 @@ import { DocDemoContainer } from '../Doc';
 export function PopoverThreadDemo() {
   const { setPopoverState, context } = usePopoverThread({
     name: 'test',
-    threadId: 'thread4',
+    cellId: 'thread4',
     _viewId: 'demo',
   });
 

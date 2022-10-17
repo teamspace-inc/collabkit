@@ -1,14 +1,17 @@
 import { useState } from 'react';
-import { AgGridReact } from '@ag-grid-community/react';
+import { AgGridReact, AgGridReactProps } from '@ag-grid-community/react';
+import type { ICellRendererParams } from '@ag-grid-community/core';
 import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-model';
 import '@ag-grid-community/styles/ag-grid.css';
 import './ag-theme-collabkit.css';
 import * as styles from './DataGridDemo.css';
-import { SidebarInboxButton } from '@collabkit/react';
+import { PopoverTrigger, SidebarInboxButton, usePopoverThread } from '@collabkit/react';
+import { vars } from '../styles/Theme.css';
 
 const AgGridReactAny = AgGridReact as any;
 
 type RowData = {
+  id: string;
   account: string;
   budget: string;
   spent: string;
@@ -16,24 +19,130 @@ type RowData = {
   nested?: true;
 };
 
+function CellRenderer(props: ICellRendererParams<RowData>) {
+  const { hasThread, popoverState, context } = usePopoverThread({
+    name: props.colDef!.headerName,
+    cellId: props.data!.id + '_' + props.colDef!.field,
+    openOnClick: true,
+  });
+  return (
+    <PopoverTrigger context={context}>
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          padding: '0 calc(var(--ag-cell-horizontal-padding) - 1px)',
+          border: '2px solid transparent',
+          ...(popoverState === 'open'
+            ? {
+                border: '2px solid',
+                borderColor: vars.color.blue,
+                borderStyle: 'var(--ag-range-selection-border-style)',
+                outline: 'initial',
+              }
+            : null),
+        }}
+      >
+        {props.value}
+        {hasThread && <ThreadIndicator />}
+      </div>
+    </PopoverTrigger>
+  );
+}
+
+const ThreadIndicator = () => (
+  <span
+    style={{
+      position: 'absolute',
+      top: -2,
+      right: -2,
+      width: 0,
+      height: 0,
+      borderStyle: 'solid',
+      borderWidth: '0 8px 8px 0',
+      borderColor: `transparent ${vars.color.blue} transparent transparent`,
+    }}
+  />
+);
+
+const cellStyle = { padding: 0, border: 'none' };
+
 export function DataGridDemo() {
   const [rowData] = useState<RowData[]>([
-    { account: 'Income', budget: '$3,000,000', spent: '120%', change: '-2%' },
-    { account: 'Cost of Goods Sold', budget: '$2,000,000', spent: '100%', change: '-2%' },
-    { account: 'Gross Profit', budget: '$2,000,000', spent: '37%', change: '+16%', nested: true },
-    { account: 'Gross Margin', budget: '40%', spent: '', change: '+12%', nested: true },
-    { account: 'Sales & Marketing', budget: '$1,500,000', spent: '72%', change: '+2%' },
-    { account: 'General and Admin', budget: '$1,500,000', spent: '134%', change: '+7%' },
-    { account: 'Research and Development', budget: '$3,000,000', spent: '64%', change: '-8%' },
-    { account: 'Net Income', budget: '$3,000,000', spent: '', change: '+10%', nested: true },
-    { account: 'Net Income Margin', budget: '$400,000', spent: '', change: '+4%', nested: true },
+    {
+      id: 'row-4V9aMhjU3_2WRBnnGVZo4',
+      account: 'Income',
+      budget: '$3,000,000',
+      spent: '120%',
+      change: '-2%',
+    },
+    {
+      id: 'row-ToeceSzBVwpLIeJOBrOr6',
+      account: 'Cost of Goods Sold',
+      budget: '$2,000,000',
+      spent: '100%',
+      change: '-2%',
+    },
+    {
+      id: 'row-C05Y02ZDZIoisnSxQEYRI',
+      account: 'Gross Profit',
+      budget: '$2,000,000',
+      spent: '37%',
+      change: '+16%',
+      nested: true,
+    },
+    {
+      id: 'row-8y3Jnq3e7jyxm32CcZsGD',
+      account: 'Gross Margin',
+      budget: '40%',
+      spent: '',
+      change: '+12%',
+      nested: true,
+    },
+    {
+      id: 'row-Pd5ZW67p8XT_WAX4A5GZ0',
+      account: 'Sales & Marketing',
+      budget: '$1,500,000',
+      spent: '72%',
+      change: '+2%',
+    },
+    {
+      id: 'row-rQ8revfytBOd6ltVi_j9r',
+      account: 'General and Admin',
+      budget: '$1,500,000',
+      spent: '134%',
+      change: '+7%',
+    },
+    {
+      id: 'row-GX0pmL9PEiIFAGXH15agq',
+      account: 'Research and Development',
+      budget: '$3,000,000',
+      spent: '64%',
+      change: '-8%',
+    },
+    {
+      id: 'row-Khya64ekcbUtGN5RDu8NC',
+      account: 'Net Income',
+      budget: '$3,000,000',
+      spent: '',
+      change: '+10%',
+      nested: true,
+    },
+    {
+      id: 'row-L3gsbnl6PROqLEWs8zYTN',
+      account: 'Net Income Margin',
+      budget: '$400,000',
+      spent: '',
+      change: '+4%',
+      nested: true,
+    },
   ]);
 
-  const [columnDefs] = useState([
-    { headerName: '', field: 'account' },
-    { headerName: 'Budget', field: 'budget' },
-    { headerName: 'Budget Spent', field: 'spent' },
-    { headerName: 'Change', field: 'change' },
+  const [columnDefs] = useState<AgGridReactProps['columnDefs']>([
+    { headerName: '', field: 'account', cellRenderer: CellRenderer, cellStyle },
+    { headerName: 'Budget', field: 'budget', cellRenderer: CellRenderer, cellStyle },
+    { headerName: 'Budget Spent', field: 'spent', cellRenderer: CellRenderer, cellStyle },
+    { headerName: 'Change', field: 'change', cellRenderer: CellRenderer, cellStyle },
   ]);
 
   return (
