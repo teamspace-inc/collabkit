@@ -82,7 +82,7 @@ export function Plans() {
           />
         </div>
         <div className={card}>
-          <h4>Pro</h4>
+          <h4>Startup</h4>
           <V12 />
           <h2>
             $500 <br />
@@ -97,6 +97,7 @@ export function Plans() {
               <small>monthly active users</small>
             </h5>
             <h5>Customize UI</h5>
+            <h5>Slack Support</h5>
           </FeatureList>
           <small>$0.50 per additonal user.</small>
           <V12 />
