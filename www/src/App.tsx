@@ -79,6 +79,12 @@ const defaultWorkspace: Partial<Workspace> = {
         viewId: 'demo',
       },
     },
+    thread5: {
+      meta: {
+        cellId: 'row003_budget',
+        viewId: 'table-demo',
+      },
+    },
   },
   timeline: {
     thread1: {
@@ -149,6 +155,24 @@ const defaultWorkspace: Partial<Workspace> = {
         body: `Yup that's included in the total.`,
         createdAt: subHours(0.1)(Date.now()),
         createdById: 'dom',
+        type: 'message',
+        hasProfile: true,
+      },
+    },
+    thread5: {
+      event1: {
+        id: 'event1',
+        body: `A healthy profit in Q1! How did we manage to get these numbers?`,
+        createdAt: subHours(0.2)(Date.now()),
+        createdById: 'alicia',
+        type: 'message',
+        hasProfile: true,
+      },
+      event2: {
+        id: 'event2',
+        body: `We changed distributors for some of our products [jameshanson](@jameshanson)`,
+        createdAt: subHours(0.1)(Date.now()),
+        createdById: 'julia',
         type: 'message',
         hasProfile: true,
       },

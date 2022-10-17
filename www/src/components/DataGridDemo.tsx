@@ -27,14 +27,17 @@ type RowData = {
 };
 
 function CellRenderer(props: ICellRendererParams<RowData>) {
+  const cellId = props.data!.id + '_' + props.colDef!.field;
   const { hasThread, popoverState, context } = usePopoverThread({
     name: props.colDef!.headerName,
-    cellId: props.data!.id + '_' + props.colDef!.field,
+    cellId,
+    _viewId: 'table-demo',
     openOnClick: true,
   });
   return (
     <PopoverTrigger context={context}>
       <div
+        data-cell-id={cellId}
         style={{
           position: 'absolute',
           inset: 0,
@@ -77,21 +80,21 @@ const cellStyle = { padding: 0, border: 'none' };
 export function DataGridDemo() {
   const [rowData] = useState<RowData[]>([
     {
-      id: 'row-4V9aMhjU3_2WRBnnGVZo4',
+      id: 'row001',
       account: 'Income',
       budget: '$3,000,000',
       spent: '120%',
       change: '-2%',
     },
     {
-      id: 'row-ToeceSzBVwpLIeJOBrOr6',
+      id: 'row002',
       account: 'Cost of Goods Sold',
       budget: '$2,000,000',
       spent: '100%',
       change: '-2%',
     },
     {
-      id: 'row-C05Y02ZDZIoisnSxQEYRI',
+      id: 'row003',
       account: 'Gross Profit',
       budget: '$2,000,000',
       spent: '37%',
@@ -99,7 +102,7 @@ export function DataGridDemo() {
       nested: true,
     },
     {
-      id: 'row-8y3Jnq3e7jyxm32CcZsGD',
+      id: 'row004',
       account: 'Gross Margin',
       budget: '40%',
       spent: '',
@@ -107,28 +110,28 @@ export function DataGridDemo() {
       nested: true,
     },
     {
-      id: 'row-Pd5ZW67p8XT_WAX4A5GZ0',
+      id: 'row005',
       account: 'Sales & Marketing',
       budget: '$1,500,000',
       spent: '72%',
       change: '+2%',
     },
     {
-      id: 'row-rQ8revfytBOd6ltVi_j9r',
+      id: 'row006',
       account: 'General and Admin',
       budget: '$1,500,000',
       spent: '134%',
       change: '+7%',
     },
     {
-      id: 'row-GX0pmL9PEiIFAGXH15agq',
+      id: 'row007',
       account: 'Research and Development',
       budget: '$3,000,000',
       spent: '64%',
       change: '-8%',
     },
     {
-      id: 'row-Khya64ekcbUtGN5RDu8NC',
+      id: 'row008',
       account: 'Net Income',
       budget: '$3,000,000',
       spent: '',
@@ -136,7 +139,7 @@ export function DataGridDemo() {
       nested: true,
     },
     {
-      id: 'row-L3gsbnl6PROqLEWs8zYTN',
+      id: 'row009',
       account: 'Net Income Margin',
       budget: '$400,000',
       spent: '',

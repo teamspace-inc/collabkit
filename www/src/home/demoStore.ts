@@ -69,6 +69,18 @@ const profiles = {
     email: 'tamar@example.com',
     name: 'Tamar Jones',
   },
+  julia: {
+    id: 'julia',
+    color: 'yellow',
+    email: 'julia@example.com',
+    name: 'Julia Efes',
+  },
+  jameshanson: {
+    id: 'jameshanson',
+    color: 'cyan',
+    email: 'jameshanson',
+    name: 'James Hanson',
+  },
 };
 
 export const mentionableUsers = Object.entries(profiles).map(([userId, profile]) => ({
