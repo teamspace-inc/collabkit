@@ -192,7 +192,7 @@ const CommentMenu = (props: { className?: string }) => {
   );
 
   return (
-    <div className={styles.actions} data-ifc={isFirstComment}>
+    <div className={styles.actions}>
       {isFirstComment && !isResolved && (
         <IconButton
           // TODO: tooltip hijacks focus when used within a modal popover
