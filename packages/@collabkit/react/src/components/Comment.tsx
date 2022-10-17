@@ -192,8 +192,8 @@ const CommentMenu = (props: { className?: string }) => {
   );
 
   return (
-    <div className={styles.actions}>
-      {isFirstComment && createdById === userId && !isResolved && (
+    <div className={styles.actions} data-ifc={isFirstComment}>
+      {isFirstComment && !isResolved && (
         <IconButton
           // TODO: tooltip hijacks focus when used within a modal popover
           // tooltip={isResolved ? 'Re-open' : 'Mark as Resolved and Hide'}
