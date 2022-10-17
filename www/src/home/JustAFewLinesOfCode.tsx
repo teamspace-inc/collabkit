@@ -1,31 +1,19 @@
-import { useEffect, useRef } from 'react';
 import SnippetReactSvg from '../assets/SnippetReact.svg';
 import SnippetReactSmallSvg from '../assets/ReactSnippetSmall.svg';
 import ReactLogoSvg from '../assets/react.svg';
 import VueLogoSvg from '../assets/vue.svg';
-import { useIsSmallScreen } from './useIsSmallScreen';
+
+import { useIsSmallScreen } from '../hooks/useIsSmallScreen';
+import { useInvertFilter } from '../hooks/useInvertFilter';
+
 import { dark } from '../styles/Theme.css';
 
 export function JustAFewLinesOfCode(props: { setInvertFilter: (invert: number) => void }) {
-  const examplesRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const listener = () => {
-      if (examplesRef.current) {
-        const rect = examplesRef.current.getBoundingClientRect();
-        if (rect.top < 0 && rect.top > -rect.height) {
-          props.setInvertFilter(1);
-        } else {
-          props.setInvertFilter(0);
-        }
-      }
-    };
-    window.addEventListener('scroll', listener);
-    return () => window.removeEventListener('scroll', listener);
-  }, []);
   const isSmallScreen = useIsSmallScreen();
+  const { ref } = useInvertFilter(props);
   return (
     <section
-      ref={examplesRef}
+      ref={ref}
       className={dark}
       style={{
         background: '#35284A',

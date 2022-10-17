@@ -1,6 +1,6 @@
 import ycLogoSvg from '../assets/yc-logo.svg';
 import { DiscordLogo } from 'phosphor-react';
-import { useIsSmallScreen } from './useIsSmallScreen';
+import { useIsSmallScreen } from '../hooks/useIsSmallScreen';
 
 import * as styles from '../styles/ContactUs.css';
 import { dark, vars } from '../styles/Theme.css';

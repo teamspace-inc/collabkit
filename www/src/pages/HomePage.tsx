@@ -15,7 +15,7 @@ export function HomePage() {
     <div style={{ alignItems: 'center' }} className={`${website} ${light}`}>
       <Header invertFilter={invertFilter} />
       <Hero />
-      <HowItWorks />
+      <HowItWorks setInvertFilter={setInvertFilter} />
       <JustAFewLinesOfCode setInvertFilter={setInvertFilter} />
       <Plans />
       <ContactUs />

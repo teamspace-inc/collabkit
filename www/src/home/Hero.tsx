@@ -1,13 +1,8 @@
-import { useIsSmallScreen } from './useIsSmallScreen';
+import { useIsSmallScreen } from '../hooks/useIsSmallScreen';
+
 import * as styles from '../styles/Hero.css';
 import { vars } from '../styles/Theme.css';
-import {
-  useFloatingNodeId,
-  useFloating,
-  autoUpdate,
-  offset,
-  size,
-} from '@floating-ui/react-dom-interactions';
+import { useFloatingNodeId, useFloating, autoUpdate } from '@floating-ui/react-dom-interactions';
 
 import alicia from '../assets/alicia.png';
 import julia from '../assets/julia.png';
