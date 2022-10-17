@@ -3,15 +3,16 @@ import PagesSvg from '../assets/Pages.svg';
 import TableSvg from '../assets/Table.svg';
 import ChartSvg from '../assets/Chart.svg';
 import TextSvg from '../assets/Text.svg';
+// import { DataGridDemo } from '../components/DataGridDemo';
 import { dark } from '../styles/Theme.css';
 import { tab, tabs } from '../styles/Website.css';
 import { useInvertFilter } from '../hooks/useInvertFilter';
 
 const scenarios = {
-  Pages: PagesSvg,
-  Tables: TableSvg,
-  Charts: ChartSvg,
-  Text: TextSvg,
+  Pages: () => <img src={PagesSvg} style={{ maxWidth: 'calc(100vw - 200px)' }} />,
+  Tables: () => <img src={TableSvg} style={{ maxWidth: 'calc(100vw - 200px)' }} />, // <DataGridDemo />,
+  Charts: () => <img src={ChartSvg} style={{ maxWidth: 'calc(100vw - 200px)' }} />,
+  Text: () => <img src={TextSvg} style={{ maxWidth: 'calc(100vw - 200px)' }} />,
   // Lists: TextSvg,
   // Canvas: TextSvg,
   // Anywhere: TextSvg,
@@ -22,9 +23,8 @@ type scenarioNames = keyof typeof scenarios;
 
 export function HowItWorks(props: { setInvertFilter: (invert: number) => void }) {
   const [activeScenario, setActiveScenario] = useState<scenarioNames>('Pages');
-  const demoMaxWidth = window.innerWidth - 200;
   const { ref } = useInvertFilter(props);
-
+  const Scenario = scenarios[activeScenario];
   return (
     <section
       ref={ref}
@@ -50,6 +50,7 @@ export function HowItWorks(props: { setInvertFilter: (invert: number) => void })
           <div className={tabs}>
             {Object.keys(scenarios).map((scenario) => (
               <div
+                key={scenario}
                 onClick={() => setActiveScenario(scenario as scenarioNames)}
                 className={tab({ active: scenario === activeScenario })}
               >
@@ -62,7 +63,7 @@ export function HowItWorks(props: { setInvertFilter: (invert: number) => void })
               gap: '40px',
             }}
           >
-            <img src={scenarios[activeScenario]} style={{ maxWidth: demoMaxWidth }} />
+            <Scenario />
           </div>
         </div>
       </div>
