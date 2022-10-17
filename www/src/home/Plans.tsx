@@ -37,12 +37,12 @@ export function Plans() {
           <FeatureList>
             <h5>All the essentials</h5>
             <h5>
-              150 <br />
+              100 <br />
               <small>monthly active users</small>
             </h5>
             <h5>Customize UI</h5>
           </FeatureList>
-          <small>$0.10 per additonal user.</small>
+          <small>$0.50 per additonal user.</small>
           <V12 />
           <GetStartedButton
             style={{
@@ -57,7 +57,35 @@ export function Plans() {
           <h4>Pro</h4>
           <V12 />
           <h2>
-            $95 <br />
+            $250 <br />
+          </h2>
+          <V12 />
+          <small>Per month</small>
+          <V12 />
+          <FeatureList>
+            <h5>All the essentials</h5>
+            <h5>
+              500 <br />
+              <small>monthly active users</small>
+            </h5>
+            <h5>Customize UI</h5>
+          </FeatureList>
+          <small>$0.50 per additonal user.</small>
+          <V12 />
+          <GetStartedButton
+            style={{
+              display: 'flex',
+              width: '100%',
+              background: vars.color.indigo,
+              color: 'white',
+            }}
+          />
+        </div>
+        <div className={card}>
+          <h4>Pro</h4>
+          <V12 />
+          <h2>
+            $500 <br />
           </h2>
           <V12 />
           <small>Per month</small>
@@ -70,7 +98,7 @@ export function Plans() {
             </h5>
             <h5>Customize UI</h5>
           </FeatureList>
-          <small>$0.10 per additonal user.</small>
+          <small>$0.50 per additonal user.</small>
           <V12 />
           <GetStartedButton
             style={{
