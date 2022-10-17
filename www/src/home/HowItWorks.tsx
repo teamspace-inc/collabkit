@@ -59,9 +59,6 @@ export function HowItWorks(props: { setInvertFilter: (invert: number) => void })
           </div>
           <div
             style={{
-              // alignSelf: 'start',
-              // display: 'grid',
-              // gridTemplateColumns: `repeat(${Object.keys(scenarios).length}, 1fr)`,
               gap: '40px',
             }}
           >
