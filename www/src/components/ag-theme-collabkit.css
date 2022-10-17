@@ -41,7 +41,7 @@
   --ag-range-selection-background-color-4: rgba(33, 150, 243, 0.59);
   --ag-background-color: var(--bg-contrast-lowest);
   --ag-foreground-color: var(--text-contrast-high);
-  --ag-border-color: #e1e7ed; // from design
+  --ag-border-color: #e1e7ed;
   --ag-secondary-border-color: var(--ag-border-color);
   --ag-header-background-color: var(--ag-background-color);
   --ag-odd-row-background-color: var(--ag-background-color);
@@ -52,7 +52,7 @@
   --ag-checkbox-background-color: var(--ag-background-color);
   --ag-checkbox-checked-color: var(--ag-alpine-active-color);
   --ag-range-selection-border-color: var(--ag-alpine-active-color);
-  --ag-secondary-foreground-color: var(--ag-foreground-color);
+  --ag-secondary-foreground-color: var(--text-contrast-low);
   --ag-input-border-color: var(--ag-border-color);
   --ag-input-border-color-invalid: var(--ag-invalid-color);
   --ag-input-focus-box-shadow: 0 0 2px 0.1rem var(--ag-input-focus-border-color);

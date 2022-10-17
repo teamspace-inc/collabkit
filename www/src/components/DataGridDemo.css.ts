@@ -1,14 +1,21 @@
 import { globalStyle, style } from '@vanilla-extract/css';
+import { vars } from '../styles/Theme.css';
 
 export const ui = style({
-  margin: '0 auto',
-  maxWidth: 1124,
+  flex: 1,
   background: '#F0F4F8',
   borderRadius: 24,
   display: 'flex',
   flexDirection: 'column',
   gap: 30,
   padding: 30,
+  textAlign: 'initial',
+  position: 'relative',
+
+  overflow: 'hidden',
+  /* this fixes the overflow:hidden in Chrome */
+  WebkitMaskImage:
+    'url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC)',
 });
 
 export const container = style({
@@ -17,7 +24,7 @@ export const container = style({
   borderRadius: 8,
   display: 'flex',
   flexDirection: 'column',
-  gap: 30,
+  gap: 4,
   padding: 30,
 });
 
@@ -31,6 +38,7 @@ export const heading = style({
   fontWeight: '700',
   fontSize: '20px',
   lineHeight: '95%',
+  color: vars.color.textContrastHigh,
 });
 
 export const grid = style({

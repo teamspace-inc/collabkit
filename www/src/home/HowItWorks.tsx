@@ -1,23 +1,23 @@
 import { useState } from 'react';
 import PagesSvg from '../assets/Pages.svg';
-import TableSvg from '../assets/Table.svg';
+// import TableSvg from '../assets/Table.svg';
 import ChartSvg from '../assets/Chart.svg';
 import TextSvg from '../assets/Text.svg';
 import { dark } from '../styles/Theme.css';
 import { tab, tabs } from '../styles/Website.css';
 import { useInvertFilter } from '../hooks/useInvertFilter';
+import { DataGridDemo } from '../components/DataGridDemo';
 
 const scenarios = ['Pages', 'Tables', 'Charts', 'Text'] as const;
 type ScenarioName = typeof scenarios[number];
 
 function Scenario({ scenario }: { scenario: ScenarioName }) {
-  const imgStyle = { maxWidth: 'calc(100vw - 200px)' };
+  const imgStyle = { maxWidth: '100%' };
   switch (scenario) {
     case 'Pages':
       return <img src={PagesSvg} style={imgStyle} />;
     case 'Tables':
-      // return <DataGridDemo />
-      return <img src={TableSvg} style={imgStyle} />;
+      return <DataGridDemo />;
     case 'Charts':
       return <img src={ChartSvg} style={imgStyle} />;
     case 'Text':
@@ -63,11 +63,7 @@ export function HowItWorks(props: { setInvertFilter: (invert: number) => void })
               </div>
             ))}
           </div>
-          <div
-            style={{
-              gap: '40px',
-            }}
-          >
+          <div style={{ width: 'calc(100vw - 400px)', display: 'flex' }}>
             <Scenario scenario={activeScenario} />
           </div>
         </div>

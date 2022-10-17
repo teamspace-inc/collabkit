@@ -61,10 +61,10 @@ export function Sidebar(props: {
     <ThemeWrapper>
       <SidebarContext.Provider value={{ titleHeight }}>
         <div className={styles.root} style={{ position: props.strategy ?? 'fixed' }}>
-          <h2 ref={titleRef} className={styles.title}>
+          <span ref={titleRef} className={styles.title}>
             <div style={{ flex: 1 }}>{props.title ?? 'Comments'}</div>
             <CloseSidebarButton />
-          </h2>
+          </span>
           <div style={{ display: 'contents' }}>{props.children}</div>
         </div>
       </SidebarContext.Provider>
