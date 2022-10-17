@@ -139,10 +139,10 @@ export function DataGridDemo() {
   ]);
 
   const [columnDefs] = useState<AgGridReactProps['columnDefs']>([
-    { headerName: '', field: 'account', cellRenderer: CellRenderer, cellStyle, flex: 1 },
+    { headerName: '', field: 'account', cellRenderer: CellRenderer, cellStyle },
     { headerName: 'Budget', field: 'budget', cellRenderer: CellRenderer, cellStyle },
     { headerName: 'Budget Spent', field: 'spent', cellRenderer: CellRenderer, cellStyle },
-    { headerName: 'Change', field: 'change', cellRenderer: CellRenderer, cellStyle },
+    { headerName: 'Change', field: 'change', cellRenderer: CellRenderer, cellStyle, flex: 1 },
   ]);
 
   return (
