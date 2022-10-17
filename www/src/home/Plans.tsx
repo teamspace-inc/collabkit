@@ -54,7 +54,7 @@ export function Plans() {
           />
         </div>
         <div className={card}>
-          <h4>Pro</h4>
+          <h4>Startup</h4>
           <V12 />
           <h2>
             $250 <br />
@@ -82,7 +82,7 @@ export function Plans() {
           />
         </div>
         <div className={card}>
-          <h4>Startup</h4>
+          <h4>Pro</h4>
           <V12 />
           <h2>
             $500 <br />
