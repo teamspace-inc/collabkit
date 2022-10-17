@@ -1,7 +1,7 @@
 import { ref, set, onChildAdded, onChildRemoved, update, onValue, child } from 'firebase/database';
-import { CreateApp, CreateOrg, FunctionResponse } from './devTypes';
+import { CreateApp, CreateOrg, FunctionResponse } from './dashboardTypes';
 import { database } from './database';
-import { devStore } from './devStore';
+import { dashboardStore } from './dashboardStore';
 import {
   isSignInWithEmailLink,
   onAuthStateChanged,
@@ -9,11 +9,11 @@ import {
   signInWithEmailLink,
 } from 'firebase/auth';
 import { auth } from './database';
-import { devEvents } from './devEvents';
+import { dashboardEvents } from './dashboardEvents';
 
-export const devActions = {
+export const dashboardActions = {
   setEmail: (email: string) => {
-    devStore.forms.enterEmail = { email };
+    dashboardStore.forms.enterEmail = { email };
   },
 
   verifyEmailLink: async () => {
@@ -24,52 +24,52 @@ export const devActions = {
       // the sign-in operation.
       // Get the email if available. This should be available if the user completes
       // the flow on the same device where they started it.
-      let email = devStore.forms.enterEmail?.email;
+      let email = dashboardStore.forms.enterEmail?.email;
       if (!email) {
         // User opened the link on a different device. To prevent session fixation
         // attacks, ask the user to provide the associated email again. For example:
-        devStore.authState = 'confirmEmailPrompt';
+        dashboardStore.authState = 'confirmEmailPrompt';
       } else {
-        await devActions.signIn();
+        await dashboardActions.signIn();
       }
     }
   },
 
   subscribeAuthState: () => {
-    devStore.subs['user'] = onAuthStateChanged(auth, (user) => {
+    dashboardStore.subs['user'] = onAuthStateChanged(auth, (user) => {
       if (user) {
-        devStore.user = user;
-        devStore.authState = 'signedIn';
-        devActions.subscribeApps();
+        dashboardStore.user = user;
+        dashboardStore.authState = 'signedIn';
+        dashboardActions.subscribeApps();
       } else {
-        devStore.user = null;
-        devStore.authState = 'signedOut';
-        devActions.unsubscribe();
+        dashboardStore.user = null;
+        dashboardStore.authState = 'signedOut';
+        dashboardActions.unsubscribe();
       }
     });
   },
 
   unsubscribe: () => {
-    Object.values(devStore.subs).forEach((sub) => sub());
+    Object.values(dashboardStore.subs).forEach((sub) => sub());
   },
 
   subscribeApps: () => {
     console.log('subscribing apps');
-    if (!devStore.user) {
+    if (!dashboardStore.user) {
       console.warn('tried to subscribe to apps without a user');
       return;
     }
-    devActions.subscribeOrgs();
+    dashboardActions.subscribeOrgs();
   },
 
   signIn: async () => {
     console.log('signIn');
     // The client SDK will parse the code from the link for you.
-    await signInWithEmailLink(auth, devStore.forms.enterEmail?.email!)
+    await signInWithEmailLink(auth, dashboardStore.forms.enterEmail?.email!)
       .then((result) => {
         // Clear email from storage.
-        devStore.user = result.user;
-        devStore.authState = 'signedIn';
+        dashboardStore.user = result.user;
+        dashboardStore.authState = 'signedIn';
         // window.localStorage.removeItem('emailForSignIn');
         window.history.pushState({}, '', '/devs');
         // You can access the new user via result.user
@@ -86,7 +86,7 @@ export const devActions = {
   },
 
   sendMagicLink: async () => {
-    const { forms } = devStore;
+    const { forms } = dashboardStore;
     const email = forms.enterEmail?.email;
     if (!email) {
       console.warn('tried to send magic link without an email');
@@ -100,7 +100,7 @@ export const devActions = {
 
     try {
       await sendSignInLinkToEmail(auth, email, actionCodeSettings);
-      devStore.authState = 'magicLinkSent';
+      dashboardStore.authState = 'magicLinkSent';
     } catch (e) {
       console.error(e);
       return false;
@@ -112,13 +112,13 @@ export const devActions = {
   },
 
   deleteApp: async (appId: string) => {
-    if (!devStore.user) {
+    if (!dashboardStore.user) {
       console.warn('tried to delete app without a user');
       return;
     }
     const data = {
       [`/apps/${appId}`]: null,
-      [`/adminApps/${devStore.user.uid}/${appId}`]: null,
+      [`/adminApps/${dashboardStore.user.uid}/${appId}`]: null,
     };
     try {
       await update(ref(database), data);
@@ -128,10 +128,10 @@ export const devActions = {
   },
 
   createApp: async () => {
-    if (!devStore.user) {
+    if (!dashboardStore.user) {
       return;
     }
-    const idToken = await devStore.user.getIdToken(true);
+    const idToken = await dashboardStore.user.getIdToken(true);
     const response = await fetch(`/api/createApp`, {
       method: 'POST',
       headers: {
@@ -143,7 +143,7 @@ export const devActions = {
     if (response.ok) {
       const json = (await response.json()) as FunctionResponse<CreateApp>;
       if (json.status === 200 || json.status === 201) {
-        devStore.apps[json.data.app.appId] = json.data.app;
+        dashboardStore.apps[json.data.app.appId] = json.data.app;
       }
       return;
     }
@@ -152,29 +152,29 @@ export const devActions = {
   },
 
   subscribeOrgs: () => {
-    if (!devStore.user) {
+    if (!dashboardStore.user) {
       console.warn('tried to subscribe to org without a user');
       return;
     }
     console.log('subscribing orgs');
-    devStore.subs.orgs = onChildAdded(
-      ref(database, `/adminOrgs/${devStore.user.uid}`),
+    dashboardStore.subs.orgs = onChildAdded(
+      ref(database, `/adminOrgs/${dashboardStore.user.uid}`),
       (childSnapshot) => {
         console.log('got org', childSnapshot.key);
         if (childSnapshot.key) {
-          devStore.subs['orgAppAdded'] = onChildAdded(
+          dashboardStore.subs['orgAppAdded'] = onChildAdded(
             ref(database, `/orgApps/${childSnapshot.key}`),
-            devEvents.onOrgAppAdded
+            dashboardEvents.onOrgAppAdded
           );
-          devStore.subs['orgAppRemoved'] = onChildRemoved(
+          dashboardStore.subs['orgAppRemoved'] = onChildRemoved(
             ref(database, `/orgApps/${childSnapshot.key}`),
-            devEvents.onOrgAppRemoved
+            dashboardEvents.onOrgAppRemoved
           );
-          devStore.subs[`org-${childSnapshot.key}`] = onValue(
+          dashboardStore.subs[`org-${childSnapshot.key}`] = onValue(
             ref(database, `/orgs/${childSnapshot.key}`),
             (snapshot) => {
               console.log('org', snapshot.val());
-              devStore.org = snapshot.val();
+              dashboardStore.org = snapshot.val();
             },
             (error) => {
               console.error(error);
@@ -186,16 +186,16 @@ export const devActions = {
   },
 
   createOrg: async () => {
-    if (!devStore.user) {
+    if (!dashboardStore.user) {
       console.warn('tried to create org without a user');
       return;
     }
-    const name = devStore.forms.createOrg?.name;
+    const name = dashboardStore.forms.createOrg?.name;
     if (!name) {
       console.warn('tried to create org without a name');
       return;
     }
-    const idToken = await devStore.user.getIdToken(true);
+    const idToken = await dashboardStore.user.getIdToken(true);
     const response = await fetch(`/api/createOrg`, {
       method: 'POST',
       headers: {
@@ -208,8 +208,8 @@ export const devActions = {
     if (response.ok) {
       const json = (await response.json()) as FunctionResponse<CreateOrg>;
       if (json.status === 200 || json.status === 201) {
-        devStore.apps[json.data.app.appId] = json.data.app;
-        devStore.org = json.data.org;
+        dashboardStore.apps[json.data.app.appId] = json.data.app;
+        dashboardStore.org = json.data.org;
       }
       return;
     }

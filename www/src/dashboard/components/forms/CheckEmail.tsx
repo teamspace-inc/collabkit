@@ -1,10 +1,10 @@
-import { Auth } from '../../UIKit';
-import { devStore } from '../devStore';
+import { Auth } from '../../../UIKit';
+import { dashboardStore } from '../../dashboardStore';
 import { useSnapshot } from 'valtio';
-import { devEvents } from '../devEvents';
+import { dashboardEvents } from '../../dashboardEvents';
 
 export function CheckEmail() {
-  const { forms } = useSnapshot(devStore);
+  const { forms } = useSnapshot(dashboardStore);
 
   return (
     <div>
@@ -13,7 +13,7 @@ export function CheckEmail() {
           <h2>Check your email</h2>
           We've sent a magic link to <b>{forms.enterEmail?.email}</b> click on it to continue.
           <div style={{ gap: '1rem' }}>
-            <button onClick={() => devEvents.onAuthFormSubmit()}>Resend Magic Link</button>
+            <button onClick={() => dashboardEvents.onAuthFormSubmit()}>Resend Magic Link</button>
           </div>
         </div>
       </Auth>

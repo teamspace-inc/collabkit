@@ -9,6 +9,14 @@ export const docs = style({});
 
 const max768 = `screen and (max-width: ${MAIN_BREAKPOINT}px)`;
 
+globalStyle(`input`, {
+  width: '30ch',
+  fontSize: '1.5rem',
+  padding: '0.75rem 1.5rem',
+  border: '2px solid #222',
+  borderRadius: '100px',
+});
+
 globalStyle(`blockquote`, {
   borderLeft: `5px solid ${vars.color.sky}`,
   textIndent: 0,

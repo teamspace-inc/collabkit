@@ -1,5 +1,5 @@
-import { Auth } from '../../UIKit';
-import { devEvents } from '../devEvents';
+import { Auth } from '../../../UIKit';
+import { dashboardEvents } from '../../dashboardEvents';
 
 export function CreateOrg() {
   return (
@@ -21,10 +21,10 @@ export function CreateOrg() {
                 border: '2px solid #222',
                 borderRadius: '100px',
               }}
-              onChange={devEvents.onCreateOrgInputChange}
+              onChange={dashboardEvents.onCreateOrgInputChange}
               type="div/email"
             />
-            <button onClick={devEvents.onCreateOrgButtonClick}>Continue</button>
+            <button onClick={dashboardEvents.onCreateOrgButtonClick}>Continue</button>
           </div>
         </div>
       </Auth>

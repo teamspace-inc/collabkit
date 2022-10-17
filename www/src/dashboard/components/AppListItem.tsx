@@ -1,8 +1,7 @@
 import { Switch, SwitchThumb } from './Switch';
-// import { H4 } from '../UIKit';
-import { App } from './devTypes';
+import { App } from '../dashboardTypes';
 import { useState } from 'react';
-import { devEvents } from './devEvents';
+import { dashboardEvents } from '../dashboardEvents';
 import { Trash } from 'phosphor-react';
 
 function AppName(props: { app: App }) {
@@ -16,7 +15,7 @@ function AppName(props: { app: App }) {
             <input
               style={{ fontSize: '1.25rem' }}
               type="text"
-              onChange={(e) => devEvents.onAppNameChange({ appId: props.app.appId, e })}
+              onChange={(e) => dashboardEvents.onAppNameChange({ appId: props.app.appId, e })}
               value={props.app.name ?? ''}
               placeholder={'Unnamed'}
             />

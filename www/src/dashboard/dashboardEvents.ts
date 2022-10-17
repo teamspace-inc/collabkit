@@ -1,37 +1,37 @@
 import { ref, DataSnapshot, onValue } from 'firebase/database';
 
 import React from 'react';
-import { devActions } from './devActions';
+import { dashboardActions } from './dashboardActions';
 import { database } from './database';
-import { devStore } from './devStore';
+import { dashboardStore } from './dashboardStore';
 
-export const devEvents = {
+export const dashboardEvents = {
   onAppChanged: (snapshot: DataSnapshot) => {
     console.log('onAppChanged');
     if (snapshot.key) {
       const app = { ...snapshot.val(), appId: snapshot.key };
       console.log('adding app', app);
-      devStore.apps[snapshot.key] = app;
+      dashboardStore.apps[snapshot.key] = app;
     }
   },
 
   onEmailInputChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-    devActions.setEmail(e.target.value);
+    dashboardActions.setEmail(e.target.value);
   },
 
   onAuthFormSubmit: () => {
     if (
-      devStore.authState === 'confirmEmailPrompt' &&
-      window.localStorage.getItem('emailForSignIn')! === devStore.forms.enterEmail?.email
+      dashboardStore.authState === 'confirmEmailPrompt' &&
+      window.localStorage.getItem('emailForSignIn')! === dashboardStore.forms.enterEmail?.email
     ) {
-      devActions.signIn();
+      dashboardActions.signIn();
     } else {
-      devActions.sendMagicLink();
+      dashboardActions.sendMagicLink();
     }
   },
 
   onDeleteAppButtonClick: (props: { appId: string; e: React.MouseEvent }) => {
-    devActions.deleteApp(props.appId);
+    dashboardActions.deleteApp(props.appId);
   },
 
   onOrgValue: (snapshot: DataSnapshot) => {
@@ -39,40 +39,40 @@ export const devEvents = {
     if (snapshot.key) {
       const org = { ...snapshot.val(), orgId: snapshot.key };
       console.log('adding org', org);
-      devStore.org = org;
+      dashboardStore.org = org;
     }
   },
 
   onOrgAppAdded: (snapshot: DataSnapshot) => {
     console.log('org app added', snapshot.key, snapshot.val());
     if (snapshot.key) {
-      devStore.subs[snapshot.key] = onValue(
+      dashboardStore.subs[snapshot.key] = onValue(
         ref(database, `/apps/${snapshot.key}`),
-        devEvents.onAppChanged
+        dashboardEvents.onAppChanged
       );
     }
   },
 
   onOrgAppRemoved: (snapshot: DataSnapshot) => {
     if (snapshot.key) {
-      devStore.subs[snapshot.key]?.();
-      delete devStore.apps[snapshot.key];
+      dashboardStore.subs[snapshot.key]?.();
+      delete dashboardStore.apps[snapshot.key];
     }
   },
 
   onCreateAppButtonClick: (e: React.MouseEvent) => {
-    devActions.createApp();
+    dashboardActions.createApp();
   },
 
   onCreateOrgButtonClick: (e: React.MouseEvent) => {
-    devActions.createOrg();
+    dashboardActions.createOrg();
   },
 
   onCreateOrgInputChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-    devStore.forms.createOrg = { name: e.target.value };
+    dashboardStore.forms.createOrg = { name: e.target.value };
   },
 
   onAppNameChange: (props: { appId: string; e: React.ChangeEvent<HTMLInputElement> }) => {
-    devActions.changeAppName({ appId: props.appId, newName: props.e.target.value });
+    dashboardActions.changeAppName({ appId: props.appId, newName: props.e.target.value });
   },
 };

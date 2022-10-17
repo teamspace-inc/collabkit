@@ -1,6 +1,6 @@
 import { styled } from '@stitches/react';
 import { Route } from 'wouter';
-import { Devs } from './devs/Devs';
+import { Dashboard } from './dashboard/components/Dashboard';
 import { useEffect } from 'react';
 
 import { DataGridPage } from './pages/DataGridPage';
@@ -24,7 +24,6 @@ const workspace = {
 };
 
 import { createDemoStore, mentionableUsers } from './home/demoStore';
-import { HomePageV2 } from './pages/HomePagev2';
 
 const defaultWorkspace: Partial<Workspace> = {
   // pins: {
@@ -234,16 +233,14 @@ export default function App() {
       mentionableUsers={[]}
     >
       <SetBreakpointContext>
-        <Page>
-          <Route path="/ui" component={UIPage} />
-          <Route path="/" component={HomePage} />
-          <Route path="/devs" component={Devs} />
-          <Route path="/signedin" component={Devs} />
-          <Route path="/datagrid" component={DataGridPage} />
-          <Route path="/theme-editor" component={ThemeEditorPage} />
-          <Route path="/v2" component={HomePageV2} />
-          <Docs />
-        </Page>
+        <Route path="/ui" component={UIPage} />
+        <Route path="/" component={HomePage} />
+        <Route path="/devs" component={Dashboard} />
+        <Route path="/signedin" component={Dashboard} />
+        <Route path="/signup" component={Dashboard} />
+        <Route path="/datagrid" component={DataGridPage} />
+        <Route path="/theme-editor" component={ThemeEditorPage} />
+        <Docs />
       </SetBreakpointContext>
     </CollabKitProvider>
   );
