@@ -41,7 +41,7 @@ export function HowItWorks(props: { setInvertFilter: (invert: number) => void })
       }}
     >
       <h1>How it works</h1>
-      <h3>CollabKit supports multiple interfaces and is fully customisable</h3>
+      <h3>CollabKit supports multiple interfaces and is fully customisable.</h3>
       <div style={{ maxWidth: '1124px' }}>
         <div
           style={{
