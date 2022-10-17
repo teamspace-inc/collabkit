@@ -13,11 +13,15 @@ export function SidebarDoc() {
           A sidebar component that can automatically show and hide the users inbox of comments. Use
           with a <code>{'<SidebarInboxButton>'}</code> to easily add a comments inbox to your app.
         </p>
-        {renderCodeSnippet(`import { Sidebar, Inbox } from '@collabkit/react';
+        {renderCodeSnippet(`import { 
+  SidebarInboxButton, 
+  Sidebar, 
+  Inbox 
+} from '@collabkit/react';
 
 export function App() {
   return <div>
-    <InboxButton />
+    <SidebarInboxButton />
     <Sidebar>
       <Inbox />
     </Sidebar>

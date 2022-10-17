@@ -32,7 +32,7 @@ export function JustAFewLinesOfCode(props: { setInvertFilter: (invert: number) =
         }}
       >
         <img
-          style={{ width: '90vw', maxWidth: '812px' }}
+          style={{ width: '90vw', maxWidth: '1124px' }}
           src={isSmallScreen ? SnippetReactSmallSvg : SnippetReactSvg}
         />
         <div

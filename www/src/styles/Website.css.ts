@@ -235,17 +235,17 @@ export const button = recipe({
     justifyContent: 'center',
     zIndex: 1,
     cursor: 'pointer',
-    ':hover': {
-      background: vars.color.highlight,
-    },
+    // ':hover': {
+    //   background: vars.color.highlight,
+    // },
     border: '0px solid transparent',
   },
   variants: {
     type: {
       primary: {
-        color: vars.color.textContrastHigh,
+        color: vars.color.bgContrastLowest,
         borderColor: vars.color.bgContrastLowest,
-        background: vars.color.bgContrastLow,
+        background: vars.color.textContrastHigh,
       },
       secondary: {
         color: vars.color.textContrastHigh,

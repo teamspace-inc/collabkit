@@ -5,7 +5,7 @@ import { DocDemoContainer } from '../Doc';
 export function SidebarInboxButtonDoc() {
   return (
     <>
-      <h2>A button with an unread indicator.</h2>
+      <h2>A button that opens the Sidebar and reveals.</h2>
       <DocDemoContainer
         style={{
           padding: 0,
