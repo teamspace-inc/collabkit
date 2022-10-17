@@ -1,6 +1,6 @@
 import ycLogoSvg from '../assets/yc-logo.svg';
 import { DiscordLogo } from 'phosphor-react';
-import { useIsSmallScreen } from './useIsSmallScreen';
+import { useIsSmallScreen } from '../hooks/useIsSmallScreen';
 
 import * as styles from '../styles/ContactUs.css';
 import { dark, vars } from '../styles/Theme.css';
@@ -11,6 +11,7 @@ export function ContactUs() {
 
   return (
     <section
+      id="Contact"
       className={dark}
       style={{
         background: vars.color.bgContrastLowest,
@@ -78,22 +79,31 @@ export function ContactUs() {
             : {}),
         }}
       >
-        {/* <FooterLink>Teamspace Inc. 2022</FooterLink>
+        <a className={styles.footerLink}>Teamspace Inc. 2022</a>
         {footerLinksDivider}
-        <FooterLink target="_blank" href="https://www.iubenda.com/privacy-policy/17041190">
+        <a
+          className={styles.footerLink}
+          target="_blank"
+          href="https://www.iubenda.com/privacy-policy/17041190"
+        >
           Privacy
-        </FooterLink>
+        </a>
         {footerLinksDivider}
-        <FooterLink
+        <a
+          className={styles.footerLink}
           target="_blank"
           href="https://www.iubenda.com/privacy-policy/17041190/cookie-policy"
         >
           Cookies
-        </FooterLink>
+        </a>
         {footerLinksDivider}
-        <FooterLink target="_blank" href="https://www.iubenda.com/terms-and-conditions/17041190">
+        <a
+          className={styles.footerLink}
+          target="_blank"
+          href="https://www.iubenda.com/terms-and-conditions/17041190"
+        >
           Terms &amp; Conditions
-        </FooterLink> */}
+        </a>
       </div>
     </section>
   );

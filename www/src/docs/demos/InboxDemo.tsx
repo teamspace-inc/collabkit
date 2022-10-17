@@ -5,9 +5,8 @@ export function InboxDemo(props: { className?: string }) {
     <div
       className={props.className}
       style={{
-        padding: 0,
-        justifyContent: 'flex-end',
-        height: '500px',
+        padding: 20,
+        height: '720px',
         display: 'flex',
         flex: 'unset',
         alignItems: 'flex-start',

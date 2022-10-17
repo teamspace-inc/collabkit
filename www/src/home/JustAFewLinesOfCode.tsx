@@ -1,32 +1,19 @@
-import { useEffect, useRef } from 'react';
 import SnippetReactSvg from '../assets/SnippetReact.svg';
 import SnippetReactSmallSvg from '../assets/ReactSnippetSmall.svg';
 import ReactLogoSvg from '../assets/react.svg';
 import VueLogoSvg from '../assets/vue.svg';
-import AngularLogoSvg from '../assets/angular.svg';
-import { useIsSmallScreen } from './useIsSmallScreen';
+
+import { useIsSmallScreen } from '../hooks/useIsSmallScreen';
+import { useInvertFilter } from '../hooks/useInvertFilter';
+
 import { dark } from '../styles/Theme.css';
 
 export function JustAFewLinesOfCode(props: { setInvertFilter: (invert: number) => void }) {
-  const examplesRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const listener = () => {
-      if (examplesRef.current) {
-        const rect = examplesRef.current.getBoundingClientRect();
-        if (rect.top < 0 && rect.top > -rect.height) {
-          props.setInvertFilter(1);
-        } else {
-          props.setInvertFilter(0);
-        }
-      }
-    };
-    window.addEventListener('scroll', listener);
-    return () => window.removeEventListener('scroll', listener);
-  }, []);
   const isSmallScreen = useIsSmallScreen();
+  const { ref } = useInvertFilter(props);
   return (
     <section
-      ref={examplesRef}
+      ref={ref}
       className={dark}
       style={{
         background: '#35284A',
@@ -34,8 +21,8 @@ export function JustAFewLinesOfCode(props: { setInvertFilter: (invert: number) =
       }}
     >
       <h1>
-        Just a few lines
-        {!isSmallScreen && <br />} of code
+        Get it running
+        {!isSmallScreen && <br />} in minutes
       </h1>
       <h3>Simply add {'<CollabKit.Thread />'}</h3>
       <div
@@ -45,7 +32,7 @@ export function JustAFewLinesOfCode(props: { setInvertFilter: (invert: number) =
         }}
       >
         <img
-          style={{ width: '90vw', maxWidth: '812px' }}
+          style={{ width: '90vw', maxWidth: '1124px' }}
           src={isSmallScreen ? SnippetReactSmallSvg : SnippetReactSvg}
         />
         <div
@@ -60,7 +47,6 @@ export function JustAFewLinesOfCode(props: { setInvertFilter: (invert: number) =
         >
           <img style={{ width: isSmallScreen ? '33px' : '44px' }} src={ReactLogoSvg} />
           <img style={{ width: isSmallScreen ? '33px' : '44px' }} src={VueLogoSvg} />
-          <img style={{ width: isSmallScreen ? '33px' : '44px' }} src={AngularLogoSvg} />
         </div>
       </div>
     </section>

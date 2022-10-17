@@ -9,7 +9,11 @@ export function InboxButtonDemo(props: { className?: string }) {
           width: '280px',
         }}
       >
-        <InboxButton />
+        <InboxButton
+          onClick={() => {
+            console.log('clicked inbox button!');
+          }}
+        />
       </div>
     </div>
   );

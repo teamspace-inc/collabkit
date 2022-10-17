@@ -230,12 +230,12 @@ export function createEvents(store: Store) {
         }
         case 'idle': {
           switch (props.target.type) {
-            case 'showInboxButton': {
-              actions.showInbox(store);
+            case 'showSidebarButton': {
+              actions.showSidebar(store);
               break;
             }
-            case 'hideInboxButton': {
-              actions.hideInbox(store);
+            case 'hideSidebarButton': {
+              actions.hideSidebar(store);
               break;
             }
             case 'floatingCommentButton': {

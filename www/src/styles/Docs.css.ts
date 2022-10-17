@@ -1,10 +1,13 @@
 import { globalStyle, style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
+import { MAIN_BREAKPOINT } from '../hooks/useWindowSize';
 import { vars } from './Theme.css';
 
 globalStyle('code', {});
 
 export const docs = style({});
+
+const max768 = `screen and (max-width: ${MAIN_BREAKPOINT}px)`;
 
 globalStyle(`blockquote`, {
   borderLeft: `5px solid ${vars.color.sky}`,
@@ -114,7 +117,7 @@ export const themeDemoContainer = style([
 
 export const docScrollableContent = style({
   padding: 20,
-  width: 760,
+  width: 720,
   display: 'table',
   margin: '0 auto',
   height: '100vh',
@@ -126,8 +129,20 @@ export const docScrollableContent = style({
   flex: 1,
   lineHeight: '28px',
   '@media': {
-    'screen and (max-width: 768px)': {
+    [max768]: {
       width: '100%',
+    },
+  },
+});
+
+export const docScrollableContentWrap = style({
+  height: '100vh',
+  borderLeft: '1px solid #333',
+  borderColor: vars.color.bgContrastLow,
+
+  '@media': {
+    [max768]: {
+      borderLeft: 'none',
     },
   },
 });
@@ -140,10 +155,12 @@ export const docNav = style({
   display: 'flex',
   height: '100vh',
   alignItems: 'flex-end',
+
   '@media': {
-    'screen and (max-width: 768px)': {
+    [max768]: {
       background: '#222',
       alignItems: 'flex-start',
+      borderRight: 'none',
     },
   },
 });
@@ -162,7 +179,7 @@ export const docFooter = style({
   paddingTop: 20,
   paddingBottom: 200,
   color: '#BBBBBB',
-  fontFamily: 'Inter',
+  fontFamily: 'Satoshi',
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'flex-end',
@@ -175,7 +192,7 @@ export const docFooter = style({
 export const docLink = style({
   borderRadius: '6px',
   textDecoration: 'none',
-  fontFamily: 'Inter',
+  fontFamily: 'Satoshi',
   fontStyle: 'normal',
   fontWeight: 600,
   fontSize: 16,
@@ -188,7 +205,7 @@ export const docLink = style({
 export const docContent = style({
   display: 'flex',
   flexDirection: 'column',
-  gap: '40px',
+  gap: '30px',
   flex: 1,
 });
 
@@ -201,7 +218,7 @@ export const docRoot = style({
   display: 'grid',
   gridTemplateColumns: 'minmax(400px, 1fr) minmax(780px, 3fr)',
   '@media': {
-    'screen and (max-width: 768px)': {
+    [max768]: {
       display: 'unset',
     },
   },
@@ -216,20 +233,10 @@ export const docTitle = style({
   fontSize: '40px',
   wordBreak: 'break-word',
   '@media': {
-    'screen and (max-width: 768px)': {
+    [max768]: {
       padding: '32px 0px 32px',
     },
   },
-});
-
-globalStyle(`ol ol`, {
-  marginTop: 0,
-  marginBottom: 8,
-  paddingLeft: 0,
-  textIndent: '20px',
-  paddingRight: 0,
-  display: 'flex',
-  flex: 1,
 });
 
 export const navOl = style({
@@ -240,10 +247,21 @@ export const navOl = style({
   display: 'flex',
   flexDirection: 'column',
   '@media': {
-    'screen and (max-width: 768px)': {
+    [max768]: {
       paddingRight: '24px',
     },
   },
+});
+
+globalStyle(`${navOl} ol`, {
+  marginTop: 0,
+  marginBottom: 8,
+  marginLeft: '0',
+  paddingLeft: 0,
+  textIndent: '20px',
+  paddingRight: 0,
+  display: 'flex',
+  flex: 1,
 });
 
 export const navLi = style({
@@ -251,7 +269,7 @@ export const navLi = style({
   flexDirection: 'column',
   flex: 1,
   '@media': {
-    'screen and (max-width: 768px)': {
+    [max768]: {
       alignItems: 'stretch',
     },
   },
@@ -305,13 +323,18 @@ export const navBurgerToggle = recipe({
     borderRadius: '4px',
     width: '40px',
     height: '40px',
-    display: 'flex',
+    display: 'none',
     alignItems: 'center',
     justifyContent: 'center',
 
     ':hover': {
       background: 'rgba(255, 255, 255, 0.04)',
       cursor: 'pointer',
+    },
+    '@media': {
+      [max768]: {
+        display: 'flex',
+      },
     },
   },
   variants: {
@@ -341,7 +364,7 @@ export const navHeader = style({
 });
 
 export const navListTitle = style({
-  fontFamily: 'Inter',
+  fontFamily: 'Satoshi',
   fontStyle: 'normal',
   fontWeight: 600,
   color: '#fff',

@@ -12,14 +12,6 @@ export const { styled, css, theme } = createStitches({
   },
 });
 
-export const H2 = (props: React.ComponentPropsWithoutRef<'h2'>) => (
-  <h2 className={ui.h2} {...props} />
-);
-
-export const H3 = (props: React.ComponentPropsWithoutRef<'h3'>) => (
-  <h3 className={ui.h3} {...props} />
-);
-
 export const VSpace = (props: { h: number }) => <div style={{ height: props.h }} />;
 export const V8 = () => <VSpace h={8} />;
 export const V12 = () => <VSpace h={12} />;

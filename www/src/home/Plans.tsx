@@ -1,8 +1,9 @@
 import React from 'react';
-import { RequestDemoButton } from './Home';
+import { GetStartedButton } from './GetStartedButton';
 import checkmarkSvg from '../assets/checkmark.svg';
 import { card, li, ul } from '../styles/Home.css';
 import { V12 } from '../UIKit';
+import { vars } from '../styles/Theme.css';
 
 function FeatureList(props: { children: React.ReactNode }) {
   return (
@@ -21,7 +22,7 @@ function FeatureList(props: { children: React.ReactNode }) {
 
 export function Plans() {
   return (
-    <section>
+    <section style={{ background: '#F0F4F8' }} id="Pricing">
       <h1>Pricing</h1>
       <h3>Packages that grow with your business.</h3>
       <div style={{ display: 'flex', gap: '40px', flexDirection: 'row' }}>
@@ -29,27 +30,34 @@ export function Plans() {
           <h4>Free</h4>
           <V12 />
           <h2>
-            Free <br />
+            $0
+            <br />
+            <br />
           </h2>
-          <V12 />
-          <V12 />
           <FeatureList>
             <h5>All the essentials</h5>
             <h5>
-              250 <br />
+              150 <br />
               <small>monthly active users</small>
             </h5>
             <h5>Customize UI</h5>
           </FeatureList>
           <small>$0.10 per additonal user.</small>
           <V12 />
-          <RequestDemoButton style={{ display: 'flex', width: '100%' }} />
+          <GetStartedButton
+            style={{
+              display: 'flex',
+              width: '100%',
+              background: vars.color.textContrastHigh,
+              color: 'white',
+            }}
+          />
         </div>
         <div className={card}>
-          <h4>Startup</h4>
+          <h4>Pro</h4>
           <V12 />
           <h2>
-            $400 <br />
+            $95 <br />
           </h2>
           <V12 />
           <small>Per month</small>
@@ -60,35 +68,18 @@ export function Plans() {
               1,000 <br />
               <small>monthly active users</small>
             </h5>
-            <h5>Remove CollabKit branding</h5>
             <h5>Customize UI</h5>
           </FeatureList>
           <small>$0.10 per additonal user.</small>
           <V12 />
-          <RequestDemoButton style={{ display: 'flex', width: '100%' }} />
-        </div>
-        <div className={card}>
-          <h4>Pro</h4>
-          <V12 />
-          <h2>
-            $800 <br />
-          </h2>
-          <V12 />
-          <small>Per month</small>
-          <V12 />
-          <FeatureList>
-            <h5>All the essentials</h5>
-            <h5>
-              5,000 <br />
-              <small>monthly active users</small>
-            </h5>
-            <h5>Remove CollabKit branding</h5>
-            <h5>Customize UI</h5>
-            <h5>Shared Slack Channel</h5>
-          </FeatureList>
-          <small>$0.10 per additonal user.</small>
-          <V12 />
-          <RequestDemoButton style={{ width: '100%', textAlign: 'center' }} />
+          <GetStartedButton
+            style={{
+              display: 'flex',
+              width: '100%',
+              background: vars.color.indigo,
+              color: 'white',
+            }}
+          />
         </div>
         <div className={card}>
           <h4>Scale</h4>
@@ -105,12 +96,20 @@ export function Plans() {
               <small>monthly active users</small>
             </h5>
             <h5>Customize UI</h5>
-            <h5>Shared Slack Channel</h5>
+            <h5>Slack Support</h5>
             <h5>API</h5>
-            <h5>SLA</h5>
           </FeatureList>
+          <br />
+          <br />
           <V12 />
-          <RequestDemoButton style={{ width: '100%', textAlign: 'center' }} />
+          <GetStartedButton
+            style={{
+              width: '100%',
+              textAlign: 'center',
+              backgroundColor: vars.color.violet,
+              color: 'white',
+            }}
+          />
         </div>
       </div>
     </section>

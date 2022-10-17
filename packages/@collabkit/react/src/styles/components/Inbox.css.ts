@@ -4,6 +4,7 @@ import { vars } from '../theme';
 export const root = style({
   display: 'flex',
   flexDirection: 'column',
+  flex: 1,
   gap: fallbackVar(vars.inbox.gap, vars.space[2]),
   boxSizing: 'border-box',
   height: '100%',

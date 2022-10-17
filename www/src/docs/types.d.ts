@@ -1,4 +1,5 @@
 /// <reference types="react" />
+import { ShowSidebarButtonTarget } from '@collabkit/core';
 import * as React from 'react';
 import React__default, { ReactNode } from 'react';
 
@@ -1168,8 +1169,8 @@ type Target =
   | PinTarget
   | CommentEditButtonTarget
   | CommentDeleteButtonTarget
-  | ShowInboxButtonTarget
-  | HideInboxButtonTarget;
+  | ShowSidebarButtonTarget
+  | HideSidebarButtonTarget;
 
 type Commentable = {
   type: 'commentable';
@@ -1201,8 +1202,8 @@ type CommentButtonTarget = { type: 'commentButton'; threadId: string; workspaceI
 
 type ShowInboxButtonTarget = { type: 'showInboxButton'; workspaceId: string };
 
-type HideInboxButtonTarget = {
-  type: 'hideInboxButton';
+type HideSidebarButtonTarget = {
+  type: 'hideSidebarButton';
   workspaceId: string;
 };
 

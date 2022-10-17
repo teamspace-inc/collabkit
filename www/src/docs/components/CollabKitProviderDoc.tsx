@@ -20,6 +20,7 @@ export const App() {
   return <CollabKitProvider 
     appId={APP_ID} 
     apiKey={API_KEY} 
+    theme={'light'}
     workspace={{ 
       id: 'acme', 
       name: 'ACME Corporation' 

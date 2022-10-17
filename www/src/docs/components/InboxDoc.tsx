@@ -27,8 +27,7 @@ export function App() {
   return <div style={style}>
     <Inbox />
   </div>;
-}
-`)}
+}`)}
       </div>
     </>
   );

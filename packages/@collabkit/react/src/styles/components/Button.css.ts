@@ -29,10 +29,7 @@ export const button = recipe({
 
         selectors: {
           '&:active': {
-            background: fallbackVar(
-              vars.button.primary.active.background,
-              vars.color.surfaceOverlay
-            ),
+            background: fallbackVar(vars.button.primary.active.background, vars.color.surface),
             color: fallbackVar(
               vars.button.primary.active.color,
               vars.button.primary.color,
@@ -40,10 +37,7 @@ export const button = recipe({
             ),
           },
           '&:hover': {
-            background: fallbackVar(
-              vars.button.primary.hover.background,
-              vars.color.surfaceOverlay
-            ),
+            background: fallbackVar(vars.button.primary.hover.background, vars.color.surface),
             color: fallbackVar(
               vars.button.primary.hover.color,
               vars.button.primary.color,
@@ -63,10 +57,7 @@ export const button = recipe({
 
         selectors: {
           '&:active': {
-            background: fallbackVar(
-              vars.button.secondary.active.background,
-              vars.color.surfaceOverlay
-            ),
+            background: fallbackVar(vars.button.secondary.active.background, vars.color.surface),
             color: fallbackVar(
               vars.button.secondary.active.color,
               vars.button.secondary.color,
@@ -74,10 +65,7 @@ export const button = recipe({
             ),
           },
           '&:hover': {
-            background: fallbackVar(
-              vars.button.secondary.active.background,
-              vars.color.surfaceOverlay
-            ),
+            background: fallbackVar(vars.button.secondary.active.background, vars.color.surface),
             color: fallbackVar(
               vars.button.secondary.active.color,
               vars.button.secondary.color,

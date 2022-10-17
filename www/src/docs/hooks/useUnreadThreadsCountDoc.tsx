@@ -1,12 +1,11 @@
-import { H2, H3 } from '../../UIKit';
 import { renderCodeSnippet } from '../CodeEditor';
 
 export function UseUnreadThreadsCountDoc() {
   return (
     <>
-      <H2>Returns the number of unread threads.</H2>
+      <h2>Returns the number of unread threads.</h2>
       <div>
-        <H3>Usage</H3>
+        <h3>Usage</h3>
         <p>
           Must be called within a <code>CollabKit.Provider</code>
         </p>

@@ -12,6 +12,7 @@ import { InboxButtonDemo } from './demos/InboxButtonDemo';
 import { dark } from '../styles/Theme.css';
 import { bg } from '../styles/Website.css';
 import { Logo } from './Logo';
+
 import {
   codeEditor,
   componentList,
@@ -21,10 +22,13 @@ import {
   root,
 } from '../styles/ThemeEditor.css';
 
+import { SidebarDemo } from './demos/SidebarDemo';
+
 const components = [
   { name: 'Thread', component: ThreadDemo },
   { name: 'Inbox', component: InboxDemo },
   { name: 'InboxButton', component: InboxButtonDemo },
+  { name: 'Sidebar', component: SidebarDemo },
 ];
 
 export function ThemeEditor() {

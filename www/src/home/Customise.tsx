@@ -1,5 +1,5 @@
 import CustomisePng from '../assets/Customise.png';
-import { useIsSmallScreen } from './useIsSmallScreen';
+import { useIsSmallScreen } from '../hooks/useIsSmallScreen';
 
 export function Customise() {
   const isSmallScreen = useIsSmallScreen();

@@ -137,6 +137,7 @@ export function usePopoverThread(props: DeprecatedPopoverProps | PopoverProps) {
   const { reference: previewReference, context: previewContext } = useFloating({
     placement: 'right-start',
     open: previewOpen,
+    whileElementsMounted: autoUpdate,
     onOpenChange: setPreviewOpen,
     nodeId,
     middleware: [

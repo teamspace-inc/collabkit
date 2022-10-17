@@ -4,14 +4,16 @@ const WINDOW_RESIZE_DEBOUNCE_WAIT_IN_MS = 100;
 
 export type Breakpoint = 'small' | 'medium' | 'large' | 'xlarge';
 
+export const MAIN_BREAKPOINT = 768;
+
 function getBreakpoint() {
   let breakpoint: Breakpoint = 'small';
 
-  if (window.innerWidth > 640) {
+  if (window.innerWidth >= 640) {
     breakpoint = 'medium';
   }
 
-  if (window.innerWidth > 960) {
+  if (window.innerWidth > MAIN_BREAKPOINT) {
     breakpoint = 'large';
   }
 

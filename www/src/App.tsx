@@ -24,6 +24,7 @@ const workspace = {
 };
 
 import { createDemoStore, mentionableUsers } from './home/demoStore';
+import { HomePageV2 } from './pages/HomePagev2';
 
 const defaultWorkspace: Partial<Workspace> = {
   // pins: {
@@ -187,16 +188,16 @@ const config: Config = {
 const store = createDemoStore(config, defaultWorkspace);
 
 export default function App() {
-  useEffect(() => {
-    // @ts-expect-error
-    window.Intercom('boot', {
-      api_base: 'https://api-iam.intercom.io',
-      app_id: 'cwr7lgni',
-    });
+  // useEffect(() => {
+  //   // @ts-expect-error
+  //   window.Intercom('boot', {
+  //     api_base: 'https://api-iam.intercom.io',
+  //     app_id: 'cwr7lgni',
+  //   });
 
-    // @ts-expect-error
-    window.Intercom('update');
-  }, []);
+  //   // @ts-expect-error
+  //   window.Intercom('update');
+  // }, []);
 
   return (
     <CollabKitProvider
@@ -216,6 +217,7 @@ export default function App() {
           <Route path="/signedin" component={Devs} />
           <Route path="/datagrid" component={DataGridPage} />
           <Route path="/theme-editor" component={ThemeEditorPage} />
+          <Route path="/v2" component={HomePageV2} />
           <Docs />
         </Page>
       </SetBreakpointContext>

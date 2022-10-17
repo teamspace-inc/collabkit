@@ -1,4 +1,3 @@
-import { H2, H3 } from '../UIKit';
 import { DocLink } from './Doc';
 
 // While apps like Slack and Microsoft Teams are where we chat they don’t really enable communication around a piece of content in your product well. People resort to taking screenshots and sharing them on other services, while describing the relevant context manually “See the fourth item from the top in this list”.
@@ -6,17 +5,17 @@ import { DocLink } from './Doc';
 export function IntroductionDoc() {
   return (
     <>
-      <H2>
+      <h2>
         CollabKit is a drop-in React &amp; Vue SDK for adding commenting to your app. It's fully
         customisable, can be integrated in minutes.
         <br />
         <br />
         Add our components to your app to help your users collaborate in context, and work as a
         team.
-      </H2>
+      </h2>
       <DocLink href="/docs/gettingstarted">Getting started</DocLink>
       <div>
-        <H3>Vision</H3>
+        <h3>Vision</h3>
         <p>
           Most SaaS apps need some form of collaboration. It’s the underlying activity we perform
           while working with others in a team, and the tools we use have the context about the work
@@ -35,7 +34,7 @@ export function IntroductionDoc() {
         </p>
       </div>
       <div>
-        <H3>Key Features</H3>
+        <h3>Key Features</h3>
         <ol>
           <li>
             <p>

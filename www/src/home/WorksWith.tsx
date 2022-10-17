@@ -1,5 +1,5 @@
 import WorksWithSvg from '../assets/WorksWith.svg';
-import { useIsSmallScreen } from './useIsSmallScreen';
+import { useIsSmallScreen } from '../hooks/useIsSmallScreen';
 
 export function WorksWith() {
   const isSmallScreen = useIsSmallScreen();

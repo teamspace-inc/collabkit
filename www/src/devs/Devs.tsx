@@ -17,7 +17,7 @@ import { devActions } from './devActions';
 //     Sign out
 //   </Link>
 // ) : null;
-import { H2, styled } from '../UIKit';
+import { styled } from '../UIKit';
 import { AppListItem } from './AppListItem';
 
 // import AddAProvider from './code/AddAProvider.mdx';
@@ -67,10 +67,10 @@ function Org() {
 
       <div>
         Project
-        <H2>{org?.name}</H2>
+        <h2>{org?.name}</h2>
       </div>
 
-      <H5>API credentials</H5>
+      <h5>API credentials</h5>
 
       {/* <H5>How to get started</H5>
       <H4>1. Install CollabKit</H4>

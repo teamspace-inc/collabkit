@@ -1,10 +1,11 @@
 import { style } from '@vanilla-extract/css';
 
 export const card = style({
-  background: '#EDF5F7',
+  background: '#fff',
   padding: '40px',
   borderRadius: '24px',
   display: 'flex',
+  flex: 1,
   flexDirection: 'column',
   alignItems: 'flex-start',
 });

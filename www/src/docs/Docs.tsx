@@ -28,6 +28,8 @@ import { Doc } from './Doc';
 import { WorkspacesDoc } from './WorkspacesDoc';
 import { SecureModeDoc } from './SecureModeDoc';
 import { NotificationsDoc } from './NotificationsDoc';
+import { SidebarDoc } from './components/SidebarDoc';
+import { SidebarInboxButtonDoc } from './components/SidebarInboxButtonDoc';
 
 export function getDocHref(path: string[], key: string) {
   return getPathHref(path.concat([key]));
@@ -56,6 +58,8 @@ export const DOCS: RootDocNode = {
       PopoverThread: { component: PopoverThreadDoc },
       Inbox: { component: InboxDoc },
       InboxButton: { component: InboxButtonDoc },
+      Sidebar: { component: SidebarDoc },
+      SidebarInboxButton: { component: SidebarInboxButtonDoc },
       // Avatar: { component: AvatarDoc },
       // Facepile: { component: FacepileDoc },
     },

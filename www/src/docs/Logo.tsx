@@ -1,10 +1,10 @@
 import { navLogoOuter, navLogoInner } from '../styles/Docs.css';
-import LogoSvg from './Logo.svg';
+import LogoSvg from '../Logo.svg';
 export function Logo() {
   return (
     <div className={navLogoOuter}>
       <div className={navLogoInner}>
-        <img src={LogoSvg} />
+        <img src={LogoSvg} style={{ filter: 'invert(1)' }} />
       </div>
     </div>
   );

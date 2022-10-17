@@ -4,7 +4,7 @@ import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-mod
 import '@ag-grid-community/styles/ag-grid.css';
 import './ag-theme-collabkit.css';
 import * as styles from './DataGridDemo.css';
-import { InboxButton } from '@collabkit/react';
+import { SidebarInboxButton } from '@collabkit/react';
 
 const AgGridReactAny = AgGridReact as any;
 
@@ -47,7 +47,7 @@ export function DataGridDemo() {
       <div className={styles.container}>
         <div className={styles.headingRow}>
           <span className={styles.heading}>Q1 Earnings</span>
-          <InboxButton />
+          <SidebarInboxButton />
         </div>
         <div className={'ag-theme-collabkit ' + styles.grid}>
           <AgGridReactAny

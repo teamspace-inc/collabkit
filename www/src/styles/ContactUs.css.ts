@@ -2,14 +2,14 @@ import { style } from '@vanilla-extract/css';
 
 export const footerLinkButton = style({
   border: '1px solid white',
-  fontFamily: 'Inter',
+  fontFamily: 'Satoshi',
   fontStyle: 'normal',
   fontWeight: 500,
-  fontSize: '1.25rem',
+  fontSize: '16px',
   lineHeight: '100%',
   boxSizing: 'border-box',
-  height: '60px',
-  padding: '0 2rem',
+  height: '50px',
+  padding: '12px 24px',
   width: '16rem',
   textAlign: 'center',
   borderRadius: '100px',
@@ -21,8 +21,8 @@ export const footerLinkButton = style({
   gap: '16px',
 });
 
-const footerLink = style({
-  fontFamily: 'Inter',
+export const footerLink = style({
+  fontFamily: 'Satoshi',
   fontStyle: 'normal',
   fontWeight: 500,
   fontSize: '1rem',

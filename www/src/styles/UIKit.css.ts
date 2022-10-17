@@ -19,8 +19,11 @@ export const h3 = style({
 });
 
 export const a = style({
-  fontSize: '1.25rem',
+  fontSize: '16px',
+  fontWeight: 700,
+  fontFamily: 'Satoshi',
   textDecoration: 'none',
+  cursor: 'pointer',
   color: 'black',
   ':hover': {
     textDecoration: 'underline',

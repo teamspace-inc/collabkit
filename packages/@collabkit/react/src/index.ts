@@ -21,6 +21,7 @@ import { InboxButton } from './components/InboxButton';
 import { ThemeProvider } from './components/ThemeContext';
 import { Sidebar } from './components/Sidebar';
 import { ThemeWrapper } from './components/ThemeWrapper';
+import { SidebarInboxButton } from './components/SidebarInboxButton';
 
 export {
   CollabKitProvider as Provider,
@@ -32,6 +33,7 @@ export {
   ThemeWrapper,
   Inbox,
   Sidebar,
+  SidebarInboxButton,
   usePopoverThread,
   useUnreadThreadsCount,
   useUnreadCommentsCount as useUnreadCount,

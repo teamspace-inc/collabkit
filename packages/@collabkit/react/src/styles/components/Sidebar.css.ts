@@ -32,7 +32,7 @@ export const title = style({
   margin: 0,
   boxSizing: 'border-box',
   display: 'flex',
-  alignItems: 'space-between',
+  alignItems: 'center',
   paddingTop: fallbackVar(vars.sidebar.title.paddingTop, vars.space[4]),
   paddingBottom: fallbackVar(vars.sidebar.title.paddingBottom, vars.space[2]),
   paddingLeft: fallbackVar(vars.inbox.item.paddingLeft, vars.space[4]),
