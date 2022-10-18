@@ -42,7 +42,6 @@ function CellRenderer(props: ICellRendererParams<RowData>) {
     <PopoverTrigger context={context}>
       <div
         onClick={() => setPopoverState('open')}
-        data-cell-id={cellId}
         style={{
           position: 'absolute',
           inset: 0,
