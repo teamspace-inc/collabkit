@@ -23,7 +23,7 @@ function CopyButton({ codeString }: { codeString: string }) {
   );
 }
 
-export function CodeSnippet(props: { code: string; language?: 'typescript' | 'shell' }) {
+export function CodeSnippet(props: { code: string; language?: 'typescript' | 'shell' | 'css' }) {
   const breakpoint = useBreakpoint();
 
   return (
@@ -41,7 +41,10 @@ export function CodeSnippet(props: { code: string; language?: 'typescript' | 'sh
   );
 }
 
-export function renderCodeSnippet(code: string, language: 'typescript' | 'shell' = 'typescript') {
+export function renderCodeSnippet(
+  code: string,
+  language: 'typescript' | 'shell' | 'css' = 'typescript'
+) {
   return <CodeSnippet code={code} language={language} />;
 }
 
@@ -51,7 +54,7 @@ export function CodeEditor(props: {
   scrollbar: boolean;
   copyButton?: boolean;
   fixedSize?: boolean;
-  language?: 'typescript' | 'shell' | 'json';
+  language?: 'typescript' | 'shell' | 'json' | 'css';
   style?: React.CSSProperties;
   lineHeight?: number;
   numLines?: number;

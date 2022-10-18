@@ -67,9 +67,14 @@ globalStyle(`h4`, {
   color: vars.color.textContrastHigh,
 });
 
+globalStyle('body', {
+  counterReset: 'step-number',
+});
+
 export const docStep = style({
+  counterIncrement: 'step-number',
   ':before': {
-    content: `attr(data-step-number)`,
+    content: `counter(step-number)`,
     fontSize: '14px',
     display: 'flex',
     justifyContent: 'center',

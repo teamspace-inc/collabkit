@@ -16,15 +16,11 @@ export function SecureModeDoc() {
         </p>
       </div>
       <div>
-        <h3 data-step-number="1" className={docStep}>
-          Contact us
-        </h3>
+        <h3 className={docStep}>Contact us</h3>
         <p>Email or Slack us and we'll enable Secure Mode for your app.</p>
       </div>
       <div>
-        <h3 data-step-number="2" className={docStep}>
-          Generate a per-user token
-        </h3>
+        <h3 className={docStep}>Generate a per-user token</h3>
         <div>
           <h4>For Node.js</h4>
           <p>
@@ -90,9 +86,7 @@ if (response?.status === 201) {
         </div>
       </div>
       <div>
-        <h3 data-step-number="3" className={docStep}>
-          Pass the token to the CollabKitProvider on the client
-        </h3>
+        <h3 className={docStep}>Pass the token to the CollabKitProvider on the client</h3>
         {renderCodeSnippet(`import { CollabKitProvider } from '@collabkit/react';
 
 export default function App() {
@@ -106,9 +100,7 @@ export default function App() {
 }`)}
       </div>
       <div>
-        <h3 data-step-number="4" className={docStep}>
-          Done!
-        </h3>
+        <h3 className={docStep}>Done!</h3>
         <p>Your app is now running in Secure Mode.</p>
       </div>
     </>

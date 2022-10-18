@@ -14,18 +14,21 @@ export function GettingStartedDoc() {
         </p>
       </div>
       <div>
-        <h3 data-step-number="1" className={docStep}>
-          Install @collabkit/react
-        </h3>
-        <p>With npm</p>
+        <h3 className={docStep}>Install @collabkit/react</h3>
+        <p>With npm:</p>
         {renderCodeSnippet(`npm install @collabkit/react`, 'shell')}
-        <p>Or with yarn</p>
+        <p>Or with yarn:</p>
         {renderCodeSnippet(`yarn add @collabkit/react`, 'shell')}
       </div>
       <div>
-        <h3 data-step-number="2" className={docStep}>
-          Wrap your app in a CollabKitProvider
-        </h3>
+        <h3 className={docStep}>Import styles</h3>
+        <p>In a JS module:</p>
+        {renderCodeSnippet(`import '@collabkit/react/dist/style.css';`, 'typescript')}
+        <p>Or in CSS file:</p>
+        {renderCodeSnippet(`@import '@collabkit/react/dist/style.css';`, 'css')}
+      </div>
+      <div>
+        <h3 className={docStep}>Wrap your app in a CollabKitProvider</h3>
         <p>
           Be sure to pass in <code>user</code> and <code>workspace</code> details.
         </p>
@@ -52,9 +55,7 @@ export default function App() {
 }`)}
       </div>
       <div>
-        <h3 data-step-number="3" className={docStep}>
-          Add a Thread to your app
-        </h3>
+        <h3 className={docStep}>Add a Thread to your app</h3>
         {renderCodeSnippet(`import { Thread } from '@collabkit/react';
 
 <div style={{ width: 280, height: 320 }}>
@@ -70,18 +71,14 @@ export default function App() {
       </div>
 
       <div>
-        <h3 data-step-number="4" className={docStep}>
-          Try it out!
-        </h3>
+        <h3 className={docStep}>Try it out!</h3>
         <p>
           Load the page with the <code>{'<Thread />'}</code> on it and send some messages. Deploy to
           staging and share a link with your coworkers so they can try it out.
         </p>
       </div>
       <div>
-        <h3 data-step-number="5" className={docStep}>
-          Turn on Secure Mode
-        </h3>
+        <h3 className={docStep}>Turn on Secure Mode</h3>
         <p>
           Before going live, enable <DocLink href="/docs/securemode">Secure Mode</DocLink> which
           requires generating a per user token for each request.
