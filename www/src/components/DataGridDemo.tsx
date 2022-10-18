@@ -32,7 +32,6 @@ function CellRenderer(props: ICellRendererParams<RowData>) {
     name: props.colDef!.headerName,
     cellId,
     _viewId: 'table-demo',
-    openOnClick: true,
   });
   useEffect(() => {
     if (cellId === 'row003_budget') {
@@ -42,6 +41,7 @@ function CellRenderer(props: ICellRendererParams<RowData>) {
   return (
     <PopoverTrigger context={context}>
       <div
+        onClick={() => setPopoverState('open')}
         data-cell-id={cellId}
         style={{
           position: 'absolute',

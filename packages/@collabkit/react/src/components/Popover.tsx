@@ -279,16 +279,16 @@ export const PopoverTrigger = ({ children, context }: Props) => {
             <div
               ref={previewContext.floating}
               style={{
-                display: 'block',
                 position: previewContext.strategy,
                 top: previewContext.y ?? 0,
                 left: previewContext.x ?? 0,
                 outline: 'none',
               }}
-              onClick={() => {
-                setPopoverState('open');
-              }}
-              {...getPreviewFloatingProps()}
+              {...getPreviewFloatingProps({
+                onClick: () => {
+                  setPopoverState('open');
+                },
+              })}
             >
               <PreviewThread threadId={threadId} info={threadInfo} />
             </div>
