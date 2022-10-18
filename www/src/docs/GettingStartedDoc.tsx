@@ -18,9 +18,9 @@ export function GettingStartedDoc() {
           Install @collabkit/react
         </h3>
         <p>With npm</p>
-        {renderCodeSnippet(`$ npm install @collabkit/react`, 'shell')}
+        {renderCodeSnippet(`npm install @collabkit/react`, 'shell')}
         <p>Or with yarn</p>
-        {renderCodeSnippet(`$ yarn add @collabkit/react`, 'shell')}
+        {renderCodeSnippet(`yarn add @collabkit/react`, 'shell')}
       </div>
       <div>
         <h3 data-step-number="2" className={docStep}>
