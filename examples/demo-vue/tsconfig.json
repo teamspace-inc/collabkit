@@ -5,12 +5,12 @@
     "lib": ["ES2016", "ES2017.Object", "DOM", "DOM.Iterable"],
     "baseUrl": "../../",
     "paths": {
-      "@collabkit/client": ["../../packages/@collabkit/client/src"],
-      "@collabkit/colors": ["../../packages/@collabkit/colors/src"],
-      "@collabkit/core": ["../../packages/@collabkit/core/src"],
-      "@collabkit/custom-themes": ["../../packages/@collabkit/custom-themes/src"],
-      "@collabkit/theme": ["../../packages/@collabkit/theme/src"],
-      "@collabkit/vue": ["../../packages/@collabkit/vue/src"]
+      "@collabkit/client": ["packages/@collabkit/client/src"],
+      "@collabkit/colors": ["packages/@collabkit/colors/src"],
+      "@collabkit/core": ["packages/@collabkit/core/src"],
+      "@collabkit/custom-themes": ["packages/@collabkit/custom-themes/src"],
+      "@collabkit/theme": ["packages/@collabkit/theme/src"],
+      "@collabkit/vue": ["packages/@collabkit/vue/src"]
     }
   },
 
