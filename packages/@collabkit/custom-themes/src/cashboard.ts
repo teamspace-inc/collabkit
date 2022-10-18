@@ -1,4 +1,4 @@
-import { CustomTheme } from '@collabkit/react';
+import type { CustomTheme } from '@collabkit/react';
 
 export const cashboard: CustomTheme = {
   text: {
