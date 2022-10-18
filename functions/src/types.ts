@@ -43,7 +43,6 @@ export type SeenByUser = {
   seenAt: number;
 };
 
-
 export type Timeline = {
   [eventId: string]: Event;
 };
@@ -82,4 +81,19 @@ export type WorkspaceProps = {
 export type ThreadInfo = {
   name?: string;
   url?: string;
+};
+
+export type EventType = 'message' | 'reaction' | 'adminMessage' | 'system' | 'delete' | 'edit';
+
+// TODO: this should be a union of different message types
+export type Event = {
+  type: EventType;
+  body: string;
+  system?: 'resolve' | 'reopen';
+  createdAt: number;
+  createdById: string;
+  parentId?: string;
+  mentions?: {
+    [userId: string]: boolean;
+  };
 };
