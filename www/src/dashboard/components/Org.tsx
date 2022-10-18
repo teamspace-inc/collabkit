@@ -1,30 +1,29 @@
 import { dashboardStore } from '../dashboardStore';
 import { useSnapshot } from 'valtio';
-import { AppListItem } from './AppListItem';
+import { DashboardApp } from './DashboardApp';
 
 export function Org() {
-  const { org, apps } = useSnapshot(dashboardStore);
+  const { apps } = useSnapshot(dashboardStore);
   return (
-    <div style={{ padding: 60 }}>
-      <div>
-        Logo
-        <div>Projects</div>
-        <div>
-          <div>{org?.name}</div>
-        </div>
+    <div>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          borderBottom: '1px solid #333',
+          marginBottom: '20px',
+        }}
+      >
+        <h1>Your Apps</h1>
+        <div style={{ flex: 1 }} />
+        {/* <button>Create New App</button> */}
       </div>
-
-      <div>
-        Project
-        <h2>{org?.name}</h2>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+        {Object.values(apps).map((app) => {
+          return <DashboardApp app={app} />;
+        })}
       </div>
-
-      <h5>API credentials</h5>
-
-      {Object.values(apps).map((app) => {
-        return <AppListItem app={app} />;
-        // return <Text key={app.appId}>{app.name}</Text>;
-      })}
     </div>
   );
 }

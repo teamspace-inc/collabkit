@@ -196,7 +196,7 @@ export const dashboardActions = {
       return;
     }
     const idToken = await dashboardStore.user.getIdToken(true);
-    const response = await fetch(`/api/createOrg`, {
+    const response = await fetch(`https://us-central1-collabkit-dev.cloudfunctions.net/createOrg`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

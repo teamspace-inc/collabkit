@@ -98,10 +98,14 @@ export function Doc(props: {
         <div className={docScrollableContentWrap}>
           <ScrollAreaRoot style={{ width: '100%' }}>
             <ScrollAreaViewport>
-              <div className={docScrollableContent}>
-                <h1 className={docTitle}>{props.title}</h1>
-                <div className={docContent}>{props.children}</div>
-                <DocFooter next={props.next} prev={props.prev} />
+              <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <div>
+                  <div className={docScrollableContent}>
+                    <h1 className={docTitle}>{props.title}</h1>
+                    <div className={docContent}>{props.children}</div>
+                    <DocFooter next={props.next} prev={props.prev} />
+                  </div>
+                </div>
               </div>
             </ScrollAreaViewport>
             <ScrollAreaScrollbar orientation="vertical">

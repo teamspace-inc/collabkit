@@ -6,7 +6,7 @@ import {
   ScrollAreaThumb,
   ScrollAreaViewport,
 } from '../UIKit';
-import { DOCS, getDocHref, RootDocNode } from './Docs';
+import { DOCS, getDocHref, RootDocNode, useDocs } from './Docs';
 import { Breakpoint, useBreakpoint } from '../hooks/useWindowSize';
 import { useEffect, useState } from 'react';
 import { List } from 'phosphor-react';
@@ -40,6 +40,7 @@ function NavList(props: { node: RootDocNode; path: string[]; onClick: () => void
     <ol className={navOl}>
       {Object.entries(props.node).map(([key, value], index) => (
         <li className={navLi} key={`${key}-${index}`}>
+          {'isEmpty' in value ? <br /> : null}
           {'component' in value ? (
             <NavListItem onClick={props.onClick} path={props.path} id={key} />
           ) : null}
@@ -59,6 +60,7 @@ function shouldShowNav(breakpoint: Breakpoint) {
 
 export function Nav(props: { className?: string }) {
   const breakpoint = useBreakpoint();
+  const docs = useDocs();
 
   const [isOpen, setIsOpen] = useState(() => shouldShowNav(breakpoint));
 
@@ -84,7 +86,7 @@ export function Nav(props: { className?: string }) {
             <ScrollAreaRoot style={{ width: '100%' }}>
               <ScrollAreaViewport>
                 <div className={navWrap}>
-                  <NavList onClick={() => hasMenu && setIsOpen(false)} node={DOCS} path={[]} />
+                  <NavList onClick={() => hasMenu && setIsOpen(false)} node={docs} path={[]} />
                 </div>
               </ScrollAreaViewport>
               <ScrollAreaScrollbar orientation="vertical">

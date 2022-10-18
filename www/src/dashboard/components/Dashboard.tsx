@@ -20,6 +20,7 @@ import { docs } from '../../styles/Docs.css';
 import { dark } from '../../styles/Theme.css';
 import { bg } from '../../styles/Website.css';
 import { Org } from './Org';
+import { Logo } from '../../Logo';
 
 export function Dashboard() {
   const { authState, org } = useSnapshot(dashboardStore);
@@ -41,6 +42,7 @@ export function Dashboard() {
 
   return (
     <div className={`${docs} ${dark} ${bg}`} style={{ height: '100vh' }}>
+      <Logo />
       {view[authState]}
     </div>
   );

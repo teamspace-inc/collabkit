@@ -1,24 +1,12 @@
-import { SidebarInboxButton } from '@collabkit/react';
+import { docDemoContainer } from '../../styles/Docs.css';
 import { renderCodeSnippet } from '../CodeEditor';
-import { DocDemoContainer } from '../Doc';
+import { SidebarDemo } from '../demos/SidebarDemo';
 
 export function SidebarInboxButtonDoc() {
   return (
     <>
-      <h2>A button that opens the Sidebar and reveals.</h2>
-      <DocDemoContainer
-        style={{
-          padding: 0,
-          height: '500px',
-          display: 'flex',
-          flex: 'unset',
-          clipPath: 'inset(0px round 6px 6px 6px 6px)',
-        }}
-      >
-        <div style={{ background: 'white', borderRadius: '8px' }}>
-          <SidebarInboxButton />
-        </div>
-      </DocDemoContainer>
+      <h2>A button that opens the SidebarInbox.</h2>
+      <SidebarDemo className={docDemoContainer} />
       <div>
         <h3>Usage</h3>
         <p>

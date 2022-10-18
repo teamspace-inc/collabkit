@@ -2,7 +2,19 @@ import { docDemoContainer } from '../../styles/Docs.css';
 import { renderCodeSnippet } from '../CodeEditor';
 import { SidebarDemo } from '../demos/SidebarDemo';
 
-export function SidebarDoc() {
+export function SidebarInboxDoc() {
+  const code = renderCodeSnippet(`import { 
+    SidebarInboxButton, 
+    SidebarInbox, 
+  } from '@collabkit/react';
+  
+  export function App() {
+    return <div>
+      <SidebarInboxButton />
+      <SidebarInbox />
+    </div>;
+}`);
+
   return (
     <>
       <h2>A sidebar you can use to show and hide the Inbox easily.</h2>
@@ -13,23 +25,9 @@ export function SidebarDoc() {
           A sidebar component that can automatically show and hide the users inbox of comments. Use
           with a <code>{'<SidebarInboxButton>'}</code> to easily add a comments inbox to your app.
         </p>
-        {renderCodeSnippet(`import { 
-  SidebarInboxButton, 
-  Sidebar, 
-  Inbox 
-} from '@collabkit/react';
-
-export function App() {
-  return <div>
-    <SidebarInboxButton />
-    <Sidebar>
-      <Inbox />
-    </Sidebar>
-  </div>;
-}`)}
+        {code}
       </div>
-
-      <div>
+      {/* <div>
         <h3>Props</h3>
         <h4>children?: React.ReactNode</h4>
         <p>What to render in the Sidebar.</p>
@@ -42,7 +40,7 @@ export function App() {
           How the sidebar is positioned. Defaults to <code>fixed</code>. Set this to{' '}
           <code>'absolute'</code> if you require more control over where the sidebar shows up.
         </p>
-      </div>
+      </div> */}
     </>
   );
 }

@@ -72,7 +72,7 @@ export const dashboardEvents = {
     dashboardStore.forms.createOrg = { name: e.target.value };
   },
 
-  onAppNameChange: (props: { appId: string; e: React.ChangeEvent<HTMLInputElement> }) => {
-    dashboardActions.changeAppName({ appId: props.appId, newName: props.e.target.value });
+  onAppNameChange: (props: { appId: string; name: string }) => {
+    dashboardActions.changeAppName({ appId: props.appId, newName: props.name });
   },
 };

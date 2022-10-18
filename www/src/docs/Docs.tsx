@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSnapshot } from 'valtio';
 import { IntroductionDoc } from './IntroductionDoc';
 // import { DetailViewsDoc } from './patterns/DetailViewsDoc';
 // import { ListViewsDoc } from './patterns/ListViewsDoc';
@@ -28,8 +29,10 @@ import { Doc } from './Doc';
 import { WorkspacesDoc } from './WorkspacesDoc';
 import { SecureModeDoc } from './SecureModeDoc';
 import { NotificationsDoc } from './NotificationsDoc';
-import { SidebarDoc } from './components/SidebarDoc';
+import { SidebarInboxDoc } from './components/SidebarInboxDoc';
 import { SidebarInboxButtonDoc } from './components/SidebarInboxButtonDoc';
+import { DashboardPage } from '../pages/DashboardPage';
+import { dashboardStore } from '../dashboard/dashboardStore';
 
 export function getDocHref(path: string[], key: string) {
   return getPathHref(path.concat([key]));
@@ -40,6 +43,9 @@ export function getPathHref(path: string[]) {
 }
 
 export const DOCS: RootDocNode = {
+  // Dashboard: { component: DashboardPage },
+  // Empty: { isEmpty: true },
+
   Introduction: { component: IntroductionDoc },
   'Getting Started': { component: GettingStartedDoc },
   // Patterns: {
@@ -58,7 +64,7 @@ export const DOCS: RootDocNode = {
       PopoverThread: { component: PopoverThreadDoc },
       Inbox: { component: InboxDoc },
       InboxButton: { component: InboxButtonDoc },
-      Sidebar: { component: SidebarDoc },
+      SidebarInbox: { component: SidebarInboxDoc },
       SidebarInboxButton: { component: SidebarInboxButtonDoc },
       // Avatar: { component: AvatarDoc },
       // Facepile: { component: FacepileDoc },
@@ -126,7 +132,8 @@ export type DocNode =
   | {
       title: string;
       children: RootDocNode;
-    };
+    }
+  | { isEmpty: boolean };
 
 type RelatedNodeReturnValue = {
   prev?: string[];
@@ -146,15 +153,15 @@ function getRelatedNodes(
   const keys = Object.keys(root);
   const index = keys.indexOf(key);
 
-  const prevKey = keys[index - 1];
-  const nextKey = keys[index + 1];
+  const prevKey = keys[index - 1] ?? keys[index - 2];
+  const nextKey = keys[index + 1] ?? keys[index + 2];
 
   prev = prevKey ? base.concat(prevKey) : prev;
   next = nextKey ? base.concat(nextKey) : next;
 
   let value: RelatedNodeReturnValue;
 
-  if ('children' in node && node.children[path[1]]) {
+  if (node && 'children' in node && node.children[path[1]]) {
     value = getRelatedNodes(node.children, path.slice(1), prev, next, [path[0]]);
   } else {
     value = {
@@ -167,10 +174,24 @@ function getRelatedNodes(
   return value;
 }
 
+// if logged in adds a dashboard route
+export function useDocs() {
+  const docs = DOCS;
+  const { user, org } = useSnapshot(dashboardStore);
+  const orgName = org?.name;
+  const dashboardPlusDocs =
+    user && orgName
+      ? { [orgName]: { component: DashboardPage }, '': { isEmpty: true }, ...docs }
+      : docs;
+  return dashboardPlusDocs;
+}
+
 export function Docs() {
+  const docs = useDocs();
+
   return (
     <>
-      <Switch>{generateDocRoutes(DOCS)}</Switch>
+      <Switch>{generateDocRoutes(docs)}</Switch>
       <Route path="/codeEditor" component={CodeEditor} />
     </>
   );

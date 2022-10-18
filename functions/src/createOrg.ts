@@ -33,16 +33,26 @@ export const createOrg = functions.https.onRequest(async (request, response) => 
         [uid]: true,
       };
 
+      const orgName = request.body.name.toString();
+
+      if (orgName.length < 1) {
+        throw new Error('Org name must be at least 1 character');
+      }
+
       const org: Org = {
-        name: request.body.name.toString(),
+        name: orgName,
         admins,
         createdAt: admin.database.ServerValue.TIMESTAMP,
       };
 
       const appId = await generateId();
+      const secureAppId = await generateId();
+      const emailBatchDelayMs = 1000 * 60 * 5;
 
       const app: App = {
-        name: 'default',
+        emailBatchDelayMs,
+        isEmailDisabled: false,
+        name: `${orgName} Development`,
         keys: {
           [await generateId()]: true,
         },
@@ -50,8 +60,19 @@ export const createOrg = functions.https.onRequest(async (request, response) => 
         mode: 'UNSECURED' as const,
       };
 
+      const secureApp: App = {
+        emailBatchDelayMs,
+        isEmailDisabled: true,
+        name: `${orgName} Production`,
+        keys: {
+          [await generateId()]: true,
+        },
+        admins,
+        mode: 'SECURED' as const,
+      };
+
       const orgApps: OrgApps = {
-        [orgId]: { [appId]: true },
+        [orgId]: { [appId]: true, [secureAppId]: true },
       };
 
       try {
@@ -61,7 +82,9 @@ export const createOrg = functions.https.onRequest(async (request, response) => 
           .update({
             [`orgs/${orgId}`]: org,
             [`apps/${appId}`]: app,
+            [`apps/${secureAppId}`]: secureApp,
             [`orgApps/${orgId}/${appId}`]: true,
+            [`orgApps/${orgId}/${secureAppId}`]: true,
             [`adminOrgs/${uid}/${orgId}`]: true,
           });
         try {

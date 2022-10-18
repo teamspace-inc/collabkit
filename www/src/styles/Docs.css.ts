@@ -9,14 +9,6 @@ export const docs = style({});
 
 const max768 = `screen and (max-width: ${MAIN_BREAKPOINT}px)`;
 
-globalStyle(`input`, {
-  width: '30ch',
-  fontSize: '1.5rem',
-  padding: '0.75rem 1.5rem',
-  border: '2px solid #222',
-  borderRadius: '100px',
-});
-
 globalStyle(`blockquote`, {
   borderLeft: `5px solid ${vars.color.sky}`,
   textIndent: 0,
@@ -125,10 +117,9 @@ export const themeDemoContainer = style([
 
 export const docScrollableContent = style({
   padding: 20,
-  width: 720,
-  display: 'table',
-  margin: '0 auto',
-  height: '100vh',
+  gridTemplateColumns: 'minmax(360px, 680px)',
+  display: 'grid',
+  width: 'auto',
   position: 'sticky',
   top: 0,
   boxSizing: 'border-box',
@@ -187,7 +178,7 @@ export const docFooter = style({
   paddingTop: 20,
   paddingBottom: 200,
   color: '#BBBBBB',
-  fontFamily: 'Satoshi',
+  fontFamily: 'Inter',
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'flex-end',
@@ -200,7 +191,7 @@ export const docFooter = style({
 export const docLink = style({
   borderRadius: '6px',
   textDecoration: 'none',
-  fontFamily: 'Satoshi',
+  fontFamily: 'Inter',
   fontStyle: 'normal',
   fontWeight: 600,
   fontSize: 16,
@@ -224,7 +215,7 @@ export const docRoot = style({
   inset: 0,
   alignItems: 'flex-start',
   display: 'grid',
-  gridTemplateColumns: 'minmax(400px, 1fr) minmax(780px, 3fr)',
+  gridTemplateColumns: 'minmax(280px, 1fr) minmax(500px, 3fr)',
   '@media': {
     [max768]: {
       display: 'unset',
@@ -372,7 +363,7 @@ export const navHeader = style({
 });
 
 export const navListTitle = style({
-  fontFamily: 'Satoshi',
+  fontFamily: 'Inter',
   fontStyle: 'normal',
   fontWeight: 600,
   color: '#fff',

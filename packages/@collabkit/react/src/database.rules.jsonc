@@ -89,6 +89,13 @@
       "$appId": {
         ".write": "!root.child('apps').child($appId).exists()",
         ".read": "root.child('apps').child($appId).child('admins').child(auth.uid).exists()",
+        // display name for dashboard
+        "label": {
+          ".read": "root.child('apps').child($appId).child('admins').child(auth.uid).exists()",
+          ".write": "root.child('apps').child($appId).child('admins').child(auth.uid).exists()",
+          ".validate": "newData.isString()"
+        },
+        // what end-users see in emails
         "name": {
           ".read": "root.child('apps').child($appId).child('admins').child(auth.uid).exists()",
           ".write": "root.child('apps').child($appId).child('admins').child(auth.uid).exists()",
@@ -102,6 +109,7 @@
             ".write": false
           }
         },
+        // dashboard expects only one key to have value true
         "keys": {
           "$key": {
             ".write": "root.child('apps').child($appId).child('admins').child(auth.uid).exists()",
@@ -118,6 +126,21 @@
           ".read": true,
           ".write": "root.child('apps').child($appId).child('admins').child(auth.uid).exists()",
           ".validate": "newData.isBoolean()"
+        },
+        "emailBatchDelayMs": {
+          ".read": true,
+          ".write": "root.child('apps').child($appId).child('admins').child(auth.uid).exists()",
+          ".validate": "newData.isNumber()"
+        },
+        "logoUrl": {
+          ".read": true,
+          ".write": "root.child('apps').child($appId).child('admins').child(auth.uid).exists()",
+          ".validate": "newData.isString()"
+        },
+        "webhook": {
+          ".read": true,
+          ".write": "root.child('apps').child($appId).child('admins').child(auth.uid).exists()",
+          ".validate": "newData.isString()"
         }
       }
     },

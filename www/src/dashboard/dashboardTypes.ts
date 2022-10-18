@@ -6,7 +6,13 @@ export interface App {
   keys: { [apiKey: string]: boolean };
   admins: { [adminId: string]: boolean };
   mode: 'UNSECURED' | 'SECURED';
-  name: string;
+  name?: string;
+  isEmailDisabled?: boolean;
+  emailBatchDelayMs?: number;
+  label?: string;
+  logoUrl?: string;
+  accentColor?: string;
+  webhook?: string;
 }
 
 export interface AdminApp {

@@ -1,33 +1,23 @@
-import { Auth } from '../../../UIKit';
 import { dashboardEvents } from '../../dashboardEvents';
 
 export function CreateOrg() {
   return (
     <div>
-      <Auth>
-        <div style={{ alignItems: 'flex-start' }}>
-          <h2>What's the name of your product or company?</h2>
-          <div>
-            This is the name your users and other admins will see. <br />
-            <b>You can change this later.</b>
-          </div>
-          <div style={{ gap: '1rem' }}>
-            <input
-              placeholder="Ex. Acme or June Analytics"
-              style={{
-                width: '30ch',
-                fontSize: '1.5rem',
-                padding: '0.75rem 1.5rem',
-                border: '2px solid #222',
-                borderRadius: '100px',
-              }}
-              onChange={dashboardEvents.onCreateOrgInputChange}
-              type="div/email"
-            />
-            <button onClick={dashboardEvents.onCreateOrgButtonClick}>Continue</button>
-          </div>
+      <div style={{ alignItems: 'flex-start' }}>
+        <h2>What's the name of your product or company?</h2>
+        <p>
+          This is the name your users and other admins will see. <br />
+          <b>You can change this later.</b>
+        </p>
+        <div style={{ gap: '1rem' }}>
+          <input
+            placeholder="Ex. Acme or June Analytics"
+            onChange={dashboardEvents.onCreateOrgInputChange}
+            type="div/email"
+          />
+          <button onClick={dashboardEvents.onCreateOrgButtonClick}>Continue</button>
         </div>
-      </Auth>
+      </div>
     </div>
   );
 }
