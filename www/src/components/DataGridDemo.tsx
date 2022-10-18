@@ -157,7 +157,16 @@ export function DataGridDemo() {
     { headerName: '', field: 'account', cellRenderer: CellRenderer, cellStyle, flex: 1.5 },
     { headerName: 'Budget', field: 'budget', cellRenderer: CellRenderer, cellStyle, flex: 1.5 },
     { headerName: 'Budget Spent', field: 'spent', cellRenderer: CellRenderer, cellStyle, flex: 1 },
-    { headerName: 'Change', field: 'change', cellRenderer: CellRenderer, cellStyle, flex: 1 },
+    {
+      headerName: 'Change',
+      field: 'change',
+      cellRenderer: CellRenderer,
+      cellStyle: (params) => ({
+        ...cellStyle,
+        color: params.value.startsWith('-') ? vars.color.red : vars.color.green,
+      }),
+      flex: 1,
+    },
   ]);
 
   return (
