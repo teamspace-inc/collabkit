@@ -1,6 +1,6 @@
 import { fallbackVar, style } from '@vanilla-extract/css';
 import { name as profileName } from './Profile.css';
-import { timestamp as commentTimestamp } from './Comment.css';
+import { timestamp as commentTimestamp, body as commentBody } from './Comment.css';
 import { vars } from '../theme';
 import { calc } from '@vanilla-extract/css-utils';
 import { recipe } from '@vanilla-extract/recipes';
@@ -24,6 +24,15 @@ export const commentRoot = style([
     display: 'flex',
     flexDirection: 'column',
     gap: '8px',
+  },
+]);
+
+export const body = style([
+  commentBody,
+  {
+    lineClamp: 3,
+    overflow: 'hidden',
+    // textOverflow: 'ellipsis',
   },
 ]);
 

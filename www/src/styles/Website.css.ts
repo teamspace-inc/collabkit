@@ -18,10 +18,10 @@ globalStyle(`${website} section`, {
   textAlign: 'center',
   justifyContent: 'center',
   padding: '140px 0px 160px',
-  gap: '60px',
+  gap: '40px',
   '@media': {
     'screen and (max-width: 720px)': {
-      gap: '30px',
+      gap: '0px',
     },
   },
 });

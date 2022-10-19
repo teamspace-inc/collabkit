@@ -6,16 +6,31 @@ export const section = style({
   overflow: 'hidden',
   background: '#FFEC6B',
   minHeight: '982px',
+  textAlign: 'center',
 });
 
 export const h3 = style({
   fontFamily: 'Clash Display',
 });
 
+export const uiWrap = style({
+  height: 'calc(434px / 632px)',
+  display: 'flex',
+  overflow: 'hidden',
+  maxWidth: '1124px',
+  marginBottom: '-360px',
+  marginTop: '100px',
+});
+
+export const messageList = style({
+  display: 'flex',
+  gap: '16px',
+  flexDirection: 'column',
+});
+
 export const h1 = style({
   fontWeight: 600,
   fontSize: 144,
-  textAlign: 'left',
   lineHeight: '90%',
   marginLeft: '-40px',
 });
@@ -65,7 +80,9 @@ export const message = style({
   borderRadius: '16px',
   gridTemplateColumns: '28px 1fr',
   gap: '8px',
-  width: '306px',
+  width: '308px',
+  boxSizing: 'border-box',
+  boxShadow: '0px 10px 20px rgba(0, 0, 0, 0.1)',
 });
 
 export const body = style({
