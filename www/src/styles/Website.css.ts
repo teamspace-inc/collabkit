@@ -46,8 +46,8 @@ globalStyle(`${website} h1`, {
   zIndex: 1,
   maxWidth: 'unset',
   minWidth: 'unset',
-  fontSize: '112px',
-  lineHeight: '100px',
+  fontSize: '64px',
+  lineHeight: '90%',
 
   '@media': {
     'screen and (max-width: 720px)': {
@@ -164,10 +164,8 @@ globalStyle(`${website} code`, {
 });
 
 export const header = style({
-  width: '90vw',
-  padding: '0 5vw',
   position: 'fixed',
-  top: 0,
+  top: 20,
   left: 0,
   right: 0,
   zIndex: 2,
@@ -179,7 +177,7 @@ export const headerInner = style({
   display: 'flex',
   flex: 1,
   alignItems: 'center',
-  maxWidth: '1352px',
+  maxWidth: '1124px',
 });
 
 export const a = style({
@@ -190,6 +188,7 @@ export const tabs = style({
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'center',
+  justifySelf: 'center',
   gap: '8px',
 });
 

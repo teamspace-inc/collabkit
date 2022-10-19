@@ -1,11 +1,11 @@
 import { style } from '@vanilla-extract/css';
-import { vars } from './Theme.css';
+import { vars } from '../Theme.css';
 
 export const section = style({
+  background: vars.color.yellow,
+  paddingTop: '240px !important',
+  boxSizing: 'border-box',
   position: 'relative',
-  overflow: 'hidden',
-  background: '#FFEC6B',
-  minHeight: '982px',
   textAlign: 'center',
 });
 
@@ -30,8 +30,8 @@ export const messageList = style({
 
 export const h1 = style({
   fontWeight: 600,
-  fontSize: 144,
-  lineHeight: '90%',
+  fontSize: '128px !important',
+  lineHeight: '90% !important',
   marginLeft: '-40px',
 });
 

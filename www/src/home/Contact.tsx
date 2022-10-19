@@ -2,10 +2,10 @@ import ycLogoSvg from '../assets/yc-logo.svg';
 import { DiscordLogo } from 'phosphor-react';
 import { useIsSmallScreen } from '../hooks/useIsSmallScreen';
 
-import * as styles from '../styles/ContactUs.css';
+import * as styles from '../styles/home/Contact.css';
 import { dark, vars } from '../styles/Theme.css';
 
-export function ContactUs() {
+export function Contact() {
   const isSmallScreen = useIsSmallScreen();
   const footerLinksDivider = isSmallScreen ? null : <span>|</span>;
 

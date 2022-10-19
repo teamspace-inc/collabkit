@@ -7,8 +7,9 @@ import { useIsSmallScreen } from '../hooks/useIsSmallScreen';
 import { useInvertFilter } from '../hooks/useInvertFilter';
 
 import { dark } from '../styles/Theme.css';
+import { h3 } from '../styles/home/Code.css';
 
-export function JustAFewLinesOfCode(props: { setInvertFilter: (invert: number) => void }) {
+export function Code(props: { setInvertFilter: (invert: number) => void }) {
   const isSmallScreen = useIsSmallScreen();
   const { ref } = useInvertFilter(props);
   return (
@@ -20,11 +21,8 @@ export function JustAFewLinesOfCode(props: { setInvertFilter: (invert: number) =
         color: 'white',
       }}
     >
-      <h1>
-        Get it running
-        {!isSmallScreen && <br />} in minutes
-      </h1>
-      <h3>Simply add {'<CollabKit.Thread />'}</h3>
+      <h1>Get it running in minutes</h1>
+      <h3 className={h3}>Simply add {'<CollabKit.Thread />'}</h3>
       <div
         style={{
           gap: isSmallScreen ? '32px' : '50px',

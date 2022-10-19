@@ -1,7 +1,6 @@
 import { useIsSmallScreen } from '../hooks/useIsSmallScreen';
 
-import * as styles from '../styles/Hero.css';
-import { vars } from '../styles/Theme.css';
+import * as styles from '../styles/home/Hero.css';
 import { useFloatingNodeId, useFloating, autoUpdate } from '@floating-ui/react-dom-interactions';
 
 import alicia from '../assets/alicia.png';
@@ -79,15 +78,7 @@ export function Hero() {
   });
 
   return (
-    <section
-      style={{
-        background: vars.color.yellow,
-        paddingTop: 240,
-        boxSizing: 'border-box',
-        position: 'relative',
-        textAlign: 'center',
-      }}
-    >
+    <section className={styles.section}>
       <h1 className={styles.h1}>{title}</h1>
       <h3>{description}</h3>
       <GetStartedButton />
