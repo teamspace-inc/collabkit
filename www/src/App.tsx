@@ -25,6 +25,7 @@ const workspace = {
 
 import { createDemoStore, mentionableUsers } from './home/demoStore';
 import { DashboardPage } from './pages/DashboardPage';
+import { DashboardExample } from './examples/DashboardExample';
 
 const defaultWorkspace: Partial<Workspace> = {
   // pins: {
@@ -239,8 +240,9 @@ export default function App() {
         <Route path="/dashboard" component={DashboardPage} />
         <Route path="/signedin" component={DashboardPage} />
         <Route path="/signup" component={DashboardPage} />
-        <Route path="/datagrid" component={DataGridPage} />
         <Route path="/theme-editor" component={ThemeEditorPage} />
+        <Route path="/examples/dashboard" component={DashboardExample} />
+        <Route path="/examples/table" component={DataGridPage} />
         <Docs />
       </SetBreakpointContext>
     </CollabKitProvider>
