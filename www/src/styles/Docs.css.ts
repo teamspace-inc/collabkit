@@ -9,14 +9,14 @@ export const docs = style({});
 
 const max768 = `screen and (max-width: ${MAIN_BREAKPOINT}px)`;
 
-globalStyle(`blockquote`, {
+globalStyle(`${docs} blockquote`, {
   borderLeft: `5px solid ${vars.color.sky}`,
   textIndent: 0,
   paddingLeft: 20,
   marginLeft: 0,
 });
 
-globalStyle(`code`, {
+globalStyle(`${docs} code`, {
   fontFamily: 'Monaco',
   fontSize: 14,
   background: vars.color.bgContrastLow,
@@ -25,20 +25,22 @@ globalStyle(`code`, {
   color: vars.color.mint,
 });
 
-globalStyle(`h1`, {
+globalStyle(`${docs} h1`, {
   marginTop: 0,
+  fontWeight: '700',
   color: vars.color.textContrastHigh,
 });
 
-globalStyle(`p`, {
+globalStyle(`${docs} p`, {
   fontStyle: 'normal',
   fontWeight: 400,
   fontSize: '16px',
   lineHeight: '28px',
+  margin: '28px auto',
   color: vars.color.textContrastMedium,
 });
 
-globalStyle(`h2`, {
+globalStyle(`${docs} h2`, {
   fontStyle: 'normal',
   fontWeight: 400,
   fontSize: 24,
@@ -46,18 +48,18 @@ globalStyle(`h2`, {
   color: vars.color.textContrastMedium,
 });
 
-globalStyle(`h3`, {
+globalStyle(`${docs} h3`, {
   marginTop: '12px',
   marginBottom: '20px',
   fontStyle: 'normal',
-  fontWeight: 700,
+  fontWeight: '700',
   fontSize: '24px',
   lineHeight: '28px',
   color: vars.color.textContrastHigh,
   position: 'relative',
 });
 
-globalStyle(`h4`, {
+globalStyle(`${docs} h4`, {
   marginTop: '32px',
   marginBottom: '8px',
   fontStyle: 'normal',
@@ -67,7 +69,7 @@ globalStyle(`h4`, {
   color: vars.color.textContrastHigh,
 });
 
-globalStyle('body', {
+globalStyle(`body`, {
   counterReset: 'step-number',
 });
 
@@ -257,7 +259,7 @@ export const navOl = style({
   },
 });
 
-globalStyle(`${navOl} ol`, {
+globalStyle(`${docs} ${navOl} ol`, {
   marginTop: 0,
   marginBottom: 8,
   marginLeft: '0',

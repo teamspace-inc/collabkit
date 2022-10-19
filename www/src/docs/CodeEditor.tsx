@@ -176,7 +176,7 @@ export function CodeEditor(props: {
     <div
       className={props.className ?? codeEditor}
       style={{
-        ...(props.fixedSize ? {} : { height }),
+        ...(props.fixedSize ? {} : { height: height + 32 }),
       }}
     >
       {props.copyButton ? <CopyButton codeString={codeString} /> : null}

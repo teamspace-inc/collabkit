@@ -2,6 +2,7 @@ import { fallbackVar, globalStyle, style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
 import { calc } from '@vanilla-extract/css-utils';
 import { vars } from '../theme';
+import { collabkit } from './Root.css';
 
 export const root = recipe({
   base: {
@@ -181,41 +182,35 @@ export const markdownLinksNotClickable = style({});
 
 // since we are using a globalStyle we need to override any
 // app specific styles
-globalStyle(`${markdown} p`, {
-  margin: '0 !important',
-  padding: '0 !important',
-  fontSize: `${fallbackVar(vars.comment.body.fontSize, vars.text.base.fontSize)} !important`,
-  fontWeight: `${fallbackVar(vars.comment.body.fontWeight, vars.fontWeight.regular)} !important`,
-  color: `${fallbackVar(vars.comment.body.color, vars.color.textPrimary)} !important`,
-  lineHeight: `${fallbackVar(vars.comment.body.lineHeight, vars.text.base.lineHeight)} !important`,
-  letterSpacing: `${fallbackVar(
-    vars.comment.body.letterSpacing,
-    vars.text.base.letterSpacing
-  )} !important`,
+globalStyle(`${collabkit} ${markdown} p`, {
+  margin: '0',
+  padding: '0',
+  fontSize: `${fallbackVar(vars.comment.body.fontSize, vars.text.base.fontSize)}`,
+  fontWeight: `${fallbackVar(vars.comment.body.fontWeight, vars.fontWeight.regular)}`,
+  color: `${fallbackVar(vars.comment.body.color, vars.color.textPrimary)}`,
+  lineHeight: `${fallbackVar(vars.comment.body.lineHeight, vars.text.base.lineHeight)}`,
+  letterSpacing: `${fallbackVar(vars.comment.body.letterSpacing, vars.text.base.letterSpacing)}`,
 });
 
-globalStyle(`${markdown} a`, {
-  textDecoration: 'none !important',
-  fontWeight: `${fallbackVar(vars.mentions.pill.fontWeight, vars.fontWeight.bold)} !important`,
-  color: `${fallbackVar(vars.mentions.pill.color, vars.color.textPrimary)} !important`,
+globalStyle(`${collabkit} ${markdown} a`, {
+  textDecoration: 'none',
+  fontWeight: `${fallbackVar(vars.mentions.pill.fontWeight, vars.fontWeight.bold)}`,
+  color: `${fallbackVar(vars.mentions.pill.color, vars.color.textPrimary)}`,
 });
 
-globalStyle(`${markdownLinksNotClickable} p`, {
-  margin: '0 !important',
-  padding: '0 !important',
-  fontSize: `${fallbackVar(vars.comment.body.fontSize, vars.text.base.fontSize)} !important`,
-  fontWeight: `${fallbackVar(vars.comment.body.fontWeight, vars.fontWeight.regular)} !important`,
+globalStyle(`${collabkit} ${markdownLinksNotClickable} p`, {
+  margin: '0',
+  padding: '0',
+  fontSize: `${fallbackVar(vars.comment.body.fontSize, vars.text.base.fontSize)}`,
+  fontWeight: `${fallbackVar(vars.comment.body.fontWeight, vars.fontWeight.regular)}`,
   color: fallbackVar(vars.comment.body.color, vars.color.textPrimary),
-  lineHeight: `${fallbackVar(vars.comment.body.lineHeight, vars.text.base.lineHeight)} !important`,
-  letterSpacing: `${fallbackVar(
-    vars.comment.body.letterSpacing,
-    vars.text.base.letterSpacing
-  )} !important`,
+  lineHeight: `${fallbackVar(vars.comment.body.lineHeight, vars.text.base.lineHeight)}`,
+  letterSpacing: `${fallbackVar(vars.comment.body.letterSpacing, vars.text.base.letterSpacing)}`,
 });
 
-globalStyle(`${markdownLinksNotClickable} a`, {
-  textDecoration: 'none !important',
-  fontWeight: `${fallbackVar(vars.mentions.pill.fontWeight, vars.fontWeight.bold)} !important`,
-  color: `${fallbackVar(vars.mentions.pill.color, vars.color.textPrimary)} !important`,
-  cursor: 'default !important',
+globalStyle(`${collabkit} ${markdownLinksNotClickable} a`, {
+  textDecoration: 'none',
+  fontWeight: `${fallbackVar(vars.mentions.pill.fontWeight, vars.fontWeight.bold)}`,
+  color: `${fallbackVar(vars.mentions.pill.color, vars.color.textPrimary)}`,
+  cursor: 'default',
 });

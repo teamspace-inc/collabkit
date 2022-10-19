@@ -4,11 +4,8 @@ import { vars } from './Theme.css';
 
 export const codeEditor = style({
   position: 'relative',
-  display: 'grid',
-  padding: '20px',
-  background: vars.color.bgContrastLowest,
+  padding: '16px 20px 16px 0px',
   borderRadius: 8,
-  gridTemplateColumns: '1fr',
   border: `1px solid ${vars.color.bgContrastMedium}`,
 });
 
@@ -19,7 +16,7 @@ export const copyButton = style({
   alignItems: 'center',
   justifyContent: 'center',
   top: 16,
-  right: 16,
+  right: 20,
   width: 32,
   height: 32,
   borderRadius: '50%',

@@ -7,6 +7,8 @@ import { Code } from '../home/Code';
 import { Plans } from '../home/Plans';
 import { light } from '../styles/Theme.css';
 import { website } from '../styles/Website.css';
+import { Components } from '../home/Components';
+import { Customisable } from '../home/Customisable';
 
 export function HomePage() {
   const [invertFilter, setInvertFilter] = useState(0);
@@ -24,7 +26,10 @@ export function HomePage() {
       <Header invertFilter={invertFilter} />
       <Hero />
       <Demos setInvertFilter={setInvertFilter} />
+      <Components setInvertFilter={setInvertFilter} />
+      <Customisable setInvertFilter={setInvertFilter} />
       <Code setInvertFilter={setInvertFilter} />
+
       <Plans />
       <Contact />
     </div>
