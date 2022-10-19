@@ -13,7 +13,6 @@
   "module": "./dist/collabkit-react.js",
   "exports": {
     ".": {
-      "css": "./dist/style.css",
       "types": "./dist/collabkit-react.d.ts",
       "import": "./dist/collabkit-react.js",
       "require": "./dist/collabkit-react.umd.cjs"
