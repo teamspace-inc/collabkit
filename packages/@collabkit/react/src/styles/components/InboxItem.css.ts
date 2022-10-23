@@ -52,7 +52,11 @@ export const unreadDot = style({
   borderRadius: fallbackVar(vars.inbox.item.unreadDot.borderRadius, '50%'),
   background: fallbackVar(vars.inbox.item.unreadDot.background, vars.color.attention),
   position: 'absolute',
-  left: `${calc(vars.inbox.item.paddingLeft).subtract(vars.inbox.item.unreadDot.width).negate()}`,
+  // halfway
+  left: `${calc(fallbackVar(vars.inbox.item.paddingLeft, vars.space[4]))
+    .add(fallbackVar(vars.inbox.item.unreadDot.width, vars.space[2]))
+    .divide(2)
+    .negate()}`,
   fontFamily: vars.fontFamily,
 });
 

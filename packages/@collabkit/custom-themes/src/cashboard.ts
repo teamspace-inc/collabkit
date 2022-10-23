@@ -128,10 +128,18 @@ export const cashboard: CustomTheme = {
     item: {
       paddingTop: '32px',
       paddingBottom: '32px',
+      paddingLeft: '24px',
+      paddingRight: '24px',
       facepile: {
         avatar: {
           size: '24px',
         },
+      },
+      unreadDot: {
+        width: '8px',
+        height: '8px',
+        borderRadius: '4px',
+        background: '#007FF5',
       },
       replyCount: {
         color: '#2C915E',
