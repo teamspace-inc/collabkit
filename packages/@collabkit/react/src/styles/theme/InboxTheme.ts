@@ -30,6 +30,15 @@ export const InboxTheme = {
         color: 'inbox-item-reply-count-color',
       },
 
+      timestamp: {
+        fontWeight: 'inbox-item-timestamp-font-weight',
+        fontSize: 'inbox-item-timestamp-font-size',
+        lineHeight: 'inbox-item-timestamp-line-height',
+        letterSpacing: 'inbox-item-timestamp-letter-spacing',
+
+        color: 'inbox-item-timestamp-color',
+      },
+
       unreadDot: {
         width: 'inbox-item-unread-dot-width',
         height: 'inbox-item-unread-dot-height',

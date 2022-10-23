@@ -24,6 +24,13 @@ export const InboxBase = {
         fontSize: 'initial',
         lineHeight: 'initial',
       },
+      timestamp: {
+        fontWeight: 'initial',
+        fontSize: 'initial',
+        lineHeight: 'initial',
+        letterSpacing: 'initial',
+        color: 'initial',
+      },
       unreadDot: {
         width: 'initial',
         height: 'initial',

@@ -123,6 +123,14 @@ export const cashboard: CustomTheme = {
       lineHeight: '22.4px',
     },
   },
+  inbox: {
+    item: {
+      replyCount: {
+        color: '#2C915E',
+        fontWeight: '600',
+      },
+    },
+  },
   mentions: {
     pill: {
       fontSize: 'inherit',

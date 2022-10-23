@@ -66,12 +66,15 @@ export const header = style({
 export const timestamp = style([
   commentTimestamp,
   {
-    // fontStyle: 'normal',
-    // fontWeight: 400,
-    // fontSize: 14,
-    // lineHeight: '160%',
-    // letterSpacing: -0.1,
-    // color: '#6A7278',
+    fontWeight: fallbackVar(vars.inbox.item.timestamp.fontWeight, '400'),
+
+    fontSize: fallbackVar(vars.inbox.item.timestamp.fontSize, vars.text.small.fontSize),
+    lineHeight: fallbackVar(vars.inbox.item.timestamp.lineHeight, vars.text.small.lineHeight),
+    letterSpacing: fallbackVar(
+      vars.inbox.item.timestamp.letterSpacing,
+      vars.text.small.letterSpacing
+    ),
+    color: fallbackVar(vars.inbox.item.timestamp.color, vars.color.textSecondary),
   },
 ]);
 

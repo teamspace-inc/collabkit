@@ -116,7 +116,13 @@ export function InboxItem() {
             <div>
               <div className={styles.nameAndTimestampWrapper}>
                 <ReplyCount className={styles.replyCount} />
-                <Comment.Timestamp className={styles.timestamp} format={formatTimestampRelative} />
+                <span className={styles.timestamp}>
+                  Last reply{' '}
+                  <Comment.Timestamp
+                    className={styles.timestamp}
+                    format={formatTimestampRelative}
+                  />
+                </span>
               </div>
             </div>
           ) : null}
