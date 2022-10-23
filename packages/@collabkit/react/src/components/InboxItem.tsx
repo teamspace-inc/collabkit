@@ -14,6 +14,8 @@ import { UnreadDot } from './UnreadDot';
 import { actions } from '../../../client/src/actions';
 import { ThreadTarget } from '@collabkit/core';
 import * as styles from '../styles/components/InboxItem.css';
+import { vars } from '../styles/theme';
+import { fallbackVar } from '@vanilla-extract/css';
 
 // Cashboard relative timestamp
 //
@@ -99,9 +101,12 @@ export function InboxItem() {
       >
         <div className={styles.header}>
           <UnreadDot className={styles.unreadDot} />
-          <ThreadCommentersFacepile hover={hover} />
+          <ThreadCommentersFacepile
+            size={fallbackVar(vars.inbox.item.facepile.avatar.size, vars.avatar.size)}
+            hover={hover}
+          />
           <div style={{ flex: 1 }}></div>
-          <ResolveThreadButton />
+          {firstComment.createdById === userId ? <ResolveThreadButton /> : null}
         </div>
         {renderThreadContextPreview?.({ threadId, workspaceId, userId, info })}
         <Comment.Root eventId={firstCommentId} className={styles.commentRoot}>

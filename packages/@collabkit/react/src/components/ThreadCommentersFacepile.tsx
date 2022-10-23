@@ -7,7 +7,7 @@ import { Facepile } from './Facepile';
 import { unique } from './Inbox';
 
 export function ThreadCommentersFacepile(
-  props: { hover: boolean } & React.ComponentPropsWithoutRef<'div'>
+  props: { hover: boolean; size: string } & React.ComponentPropsWithoutRef<'div'>
 ) {
   const timeline = useSnapshot(useTimelineStore());
   const { profiles } = useSnapshot(useApp().store);

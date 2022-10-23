@@ -124,11 +124,20 @@ export const cashboard: CustomTheme = {
     },
   },
   inbox: {
+    width: '433px',
     item: {
+      paddingTop: '32px',
+      paddingBottom: '32px',
+      facepile: {
+        avatar: {
+          size: '24px',
+        },
+      },
       replyCount: {
         color: '#2C915E',
         fontWeight: '600',
       },
+      borderBottom: '1px solid hsla(204, 22%, 91%, 1)',
     },
   },
   mentions: {

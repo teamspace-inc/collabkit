@@ -24,7 +24,7 @@ export const commentRoot = style([
     padding: 0,
     display: 'flex',
     flexDirection: 'column',
-    gap: '8px',
+    gap: '4px',
     fontFamily: vars.fontFamily,
   },
 ]);

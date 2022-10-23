@@ -17,6 +17,11 @@ export const InboxBase = {
       active: {
         background: 'initial',
       },
+      facepile: {
+        avatar: {
+          size: 'initial',
+        },
+      },
       replyCount: {
         letterSpacing: 'initial',
         fontWeight: 'initial',

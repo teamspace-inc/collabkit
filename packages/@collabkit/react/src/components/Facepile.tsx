@@ -9,6 +9,7 @@ export function Facepile(
   props: {
     profiles: ProfileType[] | readonly ProfileType[];
     hover?: boolean;
+    size?: string;
   } & React.ComponentPropsWithoutRef<'div'>
 ) {
   const { hover, ...otherProps } = props;
@@ -28,7 +29,7 @@ export function Facepile(
             }}
           >
             <Profile.Provider profileId={profile.id}>
-              <Profile.Avatar />
+              <Profile.Avatar size={props.size} />
             </Profile.Provider>
           </div>
         ) : null;
@@ -40,7 +41,7 @@ export function Facepile(
             zIndex: 999 - profiles.length,
           }}
         >
-          <Profile.NumberdAvatarPlaceholder number={overflowsBy} />
+          <Profile.NumberdAvatarPlaceholder size={props.size} number={overflowsBy} />
         </div>
       ) : null}
     </div>

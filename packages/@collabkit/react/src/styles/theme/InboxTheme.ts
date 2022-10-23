@@ -8,6 +8,7 @@ export const InboxTheme = {
       background: 'inbox-item-background',
       borderBottom: 'inbox-item-border-bottom',
       gap: 'inbox-item-gap',
+
       paddingTop: 'inbox-item-padding-top',
       paddingRight: 'inbox-item-padding-right',
       paddingLeft: 'inbox-item-padding-left',
@@ -19,6 +20,12 @@ export const InboxTheme = {
 
       active: {
         background: 'inbox-item-active-background',
+      },
+
+      facepile: {
+        avatar: {
+          size: 'inbox-item-facepile-avatar-size',
+        },
       },
 
       replyCount: {

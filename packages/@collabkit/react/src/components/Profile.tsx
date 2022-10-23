@@ -45,13 +45,13 @@ function AvatarPlaceholder({
   size,
   profile,
   ...props
-}: { size?: number; profile: Profile } & React.ComponentPropsWithoutRef<'div'>) {
+}: { size?: string; profile: Profile } & React.ComponentPropsWithoutRef<'div'>) {
   return (
     <div
       {...props}
       className={props.className ?? styles.avatar}
       style={{
-        ...(size ? { width: size, height: size, lineHeight: `${size}px` } : {}),
+        ...(size ? { width: size, height: size, lineHeight: size } : {}),
         ...(profile.color
           ? {
               backgroundColor: vars.avatar.colors[profile.color],
@@ -71,14 +71,14 @@ export function NumberdAvatarPlaceholder({
 }: {
   number: number;
   className?: string;
-  size?: number;
+  size?: string;
 }) {
   return (
     <div
       {...props}
       className={props.className ?? styles.avatar}
       style={{
-        ...(size ? { width: size, height: size, lineHeight: `${size}px` } : {}),
+        ...(size ? { width: size, height: size, lineHeight: size } : {}),
       }}
     >
       {number}
@@ -89,7 +89,7 @@ export function NumberdAvatarPlaceholder({
 export function Avatar({
   size,
   ...props
-}: { size?: number } & React.ComponentPropsWithoutRef<'div'>) {
+}: { size?: string } & React.ComponentPropsWithoutRef<'div'>) {
   const { store, renderAvatar } = useApp();
   const { profiles, avatarErrors } = useSnapshot(store);
   const { profileId } = useProfile();
@@ -116,7 +116,7 @@ export function Avatar({
       src={profile.avatar}
       className={props.className ?? styles.avatar}
       {...props}
-      style={{ ...(size ? { width: size, height: size, lineHeight: `${size}px` } : {}) }}
+      style={{ ...(size ? { width: size, height: size, lineHeight: size } : {}) }}
       onError={() => actions.setAvatarError(store, { avatar })}
     />
   );
