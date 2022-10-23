@@ -26,8 +26,8 @@ export function HomePage() {
       <Header invertFilter={invertFilter} />
       <Hero />
       <Demos setInvertFilter={setInvertFilter} />
-      {/* <Components setInvertFilter={setInvertFilter} /> */}
-      {/* <Customisable setInvertFilter={setInvertFilter} /> */}
+      <Components setInvertFilter={setInvertFilter} />
+      <Customisable setInvertFilter={setInvertFilter} />
       <Code setInvertFilter={setInvertFilter} />
 
       <Plans />

@@ -12,7 +12,6 @@ import {
   ScrollAreaThumb,
   ScrollAreaCorner,
 } from './ScrollArea';
-import { ThreadContext } from '../hooks/useThreadContext';
 import * as Comment from './Comment';
 import * as Composer from './composer/Composer';
 import * as Profile from './Profile';
@@ -21,6 +20,7 @@ import * as styles from '../styles/components/PopoverThread.css';
 import { ThemeWrapper } from './ThemeWrapper';
 import { useComposer } from '../hooks/useComposer';
 import { ButtonGroup } from './ButtonGroup';
+import { ThreadContextProvider } from './Thread';
 
 // Cashboard exact timestamp
 //
@@ -44,7 +44,7 @@ type PopoverThreadProps = {
   style?: React.CSSProperties;
   autoFocus?: boolean;
   maxAvailableSize?: { width: number; height: number } | null;
-};
+}; // make this an extension of ThreadProps
 
 type Handle = HTMLDivElement | null;
 
@@ -52,12 +52,6 @@ export const PreviewThread = forwardRef<Handle, PopoverThreadProps>(function Pop
   props: PopoverThreadProps,
   ref
 ) {
-  const { threadId } = props;
-  const [context, setContext] = React.useState<{
-    threadId: string;
-    userId: string;
-    workspaceId: string;
-  } | null>(null);
   const { store } = useApp();
   const { workspaceId, profiles, userId } = useSnapshot(store);
 
@@ -67,12 +61,6 @@ export const PreviewThread = forwardRef<Handle, PopoverThreadProps>(function Pop
     workspaceId,
   });
 
-  useEffect(() => {
-    if (threadId && userId && workspaceId) {
-      setContext({ threadId, userId, workspaceId });
-    }
-  }, [threadId, userId, workspaceId]);
-
   const event = messageEvents?.[0];
   const profile = event && profiles[event?.createdById];
 
@@ -81,7 +69,7 @@ export const PreviewThread = forwardRef<Handle, PopoverThreadProps>(function Pop
   }
 
   return (
-    <ThreadContext.Provider value={context ?? { userId, threadId, workspaceId }}>
+    <ThreadContextProvider {...props}>
       <ThemeWrapper>
         <div
           className={styles.previewRoot}
@@ -117,7 +105,7 @@ export const PreviewThread = forwardRef<Handle, PopoverThreadProps>(function Pop
           </ScrollAreaRoot>
         </div>
       </ThemeWrapper>
-    </ThreadContext.Provider>
+    </ThreadContextProvider>
   );
 });
 
@@ -126,11 +114,7 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
   ref
 ) {
   const { threadId } = props;
-  const [context, setContext] = React.useState<{
-    threadId: string;
-    userId: string;
-    workspaceId: string;
-  } | null>(null);
+
   const { store, events } = useApp();
   const { workspaceId, profiles, userId } = useSnapshot(store);
 
@@ -144,18 +128,12 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
 
   const profile = userId ? profiles[userId] : null;
 
-  useEffect(() => {
-    if (threadId && userId && workspaceId) {
-      setContext({ threadId, userId, workspaceId });
-    }
-  }, [threadId, userId, workspaceId]);
-
   if (!workspaceId || !userId) {
     return null;
   }
 
   return (
-    <ThreadContext.Provider value={context ?? { userId, threadId, workspaceId }}>
+    <ThreadContextProvider {...props}>
       <ThemeWrapper>
         <div className={styles.root} data-collabkit-internal="true" style={props.style} ref={ref}>
           <ScrollAreaRoot>
@@ -200,17 +178,14 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
                 </CommentList.Root>
               ) : null}
 
-              <Composer.Root className={styles.composer}>
+              <Composer.Root className={styles.composer} autoFocus={props.autoFocus ?? true}>
                 <Composer.Editor
-                  contentEditable={(props: { autoFocus?: boolean }) => (
-                    <Composer.ContentEditable {...props} />
-                  )}
+                  contentEditable={<Composer.ContentEditable />}
                   placeholder={
                     <Composer.Placeholder>
                       {isEmpty ? 'Add a comment' : 'Reply to this comment'}
                     </Composer.Placeholder>
                   }
-                  autoFocus={props.autoFocus}
                 />
               </Composer.Root>
               <ButtonGroup
@@ -235,6 +210,6 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
           </ScrollAreaRoot>
         </div>
       </ThemeWrapper>
-    </ThreadContext.Provider>
+    </ThreadContextProvider>
   );
 });

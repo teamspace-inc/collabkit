@@ -25,11 +25,13 @@ export const placeholder = style({
   userSelect: 'none',
   display: 'inline-block',
   pointerEvents: 'none',
+  fontFamily: vars.fontFamily,
 });
 
 const paragraph = style({
   margin: 0,
   position: 'relative',
+  fontFamily: vars.fontFamily,
 });
 
 export const lexicalTheme = {
@@ -52,6 +54,7 @@ globalStyle(`${composerGlobalStyles} p`, {
     vars.comment.body.letterSpacing,
     vars.text.base.letterSpacing
   )} !important`,
+  fontFamily: `${vars.fontFamily} !important`,
 });
 
 export const contentEditable = recipe({
@@ -69,6 +72,7 @@ export const contentEditable = recipe({
     boxSizing: 'border-box',
     outline: 0,
     width: '100%',
+    fontFamily: vars.fontFamily,
   },
   variants: {
     disabled: {
@@ -85,6 +89,7 @@ export const root = style({
   flexDirection: 'row',
   flexWrap: 'wrap',
   padding: `0 ${vars.space[4]}`,
+  fontFamily: vars.fontFamily,
 });
 
 export const editor = recipe({
@@ -97,6 +102,7 @@ export const editor = recipe({
     position: 'relative',
     verticalAlign: 'top',
     boxSizing: 'border-box',
+    fontFamily: vars.fontFamily,
   },
   variants: {
     active: {

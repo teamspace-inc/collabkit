@@ -12,6 +12,7 @@ export const root = style({
   width: fallbackVar(vars.inbox.width, '292px'),
   right: 0,
   bottom: 0,
+  fontFamily: vars.fontFamily,
 });
 
 export const scrollarea = style({
@@ -21,6 +22,7 @@ export const scrollarea = style({
     .add(vars.sidebar.title.paddingTop)
     .add(vars.sidebar.title.paddingBottom)
     .toString()})`,
+  fontFamily: vars.fontFamily,
 });
 
 export const title = style({
@@ -38,4 +40,5 @@ export const title = style({
   paddingLeft: fallbackVar(vars.inbox.item.paddingLeft, vars.space[4]),
   paddingRight: fallbackVar(vars.inbox.item.paddingRight, vars.space[4]),
   borderBottom: fallbackVar(vars.sidebar.title.borderBottom, 'none'),
+  fontFamily: vars.fontFamily,
 });

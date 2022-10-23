@@ -16,6 +16,7 @@ export const root = style({
   border: fallbackVar(vars.popoverThread.border, 'none'),
   boxShadow: fallbackVar(vars.popoverThread.boxShadow, vars.shadow.high),
   borderRadius: fallbackVar(vars.popoverThread.borderRadius, vars.space[3]),
+  fontFamily: vars.fontFamily,
 });
 
 export const previewRoot = style([
@@ -47,6 +48,7 @@ export const commentHeader = recipe({
     flexDirection: 'row',
     gap: fallbackVar(vars.comment.header.gap, vars.space[2]),
     alignItems: 'flex-start',
+    fontFamily: vars.fontFamily,
   },
   variants: {},
 });
@@ -61,6 +63,7 @@ export const composer = style([
       `0px ${vars.space[4]} ${vars.space[4]} ${vars.space[4]}`
     ),
     gap: fallbackVar(vars.popoverThread.composer.gap, vars.space[2]),
+    fontFamily: vars.fontFamily,
   },
 ]);
 
@@ -72,7 +75,7 @@ export const composerContentEditable = style([
       `1px solid ${vars.color.border}`
     ),
     minHeight: fallbackVar(vars.popoverThread.composer.contentEditable.minHeight, '40px'),
-
+    fontFamily: vars.fontFamily,
     selectors: {
       '&:focus': {
         borderColor: fallbackVar(

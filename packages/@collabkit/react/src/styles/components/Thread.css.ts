@@ -17,6 +17,7 @@ export const root = style({
   boxShadow: fallbackVar(vars.thread.boxShadow, 'none'),
   textAlign: 'left',
   minWidth: '240px',
+  fontFamily: vars.fontFamily,
 });
 
 export const header = style({
@@ -27,6 +28,7 @@ export const header = style({
   fontWeight: fallbackVar(vars.thread.header.fontWeight, vars.fontWeight.bold),
   lineHeight: fallbackVar(vars.thread.header.lineHeight, vars.text.large.lineHeight),
   letterSpacing: fallbackVar(vars.thread.header.letterSpacing, vars.text.large.letterSpacing),
+  fontFamily: vars.fontFamily,
 });
 
 export const commentList = style({
@@ -47,6 +49,7 @@ export const composer = style({
   flexWrap: 'wrap',
   columnGap: columnGap,
   padding: `${vars.space[2]} ${composerHorizontalPadding} ${typingIndicatorLineHeight}`,
+  fontFamily: vars.fontFamily,
 
   vars: {
     [composerHorizontalPadding]: vars.space[4],
@@ -67,6 +70,7 @@ export const typingIndicator = style({
     vars.thread.typingIndicator.letterSpacing,
     vars.text.small.letterSpacing
   ),
+  fontFamily: vars.fontFamily,
 });
 
 export const emptyState = style({
@@ -81,4 +85,5 @@ export const emptyState = style({
   lineHeight: vars.text.small.lineHeight,
   color: vars.color.textSecondary,
   letterSpacing: vars.text.small.letterSpacing,
+  fontFamily: vars.fontFamily,
 });

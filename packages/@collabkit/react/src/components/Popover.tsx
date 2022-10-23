@@ -44,18 +44,14 @@ function useOpenThread({ viewId, cellId }: { viewId: string; cellId: string }) {
   return threadId ?? null;
 }
 
-// type DeprecatedPopoverProps = {
-//   name?: string;
-//   cellId: string;
-//   offset?: number;
-//   padding?: number;
-// };
-
 type PopoverProps = {
   name?: string;
   cellId: string;
   _viewId?: string;
   openOnClick?: boolean;
+  autoFocus?: boolean;
+
+  shouldFlipToKeepInView?: boolean;
 
   offset?: number;
   padding?: number;
@@ -143,7 +139,7 @@ export function usePopoverThread(props: PopoverProps) {
     nodeId,
     middleware: [
       offset(props.offset ?? 4),
-      flip(),
+      ...(props.shouldFlipToKeepInView ? [flip()] : []),
       size({
         padding: props.padding ?? 12,
         apply({ availableWidth, availableHeight, elements }) {
@@ -164,7 +160,7 @@ export function usePopoverThread(props: PopoverProps) {
     nodeId,
     middleware: [
       offset(props.offset ?? 4),
-      flip(),
+      ...(props.shouldFlipToKeepInView ? [flip()] : []),
       size({
         padding: props.padding ?? 12,
         apply({ availableWidth, availableHeight, elements }) {
@@ -224,6 +220,7 @@ export function usePopoverThread(props: PopoverProps) {
       threadInfo,
       getNewThreadId,
       maxAvailableSize,
+      autoFocus: props.autoFocus ?? true,
     },
 
     hasThread,
@@ -270,6 +267,7 @@ export const PopoverTrigger = ({ children, context }: Props) => {
                 maxAvailableSize={context.maxAvailableSize}
                 threadId={threadId ?? getNewThreadId()}
                 info={threadInfo}
+                autoFocus={context.autoFocus}
               />
             </div>
           </FloatingFocusManager>

@@ -16,6 +16,7 @@ export const root = recipe({
     paddingBottom: fallbackVar(vars.comment.paddingBottom, vars.space[2]),
     paddingLeft: fallbackVar(vars.comment.paddingLeft, vars.space[4]),
     paddingRight: fallbackVar(vars.comment.paddingBottom, vars.space[4]),
+    fontFamily: vars.fontFamily,
 
     selectors: {
       '&:hover': {
@@ -49,6 +50,7 @@ export const nameAndTimestampWrapper = style({
   flexDirection: 'column',
   alignItems: 'baseline',
   gap: fallbackVar(vars.comment.header.nameAndTimestamp.gap, `${calc(vars.space[1]).divide(2)}`),
+  fontFamily: vars.fontFamily,
 });
 
 export const inlineModal = style({
@@ -62,7 +64,8 @@ export const content = recipe({
     position: 'relative',
     flexDirection: 'column',
     flex: '1',
-    gap: fallbackVar(vars.comment.content.gap, vars.space[3]),
+    gap: fallbackVar(vars.comment.content.gap, vars.space[2]),
+    fontFamily: vars.fontFamily,
   },
   variants: {
     // indents the comment to account
@@ -81,7 +84,9 @@ export const body = style({
   fontWeight: fallbackVar(vars.comment.body.fontWeight, vars.fontWeight.regular),
   letterSpacing: fallbackVar(vars.comment.body.letterSpacing, vars.text.base.letterSpacing),
   lineHeight: fallbackVar(vars.comment.body.lineHeight, vars.text.base.lineHeight),
+  fontFamily: vars.fontFamily,
 
+  textAlign: 'left',
   position: 'relative',
   wordBreak: 'break-word',
   overflowWrap: 'break-word',
@@ -94,6 +99,7 @@ export const editor = style({
   flexDirection: 'column',
   gap: '12px',
   margin: '0px -16px',
+  fontFamily: vars.fontFamily,
 });
 
 export const header = style({
@@ -103,6 +109,7 @@ export const header = style({
   flexDirection: 'row',
   alignItems: 'flex-start',
   justifyContent: 'space-between',
+  fontFamily: vars.fontFamily,
 });
 
 export const timestamp = style({
@@ -110,6 +117,7 @@ export const timestamp = style({
   fontWeight: fallbackVar(vars.comment.timestamp.fontWeight, vars.fontWeight.regular),
   letterSpacing: fallbackVar(vars.comment.timestamp.letterSpacing, vars.text.small.letterSpacing),
   lineHeight: fallbackVar(vars.comment.timestamp.lineHeight, vars.text.small.lineHeight),
+  fontFamily: vars.fontFamily,
 
   textDecoration: 'none',
   overflow: 'hidden',
@@ -122,6 +130,7 @@ export const actions = style({
   gap: vars.space[1],
   flexDirection: 'row',
   zIndex: 2, // higher than scrollbar
+  fontFamily: vars.fontFamily,
 });
 
 export const menu = style({
@@ -135,6 +144,7 @@ export const menu = style({
   background: fallbackVar(vars.menu.background, vars.color.surface),
   boxShadow: fallbackVar(vars.menu.boxShadow, vars.shadow.standard),
   outline: 'none',
+  fontFamily: vars.fontFamily,
 
   selectors: {
     '&:hover': {
@@ -160,6 +170,7 @@ export const menuItem = style({
   lineHeight: fallbackVar(vars.menu.item.lineHeight, vars.text.small.lineHeight),
   fontWeight: fallbackVar(vars.menu.item.fontWeight, vars.fontWeight.regular),
   letterSpacing: fallbackVar(vars.menu.item.letterSpacing, vars.text.small.letterSpacing),
+  fontFamily: vars.fontFamily,
 
   selectors: {
     '&:focus, &:not([disabled]):active': {
@@ -190,12 +201,14 @@ globalStyle(`${collabkit} ${markdown} p`, {
   color: `${fallbackVar(vars.comment.body.color, vars.color.textPrimary)}`,
   lineHeight: `${fallbackVar(vars.comment.body.lineHeight, vars.text.base.lineHeight)}`,
   letterSpacing: `${fallbackVar(vars.comment.body.letterSpacing, vars.text.base.letterSpacing)}`,
+  fontFamily: vars.fontFamily,
 });
 
 globalStyle(`${collabkit} ${markdown} a`, {
   textDecoration: 'none',
   fontWeight: `${fallbackVar(vars.mentions.pill.fontWeight, vars.fontWeight.bold)}`,
   color: `${fallbackVar(vars.mentions.pill.color, vars.color.textPrimary)}`,
+  fontFamily: vars.fontFamily,
 });
 
 globalStyle(`${collabkit} ${markdownLinksNotClickable} p`, {
@@ -206,6 +219,7 @@ globalStyle(`${collabkit} ${markdownLinksNotClickable} p`, {
   color: fallbackVar(vars.comment.body.color, vars.color.textPrimary),
   lineHeight: `${fallbackVar(vars.comment.body.lineHeight, vars.text.base.lineHeight)}`,
   letterSpacing: `${fallbackVar(vars.comment.body.letterSpacing, vars.text.base.letterSpacing)}`,
+  fontFamily: vars.fontFamily,
 });
 
 globalStyle(`${collabkit} ${markdownLinksNotClickable} a`, {
@@ -213,4 +227,5 @@ globalStyle(`${collabkit} ${markdownLinksNotClickable} a`, {
   fontWeight: `${fallbackVar(vars.mentions.pill.fontWeight, vars.fontWeight.bold)}`,
   color: `${fallbackVar(vars.mentions.pill.color, vars.color.textPrimary)}`,
   cursor: 'default',
+  fontFamily: vars.fontFamily,
 });

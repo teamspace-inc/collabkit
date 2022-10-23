@@ -60,7 +60,7 @@ export function Hero() {
     </>
   );
   const description = isSmallScreen ? (
-    <>Add contextual collaboration to your product with our customisable React SDK.</>
+    <>Add contextual collaboration to your product with our customisable React SDK</>
   ) : (
     <>
       Add contextual collaboration to your product

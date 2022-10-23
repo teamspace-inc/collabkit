@@ -11,6 +11,7 @@ export const root = style({
   width: fallbackVar(vars.inbox.width, '292px'),
   borderRadius: 0,
   background: fallbackVar(vars.inbox.background, vars.color.background),
+  fontFamily: vars.fontFamily,
 });
 
 // export const emptyState = {

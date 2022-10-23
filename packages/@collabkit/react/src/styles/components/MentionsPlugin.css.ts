@@ -10,6 +10,7 @@ export const typeahead = style({
   padding: vars.mentions.typeahead.padding,
   boxShadow: fallbackVar(vars.mentions.typeahead.boxShadow, vars.shadow.standard),
   border: fallbackVar(vars.mentions.typeahead.border, `1px solid ${vars.color.border}`),
+  fontFamily: vars.fontFamily,
 });
 
 export const mark = style({
@@ -17,6 +18,7 @@ export const mark = style({
   borderRadius: vars.mentions.typeahead.item.mark.borderRadius,
   color: vars.mentions.typeahead.item.mark.color,
   fontWeight: fallbackVar(vars.mentions.typeahead.item.mark.fontWeight, vars.fontWeight.bold),
+  fontFamily: vars.fontFamily,
 });
 
 export const list = style({
@@ -32,6 +34,7 @@ export const nameAndEmailWrapper = style({
   gap: fallbackVar(vars.mentions.typeahead.item.nameAndEmailWrapper.gap, vars.space[1]),
   flexDirection: vars.mentions.typeahead.item.nameAndEmailWrapper.flexDirection,
   display: 'flex',
+  fontFamily: vars.fontFamily,
 });
 
 export const item = recipe({
@@ -56,6 +59,7 @@ export const item = recipe({
       vars.mentions.typeahead.item.letterSpacing,
       vars.text.base.letterSpacing
     ),
+    fontFamily: vars.fontFamily,
 
     selectors: {
       '&:first-of-type': {

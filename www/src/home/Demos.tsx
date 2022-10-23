@@ -34,7 +34,7 @@ export function Demos(props: { setInvertFilter: (invert: number) => void }) {
   return (
     <section ref={ref} className={`${dark} ${styles.section}`} id="HowItWorks">
       <h1>Works with any UI</h1>
-      <h3 className={styles.h3}>CollabKit supports multiple ways to comment.</h3>
+      <h3 className={styles.h3}>CollabKit supports multiple ways to comment</h3>
       <div className={styles.demoOuterWrapper}>
         <div className={tabs}>
           {scenarios.map((scenario) => (

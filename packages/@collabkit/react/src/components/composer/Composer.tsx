@@ -37,11 +37,20 @@ const initialConfigDefaults = {
   onError,
 };
 
-export const ComposerContext = React.createContext<{ body: string }>({ body: '' });
+export const ComposerContext = React.createContext<{ body: string; autoFocus: boolean }>({
+  body: '',
+  autoFocus: true,
+});
+
+function useComposerContext() {
+  return useContext(ComposerContext);
+}
 
 export const Root = function ComposerRoot(props: {
   className?: string;
   children: React.ReactNode;
+  autoFocus: boolean;
+  body?: string;
 }) {
   const commentContext = useOptionalCommentContext();
 
@@ -59,17 +68,17 @@ export const Root = function ComposerRoot(props: {
 
   return (
     <div className={props.className ?? styles.root} onClick={onClick}>
-      <TargetContext.Provider value={target}>{props.children}</TargetContext.Provider>
+      <ComposerContext.Provider value={{ body: props.body ?? '', autoFocus: props.autoFocus }}>
+        <TargetContext.Provider value={target}>{props.children}</TargetContext.Provider>
+      </ComposerContext.Provider>
     </div>
   );
 };
 
-export const ContentEditable = function ComposerContentEditable(props: {
-  className?: string;
-  autoFocus?: boolean;
-}) {
+export const ContentEditable = function ComposerContentEditable(props: { className?: string }) {
   const { events } = useApp();
   const target = useTarget();
+  const { autoFocus } = useComposerContext();
   return (
     <div
       style={{ display: 'contents' }}
@@ -78,22 +87,22 @@ export const ContentEditable = function ComposerContentEditable(props: {
     >
       <LexicalContentEditable
         className={props.className ?? styles.contentEditable()}
-        tabIndex={props.autoFocus ? 1 : 0}
+        tabIndex={autoFocus ? 1 : 0}
       />
     </div>
   );
 };
 
 export const Editor = function ComposerEditor(props: {
-  autoFocus?: boolean;
   placeholder: React.ReactElement;
   className?: string;
-  contentEditable: (props: { autoFocus?: boolean }) => JSX.Element;
+  contentEditable: JSX.Element;
 }) {
   const target = useTarget();
+  const { autoFocus } = useComposerContext();
   const { events, store } = useApp();
   const { body } = useContext(ComposerContext);
-  const { focusedId, hoveringId } = useSnapshot(store);
+  const { focusedId } = useSnapshot(store);
   const active = !!(
     focusedId &&
     focusedId.type === 'composer' &&
@@ -116,16 +125,13 @@ export const Editor = function ComposerEditor(props: {
     >
       <LexicalComposer initialConfig={initialConfig}>
         <PasteTextPlugin />
-        <PlainTextPlugin
-          contentEditable={props.contentEditable({ autoFocus: props.autoFocus })}
-          placeholder={props.placeholder}
-        />
+        <PlainTextPlugin contentEditable={props.contentEditable} placeholder={props.placeholder} />
         <OnChangePlugin
           onChange={(editorState, editor) => {
             events.onComposerChange(target, editorState, editor);
           }}
         />
-        {props.autoFocus ? <AutoFocusPlugin /> : <></>}
+        {autoFocus ? <AutoFocusPlugin /> : <></>}
         <HistoryPlugin />
         <MentionsPlugin />
         <TimestampPlugin />

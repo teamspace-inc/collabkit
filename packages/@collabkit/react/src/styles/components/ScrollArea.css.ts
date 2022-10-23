@@ -23,6 +23,7 @@ export const scrollbar = style({
   padding: vars.scrollbar.padding,
   background: vars.scrollbar.background,
   transition: 'background 160ms ease-out',
+  fontFamily: vars.fontFamily,
   selectors: {
     '&:hover': { background: vars.scrollbar.hover.background },
     '&[data-orientation="vertical"]': { width: vars.scrollbar.thumb.width },

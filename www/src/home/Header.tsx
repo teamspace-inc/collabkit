@@ -56,7 +56,6 @@ export function Header(props: { invertFilter: number }) {
       }
       right={
         <div style={{ display: 'flex', flexDirection: 'row', gap: '80px', alignItems: 'center' }}>
-          <ScrollToLink selector="#HowItWorks">How it works</ScrollToLink>
           <ScrollToLink selector="#Pricing">Pricing</ScrollToLink>
           <ScrollToLink selector="#Contact">Contact</ScrollToLink>
           <Link className={a} href="/docs">

@@ -17,6 +17,7 @@ export const button = recipe({
     cursor: 'pointer',
     outline: 'none',
     borderRadius: fallbackVar(vars.button.borderRadius, '4px'),
+    fontFamily: vars.fontFamily,
   },
 
   variants: {

@@ -1,54 +1,79 @@
 import { useState } from 'react';
-import PagesSvg from '../assets/Pages.svg';
-// import TableSvg from '../assets/Table.svg';
-import ChartSvg from '../assets/Chart.svg';
-import TextSvg from '../assets/Text.svg';
-import { dark } from '../styles/Theme.css';
-import { tab, tabs } from '../styles/Website.css';
+import { dark, vars } from '../styles/Theme.css';
 import { useInvertFilter } from '../hooks/useInvertFilter';
-import { DataGridDemo } from '../components/DataGridDemo';
 import * as styles from '../styles/home/Demos.css';
-
-const scenarios = ['Pages', 'Tables', 'Charts', 'Text'] as const;
-type ScenarioName = typeof scenarios[number];
-
-function Scenario({ scenario }: { scenario: ScenarioName }) {
-  const imgStyle = { width: '100%' };
-  switch (scenario) {
-    case 'Pages':
-      return <img src={PagesSvg} style={imgStyle} />;
-    case 'Tables':
-      return <DataGridDemo />;
-    case 'Charts':
-      return <img src={ChartSvg} style={imgStyle} />;
-    case 'Text':
-      return <img src={TextSvg} style={imgStyle} />;
-    default:
-      return null;
-  }
-}
+import { ThemeProvider, Thread } from '@collabkit/react';
+import { controls, modal } from '../styles/home/Customisable.css';
+import { ToggleButtonGroup } from './ToggleButtonGroup';
 
 export function Customisable(props: { setInvertFilter: (invert: number) => void }) {
-  const [activeScenario, setActiveScenario] = useState<ScenarioName>('Pages');
   const { ref } = useInvertFilter(props);
+
+  const [theme, setTheme] = useState('light');
+  const [accent, setAccent] = useState('1');
+  const [radius, setRadius] = useState('1');
+  const [component, setComponent] = useState('1');
+
   return (
     <section ref={ref} className={`${dark} ${styles.section}`} id="HowItWorks">
-      <h1>Works with any UI</h1>
-      <h3 className={styles.h3}>CollabKit supports multiple ways to comment.</h3>
-      <div className={styles.demoOuterWrapper}>
-        <div className={tabs}>
-          {scenarios.map((scenario) => (
-            <div
-              key={scenario}
-              onClick={() => setActiveScenario(scenario as ScenarioName)}
-              className={tab({ active: scenario === activeScenario })}
-            >
-              {scenario}
+      <h1>Fully customisable</h1>
+      <h3 className={styles.h3}>Use a default theme or seamlesly integrate into your UI</h3>
+      <div className={modal}>
+        <div style={{ paddingBottom: 100 }}>
+          <ThemeProvider theme={theme as 'light' | 'dark'}>
+            <div style={{ width: '256px' }}>
+              <Thread threadId="thread3" />
             </div>
-          ))}
+          </ThemeProvider>
         </div>
-        <div className={styles.demoWrapper}>
-          <Scenario scenario={activeScenario} />
+        <div className={controls}>
+          <ToggleButtonGroup
+            title="Component"
+            options={[
+              { node: <div>1</div>, value: '1' },
+              { node: <div>2</div>, value: '2' },
+              { node: <div>3</div>, value: '3' },
+            ]}
+            value={component}
+            onChange={setComponent}
+          />
+          <ToggleButtonGroup
+            title="Theme"
+            options={[
+              {
+                node: <div style={{ background: 'white' }} />,
+                value: 'light',
+              },
+              {
+                node: <div style={{ background: vars.color.bgContrastLowest }} />,
+                value: 'dark',
+              },
+            ]}
+            value={theme}
+            onChange={setTheme}
+          />
+          <ToggleButtonGroup
+            title="Accent"
+            options={[
+              { node: <div style={{ background: vars.color.bgContrastLowest }} />, value: '1' },
+              { node: <div style={{ background: vars.color.red }} />, value: '2' },
+              { node: <div style={{ background: vars.color.green }} />, value: '3' },
+              { node: <div style={{ background: vars.color.blue }} />, value: '4' },
+            ]}
+            value={accent}
+            onChange={setAccent}
+          />
+          <ToggleButtonGroup
+            title="Radius"
+            options={[
+              { node: <div>0</div>, value: '1' },
+              { node: <div>1</div>, value: '2' },
+              { node: <div>2</div>, value: '3' },
+              { node: <div>3</div>, value: '4' },
+            ]}
+            value={radius}
+            onChange={setRadius}
+          />
         </div>
       </div>
     </section>

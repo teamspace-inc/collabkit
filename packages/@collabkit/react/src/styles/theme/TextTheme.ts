@@ -26,4 +26,5 @@ export const TextTheme = {
     medium: 'font-weight-medium',
     bold: 'font-weight-bold',
   },
+  fontFamily: 'font-family',
 };

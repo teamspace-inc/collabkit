@@ -14,6 +14,7 @@ export const replyCount = style({
     vars.inbox.item.replyCount.letterSpacing,
     vars.text.small.letterSpacing
   ),
+  fontFamily: vars.fontFamily,
 });
 
 export const name = style([profileName, {}]);
@@ -24,6 +25,7 @@ export const commentRoot = style([
     display: 'flex',
     flexDirection: 'column',
     gap: '8px',
+    fontFamily: vars.fontFamily,
   },
 ]);
 
@@ -41,6 +43,7 @@ export const nameAndTimestampWrapper = style({
   flexDirection: 'row',
   alignItems: 'baseline',
   gap: '8px',
+  fontFamily: vars.fontFamily,
 });
 
 export const unreadDot = style({
@@ -50,12 +53,14 @@ export const unreadDot = style({
   background: fallbackVar(vars.inbox.item.unreadDot.background, vars.color.attention),
   position: 'absolute',
   left: `${calc(vars.inbox.item.paddingLeft).subtract(vars.inbox.item.unreadDot.width).negate()}`,
+  fontFamily: vars.fontFamily,
 });
 
 export const header = style({
   display: 'flex',
   alignItems: 'center',
   position: 'relative',
+  fontFamily: vars.fontFamily,
 });
 
 export const timestamp = style([
@@ -84,6 +89,7 @@ export const root = recipe({
     paddingLeft: fallbackVar(vars.inbox.item.paddingLeft, vars.space[4]),
     paddingRight: fallbackVar(vars.inbox.item.paddingRight, vars.space[4]),
     userSelect: 'none',
+    fontFamily: vars.fontFamily,
     gap: '12px',
     selectors: {
       '&:hover': {

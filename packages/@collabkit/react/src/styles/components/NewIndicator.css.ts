@@ -9,6 +9,7 @@ export const root = style({
   alignItems: 'center',
   justifyContent: 'center',
   position: 'relative',
+  fontFamily: vars.fontFamily,
 });
 
 export const line = style({
@@ -31,4 +32,5 @@ export const textInlay = style({
   padding: fallbackVar(vars.newIndicator.padding, '0px 8px'),
   position: 'relative',
   borderRadius: calc.divide(vars.newIndicator.lineHeight, 2),
+  fontFamily: vars.fontFamily,
 });

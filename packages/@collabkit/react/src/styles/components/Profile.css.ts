@@ -16,6 +16,7 @@ export const avatar = style({
   cursor: 'inherit',
   boxSizing: 'border-box',
   userSelect: 'none',
+  fontFamily: vars.fontFamily,
 });
 
 export const name = style({
@@ -24,4 +25,5 @@ export const name = style({
   fontWeight: fallbackVar(vars.profile.name.fontWeight, vars.fontWeight.bold),
   lineHeight: fallbackVar(vars.profile.name.lineHeight, vars.text.base.lineHeight),
   letterSpacing: fallbackVar(vars.profile.name.letterSpacing, vars.text.base.letterSpacing),
+  fontFamily: vars.fontFamily,
 });

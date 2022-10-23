@@ -15,6 +15,7 @@ export const button = recipe({
     borderRadius: fallbackVar(vars.iconButton.borderRadius, '4px'),
     color: fallbackVar(vars.iconButton.color, vars.color.icon),
     background: fallbackVar(vars.iconButton.background, 'transparent'),
+    fontFamily: vars.fontFamily,
 
     selectors: {
       '&:active': {

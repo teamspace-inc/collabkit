@@ -24,16 +24,19 @@ export function Plans() {
   return (
     <section style={{ background: '#F0F4F8' }} id="Pricing">
       <h1>Pricing</h1>
-      <h3>Packages that grow with your business.</h3>
-      <div style={{ display: 'flex', gap: '40px', flexDirection: 'row' }}>
+      <h3 style={{ color: '#8093A7' }}>Packages that grow with your business</h3>
+      <div style={{ display: 'flex', gap: '40px', flexDirection: 'row', marginTop: '60px' }}>
         <div className={card}>
-          <h4>Free</h4>
+          <h4>Trial</h4>
           <V12 />
           <h2>
-            $0
-            <br />
+            Free
             <br />
           </h2>
+          <V12 />
+          <small>Per month</small>
+          <V12 />
+
           <FeatureList>
             <h5>All the essentials</h5>
             <h5>
@@ -54,7 +57,7 @@ export function Plans() {
           />
         </div>
         <div className={card}>
-          <h4>Startup</h4>
+          <h4 style={{ color: vars.color.teal }}>Startup</h4>
           <V12 />
           <h2>
             $250 <br />
@@ -76,13 +79,13 @@ export function Plans() {
             style={{
               display: 'flex',
               width: '100%',
-              background: vars.color.indigo,
+              background: vars.color.teal,
               color: 'white',
             }}
           />
         </div>
         <div className={card}>
-          <h4>Pro</h4>
+          <h4 style={{ color: vars.color.indigo }}>Pro</h4>
           <V12 />
           <h2>
             $500 <br />
@@ -111,7 +114,7 @@ export function Plans() {
           />
         </div>
         <div className={card}>
-          <h4>Scale</h4>
+          <h4 style={{ color: vars.color.violet }}>Scale</h4>
           <V12 />
           <h2>
             Custom

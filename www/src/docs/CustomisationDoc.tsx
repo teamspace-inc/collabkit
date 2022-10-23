@@ -1,5 +1,6 @@
 import { Thread, ThemeProvider } from '@collabkit/react';
 import { docDemoOverlay } from '../styles/Docs.css';
+import { vars } from '../styles/Theme.css';
 import { DocDemoContainer, DocLink } from './Doc';
 
 const threadSize = { width: 280, height: 320 };
@@ -41,13 +42,13 @@ export function CustomisationDoc() {
           <code>{'<CollabKitProvider />'}</code>.
         </p>
       </div>
-      <DocDemoContainer style={{ position: 'relative' }}>
+      <DocDemoContainer style={{ position: 'relative', background: vars.color.blue }}>
         <ThemeName>Light Theme</ThemeName>
         <div style={threadSize}>
           <Thread threadId={'thread1'} />
         </div>
       </DocDemoContainer>
-      <DocDemoContainer style={{ position: 'relative' }}>
+      <DocDemoContainer style={{ position: 'relative', background: vars.color.highlight }}>
         <ThemeName>Dark Theme</ThemeName>
         <div style={threadSize}>
           <ThemeProvider theme="dark">

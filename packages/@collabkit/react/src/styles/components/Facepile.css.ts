@@ -7,6 +7,7 @@ export const root = style({
   display: 'flex',
   flexDirection: 'row',
   marginLeft: `${calc(fallbackVar(vars.facepile.overlap, '4px'))}`,
+  fontFamily: vars.fontFamily,
 });
 
 export const avatarWrap = recipe({

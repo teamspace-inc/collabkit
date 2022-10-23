@@ -24,7 +24,7 @@ export type ThreadProps = {
   autoFocus?: boolean;
 };
 
-function ThreadContextProvider(props: ThreadProps & { children: React.ReactNode }) {
+export function ThreadContextProvider(props: ThreadProps & { children: React.ReactNode }) {
   const { threadId, info, composerPrompt, showHeader, autoFocus } = props;
   const [context, setContext] = useState<ThreadContextValue | null>(null);
   const { store } = useApp();
@@ -107,12 +107,11 @@ export function Thread(props: ThreadProps & { className?: string; children?: Rea
                 </div>
               </ScrollableCommentList>
             )}
-            <Composer.Root className={styles.composer}>
+            <Composer.Root className={styles.composer} autoFocus={props.autoFocus ?? true}>
               <Profile.Avatar />
               <Composer.Editor
-                contentEditable={(props) => <Composer.ContentEditable {...props} />}
+                contentEditable={<Composer.ContentEditable />}
                 placeholder={<Composer.Placeholder>Write a comment</Composer.Placeholder>}
-                autoFocus={props.autoFocus}
               />
               <TypingIndicator className={styles.typingIndicator} />
             </Composer.Root>

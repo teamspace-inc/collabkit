@@ -19,7 +19,9 @@ export function Contact() {
       }}
     >
       <h1>Contact Us</h1>
-      <h3>Any questions? Email us or join our Discord.</h3>
+      <h3 style={{ color: vars.color.textContrastLow }}>
+        Any questions? Let us know over email or Discord
+      </h3>
       <div
         style={{
           display: 'flex',

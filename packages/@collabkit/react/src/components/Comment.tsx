@@ -127,18 +127,14 @@ export function Body({ ...props }: React.ComponentPropsWithoutRef<'div'>) {
 export const Editor = (props: React.ComponentProps<'div'>) => {
   const { store } = useApp();
   const { editingId } = useSnapshot(store);
-  const comment = useCommentStore();
   const { eventId, treeId } = useCommentContext();
   const isEditing = editingId?.eventId === eventId && editingId.treeId == treeId;
 
   if (!isEditing) {
     return null;
   }
-  return (
-    <ComposerContext.Provider value={comment}>
-      <div {...props} className={props.className ?? styles.editor} />
-    </ComposerContext.Provider>
-  );
+
+  return <div {...props} className={props.className ?? styles.editor} />;
 };
 
 export function Timestamp(

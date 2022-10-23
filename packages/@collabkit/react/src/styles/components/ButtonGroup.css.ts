@@ -7,4 +7,5 @@ export const root = style({
   gap: fallbackVar(vars.buttonGroup.gap, vars.space[1]),
   padding: fallbackVar(vars.buttonGroup.padding, `0px ${vars.space[4]} ${vars.space[4]}`),
   justifyContent: 'flex-end',
+  fontFamily: vars.fontFamily,
 });
