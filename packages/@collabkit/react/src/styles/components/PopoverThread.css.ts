@@ -47,39 +47,36 @@ export const commentHeader = recipe({
     flex: '1',
     flexDirection: 'row',
     gap: fallbackVar(vars.comment.header.gap, vars.space[2]),
-    alignItems: 'flex-start',
+    alignItems: fallbackVar(vars.popoverThread.comment.header.alignItems, 'flex-start'),
     fontFamily: vars.fontFamily,
   },
   variants: {},
 });
 
-export const composer = style([
-  composerStyles.root,
-  {
-    borderTop: fallbackVar(vars.popoverThread.composer.borderTop, 'none'),
-    alignItems: 'flex-end',
-    padding: fallbackVar(
-      vars.popoverThread.composer.padding,
-      `0px ${vars.space[4]} ${vars.space[4]} ${vars.space[4]}`
-    ),
-    gap: fallbackVar(vars.popoverThread.composer.gap, vars.space[2]),
-    fontFamily: vars.fontFamily,
-  },
-]);
+export const composerRoot = composerStyles.root;
 
-export const composerContentEditable = style([
-  composerStyles.contentEditable({ disabled: false }),
+export const composerForm = style({
+  borderTop: fallbackVar(vars.popoverThread.composer.form.borderTop, 'none'),
+  display: 'flex',
+  flexDirection: 'column',
+  padding: fallbackVar(
+    vars.popoverThread.composer.form.padding,
+    `0 ${vars.space[4]} ${vars.space[3]}`
+  ),
+  gap: fallbackVar(vars.popoverThread.composer.form.gap, vars.space[2]),
+  fontFamily: vars.fontFamily,
+});
+
+export const composerInput = style([
+  composerStyles.input({ disabled: false }),
   {
-    border: fallbackVar(
-      vars.popoverThread.composer.contentEditable.border,
-      `1px solid ${vars.color.border}`
-    ),
-    minHeight: fallbackVar(vars.popoverThread.composer.contentEditable.minHeight, '40px'),
+    border: fallbackVar(vars.popoverThread.composer.input.border, `1px solid ${vars.color.border}`),
+    minHeight: fallbackVar(vars.popoverThread.composer.input.minHeight, '40px'),
     fontFamily: vars.fontFamily,
     selectors: {
       '&:focus': {
         borderColor: fallbackVar(
-          vars.popoverThread.composer.contentEditable.focus.border,
+          vars.popoverThread.composer.input.focus.border,
           `1px solid ${vars.color.border}`
         ),
       },

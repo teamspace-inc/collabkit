@@ -86,7 +86,7 @@ export const ContentEditable = function ComposerContentEditable(props: { classNa
       onBlur={(e) => events.onBlur(e, { target })}
     >
       <LexicalContentEditable
-        className={props.className ?? styles.contentEditable()}
+        className={props.className ?? styles.input()}
         tabIndex={autoFocus ? 1 : 0}
       />
     </div>

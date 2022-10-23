@@ -47,7 +47,7 @@ export const composer = style({
   display: 'flex',
   flexDirection: 'row',
   flexWrap: 'wrap',
-  columnGap: columnGap,
+  columnGap,
   padding: `${vars.space[2]} ${composerHorizontalPadding} ${typingIndicatorLineHeight}`,
   fontFamily: vars.fontFamily,
 

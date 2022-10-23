@@ -1,30 +1,32 @@
 export const ComposerTheme = {
   composer: {
-    background: 'composer-background',
-    border: 'composer-border',
-    borderRadius: 'composer-border-radius',
-    caretColor: 'composer-caret-color',
-    color: 'composer-color',
-    fontSize: 'composer-font-size',
-    lineHeight: 'composer-line-height',
-    fontWeight: 'composer-font-weight',
-    letterSpacing: 'composer-letter-spacing',
-    padding: 'composer-padding',
-    active: {
-      background: 'composer-active-background',
-      border: 'composer-active-border',
-    },
-    hover: {
-      background: 'composer-hover-background',
-      border: 'composer-hover-border',
-    },
-    disabled: {
-      background: 'composer-disabled-background',
-      border: 'composer-disabled-border',
-      color: 'composer-disabled-color',
-    },
-    placeholder: {
-      color: 'composer-placeholder-color',
+    input: {
+      background: 'composer-input-background',
+      border: 'composer-input-border',
+      borderRadius: 'composer-input-border-radius',
+      caretColor: 'composer-input-caret-color',
+      color: 'composer-input-color',
+      fontSize: 'composer-input-font-size',
+      lineHeight: 'composer-input-line-height',
+      fontWeight: 'composer-input-font-weight',
+      letterSpacing: 'composer-input-letter-spacing',
+      padding: 'composer-input-padding',
+      active: {
+        background: 'composer-input-active-background',
+        border: 'composer-input-active-border',
+      },
+      hover: {
+        background: 'composer-input-hover-background',
+        border: 'composer-input-hover-border',
+      },
+      disabled: {
+        background: 'composer-input-disabled-background',
+        border: 'composer-input-disabled-border',
+        color: 'composer-input-disabled-color',
+      },
+      placeholder: {
+        color: 'composer-input-placeholder-color',
+      },
     },
   },
 };

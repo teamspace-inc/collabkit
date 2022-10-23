@@ -45,6 +45,7 @@ export const cashboard: CustomTheme = {
     fontSize: '12px',
     lineHeight: '18px',
     fontWeight: '600',
+    borderRadius: '6px',
     primary: {
       background: '#36B374',
       color: 'white',
@@ -92,21 +93,35 @@ export const cashboard: CustomTheme = {
   },
   popoverThread: {
     border: '1px solid #E3E9ED',
+    comment: {
+      header: {
+        alignItems: 'center',
+      },
+    },
+    composer: {
+      form: {
+        borderTop: '1px solid #E3E9ED',
+        padding: '16px 16px 16px',
+        gap: '12px',
+      },
+    },
   },
   composer: {
-    border: '1px solid #E3E9ED',
-    background: 'white',
-    hover: {
-      background: 'white',
+    input: {
       border: '1px solid #E3E9ED',
-    },
-    active: {
       background: 'white',
-      border: '1px solid #36B374',
+      hover: {
+        background: 'white',
+        border: '1px solid #E3E9ED',
+      },
+      active: {
+        background: 'white',
+        border: '1px solid #36B374',
+      },
+      borderRadius: '8px',
+      fontSize: '14px',
+      lineHeight: '22.4px',
     },
-    borderRadius: '8px',
-    fontSize: '14px',
-    lineHeight: '22.4px',
   },
   mentions: {
     pill: {
@@ -117,7 +132,7 @@ export const cashboard: CustomTheme = {
     typeahead: {
       background: 'white',
       item: {
-        padding: '12px',
+        padding: '12px 12px 8px',
         fontWeight: '400',
         nameAndEmailWrapper: {
           gap: '0px',

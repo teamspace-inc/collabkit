@@ -8,6 +8,7 @@ import { useThreadContext } from '../hooks/useThreadContext';
 import { useCommentContext } from '../hooks/useCommentContext';
 import { ButtonGroup } from './ButtonGroup';
 import { useCommentStore } from '../hooks/useCommentStore';
+import { composerForm } from '../styles/components/PopoverThread.css';
 
 export const PopoverThreadCommentEditor = () => {
   const { threadId, workspaceId } = useThreadContext();
@@ -19,19 +20,19 @@ export const PopoverThreadCommentEditor = () => {
 
   return (
     <Comment.Editor>
-      <Composer.Root autoFocus={true} body={body}>
+      <Composer.Root className={composerForm} autoFocus={true} body={body}>
         <Composer.Editor contentEditable={<Composer.ContentEditable />} placeholder={<span />} />
+        <ButtonGroup
+          onCancel={(e) => {
+            if (e.button === 0) {
+              actions.stopEditing(store);
+            }
+          }}
+          onConfirm={onPointerDown}
+          confirmButtonEnabled={isEnabled}
+          confirmButtonText={'Save'}
+        />
       </Composer.Root>
-      <ButtonGroup
-        onCancel={(e) => {
-          if (e.button === 0) {
-            actions.stopEditing(store);
-          }
-        }}
-        onConfirm={onPointerDown}
-        confirmButtonEnabled={isEnabled}
-        confirmButtonText={'Save'}
-      />
     </Comment.Editor>
   );
 };

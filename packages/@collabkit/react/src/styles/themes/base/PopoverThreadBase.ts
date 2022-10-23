@@ -9,11 +9,18 @@ export const PopoverThreadBase = {
     preview: {
       boxShadow: 'initial',
     },
+    comment: {
+      header: {
+        alignItems: 'initial',
+      },
+    },
     composer: {
-      borderTop: 'initial',
-      padding: 'initial',
-      gap: 'initial',
-      contentEditable: {
+      form: {
+        borderTop: 'initial',
+        padding: 'initial',
+        gap: 'initial',
+      },
+      input: {
         border: 'initial',
         minHeight: 'initial',
         focus: {

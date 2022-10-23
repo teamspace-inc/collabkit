@@ -177,31 +177,32 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
                   )}
                 </CommentList.Root>
               ) : null}
-
-              <Composer.Root className={styles.composer} autoFocus={props.autoFocus ?? true}>
-                <Composer.Editor
-                  contentEditable={<Composer.ContentEditable />}
-                  placeholder={
-                    <Composer.Placeholder>
-                      {isEmpty ? 'Add a comment' : 'Reply to this comment'}
-                    </Composer.Placeholder>
+              <div className={styles.composerForm}>
+                <Composer.Root className={styles.composerRoot} autoFocus={props.autoFocus ?? true}>
+                  <Composer.Editor
+                    contentEditable={<Composer.ContentEditable />}
+                    placeholder={
+                      <Composer.Placeholder>
+                        {isEmpty ? 'Add a comment' : 'Reply to this comment'}
+                      </Composer.Placeholder>
+                    }
+                  />
+                </Composer.Root>
+                <ButtonGroup
+                  onCancel={(e) =>
+                    events.onPointerDown(e, {
+                      target: {
+                        type: 'closeThreadButton',
+                        threadId,
+                        workspaceId,
+                      },
+                    })
                   }
+                  onConfirm={onPointerDown}
+                  confirmButtonEnabled={isEnabled}
+                  confirmButtonText={'Comment'}
                 />
-              </Composer.Root>
-              <ButtonGroup
-                onCancel={(e) =>
-                  events.onPointerDown(e, {
-                    target: {
-                      type: 'closeThreadButton',
-                      threadId,
-                      workspaceId,
-                    },
-                  })
-                }
-                onConfirm={onPointerDown}
-                confirmButtonEnabled={isEnabled}
-                confirmButtonText={'Comment'}
-              />
+              </div>
             </ScrollAreaViewport>
             <ScrollAreaScrollbar orientation="vertical">
               <ScrollAreaThumb />

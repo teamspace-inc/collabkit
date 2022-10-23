@@ -8,7 +8,7 @@ import { InboxBase } from './base/InboxBase';
 import { MentionsBase } from './base/MentionsBase';
 import { MenuBase } from './base/MenuBase';
 import { NewIndicatorBase } from './base/NewIndicatorBase';
-import { PopoverThreadBase } from './base/PopoverBase';
+import { PopoverThreadBase } from './base/PopoverThreadBase';
 import { ProfileBase } from './base/ProfileBase';
 import { ScrollbarBase } from './base/ScrollbarBase';
 import { ShadowBase } from './base/ShadowBase';

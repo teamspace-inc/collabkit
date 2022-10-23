@@ -9,15 +9,22 @@ export const PopoverThreadTheme = {
     preview: {
       boxShadow: 'popover-thread-preview-box-shadow',
     },
+    comment: {
+      header: {
+        alignItems: 'popover-thread-comment-header-align-items',
+      },
+    },
     composer: {
-      borderTop: 'popover-thread-composer-border-top',
-      padding: 'popover-thread-composer-padding',
-      gap: 'popover-thread-composer-gap',
-      contentEditable: {
-        border: 'popover-thread-composer-content-editable-border',
-        minHeight: 'popover-thread-composer-content-editable-min-height',
+      form: {
+        borderTop: 'popover-thread-composer-form-border-top',
+        padding: 'popover-thread-composer-form-padding',
+        gap: 'popover-thread-composer-form-gap',
+      },
+      input: {
+        border: 'popover-thread-composer-input-border',
+        minHeight: 'popover-thread-composer-input-min-height',
         focus: {
-          border: 'popover-thread-composer-content-editable-focus-border',
+          border: 'popover-thread-composer-input-focus-border',
         },
       },
     },

@@ -202,13 +202,13 @@ const CommentMenu = (props: { className?: string }) => {
             })
           }
         >
-          <Check size={18} weight={'regular'} />
+          <Check size={16} weight={'bold'} />
         </IconButton>
       )}
       {createdById === userId && (
         <Menu<CommentMenuItemType>
           className={props.className ?? styles.menu}
-          icon={<DotsThree size={18} />}
+          icon={<DotsThree size={16} />}
           onItemClick={onItemClick}
         >
           <MenuItem className={styles.menuItem} label="Edit" targetType="commentEditButton" />

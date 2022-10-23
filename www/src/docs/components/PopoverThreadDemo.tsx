@@ -8,6 +8,7 @@ export function PurePopoverThreadDemo() {
     name: 'test',
     cellId: 'thread4',
     _viewId: 'demo',
+    autoFocus: false,
   });
 
   useEffect(() => {

@@ -11,11 +11,11 @@ const rtl = style({
 });
 
 export const placeholder = style({
-  color: fallbackVar(vars.composer.placeholder.color, vars.color.textSecondary),
-  fontSize: fallbackVar(vars.composer.fontSize, vars.text.base.fontSize),
-  fontWeight: fallbackVar(vars.composer.fontWeight, vars.fontWeight.regular),
-  letterSpacing: fallbackVar(vars.composer.letterSpacing, vars.text.base.letterSpacing),
-  lineHeight: fallbackVar(vars.composer.lineHeight, vars.text.base.lineHeight),
+  color: fallbackVar(vars.composer.input.placeholder.color, vars.color.textSecondary),
+  fontSize: fallbackVar(vars.composer.input.fontSize, vars.text.base.fontSize),
+  fontWeight: fallbackVar(vars.composer.input.fontWeight, vars.fontWeight.regular),
+  letterSpacing: fallbackVar(vars.composer.input.letterSpacing, vars.text.base.letterSpacing),
+  lineHeight: fallbackVar(vars.composer.input.lineHeight, vars.text.base.lineHeight),
   overflow: 'hidden',
   position: 'absolute',
   textOverflow: 'ellipsis',
@@ -57,16 +57,16 @@ globalStyle(`${composerGlobalStyles} p`, {
   fontFamily: `${vars.fontFamily} !important`,
 });
 
-export const contentEditable = recipe({
+export const input = recipe({
   base: {
     resize: 'none',
-    caretColor: fallbackVar(vars.composer.caretColor, vars.color.textPrimary),
-    color: fallbackVar(vars.composer.color, vars.color.textPrimary),
-    fontSize: fallbackVar(vars.composer.fontSize, vars.text.base.fontSize),
-    lineHeight: fallbackVar(vars.composer.lineHeight, vars.text.base.lineHeight),
-    letterSpacing: fallbackVar(vars.composer.letterSpacing, vars.text.base.letterSpacing),
-    fontWeight: fallbackVar(vars.composer.fontWeight, vars.fontWeight.regular),
-    padding: fallbackVar(vars.composer.padding, vars.space[2]),
+    caretColor: fallbackVar(vars.composer.input.caretColor, vars.color.textPrimary),
+    color: fallbackVar(vars.composer.input.color, vars.color.textPrimary),
+    fontSize: fallbackVar(vars.composer.input.fontSize, vars.text.base.fontSize),
+    lineHeight: fallbackVar(vars.composer.input.lineHeight, vars.text.base.lineHeight),
+    letterSpacing: fallbackVar(vars.composer.input.letterSpacing, vars.text.base.letterSpacing),
+    fontWeight: fallbackVar(vars.composer.input.fontWeight, vars.fontWeight.regular),
+    padding: fallbackVar(vars.composer.input.padding, vars.space[2]),
     position: 'relative',
     tabSize: 1,
     boxSizing: 'border-box',
@@ -77,8 +77,8 @@ export const contentEditable = recipe({
   variants: {
     disabled: {
       true: {
-        color: vars.composer.disabled.color,
-        background: vars.composer.disabled.background,
+        color: vars.composer.input.disabled.color,
+        background: vars.composer.input.disabled.background,
       },
     },
   },
@@ -88,15 +88,16 @@ export const root = style({
   display: 'flex',
   flexDirection: 'row',
   flexWrap: 'wrap',
-  padding: `0 ${vars.space[4]}`,
+  alignItems: 'flex-end',
+  // padding: fallbackVar(vars.composer.root.padding, `0 ${vars.space[4]}`),
   fontFamily: vars.fontFamily,
 });
 
 export const editor = recipe({
   base: {
-    background: fallbackVar(vars.composer.background, vars.color.surface),
-    border: fallbackVar(vars.composer.border, `none`),
-    borderRadius: fallbackVar(vars.composer.borderRadius, '6px'),
+    background: fallbackVar(vars.composer.input.background, vars.color.surface),
+    border: fallbackVar(vars.composer.input.border, 'none'),
+    borderRadius: fallbackVar(vars.composer.input.borderRadius, '6px'),
     flex: '1',
     width: '100%',
     position: 'relative',
@@ -107,20 +108,20 @@ export const editor = recipe({
   variants: {
     active: {
       true: {
-        background: fallbackVar(vars.composer.active.background, vars.color.surface),
-        border: fallbackVar(vars.composer.active.border, 'none'),
+        background: fallbackVar(vars.composer.input.active.background, vars.color.surface),
+        border: fallbackVar(vars.composer.input.active.border, 'none'),
       },
     },
     hover: {
       true: {
-        background: fallbackVar(vars.composer.hover.background, vars.color.surface),
-        border: fallbackVar(vars.composer.hover.border, 'none'),
+        background: fallbackVar(vars.composer.input.hover.background, vars.color.surface),
+        border: fallbackVar(vars.composer.input.hover.border, 'none'),
       },
     },
     disabled: {
       true: {
-        background: fallbackVar(vars.composer.disabled.background, vars.color.surface),
-        border: fallbackVar(vars.composer.disabled.border, 'none'),
+        background: fallbackVar(vars.composer.input.disabled.background, vars.color.surface),
+        border: fallbackVar(vars.composer.input.disabled.border, 'none'),
       },
     },
   },
