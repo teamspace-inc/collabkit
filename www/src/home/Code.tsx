@@ -13,7 +13,7 @@ import { docs } from '../styles/Docs.css';
 import { Link } from 'wouter';
 import { button } from '../styles/Website.css';
 
-import CodeSvg from '../assets/home/code/Code.svg';
+import CodeSvg from '../assets/home/code/code.svg';
 
 export function Code(props: { setInvertFilter: (invert: number) => void }) {
   const isSmallScreen = useIsSmallScreen();
