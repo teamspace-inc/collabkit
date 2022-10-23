@@ -11,7 +11,6 @@ import { useId } from '../hooks/useId';
 import * as Profile from './Profile';
 import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
 import { useApp } from '../hooks/useApp';
-import { ComposerContext } from './composer/Composer';
 import { CommentTarget, CommentType, timelineUtils } from '@collabkit/core';
 import * as styles from '../styles/components/Comment.css';
 import { Check, DotsThree } from './icons';
