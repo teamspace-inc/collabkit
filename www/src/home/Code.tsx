@@ -1,14 +1,13 @@
-import SnippetReactSvg from '../assets/SnippetReact.svg';
-import SnippetReactSmallSvg from '../assets/ReactSnippetSmall.svg';
-import ReactLogoSvg from '../assets/react.svg';
-import VueLogoSvg from '../assets/vue.svg';
+// import SnippetReactSvg from '../assets/SnippetReact.svg';
+// import SnippetReactSmallSvg from '../assets/ReactSnippetSmall.svg';
+// import ReactLogoSvg from '../assets/react.svg';
+// import VueLogoSvg from '../assets/vue.svg';
 
 import { useIsSmallScreen } from '../hooks/useIsSmallScreen';
 import { useInvertFilter } from '../hooks/useInvertFilter';
 
 import { dark } from '../styles/Theme.css';
 import { h3 } from '../styles/home/Code.css';
-import { renderCodeSnippet } from '../docs/CodeEditor';
 import { docs } from '../styles/Docs.css';
 import { Link } from 'wouter';
 import { button } from '../styles/Website.css';
