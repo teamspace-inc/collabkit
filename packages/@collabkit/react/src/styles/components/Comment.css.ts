@@ -72,7 +72,7 @@ export const content = recipe({
     // for a profile image
     profileIndent: {
       true: {
-        marginLeft: calc.add(vars.avatar.size, vars.space[2]),
+        marginLeft: calc.add(vars.avatar.size, fallbackVar(vars.comment.gap, vars.space[2])),
       },
       false: {},
     },
