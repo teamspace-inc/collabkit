@@ -20,8 +20,8 @@ const theme = {
     },
   },
   composer: {
-    border: '1px solid #E3E9ED',
-    body: {
+    input: {
+      border: '1px solid #E3E9ED',
       padding: '9px 12px',
     },
   },
