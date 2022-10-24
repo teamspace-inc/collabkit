@@ -1,6 +1,4 @@
-// import type { CustomTheme } from '@collabkit/theme';
-
-import { CustomTheme } from '@collabkit/react';
+import type { CustomTheme } from '@collabkit/theme';
 
 // export const table: CustomTheme = {
 //   radii: { 0: '4px', composer: '8px' },
