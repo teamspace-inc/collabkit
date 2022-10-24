@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useSnapshot } from 'valtio';
-import { differenceInHours, format, formatDistanceStrict, isSameDay, isSameMonth } from 'date-fns';
 import { ThreadContext, useThreadContext } from '../hooks/useThreadContext';
 import { ResolveThreadButton } from './ResolveThreadButton';
 import { ThreadCommentersFacepile } from './ThreadCommentersFacepile';
@@ -16,31 +15,6 @@ import { ThreadTarget } from '@collabkit/core';
 import * as styles from '../styles/components/InboxItem.css';
 import { vars } from '../styles/theme';
 import { fallbackVar } from '@vanilla-extract/css';
-
-// Cashboard relative timestamp
-//
-// Spec:
-// If comment’s date is current date, display “Today at HH:MM AM/PM”.
-// If it isn’t current date, display “[h] hours ago” up until 48 hours,
-// and then display days (“[d] days ago”) up until the comment date’s
-// month isn’t the current month, then display “[m] months ago”.
-function formatTimestampRelative(timestamp: number) {
-  let string;
-  const now = Date.now();
-  if (isSameDay(timestamp, now)) {
-    string = format(timestamp, "'Today' 'at' p");
-  } else if (Math.abs(differenceInHours(timestamp, now)) <= 48) {
-    string = formatDistanceStrict(timestamp, now, { unit: 'hour', addSuffix: true });
-  } else if (isSameMonth(timestamp, now)) {
-    string = formatDistanceStrict(timestamp, now, { unit: 'day', addSuffix: true });
-  } else {
-    string = formatDistanceStrict(timestamp, now, { unit: 'month', addSuffix: true });
-    if (string.charAt(0) === '0') {
-      string = 'Last month';
-    }
-  }
-  return string;
-}
 
 export function InboxItem(props: { formatTimestamp?: (timestamp: number) => string }) {
   const { threadId, workspaceId, userId } = useThreadContext();
@@ -113,10 +87,7 @@ export function InboxItem(props: { formatTimestamp?: (timestamp: number) => stri
         <Comment.Root eventId={firstCommentId} className={styles.commentRoot}>
           <div className={styles.nameAndTimestampWrapper}>
             <Comment.CreatorName className={styles.name} />
-            <Comment.Timestamp
-              className={styles.timestamp}
-              format={props.formatTimestamp ?? formatTimestampRelative}
-            />
+            <Comment.Timestamp className={styles.timestamp} format={props.formatTimestamp} />
           </div>
           <Comment.Body />
         </Comment.Root>
@@ -127,10 +98,7 @@ export function InboxItem(props: { formatTimestamp?: (timestamp: number) => stri
                 <ReplyCount className={styles.replyCount} />
                 <span className={styles.timestamp}>
                   Last reply{' '}
-                  <Comment.Timestamp
-                    className={styles.timestamp}
-                    format={props.formatTimestamp ?? formatTimestampRelative}
-                  />
+                  <Comment.Timestamp className={styles.timestamp} format={props.formatTimestamp} />
                 </span>
               </div>
             </div>
