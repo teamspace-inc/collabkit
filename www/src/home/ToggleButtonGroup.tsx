@@ -18,6 +18,7 @@ export function ToggleButtonGroup(props: {
       <div className={toggleButtonGroupOptions}>
         {props.options.map((option) => (
           <div
+            key={option.value}
             className={toggleButton({ active: props.value === option.value })}
             style={{ width: 50, height: 50, borderRadius: '50px' }}
             onClick={() => props.onChange(option.value)}
