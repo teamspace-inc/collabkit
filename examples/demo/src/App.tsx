@@ -101,18 +101,18 @@ function Demo() {
       theme={theme}
       // theme="dark"
       // renderAvatar={CustomAvatar}
-      renderThreadContextPreview={() => {
-        return (
-          <div
-            style={{
-              width: '100%',
-              height: 38,
-              background: '#F5F8FA',
-              borderRadius: 8,
-            }}
-          ></div>
-        );
-      }}
+      // renderThreadContextPreview={() => {
+      //   return (
+      //     <div
+      //       style={{
+      //         width: '100%',
+      //         height: 38,
+      //         background: '#F5F8FA',
+      //         borderRadius: 8,
+      //       }}
+      //     ></div>
+      //   );
+      // }}
       mentionableUsers={'allWorkspace'}
     >
       <Switch>
