@@ -23,3 +23,9 @@ Defaults to `false`
 Set this to automatically focus the composer input on render.
 
 Defaults to `false`
+
+#### hideComposer?: boolean
+
+Hide the composer
+
+Defaults to `false`
