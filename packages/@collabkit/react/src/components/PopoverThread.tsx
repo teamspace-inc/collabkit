@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect } from 'react';
+import React, { forwardRef } from 'react';
 import { ThreadInfo } from '@collabkit/core';
 import * as CommentList from './CommentList';
 import { useApp } from '../hooks/useApp';
@@ -44,6 +44,7 @@ type PopoverThreadProps = {
   style?: React.CSSProperties;
   autoFocus?: boolean;
   maxAvailableSize?: { width: number; height: number } | null;
+  hideComposer?: boolean;
 }; // make this an extension of ThreadProps
 
 type Handle = HTMLDivElement | null;
@@ -177,32 +178,37 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
                   )}
                 </CommentList.Root>
               ) : null}
-              <div className={styles.composerForm}>
-                <Composer.Root className={styles.composerRoot} autoFocus={props.autoFocus ?? true}>
-                  <Composer.Editor
-                    contentEditable={<Composer.ContentEditable />}
-                    placeholder={
-                      <Composer.Placeholder>
-                        {isEmpty ? 'Add a comment' : 'Reply to this comment'}
-                      </Composer.Placeholder>
+              {props.hideComposer ? null : (
+                <div className={styles.composerForm}>
+                  <Composer.Root
+                    className={styles.composerRoot}
+                    autoFocus={props.autoFocus ?? true}
+                  >
+                    <Composer.Editor
+                      contentEditable={<Composer.ContentEditable />}
+                      placeholder={
+                        <Composer.Placeholder>
+                          {isEmpty ? 'Add a comment' : 'Reply to this comment'}
+                        </Composer.Placeholder>
+                      }
+                    />
+                  </Composer.Root>
+                  <ButtonGroup
+                    onCancel={(e) =>
+                      events.onPointerDown(e, {
+                        target: {
+                          type: 'closeThreadButton',
+                          threadId,
+                          workspaceId,
+                        },
+                      })
                     }
+                    onConfirm={onPointerDown}
+                    confirmButtonEnabled={isEnabled}
+                    confirmButtonText={'Comment'}
                   />
-                </Composer.Root>
-                <ButtonGroup
-                  onCancel={(e) =>
-                    events.onPointerDown(e, {
-                      target: {
-                        type: 'closeThreadButton',
-                        threadId,
-                        workspaceId,
-                      },
-                    })
-                  }
-                  onConfirm={onPointerDown}
-                  confirmButtonEnabled={isEnabled}
-                  confirmButtonText={'Comment'}
-                />
-              </div>
+                </div>
+              )}
             </ScrollAreaViewport>
             <ScrollAreaScrollbar orientation="vertical">
               <ScrollAreaThumb />

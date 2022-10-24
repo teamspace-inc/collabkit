@@ -22,6 +22,7 @@ export type ThreadProps = {
   composerPrompt?: string;
   showHeader?: boolean;
   autoFocus?: boolean;
+  hideComposer?: boolean;
 };
 
 export function ThreadContextProvider(props: ThreadProps & { children: React.ReactNode }) {
@@ -107,14 +108,16 @@ export function Thread(props: ThreadProps & { className?: string; children?: Rea
                 </div>
               </ScrollableCommentList>
             )}
-            <Composer.Root className={styles.composer} autoFocus={props.autoFocus ?? true}>
-              <Profile.Avatar />
-              <Composer.Editor
-                contentEditable={<Composer.ContentEditable />}
-                placeholder={<Composer.Placeholder>Write a comment</Composer.Placeholder>}
-              />
-              <TypingIndicator className={styles.typingIndicator} />
-            </Composer.Root>
+            {props.hideComposer ? null : (
+              <Composer.Root className={styles.composer} autoFocus={props.autoFocus ?? true}>
+                <Profile.Avatar />
+                <Composer.Editor
+                  contentEditable={<Composer.ContentEditable />}
+                  placeholder={<Composer.Placeholder>Write a comment</Composer.Placeholder>}
+                />
+                <TypingIndicator className={styles.typingIndicator} />
+              </Composer.Root>
+            )}
           </div>
         </ThemeWrapper>
       </Profile.Provider>

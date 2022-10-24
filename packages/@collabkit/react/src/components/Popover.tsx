@@ -51,6 +51,7 @@ type PopoverProps = {
   openOnClick?: boolean;
   autoFocus?: boolean;
 
+  hideComposer?: boolean;
   shouldFlipToKeepInView?: boolean;
 
   offset?: number;
@@ -221,6 +222,7 @@ export function usePopoverThread(props: PopoverProps) {
       getNewThreadId,
       maxAvailableSize,
       autoFocus: props.autoFocus ?? true,
+      hideComposer: props.hideComposer ?? false,
     },
 
     hasThread,
@@ -264,6 +266,7 @@ export const PopoverTrigger = ({ children, context }: Props) => {
               {...getThreadFloatingProps()}
             >
               <PopoverThread
+                hideComposer={context.hideComposer}
                 maxAvailableSize={context.maxAvailableSize}
                 threadId={threadId ?? getNewThreadId()}
                 info={threadInfo}
