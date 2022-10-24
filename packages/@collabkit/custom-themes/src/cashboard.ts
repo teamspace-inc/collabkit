@@ -124,7 +124,6 @@ export const cashboard: CustomTheme = {
     },
   },
   inbox: {
-    width: '433px',
     item: {
       paddingTop: '32px',
       paddingBottom: '32px',
