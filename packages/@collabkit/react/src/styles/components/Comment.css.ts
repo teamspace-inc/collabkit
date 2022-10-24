@@ -9,7 +9,7 @@ export const root = recipe({
     display: 'flex',
     flex: '1',
     flexDirection: 'row',
-    gap: vars.space[2],
+    gap: fallbackVar(vars.comment.gap, vars.space[2]),
     position: 'relative',
     maxWidth: calc.subtract('100%', vars.space[2]),
     paddingTop: fallbackVar(vars.comment.paddingTop, vars.space[2]),

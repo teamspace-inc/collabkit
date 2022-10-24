@@ -4,6 +4,7 @@ export const CommentTheme = {
     paddingRight: 'comment-padding-right',
     paddingLeft: 'comment-padding-left',
     paddingBottom: 'comment-padding-bottom',
+    gap: 'comment-gap',
     hover: {
       background: 'comment-hover-background',
     },

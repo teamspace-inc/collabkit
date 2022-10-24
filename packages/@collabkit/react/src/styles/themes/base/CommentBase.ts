@@ -4,6 +4,7 @@ export const CommentBase = {
     paddingBottom: 'initial',
     paddingLeft: 'initial',
     paddingRight: 'initial',
+    gap: 'initial',
     hover: {
       background: 'initial',
     },
