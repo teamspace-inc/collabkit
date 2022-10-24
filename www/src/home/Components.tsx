@@ -116,7 +116,7 @@ export function Components(props: { setInvertFilter: (invert: number) => void })
           {/* empty slide to act as left margin */}
           <Slide index={0} style={{ width: (window.innerWidth - 1124) / 2 }} />
           {components.map((component, index) => (
-            <Slide index={index} style={{ outline: 'none' }}>
+            <Slide key={index} index={index} style={{ outline: 'none' }}>
               <Component {...component} />
             </Slide>
           ))}
