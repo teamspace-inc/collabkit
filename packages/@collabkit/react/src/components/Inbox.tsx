@@ -35,7 +35,7 @@ export function EmptyState() {
   );
 }
 
-export function Inbox() {
+export function Inbox(props: { formatTimestamp?: (timestamp: number) => string }) {
   const { store } = useApp();
   const { workspaceId, workspaces, userId } = useSnapshot(store);
 
@@ -83,7 +83,7 @@ export function Inbox() {
               value={{ threadId, workspaceId, userId }}
               key={`inboxThread-${threadId}`}
             >
-              <InboxItem />
+              <InboxItem formatTimestamp={props.formatTimestamp} />
             </ThreadContext.Provider>
           );
         })

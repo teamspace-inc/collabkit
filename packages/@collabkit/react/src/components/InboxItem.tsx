@@ -24,8 +24,9 @@ import { fallbackVar } from '@vanilla-extract/css';
 // If it isn’t current date, display “[h] hours ago” up until 48 hours,
 // and then display days (“[d] days ago”) up until the comment date’s
 // month isn’t the current month, then display “[m] months ago”.
-function formatTimestampRelative(timestamp: number, now: number) {
+function formatTimestampRelative(timestamp: number) {
   let string;
+  const now = Date.now();
   if (isSameDay(timestamp, now)) {
     string = format(timestamp, "'Today' 'at' p");
   } else if (Math.abs(differenceInHours(timestamp, now)) <= 48) {
@@ -41,7 +42,7 @@ function formatTimestampRelative(timestamp: number, now: number) {
   return string;
 }
 
-export function InboxItem() {
+export function InboxItem(props: { formatTimestamp?: (timestamp: number) => string }) {
   const { threadId, workspaceId, userId } = useThreadContext();
   const { store, renderThreadContextPreview } = useApp();
   const workspace = useSnapshot(useWorkspaceStore());
@@ -112,7 +113,10 @@ export function InboxItem() {
         <Comment.Root eventId={firstCommentId} className={styles.commentRoot}>
           <div className={styles.nameAndTimestampWrapper}>
             <Comment.CreatorName className={styles.name} />
-            <Comment.Timestamp className={styles.timestamp} format={formatTimestampRelative} />
+            <Comment.Timestamp
+              className={styles.timestamp}
+              format={props.formatTimestamp ?? formatTimestampRelative}
+            />
           </div>
           <Comment.Body />
         </Comment.Root>
@@ -125,7 +129,7 @@ export function InboxItem() {
                   Last reply{' '}
                   <Comment.Timestamp
                     className={styles.timestamp}
-                    format={formatTimestampRelative}
+                    format={props.formatTimestamp ?? formatTimestampRelative}
                   />
                 </span>
               </div>

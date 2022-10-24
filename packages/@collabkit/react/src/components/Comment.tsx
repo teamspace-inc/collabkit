@@ -137,7 +137,7 @@ export const Editor = (props: React.ComponentProps<'div'>) => {
 };
 
 export function Timestamp(
-  props: React.ComponentProps<'time'> & { format?: (timestamp: number, now: number) => string }
+  props: React.ComponentProps<'time'> & { format?: (timestamp: number) => string }
 ) {
   const { createdAt } = useSnapshot(useCommentStore());
   return (

@@ -28,11 +28,13 @@ import { ThreadContextProvider } from './Thread';
 // Display the time and date of the comment as HH:MM [AM/PM] Jun 23.
 // Display “Today” if the comment date is the current date.
 // Display the year (“June 23, 2021”) if the comment date is not the current year.
-function formatTimestampExact(timestamp: number, currentTimestamp: number) {
-  if (isSameDay(timestamp, currentTimestamp)) {
+function formatTimestampExact(timestamp: number) {
+  const now = Date.now();
+
+  if (isSameDay(timestamp, now)) {
     return format(timestamp, "p 'Today'");
   }
-  if (isSameYear(timestamp, currentTimestamp)) {
+  if (isSameYear(timestamp, now)) {
     return format(timestamp, 'p MMM d');
   }
   return format(timestamp, 'p MMM d, yyyy');
@@ -45,6 +47,7 @@ type PopoverThreadProps = {
   autoFocus?: boolean;
   maxAvailableSize?: { width: number; height: number } | null;
   hideComposer?: boolean;
+  formatTimestamp?: (timestamp: number) => string;
 }; // make this an extension of ThreadProps
 
 type Handle = HTMLDivElement | null;
@@ -91,7 +94,7 @@ export const PreviewThread = forwardRef<Handle, PopoverThreadProps>(function Pop
                       <Profile.Avatar />
                       <Comment.NameAndTimestampWrapper>
                         <Comment.CreatorName />
-                        <Comment.Timestamp format={formatTimestampExact} />
+                        <Comment.Timestamp format={props.formatTimestamp ?? formatTimestampExact} />
                       </Comment.NameAndTimestampWrapper>
                     </Comment.Header>
                     <Comment.Body />
@@ -166,7 +169,9 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
                             <Profile.Avatar />
                             <Comment.NameAndTimestampWrapper>
                               <Comment.CreatorName />
-                              <Comment.Timestamp format={formatTimestampExact} />
+                              <Comment.Timestamp
+                                format={props.formatTimestamp ?? formatTimestampExact}
+                              />
                             </Comment.NameAndTimestampWrapper>
                             <Comment.Menu />
                           </Comment.Header>
