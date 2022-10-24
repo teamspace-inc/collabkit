@@ -1,4 +1,4 @@
-import { fallbackVar, style } from '@vanilla-extract/css';
+import { fallbackVar, globalStyle, style } from '@vanilla-extract/css';
 import { name as profileName } from './Profile.css';
 import { timestamp as commentTimestamp, body as commentBody } from './Comment.css';
 import { vars } from '../theme';
@@ -32,11 +32,17 @@ export const commentRoot = style([
 export const body = style([
   commentBody,
   {
-    lineClamp: 3,
-    overflow: 'hidden',
     // textOverflow: 'ellipsis',
   },
 ]);
+
+globalStyle(`${commentRoot} p`, {
+  WebkitLineClamp: 3,
+  WebkitBoxOrient: 'vertical',
+  display: '-webkit-box',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+});
 
 export const nameAndTimestampWrapper = style({
   display: 'flex',
