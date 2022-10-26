@@ -9,6 +9,7 @@ export const NewIndicatorTheme = {
       background: 'inbox-new-indicator-inlay-background',
     },
     line: {
+      inset: 'inbox-new-indicator-line-inset',
       background: 'inbox-new-indicator-line-background',
     },
     padding: 'inbox-new-indicator-padding',

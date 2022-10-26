@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSnapshot } from 'valtio';
 import { ThreadContext, useThreadContext } from '../hooks/useThreadContext';
-import { ResolveThreadButton } from './ResolveThreadButton';
+import { ResolveThreadIconButton } from './ResolveThreadIconButton';
 import { ThreadCommentersFacepile } from './ThreadCommentersFacepile';
 import { useInboxStore } from '../hooks/useInboxStore';
 import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
@@ -81,7 +81,7 @@ export function InboxItem(props: { formatTimestamp?: (timestamp: number) => stri
             hover={hover}
           />
           <div style={{ flex: 1 }}></div>
-          {firstComment.createdById === userId ? <ResolveThreadButton /> : null}
+          {firstComment.createdById === userId ? <ResolveThreadIconButton /> : null}
         </div>
         {renderThreadContextPreview?.({ threadId, workspaceId, userId, info })}
         <Comment.Root eventId={firstCommentId} className={styles.commentRoot}>

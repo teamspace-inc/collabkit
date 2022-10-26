@@ -10,6 +10,7 @@ export const NewIndicatorBase = {
     },
     line: {
       background: 'initial',
+      inset: 'initial',
     },
     padding: 'initial',
   },

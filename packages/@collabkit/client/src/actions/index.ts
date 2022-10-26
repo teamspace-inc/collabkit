@@ -45,6 +45,7 @@ import { hideSidebar } from './hideSidebar';
 import { setAvatarError } from './setAvatarError';
 import { closeMenu } from './closeMenu';
 import { openMenu } from './openMenu';
+import { nextThread } from './nextThread';
 
 export type GenerateToken =
   | {
@@ -157,4 +158,5 @@ export const actions = {
   showSidebar,
   hideSidebar,
   setAvatarError,
+  nextThread,
 };

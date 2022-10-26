@@ -7,13 +7,13 @@ import { useSnapshot } from 'valtio';
 import type { ThreadInfo } from '@collabkit/core';
 import { TypingIndicator } from './TypingIndicator';
 import { ThreadContext, ThreadContextValue } from '../hooks/useThreadContext';
-import { getCommentType } from '../utils/getCommentType';
 import * as Profile from './Profile';
 import * as Comment from './Comment';
 import * as Composer from './composer/Composer';
 import { ThemeWrapper } from './ThemeWrapper';
 import * as styles from '../styles/components/Thread.css';
 import { ChatCentered } from './icons';
+import * as CommentList from './CommentList';
 
 export type ThreadProps = {
   threadId: string;
@@ -73,29 +73,22 @@ export function Thread(props: ThreadProps & { className?: string; children?: Rea
               <EmptyState />
             ) : (
               <ScrollableCommentList>
-                <div className={styles.commentList}>
-                  {list?.map((group) => {
-                    return group.map((event, index) => {
+                <CommentList.Root>
+                  {list?.map((group, gi) => {
+                    const groupedComments = group.map((event, index) => {
                       const showProfile = index === 0;
                       return (
                         <React.Fragment key={event.id}>
                           {newIndicatorId === event.id ? <NewIndicator /> : null}
-                          <Comment.Root eventId={event.id} type={getCommentType(group, index)}>
+                          <Comment.Root eventId={event.id}>
                             {showProfile && <Profile.Avatar />}
                             <Comment.Content profileIndent={!showProfile}>
                               {showProfile && (
                                 <Comment.Header>
-                                  <div
-                                    style={{
-                                      gap: '8px',
-                                      display: 'flex',
-                                      flexDirection: 'row',
-                                      alignItems: 'baseline',
-                                    }}
-                                  >
+                                  <Comment.NameAndTimestampWrapper>
                                     <Comment.CreatorName />
                                     <Comment.Timestamp />
-                                  </div>
+                                  </Comment.NameAndTimestampWrapper>
                                 </Comment.Header>
                               )}
                               <Comment.Body />
@@ -104,8 +97,9 @@ export function Thread(props: ThreadProps & { className?: string; children?: Rea
                         </React.Fragment>
                       );
                     });
+                    return groupedComments ? <div key={gi}>{groupedComments}</div> : null;
                   })}
-                </div>
+                </CommentList.Root>
               </ScrollableCommentList>
             )}
             {props.hideComposer ? null : (

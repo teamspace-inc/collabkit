@@ -215,6 +215,7 @@ export function createEvents(store: Store) {
             //   actions.viewThread(store, { ...props, isPreview: false });
             //   break;
             // }
+
             case 'closeThreadButton': {
               actions.closeThread(store);
               break;
@@ -234,6 +235,16 @@ export function createEvents(store: Store) {
         }
         case 'idle': {
           switch (props.target.type) {
+            case 'nextThreadButton': {
+              console.log('next thread');
+              actions.nextThread(store);
+              break;
+            }
+            case 'previousThreadButton': {
+              console.log('prev thread');
+              actions.nextThread(store, -1);
+              break;
+            }
             case 'showSidebarButton': {
               actions.showSidebar(store);
               break;

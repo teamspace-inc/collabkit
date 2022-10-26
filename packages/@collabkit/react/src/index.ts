@@ -24,6 +24,7 @@ import { ThemeWrapper } from './components/ThemeWrapper';
 import { SidebarInboxButton } from './components/SidebarInboxButton';
 import { SidebarInbox } from './components/SidebarInbox';
 import { PopoverThread } from './components/PopoverThread';
+import { AltPopoverThread } from './components/AltPopoverThread';
 
 export {
   CollabKitProvider as Provider,

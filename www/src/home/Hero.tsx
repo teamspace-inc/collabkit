@@ -30,7 +30,7 @@ const messages = {
   1: {
     avatar: james,
     name: 'James Hanson',
-    timeAgo: 'Just now',
+    timeAgo: 'Now',
     message: <>I'm on it!</>,
   },
 };

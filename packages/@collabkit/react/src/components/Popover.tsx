@@ -1,4 +1,4 @@
-import React, { cloneElement, useCallback, useMemo, useState } from 'react';
+import React, { cloneElement, useCallback, useEffect, useMemo, useState } from 'react';
 import {
   autoUpdate,
   flip,
@@ -81,6 +81,7 @@ export function usePopoverThread(props: PopoverProps) {
   const { viewingId, previewingId, workspaceId } = useSnapshot(store);
   const threadOpen =
     viewingId?.type === 'thread' && viewingId.threadId === (threadId ?? newThreadId);
+
   const previewOpen =
     previewingId?.type === 'thread' && previewingId.threadId === (threadId ?? newThreadId);
 
@@ -142,7 +143,7 @@ export function usePopoverThread(props: PopoverProps) {
       offset(props.offset ?? 4),
       ...(props.shouldFlipToKeepInView ? [flip()] : []),
       size({
-        padding: props.padding ?? 12,
+        padding: props.padding ?? 24,
         apply({ availableWidth, availableHeight, elements }) {
           Object.assign(elements.floating.style, {
             maxWidth: `${availableWidth}px`,
@@ -163,7 +164,7 @@ export function usePopoverThread(props: PopoverProps) {
       offset(props.offset ?? 4),
       ...(props.shouldFlipToKeepInView ? [flip()] : []),
       size({
-        padding: props.padding ?? 12,
+        padding: props.padding ?? 24,
         apply({ availableWidth, availableHeight, elements }) {
           Object.assign(elements.floating.style, {
             maxWidth: `${availableWidth}px`,
@@ -183,6 +184,7 @@ export function usePopoverThread(props: PopoverProps) {
       }),
       useDismiss(previewContext),
     ]);
+
   const { getReferenceProps: getThreadReferenceProps, getFloatingProps: getThreadFloatingProps } =
     useInteractions([
       useClick(threadContext, {

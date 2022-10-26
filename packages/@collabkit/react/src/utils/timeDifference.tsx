@@ -9,7 +9,7 @@ export function timeDifference(current: number, previous: number) {
 
   if (elapsed < msPerMinute) {
     if (Math.round(elapsed / 1000) < 60) {
-      return 'just now';
+      return 'now';
     } else {
       return Math.round(elapsed / 1000) + ' secs ago';
     }

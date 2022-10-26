@@ -5,7 +5,7 @@ const millisecondsInDay = 86_400_000;
 const locale = {
   ...enUS,
   formatDistance: (token: string, count: number, options: any) => {
-    if (token === 'xSeconds') return 'just now';
+    if (token === 'xSeconds') return 'now';
     if (token === 'xMinutes') return `${count}m`;
     if (token === 'xHours') return `${count}h`;
     return enUS.formatDistance!(token, count, options);

@@ -16,8 +16,8 @@ export const line = style({
   background: fallbackVar(vars.newIndicator.line.background, vars.color.border),
   height: '1px',
   position: 'absolute',
-  left: vars.comment.paddingLeft,
-  right: vars.comment.paddingRight,
+  left: fallbackVar(vars.newIndicator.line.inset, vars.space[4]),
+  right: fallbackVar(vars.newIndicator.line.inset, vars.space[4]),
   bottom: '50%',
 });
 

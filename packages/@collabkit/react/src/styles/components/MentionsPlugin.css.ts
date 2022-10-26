@@ -4,7 +4,7 @@ import { vars } from '../theme';
 
 export const typeahead = style({
   position: 'absolute',
-  background: fallbackVar(vars.mentions.typeahead.background, vars.color.surface),
+  background: fallbackVar(vars.mentions.typeahead.background, vars.color.background),
   borderRadius: vars.mentions.typeahead.borderRadius,
   zIndex: 9999,
   padding: vars.mentions.typeahead.padding,

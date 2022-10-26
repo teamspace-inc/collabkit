@@ -1,9 +1,6 @@
 export const CommentBase = {
   comment: {
-    paddingTop: 'initial',
-    paddingBottom: 'initial',
-    paddingLeft: 'initial',
-    paddingRight: 'initial',
+    padding: 'initial',
     gap: 'initial',
     hover: {
       background: 'initial',
@@ -12,6 +9,7 @@ export const CommentBase = {
       gap: 'initial',
       nameAndTimestamp: {
         gap: 'initial',
+        flexDirection: 'initial',
       },
       profile: {
         gap: 'initial',

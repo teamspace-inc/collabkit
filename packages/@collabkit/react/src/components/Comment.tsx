@@ -11,11 +11,10 @@ import { useId } from '../hooks/useId';
 import * as Profile from './Profile';
 import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
 import { useApp } from '../hooks/useApp';
-import { CommentTarget, CommentType, timelineUtils } from '@collabkit/core';
+import { CommentTarget, timelineUtils } from '@collabkit/core';
 import * as styles from '../styles/components/Comment.css';
-import { Check, DotsThree } from './icons';
+import { DotsThree } from './icons';
 import { Menu, MenuItem } from './Menu';
-import { IconButton } from './IconButton';
 
 export function Provider(props: { children: React.ReactNode; eventId: string }) {
   const { threadId, workspaceId } = useThreadContext();
@@ -50,7 +49,6 @@ export function Root(props: {
   children: React.ReactNode;
   className?: string;
   eventId: string;
-  type?: CommentType; // why don't we just fetch this from the store?
   style?: React.CSSProperties;
 }) {
   const { threadId, workspaceId, userId } = useThreadContext();
@@ -87,7 +85,7 @@ export function Root(props: {
     <CommentContext.Provider value={target}>
       <Profile.Provider profileId={createdById}>
         <div
-          className={props.className ?? styles.root({ type: props.type })}
+          className={props.className ?? styles.root}
           onClick={onClick}
           ref={ref}
           style={props.style}
@@ -163,17 +161,19 @@ export const Content = (props: { profileIndent?: boolean } & React.ComponentProp
 
 type CommentMenuItemType = 'commentEditButton' | 'commentDeleteButton' | 'reopenThreadButton';
 
+export const Actions = (props: React.ComponentProps<'div'>) => {
+  return <div className={styles.actions}>{props.children}</div>;
+};
+
 const CommentMenu = (props: { className?: string }) => {
   const { events, store } = useApp();
   const comment = useCommentContext();
 
-  const { createdById } = useCommentStore();
-  const { threadId, workspaceId, userId } = useThreadContext();
+  const { threadId, workspaceId } = useThreadContext();
 
   const { workspaces } = useSnapshot(store);
   const workspace = workspaces[workspaceId];
   const timeline = workspace.timeline[threadId];
-  const isFirstComment = Object.keys(timeline)[0] === comment.eventId;
 
   const isResolved = timelineUtils.computeIsResolved(timeline);
 
@@ -187,42 +187,18 @@ const CommentMenu = (props: { className?: string }) => {
   );
 
   return (
-    <div className={styles.actions}>
-      {isFirstComment && !isResolved && (
-        <IconButton
-          // TODO: tooltip hijacks focus when used within a modal popover
-          // tooltip={isResolved ? 'Re-open' : 'Mark as Resolved and Hide'}
-          onPointerDown={(e) =>
-            events.onPointerDown(e, {
-              target: {
-                threadId,
-                workspaceId,
-                type: 'resolveThreadButton',
-              },
-            })
-          }
-        >
-          <Check size={16} weight={'bold'} />
-        </IconButton>
-      )}
-      {createdById === userId && (
-        <Menu<CommentMenuItemType>
-          className={props.className ?? styles.menu}
-          icon={<DotsThree size={16} />}
-          onItemClick={onItemClick}
-        >
-          <MenuItem className={styles.menuItem} label="Edit" targetType="commentEditButton" />
-          <MenuItem className={styles.menuItem} label="Delete" targetType="commentDeleteButton" />
-          {isResolved && (
-            <MenuItem className={styles.menuItem} label="Re-open" targetType="reopenThreadButton" />
-          )}
-        </Menu>
-      )}
-    </div>
+    <Menu<CommentMenuItemType>
+      icon={<DotsThree size={16} weight={'light'} />}
+      onItemClick={onItemClick}
+    >
+      <MenuItem label="Edit" targetType="commentEditButton" />
+      <MenuItem label="Delete" targetType="commentDeleteButton" />
+      {isResolved && <MenuItem label="Re-open" targetType="reopenThreadButton" />}
+    </Menu>
   );
 };
 
-export { CommentMenu as Menu };
+export { CommentMenu as MoreMenu };
 
 // Anatomy
 

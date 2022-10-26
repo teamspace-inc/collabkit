@@ -2,6 +2,7 @@ import { fallbackVar, style } from '@vanilla-extract/css';
 import { vars } from '../theme';
 import * as composerStyles from './Composer.css';
 import * as commentStyles from './Comment.css';
+
 import { recipe } from '@vanilla-extract/recipes';
 
 export const root = style({
@@ -9,14 +10,26 @@ export const root = style({
   backgroundColor: fallbackVar(vars.popoverThread.background, vars.color.background),
   display: 'flex',
   flexDirection: 'column',
+  color: 'red',
   height: '100%',
   position: 'relative',
-  padding: fallbackVar(vars.popoverThread.padding, vars.space[0]),
-  width: fallbackVar(vars.popoverThread.width, '264px'),
+  width: fallbackVar(vars.popoverThread.width, '272px'),
   border: fallbackVar(vars.popoverThread.border, 'none'),
   boxShadow: fallbackVar(vars.popoverThread.boxShadow, vars.shadow.high),
   borderRadius: fallbackVar(vars.popoverThread.borderRadius, vars.space[3]),
   fontFamily: vars.fontFamily,
+});
+
+// these need to go inside the scrollarea
+// but root is outside it, so we split them out and
+// apply them using separate 'spacer' divs at the top and
+// bottom of PopoverThread
+export const spacerTop = style({
+  paddingTop: fallbackVar(vars.popoverThread.paddingTop, `0`),
+});
+
+export const spacerBottom = style({
+  paddingBottom: fallbackVar(vars.popoverThread.paddingBottom, vars.space[4]),
 });
 
 export const previewRoot = style([
@@ -24,22 +37,22 @@ export const previewRoot = style([
   {
     boxShadow: fallbackVar(vars.popoverThread.preview.boxShadow, vars.shadow.standard),
     cursor: 'pointer',
+    padding: `${vars.space[4]} 0`,
   },
 ]);
 
-export const commentList = style({
-  display: 'flex',
-  flexDirection: 'column',
-  flex: '1',
+export const reply = style({
+  marginTop: '2px',
+  color: fallbackVar(vars.popoverThread.preview.reply.color, vars.color.textSecondary),
+  fontSize: fallbackVar(vars.popoverThread.preview.reply.fontSize, vars.text.base.fontSize),
+  lineHeight: fallbackVar(vars.popoverThread.preview.reply.lineHeight, vars.text.base.lineHeight),
+  fontWeight: fallbackVar(vars.popoverThread.preview.reply.fontWeight, vars.fontWeight.regular),
+  letterSpacing: fallbackVar(
+    vars.popoverThread.preview.reply.letterSpacing,
+    vars.text.base.letterSpacing
+  ),
+  fontFamily: vars.fontFamily,
 });
-
-export const comment = style([
-  commentStyles.root({ type: 'default' }),
-  {
-    padding: '16px',
-    gap: '12px',
-  },
-]);
 
 export const commentHeader = recipe({
   base: {
@@ -53,16 +66,21 @@ export const commentHeader = recipe({
   variants: {},
 });
 
+export const commentNameAndTimestampWrapper = style([
+  commentStyles.nameAndTimestampWrapper,
+  {
+    // flexDirection: 'column',
+    // gap: vars.space[0],
+  },
+]);
+
 export const composerRoot = composerStyles.root;
 
 export const composerForm = style({
   borderTop: fallbackVar(vars.popoverThread.composer.form.borderTop, 'none'),
   display: 'flex',
   flexDirection: 'column',
-  padding: fallbackVar(
-    vars.popoverThread.composer.form.padding,
-    `0 ${vars.space[4]} ${vars.space[3]}`
-  ),
+  padding: fallbackVar(vars.popoverThread.composer.form.padding, `0 ${vars.space[4]} 0`),
   gap: fallbackVar(vars.popoverThread.composer.form.gap, vars.space[2]),
   fontFamily: vars.fontFamily,
 });

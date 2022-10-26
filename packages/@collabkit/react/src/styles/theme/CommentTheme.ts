@@ -1,9 +1,6 @@
 export const CommentTheme = {
   comment: {
-    paddingTop: 'comment-padding-top',
-    paddingRight: 'comment-padding-right',
-    paddingLeft: 'comment-padding-left',
-    paddingBottom: 'comment-padding-bottom',
+    padding: 'comment-padding',
     gap: 'comment-gap',
     hover: {
       background: 'comment-hover-background',
@@ -12,6 +9,7 @@ export const CommentTheme = {
       gap: 'comment-header-gap',
       nameAndTimestamp: {
         gap: 'comment-header-name-and-timestamp-gap',
+        flexDirection: 'comment-header-name-and-timestamp-flex-direction',
       },
       profile: {
         gap: 'comment-header-profile-gap',

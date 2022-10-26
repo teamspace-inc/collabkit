@@ -97,6 +97,7 @@ export const cashboard: CustomTheme = {
       header: {
         alignItems: 'center',
       },
+      
     },
     composer: {
       form: {

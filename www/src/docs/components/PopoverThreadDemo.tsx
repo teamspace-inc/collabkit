@@ -21,6 +21,8 @@ export function PurePopoverThreadDemo() {
           onClick={() => setPopoverState('open')}
           style={{
             padding: '10px 20px',
+            position: 'relative',
+            top: '-50px',
             marginLeft: '-200px',
             width: '120px',
             borderRadius: '6px',

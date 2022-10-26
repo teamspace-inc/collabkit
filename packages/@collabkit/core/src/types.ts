@@ -149,7 +149,17 @@ export type Target =
   | CommentEditButtonTarget
   | CommentDeleteButtonTarget
   | ShowSidebarButtonTarget
-  | HideSidebarButtonTarget;
+  | HideSidebarButtonTarget
+  | NextThreadButtonTarget
+  | PreviousThreadButtonTarget;
+
+export type NextThreadButtonTarget = {
+  type: 'nextThreadButton';
+};
+
+export type PreviousThreadButtonTarget = {
+  type: 'previousThreadButton';
+};
 
 export type MenuTarget = {
   type: 'menu';

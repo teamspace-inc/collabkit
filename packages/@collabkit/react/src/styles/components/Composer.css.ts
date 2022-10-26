@@ -88,8 +88,8 @@ export const root = style({
   display: 'flex',
   flexDirection: 'row',
   flexWrap: 'wrap',
-  alignItems: 'flex-end',
-  // padding: fallbackVar(vars.composer.root.padding, `0 ${vars.space[4]}`),
+  alignItems: 'flex-start',
+  gap: vars.space[2],
   fontFamily: vars.fontFamily,
 });
 
