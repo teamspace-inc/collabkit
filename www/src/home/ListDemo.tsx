@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ThemeProvider, Thread } from '@collabkit/react';
 import { light } from '../styles/Theme.css';
-import { AcmeLogo, Container, Heading, HeadingRow, UI } from './DemoUI';
+import { AcmeLogo, Container, DemoTip, Heading, HeadingRow, UI } from './DemoUI';
 import * as styles from './ListDemo.css';
 import { default as X } from 'phosphor-react/dist/icons/X.esm.js';
 
@@ -123,6 +123,7 @@ function Row({
 }
 
 function Sidebar({ employee, onClose }: { employee: Employee | undefined; onClose: () => void }) {
+  const [showTip, setShowTip] = useState(true);
   if (employee == null) return null;
   return (
     <div className={styles.modal} onClick={onClose}>
@@ -144,7 +145,22 @@ function Sidebar({ employee, onClose }: { employee: Employee | undefined; onClos
           <dt className={styles.fieldName}>Department</dt>
           <dd>{employee.department}</dd>
         </dl>
-        <Thread threadId={`employee-${employee.id}`} />
+        <div style={{ display: 'contents' }} onFocus={() => setShowTip(false)}>
+          <Thread threadId={`employee-${employee.id}`} autoFocus={false} />
+        </div>
+        {showTip && (
+          <DemoTip
+            color="dark"
+            style={{
+              position: 'absolute',
+              bottom: 84,
+              left: '50%',
+              transform: 'translateX(-50%)',
+            }}
+          >
+            Try it out!
+          </DemoTip>
+        )}
       </div>
     </div>
   );

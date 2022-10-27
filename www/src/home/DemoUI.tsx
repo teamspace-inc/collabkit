@@ -1,4 +1,4 @@
-import { ComponentProps } from 'react';
+import { ComponentProps, CSSProperties, ReactNode } from 'react';
 import * as styles from './DemoUI.css';
 
 export const UI = (props: ComponentProps<'div'>) => <div {...props} className={styles.ui}></div>;
@@ -23,5 +23,22 @@ export function AcmeLogo() {
         fill="#222222"
       />
     </svg>
+  );
+}
+
+export function DemoTip({
+  color = 'light',
+  children,
+  style,
+}: {
+  color?: 'light' | 'dark';
+  children: ReactNode;
+  style?: CSSProperties;
+}) {
+  return (
+    <div className={styles.demoTip({ color })} style={style}>
+      <div className={styles.demoTipArrow({ color })} />
+      Try it out!
+    </div>
   );
 }
