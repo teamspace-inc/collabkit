@@ -53,7 +53,7 @@ export const demoTip = recipe({
     alignItems: 'center',
     padding: '21px 14px',
     position: 'relative',
-    overflow: 'visible',
+    borderRadius: 12,
   },
   variants: {
     color: {
@@ -77,7 +77,6 @@ export const demoTipArrow = recipe({
     left: '50%',
     bottom: 0,
     transform: 'translate(-50%, 50%) rotate(45deg)',
-    borderRadius: 12,
   },
   variants: {
     color: {
