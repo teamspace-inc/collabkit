@@ -11,7 +11,7 @@ export const card = style({
   fontFamily: 'Inter, sans-serif !important',
   background: '#4A3A63',
   width: 480,
-  height: 400,
+  height: 420,
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',

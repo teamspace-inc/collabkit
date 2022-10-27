@@ -27,8 +27,8 @@ export function SmallDemos() {
         <h1>Works with any UI</h1>
         <h3 className={h3OnPurple}>CollabKit supports multiple ways to comment</h3>
       </div>
-      {demos.map((demo) => (
-        <div className={vertical20}>
+      {demos.map((demo, i) => (
+        <div className={vertical20} key={`demo-${i}`}>
           <h4 className={demoStyles.h4}>{demo.name}</h4>
           {<img src={demo.svg} style={{ flex: 1, maxWidth: 'calc(100vw - 80px)' }} />}
         </div>

@@ -32,7 +32,7 @@ export const h3OnPurple = style({
 });
 
 export const purpleBg = style({
-  background: '#35284A',
+  background: '#2E2739',
   color: 'white',
 });
 

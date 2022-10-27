@@ -25,7 +25,7 @@ export const COMPONENTS: ComponentProps[] = [
     title: 'Thread',
     description: 'A comment thread that can be rendered anywhere in your app.',
     component: (
-      <div style={{ width: 256, height: 292 }}>
+      <div style={{ width: 256, height: 320 }}>
         <Thread threadId="thread3" />
       </div>
     ),
@@ -103,7 +103,7 @@ export function Components(props: { setInvertFilter: (invert: number) => void })
       <h3 className={styles.h3}>Build your commenting system with ease</h3>
       <CarouselProvider
         naturalSlideWidth={520}
-        naturalSlideHeight={500}
+        naturalSlideHeight={520}
         totalSlides={5}
         visibleSlides={width / 500}
         // figure out padding for site
@@ -127,9 +127,9 @@ export function Components(props: { setInvertFilter: (invert: number) => void })
                 flexDirection: 'column',
                 alignItems: 'center',
                 justifyContent: 'center',
-                height: '400px',
+                height: '420px',
                 borderRadius: '24px',
-                background: '#2E2739',
+                border: '1px solid #4A3A63',
                 gap: '20px',
               }}
             >
