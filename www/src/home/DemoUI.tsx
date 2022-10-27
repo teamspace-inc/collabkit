@@ -1,4 +1,4 @@
-import { ComponentProps, CSSProperties, ReactNode } from 'react';
+import { ComponentProps, CSSProperties, forwardRef, ReactNode } from 'react';
 import * as styles from './DemoUI.css';
 
 export const UI = (props: ComponentProps<'div'>) => <div {...props} className={styles.ui}></div>;
@@ -26,19 +26,20 @@ export function AcmeLogo() {
   );
 }
 
-export function DemoTip({
-  color = 'light',
-  children,
-  style,
-}: {
+type DemoTipProps = {
   color?: 'light' | 'dark';
   children: ReactNode;
   style?: CSSProperties;
-}) {
+};
+
+export const DemoTip = forwardRef<HTMLDivElement, DemoTipProps>(function DemoTip(
+  { color = 'light', children, style }: DemoTipProps,
+  ref
+) {
   return (
-    <div className={styles.demoTip({ color })} style={style}>
+    <div style={style} ref={ref}>
+      <div className={styles.demoTip({ color })}>{children}</div>
       <div className={styles.demoTipArrow({ color })} />
-      Try it out!
     </div>
   );
-}
+});

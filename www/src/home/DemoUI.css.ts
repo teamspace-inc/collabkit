@@ -81,10 +81,10 @@ export const demoTipArrow = recipe({
   variants: {
     color: {
       light: {
-        background: vars.color.bgContrastHigh,
+        background: 'white',
       },
       dark: {
-        background: vars.color.textContrastHigh,
+        background: '#222222',
       },
     },
   },
