@@ -20,6 +20,8 @@ export const demoWrapper = style({
   display: 'grid',
   gridTemplateColumns: 'minmax(100%, 1124px)',
   flex: 1,
+  marginLeft: 16,
+  marginRight: 16,
 });
 
 export const demoMaxWidth = style({});
