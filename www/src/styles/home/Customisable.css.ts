@@ -25,6 +25,14 @@ export const controls = style({
   width: '100%',
 });
 
+export const sliderLabel = style({
+  fontFamily: 'Satoshi',
+  fontStyle: 'normal',
+  fontWeight: 700,
+  fontSize: 16,
+  lineHeight: '110%',
+});
+
 // toggle buttons
 
 export const toggleButtonGroup = style({});
@@ -70,4 +78,43 @@ export const toggleButtonGroupOptions = style({
   gap: '16px',
   display: 'flex',
   flexDirection: 'row',
+});
+
+// theme slider
+
+export const slider = style({
+  position: 'relative',
+  display: 'flex',
+  alignItems: 'center',
+  userSelect: 'none',
+  touchAction: 'none',
+  width: '292px',
+  marginTop: 21,
+  marginBottom: 21,
+});
+
+export const track = style({
+  backgroundColor: 'rgba(0,0,0,0.3)',
+  position: 'relative',
+  flexGrow: 1,
+  borderRadius: '9999px',
+  height: 8,
+});
+
+export const range = style({
+  position: 'absolute',
+  backgroundColor: 'white',
+  borderRadius: '9999px',
+  height: '100%',
+});
+
+export const thumb = style({
+  all: 'unset',
+  display: 'block',
+  width: 50,
+  height: 50,
+  backgroundColor: 'white',
+  borderRadius: 50,
+  ':hover': { backgroundColor: 'white' },
+  ':focus': { boxShadow: `0 0 0 5px ${'rgba(0,0,0,0.3)'}` },
 });

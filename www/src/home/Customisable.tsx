@@ -6,6 +6,7 @@ import { ThemeProvider } from '@collabkit/react';
 import { controls, modal } from '../styles/home/Customisable.css';
 import { ToggleButtonGroup } from './ToggleButtonGroup';
 import { COMPONENTS } from './Components';
+import { purpleBg } from '../styles/Website.css';
 
 export function Customisable(props: { setInvertFilter: (invert: number) => void }) {
   const { ref } = useInvertFilter(props);
@@ -14,7 +15,7 @@ export function Customisable(props: { setInvertFilter: (invert: number) => void 
   const [component, setComponent] = useState(0);
 
   return (
-    <section ref={ref} className={`${dark} ${styles.section}`} id="HowItWorks">
+    <section ref={ref} className={`${dark} ${purpleBg}`} id="HowItWorks">
       <h1>Fully customisable</h1>
       <h3 className={styles.h3}>Use a default theme or seamlesly integrate into your UI</h3>
       <div className={modal}>

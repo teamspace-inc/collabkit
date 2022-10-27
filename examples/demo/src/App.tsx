@@ -76,10 +76,10 @@ function Demo() {
       appId={appId}
       workspace={workspace}
       callbacks={{
-        // onInboxThreadClick: (data) => {
-        //   // defining this overrides the default action for clicking an inbox item
-        //   console.log('inbox thread, click', data);
-        // },
+        onInboxThreadClick: (data) => {
+          // defining this overrides the default action for clicking an inbox item
+          console.log('inbox thread, click', data);
+        },
         onTimestampClick: (data) => {
           console.log('timestamp, click', data);
         },

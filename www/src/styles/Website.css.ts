@@ -22,8 +22,30 @@ globalStyle(`${website} section`, {
   '@media': {
     'screen and (max-width: 720px)': {
       gap: '0px',
+      padding: '80px 20px',
     },
   },
+});
+
+export const h3OnPurple = style({
+  color: '#ADA0C0 !important',
+});
+
+export const purpleBg = style({
+  background: '#35284A',
+  color: 'white',
+});
+
+export const vertical20 = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '20px',
+});
+
+export const vertical40 = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '40px',
 });
 
 globalStyle(`${website} small`, {
@@ -51,8 +73,8 @@ globalStyle(`${website} h1`, {
 
   '@media': {
     'screen and (max-width: 720px)': {
-      lineHeight: '43px',
-      fontSize: '48px',
+      lineHeight: '32px',
+      fontSize: '29px',
     },
   },
 });
@@ -87,7 +109,7 @@ globalStyle(`${website} h3`, {
   '@media': {
     'screen and (max-width: 720px)': {
       fontSize: '20px',
-      lineHeight: '22px',
+      lineHeight: '30px',
     },
   },
 });

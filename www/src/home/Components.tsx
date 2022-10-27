@@ -10,7 +10,7 @@ import {
   componentDescription,
   componentTitle,
 } from '../styles/home/Components.css';
-import { button } from '../styles/Website.css';
+import { button, purpleBg } from '../styles/Website.css';
 import { Link } from 'wouter';
 import { useWindowSize } from '../hooks/useWindowSize';
 
@@ -98,11 +98,7 @@ export function Components(props: { setInvertFilter: (invert: number) => void })
   const width = size?.width ?? window.innerWidth;
 
   return (
-    <section
-      className={`${dark} ${styles.section}`}
-      style={{ padding: '60px 0px' }}
-      id="Components"
-    >
+    <section className={`${dark} ${purpleBg}`} style={{ padding: '60px 0px' }} id="Components">
       <h1>React components</h1>
       <h3 className={styles.h3}>Build your commenting system with ease</h3>
       <CarouselProvider
