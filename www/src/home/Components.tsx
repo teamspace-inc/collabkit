@@ -19,7 +19,7 @@ type ComponentProps = {
   component: React.ReactNode;
 };
 
-const components: ComponentProps[] = [
+export const COMPONENTS: ComponentProps[] = [
   {
     title: 'Thread',
     description: 'A comment thread that can be rendered anywhere in your app.',
@@ -115,7 +115,7 @@ export function Components(props: { setInvertFilter: (invert: number) => void })
         <Slider>
           {/* empty slide to act as left margin */}
           <Slide index={0} style={{ width: (window.innerWidth - 1124) / 2 }} />
-          {components.map((component, index) => (
+          {COMPONENTS.map((component, index) => (
             <Slide key={index} index={index} style={{ outline: 'none' }}>
               <Component {...component} />
             </Slide>

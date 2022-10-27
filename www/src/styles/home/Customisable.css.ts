@@ -32,7 +32,7 @@ export const toggleButtonGroup = style({});
 export const toggleButton = recipe({
   base: {
     background: 'rgba(0, 0, 0, 0.3)',
-    width: '50px',
+    minWidth: '50px',
     height: '50px',
     display: 'flex',
     alignItems: 'center',
