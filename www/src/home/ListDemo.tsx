@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { Inbox, ThemeProvider, Thread } from '@collabkit/react';
+import { ThemeProvider, Thread } from '@collabkit/react';
 import { light } from '../styles/Theme.css';
 import { AcmeLogo, Container, Heading, HeadingRow, UI } from './DemoUI';
 import * as styles from './ListDemo.css';
+import { default as X } from 'phosphor-react/dist/icons/X.esm.js';
 
 import avatar1 from '../assets/home/list/employees/5e6802566d3b380006d3f13b_transparent.png';
 import avatar2 from '../assets/home/list/employees/5e685b006d3b380006e7ad45_transparent.png';
@@ -11,8 +12,8 @@ import avatar4 from '../assets/home/list/employees/5e6876c86d3b380006edf213_tran
 import avatar5 from '../assets/home/list/employees/5e687bc56d3b380006ef19fb_transparent.png';
 import avatar6 from '../assets/home/list/employees/5e6886b66d3b380006f19c8f_transparent.png';
 import avatar7 from '../assets/home/list/employees/5e6887c36d3b380006f1da63_transparent.png';
-import avatar8 from '../assets/home/list/employees/5e6888a66d3b380006f20e33_transparent.png';
-import avatar9 from '../assets/home/list/employees/5e6888f06d3b380006f21e9d_transparent.png';
+import avatar8 from '../assets/home/list/employees/5e6888f06d3b380006f21e9d_transparent.png';
+import avatar9 from '../assets/home/list/employees/5e6888a66d3b380006f20e33_transparent.png';
 
 type Employee = {
   id: string;
@@ -82,7 +83,7 @@ const employees: Employee[] = [
   },
   {
     id: '3600818H',
-    name: 'Irwin Ochoa',
+    name: 'Irene Ochoa',
     role: 'Project Manager',
     hiredOn: '04/09/22',
     department: 'Engineering',
@@ -98,9 +99,20 @@ const employees: Employee[] = [
   },
 ];
 
-function Row({ employee, onClick }: { employee: Employee; onClick: (id: string) => void }) {
+function Row({
+  employee,
+  selectedId,
+  onClick,
+}: {
+  employee: Employee;
+  selectedId: string | undefined;
+  onClick: (id: string) => void;
+}) {
   return (
-    <div className={styles.row} onClick={() => onClick(employee.id)}>
+    <div
+      className={styles.row({ selected: selectedId === employee.id })}
+      onClick={() => onClick(employee.id)}
+    >
       <span className={styles.name}>
         <input type="checkbox" className={styles.checkbox} />
         {employee.name}
@@ -110,13 +122,17 @@ function Row({ employee, onClick }: { employee: Employee; onClick: (id: string) 
   );
 }
 
-function Sidebar({ employee }: { employee: Employee | undefined }) {
+function Sidebar({ employee, onClose }: { employee: Employee | undefined; onClose: () => void }) {
   if (employee == null) return null;
-  console.log('thread');
   return (
-    <div className={styles.modal}>
-      <div className={styles.sidebar}>
-        <div className={styles.sidebarTitle}>Details</div>
+    <div className={styles.modal} onClick={onClose}>
+      <div className={styles.sidebar} onClick={(e) => e.stopPropagation()}>
+        <div className={styles.sidebarTitle}>
+          Details
+          <button className={styles.closeButton} onClick={onClose} type="button">
+            <X weight={'bold'} size={16} />
+          </button>
+        </div>
         <img className={styles.avatar} src={employee.avatar} />
         <div className={styles.employeeName}>{employee.name}</div>
         <div className={styles.employeeRole}>{employee.role}</div>
@@ -135,7 +151,7 @@ function Sidebar({ employee }: { employee: Employee | undefined }) {
 }
 
 export function ListDemo() {
-  const [selectedId, setSelectedId] = useState(employees[3].id);
+  const [selectedId, setSelectedId] = useState<string | undefined>(undefined);
   const selectedEmployee = selectedId ? employees.find(({ id }) => id === selectedId) : undefined;
   return (
     <ThemeProvider theme="light">
@@ -150,11 +166,16 @@ export function ListDemo() {
             </HeadingRow>
             <div className={styles.list}>
               {employees.map((employee) => (
-                <Row key={employee.id} employee={employee} onClick={setSelectedId} />
+                <Row
+                  key={employee.id}
+                  employee={employee}
+                  selectedId={selectedId}
+                  onClick={setSelectedId}
+                />
               ))}
             </div>
           </Container>
-          <Sidebar employee={selectedEmployee} />
+          <Sidebar employee={selectedEmployee} onClose={() => setSelectedId(undefined)} />
         </UI>
       </div>
     </ThemeProvider>

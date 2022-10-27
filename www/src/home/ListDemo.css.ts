@@ -1,15 +1,31 @@
 import { style } from '@vanilla-extract/css';
+import { recipe } from '@vanilla-extract/recipes';
 import { vars } from '../styles/Theme.css';
 
 export const list = style({
   marginTop: 30,
 });
 
-export const row = style({
-  borderTop: '1px solid #E1E7ED',
-  height: 40,
-  display: 'flex',
-  alignItems: 'center',
+export const row = recipe({
+  base: {
+    borderTop: '1px solid #E1E7ED',
+    height: 40,
+    display: 'flex',
+    alignItems: 'center',
+
+    selectors: {
+      '&:hover': {
+        background: '#EBF5FF',
+      },
+    },
+  },
+  variants: {
+    selected: {
+      true: {
+        background: '#EBF5FF',
+      },
+    },
+  },
 });
 
 export const name = style({
@@ -36,6 +52,7 @@ export const checkbox = style({});
 export const modal = style({
   position: 'absolute',
   inset: 0,
+  background: 'rgba(0, 0, 0, 0.1)',
 });
 
 export const sidebar = style({
@@ -46,9 +63,9 @@ export const sidebar = style({
 
   borderLeft: '1px solid #E1E7ED',
 
-  display: 'flex  ',
+  display: 'flex',
   flexDirection: 'column',
-  backgroundColor: 'white',
+  background: 'white',
   padding: 16,
 });
 
@@ -59,6 +76,14 @@ export const sidebarTitle = style({
   lineHeight: '95%',
   color: vars.color.textContrastHigh,
   marginBottom: 40,
+
+  display: 'flex',
+  justifyContent: 'space-between',
+});
+
+export const closeButton = style({
+  background: 'none',
+  padding: 4,
 });
 
 export const avatar = style({
@@ -103,6 +128,7 @@ export const detailsBox = style({
   border: '1px solid #E1E7ED',
   borderRadius: 8,
   padding: 16,
+  marginBottom: 20,
 
   display: 'flex',
   flexWrap: 'wrap',
