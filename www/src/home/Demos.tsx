@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import PagesSvg from '../assets/Pages.svg';
 import ChartSvg from '../assets/Chart.svg';
 import TextSvg from '../assets/Text.svg';
 import { dark } from '../styles/Theme.css';
@@ -9,14 +8,12 @@ import { ListDemo } from './ListDemo';
 import { DataGridDemo } from '../components/DataGridDemo';
 import * as styles from '../styles/home/Demos.css';
 
-const scenarios = ['Pages', 'Lists', 'Tables', 'Charts', 'Text'] as const;
+const scenarios = ['Lists', 'Tables', 'Charts', 'Text'] as const;
 type ScenarioName = typeof scenarios[number];
 
 function Scenario({ scenario }: { scenario: ScenarioName }) {
   const imgStyle = { width: '100%' };
   switch (scenario) {
-    case 'Pages':
-      return <img src={PagesSvg} style={imgStyle} />;
     case 'Lists':
       return <ListDemo />;
     case 'Tables':
