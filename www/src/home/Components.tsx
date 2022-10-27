@@ -12,6 +12,7 @@ import {
 } from '../styles/home/Components.css';
 import { button } from '../styles/Website.css';
 import { Link } from 'wouter';
+import { useWindowSize } from '../hooks/useWindowSize';
 
 type ComponentProps = {
   title: string;
@@ -93,6 +94,9 @@ function Component(props: ComponentProps) {
 }
 
 export function Components(props: { setInvertFilter: (invert: number) => void }) {
+  const size = useWindowSize();
+  const width = size?.width ?? window.innerWidth;
+
   return (
     <section
       className={`${dark} ${styles.section}`}
@@ -105,7 +109,7 @@ export function Components(props: { setInvertFilter: (invert: number) => void })
         naturalSlideWidth={520}
         naturalSlideHeight={500}
         totalSlides={5}
-        visibleSlides={window.innerWidth / 500}
+        visibleSlides={width / 500}
         // figure out padding for site
         style={{
           width: '100%',
@@ -114,7 +118,7 @@ export function Components(props: { setInvertFilter: (invert: number) => void })
       >
         <Slider>
           {/* empty slide to act as left margin */}
-          <Slide index={0} style={{ width: (window.innerWidth - 1124) / 2 }} />
+          <Slide index={0} style={{ width: (width - 1124) / 2 }} />
           {COMPONENTS.map((component, index) => (
             <Slide key={index} index={index} style={{ outline: 'none' }}>
               <Component {...component} />
