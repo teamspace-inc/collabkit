@@ -151,7 +151,7 @@ function Sidebar({ employee, onClose }: { employee: Employee | undefined; onClos
 }
 
 export function ListDemo() {
-  const [selectedId, setSelectedId] = useState<string | undefined>(undefined);
+  const [selectedId, setSelectedId] = useState<string | undefined>(employees[3].id);
   const selectedEmployee = selectedId ? employees.find(({ id }) => id === selectedId) : undefined;
   return (
     <ThemeProvider theme="light">
