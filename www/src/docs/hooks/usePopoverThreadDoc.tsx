@@ -26,9 +26,7 @@ export function App() {
       Hello world
     </PopoverTrigger>
   </div>
-}
-
-// count is 1`)}
+}`)}
       </div>
 
       <Markdown
