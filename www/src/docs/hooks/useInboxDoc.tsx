@@ -1,5 +1,4 @@
 import { renderCodeSnippet } from '../CodeEditor';
-import { Markdown } from '../Markdown';
 
 export function UseInboxDoc() {
   return (
