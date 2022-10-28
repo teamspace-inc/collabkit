@@ -5,7 +5,7 @@ import { DocDemoContainer } from '../Doc';
 export function InboxButtonDoc() {
   return (
     <>
-      <h2>A button with an unread indicator.</h2>
+      <h2>A button with an unread indicator</h2>
       <DocDemoContainer
         style={{
           padding: 0,

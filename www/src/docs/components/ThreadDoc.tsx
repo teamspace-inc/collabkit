@@ -7,7 +7,7 @@ import ThreadMarkdown from '../markdown/Thread.md?raw';
 export function ThreadDoc() {
   return (
     <>
-      <h2>A comment thread that can be rendered anywhere in your app.</h2>
+      <h2>A comment thread that can be rendered anywhere in your app</h2>
       <ThreadDemo className={docDemoContainer} />
       <div>
         <h3>Usage</h3>

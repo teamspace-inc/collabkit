@@ -33,7 +33,7 @@ function ThemeName(props: { children: React.ReactNode }) {
 export function CustomisationDoc() {
   return (
     <>
-      <h2>Completely match your apps look and feel.</h2>
+      <h2>Completely match your apps look and feel</h2>
       <div>
         <h3>Built-in themes</h3>
         <p>

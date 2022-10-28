@@ -4,7 +4,7 @@ import { PopoverThreadDemo } from './PopoverThreadDemo';
 export function PopoverThreadDoc() {
   return (
     <>
-      <h2>A comment thread that anchors to a component in your app.</h2>
+      <h2>A comment thread that anchors to a component in your app</h2>
       <PopoverThreadDemo />
       <div>
         <h3>Usage</h3>

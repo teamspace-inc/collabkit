@@ -3,7 +3,7 @@ import { renderCodeSnippet } from './CodeEditor';
 export function WorkspacesDoc() {
   return (
     <>
-      <h2>A way to group comment threads by team or company.</h2>
+      <h2>A way to group comment threads by team or company</h2>
       <div>
         <p>
           Workspaces group comment threads by team/company name. e.g. if some of our users belong to

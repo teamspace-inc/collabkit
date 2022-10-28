@@ -4,7 +4,7 @@ import { Markdown } from '../Markdown';
 export function UsePopoverThreadDoc() {
   return (
     <>
-      <h2>Control a Popover Thread.</h2>
+      <h2>Control a Popover Thread</h2>
       <div>
         <h3>Usage</h3>
         <p>

@@ -3,7 +3,7 @@ import { renderCodeSnippet } from '../CodeEditor';
 export function UseInboxDoc() {
   return (
     <>
-      <h2>Subscribe to a users inbox.</h2>
+      <h2>Subscribe to a users inbox</h2>
       <div>
         <h3>Usage</h3>
         <p>
