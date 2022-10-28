@@ -68,7 +68,7 @@ export function Inbox(props: { formatTimestamp?: (timestamp: number) => string }
   return (
     <ThemeWrapper>
       <div className={styles.root} style={style}>
-        {items.length === 0 ? (
+        {Object.keys(items).length === 0 ? (
           <EmptyState />
         ) : (
           <ScrollAreaRoot>
