@@ -12,9 +12,7 @@ export function UseUnreadCommentsCountDoc() {
         </p>
         {renderCodeSnippet(`import { useUnreadCommentsCount } from '@collabkit/react';
 
-const count = useUnreadCommentsCount({ threadId: 'unique-thread-id' });
-
-// count is 1`)}
+const count = useUnreadCommentsCount({ threadId: 'unique-thread-id' });`)}
       </div>
 
       <Markdown

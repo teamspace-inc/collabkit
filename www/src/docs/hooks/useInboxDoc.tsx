@@ -36,7 +36,8 @@ export function App() {
 
       <div>
         <h3>Returns</h3>
-        <h4>{'InboxItem[]'}</h4>
+        <h4>{'{ [threadId: string]: InboxItem }'}</h4>
+        <p>Object keys are sorted to show latest threads first.</p>
         {/* find a better way to show types in our documentation */}
         {renderCodeSnippet(`type InboxItem = {  
   latestComment: {

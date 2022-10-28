@@ -18,7 +18,7 @@ import { UsePopoverThreadDoc } from './hooks/usePopoverThreadDoc';
 import { CustomisationDoc } from './CustomisationDoc';
 import { UseInboxDoc } from './hooks/useInboxDoc';
 // import { NotificationsDoc } from './NotificationsDoc';
-// import { AdvancedCustomisationDoc } from './AdvancedCustomisationDoc';
+import { AdvancedCustomisationDoc } from './AdvancedCustomisationDoc';
 
 import has from 'has';
 
@@ -34,6 +34,8 @@ import { SidebarInboxDoc } from './components/SidebarInboxDoc';
 import { SidebarInboxButtonDoc } from './components/SidebarInboxButtonDoc';
 import { DashboardPage } from '../pages/DashboardPage';
 import { dashboardStore } from '../dashboard/dashboardStore';
+import { AdvancedCommentDoc } from './advanced/AdvancedCommentDoc';
+import { AdvancedProfileDoc } from './advanced/AdvancedProfileDoc';
 
 export function getDocHref(path: string[], key: string) {
   return getPathHref(path.concat([key]));
@@ -84,7 +86,13 @@ export const DOCS: RootDocNode = {
   Workspaces: { component: WorkspacesDoc },
   Customisation: { component: CustomisationDoc },
   Notifications: { component: NotificationsDoc },
-  // 'Advanced Customisation': { component: AdvancedCustomisationDoc },
+  Advanced: {
+    title: 'Advanced',
+    children: {
+      Comment: { component: AdvancedCommentDoc },
+      Profile: { component: AdvancedProfileDoc },
+    },
+  },
 };
 
 function generateDocRoutes(docs: RootDocNode, path: string[] = []): JSX.Element[] {

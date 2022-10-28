@@ -25,6 +25,8 @@ import { SidebarInboxButton } from './components/SidebarInboxButton';
 import { SidebarInbox } from './components/SidebarInbox';
 import { PopoverThread } from './components/PopoverThread';
 import { useInbox } from './hooks/public/useInbox';
+import * as Comment from './components/Comment';
+import * as Profile from './components/Profile';
 
 export {
   CollabKitProvider as Provider,
@@ -45,6 +47,9 @@ export {
   useUnreadCommentsCount as useUnreadCount,
   useInbox,
   createValtioStore as internal_createStore,
+  // advanced
+  Comment,
+  Profile,
 };
 
 export type {

@@ -11,10 +11,7 @@ export function UseUnreadThreadsCountDoc() {
         </p>
         {renderCodeSnippet(`import { useUnreadThreadsCount } from '@collabkit/react';
 
-const count = useUnreadThreadsCount();
-
-console.log({ count })
-// count is 1`)}
+const count = useUnreadThreadsCount();`)}
       </div>
     </>
   );

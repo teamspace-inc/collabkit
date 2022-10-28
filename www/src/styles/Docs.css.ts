@@ -14,6 +14,12 @@ globalStyle(`${docs} blockquote`, {
   textIndent: 0,
   paddingLeft: 20,
   marginLeft: 0,
+  lineHeight: '24px',
+});
+
+globalStyle(`${docs} blockquote a`, {
+  fontSize: 14,
+  lineHeight: '24px',
 });
 
 globalStyle(`${docs} code`, {
