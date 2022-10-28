@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import { actions } from '@collabkit/client';
+import React from 'react';
 import { useSnapshot } from 'valtio';
 import { useApp } from '../hooks/useApp';
 import { ThreadContext } from '../hooks/useThreadContext';
@@ -12,11 +11,11 @@ import {
   ScrollAreaViewport,
 } from './ScrollArea';
 import { InboxItem } from './InboxItem';
-import { timelineUtils } from '@collabkit/core';
 import { ThemeWrapper } from './ThemeWrapper';
 import { ChatCentered } from './icons';
 import { emptyState } from '../styles/components/Thread.css';
 import { useOptionalSidebarContext } from './Sidebar';
+import { useInbox } from '../hooks/public/useInbox';
 
 export function unique<T>(value: T, index: number, self: T[]) {
   return self.indexOf(value) === index;
@@ -37,17 +36,11 @@ export function EmptyState() {
 
 export function Inbox(props: { formatTimestamp?: (timestamp: number) => string }) {
   const { store } = useApp();
-  const { workspaceId, workspaces, userId } = useSnapshot(store);
+  const { workspaceId, userId } = useSnapshot(store);
 
-  const workspace = workspaceId ? workspaces[workspaceId] : null;
+  const { items } = useInbox({ filter: 'open' });
 
-  const inbox = workspace?.inbox;
-
-  useEffect(() => {
-    actions.subscribeInbox(store);
-  }, [workspaceId]);
-
-  if (!inbox) {
+  if (!workspaceId) {
     return null;
   }
 
@@ -55,41 +48,16 @@ export function Inbox(props: { formatTimestamp?: (timestamp: number) => string }
     return null;
   }
 
-  if (!workspaceId) {
-    return null;
-  }
-
-  // todo this won't scale so we should add a view to load
-  // inboxResolved and inboxOpen
-  const inboxItems = inbox
-    ? // show threads with latest activity first
-      Object.keys(inbox)
-        .sort((a, b) => {
-          const aTime = +inbox[a].createdAt ?? 0;
-          const bTime = +inbox[b].createdAt ?? 0;
-          return bTime - aTime;
-        })
-        // filter out resolved threads
-        ?.filter(
-          (threadId) =>
-            !(
-              workspace.timeline?.[threadId] &&
-              timelineUtils.computeIsResolved(workspace.timeline?.[threadId])
-            )
-        )
-        .map((threadId) => {
-          return (
-            <ThreadContext.Provider
-              value={{ threadId, workspaceId, userId }}
-              key={`inboxThread-${threadId}`}
-            >
-              <InboxItem formatTimestamp={props.formatTimestamp} />
-            </ThreadContext.Provider>
-          );
-        })
-    : [];
-
-  const isEmpty = inboxItems?.filter((item) => item !== null).length === 0;
+  const inboxItems = Object.keys(items).map((threadId) => {
+    return (
+      <ThreadContext.Provider
+        value={{ threadId, workspaceId, userId }}
+        key={`inboxThread-${threadId}`}
+      >
+        <InboxItem formatTimestamp={props.formatTimestamp} />
+      </ThreadContext.Provider>
+    );
+  });
 
   // account for sidebar title height
   const sidebarContext = useOptionalSidebarContext();
@@ -100,7 +68,7 @@ export function Inbox(props: { formatTimestamp?: (timestamp: number) => string }
   return (
     <ThemeWrapper>
       <div className={styles.root} style={style}>
-        {isEmpty ? (
+        {items.length === 0 ? (
           <EmptyState />
         ) : (
           <ScrollAreaRoot>

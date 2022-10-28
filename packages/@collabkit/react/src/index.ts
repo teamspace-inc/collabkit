@@ -24,6 +24,7 @@ import { ThemeWrapper } from './components/ThemeWrapper';
 import { SidebarInboxButton } from './components/SidebarInboxButton';
 import { SidebarInbox } from './components/SidebarInbox';
 import { PopoverThread } from './components/PopoverThread';
+import { useInbox } from './hooks/public/useInbox';
 
 export {
   CollabKitProvider as Provider,
@@ -40,7 +41,9 @@ export {
   PopoverThread as InternalPopoverThread,
   usePopoverThread,
   useUnreadThreadsCount,
+  useUnreadCommentsCount,
   useUnreadCommentsCount as useUnreadCount,
+  useInbox,
   createValtioStore as internal_createStore,
 };
 

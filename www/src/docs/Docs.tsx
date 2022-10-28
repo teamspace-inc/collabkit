@@ -16,6 +16,7 @@ import { UseUnreadCommentsCountDoc } from './hooks/useUnreadCommentsCountDoc';
 import { UseUnreadThreadsCountDoc } from './hooks/useUnreadThreadsCountDoc';
 import { UsePopoverThreadDoc } from './hooks/usePopoverThreadDoc';
 import { CustomisationDoc } from './CustomisationDoc';
+import { UseInboxDoc } from './hooks/useInboxDoc';
 // import { NotificationsDoc } from './NotificationsDoc';
 // import { AdvancedCustomisationDoc } from './AdvancedCustomisationDoc';
 
@@ -76,6 +77,7 @@ export const DOCS: RootDocNode = {
       useUnreadCommentsCount: { component: UseUnreadCommentsCountDoc },
       useUnreadThreadsCount: { component: UseUnreadThreadsCountDoc },
       usePopoverThread: { component: UsePopoverThreadDoc },
+      useInbox: { component: UseInboxDoc },
     },
   },
   'Secure Mode': { component: SecureModeDoc },
