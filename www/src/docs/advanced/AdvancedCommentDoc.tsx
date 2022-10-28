@@ -17,14 +17,16 @@ export function AdvancedCommentDoc() {
         <p>
           Must be called within a <code>CollabKit.Provider</code>
         </p>
-        {renderCodeSnippet(`import { Comment } from '@collabkit/react';
+        {renderCodeSnippet(`import { Comment, ThreadProvider } from '@collabkit/react';
 
 export const SomeComponent() {
-  return <Comment.Root eventId="replace-with-comment-id">
-    <Comment.CreatorName />
-    <Comment.Body />
-    <Comment.Timestamp />
-  </Comment.Root>
+  return <ThreadProvider threadId="replace-with-thread-id">
+    <Comment.Root eventId="replace-with-comment-id">
+      <Comment.CreatorName />
+      <Comment.Body />
+      <Comment.Timestamp />
+    </Comment.Root>
+  </ThreadProvider>
 }`)}
       </div>
       <div>
