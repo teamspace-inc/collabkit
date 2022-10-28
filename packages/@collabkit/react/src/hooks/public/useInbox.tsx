@@ -18,15 +18,15 @@ export function useInbox(props: { filter: 'all' | 'open' }) {
   }, [workspaceId]);
 
   if (!inbox) {
-    return { items: [] };
+    return { items: {} };
   }
 
   if (!userId) {
-    return { items: [] };
+    return { items: {} };
   }
 
   if (!workspaceId) {
-    return { items: [] };
+    return { items: {} };
   }
 
   // todo this won't scale so we should add a view to load

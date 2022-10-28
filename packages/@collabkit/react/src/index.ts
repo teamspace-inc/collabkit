@@ -27,6 +27,7 @@ import { PopoverThread } from './components/PopoverThread';
 import { useInbox } from './hooks/public/useInbox';
 import * as Comment from './components/Comment';
 import * as Profile from './components/Profile';
+import { ThreadProvider } from './components/ThreadProvider';
 
 export {
   CollabKitProvider as Provider,
@@ -48,6 +49,7 @@ export {
   useInbox,
   createValtioStore as internal_createStore,
   // advanced
+  ThreadProvider,
   Comment,
   Profile,
 };

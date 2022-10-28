@@ -6,6 +6,10 @@ import {
   Sidebar,
   ThemeProvider,
   SidebarInboxButton,
+  useInbox,
+  Comment,
+  Profile,
+  ThreadProvider,
 } from '@collabkit/react';
 import { MenuItem, ControlledMenu, useMenuState } from '@szhsin/react-menu';
 import '@szhsin/react-menu/dist/index.css';
@@ -93,6 +97,8 @@ const rows: Car[] = [
 ];
 
 export const TableExample = () => {
+  const { items } = useInbox({ filter: 'open' });
+
   return (
     <div>
       <div style={{ display: 'flex', flex: 1, padding: '20px 20px', flexDirection: 'column' }}>
@@ -129,6 +135,22 @@ export const TableExample = () => {
           ))}
         </tbody>
       </table>
+      {/* <div>
+        <h1>Custom inbox</h1>
+        <ul>
+          {Object.keys(items).map((threadId) => (
+            <li>
+              <ThreadProvider threadId={threadId}>
+                <Comment.Root eventId={items[threadId].latestComment.id}>
+                  <Comment.Timestamp className="" />
+                  <Comment.Body />
+                </Comment.Root>
+              </ThreadProvider>
+            </li>
+          ))}
+        </ul>
+      </div> */}
+
       <Sidebar>
         <Inbox />
       </Sidebar>
