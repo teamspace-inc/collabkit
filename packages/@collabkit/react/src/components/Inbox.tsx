@@ -17,10 +17,6 @@ import { emptyState } from '../styles/components/Thread.css';
 import { useOptionalSidebarContext } from './Sidebar';
 import { useInbox } from '../hooks/public/useInbox';
 
-export function unique<T>(value: T, index: number, self: T[]) {
-  return self.indexOf(value) === index;
-}
-
 export interface ButtonProps extends React.ComponentPropsWithoutRef<'button'> {
   specialProp?: string;
 }
@@ -38,7 +34,7 @@ export function Inbox(props: { formatTimestamp?: (timestamp: number) => string }
   const { store } = useApp();
   const { workspaceId, userId } = useSnapshot(store);
 
-  const { items } = useInbox({ filter: 'open' });
+  const threadIds = useInbox({ filter: 'open' });
 
   if (!workspaceId) {
     return null;
@@ -48,7 +44,7 @@ export function Inbox(props: { formatTimestamp?: (timestamp: number) => string }
     return null;
   }
 
-  const inboxItems = Object.keys(items).map((threadId) => {
+  const inboxItems = threadIds.map((threadId) => {
     return (
       <ThreadContext.Provider
         value={{ threadId, workspaceId, userId }}
@@ -68,7 +64,7 @@ export function Inbox(props: { formatTimestamp?: (timestamp: number) => string }
   return (
     <ThemeWrapper>
       <div className={styles.root} style={style}>
-        {Object.keys(items).length === 0 ? (
+        {threadIds.length === 0 ? (
           <EmptyState />
         ) : (
           <ScrollAreaRoot>

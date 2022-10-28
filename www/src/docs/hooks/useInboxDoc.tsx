@@ -1,4 +1,5 @@
 import { renderCodeSnippet } from '../CodeEditor';
+import Usage from './useInboxDocUsage.tsx?raw';
 
 export function UseInboxDoc() {
   return (
@@ -7,24 +8,13 @@ export function UseInboxDoc() {
       <div>
         <h3>Usage</h3>
         <p>
-          <code>useInbox</code> lets you subscribe to inbox items so you can build your own Inbox.
+          <code>useInbox</code> lets you subscribe to threads in a users inbox.
         </p>
         <p>
-          Must be called within a <code>CollabKit.Provider</code>
+          Must be called within a <code>CollabKitProvider</code>
         </p>
 
-        {renderCodeSnippet(`import { useInbox } from '@collabkit/react';
-
-export function App() {
-  const { items } = useInbox({ filter: 'open' });
-
-  return <div>
-    {items.map((item) => {
-      <span>{item.isResolved ? 'resolved' : 'open'}</span>
-      <h1>{item.body}</h1>
-    })}
-  </div>
-}`)}
+        {renderCodeSnippet(Usage)}
       </div>
 
       <div>

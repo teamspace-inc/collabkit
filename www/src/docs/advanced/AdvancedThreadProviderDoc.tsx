@@ -16,9 +16,9 @@ export function AdvancedThreadProviderDoc() {
       <div>
         <h3>Usage</h3>
         <p>
-          Must be called within a <code>CollabKit.Provider</code>
+          Must be called within a <code>CollabKitProvider</code>
         </p>
-        {renderCodeSnippet(`import { ThreadProvider } from '@collabkit/react';
+        {renderCodeSnippet(`import { ThreadProvider, Comment } from '@collabkit/react';
 
 export const SomeComponent() {
   return <ThreadProvider threadId="replace-with-thread-id">

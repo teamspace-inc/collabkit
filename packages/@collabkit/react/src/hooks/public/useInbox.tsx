@@ -2,8 +2,7 @@ import { useEffect } from 'react';
 import { actions } from '@collabkit/client';
 import { useSnapshot } from 'valtio';
 import { useApp } from '../../hooks/useApp';
-import { timelineUtils, WithID } from '@collabkit/core';
-import type { Event } from '@collabkit/core';
+import { timelineUtils } from '@collabkit/core';
 
 export function useInbox(props: { filter: 'all' | 'open' }) {
   const { store } = useApp();
@@ -18,20 +17,20 @@ export function useInbox(props: { filter: 'all' | 'open' }) {
   }, [workspaceId]);
 
   if (!inbox) {
-    return { items: {} };
+    return [];
   }
 
   if (!userId) {
-    return { items: {} };
+    return [];
   }
 
   if (!workspaceId) {
-    return { items: {} };
+    return [];
   }
 
   // todo this won't scale so we should add a view to load
   // inboxResolved and inboxOpen
-  const _items = inbox
+  const threadIds = inbox
     ? // show threads with latest activity first
       Object.keys(inbox)
         .sort((a, b) => {
@@ -51,16 +50,5 @@ export function useInbox(props: { filter: 'all' | 'open' }) {
         .filter(Boolean)
     : [];
 
-  let items: { [threadId: string]: { latestComment: WithID<Event>; isResolved: boolean } } = {};
-
-  _items.forEach((threadId) => {
-    items[threadId] = {
-      latestComment: inbox[threadId],
-      isResolved:
-        workspace.timeline?.[threadId] &&
-        timelineUtils.computeIsResolved(workspace.timeline?.[threadId]),
-    };
-  });
-
-  return { items };
+  return threadIds;
 }

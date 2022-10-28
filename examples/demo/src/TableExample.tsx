@@ -10,6 +10,14 @@ import {
   Comment,
   Profile,
   ThreadProvider,
+  useComments,
+  useIsResolved,
+  useUnreadCount,
+  Thread,
+  useResolveThread,
+  ThreadFacepile,
+  useThreadUsers,
+  useReplyCount,
 } from '@collabkit/react';
 import { MenuItem, ControlledMenu, useMenuState } from '@szhsin/react-menu';
 import '@szhsin/react-menu/dist/index.css';
@@ -96,9 +104,59 @@ const rows: Car[] = [
   { id: 'beetle', make: 'Volkswagen', model: 'Beetle', price: 21193 },
 ];
 
-export const TableExample = () => {
-  const { items } = useInbox({ filter: 'open' });
+function CustomInboxItem(props: { threadId: string }) {
+  const commentIds = useComments();
+  const firstCommentId = commentIds[0];
+  const lastCommentId = commentIds[commentIds.length - 1];
+  const isResolved = useIsResolved();
+  const unreadCount = useUnreadCount(props);
+  const resolveThread = useResolveThread();
+  const users = useThreadUsers();
+  const replyCount = useReplyCount();
 
+  return (
+    <>
+      {/* render facepile here */}
+      <ThreadFacepile />
+      {users.map((user) => (
+        <div key={user.id}>{user.name}</div>
+      ))}
+      {unreadCount > 0 ? 'Unread' : 'Read'} {isResolved ? 'Resolved' : 'Open'}
+      {!isResolved ? <button onClick={resolveThread}>Resolve</button> : null}
+      {firstCommentId ? (
+        <Comment.Root commentId={firstCommentId}>
+          <Profile.Name />
+          <Comment.Timestamp />
+          <Comment.Body />
+        </Comment.Root>
+      ) : null}
+      {lastCommentId ? (
+        <Comment.Root commentId={lastCommentId}>
+          <Comment.Timestamp />
+        </Comment.Root>
+      ) : null}
+      {replyCount > 0 ? <div>{replyCount} replies</div> : null}
+    </>
+  );
+}
+
+function CustomInbox() {
+  const threadIds = useInbox({ filter: 'open' });
+
+  return (
+    <div>
+      <h1>Custom inbox</h1>
+
+      {threadIds.map((threadId) => (
+        <ThreadProvider key={threadId} threadId={threadId}>
+          <CustomInboxItem threadId={threadId} />
+        </ThreadProvider>
+      ))}
+    </div>
+  );
+}
+
+export const TableExample = () => {
   return (
     <div>
       <div style={{ display: 'flex', flex: 1, padding: '20px 20px', flexDirection: 'column' }}>
@@ -135,21 +193,8 @@ export const TableExample = () => {
           ))}
         </tbody>
       </table>
-      {/* <div>
-        <h1>Custom inbox</h1>
-        <ul>
-          {Object.keys(items).map((threadId) => (
-            <li>
-              <ThreadProvider threadId={threadId}>
-                <Comment.Root eventId={items[threadId].latestComment.id}>
-                  <Comment.Timestamp className="" />
-                  <Comment.Body />
-                </Comment.Root>
-              </ThreadProvider>
-            </li>
-          ))}
-        </ul>
-      </div> */}
+
+      <CustomInbox />
 
       <Sidebar>
         <Inbox />

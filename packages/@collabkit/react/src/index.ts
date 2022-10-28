@@ -28,6 +28,12 @@ import { useInbox } from './hooks/public/useInbox';
 import * as Comment from './components/Comment';
 import * as Profile from './components/Profile';
 import { ThreadProvider } from './components/ThreadProvider';
+import { useComments } from './hooks/public/useComments';
+import { useIsResolved } from './hooks/public/useIsResolved';
+import { useResolveThread } from './hooks/public/useResolveThread';
+import { useThreadUsers } from './hooks/public/useThreadUsers';
+import { ThreadFacepile } from './components/ThreadFacepile';
+import { useReplyCount } from './hooks/useReplyCount';
 
 export {
   CollabKitProvider as Provider,
@@ -44,11 +50,16 @@ export {
   PopoverThread as InternalPopoverThread,
   usePopoverThread,
   useUnreadThreadsCount,
-  useUnreadCommentsCount,
   useUnreadCommentsCount as useUnreadCount,
-  useInbox,
   createValtioStore as internal_createStore,
   // advanced
+  ThreadFacepile,
+  useInbox,
+  useComments,
+  useIsResolved,
+  useThreadUsers,
+  useResolveThread,
+  useReplyCount,
   ThreadProvider,
   Comment,
   Profile,

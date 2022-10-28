@@ -41,6 +41,7 @@ export function createEvents(store: Store) {
         const nodes = $getRoot().getAllTextNodes();
 
         nodes.forEach((node) => {
+          console.log(node.__type, node.__text);
           switch (node.__type) {
             case 'text':
               newBody += node.__text;

@@ -7,14 +7,14 @@ const MAX_NUM_PROFILES = 4;
 
 export function Facepile(
   props: {
-    profiles: ProfileType[] | readonly ProfileType[];
+    users: ProfileType[] | readonly ProfileType[];
     hover?: boolean;
     size?: string;
   } & React.ComponentPropsWithoutRef<'div'>
 ) {
   const { hover, ...otherProps } = props;
-  const profiles = props.profiles.slice(0, MAX_NUM_PROFILES - 1);
-  const overflowsBy = props.profiles.length > 4 ? props.profiles.length - MAX_NUM_PROFILES : 0;
+  const profiles = props.users.slice(0, MAX_NUM_PROFILES - 1);
+  const overflowsBy = props.users.length > 4 ? props.users.length - MAX_NUM_PROFILES : 0;
   // const overflowsWith = props.profiles.slice(MAX_NUM_PROFILES, -1);
 
   return (
