@@ -8,6 +8,7 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import { GoogleLogin } from '@react-oauth/google';
 import { proxy, useSnapshot, subscribe } from 'valtio';
 import { Route, Switch, useLocation } from 'wouter';
+import { CustomInbox } from './CustomInboxExample';
 
 const store = proxy<{ user: User | null }>(
   JSON.parse(localStorage.getItem('store') ?? '{ "user": null }') || { user: null }
@@ -118,6 +119,7 @@ function Demo() {
       <Switch>
         <Route path="/cashboard" component={TableExample} />
         <Route path="/table" component={TableExample} />
+        <Route path="/custominbox" component={CustomInbox} />
         <Route component={Home} />
       </Switch>
     </CollabKitProvider>
