@@ -13,7 +13,6 @@ import type {
 } from '@collabkit/core';
 import { actions } from './actions';
 import { markRaw } from './store';
-import { $convertToMarkdownString } from '@lexical/markdown';
 
 export type Events = ReturnType<typeof createEvents>;
 
