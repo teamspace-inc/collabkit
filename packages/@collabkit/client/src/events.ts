@@ -13,6 +13,7 @@ import type {
 } from '@collabkit/core';
 import { actions } from './actions';
 import { markRaw } from './store';
+import { $convertToMarkdownString } from '@lexical/markdown';
 
 export type Events = ReturnType<typeof createEvents>;
 
@@ -29,29 +30,24 @@ export function createEvents(store: Store) {
       });
     },
 
-    onComposerChange: (target: Target, editorState: EditorState, editor: LexicalEditor) => {
+    onComposerChange: (
+      target: Target,
+      editorState: EditorState,
+      editor: LexicalEditor,
+      newBody: string
+    ) => {
       if (target.type !== 'composer') {
         return;
       }
 
       store.workspaces[target.workspaceId].composers[target.threadId].editor = markRaw(editor);
       editorState.read(() => {
-        let newBody = '';
         let newMentions: MentionWithColor[] = [];
         const nodes = $getRoot().getAllTextNodes();
-
         nodes.forEach((node) => {
-          console.log(node.__type, node.__text);
           switch (node.__type) {
-            case 'text':
-              newBody += node.__text;
-              break;
-            case 'timestamp':
-              newBody += `[${node.__text}](#T${node.__timestamp})`;
-              break;
             case 'mention':
               newMentions.push(node.__id);
-              newBody += `[${node.__text}](#@${node.__id})`;
               break;
           }
         });
