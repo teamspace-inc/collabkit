@@ -46,11 +46,15 @@ export function createEvents(store: Store) {
         nodes.forEach((node) => {
           switch (node.__type) {
             case 'mention':
-              newMentions.push(node.__id);
+              const id = node.__id;
+              if (typeof id === 'string') {
+                newMentions.push(node.__id);
+              } else {
+                console.debug('unexpected mention id', id);
+              }
               break;
           }
         });
-        console.log(newMentions);
 
         const body = store.workspaces[target.workspaceId].composers[target.threadId].$$body;
         store.workspaces[target.workspaceId].composers[target.threadId].$$body = newBody;
