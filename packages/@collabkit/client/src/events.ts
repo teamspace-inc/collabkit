@@ -41,7 +41,7 @@ export function createEvents(store: Store) {
 
       store.workspaces[target.workspaceId].composers[target.threadId].editor = markRaw(editor);
       editorState.read(() => {
-        let newMentions: MentionWithColor[] = [];
+        let newMentions: string[] = [];
         const nodes = $getRoot().getAllTextNodes();
         nodes.forEach((node) => {
           switch (node.__type) {
@@ -50,6 +50,7 @@ export function createEvents(store: Store) {
               break;
           }
         });
+        console.log(newMentions);
 
         const body = store.workspaces[target.workspaceId].composers[target.threadId].$$body;
         store.workspaces[target.workspaceId].composers[target.threadId].$$body = newBody;

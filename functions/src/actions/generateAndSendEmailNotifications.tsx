@@ -251,14 +251,14 @@ export async function generateAndSendEmailNotifications(props: {
     const threadOnly =
       isDefaultWorkspace(workspaceId) || app.defaultNotificationPreference === 'threadOnly';
 
-    console.debug('threadOnly', threadOnly);
-
     const profileIds = threadOnly
       ? getThreadProfiles({ timeline })
       : await fetchWorkspaceProfiles({
           appId,
           workspaceId,
         });
+
+    console.debug('threadOnly', threadOnly, profileIds);
 
     if (profileIds.length === 0) {
       console.debug('0 profileIds, exiting');
