@@ -30,6 +30,7 @@ export type App = {
   webhook?: string;
   accentColor?: string;
   emailBatchDelayMs?: number;
+  defaultNotificationPreference?: 'allWorkspace' | 'threadOnly' | 'off';
 };
 
 export type NotifiedUntilId = string | undefined | null;

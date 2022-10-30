@@ -21,6 +21,7 @@ describe('isAppNotifiable', () => {
   it('is notifiable with accentColor and logoUrl', () => {
     app.accentColor = '#ff0000';
     app.logoUrl = 'https://example.com/logo.png';
+    app.defaultNotificationPreference = 'allWorkspace';
     expect(isAppNotifiable({ app })).toBeTruthy();
   });
   it('is not notifiable if isEmailDisabled is true', () => {

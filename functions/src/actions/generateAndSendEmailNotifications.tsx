@@ -248,7 +248,12 @@ export async function generateAndSendEmailNotifications(props: {
 
     const { timeline } = await fetchTimeline({ appId, workspaceId, threadId });
 
-    const profileIds = isDefaultWorkspace(workspaceId)
+    const threadOnly =
+      isDefaultWorkspace(workspaceId) || app.defaultNotificationPreference === 'threadOnly';
+
+    console.debug('threadOnly', threadOnly);
+
+    const profileIds = threadOnly
       ? getThreadProfiles({ timeline })
       : await fetchWorkspaceProfiles({
           appId,
