@@ -5,7 +5,6 @@ import { nanoid } from 'nanoid';
 import type {
   CommentReactionTarget,
   CommentTarget,
-  MentionWithColor,
   MenuTarget,
   Store,
   Target,
