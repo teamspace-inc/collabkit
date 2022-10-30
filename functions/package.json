@@ -24,6 +24,8 @@
     "lodash.uniq": "^4.5.0",
     "mailing": "0.7.1",
     "mailing-core": "^0.7.1",
+    "markdown-it": "^13.0.1",
+    "markdown-it-replace-link": "^1.1.0",
     "mjml": "^4.13.0",
     "mjml-react": "^2.0.8",
     "nanoid": "^4.0.0",

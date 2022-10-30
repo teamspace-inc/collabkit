@@ -211,25 +211,25 @@ const sample = {
           //     type: 'message',
           //   },
           // ],
-          // [
-          //   {
-          //     body: 'Hello world',
-          //     createdAt: 1660323184746,
-          //     createdById: '105986699029334209805',
-          //     type: 'message',
-          //   },
-          // ],
-          // [
-          //   {
-          //     body: 'test',
-          //     createdAt: 1660379193289,
-          //     createdById: '112557620140515558394',
-          //     type: 'message',
-          //   },
-          // ],
           [
             {
-              body: 'it works!',
+              body: 'Hello world',
+              createdAt: 1660323184746,
+              createdById: '105986699029334209805',
+              type: 'message',
+            },
+          ],
+          [
+            {
+              body: 'test',
+              createdAt: 1660379193289,
+              createdById: '112557620140515558394',
+              type: 'message',
+            },
+          ],
+          [
+            {
+              body: `it works! this is working [Namit Chadha](@namitchadha)`,
               createdAt: 1660560190610,
               createdById: '113383695894979946430',
               type: 'message',
