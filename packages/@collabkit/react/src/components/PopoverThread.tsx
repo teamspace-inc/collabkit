@@ -15,9 +15,9 @@ import {
   ScrollAreaCorner,
 } from './ScrollArea';
 
-import * as Comment from './Comment';
-import * as Composer from './composer/Composer';
-import * as Profile from './Profile';
+import Comment from './Comment';
+import Composer from './composer/Composer';
+import Profile from './Profile';
 import { PopoverThreadCommentEditor } from './PopoverThreadCommentEditor';
 import * as styles from '../styles/components/PopoverThread.css';
 import { ThemeWrapper } from './ThemeWrapper';
@@ -76,20 +76,7 @@ export const PreviewThread = forwardRef<Handle, PopoverThreadProps>(function Pop
         >
           <ScrollAreaRoot>
             <ScrollAreaViewport style={{ maxHeight: props.maxAvailableSize?.height ?? 'unset' }}>
-              <Comment.Root commentId={event.id}>
-                <Comment.Content>
-                  <Comment.Header>
-                    <Profile.Avatar />
-                    <Comment.NameAndTimestampWrapper>
-                      <Comment.CreatorName />
-                      <Comment.Timestamp format={props.formatTimestamp} />
-                    </Comment.NameAndTimestampWrapper>
-                  </Comment.Header>
-                  <Comment.Indent>
-                    <Comment.Body />
-                  </Comment.Indent>
-                </Comment.Content>
-              </Comment.Root>
+              <Comment commentId={event.id} />
             </ScrollAreaViewport>
             <ScrollAreaScrollbar orientation="vertical">
               <ScrollAreaThumb />
@@ -158,8 +145,8 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
               {!isEmpty && list ? (
                 <CommentList.Root>
                   {list.map((group, gi) =>
-                    group.map((event) => (
-                      <Comment.Root commentId={event.id} key={event.id}>
+                    group.map((comment) => (
+                      <Comment.Root commentId={comment.id} key={comment.id}>
                         <Comment.Content>
                           <Comment.Header>
                             <Profile.Avatar />

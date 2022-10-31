@@ -83,26 +83,29 @@ export function InboxItem(props: { formatTimestamp?: (timestamp: number) => stri
           {firstComment.createdById === userId ? <ResolveThreadIconButton /> : null}
         </div>
         {renderThreadContextPreview?.({ threadId, workspaceId, userId, info })}
-        <Comment.Root commentId={firstCommentId} className={styles.commentRoot}>
+        <Comment.CommentRoot commentId={firstCommentId} className={styles.commentRoot}>
           <div className={styles.nameAndTimestampWrapper}>
-            <Comment.CreatorName className={styles.name} />
-            <Comment.Timestamp className={styles.timestamp} format={props.formatTimestamp} />
+            <Comment.CommentCreatorName className={styles.name} />
+            <Comment.CommentTimestamp className={styles.timestamp} format={props.formatTimestamp} />
           </div>
-          <Comment.Body />
-        </Comment.Root>
-        <Comment.Provider eventId={lastComment.id}>
+          <Comment.CommentBody />
+        </Comment.CommentRoot>
+        <Comment.CommentProvider eventId={lastComment.id}>
           {replyCount > 0 ? (
             <div>
               <div className={styles.nameAndTimestampWrapper}>
                 <ReplyCount className={styles.replyCount} />
                 <span className={styles.timestamp}>
                   Last reply{' '}
-                  <Comment.Timestamp className={styles.timestamp} format={props.formatTimestamp} />
+                  <Comment.CommentTimestamp
+                    className={styles.timestamp}
+                    format={props.formatTimestamp}
+                  />
                 </span>
               </div>
             </div>
           ) : null}
-        </Comment.Provider>
+        </Comment.CommentProvider>
       </div>
     </ThreadContext.Provider>
   );

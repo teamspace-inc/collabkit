@@ -1,28 +1,7 @@
 import { fallbackVar, globalStyle, style } from '@vanilla-extract/css';
-import { recipe } from '@vanilla-extract/recipes';
 import { calc } from '@vanilla-extract/css-utils';
 import { vars } from '../theme';
 import { collabkit } from './Root.css';
-import { styled } from '@stitches/react';
-
-export const root = style({
-  display: 'flex',
-  flex: '1',
-  flexDirection: 'row',
-  gap: fallbackVar(vars.comment.gap, vars.space[2]),
-  position: 'relative',
-  // account for scrollbar
-  // maxWidth: calc.subtract('100%', vars.space[2]),
-  padding: fallbackVar(vars.comment.padding, `${vars.space[1]} ${vars.space[4]}`),
-  fontFamily: vars.fontFamily,
-  // borderBottom: `1px solid ${vars.color.surfaceOverlay}`,
-
-  selectors: {
-    '&:hover': {
-      backgroundColor: fallbackVar(vars.comment.hover.background, 'none'),
-    },
-  },
-});
 
 export const nameAndTimestampWrapper = style({
   flex: 1,
@@ -43,7 +22,7 @@ export const content = style({
   position: 'relative',
   flexDirection: 'column',
   flex: '1',
-  gap: fallbackVar(vars.comment.content.gap, vars.space[1]),
+  gap: fallbackVar(vars.comment.content.gap, vars.space[0]),
   fontFamily: vars.fontFamily,
 });
 
@@ -66,13 +45,17 @@ export const body = style({
   color: fallbackVar(vars.comment.body.color, vars.color.textPrimary),
 });
 
-export const editor = style({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '12px',
-  margin: '0px -16px',
-  fontFamily: vars.fontFamily,
-});
+export const editor = style([
+  {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '12px',
+    marginTop: '0px',
+    marginRight: '-16px',
+    marginLeft: '16px',
+    fontFamily: vars.fontFamily,
+  },
+]);
 
 export const header = style({
   flex: '1',
@@ -82,6 +65,7 @@ export const header = style({
   alignItems: 'flex-start',
   justifyContent: 'space-between',
   fontFamily: vars.fontFamily,
+  position: 'relative',
 });
 
 export const timestamp = style({
@@ -100,10 +84,33 @@ export const timestamp = style({
 export const actions = style({
   display: 'flex',
   gap: vars.space[1],
-  marginTop: `-4px`,
   flexDirection: 'row',
   zIndex: 2, // higher than scrollbar
   fontFamily: vars.fontFamily,
+  position: 'absolute',
+  right: '0px',
+  top: '0px',
+  background: '#F6F6F6',
+  borderRadius: '6px',
+});
+
+export const root = style({
+  flex: '1',
+  flexDirection: 'row',
+  gap: fallbackVar(vars.comment.gap, vars.space[2]),
+  position: 'relative',
+  // account for scrollbar
+  // maxWidth: calc.subtract('100%', vars.space[2]),
+  padding: fallbackVar(vars.comment.padding, `${vars.space[1]} ${vars.space[4]}`),
+  fontFamily: vars.fontFamily,
+  // borderBottom: `1px solid ${vars.color.surfaceOverlay}`,
+  display: 'flex',
+
+  selectors: {
+    '&:hover': {
+      backgroundColor: fallbackVar(vars.comment.hover.background, 'none'),
+    },
+  },
 });
 
 export const markdown = style({});

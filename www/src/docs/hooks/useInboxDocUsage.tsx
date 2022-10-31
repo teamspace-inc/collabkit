@@ -8,17 +8,17 @@ function InboxItem() {
   return (
     <div>
       {firstComment ? (
-        <Comment.Root commentId={firstComment}>
-          <Comment.CreatorName />
-          <Comment.Body />
-        </Comment.Root>
+        <Comment.CommentRoot commentId={firstComment}>
+          <Comment.CommentCreatorName />
+          <Comment.CommentBody />
+        </Comment.CommentRoot>
       ) : null}
 
       {lastComment ? (
-        <Comment.Root commentId={lastComment}>
-          <Comment.CreatorName />
-          <Comment.Body />
-        </Comment.Root>
+        <Comment.CommentRoot commentId={lastComment}>
+          <Comment.CommentCreatorName />
+          <Comment.CommentBody />
+        </Comment.CommentRoot>
       ) : null}
     </div>
   );

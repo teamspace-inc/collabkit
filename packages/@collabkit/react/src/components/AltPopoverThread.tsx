@@ -11,9 +11,9 @@ import {
   ScrollAreaThumb,
   ScrollAreaCorner,
 } from './ScrollArea';
-import * as Comment from './Comment';
-import * as Composer from './composer/Composer';
-import * as Profile from './Profile';
+import Comment from './Comment';
+import Composer from './composer/Composer';
+import Profile from './Profile';
 import { PopoverThreadCommentEditor } from './PopoverThreadCommentEditor';
 import * as styles from '../styles/components/PopoverThread.css';
 import { ThemeWrapper } from './ThemeWrapper';

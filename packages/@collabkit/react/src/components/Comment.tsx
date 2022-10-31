@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback } from 'react';
+import React, { useMemo, useCallback, useRef, useLayoutEffect } from 'react';
 import { useMarkAsSeen } from '../hooks/useMarkAsSeen';
 import { useOnMarkdownLinkClick } from '../hooks/useOnMarkdownLinkClick';
 import { useThreadContext } from '../hooks/useThreadContext';
@@ -15,8 +15,9 @@ import { CommentTarget, timelineUtils } from '@collabkit/core';
 import * as styles from '../styles/components/Comment.css';
 import { DotsThree } from './icons';
 import { Menu, MenuItem } from './Menu';
+import { useHovering } from '../hooks/useHovering';
 
-export function Provider(props: { children: React.ReactNode; eventId: string }) {
+export function CommentProvider(props: { children: React.ReactNode; eventId: string }) {
   const { threadId, workspaceId } = useThreadContext();
   const { eventId } = props;
   const treeId = useId();
@@ -45,7 +46,7 @@ export function Provider(props: { children: React.ReactNode; eventId: string }) 
   );
 }
 
-export function Root(props: {
+export function CommentRoot(props: {
   children: React.ReactNode;
   className?: string;
   commentId: string;
@@ -54,13 +55,22 @@ export function Root(props: {
   const { threadId, workspaceId, userId } = useThreadContext();
   const { commentId: eventId } = props;
   const treeId = useId();
+  const ref = useRef<HTMLDivElement>(null);
 
   const target = useMemo<CommentTarget>(
     () => ({ type: 'comment', workspaceId, threadId, eventId, treeId }),
     [workspaceId, threadId, eventId, treeId]
   );
 
-  const { ref } = useMarkAsSeen(target);
+  const { ref: setMarkAsSeenRef } = useMarkAsSeen(target);
+
+  useHovering(ref, target);
+
+  useLayoutEffect(() => {
+    if (ref.current) {
+      setMarkAsSeenRef(ref.current);
+    }
+  }, [ref]);
 
   const { onClick } = useOnMarkdownLinkClick({
     workspaceId,
@@ -97,7 +107,7 @@ export function Root(props: {
   );
 }
 
-export function Body({ ...props }: React.ComponentPropsWithoutRef<'div'>) {
+export function CommentBody({ ...props }: React.ComponentPropsWithoutRef<'div'>) {
   const { body } = useSnapshot(useCommentStore());
   const { store } = useApp();
 
@@ -134,7 +144,7 @@ export const Editor = (props: React.ComponentProps<'div'>) => {
   return <div {...props} className={props.className ?? styles.editor} />;
 };
 
-export function Timestamp(
+export function CommentTimestamp(
   props: React.ComponentProps<'time'> & { format?: (timestamp: number) => string }
 ) {
   const { createdAt } = useSnapshot(useCommentStore());
@@ -147,30 +157,37 @@ export function Timestamp(
   );
 }
 
-export const CreatorName = Profile.Name;
-export const Header = (props: React.ComponentProps<'div'>) => (
+export const CommentCreatorName = Profile.Name;
+export const CommentHeader = (props: React.ComponentProps<'div'>) => (
   <div {...props} className={props.className ?? styles.header} />
 );
-export const NameAndTimestampWrapper = (props: React.ComponentProps<'div'>) => (
+export const CommentNameAndTimestampWrapper = (props: React.ComponentProps<'div'>) => (
   <div {...props} className={props.className ?? styles.nameAndTimestampWrapper} />
 );
-export const Content = (props: React.ComponentProps<'div'>) => {
+export const CommentContent = (props: React.ComponentProps<'div'>) => {
   const { ...forwardProps } = props;
   return <div {...forwardProps} className={props.className ?? styles.content} />;
 };
 
-export const Indent = (props: React.ComponentProps<'div'>) => {
+export const CommentIndent = (props: React.ComponentProps<'div'>) => {
   const { ...forwardProps } = props;
   return <div {...forwardProps} className={props.className ?? styles.indent} />;
 };
 
 type CommentMenuItemType = 'commentEditButton' | 'commentDeleteButton' | 'reopenThreadButton';
 
-export const Actions = (props: React.ComponentProps<'div'>) => {
+export const CommentActions = (props: React.ComponentProps<'div'>) => {
+  // const { store } = useApp();
+  // const { hoveringId } = useSnapshot(store);
+  // const { eventId } = useCommentContext();
+  // if (hoveringId?.type === 'comment' && hoveringId.eventId === eventId) {
   return <div className={styles.actions}>{props.children}</div>;
+  // } else {
+  //   return null;
+  // }
 };
 
-const CommentMenu = (props: { className?: string }) => {
+const CommentMenu = () => {
   const { events, store } = useApp();
   const comment = useCommentContext();
 
@@ -204,6 +221,40 @@ const CommentMenu = (props: { className?: string }) => {
 };
 
 export { CommentMenu as MoreMenu };
+
+export default function Comment(props: { commentId: string }) {
+  return (
+    <Comment.Root commentId={props.commentId}>
+      <Comment.Content>
+        <Comment.Header>
+          <Profile.Avatar />
+          <Comment.NameAndTimestampWrapper>
+            <Comment.CreatorName />
+            <Comment.Timestamp />
+          </Comment.NameAndTimestampWrapper>
+          <Comment.Actions>
+            <Comment.MoreMenu />
+          </Comment.Actions>
+        </Comment.Header>
+        <Comment.Indent>
+          <Comment.Body />
+        </Comment.Indent>
+      </Comment.Content>
+    </Comment.Root>
+  );
+}
+
+Comment.Root = CommentRoot;
+Comment.Content = CommentContent;
+Comment.Header = CommentHeader;
+Comment.NameAndTimestampWrapper = CommentNameAndTimestampWrapper;
+Comment.CreatorName = CommentCreatorName;
+Comment.Timestamp = CommentTimestamp;
+Comment.Body = CommentBody;
+Comment.Indent = CommentIndent;
+Comment.Actions = CommentActions;
+Comment.MoreMenu = CommentMenu;
+Comment.Editor = Editor;
 
 // Anatomy
 

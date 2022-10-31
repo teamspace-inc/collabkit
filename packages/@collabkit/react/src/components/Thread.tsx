@@ -8,8 +8,8 @@ import type { ThreadInfo } from '@collabkit/core';
 import { TypingIndicator } from './TypingIndicator';
 import { ThreadContext, ThreadContextValue } from '../hooks/useThreadContext';
 import * as Profile from './Profile';
-import * as Comment from './Comment';
-import * as Composer from './composer/Composer';
+import Comment from './Comment';
+import Composer from './composer/Composer';
 import { ThemeWrapper } from './ThemeWrapper';
 import * as styles from '../styles/components/Thread.css';
 import { ChatCentered } from './icons';
@@ -86,28 +86,27 @@ export function Thread(props: ThreadProps & { className?: string; children?: Rea
                         <React.Fragment key={event.id}>
                           {newIndicatorId === event.id ? <NewIndicator /> : null}
                           <Comment.Root commentId={event.id}>
-                            {showProfile && <Profile.Avatar />}
                             <Comment.Content>
-                              {showProfile && (
-                                <Comment.Header>
+                              <Comment.Header>
+                                {showProfile && <Profile.Avatar />}
+                                {showProfile && (
                                   <Comment.NameAndTimestampWrapper>
                                     <Comment.CreatorName />
                                     <Comment.Timestamp />
                                   </Comment.NameAndTimestampWrapper>
-                                </Comment.Header>
-                              )}
-                              {showProfile ? (
+                                )}
+                                <Comment.Actions>
+                                  <Comment.MoreMenu />
+                                </Comment.Actions>
+                              </Comment.Header>
+
+                              <Comment.Indent>
                                 <Comment.Body />
-                              ) : (
-                                <Comment.Indent>
-                                  <Comment.Body />
-                                </Comment.Indent>
-                              )}
+                              </Comment.Indent>
                             </Comment.Content>
                           </Comment.Root>
                         </React.Fragment>
                       );
-                      1;
                     });
                     return groupedComments ? <div key={gi}>{groupedComments}</div> : null;
                   })}

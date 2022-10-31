@@ -13,6 +13,7 @@ export const menu = style({
   boxShadow: fallbackVar(vars.menu.boxShadow, vars.shadow.standard),
   outline: 'none',
   fontFamily: vars.fontFamily,
+  zIndex: 3,
 
   selectors: {
     '&:hover': {
