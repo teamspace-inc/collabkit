@@ -3,7 +3,7 @@ import { Markdown } from '../Markdown';
 export function FacepileDoc() {
   return (
     <div>
-      <p style={{ fontSize: 20, lineHeight: '28px' }}>Displays a facepile of user avatars.</p>
+      <p style={{ fontSize: 20, lineHeight: '28px' }}>Displays a facepile of user avatars</p>
       <Markdown
         body={`### Demo
 

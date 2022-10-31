@@ -4,7 +4,7 @@ import { DocLink } from '../Doc';
 export function CollabKitProviderDoc() {
   return (
     <>
-      <h2>Wrap your app in a CollabKitProvider to use our components.</h2>
+      <h2>Wrap your app in a CollabKitProvider to use our components</h2>
       <blockquote>
         <h4 style={{ marginTop: 0 }}>Secure Mode</h4>
         By default CollabKitProvider requires you to pass in your <code>apiKey</code> and{' '}

@@ -1,37 +1,25 @@
-import React from 'react';
 import Head from './components/Head';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import ButtonPrimary from './components/ButtonPrimary';
+import React from 'react';
+import markdown from 'markdown-it';
+
+const md = markdown({ html: true });
 
 import { Mjml, MjmlBody, MjmlSection, MjmlColumn, MjmlText, MjmlSpacer } from 'mjml-react';
 
-import reactStringReplace from 'react-string-replace';
+function Raw({ tag, html }: { tag: string; html: string }) {
+  return React.createElement(tag || 'mj-raw', {
+    className: 'mdbody',
+    dangerouslySetInnerHTML: {
+      __html: html,
+    },
+  });
+}
 
-// todo refactor this so it's the same code as in the clients
-// except we use a MjmlText instead of a span to render
-// the mention
-export const MARKDOWN_LINK_REGEXP = /\[(.*)\]\((.*)\)/;
-
-export function MarkdownBody(props: { body: string; onLinkClick?: (e: React.MouseEvent) => void }) {
-  return (
-    <>
-      {reactStringReplace(props.body, /(\[.*\]\(.*\))/g, (match, i) => {
-        // parse and render markdown as an A tag
-        const linkMatches = match.match(MARKDOWN_LINK_REGEXP);
-        if (linkMatches && linkMatches[0]) {
-          return <span key={i}>{linkMatches[1]}</span>;
-        }
-
-        // todo check if it matches a profile before bolding
-        return (
-          <MjmlText key={i} fontWeight={700}>
-            {match}
-          </MjmlText>
-        );
-      })}
-    </>
-  );
+export function Markdown(props: { body: string; onLinkClick?: (e: React.MouseEvent) => void }) {
+  return <Raw tag="span" html={md.render(props.body)} />;
 }
 
 type NotificationEmailProps = {
@@ -39,9 +27,7 @@ type NotificationEmailProps = {
   action: string;
   preposition: string;
   actor: string;
-
   appLogoUrl?: string;
-
   accentColor?: string;
   commentList: {
     createdById: string;
@@ -57,7 +43,7 @@ type NotificationEmailProps = {
 
 function Comment(props: { actorColor: string; actorName: string; commentBody: string[] }) {
   return (
-    <MjmlSection textAlign="left" padding="32px 0px 32px">
+    <MjmlSection textAlign="left" padding="0px 0px 32px">
       <MjmlColumn width="44px" padding="0px">
         <MjmlText
           lineHeight={'32px'}
@@ -69,13 +55,13 @@ function Comment(props: { actorColor: string; actorName: string; commentBody: st
           {props.actorName.slice(0, 1)}
         </MjmlText>
       </MjmlColumn>
-      <MjmlColumn padding={'0px'}>
-        <MjmlText fontWeight={500} fontSize={'18px'} lineHeight={'32px'}>
+      <MjmlColumn padding={'0px'} width={'420px'}>
+        <MjmlText fontWeight={600} fontSize={'18px'} lineHeight={'32px'}>
           {props.actorName}
         </MjmlText>
         {props.commentBody.map((line) => (
-          <MjmlText padding="16px 24px 0px" fontWeight={400} fontSize={'18px'} lineHeight={'27px'}>
-            <MarkdownBody body={line} />
+          <MjmlText padding="0px 24px 0px" fontWeight={400} fontSize={'18px'} lineHeight={'27px'}>
+            <Markdown body={line} />
           </MjmlText>
         ))}
       </MjmlColumn>

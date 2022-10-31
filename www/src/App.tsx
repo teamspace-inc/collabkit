@@ -1,8 +1,4 @@
-import { styled } from '@stitches/react';
 import { Route } from 'wouter';
-import { Dashboard } from './dashboard/components/Dashboard';
-import { useEffect } from 'react';
-
 import { DataGridPage } from './pages/DataGridPage';
 import { HomePage } from './pages/HomePage';
 import { Docs } from './docs/Docs';
@@ -11,8 +7,6 @@ import { SetBreakpointContext } from './hooks/useWindowSize';
 import { UIPage } from './pages/UIPage';
 import { ThemeEditorPage } from './pages/ThemeEditorPage';
 import { subHours } from 'date-fns/fp';
-
-const Page = styled('div', {});
 
 // todo generate a new workspace
 // for each docs user
@@ -178,12 +172,23 @@ const defaultWorkspace: Partial<Workspace> = {
         hasProfile: true,
       },
     },
+    employee_2608510R: {
+      event1: {
+        id: 'event1',
+        body: `Excellent performance this half - due for a promo?`,
+        createdAt: subHours(0.2)(Date.now()),
+        createdById: 'sara',
+        type: 'message',
+        hasProfile: true,
+      },
+    },
   },
   seen: {
     thread1: 'event2',
     thread2: 'event1',
     thread3: 'event3',
     thread4: 'event2',
+    employee_2608510R: 'event1',
     // IdNMQ8uP07YfJtxyNqH28: '-N7ukV90v5j3inGLNQt3',
     // B0ENawPadDHvTyyILKWz2: '-N7ul9YUhGqMcZnBhpUh',
     // sxG87Sq0t3HHG0ghJMaXu: '-N84KobQKUnix1nNkMH-',

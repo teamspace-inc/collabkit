@@ -11,7 +11,7 @@ export async function writeMessageToFirebase(
     parentId?: string;
     type: 'message' | 'reaction' | 'edit';
     pin?: Pin;
-    mentions?: MentionWithColor[];
+    mentions?: string[];
   }
 ) {
   const { type, workspaceId, threadId, body, preview, pin, parentId, mentions } = props;
@@ -32,9 +32,9 @@ export async function writeMessageToFirebase(
   store.reactingId = null;
 
   const mentionsMap: { [userId: string]: boolean } = {};
-  for (const mention of mentions || []) {
-    mentionsMap[mention.id] = true;
-  }
+  mentions?.forEach((mention) => {
+    mentionsMap[mention] = true;
+  });
 
   const event: Event = {
     type,

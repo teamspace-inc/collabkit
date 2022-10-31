@@ -14,6 +14,7 @@ import { ThemeProvider } from './ThemeContext';
 export type ProviderProps = {
   children: React.ReactNode;
   theme?: 'light' | 'dark' | CustomTheme;
+  // notificationPreferences: 'allWorkspace' | 'onlyThread' | 'off';
   renderAvatar?: (props: AvatarProps) => ReactNode;
   renderThreadContextPreview?: (props: {
     threadId: string;

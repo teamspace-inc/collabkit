@@ -5,7 +5,6 @@ import { nanoid } from 'nanoid';
 import type {
   CommentReactionTarget,
   CommentTarget,
-  MentionWithColor,
   MenuTarget,
   Store,
   Target,
@@ -29,28 +28,29 @@ export function createEvents(store: Store) {
       });
     },
 
-    onComposerChange: (target: Target, editorState: EditorState, editor: LexicalEditor) => {
+    onComposerChange: (
+      target: Target,
+      editorState: EditorState,
+      editor: LexicalEditor,
+      newBody: string
+    ) => {
       if (target.type !== 'composer') {
         return;
       }
 
       store.workspaces[target.workspaceId].composers[target.threadId].editor = markRaw(editor);
       editorState.read(() => {
-        let newBody = '';
-        let newMentions: MentionWithColor[] = [];
+        let newMentions: string[] = [];
         const nodes = $getRoot().getAllTextNodes();
-
         nodes.forEach((node) => {
           switch (node.__type) {
-            case 'text':
-              newBody += node.__text;
-              break;
-            case 'timestamp':
-              newBody += `[${node.__text}](#T${node.__timestamp})`;
-              break;
             case 'mention':
-              newMentions.push(node.__id);
-              newBody += `[${node.__text}](#@${node.__id})`;
+              const id = node.__id;
+              if (typeof id === 'string') {
+                newMentions.push(node.__id);
+              } else {
+                console.debug('unexpected mention id', id);
+              }
               break;
           }
         });

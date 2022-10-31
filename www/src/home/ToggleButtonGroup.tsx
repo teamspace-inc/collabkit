@@ -8,9 +8,9 @@ import {
 
 export function ToggleButtonGroup(props: {
   title: string;
-  options: { value: string; node: React.ReactElement }[];
+  options: { value: number; node: React.ReactElement }[];
   value: React.ReactNode;
-  onChange: (value: string) => void;
+  onChange: (value: number) => void;
 }) {
   return (
     <div className={toggleButtonGroup}>
@@ -20,14 +20,14 @@ export function ToggleButtonGroup(props: {
           <div
             key={option.value}
             className={toggleButton({ active: props.value === option.value })}
-            style={{ width: 50, height: 50, borderRadius: '50px' }}
+            style={{ height: 50, borderRadius: '50px' }}
             onClick={() => props.onChange(option.value)}
           >
             {React.cloneElement(option.node, {
               style: {
                 ...option.node.props.style,
-                width: 50,
                 height: 50,
+                minWidth: 50,
                 lineHeight: '50px',
                 borderRadius: '50px',
               },

@@ -5,11 +5,17 @@ import { useWorkspaceStore } from './useWorkspaceStore';
 
 export function useCommentStore() {
   const { eventId } = useCommentContext();
-  const { threadId } = useThreadContext();
-  const timeline = useWorkspaceStore().timeline[threadId];
-  const eventStore = timelineUtils.findLatestEdit(timeline, eventId) ?? timeline[eventId];
+  const eventStore = useOptionalCommentStore({ eventId });
   if (eventStore == null) {
     throw new Error('[useCommentStore] Event not found');
   }
+  return eventStore;
+}
+
+export function useOptionalCommentStore(props: { eventId: string }) {
+  const { eventId } = props;
+  const { threadId } = useThreadContext();
+  const timeline = useWorkspaceStore().timeline[threadId];
+  const eventStore = timelineUtils.findLatestEdit(timeline, eventId) ?? timeline[eventId];
   return eventStore;
 }

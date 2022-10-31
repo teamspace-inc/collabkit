@@ -9,10 +9,6 @@ export const section = style({
   textAlign: 'center',
 });
 
-export const h3 = style({
-  fontFamily: 'Clash Display',
-});
-
 export const uiWrap = style({
   height: 'calc(434px / 632px)',
   display: 'flex',
@@ -32,7 +28,23 @@ export const h1 = style({
   fontWeight: 600,
   fontSize: '128px !important',
   lineHeight: '90% !important',
-  marginLeft: '-40px',
+  margin: '0px !important',
+  '@media': {
+    'screen and (max-width: 720px)': {
+      lineHeight: '43px !important',
+      fontSize: '48px !important',
+      marginTop: '-100px !important',
+    },
+  },
+});
+
+export const h3 = style({
+  '@media': {
+    'screen and (max-width: 720px)': {
+      lineHeight: '30px !important',
+      fontSize: '20px!important',
+    },
+  },
 });
 
 export const center = style({
@@ -64,10 +76,15 @@ export const chevron = style({
   padding: '60px 0',
 });
 
+export const messageInner = style({
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+});
+
 export const avatar = style({
   width: 28,
   height: 28,
-  background: 'red',
   borderRadius: '50%',
 });
 

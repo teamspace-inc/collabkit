@@ -5,7 +5,7 @@ import { InboxDemo } from '../demos/InboxDemo';
 export function InboxDoc() {
   return (
     <>
-      <h2>See all comment threads in one place.</h2>
+      <h2>See all comment threads in one place</h2>
       <InboxDemo className={docDemoContainer} />
       <div>
         <h3>Usage</h3>

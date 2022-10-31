@@ -127,6 +127,11 @@
           ".write": "root.child('apps').child($appId).child('admins').child(auth.uid).exists()",
           ".validate": "newData.isBoolean()"
         },
+        "defaultNotificationPreference": {
+          ".read": true,
+          ".write": "root.child('apps').child($appId).child('admins').child(auth.uid).exists()",
+          ".validate": "newData.isString() && (newData.val() === 'allWorkspace' || newData.val() === 'threadOnly' || newData.val() === 'off')"
+        },
         "emailBatchDelayMs": {
           ".read": true,
           ".write": "root.child('apps').child($appId).child('admins').child(auth.uid).exists()",

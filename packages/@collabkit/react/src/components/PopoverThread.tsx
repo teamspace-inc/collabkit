@@ -69,25 +69,25 @@ export const PreviewThread = forwardRef<Handle, PopoverThreadProps>(function Pop
         >
           <ScrollAreaRoot>
             <ScrollAreaViewport style={{ maxHeight: props.maxAvailableSize?.height ?? 'unset' }}>
-              <Comment.Root eventId={event.id}>
-                <Profile.Avatar />
-                <Comment.Content>
-                  <Comment.Header>
-                    <Comment.NameAndTimestampWrapper>
-                      <Comment.CreatorName />
-                      <Comment.Timestamp format={props.formatTimestamp} />
-                    </Comment.NameAndTimestampWrapper>
-                    <Comment.Actions>
-                      {/* button adds some vertical height, add one here to avoid jank when going from preview to popover thread */}
-                      <div style={{ opacity: 0, pointerEvents: 'none' }}>
-                        <ResolveThreadIconButton />
-                      </div>
-                    </Comment.Actions>
-                  </Comment.Header>
-                  <Comment.Body />
-                  {/* <div className={styles.reply}>Reply</div> */}
-                </Comment.Content>
-              </Comment.Root>
+              <CommentList.Root className={styles.commentList}>
+                <Comment.Root
+                  className={styles.comment}
+                  commentId={event.id}
+                  style={{ paddingTop: '16px' }}
+                >
+                  <Comment.Content>
+                    <Comment.Header className={styles.commentHeader()}>
+                      <Profile.Avatar />
+                      <Comment.NameAndTimestampWrapper>
+                        <Comment.CreatorName />
+                        <Comment.Timestamp format={props.formatTimestamp} />
+                      </Comment.NameAndTimestampWrapper>
+                    </Comment.Header>
+                    <Comment.Body />
+                  </Comment.Content>
+                </Comment.Root>
+              </CommentList.Root>
+
             </ScrollAreaViewport>
             <ScrollAreaScrollbar orientation="vertical">
               <ScrollAreaThumb />
@@ -154,8 +154,7 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
                 <CommentList.Root>
                   {list.map((group, gi) =>
                     group.map((event) => (
-                      <Comment.Root eventId={event.id} key={event.id}>
-                        <Profile.Avatar />
+                      <Comment.Root className={styles.comment} commentId={event.id} key={event.id}>
                         <Comment.Content>
                           <Comment.Header>
                             <Comment.NameAndTimestampWrapper>

@@ -4,7 +4,7 @@ import { Markdown } from '../Markdown';
 export function UseUnreadCommentsCountDoc() {
   return (
     <>
-      <h2>Returns the number of unread comments for a thread.</h2>
+      <h2>Returns the number of unread comments for a thread</h2>
       <div>
         <h3>Usage</h3>
         <p>
@@ -12,9 +12,7 @@ export function UseUnreadCommentsCountDoc() {
         </p>
         {renderCodeSnippet(`import { useUnreadCommentsCount } from '@collabkit/react';
 
-const count = useUnreadCommentsCount({ threadId: 'unique-thread-id' });
-
-// count is 1`)}
+const count = useUnreadCommentsCount({ threadId: 'unique-thread-id' });`)}
       </div>
 
       <Markdown

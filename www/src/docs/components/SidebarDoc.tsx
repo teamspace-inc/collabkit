@@ -17,7 +17,7 @@ export function SidebarInboxDoc() {
 
   return (
     <>
-      <h2>A sidebar you can use to show and hide the Inbox easily.</h2>
+      <h2>A sidebar you can use to show and hide the Inbox easily</h2>
       <SidebarDemo className={docDemoContainer} />
       <div>
         <h3>Usage</h3>

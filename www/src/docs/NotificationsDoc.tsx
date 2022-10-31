@@ -3,7 +3,7 @@ import { DocDemoContainer } from './Doc';
 export function NotificationsDoc() {
   return (
     <>
-      <h2>Get notified about new comments and replies.</h2>
+      <h2>Get notified about new comments and replies</h2>
       <DocDemoContainer />
       <div>
         <p>CollabKit delivers email notifications for new comments and threads by default.</p>

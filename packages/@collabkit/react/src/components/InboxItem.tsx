@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import { useSnapshot } from 'valtio';
 import { ThreadContext, useThreadContext } from '../hooks/useThreadContext';
-import { ResolveThreadIconButton } from './ResolveThreadIconButton';
-import { ThreadCommentersFacepile } from './ThreadCommentersFacepile';
+//import { ResolveThreadIconButton } from './ResolveThreadIconButton';
+//import { ThreadCommentersFacepile } from './ThreadCommentersFacepile';
+import { ResolveThreadButton } from './ResolveThreadButton';
+import { ThreadFacepile } from './ThreadFacepile';
 import { useInboxStore } from '../hooks/useInboxStore';
 import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
 import { useReplyCount } from '../hooks/useReplyCount';
 import { useApp } from '../hooks/useApp';
 import * as Comment from './Comment';
 import { ReplyCount } from './ReplyCount';
-import { UnreadDot } from './UnreadDot';
+import { ThreadUnreadDot } from './ThreadUnreadDot';
 import { actions } from '../../../client/src/actions';
 import { ThreadTarget } from '@collabkit/core';
 import * as styles from '../styles/components/InboxItem.css';
@@ -75,16 +77,15 @@ export function InboxItem(props: { formatTimestamp?: (timestamp: number) => stri
         }}
       >
         <div className={styles.header}>
-          <UnreadDot className={styles.unreadDot} />
-          <ThreadCommentersFacepile
+          <ThreadUnreadDot />
+          <ThreadFacepile
             size={fallbackVar(vars.inbox.item.facepile.avatar.size, vars.avatar.size)}
-            hover={hover}
           />
           <div style={{ flex: 1 }}></div>
           {firstComment.createdById === userId ? <ResolveThreadIconButton /> : null}
         </div>
         {renderThreadContextPreview?.({ threadId, workspaceId, userId, info })}
-        <Comment.Root eventId={firstCommentId} className={styles.commentRoot}>
+        <Comment.Root commentId={firstCommentId} className={styles.commentRoot}>
           <div className={styles.nameAndTimestampWrapper}>
             <Comment.CreatorName className={styles.name} />
             <Comment.Timestamp className={styles.timestamp} format={props.formatTimestamp} />

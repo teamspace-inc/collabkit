@@ -18,12 +18,13 @@ export async function sendMessage(store: Store, props: { workspaceId: string; th
     console.warn('[CollabKit]: cannot send message in read-only mode');
     return;
   }
+
   const workspace = store.workspaces[workspaceId];
   const { editor, $$body: body, $$mentions: mentions } = workspace.composers[threadId];
 
   // console.debug('[CollabKit]: sending message', workspaceId, threadId, body, mentions);
 
-  if (body.trim().length === 0) {
+  if (`${body}`.trim().length === 0) {
     console.warn('[CollabKit] tried to send an empty message');
     // can't send empty messages
     return;

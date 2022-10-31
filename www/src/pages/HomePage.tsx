@@ -9,9 +9,16 @@ import { light } from '../styles/Theme.css';
 import { website } from '../styles/Website.css';
 import { Components } from '../home/Components';
 import { Customisable } from '../home/Customisable';
+import { SmallHero } from '../home/small/SmallHero';
+import { useIsSmallScreen } from '../hooks/useIsSmallScreen';
+import { SmallDemos } from '../home/small/SmallDemos';
+import { SmallComponents } from '../home/small/SmallComponents';
+import { SmallCustomisable } from '../home/small/SmallCustomisable';
+import { SmallCode } from '../home/small/SmallCode';
 
 export function HomePage() {
   const [invertFilter, setInvertFilter] = useState(0);
+  const isSmallScreen = useIsSmallScreen();
 
   return (
     <div
@@ -23,15 +30,26 @@ export function HomePage() {
       }}
       className={`${website} ${light}`}
     >
-      <Header invertFilter={invertFilter} />
-      <Hero />
-      <Demos setInvertFilter={setInvertFilter} />
-      <Components setInvertFilter={setInvertFilter} />
-      <Customisable setInvertFilter={setInvertFilter} />
-      <Code setInvertFilter={setInvertFilter} />
-
-      <Plans />
-      <Contact />
+      {isSmallScreen ? (
+        <>
+          <SmallHero />
+          <SmallDemos />
+          <SmallComponents />
+          <SmallCustomisable />
+          <SmallCode />
+        </>
+      ) : (
+        <>
+          <Header invertFilter={invertFilter} />
+          <Hero />
+          <Demos setInvertFilter={setInvertFilter} />
+          <Components setInvertFilter={setInvertFilter} />
+          <Customisable setInvertFilter={setInvertFilter} />
+          <Code setInvertFilter={setInvertFilter} />
+          <Plans />
+          <Contact />
+        </>
+      )}
     </div>
   );
 }

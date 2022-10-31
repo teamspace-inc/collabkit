@@ -1,67 +1,19 @@
-import { useIsSmallScreen } from '../hooks/useIsSmallScreen';
-
 import * as styles from '../styles/home/Hero.css';
 import { useFloatingNodeId, useFloating, autoUpdate } from '@floating-ui/react-dom-interactions';
-
-import alicia from '../assets/alicia.png';
-// import julia from '../assets/julia.png';
-// 1: {
-//   avatar: julia,
-//   name: 'Julia Efes',
-//   timeAgo: '5m',
-//   message: <>Looks great! Maybe we should change it to ‘commenting’?</>,
-// },
-import james from '../assets/james.png';
 import { GetStartedButton } from './GetStartedButton';
 
 import UISvg from '../assets/home/hero/ui.svg';
-
-const messages = {
-  0: {
-    avatar: alicia,
-    name: 'Alicia Baker',
-    timeAgo: '10m',
-    message: (
-      <>
-        May isn’t looking great. <span>@james</span> Let’s change distributor?
-      </>
-    ),
-  },
-  1: {
-    avatar: james,
-    name: 'James Hanson',
-    timeAgo: 'Now',
-    message: <>I'm on it!</>,
-  },
-};
-
-function Message(props: { message: typeof messages[keyof typeof messages] }) {
-  return (
-    <div className={styles.message}>
-      <img src={props.message.avatar} className={styles.avatar} />
-      <div>
-        <div className={styles.name}>
-          {props.message.name} <span className={styles.timeAgo}>{props.message.timeAgo}</span>
-        </div>
-        <div className={styles.body}>{props.message.message}</div>
-      </div>
-    </div>
-  );
-}
+import { HeroMessage, HERO_MESSAGES } from './HeroMessage';
 
 export function Hero() {
-  const isSmallScreen = useIsSmallScreen();
-  const title = isSmallScreen ? (
-    <>Commenting made easy</>
-  ) : (
+  const title = (
     <>
       Commenting
-      <br /> made easy
+      <br />
+      made easy
     </>
   );
-  const description = isSmallScreen ? (
-    <>Add contextual collaboration to your product with our customisable React SDK</>
-  ) : (
+  const description = (
     <>
       Add contextual collaboration to your product
       <br /> with our customisable React SDK.
@@ -93,8 +45,8 @@ export function Hero() {
         }}
       >
         <div className={styles.messageList}>
-          <Message message={messages[0]} />
-          <Message message={messages[1]} />
+          <HeroMessage message={HERO_MESSAGES[0]} />
+          <HeroMessage message={HERO_MESSAGES[1]} />
         </div>
       </div>
 

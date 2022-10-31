@@ -22,5 +22,15 @@ export function isAppNotifiable(props: { app: App }) {
     return false;
   }
 
+  if (!app.defaultNotificationPreference) {
+    console.debug('app.defaultNotificationPreference is blank');
+    return false;
+  }
+
+  if (app.defaultNotificationPreference === 'off') {
+    console.debug('app.defaultNotificationPreference is off');
+    return false;
+  }
+
   return true;
 }

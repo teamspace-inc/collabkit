@@ -6,7 +6,7 @@ import { DocLink } from './Doc';
 export function GettingStartedDoc() {
   return (
     <>
-      <h2>A quick tutorial to get you up and running with CollabKit.</h2>
+      <h2>A quick tutorial to get you up and running with CollabKit</h2>
       <p>
         In this tutorial we'll show you how to add a comment thread to your app. Set aside 5 to 10
         minutes to get this done.

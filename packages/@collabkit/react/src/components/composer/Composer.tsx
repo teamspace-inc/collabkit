@@ -7,7 +7,7 @@ import { PlainTextPlugin } from '@lexical/react/LexicalPlainTextPlugin';
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
-import { $convertFromMarkdownString } from '@lexical/markdown';
+import { $convertFromMarkdownString, $convertToMarkdownString } from '@lexical/markdown';
 import { TRANSFORMERS, MentionNode, TimestampNode } from '../../editor';
 import { TimestampPlugin } from './TimestampPlugin';
 import { MentionsPlugin } from './MentionsPlugin';
@@ -128,7 +128,10 @@ export const Editor = function ComposerEditor(props: {
         <PlainTextPlugin contentEditable={props.contentEditable} placeholder={props.placeholder} />
         <OnChangePlugin
           onChange={(editorState, editor) => {
-            events.onComposerChange(target, editorState, editor);
+            editorState.read(() => {
+              const newBody = $convertToMarkdownString(TRANSFORMERS);
+              events.onComposerChange(target, editorState, editor, newBody);
+            });
           }}
         />
         {autoFocus ? <AutoFocusPlugin /> : <></>}

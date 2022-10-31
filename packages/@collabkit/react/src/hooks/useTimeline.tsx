@@ -1,6 +1,9 @@
-import type { Timeline } from '@collabkit/core';
-import { timelineUtils } from '@collabkit/core';
+import { useSnapshot } from 'valtio';
+import { useThreadContext } from './useThreadContext';
+import { useWorkspaceStore } from './useWorkspaceStore';
 
-export function useTimeline(timeline: Timeline, seenUntil?: string) {
-  return timelineUtils.groupedTimeline(timeline);
+export function useTimeline() {
+  const { threadId } = useThreadContext();
+  const { timeline } = useSnapshot(useWorkspaceStore());
+  return timeline[threadId];
 }

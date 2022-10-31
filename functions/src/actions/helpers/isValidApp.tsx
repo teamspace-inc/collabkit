@@ -32,6 +32,12 @@ export function isValidApp(data: unknown): data is App {
 
   const accentColorValid = has(data, 'accentColor') ? typeof data.accentColor === 'string' : true;
 
+  const defaultNotificationPreference = has(data, 'defaultNotificationPreference')
+    ? data.defaultNotificationPreference === 'allWorkspace' ||
+      data.defaultNotificationPreference === 'threadOnly' ||
+      data.defaultNotificationPreference === 'off'
+    : true;
+
   return (
     nameValid &&
     isEmailDisabledValid &&
@@ -40,6 +46,7 @@ export function isValidApp(data: unknown): data is App {
     adminsValid &&
     keysValid &&
     modeValid &&
-    accentColorValid
+    accentColorValid &&
+    defaultNotificationPreference
   );
 }

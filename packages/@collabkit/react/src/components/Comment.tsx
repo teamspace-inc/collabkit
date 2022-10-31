@@ -48,11 +48,11 @@ export function Provider(props: { children: React.ReactNode; eventId: string }) 
 export function Root(props: {
   children: React.ReactNode;
   className?: string;
-  eventId: string;
+  commentId: string;
   style?: React.CSSProperties;
 }) {
   const { threadId, workspaceId, userId } = useThreadContext();
-  const { eventId } = props;
+  const { commentId: eventId } = props;
   const treeId = useId();
 
   const target = useMemo<CommentTarget>(

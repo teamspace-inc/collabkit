@@ -1,22 +1,19 @@
 import { useState } from 'react';
-import PagesSvg from '../assets/Pages.svg';
-import ChartSvg from '../assets/Chart.svg';
-import TextSvg from '../assets/Text.svg';
+import ChartSvg from '../assets/home/demos/Charts.svg';
+import TextSvg from '../assets/home/demos/Text.svg';
 import { dark } from '../styles/Theme.css';
-import { tab, tabs } from '../styles/Website.css';
+import { purpleBg, tab, tabs } from '../styles/Website.css';
 import { useInvertFilter } from '../hooks/useInvertFilter';
 import { ListDemo } from './ListDemo';
 import { DataGridDemo } from '../components/DataGridDemo';
 import * as styles from '../styles/home/Demos.css';
 
-const scenarios = ['Pages', 'Lists', 'Tables', 'Charts', 'Text'] as const;
+const scenarios = ['Lists', 'Tables', 'Charts', 'Text'] as const;
 type ScenarioName = typeof scenarios[number];
 
 function Scenario({ scenario }: { scenario: ScenarioName }) {
   const imgStyle = { width: '100%' };
   switch (scenario) {
-    case 'Pages':
-      return <img src={PagesSvg} style={imgStyle} />;
     case 'Lists':
       return <ListDemo />;
     case 'Tables':
@@ -34,7 +31,7 @@ export function Demos(props: { setInvertFilter: (invert: number) => void }) {
   const [activeScenario, setActiveScenario] = useState<ScenarioName>('Lists');
   const { ref } = useInvertFilter(props);
   return (
-    <section ref={ref} className={`${dark} ${styles.section}`} id="HowItWorks">
+    <section ref={ref} className={`${dark} ${purpleBg}`} id="HowItWorks">
       <h1>Works with any UI</h1>
       <h3 className={styles.h3}>CollabKit supports multiple ways to comment</h3>
       <div className={styles.demoOuterWrapper}>

@@ -5,7 +5,7 @@ import { SidebarDemo } from '../demos/SidebarDemo';
 export function SidebarInboxButtonDoc() {
   return (
     <>
-      <h2>A button that opens the SidebarInbox.</h2>
+      <h2>A button that opens the SidebarInbox</h2>
       <SidebarDemo className={docDemoContainer} />
       <div>
         <h3>Usage</h3>

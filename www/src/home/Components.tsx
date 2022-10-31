@@ -10,8 +10,9 @@ import {
   componentDescription,
   componentTitle,
 } from '../styles/home/Components.css';
-import { button } from '../styles/Website.css';
+import { button, purpleBg } from '../styles/Website.css';
 import { Link } from 'wouter';
+import { useWindowSize } from '../hooks/useWindowSize';
 
 type ComponentProps = {
   title: string;
@@ -19,12 +20,12 @@ type ComponentProps = {
   component: React.ReactNode;
 };
 
-const components: ComponentProps[] = [
+export const COMPONENTS: ComponentProps[] = [
   {
     title: 'Thread',
     description: 'A comment thread that can be rendered anywhere in your app.',
     component: (
-      <div style={{ width: 256, height: 292 }}>
+      <div style={{ width: 256, height: 320 }}>
         <Thread threadId="thread3" />
       </div>
     ),
@@ -93,19 +94,18 @@ function Component(props: ComponentProps) {
 }
 
 export function Components(props: { setInvertFilter: (invert: number) => void }) {
+  const size = useWindowSize();
+  const width = size?.width ?? window.innerWidth;
+
   return (
-    <section
-      className={`${dark} ${styles.section}`}
-      style={{ padding: '60px 0px' }}
-      id="Components"
-    >
+    <section className={`${dark} ${purpleBg}`} style={{ padding: '60px 0px' }} id="Components">
       <h1>React components</h1>
       <h3 className={styles.h3}>Build your commenting system with ease</h3>
       <CarouselProvider
         naturalSlideWidth={520}
-        naturalSlideHeight={500}
+        naturalSlideHeight={520}
         totalSlides={5}
-        visibleSlides={window.innerWidth / 500}
+        visibleSlides={width / 500}
         // figure out padding for site
         style={{
           width: '100%',
@@ -114,8 +114,8 @@ export function Components(props: { setInvertFilter: (invert: number) => void })
       >
         <Slider>
           {/* empty slide to act as left margin */}
-          <Slide index={0} style={{ width: (window.innerWidth - 1124) / 2 }} />
-          {components.map((component, index) => (
+          <Slide index={0} style={{ width: (width - 1124) / 2 }} />
+          {COMPONENTS.map((component, index) => (
             <Slide key={index} index={index} style={{ outline: 'none' }}>
               <Component {...component} />
             </Slide>
@@ -127,9 +127,9 @@ export function Components(props: { setInvertFilter: (invert: number) => void })
                 flexDirection: 'column',
                 alignItems: 'center',
                 justifyContent: 'center',
-                height: '400px',
+                height: '420px',
                 borderRadius: '24px',
-                background: '#2E2739',
+                border: '1px solid #4A3A63',
                 gap: '20px',
               }}
             >

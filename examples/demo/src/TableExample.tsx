@@ -129,6 +129,7 @@ export const TableExample = () => {
           ))}
         </tbody>
       </table>
+
       <Sidebar>
         <Inbox />
       </Sidebar>

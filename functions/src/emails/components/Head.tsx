@@ -23,6 +23,17 @@ const Head: React.FC<HeadProps> = ({ children }) => {
           color: ${black} !important;
         }
 
+        .mdbody a {
+          color: #007FF5 !important;
+          font-weight: 700 !important;
+          text-decoration: none !important;
+        }
+
+        .mdbody p {
+          padding: 0 !important;
+          margin: 0 !important;
+        }
+
         .avatar > div {
           width: 32px;
           height: 32px;

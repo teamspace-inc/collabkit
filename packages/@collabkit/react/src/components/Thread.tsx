@@ -80,7 +80,7 @@ export function Thread(props: ThreadProps & { className?: string; children?: Rea
                       return (
                         <React.Fragment key={event.id}>
                           {newIndicatorId === event.id ? <NewIndicator /> : null}
-                          <Comment.Root eventId={event.id}>
+                          <Comment.Root commentId={event.id}>
                             {showProfile && <Profile.Avatar />}
                             <Comment.Content profileIndent={!showProfile}>
                               {showProfile && (

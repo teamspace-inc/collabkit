@@ -25,6 +25,16 @@ import { SidebarInboxButton } from './components/SidebarInboxButton';
 import { SidebarInbox } from './components/SidebarInbox';
 import { PopoverThread } from './components/PopoverThread';
 import { AltPopoverThread } from './components/AltPopoverThread';
+import { useInbox } from './hooks/public/useInbox';
+import * as Comment from './components/Comment';
+import * as Profile from './components/Profile';
+import { ThreadProvider } from './components/ThreadProvider';
+import { useComments } from './hooks/public/useComments';
+import { useIsResolved } from './hooks/public/useIsResolved';
+import { useResolveThread } from './hooks/public/useResolveThread';
+import { useThreadUsers } from './hooks/public/useThreadUsers';
+import { ThreadFacepile } from './components/ThreadFacepile';
+import { useReplyCount } from './hooks/useReplyCount';
 
 export {
   CollabKitProvider as Provider,
@@ -43,6 +53,17 @@ export {
   useUnreadThreadsCount,
   useUnreadCommentsCount as useUnreadCount,
   createValtioStore as internal_createStore,
+  // advanced
+  ThreadFacepile,
+  useInbox,
+  useComments,
+  useIsResolved,
+  useThreadUsers,
+  useResolveThread,
+  useReplyCount,
+  ThreadProvider,
+  Comment,
+  Profile,
 };
 
 export type {
