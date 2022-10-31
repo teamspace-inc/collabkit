@@ -1,5 +1,4 @@
-import { createVar, fallbackVar, style } from '@vanilla-extract/css';
-import { calc } from '@vanilla-extract/css-utils';
+import { fallbackVar, style } from '@vanilla-extract/css';
 import { vars } from '../theme';
 
 export const root = style({
@@ -33,44 +32,6 @@ export const header = style({
 
 export const commentList = style({
   paddingBottom: vars.space[2],
-});
-
-const columnGap = createVar();
-const composerHorizontalPadding = createVar();
-
-const typingIndicatorLineHeight = fallbackVar(
-  vars.thread.typingIndicator.lineHeight,
-  vars.text.small.lineHeight
-);
-
-export const composer = style({
-  display: 'flex',
-  flexDirection: 'row',
-  flexWrap: 'wrap',
-  columnGap,
-  padding: `${vars.space[2]} ${composerHorizontalPadding} ${typingIndicatorLineHeight}`,
-  fontFamily: vars.fontFamily,
-
-  vars: {
-    [composerHorizontalPadding]: vars.space[4],
-    [columnGap]: vars.space[2],
-  },
-});
-
-export const typingIndicator = style({
-  height: fallbackVar(vars.thread.typingIndicator.lineHeight),
-  paddingLeft: calc.add(vars.avatar.size, columnGap),
-  paddingTop: calc.divide(vars.space[1]),
-  overflow: 'hidden',
-  flexBasis: '100%',
-  color: fallbackVar(vars.thread.typingIndicator.color, vars.color.textSecondary),
-  fontSize: fallbackVar(vars.thread.typingIndicator.fontSize, vars.text.small.fontSize),
-  lineHeight: typingIndicatorLineHeight,
-  letterSpacing: fallbackVar(
-    vars.thread.typingIndicator.letterSpacing,
-    vars.text.small.letterSpacing
-  ),
-  fontFamily: vars.fontFamily,
 });
 
 export const emptyState = style({

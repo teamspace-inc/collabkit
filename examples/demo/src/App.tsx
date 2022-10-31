@@ -131,7 +131,7 @@ function Demo() {
 // }
 
 function Home() {
-  const threadId = 'new-your-thread-id2';
+  const threadId = 'new-your-thread-id3';
 
   const unreadCount = useUnreadCount({ threadId });
   const unread = unreadCount > 0 ? ` (${unreadCount})` : '';
@@ -141,7 +141,7 @@ function Home() {
     <div style={{ position: 'fixed', inset: 0 }}>
       <Thread
         autoFocus={true}
-        info={{ name: 'Demo thread' }}
+        // info={{ name: 'Demo thread' }}
         showHeader={true}
         composerPrompt="Write a comment"
         style={{ borderRadius: 0, height: '100%' }}

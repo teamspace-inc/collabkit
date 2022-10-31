@@ -17,12 +17,13 @@ import {
 } from '@floating-ui/react-dom-interactions';
 
 import { mergeRefs } from 'react-merge-refs';
-import { PopoverThread, PreviewThread } from './PopoverThread';
-import { useApp } from '../hooks/useApp';
+import { PopoverThread } from './PopoverThread';
+import { useApp } from '../../hooks/useApp';
 import { nanoid } from 'nanoid';
 import { useSnapshot } from 'valtio';
 import { ThreadInfo, ThreadTarget } from '@collabkit/core';
 import { actions } from '@collabkit/client';
+import { PreviewThread } from './PreviewThread';
 
 function useStableId(): [string, () => void] {
   const [id, setId] = useState<string>(() => nanoid());
@@ -50,10 +51,25 @@ type PopoverProps = {
   _viewId?: string;
   openOnClick?: boolean;
   autoFocus?: boolean;
-
   hideComposer?: boolean;
   shouldFlipToKeepInView?: boolean;
 };
+
+// export function useThreadId(props: { objectId: string }) {
+//   const { name, objectId: cellId } = props;
+
+//   const viewId =
+//     '_viewId' in props && props._viewId ? props._viewId : window?.location?.pathname || 'default';
+
+//   const threadInfo = useMemo<ThreadInfo>(
+//     () => ({ name, meta: { viewId, cellId } }),
+//     [name, viewId, cellId]
+//   );
+//   const threadId = useOpenThread({ viewId, cellId });
+//   const [newThreadId, _resetNewThreadId] = useStableId();
+//   const getNewThreadId = useCallback(() => newThreadId, [newThreadId]);
+//   return threadId;
+// }
 
 export function usePopoverThread(props: PopoverProps) {
   const { name, cellId } = props;

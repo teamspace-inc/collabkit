@@ -23,6 +23,7 @@ import { useOptionalCommentContext } from '../../hooks/useCommentContext';
 import { useSnapshot } from 'valtio';
 import { $setSelection } from 'lexical';
 import Profile from '../Profile';
+import { TypingIndicator } from '../TypingIndicator';
 
 // Catch any errors that occur during Lexical updates and log them
 // or throw them as needed. If you don't throw them, Lexical will
@@ -47,12 +48,13 @@ function useComposerContext() {
   return useContext(ComposerContext);
 }
 
-function ComposerRoot(props: {
-  className?: string;
-  children: React.ReactNode;
-  autoFocus: boolean;
-  body?: string;
-}) {
+function ComposerRoot(
+  props: {
+    children: React.ReactNode;
+    autoFocus: boolean;
+    body?: string;
+  } & React.ComponentPropsWithoutRef<'div'>
+) {
   const commentContext = useOptionalCommentContext();
 
   const { threadId, workspaceId, userId } = useThreadContext();
@@ -68,7 +70,7 @@ function ComposerRoot(props: {
   };
 
   return (
-    <div className={props.className ?? styles.root} onClick={onClick}>
+    <div className={styles.root} {...props} onClick={onClick}>
       <ComposerContext.Provider value={{ body: props.body ?? '', autoFocus: props.autoFocus }}>
         <TargetContext.Provider value={target}>{props.children}</TargetContext.Provider>
       </ComposerContext.Provider>
@@ -131,7 +133,7 @@ function ComposerEditor(props: {
           onChange={(editorState, editor) => {
             editorState.read(() => {
               const newBody = $convertToMarkdownString(TRANSFORMERS);
-              events.onComposerChange(target, editorState, editor, newBody);
+              events.onComposerChange(target, editor, newBody);
             });
           }}
         />
@@ -156,6 +158,7 @@ export default function Composer(props: { autoFocus?: boolean }) {
         contentEditable={<Composer.ContentEditable />}
         placeholder={<Composer.Placeholder>Write a comment</Composer.Placeholder>}
       />
+      <Composer.TypingIndicator />
     </Composer.Root>
   );
 }
@@ -164,3 +167,4 @@ Composer.Root = ComposerRoot;
 Composer.ContentEditable = ComposerContentEditable;
 Composer.Editor = ComposerEditor;
 Composer.Placeholder = ComposerPlaceholder;
+Composer.TypingIndicator = TypingIndicator;

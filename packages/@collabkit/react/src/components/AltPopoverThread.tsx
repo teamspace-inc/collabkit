@@ -14,12 +14,12 @@ import {
 import Comment from './Comment';
 import Composer from './composer/Composer';
 import Profile from './Profile';
-import { PopoverThreadCommentEditor } from './PopoverThreadCommentEditor';
+import { CommentEditor } from './CommentEditor';
 import * as styles from '../styles/components/PopoverThread.css';
 import { ThemeWrapper } from './ThemeWrapper';
 import { useComposer } from '../hooks/useComposer';
 import { ButtonGroup } from './ButtonGroup';
-import { ThreadContextProvider } from './Thread';
+import { ThreadProvider } from './Thread';
 
 type PopoverThreadProps = {
   threadId: string;
@@ -54,7 +54,7 @@ export const AltPreviewThread = forwardRef<Handle, PopoverThreadProps>(function 
   }
 
   return (
-    <ThreadContextProvider {...props}>
+    <ThreadProvider {...props}>
       <ThemeWrapper>
         <div
           className={styles.previewRoot}
@@ -84,7 +84,7 @@ export const AltPreviewThread = forwardRef<Handle, PopoverThreadProps>(function 
           </ScrollAreaRoot>
         </div>
       </ThemeWrapper>
-    </ThreadContextProvider>
+    </ThreadProvider>
   );
 });
 
@@ -112,7 +112,7 @@ export const AltPopoverThread = forwardRef<Handle, PopoverThreadProps>(function 
   }
 
   return (
-    <ThreadContextProvider {...props}>
+    <ThreadProvider {...props}>
       <ThemeWrapper>
         <div className={styles.root} data-collabkit-internal="true" style={props.style} ref={ref}>
           <ScrollAreaRoot>
@@ -148,7 +148,7 @@ export const AltPopoverThread = forwardRef<Handle, PopoverThreadProps>(function 
                             </Comment.NameAndTimestampWrapper>
                           </Comment.Header>
                           <Comment.Body />
-                          <PopoverThreadCommentEditor />
+                          <CommentEditor />
                         </Comment.Content>
                       </Comment.Root>
                     ))
@@ -156,17 +156,15 @@ export const AltPopoverThread = forwardRef<Handle, PopoverThreadProps>(function 
                 </CommentList.Root>
               ) : null}
               {props.hideComposer ? null : (
-                <div className={styles.composerForm}>
-                  <Composer.Root autoFocus={props.autoFocus ?? true}>
-                    <Composer.Editor
-                      contentEditable={<Composer.ContentEditable />}
-                      placeholder={
-                        <Composer.Placeholder>
-                          {isEmpty ? 'Add a comment' : 'Reply to this comment'}
-                        </Composer.Placeholder>
-                      }
-                    />
-                  </Composer.Root>
+                <Composer.Root autoFocus={props.autoFocus ?? true}>
+                  <Composer.Editor
+                    contentEditable={<Composer.ContentEditable />}
+                    placeholder={
+                      <Composer.Placeholder>
+                        {isEmpty ? 'Add a comment' : 'Reply to this comment'}
+                      </Composer.Placeholder>
+                    }
+                  />
                   <ButtonGroup
                     onCancel={(e) =>
                       events.onPointerDown(e, {
@@ -181,7 +179,7 @@ export const AltPopoverThread = forwardRef<Handle, PopoverThreadProps>(function 
                     confirmButtonEnabled={isEnabled}
                     confirmButtonText={'Comment'}
                   />
-                </div>
+                </Composer.Root>
               )}
             </ScrollAreaViewport>
             <ScrollAreaScrollbar orientation="vertical">
@@ -191,6 +189,6 @@ export const AltPopoverThread = forwardRef<Handle, PopoverThreadProps>(function 
           </ScrollAreaRoot>
         </div>
       </ThemeWrapper>
-    </ThreadContextProvider>
+    </ThreadProvider>
   );
 });

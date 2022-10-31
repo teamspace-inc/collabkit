@@ -2,7 +2,7 @@ import {
   useInbox,
   Comment,
   Profile,
-  ThreadProvider,
+  Thread,
   useComments,
   useIsResolved,
   useUnreadCount,
@@ -56,9 +56,9 @@ export function CustomInbox() {
       <h1>Custom inbox</h1>
 
       {threadIds.map((threadId) => (
-        <ThreadProvider key={threadId} threadId={threadId}>
+        <Thread.Provider key={threadId} threadId={threadId}>
           <CustomInboxItem threadId={threadId} />
-        </ThreadProvider>
+        </Thread.Provider>
       ))}
     </div>
   );

@@ -1,4 +1,4 @@
-import type { Event, MentionWithColor, Pin, Store, WithID } from '@collabkit/core';
+import type { Event, Pin, Store, WithID } from '@collabkit/core';
 import { actions } from './';
 
 export async function writeMessageToFirebase(

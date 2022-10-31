@@ -11,12 +11,5 @@ export const ThreadBase = {
       lineHeight: 'initial',
       letterSpacing: 'initial',
     },
-    typingIndicator: {
-      color: 'initial',
-      fontSize: 'initial',
-      lineHeight: 'initial',
-      fontWeight: 'initial',
-      letterSpacing: 'initial',
-    },
   },
 };

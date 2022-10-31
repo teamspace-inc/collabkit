@@ -1,5 +1,5 @@
 import { ComposerBase } from "../styles/themes/base/ComposerBase";
-import { PopoverTrigger, usePopoverThread } from "./Popover";
+import { PopoverThread, usePopoverThread } from "./Popover";
 import { PopoverThread } from "./PopoverThread";
 import React from 'react'
 
@@ -7,7 +7,7 @@ import React from 'react'
 
 function CellRenderer(props: any) {
   const { context } = usePopoverThread({viewId, ...});
-  return <PopoverTrigger context={context}>{ props.value}</PopoverTrigger> 
+  return <PopoverThread context={context}>{ props.value}</PopoverThread> 
 }
 
 const CellRendererRadix (props: any) => (

@@ -11,7 +11,8 @@ import type { AvatarProps } from './types';
 import type { CustomTheme } from './styles/themes.css';
 
 import { CollabKitProvider } from './components/Provider';
-import { PopoverTrigger, usePopoverThread } from './components/Popover';
+import { PopoverTrigger, usePopoverThread } from './components/popover/Popover';
+import { PopoverThread } from './components/popover/PopoverThread';
 import { Thread } from './components/Thread';
 import { useUnreadCommentsCount } from './hooks/public/useUnreadCommentsCount';
 import { useUnreadThreadsCount } from './hooks/public/useUnreadThreadsCount';
@@ -23,12 +24,10 @@ import { Sidebar } from './components/Sidebar';
 import { ThemeWrapper } from './components/ThemeWrapper';
 import { SidebarInboxButton } from './components/SidebarInboxButton';
 import { SidebarInbox } from './components/SidebarInbox';
-import { PopoverThread } from './components/PopoverThread';
-import { AltPopoverThread } from './components/AltPopoverThread';
+// import { AltPopoverThread } from './components/AltPopoverThread';
 import { useInbox } from './hooks/public/useInbox';
-import * as Comment from './components/Comment';
-import * as Profile from './components/Profile';
-import { ThreadProvider } from './components/ThreadProvider';
+import Comment from './components/Comment';
+import Profile from './components/Profile';
 import { useComments } from './hooks/public/useComments';
 import { useIsResolved } from './hooks/public/useIsResolved';
 import { useResolveThread } from './hooks/public/useResolveThread';
@@ -61,7 +60,6 @@ export {
   useThreadUsers,
   useResolveThread,
   useReplyCount,
-  ThreadProvider,
   Comment,
   Profile,
 };

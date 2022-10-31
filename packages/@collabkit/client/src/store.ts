@@ -23,6 +23,7 @@ export function createWorkspace(): Workspace {
     seen: {},
     seenBy: {},
     threadInfo: {},
+    clientThreadInfo: {},
     likelyFetchedAllProfiles: false,
   };
 }

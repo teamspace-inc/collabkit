@@ -1,6 +1,6 @@
 import { CaretRight } from './icons';
 import { IconButton } from './IconButton';
-import { useNextThread } from './useNextThread';
+import { useNextThread } from '../hooks/useNextThread';
 import React from 'react';
 
 export const NextThreadIconButton = (props: {}) => {

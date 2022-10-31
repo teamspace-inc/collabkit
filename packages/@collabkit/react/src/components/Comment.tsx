@@ -16,6 +16,8 @@ import * as styles from '../styles/components/Comment.css';
 import { DotsThree } from './icons';
 import { Menu, MenuItem } from './Menu';
 import { useHovering } from '../hooks/useHovering';
+import { ResolveThreadIconButton } from './ResolveThreadIconButton';
+import { CommentEditor } from './CommentEditor';
 
 export function CommentProvider(props: { children: React.ReactNode; eventId: string }) {
   const { threadId, workspaceId } = useThreadContext();
@@ -222,23 +224,34 @@ const CommentMenu = () => {
 
 export { CommentMenu as MoreMenu };
 
-export default function Comment(props: { commentId: string }) {
+export default function Comment(props: {
+  commentId: string;
+  hideProfile?: boolean;
+  showResolveThreadButton?: boolean;
+}) {
+  const hideProfile = props.hideProfile ?? false;
+  const showResolveThreadButton = props.showResolveThreadButton ?? false;
+
   return (
     <Comment.Root commentId={props.commentId}>
       <Comment.Content>
         <Comment.Header>
-          <Profile.Avatar />
-          <Comment.NameAndTimestampWrapper>
-            <Comment.CreatorName />
-            <Comment.Timestamp />
-          </Comment.NameAndTimestampWrapper>
+          {!hideProfile && <Profile.Avatar />}
+          {!hideProfile && (
+            <Comment.NameAndTimestampWrapper>
+              <Comment.CreatorName />
+              <Comment.Timestamp />
+            </Comment.NameAndTimestampWrapper>
+          )}
           <Comment.Actions>
+            {showResolveThreadButton && <ResolveThreadIconButton />}
             <Comment.MoreMenu />
           </Comment.Actions>
         </Comment.Header>
         <Comment.Indent>
           <Comment.Body />
         </Comment.Indent>
+        <CommentEditor />
       </Comment.Content>
     </Comment.Root>
   );

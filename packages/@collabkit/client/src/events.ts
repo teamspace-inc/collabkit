@@ -1,6 +1,6 @@
 import type React from 'react';
-import { $getRoot, $getSelection } from 'lexical';
-import type { EditorState, LexicalEditor } from 'lexical';
+import { $getSelection } from 'lexical';
+import type { LexicalEditor } from 'lexical';
 import { nanoid } from 'nanoid';
 import type {
   CommentReactionTarget,
@@ -28,49 +28,26 @@ export function createEvents(store: Store) {
       });
     },
 
-    onComposerChange: (
-      target: Target,
-      editorState: EditorState,
-      editor: LexicalEditor,
-      newBody: string
-    ) => {
+    onComposerChange: (target: Target, editor: LexicalEditor, newBody: string) => {
       if (target.type !== 'composer') {
         return;
       }
 
       store.workspaces[target.workspaceId].composers[target.threadId].editor = markRaw(editor);
-      editorState.read(() => {
-        let newMentions: string[] = [];
-        const nodes = $getRoot().getAllTextNodes();
-        nodes.forEach((node) => {
-          switch (node.__type) {
-            case 'mention':
-              const id = node.__id;
-              if (typeof id === 'string') {
-                newMentions.push(node.__id);
-              } else {
-                console.debug('unexpected mention id', id);
-              }
-              break;
-          }
-        });
 
-        const body = store.workspaces[target.workspaceId].composers[target.threadId].$$body;
-        store.workspaces[target.workspaceId].composers[target.threadId].$$body = newBody;
+      const body = store.workspaces[target.workspaceId].composers[target.threadId].$$body;
+      store.workspaces[target.workspaceId].composers[target.threadId].$$body = newBody;
 
-        store.workspaces[target.workspaceId].composers[target.threadId].$$mentions = newMentions;
-
-        if (newBody.length === 0) {
-          actions.isTyping.cancel();
-          actions.disableComposerCommentButton(store, { target });
-          setTimeout(() => {
-            actions.stopTyping(store, { target });
-          }, 100);
-        } else if (newBody.length !== body.length) {
-          actions.enableComposerCommentButton(store, { target });
-          actions.isTyping(store, { target });
-        }
-      });
+      if (newBody.length === 0) {
+        actions.isTyping.cancel();
+        actions.disableComposerCommentButton(store, { target });
+        setTimeout(() => {
+          actions.stopTyping(store, { target });
+        }, 100);
+      } else if (newBody.length !== body.length) {
+        actions.enableComposerCommentButton(store, { target });
+        actions.isTyping(store, { target });
+      }
     },
 
     onDestroy: () => {

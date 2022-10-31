@@ -1,6 +1,8 @@
 import { fallbackVar, globalStyle, style } from '@vanilla-extract/css';
+import { calc } from '@vanilla-extract/css-utils';
 import { recipe } from '@vanilla-extract/recipes';
 import { vars } from '../theme';
+import type { CSSTransitionClassNames } from 'react-transition-group/CSSTransition';
 
 const ltr = style({
   textAlign: 'left',
@@ -8,6 +10,29 @@ const ltr = style({
 
 const rtl = style({
   textAlign: 'right',
+});
+
+const typingHeight = fallbackVar(
+  vars.composer.typingIndicator.lineHeight,
+  vars.text.small.lineHeight
+);
+
+export const typing = style({
+  height: typingHeight,
+  marginLeft: calc.add(vars.avatar.size, fallbackVar(vars.comment.gap, vars.space[2])),
+  marginTop: calc.negate(fallbackVar(vars.composer.gap, vars.space[2])),
+  paddingTop: `${calc(vars.space[1]).divide(2)}`,
+  paddingBottom: `${calc(vars.space[1]).divide(2)}`,
+  overflow: 'hidden',
+  flexBasis: '100%',
+  color: fallbackVar(vars.composer.typingIndicator.color, vars.color.textSecondary),
+  fontSize: fallbackVar(vars.composer.typingIndicator.fontSize, vars.text.tiny.fontSize),
+  lineHeight: typingHeight,
+  letterSpacing: fallbackVar(
+    vars.composer.typingIndicator.letterSpacing,
+    vars.text.small.letterSpacing
+  ),
+  fontFamily: vars.fontFamily,
 });
 
 export const placeholder = style({
@@ -89,9 +114,32 @@ export const root = style({
   flexDirection: 'row',
   flexWrap: 'wrap',
   alignItems: 'flex-start',
-  gap: vars.space[2],
   fontFamily: vars.fontFamily,
+  padding: fallbackVar(vars.composer.padding, `0 ${vars.space[4]} 0px`),
+  border: fallbackVar(vars.composer.border, `none`),
+  gap: fallbackVar(vars.composer.gap, vars.space[2]),
 });
+
+export const transitionClassNames: CSSTransitionClassNames = {
+  enter: style({
+    opacity: 0,
+    transform: 'translateY(100%)',
+  }),
+  enterActive: style({
+    opacity: 1,
+    transform: 'translateY(0)',
+    transition: 'all 200ms ease-out',
+  }),
+  exit: style({
+    transform: 'translateY(0)',
+    opacity: 1,
+  }),
+  exitActive: style({
+    transform: 'translateY(100%)',
+    transition: 'all 200ms ease-in',
+    opacity: 0,
+  }),
+};
 
 export const editor = recipe({
   base: {

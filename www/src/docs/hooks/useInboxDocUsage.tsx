@@ -1,4 +1,4 @@
-import { Comment, ThreadProvider, useComments, useInbox } from '@collabkit/react';
+import { Comment, Thread, useComments, useInbox } from '@collabkit/react';
 
 function InboxItem() {
   const comments = useComments();
@@ -8,17 +8,17 @@ function InboxItem() {
   return (
     <div>
       {firstComment ? (
-        <Comment.CommentRoot commentId={firstComment}>
-          <Comment.CommentCreatorName />
-          <Comment.CommentBody />
-        </Comment.CommentRoot>
+        <Comment.Root commentId={firstComment}>
+          <Comment.CreatorName />
+          <Comment.Body />
+        </Comment.Root>
       ) : null}
 
       {lastComment ? (
-        <Comment.CommentRoot commentId={lastComment}>
-          <Comment.CommentCreatorName />
-          <Comment.CommentBody />
-        </Comment.CommentRoot>
+        <Comment.Root commentId={lastComment}>
+          <Comment.CreatorName />
+          <Comment.Body />
+        </Comment.Root>
       ) : null}
     </div>
   );
@@ -29,9 +29,9 @@ export function App() {
   return (
     <div>
       {threadIds.map((threadId) => (
-        <ThreadProvider key={threadId} threadId={threadId}>
+        <Thread.Provider key={threadId} threadId={threadId}>
           <InboxItem />
-        </ThreadProvider>
+        </Thread.Provider>
       ))}
     </div>
   );

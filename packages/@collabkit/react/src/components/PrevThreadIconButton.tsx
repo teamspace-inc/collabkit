@@ -1,7 +1,7 @@
 import { CaretLeft } from './icons';
 import { IconButton } from './IconButton';
 import React from 'react';
-import { useNextThread } from './useNextThread';
+import { useNextThread } from '../hooks/useNextThread';
 
 export const PrevThreadIconButton = (props: {}) => {
   const { onPointerDown } = useNextThread(-1);

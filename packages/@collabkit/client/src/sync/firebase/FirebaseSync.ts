@@ -69,6 +69,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
         ? { meta: data.info?.meta ?? null }
         : null,
     };
+    console.log(values);
     return update(ref(getDatabase(getApp('CollabKit'))), values);
   }
 

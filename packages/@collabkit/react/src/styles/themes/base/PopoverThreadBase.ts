@@ -25,19 +25,5 @@ export const PopoverThreadBase = {
         flexDirection: 'initial',
       },
     },
-    composer: {
-      form: {
-        borderTop: 'initial',
-        padding: 'initial',
-        gap: 'initial',
-      },
-      input: {
-        border: 'initial',
-        minHeight: 'initial',
-        focus: {
-          border: 'initial',
-        },
-      },
-    },
   },
 };

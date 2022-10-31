@@ -3,8 +3,7 @@ import { useSnapshot } from 'valtio';
 import { useApp } from '../hooks/useApp';
 import type { Profile } from '@collabkit/core';
 import { useThreadContext } from '../hooks/useThreadContext';
-// import { transitionClassNames } from '../styles/components/TypingIndicator.css';
-// import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import { typing } from '../styles/components/Composer.css';
 
 function getNames(props: {
   userId: string;
@@ -22,7 +21,7 @@ function getNames(props: {
 }
 
 const TypingIndicatorText = function TypingIndicatorText({ names }: { names: string[] }) {
-  if (names.length === 0) return <div />;
+  if (names.length === 0) return <div></div>;
   if (names.length === 1)
     return (
       <div>
@@ -70,7 +69,7 @@ export function TypingIndicator(props: { className?: string }) {
     //       ]
     //     : []}
     // </TransitionGroup>
-    <div ref={nodeRef} className={props.className}>
+    <div ref={nodeRef} className={props.className ?? typing}>
       <TypingIndicatorText names={names} />
     </div>
   );

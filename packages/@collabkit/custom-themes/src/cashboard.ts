@@ -99,15 +99,9 @@ export const cashboard: CustomTheme = {
         alignItems: 'center',
       },
     },
-    composer: {
-      form: {
-        borderTop: '1px solid #E3E9ED',
-        padding: '16px 16px 0px',
-        gap: '12px',
-      },
-    },
   },
   composer: {
+
     input: {
       border: '1px solid #E3E9ED',
       background: 'white',

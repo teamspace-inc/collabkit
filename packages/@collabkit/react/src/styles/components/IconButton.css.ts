@@ -7,7 +7,7 @@ export const button = recipe({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    height: fallbackVar(vars.iconButton.size, '24px'),
+    height: fallbackVar(vars.iconButton.size, '20px'),
     width: fallbackVar(vars.iconButton.size, '24px'),
     cursor: 'pointer',
     userSelect: 'none',

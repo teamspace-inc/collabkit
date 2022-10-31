@@ -83,7 +83,8 @@ export const DOCS: RootDocNode = {
   'Secure Mode': { component: SecureModeDoc },
   Workspaces: { component: WorkspacesDoc },
   Customisation: { component: CustomisationDoc },
-  Notifications: { component: NotificationsDoc },
+  // todo rework notifications and include again
+  // Notifications: { component: NotificationsDoc },
   Advanced: {
     title: 'Advanced',
     children: {

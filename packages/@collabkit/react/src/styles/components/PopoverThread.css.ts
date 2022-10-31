@@ -1,6 +1,5 @@
 import { fallbackVar, style } from '@vanilla-extract/css';
 import { vars } from '../theme';
-import * as composerStyles from './Composer.css';
 import * as commentStyles from './Comment.css';
 
 import { recipe } from '@vanilla-extract/recipes';
@@ -20,6 +19,29 @@ export const root = style({
   fontFamily: vars.fontFamily,
 });
 
+export const previewRoot = style([
+  root,
+  {
+    boxShadow: fallbackVar(vars.popoverThread.preview.boxShadow, vars.shadow.standard),
+    cursor: 'pointer',
+    padding: `${vars.space[4]} 0`,
+  },
+]);
+
+export const header = style({
+  display: 'flex',
+  flexDirection: 'row',
+  gap: '0',
+  padding: '8px 16px 8px 12px',
+  borderBottom: `1px solid ${vars.color.surfaceOverlay}`,
+});
+
+export const iconList = style({
+  display: 'flex',
+  flexDirection: 'row',
+  gap: '4px',
+});
+
 // these need to go inside the scrollarea
 // but root is outside it, so we split them out and
 // apply them using separate 'spacer' divs at the top and
@@ -31,15 +53,6 @@ export const spacerTop = style({
 export const spacerBottom = style({
   paddingBottom: fallbackVar(vars.popoverThread.paddingBottom, vars.space[4]),
 });
-
-export const previewRoot = style([
-  root,
-  {
-    boxShadow: fallbackVar(vars.popoverThread.preview.boxShadow, vars.shadow.standard),
-    cursor: 'pointer',
-    padding: `${vars.space[4]} 0`,
-  },
-]);
 
 export const reply = style({
   marginTop: '2px',
@@ -71,31 +84,5 @@ export const commentNameAndTimestampWrapper = style([
   {
     // flexDirection: 'column',
     // gap: vars.space[0],
-  },
-]);
-
-export const composerForm = style({
-  borderTop: fallbackVar(vars.popoverThread.composer.form.borderTop, 'none'),
-  display: 'flex',
-  flexDirection: 'column',
-  padding: fallbackVar(vars.popoverThread.composer.form.padding, `0 ${vars.space[4]} 0`),
-  gap: fallbackVar(vars.popoverThread.composer.form.gap, vars.space[2]),
-  fontFamily: vars.fontFamily,
-});
-
-export const composerInput = style([
-  composerStyles.input({ disabled: false }),
-  {
-    border: fallbackVar(vars.popoverThread.composer.input.border, `1px solid ${vars.color.border}`),
-    minHeight: fallbackVar(vars.popoverThread.composer.input.minHeight, '40px'),
-    fontFamily: vars.fontFamily,
-    selectors: {
-      '&:focus': {
-        borderColor: fallbackVar(
-          vars.popoverThread.composer.input.focus.border,
-          `1px solid ${vars.color.border}`
-        ),
-      },
-    },
   },
 ]);

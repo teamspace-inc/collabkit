@@ -49,7 +49,7 @@ export const editor = style([
   {
     display: 'flex',
     flexDirection: 'column',
-    gap: '12px',
+    gap: vars.space[1],
     marginTop: '0px',
     marginRight: '-16px',
     marginLeft: '16px',

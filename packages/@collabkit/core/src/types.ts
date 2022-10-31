@@ -342,6 +342,7 @@ export interface Workspace {
   composers: { [threadId: string]: Composer };
   seen: { [threadId: string]: string }; // lastSeenEventId
   seenBy: { [threadId: string]: SeenBy };
+  clientThreadInfo: { [threadId: string]: ThreadInfo };
   threadInfo: { [threadId: string]: ThreadInfo };
   likelyFetchedAllProfiles: boolean;
 }
