@@ -154,9 +154,14 @@ export const Header = (props: React.ComponentProps<'div'>) => (
 export const NameAndTimestampWrapper = (props: React.ComponentProps<'div'>) => (
   <div {...props} className={props.className ?? styles.nameAndTimestampWrapper} />
 );
-export const Content = (props: { profileIndent?: boolean } & React.ComponentProps<'div'>) => {
-  const { profileIndent, ...forwardProps } = props;
-  return <div {...forwardProps} className={props.className ?? styles.content({ profileIndent })} />;
+export const Content = (props: React.ComponentProps<'div'>) => {
+  const { ...forwardProps } = props;
+  return <div {...forwardProps} className={props.className ?? styles.content} />;
+};
+
+export const Indent = (props: React.ComponentProps<'div'>) => {
+  const { ...forwardProps } = props;
+  return <div {...forwardProps} className={props.className ?? styles.indent} />;
 };
 
 type CommentMenuItemType = 'commentEditButton' | 'commentDeleteButton' | 'reopenThreadButton';

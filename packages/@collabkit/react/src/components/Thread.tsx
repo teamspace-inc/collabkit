@@ -48,6 +48,11 @@ export function ThreadContextProvider(props: ThreadProps & { children: React.Rea
   );
 }
 
+// Thread.Root
+const Root = (props: React.ComponentProps<'div'>) => (
+  <div {...props} className={props.className ?? styles.root} />
+);
+
 export function Thread(props: ThreadProps & { className?: string; children?: React.ReactNode }) {
   const { threadId } = props;
   const { store } = useApp();
@@ -67,7 +72,7 @@ export function Thread(props: ThreadProps & { className?: string; children?: Rea
     <ThreadContextProvider {...props}>
       <Profile.Provider profileId={userId}>
         <ThemeWrapper>
-          <div className={styles.root}>
+          <Root>
             {props.showHeader && <div className={styles.header}>Comments</div>}
             {isEmpty ? (
               <EmptyState />
@@ -82,7 +87,7 @@ export function Thread(props: ThreadProps & { className?: string; children?: Rea
                           {newIndicatorId === event.id ? <NewIndicator /> : null}
                           <Comment.Root commentId={event.id}>
                             {showProfile && <Profile.Avatar />}
-                            <Comment.Content profileIndent={!showProfile}>
+                            <Comment.Content>
                               {showProfile && (
                                 <Comment.Header>
                                   <Comment.NameAndTimestampWrapper>
@@ -91,11 +96,18 @@ export function Thread(props: ThreadProps & { className?: string; children?: Rea
                                   </Comment.NameAndTimestampWrapper>
                                 </Comment.Header>
                               )}
-                              <Comment.Body />
+                              {showProfile ? (
+                                <Comment.Body />
+                              ) : (
+                                <Comment.Indent>
+                                  <Comment.Body />
+                                </Comment.Indent>
+                              )}
                             </Comment.Content>
                           </Comment.Root>
                         </React.Fragment>
                       );
+                      1;
                     });
                     return groupedComments ? <div key={gi}>{groupedComments}</div> : null;
                   })}
@@ -112,7 +124,7 @@ export function Thread(props: ThreadProps & { className?: string; children?: Rea
                 <TypingIndicator className={styles.typingIndicator} />
               </Composer.Root>
             )}
-          </div>
+          </Root>
         </ThemeWrapper>
       </Profile.Provider>
     </ThreadContextProvider>

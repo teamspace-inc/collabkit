@@ -70,7 +70,7 @@ export function App() {
           Hide the composer. <br />
           Defaults to <code>false</code>
         </p>
-
+        <br />
         <h2>PopoverTrigger</h2>
         <br />
         <h3>Props</h3>

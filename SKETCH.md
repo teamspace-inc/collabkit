@@ -1,4 +1,4 @@
-# CollabKit
+Thre# CollabKit
 
 sending a new message = firebase.push('/$appId/$roomId/timeline')
 get last 20 messages = firebase.get('/$appId/$roomId/timeline', { limit: 20 })

@@ -64,20 +64,18 @@ export const AltPreviewThread = forwardRef<Handle, PopoverThreadProps>(function 
         >
           <ScrollAreaRoot>
             <ScrollAreaViewport style={{ maxHeight: props.maxAvailableSize?.height ?? 'unset' }}>
-              <CommentList.Root>
-                <Comment.Root eventId={event.id}>
-                  <Profile.Avatar />
-                  <Comment.Content>
-                    <Comment.Header className={styles.commentHeader()}>
-                      <Comment.NameAndTimestampWrapper>
-                        <Comment.CreatorName />
-                        <Comment.Timestamp format={props.formatTimestamp} />
-                      </Comment.NameAndTimestampWrapper>
-                    </Comment.Header>
-                    <Comment.Body />
-                  </Comment.Content>
-                </Comment.Root>
-              </CommentList.Root>
+              <Comment.Root commentId={event.id}>
+                <Profile.Avatar />
+                <Comment.Content>
+                  <Comment.Header>
+                    <Comment.NameAndTimestampWrapper>
+                      <Comment.CreatorName />
+                      <Comment.Timestamp format={props.formatTimestamp} />
+                    </Comment.NameAndTimestampWrapper>
+                  </Comment.Header>
+                  <Comment.Body />
+                </Comment.Content>
+              </Comment.Root>
             </ScrollAreaViewport>
             <ScrollAreaScrollbar orientation="vertical">
               <ScrollAreaThumb />
@@ -140,15 +138,14 @@ export const AltPopoverThread = forwardRef<Handle, PopoverThreadProps>(function 
                 <CommentList.Root>
                   {list.map((group) =>
                     group.map((event) => (
-                      <Comment.Root eventId={event.id} key={event.id}>
+                      <Comment.Root commentId={event.id} key={event.id}>
                         <Profile.Avatar />
                         <Comment.Content>
-                          <Comment.Header className={styles.commentHeader()}>
+                          <Comment.Header>
                             <Comment.NameAndTimestampWrapper>
                               <Comment.CreatorName />
                               <Comment.Timestamp format={props.formatTimestamp} />
                             </Comment.NameAndTimestampWrapper>
-                            <Comment.Actions></Comment.Actions>
                           </Comment.Header>
                           <Comment.Body />
                           <PopoverThreadCommentEditor />
@@ -160,10 +157,7 @@ export const AltPopoverThread = forwardRef<Handle, PopoverThreadProps>(function 
               ) : null}
               {props.hideComposer ? null : (
                 <div className={styles.composerForm}>
-                  <Composer.Root
-                    className={styles.composerRoot}
-                    autoFocus={props.autoFocus ?? true}
-                  >
+                  <Composer.Root autoFocus={props.autoFocus ?? true}>
                     <Composer.Editor
                       contentEditable={<Composer.ContentEditable />}
                       placeholder={

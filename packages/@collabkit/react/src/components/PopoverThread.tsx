@@ -1,9 +1,12 @@
 import React, { forwardRef } from 'react';
 import { ThreadInfo } from '@collabkit/core';
+
 import * as CommentList from './CommentList';
+
 import { useApp } from '../hooks/useApp';
 import { useThread } from '../hooks/useThread';
 import { useSnapshot } from 'valtio';
+
 import {
   ScrollAreaRoot,
   ScrollAreaViewport,
@@ -11,20 +14,24 @@ import {
   ScrollAreaThumb,
   ScrollAreaCorner,
 } from './ScrollArea';
+
 import * as Comment from './Comment';
 import * as Composer from './composer/Composer';
 import * as Profile from './Profile';
 import { PopoverThreadCommentEditor } from './PopoverThreadCommentEditor';
 import * as styles from '../styles/components/PopoverThread.css';
 import { ThemeWrapper } from './ThemeWrapper';
-import { useComposer } from '../hooks/useComposer';
-import { ButtonGroup } from './ButtonGroup';
+
+// import { useComposer } from '../hooks/useComposer';
+// import { ButtonGroup } from './ButtonGroup';
+
 import { ThreadContextProvider } from './Thread';
 import { ResolveThreadIconButton } from './ResolveThreadIconButton';
-import { CloseThreadIconButton } from './CloseThreadIconButton';
-import { vars } from '../styles/theme';
-import { PrevThreadIconButton } from './PrevThreadIconButton';
-import { NextThreadIconButton } from './NextThreadIconButton';
+// import { CloseThreadIconButton } from './CloseThreadIconButton';
+// import { vars } from '../styles/theme';
+// import { PrevThreadIconButton } from './PrevThreadIconButton';
+// import { NextThreadIconButton } from './NextThreadIconButton';
+// import { style } from '@vanilla-extract/css';
 
 type PopoverThreadProps = {
   threadId: string;
@@ -69,25 +76,20 @@ export const PreviewThread = forwardRef<Handle, PopoverThreadProps>(function Pop
         >
           <ScrollAreaRoot>
             <ScrollAreaViewport style={{ maxHeight: props.maxAvailableSize?.height ?? 'unset' }}>
-              <CommentList.Root className={styles.commentList}>
-                <Comment.Root
-                  className={styles.comment}
-                  commentId={event.id}
-                  style={{ paddingTop: '16px' }}
-                >
-                  <Comment.Content>
-                    <Comment.Header className={styles.commentHeader()}>
-                      <Profile.Avatar />
-                      <Comment.NameAndTimestampWrapper>
-                        <Comment.CreatorName />
-                        <Comment.Timestamp format={props.formatTimestamp} />
-                      </Comment.NameAndTimestampWrapper>
-                    </Comment.Header>
+              <Comment.Root commentId={event.id}>
+                <Comment.Content>
+                  <Comment.Header>
+                    <Profile.Avatar />
+                    <Comment.NameAndTimestampWrapper>
+                      <Comment.CreatorName />
+                      <Comment.Timestamp format={props.formatTimestamp} />
+                    </Comment.NameAndTimestampWrapper>
+                  </Comment.Header>
+                  <Comment.Indent>
                     <Comment.Body />
-                  </Comment.Content>
-                </Comment.Root>
-              </CommentList.Root>
-
+                  </Comment.Indent>
+                </Comment.Content>
+              </Comment.Root>
             </ScrollAreaViewport>
             <ScrollAreaScrollbar orientation="vertical">
               <ScrollAreaThumb />
@@ -100,42 +102,46 @@ export const PreviewThread = forwardRef<Handle, PopoverThreadProps>(function Pop
   );
 });
 
-export function PopoverThreadHeader(props: {}) {
-  return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'row',
-        gap: '0',
-        padding: '8px 16px 8px 12px',
-        borderBottom: `1px solid ${vars.color.surfaceOverlay}`,
-      }}
-    >
-      <div style={{ display: 'flex', flexDirection: 'row', gap: '4px' }}>
-        <PrevThreadIconButton />
-        <NextThreadIconButton />
-        <ResolveThreadIconButton />
-      </div>
-      <div style={{ flex: 1 }} />
-      <CloseThreadIconButton />
-    </div>
-  );
-}
+// const header = style({
+//   display: 'flex',
+//   flexDirection: 'row',
+//   gap: '0',
+//   padding: '8px 16px 8px 12px',
+//   borderBottom: `1px solid ${vars.color.surfaceOverlay}`,
+// });
+
+// const iconList = style({
+//   display: 'flex',
+//   flexDirection: 'row',
+//   gap: '4px',
+// });
+
+// export function PopoverThreadHeader() {
+//   return (
+//     <div className={header}>
+//       <div className={iconList}>
+//         <PrevThreadIconButton />
+//         <NextThreadIconButton />
+//         <ResolveThreadIconButton />
+//       </div>
+//       <div style={{ flex: 1 }} />
+//       <CloseThreadIconButton />
+//     </div>
+//   );
+// }
 
 export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function PopoverThread(
   props: PopoverThreadProps,
   ref
 ) {
   const { store } = useApp();
-  const { workspaceId, profiles, userId } = useSnapshot(store);
+  const { workspaceId, userId } = useSnapshot(store);
 
   const { isEmpty, list } = useThread({
     ...props,
     store,
     workspaceId,
   });
-
-  const profile = userId ? profiles[userId] : null;
 
   if (!workspaceId || !userId) {
     return null;
@@ -144,19 +150,19 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
   return (
     <ThreadContextProvider {...props}>
       <ThemeWrapper>
-        <div className={styles.root} data-collabkit-internal="true" style={props.style} ref={ref}>
+        <div className={styles.root} data-collabkit-internal="true" ref={ref}>
           {/* <PopoverThreadHeader /> */}
           <ScrollAreaRoot>
             <ScrollAreaViewport style={{ maxHeight: props.maxAvailableSize?.height ?? 'unset' }}>
-              <div className={styles.spacerTop} />
               {isEmpty && <div style={{ height: 16 }} />}
               {!isEmpty && list ? (
                 <CommentList.Root>
                   {list.map((group, gi) =>
                     group.map((event) => (
-                      <Comment.Root className={styles.comment} commentId={event.id} key={event.id}>
+                      <Comment.Root commentId={event.id} key={event.id}>
                         <Comment.Content>
                           <Comment.Header>
+                            <Profile.Avatar />
                             <Comment.NameAndTimestampWrapper>
                               <Comment.CreatorName />
                               <Comment.Timestamp format={props.formatTimestamp} />
@@ -166,7 +172,9 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
                               <Comment.MoreMenu />
                             </Comment.Actions>
                           </Comment.Header>
-                          <Comment.Body />
+                          <Comment.Indent>
+                            <Comment.Body />
+                          </Comment.Indent>
                           <PopoverThreadCommentEditor />
                         </Comment.Content>
                       </Comment.Root>
@@ -176,10 +184,7 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
               ) : null}
               {props.hideComposer ? null : (
                 <div className={styles.composerForm}>
-                  <Composer.Root
-                    className={styles.composerRoot}
-                    autoFocus={props.autoFocus ?? true}
-                  >
+                  <Composer.Root autoFocus={props.autoFocus ?? true}>
                     <Profile.Provider profileId={userId}>
                       <Profile.Avatar />
                     </Profile.Provider>

@@ -3,6 +3,7 @@ import { recipe } from '@vanilla-extract/recipes';
 import { calc } from '@vanilla-extract/css-utils';
 import { vars } from '../theme';
 import { collabkit } from './Root.css';
+import { styled } from '@stitches/react';
 
 export const root = style({
   display: 'flex',
@@ -37,25 +38,17 @@ export const inlineModal = style({
   borderRadius: '6px',
 });
 
-export const content = recipe({
-  base: {
-    display: 'flex',
-    position: 'relative',
-    flexDirection: 'column',
-    flex: '1',
-    gap: fallbackVar(vars.comment.content.gap, vars.space[1]),
-    fontFamily: vars.fontFamily,
-  },
-  variants: {
-    // indents the comment to account
-    // for a profile image
-    profileIndent: {
-      true: {
-        marginLeft: calc.add(vars.avatar.size, fallbackVar(vars.comment.gap, vars.space[2])),
-      },
-      false: {},
-    },
-  },
+export const content = style({
+  display: 'flex',
+  position: 'relative',
+  flexDirection: 'column',
+  flex: '1',
+  gap: fallbackVar(vars.comment.content.gap, vars.space[1]),
+  fontFamily: vars.fontFamily,
+});
+
+export const indent = style({
+  marginLeft: calc.add(vars.avatar.size, fallbackVar(vars.comment.gap, vars.space[2])),
 });
 
 export const body = style({

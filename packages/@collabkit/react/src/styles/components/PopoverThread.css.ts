@@ -74,8 +74,6 @@ export const commentNameAndTimestampWrapper = style([
   },
 ]);
 
-export const composerRoot = composerStyles.root;
-
 export const composerForm = style({
   borderTop: fallbackVar(vars.popoverThread.composer.form.borderTop, 'none'),
   display: 'flex',

@@ -93,16 +93,16 @@ export const cashboard: CustomTheme = {
   },
   popoverThread: {
     border: '1px solid #E3E9ED',
+    width: '320px',
     comment: {
       header: {
         alignItems: 'center',
       },
-      
     },
     composer: {
       form: {
         borderTop: '1px solid #E3E9ED',
-        padding: '16px 16px 16px',
+        padding: '16px 16px 0px',
         gap: '12px',
       },
     },

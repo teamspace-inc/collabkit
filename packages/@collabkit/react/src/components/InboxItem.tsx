@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { useSnapshot } from 'valtio';
 import { ThreadContext, useThreadContext } from '../hooks/useThreadContext';
-//import { ResolveThreadIconButton } from './ResolveThreadIconButton';
-//import { ThreadCommentersFacepile } from './ThreadCommentersFacepile';
-import { ResolveThreadButton } from './ResolveThreadButton';
+import { ResolveThreadIconButton } from './ResolveThreadIconButton';
 import { ThreadFacepile } from './ThreadFacepile';
 import { useInboxStore } from '../hooks/useInboxStore';
 import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
