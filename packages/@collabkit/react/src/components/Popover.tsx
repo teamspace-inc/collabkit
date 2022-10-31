@@ -53,9 +53,6 @@ type PopoverProps = {
 
   hideComposer?: boolean;
   shouldFlipToKeepInView?: boolean;
-
-  offset?: number;
-  padding?: number;
 };
 
 export function usePopoverThread(props: PopoverProps) {
@@ -140,10 +137,10 @@ export function usePopoverThread(props: PopoverProps) {
     onOpenChange: setPreviewOpen,
     nodeId,
     middleware: [
-      offset(props.offset ?? 4),
+      offset(4),
       ...(props.shouldFlipToKeepInView ? [flip()] : []),
       size({
-        padding: props.padding ?? 24,
+        padding: 24,
         apply({ availableWidth, availableHeight, elements }) {
           Object.assign(elements.floating.style, {
             maxWidth: `${availableWidth}px`,
@@ -161,10 +158,10 @@ export function usePopoverThread(props: PopoverProps) {
     onOpenChange: setThreadOpen,
     nodeId,
     middleware: [
-      offset(props.offset ?? 4),
+      offset(4),
       ...(props.shouldFlipToKeepInView ? [flip()] : []),
       size({
-        padding: props.padding ?? 24,
+        padding: 24,
         apply({ availableWidth, availableHeight, elements }) {
           Object.assign(elements.floating.style, {
             maxWidth: `${availableWidth}px`,
