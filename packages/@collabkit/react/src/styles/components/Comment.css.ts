@@ -90,7 +90,7 @@ export const actions = style({
   position: 'absolute',
   right: '0px',
   top: '0px',
-  background: '#F6F6F6',
+  background: vars.color.surfaceOverlay,
   borderRadius: '6px',
 });
 

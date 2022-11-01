@@ -62,7 +62,7 @@ export function CodeEditor(props: {
   fontSize?: number;
   onChange?: (value: string) => void;
 }) {
-  const numLines = props.numLines ?? 40;
+  const numLines = props.numLines ?? 80;
   const fontSize = props.fontSize ?? 14;
   const lineHeight = props.lineHeight ?? 24;
   const language = props.language ?? 'typescript';

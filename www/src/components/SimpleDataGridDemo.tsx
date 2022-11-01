@@ -5,16 +5,9 @@ import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-mod
 import '@ag-grid-community/styles/ag-grid.css';
 import './ag-theme-collabkit.css';
 import * as styles from './DataGridDemo.css';
-import {
-  Inbox,
-  PopoverTrigger,
-  Sidebar,
-  SidebarInboxButton,
-  ThemeProvider,
-  usePopoverThread,
-} from '@collabkit/react';
+import { PopoverTrigger, ThemeProvider, usePopoverThread } from '@collabkit/react';
 import { vars, light } from '../styles/Theme.css';
-import { AcmeLogo, Container, Heading, HeadingRow, UI } from '../home/DemoUI';
+import { Container } from '../home/DemoUI';
 
 const AgGridReactAny = AgGridReact as any;
 
@@ -156,7 +149,6 @@ export function DataGridDemo(props: { onlyTable?: boolean }) {
   const [columnDefs] = useState<AgGridReactProps['columnDefs']>([
     { headerName: '', field: 'account', cellRenderer: CellRenderer, cellStyle, flex: 1.5 },
     { headerName: 'Budget', field: 'budget', cellRenderer: CellRenderer, cellStyle, flex: 1.5 },
-    { headerName: 'Budget Spent', field: 'spent', cellRenderer: CellRenderer, cellStyle, flex: 1 },
     {
       headerName: 'Change',
       field: 'change',
@@ -172,32 +164,16 @@ export function DataGridDemo(props: { onlyTable?: boolean }) {
   return (
     <ThemeProvider theme="dark">
       <div className={light} style={{ display: 'contents' }}>
-        <UI>
-          <div>
-            <AcmeLogo />
+        <Container>
+          <div className={'ag-theme-collabkit ' + styles.grid} style={{ minWidth: 500 }}>
+            <AgGridReactAny
+              columnDefs={columnDefs}
+              rowData={rowData}
+              modules={[ClientSideRowModelModule]}
+              getRowClass={getRowClass}
+            />
           </div>
-          <Container>
-            <HeadingRow>
-              <Heading>Q1 Earnings</Heading>
-              <ThemeProvider theme="light">
-                <SidebarInboxButton />
-              </ThemeProvider>
-            </HeadingRow>
-            <Container>
-              <div className={'ag-theme-collabkit ' + styles.grid} style={{ minWidth: 500 }}>
-                <AgGridReactAny
-                  columnDefs={columnDefs}
-                  rowData={rowData}
-                  modules={[ClientSideRowModelModule]}
-                  getRowClass={getRowClass}
-                />
-              </div>
-            </Container>
-          </Container>
-          <Sidebar strategy="absolute">
-            <Inbox />
-          </Sidebar>
-        </UI>
+        </Container>
       </div>
     </ThemeProvider>
   );

@@ -35,6 +35,7 @@ import { dashboardStore } from '../dashboard/dashboardStore';
 import { AdvancedCommentDoc } from './advanced/AdvancedCommentDoc';
 import { AdvancedProfileDoc } from './advanced/AdvancedProfileDoc';
 import { AdvancedThreadProviderDoc } from './advanced/AdvancedThreadProviderDoc';
+import { AGGridDoc } from './guides/aggrid/AGGridDoc';
 
 export function getDocHref(path: string[], key: string) {
   return getPathHref(path.concat([key]));
@@ -50,14 +51,13 @@ export const DOCS: RootDocNode = {
 
   Introduction: { component: IntroductionDoc },
   'Getting Started': { component: GettingStartedDoc },
-  // Patterns: {
-  //   title: 'Patterns',
-  //   children: {
-  //     'Detail Views': { component: DetailViewsDoc },
-  //     'List Views': { component: ListViewsDoc },
-  //     'Table Views': { component: TableViewsDoc },
-  //   },
-  // },
+
+  Guides: {
+    title: 'Guides',
+    children: {
+      ['AG Grid']: { component: AGGridDoc },
+    },
+  },
   Components: {
     title: 'Components',
     children: {
