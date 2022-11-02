@@ -107,6 +107,7 @@ export function Components(props: { setInvertFilter: (invert: number) => void })
         totalSlides={5}
         visibleSlides={width / 500}
         // figure out padding for site
+        // @ts-expect-error Property 'style' does not exist
         style={{
           width: '100%',
           marginTop: '20px',
