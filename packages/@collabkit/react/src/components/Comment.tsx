@@ -60,6 +60,8 @@ export function CommentRoot(props: {
   const { commentId: eventId } = props;
   const treeId = useId();
 
+  console.log(props.commentId);
+
   const target = useMemo<CommentTarget>(
     () => ({ type: 'comment', workspaceId, threadId, eventId, treeId }),
     [workspaceId, threadId, eventId, treeId]
@@ -152,6 +154,7 @@ export function CommentTimestamp(
   );
 }
 
+export const CommentCreatorAvatar = Profile.Avatar;
 export const CommentCreatorName = Profile.Name;
 export const CommentHeader = (props: React.ComponentProps<'div'>) => (
   <div {...props} className={props.className ?? styles.header} />
@@ -256,7 +259,6 @@ export default function Comment(props: {
   return (
     <Comment.Root commentId={props.commentId}>
       <Comment.Content>
-        {' '}
         {/* do we need content? or can root take care of the same job */}
         <Comment.Header>
           {!hideProfile && <Profile.Avatar />}
@@ -274,7 +276,7 @@ export default function Comment(props: {
         <Comment.Indent>
           <Comment.Body />
         </Comment.Indent>
-        <ThreadCommentEditor />{' '}
+        <ThreadCommentEditor />
         {/* this should be autorendered in Body, if the user has rendered the edit menu? */}
       </Comment.Content>
     </Comment.Root>
@@ -287,6 +289,7 @@ Comment.Content = CommentContent;
 Comment.Header = CommentHeader;
 Comment.NameAndTimestampWrapper = CommentNameAndTimestampWrapper;
 Comment.CreatorName = CommentCreatorName;
+Comment.CreatorAvatar = CommentCreatorAvatar;
 Comment.Timestamp = CommentTimestamp;
 Comment.Body = CommentBody;
 Comment.Indent = CommentIndent;

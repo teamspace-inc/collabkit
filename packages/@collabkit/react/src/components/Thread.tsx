@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useMemo } from 'react';
 import { ScrollableCommentList } from './ScrollableCommentList';
 import { useApp } from '../hooks/useApp';
 import { useThread } from '../hooks/useThread';
@@ -6,7 +6,7 @@ import { NewIndicator, useNewIndicator } from './NewIndicator';
 import { useSnapshot } from 'valtio';
 import type { ThreadInfo } from '@collabkit/core';
 import { TypingIndicator } from './TypingIndicator';
-import { ThreadContext, ThreadContextValue } from '../hooks/useThreadContext';
+import { ThreadContext } from '../hooks/useThreadContext';
 import { getCommentType } from '../utils/getCommentType';
 import Profile from './Profile';
 import Comment from './Comment';
@@ -25,27 +25,27 @@ export type ThreadProps = {
   hideComposer?: boolean;
 };
 
-export function ThreadContextProvider(props: ThreadProps & { children: React.ReactNode }) {
-  const { threadId, info, composerPrompt, showHeader, autoFocus } = props;
-  const [context, setContext] = useState<ThreadContextValue | null>(null);
+export function ThreadProvider(props: ThreadProps & { children: React.ReactNode }) {
   const { store } = useApp();
   const { userId, workspaceId } = useSnapshot(store);
+  const { threadId } = props;
 
-  useEffect(() => {
-    if (threadId && userId && workspaceId) {
-      setContext({ threadId, userId, workspaceId, showHeader, composerPrompt, autoFocus, info });
-    }
-  }, [threadId, userId, workspaceId, showHeader, autoFocus, composerPrompt, info]);
+  console.log('ThreadProvider', { threadId, userId, workspaceId });
 
   if (userId == null || workspaceId == null) {
     return null;
   }
 
-  return (
-    <ThreadContext.Provider value={context ?? { threadId, userId, workspaceId }}>
-      {props.children}
-    </ThreadContext.Provider>
+  const value = useMemo(
+    () => ({
+      threadId,
+      workspaceId,
+      userId,
+    }),
+    [threadId, workspaceId, userId]
   );
+
+  return <ThreadContext.Provider value={value}>{props.children}</ThreadContext.Provider>;
 }
 
 export function Thread(props: ThreadProps & { className?: string; children?: React.ReactNode }) {
@@ -64,7 +64,7 @@ export function Thread(props: ThreadProps & { className?: string; children?: Rea
   }
 
   return (
-    <ThreadContextProvider {...props}>
+    <ThreadProvider {...props}>
       <Profile.Provider profileId={userId}>
         <ThemeWrapper>
           <div className={styles.root}>
@@ -121,9 +121,11 @@ export function Thread(props: ThreadProps & { className?: string; children?: Rea
           </div>
         </ThemeWrapper>
       </Profile.Provider>
-    </ThreadContextProvider>
+    </ThreadProvider>
   );
 }
+
+Thread.Provider = ThreadProvider;
 
 const emptyState = (
   <div className={styles.emptyState}>

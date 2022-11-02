@@ -1,3 +1,7 @@
-import { Comment } from '@collabkit/react';
+import { Comment, Thread } from '@collabkit/react';
 
-<Comment commentId="comment123" />;
+export default () => (
+  <Thread.Provider threadId="thread1">
+    <Comment commentId="comment123" />
+  </Thread.Provider>
+);

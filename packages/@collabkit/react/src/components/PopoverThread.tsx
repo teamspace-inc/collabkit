@@ -13,7 +13,7 @@ import * as styles from '../styles/components/PopoverThread.css';
 import { ThemeWrapper } from './ThemeWrapper';
 import { useComposer } from '../hooks/useComposer';
 import { ButtonGroup } from './ButtonGroup';
-import { ThreadContextProvider } from './Thread';
+import { ThreadProvider } from './Thread';
 
 type PopoverThreadProps = {
   threadId: string;
@@ -48,7 +48,7 @@ export const PreviewThread = forwardRef<Handle, PopoverThreadProps>(function Pop
   }
 
   return (
-    <ThreadContextProvider {...props}>
+    <ThreadProvider {...props}>
       <ThemeWrapper>
         <div
           className={styles.previewRoot}
@@ -78,7 +78,7 @@ export const PreviewThread = forwardRef<Handle, PopoverThreadProps>(function Pop
           </Scrollable>
         </div>
       </ThemeWrapper>
-    </ThreadContextProvider>
+    </ThreadProvider>
   );
 });
 
@@ -106,7 +106,7 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
   }
 
   return (
-    <ThreadContextProvider {...props}>
+    <ThreadProvider {...props}>
       <ThemeWrapper>
         <div className={styles.root} data-collabkit-internal="true" style={props.style} ref={ref}>
           <Scrollable maxHeight={props.maxAvailableSize?.height ?? 'unset'}>
@@ -180,6 +180,6 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
           </Scrollable>
         </div>
       </ThemeWrapper>
-    </ThreadContextProvider>
+    </ThreadProvider>
   );
 });
