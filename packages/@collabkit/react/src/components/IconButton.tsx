@@ -16,7 +16,7 @@ const iconContextValue = {
   color: fallbackVar(vars.iconButton.color, vars.color.icon),
   weight: 'bold',
   size: 16,
-};
+} as const;
 
 export const IconButton = forwardRef<HTMLDivElement, Props>(function IconButton(props: Props, ref) {
   const { active, ...otherProps } = props;
