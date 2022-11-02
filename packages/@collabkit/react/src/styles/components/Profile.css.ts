@@ -29,3 +29,10 @@ export const name = style({
   letterSpacing: fallbackVar(vars.profile.name.letterSpacing, vars.text.base.letterSpacing),
   fontFamily: vars.fontFamily,
 });
+
+export const root = style({
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'baseline',
+  gap: fallbackVar(vars.profile.gap, vars.space[2]),
+});

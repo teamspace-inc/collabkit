@@ -1,5 +1,6 @@
 export const ProfileBase = {
   profile: {
+    gap: 'initial',
     avatar: {
       borderRadius: '50%',
       fontSize: 'initial',

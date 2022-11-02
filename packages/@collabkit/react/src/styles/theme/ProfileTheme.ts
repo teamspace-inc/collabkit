@@ -1,5 +1,6 @@
 export const ProfileTheme = {
   profile: {
+    gap: 'profile-gap',
     avatar: {
       borderRadius: 'profile-avatar-border-radius',
       fontSize: 'profile-avatar-font-size',

@@ -125,8 +125,10 @@ export function Avatar({
 export default function Profile(props: { profileId: string }) {
   return (
     <Profile.Provider profileId={props.profileId}>
-      <Profile.Avatar />
-      <Profile.Name />
+      <div className={styles.root}>
+        <Profile.Avatar />
+        <Profile.Name />
+      </div>
     </Profile.Provider>
   );
 }

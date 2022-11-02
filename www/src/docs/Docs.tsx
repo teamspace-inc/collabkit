@@ -29,7 +29,7 @@ import { SidebarInboxButtonDoc } from './components/SidebarInboxButtonDoc';
 import { DashboardPage } from '../pages/DashboardPage';
 import { dashboardStore } from '../dashboard/dashboardStore';
 import { AdvancedCommentDoc } from './advanced/AdvancedCommentDoc';
-import { AdvancedProfileDoc } from './advanced/AdvancedProfileDoc';
+import { ProfileDoc } from './advanced/profile/ProfileDoc';
 import { AdvancedThreadProviderDoc } from './advanced/AdvancedThreadProviderDoc';
 
 export function getDocHref(path: string[], key: string) {
@@ -86,7 +86,7 @@ export const DOCS: RootDocNode = {
       useInbox: { component: UseInboxDoc },
       ThreadProvider: { component: AdvancedThreadProviderDoc },
       Comment: { component: AdvancedCommentDoc },
-      Profile: { component: AdvancedProfileDoc },
+      Profile: { component: ProfileDoc },
     },
   },
 };

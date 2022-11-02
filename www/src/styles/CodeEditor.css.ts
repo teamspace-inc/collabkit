@@ -6,6 +6,7 @@ export const codeEditor = style({
   position: 'relative',
   padding: '16px 20px 16px 0px',
   borderRadius: 8,
+  flex: 1,
   border: `1px solid ${vars.color.bgContrastMedium}`,
 });
 

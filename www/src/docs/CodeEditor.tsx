@@ -23,14 +23,19 @@ function CopyButton({ codeString }: { codeString: string }) {
   );
 }
 
-export function CodeSnippet(props: { code: string; language?: 'typescript' | 'shell' | 'css' }) {
+export function CodeSnippet(props: {
+  code: string;
+  language?: 'typescript' | 'shell' | 'css';
+  hideRanges?: [start: number, end: number][];
+}) {
   const breakpoint = useBreakpoint();
 
   return (
     <CodeEditor
       readOnly={true}
       copyButton={true}
-      code={props.code}
+      hideRanges={props.hideRanges}
+      code={props.code.trim()}
       language={props.language ?? 'typescript'}
       style={{
         borderRadius: '6px',
@@ -43,9 +48,10 @@ export function CodeSnippet(props: { code: string; language?: 'typescript' | 'sh
 
 export function renderCodeSnippet(
   code: string,
+  hideRanges?: [start: number, end: number][],
   language: 'typescript' | 'shell' | 'css' = 'typescript'
 ) {
-  return <CodeSnippet code={code} language={language} />;
+  return <CodeSnippet code={code} language={language} hideRanges={hideRanges} />;
 }
 
 export function CodeEditor(props: {
@@ -60,10 +66,11 @@ export function CodeEditor(props: {
   numLines?: number;
   className?: string;
   fontSize?: number;
+  hideRanges?: [start: number, end: number][];
   onChange?: (value: string) => void;
 }) {
   const numLines = props.numLines ?? 40;
-  const fontSize = props.fontSize ?? 14;
+  const fontSize = props.fontSize ?? 13;
   const lineHeight = props.lineHeight ?? 24;
   const language = props.language ?? 'typescript';
   const editorRef = useRef<HTMLDivElement>(null);
@@ -117,6 +124,11 @@ export function CodeEditor(props: {
           definitionLinkOpensInPeek: false,
           contextmenu: false,
         });
+
+        props.hideRanges &&
+          editorInstanceRef.current.setHiddenAreas(
+            props.hideRanges.map(([start, end]) => new monaco.Range(start, 1, end, 1))
+          );
 
         if (props.readOnly) {
           const messageContribution = editorInstanceRef.current.getContribution(

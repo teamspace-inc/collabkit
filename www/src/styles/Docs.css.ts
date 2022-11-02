@@ -10,16 +10,24 @@ export const docs = style({});
 const max768 = `screen and (max-width: ${MAIN_BREAKPOINT}px)`;
 
 globalStyle(`${docs} blockquote`, {
-  borderLeft: `5px solid ${vars.color.sky}`,
+  borderLeft: `12px solid ${vars.color.yellow}`,
   textIndent: 0,
-  paddingLeft: 20,
   marginLeft: 0,
+  lineHeight: '24px',
+  background: vars.color.bgContrastLow,
+  padding: '16px 24px 16px 24px',
+  borderRadius: '4px',
+});
+
+globalStyle(`${docs} blockquote h4`, {
+  fontSize: 14,
   lineHeight: '24px',
 });
 
 globalStyle(`${docs} blockquote a`, {
   fontSize: 14,
   lineHeight: '24px',
+  color: vars.color.textContrastMedium,
 });
 
 globalStyle(`${docs} code`, {
@@ -66,8 +74,8 @@ globalStyle(`${docs} h3`, {
 });
 
 globalStyle(`${docs} h4`, {
-  marginTop: '32px',
-  marginBottom: '8px',
+  marginTop: '8px',
+  marginBottom: '12px',
   fontStyle: 'normal',
   fontWeight: 700,
   fontSize: '18px',
