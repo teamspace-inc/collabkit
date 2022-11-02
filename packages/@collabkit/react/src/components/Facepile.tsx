@@ -41,7 +41,7 @@ export function Facepile(
             zIndex: 999 - profiles.length,
           }}
         >
-          <Profile.NumberdAvatarPlaceholder size={props.size} number={overflowsBy} />
+          <Profile.NumberedAvatarPlaceholder size={props.size} number={overflowsBy} />
         </div>
       ) : null}
     </div>

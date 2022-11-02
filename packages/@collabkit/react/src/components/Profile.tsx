@@ -64,7 +64,7 @@ function AvatarPlaceholder({
   );
 }
 
-export function NumberdAvatarPlaceholder({
+export function NumberedAvatarPlaceholder({
   size,
   number,
   ...props
@@ -134,3 +134,4 @@ export default function Profile(props: { profileId: string }) {
 Profile.Provider = Provider;
 Profile.Avatar = Avatar;
 Profile.Name = ProfileName;
+Profile.NumberedAvatarPlaceholder = NumberedAvatarPlaceholder;
