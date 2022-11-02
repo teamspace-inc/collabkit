@@ -9,8 +9,8 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import { ThemeProvider } from '@collabkit/react';
-import { light } from '../styles/Theme.css';
-import { AcmeLogo, Container, DemoTip, Heading, HeadingRow, UI } from './DemoUI';
+import { light, vars } from '../styles/Theme.css';
+import { AcmeLogo, Container, Heading, HeadingRow, UI } from './DemoUI';
 
 const data = [
   {
@@ -96,7 +96,18 @@ export function ChartDemo() {
             <ResponsiveContainer width="100%" height={430}>
               <AreaChart data={data}>
                 <CartesianGrid vertical={false} />
-                <Legend align="right" verticalAlign="top" height={30} />
+                <Legend
+                  align="right"
+                  verticalAlign="top"
+                  height={30}
+                  iconType="circle"
+                  iconSize={12}
+                  formatter={(text) => (
+                    <span style={{ paddingLeft: 4, color: vars.color.textContrastHigh }}>
+                      {text}
+                    </span>
+                  )}
+                />
                 <XAxis dataKey="name" />
                 <YAxis
                   tickFormatter={(value) => currencyFormat.format(value)}
