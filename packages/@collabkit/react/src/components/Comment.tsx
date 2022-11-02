@@ -19,6 +19,7 @@ import { IconButton } from './IconButton';
 import { ResolveThreadIconButton } from './ResolveThreadIconButton';
 import { ThreadCommentEditor } from './ThreadCommentEditor';
 
+// tidy up root and provider
 export function CommentProvider(props: { children: React.ReactNode; eventId: string }) {
   const { threadId, workspaceId } = useThreadContext();
   const { eventId } = props;

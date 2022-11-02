@@ -1,18 +1,10 @@
-import { Profile } from '@collabkit/react';
 import { renderCodeSnippet } from '../../CodeEditor';
-import { DocDemoContainer, DocLink } from '../../Doc';
+import { DocLink } from '../../Doc';
 
 import Anatomy from './CommentAnatomy.tsx?raw';
-import AnatomyName from './NameExample.tsx?raw';
-import AnatomyAvatar from './AvatarExample.tsx?raw';
 
 import Usage from './CommentUsage.tsx?raw';
-import { vars } from '../../../styles/Theme.css';
 import { AdvancedDemo, AdvancedDisclaimer, AdvancedPart } from '../AdvancedCommon';
-import { Comment } from '@collabkit/react';
-
-const Spacer24 = <div style={{ height: 24 }} />;
-const Spacer12 = <div style={{ height: 12 }} />;
 
 export function CommentDoc() {
   return (
@@ -43,13 +35,12 @@ export function CommentDoc() {
           Lets look at the parts that make up a <code>{'<Comment />'}</code>.
         </p>
         {renderCodeSnippet(Anatomy, [[1, 2]])}
-        {Spacer24}
-        <AdvancedDemo>
-          <Profile profileId="ville" />
-        </AdvancedDemo>
         <p>
-          You can render just the individual parts too, if you want to just render a users name or
-          avatar. These components must be rendererd within a <code>{'Profile.Provider'}</code>.
+          You can render just the individual parts too, if you want to just render just the comment
+          body. Replace some components with your own custom ones. Or even insert new components in
+          between the existing ones you can do so. <br />
+          <br />
+          Ensure components are be rendererd within an instance of <code>{'<Comment.Root>'}</code>.
         </p>
       </div>
       <AdvancedPart
