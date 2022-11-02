@@ -189,6 +189,7 @@ export function CodeEditor(props: {
       className={props.className ?? codeEditor}
       style={{
         ...(props.fixedSize ? {} : { height: height + 32 }),
+        ['--vscode-editor-background' as any]: 'blue',
       }}
     >
       {props.copyButton ? <CopyButton codeString={codeString} /> : null}

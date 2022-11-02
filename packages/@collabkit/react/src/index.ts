@@ -25,7 +25,7 @@ import { SidebarInboxButton } from './components/SidebarInboxButton';
 import { SidebarInbox } from './components/SidebarInbox';
 import { PopoverThread } from './components/PopoverThread';
 import { useInbox } from './hooks/public/useInbox';
-import * as Comment from './components/Comment';
+import Comment from './components/Comment';
 import Profile from './components/Profile';
 import { ThreadProvider } from './components/ThreadProvider';
 import { useComments } from './hooks/public/useComments';

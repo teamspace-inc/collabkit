@@ -5,10 +5,10 @@ import { useApp } from '../hooks/useApp';
 import { useThread } from '../hooks/useThread';
 import { useSnapshot } from 'valtio';
 import { Scrollable } from './ScrollArea';
-import * as Comment from './Comment';
+import Comment from './Comment';
 import * as Composer from './composer/Composer';
 import Profile from './Profile';
-import { PopoverThreadCommentEditor } from './PopoverThreadCommentEditor';
+import { ThreadCommentEditor } from './ThreadCommentEditor';
 import * as styles from '../styles/components/PopoverThread.css';
 import { ThemeWrapper } from './ThemeWrapper';
 import { useComposer } from '../hooks/useComposer';
@@ -139,10 +139,10 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
                             <Comment.CreatorName />
                             <Comment.Timestamp format={props.formatTimestamp} />
                           </Comment.NameAndTimestampWrapper>
-                          <Comment.Menu />
+                          <Comment.MoreMenu />
                         </Comment.Header>
                         <Comment.Body />
-                        <PopoverThreadCommentEditor />
+                        <ThreadCommentEditor />
                       </Comment.Content>
                     </Comment.Root>
                   ))

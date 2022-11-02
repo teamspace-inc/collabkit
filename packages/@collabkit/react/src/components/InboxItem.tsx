@@ -7,7 +7,7 @@ import { useInboxStore } from '../hooks/useInboxStore';
 import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
 import { useReplyCount } from '../hooks/useReplyCount';
 import { useApp } from '../hooks/useApp';
-import * as Comment from './Comment';
+import Comment from './Comment';
 import { ReplyCount } from './ReplyCount';
 import { ThreadUnreadDot } from './ThreadUnreadDot';
 import { actions } from '../../../client/src/actions';

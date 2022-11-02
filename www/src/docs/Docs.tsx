@@ -31,6 +31,7 @@ import { dashboardStore } from '../dashboard/dashboardStore';
 import { AdvancedCommentDoc } from './advanced/AdvancedCommentDoc';
 import { ProfileDoc } from './advanced/profile/ProfileDoc';
 import { AdvancedThreadProviderDoc } from './advanced/AdvancedThreadProviderDoc';
+import { CommentDoc } from './advanced/comment/CommentDoc';
 
 export function getDocHref(path: string[], key: string) {
   return getPathHref(path.concat([key]));
@@ -85,7 +86,7 @@ export const DOCS: RootDocNode = {
     children: {
       useInbox: { component: UseInboxDoc },
       ThreadProvider: { component: AdvancedThreadProviderDoc },
-      Comment: { component: AdvancedCommentDoc },
+      Comment: { component: CommentDoc },
       Profile: { component: ProfileDoc },
     },
   },

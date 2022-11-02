@@ -1,7 +1,7 @@
 import React from 'react';
 import { actions } from '@collabkit/client';
 import { useApp } from '../hooks/useApp';
-import * as Comment from './Comment';
+import Comment from './Comment';
 import * as Composer from './composer/Composer';
 import { useComposer } from '../hooks/useComposer';
 import { useThreadContext } from '../hooks/useThreadContext';
@@ -10,7 +10,7 @@ import { ButtonGroup } from './ButtonGroup';
 import { useCommentStore } from '../hooks/useCommentStore';
 import { composerForm } from '../styles/components/PopoverThread.css';
 
-export const PopoverThreadCommentEditor = () => {
+export const ThreadCommentEditor = () => {
   const { threadId, workspaceId } = useThreadContext();
   const { eventId } = useCommentContext();
   const { body } = useCommentStore();

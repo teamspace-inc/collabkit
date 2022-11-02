@@ -9,7 +9,7 @@ import { TypingIndicator } from './TypingIndicator';
 import { ThreadContext, ThreadContextValue } from '../hooks/useThreadContext';
 import { getCommentType } from '../utils/getCommentType';
 import Profile from './Profile';
-import * as Comment from './Comment';
+import Comment from './Comment';
 import * as Composer from './composer/Composer';
 import { ThemeWrapper } from './ThemeWrapper';
 import * as styles from '../styles/components/Thread.css';

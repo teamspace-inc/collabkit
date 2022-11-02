@@ -16,8 +16,10 @@ import * as styles from '../styles/components/Comment.css';
 import { Check, DotsThree } from './icons';
 import { Menu, MenuItem } from './Menu';
 import { IconButton } from './IconButton';
+import { ResolveThreadIconButton } from './ResolveThreadIconButton';
+import { ThreadCommentEditor } from './ThreadCommentEditor';
 
-export function Provider(props: { children: React.ReactNode; eventId: string }) {
+export function CommentProvider(props: { children: React.ReactNode; eventId: string }) {
   const { threadId, workspaceId } = useThreadContext();
   const { eventId } = props;
   const treeId = useId();
@@ -46,7 +48,7 @@ export function Provider(props: { children: React.ReactNode; eventId: string }) 
   );
 }
 
-export function Root(props: {
+export function CommentRoot(props: {
   children: React.ReactNode;
   className?: string;
   commentId: string;
@@ -99,7 +101,7 @@ export function Root(props: {
   );
 }
 
-export function Body({ ...props }: React.ComponentPropsWithoutRef<'div'>) {
+export function CommentBody({ ...props }: React.ComponentPropsWithoutRef<'div'>) {
   const { body } = useSnapshot(useCommentStore());
   const { store } = useApp();
 
@@ -136,7 +138,7 @@ export const Editor = (props: React.ComponentProps<'div'>) => {
   return <div {...props} className={props.className ?? styles.editor} />;
 };
 
-export function Timestamp(
+export function CommentTimestamp(
   props: React.ComponentProps<'time'> & { format?: (timestamp: number) => string }
 ) {
   const { createdAt } = useSnapshot(useCommentStore());
@@ -149,14 +151,16 @@ export function Timestamp(
   );
 }
 
-export const CreatorName = Profile.Name;
-export const Header = (props: React.ComponentProps<'div'>) => (
+export const CommentCreatorName = Profile.Name;
+export const CommentHeader = (props: React.ComponentProps<'div'>) => (
   <div {...props} className={props.className ?? styles.header} />
 );
-export const NameAndTimestampWrapper = (props: React.ComponentProps<'div'>) => (
+export const CommentNameAndTimestampWrapper = (props: React.ComponentProps<'div'>) => (
   <div {...props} className={props.className ?? styles.nameAndTimestampWrapper} />
 );
-export const Content = (props: { profileIndent?: boolean } & React.ComponentProps<'div'>) => {
+export const CommentContent = (
+  props: { profileIndent?: boolean } & React.ComponentProps<'div'>
+) => {
   const { profileIndent, ...forwardProps } = props;
   return <div {...forwardProps} className={props.className ?? styles.content({ profileIndent })} />;
 };
@@ -223,6 +227,71 @@ const CommentMenu = (props: { className?: string }) => {
 };
 
 export { CommentMenu as Menu };
+
+export const CommentActions = (props: React.ComponentProps<'div'>) => {
+  // const { store } = useApp();
+  // const { hoveringId } = useSnapshot(store);
+  // const { eventId } = useCommentContext();
+  // if (hoveringId?.type === 'comment' && hoveringId.eventId === eventId) {
+  return <div className={styles.actions}>{props.children}</div>;
+  // } else {
+  //   return null;
+  // }
+};
+
+export const CommentIndent = (props: React.ComponentProps<'div'>) => {
+  const { ...forwardProps } = props;
+  return <div {...forwardProps} className={props.className ?? styles.indent} />;
+};
+
+export default function Comment(props: {
+  commentId: string;
+  hideProfile?: boolean;
+  showResolveThreadButton?: boolean;
+}) {
+  const hideProfile = props.hideProfile ?? false;
+  const showResolveThreadButton = props.showResolveThreadButton ?? false;
+
+  return (
+    <Comment.Root commentId={props.commentId}>
+      <Comment.Content>
+        {' '}
+        {/* do we need content? or can root take care of the same job */}
+        <Comment.Header>
+          {!hideProfile && <Profile.Avatar />}
+          {!hideProfile && (
+            <Comment.NameAndTimestampWrapper>
+              <Comment.CreatorName />
+              <Comment.Timestamp />
+            </Comment.NameAndTimestampWrapper>
+          )}
+          <Comment.Actions>
+            {showResolveThreadButton && <ResolveThreadIconButton />}
+            <Comment.MoreMenu />
+          </Comment.Actions>
+        </Comment.Header>
+        <Comment.Indent>
+          <Comment.Body />
+        </Comment.Indent>
+        <ThreadCommentEditor />{' '}
+        {/* this should be autorendered in Body, if the user has rendered the edit menu? */}
+      </Comment.Content>
+    </Comment.Root>
+  );
+}
+
+Comment.Provider = CommentProvider;
+Comment.Root = CommentRoot;
+Comment.Content = CommentContent;
+Comment.Header = CommentHeader;
+Comment.NameAndTimestampWrapper = CommentNameAndTimestampWrapper;
+Comment.CreatorName = CommentCreatorName;
+Comment.Timestamp = CommentTimestamp;
+Comment.Body = CommentBody;
+Comment.Indent = CommentIndent;
+Comment.Actions = CommentActions;
+Comment.MoreMenu = CommentMenu;
+Comment.Editor = Editor;
 
 // Anatomy
 

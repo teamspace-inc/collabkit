@@ -68,6 +68,18 @@ globalStyle(`${docs} .monaco-editor .monaco-hover`, {
   border: 'none',
 });
 
+globalStyle(`${docs} .monaco-editor`, {
+  backgroundColor: 'transparent !important',
+});
+
+globalStyle(`${docs} .monaco-editor .margin`, {
+  backgroundColor: 'transparent !important',
+});
+
+globalStyle(`${docs} .monaco-editor .monaco-editor-background`, {
+  backgroundColor: 'transparent !important',
+});
+
 globalStyle(`${docs} .monaco-editor .goto-definition-link`, {
   color: `${vars.color.purple} !important`,
 });

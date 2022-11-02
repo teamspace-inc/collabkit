@@ -241,7 +241,7 @@ export const CollabKitMonacoTheme: editor.IStandaloneThemeData = {
   ],
   colors: {
     'editor.foreground': '#ffffff',
-    'editor.background': '#222222',
+    'editor.background': 'transparent',
     'editor.selectionBackground': '#3D3D3D',
     'editor.inactiveSelectionBackground': '#222222',
     'editor.lineHighlightBackground': '#444444',

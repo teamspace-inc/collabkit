@@ -1,30 +1,32 @@
-import { Profile, ThemeProvider, ThemeWrapper } from '@collabkit/react';
+import { Profile } from '@collabkit/react';
 import { renderCodeSnippet } from '../../CodeEditor';
-import { DocDemoContainer, DocLink } from '../../Doc';
-import Anatomy from './ProfileAnatomyCodeExample.tsx?raw';
-import AnatomyName from './ProfileAnatomyNameCodeExample.tsx?raw';
-import AnatomyAvatar from './ProfileAnatomyAvatarCodeExample.tsx?raw';
+import { DocLink } from '../../Doc';
+import Anatomy from './ProfileAnatomy.tsx?raw';
+import AnatomyName from './NameExample.tsx?raw';
+import AnatomyAvatar from './AvatarExample.tsx?raw';
 
-import Usage from './ProfileUsageCodeExample.tsx?raw';
+import Usage from './ProfileUsage.tsx?raw';
+import { vars } from '../../../styles/Theme.css';
+import {
+  AdvancedDemo,
+  AdvancedDisclaimer,
+  AdvancedPart,
+  AdvancedSubsection,
+} from '../AdvancedCommon';
 
 const Spacer24 = <div style={{ height: 24 }} />;
+const Spacer12 = <div style={{ height: 12 }} />;
 
 export function ProfileDoc() {
   return (
     <>
-      <h2>Render a users profile, their avatar or name.</h2>
-      <blockquote>
-        <h4 style={{ marginTop: 0 }}>Advanced</h4>
-        This doc covers how to render an individual Profile. In most cases you'll want to use a
-        higher level component like <DocLink href="/docs/components/thread">Thread</DocLink> or{' '}
-        <DocLink href="/docs/components/popoverthread">PopoverThread</DocLink> directly.
-      </blockquote>
-
+      <h2>Render a profile, which consists of an avatar and name</h2>
+      <AdvancedDisclaimer componentName="Profile" />
       <div>
         <h3>Demo</h3>
-        <DocDemoContainer style={{ padding: 40 }}>
+        <AdvancedDemo>
           <Profile profileId="ville" />
-        </DocDemoContainer>
+        </AdvancedDemo>
       </div>
 
       <div>
@@ -37,8 +39,10 @@ export function ProfileDoc() {
         <p>
           The the <code>id</code> of the user in your system.
           <br />
-          You must have passed this user to <code>CollabKitProvider</code> or while calling{' '}
-          <code>generateToken</code> with Secure Mode enabled.
+          <br />
+          You must provide <code>CollabKitProvider</code> with this user's info or if with{' '}
+          <DocLink href="/docs/secureMode">Secure Mode</DocLink> enabled to the
+          <code>generateToken</code> request.
         </p>
       </div>
 
@@ -48,44 +52,42 @@ export function ProfileDoc() {
           Lets look at the parts that make up a <code>{'<Profile />'}</code>.
         </p>
         {renderCodeSnippet(Anatomy, [[1, 2]])}
-        {Spacer24}
-        <DocDemoContainer style={{ padding: '40px' }}>
-          <Profile profileId="ville" />
-        </DocDemoContainer>
         <p>
           You can render just the individual parts too, if you want to just render a users name or
           avatar. These components must be rendererd within a <code>{'Profile.Provider'}</code>.
         </p>
 
-        <p>
-          <h4>Profile.Name</h4>
-          Renders a users name.
-        </p>
-        <DocDemoContainer style={{ maxHeight: '100px', padding: '20px' }}>
-          <Profile.Provider profileId="ville">
-            <Profile.Name />
-          </Profile.Provider>
-        </DocDemoContainer>
-        {Spacer24}
-        {renderCodeSnippet(AnatomyName, [
-          [1, 3],
-          [5, 6],
-        ])}
+        <AdvancedPart
+          title="Profile.Name"
+          description="Render a user's name"
+          demo={
+            <Profile.Provider profileId="ville">
+              <Profile.Name />
+            </Profile.Provider>
+          }
+          code={AnatomyName}
+        />
       </div>
       <div>
-        <p>
-          <h4>Profile.Avatar</h4>Renders a users avatar.
-        </p>
-        <DocDemoContainer style={{ maxHeight: '100px', padding: '20px' }}>
-          <Profile.Provider profileId="ville">
-            <Profile.Avatar />
-          </Profile.Provider>
-        </DocDemoContainer>
-        {Spacer24}
-        {renderCodeSnippet(AnatomyAvatar, [
-          [1, 3],
-          [5, 6],
-        ])}
+        <AdvancedPart
+          title="Profile.Avatar"
+          description="Render a user's avatar"
+          demo={
+            <Profile.Provider profileId="ville">
+              <Profile.Avatar />
+            </Profile.Provider>
+          }
+          code={AnatomyAvatar}
+          props={
+            <>
+              <b style={{ color: vars.color.textContrastHigh }}>size?: string</b>
+              {Spacer12}
+              Defaults to <code>24px</code>
+              {Spacer12}
+              Set the size of the avatar in pixels.
+            </>
+          }
+        />
       </div>
     </>
   );

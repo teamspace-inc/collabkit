@@ -58,6 +58,10 @@ export const nameAndTimestampWrapper = style({
   fontFamily: vars.fontFamily,
 });
 
+export const indent = style({
+  marginLeft: calc.add(vars.avatar.size, fallbackVar(vars.comment.gap, vars.space[2])),
+});
+
 export const inlineModal = style({
   background: vars.color.surface,
   borderRadius: '6px',
