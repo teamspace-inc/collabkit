@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { Link } from 'wouter';
+import { PropsWithChildren, useEffect } from 'react';
+import { Link, LinkProps, LocationHook } from 'wouter';
 import {
   docContent,
   docDemoContainer,
@@ -70,7 +70,7 @@ export function DocFooter(props: { next?: string[]; prev?: string[] }) {
   );
 }
 
-export const DocLink = (props: React.ComponentPropsWithoutRef<'div'> & { href?: string }) => (
+export const DocLink = (props: PropsWithChildren<LinkProps<LocationHook>>) => (
   <Link {...props} className={docLink} />
 );
 
