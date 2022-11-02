@@ -202,7 +202,6 @@ export function Docs() {
   return (
     <>
       <Switch>{generateDocRoutes(docs)}</Switch>
-      <Route path="/codeEditor" component={CodeEditor} />
     </>
   );
 }
