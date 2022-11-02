@@ -1,8 +1,6 @@
 import { renderCodeSnippet } from '../../CodeEditor';
 import { DocLink } from '../../Doc';
-
 import Anatomy from './CommentAnatomy.tsx?raw';
-
 import Usage from './CommentUsage.tsx?raw';
 import { AdvancedDemo, AdvancedDisclaimer, AdvancedPart } from '../AdvancedCommon';
 
