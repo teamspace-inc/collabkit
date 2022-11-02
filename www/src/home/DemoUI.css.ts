@@ -34,12 +34,25 @@ export const headingRow = style({
   justifyContent: 'space-between',
 });
 
-export const heading = style({
-  fontStyle: 'normal',
-  fontWeight: '700',
-  fontSize: '20px',
-  lineHeight: '95%',
-  color: vars.color.textContrastHigh,
+export const heading = recipe({
+  base: {
+    fontStyle: 'normal',
+    fontWeight: '700',
+    fontSize: '20px',
+    lineHeight: '95%',
+    color: vars.color.textContrastHigh,
+  },
+  defaultVariants: { size: 'small' },
+  variants: {
+    size: {
+      big: {
+        fontSize: '20px',
+      },
+      small: {
+        fontSize: '14px',
+      },
+    },
+  },
 });
 
 export const demoTip = recipe({

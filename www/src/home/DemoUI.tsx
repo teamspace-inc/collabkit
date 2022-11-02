@@ -11,8 +11,8 @@ export const HeadingRow = (props: ComponentProps<'div'>) => (
   <div {...props} className={styles.headingRow}></div>
 );
 
-export const Heading = (props: ComponentProps<'div'>) => (
-  <div {...props} className={styles.heading}></div>
+export const Heading = (props: { size?: 'big' | 'small' } & ComponentProps<'div'>) => (
+  <div {...props} className={styles.heading({ size: props.size })}></div>
 );
 
 export function AcmeLogo() {

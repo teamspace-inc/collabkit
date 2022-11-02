@@ -6,6 +6,7 @@ import { CollabKitProvider, Config, Workspace } from '@collabkit/react';
 import { SetBreakpointContext } from './hooks/useWindowSize';
 import { UIPage } from './pages/UIPage';
 import { ThemeEditorPage } from './pages/ThemeEditorPage';
+import { ChartDemo } from './home/ChartDemo';
 import { subHours } from 'date-fns/fp';
 
 // todo generate a new workspace
@@ -248,6 +249,7 @@ export default function App() {
         <Route path="/theme-editor" component={ThemeEditorPage} />
         <Route path="/examples/dashboard" component={DashboardExample} />
         <Route path="/examples/table" component={DataGridPage} />
+        <Route path="/examples/chart" component={ChartDemo} />
         <Docs />
       </SetBreakpointContext>
     </CollabKitProvider>
