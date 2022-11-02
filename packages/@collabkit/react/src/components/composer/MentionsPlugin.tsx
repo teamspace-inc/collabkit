@@ -36,6 +36,7 @@ import {
 } from '@floating-ui/react-dom-interactions';
 import { ThemeWrapper } from '../ThemeWrapper';
 import * as Profile from '../Profile';
+import { Scrollable } from '../ScrollArea';
 
 type MentionMatch = {
   leadOffset: number;
@@ -112,7 +113,7 @@ const AtSignMentionsRegexAliasRegex = new RegExp(
 );
 
 // At most, 5 suggestions are shown in the popup.
-const SUGGESTION_LIST_LENGTH_LIMIT = 5;
+const SUGGESTION_LIST_LENGTH_LIMIT = 25;
 
 const mentionsCache = new Map();
 
@@ -239,6 +240,7 @@ export function MentionsTypeahead({
   const results = useMentionLookupService(match.matchingString);
   const [selectedIndex, setSelectedIndex] = useState<null | number>(null);
   const [width, setWidth] = useState(0);
+  const [maxAvailableSize, setMaxAvailableSize] = useState({ width: 0, height: 0 });
 
   const nodeId = useFloatingNodeId();
 
@@ -257,7 +259,7 @@ export function MentionsTypeahead({
             maxWidth: `${availableWidth}px`,
             maxHeight: `${availableHeight}px`,
           });
-          // setMaxAvailableSize({ width: availableWidth, height: availableHeight });
+          setMaxAvailableSize({ width: availableWidth, height: availableHeight });
         },
       }),
     ],
@@ -413,24 +415,28 @@ export function MentionsTypeahead({
               width,
             }}
           >
-            <div className={styles.list}>
-              {results.slice(0, SUGGESTION_LIST_LENGTH_LIMIT).map((result, i) => (
-                <MentionsTypeaheadItem
-                  key={result.id}
-                  index={i}
-                  active={i === selectedIndex}
-                  onClick={() => {
-                    setSelectedIndex(i);
-                    applyCurrentSelected();
-                  }}
-                  onMouseEnter={() => {
-                    setSelectedIndex(i);
-                  }}
-                  result={result}
-                  query={match.matchingString}
-                />
-              ))}
-            </div>
+            <Scrollable maxHeight={maxAvailableSize.height}>
+              <div className={styles.list}>
+                {results.slice(0, SUGGESTION_LIST_LENGTH_LIMIT).map((result, i) => (
+                  <>
+                    <MentionsTypeaheadItem
+                      key={result.id}
+                      index={i}
+                      active={i === selectedIndex}
+                      onClick={() => {
+                        setSelectedIndex(i);
+                        applyCurrentSelected();
+                      }}
+                      onMouseEnter={() => {
+                        setSelectedIndex(i);
+                      }}
+                      result={result}
+                      query={match.matchingString}
+                    />
+                  </>
+                ))}
+              </div>
+            </Scrollable>
           </div>
         </ThemeWrapper>
       </FloatingFocusManager>

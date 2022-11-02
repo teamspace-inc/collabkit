@@ -31,3 +31,22 @@ export const ScrollAreaCorner: React.ForwardRefExoticComponent<
 > = forwardRef((props, ref) => (
   <ScrollArea.Corner {...props} ref={ref} className={props.className ?? styles.corner} />
 ));
+
+export function Scrollable(props: {
+  children: React.ReactNode;
+  className?: string;
+  maxHeight: React.CSSProperties['maxHeight'];
+}) {
+  const { maxHeight } = props;
+  return (
+    <ScrollAreaRoot>
+      <ScrollAreaViewport className={props.className} style={{ maxHeight }}>
+        {props.children}
+      </ScrollAreaViewport>
+      <ScrollAreaScrollbar orientation="vertical">
+        <ScrollAreaThumb />
+      </ScrollAreaScrollbar>
+      <ScrollAreaCorner />
+    </ScrollAreaRoot>
+  );
+}

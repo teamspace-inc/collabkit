@@ -4,13 +4,7 @@ import * as CommentList from './CommentList';
 import { useApp } from '../hooks/useApp';
 import { useThread } from '../hooks/useThread';
 import { useSnapshot } from 'valtio';
-import {
-  ScrollAreaRoot,
-  ScrollAreaViewport,
-  ScrollAreaScrollbar,
-  ScrollAreaThumb,
-  ScrollAreaCorner,
-} from './ScrollArea';
+import { Scrollable } from './ScrollArea';
 import * as Comment from './Comment';
 import * as Composer from './composer/Composer';
 import * as Profile from './Profile';
@@ -62,32 +56,26 @@ export const PreviewThread = forwardRef<Handle, PopoverThreadProps>(function Pop
           style={props.style}
           ref={ref}
         >
-          <ScrollAreaRoot>
-            <ScrollAreaViewport style={{ maxHeight: props.maxAvailableSize?.height ?? 'unset' }}>
-              <CommentList.Root className={styles.commentList}>
-                <Comment.Root
-                  className={styles.comment}
-                  commentId={event.id}
-                  style={{ paddingTop: '16px' }}
-                >
-                  <Comment.Content>
-                    <Comment.Header className={styles.commentHeader()}>
-                      <Profile.Avatar />
-                      <Comment.NameAndTimestampWrapper>
-                        <Comment.CreatorName />
-                        <Comment.Timestamp format={props.formatTimestamp} />
-                      </Comment.NameAndTimestampWrapper>
-                    </Comment.Header>
-                    <Comment.Body />
-                  </Comment.Content>
-                </Comment.Root>
-              </CommentList.Root>
-            </ScrollAreaViewport>
-            <ScrollAreaScrollbar orientation="vertical">
-              <ScrollAreaThumb />
-            </ScrollAreaScrollbar>
-            <ScrollAreaCorner />
-          </ScrollAreaRoot>
+          <Scrollable maxHeight={props.maxAvailableSize?.height ?? 'unset'}>
+            <CommentList.Root className={styles.commentList}>
+              <Comment.Root
+                className={styles.comment}
+                commentId={event.id}
+                style={{ paddingTop: '16px' }}
+              >
+                <Comment.Content>
+                  <Comment.Header className={styles.commentHeader()}>
+                    <Profile.Avatar />
+                    <Comment.NameAndTimestampWrapper>
+                      <Comment.CreatorName />
+                      <Comment.Timestamp format={props.formatTimestamp} />
+                    </Comment.NameAndTimestampWrapper>
+                  </Comment.Header>
+                  <Comment.Body />
+                </Comment.Content>
+              </Comment.Root>
+            </CommentList.Root>
+          </Scrollable>
         </div>
       </ThemeWrapper>
     </ThreadContextProvider>
@@ -121,84 +109,75 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
     <ThreadContextProvider {...props}>
       <ThemeWrapper>
         <div className={styles.root} data-collabkit-internal="true" style={props.style} ref={ref}>
-          <ScrollAreaRoot>
-            <ScrollAreaViewport style={{ maxHeight: props.maxAvailableSize?.height ?? 'unset' }}>
-              {isEmpty &&
-                (profile ? (
-                  <div
-                    style={{
-                      padding: '16px',
-                      display: 'flex',
-                      flexDirection: 'row',
-                      gap: '12px',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <Profile.Provider profileId={userId}>
-                      <Profile.Avatar />
-                      <Profile.Name />
-                    </Profile.Provider>
-                  </div>
-                ) : null)}
-              {!isEmpty && list ? (
-                <CommentList.Root className={styles.commentList}>
-                  {list.map((group) =>
-                    group.map((event) => (
-                      <Comment.Root className={styles.comment} commentId={event.id} key={event.id}>
-                        <Comment.Content>
-                          <Comment.Header className={styles.commentHeader()}>
-                            <Profile.Avatar />
-                            <Comment.NameAndTimestampWrapper>
-                              <Comment.CreatorName />
-                              <Comment.Timestamp format={props.formatTimestamp} />
-                            </Comment.NameAndTimestampWrapper>
-                            <Comment.Menu />
-                          </Comment.Header>
-                          <Comment.Body />
-                          <PopoverThreadCommentEditor />
-                        </Comment.Content>
-                      </Comment.Root>
-                    ))
-                  )}
-                </CommentList.Root>
-              ) : null}
-              {props.hideComposer ? null : (
-                <div className={styles.composerForm}>
-                  <Composer.Root
-                    className={styles.composerRoot}
-                    autoFocus={props.autoFocus ?? true}
-                  >
-                    <Composer.Editor
-                      contentEditable={<Composer.ContentEditable />}
-                      placeholder={
-                        <Composer.Placeholder>
-                          {isEmpty ? 'Add a comment' : 'Reply to this comment'}
-                        </Composer.Placeholder>
-                      }
-                    />
-                  </Composer.Root>
-                  <ButtonGroup
-                    onCancel={(e) =>
-                      events.onPointerDown(e, {
-                        target: {
-                          type: 'closeThreadButton',
-                          threadId,
-                          workspaceId,
-                        },
-                      })
-                    }
-                    onConfirm={onPointerDown}
-                    confirmButtonEnabled={isEnabled}
-                    confirmButtonText={'Comment'}
-                  />
+          <Scrollable maxHeight={props.maxAvailableSize?.height ?? 'unset'}>
+            {isEmpty &&
+              (profile ? (
+                <div
+                  style={{
+                    padding: '16px',
+                    display: 'flex',
+                    flexDirection: 'row',
+                    gap: '12px',
+                    alignItems: 'center',
+                  }}
+                >
+                  <Profile.Provider profileId={userId}>
+                    <Profile.Avatar />
+                    <Profile.Name />
+                  </Profile.Provider>
                 </div>
-              )}
-            </ScrollAreaViewport>
-            <ScrollAreaScrollbar orientation="vertical">
-              <ScrollAreaThumb />
-            </ScrollAreaScrollbar>
-            <ScrollAreaCorner />
-          </ScrollAreaRoot>
+              ) : null)}
+            {!isEmpty && list ? (
+              <CommentList.Root className={styles.commentList}>
+                {list.map((group) =>
+                  group.map((event) => (
+                    <Comment.Root className={styles.comment} commentId={event.id} key={event.id}>
+                      <Comment.Content>
+                        <Comment.Header className={styles.commentHeader()}>
+                          <Profile.Avatar />
+                          <Comment.NameAndTimestampWrapper>
+                            <Comment.CreatorName />
+                            <Comment.Timestamp format={props.formatTimestamp} />
+                          </Comment.NameAndTimestampWrapper>
+                          <Comment.Menu />
+                        </Comment.Header>
+                        <Comment.Body />
+                        <PopoverThreadCommentEditor />
+                      </Comment.Content>
+                    </Comment.Root>
+                  ))
+                )}
+              </CommentList.Root>
+            ) : null}
+            {props.hideComposer ? null : (
+              <div className={styles.composerForm}>
+                <Composer.Root className={styles.composerRoot} autoFocus={props.autoFocus ?? true}>
+                  <Composer.Editor
+                    contentEditable={<Composer.ContentEditable />}
+                    placeholder={
+                      <Composer.Placeholder>
+                        {isEmpty ? 'Add a comment' : 'Reply to this comment'}
+                      </Composer.Placeholder>
+                    }
+                  />
+                </Composer.Root>
+                <ButtonGroup
+                  onCancel={(e) =>
+                    events.onPointerDown(e, {
+                      target: {
+                        type: 'closeThreadButton',
+                        threadId,
+                        workspaceId,
+                      },
+                    })
+                  }
+                  onConfirm={onPointerDown}
+                  confirmButtonEnabled={isEnabled}
+                  confirmButtonText={'Comment'}
+                />
+              </div>
+            )}
+          </Scrollable>
         </div>
       </ThemeWrapper>
     </ThreadContextProvider>

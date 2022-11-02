@@ -3,13 +3,7 @@ import { useSnapshot } from 'valtio';
 import { useApp } from '../hooks/useApp';
 import { ThreadContext } from '../hooks/useThreadContext';
 import * as styles from '../styles/components/Inbox.css';
-import {
-  ScrollAreaCorner,
-  ScrollAreaRoot,
-  ScrollAreaScrollbar,
-  ScrollAreaThumb,
-  ScrollAreaViewport,
-} from './ScrollArea';
+import { Scrollable } from './ScrollArea';
 import { InboxItem } from './InboxItem';
 import { ThemeWrapper } from './ThemeWrapper';
 import { ChatCentered } from './icons';
@@ -67,13 +61,7 @@ export function Inbox(props: { formatTimestamp?: (timestamp: number) => string }
         {threadIds.length === 0 ? (
           <EmptyState />
         ) : (
-          <ScrollAreaRoot>
-            <ScrollAreaViewport>{inboxItems}</ScrollAreaViewport>
-            <ScrollAreaScrollbar orientation="vertical">
-              <ScrollAreaThumb />
-            </ScrollAreaScrollbar>
-            <ScrollAreaCorner />
-          </ScrollAreaRoot>
+          <Scrollable maxHeight={'unset'}>{inboxItems}</Scrollable>
         )}
       </div>
     </ThemeWrapper>
