@@ -35,6 +35,7 @@ import { useThreadUsers } from './hooks/public/useThreadUsers';
 import { ThreadFacepile } from './components/ThreadFacepile';
 import { useReplyCount } from './hooks/useReplyCount';
 import { ResolveThreadIconButton } from './components/ResolveThreadIconButton';
+import CollabKitRecharts from './components/Recharts';
 
 export {
   CollabKitProvider as Provider,
@@ -45,6 +46,7 @@ export {
   PopoverTrigger,
   ThemeWrapper,
   Inbox,
+  CollabKitRecharts,
   Sidebar,
   SidebarInbox,
   SidebarInboxButton,
