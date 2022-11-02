@@ -37,8 +37,8 @@ function ThemeSlider(props: { onChange: (theme: string) => void }) {
       defaultValue={[0]}
       max={100}
       step={100 / 6}
-      onValueChange={(value: number) => {
-        const themeIndex = Math.floor(value / 16);
+      onValueChange={(value: number[]) => {
+        const themeIndex = Math.floor(value[0] / 16);
         const theme = Object.keys(THEMES)[themeIndex];
         props.onChange(theme);
       }}
