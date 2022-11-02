@@ -8,7 +8,7 @@ import { useCommentStore } from '../hooks/useCommentStore';
 import { CommentContext, useCommentContext } from '../hooks/useCommentContext';
 import { Timestamp as RawTimestamp } from './Timestamp';
 import { useId } from '../hooks/useId';
-import * as Profile from './Profile';
+import Profile from './Profile';
 import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
 import { useApp } from '../hooks/useApp';
 import { CommentTarget, CommentType, timelineUtils } from '@collabkit/core';

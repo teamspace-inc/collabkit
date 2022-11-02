@@ -1,5 +1,5 @@
 import { actions } from '@collabkit/client';
-import { Profile } from '@collabkit/core';
+import type { Profile as ProfileType } from '@collabkit/core';
 import React from 'react';
 import { useSnapshot } from 'valtio';
 import { useApp } from '../hooks/useApp';
@@ -29,7 +29,7 @@ export function Provider(props: { children: React.ReactNode; profileId: string }
   );
 }
 
-export function Name(props: React.ComponentPropsWithoutRef<'span'>) {
+export function ProfileName(props: React.ComponentPropsWithoutRef<'span'>) {
   const { store } = useApp();
   const { profiles } = useSnapshot(store);
   const { profileId } = useProfile();
@@ -45,7 +45,7 @@ function AvatarPlaceholder({
   size,
   profile,
   ...props
-}: { size?: string; profile: Profile } & React.ComponentPropsWithoutRef<'div'>) {
+}: { size?: string; profile: ProfileType } & React.ComponentPropsWithoutRef<'div'>) {
   return (
     <div
       {...props}
@@ -121,3 +121,16 @@ export function Avatar({
     />
   );
 }
+
+export default function Profile(props: { profileId: string }) {
+  return (
+    <Profile.Provider profileId={props.profileId}>
+      <Profile.Avatar />
+      <Profile.Name />
+    </Profile.Provider>
+  );
+}
+
+Profile.Provider = Provider;
+Profile.Avatar = Avatar;
+Profile.Name = ProfileName;

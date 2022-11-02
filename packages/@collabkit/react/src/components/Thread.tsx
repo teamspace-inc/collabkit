@@ -8,7 +8,7 @@ import type { ThreadInfo } from '@collabkit/core';
 import { TypingIndicator } from './TypingIndicator';
 import { ThreadContext, ThreadContextValue } from '../hooks/useThreadContext';
 import { getCommentType } from '../utils/getCommentType';
-import * as Profile from './Profile';
+import Profile from './Profile';
 import * as Comment from './Comment';
 import * as Composer from './composer/Composer';
 import { ThemeWrapper } from './ThemeWrapper';

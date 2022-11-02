@@ -35,7 +35,7 @@ import {
   useFloatingNodeId,
 } from '@floating-ui/react-dom-interactions';
 import { ThemeWrapper } from '../ThemeWrapper';
-import * as Profile from '../Profile';
+import Profile from '../Profile';
 import { Scrollable } from '../ScrollArea';
 
 type MentionMatch = {

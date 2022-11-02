@@ -7,7 +7,7 @@ import { useSnapshot } from 'valtio';
 import { Scrollable } from './ScrollArea';
 import * as Comment from './Comment';
 import * as Composer from './composer/Composer';
-import * as Profile from './Profile';
+import Profile from './Profile';
 import { PopoverThreadCommentEditor } from './PopoverThreadCommentEditor';
 import * as styles from '../styles/components/PopoverThread.css';
 import { ThemeWrapper } from './ThemeWrapper';
