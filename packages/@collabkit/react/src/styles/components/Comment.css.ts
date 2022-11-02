@@ -4,6 +4,11 @@ import { calc } from '@vanilla-extract/css-utils';
 import { vars } from '../theme';
 import { collabkit } from './Root.css';
 
+export const paddingLeft = fallbackVar(vars.comment.paddingLeft, vars.space[4]);
+export const paddingRight = fallbackVar(vars.comment.paddingRight, vars.space[4]);
+export const headerGap = fallbackVar(vars.comment.header.gap, vars.space[2]);
+export const actionsGap = fallbackVar(vars.comment.actions.gap, vars.space[2]);
+
 export const root = recipe({
   base: {
     display: 'flex',
@@ -14,8 +19,8 @@ export const root = recipe({
     maxWidth: calc.subtract('100%', vars.space[2]),
     paddingTop: fallbackVar(vars.comment.paddingTop, vars.space[2]),
     paddingBottom: fallbackVar(vars.comment.paddingBottom, vars.space[2]),
-    paddingLeft: fallbackVar(vars.comment.paddingLeft, vars.space[4]),
-    paddingRight: fallbackVar(vars.comment.paddingBottom, vars.space[4]),
+    paddingLeft,
+    paddingRight,
     fontFamily: vars.fontFamily,
 
     selectors: {

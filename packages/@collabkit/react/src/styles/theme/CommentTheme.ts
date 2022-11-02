@@ -17,6 +17,9 @@ export const CommentTheme = {
         gap: 'comment-header-profile-gap',
       },
     },
+    actions: {
+      gap: 'comment-actions-gap',
+    },
     content: {
       gap: 'comment-content-gap',
     },

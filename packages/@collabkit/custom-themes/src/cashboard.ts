@@ -93,6 +93,7 @@ export const cashboard: CustomTheme = {
   },
   popoverThread: {
     border: '1px solid #E3E9ED',
+    width: '272px',
     comment: {
       header: {
         alignItems: 'center',

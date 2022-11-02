@@ -2,13 +2,15 @@ import { fallbackVar } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
 import { vars } from '../theme';
 
+export const iconButtonSize = fallbackVar(vars.iconButton.size, '24px');
+
 export const button = recipe({
   base: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    height: fallbackVar(vars.iconButton.size, '24px'),
-    width: fallbackVar(vars.iconButton.size, '24px'),
+    height: iconButtonSize,
+    width: iconButtonSize,
     cursor: 'pointer',
     userSelect: 'none',
     pointerEvents: 'all',

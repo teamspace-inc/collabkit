@@ -1,12 +1,14 @@
 import { fallbackVar, style } from '@vanilla-extract/css';
 import { vars } from '../theme';
 
+export const avatarSize = fallbackVar(vars.avatar.size, '24px');
+
 export const avatar = style({
-  width: vars.avatar.size,
-  height: vars.avatar.size,
+  width: avatarSize,
+  height: avatarSize,
   borderRadius: vars.profile.avatar.borderRadius,
   fontSize: fallbackVar(vars.profile.avatar.fontSize, vars.avatar.fontSize),
-  lineHeight: vars.avatar.size,
+  lineHeight: avatarSize,
   color: fallbackVar(vars.profile.avatar.color, vars.color.background),
   flexShrink: 0,
   background: vars.profile.avatar.background,

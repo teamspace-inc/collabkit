@@ -20,6 +20,9 @@ export const CommentBase = {
     content: {
       gap: 'initial',
     },
+    actions: {
+      gap: 'initial',
+    },
     body: {
       color: 'initial',
       fontSize: 'initial',
