@@ -1,5 +1,8 @@
 import React from 'react';
 import { useSnapshot } from 'valtio';
+import has from 'has';
+import { Redirect, Route, Switch } from 'wouter';
+
 import { IntroductionDoc } from './IntroductionDoc';
 // import { DetailViewsDoc } from './patterns/DetailViewsDoc';
 // import { ListViewsDoc } from './patterns/ListViewsDoc';
@@ -17,14 +20,7 @@ import { UseUnreadThreadsCountDoc } from './hooks/useUnreadThreadsCountDoc';
 import { UsePopoverThreadDoc } from './hooks/usePopoverThreadDoc';
 import { CustomisationDoc } from './CustomisationDoc';
 import { UseInboxDoc } from './hooks/useInboxDoc';
-
-import has from 'has';
-
-import { Redirect, Route, Switch } from 'wouter';
-
-import { CodeEditor } from './CodeEditor';
 import { Doc } from './Doc';
-
 import { WorkspacesDoc } from './WorkspacesDoc';
 import { SecureModeDoc } from './SecureModeDoc';
 import { NotificationsDoc } from './NotificationsDoc';

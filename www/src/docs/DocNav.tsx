@@ -6,7 +6,7 @@ import {
   ScrollAreaThumb,
   ScrollAreaViewport,
 } from '../UIKit';
-import { DOCS, getDocHref, RootDocNode, useDocs } from './Docs';
+import { getDocHref, RootDocNode, useDocs } from './Docs';
 import { Breakpoint, useBreakpoint } from '../hooks/useWindowSize';
 import { useEffect, useState } from 'react';
 import { List } from 'phosphor-react';
