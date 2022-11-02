@@ -34,6 +34,7 @@ import { useResolveThread } from './hooks/public/useResolveThread';
 import { useThreadUsers } from './hooks/public/useThreadUsers';
 import { ThreadFacepile } from './components/ThreadFacepile';
 import { useReplyCount } from './hooks/useReplyCount';
+import { ResolveThreadIconButton } from './components/ResolveThreadIconButton';
 
 export {
   CollabKitProvider as Provider,
@@ -53,6 +54,7 @@ export {
   useUnreadCommentsCount as useUnreadCount,
   createValtioStore as internal_createStore,
   // advanced
+  ResolveThreadIconButton,
   ThreadFacepile,
   useInbox,
   useComments,

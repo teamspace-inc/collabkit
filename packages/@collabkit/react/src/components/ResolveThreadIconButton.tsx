@@ -5,7 +5,10 @@ import { useThreadContext } from '../hooks/useThreadContext';
 import { Check } from './icons';
 import { IconButton } from './IconButton';
 
-export function ResolveThreadButton(props: { className?: string; style?: React.CSSProperties }) {
+export function ResolveThreadIconButton(props: {
+  className?: string;
+  style?: React.CSSProperties;
+}) {
   const { events } = useApp();
   const { threadId, workspaceId } = useThreadContext();
 
@@ -17,6 +20,8 @@ export function ResolveThreadButton(props: { className?: string; style?: React.C
 
   return (
     <IconButton
+      className={props.className}
+      style={props.style}
       // TODO: tooltip hijacks focus when used within a modal popover
       // tooltip={isResolved ? 'Re-open' : 'Mark as Resolved and Hide'}
       onPointerDown={(e) =>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSnapshot } from 'valtio';
 import { ThreadContext, useThreadContext } from '../hooks/useThreadContext';
-import { ResolveThreadButton } from './ResolveThreadButton';
+import { ResolveThreadIconButton } from './ResolveThreadIconButton';
 import { ThreadFacepile } from './ThreadFacepile';
 import { useInboxStore } from '../hooks/useInboxStore';
 import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
@@ -80,7 +80,7 @@ export function InboxItem(props: { formatTimestamp?: (timestamp: number) => stri
             size={fallbackVar(vars.inbox.item.facepile.avatar.size, vars.avatar.size)}
           />
           <div style={{ flex: 1 }}></div>
-          {firstComment.createdById === userId ? <ResolveThreadButton /> : null}
+          {firstComment.createdById === userId ? <ResolveThreadIconButton /> : null}
         </div>
         {renderThreadContextPreview?.({ threadId, workspaceId, userId, info })}
         <Comment.Root commentId={firstCommentId} className={styles.commentRoot}>
