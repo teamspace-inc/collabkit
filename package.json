@@ -9,7 +9,6 @@
       "www"
     ],
     "nohoist": [
-      "**/@types/react",
       "**/@ladle/react",
       "**/mailing",
       "**/mailing-core"
