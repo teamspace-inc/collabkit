@@ -14,16 +14,16 @@ export function GettingStartedDoc() {
       <div>
         <h3 className={docStep}>Install @collabkit/react</h3>
         <p>With npm:</p>
-        {renderCodeSnippet(`npm install @collabkit/react`, 'shell')}
+        {renderCodeSnippet(`npm install @collabkit/react`, [], 'shell')}
         <p>Or with yarn:</p>
-        {renderCodeSnippet(`yarn add @collabkit/react`, 'shell')}
+        {renderCodeSnippet(`yarn add @collabkit/react`, [], 'shell')}
       </div>
       <div>
         <h3 className={docStep}>Import styles</h3>
         <p>In a JS module:</p>
-        {renderCodeSnippet(`import '@collabkit/react/dist/style.css';`, 'typescript')}
+        {renderCodeSnippet(`import '@collabkit/react/dist/style.css';`)}
         <p>Or in CSS file:</p>
-        {renderCodeSnippet(`@import '@collabkit/react/dist/style.css';`, 'css')}
+        {renderCodeSnippet(`@import '@collabkit/react/dist/style.css';`, [], 'css')}
       </div>
       <div>
         <h3 className={docStep}>Wrap your app in a CollabKitProvider</h3>
