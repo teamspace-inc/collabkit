@@ -95,6 +95,16 @@ export function ChartDemo() {
             </HeadingRow>
             <ResponsiveContainer width="100%" height={430}>
               <AreaChart data={data}>
+                <defs>
+                  <linearGradient id="colorProjected" x1="0" y1="0" x2="0" y2="1">
+                    <stop stopColor={vars.color.indigo} />
+                    <stop offset="1" stopColor="#4DA0F9" stopOpacity={0} />
+                  </linearGradient>
+                  <linearGradient id="colorCurrent" x1="0" y1="0" x2="0" y2="1">
+                    <stop stopColor={vars.color.pink} />
+                    <stop offset="1" stopColor="#D560A5" stopOpacity={0} />
+                  </linearGradient>
+                </defs>
                 <CartesianGrid vertical={false} />
                 <Legend
                   align="right"
@@ -118,26 +128,18 @@ export function ChartDemo() {
                 <Tooltip />
                 <Area
                   dataKey="Projected"
-                  stroke="#5779DF"
+                  stroke={vars.color.indigo}
+                  strokeWidth={2}
                   fill="url(#colorProjected)"
                   fillOpacity={0.3}
                 />
                 <Area
                   dataKey="Current"
-                  stroke="#D560A5"
+                  stroke={vars.color.pink}
+                  strokeWidth={2}
                   fill="url(#colorCurrent)"
                   fillOpacity={0.3}
                 />
-                <defs>
-                  <linearGradient id="colorProjected" x1="0" y1="0" x2="0" y2="1">
-                    <stop stop-color="#5779DF" />
-                    <stop offset="1" stopColor="#4DA0F9" stopOpacity={0} />
-                  </linearGradient>
-                  <linearGradient id="colorCurrent" x1="0" y1="0" x2="0" y2="1">
-                    <stop stop-color="#D560A5" />
-                    <stop offset="1" stopColor="#D560A5" stopOpacity={0} />
-                  </linearGradient>
-                </defs>
               </AreaChart>
             </ResponsiveContainer>
           </Container>
