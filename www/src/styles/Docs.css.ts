@@ -91,20 +91,22 @@ export const docStep = style({
   counterIncrement: 'step-number',
   ':before': {
     content: `counter(step-number)`,
-    fontSize: '14px',
+    fontSize: '16px',
     display: 'flex',
     justifyContent: 'center',
-    height: '28px',
-    width: '28px',
+    height: '32px',
+    width: '32px',
     textIndent: '-1px',
-    lineHeight: '29px',
+    lineHeight: '32px',
     color: vars.color.textContrastHigh,
     background: vars.color.bgContrastLow,
     borderRadius: '50%',
     position: 'absolute',
-    left: -28 - 16,
+    left: -32 - 16,
   },
 });
+
+export const advancedAnatomyPartNumber = style([docStep, {}]);
 
 export const docDemoOverlay = style({
   fontSize: 14,

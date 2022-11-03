@@ -1,14 +1,14 @@
 import { renderCodeSnippet } from '../../CodeEditor';
-import { DocLink } from '../../Doc';
+import { DocDemoContainer, DocLink } from '../../Doc';
 import Anatomy from './CommentAnatomy.tsx?raw';
 import Usage from './CommentUsage.tsx?raw';
-import { AdvancedDemo, AdvancedDisclaimer, AdvancedPart } from '../AdvancedCommon';
+import { AdvancedDisclaimer, AdvancedHeroDemo, AdvancedPart } from '../AdvancedCommon';
 import { Comment, Thread } from '@collabkit/react';
-import { vars } from '../../../styles/Theme.css';
 import React from 'react';
+import { vars } from '../../../styles/Theme.css';
 
 const commentContainer: React.CSSProperties = {
-  width: '320px',
+  width: '100%',
   background: vars.color.bgContrastMedium,
 };
 
@@ -30,13 +30,13 @@ export function CommentDoc() {
 
       <div>
         <h3>Demo</h3>
-        <AdvancedDemo>
+        <AdvancedHeroDemo>
           <Thread.Provider threadId="thread3">
-            <div style={commentContainer}>
+            <div style={{ ...commentContainer }}>
               <Comment commentId="event1" />
             </div>
           </Thread.Provider>
-        </AdvancedDemo>
+        </AdvancedHeroDemo>
       </div>
 
       <div>
@@ -129,6 +129,11 @@ export default () => (<Thread.Provider threadId="thread1">
     <Comment.Header />
   </Comment.Root>
 </Thread.Provider>);`}
+        demo={
+          <CommentDemo>
+            <Comment.CreatorAvatar />
+          </CommentDemo>
+        }
         description={<>A component that renders the comment creator's avatar.</>}
         title={'Comment.CreatorAvatar'}
       />
@@ -138,9 +143,10 @@ export default () => (<Thread.Provider threadId="thread1">
 
 export default () => (<Thread.Provider threadId="thread1">
   <Comment.Root commentId="event1">
-    <Comment.Header>
-      <Comment.CreatorAvatar />
-    <Comment.Header />
+    <Comment.NameAndTimestampWrapper>
+      <Comment.CreatorName />
+      <Comment.Timestamp />
+    </Comment.NameAndTimestampWrapper>
   </Comment.Root>
 </Thread.Provider>);`}
         demo={

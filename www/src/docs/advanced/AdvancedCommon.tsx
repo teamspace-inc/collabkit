@@ -1,4 +1,5 @@
-import { ThemeProvider, ThemeWrapper, Profile } from '@collabkit/react';
+import { ThemeProvider, ThemeWrapper } from '@collabkit/react';
+import { advancedAnatomyPartNumber, docStep } from '../../styles/Docs.css';
 import { vars } from '../../styles/Theme.css';
 import { renderCodeSnippet } from '../CodeEditor';
 import { DocDemoContainer, DocLink } from '../Doc';
@@ -26,7 +27,7 @@ export function AdvancedPart(props: {
 }) {
   return (
     <AdvancedSubsection>
-      <h4>{props.title}</h4>
+      <h4 className={advancedAnatomyPartNumber}>{props.title}</h4>
       <p>{props.description}</p>
       {props.demo ? (
         <>
@@ -48,7 +49,15 @@ export function AdvancedPart(props: {
 
 export function AdvancedDemo(props: { children: React.ReactNode }) {
   return (
-    <DocDemoContainer style={{ padding: '40px', background: vars.color.bgContrastLow }}>
+    <DocDemoContainer
+      style={{
+        padding: '20px 40px',
+        borderColor: vars.color.bgContrastMedium,
+        borderWidth: 1,
+        borderStyle: 'solid',
+        background: 'transparent',
+      }}
+    >
       <ThemeProvider theme="dark">
         <ThemeWrapper>{props.children}</ThemeWrapper>
       </ThemeProvider>
@@ -56,17 +65,24 @@ export function AdvancedDemo(props: { children: React.ReactNode }) {
   );
 }
 
-export function AdvancedSubsection(props: { children: React.ReactNode }) {
+export function AdvancedHeroDemo(props: { children: React.ReactNode }) {
   return (
-    <div
-      style={{
-        padding: 20,
-        border: `1px solid ${vars.color.bgContrastLow}`,
-        // background: vars.color.bgContrastLow,
-        borderRadius: '12px',
-      }}
-    >
-      {props.children}
-    </div>
+    <DocDemoContainer style={{ padding: '64px 60px', background: vars.color.bgContrastLow }}>
+      <ThemeProvider theme="dark">
+        <ThemeWrapper>{props.children}</ThemeWrapper>
+      </ThemeProvider>
+    </DocDemoContainer>
   );
+}
+
+const style: React.CSSProperties = {
+  padding: '0px 72px 0px 0px',
+  position: 'relative',
+  left: 44,
+  background: vars.color.bgContrastLowest,
+  marginBottom: '40px',
+};
+
+export function AdvancedSubsection(props: { children: React.ReactNode }) {
+  return <div style={style}>{props.children}</div>;
 }

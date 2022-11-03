@@ -18,14 +18,14 @@ export function AdvancedThreadProviderDoc() {
         <p>
           Must be called within a <code>CollabKitProvider</code>
         </p>
-        {renderCodeSnippet(`import { ThreadProvider, Comment } from '@collabkit/react';
+        {renderCodeSnippet(`import { Thread, Comment } from '@collabkit/react';
 
 export const SomeComponent() {
-  return <ThreadProvider threadId="replace-with-thread-id">
+  return <Thread.Provider threadId="replace-with-thread-id">
     <Comment.Root>
       <Comment.Body />
     </Comment.Root>
-  </ThreadProvider>
+  </Thread.Provider>
 }`)}
       </div>
       <div>

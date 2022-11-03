@@ -85,7 +85,7 @@ export const DOCS: RootDocNode = {
     title: 'Advanced',
     children: {
       useInbox: { component: UseInboxDoc },
-      ThreadProvider: { component: AdvancedThreadProviderDoc },
+      ['Thread.Provider']: { component: AdvancedThreadProviderDoc },
       Comment: { component: CommentDoc },
       Profile: { component: ProfileDoc },
     },
