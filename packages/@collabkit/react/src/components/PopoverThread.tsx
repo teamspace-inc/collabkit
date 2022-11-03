@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import { ThreadInfo } from '@collabkit/core';
-import * as CommentList from './CommentList';
+import CommentList from './CommentList';
 import { useApp } from '../hooks/useApp';
 import { useThread } from '../hooks/useThread';
 import { useSnapshot } from 'valtio';
@@ -8,7 +8,6 @@ import { Scrollable } from './ScrollArea';
 import Comment from './Comment';
 import * as Composer from './composer/Composer';
 import Profile from './Profile';
-import { ThreadCommentEditor } from './ThreadCommentEditor';
 import * as styles from '../styles/components/PopoverThread.css';
 import { ThemeWrapper } from './ThemeWrapper';
 import { useComposer } from '../hooks/useComposer';
@@ -127,7 +126,8 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
                   </Profile.Provider>
                 </div>
               ) : null)}
-            {!isEmpty && list ? (
+            <CommentList />
+            {/* {!isEmpty && list ? (
               <CommentList.Root className={styles.commentList}>
                 {list.map((group) =>
                   group.map((event) => (
@@ -135,20 +135,22 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
                       <Comment.Content>
                         <Comment.Header className={styles.commentHeader()}>
                           <Profile.Avatar />
-                          <Comment.NameAndTimestampWrapper>
+                          <Comment.NameAndTimestampWrapper style={{ flexDirection: 'column' }}>
                             <Comment.CreatorName />
                             <Comment.Timestamp format={props.formatTimestamp} />
                           </Comment.NameAndTimestampWrapper>
                           <Comment.MoreMenu />
                         </Comment.Header>
-                        <Comment.Body />
+                        <Comment.Indent>
+                          <Comment.Body />
+                        </Comment.Indent>
                         <ThreadCommentEditor />
                       </Comment.Content>
                     </Comment.Root>
                   ))
                 )}
               </CommentList.Root>
-            ) : null}
+            ) : null} */}
             {props.hideComposer ? null : (
               <div className={styles.composerForm}>
                 <Composer.Root className={styles.composerRoot} autoFocus={props.autoFocus ?? true}>

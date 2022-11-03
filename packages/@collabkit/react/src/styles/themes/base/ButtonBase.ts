@@ -2,7 +2,8 @@ export const ButtonBase = {
   iconButton: {
     background: 'initial',
     color: 'initial',
-    size: 'initial',
+    width: 'initial',
+    height: 'initial',
     borderRadius: 'initial',
     active: {
       background: 'initial',

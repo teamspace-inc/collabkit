@@ -30,7 +30,7 @@ export function ResolveThreadIconButton(props: {
         })
       }
     >
-      <Check size={19} weight={'regular'} />
+      <Check size={14} weight={'bold'} />
     </IconButton>
   );
 }

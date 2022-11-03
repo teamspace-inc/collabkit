@@ -1,5 +1,4 @@
 import { fallbackVar, globalStyle, style } from '@vanilla-extract/css';
-import { recipe } from '@vanilla-extract/recipes';
 import { calc } from '@vanilla-extract/css-utils';
 import { vars } from '../theme';
 import { collabkit } from './Root.css';
@@ -9,57 +8,13 @@ export const paddingRight = fallbackVar(vars.comment.paddingRight, vars.space[4]
 export const headerGap = fallbackVar(vars.comment.header.gap, vars.space[2]);
 export const actionsGap = fallbackVar(vars.comment.actions.gap, vars.space[2]);
 
-export const root = recipe({
-  base: {
-    display: 'flex',
-    flex: '1',
-    flexDirection: 'row',
-    gap: fallbackVar(vars.comment.gap, vars.space[2]),
-    position: 'relative',
-    maxWidth: calc.subtract('100%', vars.space[2]),
-    paddingTop: fallbackVar(vars.comment.paddingTop, vars.space[2]),
-    paddingBottom: fallbackVar(vars.comment.paddingBottom, vars.space[2]),
-    paddingLeft,
-    paddingRight,
-    fontFamily: vars.fontFamily,
-
-    selectors: {
-      '&:hover': {
-        backgroundColor: fallbackVar(vars.comment.hover.background, 'none'),
-      },
-    },
-  },
-
-  variants: {
-    type: {
-      inline: {
-        paddingTop: fallbackVar(vars.comment.paddingTop, vars.space[1]),
-        paddingBottom: fallbackVar(vars.comment.paddingBottom, vars.space[1]),
-      },
-      'inline-start': {
-        paddingTop: fallbackVar(vars.comment.paddingTop, vars.space[1]),
-        paddingBottom: fallbackVar(vars.comment.paddingBottom, vars.space[1]),
-      },
-      'inline-end': {
-        paddingTop: fallbackVar(vars.comment.paddingTop, vars.space[1]),
-        paddingBottom: fallbackVar(vars.comment.paddingBottom, vars.space[1]),
-      },
-      default: {},
-    },
-  },
-});
-
 export const nameAndTimestampWrapper = style({
   flex: 1,
   display: 'flex',
-  flexDirection: 'column',
+  flexDirection: 'row',
   alignItems: 'baseline',
-  gap: fallbackVar(vars.comment.header.nameAndTimestamp.gap, `${calc(vars.space[1]).divide(2)}`),
+  gap: fallbackVar(vars.comment.header.nameAndTimestamp.gap, `${calc(vars.space[2])}`),
   fontFamily: vars.fontFamily,
-});
-
-export const indent = style({
-  marginLeft: calc.add(vars.avatar.size, fallbackVar(vars.comment.gap, vars.space[2])),
 });
 
 export const inlineModal = style({
@@ -67,25 +22,17 @@ export const inlineModal = style({
   borderRadius: '6px',
 });
 
-export const content = recipe({
-  base: {
-    display: 'flex',
-    position: 'relative',
-    flexDirection: 'column',
-    flex: '1',
-    gap: fallbackVar(vars.comment.content.gap, vars.space[2]),
-    fontFamily: vars.fontFamily,
-  },
-  variants: {
-    // indents the comment to account
-    // for a profile image
-    profileIndent: {
-      true: {
-        marginLeft: calc.add(vars.avatar.size, fallbackVar(vars.comment.gap, vars.space[2])),
-      },
-      false: {},
-    },
-  },
+export const content = style({
+  display: 'flex',
+  position: 'relative',
+  flexDirection: 'column',
+  flex: '1',
+  gap: fallbackVar(vars.comment.content.gap, vars.space[0]),
+  fontFamily: vars.fontFamily,
+});
+
+export const indent = style({
+  marginLeft: calc.add(vars.avatar.size, fallbackVar(vars.comment.gap, vars.space[2])),
 });
 
 export const body = style({
@@ -103,13 +50,17 @@ export const body = style({
   color: fallbackVar(vars.comment.body.color, vars.color.textPrimary),
 });
 
-export const editor = style({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '12px',
-  margin: '0px -16px',
-  fontFamily: vars.fontFamily,
-});
+export const editor = style([
+  {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: vars.space[1],
+    marginTop: '0px',
+    marginRight: '-16px',
+    marginLeft: '16px',
+    fontFamily: vars.fontFamily,
+  },
+]);
 
 export const header = style({
   flex: '1',
@@ -119,6 +70,7 @@ export const header = style({
   alignItems: 'flex-start',
   justifyContent: 'space-between',
   fontFamily: vars.fontFamily,
+  position: 'relative',
 });
 
 export const timestamp = style({
@@ -140,59 +92,30 @@ export const actions = style({
   flexDirection: 'row',
   zIndex: 2, // higher than scrollbar
   fontFamily: vars.fontFamily,
+  position: 'absolute',
+  right: '0px',
+  top: '0px',
+  background: vars.color.surfaceOverlay,
+  borderRadius: '6px',
 });
 
-export const menu = style({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'stretch',
-  cursor: 'pointer',
-  pointerEvents: 'all',
-  minWidth: 110,
-  borderRadius: fallbackVar(vars.menu.borderRadius, vars.space[1]),
-  background: fallbackVar(vars.menu.background, vars.color.surface),
-  boxShadow: fallbackVar(vars.menu.boxShadow, vars.shadow.standard),
-  outline: 'none',
+export const root = style({
+  flex: '1',
+  flexDirection: 'row',
+  gap: fallbackVar(vars.comment.gap, vars.space[2]),
+  position: 'relative',
+  // account for scrollbar
+  // maxWidth: calc.subtract('100%', vars.space[2]),
+  paddingLeft: fallbackVar(vars.comment.paddingLeft, vars.space[4]),
+  paddingRight: fallbackVar(vars.comment.paddingRight, vars.space[4]),
+  paddingTop: fallbackVar(vars.comment.paddingTop, vars.space[1]),
+  paddingBottom: fallbackVar(vars.comment.paddingBottom, vars.space[1]),
   fontFamily: vars.fontFamily,
+  display: 'flex',
 
   selectors: {
     '&:hover': {
-      cursor: 'pointer',
-    },
-  },
-});
-
-export const menuItem = style({
-  display: 'flex',
-  justifyContent: 'space-between',
-  width: '100%',
-  border: 'none',
-  textAlign: 'left',
-  margin: 0,
-  outline: 0,
-  padding: `${vars.space[1]} ${vars.space[2]}`,
-  borderRadius: vars.space[1],
-  cursor: 'pointer',
-  background: fallbackVar(vars.menu.background, vars.color.surface),
-  color: fallbackVar(vars.menu.item.color, vars.color.textPrimary),
-  fontSize: fallbackVar(vars.menu.item.fontSize, vars.text.small.fontSize),
-  lineHeight: fallbackVar(vars.menu.item.lineHeight, vars.text.small.lineHeight),
-  fontWeight: fallbackVar(vars.menu.item.fontWeight, vars.fontWeight.regular),
-  letterSpacing: fallbackVar(vars.menu.item.letterSpacing, vars.text.small.letterSpacing),
-  fontFamily: vars.fontFamily,
-
-  selectors: {
-    '&:focus, &:not([disabled]):active': {
-      color: fallbackVar(vars.menu.item.active.color, vars.color.textPrimary),
-      background: fallbackVar(vars.menu.item.active.background, vars.color.surfaceOverlay),
-    },
-    '&:not(:first-of-type)': {
-      borderTopRightRadius: 0,
-      borderTopLeftRadius: 0,
-    },
-    '&:not(:last-of-type)': {
-      borderBottomLeftRadius: 0,
-      borderBottomRightRadius: 0,
+      backgroundColor: fallbackVar(vars.comment.hover.background, 'none'),
     },
   },
 });

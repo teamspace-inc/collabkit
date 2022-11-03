@@ -13,9 +13,8 @@ import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
 import { useApp } from '../hooks/useApp';
 import { CommentTarget, CommentType, timelineUtils } from '@collabkit/core';
 import * as styles from '../styles/components/Comment.css';
-import { Check, DotsThree } from './icons';
+import { DotsThree } from './icons';
 import { Menu, MenuItem } from './Menu';
-import { IconButton } from './IconButton';
 import { ResolveThreadIconButton } from './ResolveThreadIconButton';
 import { ThreadCommentEditor } from './ThreadCommentEditor';
 
@@ -92,7 +91,7 @@ export function CommentRoot(props: {
     <CommentContext.Provider value={target}>
       <Profile.Provider profileId={createdById}>
         <div
-          className={props.className ?? styles.root({ type: props.type })}
+          className={props.className ?? styles.root}
           onClick={onClick}
           ref={ref}
           style={props.style}
@@ -166,7 +165,7 @@ export const CommentContent = (
   props: { profileIndent?: boolean } & React.ComponentProps<'div'>
 ) => {
   const { profileIndent, ...forwardProps } = props;
-  return <div {...forwardProps} className={props.className ?? styles.content({ profileIndent })} />;
+  return <div {...forwardProps} className={props.className ?? styles.content} />;
 };
 
 type CommentMenuItemType = 'commentEditButton' | 'commentDeleteButton' | 'reopenThreadButton';
@@ -195,38 +194,19 @@ const CommentMenu = (props: { className?: string }) => {
   );
 
   return (
-    <div className={styles.actions}>
-      {isFirstComment && !isResolved && (
-        <IconButton
-          // TODO: tooltip hijacks focus when used within a modal popover
-          // tooltip={isResolved ? 'Re-open' : 'Mark as Resolved and Hide'}
-          onPointerDown={(e) =>
-            events.onPointerDown(e, {
-              target: {
-                threadId,
-                workspaceId,
-                type: 'resolveThreadButton',
-              },
-            })
-          }
-        >
-          <Check size={16} weight={'bold'} />
-        </IconButton>
-      )}
+    <>
       {createdById === userId && (
         <Menu<CommentMenuItemType>
-          className={props.className ?? styles.menu}
+          className={props.className}
           icon={<DotsThree size={16} />}
           onItemClick={onItemClick}
         >
-          <MenuItem className={styles.menuItem} label="Edit" targetType="commentEditButton" />
-          <MenuItem className={styles.menuItem} label="Delete" targetType="commentDeleteButton" />
-          {isResolved && (
-            <MenuItem className={styles.menuItem} label="Re-open" targetType="reopenThreadButton" />
-          )}
+          <MenuItem label="Edit" targetType="commentEditButton" />
+          <MenuItem label="Delete" targetType="commentDeleteButton" />
+          {isResolved && <MenuItem label="Re-open" targetType="reopenThreadButton" />}
         </Menu>
       )}
-    </div>
+    </>
   );
 };
 

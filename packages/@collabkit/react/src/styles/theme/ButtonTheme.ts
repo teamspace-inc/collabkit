@@ -2,7 +2,8 @@ export const ButtonTheme = {
   iconButton: {
     background: 'icon-button-background',
     color: 'icon-button-color',
-    size: 'icon-button-size',
+    width: 'icon-button-width',
+    height: 'icon-button-height',
     borderRadius: 'icon-button-border-radius',
     active: {
       background: 'icon-button-active-background',

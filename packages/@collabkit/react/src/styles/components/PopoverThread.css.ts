@@ -5,7 +5,7 @@ import * as commentStyles from './Comment.css';
 import { recipe } from '@vanilla-extract/recipes';
 import * as profileStyles from './Profile.css';
 import { calc } from '@vanilla-extract/css-utils';
-import { iconButtonSize } from './IconButton.css';
+import { iconButtonWidth } from './IconButton.css';
 
 const width = fallbackVar(vars.popoverThread.width, '264px');
 const maxWidth = width;
@@ -28,7 +28,7 @@ export const root = style({
 // we want to target the comment name
 globalStyle(`${root} ${profileStyles.name}`, {
   maxWidth: `${calc(calc.subtract(width, profileStyles.avatarSize)).subtract(
-    calc(iconButtonSize)
+    calc(iconButtonWidth)
       .multiply(2)
       .add(commentStyles.paddingLeft)
       .add(commentStyles.paddingRight)
@@ -54,7 +54,7 @@ export const commentList = style({
 });
 
 export const comment = style([
-  commentStyles.root({ type: 'default' }),
+  commentStyles,
   {
     padding: '16px',
     gap: '12px',

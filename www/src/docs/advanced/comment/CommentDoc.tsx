@@ -46,12 +46,12 @@ export function CommentDoc() {
 
       <div>
         <h3>Usage</h3>
-        <p>
-          Renders a Comment. The most basic usage is as follows. You must render{' '}
-          <code>Comment</code> inside a <code>Thread.Provider</code> so it knows which thread the{' '}
-          <code>commentId</code> is in.{' '}
-        </p>
+        <p>Renders a Comment. The most basic usage is as follows.</p>
         {renderCodeSnippet(Usage)}
+        <p>
+          You must render <code>Comment</code> inside a <code>Thread.Provider</code> so it knows
+          which thread the <code>commentId</code> is in.{' '}
+        </p>
       </div>
 
       <div>

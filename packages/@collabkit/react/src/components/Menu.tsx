@@ -31,13 +31,14 @@ import { IconButton } from './IconButton';
 import { ThemeWrapper } from './ThemeWrapper';
 import { useApp } from '../hooks/useApp';
 import { useSnapshot } from 'valtio';
+import { menu, menuItem } from '../styles/components/Menu.css';
 
 export const MenuItem = forwardRef<
   HTMLButtonElement,
   { label: string; disabled?: boolean; targetType: unknown; className?: string }
 >(({ label, disabled, targetType, ...props }, ref) => {
   return (
-    <button {...props} ref={ref} role="menuitem" disabled={disabled}>
+    <button className={menuItem} {...props} ref={ref} role="menuitem" disabled={disabled}>
       {label}
     </button>
   );
@@ -186,7 +187,7 @@ export function Menu<ItemType>({
             <ThemeWrapper>
               <div
                 {...getFloatingProps({
-                  className,
+                  className: className ?? menu,
                   ref: floating,
                   style: {
                     position: strategy,

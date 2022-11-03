@@ -2,6 +2,7 @@ import { createGlobalThemeContract } from '@vanilla-extract/css';
 import { AvatarTheme } from './AvatarTheme';
 import { ButtonTheme } from './ButtonTheme';
 import { ColorTheme } from './ColorTheme';
+import { CommentListTheme } from './CommentListTheme';
 import { CommentTheme } from './CommentTheme';
 import { ComposerTheme } from './ComposerTheme';
 import { FacepileTheme } from './FacepileTheme';
@@ -24,6 +25,7 @@ export const vars = createGlobalThemeContract(
     ...ButtonTheme,
     ...ColorTheme,
     ...CommentTheme,
+    ...CommentListTheme,
     ...ComposerTheme,
     ...FacepileTheme,
     ...InboxTheme,

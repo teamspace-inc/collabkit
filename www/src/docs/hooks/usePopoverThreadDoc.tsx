@@ -1,5 +1,5 @@
+import { AdvancedProps } from '../advanced/AdvancedCommon';
 import { renderCodeSnippet } from '../CodeEditor';
-import { Markdown } from '../Markdown';
 
 export function UsePopoverThreadDoc() {
   return (
@@ -29,25 +29,25 @@ export function App() {
 }`)}
       </div>
 
-      <Markdown
-        body={`### Props
-
-#### threadId: string
-
-The thread ID of the Popover Thread.`}
-      />
-
-      <Markdown
-        body={`### Returns
-
-#### setPopoverState: (state: 'open' | 'close' | 'preview') => void
-
-Sets the popover state.
-
-#### context: PopoverContext
-
-The Popover Context. Pass this to \`PopoverTrigger\` to anchor the Popover Thread to a component.`}
-      />
+      <div>
+        <h3>API</h3>
+        <h4>Props</h4>
+        <AdvancedProps
+          rows={[['threadId', 'string', 'A unique ID that represents this thread.']]}
+        />
+        <br />
+        <h4>Returns</h4>
+        <AdvancedProps
+          rows={[
+            [
+              'setPopoverState',
+              `(state: 'open' | 'close' | 'preview') => void`,
+              'Sets the popover state.',
+            ],
+            ['context', 'PopoverThreadContext', ''],
+          ]}
+        />
+      </div>
     </>
   );
 }

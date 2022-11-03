@@ -79,7 +79,6 @@ export function App() {
             ],
           ]}
         />
-        {/* <Markdown body={ThreadMarkdown} /> */}
       </div>
     </>
   );

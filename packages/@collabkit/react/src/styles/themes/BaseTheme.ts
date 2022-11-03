@@ -2,6 +2,7 @@ import { AvatarBase } from './base/AvatarBase';
 import { ButtonBase } from './base/ButtonBase';
 import { ColorBase } from './base/ColorBase';
 import { CommentBase } from './base/CommentBase';
+import { CommentListBase } from './base/CommentListBase';
 import { ComposerBase } from './base/ComposerBase';
 import { FacepileBase } from './base/FacepileBase';
 import { InboxBase } from './base/InboxBase';
@@ -20,6 +21,7 @@ import { ThreadBase } from './base/ThreadBase';
 export const BaseTheme = {
   ...NewIndicatorBase,
   ...ColorBase,
+  ...CommentListBase,
   ...TextBase,
   ...SpaceBase,
   ...ButtonBase,
