@@ -44,8 +44,8 @@ export function App() {
         </p>
       </div>
       <div>
-        <h2>usePopoverThread</h2>
-        <br />
+        <h3>Props</h3>
+        <h4>usePopoverThread</h4>
         <AdvancedProps
           rows={[
             ['threadId', 'string', 'A unique ID that represents this thread.'],
@@ -88,14 +88,18 @@ export function App() {
             ],
           ]}
         />
-
-        <h2>PopoverTrigger</h2>
-        <br />
-        <h3>Props</h3>
-        <h4>Context: {`ReturnType<typeof usePopoverThread>['context']`}</h4>
-        <p>
-          Context from <code>usePopoverThread</code> to pass to <code>PopoverTrigger</code>
-        </p>
+        <h4>PopoverTrigger</h4>
+        <AdvancedProps
+          rows={[
+            [
+              'context',
+              'PopoverThreadContext',
+              <>
+                Context from <code>usePopoverThread</code> to pass to <code>PopoverTrigger</code>
+              </>,
+            ],
+          ]}
+        />
       </div>
     </>
   );
