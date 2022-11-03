@@ -2,7 +2,7 @@ import React from 'react';
 import { actions } from '@collabkit/client';
 import { useApp } from '../hooks/useApp';
 import Comment from './Comment';
-import * as Composer from './composer/Composer';
+import Composer from './composer/Composer';
 import { useComposer } from '../hooks/useComposer';
 import { useThreadContext } from '../hooks/useThreadContext';
 import { useCommentContext } from '../hooks/useCommentContext';

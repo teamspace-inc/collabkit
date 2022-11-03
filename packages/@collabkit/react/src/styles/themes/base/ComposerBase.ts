@@ -1,5 +1,15 @@
 export const ComposerBase = {
   composer: {
+    border: 'initial',
+    padding: 'initial',
+    gap: 'initial',
+    typingIndicator: {
+      color: 'initial',
+      fontSize: 'initial',
+      lineHeight: 'initial',
+      fontWeight: 'initial',
+      letterSpacing: 'initial',
+    },
     input: {
       caretColor: 'initial',
       color: 'initial',

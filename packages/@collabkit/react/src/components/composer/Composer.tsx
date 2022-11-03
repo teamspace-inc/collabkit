@@ -22,6 +22,8 @@ import * as styles from '../../styles/components/Composer.css';
 import { useOptionalCommentContext } from '../../hooks/useCommentContext';
 import { useSnapshot } from 'valtio';
 import { $setSelection } from 'lexical';
+import { TypingIndicator } from '../TypingIndicator';
+import Profile from '../Profile';
 
 // Catch any errors that occur during Lexical updates and log them
 // or throw them as needed. If you don't throw them, Lexical will
@@ -46,7 +48,7 @@ function useComposerContext() {
   return useContext(ComposerContext);
 }
 
-export const Root = function ComposerRoot(props: {
+function ComposerRoot(props: {
   className?: string;
   children: React.ReactNode;
   autoFocus: boolean;
@@ -68,14 +70,16 @@ export const Root = function ComposerRoot(props: {
 
   return (
     <div className={props.className ?? styles.root} onClick={onClick}>
-      <ComposerContext.Provider value={{ body: props.body ?? '', autoFocus: props.autoFocus }}>
-        <TargetContext.Provider value={target}>{props.children}</TargetContext.Provider>
-      </ComposerContext.Provider>
+      <Profile.Provider profileId={userId}>
+        <ComposerContext.Provider value={{ body: props.body ?? '', autoFocus: props.autoFocus }}>
+          <TargetContext.Provider value={target}>{props.children}</TargetContext.Provider>
+        </ComposerContext.Provider>
+      </Profile.Provider>
     </div>
   );
-};
+}
 
-export const ContentEditable = function ComposerContentEditable(props: { className?: string }) {
+function ComposerContentEditable(props: { className?: string }) {
   const { events } = useApp();
   const target = useTarget();
   const { autoFocus } = useComposerContext();
@@ -91,9 +95,9 @@ export const ContentEditable = function ComposerContentEditable(props: { classNa
       />
     </div>
   );
-};
+}
 
-export const Editor = function ComposerEditor(props: {
+function ComposerEditor(props: {
   placeholder: React.ReactElement;
   className?: string;
   contentEditable: JSX.Element;
@@ -141,8 +145,27 @@ export const Editor = function ComposerEditor(props: {
       </LexicalComposer>
     </div>
   );
-};
+}
 
-export const Placeholder = function ComposerPlaceholder(props: ComponentProps<'span'>) {
+function ComposerPlaceholder(props: ComponentProps<'span'>) {
   return <span {...props} className={props.className ?? styles.placeholder} />;
-};
+}
+
+export default function Composer(props: { autoFocus?: boolean }) {
+  return (
+    <Composer.Root autoFocus={props.autoFocus ?? true}>
+      <Profile.Avatar />
+      <Composer.Editor
+        contentEditable={<Composer.ContentEditable />}
+        placeholder={<Composer.Placeholder>Write a comment</Composer.Placeholder>}
+      />
+      <Composer.TypingIndicator />
+    </Composer.Root>
+  );
+}
+
+Composer.Root = ComposerRoot;
+Composer.ContentEditable = ComposerContentEditable;
+Composer.Editor = ComposerEditor;
+Composer.Placeholder = ComposerPlaceholder;
+Composer.TypingIndicator = TypingIndicator;

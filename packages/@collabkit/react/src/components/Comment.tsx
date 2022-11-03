@@ -59,8 +59,6 @@ export function CommentRoot(props: {
   const { commentId: eventId } = props;
   const treeId = useId();
 
-  console.log(props.commentId);
-
   const target = useMemo<CommentTarget>(
     () => ({ type: 'comment', workspaceId, threadId, eventId, treeId }),
     [workspaceId, threadId, eventId, treeId]

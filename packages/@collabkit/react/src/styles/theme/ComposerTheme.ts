@@ -1,5 +1,17 @@
 export const ComposerTheme = {
   composer: {
+    padding: 'composer-padding',
+    border: 'composer-border',
+    gap: 'composer-gap',
+
+    typingIndicator: {
+      color: 'composer-typing-indicator-color',
+      fontSize: 'composer-typing-indicator-font-size',
+      lineHeight: 'composer-typing-indicator-line-height',
+      fontWeight: 'composer-typing-indicator-font-weight',
+      letterSpacing: 'composer-typing-indicator-letter-spacing',
+    },
+
     input: {
       background: 'composer-input-background',
       border: 'composer-input-border',

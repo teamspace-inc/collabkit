@@ -5,6 +5,7 @@ import type { Profile } from '@collabkit/core';
 import { useThreadContext } from '../hooks/useThreadContext';
 // import { transitionClassNames } from '../styles/components/TypingIndicator.css';
 // import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import { typing } from '../styles/components/Composer.css';
 
 function getNames(props: {
   userId: string;
@@ -70,7 +71,7 @@ export function TypingIndicator(props: { className?: string }) {
     //       ]
     //     : []}
     // </TransitionGroup>
-    <div ref={nodeRef} className={props.className}>
+    <div ref={nodeRef} className={props.className ?? typing}>
       <TypingIndicatorText names={names} />
     </div>
   );

@@ -6,12 +6,12 @@ import { useThread } from '../hooks/useThread';
 import { useSnapshot } from 'valtio';
 import { Scrollable } from './ScrollArea';
 import Comment from './Comment';
-import * as Composer from './composer/Composer';
+import Composer from './composer/Composer';
 import Profile from './Profile';
 import * as styles from '../styles/components/PopoverThread.css';
 import { ThemeWrapper } from './ThemeWrapper';
-import { useComposer } from '../hooks/useComposer';
-import { ButtonGroup } from './ButtonGroup';
+// import { useComposer } from '../hooks/useComposer';
+// import { ButtonGroup } from './ButtonGroup';
 import { ThreadProvider } from './Thread';
 
 type PopoverThreadProps = {
@@ -127,37 +127,35 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
                 </div>
               ) : null)}
             <CommentList />
-            {/* {props.hideComposer ? null : (
-              <div className={styles.composerForm}>
-                <Composer.Root className={styles.composerRoot} autoFocus={props.autoFocus ?? true}>
-                  <Composer.Editor
-                    contentEditable={<Composer.ContentEditable />}
-                    placeholder={
-                      <Composer.Placeholder>
-                        {isEmpty ? 'Add a comment' : 'Reply to this comment'}
-                      </Composer.Placeholder>
-                    }
-                  />
-                </Composer.Root>
-                <ButtonGroup
-                  onCancel={(e) =>
-                    events.onPointerDown(e, {
-                      target: {
-                        type: 'closeThreadButton',
-                        threadId,
-                        workspaceId,
-                      },
-                    })
-                  }
-                  onConfirm={onPointerDown}
-                  confirmButtonEnabled={isEnabled}
-                  confirmButtonText={'Comment'}
-                />
-              </div>
-            )} */}
+            {props.hideComposer ? null : <Composer />}
           </Scrollable>
         </div>
       </ThemeWrapper>
     </ThreadProvider>
   );
 });
+
+/* <Composer.Root className={styles.composerRoot} autoFocus={props.autoFocus ?? true}>
+    <Composer.Editor
+      contentEditable={<Composer.ContentEditable />}
+      placeholder={
+        <Composer.Placeholder>
+          {isEmpty ? 'Add a comment' : 'Reply to this comment'}
+        </Composer.Placeholder>
+      }
+    />
+  </Composer.Root> */
+/* <ButtonGroup
+    onCancel={(e) =>
+      events.onPointerDown(e, {
+        target: {
+          type: 'closeThreadButton',
+          threadId,
+          workspaceId,
+        },
+      })
+    }
+    onConfirm={onPointerDown}
+    confirmButtonEnabled={isEnabled}
+    confirmButtonText={'Comment'}
+  /> */

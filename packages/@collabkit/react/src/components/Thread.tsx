@@ -7,7 +7,7 @@ import type { ThreadInfo } from '@collabkit/core';
 import { TypingIndicator } from './TypingIndicator';
 import { ThreadContext } from '../hooks/useThreadContext';
 import Profile from './Profile';
-import * as Composer from './composer/Composer';
+import Composer from './composer/Composer';
 import { ThemeWrapper } from './ThemeWrapper';
 import * as styles from '../styles/components/Thread.css';
 import { ChatCentered } from './icons';
@@ -73,16 +73,7 @@ export function Thread(props: ThreadProps & { className?: string; children?: Rea
                 <CommentList />
               </ScrollableCommentList>
             )}
-            {props.hideComposer ? null : (
-              <Composer.Root className={styles.composer} autoFocus={props.autoFocus ?? true}>
-                <Profile.Avatar />
-                <Composer.Editor
-                  contentEditable={<Composer.ContentEditable />}
-                  placeholder={<Composer.Placeholder>Write a comment</Composer.Placeholder>}
-                />
-                <TypingIndicator className={styles.typingIndicator} />
-              </Composer.Root>
-            )}
+            {props.hideComposer ? null : <Composer />}
           </div>
         </ThemeWrapper>
       </Profile.Provider>
