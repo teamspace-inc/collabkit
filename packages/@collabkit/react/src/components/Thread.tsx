@@ -4,7 +4,6 @@ import { useApp } from '../hooks/useApp';
 import { useThread } from '../hooks/useThread';
 import { useSnapshot } from 'valtio';
 import type { ThreadInfo } from '@collabkit/core';
-import { TypingIndicator } from './TypingIndicator';
 import { ThreadContext } from '../hooks/useThreadContext';
 import Profile from './Profile';
 import Composer from './composer/Composer';
@@ -12,6 +11,9 @@ import { ThemeWrapper } from './ThemeWrapper';
 import * as styles from '../styles/components/Thread.css';
 import { ChatCentered } from './icons';
 import CommentList from './CommentList';
+import { ThreadFacepile } from './ThreadFacepile';
+import { ThreadUnreadDot } from './ThreadUnreadDot';
+import { ResolveThreadIconButton } from './ResolveThreadIconButton';
 
 export type ThreadProps = {
   threadId: string;
@@ -82,6 +84,9 @@ export function Thread(props: ThreadProps & { className?: string; children?: Rea
 }
 
 Thread.Provider = ThreadProvider;
+Thread.Facepile = ThreadFacepile;
+Thread.UnreadDot = ThreadUnreadDot;
+Thread.ResolveIconButton = ResolveThreadIconButton;
 
 const emptyState = (
   <div className={styles.emptyState}>

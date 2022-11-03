@@ -1,20 +1,18 @@
 import React, { useState } from 'react';
 import { useSnapshot } from 'valtio';
 import { ThreadContext, useThreadContext } from '../hooks/useThreadContext';
-import { ResolveThreadIconButton } from './ResolveThreadIconButton';
-import { ThreadFacepile } from './ThreadFacepile';
 import { useInboxStore } from '../hooks/useInboxStore';
 import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
 import { useReplyCount } from '../hooks/useReplyCount';
 import { useApp } from '../hooks/useApp';
 import Comment from './Comment';
 import { ReplyCount } from './ReplyCount';
-import { ThreadUnreadDot } from './ThreadUnreadDot';
 import { actions } from '../../../client/src/actions';
 import { ThreadTarget } from '@collabkit/core';
 import * as styles from '../styles/components/InboxItem.css';
 import { vars } from '../styles/theme';
 import { fallbackVar } from '@vanilla-extract/css';
+import { Thread } from '..';
 
 export function InboxItem(props: { formatTimestamp?: (timestamp: number) => string }) {
   const { threadId, workspaceId, userId } = useThreadContext();
@@ -75,12 +73,12 @@ export function InboxItem(props: { formatTimestamp?: (timestamp: number) => stri
         }}
       >
         <div className={styles.header}>
-          <ThreadUnreadDot />
-          <ThreadFacepile
+          <Thread.UnreadDot />
+          <Thread.Facepile
             size={fallbackVar(vars.inbox.item.facepile.avatar.size, vars.avatar.size)}
           />
           <div style={{ flex: 1 }}></div>
-          {firstComment.createdById === userId ? <ResolveThreadIconButton /> : null}
+          {firstComment.createdById === userId ? <Thread.ResolveIconButton /> : null}
         </div>
         {renderThreadContextPreview?.({ threadId, workspaceId, userId, info })}
         <Comment.Root commentId={firstCommentId} className={styles.commentRoot}>

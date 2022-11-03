@@ -1,4 +1,4 @@
-import { Profile, Comment, ResolveThreadIconButton } from '@collabkit/react';
+import { Profile, Comment, Thread } from '@collabkit/react';
 
 <Comment.Root commentId="comment123">
   <Comment.Content>
@@ -9,11 +9,11 @@ import { Profile, Comment, ResolveThreadIconButton } from '@collabkit/react';
         <Comment.Timestamp />
       </Comment.NameAndTimestampWrapper>
       <Comment.Actions>
-        <ResolveThreadIconButton />
+        <Thread.ResolveIconButton />
         <Comment.MoreMenu />
       </Comment.Actions>
     </Comment.Header>
-    <Comment.Indent>
+    <Comment.Indent
       <Comment.Body />
     </Comment.Indent>
   </Comment.Content>

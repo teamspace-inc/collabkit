@@ -15,7 +15,7 @@ import { CommentTarget, CommentType, timelineUtils } from '@collabkit/core';
 import * as styles from '../styles/components/Comment.css';
 import { DotsThree } from './icons';
 import { Menu, MenuItem } from './Menu';
-import { ResolveThreadIconButton } from './ResolveThreadIconButton';
+import { Thread } from './Thread';
 import { ThreadCommentEditor } from './ThreadCommentEditor';
 
 // tidy up root and provider
@@ -247,7 +247,7 @@ export default function Comment(props: {
             </Comment.NameAndTimestampWrapper>
           )}
           <Comment.Actions>
-            {showResolveThreadButton && <ResolveThreadIconButton />}
+            {showResolveThreadButton && <Thread.ResolveIconButton />}
             <Comment.MoreMenu />
           </Comment.Actions>
         </Comment.Header>
