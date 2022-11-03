@@ -33,7 +33,8 @@ export const cashboard: CustomTheme = {
   },
   iconButton: {
     color: '#6A7278',
-    size: '32px',
+    width: '32px',
+    height: '32px',
     hover: {
       background: `linear-gradient(0deg, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)), #FFFFFF`,
     },
