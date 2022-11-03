@@ -173,7 +173,7 @@ export const themeDemoContainer = style([
 
 export const docScrollableContent = style({
   padding: 20,
-  gridTemplateColumns: 'minmax(360px, 680px)',
+  gridTemplateColumns: 'minmax(360px, 666px)',
   display: 'grid',
   width: 'auto',
   position: 'sticky',
