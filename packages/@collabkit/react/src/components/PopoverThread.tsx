@@ -85,18 +85,18 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
   props: PopoverThreadProps,
   ref
 ) {
-  const { threadId } = props;
+  // const { threadId } = props;
 
-  const { store, events } = useApp();
+  const { store } = useApp();
   const { workspaceId, profiles, userId } = useSnapshot(store);
 
-  const { isEmpty, list } = useThread({
+  const { isEmpty } = useThread({
     ...props,
     store,
     workspaceId,
   });
 
-  const { isEnabled, onPointerDown } = useComposer({ workspaceId, threadId });
+  // const { isEnabled, onPointerDown } = useComposer({ workspaceId, threadId });
 
   const profile = userId ? profiles[userId] : null;
 
@@ -127,31 +127,7 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
                 </div>
               ) : null)}
             <CommentList />
-            {/* {!isEmpty && list ? (
-              <CommentList.Root className={styles.commentList}>
-                {list.map((group) =>
-                  group.map((event) => (
-                    <Comment.Root className={styles.comment} commentId={event.id} key={event.id}>
-                      <Comment.Content>
-                        <Comment.Header className={styles.commentHeader()}>
-                          <Profile.Avatar />
-                          <Comment.NameAndTimestampWrapper style={{ flexDirection: 'column' }}>
-                            <Comment.CreatorName />
-                            <Comment.Timestamp format={props.formatTimestamp} />
-                          </Comment.NameAndTimestampWrapper>
-                          <Comment.MoreMenu />
-                        </Comment.Header>
-                        <Comment.Indent>
-                          <Comment.Body />
-                        </Comment.Indent>
-                        <ThreadCommentEditor />
-                      </Comment.Content>
-                    </Comment.Root>
-                  ))
-                )}
-              </CommentList.Root>
-            ) : null} */}
-            {props.hideComposer ? null : (
+            {/* {props.hideComposer ? null : (
               <div className={styles.composerForm}>
                 <Composer.Root className={styles.composerRoot} autoFocus={props.autoFocus ?? true}>
                   <Composer.Editor
@@ -178,7 +154,7 @@ export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function Pop
                   confirmButtonText={'Comment'}
                 />
               </div>
-            )}
+            )} */}
           </Scrollable>
         </div>
       </ThemeWrapper>
