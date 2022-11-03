@@ -8,6 +8,10 @@ export interface ThreadMeta {
   cellId?: string; // todo rename to threadId
 }
 
+export type ThreadLocator = {
+  objectId: string;
+};
+
 export type ThreadInfo = {
   name?: string | null;
   url?: string | null;

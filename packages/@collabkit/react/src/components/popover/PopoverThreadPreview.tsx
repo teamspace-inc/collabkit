@@ -1,15 +1,15 @@
 import React, { forwardRef } from 'react';
 import { useSnapshot } from 'valtio';
-import { useApp } from '../hooks/useApp';
-import { useThread } from '../hooks/useThread';
-import { previewRoot } from '../styles/components/PopoverThread.css';
-import CommentList from './CommentList';
+import { useApp } from '../../hooks/useApp';
+import { useThread } from '../../hooks/useThread';
+import { previewRoot } from '../../styles/components/PopoverThread.css';
+import CommentList from '../CommentList';
 import { Handle, PopoverThreadProps } from './PopoverThread';
-import { Scrollable } from './ScrollArea';
-import { ThemeWrapper } from './ThemeWrapper';
-import { ThreadProvider } from './Thread';
+import { Scrollable } from '../ScrollArea';
+import { ThemeWrapper } from '../ThemeWrapper';
+import { ThreadProvider } from '../Thread';
 
-export const PreviewThread = forwardRef<Handle, PopoverThreadProps>(function PopoverThread(
+export const PopoverThreadPreview = forwardRef<Handle, PopoverThreadProps>(function PopoverThread(
   props: PopoverThreadProps,
   ref
 ) {

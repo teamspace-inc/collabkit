@@ -1,7 +1,8 @@
-import { AdvancedProps } from '../advanced/AdvancedCommon';
-import { renderCodeSnippet } from '../CodeEditor';
+import { AdvancedProps } from '../../advanced/AdvancedCommon';
+import { renderCodeSnippet } from '../../CodeEditor';
+import Usage from './UsePopoverUsage.tsx?raw';
 
-export function UsePopoverThreadDoc() {
+export function UsePopoverDoc() {
   return (
     <>
       <h2>Preview, open or close a popover thread.</h2>
@@ -15,18 +16,7 @@ export function UsePopoverThreadDoc() {
           Must be called within a <code>CollabKit.Provider</code>
         </p>
 
-        {renderCodeSnippet(`import { usePopoverThreadState, Popover } from '@collabkit/react';
-
-export function App() {
-  const { context, setPopoverState } = usePopoverThread({ threadId: 'unique-thread-id' });
-
-  return <div>
-    <button onClick={() => setPopoverState('open')}>Open Sesame</button>
-    <PopoverTrigger context={context}>
-      Hello world
-    </PopoverTrigger>
-  </div>
-}`)}
+        {renderCodeSnippet(Usage)}
       </div>
 
       <div>
@@ -40,11 +30,10 @@ export function App() {
           hideHeader={true}
           rows={[
             [
-              'setPopoverState',
+              '[popoverState, setPopoverThreadState]',
               `(state: 'open' | 'close' | 'preview') => void`,
               'Sets the popover state.',
             ],
-            ['context', 'PopoverThreadContext', ''],
           ]}
         />
       </div>

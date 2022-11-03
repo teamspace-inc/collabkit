@@ -1,5 +1,6 @@
 import { renderCodeSnippet } from '../CodeEditor';
 import { DocLink } from '../Doc';
+import { AdvancedProps } from './AdvancedCommon';
 
 export function AdvancedThreadProviderDoc() {
   return (
@@ -28,12 +29,20 @@ export const SomeComponent() {
   </Thread.Provider>
 }`)}
       </div>
+
       <div>
         <h3>Props</h3>
-        <h4>threadId: string</h4>
-        <p>
-          The <code>threadId</code> of the thread to provide context for.
-        </p>
+        <AdvancedProps
+          rows={[
+            [
+              'threadId',
+              'string',
+              <>
+                The <code>threadId</code> of the thread to provide context for.
+              </>,
+            ],
+          ]}
+        />
       </div>
     </>
   );

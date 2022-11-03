@@ -50,6 +50,7 @@ if (response?.status === 201) {
 } else {
   throw new Error('Failed to generate token');
 }`)}
+          <br />
           <h4>For everything else (HTTP request)</h4>
 
           <p>

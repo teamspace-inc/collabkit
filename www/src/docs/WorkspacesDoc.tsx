@@ -1,22 +1,39 @@
 import { renderCodeSnippet } from './CodeEditor';
+import { DocLink } from './Doc';
+
+// How PropelAuth explains Organisations, I found this helpful.
+
+// Organizations / Shared Accounts¶
+// Organizations are groups of your users that will use your product together. These are also referred to as companies, tenants, teams, workspaces, or shared accounts. Let's say you are building a product that helps people create and share documents internally. Your customers might include:
+
+// A two-person startup
+// A fast-growing 50-person tech company
+// A hobbyist using you by themselves, but who might get more employees someday
+// A large enterprise
+// Each of these would be an organization within your product, managed by PropelAuth.
 
 export function WorkspacesDoc() {
   return (
     <>
-      <h2>A way to group comment threads by team or company</h2>
       <div>
+        <h2>Workspaces are groups of your users that will use your product together.</h2>
         <p>
-          Workspaces group comment threads by team/company name. e.g. if some of our users belong to
-          the company ACME.
+          These are also referred to as companies, organisations or teams in other products. <br />
+          <br />
+          If you're building an app for financial teams to collaborate on company accounts you might
+          want to create a Workspace for the company, say 'ACME Inc.' or the team 'ACME Finance
+          Team'.
+          <br />
+          <br />
+          By default, users in a Workspace will have visiblity into all other comment threads
+          created in a Workspace.
         </p>
+        <h3>Usage</h3>
         <p>
-          When you provide user information to CollabKit, you should also provide their associated
-          Workspace.
+          By default, you can set a users workspace by passing their workspace details to{' '}
+          <code>CollabKitProvider</code>.
         </p>
-        <br />
-        <div>
-          <h3>Usage</h3>
-          {renderCodeSnippet(`import { CollabKitProvider } from '@collabkit/react';
+        {renderCodeSnippet(`import { CollabKitProvider } from '@collabkit/react';
 
 export const App() {
   return <CollabKitProvider 
@@ -34,12 +51,16 @@ export const App() {
     {'your app code here'}
   </CollabKitProvider>
 }`)}
-        </div>
-        {/* <p>
+        <p>
+          When <DocLink href="/docs/securemode">Secure Mode</DocLink> is enabled, you need to pass
+          the user's workspace details to the <code>generateToken</code> call.
+        </p>
+      </div>
+      {/* <p>
           Note: if you do not have the concept of Workspaces, Teams or Companies in your product,
           and instead want to provide commenting, you should follow our Workspace-Less guide.
         </p> */}
-      </div>
+
       {/* <div>
         <H3>Notifications</H3>
         <p>

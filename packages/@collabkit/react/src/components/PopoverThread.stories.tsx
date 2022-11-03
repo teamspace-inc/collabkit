@@ -1,6 +1,6 @@
 import React from 'react';
 import type { StoryDecorator } from '@ladle/react';
-import { PopoverThread, PreviewThread } from './PopoverThread';
+import { PopoverThread, PreviewThread } from './popover';
 import { CollabKitProvider } from './Provider';
 import { config } from './__stories__/constants';
 

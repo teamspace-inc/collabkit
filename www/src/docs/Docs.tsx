@@ -10,14 +10,13 @@ import { IntroductionDoc } from './IntroductionDoc';
 import { GettingStartedDoc } from './GettingStartedDoc';
 // import { AvatarDoc } from './components/AvatarDoc';
 // import { FacepileDoc } from './components/FacepileDoc';
-import { InboxDoc } from './components/InboxDoc';
+import { InboxDoc } from './components/inbox/InboxDoc';
 import { InboxButtonDoc } from './components/InboxButtonDoc';
-import { PopoverThreadDoc } from './components/PopoverThreadDoc';
+import { PopoverDoc } from './components/PopoverDoc';
 import { CollabKitProviderDoc } from './components/CollabKitProviderDoc';
 import { ThreadDoc } from './components/ThreadDoc';
 import { UseUnreadCommentsCountDoc } from './hooks/useUnreadCommentsCountDoc';
 import { UseUnreadThreadsCountDoc } from './hooks/useUnreadThreadsCountDoc';
-import { UsePopoverThreadDoc } from './hooks/usePopoverThreadDoc';
 import { CustomisationDoc } from './CustomisationDoc';
 import { UseInboxDoc } from './hooks/useInboxDoc';
 import { Doc } from './Doc';
@@ -28,10 +27,10 @@ import { SidebarInboxDoc } from './components/SidebarInboxDoc';
 import { SidebarInboxButtonDoc } from './components/SidebarInboxButtonDoc';
 import { DashboardPage } from '../pages/DashboardPage';
 import { dashboardStore } from '../dashboard/dashboardStore';
-import { AdvancedCommentDoc } from './advanced/AdvancedCommentDoc';
 import { ProfileDoc } from './advanced/profile/ProfileDoc';
 import { AdvancedThreadProviderDoc } from './advanced/AdvancedThreadProviderDoc';
 import { CommentDoc } from './advanced/comment/CommentDoc';
+import { UsePopoverDoc } from './hooks/usePopover/UsePopoverDoc';
 
 export function getDocHref(path: string[], key: string) {
   return getPathHref(path.concat([key]));
@@ -60,7 +59,7 @@ export const DOCS: RootDocNode = {
     children: {
       CollabKitProvider: { component: CollabKitProviderDoc },
       Thread: { component: ThreadDoc },
-      PopoverThread: { component: PopoverThreadDoc },
+      Popover: { component: PopoverDoc },
       Inbox: { component: InboxDoc },
       InboxButton: { component: InboxButtonDoc },
       SidebarInbox: { component: SidebarInboxDoc },
@@ -74,7 +73,7 @@ export const DOCS: RootDocNode = {
     children: {
       useUnreadCommentsCount: { component: UseUnreadCommentsCountDoc },
       useUnreadThreadsCount: { component: UseUnreadThreadsCountDoc },
-      usePopoverThread: { component: UsePopoverThreadDoc },
+      usePopoverState: { component: UsePopoverDoc },
     },
   },
   'Secure Mode': { component: SecureModeDoc },

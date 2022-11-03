@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import {
-  usePopoverThread,
-  PopoverTrigger,
   Inbox,
   Sidebar,
   ThemeProvider,
   SidebarInboxButton,
+  Popover,
+  usePopoverState,
 } from '@collabkit/react';
 import { MenuItem, ControlledMenu, useMenuState } from '@szhsin/react-menu';
 import '@szhsin/react-menu/dist/index.css';
@@ -16,21 +16,18 @@ type CellProps = { value: number | string; row: Car; column: Column };
 const Cell = ({ value, row, column }: CellProps) => {
   const name = `Cars / ${row.make} ${row.model}`;
   const cellId = `${row.id}_${column.key}`;
-  const { hasThread, popoverState, setPopoverState, context } = usePopoverThread({
-    name,
-    cellId,
-  });
+  const [popoverState, setPopoverState] = usePopoverState({ objectId: cellId });
 
   const [menuProps, toggleMenu] = useMenuState();
   const [anchorPoint, setAnchorPoint] = useState({ x: 0, y: 0 });
 
   const classes = [];
-  if (hasThread) classes.push('hasThread');
+  // if (hasThread) classes.push('hasThread');
   if (popoverState === 'preview') classes.push('previewOpen');
   if (popoverState === 'open') classes.push('threadOpen');
 
   return (
-    <PopoverTrigger context={context}>
+    <Popover objectId={cellId} name={name}>
       <td
         className={classes.join(' ')}
         onContextMenu={(e) => {
@@ -39,19 +36,19 @@ const Cell = ({ value, row, column }: CellProps) => {
           toggleMenu(true);
         }}
         onClick={() => {
-          if (hasThread) {
-            setPopoverState('open');
-          }
+          // if (hasThread) {
+          setPopoverState('open' as const);
+          // }
         }}
       >
         {value}
-        {hasThread && <ThreadIndicator />}
+        {/* {hasThread && <ThreadIndicator />} */}
 
         <ControlledMenu {...menuProps} anchorPoint={anchorPoint} onClose={() => toggleMenu(false)}>
           <MenuItem onClick={() => setPopoverState('open')}>Comment</MenuItem>
         </ControlledMenu>
       </td>
-    </PopoverTrigger>
+    </Popover>
   );
 };
 

@@ -1,5 +1,5 @@
+import { AdvancedProps } from '../advanced/AdvancedCommon';
 import { renderCodeSnippet } from '../CodeEditor';
-import { Markdown } from '../Markdown';
 
 export function UseUnreadCommentsCountDoc() {
   return (
@@ -15,13 +15,20 @@ export function UseUnreadCommentsCountDoc() {
 const count = useUnreadCommentsCount({ threadId: 'unique-thread-id' });`)}
       </div>
 
-      <Markdown
-        body={`### Props
-
-#### threadId: string
-
-The thread ID to retrieve unread count for.`}
-      />
+      <div>
+        <h3>Props</h3>
+        <AdvancedProps
+          rows={[
+            [
+              'threadId',
+              'string',
+              <>
+                The <code>threadId</code> to retrieve unread count for.
+              </>,
+            ],
+          ]}
+        />
+      </div>
     </>
   );
 }

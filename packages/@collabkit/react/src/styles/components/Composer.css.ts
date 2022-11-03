@@ -97,6 +97,7 @@ export const input = recipe({
     boxSizing: 'border-box',
     outline: 0,
     width: '100%',
+    textAlign: 'left',
     fontFamily: vars.fontFamily,
   },
   variants: {

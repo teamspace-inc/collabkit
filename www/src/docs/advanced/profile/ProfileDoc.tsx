@@ -7,14 +7,8 @@ import AnatomyAvatar from './AvatarExample.tsx?raw';
 
 import Usage from './ProfileUsage.tsx?raw';
 import { vars } from '../../../styles/Theme.css';
-import {
-  AdvancedDemo,
-  AdvancedDisclaimer,
-  AdvancedPart,
-  AdvancedSubsection,
-} from '../AdvancedCommon';
+import { AdvancedDemo, AdvancedDisclaimer, AdvancedPart, AdvancedProps } from '../AdvancedCommon';
 
-const Spacer24 = <div style={{ height: 24 }} />;
 const Spacer12 = <div style={{ height: 12 }} />;
 
 export function ProfileDoc() {
@@ -33,17 +27,23 @@ export function ProfileDoc() {
         <h3>Usage</h3>
         <p>Renders a Profile. The most basic usage is: </p>
         {renderCodeSnippet(Usage)}
-        <br />
+      </div>
+      <div>
         <h3>Props</h3>
-        <h4>profileId: string</h4>
-        <p>
-          The the <code>id</code> of the user in your system.
-          <br />
-          <br />
-          You must provide <code>CollabKitProvider</code> with this user's info or if with{' '}
-          <DocLink href="/docs/secureMode">Secure Mode</DocLink> enabled to the
-          <code>generateToken</code> request.
-        </p>
+        <AdvancedProps
+          rows={[
+            [
+              'profileId',
+              'string',
+              <>
+                The <code>id</code> of the user in your system. You must have provided this to
+                CollabKit, either by passing it to <code>CollabKitProvider</code> or by calling{' '}
+                <code>generateToken</code> if <DocLink href="/docs/secureMode">Secure Mode</DocLink>{' '}
+                is enabled.
+              </>,
+            ],
+          ]}
+        />
       </div>
 
       <div>

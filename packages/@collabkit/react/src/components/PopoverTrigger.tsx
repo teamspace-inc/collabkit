@@ -17,13 +17,13 @@ import {
 } from '@floating-ui/react-dom-interactions';
 
 import { mergeRefs } from 'react-merge-refs';
-import { PopoverThread } from './PopoverThread';
 import { useApp } from '../hooks/useApp';
 import { nanoid } from 'nanoid';
 import { useSnapshot } from 'valtio';
 import { ThreadInfo, ThreadTarget } from '@collabkit/core';
 import { actions } from '@collabkit/client';
-import { PreviewThread } from './PreviewThread';
+import { PopoverThreadPreview } from './popover/PopoverThreadPreview';
+import { PopoverThread } from './popover/PopoverThread';
 
 function useStableId(): [string, () => void] {
   const [id, setId] = useState<string>(() => nanoid());
@@ -292,7 +292,7 @@ export const PopoverTrigger = ({ children, context }: Props) => {
                 },
               })}
             >
-              <PreviewThread threadId={threadId} info={threadInfo} />
+              <PopoverThreadPreview threadId={threadId} info={threadInfo} />
             </div>
           </FloatingFocusManager>
         )}

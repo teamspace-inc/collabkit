@@ -3,7 +3,6 @@ import { ScrollableCommentList } from './ScrollableCommentList';
 import { useApp } from '../hooks/useApp';
 import { useThread } from '../hooks/useThread';
 import { useSnapshot } from 'valtio';
-import type { ThreadInfo } from '@collabkit/core';
 import { ThreadContext } from '../hooks/useThreadContext';
 import Profile from './Profile';
 import Composer from './composer/Composer';
@@ -14,23 +13,12 @@ import CommentList from './CommentList';
 import { ThreadFacepile } from './ThreadFacepile';
 import { ThreadUnreadDot } from './ThreadUnreadDot';
 import { ResolveThreadIconButton } from './ResolveThreadIconButton';
-
-export type ThreadProps = {
-  threadId: string;
-  info?: ThreadInfo;
-  style?: React.CSSProperties;
-  composerPrompt?: string;
-  showHeader?: boolean;
-  autoFocus?: boolean;
-  hideComposer?: boolean;
-};
+import { ThreadProps } from '../types';
 
 export function ThreadProvider(props: ThreadProps & { children: React.ReactNode }) {
   const { store } = useApp();
   const { userId, workspaceId } = useSnapshot(store);
   const { threadId } = props;
-
-  console.log('ThreadProvider', { threadId, userId, workspaceId });
 
   if (userId == null || workspaceId == null) {
     return null;

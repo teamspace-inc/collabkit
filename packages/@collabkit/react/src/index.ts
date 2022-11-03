@@ -11,7 +11,7 @@ import type { AvatarProps } from './types';
 import type { CustomTheme } from './styles/themes.css';
 
 import { CollabKitProvider } from './components/Provider';
-import { PopoverTrigger, usePopoverThread } from './components/Popover';
+import { PopoverTrigger, usePopoverThread } from './components/PopoverTrigger';
 import { Thread } from './components/Thread';
 import { useUnreadCommentsCount } from './hooks/public/useUnreadCommentsCount';
 import { useUnreadThreadsCount } from './hooks/public/useUnreadThreadsCount';
@@ -23,7 +23,7 @@ import { Sidebar } from './components/Sidebar';
 import { ThemeWrapper } from './components/ThemeWrapper';
 import { SidebarInboxButton } from './components/SidebarInboxButton';
 import { SidebarInbox } from './components/SidebarInbox';
-import { PopoverThread } from './components/PopoverThread';
+import { PopoverThread } from './components/popover/PopoverThread';
 import { useInbox } from './hooks/public/useInbox';
 import Comment from './components/Comment';
 import Profile from './components/Profile';
@@ -36,7 +36,8 @@ import { ThreadFacepile } from './components/ThreadFacepile';
 import { useReplyCount } from './hooks/useReplyCount';
 import { ResolveThreadIconButton } from './components/ResolveThreadIconButton';
 import CollabKitRecharts from './components/Recharts';
-import { NewPopoverTrigger } from './components/NewPopover';
+import { Popover } from './components/popover/Popover';
+import { usePopoverState } from './hooks/usePopoverThreadState';
 
 export {
   CollabKitProvider as Provider,
@@ -45,7 +46,7 @@ export {
   Thread,
   InboxButton,
   PopoverTrigger,
-  NewPopoverTrigger,
+  Popover,
   ThemeWrapper,
   Inbox,
   CollabKitRecharts,
@@ -54,6 +55,7 @@ export {
   SidebarInboxButton,
   PopoverThread as InternalPopoverThread,
   usePopoverThread,
+  usePopoverState,
   useUnreadThreadsCount,
   useUnreadCommentsCount as useUnreadCount,
   createValtioStore as internal_createStore,

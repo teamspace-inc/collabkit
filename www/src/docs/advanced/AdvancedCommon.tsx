@@ -18,25 +18,27 @@ export function AdvancedDisclaimer(props: { componentName: string }) {
 
 const Spacer24 = <div style={{ height: 24 }} />;
 
-export function AdvancedProps(props: {
-  rows: [React.ReactNode, React.ReactNode, React.ReactNode][];
-}) {
+export type AdvancedPropRow = [React.ReactNode, React.ReactNode, React.ReactNode];
+
+export function AdvancedProps(props: { rows: AdvancedPropRow[]; hideHeader?: boolean }) {
   return (
     <table>
-      <thead>
-        <tr>
-          <th>Prop</th>
-          <th>Type</th>
-          <th></th>
-        </tr>
-      </thead>
+      {props.hideHeader ? null : (
+        <thead>
+          <tr>
+            <th>Prop</th>
+            <th>Type</th>
+            <th></th>
+          </tr>
+        </thead>
+      )}
       <tbody>
         {props.rows.map((row) => (
           <tr>
-            <td style={{ verticalAlign: 'top', width: 156 }}>
+            <td style={{ verticalAlign: 'top', maxWidth: 175 }}>
               <code>{row[0]}</code>
             </td>
-            <td style={{ verticalAlign: 'top' }}>
+            <td style={{ verticalAlign: 'top', maxWidth: 225 }}>
               <code style={{ color: vars.color.textContrastMedium }}>{row[1]}</code>
             </td>
             <td style={{ maxWidth: 320, verticalAlign: 'top', fontSize: 14 }}>{row[2]}</td>

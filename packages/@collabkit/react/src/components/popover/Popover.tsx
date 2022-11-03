@@ -17,13 +17,14 @@ import {
 } from '@floating-ui/react-dom-interactions';
 
 import { mergeRefs } from 'react-merge-refs';
-import { PopoverThread } from './PopoverThread';
-import { useApp } from '../hooks/useApp';
+import { useApp } from '../../hooks/useApp';
 import { nanoid } from 'nanoid';
 import { useSnapshot } from 'valtio';
 import { ThreadInfo, ThreadTarget } from '@collabkit/core';
 import { actions } from '@collabkit/client';
-import { PreviewThread } from './PreviewThread';
+
+import { PopoverThread } from './PopoverThread';
+import { PopoverThreadPreview } from './PopoverThreadPreview';
 
 function useStableId(): [string, () => void] {
   const [id, setId] = useState<string>(() => nanoid());
@@ -45,9 +46,9 @@ function useOpenThread({ viewId, cellId }: { viewId: string; cellId: string }) {
   return threadId ?? null;
 }
 
-type PopoverProps = {
+type NewPopoverProps = {
   name?: string;
-  cellId: string;
+  objectId: string;
   _viewId?: string;
   openOnClick?: boolean;
   autoFocus?: boolean;
@@ -59,17 +60,17 @@ type PopoverProps = {
   padding?: number;
 };
 
-function usePopoverThreadInternal(props: PopoverProps) {
-  const { name, cellId } = props;
+export const Popover = (props: NewPopoverProps & { children: React.ReactElement }) => {
+  const { name, objectId } = props;
 
   const viewId =
     '_viewId' in props && props._viewId ? props._viewId : window?.location?.pathname || 'default';
 
   const threadInfo = useMemo<ThreadInfo>(
-    () => ({ name, meta: { viewId, cellId } }),
-    [name, viewId, cellId]
+    () => ({ name, meta: { viewId, cellId: objectId } }),
+    [name, viewId, objectId]
   );
-  const threadId = useOpenThread({ viewId, cellId });
+  const threadId = useOpenThread({ viewId, cellId: objectId });
   const hasThread = threadId != null;
   const [newThreadId, _resetNewThreadId] = useStableId();
   const getNewThreadId = useCallback(() => newThreadId, [newThreadId]);
@@ -118,6 +119,7 @@ function usePopoverThreadInternal(props: PopoverProps) {
     },
     [store, target]
   );
+
   const setPreviewOpen = useCallback(
     (open: boolean) => {
       if (target) {
@@ -203,39 +205,14 @@ function usePopoverThreadInternal(props: PopoverProps) {
   const getProps = (userProps: any) =>
     getPreviewReferenceProps(getThreadReferenceProps({ ref, ...userProps }));
 
-  const popoverState: 'open' | 'preview' | 'closed' = threadOpen
-    ? 'open'
-    : previewOpen
-    ? 'preview'
-    : 'closed';
+  // const popoverState: 'open' | 'preview' | 'closed' = threadOpen
+  //   ? 'open'
+  //   : previewOpen
+  //   ? 'preview'
+  //   : 'closed';
 
-  return {
-    context: {
-      nodeId,
-      getProps,
-      threadContext,
-      previewContext,
-      getThreadFloatingProps,
-      getPreviewFloatingProps,
-      setPopoverState,
-      threadId,
-      threadInfo,
-      getNewThreadId,
-      maxAvailableSize,
-      autoFocus: props.autoFocus ?? true,
-      hideComposer: props.hideComposer ?? false,
-    },
-
-    hasThread,
-    popoverState,
-    setPopoverState,
-  };
-}
-
-export const NewPopoverTrigger = (props: PopoverProps & { children: React.ReactElement }) => {
-  const { children, ...rest } = props;
-  const { context } = usePopoverThreadInternal(rest);
-  const {
+  const context = {
+    nodeId,
     getProps,
     threadContext,
     previewContext,
@@ -245,56 +222,77 @@ export const NewPopoverTrigger = (props: PopoverProps & { children: React.ReactE
     threadId,
     threadInfo,
     getNewThreadId,
-    nodeId,
-  } = context;
+    maxAvailableSize,
+    autoFocus: props.autoFocus ?? true,
+    hideComposer: props.hideComposer ?? false,
+  };
+
+  // todo: make it possible to pass a ref instead
+  // of children here...
+  const { children } = props;
+
+  const thread = threadContext.open ? (
+    <FloatingFocusManager context={threadContext}>
+      <div
+        ref={threadContext.floating}
+        style={{
+          position: threadContext.strategy,
+          top: threadContext.y ?? 0,
+          left: threadContext.x ?? 0,
+          outline: 'none',
+        }}
+        {...getThreadFloatingProps({})}
+      >
+        {threadId ? (
+          <Popover.Thread
+            hideComposer={context.hideComposer}
+            maxAvailableSize={context.maxAvailableSize}
+            threadId={context.threadId ?? context.getNewThreadId()}
+            info={context.threadInfo ?? undefined}
+            autoFocus={context.autoFocus}
+          />
+        ) : null}
+      </div>
+    </FloatingFocusManager>
+  ) : null;
+
+  const preview =
+    !context.threadContext.open && context.previewContext.open && context.threadId != null ? (
+      <FloatingFocusManager context={context.previewContext}>
+        <div
+          ref={context.previewContext.floating}
+          style={{
+            position: context.previewContext.strategy,
+            top: context.previewContext.y ?? 0,
+            left: context.previewContext.x ?? 0,
+            outline: 'none',
+          }}
+          {...context.getPreviewFloatingProps({
+            onClick: () => {
+              context.setPopoverState('open');
+            },
+          })}
+        >
+          {context.threadId ? (
+            <PopoverThreadPreview
+              threadId={context.threadId}
+              info={context.threadInfo ?? undefined}
+            />
+          ) : null}
+        </div>
+      </FloatingFocusManager>
+    ) : null;
 
   return (
     <FloatingNode id={nodeId}>
       {cloneElement(children, getProps(children.props))}
       <FloatingPortal>
-        {threadContext.open && (
-          <FloatingFocusManager context={threadContext}>
-            <div
-              ref={threadContext.floating}
-              style={{
-                position: threadContext.strategy,
-                top: threadContext.y ?? 0,
-                left: threadContext.x ?? 0,
-                outline: 'none',
-              }}
-              {...getThreadFloatingProps()}
-            >
-              <PopoverThread
-                hideComposer={context.hideComposer}
-                maxAvailableSize={context.maxAvailableSize}
-                threadId={threadId ?? getNewThreadId()}
-                info={threadInfo}
-                autoFocus={context.autoFocus}
-              />
-            </div>
-          </FloatingFocusManager>
-        )}
-        {!threadContext.open && previewContext.open && threadId != null && (
-          <FloatingFocusManager context={previewContext}>
-            <div
-              ref={previewContext.floating}
-              style={{
-                position: previewContext.strategy,
-                top: previewContext.y ?? 0,
-                left: previewContext.x ?? 0,
-                outline: 'none',
-              }}
-              {...getPreviewFloatingProps({
-                onClick: () => {
-                  setPopoverState('open');
-                },
-              })}
-            >
-              <PreviewThread threadId={threadId} info={threadInfo} />
-            </div>
-          </FloatingFocusManager>
-        )}
+        {preview}
+        {thread}
       </FloatingPortal>
     </FloatingNode>
   );
 };
+
+Popover.Preview = PopoverThreadPreview;
+Popover.Thread = PopoverThread;

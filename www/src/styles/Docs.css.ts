@@ -59,6 +59,7 @@ globalStyle(`${docs} h2`, {
   fontWeight: 400,
   fontSize: 24,
   lineHeight: '34px',
+  marginBottom: '16px',
   color: vars.color.textContrastMedium,
 });
 
@@ -77,10 +78,11 @@ globalStyle(`${docs} table tbody tr:last-child`, {
 globalStyle(`${docs} table td, ${docs} table th`, {
   fontSize: 16,
   padding: '16px 16px 16px 0px',
+  wordBreak: 'break-word',
 });
 
 globalStyle(`${docs} table td code`, {
-  fontSize: 13,
+  fontSize: 14,
   padding: '2px 4px',
 });
 
@@ -282,7 +284,7 @@ export const docRoot = style({
 export const docTitle = style({
   display: 'block',
   margin: '0px !important',
-  padding: '56px 0px 32px',
+  padding: '56px 0px 12px',
   boxSizing: 'border-box',
   lineHeight: '56px',
   fontSize: '40px',

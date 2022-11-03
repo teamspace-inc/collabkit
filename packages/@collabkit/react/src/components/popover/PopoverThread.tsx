@@ -1,17 +1,17 @@
 import React, { forwardRef } from 'react';
 import { ThreadInfo } from '@collabkit/core';
-import CommentList from './CommentList';
-import { useApp } from '../hooks/useApp';
-import { useThread } from '../hooks/useThread';
+import CommentList from '../CommentList';
+import { useApp } from '../../hooks/useApp';
+import { useThread } from '../../hooks/useThread';
 import { useSnapshot } from 'valtio';
-import { Scrollable } from './ScrollArea';
-import Composer from './composer/Composer';
-import Profile from './Profile';
-import * as styles from '../styles/components/PopoverThread.css';
-import { ThemeWrapper } from './ThemeWrapper';
+import { Scrollable } from '../ScrollArea';
+import Composer from '../composer/Composer';
+import Profile from '../Profile';
+import * as styles from '../../styles/components/PopoverThread.css';
+import { ThemeWrapper } from '../ThemeWrapper';
 // import { useComposer } from '../hooks/useComposer';
 // import { ButtonGroup } from './ButtonGroup';
-import { ThreadProvider } from './Thread';
+import { ThreadProvider } from '../Thread';
 
 export type PopoverThreadProps = {
   threadId: string;
