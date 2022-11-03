@@ -17,12 +17,13 @@ import {
 } from '@floating-ui/react-dom-interactions';
 
 import { mergeRefs } from 'react-merge-refs';
-import { PopoverThread, PreviewThread } from './PopoverThread';
+import { PopoverThread } from './PopoverThread';
 import { useApp } from '../hooks/useApp';
 import { nanoid } from 'nanoid';
 import { useSnapshot } from 'valtio';
 import { ThreadInfo, ThreadTarget } from '@collabkit/core';
 import { actions } from '@collabkit/client';
+import { PreviewThread } from './PreviewThread';
 
 function useStableId(): [string, () => void] {
   const [id, setId] = useState<string>(() => nanoid());

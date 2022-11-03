@@ -13,7 +13,7 @@ import { ThemeWrapper } from './ThemeWrapper';
 // import { ButtonGroup } from './ButtonGroup';
 import { ThreadProvider } from './Thread';
 
-type PopoverThreadProps = {
+export type PopoverThreadProps = {
   threadId: string;
   info?: ThreadInfo;
   style?: React.CSSProperties;
@@ -23,45 +23,7 @@ type PopoverThreadProps = {
   formatTimestamp?: (timestamp: number) => string;
 }; // make this an extension of ThreadProps
 
-type Handle = HTMLDivElement | null;
-
-export const PreviewThread = forwardRef<Handle, PopoverThreadProps>(function PopoverThread(
-  props: PopoverThreadProps,
-  ref
-) {
-  const { store } = useApp();
-  const { workspaceId, profiles, userId } = useSnapshot(store);
-
-  const { isEmpty, messageEvents } = useThread({
-    ...props,
-    store,
-    workspaceId,
-  });
-
-  const event = messageEvents?.[0];
-  const profile = event && profiles[event?.createdById];
-
-  if (!workspaceId || !userId || !event || !profile || isEmpty) {
-    return null;
-  }
-
-  return (
-    <ThreadProvider {...props}>
-      <ThemeWrapper>
-        <div
-          className={styles.previewRoot}
-          data-collabkit-internal="true"
-          style={props.style}
-          ref={ref}
-        >
-          <Scrollable maxHeight={props.maxAvailableSize?.height ?? 'unset'}>
-            <CommentList />
-          </Scrollable>
-        </div>
-      </ThemeWrapper>
-    </ThreadProvider>
-  );
-});
+export type Handle = HTMLDivElement | null;
 
 export const PopoverThread = forwardRef<Handle, PopoverThreadProps>(function PopoverThread(
   props: PopoverThreadProps,
