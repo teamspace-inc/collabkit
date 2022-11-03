@@ -5,7 +5,7 @@ export function NotificationsDoc() {
   return (
     <>
       <h2>Get notified about new comments and replies</h2>
-      <DocDemoContainer style={{ padding: '40px 0px' }}>
+      <DocDemoContainer style={{ padding: '60px 0px 32px' }}>
         <img style={{ width: 640 }} src={EmailPng} />
       </DocDemoContainer>
       <div>
