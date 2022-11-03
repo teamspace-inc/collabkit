@@ -12,71 +12,55 @@ import {
 import { ThemeProvider, CollabKitRecharts } from '@collabkit/react';
 import { light, vars } from '../styles/Theme.css';
 import { AcmeLogo, Container, Heading, HeadingRow, UI } from './DemoUI';
-import {
-  CategoricalChartProps,
-  CategoricalChartState,
-} from 'recharts/types/chart/generateCategoricalChart';
 
 const data = [
   {
-    name: 'Jan',
-    Projected: 40_000,
-    Current: 22_000,
+    date: '2022-01',
+    earnings: { projected: 40_000, current: 22_000 },
   },
   {
-    name: 'Feb',
-    Projected: 35_000,
-    Current: 20_000,
+    date: '2022-02',
+    earnings: { projected: 35_000, current: 20_000 },
   },
   {
-    name: 'Mar',
-    Projected: 40_000,
-    Current: 28_500,
+    date: '2022-03',
+    earnings: { projected: 40_000, current: 28_500 },
   },
   {
-    name: 'Apr',
-    Projected: 31_500,
-    Current: 22_000,
+    date: '2022-04',
+    earnings: { projected: 31_500, current: 22_000 },
   },
   {
-    name: 'May',
-    Projected: 36_750,
-    Current: 26_500,
+    date: '2022-05',
+    earnings: { projected: 36_750, current: 26_500 },
   },
   {
-    name: 'Jun',
-    Projected: 42_000,
-    Current: 31_000,
+    date: '2022-06',
+    earnings: { projected: 42_000, current: 31_000 },
   },
   {
-    name: 'Jul',
-    Projected: 40_500,
-    Current: 25_000,
+    date: '2022-07',
+    earnings: { projected: 40_500, current: 25_000 },
   },
   {
-    name: 'Aug',
-    Projected: 27_500,
-    Current: 32_500,
+    date: '2022-08',
+    earnings: { projected: 27_500, current: 32_500 },
   },
   {
-    name: 'Sep',
-    Projected: 34_750,
-    Current: 40_000,
+    date: '2022-09',
+    earnings: { projected: 34_750, current: 40_000 },
   },
   {
-    name: 'Oct',
-    Projected: 40_000,
-    Current: 34_000,
+    date: '2022-10',
+    earnings: { projected: 40_000, current: 34_000 },
   },
   {
-    name: 'Nov',
-    Projected: 28_000,
-    Current: 29_000,
+    date: '2022-11',
+    earnings: { projected: 28_000, current: 29_000 },
   },
   {
-    name: 'Dec',
-    Projected: 35_000,
-    Current: 43_000,
+    date: '2022-12',
+    earnings: { projected: 35_000, current: 43_000 },
   },
 ];
 
@@ -84,6 +68,10 @@ const currencyFormat = new Intl.NumberFormat('en', {
   style: 'currency',
   currency: 'USD',
   maximumFractionDigits: 0,
+});
+
+const dateFormat = new Intl.DateTimeFormat('en', {
+  month: 'short',
 });
 
 export function ChartDemo() {
@@ -124,7 +112,10 @@ export function ChartDemo() {
                       </span>
                     )}
                   />
-                  <XAxis dataKey="name" />
+                  <XAxis
+                    dataKey="date"
+                    tickFormatter={(value) => dateFormat.format(new Date(value))}
+                  />
                   <YAxis
                     tickFormatter={(value) => currencyFormat.format(value)}
                     ticks={[0, 10_000, 20_000, 30_000, 40_000, 50_000]}
@@ -133,14 +124,16 @@ export function ChartDemo() {
                   />
                   <Tooltip />
                   <Area
-                    dataKey="Projected"
+                    name="Projected"
+                    dataKey="earnings.projected"
                     stroke={vars.color.indigo}
                     strokeWidth={2}
                     fill="url(#colorProjected)"
                     fillOpacity={0.3}
                   />
                   <Area
-                    dataKey="Current"
+                    name="Current"
+                    dataKey="earnings.current"
                     stroke={vars.color.pink}
                     strokeWidth={2}
                     fill="url(#colorCurrent)"
