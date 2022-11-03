@@ -33,7 +33,7 @@ export function AdvancedProps(props: {
       <tbody>
         {props.rows.map((row) => (
           <tr>
-            <td style={{ verticalAlign: 'top' }}>
+            <td style={{ verticalAlign: 'top', width: 156 }}>
               <code>{row[0]}</code>
             </td>
             <td style={{ verticalAlign: 'top' }}>
