@@ -1,15 +1,18 @@
 import { DocDemoContainer } from './Doc';
+import EmailPng from '../assets/docs/Docs/Email.png';
 
 export function NotificationsDoc() {
   return (
     <>
       <h2>Get notified about new comments and replies</h2>
-      <DocDemoContainer />
+      <DocDemoContainer style={{ padding: '40px 0px' }}>
+        <img style={{ width: 640 }} src={EmailPng} />
+      </DocDemoContainer>
       <div>
         <p>CollabKit delivers email notifications for new comments and threads by default.</p>
         <p>
-          If you would like to deliver notifications yourself you can subscribe to new comments and
-          threads by providing a webhook URL.
+          If you would like to deliver notifications yourself contact us and we'll be able to assist
+          you.
         </p>
       </div>
       {/* 

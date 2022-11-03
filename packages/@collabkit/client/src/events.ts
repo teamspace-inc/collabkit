@@ -225,7 +225,7 @@ export function createEvents(store: Store) {
             }
             case 'reopenThreadButton': {
               actions.reopenThread(store, props.target.workspaceId, props.target.threadId);
-              break;
+              break
             }
             case 'commentable': {
               actions.startThread(store, { threadId: nanoid(), ...props.target });

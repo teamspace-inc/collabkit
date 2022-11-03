@@ -36,6 +36,7 @@ import { ThreadFacepile } from './components/ThreadFacepile';
 import { useReplyCount } from './hooks/useReplyCount';
 import { ResolveThreadIconButton } from './components/ResolveThreadIconButton';
 import CollabKitRecharts from './components/Recharts';
+import { NewPopoverTrigger } from './components/NewPopover';
 
 export {
   CollabKitProvider as Provider,
@@ -44,6 +45,7 @@ export {
   Thread,
   InboxButton,
   PopoverTrigger,
+  NewPopoverTrigger,
   ThemeWrapper,
   Inbox,
   CollabKitRecharts,

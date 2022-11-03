@@ -1,24 +1,46 @@
-import { useEffect } from 'react';
-import { PopoverTrigger, usePopoverThread } from '@collabkit/react';
+import { NewPopoverTrigger } from '@collabkit/react';
 import { DocDemoContainer } from '../Doc';
 import { vars } from '../../styles/Theme.css';
 
-export function PurePopoverThreadDemo() {
-  const { setPopoverState, context } = usePopoverThread({
-    name: 'test',
-    cellId: 'thread4',
-    _viewId: 'demo',
-    autoFocus: false,
-  });
+// actions
 
-  useEffect(() => {
-    setPopoverState('open');
-  }, []);
+// don't whitelist them
+// can control the interface more easily
+
+// const { actions } = useActions();
+// const actions = CollabKit.actions();
+// const { actions } = useActions();
+// actions.setPopoverThreadState({ objectId, state: 'open' | 'preview' | 'closed });
+
+// popoverState = 'open' | 'preview' | 'closed'
+// setPopoverState = (state: 'open' | 'preview' | 'closed') => void
+
+// nice to have / debateable.....
+// actions.openPopoverThread({ objectId });
+// actions.closePopoverThread({ objectId });
+
+// const store = CollabKit.createStore()
+
+// <CollabKitProvider store={store}>
+
+// store.setPpoverThreadState({ objectId, state: 'open' | 'preview' | 'closed' });
+
+export function PurePopoverThreadDemo() {
+  // const { setPopoverState, context } = usePopoverThread({
+  //   name: 'test',
+  //   cellId: 'thread4',
+  //   _viewId: 'demo',
+  //   autoFocus: false,
+  // });
+
+  // useEffect(() => {
+  //   setPopoverState('open');
+  // }, []);
   return (
     <div>
-      <PopoverTrigger context={context}>
+      <NewPopoverTrigger cellId="thread4" name="test" _viewId="demo" autoFocus={false}>
         <div
-          onClick={() => setPopoverState('open')}
+          // onClick={() => setPopoverState('open')}
           style={{
             padding: '10px 20px',
             marginLeft: '-200px',
@@ -34,7 +56,7 @@ export function PurePopoverThreadDemo() {
         >
           Component
         </div>
-      </PopoverTrigger>
+      </NewPopoverTrigger>
     </div>
   );
 }
