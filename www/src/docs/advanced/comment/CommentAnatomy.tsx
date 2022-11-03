@@ -13,7 +13,7 @@ import { Profile, Comment, Thread } from '@collabkit/react';
         <Comment.MoreMenu />
       </Comment.Actions>
     </Comment.Header>
-    <Comment.Indent
+    <Comment.Indent>
       <Comment.Body />
     </Comment.Indent>
   </Comment.Content>
