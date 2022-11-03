@@ -1,5 +1,5 @@
 import { ThemeProvider, ThemeWrapper } from '@collabkit/react';
-import { advancedAnatomyPartNumber, docStep } from '../../styles/Docs.css';
+import { advancedAnatomyPartNumber } from '../../styles/Docs.css';
 import { vars } from '../../styles/Theme.css';
 import { renderCodeSnippet } from '../CodeEditor';
 import { DocDemoContainer, DocLink } from '../Doc';
@@ -17,6 +17,35 @@ export function AdvancedDisclaimer(props: { componentName: string }) {
 }
 
 const Spacer24 = <div style={{ height: 24 }} />;
+
+export function AdvancedProps(props: {
+  rows: [React.ReactNode, React.ReactNode, React.ReactNode][];
+}) {
+  return (
+    <table>
+      <thead>
+        <tr>
+          <th>Prop</th>
+          <th>Type</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {props.rows.map((row) => (
+          <tr>
+            <td style={{ verticalAlign: 'top' }}>
+              <code>{row[0]}</code>
+            </td>
+            <td style={{ verticalAlign: 'top' }}>
+              <code style={{ color: vars.color.textContrastMedium }}>{row[1]}</code>
+            </td>
+            <td style={{ maxWidth: 320, verticalAlign: 'top', fontSize: 14 }}>{row[2]}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+}
 
 export function AdvancedPart(props: {
   code: string;

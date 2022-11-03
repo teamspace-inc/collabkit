@@ -1,8 +1,13 @@
 import { renderCodeSnippet } from '../../CodeEditor';
-import { DocDemoContainer, DocLink } from '../../Doc';
+import { DocLink } from '../../Doc';
 import Anatomy from './CommentAnatomy.tsx?raw';
 import Usage from './CommentUsage.tsx?raw';
-import { AdvancedDisclaimer, AdvancedHeroDemo, AdvancedPart } from '../AdvancedCommon';
+import {
+  AdvancedDisclaimer,
+  AdvancedHeroDemo,
+  AdvancedPart,
+  AdvancedProps,
+} from '../AdvancedCommon';
 import { Comment, Thread } from '@collabkit/react';
 import React from 'react';
 import { vars } from '../../../styles/Theme.css';
@@ -47,12 +52,23 @@ export function CommentDoc() {
           <code>commentId</code> is in.{' '}
         </p>
         {renderCodeSnippet(Usage)}
-        <br />
+      </div>
+
+      <div>
         <h3>Props</h3>
-        <h4>commentId: string</h4>
-        <p>
-          The the <code>id</code> of the comment.
-        </p>
+        <AdvancedProps
+          rows={[
+            ['commentId', 'string', <>The id of the comment.</>],
+            [
+              'className',
+              'string | undefined',
+              <>
+                Providing a <code>className</code> will override any default styles and apply your
+                own.
+              </>,
+            ],
+          ]}
+        />
       </div>
 
       <div>

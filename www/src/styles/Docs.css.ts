@@ -62,6 +62,39 @@ globalStyle(`${docs} h2`, {
   color: vars.color.textContrastMedium,
 });
 
+globalStyle(`${docs} table`, {
+  width: '100%',
+});
+
+globalStyle(`${docs} table tr`, {
+  borderBottom: `1px solid ${vars.color.bgContrastMedium}`,
+});
+
+globalStyle(`${docs} table tbody tr:last-child`, {
+  borderBottom: `none`,
+});
+
+globalStyle(`${docs} table td, ${docs} table th`, {
+  fontSize: 16,
+  padding: '16px 16px 16px 0px',
+});
+
+globalStyle(`${docs} table td code`, {
+  fontSize: 13,
+  padding: '2px 4px',
+});
+
+globalStyle(`${docs} table td a`, {
+  fontSize: 13,
+});
+
+globalStyle(`${docs} table th`, {
+  fontSize: '13px',
+  textAlign: 'left',
+  fontWeight: 'normal',
+  paddingBottom: '16px',
+});
+
 globalStyle(`${docs} h3`, {
   marginTop: '12px',
   marginBottom: '20px',
@@ -91,14 +124,14 @@ export const docStep = style({
   counterIncrement: 'step-number',
   ':before': {
     content: `counter(step-number)`,
-    fontSize: '16px',
+    fontSize: '14px',
     display: 'flex',
     justifyContent: 'center',
-    height: '32px',
-    width: '32px',
+    height: '28px',
+    width: '28px',
     textIndent: '-1px',
-    lineHeight: '32px',
-    color: vars.color.textContrastHigh,
+    lineHeight: '28px',
+    color: vars.color.textContrastMedium,
     background: vars.color.bgContrastLow,
     borderRadius: '50%',
     position: 'absolute',
