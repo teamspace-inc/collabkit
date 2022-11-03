@@ -1,4 +1,5 @@
 import { InboxButton } from '@collabkit/react';
+import { AdvancedProps } from '../advanced/AdvancedCommon';
 import { renderCodeSnippet } from '../CodeEditor';
 import { DocDemoContainer } from '../Doc';
 
@@ -40,11 +41,16 @@ export function App() {
       </div>
       <div>
         <h3>Props</h3>
-        <h4>{'onClick: (e: React.MouseEvent) => void'}</h4>
-        <p>Handle the button click event.</p>
-        <br />
-        <h4>children?: React.ReactNode</h4>
-        <p>Replace the contents of the button with other elements.</p>
+        <AdvancedProps
+          rows={[
+            ['onClick', '(e: React.MouseEvent) => void', 'Called when the user clicks the button.'],
+            [
+              'children',
+              'React.ReactNode | undefined',
+              'Optional children to render inside the button and replace default contents.',
+            ],
+          ]}
+        />
       </div>
     </>
   );

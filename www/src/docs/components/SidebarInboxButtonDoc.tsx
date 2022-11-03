@@ -1,4 +1,5 @@
 import { docDemoContainer } from '../../styles/Docs.css';
+import { AdvancedProps } from '../advanced/AdvancedCommon';
 import { renderCodeSnippet } from '../CodeEditor';
 import { SidebarDemo } from '../demos/SidebarDemo';
 
@@ -25,8 +26,15 @@ export function App() {
       </div>
       <div>
         <h3>Props</h3>
-        <h4>children?: React.ReactNode</h4>
-        <p>Replace the contents of the button with other elements.</p>
+        <AdvancedProps
+          rows={[
+            [
+              'children',
+              'React.ReactNode | undefined',
+              'Optional children to render inside the button and replace default contents.',
+            ],
+          ]}
+        />
       </div>
     </>
   );
