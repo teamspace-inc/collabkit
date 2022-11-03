@@ -5,7 +5,6 @@ import { useApp } from '../hooks/useApp';
 import { useThread } from '../hooks/useThread';
 import { useSnapshot } from 'valtio';
 import { Scrollable } from './ScrollArea';
-import Comment from './Comment';
 import Composer from './composer/Composer';
 import Profile from './Profile';
 import * as styles from '../styles/components/PopoverThread.css';
@@ -56,24 +55,7 @@ export const PreviewThread = forwardRef<Handle, PopoverThreadProps>(function Pop
           ref={ref}
         >
           <Scrollable maxHeight={props.maxAvailableSize?.height ?? 'unset'}>
-            <CommentList.Root className={styles.commentList}>
-              <Comment.Root
-                className={styles.comment}
-                commentId={event.id}
-                style={{ paddingTop: '16px' }}
-              >
-                <Comment.Content>
-                  <Comment.Header className={styles.commentHeader()}>
-                    <Profile.Avatar />
-                    <Comment.NameAndTimestampWrapper>
-                      <Comment.CreatorName />
-                      <Comment.Timestamp format={props.formatTimestamp} />
-                    </Comment.NameAndTimestampWrapper>
-                  </Comment.Header>
-                  <Comment.Body />
-                </Comment.Content>
-              </Comment.Root>
-            </CommentList.Root>
+            <CommentList />
           </Scrollable>
         </div>
       </ThemeWrapper>
