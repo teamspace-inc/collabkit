@@ -73,6 +73,10 @@ function CollabKitRechartsRoot(props: { children: ReactNode }) {
         threadId,
         isOpen: true,
       });
+      actions.viewThread(store, {
+        target: { type: 'thread', threadId, workspaceId },
+        isPreview: false,
+      });
     }
   }, [cursorInfo.objectId, cursorInfo.xValue, cursorInfo.yValue, workspaceId]);
 
