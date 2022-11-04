@@ -1,5 +1,9 @@
-import React, { ComponentPropsWithoutRef, ReactNode } from 'react';
-import {
+import React, {
+  ComponentPropsWithoutRef,
+  createContext,
+  ReactNode,
+  useCallback,
+  useContext,
   Children,
   cloneElement,
   forwardRef,
@@ -10,7 +14,6 @@ import {
   useState,
   useImperativeHandle,
 } from 'react';
-// import { mergeRefs } from 'react-merge-refs';
 import {
   autoUpdate,
   flip,
@@ -26,54 +29,53 @@ import {
   useTypeahead,
   FloatingOverlay,
 } from '@floating-ui/react-dom-interactions';
+import { actions } from '@collabkit/client';
+import { nanoid } from 'nanoid';
+import { useSnapshot } from 'valtio';
 
+import { useApp } from '../hooks/useApp';
+import { ThreadMeta } from '@collabkit/core';
+import { useUserContext } from '../hooks/useUserContext';
+import { PopoverTrigger, usePopoverThread } from './PopoverTrigger';
 import * as styles from '../styles/components/Recharts.css';
 
-function CollabKitRechartsChart(props: any) {
-  // console.log('CollabKitRecharts');
-  // if (props.activeCoordinate) {
-  //   const { x, y } = props.activeCoordinate;
-  //   return <circle cx={x} cy={y} r={10} onClick={() => console.log('click!!')} />;
-  // }
-  // const {offset} = props
-  // const gridProps =      {
-  //   key: element.key || 'grid',
-  //   x: Number.isFinite(props.x) ? props.x : offset.left,
-  //   y: Number.isFinite(props.y) ? props.y : offset.top,
-  //   width: Number.isFinite(props.width) ? props.width : offset.width,
-  //   height: Number.isFinite(props.height) ? props.height : offset.height,
-  //   xAxis,
-  //   yAxis,
-  //   offset,
-  //   chartWidth: width,
-  //   chartHeight: height,
-  //   verticalCoordinatesGenerator: props.verticalCoordinatesGenerator || this.verticalCoordinatesGenerator,
-  //   horizontalCoordinatesGenerator: props.horizontalCoordinatesGenerator || this.horizontalCoordinatesGenerator,
-  // }
-  // console.log(props);
-  return null;
-}
+type CursorInfo = {
+  objectId: string | null;
+  xValue: number | null;
+  yValue: number | null;
+};
 
-// function Grid() {
-//   const { fillOpacity, x, y, width, height } = this.props;
-
-//   return (
-//     <rect
-//       x={x}
-//       y={y}
-//       width={width}
-//       height={height}
-//       stroke="none"
-//       fill={fill}
-//       fillOpacity={fillOpacity}
-//       className="recharts-cartesian-grid-bg"
-//     />
-// }
-
-type MenuHandle = { onContextMenu: (e: React.MouseEvent) => void };
+const ChartContext = createContext((info: CursorInfo) => {});
 
 function CollabKitRechartsRoot(props: { children: ReactNode }) {
   const menuRef = useRef<MenuHandle>();
+  const [cursorInfo, setCursorInfo] = useState<CursorInfo>({
+    objectId: null,
+    xValue: null,
+    yValue: null,
+  });
+  const { workspaceId } = useUserContext();
+  const { store } = useApp();
+
+  const onAddComment = useCallback(() => {
+    const threadId = nanoid();
+    if (cursorInfo.objectId != null) {
+      actions.saveThreadInfo(store, {
+        info: {
+          meta: {
+            cellId: cursorInfo.objectId,
+            objectId: cursorInfo.objectId,
+            xValue: cursorInfo.xValue,
+            yValue: cursorInfo.yValue,
+          },
+        },
+        workspaceId,
+        threadId,
+        isOpen: true,
+      });
+    }
+  }, [cursorInfo.objectId, cursorInfo.xValue, cursorInfo.yValue, workspaceId]);
+
   return (
     <div
       style={{ display: 'contents', position: 'relative' }}
@@ -83,11 +85,73 @@ function CollabKitRechartsRoot(props: { children: ReactNode }) {
         }
       }}
     >
-      {props.children}
+      <ChartContext.Provider value={setCursorInfo}>{props.children}</ChartContext.Provider>
+
       <Menu ref={menuRef}>
-        <MenuItem label="Add Comment" onClick={() => console.log('add comment')} />
+        <MenuItem label="Add Comment" onClick={onAddComment} />
       </Menu>
     </div>
+  );
+}
+
+function CollabKitRechartsChart(props: any) {
+  const yAxisId = Object.keys(props.yAxisMap)[0];
+  const yAxis = props.yAxisMap[yAxisId];
+
+  let xValue: number | null = null;
+  let yValue: number | null = null;
+  let objectId: string | null = null;
+  if (props.activeTooltipIndex != null && props.activeTooltipIndex != -1) {
+    const entry = props.data[props.activeTooltipIndex];
+    objectId = props.getObjectId(entry);
+    yValue = yAxis.scale.invert(props.activeCoordinate.y);
+    xValue = props.tooltipTicks[props.activeTooltipIndex]?.value;
+  }
+  const setPageInfo = useContext(ChartContext);
+  useEffect(() => {
+    setPageInfo({ objectId, xValue, yValue });
+  }, [objectId, xValue, yValue]);
+
+  const objectIds = props.data.map((entry: any) => props.getObjectId(entry));
+
+  const { store } = useApp();
+  const { workspaceId, workspaces } = useSnapshot(store);
+  const openThreads = workspaceId ? workspaces[workspaceId]?.openThreads : {};
+  const threadMap: {
+    [objectId: string]: { threadId: string; meta: ThreadMeta };
+  } = {};
+  for (const [threadId, { meta }] of Object.entries(openThreads)) {
+    if (meta.cellId && (meta as any).yValue != null) {
+      threadMap[meta.cellId] = { threadId, meta };
+    }
+  }
+
+  return (
+    <>
+      {objectIds.map((objectId: string, i) => {
+        const value = threadMap[objectId];
+        if (value) {
+          const { threadId, meta } = value;
+          const index = props.data.findIndex((entry: any) => props.getObjectId(entry) === objectId);
+          const entry = props.tooltipTicks.find((tick: any) => tick && tick.index === index);
+          const x = entry.coordinate;
+          const y = yAxis.scale(meta.yValue);
+          return (
+            <Pin key={`${objectId}-{i}`} x={x} y={y} objectId={objectId} threadId={threadId} />
+          );
+        }
+        return null;
+      })}
+    </>
+  );
+}
+
+function Pin({ x, y, objectId }: { x: number; y: number; objectId: string; threadId: string }) {
+  const { context, setPopoverState } = usePopoverThread({ cellId: objectId });
+  return (
+    <PopoverTrigger context={context}>
+      <circle cx={x} cy={y} r={12} onClick={() => setPopoverState('open')} />
+    </PopoverTrigger>
   );
 }
 
@@ -95,6 +159,8 @@ export default {
   Root: CollabKitRechartsRoot,
   Chart: CollabKitRechartsChart,
 };
+
+type MenuHandle = { onContextMenu: (e: React.MouseEvent) => void };
 
 export const MenuItem = forwardRef<
   HTMLButtonElement,
@@ -107,12 +173,12 @@ export const MenuItem = forwardRef<
   );
 });
 
-interface Props {
+interface MenuProps {
   label?: string;
   nested?: boolean;
 }
 
-export const Menu = forwardRef<any, Props & React.HTMLProps<HTMLButtonElement>>(
+export const Menu = forwardRef<any, MenuProps & React.HTMLProps<HTMLButtonElement>>(
   ({ children }, ref) => {
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
     const [open, setOpen] = useState(false);
@@ -210,6 +276,9 @@ export const Menu = forwardRef<any, Props & React.HTMLProps<HTMLButtonElement>>(
                         className: styles.contextMenuItem,
                         ref(node: HTMLButtonElement) {
                           listItemsRef.current[index] = node;
+                        },
+                        onClick: (e) => {
+                          child.props.onClick?.(e);
                         },
                       })
                     )

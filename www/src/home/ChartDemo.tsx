@@ -13,6 +13,8 @@ import { ThemeProvider, CollabKitRecharts } from '@collabkit/react';
 import { light, vars } from '../styles/Theme.css';
 import { AcmeLogo, Container, Heading, HeadingRow, UI } from './DemoUI';
 
+type EarningsEntry = { date: string; earnings: { actual: number; current: number } };
+
 const data = [
   {
     date: '2022-01',
@@ -139,7 +141,15 @@ export function ChartDemo() {
                     fill="url(#colorCurrent)"
                     fillOpacity={0.3}
                   />
-                  <Customized component={CollabKitRecharts.Chart} />
+                  <Customized
+                    component={
+                      <CollabKitRecharts.Chart
+                        getObjectId={(item: EarningsEntry, dataKey: string) =>
+                          `acme/earnings/${item.date}`
+                        }
+                      />
+                    }
+                  />
                 </AreaChart>
               </ResponsiveContainer>
             </CollabKitRecharts.Root>

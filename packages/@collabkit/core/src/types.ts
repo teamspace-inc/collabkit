@@ -6,6 +6,7 @@ export * as Sync from './sync';
 export interface ThreadMeta {
   viewId?: string;
   cellId?: string; // todo rename to threadId
+  [x: string]: unknown;
 }
 
 export type ThreadLocator = {
