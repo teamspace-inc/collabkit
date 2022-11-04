@@ -116,32 +116,29 @@ function CollabKitRechartsChart(props: any) {
     setPageInfo({ objectId, xValue, yValue });
   }, [objectId, xValue, yValue]);
 
-  const objectIds = props.data.map((entry: any) => props.getObjectId(entry));
+  const objectIds = new Set(props.data.map((entry: any) => props.getObjectId(entry)));
 
   const { store } = useApp();
   const { workspaceId, workspaces } = useSnapshot(store);
   const openThreads = workspaceId ? workspaces[workspaceId]?.openThreads : {};
-  const threadMap: {
-    [objectId: string]: { threadId: string; meta: ThreadMeta };
-  } = {};
+
+  const threads = [];
   for (const [threadId, { meta }] of Object.entries(openThreads)) {
-    if (meta.cellId && (meta as any).yValue != null) {
-      threadMap[meta.cellId] = { threadId, meta };
+    if (meta.cellId && (meta as any).yValue != null && objectIds.has(meta.cellId)) {
+      threads.push({ threadId, meta });
     }
   }
-
   return (
     <>
-      {objectIds.map((objectId: string, i) => {
-        const value = threadMap[objectId];
-        if (value) {
-          const { threadId, meta } = value;
+      {threads.map(({ threadId, meta }, i) => {
+        const objectId = meta.cellId;
+        if (objectId) {
           const index = props.data.findIndex((entry: any) => props.getObjectId(entry) === objectId);
           const entry = props.tooltipTicks.find((tick: any) => tick && tick.index === index);
           const x = entry.coordinate;
           const y = yAxis.scale(meta.yValue);
           return (
-            <Pin key={`${objectId}-{i}`} x={x} y={y} objectId={objectId} threadId={threadId} />
+            <Pin key={`${objectId}-${i}`} x={x} y={y} objectId={objectId} threadId={threadId} />
           );
         }
         return null;
