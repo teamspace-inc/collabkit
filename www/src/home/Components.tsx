@@ -3,7 +3,13 @@ import { dark } from '../styles/Theme.css';
 import * as styles from '../styles/home/Demos.css';
 import { CarouselProvider, Slider, Slide } from 'pure-react-carousel';
 import 'pure-react-carousel/dist/react-carousel.es.css';
-import { PopoverThread, Inbox, Thread, usePopoverThread } from '@collabkit/react';
+import {
+  PopoverThread,
+  Inbox,
+  Thread,
+  usePopoverThread,
+  InternalPopoverThreadThread,
+} from '@collabkit/react';
 import {
   component,
   card,
@@ -32,12 +38,10 @@ function PopoverThreadComponent() {
   }, []);
 
   return (
-    <PopoverThread objectId={objectId}>
+    <Thread.Provider threadId="thread3">
       <div
         style={{
-          marginTop: '-160px',
           padding: '9px 4px',
-          marginLeft: '-190px',
           width: '100px',
           height: '50px',
           display: 'flex',
@@ -55,7 +59,10 @@ function PopoverThreadComponent() {
       >
         Component
       </div>
-    </PopoverThread>
+      <div style={{ position: 'relative', left: 4 }}>
+        <InternalPopoverThreadThread />
+      </div>
+    </Thread.Provider>
   );
 }
 

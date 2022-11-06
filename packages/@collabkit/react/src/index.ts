@@ -22,7 +22,7 @@ import { Sidebar } from './components/Sidebar';
 import { ThemeWrapper } from './components/ThemeWrapper';
 import { SidebarInboxButton } from './components/SidebarInboxButton';
 import { SidebarInbox } from './components/SidebarInbox';
-import { PopoverThread } from './components/PopoverThread';
+import { PopoverThread, PopoverThreadThread } from './components/PopoverThread';
 import { useInbox } from './hooks/public/useInbox';
 import { ThreadProvider } from './components/ThreadProvider';
 import { useComments } from './hooks/public/useComments';
@@ -53,7 +53,6 @@ export {
   PopoverThread,
   useUnreadThreadsCount,
   useUnreadCommentsCount as useUnreadCount,
-  createValtioStore as internal_createStore,
   // advanced
   usePopoverThread,
   ResolveThreadIconButton,
@@ -67,6 +66,9 @@ export {
   ThreadProvider,
   Comment,
   Profile,
+  // internal
+  createValtioStore as internal_createStore,
+  PopoverThreadThread as InternalPopoverThreadThread,
 };
 
 export type {

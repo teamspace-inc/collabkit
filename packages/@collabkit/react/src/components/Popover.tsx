@@ -125,11 +125,22 @@ type RootProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onPreviewChange: (preview: boolean) => void;
+} & AdvancedPopoverProps;
+
+export type AdvancedPopoverProps = {
+  // optional
+  defaultOpen?: boolean;
+  dismissOnClickOutside?: boolean;
+  shouldFlipToKeepInView?: boolean;
 };
 
 function PopoverRoot(props: RootProps) {
   const { children, preview, open, onOpenChange, onPreviewChange } = props;
   const nodeId = useFloatingNodeId();
+
+  const defaultOpen = props.defaultOpen ?? false;
+  const dismissOnClickOutside = props.dismissOnClickOutside ?? true;
+  const shouldFlipToKeepInView = props.shouldFlipToKeepInView ?? true;
 
   const { reference: previewReference, context: previewContext } = useFloating({
     placement: 'right-start',
@@ -139,7 +150,7 @@ function PopoverRoot(props: RootProps) {
     nodeId,
     middleware: [
       offset(4),
-      flip(),
+      ...(shouldFlipToKeepInView ? [flip()] : []),
       size({
         padding: 12,
         apply({ availableWidth, availableHeight, elements }) {
@@ -160,7 +171,7 @@ function PopoverRoot(props: RootProps) {
     nodeId,
     middleware: [
       offset(4),
-      flip(),
+      ...(shouldFlipToKeepInView ? [flip()] : []),
       size({
         padding: 12,
         apply({ availableWidth, availableHeight, elements }) {
@@ -179,7 +190,9 @@ function PopoverRoot(props: RootProps) {
         enabled: !open,
         handleClose: safePolygon(),
       }),
-      useDismiss(previewContext),
+      useDismiss(previewContext, {
+        enabled: dismissOnClickOutside ?? true,
+      }),
     ]);
 
   const { getReferenceProps, getFloatingProps } = useInteractions([
@@ -190,6 +203,7 @@ function PopoverRoot(props: RootProps) {
     }),
     useDismiss(context, {
       escapeKey: false,
+      enabled: dismissOnClickOutside ?? true,
     }),
   ]);
 
@@ -214,6 +228,7 @@ function PopoverRoot(props: RootProps) {
       open,
       preview,
       setOpen: onOpenChange,
+
       ref,
       getPreviewFloatingProps,
       getFloatingProps,
@@ -231,6 +246,12 @@ function PopoverRoot(props: RootProps) {
     ]
   );
 
+  useEffect(() => {
+    if (defaultOpen) {
+      onOpenChange(true);
+    }
+  }, [defaultOpen]);
+
   return (
     <FloatingNode id={nodeId}>
       <PopoverContext.Provider value={popoverContext}>{children}</PopoverContext.Provider>
@@ -241,16 +262,28 @@ function PopoverRoot(props: RootProps) {
 type PopoverProps = PopoverTriggerProps & {
   preview: React.ReactNode;
   content: React.ReactNode;
-};
+} & AdvancedPopoverProps;
 
 export const PopoverPortal = FloatingPortal;
 
 export function Popover(props: PopoverProps) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(() => props.defaultOpen ?? false);
   const [preview, setPreview] = useState(false);
 
+  // advanced
+  const { dismissOnClickOutside, shouldFlipToKeepInView, defaultOpen } = props;
+
   return (
-    <PopoverRoot open={open} preview={preview} onOpenChange={setOpen} onPreviewChange={setPreview}>
+    <PopoverRoot
+      open={open}
+      preview={preview}
+      onOpenChange={setOpen}
+      onPreviewChange={setPreview}
+      // advanced
+      dismissOnClickOutside={dismissOnClickOutside}
+      shouldFlipToKeepInView={shouldFlipToKeepInView}
+      defaultOpen={defaultOpen}
+    >
       {'children' in props ? (
         <PopoverTrigger>{props.children}</PopoverTrigger>
       ) : (

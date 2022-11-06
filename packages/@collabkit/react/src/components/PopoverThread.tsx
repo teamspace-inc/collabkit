@@ -11,7 +11,7 @@ import Composer from './composer/Composer';
 
 export type PopoverThreadProps = PopoverTriggerProps & ObjectProps;
 
-function PopoverThreadPreview() {
+function PopoverThreadPreview(props: {}) {
   return (
     <ThemeWrapper>
       <div className={previewRoot} data-collabkit-internal="true">
@@ -23,7 +23,7 @@ function PopoverThreadPreview() {
   );
 }
 
-function PopoverThreadThread() {
+export function PopoverThreadThread(props: {}) {
   return (
     <ThemeWrapper>
       <div className={root} data-collabkit-internal="true">
