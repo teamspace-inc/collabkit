@@ -12,7 +12,6 @@ export function createDemoStore(config: Config, defaultWorkspace: Partial<Worksp
   // @ts-ignore
   Object.keys(defaultWorkspace).forEach((k) => (workspaceStore[k] = defaultWorkspace[k]));
 
-  store.isSignedIn = true;
   store.workspaces.acme = workspaceStore;
   store.workspaceId = 'acme';
   store.userId = 'anon';

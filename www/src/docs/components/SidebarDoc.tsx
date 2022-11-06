@@ -1,6 +1,7 @@
 import { docDemoContainer } from '../../styles/Docs.css';
 import { renderCodeSnippet } from '../CodeEditor';
 import { SidebarDemo } from '../demos/SidebarDemo';
+import { DocDemoContainer } from '../Doc';
 
 export function SidebarInboxDoc() {
   const code = renderCodeSnippet(`import { 
@@ -18,7 +19,9 @@ export function SidebarInboxDoc() {
   return (
     <>
       <h2>A sidebar you can use to show and hide the Inbox easily</h2>
-      <SidebarDemo className={docDemoContainer} />
+      <DocDemoContainer>
+        <SidebarDemo />
+      </DocDemoContainer>
       <div>
         <h3>Usage</h3>
         <p>

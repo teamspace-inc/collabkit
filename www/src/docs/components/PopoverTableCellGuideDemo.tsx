@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { PopoverTrigger, usePopoverThread } from '@collabkit/react';
+import { PopoverThread, usePopoverThread } from '@collabkit/react';
 import { nanoid } from 'nanoid';
 import { DocDemoContainer } from '../Doc';
 
@@ -41,18 +41,17 @@ const ThreadIndicator = () => <span className="ThreadIndicator" />;
 const Cell = ({ value, row, column }: CellProps) => {
   const name = `Cars / ${row.make} ${row.model}`;
   const cellId = `${row.id}_${column.key}`;
-  const { hasThread, popoverState, setPopoverState, context } = usePopoverThread({
-    name,
-    cellId,
+  const { hasThread, openPopover, showPreview, open, preview } = usePopoverThread({
+    objectId: cellId,
   });
 
   const classes = [];
   if (hasThread) classes.push('hasThread');
-  if (popoverState === 'preview') classes.push('previewOpen');
-  if (popoverState === 'open') classes.push('threadOpen');
+  if (preview) classes.push('previewOpen');
+  if (open) classes.push('threadOpen');
 
   return (
-    <PopoverTrigger context={context}>
+    <PopoverThread objectId={cellId}>
       <td
         style={{
           borderBottom: '1px solid rgba(255,255,255,0.1)',
@@ -63,27 +62,26 @@ const Cell = ({ value, row, column }: CellProps) => {
         className={classes.join(' ')}
         onClick={() => {
           if (hasThread) {
-            setPopoverState('preview');
+            showPreview();
           } else {
-            setPopoverState('open');
+            openPopover();
           }
         }}
       >
         {value}
         {hasThread && <ThreadIndicator />}
       </td>
-    </PopoverTrigger>
+    </PopoverThread>
   );
 };
 
 export function PopoverThreadDemo() {
-  const { setPopoverState } = usePopoverThread({
-    name: 'test',
-    cellId,
+  const { openPopover } = usePopoverThread({
+    objectId: cellId,
   });
 
   useEffect(() => {
-    setPopoverState('open');
+    openPopover();
   }, []);
 
   return (

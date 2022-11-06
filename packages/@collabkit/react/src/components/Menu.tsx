@@ -99,7 +99,7 @@ export function Menu<ItemType>({
   const { getReferenceProps, getFloatingProps, getItemProps } = useInteractions([
     useClick(context, {
       toggle: true,
-      pointerDown: true,
+      event: 'mousedown',
       ignoreMouse: false,
     }),
     useRole(context, { role: 'menu' }),
@@ -176,7 +176,8 @@ export function Menu<ItemType>({
         {open && (
           <FloatingFocusManager
             context={context}
-            preventTabbing
+            // todo figure out if we actually need preventTabbing
+            // preventTabbing
             modal={true}
             // Touch-based screen readers will be able to navigate back to the
             // reference and click it to dismiss the menu without clicking an item.

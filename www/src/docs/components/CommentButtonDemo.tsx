@@ -1,18 +1,17 @@
 import { useEffect } from 'react';
-import { PopoverTrigger, usePopoverThread } from '@collabkit/react';
+import { PopoverThread, usePopoverThread } from '@collabkit/react';
 import { nanoid } from 'nanoid';
 import { DocDemoContainer } from '../Doc';
 
 const cellId = nanoid();
 
 export function PopoverThreadDemo() {
-  const { popoverState, setPopoverState, context } = usePopoverThread({
-    name: 'test',
-    cellId,
+  const { openPopover } = usePopoverThread({
+    objectId: cellId,
   });
 
   useEffect(() => {
-    setPopoverState('open');
+    openPopover();
   }, []);
 
   return (
@@ -29,7 +28,7 @@ export function PopoverThreadDemo() {
           position: 'relative',
         }}
       >
-        <PopoverTrigger context={context}>
+        <PopoverThread objectId={cellId}>
           <button
             style={{
               background: 'rgba(255,255,255,0.1)',
@@ -42,11 +41,11 @@ export function PopoverThreadDemo() {
               right: 20,
               position: 'absolute',
             }}
-            onClick={() => (popoverState !== 'open' ? setPopoverState('open') : null)}
+            onClick={() => openPopover()}
           >
             Comment
           </button>
-        </PopoverTrigger>
+        </PopoverThread>
       </div>
     </DocDemoContainer>
   );

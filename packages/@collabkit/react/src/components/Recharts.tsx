@@ -36,7 +36,8 @@ import { useSnapshot } from 'valtio';
 import { useApp } from '../hooks/useApp';
 import { ThreadMeta } from '@collabkit/core';
 import { useUserContext } from '../hooks/useUserContext';
-import { PopoverTrigger, usePopoverThread } from './PopoverTrigger';
+import { PopoverThread } from './PopoverThread';
+import { usePopoverThread } from '../hooks/usePopoverThread';
 import * as styles from '../styles/components/Recharts.css';
 
 type CursorInfo = {
@@ -75,7 +76,6 @@ function CollabKitRechartsRoot(props: { children: ReactNode }) {
       });
       actions.viewThread(store, {
         target: { type: 'thread', threadId, workspaceId },
-        isPreview: false,
       });
     }
   }, [cursorInfo.objectId, cursorInfo.xValue, cursorInfo.yValue, workspaceId]);
@@ -148,11 +148,11 @@ function CollabKitRechartsChart(props: any) {
 }
 
 function Pin({ x, y, objectId }: { x: number; y: number; objectId: string; threadId: string }) {
-  const { context, setPopoverState } = usePopoverThread({ cellId: objectId });
+  const { openPopover } = usePopoverThread({ objectId });
   return (
-    <PopoverTrigger context={context}>
-      <circle cx={x} cy={y} r={12} onClick={() => setPopoverState('open')} />
-    </PopoverTrigger>
+    <PopoverThread objectId={objectId}>
+      <circle cx={x} cy={y} r={12} onClick={() => openPopover()} />
+    </PopoverThread>
   );
 }
 
