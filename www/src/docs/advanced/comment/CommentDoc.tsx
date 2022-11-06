@@ -10,11 +10,10 @@ import {
 } from '../AdvancedCommon';
 import { Comment, Thread } from '@collabkit/react';
 import React from 'react';
-import { vars } from '../../../styles/Theme.css';
 
 const commentContainer: React.CSSProperties = {
   width: '100%',
-  background: vars.color.bgContrastMedium,
+  // background: vars.color.bgContrastMedium,
 };
 
 function CommentDemo(props: { children?: React.ReactNode }) {

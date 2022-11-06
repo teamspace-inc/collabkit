@@ -9,6 +9,7 @@ import collabKitTypes from './types.d.ts?raw';
 import { useBreakpoint } from '../hooks/useWindowSize';
 import { codeEditor, copyButton } from '../styles/CodeEditor.css';
 import { Copy } from 'phosphor-react';
+import { vars } from '../styles/Theme.css';
 
 function CopyButton({ codeString }: { codeString: string }) {
   return (
@@ -18,7 +19,7 @@ function CopyButton({ codeString }: { codeString: string }) {
         navigator.clipboard.writeText(codeString);
       }}
     >
-      <Copy />
+      <Copy color={vars.color.textContrastLow} />
     </div>
   );
 }

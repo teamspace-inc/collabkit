@@ -42,13 +42,15 @@ export function CustomisationDoc() {
           <code>{'<CollabKitProvider />'}</code>.
         </p>
       </div>
-      <DocDemoContainer style={{ position: 'relative', background: vars.color.blue }}>
-        <ThemeName>Light Theme</ThemeName>
-        <div style={threadSize}>
-          <Thread threadId={'thread1'} autoFocus={false} />
-        </div>
+      <DocDemoContainer style={{ position: 'relative' }}>
+        <ThemeProvider theme="light">
+          <ThemeName>Light Theme</ThemeName>
+          <div style={threadSize}>
+            <Thread threadId={'thread1'} autoFocus={false} />
+          </div>
+        </ThemeProvider>
       </DocDemoContainer>
-      <DocDemoContainer style={{ position: 'relative', background: vars.color.highlight }}>
+      <DocDemoContainer style={{ position: 'relative' }}>
         <ThemeName>Dark Theme</ThemeName>
         <div style={threadSize}>
           <ThemeProvider theme="dark">

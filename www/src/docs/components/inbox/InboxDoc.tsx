@@ -1,13 +1,15 @@
-import { docDemoContainer } from '../../../styles/Docs.css';
 import { renderCodeSnippet } from '../../CodeEditor';
 import { InboxDemo } from '../../demos/InboxDemo';
+import { DocDemoContainer } from '../../Doc';
 import Usage from './InboxUsage.tsx?raw';
 
 export function InboxDoc() {
   return (
     <>
       <h2>See all comment threads in one place.</h2>
-      <InboxDemo className={docDemoContainer} />
+      <DocDemoContainer style={{ padding: '20px 0px' }}>
+        <InboxDemo />
+      </DocDemoContainer>
       <div>
         <h3>Usage</h3>
         <p>

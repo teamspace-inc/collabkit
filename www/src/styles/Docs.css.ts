@@ -10,24 +10,33 @@ export const docs = style({});
 const max768 = `screen and (max-width: ${MAIN_BREAKPOINT}px)`;
 
 globalStyle(`${docs} blockquote`, {
-  borderLeft: `12px solid ${vars.color.yellow}`,
+  border: `1px solid ${vars.color.mint}`,
+  color: vars.color.mint,
   textIndent: 0,
   marginLeft: 0,
+  background: 'transparent',
+  padding: '20px',
+  borderRadius: '8px',
+  fontSize: 14,
   lineHeight: '24px',
-  background: vars.color.bgContrastLow,
-  padding: '16px 24px 16px 24px',
-  borderRadius: '4px',
 });
 
 globalStyle(`${docs} blockquote h4`, {
   fontSize: 14,
   lineHeight: '24px',
+  color: vars.color.mint,
+  margin: '0 0 4px',
 });
 
 globalStyle(`${docs} blockquote a`, {
   fontSize: 14,
   lineHeight: '24px',
-  color: vars.color.textContrastMedium,
+  color: vars.color.mint,
+  textDecoration: 'none',
+});
+
+globalStyle(`${docs} blockquote a:hover`, {
+  textDecoration: 'underline',
 });
 
 globalStyle(`${docs} code`, {
@@ -65,6 +74,7 @@ globalStyle(`${docs} h2`, {
 
 globalStyle(`${docs} table`, {
   width: '100%',
+  color: vars.color.textContrastMedium,
 });
 
 globalStyle(`${docs} table tr`, {
@@ -133,8 +143,8 @@ export const docStep = style({
     width: '28px',
     textIndent: '-1px',
     lineHeight: '28px',
-    color: vars.color.textContrastMedium,
-    background: vars.color.bgContrastLow,
+    color: `hsla(0, 0%, 11%, 1)`,
+    background: vars.color.mint,
     borderRadius: '50%',
     position: 'absolute',
     left: -32 - 16,
@@ -152,15 +162,15 @@ export const docDemoOverlay = style({
 
 export const docDemoContainer = style({
   flex: 1,
-  backgroundColor: vars.color.violet,
   display: 'flex',
-  borderRadius: '6px',
+  borderRadius: '8px',
   padding: '100px 20px',
   boxSizing: 'border-box',
   width: '100%',
   margin: '0',
   justifyContent: 'center',
   alignItems: 'center',
+  border: '1px solid ' + vars.color.bgContrastMedium,
 });
 
 export const themeDemoContainer = style([
@@ -168,6 +178,7 @@ export const themeDemoContainer = style([
   {
     borderRadius: '0px',
     clipPath: 'unset !important',
+    background: 'transparent !important',
     height: '100% !important',
     flex: 1,
   },
@@ -254,9 +265,14 @@ export const docLink = style({
   fontWeight: 600,
   fontSize: 16,
   lineHeight: '34px',
-  textDecorationLine: 'underline',
-  color: '#FFEC6B',
+  color: `${vars.color.mint} !important`,
   cursor: 'pointer !important',
+
+  selectors: {
+    '&:hover': {
+      textDecoration: 'underline',
+    },
+  },
 });
 
 export const docContent = style({
@@ -341,7 +357,7 @@ export const navListItem = recipe({
     userSelect: 'none',
     display: 'flex',
     flex: 1,
-    color: vars.color.textContrastHigh,
+    color: vars.color.textContrastMedium,
     textDecoration: 'none',
     borderRadius: '4px',
   },

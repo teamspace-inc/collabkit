@@ -1,13 +1,26 @@
-import { docDemoContainer } from '../../styles/Docs.css';
 import { AdvancedProps } from '../advanced/AdvancedCommon';
 import { renderCodeSnippet } from '../CodeEditor';
 import { SidebarDemo } from '../demos/SidebarDemo';
+import { DocDemoContainer } from '../Doc';
 
 export function SidebarInboxButtonDoc() {
   return (
     <>
-      <h2>A button that opens the SidebarInbox</h2>
-      <SidebarDemo className={docDemoContainer} />
+      <h2>A button that opens the SidebarInbox.</h2>
+      <DocDemoContainer
+        style={{
+          padding: 0,
+          justifyContent: 'flex-end',
+          height: '720px',
+          display: 'flex',
+          flex: 'unset',
+          position: 'relative',
+          alignItems: 'flex-start',
+          clipPath: 'inset(0px round 6px 6px 6px 6px)',
+        }}
+      >
+        <SidebarDemo />
+      </DocDemoContainer>
       <div>
         <h3>Usage</h3>
         <p>

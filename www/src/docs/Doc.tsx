@@ -1,3 +1,4 @@
+import { ThemeProvider } from '@collabkit/react';
 import { PropsWithChildren, useEffect } from 'react';
 import { Link, LinkProps, LocationHook } from 'wouter';
 import {
@@ -22,6 +23,7 @@ import {
   ScrollAreaViewport,
 } from '../UIKit';
 import { Nav } from './DocNav';
+import { ArrowLeft, ArrowRight, IconContext } from 'phosphor-react';
 
 function pathToHref(path?: string[]) {
   return `/docs/${path
@@ -32,8 +34,8 @@ function pathToHref(path?: string[]) {
 
 function DocFooterLink(props: {
   path?: string[];
-  children: React.ReactNode;
   style?: React.CSSProperties;
+  direction: 'next' | 'prev';
 }) {
   return props.path ? (
     <div
@@ -42,17 +44,26 @@ function DocFooterLink(props: {
         ...props.style,
       }}
     >
-      {props.children}
-      <DocLink href={pathToHref(props.path)}>
-        <span
-          style={{
-            color: vars.color.yellow,
-            fontWeight: '700',
-          }}
-        >
-          {props.path?.[props.path?.length - 1]}
-        </span>
-      </DocLink>
+      <IconContext.Provider value={{ size: 20, weight: 'bold' }}>
+        <DocLink href={pathToHref(props.path)}>
+          <span
+            style={{
+              color: vars.color.mint,
+              fontWeight: '600',
+              fontSize: 16,
+              lineHeight: '28px',
+              display: 'flex',
+              gap: '1ch',
+              alignItems: 'center',
+              flexDirection: 'row',
+            }}
+          >
+            {props.direction === 'prev' ? <ArrowLeft /> : null}
+            <span style={{ flex: 1 }}>{props.path?.[props.path?.length - 1]}</span>
+            {props.direction === 'next' ? <ArrowRight /> : null}
+          </span>
+        </DocLink>
+      </IconContext.Provider>
     </div>
   ) : null;
 }
@@ -60,12 +71,8 @@ function DocFooterLink(props: {
 export function DocFooter(props: { next?: string[]; prev?: string[] }) {
   return (
     <div className={docFooter}>
-      <DocFooterLink path={props.prev} style={{ alignItems: 'flex-start' }}>
-        Prev
-      </DocFooterLink>
-      <DocFooterLink path={props.next} style={{ alignItems: 'flex-end' }}>
-        Next
-      </DocFooterLink>
+      <DocFooterLink path={props.prev} style={{ alignItems: 'flex-start' }} direction="prev" />
+      <DocFooterLink path={props.next} style={{ alignItems: 'flex-end' }} direction="next" />
     </div>
   );
 }
@@ -75,7 +82,9 @@ export const DocLink = (props: PropsWithChildren<LinkProps<LocationHook>>) => (
 );
 
 export const DocDemoContainer = (props: React.ComponentPropsWithoutRef<'div'>) => (
-  <div {...props} className={docDemoContainer} />
+  <ThemeProvider theme="dark">
+    <div {...props} className={docDemoContainer} />
+  </ThemeProvider>
 );
 
 export const DocTitle = (props: React.ComponentPropsWithoutRef<'h1'>) => (

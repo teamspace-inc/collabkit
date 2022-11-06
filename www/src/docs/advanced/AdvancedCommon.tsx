@@ -97,7 +97,7 @@ export function AdvancedDemo(props: { children: React.ReactNode }) {
 
 export function AdvancedHeroDemo(props: { children: React.ReactNode }) {
   return (
-    <DocDemoContainer style={{ padding: '64px 60px', background: vars.color.bgContrastLow }}>
+    <DocDemoContainer style={{ padding: '16px' }}>
       <ThemeProvider theme="dark">
         <ThemeWrapper>{props.children}</ThemeWrapper>
       </ThemeProvider>
@@ -109,7 +109,6 @@ const style: React.CSSProperties = {
   padding: '0px 72px 0px 0px',
   position: 'relative',
   left: 44,
-  background: vars.color.bgContrastLowest,
   marginBottom: '40px',
 };
 

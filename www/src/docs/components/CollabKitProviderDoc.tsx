@@ -4,7 +4,9 @@ import { DocLink } from '../Doc';
 export function CollabKitProviderDoc() {
   return (
     <>
-      <h2>Wrap your app in a CollabKitProvider to use our components</h2>
+      <h2>
+        Handles user authentication and realtime comments syncing. Required to use other components.
+      </h2>
       <blockquote>
         <h4 style={{ marginTop: 0 }}>Secure Mode</h4>
         By default CollabKitProvider requires you to pass in your <code>apiKey</code> and{' '}
@@ -14,6 +16,10 @@ export function CollabKitProviderDoc() {
 
       <div>
         <h3>Usage</h3>
+        <p>
+          <code>CollabKitProvider</code> is the React context provider that handles authentication
+          with CollabKit's servers and all other components fetch data from it.
+        </p>
         {renderCodeSnippet(`import { CollabKitProvider } from '@collabkit/react';
 
 export const App() {

@@ -1,8 +1,7 @@
-import { docDemoContainer } from '../../styles/Docs.css';
 import { AdvancedPropRow, AdvancedProps } from '../advanced/AdvancedCommon';
 import { renderCodeSnippet } from '../CodeEditor';
 import { ThreadDemo } from '../demos/ThreadDemo';
-import { DocLink } from '../Doc';
+import { DocDemoContainer, DocLink } from '../Doc';
 
 export const ThreadProps: AdvancedPropRow[] = [
   ['threadId', 'string', 'A unique ID that represents this thread.'],
@@ -49,7 +48,9 @@ export function ThreadDoc() {
   return (
     <>
       <h2>A flexible comment thread that can be rendered anywhere in your app.</h2>
-      <ThreadDemo className={docDemoContainer} />
+      <DocDemoContainer>
+        <ThreadDemo />
+      </DocDemoContainer>
       <div>
         <h3>Usage</h3>
         <p>

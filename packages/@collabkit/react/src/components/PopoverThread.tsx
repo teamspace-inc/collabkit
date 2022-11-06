@@ -9,7 +9,7 @@ import { Scrollable } from './ScrollArea';
 import { ThemeWrapper } from './ThemeWrapper';
 import Composer from './composer/Composer';
 
-type PopoverThreadProps = PopoverTriggerProps & ObjectProps;
+export type PopoverThreadProps = PopoverTriggerProps & ObjectProps;
 
 function PopoverThreadPreview() {
   return (

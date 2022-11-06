@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { dark } from '../styles/Theme.css';
 import * as styles from '../styles/home/Demos.css';
 import { CarouselProvider, Slider, Slide } from 'pure-react-carousel';
 import 'pure-react-carousel/dist/react-carousel.es.css';
-import { PopoverThread, Inbox, Thread } from '@collabkit/react';
+import { PopoverThread, Inbox, Thread, usePopoverThread } from '@collabkit/react';
 import {
   component,
   card,
@@ -20,6 +20,45 @@ type ComponentProps = {
   component: React.ReactNode;
 };
 
+function PopoverThreadComponent() {
+  const objectId = 'object3';
+
+  const { openPopover } = usePopoverThread({
+    objectId,
+  });
+
+  useEffect(() => {
+    openPopover();
+  }, []);
+
+  return (
+    <PopoverThread objectId={objectId}>
+      <div
+        style={{
+          marginTop: '-160px',
+          padding: '9px 4px',
+          marginLeft: '-190px',
+          width: '100px',
+          height: '50px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          boxSizing: 'border-box',
+          borderRadius: '6px',
+          fontSize: '12px',
+          textAlign: 'center',
+          fontWeight: 'bold',
+          background: 'rgba(0,0,0,0.3)',
+          cursor: 'pointer',
+          color: 'white',
+        }}
+      >
+        Component
+      </div>
+    </PopoverThread>
+  );
+}
+
 export const COMPONENTS: ComponentProps[] = [
   {
     title: 'Thread',
@@ -35,34 +74,7 @@ export const COMPONENTS: ComponentProps[] = [
     description: 'A comment thread that anchors to a component in your app.',
     component: (
       <div style={{ display: 'flex', marginTop: '8px' }}>
-        <div
-          style={{
-            marginTop: '00px',
-            padding: '9px 4px',
-            marginRight: '4px',
-            width: '100px',
-            height: '50px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            boxSizing: 'border-box',
-            borderRadius: '6px',
-            fontSize: '12px',
-            textAlign: 'center',
-            fontWeight: 'bold',
-            background: 'rgba(0,0,0,0.3)',
-            cursor: 'pointer',
-            color: 'white',
-          }}
-        >
-          Component
-        </div>
-        <div style={{ height: 'auto' }}>
-          {/* <PopoverThread objectId={'thread2'}>
-
-
-             */}
-        </div>
+        <PopoverThreadComponent />
       </div>
     ),
   },

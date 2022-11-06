@@ -1,5 +1,6 @@
 import { PopoverThread, usePopoverThread } from '@collabkit/react';
 import { useEffect } from 'react';
+import { vars } from '../../styles/Theme.css';
 
 export function PopoverDemo() {
   const objectId = 'object3';
@@ -23,7 +24,7 @@ export function PopoverDemo() {
             fontWeight: 'bold',
             background: 'rgba(0,0,0,0.3)',
             cursor: 'pointer',
-            color: 'white',
+            color: vars.color.textContrastHigh,
           }}
         >
           Component

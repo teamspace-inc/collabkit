@@ -1,18 +1,27 @@
-import { usePopoverState, Popover } from '@collabkit/react';
+import React, { useEffect } from 'react';
+import { PopoverThread, usePopoverThread } from '@collabkit/react';
 
 export function App() {
-  const objectId = 'snazzy-product-id';
+  const objectId = 'fox-fabrics';
 
-  const [_popoverState, setPopoverState] = usePopoverState({
+  const { openPopover } = usePopoverThread({
     objectId,
   });
 
+  // automatically open the popover thread on mount
+  useEffect(() => {
+    openPopover();
+  }, []);
+
   return (
     <div>
-      <button onClick={() => setPopoverState('open')}>Open Sesame</button>
-      <Popover objectId={objectId} name="Snazzy Product Name">
-        <div>Hello world</div>
-      </Popover>
+      {/* show the popover when the user clicks this button */}
+      <button onClick={() => openPopover()}>Comment</button>
+      <PopoverThread objectId={objectId} objectName="Fox Fabrics">
+        <div>
+          <h1>Fox Fabrics</h1>
+        </div>
+      </PopoverThread>
     </div>
   );
 }

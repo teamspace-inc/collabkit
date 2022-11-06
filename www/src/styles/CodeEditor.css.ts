@@ -7,8 +7,7 @@ export const codeEditor = style({
   padding: '16px 20px 16px 0px',
   borderRadius: 8,
   flex: 1,
-  // background: vars.color.bgContrastLow,
-  border: `1px solid ${vars.color.bgContrastMedium}`,
+  background: vars.color.bgContrastLowest,
 });
 
 export const copyButton = style({
@@ -17,15 +16,15 @@ export const copyButton = style({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  top: 11,
-  right: 11,
-  width: 32,
-  height: 32,
+  top: 13,
+  right: 16,
+  width: 28,
+  height: 28,
   borderRadius: '50%',
-  background: vars.color.bgContrastLow,
+  background: 'transparent',
   cursor: 'pointer',
   ':hover': {
-    background: vars.color.bgContrastMedium,
+    background: vars.color.bgContrastLow,
   },
 });
 
