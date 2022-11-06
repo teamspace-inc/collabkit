@@ -50,35 +50,36 @@ const defaultWorkspace: Partial<Workspace> = {
   //   },
   // },
   inbox: {},
+  objects: {
+    row003_budget: ['thread5'],
+    object2: ['thread1'],
+    object3: ['thread2'],
+    object4: ['thread3'],
+  },
   openThreads: {
     thread1: {
       meta: {
-        cellId: 'thread1',
-        viewId: 'demo',
+        cellId: 'object1',
       },
     },
     thread2: {
       meta: {
-        cellId: 'thread2',
-        viewId: 'demo',
+        cellId: 'object2',
       },
     },
     thread3: {
       meta: {
-        cellId: 'thread3',
-        viewId: 'demo',
+        cellId: 'object3',
       },
     },
     thread4: {
       meta: {
-        cellId: 'thread4',
-        viewId: 'demo',
+        cellId: 'object4',
       },
     },
     thread5: {
       meta: {
         cellId: 'row003_budget',
-        viewId: 'table-demo',
       },
     },
   },

@@ -2,23 +2,22 @@ import { useCallback, useMemo } from 'react';
 import { useApp } from '../hooks/useApp';
 import { useSnapshot } from 'valtio';
 import { ThreadLocator, ThreadTarget } from '@collabkit/core';
-import { useExistingOrNewThreadId } from '../hooks/useExistingOrNewThreadId';
+import { useExistingThreadId } from './useExistingThreadId';
 
-type PopoverThreadState = 'open' | 'preview' | 'closed';
+export type PopoverState = 'open' | 'preview' | 'closed';
 
-export function usePopoverState(
-  props: ThreadLocator
-): [PopoverThreadState | 'preview', (state: PopoverThreadState) => void] {
-  const { store, events } = useApp();
+export function usePopoverStateInternal(props: {
+  threadId: string | null;
+}): [PopoverState, (state: PopoverState) => void] {
+  const { threadId } = props;
+  const { store } = useApp();
   const { viewingId, previewingId, workspaceId } = useSnapshot(store);
-  const threadId = useExistingOrNewThreadId(props);
-
   const threadOpen = viewingId?.type === 'thread' && viewingId.threadId === threadId;
   const previewOpen = previewingId?.type === 'thread' && previewingId.threadId === threadId;
 
   const target = useMemo<ThreadTarget | null>(
     () =>
-      workspaceId
+      workspaceId && threadId
         ? {
             type: 'thread',
             threadId,
@@ -29,15 +28,23 @@ export function usePopoverState(
   );
 
   const setPopoverState = useCallback(
-    (state: PopoverThreadState) => {
+    (state: PopoverState) => {
+      console.log('setPopoverState', { state, target });
       if (target) {
-        events.onSetPopoverState({ target, state });
+        // events.onSetPopoverState({ target, state });
       }
     },
     [target]
   );
 
-  const popoverState: PopoverThreadState = threadOpen ? 'open' : previewOpen ? 'preview' : 'closed';
+  const popoverState: PopoverState = threadOpen ? 'open' : previewOpen ? 'preview' : 'closed';
+
+  console.log(threadOpen, previewOpen);
 
   return [popoverState, setPopoverState];
+}
+
+export function usePopoverState(props: ThreadLocator) {
+  const threadId = useExistingThreadId(props);
+  return usePopoverStateInternal({ threadId });
 }

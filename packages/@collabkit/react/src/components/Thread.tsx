@@ -21,6 +21,7 @@ export function ThreadProvider(props: ThreadProps & { children: React.ReactNode 
   const { threadId } = props;
 
   if (userId == null || workspaceId == null) {
+    console.error('ThreadProvider: userId or workspaceId is null');
     return null;
   }
 
@@ -40,8 +41,8 @@ export function Thread(props: ThreadProps & { className?: string; children?: Rea
   const { threadId } = props;
   const { store } = useApp();
   const { userId, workspaceId } = useSnapshot(store);
-  const { isEmpty } = useThread({
-    store,
+
+  useThread({
     threadId,
     workspaceId,
   });
@@ -56,13 +57,9 @@ export function Thread(props: ThreadProps & { className?: string; children?: Rea
         <ThemeWrapper>
           <div className={styles.root}>
             {props.showHeader && <div className={styles.header}>Comments</div>}
-            {isEmpty ? (
-              <EmptyState />
-            ) : (
-              <ScrollableCommentList>
-                <CommentList />
-              </ScrollableCommentList>
-            )}
+            <ScrollableCommentList>
+              <CommentList />
+            </ScrollableCommentList>
             {props.hideComposer ? null : <Composer />}
           </div>
         </ThemeWrapper>

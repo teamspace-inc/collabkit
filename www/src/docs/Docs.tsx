@@ -12,7 +12,7 @@ import { GettingStartedDoc } from './GettingStartedDoc';
 // import { FacepileDoc } from './components/FacepileDoc';
 import { InboxDoc } from './components/inbox/InboxDoc';
 import { InboxButtonDoc } from './components/InboxButtonDoc';
-import { PopoverDoc } from './components/PopoverDoc';
+import { PopoverThreadDoc } from './components/PopoverDoc';
 import { CollabKitProviderDoc } from './components/CollabKitProviderDoc';
 import { ThreadDoc } from './components/ThreadDoc';
 import { UseUnreadCommentsCountDoc } from './hooks/useUnreadCommentsCountDoc';
@@ -59,7 +59,7 @@ export const DOCS: RootDocNode = {
     children: {
       CollabKitProvider: { component: CollabKitProviderDoc },
       Thread: { component: ThreadDoc },
-      Popover: { component: PopoverDoc },
+      Popover: { component: PopoverThreadDoc },
       Inbox: { component: InboxDoc },
       InboxButton: { component: InboxButtonDoc },
       SidebarInbox: { component: SidebarInboxDoc },
@@ -78,10 +78,10 @@ export const DOCS: RootDocNode = {
   },
   'Secure Mode': { component: SecureModeDoc },
   Workspaces: { component: WorkspacesDoc },
-  Customisation: { component: CustomisationDoc },
   Notifications: { component: NotificationsDoc },
-  Advanced: {
-    title: 'Advanced',
+  Customisation: { component: CustomisationDoc },
+  'Advanced Customisation': {
+    title: 'Advanced Customisation',
     children: {
       useInbox: { component: UseInboxDoc },
       ['Thread.Provider']: { component: AdvancedThreadProviderDoc },

@@ -12,10 +12,7 @@ const rtl = style({
   textAlign: 'right',
 });
 
-const typingHeight = fallbackVar(
-  vars.composer.typingIndicator.lineHeight,
-  vars.text.small.lineHeight
-);
+const typingHeight = fallbackVar(vars.composer.typingIndicator.lineHeight, vars.space[4]);
 
 export const typing = style({
   height: typingHeight,

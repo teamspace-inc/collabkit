@@ -7,10 +7,10 @@ import './ag-theme-collabkit.css';
 import * as styles from './DataGridDemo.css';
 import {
   Inbox,
-  PopoverTrigger,
   Sidebar,
   SidebarInboxButton,
   ThemeProvider,
+  PopoverThread,
   usePopoverThread,
 } from '@collabkit/react';
 import { vars, light } from '../styles/Theme.css';
@@ -29,26 +29,24 @@ type RowData = {
 
 function CellRenderer(props: ICellRendererParams<RowData>) {
   const cellId = props.data!.id + '_' + props.colDef!.field;
-  const { hasThread, popoverState, setPopoverState, context } = usePopoverThread({
-    name: props.colDef!.headerName,
-    cellId,
-    _viewId: 'table-demo',
-  });
+  const { hasThread, open, openPopover } = usePopoverThread({ objectId: cellId });
+
   useEffect(() => {
     if (cellId === 'row003_budget') {
-      setPopoverState('open');
+      openPopover();
     }
   }, []);
+
   return (
-    <PopoverTrigger context={context}>
+    <PopoverThread objectId={cellId}>
       <div
-        onClick={() => setPopoverState('open')}
+        onClick={() => openPopover()}
         style={{
           position: 'absolute',
           inset: 0,
           padding: '0 calc(var(--ag-cell-horizontal-padding) - 1px)',
           border: '2px solid transparent',
-          ...(popoverState === 'open'
+          ...(open
             ? {
                 border: '2px solid',
                 borderColor: vars.color.blue,
@@ -61,7 +59,7 @@ function CellRenderer(props: ICellRendererParams<RowData>) {
         {props.value}
         {hasThread && <ThreadIndicator />}
       </div>
-    </PopoverTrigger>
+    </PopoverThread>
   );
 }
 

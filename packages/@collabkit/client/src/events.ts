@@ -189,7 +189,7 @@ export function createEvents(store: Store) {
       } else if (store.viewingId) {
         if (e.key === 'Escape') {
           actions.removePendingPins(store);
-          actions.closeThread(store);
+          actions.closeAll(store);
           e.stopPropagation();
           e.preventDefault();
         }
@@ -216,7 +216,7 @@ export function createEvents(store: Store) {
             //   break;
             // }
             case 'closeThreadButton': {
-              actions.closeThread(store);
+              actions.closeAll(store);
               break;
             }
             case 'resolveThreadButton': {
@@ -225,7 +225,7 @@ export function createEvents(store: Store) {
             }
             case 'reopenThreadButton': {
               actions.reopenThread(store, props.target.workspaceId, props.target.threadId);
-              break
+              break;
             }
             case 'commentable': {
               actions.startThread(store, { threadId: nanoid(), ...props.target });
@@ -254,7 +254,7 @@ export function createEvents(store: Store) {
               break;
             }
             case 'closeThreadButton': {
-              actions.closeThread(store);
+              actions.closeAll(store);
               break;
             }
             case 'resolveThreadButton': {
@@ -286,6 +286,23 @@ export function createEvents(store: Store) {
       actions.seen(store, props.target);
     },
 
+    onPopoverPreviewChange: (props: { target: ThreadTarget; open: boolean }) => {
+      if (props.open) {
+        actions.previewThread(store, props);
+      } else {
+        actions.closePreview(store, props);
+      }
+    },
+
+    onPopoverThreadOpenChange: (props: { target: ThreadTarget; open: boolean }) => {
+      console.log('onPopoverThreadOpenChange', props);
+      if (props.open) {
+        actions.viewThread(store, props);
+      } else {
+        actions.closeAll(store);
+      }
+    },
+
     onSetPopoverState: ({
       target,
       state,
@@ -293,18 +310,20 @@ export function createEvents(store: Store) {
       target: ThreadTarget;
       state: 'open' | 'preview' | 'closed';
     }) => {
+      console.log('onSetPopoverState', target, state);
       switch (state) {
         case 'open':
-          actions.closePreview(store);
-          actions.viewThread(store, { target, isPreview: false });
+          console.log('open');
+          actions.closePreview(store, { target });
+          actions.viewThread(store, { target });
           break;
         case 'preview':
-          actions.closeThread(store);
-          actions.viewThread(store, { target, isPreview: true });
+          actions.closeThread(store, { target });
+          actions.previewThread(store, { target });
           break;
         case 'closed':
-          actions.closePreview(store);
-          actions.closeThread(store);
+          actions.closePreview(store, { target });
+          actions.closeThread(store, { target });
           break;
         default:
           throw new Error(`invalid popover state: ${state}`);

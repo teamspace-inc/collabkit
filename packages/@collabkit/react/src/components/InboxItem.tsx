@@ -67,7 +67,7 @@ export function InboxItem(props: { formatTimestamp?: (timestamp: number) => stri
               window.history.pushState(null, '', pathname);
             } else {
               const target: ThreadTarget = { type: 'thread', threadId, workspaceId };
-              actions.viewThread(store, { target, isPreview: false });
+              actions.viewThread(store, { target });
             }
           }
         }}

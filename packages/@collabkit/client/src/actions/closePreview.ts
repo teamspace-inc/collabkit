@@ -1,5 +1,11 @@
-import type { Store } from '@collabkit/core';
+import type { Store, ThreadTarget } from '@collabkit/core';
 
-export function closePreview(store: Store) {
-  store.previewingId = null;
+export function closePreview(store: Store, props: { target: ThreadTarget }) {
+  if (
+    store.previewingId?.type === 'thread' &&
+    store.previewingId.threadId === props.target.threadId
+  ) {
+    console.log('closePreview', props.target);
+    store.previewingId = null;
+  }
 }

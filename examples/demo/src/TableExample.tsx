@@ -4,9 +4,10 @@ import {
   Sidebar,
   ThemeProvider,
   SidebarInboxButton,
-  Popover,
-  usePopoverState,
+  PopoverThread,
+  usePopoverThread,
 } from '@collabkit/react';
+
 import { MenuItem, ControlledMenu, useMenuState } from '@szhsin/react-menu';
 import '@szhsin/react-menu/dist/index.css';
 import '@szhsin/react-menu/dist/transitions/slide.css';
@@ -16,18 +17,18 @@ type CellProps = { value: number | string; row: Car; column: Column };
 const Cell = ({ value, row, column }: CellProps) => {
   const name = `Cars / ${row.make} ${row.model}`;
   const cellId = `${row.id}_${column.key}`;
-  const [popoverState, setPopoverState] = usePopoverState({ objectId: cellId });
 
+  const { open, preview, openPopover, hasThread } = usePopoverThread({ objectId: cellId });
   const [menuProps, toggleMenu] = useMenuState();
   const [anchorPoint, setAnchorPoint] = useState({ x: 0, y: 0 });
 
   const classes = [];
-  // if (hasThread) classes.push('hasThread');
-  if (popoverState === 'preview') classes.push('previewOpen');
-  if (popoverState === 'open') classes.push('threadOpen');
+  if (hasThread) classes.push('hasThread');
+  if (preview) classes.push('previewOpen');
+  if (open) classes.push('threadOpen');
 
   return (
-    <Popover objectId={cellId} name={name}>
+    <PopoverThread objectId={cellId}>
       <td
         className={classes.join(' ')}
         onContextMenu={(e) => {
@@ -36,19 +37,16 @@ const Cell = ({ value, row, column }: CellProps) => {
           toggleMenu(true);
         }}
         onClick={() => {
-          // if (hasThread) {
-          setPopoverState('open' as const);
-          // }
+          openPopover();
         }}
       >
         {value}
-        {/* {hasThread && <ThreadIndicator />} */}
-
+        {hasThread && <ThreadIndicator />}
         <ControlledMenu {...menuProps} anchorPoint={anchorPoint} onClose={() => toggleMenu(false)}>
-          <MenuItem onClick={() => setPopoverState('open')}>Comment</MenuItem>
+          <MenuItem onClick={() => openPopover()}>Comment</MenuItem>
         </ControlledMenu>
       </td>
-    </Popover>
+    </PopoverThread>
   );
 };
 

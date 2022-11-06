@@ -207,7 +207,7 @@ export const docScrollableContentWrap = style({
 export const docNav = style({
   position: 'sticky',
   top: 0,
-  background: '#222',
+  background: '#1C1C1C',
   color: 'white',
   display: 'flex',
   height: '100vh',
@@ -215,7 +215,7 @@ export const docNav = style({
 
   '@media': {
     [max768]: {
-      background: '#222',
+      background: '#1C1C1C',
       alignItems: 'flex-start',
       borderRight: 'none',
     },
@@ -267,8 +267,8 @@ export const docContent = style({
 });
 
 export const docRoot = style({
-  color: '#BBBBBB',
-  background: '#222',
+  color: '#1C1C1C',
+  background: '#1C1C1C',
   position: 'fixed',
   inset: 0,
   alignItems: 'flex-start',

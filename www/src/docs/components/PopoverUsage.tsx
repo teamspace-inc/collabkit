@@ -1,6 +1,19 @@
-import { Popover, usePopoverState } from '@collabkit/react';
+import { PopoverThread, usePopoverThread } from '@collabkit/react';
 
-function YourComponent(props: { onClick: () => void }) {
+export function App() {
+  const { openPopover, open } = usePopoverThread({
+    objectId: 'cellA12',
+  });
+
+  // name="Q4 P&L"
+  return (
+    <PopoverThread objectId="cellA12">
+      <TableCell onClick={() => openPopover()} open={open} />
+    </PopoverThread>
+  );
+}
+
+function TableCell(props: { onClick: () => void; open: boolean }) {
   return (
     <div
       onClick={props.onClick}
@@ -8,23 +21,12 @@ function YourComponent(props: { onClick: () => void }) {
         padding: 20,
         background: 'white',
         cursor: 'pointer',
+        borderWidth: 1,
+        borderStyle: 'solid',
+        borderColor: props.open ? '#ccc' : 'transparent',
       }}
     >
       Component
-    </div>
-  );
-}
-
-export function App() {
-  const [popoverState, setPopoverState] = usePopoverState({
-    objectId: 'thread4',
-  });
-
-  return (
-    <div>
-      <Popover objectId={'thread4'} name={'name of thread'}>
-        <YourComponent onClick={() => popoverState !== 'open' && setPopoverState('open')} />
-      </Popover>
     </div>
   );
 }

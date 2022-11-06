@@ -3,7 +3,7 @@ import { dark } from '../styles/Theme.css';
 import * as styles from '../styles/home/Demos.css';
 import { CarouselProvider, Slider, Slide } from 'pure-react-carousel';
 import 'pure-react-carousel/dist/react-carousel.es.css';
-import { InternalPopoverThread, Inbox, Thread } from '@collabkit/react';
+import { PopoverThread, Inbox, Thread } from '@collabkit/react';
 import {
   component,
   card,
@@ -58,7 +58,10 @@ export const COMPONENTS: ComponentProps[] = [
           Component
         </div>
         <div style={{ height: 'auto' }}>
-          <InternalPopoverThread threadId={'thread2'} autoFocus={false} />
+          {/* <PopoverThread objectId={'thread2'}>
+
+
+             */}
         </div>
       </div>
     ),

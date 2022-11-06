@@ -4,6 +4,7 @@ import { actions } from '@collabkit/client';
 import { ThreadInfo, timelineUtils } from '@collabkit/core';
 import { Store } from '../constants';
 import { useComposer } from './useComposer';
+import { useApp } from './useApp';
 
 export function useThreadSubscription(props: {
   store: Store;
@@ -23,13 +24,13 @@ export function useThreadSubscription(props: {
 }
 
 export function useThread(props: {
-  store: Store;
   threadId: string;
   workspaceId?: string | null;
   info?: ThreadInfo;
   meta?: unknown;
 }) {
-  const { threadId, workspaceId, store, info } = props;
+  const { store } = useApp();
+  const { threadId, workspaceId, info } = props;
   const { isSignedIn, workspaces } = useSnapshot(store);
   const workspace = workspaceId ? workspaces[workspaceId] : null;
   const timeline = workspace ? workspace.timeline[threadId] : null;

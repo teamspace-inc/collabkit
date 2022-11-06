@@ -17,8 +17,7 @@ export function UserContextProvider(props: { children: React.ReactNode }) {
 }
 
 export function useOptionalUserContext() {
-  const context = React.useContext(UserContext);
-  return context;
+  return React.useContext(UserContext);
 }
 
 export function useUserContext() {

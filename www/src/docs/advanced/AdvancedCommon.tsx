@@ -3,7 +3,6 @@ import { advancedAnatomyPartNumber } from '../../styles/Docs.css';
 import { vars } from '../../styles/Theme.css';
 import { renderCodeSnippet } from '../CodeEditor';
 import { DocDemoContainer, DocLink } from '../Doc';
-import React from '../react.types';
 
 export function AdvancedDisclaimer(props: { componentName: string }) {
   return (
@@ -33,15 +32,15 @@ export function AdvancedProps(props: { rows: AdvancedPropRow[]; hideHeader?: boo
         </thead>
       )}
       <tbody>
-        {props.rows.map((row) => (
-          <tr>
+        {props.rows.map((row, i) => (
+          <tr key={`row-${i}`}>
             <td style={{ verticalAlign: 'top', maxWidth: 175 }}>
               <code>{row[0]}</code>
             </td>
             <td style={{ verticalAlign: 'top', maxWidth: 225 }}>
               <code style={{ color: vars.color.textContrastMedium }}>{row[1]}</code>
             </td>
-            <td style={{ maxWidth: 320, verticalAlign: 'top', fontSize: 14 }}>{row[2]}</td>
+            <td style={{ verticalAlign: 'top', maxWidth: 320, fontSize: 14 }}>{row[2]}</td>
           </tr>
         ))}
       </tbody>

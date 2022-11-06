@@ -1,20 +1,16 @@
-import { Popover, usePopoverState } from '@collabkit/react';
+import { PopoverThread } from '@collabkit/react';
 import { useEffect } from 'react';
 
 export function PopoverDemo() {
-  const [popoverState, setPopoverState] = usePopoverState({
-    objectId: 'thread4',
-  });
-
-  useEffect(() => {
-    setPopoverState('open');
-  }, []);
+  // useEffect(() => {
+  //   setPopoverState('open');
+  // }, []);
 
   return (
     <div>
-      <Popover objectId="thread4" name="test" _viewId="demo" autoFocus={false}>
+      <PopoverThread objectId="object1">
         <div
-          onClick={() => setPopoverState('open')}
+          // onClick={() => setPopoverState('open')}
           style={{
             padding: '10px 20px',
             marginLeft: '-200px',
@@ -30,7 +26,7 @@ export function PopoverDemo() {
         >
           Component
         </div>
-      </Popover>
+      </PopoverThread>
     </div>
   );
 }

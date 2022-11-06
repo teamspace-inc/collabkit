@@ -6,7 +6,7 @@ import { PopoverDemo } from './PopoverDemo';
 import Usage from './PopoverUsage.tsx?raw';
 import { ThreadProps } from './ThreadDoc';
 
-export function PopoverDoc() {
+export function PopoverThreadDoc() {
   return (
     <>
       <h2>A popover comment thread that can anchor to any component in your app.</h2>
@@ -25,7 +25,7 @@ export function PopoverDoc() {
           the <code>Escape</code> key.
           <br />
           <br />
-          Show and hide the popover thread using <code>usePopoverThreadState</code>.
+          Show and hide the popover thread using <code>usePopoverState</code>.
         </p>
         {renderCodeSnippet(Usage)}
       </div>
@@ -36,3 +36,13 @@ export function PopoverDoc() {
     </>
   );
 }
+
+// const ref  = usePopoverAnchor({ objectId: 'cellA12' });
+// <>
+//   <Popover.Thread objectId="cellA12" name="Q4 P&L">
+
+//   </Popover.Thread>
+//   <Popover.Preview objectId="cellA12" name="Q4 P&L">
+
+//     </Popover.Preview>
+// </>

@@ -9,6 +9,10 @@ export interface ThreadMeta {
   [x: string]: unknown;
 }
 
+export interface ObjectMeta {
+  [x: string]: any;
+}
+
 export type ThreadLocator = {
   objectId: string;
 };
@@ -327,10 +331,14 @@ export interface Pin {
   state: 'new' | 'pending' | 'open' | 'resolved' | 'deleted';
 }
 
+type OpenThreadIds = string[];
+
 export interface Workspace {
   profiles: { [userId: string]: boolean };
   name: string;
   openThreads: { [threadId: string]: { meta: ThreadMeta } };
+  pendingThreads: { [objectId: string]: string };
+  objects: { [objectId: string]: OpenThreadIds };
   pins: { [threadId: string]: Pin };
   inbox: { [threadId: string]: WithID<Event> };
   timeline: { [threadId: string]: Timeline };

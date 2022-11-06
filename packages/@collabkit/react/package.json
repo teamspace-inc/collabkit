@@ -33,7 +33,7 @@
     "@collabkit/colors": "^0.0.0",
     "@collabkit/core": "^0.0.0",
     "@collabkit/theme": "^0.0.0",
-    "@floating-ui/react-dom-interactions": "^0.7.0",
+    "@floating-ui/react-dom-interactions": "0.10.3",
     "@ladle/react": "^2.4.2",
     "@lexical/markdown": "^0.4.1",
     "@lexical/react": "^0.4.1",

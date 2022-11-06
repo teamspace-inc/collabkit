@@ -7,7 +7,6 @@ import type {
   UserProps,
   ThreadInfo,
   ThreadMeta,
-  EventType,
   WithID,
 } from '../types';
 import type { DataSnapshot } from 'firebase/database';

@@ -31,6 +31,8 @@ import { hover } from './hover';
 import { unhover } from './unhover';
 import { viewThread } from './viewThread';
 import { isTyping } from './isTyping';
+import { previewThread } from './previewThread';
+
 import { saveThreadInfo } from './saveThreadInfo';
 import { init } from './init';
 import { saveMentionableUsers } from './saveMentionableUsers';
@@ -45,6 +47,7 @@ import { hideSidebar } from './hideSidebar';
 import { setAvatarError } from './setAvatarError';
 import { closeMenu } from './closeMenu';
 import { openMenu } from './openMenu';
+import { closeAll } from './closeAll';
 
 export type GenerateToken =
   | {
@@ -154,7 +157,9 @@ export const actions = {
   unhover,
   updateComment,
   viewThread,
+  previewThread,
   showSidebar,
   hideSidebar,
   setAvatarError,
+  closeAll,
 };

@@ -17,7 +17,7 @@ export type ThreadProps = {
   hideComposer?: boolean;
 };
 
-export type PopoverThreadProps = ThreadProps & {
-  maxAvailableSize?: { width: number; height: number } | null;
-  formatTimestamp?: (timestamp: number) => string;
-};
+// export type PopoverThreadProps = ThreadProps & {
+//   maxAvailableSize?: { width: number; height: number } | null;
+//   formatTimestamp?: (timestamp: number) => string;
+// };

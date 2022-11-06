@@ -48,10 +48,7 @@ export const ThreadProps: AdvancedPropRow[] = [
 export function ThreadDoc() {
   return (
     <>
-      <h2>
-        A flexible comment thread that can be rendered anywhere in your app. Useful for commenting
-        in detail views.
-      </h2>
+      <h2>A flexible comment thread that can be rendered anywhere in your app.</h2>
       <ThreadDemo className={docDemoContainer} />
       <div>
         <h3>Usage</h3>

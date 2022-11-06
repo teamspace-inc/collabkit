@@ -15,6 +15,8 @@ export function createWorkspace(): Workspace {
   return {
     inbox: {},
     openThreads: {},
+    objects: {},
+    pendingThreads: {},
     pins: {},
     profiles: {},
     name: '',
@@ -48,7 +50,6 @@ export function createStore(): UnconfiguredStore {
     viewingId: null,
     previewingId: null,
     editingId: null,
-    // composingId: null,
     hoveringId: null,
     workspaces: {},
     profiles: {},
