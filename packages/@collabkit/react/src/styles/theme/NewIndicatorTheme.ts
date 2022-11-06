@@ -12,5 +12,6 @@ export const NewIndicatorTheme = {
       background: 'inbox-new-indicator-line-background',
     },
     padding: 'inbox-new-indicator-padding',
+    margin: 'inbox-new-indicator-margin',
   },
 };

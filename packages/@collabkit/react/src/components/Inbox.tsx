@@ -1,7 +1,6 @@
 import React from 'react';
 import { useSnapshot } from 'valtio';
 import { useApp } from '../hooks/useApp';
-import { ThreadContext } from '../hooks/useThreadContext';
 import * as styles from '../styles/components/Inbox.css';
 import { Scrollable } from './ScrollArea';
 import { InboxItem } from './InboxItem';
@@ -10,6 +9,7 @@ import { ChatCentered } from './icons';
 import { emptyState } from '../styles/components/Thread.css';
 import { useOptionalSidebarContext } from './Sidebar';
 import { useInbox } from '../hooks/public/useInbox';
+import { Thread } from './Thread';
 
 export interface ButtonProps extends React.ComponentPropsWithoutRef<'button'> {
   specialProp?: string;
@@ -40,12 +40,9 @@ export function Inbox(props: { formatTimestamp?: (timestamp: number) => string }
 
   const inboxItems = threadIds.map((threadId) => {
     return (
-      <ThreadContext.Provider
-        value={{ threadId, workspaceId, userId }}
-        key={`inboxThread-${threadId}`}
-      >
+      <Thread.Provider threadId={threadId} key={`inboxThread-${threadId}`}>
         <InboxItem formatTimestamp={props.formatTimestamp} />
-      </ThreadContext.Provider>
+      </Thread.Provider>
     );
   });
 

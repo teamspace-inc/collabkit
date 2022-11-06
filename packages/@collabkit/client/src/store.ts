@@ -1,4 +1,4 @@
-import type { SyncAdapter, UnconfiguredStore, Workspace } from '@collabkit/core';
+import type { Composer, SyncAdapter, UnconfiguredStore, Workspace } from '@collabkit/core';
 import { ref as valtioRef } from 'valtio/vanilla';
 import { markRaw as vueMarkRaw } from '@vue/reactivity';
 
@@ -11,12 +11,21 @@ export function markRaw<T extends object>(
   return vueMarkRaw(valtioRef(value));
 }
 
+export function createComposer(): Composer {
+  return {
+    $$body: '',
+    $$mentions: [],
+    isTyping: {},
+    editor: null,
+    enabled: { default: false },
+  };
+}
+
 export function createWorkspace(): Workspace {
   return {
     inbox: {},
     openThreads: {},
     objects: {},
-    pendingThreads: {},
     pins: {},
     profiles: {},
     name: '',
@@ -26,6 +35,9 @@ export function createWorkspace(): Workspace {
     seenBy: {},
     threadInfo: {},
     likelyFetchedAllProfiles: false,
+
+    pendingThreads: {},
+    pendingThreadInfo: {},
   };
 }
 
@@ -34,7 +46,6 @@ export function createStore(): UnconfiguredStore {
     sync: null as unknown as SyncAdapter,
     isReadOnly: false,
     isConnected: false,
-    isSignedIn: false,
     isSidebarOpen: false,
     appState: 'blank',
     uiState: 'idle',

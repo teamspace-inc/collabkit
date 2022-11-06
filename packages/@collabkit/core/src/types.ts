@@ -13,8 +13,9 @@ export interface ObjectMeta {
   [x: string]: any;
 }
 
-export type ThreadLocator = {
+export type ObjectProps = {
   objectId: string;
+  objectName?: string;
 };
 
 export type ThreadInfo = {
@@ -337,6 +338,7 @@ export interface Workspace {
   profiles: { [userId: string]: boolean };
   name: string;
   openThreads: { [threadId: string]: { meta: ThreadMeta } };
+  pendingThreadInfo: { [threadId: string]: ThreadInfo };
   pendingThreads: { [objectId: string]: string };
   objects: { [objectId: string]: OpenThreadIds };
   pins: { [threadId: string]: Pin };
@@ -353,7 +355,6 @@ export interface UnconfiguredStore {
   sync: null | SyncAdapter;
   isReadOnly: boolean;
   isConnected: boolean;
-  isSignedIn: boolean;
   isSidebarOpen: boolean;
   isDemo: boolean;
   userId: string | null;

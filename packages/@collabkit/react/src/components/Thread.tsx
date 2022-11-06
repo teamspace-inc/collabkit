@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { ScrollableCommentList } from './ScrollableCommentList';
 import { useApp } from '../hooks/useApp';
-import { useThread } from '../hooks/useThread';
+import { useThreadSubscription } from '../hooks/useThread';
 import { useSnapshot } from 'valtio';
 import { ThreadContext } from '../hooks/useThreadContext';
 import Profile from './Profile';
@@ -14,6 +14,7 @@ import { ThreadFacepile } from './ThreadFacepile';
 import { ThreadUnreadDot } from './ThreadUnreadDot';
 import { ResolveThreadIconButton } from './ResolveThreadIconButton';
 import { ThreadProps } from '../types';
+import { useSaveThreadInfo } from '../hooks/useSaveThreadInfo';
 
 export function ThreadProvider(props: ThreadProps & { children: React.ReactNode }) {
   const { store } = useApp();
@@ -38,14 +39,12 @@ export function ThreadProvider(props: ThreadProps & { children: React.ReactNode 
 }
 
 export function Thread(props: ThreadProps & { className?: string; children?: React.ReactNode }) {
-  const { threadId } = props;
+  const { threadId, info } = props;
   const { store } = useApp();
   const { userId, workspaceId } = useSnapshot(store);
 
-  useThread({
-    threadId,
-    workspaceId,
-  });
+  useThreadSubscription({ store, threadId, workspaceId });
+  useSaveThreadInfo({ threadId, workspaceId, info });
 
   if (!userId) {
     return null;

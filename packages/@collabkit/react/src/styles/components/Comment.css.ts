@@ -48,6 +48,10 @@ export const body = style({
   overflowWrap: 'break-word',
   minHeight: fallbackVar(vars.comment.body.lineHeight, vars.text.base.lineHeight), // prevents flicker
   color: fallbackVar(vars.comment.body.color, vars.color.textPrimary),
+
+  // todo @nc: this should be adjusted automatically based on the space
+  // available on the right
+  paddingRight: `${calc(vars.space[3]).multiply(3)}`,
 });
 
 export const editor = style([
@@ -55,9 +59,9 @@ export const editor = style([
     display: 'flex',
     flexDirection: 'column',
     gap: vars.space[1],
-    marginTop: '0px',
-    marginRight: '-16px',
-    marginLeft: '16px',
+    marginTop: vars.space[1],
+    marginRight: `${calc(paddingRight).negate()}`,
+    marginLeft: paddingLeft,
     fontFamily: vars.fontFamily,
   },
 ]);

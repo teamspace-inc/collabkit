@@ -13,7 +13,7 @@ export async function resolveThread(store: Store, workspaceId: string, threadId:
     return;
   }
 
-  actions.closeThread(store);
+  actions.closeThread(store, { target: { type: 'thread', workspaceId, threadId } });
   delete store.workspaces[workspaceId].openThreads[threadId];
 
   const event: Event = {

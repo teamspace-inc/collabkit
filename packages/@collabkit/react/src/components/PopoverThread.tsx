@@ -1,12 +1,40 @@
-import { ThreadLocator } from '@collabkit/core';
+import { ObjectProps } from '@collabkit/core';
 import { Thread } from './Thread';
 import React from 'react';
 import { Popover, PopoverTriggerProps } from './Popover';
-import { PopoverThreadPreview } from './PopoverThreadPreview';
 import { usePopoverThread } from '../hooks/usePopoverThread';
-import { root } from '../styles/components/PopoverThread.css';
+import { previewRoot, root } from '../styles/components/PopoverThread.css';
+import CommentList from './CommentList';
+import { Scrollable } from './ScrollArea';
+import { ThemeWrapper } from './ThemeWrapper';
+import Composer from './composer/Composer';
 
-type PopoverThreadProps = PopoverTriggerProps & ThreadLocator;
+type PopoverThreadProps = PopoverTriggerProps & ObjectProps;
+
+function PopoverThreadPreview() {
+  return (
+    <ThemeWrapper>
+      <div className={previewRoot} data-collabkit-internal="true">
+        <Scrollable>
+          <CommentList />
+        </Scrollable>
+      </div>
+    </ThemeWrapper>
+  );
+}
+
+function PopoverThreadThread() {
+  return (
+    <ThemeWrapper>
+      <div className={root} data-collabkit-internal="true">
+        <Scrollable>
+          <CommentList />
+        </Scrollable>
+        <Composer />
+      </div>
+    </ThemeWrapper>
+  );
+}
 
 export function PopoverThread(props: PopoverThreadProps) {
   const { threadId, ...popoverProps } = usePopoverThread(props);
@@ -17,14 +45,19 @@ export function PopoverThread(props: PopoverThreadProps) {
       <Popover.Trigger {...otherProps} />
       <Popover.Portal>
         <Popover.Preview>
-          <Thread.Provider threadId={threadId}>
-            <PopoverThreadPreview />
-          </Thread.Provider>
+          {/* todo @nc: consider adding 
+          hasPreview and hasPopover 
+          to avoid this */}
+          {popoverProps.hasThread ? (
+            <Thread.Provider threadId={threadId}>
+              <PopoverThreadPreview />
+            </Thread.Provider>
+          ) : null}
         </Popover.Preview>
         <Popover.Content>
-          <div className={root}>
-            <Thread threadId={threadId} />
-          </div>
+          <Thread.Provider threadId={threadId}>
+            <PopoverThreadThread />
+          </Thread.Provider>
         </Popover.Content>
       </Popover.Portal>
     </Popover.Root>

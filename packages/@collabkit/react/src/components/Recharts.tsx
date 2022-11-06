@@ -252,7 +252,9 @@ export const Menu = forwardRef<any, MenuProps & React.HTMLProps<HTMLButtonElemen
       <FloatingPortal>
         {open && (
           <FloatingOverlay lockScroll>
-            <FloatingFocusManager context={context} preventTabbing>
+            {/* @ville I upgraded floating-ui to fix a bug, but preventTabbing no longer exists in the latest version */}
+            {/* <FloatingFocusManager context={context} preventTabbing> */}
+            <FloatingFocusManager context={context}>
               <div
                 {...getFloatingProps({
                   className: styles.contextMenu,

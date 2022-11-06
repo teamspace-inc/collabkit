@@ -1,8 +1,8 @@
-import { ThreadLocator } from '@collabkit/core';
+import { ObjectProps } from '@collabkit/core';
 import { nanoid } from 'nanoid';
 import { useApp } from './useApp';
 
-export function usePendingThreadId(props: ThreadLocator & { workspaceId: string | null }) {
+export function usePendingThreadId(props: ObjectProps & { workspaceId: string | null }) {
   const { store } = useApp();
   if (!props.workspaceId) {
     return '';

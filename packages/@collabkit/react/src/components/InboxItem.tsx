@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSnapshot } from 'valtio';
-import { ThreadContext, useThreadContext } from '../hooks/useThreadContext';
+import { useThreadContext } from '../hooks/useThreadContext';
 import { useInboxStore } from '../hooks/useInboxStore';
 import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
 import { useReplyCount } from '../hooks/useReplyCount';
@@ -23,6 +23,8 @@ export function InboxItem(props: { formatTimestamp?: (timestamp: number) => stri
   const timeline = workspace.timeline[threadId];
   const info = workspace.threadInfo[threadId];
   const replyCount = useReplyCount();
+
+  // replace with useHover hook
   const [hover, setHover] = useState(false);
 
   if (!timeline) {
@@ -49,10 +51,7 @@ export function InboxItem(props: { formatTimestamp?: (timestamp: number) => stri
   const active = !!(viewingId && viewingId.type === 'thread' && viewingId.threadId === threadId);
 
   return (
-    <ThreadContext.Provider
-      value={{ threadId, workspaceId, userId }}
-      key={`inboxThread-${threadId}`}
-    >
+    <Thread.Provider threadId={threadId} key={`inboxThread-${threadId}`}>
       <div
         onMouseOver={() => setHover(true)}
         onMouseOut={() => setHover(false)}
@@ -102,6 +101,6 @@ export function InboxItem(props: { formatTimestamp?: (timestamp: number) => stri
           ) : null}
         </Comment.Provider>
       </div>
-    </ThreadContext.Provider>
+    </Thread.Provider>
   );
 }

@@ -418,22 +418,20 @@ export function MentionsTypeahead({
             <Scrollable maxHeight={maxAvailableSize.height}>
               <div className={styles.list}>
                 {results.slice(0, SUGGESTION_LIST_LENGTH_LIMIT).map((result, i) => (
-                  <>
-                    <MentionsTypeaheadItem
-                      key={result.id}
-                      index={i}
-                      active={i === selectedIndex}
-                      onClick={() => {
-                        setSelectedIndex(i);
-                        applyCurrentSelected();
-                      }}
-                      onMouseEnter={() => {
-                        setSelectedIndex(i);
-                      }}
-                      result={result}
-                      query={match.matchingString}
-                    />
-                  </>
+                  <MentionsTypeaheadItem
+                    key={result.id}
+                    index={i}
+                    active={i === selectedIndex}
+                    onClick={() => {
+                      setSelectedIndex(i);
+                      applyCurrentSelected();
+                    }}
+                    onMouseEnter={() => {
+                      setSelectedIndex(i);
+                    }}
+                    result={result}
+                    query={match.matchingString}
+                  />
                 ))}
               </div>
             </Scrollable>

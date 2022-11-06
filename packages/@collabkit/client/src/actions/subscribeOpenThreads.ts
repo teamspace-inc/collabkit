@@ -10,10 +10,10 @@ export function subscribeOpenThreads(store: Store) {
     threadId: string;
     info: { meta: ThreadMeta } | null;
   }) => {
+    // console.log('subscribeOpenThreads', workspaceId);
     if (info) {
       store.workspaces[workspaceId].openThreads[threadId] = info;
       if (info.meta.cellId) {
-        console.log('subscribeOpenThreads', info.meta);
         store.workspaces[workspaceId].objects[info.meta.cellId] ||= [threadId];
       }
     } else {

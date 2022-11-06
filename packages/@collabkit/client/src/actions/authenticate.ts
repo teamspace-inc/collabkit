@@ -57,9 +57,6 @@ export async function authenticate(store: Store) {
     store.workspaces[workspaceId] = createWorkspace();
     // store.workspaces[workspaceId].name = workspaceName;
 
-    // todo we don't need this.
-    store.isSignedIn = true;
-
     actions.subscribeProfiles(store);
     actions.subscribeWorkspace(store);
 
@@ -103,8 +100,6 @@ export async function authenticate(store: Store) {
     if (config.workspace.name) {
       store.workspaces[config.workspace.id].name = config.workspace.name;
     }
-
-    store.isSignedIn = true;
 
     // console.log('CollabKit authenticated', userCredential, mode);
 

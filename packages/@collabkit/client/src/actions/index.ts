@@ -31,7 +31,7 @@ import { hover } from './hover';
 import { unhover } from './unhover';
 import { viewThread } from './viewThread';
 import { isTyping } from './isTyping';
-import { previewThread } from './previewThread';
+import { showPreview } from './showPreview';
 
 import { saveThreadInfo } from './saveThreadInfo';
 import { init } from './init';
@@ -157,7 +157,7 @@ export const actions = {
   unhover,
   updateComment,
   viewThread,
-  previewThread,
+  showPreview,
   showSidebar,
   hideSidebar,
   setAvatarError,

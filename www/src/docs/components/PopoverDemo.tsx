@@ -1,16 +1,18 @@
-import { PopoverThread } from '@collabkit/react';
+import { PopoverThread, usePopoverThread } from '@collabkit/react';
 import { useEffect } from 'react';
 
 export function PopoverDemo() {
-  // useEffect(() => {
-  //   setPopoverState('open');
-  // }, []);
+  const objectId = 'object3';
+  const { openPopover } = usePopoverThread({ objectId });
+  useEffect(() => {
+    openPopover();
+  }, []);
 
   return (
     <div>
-      <PopoverThread objectId="object1">
+      <PopoverThread objectId={objectId}>
         <div
-          // onClick={() => setPopoverState('open')}
+          onClick={() => openPopover()}
           style={{
             padding: '10px 20px',
             marginLeft: '-200px',

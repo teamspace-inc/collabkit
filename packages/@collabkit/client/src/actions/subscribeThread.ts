@@ -1,5 +1,6 @@
 import { getConfig } from './index';
 import type { Sync, ThreadInfo, Store } from '@collabkit/core';
+import { createComposer } from '../store';
 
 export async function subscribeThread(
   store: Store,
@@ -9,13 +10,8 @@ export async function subscribeThread(
     info?: ThreadInfo;
   }
 ) {
-  store.workspaces[props.workspaceId].composers[props.threadId] ||= {
-    $$body: '',
-    $$mentions: [],
-    isTyping: {},
-    editor: null,
-    enabled: { default: false },
-  };
+  // console.log('subscribeThread', props.threadId);
+  store.workspaces[props.workspaceId].composers[props.threadId] ||= createComposer();
   const { workspaceId, threadId } = props;
   const { appId, userId } = getConfig(store);
   store.sync.subscribeThread({

@@ -1,22 +1,28 @@
 import { useCallback, useMemo } from 'react';
 import { useApp } from '../hooks/useApp';
 import { useSnapshot } from 'valtio';
-import { ThreadLocator, ThreadTarget } from '@collabkit/core';
+import { ObjectProps, ThreadTarget } from '@collabkit/core';
 import { useExistingThreadId } from './useExistingThreadId';
 import { usePendingThreadId } from './usePendingThreadId';
+import { useSaveThreadInfo } from './useSaveThreadInfo';
 
 export type PopoverState = 'open' | 'preview' | 'closed';
 
-export function usePopoverThread(props: ThreadLocator) {
+export function usePopoverThread(props: ObjectProps) {
   const { store, events } = useApp();
-  const { objectId } = props;
+  const { objectId, objectName } = props;
   const { workspaceId, viewingId, previewingId } = useSnapshot(store);
 
   const existingThreadId = useExistingThreadId({ objectId });
   const hasThread = !!existingThreadId;
   const newThreadId = usePendingThreadId({ objectId, workspaceId });
-  // console.log(existingThreadId, newThreadId);
   const threadId = existingThreadId ?? newThreadId;
+
+  useSaveThreadInfo({
+    workspaceId,
+    threadId,
+    info: { name: objectName, meta: { cellId: objectId } },
+  });
 
   const open =
     viewingId?.type === 'thread' &&

@@ -35,7 +35,7 @@ export const ScrollAreaCorner: React.ForwardRefExoticComponent<
 export function Scrollable(props: {
   children: React.ReactNode;
   className?: string;
-  maxHeight: React.CSSProperties['maxHeight'];
+  maxHeight?: React.CSSProperties['maxHeight'];
 }) {
   const { maxHeight } = props;
   return (

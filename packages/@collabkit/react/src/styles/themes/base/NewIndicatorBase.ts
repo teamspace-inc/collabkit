@@ -12,5 +12,6 @@ export const NewIndicatorBase = {
       background: 'initial',
     },
     padding: 'initial',
+    margin: 'initial',
   },
 };

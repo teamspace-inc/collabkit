@@ -23,6 +23,7 @@ import { useOptionalCommentContext } from '../../hooks/useCommentContext';
 import { useSnapshot } from 'valtio';
 import { $setSelection } from 'lexical';
 import { TypingIndicator } from '../TypingIndicator';
+
 import Profile from '../Profile';
 
 // Catch any errors that occur during Lexical updates and log them
@@ -134,7 +135,7 @@ function ComposerEditor(props: {
           onChange={(editorState, editor) => {
             editorState.read(() => {
               const newBody = $convertToMarkdownString(TRANSFORMERS);
-              events.onComposerChange(target, editorState, editor, newBody);
+              events.onComposerChange(target, editor, newBody);
             });
           }}
         />

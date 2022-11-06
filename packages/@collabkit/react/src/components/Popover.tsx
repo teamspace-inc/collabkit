@@ -206,23 +206,34 @@ function PopoverRoot(props: RootProps) {
       })
     );
 
+  const popoverContext = useMemo(
+    () => ({
+      previewContext,
+      context,
+      getProps,
+      open,
+      preview,
+      setOpen: onOpenChange,
+      ref,
+      getPreviewFloatingProps,
+      getFloatingProps,
+    }),
+    [
+      previewContext,
+      context,
+      getProps,
+      open,
+      preview,
+      // onOpenChange,
+      ref,
+      // getPreviewFloatingProps,
+      // getFloatingProps,
+    ]
+  );
+
   return (
     <FloatingNode id={nodeId}>
-      <PopoverContext.Provider
-        value={{
-          previewContext,
-          context,
-          getProps,
-          open,
-          preview,
-          setOpen: onOpenChange,
-          ref,
-          getPreviewFloatingProps,
-          getFloatingProps,
-        }}
-      >
-        {children}
-      </PopoverContext.Provider>
+      <PopoverContext.Provider value={popoverContext}>{children}</PopoverContext.Provider>
     </FloatingNode>
   );
 }

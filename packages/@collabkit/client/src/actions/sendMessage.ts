@@ -1,7 +1,7 @@
 import type { Store } from '@collabkit/core';
 import { $createTextNode, $getRoot } from 'lexical';
 import { writeMessageToFirebase } from './writeMessageToFirebase';
-import { getConfig } from '.';
+import { actions, getConfig } from '.';
 
 export async function sendMessage(store: Store, props: { workspaceId: string; threadId: string }) {
   const { workspaceId, threadId } = props;
@@ -20,7 +20,25 @@ export async function sendMessage(store: Store, props: { workspaceId: string; th
   }
 
   const workspace = store.workspaces[workspaceId];
-  const { editor, $$body: body, $$mentions: mentions } = workspace.composers[threadId];
+  const { editor, $$body: body } = workspace.composers[threadId];
+
+  let mentions: string[] = [];
+
+  editor?.getEditorState().read(() => {
+    const nodes = $getRoot().getAllTextNodes();
+    nodes.forEach((node) => {
+      switch (node.__type) {
+        case 'mention':
+          const id = node.__id;
+          if (typeof id === 'string') {
+            mentions.push(node.__id);
+          } else {
+            console.debug('unexpected mention id', id);
+          }
+          break;
+      }
+    });
+  });
 
   // console.debug('[CollabKit]: sending message', workspaceId, threadId, body, mentions);
 
@@ -36,6 +54,19 @@ export async function sendMessage(store: Store, props: { workspaceId: string; th
 
   // a pending pin is marked as 'open' on first message send
   const hasPendingPin = workspace.pins[threadId]?.state === 'pending';
+
+  const isFirstMessage = Object.keys(workspace.timeline[threadId] ?? {}).length === 0;
+
+  if (isFirstMessage && store.workspaces[workspaceId].pendingThreadInfo[threadId]) {
+    console.log('saving thread info');
+    // save thread info
+    await actions.saveThreadInfo(store, {
+      workspaceId,
+      threadId,
+      isOpen: true,
+      info: store.workspaces[workspaceId].pendingThreadInfo[threadId],
+    });
+  }
 
   try {
     const event = await writeMessageToFirebase(store, {
@@ -55,6 +86,8 @@ export async function sendMessage(store: Store, props: { workspaceId: string; th
     if (!event) {
       return;
     }
+
+    // is first message in thread
 
     if (hasPendingPin) {
       workspace.pins[threadId].state = 'open';

@@ -24,8 +24,6 @@ import { SidebarInboxButton } from './components/SidebarInboxButton';
 import { SidebarInbox } from './components/SidebarInbox';
 import { PopoverThread } from './components/PopoverThread';
 import { useInbox } from './hooks/public/useInbox';
-import Comment from './components/Comment';
-import Profile from './components/Profile';
 import { ThreadProvider } from './components/ThreadProvider';
 import { useComments } from './hooks/public/useComments';
 import { useIsResolved } from './hooks/public/useIsResolved';
@@ -34,11 +32,11 @@ import { useThreadUsers } from './hooks/public/useThreadUsers';
 import { ThreadFacepile } from './components/ThreadFacepile';
 import { useReplyCount } from './hooks/useReplyCount';
 import { ResolveThreadIconButton } from './components/ResolveThreadIconButton';
-import CollabKitRecharts from './components/Recharts';
-import { useExistingOrNewThreadId } from './hooks/useExistingOrNewThreadId';
-import { useExistingThreadId } from './hooks/useExistingThreadId';
-import { useNewThreadId } from './hooks/useNewThreadId';
 import { usePopoverThread } from './hooks/usePopoverThread';
+
+import Comment from './components/Comment';
+import CollabKitRecharts from './components/Recharts';
+import Profile from './components/Profile';
 
 export {
   CollabKitProvider as Provider,
