@@ -105,7 +105,7 @@ globalStyle(`${docs} table td a`, {
 });
 
 globalStyle(`${docs} table th`, {
-  fontSize: '13px',
+  fontSize: '14px',
   textAlign: 'left',
   fontWeight: 'normal',
   paddingBottom: '16px',

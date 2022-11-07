@@ -40,6 +40,7 @@ export function AdvancedProps(props: {
             <td style={{ verticalAlign: 'top', maxWidth: 320, fontSize: 14 }}>{row[2]}</td>
           </tr>
         ))}
+        <br />
       </tbody>
       {props.optionalProps ? (
         <>
