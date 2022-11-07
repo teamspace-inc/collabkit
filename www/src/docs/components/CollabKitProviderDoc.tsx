@@ -62,7 +62,7 @@ export const App() {
       <div>
         <h3>Props</h3>
         <AdvancedProps
-          rows={[
+          props={[
             ['appId', 'string', 'Your CollabKit App ID'],
             ['apiKey', 'string', 'Your CollabKit API Key'],
             ['theme', `'light' | 'dark' | 'CustomTheme'`, 'The theme to use'],

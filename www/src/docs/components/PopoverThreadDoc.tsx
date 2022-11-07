@@ -40,7 +40,27 @@ export function PopoverThreadDoc() {
       </div>
       <div>
         <h3>Props</h3>
-        <AdvancedProps rows={ThreadProps} />
+        <AdvancedProps
+          props={[
+            [
+              'objectId',
+              'string',
+              'A unique ID that represents the object you want to attach the popover thread to.',
+            ],
+            [
+              'children',
+              'React.ReactNode',
+              'The component you want to attach the popover thread to.',
+            ],
+          ]}
+          optionalProps={[
+            [
+              'objectName',
+              'string | undefined',
+              'A name for the object. Used in email notifications to refer to the object.',
+            ],
+          ]}
+        />
       </div>
     </>
   );

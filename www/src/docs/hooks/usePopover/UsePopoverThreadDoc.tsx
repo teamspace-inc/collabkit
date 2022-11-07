@@ -33,13 +33,15 @@ export function UsePopoverThreadDoc() {
       <div>
         <h3>Props</h3>
         <AdvancedProps
-          rows={[['objectId', 'string', 'A unique ID that represents the object in your product.']]}
+          props={[
+            ['objectId', 'string', 'A unique ID that represents the object in your product.'],
+          ]}
         />
         <br />
         <h3>Returns</h3>
         <AdvancedProps
           hideHeader={true}
-          rows={[
+          props={[
             ['showPopover', `() => void`, 'Opens the popover.'],
             ['hidePopover', `() => void`, 'Closes the popover.'],
             ['open', `boolean`, 'Whether the popover is open or not.'],

@@ -56,7 +56,7 @@ export function CommentDoc() {
       <div>
         <h3>Props</h3>
         <AdvancedProps
-          rows={[
+          props={[
             ['commentId', 'string', <>The id of the comment.</>],
             [
               'className',

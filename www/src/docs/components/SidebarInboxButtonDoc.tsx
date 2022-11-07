@@ -40,7 +40,7 @@ export function App() {
       <div>
         <h3>Props</h3>
         <AdvancedProps
-          rows={[
+          props={[
             [
               'children',
               'React.ReactNode | undefined',

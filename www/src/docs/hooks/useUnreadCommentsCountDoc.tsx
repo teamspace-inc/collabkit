@@ -18,7 +18,7 @@ const count = useUnreadCommentsCount({ threadId: 'unique-thread-id' });`)}
       <div>
         <h3>Props</h3>
         <AdvancedProps
-          rows={[
+          props={[
             [
               'threadId',
               'string',

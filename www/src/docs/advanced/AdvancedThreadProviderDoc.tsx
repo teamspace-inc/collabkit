@@ -33,7 +33,7 @@ export const SomeComponent() {
       <div>
         <h3>Props</h3>
         <AdvancedProps
-          rows={[
+          props={[
             [
               'threadId',
               'string',

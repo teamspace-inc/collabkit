@@ -31,7 +31,7 @@ export function ProfileDoc() {
       <div>
         <h3>Props</h3>
         <AdvancedProps
-          rows={[
+          props={[
             [
               'profileId',
               'string',

@@ -35,18 +35,29 @@ export function InboxButtonDoc() {
 
 export function App() {
   return <div>
-    <InboxButton onClick={() => { /* handle showing the users inbox here */ }} />
+    <InboxButton 
+      onClick={/* handle showing the users inbox here */} 
+    />
   </div>;
 }`)}
       </div>
       <div>
         <h3>Props</h3>
         <AdvancedProps
-          rows={[
-            ['onClick', '(e: React.MouseEvent) => void', 'Called when the user clicks the button.'],
+          props={[
+            [
+              'onClick',
+              <>
+                (e: React.MouseEvent)
+                <br /> {'=> void'}
+              </>,
+              'Called when the user clicks the button.',
+            ],
             [
               'children',
-              'React.ReactNode | undefined',
+              <>
+                React.ReactNode <br />| undefined
+              </>,
               'Optional children to render inside the button and replace default contents.',
             ],
           ]}

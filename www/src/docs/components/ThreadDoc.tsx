@@ -79,7 +79,7 @@ export function App() {
 
       <div>
         <h3>Props</h3>
-        <AdvancedProps rows={ThreadProps} />
+        <AdvancedProps props={ThreadProps} />
       </div>
     </>
   );

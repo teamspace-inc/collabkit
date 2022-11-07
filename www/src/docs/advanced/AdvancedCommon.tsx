@@ -1,5 +1,5 @@
 import { ThemeProvider, ThemeWrapper } from '@collabkit/react';
-import { advancedAnatomyPartNumber } from '../../styles/Docs.css';
+import { advancedAnatomyPartNumber, navListItem } from '../../styles/Docs.css';
 import { vars } from '../../styles/Theme.css';
 import { renderCodeSnippet } from '../CodeEditor';
 import { DocDemoContainer, DocLink } from '../Doc';
@@ -19,20 +19,20 @@ const Spacer24 = <div style={{ height: 24 }} />;
 
 export type AdvancedPropRow = [React.ReactNode, React.ReactNode, React.ReactNode];
 
-export function AdvancedProps(props: { rows: AdvancedPropRow[]; hideHeader?: boolean }) {
+export function AdvancedProps(props: {
+  props: AdvancedPropRow[];
+  optionalProps?: AdvancedPropRow[];
+  hideHeader?: boolean;
+}) {
   return (
     <table>
       {props.hideHeader ? null : (
         <thead>
-          <tr>
-            <th>Prop</th>
-            <th>Type</th>
-            <th></th>
-          </tr>
+          <tr></tr>
         </thead>
       )}
       <tbody>
-        {props.rows.map((row, i) => (
+        {props.props.map((row, i) => (
           <tr key={`row-${i}`}>
             <td style={{ verticalAlign: 'top', maxWidth: 175 }}>
               <code>{row[0]}</code>
@@ -44,6 +44,28 @@ export function AdvancedProps(props: { rows: AdvancedPropRow[]; hideHeader?: boo
           </tr>
         ))}
       </tbody>
+      {props.optionalProps ? (
+        <>
+          <thead>
+            <tr>
+              <th>Optional</th>
+            </tr>
+          </thead>
+          <tbody>
+            {props.optionalProps.map((row, i) => (
+              <tr key={`row-${i}`}>
+                <td style={{ verticalAlign: 'top', maxWidth: 175 }}>
+                  <code>{row[0]}</code>
+                </td>
+                <td style={{ verticalAlign: 'top', maxWidth: 225 }}>
+                  <code style={{ color: vars.color.textContrastMedium }}>{row[1]}</code>
+                </td>
+                <td style={{ verticalAlign: 'top', maxWidth: 320, fontSize: 14 }}>{row[2]}</td>
+              </tr>
+            ))}
+          </tbody>
+        </>
+      ) : null}
     </table>
   );
 }
