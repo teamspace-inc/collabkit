@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Contact } from '../home/Contact';
 import { Demos } from '../home/Demos';
 import { Header } from '../home/Header';
@@ -17,7 +16,6 @@ import { SmallCustomisable } from '../home/small/SmallCustomisable';
 import { SmallCode } from '../home/small/SmallCode';
 
 export function HomePage() {
-  const [invertFilter, setInvertFilter] = useState(0);
   const isSmallScreen = useIsSmallScreen();
 
   return (
@@ -40,12 +38,12 @@ export function HomePage() {
         </>
       ) : (
         <>
-          <Header invertFilter={invertFilter} />
+          <Header />
           <Hero />
-          <Demos setInvertFilter={setInvertFilter} />
-          <Components setInvertFilter={setInvertFilter} />
-          <Customisable setInvertFilter={setInvertFilter} />
-          <Code setInvertFilter={setInvertFilter} />
+          <Demos />
+          <Components />
+          <Customisable />
+          <Code />
           <Plans />
           <Contact />
         </>

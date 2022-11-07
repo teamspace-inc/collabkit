@@ -17,15 +17,3 @@ export const h3 = style({
   lineHeight: '28px',
   color: 'white',
 });
-
-export const a = style({
-  fontSize: '16px',
-  fontWeight: 600,
-  fontFamily: 'Inter',
-  textDecoration: 'none',
-  cursor: 'pointer',
-  color: 'black',
-  ':hover': {
-    textDecoration: 'underline',
-  },
-});

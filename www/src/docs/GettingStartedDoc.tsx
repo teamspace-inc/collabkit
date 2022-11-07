@@ -9,8 +9,10 @@ export function GettingStartedDoc() {
       <div>
         <h2>A quick tutorial to get you up and running with CollabKit</h2>
         <p>
-          In this tutorial we'll show you how to add a comment thread to your app. Once you complete
-          this you'll be ready to integrate other components and start customising CollabKit. <br />
+          In this tutorial we'll show you how to add a comment thread to your app. <br />
+          <br />
+          Once you complete this you'll be ready to integrate other components and start customising
+          CollabKit. <br />
           <br />
           Set aside 5 to 10 minutes to get this done.
         </p>
@@ -64,9 +66,8 @@ export default function App() {
   <Thread threadId={'unique ID here'} />
 </div>;`)}
         <div>
-          <br />
           <p>
-            You should see a <code>{'<Thread />'}</code>
+            You should see a <code>{'<Thread />'}</code> like the one below:
           </p>
           <DocDemoContainer>
             <ThreadDemo />

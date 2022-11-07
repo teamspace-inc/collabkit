@@ -1,14 +1,16 @@
 import React from 'react';
-import LogoSvg from './Logo.svg';
+import LogoLightSvg from './assets/LogoLight.svg';
+import LogoDarkSvg from './assets/LogoDark.svg';
 
 export function Logo(props: {
+  theme: 'light' | 'dark';
   style?: React.CSSProperties;
   onClick?: (e: React.MouseEvent) => void;
 }) {
   return (
     <img
       {...props}
-      src={LogoSvg}
+      src={props.theme === 'light' ? LogoLightSvg : LogoDarkSvg}
       style={{
         height: '1.5rem',
         position: 'relative',

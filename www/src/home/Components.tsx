@@ -3,13 +3,7 @@ import { dark } from '../styles/Theme.css';
 import * as styles from '../styles/home/Demos.css';
 import { CarouselProvider, Slider, Slide } from 'pure-react-carousel';
 import 'pure-react-carousel/dist/react-carousel.es.css';
-import {
-  PopoverThread,
-  Inbox,
-  Thread,
-  usePopoverThread,
-  InternalPopoverThreadThread,
-} from '@collabkit/react';
+import { Inbox, Thread, usePopoverThread, InternalPopoverThreadThread } from '@collabkit/react';
 import {
   component,
   card,
@@ -115,7 +109,7 @@ function Component(props: ComponentProps) {
   );
 }
 
-export function Components(props: { setInvertFilter: (invert: number) => void }) {
+export function Components() {
   const size = useWindowSize();
   const width = size?.width ?? window.innerWidth;
 

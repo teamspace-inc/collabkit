@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import ChartSvg from '../assets/home/demos/Charts.svg';
 import TextSvg from '../assets/home/demos/Text.svg';
-import { dark } from '../styles/Theme.css';
+import { dark, vars } from '../styles/Theme.css';
 import { purpleBg, tab, tabs } from '../styles/Website.css';
-import { useInvertFilter } from '../hooks/useInvertFilter';
+import { useHeaderStyle } from '../hooks/useHeaderStyle';
 import { ListDemo } from './ListDemo';
 import { DataGridDemo } from '../components/DataGridDemo';
 import * as styles from '../styles/home/Demos.css';
@@ -27,9 +27,12 @@ function Scenario({ scenario }: { scenario: ScenarioName }) {
   }
 }
 
-export function Demos(props: { setInvertFilter: (invert: number) => void }) {
+export function Demos() {
   const [activeScenario, setActiveScenario] = useState<ScenarioName>('Lists');
-  const { ref } = useInvertFilter(props);
+  const { ref } = useHeaderStyle({
+    backgroundColor: vars.color.aubergine,
+    theme: 'dark',
+  });
   return (
     <section ref={ref} className={`${dark} ${purpleBg}`} id="HowItWorks">
       <h1>Works with any UI</h1>

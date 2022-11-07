@@ -41,10 +41,6 @@ globalStyle(
   {}
 );
 
-globalStyle(`${docs} a`, {
-  color: vars.color.yellow,
-});
-
 globalStyle(`${docs} .mtk42`, {
   fontWeight: '700',
   color: vars.color.sky,

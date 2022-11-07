@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { dark, vars } from '../styles/Theme.css';
-import { useInvertFilter } from '../hooks/useInvertFilter';
+import { useHeaderStyle } from '../hooks/useHeaderStyle';
 import * as styles from '../styles/home/Demos.css';
 import { ThemeProvider } from '@collabkit/react';
 import { controls, modal } from '../styles/home/Customisable.css';
@@ -8,8 +8,11 @@ import { ToggleButtonGroup } from './ToggleButtonGroup';
 import { COMPONENTS } from './Components';
 import { purpleBg } from '../styles/Website.css';
 
-export function Customisable(props: { setInvertFilter: (invert: number) => void }) {
-  const { ref } = useInvertFilter(props);
+export function Customisable() {
+  const { ref } = useHeaderStyle({
+    backgroundColor: vars.color.aubergine,
+    theme: 'dark',
+  });
 
   const [theme, setTheme] = useState(0);
   const [component, setComponent] = useState(0);

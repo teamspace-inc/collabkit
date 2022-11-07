@@ -60,6 +60,7 @@ export const sidebar = style({
   top: 0,
   right: 0,
   bottom: 0,
+  width: 320,
 
   borderLeft: '1px solid #E1E7ED',
 

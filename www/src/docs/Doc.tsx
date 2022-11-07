@@ -2,6 +2,7 @@ import { ThemeProvider } from '@collabkit/react';
 import { PropsWithChildren, useEffect } from 'react';
 import { Link, LinkProps, LocationHook } from 'wouter';
 import {
+  docBody,
   docContent,
   docDemoContainer,
   docFooter,
@@ -15,15 +16,9 @@ import {
   docTitle,
 } from '../styles/Docs.css';
 import { dark, vars } from '../styles/Theme.css';
-import {
-  ScrollAreaCorner,
-  ScrollAreaRoot,
-  ScrollAreaScrollbar,
-  ScrollAreaThumb,
-  ScrollAreaViewport,
-} from '../UIKit';
 import { Nav } from './DocNav';
 import { ArrowLeft, ArrowRight, IconContext } from 'phosphor-react';
+import { store, Header } from '../home/Header';
 
 function pathToHref(path?: string[]) {
   return `/docs/${path
@@ -37,7 +32,6 @@ export function DocFooterLink(props: {
   style?: React.CSSProperties;
   direction: 'next' | 'prev';
 }) {
-  console.log(props.path);
   return props.path ? (
     <div
       className={docFooterLink}
@@ -107,30 +101,31 @@ export function Doc(props: {
   prev: string[] | undefined;
 }) {
   useEffect(() => {
+    store.backgroundColor = vars.color.bgContrastFloor;
+    store.theme = 'dark';
     window.scrollTo(0, 0);
   }, []);
+
   return (
-    <div className={`${docs} ${dark}`}>
+    <div
+      className={`${docs} ${dark}`}
+      style={{ background: vars.color.bgContrastFloor, height: '100vh' }}
+    >
       <div className={docRoot}>
-        <Nav className={docNav} />
-        <div className={docScrollableContentWrap}>
-          <ScrollAreaRoot style={{ width: '100%' }}>
-            <ScrollAreaViewport>
-              <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <div>
-                  <div className={docScrollableContent}>
-                    <h1 className={docTitle}>{props.title}</h1>
-                    <div className={docContent}>{props.children}</div>
-                    <DocFooter next={props.next} prev={props.prev} />
-                  </div>
+        <div className={docContent}>
+          <Nav className={docNav} />
+          <div className={docScrollableContentWrap}>
+            <Header />
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <div>
+                <div className={docScrollableContent}>
+                  <h1 className={docTitle}>{props.title}</h1>
+                  <div className={docBody}>{props.children}</div>
+                  <DocFooter next={props.next} prev={props.prev} />
                 </div>
               </div>
-            </ScrollAreaViewport>
-            <ScrollAreaScrollbar orientation="vertical">
-              <ScrollAreaThumb />
-            </ScrollAreaScrollbar>
-            <ScrollAreaCorner />
-          </ScrollAreaRoot>
+            </div>
+          </div>
         </div>
       </div>
     </div>

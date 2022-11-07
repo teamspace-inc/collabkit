@@ -32,7 +32,7 @@ export const h3OnPurple = style({
 });
 
 export const purpleBg = style({
-  background: '#2E2739',
+  background: vars.color.aubergine,
   color: 'white',
 });
 
@@ -185,25 +185,16 @@ globalStyle(`${website} code`, {
   color: vars.color.textContrastHigh,
 });
 
-export const header = style({
-  position: 'fixed',
-  top: 20,
-  left: 0,
-  right: 0,
-  zIndex: 2,
-  display: 'flex',
-  justifyContent: 'center',
-});
-
-export const headerInner = style({
-  display: 'flex',
-  flex: 1,
-  alignItems: 'center',
-  maxWidth: '1124px',
-});
-
 export const a = style({
   color: vars.color.textContrastHigh,
+  fontSize: '16px',
+  fontWeight: 600,
+  fontFamily: 'Inter',
+  textDecoration: 'none',
+  cursor: 'pointer',
+  ':hover': {
+    textDecoration: 'underline',
+  },
 });
 
 export const tabs = style({

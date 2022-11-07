@@ -63,7 +63,7 @@ export const App() {
           props={[
             ['appId', 'string', 'Your CollabKit App ID'],
             ['apiKey', 'string', 'Your CollabKit API Key'],
-            ['theme', `'light' | 'dark' | 'CustomTheme'`, 'The theme to use'],
+            ['theme', `'light' | 'dark' | CustomTheme`, 'The theme to use'],
             ['user', 'User', <>Authenticated user</>],
             [
               'workspace',

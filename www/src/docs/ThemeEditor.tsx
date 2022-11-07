@@ -11,7 +11,7 @@ import { InboxButtonDemo } from './demos/InboxButtonDemo';
 
 import { dark } from '../styles/Theme.css';
 import { bg } from '../styles/Website.css';
-import { Logo } from './Logo';
+import { Logo } from '../Logo';
 
 import {
   codeEditor,
@@ -52,7 +52,7 @@ export function ThemeEditor() {
   return (
     <div className={`${docs} ${dark} ${bg} ${root}`}>
       <div className={header}>
-        <Logo />
+        <Logo theme="light" />
         <div className={componentList}>
           Theme Editor
           {components.map((c) => (

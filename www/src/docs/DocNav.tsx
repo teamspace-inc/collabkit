@@ -18,8 +18,7 @@ import {
   navListTitle,
   navOl,
   navWrap,
-} from '../styles/Docs.css';
-import { Logo } from './Logo';
+} from '../styles/docs/DocNav.css';
 
 function NavListItem(props: { path: string[]; id: string; onClick: () => void }) {
   const [location] = useLocation();
@@ -74,9 +73,6 @@ export function Nav(props: { className?: string }) {
     <>
       <div>
         <div className={navHeader}>
-          <Link to="/docs">
-            <Logo />
-          </Link>
           <div className={navBurgerToggle({ active: isOpen })} onClick={() => setIsOpen(!isOpen)}>
             <List size={24} color="rgba(255,255,255,0.75)" />
           </div>

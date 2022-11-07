@@ -1,6 +1,7 @@
 import { createStitches, keyframes } from '@stitches/react';
 import * as ScrollArea from '@radix-ui/react-scroll-area';
-import * as ui from './styles/UIKit.css';
+import { a } from './styles/Website.css';
+import { vars } from './styles/Theme.css';
 
 export const { styled, css, theme } = createStitches({
   theme: {
@@ -17,7 +18,7 @@ export const V8 = () => <VSpace h={8} />;
 export const V12 = () => <VSpace h={12} />;
 export const V24 = () => <VSpace h={24} />;
 
-const SCROLLBAR_SIZE = 6;
+const SCROLLBAR_SIZE = 8;
 
 const scrollAreaStyles = {
   root: css({
@@ -36,9 +37,9 @@ const scrollAreaStyles = {
     userSelect: 'none',
     // disable browser handling of all panning and zooming gestures on touch devices
     touchAction: 'none',
-    padding: '6px 4px 6px 4px',
+    padding: '1px',
     transition: 'background 160ms ease-out',
-    '&:hover': { background: 'rgba(255,255,255,0.04)' },
+    '&:hover': { background: vars.color.bgContrastLowest },
     '&[data-orientation="vertical"]': { width: SCROLLBAR_SIZE },
     '&[data-orientation="horizontal"]': {
       flexDirection: 'column',
@@ -48,7 +49,7 @@ const scrollAreaStyles = {
 
   thumb: css({
     flex: 1,
-    background: 'rgba(255,255,255,0.16)',
+    background: vars.color.bgContrastMedium,
     borderRadius: SCROLLBAR_SIZE,
     // increase target size for touch devices https://www.w3.org/WAI/WCAG21/Understanding/target-size.html
     position: 'relative',
@@ -130,17 +131,4 @@ export const loading = keyframes({
 //   paddingLeft: '5vw',
 // });
 
-export const Header = styled('header', {
-  display: 'flex',
-  alignItems: 'center',
-  flex: 1,
-  width: '90vw',
-  padding: '0 5vw',
-  position: 'fixed',
-  zIndex: 2,
-  maxWidth: '1352px',
-});
-
-export const Link = (props: React.ComponentPropsWithoutRef<'a'>) => (
-  <a className={ui.a} {...props} />
-);
+export const Link = (props: React.ComponentPropsWithoutRef<'a'>) => <a className={a} {...props} />;

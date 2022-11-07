@@ -1,15 +1,16 @@
 import { useEffect, useRef } from 'react';
+import { store } from '../home/Header';
 
-export function useInvertFilter(props: { setInvertFilter: (invertFilter: number) => void }) {
+export function useHeaderStyle(props: { theme: 'light' | 'dark'; backgroundColor: string }) {
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const listener = () => {
       if (ref.current) {
         const rect = ref.current.getBoundingClientRect();
         if (rect.top < 0 && rect.top > -rect.height) {
-          props.setInvertFilter(1);
-        } else {
-          props.setInvertFilter(0);
+          store.backgroundColor = props.backgroundColor;
+          store.theme = props.theme;
+          // props.setInvertFilter(1);
         }
       }
     };

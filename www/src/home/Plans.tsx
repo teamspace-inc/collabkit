@@ -4,6 +4,7 @@ import checkmarkSvg from '../assets/checkmark.svg';
 import { card, li, ul } from '../styles/Home.css';
 import { V12 } from '../UIKit';
 import { vars } from '../styles/Theme.css';
+import { useHeaderStyle } from '../hooks/useHeaderStyle';
 
 function FeatureList(props: { children: React.ReactNode }) {
   return (
@@ -21,11 +22,24 @@ function FeatureList(props: { children: React.ReactNode }) {
 }
 
 export function Plans() {
+  const { ref } = useHeaderStyle({
+    backgroundColor: vars.color.ice,
+    theme: 'light',
+  });
+
   return (
-    <section style={{ background: '#F0F4F8' }} id="Pricing">
+    <section ref={ref} style={{ background: vars.color.ice }} id="Pricing">
       <h1>Pricing</h1>
       <h3 style={{ color: '#8093A7' }}>Packages that grow with your business</h3>
-      <div style={{ display: 'flex', gap: '40px', flexDirection: 'row', marginTop: '60px' }}>
+      <div
+        style={{
+          display: 'flex',
+          gap: '20px',
+          flexDirection: 'row',
+          marginTop: '60px',
+          maxWidth: 1124,
+        }}
+      >
         <div className={card}>
           <h4>Trial</h4>
           <V12 />

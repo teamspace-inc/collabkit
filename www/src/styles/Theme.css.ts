@@ -2,6 +2,7 @@ import { createGlobalThemeContract, createTheme } from '@vanilla-extract/css';
 
 export const vars = createGlobalThemeContract({
   color: {
+    bgContrastFloor: 'bg-contrast-floor',
     bgContrastLowest: 'bg-contrast-lowest',
     bgContrastLow: 'bg-contrast-low',
     bgContrastMedium: 'bg-contrast-medium',
@@ -17,6 +18,7 @@ export const vars = createGlobalThemeContract({
     pink: 'pink',
     plum: 'plum',
     purple: 'purple',
+    aubergine: 'aubergine',
     violet: 'violet',
     indigo: 'indigo',
     blue: 'blue',
@@ -31,11 +33,17 @@ export const vars = createGlobalThemeContract({
     lime: 'lime',
     yellow: 'yellow',
     amber: 'amber',
+    ice: 'ice',
+  },
+  header: {
+    backgroundColor: 'header-background-color',
+    borderColor: 'header-border-color',
   },
 });
 
 export const dark = createTheme(vars, {
   color: {
+    bgContrastFloor: '#1C1C1C',
     bgContrastLowest: '#222',
     bgContrastLow: '#2C2C2C',
     bgContrastMedium: '#3D3D3D',
@@ -51,6 +59,7 @@ export const dark = createTheme(vars, {
     pink: '#D560A5',
     plum: '#B064BD',
     purple: '#9669C9',
+    aubergine: '#2E2739',
     violet: '#7A70D3',
     indigo: '#5779DF',
     blue: '#4DA0F9',
@@ -65,11 +74,17 @@ export const dark = createTheme(vars, {
     lime: '#CCEB65',
     yellow: '#FFEE78',
     amber: '#FBCC64',
+    ice: '#F0F4F8',
+  },
+  header: {
+    backgroundColor: 'transparent',
+    borderColor: 'rgba(255, 255, 255, 0.1)',
   },
 });
 
 export const light = createTheme(vars, {
   color: {
+    bgContrastFloor: '#FFFFFF',
     bgContrastLowest: '#FFFFFF',
     bgContrastLow: '#F6F6F6',
     bgContrastMedium: '#EEEEEE',
@@ -85,6 +100,7 @@ export const light = createTheme(vars, {
     pink: '#D560A5',
     plum: '#B064BD',
     purple: '#9669C9',
+    aubergine: '#2E2739',
     violet: '#7A70D3',
     indigo: '#5779DF',
     blue: '#4DA0F9',
@@ -99,5 +115,10 @@ export const light = createTheme(vars, {
     lime: '#CCEB65',
     yellow: '#FFEE78',
     amber: '#FBCC64',
+    ice: '#F0F4F8',
+  },
+  header: {
+    backgroundColor: 'transparent',
+    borderColor: 'rgba(0, 0, 0, 0.1)',
   },
 });

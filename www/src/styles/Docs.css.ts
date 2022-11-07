@@ -1,5 +1,4 @@
 import { globalStyle, style } from '@vanilla-extract/css';
-import { recipe } from '@vanilla-extract/recipes';
 import { MAIN_BREAKPOINT } from '../hooks/useWindowSize';
 import { vars } from './Theme.css';
 
@@ -7,7 +6,7 @@ globalStyle('code', {});
 
 export const docs = style({});
 
-const max768 = `screen and (max-width: ${MAIN_BREAKPOINT}px)`;
+export const max768 = `screen and (max-width: ${MAIN_BREAKPOINT}px)`;
 
 globalStyle(`${docs} blockquote`, {
   border: `1px solid ${vars.color.mint}`,
@@ -151,7 +150,7 @@ export const docStep = style({
     background: vars.color.mint,
     borderRadius: '50%',
     position: 'absolute',
-    left: -32 - 16,
+    left: -44,
   },
 });
 
@@ -190,6 +189,7 @@ export const themeDemoContainer = style([
 
 export const docScrollableContent = style({
   padding: 20,
+  paddingTop: 72,
   gridTemplateColumns: 'minmax(360px, 666px)',
   display: 'grid',
   width: 'auto',
@@ -208,9 +208,9 @@ export const docScrollableContent = style({
 });
 
 export const docScrollableContentWrap = style({
-  height: '100vh',
   borderLeft: '1px solid #333',
   borderColor: vars.color.bgContrastLow,
+  minHeight: '100vh',
 
   '@media': {
     [max768]: {
@@ -220,9 +220,10 @@ export const docScrollableContentWrap = style({
 });
 
 export const docNav = style({
-  position: 'sticky',
+  position: 'fixed',
+  paddingTop: '80px',
   top: 0,
-  background: '#1C1C1C',
+  background: vars.color.bgContrastFloor,
   color: 'white',
   display: 'flex',
   height: '100vh',
@@ -230,9 +231,8 @@ export const docNav = style({
 
   '@media': {
     [max768]: {
-      background: '#1C1C1C',
+      background: vars.color.bgContrastFloor,
       alignItems: 'flex-start',
-      borderRight: 'none',
     },
   },
 });
@@ -280,6 +280,21 @@ export const docLink = style({
 });
 
 export const docContent = style({
+  maxWidth: 1124,
+  inset: 0,
+  alignItems: 'flex-start',
+  display: 'grid',
+  height: '100%',
+  overflow: 'hidden',
+  gridTemplateColumns: 'minmax(320px, 1fr) minmax(500px, 3fr)',
+  '@media': {
+    [max768]: {
+      display: 'unset',
+    },
+  },
+});
+
+export const docBody = style({
   display: 'flex',
   flexDirection: 'column',
   gap: '30px',
@@ -288,17 +303,11 @@ export const docContent = style({
 
 export const docRoot = style({
   color: vars.color.textContrastMedium,
-  background: '#1C1C1C',
-  position: 'fixed',
-  inset: 0,
-  alignItems: 'flex-start',
-  display: 'grid',
-  gridTemplateColumns: 'minmax(280px, 1fr) minmax(500px, 3fr)',
-  '@media': {
-    [max768]: {
-      display: 'unset',
-    },
-  },
+  background: vars.color.bgContrastFloor,
+  display: 'flex',
+  justifyContent: 'center',
+  // position: 'fixed',
+  // inset: 0,
 });
 
 export const docTitle = style({
@@ -314,139 +323,4 @@ export const docTitle = style({
       padding: '32px 0px 32px',
     },
   },
-});
-
-export const navOl = style({
-  listStyle: 'none',
-  boxSizing: 'border-box',
-  padding: '0px 12px 0px 12px',
-  gap: '4px',
-  display: 'flex',
-  flexDirection: 'column',
-  '@media': {
-    [max768]: {
-      paddingRight: '24px',
-    },
-  },
-});
-
-globalStyle(`${docs} ${navOl} ol`, {
-  marginTop: 0,
-  marginBottom: 8,
-  marginLeft: '0',
-  paddingLeft: 0,
-  textIndent: '20px',
-  paddingRight: 0,
-  display: 'flex',
-  flex: 1,
-});
-
-export const navLi = style({
-  display: 'flex',
-  flexDirection: 'column',
-  flex: 1,
-  '@media': {
-    [max768]: {
-      alignItems: 'stretch',
-    },
-  },
-});
-
-export const navListItem = recipe({
-  base: {
-    fontSize: '16px',
-    lineHeight: '32px',
-    boxSizing: 'border-box',
-    padding: '4px 12px',
-    userSelect: 'none',
-    display: 'flex',
-    flex: 1,
-    color: vars.color.textContrastMedium,
-    textDecoration: 'none',
-    borderRadius: '4px',
-  },
-  variants: {
-    active: {
-      true: {
-        background: 'rgba(255, 255, 255, 0.08)',
-        color: 'white',
-        fontWeight: 600,
-      },
-      false: {
-        ':hover': {
-          background: 'rgba(255, 255, 255, 0.04)',
-          cursor: 'pointer',
-          color: 'white',
-        },
-      },
-    },
-  },
-});
-
-export const navLogoOuter = style({
-  flex: 1,
-  cursor: 'pointer',
-  display: 'flex',
-});
-
-export const navLogoInner = style({
-  width: 290,
-});
-
-export const navBurgerToggle = recipe({
-  base: {
-    border: 'none',
-    background: 'rgba(255, 255, 255, 0.02)',
-    borderRadius: '4px',
-    width: '40px',
-    height: '40px',
-    display: 'none',
-    alignItems: 'center',
-    justifyContent: 'center',
-
-    ':hover': {
-      background: 'rgba(255, 255, 255, 0.04)',
-      cursor: 'pointer',
-    },
-    '@media': {
-      [max768]: {
-        display: 'flex',
-      },
-    },
-  },
-  variants: {
-    active: {
-      true: {
-        background: 'rgba(255, 255, 255, 0.08)',
-        ':hover': {
-          background: 'rgba(255, 255, 255, 0.08)',
-        },
-      },
-    },
-  },
-});
-
-export const navWrap = style({
-  display: 'flex',
-  flexDirection: 'column',
-  paddingBottom: '100px',
-});
-
-export const navHeader = style({
-  display: 'flex',
-  flexDirection: 'row',
-  height: '80px',
-  alignItems: 'center',
-  padding: '0px 24px',
-});
-
-export const navListTitle = style({
-  fontFamily: 'Inter',
-  fontStyle: 'normal',
-  fontWeight: 600,
-  color: '#fff',
-  fontSize: 14,
-  marginTop: '8px',
-  paddingLeft: '12px',
-  lineHeight: '32px',
 });

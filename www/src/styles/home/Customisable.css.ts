@@ -47,7 +47,7 @@ export const toggleButton = recipe({
     justifyContent: 'center',
     fontFamily: 'Inter',
     fontStyle: 'normal',
-    fontWeight: 700,
+    fontWeight: 500,
     fontSize: 16,
     cursor: 'pointer',
     lineHeight: 18,
@@ -55,6 +55,7 @@ export const toggleButton = recipe({
   variants: {
     active: {
       true: {
+        fontWeight: 500,
         cursor: 'default',
         outline: '6px solid rgba(255, 255, 255, 0.15)',
       },

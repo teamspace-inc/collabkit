@@ -4,8 +4,22 @@ import { GetStartedButton } from './GetStartedButton';
 
 import UISvg from '../assets/home/hero/ui.svg';
 import { HeroMessage, HERO_MESSAGES } from './HeroMessage';
+import { useHeaderStyle } from '../hooks/useHeaderStyle';
+import { vars } from '../styles/Theme.css';
+import { store } from './Header';
+import { useEffect } from 'react';
 
 export function Hero() {
+  const { ref } = useHeaderStyle({
+    backgroundColor: vars.color.yellow,
+    theme: 'light',
+  });
+
+  useEffect(() => {
+    store.backgroundColor = vars.color.yellow;
+    store.theme = 'light';
+  }, []);
+
   const title = (
     <>
       Commenting
@@ -30,7 +44,7 @@ export function Hero() {
   });
 
   return (
-    <section className={styles.section}>
+    <section ref={ref} className={styles.section}>
       <h1 className={styles.h1}>{title}</h1>
       <h3>{description}</h3>
       <GetStartedButton />
