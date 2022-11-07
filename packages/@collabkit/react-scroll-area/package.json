@@ -1,0 +1,46 @@
+{
+  "name": "@radix-ui/react-scroll-area",
+  "version": "1.0.2-rc.1",
+  "license": "MIT",
+  "source": "src/index.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.module.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "clean": "rm -rf dist",
+    "version": "yarn version"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.13.10",
+    "@radix-ui/number": "workspace:*",
+    "@radix-ui/primitive": "workspace:*",
+    "@radix-ui/react-compose-refs": "workspace:*",
+    "@radix-ui/react-context": "workspace:*",
+    "@radix-ui/react-direction": "workspace:*",
+    "@radix-ui/react-presence": "workspace:*",
+    "@radix-ui/react-primitive": "workspace:*",
+    "@radix-ui/react-use-callback-ref": "workspace:*",
+    "@radix-ui/react-use-layout-effect": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/resize-observer-browser": "^0.1.4"
+  },
+  "peerDependencies": {
+    "react": "^16.8 || ^17.0 || ^18.0",
+    "react-dom": "^16.8 || ^17.0 || ^18.0"
+  },
+  "homepage": "https://radix-ui.com/primitives",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/radix-ui/primitives.git"
+  },
+  "bugs": {
+    "url": "https://github.com/radix-ui/primitives/issues"
+  },
+  "stableVersion": "1.0.1"
+}
