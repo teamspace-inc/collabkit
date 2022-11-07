@@ -6,7 +6,7 @@ export function CollabKitProviderDoc() {
   return (
     <>
       <h2>
-        Handles user authentication and realtime comments syncing. Required to use other components.
+        Identifies users and subscribes to realtime comments. Required to use other components.
       </h2>
 
       <div>
