@@ -155,6 +155,7 @@ function Sidebar({ employee, onClose }: { employee: Employee | undefined; onClos
               position: 'absolute',
               bottom: 84,
               left: '50%',
+              boxSizing: 'border-box',
               transform: 'translateX(-50%)',
             }}
           >
@@ -167,7 +168,7 @@ function Sidebar({ employee, onClose }: { employee: Employee | undefined; onClos
 }
 
 export function ListDemo() {
-  const [selectedId, setSelectedId] = useState<string | undefined>(employees[3].id);
+  const [selectedId, setSelectedId] = useState<string | undefined>(employees[8].id);
   const selectedEmployee = selectedId ? employees.find(({ id }) => id === selectedId) : undefined;
   return (
     <ThemeProvider theme="light">
