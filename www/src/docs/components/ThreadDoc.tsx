@@ -1,49 +1,8 @@
 import { vars } from '../../styles/Theme.css';
-import { AdvancedPropRow, AdvancedProps } from '../advanced/AdvancedCommon';
+import { AdvancedProps } from '../advanced/AdvancedCommon';
 import { renderCodeSnippet } from '../CodeEditor';
 import { ThreadDemo } from '../demos/ThreadDemo';
-import { DocDemoContainer, DocHeroDemoContainer, DocLink } from '../Doc';
-
-export const ThreadProps: AdvancedPropRow[] = [
-  ['threadId', 'string', 'A unique ID that represents this thread.'],
-  [
-    'name',
-    'string | undefined',
-    'A name for the thread. Used in email notifications to refer to the thread.',
-  ],
-  [
-    'url',
-    'string | undefined',
-    <>
-      The URL of the page where the thread is rendered. Used in email notifications and the Inbox to{' '}
-      <DocLink href="/docs/inbox">link</DocLink> to the thread.
-    </>,
-  ],
-  [
-    'showHeader',
-    'boolean | undefined',
-    <>
-      Defaults to <code>false</code>. <br />
-      Set this to <code>true</code> to show the header.
-    </>,
-  ],
-  [
-    'autoFocus',
-    'boolean | undefined',
-    <>
-      Defaults to <code>true</code>. <br />
-      Set this to <code>false</code> to prevent focusing the composer on mount.
-    </>,
-  ],
-  [
-    'hideComposer',
-    'boolean | undefined',
-    <>
-      Defaults to <code>false</code>. <br />
-      Set this to <code>true</code> to hide the composer.
-    </>,
-  ],
-];
+import { DocHeroDemoContainer, DocLink } from '../Doc';
 
 export function ThreadDoc() {
   return (
@@ -79,7 +38,48 @@ export function App() {
 
       <div>
         <h3>Props</h3>
-        <AdvancedProps props={ThreadProps} />
+        <AdvancedProps
+          props={[['threadId', 'string', 'A unique ID that represents this thread.']]}
+          optionalProps={[
+            [
+              'name',
+              'string | undefined',
+              'A name for the thread. Used in email notifications to refer to the thread.',
+            ],
+            [
+              'url',
+              'string | undefined',
+              <>
+                The URL of the page where the thread is rendered. Used in email notifications and
+                the Inbox to <DocLink href="/docs/inbox">link</DocLink> to the thread.
+              </>,
+            ],
+            [
+              'showHeader',
+              'boolean | undefined',
+              <>
+                Defaults to <code>false</code>. <br />
+                Set this to <code>true</code> to show the header.
+              </>,
+            ],
+            [
+              'autoFocus',
+              'boolean | undefined',
+              <>
+                Defaults to <code>true</code>. <br />
+                Set this to <code>false</code> to prevent focusing the composer on mount.
+              </>,
+            ],
+            [
+              'hideComposer',
+              'boolean | undefined',
+              <>
+                Defaults to <code>false</code>. <br />
+                Set this to <code>true</code> to hide the composer.
+              </>,
+            ],
+          ]}
+        />
       </div>
     </>
   );

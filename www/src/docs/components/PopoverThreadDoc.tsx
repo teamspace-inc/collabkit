@@ -3,7 +3,6 @@ import { renderCodeSnippet } from '../CodeEditor';
 import { DocHeroDemoContainer } from '../Doc';
 import { PopoverDemo } from './PopoverDemo';
 import Usage from './PopoverUsage.tsx?raw';
-import { ThreadProps } from './ThreadDoc';
 
 export function PopoverThreadDoc() {
   return (
