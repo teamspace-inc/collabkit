@@ -1,4 +1,4 @@
-import { DocLink } from './Doc';
+import { DocFooterLink } from './Doc';
 
 // While apps like Slack and Microsoft Teams are where we chat they don’t really enable communication around a piece of content in your product well. People resort to taking screenshots and sharing them on other services, while describing the relevant context manually “See the fourth item from the top in this list”.
 
@@ -13,7 +13,11 @@ export function IntroductionDoc() {
         Add our components to your app to help your users collaborate in context, and work as a
         team.
       </h2>
-      <DocLink href="/docs/gettingstarted">Getting started</DocLink>
+      <DocFooterLink
+        path={['Getting Started']}
+        style={{ alignItems: 'flex-start' }}
+        direction="next"
+      />
       <div>
         <h3>Vision</h3>
         <p>

@@ -32,11 +32,12 @@ function pathToHref(path?: string[]) {
     .toLowerCase()}`;
 }
 
-function DocFooterLink(props: {
+export function DocFooterLink(props: {
   path?: string[];
   style?: React.CSSProperties;
   direction: 'next' | 'prev';
 }) {
+  console.log(props.path);
   return props.path ? (
     <div
       className={docFooterLink}
