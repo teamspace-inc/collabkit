@@ -66,7 +66,7 @@ export const COMPONENTS: ComponentProps[] = [
     description: 'A comment thread that can be rendered anywhere in your app.',
     component: (
       <div style={{ width: 256, height: 320 }}>
-        <Thread threadId="thread3" />
+        <Thread objectId="object3" />
       </div>
     ),
   },

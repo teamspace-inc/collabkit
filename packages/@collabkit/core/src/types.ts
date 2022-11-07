@@ -10,7 +10,7 @@ export interface ThreadMeta {
 }
 
 export interface ObjectMeta {
-  [x: string]: any;
+  [x: string]: unknown;
 }
 
 export type ObjectProps = {

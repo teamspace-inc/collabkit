@@ -146,7 +146,7 @@ function Sidebar({ employee, onClose }: { employee: Employee | undefined; onClos
           <dd>{employee.department}</dd>
         </dl>
         <div style={{ display: 'contents' }} onFocus={() => setShowTip(false)}>
-          <Thread threadId={`employee_${employee.id}`} autoFocus={false} />
+          <Thread objectId={`employee_${employee.id}`} autoFocus={false} />
         </div>
         {showTip && (
           <DemoTip

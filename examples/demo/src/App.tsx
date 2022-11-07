@@ -131,22 +131,15 @@ function Demo() {
 // }
 
 function Home() {
-  const threadId = 'new-your-thread-id2';
+  const objectId = 'new-your-thread-id2';
 
-  const unreadCount = useUnreadCount({ threadId });
+  const unreadCount = useUnreadCount({ threadId: objectId });
   const unread = unreadCount > 0 ? ` (${unreadCount})` : '';
   useDocumentTitle(`CollabKit Demo${unread}`);
 
   return (
     <div style={{ position: 'fixed', inset: 0 }}>
-      <Thread
-        autoFocus={true}
-        info={{ name: 'Demo thread' }}
-        showHeader={true}
-        composerPrompt="Write a comment"
-        style={{ borderRadius: 0, height: '100%' }}
-        threadId={threadId}
-      />
+      <Thread autoFocus={true} objectName="Demo" showHeader={true} objectId={objectId} />
     </div>
   );
 }

@@ -15,8 +15,9 @@ import { ThreadUnreadDot } from './ThreadUnreadDot';
 import { ResolveThreadIconButton } from './ResolveThreadIconButton';
 import { ThreadProps } from '../types';
 import { useSaveThreadInfo } from '../hooks/useSaveThreadInfo';
+import { useExistingOrNewThreadId } from '../hooks/useExistingOrNewThreadId';
 
-function ThreadProvider(props: ThreadProps & { children: React.ReactNode }) {
+function ThreadProvider(props: { threadId: string; children: React.ReactNode }) {
   const { store } = useApp();
   const { userId, workspaceId } = useSnapshot(store);
   const { threadId } = props;
@@ -39,19 +40,24 @@ function ThreadProvider(props: ThreadProps & { children: React.ReactNode }) {
 }
 
 export function Thread(props: ThreadProps & { className?: string; children?: React.ReactNode }) {
-  const { threadId, info } = props;
+  const { objectId } = props;
   const { store } = useApp();
   const { userId, workspaceId } = useSnapshot(store);
 
+  const threadId = useExistingOrNewThreadId({ objectId });
   useThreadSubscription({ store, threadId, workspaceId });
-  useSaveThreadInfo({ threadId, workspaceId, info });
+  useSaveThreadInfo({
+    threadId,
+    workspaceId,
+    info: { url: props.url, name: props.objectName, meta: props.objectMeta },
+  });
 
   if (!userId) {
     return null;
   }
 
   return (
-    <ThreadProvider {...props}>
+    <ThreadProvider threadId={threadId}>
       <Profile.Provider profileId={userId}>
         <ThemeWrapper>
           <div className={styles.root}>

@@ -45,7 +45,7 @@ export function CustomisationDoc() {
         <ThemeProvider theme="light">
           <ThemeName>Light Theme</ThemeName>
           <div style={threadSize}>
-            <Thread threadId={'thread1'} autoFocus={false} />
+            <Thread objectId={'object1'} autoFocus={false} />
           </div>
         </ThemeProvider>
       </DocDemoContainer>
@@ -53,7 +53,7 @@ export function CustomisationDoc() {
         <ThemeName>Dark Theme</ThemeName>
         <div style={threadSize}>
           <ThemeProvider theme="dark">
-            <Thread threadId={'thread1'} autoFocus={false} />
+            <Thread objectId={'object1'} autoFocus={false} />
           </ThemeProvider>
         </div>
       </DocDemoContainer>

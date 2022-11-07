@@ -14,13 +14,18 @@ export function ThreadDoc() {
       <div>
         <h3>Usage</h3>
         <p>
-          Render a comment thread in your app with <code>{'<Thread />'}</code>. Pass a unique{' '}
-          <code>threadId</code> to identify the thread.
+          Render a comment thread in your app with <code>{'<Thread />'}</code>. Threads require a
+          unique <code>objectId</code> to identify them. This refers to the ID of an object in your
+          system that the thread is linked to. E.g. for a task management app this would be a task
+          ID or for a CRM a customer ID. <br />
+          <br />
+          Object IDs should be stable (do not change over time for the same object) and unique (only
+          one in your system).
         </p>
         {renderCodeSnippet(`import { Thread } from '@collabkit/react';
 
 export function App() {
-  return <Thread threadId={'my-thread-id'} />;
+  return <Thread objectId={'my-thread-id'} />;
 }`)}
         <br />
         <h3>Sizing</h3>
@@ -32,19 +37,30 @@ export function App() {
           size.
         </p>
         {renderCodeSnippet(`<div style={{ width: '280px', height: '320px' }}>
-  <Thread threadId={'my-thread-id'} />
+  <Thread objectId={'my-thread-id'} />
 </div>`)}
       </div>
 
       <div>
         <h3>Props</h3>
         <AdvancedProps
-          props={[['threadId', 'string', 'A unique ID that represents this thread.']]}
+          props={[
+            [
+              'objectId',
+              'string',
+              'A unique ID that links this thread to an object in your system.',
+            ],
+          ]}
           optionalProps={[
             [
-              'name',
+              'objectName',
               'string | undefined',
-              'A name for the thread. Used in email notifications to refer to the thread.',
+              <>
+                The name of the linked object in your system. <br />
+                <br />
+                Used in email notifications to refer to the thread. Ex. in a task management app
+                this might be "Ship Website" or in a CRM a customer called "ACME Inc".
+              </>,
             ],
             [
               'url',
@@ -60,6 +76,7 @@ export function App() {
               'boolean | undefined',
               <>
                 Defaults to <code>false</code>. <br />
+                <br />
                 Set this to <code>true</code> to show the header.
               </>,
             ],
@@ -68,6 +85,7 @@ export function App() {
               'boolean | undefined',
               <>
                 Defaults to <code>true</code>. <br />
+                <br />
                 Set this to <code>false</code> to prevent focusing the composer on mount.
               </>,
             ],
@@ -76,6 +94,7 @@ export function App() {
               'boolean | undefined',
               <>
                 Defaults to <code>false</code>. <br />
+                <br />
                 Set this to <code>true</code> to hide the composer.
               </>,
             ],

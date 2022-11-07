@@ -52,6 +52,7 @@ const defaultWorkspace: Partial<Workspace> = {
   inbox: {},
   objects: {
     row003_budget: ['thread5'],
+    object1: ['thread1'],
     object2: ['thread1'],
     object3: ['thread2'],
     object4: ['thread3'],
