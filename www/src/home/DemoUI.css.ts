@@ -59,12 +59,12 @@ export const demoTip = recipe({
   base: {
     fontStyle: 'normal',
     fontWeight: '500',
-    fontSize: '20px',
+    fontSize: '16px',
     lineHeight: '90%',
     letterSpacing: '-0.03em',
     display: 'flex',
     alignItems: 'center',
-    padding: '21px 14px',
+    padding: '16px 20px',
     position: 'relative',
     borderRadius: 12,
   },
@@ -84,8 +84,8 @@ export const demoTip = recipe({
 
 export const demoTipArrow = recipe({
   base: {
-    width: 18,
-    height: 18,
+    width: 16,
+    height: 16,
     position: 'absolute',
     left: '50%',
     bottom: 0,

@@ -67,7 +67,7 @@ export const sidebar = style({
   display: 'flex',
   flexDirection: 'column',
   background: 'white',
-  padding: 16,
+  paddingBottom: 8,
 });
 
 export const sidebarTitle = style({
@@ -77,6 +77,7 @@ export const sidebarTitle = style({
   lineHeight: '95%',
   color: vars.color.textContrastHigh,
   marginBottom: 40,
+  padding: '16px 16px 0px',
 
   display: 'flex',
   justifyContent: 'space-between',
@@ -125,7 +126,7 @@ export const detailsBox = style({
   fontSize: '12px',
   lineHeight: '140%',
   color: vars.color.textContrastHigh,
-
+  margin: '0px 16px',
   border: '1px solid #E1E7ED',
   borderRadius: 8,
   padding: 16,

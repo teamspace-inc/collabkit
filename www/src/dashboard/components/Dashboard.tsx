@@ -42,7 +42,6 @@ export function Dashboard() {
 
   return (
     <div className={`${docs} ${dark} ${bg}`} style={{ height: '100vh' }}>
-      <Logo />
       {view[authState]}
     </div>
   );

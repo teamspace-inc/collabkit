@@ -174,7 +174,7 @@ const defaultWorkspace: Partial<Workspace> = {
         hasProfile: true,
       },
     },
-    employee_2608510R: {
+    employee_8789935W: {
       event1: {
         id: 'event1',
         body: `Excellent performance this half - due for a promo?`,
