@@ -50,11 +50,11 @@ export const App() {
         </p>
         <blockquote>
           <h4 style={{ marginTop: 0 }}>Secure Mode</h4>By default CollabKit lets you provide your{' '}
-          <code>apiKey</code> from the Provider as shown above. <br />
+          <code>apiKey</code> client side so it's easy to get started. <br />
           <br />
           Before going live you'll want to enable{' '}
           <DocLink href="/docs/secureMode">Secure Mode</DocLink> which requires an additional step
-          to generate a per-user token from your server.
+          to generate a per-user token from your server. Which keeps your <code>apiKey</code> safe.
         </blockquote>
       </div>
       <div>

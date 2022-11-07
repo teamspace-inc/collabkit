@@ -54,10 +54,21 @@ export function usePopoverThread(props: ObjectProps) {
     [events, target]
   );
 
-  const openPopover = useCallback(() => onOpenChange(true), [onOpenChange]);
-  const hidePopover = useCallback(() => onOpenChange(false), [onOpenChange]);
-  const showPreview = useCallback(() => onPreviewChange(true), [onPreviewChange]);
-  const hidePreview = useCallback(() => onPreviewChange(false), [onPreviewChange]);
+  // onOpenChange and onPreviewChange return void | null
+  // lets make sure they return void so we can use them
+  // in useEffect inline;
+  const openPopover = useCallback(() => {
+    onOpenChange(true);
+  }, [onOpenChange]);
+  const hidePopover = useCallback(() => {
+    onOpenChange(false);
+  }, [onOpenChange]);
+  const showPreview = useCallback(() => {
+    onPreviewChange(true);
+  }, [onPreviewChange]);
+  const hidePreview = useCallback(() => {
+    onPreviewChange(false);
+  }, [onPreviewChange]);
 
   return {
     threadId,

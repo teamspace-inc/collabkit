@@ -9,9 +9,7 @@ export function App() {
   });
 
   // automatically open the popover thread on mount
-  useEffect(() => {
-    openPopover();
-  }, []);
+  useEffect(() => openPopover(), []);
 
   return (
     <div>
