@@ -81,7 +81,7 @@ globalStyle(`${docs} table tr`, {
   borderBottom: `1px solid ${vars.color.bgContrastMedium}`,
 });
 
-globalStyle(`${docs} table tbody tr:last-child`, {
+globalStyle(`${docs} table tbody tr:last-of-type`, {
   borderBottom: `none`,
 });
 

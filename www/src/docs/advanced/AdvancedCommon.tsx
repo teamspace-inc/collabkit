@@ -22,15 +22,12 @@ export type AdvancedPropRow = [React.ReactNode, React.ReactNode, React.ReactNode
 export function AdvancedProps(props: {
   props: AdvancedPropRow[];
   optionalProps?: AdvancedPropRow[];
-  hideHeader?: boolean;
 }) {
   return (
     <table>
-      {props.hideHeader ? null : (
-        <thead>
-          <tr></tr>
-        </thead>
-      )}
+      <thead>
+        <tr></tr>
+      </thead>
       <tbody>
         {props.props.map((row, i) => (
           <tr key={`row-${i}`}>

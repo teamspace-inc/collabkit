@@ -5,9 +5,8 @@ export function App() {
     objectId: 'cellA12',
   });
 
-  // name="Q4 P&L"
   return (
-    <PopoverThread objectId="cellA12">
+    <PopoverThread objectId="cellA12" objectName="Q4 P&L">
       <TableCell onClick={() => openPopover()} open={open} />
     </PopoverThread>
   );

@@ -40,7 +40,6 @@ export function UsePopoverThreadDoc() {
         <br />
         <h3>Returns</h3>
         <AdvancedProps
-          hideHeader={true}
           props={[
             ['showPopover', `() => void`, 'Opens the popover.'],
             ['hidePopover', `() => void`, 'Closes the popover.'],
