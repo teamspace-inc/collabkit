@@ -69,7 +69,7 @@ globalStyle(`${docs} h2`, {
   fontSize: 24,
   lineHeight: '34px',
   marginBottom: '16px',
-  color: vars.color.textContrastMedium,
+  color: vars.color.textContrastHigh,
 });
 
 globalStyle(`${docs} table`, {
