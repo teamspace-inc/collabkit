@@ -50,8 +50,9 @@ export function App() {
               'url',
               'string | undefined',
               <>
-                The URL of the page where the thread is rendered. Used in email notifications and
-                the Inbox to <DocLink href="/docs/inbox">link</DocLink> to the thread.
+                The URL of the page the Thread lives on. Used to help the user get back to the
+                Thread from email notifications and the{' '}
+                <DocLink to="/docs/components/inbox">Inbox</DocLink>.
               </>,
             ],
             [

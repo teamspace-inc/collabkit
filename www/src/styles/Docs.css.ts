@@ -101,7 +101,7 @@ globalStyle(`${docs} table td`, {
 });
 
 globalStyle(`${docs} table td a`, {
-  fontSize: 13,
+  fontSize: 14,
 });
 
 globalStyle(`${docs} table th`, {
