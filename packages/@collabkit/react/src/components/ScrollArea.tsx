@@ -36,10 +36,11 @@ export function Scrollable(props: {
   children: React.ReactNode;
   className?: string;
   maxHeight?: React.CSSProperties['maxHeight'];
+  autoScroll?: 'none' | 'bottom';
 }) {
   const { maxHeight } = props;
   return (
-    <ScrollAreaRoot>
+    <ScrollAreaRoot autoScroll={props.autoScroll}>
       <ScrollAreaViewport className={props.className} style={{ maxHeight }}>
         {props.children}
       </ScrollAreaViewport>
