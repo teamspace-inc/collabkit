@@ -110,7 +110,7 @@ export const body = style({
 });
 
 export const name = style({
-  fontFamily: 'Satoshi',
+  fontFamily: 'Inter',
   fontStyle: 'normal',
   fontWeight: 700,
   fontSize: 16,

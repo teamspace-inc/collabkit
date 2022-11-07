@@ -5,7 +5,7 @@ export const h3 = style({
 });
 
 export const h4 = style({
-  fontFamily: 'Satoshi !important',
+  fontFamily: 'Inter !important',
   fontStyle: 'normal',
   fontWeight: 700,
   fontSize: '20px !important',

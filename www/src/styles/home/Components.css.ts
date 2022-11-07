@@ -34,7 +34,7 @@ export const card = style({
 });
 
 export const componentTitle = style({
-  fontFamily: 'Satoshi, sans-serif !important',
+  fontFamily: 'Inter, sans-serif !important',
   marginBottom: '4px !important',
   lineHeight: '28px !important',
 });

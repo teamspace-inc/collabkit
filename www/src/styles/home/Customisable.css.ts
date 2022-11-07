@@ -26,7 +26,7 @@ export const controls = style({
 });
 
 export const sliderLabel = style({
-  fontFamily: 'Satoshi',
+  fontFamily: 'Inter',
   fontStyle: 'normal',
   fontWeight: 700,
   fontSize: 16,
@@ -45,7 +45,7 @@ export const toggleButton = recipe({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    fontFamily: 'Satoshi',
+    fontFamily: 'Inter',
     fontStyle: 'normal',
     fontWeight: 700,
     fontSize: 16,
@@ -63,7 +63,7 @@ export const toggleButton = recipe({
 });
 
 export const toggleButtonGroupTitle = style({
-  fontFamily: 'Satoshi',
+  fontFamily: 'Inter',
   fontStyle: 'normal',
   fontWeight: 700,
   fontSize: 16,

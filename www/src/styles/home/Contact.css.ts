@@ -2,7 +2,7 @@ import { style } from '@vanilla-extract/css';
 
 export const footerLinkButton = style({
   border: '1px solid white',
-  fontFamily: 'Satoshi',
+  fontFamily: 'Inter',
   fontStyle: 'normal',
   fontWeight: 500,
   fontSize: '16px',
@@ -22,7 +22,7 @@ export const footerLinkButton = style({
 });
 
 export const footerLink = style({
-  fontFamily: 'Satoshi',
+  fontFamily: 'Inter',
   fontStyle: 'normal',
   fontWeight: 500,
   fontSize: '1rem',

@@ -49,7 +49,7 @@ export const vertical40 = style({
 });
 
 globalStyle(`${website} small`, {
-  fontFamily: 'Satoshi',
+  fontFamily: 'Inter',
   fontStyle: 'normal',
   fontWeight: 500,
   fontSize: '14px',
@@ -97,7 +97,7 @@ globalStyle(`${website} h2`, {
 });
 
 globalStyle(`${website} h3`, {
-  fontFamily: 'Satoshi',
+  fontFamily: 'Inter',
   fontStyle: 'normal',
   fontWeight: 400,
   fontSize: '28px',
@@ -135,7 +135,7 @@ globalStyle(`${website} h4`, {
 });
 
 globalStyle(`${website} h5`, {
-  fontFamily: 'Satoshi',
+  fontFamily: 'Inter',
   fontStyle: 'normal',
   fontWeight: 500,
   fontSize: 16,
@@ -145,7 +145,7 @@ globalStyle(`${website} h5`, {
 
   '@media': {
     'screen and (max-width: 720px)': {
-      fontFamily: 'Satoshi',
+      fontFamily: 'Inter',
       fontStyle: 'normal',
       fontWeight: 500,
       fontSize: 16,
@@ -155,7 +155,7 @@ globalStyle(`${website} h5`, {
 });
 
 globalStyle('body', {
-  fontFamily: 'Satoshi',
+  fontFamily: 'Inter',
   fontWeight: 400,
   fontSize: 14,
   lineHeight: '18px',
@@ -163,7 +163,7 @@ globalStyle('body', {
 });
 
 globalStyle(`${website} p`, {
-  fontFamily: 'Satoshi',
+  fontFamily: 'Inter',
   fontStyle: 'normal',
   fontWeight: 400,
   fontSize: 14,
@@ -216,7 +216,7 @@ export const tabs = style({
 
 export const tab = recipe({
   base: {
-    fontFamily: 'Satoshi',
+    fontFamily: 'Inter',
     fontStyle: 'normal',
     width: '120px',
     fontSize: 16,
@@ -244,7 +244,7 @@ export const tab = recipe({
 
 export const button = recipe({
   base: {
-    fontFamily: 'Satoshi',
+    fontFamily: 'Inter',
     fontStyle: 'normal',
     fontWeight: 700,
     boxSizing: 'border-box',
@@ -282,7 +282,7 @@ export const button = recipe({
         padding: '0px 16px',
         height: '36px',
 
-        fontFamily: 'Satoshi',
+        fontFamily: 'Inter',
         fontStyle: 'normal',
         fontWeight: 500,
         fontSize: '14px',
@@ -292,7 +292,7 @@ export const button = recipe({
         height: '40px',
         padding: '0px 20px',
 
-        fontFamily: 'Satoshi',
+        fontFamily: 'Inter',
         fontStyle: 'normal',
         fontWeight: 500,
         fontSize: '16px',
@@ -303,7 +303,7 @@ export const button = recipe({
         height: '50px',
         padding: '0px 28px',
 
-        fontFamily: 'Satoshi',
+        fontFamily: 'Inter',
         fontStyle: 'normal',
         fontWeight: 700,
         fontSize: '16px',
