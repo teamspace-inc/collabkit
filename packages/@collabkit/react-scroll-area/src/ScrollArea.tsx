@@ -38,6 +38,7 @@ const [createScrollAreaContext, createScrollAreaScope] = createContextScope(SCRO
 type ScrollAreaContextValue = {
   type: 'auto' | 'always' | 'scroll' | 'hover';
   dir: Direction;
+  autoScroll: 'none' | 'bottom';
   scrollHideDelay: number;
   scrollArea: ScrollAreaElement | null;
   viewport: ScrollAreaViewportElement | null;
@@ -64,6 +65,7 @@ type PrimitiveDivProps = Radix.ComponentPropsWithoutRef<typeof Primitive.div>;
 interface ScrollAreaProps extends PrimitiveDivProps {
   type?: ScrollAreaContextValue['type'];
   dir?: ScrollAreaContextValue['dir'];
+  autoScroll?: ScrollAreaContextValue['autoScroll'];
   scrollHideDelay?: number;
 }
 
@@ -73,6 +75,7 @@ const ScrollArea = React.forwardRef<ScrollAreaElement, ScrollAreaProps>(
       __scopeScrollArea,
       type = 'hover',
       dir,
+      autoScroll = 'none',
       scrollHideDelay = 600,
       ...scrollAreaProps
     } = props;
@@ -93,6 +96,7 @@ const ScrollArea = React.forwardRef<ScrollAreaElement, ScrollAreaProps>(
         scope={__scopeScrollArea}
         type={type}
         dir={direction}
+        autoScroll={autoScroll}
         scrollHideDelay={scrollHideDelay}
         scrollArea={scrollArea}
         viewport={viewport}
@@ -144,6 +148,21 @@ const ScrollAreaViewport = React.forwardRef<ScrollAreaViewportElement, ScrollAre
     const context = useScrollAreaContext(VIEWPORT_NAME, __scopeScrollArea);
     const ref = React.useRef<ScrollAreaViewportElement>(null);
     const composedRefs = useComposedRefs(forwardedRef, ref, context.onViewportChange);
+
+    const prevHeight = React.useRef(0);
+    const handleResize = useDebounceCallback(() => {
+      if (context.autoScroll === 'bottom' && context.viewport) {
+        const height = context.viewport.scrollHeight;
+        if (height !== prevHeight.current) {
+          context.viewport.scrollTop = height;
+        }
+        prevHeight.current = height;
+      }
+    }, 10);
+
+    useResizeObserver(context.viewport, handleResize);
+    useResizeObserver(context.content, handleResize);
+
     return (
       <>
         {/* Hide scrollbars cross-browser and enable momentum scroll for touch devices */}
