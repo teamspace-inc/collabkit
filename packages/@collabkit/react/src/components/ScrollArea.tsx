@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import * as ScrollArea from '@radix-ui/react-scroll-area';
+import * as ScrollArea from '@collabkit/react-scroll-area';
 import * as styles from '../styles/components/ScrollArea.css';
 
 export const ScrollAreaRoot: React.ForwardRefExoticComponent<
