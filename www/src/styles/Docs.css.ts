@@ -96,6 +96,10 @@ globalStyle(`${docs} table td code`, {
   padding: '2px 4px',
 });
 
+globalStyle(`${docs} table td`, {
+  color: vars.color.textContrastMedium,
+});
+
 globalStyle(`${docs} table td a`, {
   fontSize: 13,
 });
@@ -283,7 +287,7 @@ export const docContent = style({
 });
 
 export const docRoot = style({
-  color: '#1C1C1C',
+  color: vars.color.textContrastMedium,
   background: '#1C1C1C',
   position: 'fixed',
   inset: 0,

@@ -1,6 +1,6 @@
 import { AdvancedProps } from '../advanced/AdvancedCommon';
 import { renderCodeSnippet } from '../CodeEditor';
-import { DocDemoContainer } from '../Doc';
+import { DocHeroDemoContainer } from '../Doc';
 import { PopoverDemo } from './PopoverDemo';
 import Usage from './PopoverUsage.tsx?raw';
 import { ThreadProps } from './ThreadDoc';
@@ -9,9 +9,9 @@ export function PopoverThreadDoc() {
   return (
     <>
       <h2>A popover comment thread that can anchor to any component in your app.</h2>
-      <DocDemoContainer style={{ padding: '100px 20px 280px' }}>
+      <DocHeroDemoContainer style={{ padding: '100px 20px 280px' }}>
         <PopoverDemo />
-      </DocDemoContainer>
+      </DocHeroDemoContainer>
 
       <div>
         <h3>Usage</h3>

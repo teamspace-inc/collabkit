@@ -81,6 +81,14 @@ export const DocLink = (props: PropsWithChildren<LinkProps<LocationHook>>) => (
   <Link {...props} className={docLink} />
 );
 
+// mint feels too strong here...
+/* background: vars.color.mint, borderColor: vars.color.mint */
+export const DocHeroDemoContainer = (props: React.ComponentPropsWithoutRef<'div'>) => (
+  <ThemeProvider theme="dark">
+    <div {...props} className={docDemoContainer} style={{ ...props.style }} />
+  </ThemeProvider>
+);
+
 export const DocDemoContainer = (props: React.ComponentPropsWithoutRef<'div'>) => (
   <ThemeProvider theme="dark">
     <div {...props} className={docDemoContainer} />

@@ -47,7 +47,7 @@ globalStyle(`${docs} a`, {
 
 globalStyle(`${docs} .mtk42`, {
   fontWeight: '700',
-  color: '#6BD1C7',
+  color: vars.color.sky,
 });
 
 globalStyle(`${docs} .mtk6`, {
@@ -57,7 +57,7 @@ globalStyle(`${docs} .mtk6`, {
 });
 
 globalStyle(`${docs} .mtk7`, { color: vars.color.yellow });
-globalStyle(`${docs} .mtk1`, { color: vars.color.mint });
+globalStyle(`${docs} .mtk1`, { color: vars.color.cyan });
 globalStyle(`${docs} .mtk16`, { color: 'white' });
 globalStyle(`${docs} .mtk5`, { color: vars.color.orange });
 
