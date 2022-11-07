@@ -5,7 +5,7 @@ import { DocLink } from '../Doc';
 export function CollabKitProviderDoc() {
   return (
     <>
-      <h2>Identifies users and subscribes to comment openThreads. Required to use other components.</h2>
+      <h2>Identifies users and sync data. Required to use other components.</h2>
 
       <div>
         <h3>Usage</h3>
