@@ -235,7 +235,7 @@ export const tab = recipe({
   variants: {
     active: {
       true: {
-        fontWeight: '700 !important',
+        fontWeight: '600 !important',
         background: vars.color.highlight,
       },
     },
@@ -246,7 +246,7 @@ export const button = recipe({
   base: {
     fontFamily: 'Inter',
     fontStyle: 'normal',
-    fontWeight: 700,
+    fontWeight: 500,
     boxSizing: 'border-box',
     color: vars.color.textContrastHigh,
     background: vars.color.bgContrastMedium,
@@ -305,7 +305,7 @@ export const button = recipe({
 
         fontFamily: 'Inter',
         fontStyle: 'normal',
-        fontWeight: 700,
+        fontWeight: 600,
         fontSize: '16px',
         lineHeight: '110%',
         textAlign: 'center',

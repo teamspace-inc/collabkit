@@ -11,7 +11,7 @@ export const h2 = style({
 export const h3 = style({
   fontFamily: 'Inter',
   fontStyle: 'normal',
-  fontWeight: 700,
+  fontWeight: 600,
   fontSize: 24,
   margin: '0 0 20px',
   lineHeight: '28px',
@@ -20,7 +20,7 @@ export const h3 = style({
 
 export const a = style({
   fontSize: '16px',
-  fontWeight: 700,
+  fontWeight: 600,
   fontFamily: 'Inter',
   textDecoration: 'none',
   cursor: 'pointer',
