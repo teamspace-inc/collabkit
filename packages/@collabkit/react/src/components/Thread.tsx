@@ -16,7 +16,7 @@ import { ResolveThreadIconButton } from './ResolveThreadIconButton';
 import { ThreadProps } from '../types';
 import { useSaveThreadInfo } from '../hooks/useSaveThreadInfo';
 
-export function ThreadProvider(props: ThreadProps & { children: React.ReactNode }) {
+function ThreadProvider(props: ThreadProps & { children: React.ReactNode }) {
   const { store } = useApp();
   const { userId, workspaceId } = useSnapshot(store);
   const { threadId } = props;
