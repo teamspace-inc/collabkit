@@ -3,7 +3,7 @@ import { PopoverThread, usePopoverThread } from '@collabkit/react';
 import { nanoid } from 'nanoid';
 import { DocDemoContainer } from '../Doc';
 
-const cellId = nanoid();
+const cellId = nanoid()
 
 type Car = { id: string; make: string; model: string; price: number };
 type Column = { name: string; key: keyof Car; format: (value: any) => string };
