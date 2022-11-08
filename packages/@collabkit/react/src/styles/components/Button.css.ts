@@ -49,7 +49,7 @@ export const button = recipe({
       },
       secondary: {
         background: fallbackVar(vars.button.secondary.background, 'transparent'),
-        color: fallbackVar(vars.button.secondary.color, vars.color.textPrimary),
+        color: fallbackVar(vars.button.secondary.color, vars.color.textSecondary),
         letterSpacing: fallbackVar(
           vars.button.secondary.letterSpacing,
           vars.text.base.letterSpacing
