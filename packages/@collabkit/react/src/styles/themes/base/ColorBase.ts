@@ -17,7 +17,7 @@ export const ColorBase = {
   color: {
     background: colors.white,
     surface: '#EEEEEE',
-    surfaceHover: colors.opacity4,
+    surfaceHover: 'transparent',
     surfaceOverlay: colors.opacity7,
     textPrimary: colors.black10,
     textSecondary: colors.grey30,
