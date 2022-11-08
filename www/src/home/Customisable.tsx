@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { dark, vars } from '../styles/Theme.css';
 import { useHeaderStyle } from '../hooks/useHeaderStyle';
 import * as styles from '../styles/home/Demos.css';
