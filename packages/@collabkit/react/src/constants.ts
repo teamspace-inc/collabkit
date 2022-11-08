@@ -2,7 +2,6 @@ export type {
   SyncAdapter,
   Target,
   Commentable,
-  CommentType,
   BasicPinProps,
   PinTarget,
   CommentableContainer,

@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback, useState, useRef } from 'react';
+import React, { useMemo, useCallback, useRef } from 'react';
 import { useMarkAsSeen } from '../hooks/useMarkAsSeen';
 import { useOnMarkdownLinkClick } from '../hooks/useOnMarkdownLinkClick';
 import { useThreadContext } from '../hooks/useThreadContext';
@@ -52,10 +52,9 @@ export function CommentProvider(props: { children: React.ReactNode; eventId: str
 
 type CommentRootProps = {
   commentId: string;
-  type?: CommentType;
 } & React.ComponentPropsWithRef<'div'>;
 
-function CommentRoot({ commentId: eventId, type, ...props }: CommentRootProps) {
+function CommentRoot({ commentId: eventId, ...props }: CommentRootProps) {
   const { threadId, workspaceId, userId } = useThreadContext();
   const treeId = useId();
 
