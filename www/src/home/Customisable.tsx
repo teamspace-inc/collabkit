@@ -8,6 +8,8 @@ import { ToggleButtonGroup } from './ToggleButtonGroup';
 import { COMPONENTS } from './Components';
 import { purpleBg } from '../styles/Website.css';
 
+const padding = { padding: '0px 28px' };
+
 export function Customisable() {
   const { ref } = useHeaderStyle({
     backgroundColor: vars.color.aubergine,
@@ -31,9 +33,9 @@ export function Customisable() {
           <ToggleButtonGroup
             title="Component"
             options={[
-              { node: <div style={{ padding: '0px 28px' }}>Thread</div>, value: 0 },
-              { node: <div style={{ padding: '0px 28px' }}>Popover Thread</div>, value: 1 },
-              { node: <div style={{ padding: '0px 28px' }}>Inbox</div>, value: 2 },
+              { node: <div style={padding}>Thread</div>, value: 0 },
+              { node: <div style={padding}>Popover Thread</div>, value: 1 },
+              { node: <div style={padding}>Inbox</div>, value: 2 },
             ]}
             value={component}
             onChange={setComponent}
