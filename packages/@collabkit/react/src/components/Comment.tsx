@@ -11,7 +11,7 @@ import { useId } from '../hooks/useId';
 import Profile from './Profile';
 import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
 import { useApp } from '../hooks/useApp';
-import { CommentTarget, CommentType, timelineUtils } from '@collabkit/core';
+import { CommentTarget, timelineUtils } from '@collabkit/core';
 import * as styles from '../styles/components/Comment.css';
 import { DotsThree } from './icons';
 import { Menu, MenuItem } from './Menu';
