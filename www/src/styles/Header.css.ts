@@ -6,7 +6,7 @@ export const root = style({
   top: 0,
   left: 0,
   right: 0,
-  zIndex: 2,
+  zIndex: 9999,
   display: 'flex',
   justifyContent: 'center',
   background: vars.header.backgroundColor,
