@@ -8,12 +8,17 @@ import { useHeaderStyle } from '../hooks/useHeaderStyle';
 import { vars } from '../styles/Theme.css';
 import { store } from './Header';
 import { useEffect } from 'react';
+import { useWindowSize } from '../hooks/useWindowSize';
 
 export function Hero() {
   const { ref } = useHeaderStyle({
     backgroundColor: vars.color.yellow,
     theme: 'light',
   });
+
+  const size = useWindowSize();
+  const width = size?.width ?? 1124;
+  const scale = Math.max(Math.min(1, width / 1124), 0.75);
 
   useEffect(() => {
     store.backgroundColor = vars.color.yellow;
@@ -58,14 +63,14 @@ export function Hero() {
           marginLeft: -280,
         }}
       >
-        <div className={styles.messageList}>
+        <div className={styles.messageList} style={{ transform: `scale(${scale})` }}>
           <HeroMessage message={HERO_MESSAGES[0]} />
           <HeroMessage message={HERO_MESSAGES[1]} />
         </div>
       </div>
 
       <div className={styles.uiWrap} ref={reference}>
-        <img src={UISvg} />
+        <img src={UISvg} style={{ width: '100%', maxWidth: 'calc(100vw - 30px)' }} />
       </div>
     </section>
   );

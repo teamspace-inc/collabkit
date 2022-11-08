@@ -20,8 +20,8 @@ export const uiWrap = style({
 
 export const messageList = style({
   display: 'flex',
-  gap: '16px',
   flexDirection: 'column',
+  gap: 16,
 });
 
 export const h1 = style({
