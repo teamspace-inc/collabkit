@@ -237,8 +237,6 @@ export default function Comment(props: {
 }) {
   const hideProfile = props.hideProfile ?? false;
   const showResolveThreadButton = props.showResolveThreadButton ?? false;
-  console.log('r');
-
   return (
     <Comment.Root commentId={props.commentId}>
       <Comment.Content>
