@@ -19,15 +19,7 @@ export function HomePage() {
   const isSmallScreen = useIsSmallScreen();
 
   return (
-    <div
-      style={{
-        alignItems: 'center',
-        justifyContent: 'center',
-        display: 'flex',
-        flexDirection: 'column',
-      }}
-      className={`${website} ${light}`}
-    >
+    <div className={`${website} ${light}`}>
       {isSmallScreen ? (
         <>
           <SmallHero />

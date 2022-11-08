@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
-import { dark } from '../styles/Theme.css';
+import { dark, vars } from '../styles/Theme.css';
 import * as styles from '../styles/home/Demos.css';
-import { CarouselProvider, Slider, Slide } from 'pure-react-carousel';
 import 'pure-react-carousel/dist/react-carousel.es.css';
 import { Inbox, Thread, usePopoverThread, InternalPopoverThreadThread } from '@collabkit/react';
 import {
@@ -10,8 +9,9 @@ import {
   componentDescription,
   componentTitle,
 } from '../styles/home/Components.css';
-import { button, purpleBg } from '../styles/Website.css';
+import { Carousel } from '../Carousel';
 import { Link } from 'wouter';
+import { button, purpleBg } from '../styles/Website.css';
 import { useWindowSize } from '../hooks/useWindowSize';
 
 type ComponentProps = {
@@ -111,40 +111,29 @@ function Component(props: ComponentProps) {
 
 export function Components() {
   const size = useWindowSize();
-  const width = size?.width ?? window.innerWidth;
 
   return (
-    <section className={`${dark} ${purpleBg}`} style={{ padding: '60px 0px' }} id="Components">
-      <h1>React components</h1>
-      <h3 className={styles.h3}>Build your commenting system with ease</h3>
-      <CarouselProvider
-        naturalSlideWidth={520}
-        naturalSlideHeight={520}
-        totalSlides={5}
-        visibleSlides={width / 500}
-        // figure out padding for site
-        // @ts-expect-error Property 'style' does not exist
-        style={{
-          width: '100%',
-          marginTop: '20px',
-        }}
-      >
-        <Slider>
-          {/* empty slide to act as left margin */}
-          <Slide index={0} style={{ width: (width - 1124) / 2 }} />
-          {COMPONENTS.map((component, index) => (
-            <Slide key={index} index={index} style={{ outline: 'none' }}>
-              <Component {...component} />
-            </Slide>
-          ))}
-          <Slide index={4}>
+    // turns out you cant put the carousel in a container with]
+    // display: flex, flex-direction: column, and overflow: hidden
+    <>
+      <section className={`${dark} ${purpleBg}`} style={{ paddingBottom: 40, paddingTop: 40 }}>
+        <h1>React components</h1>
+        <h3 className={styles.h3}>Build your commenting system with ease</h3>
+      </section>
+      <div style={{ background: vars.color.aubergine }} className={dark}>
+        <Carousel
+          style={{
+            // position so it's centered on the screen
+            padding: `0px ${((size?.width ?? 0) - 1124) / 2}px`,
+            gap: 40,
+          }}
+          slides={[
+            <Component {...COMPONENTS[0]} />,
+            <Component {...COMPONENTS[1]} />,
+            <Component {...COMPONENTS[2]} />,
             <div
+              className={card}
               style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                height: '420px',
                 borderRadius: '24px',
                 border: '1px solid #4A3A63',
                 gap: '20px',
@@ -154,10 +143,11 @@ export function Components() {
               <Link href="/docs" className={button({ type: 'secondary', size: 'medium' })}>
                 Documentation
               </Link>
-            </div>
-          </Slide>
-        </Slider>
-      </CarouselProvider>
-    </section>
+            </div>,
+          ]}
+        />
+      </div>
+      <div style={{ height: 80, background: vars.color.aubergine }} />
+    </>
   );
 }
