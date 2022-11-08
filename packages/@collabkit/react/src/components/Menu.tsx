@@ -32,6 +32,7 @@ import { ThemeWrapper } from './ThemeWrapper';
 import { useApp } from '../hooks/useApp';
 import { useSnapshot } from 'valtio';
 import { menu, menuItem } from '../styles/components/Menu.css';
+import { MenuTarget, Target } from '@collabkit/core';
 
 export const MenuItem = forwardRef<
   HTMLButtonElement,
@@ -51,6 +52,7 @@ interface Props<ItemType> {
   children?: React.ReactNode;
   onItemClick: (e: React.MouseEvent, id: ItemType) => void;
   className?: string;
+  context?: Target;
 }
 
 export function Menu<ItemType>({
@@ -58,6 +60,7 @@ export function Menu<ItemType>({
   label,
   onItemClick,
   className,
+  context: rootTarget,
   ...props
 }: Props<ItemType>) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -79,10 +82,12 @@ export function Menu<ItemType>({
 
   const open = menuId?.type === 'menu' && menuId.nodeId === nodeId && menuId.parentId === parentId;
 
+  const target: MenuTarget = { type: 'menu', nodeId, parentId, context: rootTarget };
+
   const onOpenChange = useCallback(
     (open: boolean) => {
       const fn = open ? events.onMenuOpen : events.onMenuClose;
-      fn({ target: { type: 'menu', nodeId, parentId } });
+      fn({ target });
     },
     [nodeId, parentId]
   );
@@ -122,7 +127,7 @@ export function Menu<ItemType>({
   // in the tree.
   useEffect(() => {
     function onTreeClick() {
-      events.onMenuClose({ target: { type: 'menu', nodeId, parentId } });
+      events.onMenuClose({ target });
       refs.reference.current?.focus();
     }
 
@@ -197,7 +202,7 @@ export function Menu<ItemType>({
                   },
                   onKeyDown(event: React.KeyboardEvent) {
                     if (event.key === 'Tab') {
-                      events.onMenuClose({ target: { type: 'menu', nodeId, parentId } });
+                      events.onMenuClose({ target });
                     }
                   },
                 })}

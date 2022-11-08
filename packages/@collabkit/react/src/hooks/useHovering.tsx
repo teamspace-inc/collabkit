@@ -4,12 +4,15 @@ import { Target } from '@collabkit/core';
 
 export function useHovering(ref: React.RefObject<HTMLElement>, target: Target) {
   const { store } = useApp();
+  const [isHovering, setIsHovering] = React.useState(false);
 
   const handleMouseOut = useCallback(() => {
+    setIsHovering(false);
     store.hoveringId = null;
   }, [store]);
 
   const handleMouseOver = useCallback(() => {
+    setIsHovering(true);
     store.hoveringId = target;
   }, [store, target]);
 
@@ -26,4 +29,6 @@ export function useHovering(ref: React.RefObject<HTMLElement>, target: Target) {
       node.removeEventListener('mouseout', handleMouseOut);
     };
   }, []);
+
+  return isHovering;
 }

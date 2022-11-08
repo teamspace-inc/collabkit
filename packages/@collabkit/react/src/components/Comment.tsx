@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback } from 'react';
+import React, { useMemo, useCallback, useState, useRef } from 'react';
 import { useMarkAsSeen } from '../hooks/useMarkAsSeen';
 import { useOnMarkdownLinkClick } from '../hooks/useOnMarkdownLinkClick';
 import { useThreadContext } from '../hooks/useThreadContext';
@@ -17,6 +17,8 @@ import { DotsThree } from './icons';
 import { Menu, MenuItem } from './Menu';
 import { Thread } from './Thread';
 import { ThreadCommentEditor } from './ThreadCommentEditor';
+import { useHovering } from '../hooks/useHovering';
+import { mergeRefs } from 'react-merge-refs';
 
 // tidy up root and provider
 export function CommentProvider(props: { children: React.ReactNode; eventId: string }) {
@@ -48,15 +50,13 @@ export function CommentProvider(props: { children: React.ReactNode; eventId: str
   );
 }
 
-export function CommentRoot(props: {
-  children: React.ReactNode;
-  className?: string;
+type CommentRootProps = {
   commentId: string;
-  type?: CommentType; // why don't we just fetch this from the store?
-  style?: React.CSSProperties;
-}) {
+  type?: CommentType;
+} & React.ComponentPropsWithRef<'div'>;
+
+function CommentRoot({ commentId: eventId, type, ...props }: CommentRootProps) {
   const { threadId, workspaceId, userId } = useThreadContext();
-  const { commentId: eventId } = props;
   const treeId = useId();
 
   const target = useMemo<CommentTarget>(
@@ -64,7 +64,10 @@ export function CommentRoot(props: {
     [workspaceId, threadId, eventId, treeId]
   );
 
-  const { ref } = useMarkAsSeen(target);
+  const divRef = useRef(null);
+  const { ref: seenRef } = useMarkAsSeen(target);
+
+  const ref = mergeRefs([divRef, seenRef]);
 
   const { onClick } = useOnMarkdownLinkClick({
     workspaceId,
@@ -74,8 +77,16 @@ export function CommentRoot(props: {
   });
 
   const timeline = useSnapshot(useWorkspaceStore().timeline[threadId]);
+  const { menuId } = useSnapshot(useApp().store);
   const event = timeline?.[eventId];
   const createdById = event?.createdById;
+
+  const isHovering =
+    // hovering or the menu is open and the menu is for this comment
+    useHovering(divRef, target) ||
+    (menuId?.type === 'menu' &&
+      menuId.context?.type === 'comment' &&
+      menuId.context.eventId === event.id);
 
   if (!createdById) {
     return null;
@@ -89,7 +100,7 @@ export function CommentRoot(props: {
     <CommentContext.Provider value={target}>
       <Profile.Provider profileId={createdById}>
         <div
-          className={props.className ?? styles.root}
+          className={`${props.className ?? styles.root} ${isHovering ? styles.hover : ''}`}
           onClick={onClick}
           ref={ref}
           style={props.style}
@@ -175,11 +186,10 @@ const CommentMenu = (props: { className?: string }) => {
   const { createdById } = useCommentStore();
   const { threadId, workspaceId, userId } = useThreadContext();
 
+  // todo @nc: extract this into a hook
   const { workspaces } = useSnapshot(store);
   const workspace = workspaces[workspaceId];
   const timeline = workspace.timeline[threadId];
-  const isFirstComment = Object.keys(timeline)[0] === comment.eventId;
-
   const isResolved = timelineUtils.computeIsResolved(timeline);
 
   const onItemClick = useCallback(
@@ -198,6 +208,7 @@ const CommentMenu = (props: { className?: string }) => {
           className={props.className}
           icon={<DotsThree size={16} />}
           onItemClick={onItemClick}
+          context={comment}
         >
           <MenuItem label="Edit" targetType="commentEditButton" />
           <MenuItem label="Delete" targetType="commentDeleteButton" />
@@ -211,14 +222,7 @@ const CommentMenu = (props: { className?: string }) => {
 export { CommentMenu as Menu };
 
 export const CommentActions = (props: React.ComponentProps<'div'>) => {
-  // const { store } = useApp();
-  // const { hoveringId } = useSnapshot(store);
-  // const { eventId } = useCommentContext();
-  // if (hoveringId?.type === 'comment' && hoveringId.eventId === eventId) {
   return <div className={styles.actions}>{props.children}</div>;
-  // } else {
-  //   return null;
-  // }
 };
 
 export const CommentIndent = (props: React.ComponentProps<'div'>) => {
@@ -233,6 +237,7 @@ export default function Comment(props: {
 }) {
   const hideProfile = props.hideProfile ?? false;
   const showResolveThreadButton = props.showResolveThreadButton ?? false;
+  console.log('r');
 
   return (
     <Comment.Root commentId={props.commentId}>

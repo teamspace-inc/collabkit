@@ -90,19 +90,6 @@ export const timestamp = style({
   color: fallbackVar(vars.comment.timestamp.color, vars.color.textSecondary),
 });
 
-export const actions = style({
-  display: 'flex',
-  gap: vars.space[1],
-  flexDirection: 'row',
-  zIndex: 2, // higher than scrollbar
-  fontFamily: vars.fontFamily,
-  position: 'absolute',
-  right: '0px',
-  top: '0px',
-  background: vars.color.surfaceOverlay,
-  borderRadius: '6px',
-});
-
 export const root = style({
   flex: '1',
   flexDirection: 'row',
@@ -116,12 +103,44 @@ export const root = style({
   paddingBottom: fallbackVar(vars.comment.paddingBottom, vars.space[1]),
   fontFamily: vars.fontFamily,
   display: 'flex',
+});
 
-  selectors: {
-    '&:hover': {
-      backgroundColor: fallbackVar(vars.comment.hover.background, 'none'),
-    },
-  },
+export const actions = style({
+  display: 'flex',
+  gap: vars.space[1],
+  flexDirection: 'row',
+  zIndex: 2, // higher than scrollbar
+  fontFamily: vars.fontFamily,
+  position: 'absolute',
+  right: '0px',
+  top: '-1px',
+  background: vars.color.surfaceOverlay,
+  borderRadius: '6px',
+
+  opacity: 0,
+});
+
+export const hover = style({
+  opacity: 1,
+  pointerEvents: 'all',
+});
+
+globalStyle(`${collabkit} ${root}:hover`, {
+  backgroundColor: fallbackVar(vars.comment.hover.background, vars.color.surfaceHover),
+});
+
+globalStyle(`${collabkit} ${root}${hover}`, {
+  backgroundColor: fallbackVar(vars.comment.hover.background, vars.color.surfaceHover),
+});
+
+globalStyle(`${collabkit} ${root}${hover} ${actions}`, {
+  opacity: 1,
+  pointerEvents: 'all',
+});
+
+globalStyle(`${collabkit} ${root}:hover ${actions}`, {
+  opacity: 1,
+  pointerEvents: 'all',
 });
 
 export const markdown = style({});

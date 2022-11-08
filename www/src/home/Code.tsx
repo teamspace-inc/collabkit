@@ -15,7 +15,7 @@ export function Code() {
     theme: 'dark',
   });
   return (
-    <section ref={ref} className={`${dark} ${purpleBg} ${section}`}>
+    <section ref={ref} className={`${dark} ${section}`}>
       <h1>Get it running in minutes</h1>
       <h3 className={h3}>Simply add {'<CollabKit.Thread />'}</h3>
       <Link to="/docs" className={button({ type: 'secondary', size: 'medium' })}>

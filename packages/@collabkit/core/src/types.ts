@@ -155,6 +155,7 @@ export type Target =
   | CommentableContainer
   | Commentable
   | MenuTarget
+  | CommentMenuTarget
   | PinTarget
   | CommentEditButtonTarget
   | CommentDeleteButtonTarget
@@ -165,7 +166,10 @@ export type MenuTarget = {
   type: 'menu';
   nodeId: string;
   parentId: string | null;
+  context?: Target;
 };
+
+export type CommentMenuTarget = MenuTarget & CommentTarget;
 
 export type Commentable = {
   type: 'commentable';

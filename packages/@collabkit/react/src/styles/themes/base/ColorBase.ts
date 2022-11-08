@@ -9,6 +9,7 @@ const colors = {
   grey7: 'hsl(0, 0%, 7%)', // Grey 7
   white: 'hsl(0, 0%, 100%)', // White
   opacity7: 'rgba(0, 0, 0, 0.08)', // White Opacity 7
+  opacity4: 'rgba(0, 0, 0, 0.04)', // White Opacity 7
   red: 'hsl(2, 73%, 62%)', // Red
 };
 
@@ -16,6 +17,7 @@ export const ColorBase = {
   color: {
     background: colors.white,
     surface: '#EEEEEE',
+    surfaceHover: colors.opacity4,
     surfaceOverlay: colors.opacity7,
     textPrimary: colors.black10,
     textSecondary: colors.grey30,
