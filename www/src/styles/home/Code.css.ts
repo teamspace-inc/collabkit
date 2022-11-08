@@ -1,4 +1,5 @@
 import { style } from '@vanilla-extract/css';
+import { vars } from '../Theme.css';
 
 export const h3 = style({
   color: '#ADA0C0 !important',
@@ -16,4 +17,5 @@ export const codeWrap = style({
 
 export const section = style({
   paddingTop: '40px !important',
+  backgroundColor: vars.color.aubergine,
 });
