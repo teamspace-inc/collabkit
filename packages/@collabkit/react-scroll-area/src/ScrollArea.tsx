@@ -39,6 +39,7 @@ type ScrollAreaContextValue = {
   type: 'auto' | 'always' | 'scroll' | 'hover';
   dir: Direction;
   autoScroll: 'none' | 'bottom';
+  autoScrollThreshold: number;
   scrollHideDelay: number;
   scrollArea: ScrollAreaElement | null;
   viewport: ScrollAreaViewportElement | null;
@@ -66,6 +67,7 @@ interface ScrollAreaProps extends PrimitiveDivProps {
   type?: ScrollAreaContextValue['type'];
   dir?: ScrollAreaContextValue['dir'];
   autoScroll?: ScrollAreaContextValue['autoScroll'];
+  autoScrollThreshold?: number;
   scrollHideDelay?: number;
 }
 
@@ -76,6 +78,7 @@ const ScrollArea = React.forwardRef<ScrollAreaElement, ScrollAreaProps>(
       type = 'hover',
       dir,
       autoScroll = 'none',
+      autoScrollThreshold = 16,
       scrollHideDelay = 600,
       ...scrollAreaProps
     } = props;
@@ -97,6 +100,7 @@ const ScrollArea = React.forwardRef<ScrollAreaElement, ScrollAreaProps>(
         type={type}
         dir={direction}
         autoScroll={autoScroll}
+        autoScrollThreshold={autoScrollThreshold}
         scrollHideDelay={scrollHideDelay}
         scrollArea={scrollArea}
         viewport={viewport}
@@ -149,11 +153,29 @@ const ScrollAreaViewport = React.forwardRef<ScrollAreaViewportElement, ScrollAre
     const ref = React.useRef<ScrollAreaViewportElement>(null);
     const composedRefs = useComposedRefs(forwardedRef, ref, context.onViewportChange);
 
+    const canAutoScroll = React.useRef(true);
+    React.useEffect(() => {
+      const viewport = context.viewport;
+      if (viewport) {
+        const handleScroll = () => {
+          const distanceFromEnd =
+            viewport.scrollHeight - viewport.scrollTop - viewport.offsetHeight;
+          if (distanceFromEnd > context.autoScrollThreshold) {
+            canAutoScroll.current = false;
+          } else {
+            canAutoScroll.current = true;
+          }
+        };
+        viewport.addEventListener('scroll', handleScroll);
+        return () => viewport.removeEventListener('scroll', handleScroll);
+      }
+    }, [context.viewport]);
+
     const prevHeight = React.useRef(0);
     const handleResize = useDebounceCallback(() => {
       if (context.autoScroll === 'bottom' && context.viewport) {
         const height = context.viewport.scrollHeight;
-        if (height !== prevHeight.current) {
+        if (height !== prevHeight.current && canAutoScroll.current) {
           context.viewport.scrollTop = height;
         }
         prevHeight.current = height;

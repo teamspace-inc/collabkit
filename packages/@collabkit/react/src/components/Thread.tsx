@@ -1,5 +1,4 @@
 import React, { useMemo } from 'react';
-import { ScrollableCommentList } from './ScrollableCommentList';
 import { useApp } from '../hooks/useApp';
 import { useThreadSubscription } from '../hooks/useThread';
 import { useSnapshot } from 'valtio';
@@ -15,6 +14,7 @@ import { ThreadUnreadDot } from './ThreadUnreadDot';
 import { ResolveThreadIconButton } from './ResolveThreadIconButton';
 import { ThreadProps } from '../types';
 import { useSaveThreadInfo } from '../hooks/useSaveThreadInfo';
+import { Scrollable } from './ScrollArea';
 
 function ThreadProvider(props: ThreadProps & { children: React.ReactNode }) {
   const { store } = useApp();
@@ -57,9 +57,9 @@ export function Thread(props: ThreadProps & { className?: string; children?: Rea
         <ThemeWrapper>
           <div className={styles.root}>
             {props.showHeader && <div className={styles.header}>Comments</div>}
-            <ScrollableCommentList>
+            <Scrollable autoScroll="bottom">
               <CommentList />
-            </ScrollableCommentList>
+            </Scrollable>
             {props.hideComposer ? null : <Composer />}
           </div>
         </ThemeWrapper>
