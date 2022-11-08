@@ -16,7 +16,7 @@ function PopoverThreadPreview(props: {}) {
   return (
     <ThemeWrapper>
       <div className={previewRoot} data-collabkit-internal="true">
-        <Scrollable>
+        <Scrollable autoScroll="bottom">
           <CommentList />
         </Scrollable>
       </div>
@@ -28,7 +28,7 @@ export function PopoverThreadThread(props: {}) {
   return (
     <ThemeWrapper>
       <div className={root} data-collabkit-internal="true">
-        <Scrollable>
+        <Scrollable autoScroll="bottom">
           <CommentList />
         </Scrollable>
         <Composer />
