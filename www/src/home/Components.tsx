@@ -35,6 +35,7 @@ function PopoverThreadComponent() {
     <Thread.Provider threadId="thread3">
       <div
         style={{
+          marginLeft: '-12px',
           padding: '9px 4px',
           width: '100px',
           height: '50px',
@@ -85,7 +86,7 @@ export const COMPONENTS: ComponentProps[] = [
     component: (
       <div
         style={{
-          marginTop: '52px',
+          marginTop: '60px',
           overflow: 'hidden',
           borderTopLeftRadius: 12,
           borderTopRightRadius: 12,
