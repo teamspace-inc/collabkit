@@ -19,6 +19,20 @@ export const footerLinkButton = style({
   alignItems: 'center',
   justifyContent: 'center',
   gap: '16px',
+
+  '@media': {
+    'screen and (max-width: 768px)': {
+      width: 'calc(100vw - 40px)',
+      selectors: {
+        '&:first-of-type': {
+          marginTop: '20px',
+        },
+        '&:last-of-type': {
+          marginBottom: '-20px',
+        },
+      },
+    },
+  },
 });
 
 export const footerLink = style({

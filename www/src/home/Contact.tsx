@@ -68,16 +68,12 @@ export function Contact() {
           fontWeight: 500,
           fontSize: 16,
           lineHeight: '120%',
-          /* or 19px */
           textAlign: 'center',
           letterSpacing: '-0.03em',
           gap: '24px',
           ...(isSmallScreen
             ? {
                 display: 'inline',
-                // alignItems: 'center',
-                // flexDirection: 'column',
-                // gap: '8px',
               }
             : {}),
         }}
