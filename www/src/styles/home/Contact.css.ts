@@ -31,4 +31,11 @@ export const footerLink = style({
   letterSpacing: '-0.03em',
   color: '#999999',
   textDecoration: 'none',
+
+  '@media': {
+    'screen and (max-width: 768px)': {
+      padding: '5px 4px',
+      display: 'inline-block',
+    },
+  },
 });

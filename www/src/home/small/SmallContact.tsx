@@ -1,3 +1,5 @@
+import { Contact } from '../Contact';
+
 export function SmallContact() {
-  return <div></div>;
+  return <Contact />;
 }

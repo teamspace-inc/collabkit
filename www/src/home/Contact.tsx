@@ -7,7 +7,7 @@ import { dark, vars } from '../styles/Theme.css';
 
 export function Contact() {
   const isSmallScreen = useIsSmallScreen();
-  const footerLinksDivider = isSmallScreen ? null : <span>|</span>;
+  const footerLinksDivider = <span>|</span>;
 
   return (
     <section
@@ -74,9 +74,10 @@ export function Contact() {
           gap: '24px',
           ...(isSmallScreen
             ? {
-                alignItems: 'center',
-                flexDirection: 'column',
-                gap: '32px',
+                display: 'inline',
+                // alignItems: 'center',
+                // flexDirection: 'column',
+                // gap: '8px',
               }
             : {}),
         }}

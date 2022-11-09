@@ -25,7 +25,7 @@ globalStyle(`${website} section`, {
   gap: '40px',
   '@media': {
     'screen and (max-width: 720px)': {
-      gap: '0px',
+      gap: '20px',
       padding: '80px 20px',
     },
   },
