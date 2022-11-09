@@ -8,6 +8,13 @@ export const card = style({
   flex: 1,
   flexDirection: 'column',
   alignItems: 'flex-start',
+
+  '@media': {
+    'screen and (max-width: 768px)': {
+      minHeight: 540,
+      width: 'calc(100vw - 40px)',
+    },
+  },
 });
 
 export const ul = style({

@@ -21,6 +21,128 @@ function FeatureList(props: { children: React.ReactNode }) {
   );
 }
 
+export const PLANS = (
+  <>
+    <div className={card}>
+      <h4>Trial</h4>
+      <V12 />
+      <h2>
+        Free
+        <br />
+      </h2>
+      <V12 />
+      <small>Per month</small>
+      <V12 />
+
+      <FeatureList>
+        <h5>All the essentials</h5>
+        <h5>
+          100 <br />
+          <small>monthly active users</small>
+        </h5>
+        <h5>Customize UI</h5>
+      </FeatureList>
+      <small>$0.50 per additonal user.</small>
+      <V12 />
+      <GetStartedButton
+        style={{
+          display: 'flex',
+          width: '100%',
+          background: vars.color.textContrastHigh,
+          color: 'white',
+        }}
+      />
+    </div>
+    <div className={card}>
+      <h4 style={{ color: vars.color.teal }}>Startup</h4>
+      <V12 />
+      <h2>
+        $250 <br />
+      </h2>
+      <V12 />
+      <small>Per month</small>
+      <V12 />
+      <FeatureList>
+        <h5>All the essentials</h5>
+        <h5>
+          500 <br />
+          <small>monthly active users</small>
+        </h5>
+        <h5>Customize UI</h5>
+      </FeatureList>
+      <small>$0.50 per additonal user.</small>
+      <V12 />
+      <GetStartedButton
+        style={{
+          display: 'flex',
+          width: '100%',
+          background: vars.color.teal,
+          color: 'white',
+        }}
+      />
+    </div>
+    <div className={card}>
+      <h4 style={{ color: vars.color.indigo }}>Pro</h4>
+      <V12 />
+      <h2>
+        $500 <br />
+      </h2>
+      <V12 />
+      <small>Per month</small>
+      <V12 />
+      <FeatureList>
+        <h5>All the essentials</h5>
+        <h5>
+          1,000 <br />
+          <small>monthly active users</small>
+        </h5>
+        <h5>Customize UI</h5>
+        <h5>Slack Support</h5>
+      </FeatureList>
+      <small>$0.50 per additonal user.</small>
+      <V12 />
+      <GetStartedButton
+        style={{
+          display: 'flex',
+          width: '100%',
+          background: vars.color.indigo,
+          color: 'white',
+        }}
+      />
+    </div>
+    <div className={card}>
+      <h4 style={{ color: vars.color.violet }}>Scale</h4>
+      <V12 />
+      <h2>
+        Custom
+        <br />
+        <br />
+      </h2>
+      <FeatureList>
+        <h5>All the essentials</h5>
+        <h5>
+          Unlimited <br />
+          <small>monthly active users</small>
+        </h5>
+        <h5>Customize UI</h5>
+        <h5>Slack Support</h5>
+        <h5>API</h5>
+      </FeatureList>
+      <br />
+      <br />
+      <V12 />
+      <GetStartedButton
+        style={{
+          width: '100%',
+          textAlign: 'center',
+          backgroundColor: vars.color.violet,
+          color: 'white',
+        }}
+      />
+    </div>
+  </>
+);
+
 export function Plans() {
   const { ref } = useHeaderStyle({
     backgroundColor: vars.color.ice,
@@ -40,123 +162,7 @@ export function Plans() {
           maxWidth: 1124,
         }}
       >
-        <div className={card}>
-          <h4>Trial</h4>
-          <V12 />
-          <h2>
-            Free
-            <br />
-          </h2>
-          <V12 />
-          <small>Per month</small>
-          <V12 />
-
-          <FeatureList>
-            <h5>All the essentials</h5>
-            <h5>
-              100 <br />
-              <small>monthly active users</small>
-            </h5>
-            <h5>Customize UI</h5>
-          </FeatureList>
-          <small>$0.50 per additonal user.</small>
-          <V12 />
-          <GetStartedButton
-            style={{
-              display: 'flex',
-              width: '100%',
-              background: vars.color.textContrastHigh,
-              color: 'white',
-            }}
-          />
-        </div>
-        <div className={card}>
-          <h4 style={{ color: vars.color.teal }}>Startup</h4>
-          <V12 />
-          <h2>
-            $250 <br />
-          </h2>
-          <V12 />
-          <small>Per month</small>
-          <V12 />
-          <FeatureList>
-            <h5>All the essentials</h5>
-            <h5>
-              500 <br />
-              <small>monthly active users</small>
-            </h5>
-            <h5>Customize UI</h5>
-          </FeatureList>
-          <small>$0.50 per additonal user.</small>
-          <V12 />
-          <GetStartedButton
-            style={{
-              display: 'flex',
-              width: '100%',
-              background: vars.color.teal,
-              color: 'white',
-            }}
-          />
-        </div>
-        <div className={card}>
-          <h4 style={{ color: vars.color.indigo }}>Pro</h4>
-          <V12 />
-          <h2>
-            $500 <br />
-          </h2>
-          <V12 />
-          <small>Per month</small>
-          <V12 />
-          <FeatureList>
-            <h5>All the essentials</h5>
-            <h5>
-              1,000 <br />
-              <small>monthly active users</small>
-            </h5>
-            <h5>Customize UI</h5>
-            <h5>Slack Support</h5>
-          </FeatureList>
-          <small>$0.50 per additonal user.</small>
-          <V12 />
-          <GetStartedButton
-            style={{
-              display: 'flex',
-              width: '100%',
-              background: vars.color.indigo,
-              color: 'white',
-            }}
-          />
-        </div>
-        <div className={card}>
-          <h4 style={{ color: vars.color.violet }}>Scale</h4>
-          <V12 />
-          <h2>
-            Custom
-            <br />
-            <br />
-          </h2>
-          <FeatureList>
-            <h5>All the essentials</h5>
-            <h5>
-              Unlimited <br />
-              <small>monthly active users</small>
-            </h5>
-            <h5>Customize UI</h5>
-            <h5>Slack Support</h5>
-            <h5>API</h5>
-          </FeatureList>
-          <br />
-          <br />
-          <V12 />
-          <GetStartedButton
-            style={{
-              width: '100%',
-              textAlign: 'center',
-              backgroundColor: vars.color.violet,
-              color: 'white',
-            }}
-          />
-        </div>
+        {PLANS}
       </div>
     </section>
   );

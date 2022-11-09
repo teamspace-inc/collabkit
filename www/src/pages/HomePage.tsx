@@ -15,6 +15,7 @@ import { SmallComponents } from '../home/small/SmallComponents';
 import { SmallCustomisable } from '../home/small/SmallCustomisable';
 import { SmallCode } from '../home/small/SmallCode';
 import { SmallHeader } from '../home/small/SmallHeader';
+import { SmallPlans } from '../home/small/SmallPlans';
 
 function SmallHomePage() {
   return (
@@ -25,6 +26,7 @@ function SmallHomePage() {
       <SmallComponents />
       <SmallCustomisable />
       <SmallCode />
+      <SmallPlans />
     </>
   );
 }
