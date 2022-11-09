@@ -158,7 +158,7 @@ export const docStep = style({
     textIndent: '-1px',
     lineHeight: '28px',
     color: `hsla(0, 0%, 11%, 1)`,
-    background: vars.color.mint,
+    background: vars.color.teal,
     borderRadius: '50%',
     position: 'absolute',
     left: -44,
