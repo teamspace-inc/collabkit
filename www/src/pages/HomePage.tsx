@@ -17,7 +17,6 @@ import { SmallCode } from '../home/small/SmallCode';
 
 export function HomePage() {
   const isSmallScreen = useIsSmallScreen();
-
   return (
     <div className={`${website} ${light}`}>
       {isSmallScreen ? (
