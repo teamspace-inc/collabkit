@@ -53,7 +53,7 @@ export const checkbox = style({});
 export const modal = style({
   position: 'absolute',
   inset: 0,
-  background: 'rgba(0, 0, 0, 0.1)',
+  background: 'rgba(0, 0, 0, 0.5)',
 });
 
 export const sidebar = style({
