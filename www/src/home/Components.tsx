@@ -33,29 +33,30 @@ function PopoverThreadComponent() {
 
   return (
     <Thread.Provider threadId="thread3">
-      <div
-        style={{
-          marginLeft: '-12px',
-          padding: '9px 4px',
-          width: '100px',
-          height: '50px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          boxSizing: 'border-box',
-          borderRadius: '6px',
-          fontSize: '12px',
-          textAlign: 'center',
-          fontWeight: 'bold',
-          background: 'rgba(0,0,0,0.3)',
-          cursor: 'pointer',
-          color: 'white',
-        }}
-      >
-        Component
-      </div>
-      <div style={{ position: 'relative', left: 4 }}>
-        <InternalPopoverThreadThread />
+      <div style={{ display: 'flex', gap: '4px' }}>
+        <div
+          style={{
+            padding: '9px 4px',
+            width: '100px',
+            height: '50px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxSizing: 'border-box',
+            borderRadius: '6px',
+            fontSize: '12px',
+            textAlign: 'center',
+            fontWeight: 'bold',
+            background: 'rgba(0,0,0,0.3)',
+            cursor: 'pointer',
+            color: 'white',
+          }}
+        >
+          Component
+        </div>
+        <div style={{ position: 'relative', left: 0 }}>
+          <InternalPopoverThreadThread />
+        </div>
       </div>
     </Thread.Provider>
   );
