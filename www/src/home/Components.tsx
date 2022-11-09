@@ -137,12 +137,13 @@ export function Components() {
               className={card}
               style={{
                 borderRadius: '24px',
+                background: 'transparent',
                 border: '1px solid #4A3A63',
                 gap: '20px',
               }}
             >
               <h4 className={componentTitle}>See more components</h4>
-              <Link href="/docs" className={button({ type: 'secondary', size: 'medium' })}>
+              <Link href="/docs" className={button({ type: 'secondary', size: 'large' })}>
                 Documentation
               </Link>
             </div>,
