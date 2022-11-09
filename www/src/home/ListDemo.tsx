@@ -97,6 +97,14 @@ const employees: Employee[] = [
     department: 'Engineering',
     avatar: avatar9,
   },
+  {
+    id: '8789935X',
+    name: 'Mark Forrester',
+    role: 'VP Engineering',
+    hiredOn: '04/10/17',
+    department: 'Engineering',
+    avatar: avatar9,
+  },
 ];
 
 function Row({

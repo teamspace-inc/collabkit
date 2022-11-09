@@ -4,6 +4,7 @@ import { vars } from '../styles/Theme.css';
 
 export const list = style({
   marginTop: 30,
+  marginBottom: 23,
 });
 
 export const row = recipe({
