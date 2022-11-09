@@ -193,6 +193,7 @@ export const themeDemoContainer = style([
     background: 'transparent !important',
     height: '100% !important',
     flex: 1,
+    border: 'none',
   },
 ]);
 

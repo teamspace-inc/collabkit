@@ -12,7 +12,7 @@ export const editorAndPreview = style({
 export const codeEditor = style({
   position: 'relative',
   display: 'grid',
-  background: vars.color.bgContrastLow,
+  background: vars.color.bgContrastLowest,
   gridTemplateColumns: '1fr',
   boxSizing: 'border-box',
 });
@@ -23,6 +23,7 @@ export const root = style({
   position: 'fixed',
   height: '100%',
   inset: 0,
+  background: vars.color.bgContrastFloor,
 });
 
 export const header = style({

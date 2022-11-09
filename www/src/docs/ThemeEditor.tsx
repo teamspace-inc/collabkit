@@ -23,6 +23,7 @@ import {
 } from '../styles/ThemeEditor.css';
 
 import { SidebarDemo } from './demos/SidebarDemo';
+import { Link } from 'wouter';
 
 const components = [
   { name: 'Thread', component: ThreadDemo },
@@ -52,7 +53,9 @@ export function ThemeEditor() {
   return (
     <div className={`${docs} ${dark} ${bg} ${root}`}>
       <div className={header}>
-        <Logo theme="light" />
+        <Link href="/docs/customisation">
+          <Logo theme="dark" />
+        </Link>
         <div className={componentList}>
           Theme Editor
           {components.map((c) => (
