@@ -1,6 +1,8 @@
 import { globalStyle, style } from '@vanilla-extract/css';
 import { vars } from './Theme.css';
 
+export const HEADER_HEIGHT = 80;
+
 export const root = style({
   position: 'fixed',
   top: 0,
@@ -19,7 +21,7 @@ export const content = style({
   flex: 1,
   alignItems: 'center',
   maxWidth: '1124px',
-  height: 80,
+  height: HEADER_HEIGHT,
   padding: '14px 16px 15px',
 });
 

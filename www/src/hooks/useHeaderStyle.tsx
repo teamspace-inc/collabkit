@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { store } from '../home/Header';
+import { HEADER_HEIGHT } from '../styles/Header.css';
 
 export function useHeaderStyle(props: { theme: 'light' | 'dark'; backgroundColor: string }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -7,10 +8,9 @@ export function useHeaderStyle(props: { theme: 'light' | 'dark'; backgroundColor
     const listener = () => {
       if (ref.current) {
         const rect = ref.current.getBoundingClientRect();
-        if (rect.top < 0 && rect.top > -rect.height) {
+        if (rect.top < HEADER_HEIGHT && rect.top > -rect.height) {
           store.backgroundColor = props.backgroundColor;
           store.theme = props.theme;
-          // props.setInvertFilter(1);
         }
       }
     };
