@@ -1,4 +1,4 @@
-import { style } from '@vanilla-extract/css';
+import { globalStyle, style } from '@vanilla-extract/css';
 
 export const card = style({
   background: '#fff',
@@ -15,6 +15,11 @@ export const card = style({
       width: 'calc(100vw - 40px)',
     },
   },
+});
+
+globalStyle(`${card} h2`, {
+  fontSize: 48,
+  lineHeight: '59px',
 });
 
 export const ul = style({

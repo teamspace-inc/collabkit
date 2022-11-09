@@ -113,11 +113,9 @@ export const PLANS = (
     <div className={card}>
       <h4 style={{ color: vars.color.violet }}>Scale</h4>
       <V12 />
-      <h2>
-        Custom
-        <br />
-        <br />
-      </h2>
+      <h2>Custom</h2>
+      <br />
+      <br />
       <FeatureList>
         <h5>All the essentials</h5>
         <h5>
@@ -156,7 +154,7 @@ export function Plans() {
       <div
         style={{
           display: 'flex',
-          gap: '20px',
+          gap: '16px',
           flexDirection: 'row',
           marginTop: '60px',
           maxWidth: 1124,
