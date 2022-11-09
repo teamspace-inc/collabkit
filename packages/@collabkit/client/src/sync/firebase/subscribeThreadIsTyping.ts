@@ -11,20 +11,18 @@ export async function subscribeThreadIsTyping(props: {
   onThreadTypingChange: (event: Sync.TypingEvent) => void;
 }) {
   const { appId, userId, workspaceId, threadId, subs } = props;
-
   const key = `isTyping-${workspaceId}/${threadId}`;
   const addedKey = `${key}-added`;
   const removedKey = `${key}-removed`;
+  if (subs[addedKey] && subs[removedKey]) {
+    return;
+  }
 
   if (userId) {
     await onDisconnect(userTypingRef(appId, workspaceId, threadId, userId)).remove();
   }
 
   const isTypingRef = typingRef(appId, workspaceId, threadId);
-
-  if (subs[addedKey] && subs[removedKey]) {
-    return;
-  }
 
   try {
     subs[addedKey] = onChildAdded(isTypingRef, (snapshot) => {
