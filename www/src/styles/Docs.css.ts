@@ -8,6 +8,10 @@ export const docs = style({});
 
 export const max768 = `screen and (max-width: ${MAIN_BREAKPOINT}px)`;
 
+export const inset = style({
+  padding: '0 0 0 40px',
+});
+
 globalStyle(`${docs} blockquote`, {
   border: `1px solid ${vars.color.mint}`,
   color: vars.color.mint,

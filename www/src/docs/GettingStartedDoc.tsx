@@ -1,4 +1,4 @@
-import { docStep } from '../styles/Docs.css';
+import { docStep, inset } from '../styles/Docs.css';
 import { renderCodeSnippet } from './CodeEditor';
 import { ThreadDemo } from './demos/ThreadDemo';
 import { DocDemoContainer, DocLink } from './Doc';
@@ -17,21 +17,21 @@ export function GettingStartedDoc() {
           Set aside 5 to 10 minutes to get this done.
         </p>
       </div>
-      <div>
+      <div className={inset}>
         <h3 className={docStep}>Install @collabkit/react</h3>
         <p>With npm:</p>
         {renderCodeSnippet(`npm install @collabkit/react`, [], 'shell')}
         <p>Or with yarn:</p>
         {renderCodeSnippet(`yarn add @collabkit/react`, [], 'shell')}
       </div>
-      <div>
+      <div className={inset}>
         <h3 className={docStep}>Import styles</h3>
         <p>In a JS module:</p>
         {renderCodeSnippet(`import '@collabkit/react/dist/style.css';`)}
         <p>Or in CSS file:</p>
         {renderCodeSnippet(`@import '@collabkit/react/dist/style.css';`, [], 'css')}
       </div>
-      <div>
+      <div className={inset}>
         <h3 className={docStep}>Wrap your app in a CollabKitProvider</h3>
         <p>
           Be sure to pass in <code>user</code> and <code>workspace</code> details.
@@ -58,7 +58,7 @@ export default function App() {
   );
 }`)}
       </div>
-      <div>
+      <div className={inset}>
         <h3 className={docStep}>Add a Thread to your app</h3>
         {renderCodeSnippet(`import { Thread } from '@collabkit/react';
 
@@ -75,14 +75,14 @@ export default function App() {
         </div>
       </div>
 
-      <div>
+      <div className={inset}>
         <h3 className={docStep}>Try it out!</h3>
         <p>
           Load the page with the <code>{'<Thread />'}</code> on it and send some messages. Deploy to
           staging and share a link with your coworkers so they can try it out.
         </p>
       </div>
-      <div>
+      <div className={inset}>
         <h3 className={docStep}>Turn on Secure Mode</h3>
         <p>
           Before going live, enable <DocLink href="/docs/securemode">Secure Mode</DocLink> which

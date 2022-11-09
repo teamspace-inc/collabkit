@@ -1,4 +1,4 @@
-import { docStep } from '../styles/Docs.css';
+import { docStep, inset } from '../styles/Docs.css';
 import { renderCodeSnippet } from './CodeEditor';
 
 export function SecureModeDoc() {
@@ -15,11 +15,11 @@ export function SecureModeDoc() {
           In this tutorial we'll show you how to enable it. Set aside 30 minutes to get it done.
         </p>
       </div>
-      <div>
+      <div className={inset}>
         <h3 className={docStep}>Contact us</h3>
         <p>Email or Slack us and we'll enable Secure Mode for your app.</p>
       </div>
-      <div>
+      <div className={inset}>
         <h3 className={docStep}>Generate a per-user token</h3>
         <div>
           <h4>For Node.js</h4>
@@ -86,7 +86,7 @@ if (response?.status === 201) {
           </p>
         </div>
       </div>
-      <div>
+      <div className={inset}>
         <h3 className={docStep}>Pass the token to the CollabKitProvider on the client</h3>
         {renderCodeSnippet(`import { CollabKitProvider } from '@collabkit/react';
 
@@ -100,7 +100,7 @@ export default function App() {
   );
 }`)}
       </div>
-      <div>
+      <div className={inset}>
         <h3 className={docStep}>Done!</h3>
         <p>Your app is now running in Secure Mode.</p>
       </div>
