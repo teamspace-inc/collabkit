@@ -16,15 +16,17 @@ export function PopoverThreadDoc() {
         <h3>Usage</h3>
         <p>
           To add a popover thread to a component in your app. Wrap the component with{' '}
-          <code>{'<PopoverThread />'}</code> and pass an <code>objectId</code> as a prop. <br />
+          <code className="ReactNode">{'<PopoverThread />'}</code> and pass an <code>objectId</code>{' '}
+          as a prop. <br />
           <br />
           Object IDs are your stable unique identifiers for an object in your product. Ex. for a CRM
           it may be a customer's ID or for a task management app it may be a task ID.
           <br />
           <br />
-          Once you've wrapped your component in <code>{'<PopoverThread />'}</code> you need to then
-          call the associated <code>{'usePopoverThread'}</code> hook with the same object ID to get
-          the popover thread's state and actions.
+          Once you've wrapped your component in{' '}
+          <code className="ReactNode">{'<PopoverThread />'}</code> you need to then call the
+          associated <code>{'usePopoverThread'}</code> hook with the same object ID to get the
+          popover thread's state and actions.
           <br />
           <br />
           The main action you'll need to use is <code>{'openPopover()'}</code>. This will open the

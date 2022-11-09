@@ -14,8 +14,8 @@ export function ThreadDoc() {
       <div>
         <h3>Usage</h3>
         <p>
-          Render a comment thread in your app with <code>{'<Thread />'}</code>. Pass a unique{' '}
-          <code>threadId</code> to identify the thread.
+          Render a comment thread in your app with <code className="ReactNode">{'<Thread />'}</code>
+          . Pass a unique <code>threadId</code> to identify the thread.
         </p>
         {renderCodeSnippet(`import { Thread } from '@collabkit/react';
 
@@ -27,9 +27,10 @@ export function App() {
         <p>
           Threads fill the container they are rendered in. <br />
           <br />
-          So if you would like to give it a fixed size wrap your <code>{'<Thread />'}</code> in a{' '}
-          <code>{'<div />'}</code> or similar container with a fixed width and height to control its
-          size.
+          So if you would like to give it a fixed size wrap your{' '}
+          <code className="ReactNode">{'<Thread />'}</code> in a{' '}
+          <code className="ReactNode">{'<div />'}</code> or similar container with a fixed width and
+          height to control its size.
         </p>
         {renderCodeSnippet(`<div style={{ width: '280px', height: '320px' }}>
   <Thread threadId={'my-thread-id'} />

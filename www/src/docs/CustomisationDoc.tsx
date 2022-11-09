@@ -18,17 +18,7 @@ function ThemeName(props: { children: React.ReactNode }) {
     </div>
   );
 }
-<div>
-  <h3>Security</h3>
-  <p>
-    CollabKit supports two modes of operation, unsecured mode which is great for getting started,
-    trying it out, and shipping to trusted environments like dev or staging. <br />
-    <br />
-    When you're ready to ship to production, make sure you turn on <b>Secured Mode</b> which
-    requires fetching a per user token and passing it to <code>CollabKitProvider</code> on the
-    client.
-  </p>
-</div>;
+
 export function CustomisationDoc() {
   return (
     <>
@@ -38,7 +28,7 @@ export function CustomisationDoc() {
         <p>
           CollabKit comes with two builtin themes. <code>Light</code> and <code>Dark</code>. Use
           these by passing <code>light</code> or <code>dark</code> to the{' '}
-          <code>{'<CollabKitProvider />'}</code>.
+          <code className="ReactNode">{'<CollabKitProvider />'}</code>.
         </p>
       </div>
       <DocDemoContainer style={{ position: 'relative' }}>

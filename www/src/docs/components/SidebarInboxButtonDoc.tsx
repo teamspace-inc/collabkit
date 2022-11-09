@@ -25,9 +25,11 @@ export function SidebarInboxButtonDoc() {
         <h3>Usage</h3>
         <p>
           A button that displays the number of unread comments in the users inbox. Clicking the
-          button will show the inbox using a <code>{'<Sidebar />'}</code> component. <br />
+          button will show the inbox using a <code className="ReactNode">{'<Sidebar />'}</code>{' '}
+          component. <br />
           <br />
-          Ensure you have rendered the <code>{'<Sidebar />'}</code> component in your app already.
+          Ensure you have rendered the <code className="ReactNode">{'<Sidebar />'}</code> component
+          in your app already.
         </p>
         {renderCodeSnippet(`import { SidebarInboxButton } from '@collabkit/react';
 

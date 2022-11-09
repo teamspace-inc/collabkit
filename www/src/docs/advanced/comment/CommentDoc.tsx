@@ -48,8 +48,9 @@ export function CommentDoc() {
         <p>Renders a Comment. The most basic usage is as follows.</p>
         {renderCodeSnippet(Usage)}
         <p>
-          You must render <code>Comment</code> inside a <code>Thread.Provider</code> so it knows
-          which thread the <code>commentId</code> is in.{' '}
+          You must render <code className="ReactNode">Comment</code> inside a{' '}
+          <code className="ReactNode">Thread.Provider</code> so it knows which thread the{' '}
+          <code>commentId</code> is in.{' '}
         </p>
       </div>
 
@@ -73,7 +74,7 @@ export function CommentDoc() {
       <div>
         <h3>Anatomy</h3>
         <p>
-          Lets look at the parts that make up a <code>{'<Comment />'}</code>.
+          Lets look at the parts that make up a <code className="ReactNode">{'<Comment />'}</code>.
         </p>
         {renderCodeSnippet(Anatomy, [[1, 2]])}
         <p>
@@ -81,7 +82,8 @@ export function CommentDoc() {
           body. Replace some components with your own custom ones. Or even insert new components in
           between the existing ones you can do so. <br />
           <br />
-          Ensure components are be rendererd within an instance of <code>{'<Comment.Root>'}</code>.
+          Ensure components are be rendererd within an instance of{' '}
+          <code className="ReactNode">{'<Comment.Root>'}</code>.
         </p>
       </div>
       <AdvancedPart
@@ -98,8 +100,9 @@ export default () => (<Thread.Provider threadId="thread1">
             The root component of a Comment. Sets up Comment & Profile providers for you. Is
             required to other Comment components further down this list.
             <br />
-            Creates <code>{'<Comment.Provider>'}</code> for the provided <code>commentId</code> and
-            a<code>{'<Profile.Provider>'}</code> for the comments author for you. <br />
+            Creates <code className="ReactNode">{'<Comment.Provider>'}</code> for the provided{' '}
+            <code>commentId</code> and a<code className="ReactNode">{'<Profile.Provider>'}</code>{' '}
+            for the comments author for you. <br />
             <br />
             And automatically marks comment as seen when mounted and visible in the browser
             viewport.
@@ -198,7 +201,7 @@ export default () => (<Thread.Provider threadId="thread1">
           <>
             Renders the comment creator's name using{' '}
             <DocLink href="/docs/profile">
-              <code>{'<Profile.Name>'}</code>
+              <code className="ReactNode">{'<Profile.Name>'}</code>
             </DocLink>
           </>
         }

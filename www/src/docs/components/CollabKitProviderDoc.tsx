@@ -10,8 +10,9 @@ export function CollabKitProviderDoc() {
       <div>
         <h3>Usage</h3>
         <p>
-          <code>CollabKitProvider</code> is the React context provider that handles authentication
-          with CollabKit's servers and all other components fetch data from it.
+          <code className="ReactNode">CollabKitProvider</code> is the React context provider that
+          handles authentication with CollabKit's servers and all other components fetch data from
+          it.
         </p>
 
         <p>
@@ -20,8 +21,9 @@ export function CollabKitProviderDoc() {
         </p>
 
         <p>
-          The following example shows how to setup <code>CollabKitProvider</code> for your app. Copy
-          the code below into your root <code>App</code> component.
+          The following example shows how to setup{' '}
+          <code className="ReactNode">CollabKitProvider</code> for your app. Copy the code below
+          into your root <code className="ReactNode">App</code> component.
         </p>
 
         {renderCodeSnippet(`import { CollabKitProvider } from '@collabkit/react';

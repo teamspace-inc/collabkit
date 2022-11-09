@@ -67,7 +67,7 @@ export default function App() {
 </div>;`)}
         <div>
           <p>
-            You should see a <code>{'<Thread />'}</code> like the one below:
+            You should see a <code className="ReactNode">{'<Thread />'}</code> like the one below:
           </p>
           <DocDemoContainer>
             <ThreadDemo />
@@ -78,8 +78,9 @@ export default function App() {
       <div className={inset}>
         <h3 className={docStep}>Try it out!</h3>
         <p>
-          Load the page with the <code>{'<Thread />'}</code> on it and send some messages. Deploy to
-          staging and share a link with your coworkers so they can try it out.
+          Load the page with the <code className="ReactNode">{'<Thread />'}</code> on it and send
+          some messages. Deploy to staging and share a link with your coworkers so they can try it
+          out.
         </p>
       </div>
       <div className={inset}>

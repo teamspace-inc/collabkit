@@ -29,7 +29,7 @@ export function InboxButtonDoc() {
         <p>
           A button that displays the number of unread comments in the users inbox. Handle{' '}
           <code>onClick</code> to show the user's inbox yourself by rendering the
-          <code>{'<Inbox>'}</code> component.
+          <code className="ReactNode">{'<Inbox>'}</code> component.
         </p>
         {renderCodeSnippet(`import { InboxButton } from '@collabkit/react';
 

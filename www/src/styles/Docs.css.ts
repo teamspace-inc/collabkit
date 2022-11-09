@@ -48,7 +48,12 @@ globalStyle(`${docs} code`, {
   background: vars.color.bgContrastLow,
   padding: '4px 6px',
   borderRadius: '6px',
-  color: vars.color.mint,
+  color: vars.color.cyan,
+});
+
+globalStyle(`${docs} code.ReactNode`, {
+  fontWeight: 'bold',
+  color: vars.color.sky,
 });
 
 globalStyle(`${docs} h1`, {
