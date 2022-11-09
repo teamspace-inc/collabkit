@@ -54,7 +54,7 @@ export function Contact() {
         }}
       >
         <img src={ycLogoSvg} style={{ width: '2rem', height: '2rem' }} />
-        <small style={{ color: 'white' }}>Backed by Y Combinator</small>
+        <span className={styles.backedByYCText}>Backed by Y Combinator</span>
       </div>
       <div
         className="FooterLinks"

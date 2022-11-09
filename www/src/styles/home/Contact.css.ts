@@ -1,5 +1,16 @@
 import { style } from '@vanilla-extract/css';
 
+export const backedByYCText = style({
+  color: 'white !important',
+  fontFamily: 'Inter',
+  fontStyle: 'normal',
+  fontWeight: 500,
+  fontSize: 16,
+  lineHeight: '120%',
+  textAlign: 'center',
+  letterSpacing: '-0.03em',
+});
+
 export const footerLinkButton = style({
   border: '1px solid white',
   fontFamily: 'Inter',
