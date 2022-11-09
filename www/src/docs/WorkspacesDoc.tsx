@@ -31,7 +31,7 @@ export function WorkspacesDoc() {
         <h3>Usage</h3>
         <p>
           By default, you can set a users workspace by passing their workspace details to{' '}
-          <code>CollabKitProvider</code>.
+          <code className="ReactNode">CollabKitProvider</code>.
         </p>
         {renderCodeSnippet(`import { CollabKitProvider } from '@collabkit/react';
 
