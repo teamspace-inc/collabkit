@@ -120,7 +120,9 @@ export function Components() {
     <>
       <section className={`${dark} ${purpleBg}`} style={{ paddingBottom: 40, paddingTop: 40 }}>
         <h1>React components</h1>
-        <h3 className={styles.h3}>Build your commenting system with ease</h3>
+        <h3 className={styles.h3} style={{ marginBottom: 40 }}>
+          Build your commenting system with ease
+        </h3>
       </section>
       <div style={{ background: vars.color.aubergine }} className={dark}>
         <Carousel

@@ -17,8 +17,10 @@ export function Code() {
   return (
     <section ref={ref} className={`${dark} ${section}`}>
       <h1>Get it running in minutes</h1>
-      <h3 className={h3}>Simply add {'<CollabKit.Thread />'}</h3>
-      <Link to="/docs" className={button({ type: 'secondary', size: 'medium' })}>
+      <h3 className={h3} style={{ marginBottom: 40 }}>
+        Simply add {'<CollabKit.Thread />'}
+      </h3>
+      <Link to="/docs" className={button({ type: 'secondary', size: 'large' })}>
         Documentation
       </Link>
       <div

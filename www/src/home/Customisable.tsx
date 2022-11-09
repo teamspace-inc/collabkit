@@ -22,7 +22,9 @@ export function Customisable() {
   return (
     <section ref={ref} className={`${dark} ${purpleBg}`} id="HowItWorks">
       <h1>Fully customisable</h1>
-      <h3 className={styles.h3}>Use a default theme or seamlesly integrate into your UI</h3>
+      <h3 className={styles.h3} style={{ marginBottom: 40 }}>
+        Use a default theme or seamlesly integrate into your UI
+      </h3>
       <div className={modal}>
         <div style={{ paddingBottom: 100, height: 400, overflow: 'hidden' }}>
           <ThemeProvider theme={theme === 0 ? 'light' : 'dark'}>
