@@ -22,9 +22,6 @@ export function UsePopoverThreadDoc() {
           component.
         </p>
         <p>
-          Must be called within a <code>CollabKit.Provider</code>
-        </p>
-        <p>
           The following code shows how you can use <code>usePopoverThread</code>
         </p>
         {renderCodeSnippet(Usage)}
