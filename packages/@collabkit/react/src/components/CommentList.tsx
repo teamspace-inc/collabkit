@@ -5,7 +5,6 @@ import { useNewIndicator } from '../hooks/useNewIndicator';
 import Comment from './Comment';
 import { useTimeline } from '../hooks/useTimeline';
 import { groupedTimeline, computeIsResolved } from '@collabkit/core/src/timelineUtils';
-import { useThreadContext } from '../hooks/useThreadContext';
 
 const CommentListRoot = (props: React.ComponentProps<'div'>) => (
   <div className={styles.root} {...props} />
@@ -14,38 +13,31 @@ const CommentListRoot = (props: React.ComponentProps<'div'>) => (
 export { CommentListRoot as Root };
 
 export default function CommentList(props: React.ComponentProps<'div'>) {
-  const { userId } = useThreadContext();
   const timeline = useTimeline();
-
-  // todo @nc: tidy this up a bit
   const isResolved = computeIsResolved(timeline);
-  const firstCommentId = timeline ? Object.keys(timeline)[0] : null;
-  const canResolve = firstCommentId ? timeline[firstCommentId].createdById === userId : false;
-  canResolve;
-
   const { list } = groupedTimeline(timeline ?? {});
   const newIndicatorId = useNewIndicator();
 
   return (
     <CommentListRoot {...props}>
       {props.children ??
-        list?.map((group, gi) => {
+        list.map((group, groupIndex) => {
           const groupedComments = group.map((event, index) => {
-            // todo put this in context?!
-            const showProfile = index === 0;
             return (
               <React.Fragment key={event.id}>
-                {newIndicatorId === event.id ? <NewIndicator /> : null}
+                {newIndicatorId === event.id && <NewIndicator />}
                 <Comment
                   commentId={event.id}
-                  hideProfile={!showProfile}
-                  showResolveThreadButton={canResolve && !isResolved && gi === 0 && index === 0}
+                  hideProfile={index > 0}
+                  showResolveThreadButton={!isResolved && groupIndex === 0 && index === 0}
                 />
               </React.Fragment>
             );
           });
-          // only add a div if the group has comments in it
-          return groupedComments ? <div key={gi}>{groupedComments}</div> : null;
+          // only add a fragment if the group has comments in it
+          return groupedComments ? (
+            <React.Fragment key={groupIndex}>{groupedComments}</React.Fragment>
+          ) : null;
         })}
     </CommentListRoot>
   );
