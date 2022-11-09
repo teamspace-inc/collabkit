@@ -23,6 +23,13 @@ export const content = style({
   maxWidth: '1124px',
   height: HEADER_HEIGHT,
   padding: '14px 16px 15px',
+  zIndex: 2,
+
+  '@media': {
+    'screen and (max-width: 768px)': {
+      height: 60,
+    },
+  },
 });
 
 export const rightLinks = style({
@@ -34,4 +41,34 @@ export const rightLinks = style({
 
 globalStyle(`${rightLinks} a`, {
   color: vars.color.textContrastHigh,
+});
+
+export const smallLogoImg = style({
+  height: '16px',
+});
+
+export const smallMenu = style({
+  position: 'fixed',
+  inset: 0,
+  background: vars.color.yellow,
+});
+
+export const smallLink = style({
+  fontFamily: 'Satoshi',
+  fontStyle: 'normal',
+  fontWeight: 400,
+  fontSize: '36px',
+  lineHeight: '36px',
+  textAlign: 'center',
+  color: vars.color.textContrastHigh,
+});
+
+export const smallLinkList = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '40px',
+  justifyContent: 'center',
+  width: '100vw',
+  height: '100vh',
+  textAlign: 'center',
 });

@@ -2,10 +2,14 @@ import * as heroStyles from '../../styles/home/Hero.css';
 import * as styles from '../../styles/Website.css';
 import { HeroMessage, HERO_MESSAGES } from '../HeroMessage';
 import UISmallSvg from '../../assets/home/hero/ui-small.svg';
+import { useHeaderStyle } from '../../hooks/useHeaderStyle';
+import { vars } from '../../styles/Theme.css';
 
 export function SmallHero() {
+  const { ref } = useHeaderStyle({ backgroundColor: vars.color.yellow, theme: 'light' });
+
   return (
-    <section className={heroStyles.section} style={{ justifyContent: 'center' }}>
+    <section ref={ref} className={heroStyles.section} style={{ justifyContent: 'center' }}>
       <div style={{ display: 'flex', gap: '40px', flexDirection: 'column' }}>
         <h1 className={heroStyles.h1}>
           Commenting

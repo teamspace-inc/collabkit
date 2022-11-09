@@ -7,8 +7,9 @@ import TextSvg from '../../assets/home/demos/Text.svg';
 // import MapSvg from '../../assets/home/hero/Map.svg';
 // import VideoSvg from '../../assets/home/hero/Video.svg';
 import * as demoStyles from '../../styles/home/Demos.css';
-import { dark } from '../../styles/Theme.css';
+import { dark, vars } from '../../styles/Theme.css';
 import { h3OnPurple, purpleBg, vertical20 } from '../../styles/Website.css';
+import { useHeaderStyle } from '../../hooks/useHeaderStyle';
 
 const demos = [
   { name: 'Lists', svg: ListsSvg },
@@ -21,8 +22,9 @@ const demos = [
 ];
 
 export function SmallDemos() {
+  const { ref } = useHeaderStyle({ backgroundColor: vars.color.aubergine, theme: 'dark' });
   return (
-    <section className={`${purpleBg} ${dark}`} style={{ gap: '40px' }}>
+    <section ref={ref} className={`${purpleBg} ${dark}`} style={{ gap: '40px' }}>
       <div className={vertical20}>
         <h1>Works with any UI</h1>
         <h3 className={h3OnPurple}>CollabKit supports multiple ways to comment</h3>

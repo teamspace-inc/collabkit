@@ -8,6 +8,10 @@ export const bg = style({
   backgroundColor: vars.color.bgContrastLowest,
 });
 
+globalStyle(`.noscroll`, {
+  overflow: 'hidden',
+});
+
 globalStyle(`${website} section`, {
   position: 'relative',
   display: 'flex',

@@ -7,30 +7,19 @@ import {
   ScrollAreaViewport,
 } from '../UIKit';
 import { getDocHref, RootDocNode, useDocs } from './Docs';
-import { Breakpoint, useBreakpoint } from '../hooks/useWindowSize';
-import { useEffect, useState } from 'react';
-import { List } from 'phosphor-react';
-import {
-  navBurgerToggle,
-  navHeader,
-  navLi,
-  navListItem,
-  navListTitle,
-  navOl,
-  navWrap,
-} from '../styles/docs/DocNav.css';
+import { navLi, navListItem, navListTitle, navOl, navWrap } from '../styles/docs/DocNav.css';
 
-function NavListItem(props: { path: string[]; id: string; onClick: () => void }) {
+function NavListItem(props: { path: string[]; id: string }) {
   const [location] = useLocation();
   const href = getDocHref(props.path, props.id);
   return (
-    <Link href={href} onClick={props.onClick}>
+    <Link href={href}>
       <div className={navListItem({ active: href === location })}>{props.id}</div>
     </Link>
   );
 }
 
-function NavList(props: { node: RootDocNode; path: string[]; onClick: () => void }) {
+function NavList(props: { node: RootDocNode; path: string[] }) {
   if (typeof props.node === 'function') {
     return null;
   }
@@ -40,12 +29,10 @@ function NavList(props: { node: RootDocNode; path: string[]; onClick: () => void
       {Object.entries(props.node).map(([key, value], index) => (
         <li className={navLi} key={`${key}-${index}`}>
           {'isEmpty' in value ? <br /> : null}
-          {'component' in value ? (
-            <NavListItem onClick={props.onClick} path={props.path} id={key} />
-          ) : null}
+          {'component' in value ? <NavListItem path={props.path} id={key} /> : null}
           {'title' in value ? <div className={navListTitle}>{value.title}</div> : null}
           {'children' in value ? (
-            <NavList onClick={props.onClick} node={value.children} path={[...props.path, key]} />
+            <NavList node={value.children} path={[...props.path, key]} />
           ) : null}
         </li>
       ))}
@@ -53,45 +40,25 @@ function NavList(props: { node: RootDocNode; path: string[]; onClick: () => void
   );
 }
 
-function shouldShowNav(breakpoint: Breakpoint) {
-  return ['large', 'xlarge'].includes(breakpoint);
-}
-
 export function Nav(props: { className?: string }) {
-  const breakpoint = useBreakpoint();
   const docs = useDocs();
-
-  const [isOpen, setIsOpen] = useState(() => shouldShowNav(breakpoint));
-
-  const hasMenu = !shouldShowNav(breakpoint);
-
-  useEffect(() => {
-    setIsOpen(shouldShowNav(breakpoint));
-  }, [breakpoint]);
 
   return (
     <>
       <div>
-        <div className={navHeader}>
-          <div className={navBurgerToggle({ active: isOpen })} onClick={() => setIsOpen(!isOpen)}>
-            <List size={24} color="rgba(255,255,255,0.75)" />
-          </div>
+        <div className={props.className}>
+          <ScrollAreaRoot style={{ width: '100%' }}>
+            <ScrollAreaViewport>
+              <div className={navWrap}>
+                <NavList node={docs} path={[]} />
+              </div>
+            </ScrollAreaViewport>
+            <ScrollAreaScrollbar orientation="vertical">
+              <ScrollAreaThumb />
+            </ScrollAreaScrollbar>
+            <ScrollAreaCorner />
+          </ScrollAreaRoot>
         </div>
-        {isOpen ? (
-          <div className={props.className}>
-            <ScrollAreaRoot style={{ width: '100%' }}>
-              <ScrollAreaViewport>
-                <div className={navWrap}>
-                  <NavList onClick={() => hasMenu && setIsOpen(false)} node={docs} path={[]} />
-                </div>
-              </ScrollAreaViewport>
-              <ScrollAreaScrollbar orientation="vertical">
-                <ScrollAreaThumb />
-              </ScrollAreaScrollbar>
-              <ScrollAreaCorner />
-            </ScrollAreaRoot>
-          </div>
-        ) : null}
       </div>
     </>
   );

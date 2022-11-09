@@ -22,6 +22,7 @@ import { createDemoStore, mentionableUsers } from './home/demoStore';
 import { DashboardPage } from './pages/DashboardPage';
 import { DashboardExample } from './examples/DashboardExample';
 import { CarouselPage } from './pages/CarouselPage';
+import { useLayoutEffect } from 'react';
 
 const defaultWorkspace: Partial<Workspace> = {
   // pins: {
@@ -231,6 +232,15 @@ export default function App() {
   //   // @ts-expect-error
   //   window.Intercom('update');
   // }, []);
+
+  useLayoutEffect(() => {
+    // if a user resizes the window to small
+    // and then opens the burger menu
+    // and resizes the window to be larger
+    // we need to remove the noscroll class
+    // added by the small screen burger menu
+    document.body.classList.remove('noscroll');
+  }, []);
 
   return (
     <CollabKitProvider

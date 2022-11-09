@@ -20,7 +20,7 @@ import { docs } from '../../styles/Docs.css';
 import { dark } from '../../styles/Theme.css';
 import { bg } from '../../styles/Website.css';
 import { Org } from './Org';
-import { Logo } from '../../Logo';
+import { LogoImg } from '../../Logo';
 
 export function Dashboard() {
   const { authState, org } = useSnapshot(dashboardStore);

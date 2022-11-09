@@ -1,10 +1,13 @@
-import { dark } from '../../styles/Theme.css';
+import { dark, vars } from '../../styles/Theme.css';
 import { button, h3OnPurple, purpleBg, vertical20, vertical40 } from '../../styles/Website.css';
 import CodeSvg from '../../assets/home/code/codeSmall.svg';
+import { useHeaderStyle } from '../../hooks/useHeaderStyle';
 
 export function SmallCode() {
+  const { ref } = useHeaderStyle({ backgroundColor: vars.color.aubergine, theme: 'dark' });
+
   return (
-    <section className={`${purpleBg} ${dark}`}>
+    <section ref={ref} className={`${purpleBg} ${dark}`}>
       <div className={vertical40}>
         <div className={vertical20}>
           <h1>Get it running in minutes</h1>

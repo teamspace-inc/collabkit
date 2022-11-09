@@ -1,4 +1,4 @@
-import { dark } from '../../styles/Theme.css';
+import { dark, vars } from '../../styles/Theme.css';
 import { button, h3OnPurple, purpleBg, vertical20, vertical40 } from '../../styles/Website.css';
 import { Slider, SliderTrack, SliderThumb, SliderRange } from '@radix-ui/react-slider';
 import {
@@ -20,6 +20,7 @@ import Theme6 from '../../assets/home/customisability/6.svg';
 import Theme7 from '../../assets/home/customisability/7.svg';
 import { useState } from 'react';
 import { usePreloadImages } from '../../hooks/usePreloadImages';
+import { useHeaderStyle } from '../../hooks/useHeaderStyle';
 
 const THEMES: { [x: string]: string } = {
   Theme1,
@@ -56,9 +57,10 @@ function ThemeSlider(props: { onChange: (theme: string) => void }) {
 export function SmallCustomisable() {
   const [theme, setTheme] = useState('Theme1');
   usePreloadImages({ imageUrls: Object.values(THEMES) });
+  const { ref } = useHeaderStyle({ backgroundColor: vars.color.aubergine, theme: 'dark' });
 
   return (
-    <section className={`${purpleBg} ${dark}`}>
+    <section ref={ref} className={`${purpleBg} ${dark}`}>
       <div className={vertical40}>
         <div className={vertical20}>
           <h1>Fully Customisable</h1>

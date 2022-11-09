@@ -184,6 +184,7 @@ export function CodeEditor(props: {
       }
     }
   }, [props.fixedSize, codeString.length, id, didMount]);
+  const breakpoint = useBreakpoint();
 
   return (
     <div
@@ -193,7 +194,9 @@ export function CodeEditor(props: {
         ['--vscode-editor-background' as any]: 'blue',
       }}
     >
-      {props.copyButton ? <CopyButton codeString={codeString} /> : null}
+      {props.copyButton && !['small', 'medium'].includes(breakpoint) ? (
+        <CopyButton codeString={codeString} />
+      ) : null}
       <div ref={editorRef} style={{ ...(props.fixedSize ? {} : { height }) }} />
     </div>
   );

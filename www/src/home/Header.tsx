@@ -1,12 +1,12 @@
 import { Link } from '../UIKit';
-import { Logo } from '../Logo';
+import { LogoImg } from '../Logo';
 import { GetStartedButton } from './GetStartedButton';
 import { a, website } from '../styles/Website.css';
 import { content, rightLinks, root } from '../styles/Header.css';
 import { proxy, useSnapshot } from 'valtio';
 import { dark, light, vars } from '../styles/Theme.css';
 import { useLocation } from 'wouter';
-import { useCallback } from 'react';
+import React, { useCallback } from 'react';
 
 export const store = proxy<{
   backgroundColor: string;
@@ -16,57 +16,70 @@ export const store = proxy<{
   theme: 'light',
 });
 
-export function StickyHeader(props: {
-  left?: React.ReactNode;
-  right?: React.ReactNode;
-  style?: React.CSSProperties;
-}) {
+export function HeaderContent(props: { left?: React.ReactNode; right: React.ReactNode }) {
   return (
-    <div className={`${root} ${website}`} style={props.style}>
-      <div className={content}>
-        <div>{props.left}</div>
-        <div style={{ display: 'flex', flex: 1 }}></div>
-        <div style={{ display: 'flex' }}>{props.right}</div>
-      </div>
+    <div className={content}>
+      <div>{props.left}</div>
+      <div style={{ display: 'flex', flex: 1 }}></div>
+      <div style={{ display: 'flex' }}>{props.right}</div>
     </div>
   );
 }
 
-export function useScrollToLink(props: { selector: string }) {
-  const [, setLocation] = useLocation();
-  return useCallback(
-    (opts?: { behaviour?: 'smooth' | 'auto' }) => {
-      const element = document.querySelector(props.selector);
-      if (element) {
-        element.scrollIntoView({ behavior: opts?.behaviour ?? 'smooth', block: 'start' });
-        setLocation(props.selector);
-      }
-    },
-    [props.selector]
+export function HeaderRoot(props: {
+  children?: React.ReactNode;
+  style?: React.CSSProperties;
+  className?: string;
+}) {
+  return (
+    <div className={`${root} ${website} ${props.className}`} style={props.style}>
+      {props.children}
+    </div>
   );
 }
 
-function ScrollToLink(props: { selector: string; children: React.ReactNode; href: string }) {
-  const scrollToLink = useScrollToLink(props);
+export function useScrollToLink() {
   const [, setLocation] = useLocation();
-  return window.innerWidth > 640 ? (
+  return useCallback((props: { selector: string; behaviour?: 'smooth' | 'auto' }) => {
+    const element = document.querySelector(props.selector);
+    if (element) {
+      element.scrollIntoView({ behavior: props?.behaviour ?? 'smooth', block: 'start' });
+      setLocation(props.selector);
+    }
+  }, []);
+}
+
+export function isDocsInPath() {
+  return window.location.href.toString().includes('/docs');
+}
+
+export function ScrollToLink(props: {
+  selector: string;
+  children: React.ReactNode;
+  href: string;
+  className?: string;
+  style?: React.CSSProperties;
+}) {
+  const scrollToLink = useScrollToLink();
+  const [, setLocation] = useLocation();
+  return (
     <Link
-      className={a}
+      className={props.className}
       onClick={() => {
         if (window.location.href.toString().includes('/docs')) {
           setLocation('/');
           setTimeout(() => {
-            scrollToLink({ behaviour: 'auto' });
+            scrollToLink({ ...props, behaviour: 'auto' });
           }, 1);
-          scrollToLink();
+          scrollToLink(props);
         } else {
-          scrollToLink();
+          scrollToLink(props);
         }
       }}
     >
       {props.children}
     </Link>
-  ) : null;
+  );
 }
 
 function HeaderRightLinks() {
@@ -74,10 +87,10 @@ function HeaderRightLinks() {
 
   return (
     <div className={rightLinks}>
-      <ScrollToLink href="/#Pricing" selector="#Pricing">
+      <ScrollToLink className={a} href="/#Pricing" selector="#Pricing">
         Pricing
       </ScrollToLink>
-      <ScrollToLink href="/#Contact" selector="#Contact">
+      <ScrollToLink className={a} href="/#Contact" selector="#Contact">
         Contact
       </ScrollToLink>
       <Link className={a} onClick={() => setLocation('/docs/introduction')}>
@@ -90,34 +103,40 @@ function HeaderRightLinks() {
   );
 }
 
+export function useLogoClick() {
+  const [, setLocation] = useLocation();
+  return () => {
+    if (isDocsInPath()) {
+      setLocation('/');
+    } else {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'smooth',
+      });
+    }
+  };
+}
+
+export function HeaderLogoImg(props: React.ComponentPropsWithoutRef<'img'>) {
+  const { theme } = useSnapshot(store);
+  const onClick = useLogoClick();
+  return <LogoImg theme={theme} onClick={onClick} {...props} />;
+}
+
 export function Header() {
-  const { backgroundColor, theme } = useSnapshot(store);
-  const [location, setLocation] = useLocation();
+  const { theme, backgroundColor } = useSnapshot(store);
 
   return (
-    <StickyHeader
-      style={{ backgroundColor }}
-      left={
-        <Logo
-          theme={theme}
-          onClick={() => {
-            if (window.location.href.toString().includes('/docs')) {
-              setLocation('/');
-            } else {
-              window.scrollTo({
-                top: 0,
-                left: 0,
-                behavior: 'smooth',
-              });
-            }
-          }}
-        />
-      }
-      right={
-        <div className={theme === 'dark' ? dark : light}>
-          <HeaderRightLinks />
-        </div>
-      }
-    />
+    <HeaderRoot style={{ backgroundColor }}>
+      <HeaderContent
+        left={<HeaderLogoImg />}
+        right={
+          <div className={theme === 'dark' ? dark : light}>
+            <HeaderRightLinks />
+          </div>
+        }
+      />
+    </HeaderRoot>
   );
 }

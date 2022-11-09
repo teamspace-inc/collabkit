@@ -1,11 +1,13 @@
 import { globalStyle, style } from '@vanilla-extract/css';
 import { MAIN_BREAKPOINT } from '../hooks/useWindowSize';
+import { HEADER_HEIGHT } from './Header.css';
 import { vars } from './Theme.css';
 
 globalStyle('code', {});
 
 export const docs = style({});
 
+// todo move to root styles
 export const max768 = `screen and (max-width: ${MAIN_BREAKPOINT}px)`;
 
 export const inset = style({
@@ -231,7 +233,7 @@ export const docScrollableContentWrap = style({
 
 export const docNav = style({
   position: 'fixed',
-  paddingTop: '80px',
+  paddingTop: HEADER_HEIGHT,
   top: 0,
   background: vars.color.bgContrastFloor,
   color: 'white',
@@ -243,6 +245,7 @@ export const docNav = style({
     [max768]: {
       background: vars.color.bgContrastFloor,
       alignItems: 'flex-start',
+      paddingTop: 60,
     },
   },
 });
@@ -316,8 +319,6 @@ export const docRoot = style({
   background: vars.color.bgContrastFloor,
   display: 'flex',
   justifyContent: 'center',
-  // position: 'fixed',
-  // inset: 0,
 });
 
 export const docTitle = style({
@@ -331,6 +332,8 @@ export const docTitle = style({
   '@media': {
     [max768]: {
       padding: '32px 0px 32px',
+      lineHeight: '40px',
+      fontSize: '32px',
     },
   },
 });

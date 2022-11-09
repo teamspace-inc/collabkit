@@ -14,19 +14,27 @@ import { SmallDemos } from '../home/small/SmallDemos';
 import { SmallComponents } from '../home/small/SmallComponents';
 import { SmallCustomisable } from '../home/small/SmallCustomisable';
 import { SmallCode } from '../home/small/SmallCode';
+import { SmallHeader } from '../home/small/SmallHeader';
+
+function SmallHomePage() {
+  return (
+    <>
+      <SmallHeader />
+      <SmallHero />
+      <SmallDemos />
+      <SmallComponents />
+      <SmallCustomisable />
+      <SmallCode />
+    </>
+  );
+}
 
 export function HomePage() {
   const isSmallScreen = useIsSmallScreen();
   return (
     <div className={`${website} ${light}`}>
       {isSmallScreen ? (
-        <>
-          <SmallHero />
-          <SmallDemos />
-          <SmallComponents />
-          <SmallCustomisable />
-          <SmallCode />
-        </>
+        <SmallHomePage />
       ) : (
         <>
           <Header />

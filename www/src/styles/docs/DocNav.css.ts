@@ -12,7 +12,9 @@ export const navOl = style({
   flexDirection: 'column',
   '@media': {
     [max768]: {
-      paddingRight: '24px',
+      paddingRight: '12px',
+      textAlign: 'left',
+      width: '100%',
     },
   },
 });
@@ -109,6 +111,11 @@ export const navWrap = style({
   paddingBottom: '100px',
   paddingTop: '40px',
   width: 320,
+  '@media': {
+    [max768]: {
+      width: 'calc(100vw)',
+    },
+  },
 });
 
 export const navHeader = style({

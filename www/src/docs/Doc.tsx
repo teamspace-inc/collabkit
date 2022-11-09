@@ -19,6 +19,8 @@ import { dark, vars } from '../styles/Theme.css';
 import { Nav } from './DocNav';
 import { ArrowLeft, ArrowRight, IconContext } from 'phosphor-react';
 import { store, Header } from '../home/Header';
+import { useIsSmallScreen } from '../hooks/useIsSmallScreen';
+import { SmallHeader } from '../home/small/SmallHeader';
 
 function pathToHref(path?: string[]) {
   return `/docs/${path
@@ -106,6 +108,8 @@ export function Doc(props: {
     window.scrollTo(0, 0);
   }, []);
 
+  const isSmallScreen = useIsSmallScreen();
+
   return (
     <div
       className={`${docs} ${dark}`}
@@ -113,9 +117,15 @@ export function Doc(props: {
     >
       <div className={docRoot}>
         <div className={docContent}>
-          <Nav className={docNav} />
+          {isSmallScreen ? null : <Nav className={docNav} />}
           <div className={docScrollableContentWrap}>
-            <Header />
+            {isSmallScreen ? (
+              <SmallHeader>
+                <Nav className={docNav} />
+              </SmallHeader>
+            ) : (
+              <Header />
+            )}
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               <div>
                 <div className={docScrollableContent}>
