@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import ChartSvg from '../assets/home/demos/Charts.svg';
 import TextSvg from '../assets/home/demos/Text.svg';
 import { dark, vars } from '../styles/Theme.css';
@@ -7,6 +7,7 @@ import { useHeaderStyle } from '../hooks/useHeaderStyle';
 import { ListDemo } from './ListDemo';
 import { DataGridDemo } from '../components/DataGridDemo';
 import * as styles from '../styles/home/Demos.css';
+import { usePreloadImages } from '../hooks/usePreloadImages';
 
 const scenarios = ['Lists', 'Tables', 'Charts', 'Text'] as const;
 type ScenarioName = typeof scenarios[number];
@@ -28,15 +29,7 @@ function Scenario({ scenario }: { scenario: ScenarioName }) {
 }
 
 export function Demos() {
-  // preload demo images
-  useEffect(() => {
-    setTimeout(() => {
-      const img = new Image();
-      img.src = ChartSvg;
-      img.src = TextSvg;
-    }, 2000);
-  }, []);
-
+  usePreloadImages({ imageUrls: [ChartSvg, TextSvg] });
   const [activeScenario, setActiveScenario] = useState<ScenarioName>('Lists');
   const { ref } = useHeaderStyle({
     backgroundColor: vars.color.aubergine,

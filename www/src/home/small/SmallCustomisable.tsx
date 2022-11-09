@@ -19,6 +19,7 @@ import Theme5 from '../../assets/home/customisability/5.svg';
 import Theme6 from '../../assets/home/customisability/6.svg';
 import Theme7 from '../../assets/home/customisability/7.svg';
 import { useState } from 'react';
+import { usePreloadImages } from '../../hooks/usePreloadImages';
 
 const THEMES: { [x: string]: string } = {
   Theme1,
@@ -54,6 +55,7 @@ function ThemeSlider(props: { onChange: (theme: string) => void }) {
 
 export function SmallCustomisable() {
   const [theme, setTheme] = useState('Theme1');
+  usePreloadImages({ imageUrls: Object.values(THEMES) });
 
   return (
     <section className={`${purpleBg} ${dark}`}>
