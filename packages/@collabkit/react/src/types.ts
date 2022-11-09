@@ -11,7 +11,9 @@ export type ThreadProps = {
   threadId: string;
   info?: ThreadInfo;
   style?: React.CSSProperties;
-  composerPrompt?: string;
+} & OptionalThreadProps;
+
+export type OptionalThreadProps = {
   showHeader?: boolean;
   autoFocus?: boolean;
   hideComposer?: boolean;

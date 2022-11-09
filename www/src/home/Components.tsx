@@ -32,7 +32,7 @@ function PopoverThreadComponent() {
   }, []);
 
   return (
-    <Thread.Provider threadId="thread4">
+    <Thread.Provider threadId="thread4" autoFocus={false}>
       <div style={{ display: 'flex', gap: '4px' }}>
         <div
           style={{
@@ -68,7 +68,7 @@ export const COMPONENTS: ComponentProps[] = [
     description: 'A comment thread that can be rendered anywhere in your app.',
     component: (
       <div style={{ width: 256, height: 320 }}>
-        <Thread threadId="thread3" />
+        <Thread threadId="thread3" autoFocus={false} />
       </div>
     ),
   },

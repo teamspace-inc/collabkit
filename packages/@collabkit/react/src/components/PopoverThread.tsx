@@ -8,8 +8,9 @@ import CommentList from './CommentList';
 import { Scrollable } from './ScrollArea';
 import { ThemeWrapper } from './ThemeWrapper';
 import Composer from './composer/Composer';
+import { OptionalThreadProps } from '../types';
 
-export type PopoverThreadProps = PopoverTriggerProps & ObjectProps;
+export type PopoverThreadProps = PopoverTriggerProps & ObjectProps & OptionalThreadProps;
 
 function PopoverThreadPreview(props: {}) {
   return (
@@ -49,13 +50,13 @@ export function PopoverThread(props: PopoverThreadProps) {
           hasPreview and hasPopover 
           to avoid this */}
           {popoverProps.hasThread ? (
-            <Thread.Provider threadId={threadId}>
+            <Thread.Provider threadId={threadId} {...props}>
               <PopoverThreadPreview />
             </Thread.Provider>
           ) : null}
         </Popover.Preview>
         <Popover.Content>
-          <Thread.Provider threadId={threadId}>
+          <Thread.Provider threadId={threadId} {...props}>
             <PopoverThreadThread />
           </Thread.Provider>
         </Popover.Content>
