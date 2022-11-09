@@ -78,7 +78,7 @@ export const sidebarTitle = style({
   lineHeight: '95%',
   color: vars.color.textContrastHigh,
   marginBottom: 40,
-  padding: '16px 16px 0px',
+  padding: '22px 16px 0px',
 
   display: 'flex',
   justifyContent: 'space-between',
@@ -87,6 +87,7 @@ export const sidebarTitle = style({
 export const closeButton = style({
   background: 'none',
   padding: 4,
+  marginTop: -4,
 });
 
 export const avatar = style({
@@ -131,7 +132,7 @@ export const detailsBox = style({
   border: '1px solid #E1E7ED',
   borderRadius: 8,
   padding: 16,
-  marginBottom: 20,
+  marginBottom: 8,
 
   display: 'flex',
   flexWrap: 'wrap',
@@ -140,4 +141,10 @@ export const detailsBox = style({
 export const fieldName = style({
   fontWeight: '700',
   width: '50%',
+  marginBottom: 8,
+  selectors: {
+    '&:last-of-type': {
+      marginBottom: 0,
+    },
+  },
 });

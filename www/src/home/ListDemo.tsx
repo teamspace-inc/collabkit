@@ -148,11 +148,12 @@ function Sidebar({ employee, onClose }: { employee: Employee | undefined; onClos
         <dl className={styles.detailsBox}>
           <dt className={styles.fieldName}>ID</dt>
           <dd>{employee.id}</dd>
-          <dt className={styles.fieldName}>Hiring date</dt>
-          <dd>{employee.hiredOn}</dd>
+          {/* <dt className={styles.fieldName}>Hiring date</dt> */}
+          {/* <dd>{employee.hiredOn}</dd> */}
           <dt className={styles.fieldName}>Department</dt>
           <dd>{employee.department}</dd>
         </dl>
+        <p style={{ fontWeight: '600', paddingLeft: 16, fontSize: 13, paddingTop: 16 }}>Comments</p>
         <div style={{ display: 'contents' }} onFocus={() => setShowTip(false)}>
           <Thread threadId={`employee_${employee.id}`} autoFocus={false} />
         </div>
