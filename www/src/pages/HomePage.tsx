@@ -17,6 +17,7 @@ import { SmallCode } from '../home/small/SmallCode';
 import { SmallHeader } from '../home/small/SmallHeader';
 import { SmallPlans } from '../home/small/SmallPlans';
 import { SmallContact } from '../home/small/SmallContact';
+import { TrustedBy } from '../home/TrustedBy';
 
 function SmallHomePage() {
   return (
@@ -27,6 +28,8 @@ function SmallHomePage() {
       <SmallComponents />
       <SmallCustomisable />
       <SmallCode />
+      <TrustedBy />
+
       <SmallPlans />
       <SmallContact />
     </>
@@ -47,6 +50,7 @@ export function HomePage() {
           <Components />
           <Customisable />
           <Code />
+          <TrustedBy />
           <Plans />
           <Contact />
         </>
