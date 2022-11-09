@@ -35,11 +35,12 @@ export const PLANS = (
       <V12 />
 
       <FeatureList>
-        <h5>All the essentials</h5>
         <h5>
           100 <br />
           <small>monthly active users</small>
         </h5>
+        <h5>All the essentials</h5>
+
         <h5>Customize UI</h5>
       </FeatureList>
       <small>$0.50 per additonal user.</small>
@@ -63,11 +64,12 @@ export const PLANS = (
       <small>Per month</small>
       <V12 />
       <FeatureList>
-        <h5>All the essentials</h5>
         <h5>
           500 <br />
           <small>monthly active users</small>
         </h5>
+        <h5>All the essentials</h5>
+
         <h5>Customize UI</h5>
       </FeatureList>
       <small>$0.50 per additonal user.</small>
@@ -91,11 +93,12 @@ export const PLANS = (
       <small>Per month</small>
       <V12 />
       <FeatureList>
-        <h5>All the essentials</h5>
         <h5>
           1,000 <br />
           <small>monthly active users</small>
         </h5>
+        <h5>All the essentials</h5>
+
         <h5>Customize UI</h5>
         <h5>Slack Support</h5>
       </FeatureList>
@@ -117,11 +120,12 @@ export const PLANS = (
       <br />
       <br />
       <FeatureList>
-        <h5>All the essentials</h5>
         <h5>
           Unlimited <br />
           <small>monthly active users</small>
         </h5>
+        <h5>All the essentials</h5>
+
         <h5>Customize UI</h5>
         <h5>Slack Support</h5>
         <h5>API</h5>
