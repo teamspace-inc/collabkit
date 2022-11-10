@@ -35,8 +35,8 @@ export function Contact() {
             : {}),
         }}
       >
-        <a className={styles.footerLinkButton} href="mailto:info@collabkit.dev">
-          info@collabkit.dev
+        <a className={styles.footerLinkButton} href="mailto:namit@collabkit.dev">
+          namit@collabkit.dev
         </a>
         <a className={styles.footerLinkButton} href="https://discord.gg/UCA4CbZad4">
           <DiscordLogo color="white" weight={'fill'} size={25} />
