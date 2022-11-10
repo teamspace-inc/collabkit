@@ -17,15 +17,12 @@ async function signup(params: { email: string }) {
 const SIGNUP_ERROR_MESSAGE =
   'Something went wrong. Please email us at info@collabkit.dev and we can sort it out.';
 
-const SIGNUP_SUCCESS_MESSAGE =
-  'Thanks for signing up! You should receive the API keys in a few hours.';
-
 export function GetStartedPage() {
   const { ref } = useHeaderStyle({ backgroundColor: vars.color.ice, theme: 'dark' });
 
   const emailRef = useRef<HTMLInputElement>(null);
   const [errorMessage, setErrorMessage] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
+  const [signupSuccess, setSignupSuccess] = useState(false);
 
   useEffect(() => {
     store.backgroundColor = vars.color.ice;
@@ -41,8 +38,7 @@ export function GetStartedPage() {
       signup({ email }).then(
         () => {
           console.log('signup success');
-          setSuccessMessage(SIGNUP_SUCCESS_MESSAGE);
-          window.open('https://calendly.com/namit-chadha/30min?month=2022-07', '_blank');
+          setSignupSuccess(true);
         },
         (e) => {
           console.log('signup fail', e);
@@ -103,7 +99,20 @@ export function GetStartedPage() {
             <button className={button({ size: 'large', type: 'primary' })}>Continue</button>
           </form>
           {errorMessage}
-          {successMessage}
+          {signupSuccess && (
+            <>
+              Thanks for signing up! You should receive the API keys in a few hours.
+              <a
+                href="https://calendly.com/namit-chadha/30min?month=2022-07"
+                target="_blank"
+                style={{
+                  color: vars.color.blue,
+                }}
+              >
+                Book a time a for a demo and onboarding with us.
+              </a>
+            </>
+          )}
         </div>
       </section>
     </div>
