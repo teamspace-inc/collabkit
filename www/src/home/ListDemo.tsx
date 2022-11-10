@@ -162,7 +162,7 @@ function Sidebar({ employee, onClose }: { employee: Employee | undefined; onClos
             color="dark"
             style={{
               position: 'absolute',
-              bottom: 84,
+              bottom: 66,
               left: '50%',
               boxSizing: 'border-box',
               transform: 'translateX(-50%)',
