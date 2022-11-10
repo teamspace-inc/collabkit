@@ -54,7 +54,7 @@ export const smallMenu = style({
 });
 
 export const smallLink = style({
-  fontFamily: 'Satoshi',
+  fontFamily: 'Inter',
   fontStyle: 'normal',
   fontWeight: 400,
   fontSize: '36px',
