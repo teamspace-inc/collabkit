@@ -5,6 +5,7 @@ import UISmallSvg from '../../assets/home/hero/ui-small.svg';
 import UISmallPng from '../../assets/graph.png';
 import { useHeaderStyle } from '../../hooks/useHeaderStyle';
 import { vars } from '../../styles/Theme.css';
+import { GetStartedButton } from '../GetStartedButton';
 
 export function SmallHero() {
   const { ref } = useHeaderStyle({ backgroundColor: vars.color.yellow, theme: 'light' });
@@ -21,7 +22,7 @@ export function SmallHero() {
           <br /> your product with our
           <br /> customisable React SDK
         </h3>
-        <button className={styles.button({ type: 'primary', size: 'medium' })}>Get Started</button>
+        <GetStartedButton size="medium" />
         <div
           style={{
             display: 'flex',
