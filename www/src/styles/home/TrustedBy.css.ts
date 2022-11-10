@@ -9,10 +9,10 @@ export const slide = style({
 
 export const card = style({
   fontFamily: 'Inter, sans-serif !important',
-  background: '#4A3A63',
+  background: '#2E2739',
   color: 'white',
-  width: 410,
-  height: 256,
+  width: 360,
+  height: 272,
   padding: 40,
   display: 'flex',
   flexDirection: 'column',
@@ -45,6 +45,7 @@ export const name = style({
   fontSize: '16px',
   lineHeight: '19px',
   fontFeatureSettings: "'ss04' on",
+  marginBottom: 4,
 });
 
 export const title = style({
@@ -59,4 +60,5 @@ export const text = style({
   fontWeight: '400',
   fontSize: '14px',
   lineHeight: '26px',
+  height: '144px',
 });

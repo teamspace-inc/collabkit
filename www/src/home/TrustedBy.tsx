@@ -1,75 +1,15 @@
-import LogoSvgs from '../assets/logos.svg';
-import LogoVerticalSvgs from '../assets/logosVerticla.svg';
 import { useHeaderStyle } from '../hooks/useHeaderStyle';
-import { useIsSmallScreen } from '../hooks/useIsSmallScreen';
-
-import React, { useEffect } from 'react';
-import { dark, vars } from '../styles/Theme.css';
+import { dark } from '../styles/Theme.css';
 import * as styles from '../styles/home/TrustedBy.css';
 import 'pure-react-carousel/dist/react-carousel.es.css';
-import { Inbox, Thread, usePopoverThread, InternalPopoverThreadThread } from '@collabkit/react';
-import {
-  component,
-  card,
-  componentDescription,
-  componentTitle,
-} from '../styles/home/Components.css';
 import { Carousel } from '../Carousel';
-import { Link } from 'wouter';
-import { button, purpleBg } from '../styles/Website.css';
-import { useWindowSize } from '../hooks/useWindowSize';
-import { text } from 'packages/@collabkit/theme/src/styles/comment/systemMessageStyles';
+import { purpleBg } from '../styles/Website.css';
 import zack from '../assets/home/testimonials/zack.png';
 import matthew from '../assets/home/testimonials/matthew.png';
 import michiel from '../assets/home/testimonials/michiel.png';
-
-type ComponentProps = {
-  title: string;
-  description: string;
-  component: React.ReactNode;
-};
-
-function PopoverThreadComponent() {
-  const objectId = 'object3';
-
-  const { openPopover } = usePopoverThread({
-    objectId,
-  });
-
-  useEffect(() => {
-    openPopover();
-  }, []);
-
-  return (
-    <Thread.Provider threadId="thread4" autoFocus={false}>
-      <div style={{ display: 'flex', gap: '4px' }}>
-        <div
-          style={{
-            padding: '9px 4px',
-            width: '100px',
-            height: '50px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            boxSizing: 'border-box',
-            borderRadius: '6px',
-            fontSize: '12px',
-            textAlign: 'center',
-            fontWeight: 'bold',
-            background: 'rgba(0,0,0,0.3)',
-            cursor: 'pointer',
-            color: 'white',
-          }}
-        >
-          Component
-        </div>
-        <div style={{ position: 'relative', left: 0 }}>
-          <InternalPopoverThreadThread />
-        </div>
-      </div>
-    </Thread.Provider>
-  );
-}
+import Logos2VSvg from '../assets/logos2v.svg';
+import Logos2Svg from '../assets/logos2.svg';
+import { useIsSmallScreen } from '../hooks/useIsSmallScreen';
 
 type TestimonialProps = { profilePicture: string; name: string; title: string; text: string };
 
@@ -114,21 +54,26 @@ function Testimonial(props: TestimonialProps) {
 }
 
 export function TrustedBy() {
-  const size = useWindowSize();
+  const { ref } = useHeaderStyle({ theme: 'dark', backgroundColor: '#24202B' });
+  const isSmallScreen = useIsSmallScreen();
 
   return (
     // turns out you cant put the carousel in a container with]
     // display: flex, flex-direction: column, and overflow: hidden
     <>
-      <section className={`${dark} ${purpleBg}`} style={{ paddingBottom: 40, paddingTop: 40 }}>
-        <h1>Trusted by</h1>
+      <section
+        ref={ref}
+        className={`${dark} ${purpleBg}`}
+        style={{ paddingBottom: 80, backgroundColor: '#24202B' }}
+      >
+        <h1 style={{ fontSize: 48, lineHeight: '38px' }}>Trusted by</h1>
       </section>
-      <div style={{ background: vars.color.aubergine }} className={dark}>
+      <div style={{ background: '#24202B' }} className={dark}>
         <Carousel
           style={{
             // position so it's centered on the screen
-            padding: '0 20px',
-            gap: 40,
+            padding: isSmallScreen ? '0 40px' : '0 20px',
+            gap: isSmallScreen ? 20 : 40,
             maxWidth: 'min-content',
             margin: '0 auto',
           }}
@@ -139,7 +84,17 @@ export function TrustedBy() {
           ]}
         />
       </div>
-      <div style={{ height: 80, background: vars.color.aubergine }} />
+      <div
+        style={{
+          background: '#24202B',
+          height: isSmallScreen ? '360px' : '185px',
+          alignItems: 'center',
+          justifyContent: 'center',
+          display: 'flex',
+        }}
+      >
+        <img src={isSmallScreen ? Logos2VSvg : Logos2Svg} />
+      </div>
     </>
   );
 }
