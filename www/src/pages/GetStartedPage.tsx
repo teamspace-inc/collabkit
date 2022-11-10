@@ -18,6 +18,11 @@ const SIGNUP_ERROR_MESSAGE =
   'Something went wrong. Please email us at info@collabkit.dev and we can sort it out.';
 
 export function GetStartedPage() {
+  useEffect(() => {
+    store.backgroundColor = vars.color.ice;
+    store.theme = 'light';
+  }, []);
+
   const { ref } = useHeaderStyle({ backgroundColor: vars.color.ice, theme: 'dark' });
 
   const emailRef = useRef<HTMLInputElement>(null);
