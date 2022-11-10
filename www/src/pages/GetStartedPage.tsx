@@ -21,7 +21,7 @@ const SIGNUP_SUCCESS_MESSAGE =
   'Thanks for signing up! You should receive the API keys in a few hours.';
 
 export function GetStartedPage() {
-  const { ref } = useHeaderStyle({ backgroundColor: vars.color.ice, theme: 'light' });
+  const { ref } = useHeaderStyle({ backgroundColor: vars.color.ice, theme: 'dark' });
 
   const emailRef = useRef<HTMLInputElement>(null);
   const [errorMessage, setErrorMessage] = useState('');
