@@ -15,7 +15,7 @@ async function signup(params: { email: string }) {
 }
 
 const SIGNUP_ERROR_MESSAGE =
-  'Something went wrong. Please email us at info@collabkit.dev and we can sort it out.';
+  'Something went wrong. Please email us at namit@collabkit.dev and we can sort it out.';
 
 export function GetStartedPage() {
   useEffect(() => {
