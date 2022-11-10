@@ -8,6 +8,9 @@ import { UIPage } from './pages/UIPage';
 import { ThemeEditorPage } from './pages/ThemeEditorPage';
 import { ChartDemo } from './home/ChartDemo';
 import { subHours } from 'date-fns/fp';
+import { useSnapshot } from 'valtio';
+import { store as wwwStore } from './home/Header';
+import * as Theme from './styles/Theme.css';
 
 // todo generate a new workspace
 // for each docs user
@@ -242,6 +245,13 @@ export default function App() {
     // added by the small screen burger menu
     document.body.classList.remove('noscroll');
   }, []);
+
+  const { backgroundColor, theme } = useSnapshot(wwwStore);
+
+  useLayoutEffect(() => {
+    document.body.style.backgroundColor = backgroundColor;
+    document.body.className = Theme[theme];
+  }, [backgroundColor, theme]);
 
   return (
     <CollabKitProvider
