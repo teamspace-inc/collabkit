@@ -23,6 +23,7 @@ import { DashboardPage } from './pages/DashboardPage';
 import { DashboardExample } from './examples/DashboardExample';
 import { CarouselPage } from './pages/CarouselPage';
 import { useLayoutEffect } from 'react';
+import { GetStartedPage } from './pages/GetStartedPage';
 
 const defaultWorkspace: Partial<Workspace> = {
   // pins: {
@@ -255,6 +256,7 @@ export default function App() {
       <SetBreakpointContext>
         <Route path="/ui" component={UIPage} />
         <Route path="/" component={HomePage} />
+        <Route path="/getstarted" component={GetStartedPage} />
         <Route path="/dashboard" component={DashboardPage} />
         <Route path="/signedin" component={DashboardPage} />
         <Route path="/signup" component={DashboardPage} />
