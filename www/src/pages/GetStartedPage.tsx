@@ -23,7 +23,7 @@ export function GetStartedPage() {
     store.theme = 'light';
   }, []);
 
-  const { ref } = useHeaderStyle({ backgroundColor: vars.color.ice, theme: 'dark' });
+  const { ref } = useHeaderStyle({ backgroundColor: vars.color.ice, theme: 'light' });
 
   const emailRef = useRef<HTMLInputElement>(null);
   const [errorMessage, setErrorMessage] = useState('');
