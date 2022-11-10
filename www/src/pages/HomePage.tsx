@@ -24,11 +24,11 @@ function SmallHomePage() {
     <>
       <SmallHeader />
       <SmallHero />
+      <TrustedBy />
       <SmallDemos />
       <SmallComponents />
       <SmallCustomisable />
       <SmallCode />
-      <TrustedBy />
 
       <SmallPlans />
       <SmallContact />
@@ -46,6 +46,7 @@ export function HomePage() {
         <>
           <Header />
           <Hero />
+          <TrustedBy />
           <Demos />
           <Components />
           <Customisable />
