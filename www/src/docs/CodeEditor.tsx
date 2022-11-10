@@ -95,11 +95,10 @@ export function CodeEditor(props: {
         );
 
         monaco.editor.defineTheme('collabkit', CollabKitMonacoTheme);
-
         editorInstanceRef.current = monaco.editor.create(editorRef.current!, {
           model,
           fontSize,
-          fontFamily: 'Monaco',
+          fontFamily: 'Monaco, Menlo, source-code-pro, monospace',
           theme: 'collabkit',
           lineHeight,
           scrollBeyondLastLine: false,
