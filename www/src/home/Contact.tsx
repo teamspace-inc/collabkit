@@ -1,5 +1,7 @@
 import ycLogoSvg from '../assets/yc-logo.svg';
-import { DiscordLogo } from 'phosphor-react';
+// import ycLogoSvg from '../assets/yc-logo.svg';
+
+import { DiscordLogo, TwitterLogo } from 'phosphor-react';
 import { useIsSmallScreen } from '../hooks/useIsSmallScreen';
 
 import * as styles from '../styles/home/Contact.css';
@@ -22,6 +24,7 @@ export function Contact() {
       <h3 style={{ color: vars.color.textContrastLow }}>
         Any questions? Let us know over email or Discord
       </h3>
+
       <div
         style={{
           display: 'flex',
@@ -37,6 +40,10 @@ export function Contact() {
       >
         <a className={styles.footerLinkButton} href="mailto:namit@collabkit.dev">
           namit@collabkit.dev
+        </a>
+        <a className={styles.footerLinkButton} href="https://twitter.com/collabkitdev">
+          <TwitterLogo color="white" weight={'fill'} size={25} />
+          Twitter
         </a>
         <a className={styles.footerLinkButton} href="https://discord.gg/UCA4CbZad4">
           <DiscordLogo color="white" weight={'fill'} size={25} />
