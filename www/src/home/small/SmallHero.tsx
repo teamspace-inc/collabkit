@@ -1,7 +1,5 @@
 import * as heroStyles from '../../styles/home/Hero.css';
-import * as styles from '../../styles/Website.css';
 import { HeroMessage, HERO_MESSAGES } from '../HeroMessage';
-import UISmallSvg from '../../assets/home/hero/ui-small.svg';
 import UISmallPng from '../../assets/graph.png';
 import { useHeaderStyle } from '../../hooks/useHeaderStyle';
 import { vars } from '../../styles/Theme.css';
@@ -29,9 +27,10 @@ export function SmallHero() {
             gap: '20px',
             flexDirection: 'column',
             justifyContent: 'center',
+            alignItems: 'center',
           }}
         >
-          <div style={{ width: 350, marginLeft: -20 }}>
+          <div style={{ width: 350 }}>
             <img style={{ width: 350 }} src={UISmallPng} />
           </div>
           <HeroMessage message={HERO_MESSAGES[0]} />
