@@ -24,7 +24,7 @@ function SmallHomePage() {
     <>
       <SmallHeader />
       <SmallHero />
-      <TrustedBy />
+      {/* <TrustedBy /> */}
       <SmallDemos />
       <SmallComponents />
       <SmallCustomisable />
@@ -46,7 +46,7 @@ export function HomePage() {
         <>
           <Header />
           <Hero />
-          <TrustedBy />
+          {/* <TrustedBy /> */}
           <Demos />
           <Components />
           <Customisable />
