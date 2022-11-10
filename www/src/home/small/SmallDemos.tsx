@@ -32,7 +32,7 @@ export function SmallDemos() {
       {demos.map((demo, i) => (
         <div className={vertical20} key={`demo-${i}`}>
           <h4 className={demoStyles.h4}>{demo.name}</h4>
-          {<img src={demo.svg} style={{ flex: 1, maxWidth: 'calc(100vw - 80px)' }} />}
+          {<img src={demo.svg} style={{ width: 'calc(100vw - 40px)', aspectRatio: '281/158' }} />}
         </div>
       ))}
     </section>
