@@ -6,6 +6,7 @@ import {
   FloatingContext,
   FloatingFocusManager,
   FloatingNode,
+  FloatingOverlay,
   FloatingPortal,
   offset,
   ReferenceType,
@@ -76,20 +77,22 @@ function PopoverContent(props: { children: React.ReactNode }) {
   const { context, open, getFloatingProps } = usePopoverContext();
 
   return context.open ? (
-    <FloatingFocusManager context={context}>
-      <div
-        ref={context.floating}
-        style={{
-          position: context.strategy,
-          top: context.y ?? 0,
-          left: context.x ?? 0,
-          outline: 'none',
-        }}
-        {...getFloatingProps({})}
-      >
-        {open ? props.children : null}
-      </div>
-    </FloatingFocusManager>
+    <FloatingOverlay lockScroll>
+      <FloatingFocusManager context={context}>
+        <div
+          ref={context.floating}
+          style={{
+            position: context.strategy,
+            top: context.y ?? 0,
+            left: context.x ?? 0,
+            outline: 'none',
+          }}
+          {...getFloatingProps({})}
+        >
+          {open ? props.children : null}
+        </div>
+      </FloatingFocusManager>
+    </FloatingOverlay>
   ) : null;
 }
 
