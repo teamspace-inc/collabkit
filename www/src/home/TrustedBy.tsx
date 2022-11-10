@@ -7,8 +7,8 @@ import { vars } from '../styles/Theme.css';
 export function TrustedBy() {
   const isSmallScreen = useIsSmallScreen();
   const { ref } = useHeaderStyle({
-    backgroundColor: vars.color.textContrastHigh,
-    theme: 'dark',
+    backgroundColor: 'white',
+    theme: 'light',
   });
 
   return (
