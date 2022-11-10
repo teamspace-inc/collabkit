@@ -2,6 +2,7 @@ import * as heroStyles from '../../styles/home/Hero.css';
 import * as styles from '../../styles/Website.css';
 import { HeroMessage, HERO_MESSAGES } from '../HeroMessage';
 import UISmallSvg from '../../assets/home/hero/ui-small.svg';
+import UISmallPng from '../../assets/graph.png';
 import { useHeaderStyle } from '../../hooks/useHeaderStyle';
 import { vars } from '../../styles/Theme.css';
 
@@ -29,11 +30,11 @@ export function SmallHero() {
             justifyContent: 'center',
           }}
         >
+          <div style={{ width: 350, marginLeft: -20 }}>
+            <img style={{ width: 350 }} src={UISmallPng} />
+          </div>
           <HeroMessage message={HERO_MESSAGES[0]} />
           <HeroMessage message={HERO_MESSAGES[1]} />
-          <div style={{ maxWidth: 300, height: 220 }}>
-            <img style={{ width: 492, position: 'absolute' }} src={UISmallSvg} />
-          </div>
           <HeroMessage message={HERO_MESSAGES[2]} />
         </div>
       </div>
