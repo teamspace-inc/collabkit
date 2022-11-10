@@ -108,6 +108,8 @@ export function useLogoClick() {
   return () => {
     if (isDocsInPath()) {
       setLocation('/');
+    } else if (window.location.href.toString().includes('/getstarted')) {
+      setLocation('/');
     } else {
       window.scrollTo({
         top: 0,

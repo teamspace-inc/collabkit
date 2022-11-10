@@ -1,11 +1,13 @@
+import { useLocation } from 'wouter';
 import * as styles from '../styles/Website.css';
 
 export function GetStartedButton(props: { style?: React.CSSProperties }) {
+  const [, setLocation] = useLocation();
   return (
     <button
       className={styles.button({ type: 'primary', size: 'large' })}
       style={{ ...props.style }}
-      onClick={() => window.open('https://calendly.com/namit-chadha/30min?month=2022-07', '_blank')}
+      onClick={() => setLocation('/getstarted')}
     >
       Get started
     </button>
