@@ -1,15 +1,15 @@
-import { useLocation } from 'wouter';
+import { Link } from 'wouter';
+import { vars } from '../styles/Theme.css';
 import * as styles from '../styles/Website.css';
 
 export function GetStartedButton(props: { style?: React.CSSProperties }) {
-  const [, setLocation] = useLocation();
   return (
-    <button
+    <Link
       className={styles.button({ type: 'primary', size: 'large' })}
-      style={{ ...props.style }}
-      onClick={() => setLocation('/getstarted')}
+      style={{ ...props.style, color: `${vars.color.bgContrastLowest}` }}
+      to="/getstarted"
     >
       Get started
-    </button>
+    </Link>
   );
 }
