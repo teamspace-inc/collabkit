@@ -2,6 +2,7 @@ import { dark, vars } from '../../styles/Theme.css';
 import { button, h3OnPurple, purpleBg, vertical20, vertical40 } from '../../styles/Website.css';
 import CodeSvg from '../../assets/home/code/codeSmall.svg';
 import { useHeaderStyle } from '../../hooks/useHeaderStyle';
+import { Link } from 'wouter';
 
 export function SmallCode() {
   const { ref } = useHeaderStyle({ backgroundColor: vars.color.aubergine, theme: 'dark' });
@@ -24,7 +25,9 @@ export function SmallCode() {
           <img src={CodeSvg} />
         </div>
         <div className={vertical20} style={{ width: 'calc(100vw - 20px)', paddingLeft: '20px' }}>
-          <button className={button({ type: 'secondary', size: 'medium' })}>Find out more</button>
+          <Link to="/docs" className={button({ type: 'secondary', size: 'medium' })}>
+            Find out more
+          </Link>
         </div>
       </div>
     </section>

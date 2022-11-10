@@ -8,6 +8,7 @@ import { componentDescription, componentTitle } from '../../styles/home/Componen
 
 import * as styles from '../../styles/home/Components.css';
 import { useHeaderStyle } from '../../hooks/useHeaderStyle';
+import { Link } from 'wouter';
 
 const components = [
   {
@@ -50,7 +51,9 @@ export function SmallComponents() {
             </div>
           ))}
         </div>
-        <button className={button({ type: 'secondary', size: 'medium' })}>Find out more</button>
+        <Link to="/docs" className={button({ type: 'secondary', size: 'medium' })}>
+          Find out more
+        </Link>
       </div>
     </section>
   );

@@ -21,6 +21,7 @@ import Theme7 from '../../assets/home/customisability/7.svg';
 import { useState } from 'react';
 import { usePreloadImages } from '../../hooks/usePreloadImages';
 import { useHeaderStyle } from '../../hooks/useHeaderStyle';
+import { Link } from 'wouter';
 
 const THEMES: { [x: string]: string } = {
   Theme1,
@@ -77,7 +78,9 @@ export function SmallCustomisable() {
             </div>
           </div>
         </div>
-        <button className={button({ type: 'secondary', size: 'medium' })}>Find out more</button>
+        <Link to="/docs" className={button({ type: 'secondary', size: 'medium' })}>
+          Find out more
+        </Link>
       </div>
     </section>
   );
