@@ -1,19 +1,56 @@
-import { useEffect } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Header, store } from '../home/Header';
 import { SmallHeader } from '../home/small/SmallHeader';
 import { useHeaderStyle } from '../hooks/useHeaderStyle';
 import { useIsSmallScreen } from '../hooks/useIsSmallScreen';
 import { light, vars } from '../styles/Theme.css';
 import { button, website } from '../styles/Website.css';
+import { push, getDatabase, ref } from 'firebase/database';
+import { getApp } from 'firebase/app';
+
+async function signup(params: { email: string }) {
+  await push(ref(getDatabase(getApp('CollabKit')), '/website/signups'), {
+    email: params.email,
+  });
+}
+
+const SIGNUP_ERROR_MESSAGE =
+  'Something went wrong. Please email us at info@collabkit.dev and we can sort it out.';
+
+const SIGNUP_SUCCESS_MESSAGE =
+  'Thanks for signing up! You should receive the API keys in a few hours.';
 
 export function GetStartedPage() {
   const { ref } = useHeaderStyle({ backgroundColor: vars.color.ice, theme: 'light' });
+
+  const emailRef = useRef<HTMLInputElement>(null);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
   useEffect(() => {
     store.backgroundColor = vars.color.ice;
   }, []);
 
   const isSmallScreen = useIsSmallScreen();
+
+  const onSubmit = useCallback((e: React.FormEvent) => {
+    e.preventDefault();
+    if (emailRef.current) {
+      const email = emailRef.current.value;
+      emailRef.current.value = '';
+      signup({ email }).then(
+        () => {
+          console.log('signup success');
+          setSuccessMessage(SIGNUP_SUCCESS_MESSAGE);
+          window.open('https://calendly.com/namit-chadha/30min?month=2022-07', '_blank');
+        },
+        (e) => {
+          console.log('signup fail', e);
+          setErrorMessage(SIGNUP_ERROR_MESSAGE);
+        }
+      );
+    }
+  }, []);
 
   return (
     <div className={`${website} ${light}`}>
@@ -37,6 +74,7 @@ export function GetStartedPage() {
             <br /> a few hours
           </h3>
           <form
+            onSubmit={onSubmit}
             style={{
               display: 'flex',
               gap: '20px',
@@ -46,6 +84,7 @@ export function GetStartedPage() {
             }}
           >
             <input
+              ref={emailRef}
               type="email"
               placeholder="name@work-email.com"
               style={{
@@ -63,6 +102,8 @@ export function GetStartedPage() {
             />
             <button className={button({ size: 'large', type: 'primary' })}>Continue</button>
           </form>
+          {errorMessage}
+          {successMessage}
         </div>
       </section>
     </div>

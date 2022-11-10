@@ -1,5 +1,18 @@
 {
   "rules": {
+    "website": {
+      ".read": false,
+      ".write": false,
+      "signups": {
+        "$entry": {
+          ".write": "!data.exists()",
+          "email": {
+            ".validate": "newData.isString()"
+          }
+        }
+      }
+    },
+
     "pins": {
       "$appId": {
         "$workspaceId": {
