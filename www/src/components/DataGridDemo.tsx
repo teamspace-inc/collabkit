@@ -38,7 +38,7 @@ function CellRenderer(props: ICellRendererParams<RowData>) {
   }, []);
 
   return (
-    <PopoverThread objectId={cellId}>
+    <PopoverThread objectId={cellId} lockScroll>
       <div
         onClick={() => openPopover()}
         style={{

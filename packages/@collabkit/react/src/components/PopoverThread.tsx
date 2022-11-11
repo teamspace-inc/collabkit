@@ -1,7 +1,7 @@
 import { ObjectProps } from '@collabkit/core';
 import { Thread } from './Thread';
 import React from 'react';
-import { Popover, PopoverTriggerProps } from './Popover';
+import { Popover, PopoverTriggerProps, PopoverContentProps } from './Popover';
 import { usePopoverThread } from '../hooks/usePopoverThread';
 import { previewRoot, root } from '../styles/components/PopoverThread.css';
 import CommentList from './CommentList';
@@ -10,7 +10,10 @@ import { ThemeWrapper } from './ThemeWrapper';
 import Composer from './composer/Composer';
 import { OptionalThreadProps } from '../types';
 
-export type PopoverThreadProps = PopoverTriggerProps & ObjectProps & OptionalThreadProps;
+export type PopoverThreadProps = PopoverContentProps &
+  PopoverTriggerProps &
+  ObjectProps &
+  OptionalThreadProps;
 
 function PopoverThreadPreview(props: {}) {
   return (
@@ -39,7 +42,7 @@ export function PopoverThreadThread(props: {}) {
 
 export function PopoverThread(props: PopoverThreadProps) {
   const { threadId, ...popoverProps } = usePopoverThread(props);
-  const { objectId, ...otherProps } = props;
+  const { objectId, lockScroll, ...otherProps } = props;
 
   return (
     <Popover.Root {...popoverProps}>
@@ -55,7 +58,7 @@ export function PopoverThread(props: PopoverThreadProps) {
             </Thread.Provider>
           ) : null}
         </Popover.Preview>
-        <Popover.Content>
+        <Popover.Content lockScroll={lockScroll}>
           <Thread.Provider threadId={threadId} {...props}>
             <PopoverThreadThread />
           </Thread.Provider>

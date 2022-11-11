@@ -73,11 +73,16 @@ function PopoverPreview(props: { children: React.ReactNode }) {
   ) : null;
 }
 
-function PopoverContent(props: { children: React.ReactNode }) {
+export type PopoverContentProps = {
+  children: React.ReactNode;
+  lockScroll?: boolean;
+};
+
+function PopoverContent(props: PopoverContentProps) {
   const { context, open, getFloatingProps } = usePopoverContext();
 
   return context.open ? (
-    <FloatingOverlay lockScroll>
+    <FloatingOverlay lockScroll={props.lockScroll}>
       <FloatingFocusManager context={context}>
         <div
           ref={context.floating}
