@@ -1,17 +1,15 @@
-import { vars } from '../../theme';
-
 export const ScrollbarBase = {
   scrollbar: {
     thumb: {
-      background: 'hsl(0, 0%, 30%)',
-      width: '6px',
-      borderRadius: '12px',
+      background: 'initial',
+      width: 'initial',
+      borderRadius: 'initial',
     },
-    padding: '4px',
-    background: 'transparent',
+    padding: 'initial',
+    background: 'initial',
     hover: {
-      background: vars.color.surfaceOverlay,
+      background: 'initial',
     },
-    borderRadius: '0px 3px 3px 0px',
+    borderRadius: 'initial',
   },
 };

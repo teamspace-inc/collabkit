@@ -1,4 +1,4 @@
-import { style } from '@vanilla-extract/css';
+import { style, fallbackVar } from '@vanilla-extract/css';
 import { vars } from '../theme';
 
 export const root = style({
@@ -19,25 +19,27 @@ export const scrollbar = style({
   userSelect: 'none',
   // disable browser handling of all panning and zooming gestures on touch devices
   touchAction: 'none',
-  borderRadius: vars.scrollbar.borderRadius,
-  padding: vars.scrollbar.padding,
-  background: vars.scrollbar.background,
+  borderRadius: fallbackVar(vars.scrollbar.borderRadius, '6px'),
+  padding: fallbackVar(vars.scrollbar.padding, '1px'),
+  background: fallbackVar(vars.scrollbar.background, vars.color.background),
   transition: 'background 160ms ease-out',
   fontFamily: vars.fontFamily,
   selectors: {
-    '&:hover': { background: vars.scrollbar.hover.background },
-    '&[data-orientation="vertical"]': { width: vars.scrollbar.thumb.width },
+    '&:hover': {
+      background: fallbackVar(vars.scrollbar.hover.background, vars.color.background),
+    },
+    '&[data-orientation="vertical"]': { width: fallbackVar(vars.scrollbar.thumb.width, '8px') },
     '&[data-orientation="horizontal"]': {
       flexDirection: 'column',
-      height: vars.scrollbar.thumb.width,
+      height: fallbackVar(vars.scrollbar.thumb.width, '2px'),
     },
   },
 });
 
 export const thumb = style({
   flex: 1,
-  background: vars.scrollbar.thumb.background,
-  borderRadius: vars.scrollbar.thumb.borderRadius,
+  background: fallbackVar(vars.scrollbar.thumb.background, vars.color.textDisabled),
+  borderRadius: fallbackVar(vars.scrollbar.thumb.borderRadius, '6px'),
   // increase target size for touch devices https://www.w3.org/WAI/WCAG21/Understanding/target-size.html
   position: 'relative',
   selectors: {
