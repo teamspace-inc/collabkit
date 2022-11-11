@@ -87,10 +87,11 @@ export function TrustedBy() {
       <div
         style={{
           background: '#24202B',
-          height: isSmallScreen ? '360px' : '185px',
+          height: isSmallScreen ? '360px' : '260px',
           alignItems: 'center',
           justifyContent: 'center',
           display: 'flex',
+          paddingBottom: 60,
         }}
       >
         <img src={isSmallScreen ? Logos2VSvg : Logos2Svg} />

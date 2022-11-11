@@ -24,12 +24,11 @@ function SmallHomePage() {
     <>
       <SmallHeader />
       <SmallHero />
-      {/* <TrustedBy /> */}
       <SmallDemos />
       <SmallComponents />
       <SmallCustomisable />
       <SmallCode />
-
+      <TrustedBy />
       <SmallPlans />
       <SmallContact />
     </>
