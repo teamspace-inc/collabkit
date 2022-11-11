@@ -21,12 +21,12 @@ export const scrollbar = style({
   touchAction: 'none',
   borderRadius: fallbackVar(vars.scrollbar.borderRadius, '6px'),
   padding: fallbackVar(vars.scrollbar.padding, '1px'),
-  background: fallbackVar(vars.scrollbar.background, vars.color.background),
+  background: fallbackVar(vars.scrollbar.background, 'transparent'),
   transition: 'background 160ms ease-out',
   fontFamily: vars.fontFamily,
   selectors: {
     '&:hover': {
-      background: fallbackVar(vars.scrollbar.hover.background, vars.color.background),
+      background: fallbackVar(vars.scrollbar.hover.background, 'transparent'),
     },
     '&[data-orientation="vertical"]': { width: fallbackVar(vars.scrollbar.thumb.width, '8px') },
     '&[data-orientation="horizontal"]': {
