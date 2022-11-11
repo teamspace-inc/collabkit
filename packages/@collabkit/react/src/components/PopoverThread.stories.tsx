@@ -3,15 +3,9 @@ import type { StoryDecorator } from '@ladle/react';
 import { PopoverThread } from './PopoverThread';
 import { CollabKitProvider } from './Provider';
 import { config } from './__stories__/constants';
-import { Thread } from './Thread';
 
 const threadId = 'PopoverThread-stories';
 
-export const PopoverThreadPreviewStory = () => (
-  <Thread.Provider threadId={threadId}>
-    <PopoverThread.Preview />
-  </Thread.Provider>
-);
 export const PopoverThreadStory = () => (
   <PopoverThread objectId={threadId}>
     <h1>Hello</h1>

@@ -44,7 +44,7 @@ const userId = computed(() => store.userId);
 const workspaceId = computed(() => store.workspaceId);
 
 watchEffect(() => {
-  if (store.workspaceId && store.isSignedIn) {
+  if (store.workspaceId /*&& store.isSignedIn*/) {
     actions.subscribeThread(store, {
       workspaceId: store.workspaceId,
       threadId: props.threadId,
