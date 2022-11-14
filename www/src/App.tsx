@@ -6,6 +6,7 @@ import { CollabKitProvider, Config, Workspace } from '@collabkit/react';
 import { SetBreakpointContext } from './hooks/useWindowSize';
 import { UIPage } from './pages/UIPage';
 import { ThemeEditorPage } from './pages/ThemeEditorPage';
+import { UnsubscribePage } from './pages/UnsubscribePage';
 import { ChartDemo } from './home/ChartDemo';
 import { subHours } from 'date-fns/fp';
 import { useSnapshot } from 'valtio';
@@ -275,6 +276,7 @@ export default function App() {
         <Route path="/examples/table" component={DataGridPage} />
         <Route path="/examples/chart" component={ChartDemo} />
         <Route path="/carousel" component={CarouselPage} />
+        <Route path="/unsubscribe" component={UnsubscribePage} />
         <Docs />
       </SetBreakpointContext>
     </CollabKitProvider>

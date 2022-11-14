@@ -39,6 +39,7 @@ type NotificationEmailProps = {
   ctaText?: string;
   profiles: { [id: string]: { name?: string; avatar?: string; email?: string; color?: string } };
   openUrl: string;
+  unsubscribeToken: string;
 };
 
 function Comment(props: { actorColor: string; actorName: string; commentBody: string[] }) {
@@ -79,6 +80,7 @@ const NotificationEmail: React.FC<NotificationEmailProps> = ({
   action,
   entity,
   preposition,
+  unsubscribeToken,
 }) => {
   if (commentList.length === 0) {
     return null;
@@ -142,6 +144,14 @@ const NotificationEmail: React.FC<NotificationEmailProps> = ({
                 uiText={commentList.length === 1 ? 'View Comment' : 'View Comments'}
               />
               <MjmlSpacer height="8px" />
+              <MjmlText>
+                <a
+                  href={`https://www.collabkit.dev/unsubscribe?token=${unsubscribeToken}`}
+                  className="unsubscribe"
+                >
+                  Unsubscribe from this comment thread
+                </a>
+              </MjmlText>
             </>
           </MjmlColumn>
         </MjmlSection>
