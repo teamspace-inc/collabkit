@@ -371,8 +371,7 @@
           "$threadId": {
             "$endUserId": {
               ".read": true,
-              ".write": false, // only 'Firebase Admin' can write
-
+              ".write": "auth.token.unsubAppId === $appId && auth.token.unsubWorkspaceId === $workspaceId && auth.token.unsubProfileId === $endUserId && auth.token.unsubThreadId === $threadId",
               // mirrors Slack notification settings
               // "notifyFor": {
               //   ".validate": "newData.isString() && (newData.val() === 'allMessages' || newData.val() === 'onlyMentions' || newData.val() === 'off')"

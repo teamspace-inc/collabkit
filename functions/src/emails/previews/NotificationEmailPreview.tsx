@@ -255,6 +255,7 @@ export function newComments() {
       accentColor="#D73C56"
       commentList={sample.body.data.comments.list}
       profiles={sample.body.data.workspace.profiles}
+      unsubscribeToken={'DUMMY_TOKEN'}
     />
   );
 }

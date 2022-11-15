@@ -1,4 +1,5 @@
 import React from 'react';
+import * as admin from 'firebase-admin';
 
 import { sendMail } from '../emails';
 import NotificationEmail from '../emails/NotificationEmail';
@@ -20,10 +21,12 @@ import { groupedEvents } from './helpers/groupedEvents';
 import { fetchIsMuted } from './data/fetchIsMuted';
 import { fetchSeenBy } from './data/fetchSeenBy';
 import uniq from 'lodash.uniq';
+import { fetchApiKey } from './data/fetchApiKey';
 
 async function sendMailForProfile(props: {
   eventId: string;
   appId: string;
+  apiKey: string;
   workspaceId: string;
   profileId: string;
   threadId: string;
@@ -170,6 +173,14 @@ async function sendMailForProfile(props: {
 
   const subject = [actor, action, preposition, entity].filter((part) => part.length > 0).join(' ');
 
+  const unsubscribeToken = await admin.auth().createCustomToken(props.apiKey, {
+    // These are all prefixed 'unsub' to distinguish them from claims in secure mode tokens.
+    unsubAppId: appId,
+    unsubWorkspaceId: workspaceId,
+    unsubProfileId: profileId,
+    unsubThreadId: threadId,
+  });
+
   if (!threadInfo.url) {
     return null;
   }
@@ -186,6 +197,7 @@ async function sendMailForProfile(props: {
       appLogoUrl={app.logoUrl}
       commentList={list}
       profiles={profiles}
+      unsubscribeToken={unsubscribeToken}
     />
   );
 
@@ -288,10 +300,13 @@ export async function generateAndSendEmailNotifications(props: {
 
     const seenBy = await fetchSeenBy({ appId, workspaceId, threadId });
 
+    const apiKey = await fetchApiKey({ appId });
+
     await Promise.allSettled(
       profileIds.map((profileId) =>
         sendMailForProfile({
           appId,
+          apiKey,
           eventId,
           profileId,
           threadId,
@@ -311,8 +326,10 @@ export async function generateAndSendEmailNotifications(props: {
   return null;
 }
 
+// import os from 'os';
+// import path from 'path';
 // admin.initializeApp({
-//   credential: admin.credential.cert('/Users/namitchadha/collabkit-dev-service-account.json'),
+//   credential: admin.credential.cert(path.join(os.homedir(), 'collabkit-dev-service-account.json')),
 //   databaseURL: 'https://collabkit-dev-default-rtdb.europe-west1.firebasedatabase.app/',
 // });
 

@@ -103,7 +103,13 @@ const Head: React.FC<HeadProps> = ({ children }) => {
         .avatar.color.amber > div  {
           background-color: #FBC858;
         }
-
+        .unsubscribe {
+          font-weight: 600;
+          font-size: 12px;
+          line-height: 153%;
+          letter-spacing: -0.1px;
+          color: ${grayDark};
+        }
         .li {
           text-indent: -18px;
           margin-left: 24px;
