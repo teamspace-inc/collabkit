@@ -146,8 +146,9 @@ const NotificationEmail: React.FC<NotificationEmailProps> = ({
               <MjmlSpacer height="8px" />
               <MjmlText>
                 <a
-                  href={`https://www.collabkit.dev/unsubscribe?token=${unsubscribeToken}`}
                   className="unsubscribe"
+                  href={`https://www.collabkit.dev/unsubscribe?token=${unsubscribeToken}`}
+                  target="_blank"
                 >
                   Unsubscribe from this comment thread
                 </a>
