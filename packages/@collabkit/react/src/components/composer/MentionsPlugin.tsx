@@ -593,9 +593,10 @@ function createMentionNodeFromSearchResult(
     const textContent = anchorNode.getTextContent().slice(0, selectionOffset);
     const characterOffset = match.replaceableString.length;
 
+    const mentionText = `@${mention.name}`;
     // Given a known offset for the mention match, look backward in the
     // text to see if there's a longer match to replace.
-    const mentionOffset = getMentionOffset(textContent, mention.name, characterOffset);
+    const mentionOffset = getMentionOffset(textContent, mentionText, characterOffset);
     const startOffset = selectionOffset - mentionOffset;
     if (startOffset < 0) {
       return;
@@ -608,7 +609,7 @@ function createMentionNodeFromSearchResult(
       [, nodeToReplace] = anchorNode.splitText(startOffset, selectionOffset);
     }
 
-    const mentionNode = $createMentionNode(mention.id, mention.name);
+    const mentionNode = $createMentionNode(mention.id, mentionText);
     nodeToReplace.replace(mentionNode);
     mentionNode.select();
   });
