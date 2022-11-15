@@ -173,7 +173,7 @@ async function sendMailForProfile(props: {
 
   const subject = [actor, action, preposition, entity].filter((part) => part.length > 0).join(' ');
 
-  const unsubscribeToken = await admin.auth().createCustomToken(apiKey, {
+  const unsubscribeToken = await admin.auth().createCustomToken(props.apiKey, {
     // These are all prefixed 'unsub' to distinguish them from claims in secure mode tokens.
     unsubAppId: appId,
     unsubWorkspaceId: workspaceId,
