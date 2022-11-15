@@ -33,7 +33,7 @@ import '@tremor/react/dist/esm/tremor.css';
 import { isAfter, isBefore, isEqual } from 'date-fns';
 
 import { performance } from './data';
-import './examples.css';
+// import './examples.css';
 
 type Kpi = {
   title: string;

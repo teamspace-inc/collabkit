@@ -4,7 +4,7 @@ import { GetStartedButton } from './GetStartedButton';
 import { a, website } from '../styles/Website.css';
 import { content, rightLinks, root } from '../styles/Header.css';
 import { proxy, useSnapshot } from 'valtio';
-import { dark, light, vars } from '../styles/Theme.css';
+import { dark, light } from '../styles/Theme.css';
 import { useLocation } from 'wouter';
 import React, { useCallback } from 'react';
 
@@ -12,7 +12,7 @@ export const store = proxy<{
   backgroundColor: string;
   theme: 'light' | 'dark';
 }>({
-  backgroundColor: `${vars.color.yellow}`,
+  backgroundColor: '#F5F5F5',
   theme: 'light',
 });
 
