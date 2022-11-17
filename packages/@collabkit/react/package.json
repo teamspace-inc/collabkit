@@ -42,6 +42,7 @@
     "@radix-ui/popper": "^0.1.0",
     "@radix-ui/react-scroll-area": "^0.1.4",
     "@radix-ui/react-tooltip": "^0.1.7",
+    "@radix-ui/react-use-callback-ref": "1.0.0",
     "@stitches/react": "^1.2.8",
     "@types/jest": "^28.1.7",
     "@types/lodash.debounce": "^4.0.7",

@@ -1,6 +1,7 @@
 import { useCallback, useMemo } from 'react';
 import { useApp } from '../hooks/useApp';
 import { useSnapshot } from 'valtio';
+import { useCallbackRef } from '@radix-ui/react-use-callback-ref';
 import { ObjectProps, ThreadTarget } from '@collabkit/core';
 import { useExistingThreadId } from './useExistingThreadId';
 import { usePendingThreadId } from './usePendingThreadId';
@@ -44,31 +45,37 @@ export function usePopoverThread(props: ObjectProps) {
       : null;
   }, [workspaceId, threadId]);
 
-  const onOpenChange = useCallback(
-    (open: boolean) => target && events.onPopoverThreadOpenChange({ target, open }),
-    [events, target]
-  );
+  const onOpenChange = useCallbackRef((open: boolean) => {
+    if (target) {
+      events.onPopoverThreadOpenChange({ target, open });
+    }
+  });
+  const onPreviewChange = useCallbackRef((open: boolean) => {
+    if (target) {
+      events.onPopoverPreviewChange({ target, open });
+    }
+  });
+  const openPopover = useCallbackRef(() => {
+    if (target) {
+      events.onPopoverThreadOpenChange({ target, open: true });
+    }
+  });
+  const hidePopover = useCallbackRef(() => {
+    if (target) {
+      events.onPopoverThreadOpenChange({ target, open: false });
+    }
+  });
+  const showPreview = useCallbackRef(() => {
+    if (target) {
+      events.onPopoverPreviewChange({ target, open: true });
+    }
+  });
+  const hidePreview = useCallbackRef(() => {
+    if (target) {
+      events.onPopoverPreviewChange({ target, open: false });
+    }
+  });
 
-  const onPreviewChange = useCallback(
-    (open: boolean) => target && events.onPopoverPreviewChange({ target, open }),
-    [events, target]
-  );
-
-  // onOpenChange and onPreviewChange return void | null
-  // lets make sure they return void so we can use them
-  // in useEffect inline;
-  const openPopover = useCallback(() => {
-    onOpenChange(true);
-  }, [onOpenChange]);
-  const hidePopover = useCallback(() => {
-    onOpenChange(false);
-  }, [onOpenChange]);
-  const showPreview = useCallback(() => {
-    onPreviewChange(true);
-  }, [onPreviewChange]);
-  const hidePreview = useCallback(() => {
-    onPreviewChange(false);
-  }, [onPreviewChange]);
 
   return {
     threadId,

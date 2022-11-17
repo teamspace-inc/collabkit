@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSnapshot } from 'valtio';
 import { useThreadContext } from '../hooks/useThreadContext';
 import { useInboxStore } from '../hooks/useInboxStore';
