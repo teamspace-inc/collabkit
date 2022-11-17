@@ -24,9 +24,6 @@ export function InboxItem(props: { formatTimestamp?: (timestamp: number) => stri
   const info = workspace.threadInfo[threadId];
   const replyCount = useReplyCount();
 
-  // replace with useHover hook
-  const [hover, setHover] = useState(false);
-
   if (!timeline) {
     return null;
   }
@@ -53,8 +50,6 @@ export function InboxItem(props: { formatTimestamp?: (timestamp: number) => stri
   return (
     <Thread.Provider threadId={threadId} key={`inboxThread-${threadId}`}>
       <div
-        onMouseOver={() => setHover(true)}
-        onMouseOut={() => setHover(false)}
         className={styles.root({ active })}
         onClick={() => {
           const onInboxThreadClick = store.callbacks?.onInboxThreadClick;
