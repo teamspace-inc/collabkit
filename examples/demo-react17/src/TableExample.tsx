@@ -1,5 +1,13 @@
 import { useState } from 'react';
-import { usePopoverThread, PopoverTrigger, Inbox, InboxButton, Sidebar } from '@collabkit/react';
+import {
+  Inbox,
+  Sidebar,
+  ThemeProvider,
+  SidebarInboxButton,
+  PopoverThread,
+  usePopoverThread,
+} from '@collabkit/react';
+
 import { MenuItem, ControlledMenu, useMenuState } from '@szhsin/react-menu';
 import '@szhsin/react-menu/dist/index.css';
 import '@szhsin/react-menu/dist/transitions/slide.css';
@@ -9,21 +17,20 @@ type CellProps = { value: number | string; row: Car; column: Column };
 const Cell = ({ value, row, column }: CellProps) => {
   const name = `Cars / ${row.make} ${row.model}`;
   const cellId = `${row.id}_${column.key}`;
-  const { hasThread, popoverState, setPopoverState, context } = usePopoverThread({
-    name,
-    cellId,
-  });
 
+  const { threadVisible, previewVisible, showThread, hasThread } = usePopoverThread({
+    objectId: cellId,
+  });
   const [menuProps, toggleMenu] = useMenuState();
   const [anchorPoint, setAnchorPoint] = useState({ x: 0, y: 0 });
 
   const classes = [];
   if (hasThread) classes.push('hasThread');
-  if (popoverState === 'preview') classes.push('previewOpen');
-  if (popoverState === 'open') classes.push('threadOpen');
+  if (previewVisible) classes.push('previewVisible');
+  if (threadVisible) classes.push('threadVisible');
 
   return (
-    <PopoverTrigger context={context}>
+    <PopoverThread objectId={cellId}>
       <td
         className={classes.join(' ')}
         onContextMenu={(e) => {
@@ -32,19 +39,16 @@ const Cell = ({ value, row, column }: CellProps) => {
           toggleMenu(true);
         }}
         onClick={() => {
-          if (hasThread) {
-            setPopoverState('open');
-          }
+          showThread();
         }}
       >
         {value}
         {hasThread && <ThreadIndicator />}
-
         <ControlledMenu {...menuProps} anchorPoint={anchorPoint} onClose={() => toggleMenu(false)}>
-          <MenuItem onClick={() => setPopoverState('open')}>Comment</MenuItem>
+          <MenuItem onClick={() => showThread()}>Comment</MenuItem>
         </ControlledMenu>
       </td>
-    </PopoverTrigger>
+    </PopoverThread>
   );
 };
 
@@ -94,7 +98,9 @@ export const TableExample = () => {
       </div>
 
       <div style={{ display: 'flex', position: 'fixed', top: 20, right: 20 }}>
-        <InboxButton />
+        <ThemeProvider theme="light">
+          <SidebarInboxButton />
+        </ThemeProvider>
       </div>
 
       <table className="TableExample">
@@ -120,6 +126,7 @@ export const TableExample = () => {
           ))}
         </tbody>
       </table>
+
       <Sidebar>
         <Inbox />
       </Sidebar>
