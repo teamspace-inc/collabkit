@@ -3,7 +3,7 @@ import { PopoverThread, usePopoverThread } from '@collabkit/react';
 import { nanoid } from 'nanoid';
 import { DocDemoContainer } from '../Doc';
 
-const cellId = nanoid()
+const cellId = nanoid();
 
 type Car = { id: string; make: string; model: string; price: number };
 type Column = { name: string; key: keyof Car; format: (value: any) => string };
@@ -39,16 +39,17 @@ type CellProps = { value: number | string; row: Car; column: Column };
 const ThreadIndicator = () => <span className="ThreadIndicator" />;
 
 const Cell = ({ value, row, column }: CellProps) => {
-  const name = `Cars / ${row.make} ${row.model}`;
-  const cellId = `${row.id}_${column.key}`;
-  const { hasThread, openPopover, showPreview, open, preview } = usePopoverThread({
-    objectId: cellId,
+  const objectName = `Cars / ${row.make} ${row.model}`;
+  const objectId = `${row.id}_${column.key}`;
+  const { hasThread, showThread, showPreview, threadVisible, previewVisible } = usePopoverThread({
+    objectId,
+    objectName,
   });
 
   const classes = [];
   if (hasThread) classes.push('hasThread');
-  if (preview) classes.push('previewOpen');
-  if (open) classes.push('threadOpen');
+  if (threadVisible) classes.push('threadVisible');
+  if (previewVisible) classes.push('previewVisible');
 
   return (
     <PopoverThread objectId={cellId}>
@@ -64,7 +65,7 @@ const Cell = ({ value, row, column }: CellProps) => {
           if (hasThread) {
             showPreview();
           } else {
-            openPopover();
+            showThread();
           }
         }}
       >
@@ -76,12 +77,12 @@ const Cell = ({ value, row, column }: CellProps) => {
 };
 
 export function PopoverThreadDemo() {
-  const { openPopover } = usePopoverThread({
+  const { showThread } = usePopoverThread({
     objectId: cellId,
   });
 
   useEffect(() => {
-    openPopover();
+    showThread();
   }, []);
 
   return (

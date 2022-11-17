@@ -4,16 +4,16 @@ import { vars } from '../../styles/Theme.css';
 
 export function PopoverDemo() {
   const objectId = 'object3';
-  const { openPopover } = usePopoverThread({ objectId });
+  const { showThread } = usePopoverThread({ objectId });
   useEffect(() => {
-    openPopover();
+    showThread();
   }, []);
 
   return (
     <div>
       <PopoverThread objectId={objectId}>
         <div
-          onClick={() => openPopover()}
+          onClick={() => showThread()}
           style={{
             padding: '10px 20px',
             marginLeft: '-200px',

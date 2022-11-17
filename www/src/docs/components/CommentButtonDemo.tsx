@@ -6,12 +6,12 @@ import { DocDemoContainer } from '../Doc';
 const cellId = nanoid();
 
 export function PopoverThreadDemo() {
-  const { openPopover } = usePopoverThread({
+  const { showThread } = usePopoverThread({
     objectId: cellId,
   });
 
   useEffect(() => {
-    openPopover();
+    showThread();
   }, []);
 
   return (
@@ -41,7 +41,7 @@ export function PopoverThreadDemo() {
               right: 20,
               position: 'absolute',
             }}
-            onClick={() => openPopover()}
+            onClick={() => showThread()}
           >
             Comment
           </button>

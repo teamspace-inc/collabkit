@@ -29,7 +29,7 @@ export function PopoverThreadDoc() {
           popover thread's state and actions.
           <br />
           <br />
-          The main action you'll need to use is <code>{'openPopover()'}</code>. This will open the
+          The main action you'll need to use is <code>{'showThread()'}</code>. This will open the
           comment thread popover for you. We recommend binding this to the <code>onClick</code>{' '}
           event of your component, a context menu, or another button in your product. This vary's
           based on your use case.

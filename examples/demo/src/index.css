@@ -1,16 +1,14 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+    'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow: hidden;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
 .TableExample {
@@ -21,17 +19,17 @@ code {
 .TableExample th {
   font-size: 14px;
   min-width: 140px;
-  border-bottom: 2px solid #E3E9ED;
+  border-bottom: 2px solid #e3e9ed;
   line-height: 160%;
   text-align: center;
   letter-spacing: -0.1px;
-  color: #6A7278;
+  color: #6a7278;
 }
 
 .TableExample td {
   position: relative;
   height: 22px;
-  border-bottom: 1px solid #E3E9ED;
+  border-bottom: 1px solid #e3e9ed;
   padding: 8px 16px 8px 8px;
   font-size: 14px;
   line-height: 160%;
@@ -48,18 +46,18 @@ code {
 }
 
 .TableExample td:focus {
-  outline: 2px solid #36B374;
+  outline: 2px solid #36b374;
   border-radius: 4px;
   font-weight: 600;
-  color: #2C915E;
+  color: #2c915e;
 }
 
-.TableExample td.threadOpen {
+.TableExample td.threadVisible {
   background: rgba(255, 221, 0, 0.15);
-  outline: 2px solid #FFDD00;
+  outline: 2px solid #ffdd00;
   border-radius: 4px;
   font-weight: 600;
-  color: #2C915E;
+  color: #2c915e;
 }
 
 .TableExample .ThreadIndicator {
@@ -70,9 +68,9 @@ code {
   height: 0;
   border-style: solid;
   border-width: 0 12px 12px 0;
-  border-color: transparent #FFDD00 transparent transparent;
+  border-color: transparent #ffdd00 transparent transparent;
 }
 
 .TableExample td + td {
-  border-left: 1px solid #E3E9ED;
+  border-left: 1px solid #e3e9ed;
 }

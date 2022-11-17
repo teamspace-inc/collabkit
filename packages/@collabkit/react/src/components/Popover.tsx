@@ -129,8 +129,8 @@ function usePopoverContext() {
 
 type RootProps = {
   children: React.ReactNode;
-  preview: boolean;
-  open: boolean;
+  previewVisible: boolean;
+  threadVisible: boolean;
   onOpenChange: (open: boolean) => void;
   onPreviewChange: (preview: boolean) => void;
 } & AdvancedPopoverProps;
@@ -143,7 +143,7 @@ export type AdvancedPopoverProps = {
 };
 
 function PopoverRoot(props: RootProps) {
-  const { children, preview, open, onOpenChange, onPreviewChange } = props;
+  const { children, previewVisible, threadVisible, onOpenChange, onPreviewChange } = props;
   const nodeId = useFloatingNodeId();
 
   const defaultOpen = props.defaultOpen ?? false;
@@ -152,7 +152,7 @@ function PopoverRoot(props: RootProps) {
 
   const { reference: previewReference, context: previewContext } = useFloating({
     placement: 'right-start',
-    open: preview,
+    open: previewVisible,
     whileElementsMounted: autoUpdate,
     onOpenChange: onPreviewChange,
     nodeId,
@@ -173,7 +173,7 @@ function PopoverRoot(props: RootProps) {
 
   const { reference, context } = useFloating({
     placement: 'right-start',
-    open,
+    open: threadVisible,
     whileElementsMounted: autoUpdate,
     onOpenChange,
     nodeId,
@@ -195,7 +195,7 @@ function PopoverRoot(props: RootProps) {
   const { getReferenceProps: getPreviewReferenceProps, getFloatingProps: getPreviewFloatingProps } =
     useInteractions([
       useHover(previewContext, {
-        enabled: !open,
+        enabled: !threadVisible,
         handleClose: safePolygon(),
       }),
       useDismiss(previewContext, {
@@ -233,8 +233,8 @@ function PopoverRoot(props: RootProps) {
       previewContext,
       context,
       getProps,
-      open,
-      preview,
+      open: threadVisible,
+      preview: previewVisible,
       setOpen: onOpenChange,
 
       ref,
@@ -245,8 +245,8 @@ function PopoverRoot(props: RootProps) {
       previewContext,
       context,
       getProps,
-      open,
-      preview,
+      threadVisible,
+      previewVisible,
       // onOpenChange,
       ref,
       // getPreviewFloatingProps,
@@ -283,8 +283,8 @@ export function Popover(props: PopoverProps) {
 
   return (
     <PopoverRoot
-      open={open}
-      preview={preview}
+      threadVisible={open}
+      previewVisible={preview}
       onOpenChange={setOpen}
       onPreviewChange={setPreview}
       // advanced

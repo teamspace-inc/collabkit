@@ -4,17 +4,17 @@ import { PopoverThread, usePopoverThread } from '@collabkit/react';
 export function App() {
   const objectId = 'fox-fabrics';
 
-  const { openPopover } = usePopoverThread({
+  const { showThread } = usePopoverThread({
     objectId,
   });
 
   // automatically open the popover thread on mount
-  useEffect(() => openPopover(), []);
+  useEffect(() => showThread(), []);
 
   return (
     <div>
       {/* show the popover when the user clicks this button */}
-      <button onClick={() => openPopover()}>Comment</button>
+      <button onClick={() => showThread()}>Comment</button>
       <PopoverThread objectId={objectId} objectName="Fox Fabrics">
         <div>
           <h1>Fox Fabrics</h1>

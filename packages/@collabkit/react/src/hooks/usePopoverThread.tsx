@@ -25,12 +25,12 @@ export function usePopoverThread(props: ObjectProps) {
     info: { name: objectName, meta: { cellId: objectId } },
   });
 
-  const open =
+  const threadVisible =
     viewingId?.type === 'thread' &&
     viewingId.threadId === threadId &&
     viewingId.workspaceId === workspaceId;
 
-  const preview =
+  const previewVisible =
     previewingId?.type === 'thread' &&
     previewingId.threadId === threadId &&
     previewingId.workspaceId === workspaceId;
@@ -55,12 +55,12 @@ export function usePopoverThread(props: ObjectProps) {
       events.onPopoverPreviewChange({ target, open });
     }
   });
-  const openPopover = useCallbackRef(() => {
+  const showThread = useCallbackRef(() => {
     if (target) {
       events.onPopoverThreadOpenChange({ target, open: true });
     }
   });
-  const hidePopover = useCallbackRef(() => {
+  const hideThread = useCallbackRef(() => {
     if (target) {
       events.onPopoverThreadOpenChange({ target, open: false });
     }
@@ -80,12 +80,12 @@ export function usePopoverThread(props: ObjectProps) {
   return {
     threadId,
     hasThread,
-    open,
-    preview,
+    threadVisible,
+    previewVisible,
     onOpenChange,
     onPreviewChange,
-    openPopover,
-    hidePopover,
+    showThread,
+    hideThread,
     showPreview,
     hidePreview,
   };

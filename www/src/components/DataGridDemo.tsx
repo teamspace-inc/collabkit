@@ -29,24 +29,24 @@ type RowData = {
 
 function CellRenderer(props: ICellRendererParams<RowData>) {
   const cellId = props.data!.id + '_' + props.colDef!.field;
-  const { hasThread, open, openPopover } = usePopoverThread({ objectId: cellId });
+  const { hasThread, threadVisible, showThread } = usePopoverThread({ objectId: cellId });
 
   useEffect(() => {
     if (cellId === 'row003_budget') {
-      openPopover();
+      showThread();
     }
   }, []);
 
   return (
     <PopoverThread objectId={cellId} lockScroll>
       <div
-        onClick={() => openPopover()}
+        onClick={() => showThread()}
         style={{
           position: 'absolute',
           inset: 0,
           padding: '0 calc(var(--ag-cell-horizontal-padding) - 1px)',
           border: '2px solid transparent',
-          ...(open
+          ...(threadVisible
             ? {
                 border: '2px solid',
                 borderColor: vars.color.blue,

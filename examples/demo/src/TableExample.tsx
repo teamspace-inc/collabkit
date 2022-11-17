@@ -18,14 +18,16 @@ const Cell = ({ value, row, column }: CellProps) => {
   const name = `Cars / ${row.make} ${row.model}`;
   const cellId = `${row.id}_${column.key}`;
 
-  const { open, preview, openPopover, hasThread } = usePopoverThread({ objectId: cellId });
+  const { threadVisible, previewVisible, showThread, hasThread } = usePopoverThread({
+    objectId: cellId,
+  });
   const [menuProps, toggleMenu] = useMenuState();
   const [anchorPoint, setAnchorPoint] = useState({ x: 0, y: 0 });
 
   const classes = [];
   if (hasThread) classes.push('hasThread');
-  if (preview) classes.push('previewOpen');
-  if (open) classes.push('threadOpen');
+  if (previewVisible) classes.push('previewVisible');
+  if (threadVisible) classes.push('threadVisible');
 
   return (
     <PopoverThread objectId={cellId}>
@@ -37,13 +39,13 @@ const Cell = ({ value, row, column }: CellProps) => {
           toggleMenu(true);
         }}
         onClick={() => {
-          openPopover();
+          showThread();
         }}
       >
         {value}
         {hasThread && <ThreadIndicator />}
         <ControlledMenu {...menuProps} anchorPoint={anchorPoint} onClose={() => toggleMenu(false)}>
-          <MenuItem onClick={() => openPopover()}>Comment</MenuItem>
+          <MenuItem onClick={() => showThread()}>Comment</MenuItem>
         </ControlledMenu>
       </td>
     </PopoverThread>

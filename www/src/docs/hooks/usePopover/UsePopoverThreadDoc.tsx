@@ -13,7 +13,7 @@ export function UsePopoverThreadDoc() {
           <code>usePopoverThread</code> lets you manage the state of a{' '}
           <DocLink to="/docs/components/popoverthread">PopoverThread</DocLink>. It's main purpose is
           to let you show the popover when user takes some action in your product by calling the{' '}
-          <code>showPopover()</code> and <code>hidePopover()</code> actions it returns.
+          <code>showThread()</code> and <code>hideThread()</code> actions it returns.
         </p>
         <p>
           To use <code>usePopoverThread</code> pass an <code>objectId</code> which maps to the
@@ -38,12 +38,12 @@ export function UsePopoverThreadDoc() {
         <h3>Returns</h3>
         <AdvancedProps
           props={[
-            ['showPopover', `() => void`, 'Opens the popover.'],
-            ['hidePopover', `() => void`, 'Closes the popover.'],
-            ['open', `boolean`, 'Whether the popover is open or not.'],
-            ['showPreview', `() => void`, 'Opens the preview.'],
-            ['hidePreview', `() => void`, 'Closes the preview.'],
-            ['preview', `boolean`, 'Whether the preview is open or not.'],
+            ['showThread', `() => void`, 'Opens the thread popover.'],
+            ['hideThread', `() => void`, 'Closes the thread popover.'],
+            ['threadVisible', `boolean`, 'Whether the thread popover is open or not.'],
+            ['showPreview', `() => void`, 'Opens the preview popover.'],
+            ['hidePreview', `() => void`, 'Closes the preview popover.'],
+            ['previewVisible', `boolean`, 'Whether the preview popover is open or not.'],
             ['hasThread', `boolean`, 'Whether there is an open comment thread for this objectId.'],
           ]}
         />

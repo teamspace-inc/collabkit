@@ -148,10 +148,10 @@ function CollabKitRechartsChart(props: any) {
 }
 
 function Pin({ x, y, objectId }: { x: number; y: number; objectId: string; threadId: string }) {
-  const { openPopover } = usePopoverThread({ objectId });
+  const { showThread } = usePopoverThread({ objectId });
   return (
     <PopoverThread objectId={objectId}>
-      <circle cx={x} cy={y} r={12} onClick={() => openPopover()} />
+      <circle cx={x} cy={y} r={12} onClick={() => showThread()} />
     </PopoverThread>
   );
 }

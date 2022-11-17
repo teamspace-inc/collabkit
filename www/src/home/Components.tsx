@@ -23,12 +23,12 @@ type ComponentProps = {
 function PopoverThreadComponent() {
   const objectId = 'object3';
 
-  const { openPopover } = usePopoverThread({
+  const { showThread } = usePopoverThread({
     objectId,
   });
 
   useEffect(() => {
-    openPopover();
+    showThread();
   }, []);
 
   return (
