@@ -5,6 +5,7 @@ import {
   Composer,
   Popover,
   PopoverThreadProps,
+  Profile,
   Scrollable,
   Thread,
   useComposer,
@@ -22,14 +23,30 @@ function PopoverThreadPreview() {
   );
 }
 
-export function PopoverThreadContent({ hideThread }: { hideThread: () => void }) {
+export function PopoverThreadContent({
+  hasThread,
+  hideThread,
+}: {
+  hasThread: boolean;
+  hideThread: () => void;
+}) {
   const { canSend, send, hasMentions } = useComposer();
+  const composerBorder = hasThread ? 'border-t border-cb-bg3' : 'border-t border-transparent';
   return (
     <div className="bg-white rounded-lg w-[270px] border border-solid border-cb-bg3 shadow-cb-high">
       <Scrollable autoScroll="bottom">
-        <CommentList renderComment={(props) => <CashboardComment {...props} />} />
+        <CommentList
+          className="flex flex-col py-4 gap-2 empty:p-0"
+          renderComment={(props) => <CashboardComment {...props} />}
+        />
       </Scrollable>
-      <Composer.Root className="border-t border-cb-bg3 pt-4 px-4">
+      <Composer.Root className={`${composerBorder} pt-4 px-4`}>
+        {!hasThread && (
+          <div className="flex items-center gap-3 mb-3">
+            <Profile.Avatar />
+            <Profile.Name />
+          </div>
+        )}
         <Composer.Editor
           placeholder={<Composer.Placeholder>Comment or add others with @</Composer.Placeholder>}
         />
