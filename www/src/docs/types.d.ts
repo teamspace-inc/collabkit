@@ -1303,7 +1303,7 @@ interface Timeline {
 interface Composer {
   editor: LexicalEditor | null;
   $$body: string;
-  $$mentions: MentionWithColor[];
+  mentions: string[];
   sendButtonDisabled: boolean;
   isTypingTimeoutID?: ReturnType<typeof setTimeout>;
   isTyping: { [endUserId: string]: boolean };

@@ -28,16 +28,23 @@ export function createEvents(store: Store) {
       });
     },
 
-    onComposerChange: (target: Target, editor: LexicalEditor, newBody: string) => {
+    onComposerChange: (
+      target: Target,
+      editor: LexicalEditor,
+      newBody: string,
+      mentions: string[]
+    ) => {
       if (target.type !== 'composer') {
         return;
       }
 
-      store.workspaces[target.workspaceId].composers[target.threadId] ||= createComposer();
-      store.workspaces[target.workspaceId].composers[target.threadId].editor = markRaw(editor);
+      const composers = store.workspaces[target.workspaceId].composers;
+      composers[target.threadId] ||= createComposer();
+      composers[target.threadId].editor = markRaw(editor);
 
-      const body = store.workspaces[target.workspaceId].composers[target.threadId].$$body;
-      store.workspaces[target.workspaceId].composers[target.threadId].$$body = newBody;
+      const body = composers[target.threadId].$$body;
+      composers[target.threadId].$$body = newBody;
+      composers[target.threadId].mentions = mentions;
 
       if (newBody.length === 0) {
         actions.isTyping.cancel();

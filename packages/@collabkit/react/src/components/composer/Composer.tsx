@@ -8,7 +8,7 @@ import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
 import { $convertFromMarkdownString, $convertToMarkdownString } from '@lexical/markdown';
-import { TRANSFORMERS, MentionNode, TimestampNode } from '../../editor';
+import { TRANSFORMERS, MentionNode, TimestampNode, $isMentionNode } from '../../editor';
 import { TimestampPlugin } from './TimestampPlugin';
 import { MentionsPlugin } from './MentionsPlugin';
 import { PasteTextPlugin } from './PasteTextPlugin';
@@ -21,7 +21,7 @@ import { useTarget } from '../../hooks/useTarget';
 import * as styles from '../../styles/components/Composer.css';
 import { useOptionalCommentContext } from '../../hooks/useCommentContext';
 import { useSnapshot } from 'valtio';
-import { $setSelection } from 'lexical';
+import { $getRoot, $setSelection } from 'lexical';
 import { TypingIndicator } from '../TypingIndicator';
 
 import Profile from '../Profile';
@@ -52,7 +52,7 @@ function useComposerContext() {
 function ComposerRoot(props: {
   className?: string;
   children: React.ReactNode;
-  autoFocus: boolean;
+  autoFocus?: boolean;
   body?: string;
 }) {
   const commentContext = useOptionalCommentContext();
@@ -72,7 +72,9 @@ function ComposerRoot(props: {
   return (
     <div className={props.className ?? styles.root} onClick={onClick}>
       <Profile.Provider profileId={userId}>
-        <ComposerContext.Provider value={{ body: props.body ?? '', autoFocus: props.autoFocus }}>
+        <ComposerContext.Provider
+          value={{ body: props.body ?? '', autoFocus: props.autoFocus ?? true }}
+        >
           <TargetContext.Provider value={target}>{props.children}</TargetContext.Provider>
         </ComposerContext.Provider>
       </Profile.Provider>
@@ -101,7 +103,7 @@ function ComposerContentEditable(props: { className?: string }) {
 function ComposerEditor(props: {
   placeholder: React.ReactElement;
   className?: string;
-  contentEditable: JSX.Element;
+  contentEditable?: JSX.Element;
 }) {
   const target = useTarget();
   const { autoFocus } = useComposerContext();
@@ -130,12 +132,20 @@ function ComposerEditor(props: {
     >
       <LexicalComposer initialConfig={initialConfig}>
         <PasteTextPlugin />
-        <PlainTextPlugin contentEditable={props.contentEditable} placeholder={props.placeholder} />
+        <PlainTextPlugin
+          contentEditable={props.contentEditable ?? <Composer.ContentEditable />}
+          placeholder={props.placeholder}
+        />
         <OnChangePlugin
           onChange={(editorState, editor) => {
             editorState.read(() => {
               const newBody = $convertToMarkdownString(TRANSFORMERS);
-              events.onComposerChange(target, editor, newBody);
+              const mentions = $getRoot()
+                .getAllTextNodes()
+                .filter((node) => $isMentionNode(node))
+                .map((node) => node.__id)
+                .filter((id) => typeof id === 'string');
+              events.onComposerChange(target, editor, newBody, mentions);
             });
           }}
         />
@@ -152,14 +162,16 @@ function ComposerPlaceholder(props: ComponentProps<'span'>) {
   return <span {...props} className={props.className ?? styles.placeholder} />;
 }
 
-export default function Composer() {
+export default function Composer(props: { placeholder?: string }) {
   const { autoFocus } = useThreadContext();
   return (
     <Composer.Root autoFocus={autoFocus ?? true}>
       <Profile.Avatar />
       <Composer.Editor
         contentEditable={<Composer.ContentEditable />}
-        placeholder={<Composer.Placeholder>Write a comment</Composer.Placeholder>}
+        placeholder={
+          <Composer.Placeholder>{props.placeholder ?? 'Write a comment'}</Composer.Placeholder>
+        }
       />
       <Composer.TypingIndicator />
     </Composer.Root>

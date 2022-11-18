@@ -18,7 +18,7 @@ export async function updateComment(store: Store) {
   }
 
   const workspace = store.workspaces[workspaceId];
-  const { $$body: body, $$mentions: mentions } = workspace.composers[threadId];
+  const { $$body: body, mentions } = workspace.composers[threadId];
 
   await writeMessageToFirebase(store, {
     workspaceId,

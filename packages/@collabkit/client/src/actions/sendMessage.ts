@@ -20,27 +20,7 @@ export async function sendMessage(store: Store, props: { workspaceId: string; th
   }
 
   const workspace = store.workspaces[workspaceId];
-  const { editor, $$body: body } = workspace.composers[threadId];
-
-  let mentions: string[] = [];
-
-  editor?.getEditorState().read(() => {
-    const nodes = $getRoot().getAllTextNodes();
-    nodes.forEach((node) => {
-      switch (node.__type) {
-        case 'mention':
-          const id = node.__id;
-          if (typeof id === 'string') {
-            mentions.push(node.__id);
-          } else {
-            console.debug('unexpected mention id', id);
-          }
-          break;
-      }
-    });
-  });
-
-  // console.debug('[CollabKit]: sending message', workspaceId, threadId, body, mentions);
+  const { editor, $$body: body, mentions } = workspace.composers[threadId];
 
   if (`${body}`.trim().length === 0) {
     console.warn('[CollabKit] tried to send an empty message');

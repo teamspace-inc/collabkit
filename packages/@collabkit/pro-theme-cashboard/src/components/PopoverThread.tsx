@@ -25,14 +25,23 @@ function PopoverThreadPreview({ threadId }: { threadId: string }) {
 }
 
 export function PopoverThreadContent({ hideThread }: { hideThread: () => void }) {
-  const { canSend, send } = useComposer();
+  const { canSend, send, hasMentions } = useComposer();
   return (
     <div className="rounded-lg w-[270px] border border-solid border-cb-bg3 shadow-cb-high">
       <Scrollable autoScroll="bottom">
         <CommentList renderComment={(props) => <CashboardComment {...props} />} />
       </Scrollable>
-      <Composer />
-      <div className="flex gap-2 justify-end p-4 pt-1">
+      <Composer.Root className="border-t border-cb-bg3 pt-4 px-4">
+        <Composer.Editor
+          placeholder={<Composer.Placeholder>Comment or add others with @</Composer.Placeholder>}
+        />
+      </Composer.Root>
+      {hasMentions && (
+        <div className="pt-2 px-4 text-sm">
+          Your @mention will add people to this conversation and send an email.
+        </div>
+      )}
+      <div className="flex gap-2 justify-end p-4 pt-3">
         <Button text="Cancel" type="secondary" onPointerDown={hideThread} />
         <Button text="Comment" type="primary" onPointerDown={send} disabled={!canSend} />
       </div>

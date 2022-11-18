@@ -7,11 +7,12 @@ export function useComposer() {
   const { threadId, workspaceId } = useThreadContext();
   const { workspaces } = useSnapshot(store);
   const canSend = !!workspaces[workspaceId]?.composers[threadId]?.enabled.default;
-
+  const hasMentions = workspaces[workspaceId]?.composers[threadId]?.mentions.length > 0;
   return {
     canSend,
     send: () => {
       events.onSend(workspaceId, threadId);
     },
+    hasMentions,
   };
 }
