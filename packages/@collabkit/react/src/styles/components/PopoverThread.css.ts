@@ -60,16 +60,3 @@ export const comment = style([
     gap: '12px',
   },
 ]);
-
-export const commentHeader = recipe({
-  base: {
-    maxWidth,
-    display: 'flex',
-    flex: '1',
-    flexDirection: 'row',
-    gap: fallbackVar(vars.comment.header.gap, vars.space[2]),
-    alignItems: fallbackVar(vars.popoverThread.comment.header.alignItems, 'flex-start'),
-    fontFamily: vars.fontFamily,
-  },
-  variants: {},
-});

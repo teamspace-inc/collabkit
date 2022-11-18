@@ -9,17 +9,7 @@ export const PopoverThreadTheme = {
     preview: {
       boxShadow: 'popover-thread-preview-box-shadow',
     },
-    comment: {
-      header: {
-        alignItems: 'popover-thread-comment-header-align-items',
-      },
-    },
     composer: {
-      form: {
-        borderTop: 'popover-thread-composer-form-border-top',
-        padding: 'popover-thread-composer-form-padding',
-        gap: 'popover-thread-composer-form-gap',
-      },
       input: {
         border: 'popover-thread-composer-input-border',
         minHeight: 'popover-thread-composer-input-min-height',

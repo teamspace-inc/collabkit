@@ -89,22 +89,6 @@ export const cashboardTheme: CustomTheme = {
       lineHeight: '22px',
     },
   },
-  popoverThread: {
-    border: '1px solid #E3E9ED',
-    width: '272px',
-    comment: {
-      header: {
-        alignItems: 'center',
-      },
-    },
-    // composer: {
-    //   form: {
-    //     borderTop: '1px solid #E3E9ED',
-    //     padding: '16px 16px 16px',
-    //     gap: '12px',
-    //   },
-    // },
-  },
   composer: {
     input: {
       border: '1px solid #E3E9ED',
