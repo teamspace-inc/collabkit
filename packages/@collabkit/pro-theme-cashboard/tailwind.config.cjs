@@ -21,7 +21,10 @@ module.exports = {
         'cb-bg2': '#F5F8FA',
         'cb-bg3': '#E3E9ED',
         'cb-bg4': '#E5E5E5',
-        bg3: '#E3E9ED',
+      },
+      boxShadow: {
+        'cb-standard': '0px 2px 4px rgba(0, 0, 0, 0.05)',
+        'cb-high': '0px -12px 24px rgba(0, 0, 0, 0.02), 0px 12px 24px rgba(0, 0, 0, 0.06)',
       },
     },
   },

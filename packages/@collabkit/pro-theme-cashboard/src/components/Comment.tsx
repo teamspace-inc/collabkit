@@ -1,7 +1,11 @@
 import React from 'react';
 import { Comment, CommentProps, Profile, Thread } from '@collabkit/react';
 
-export function CustomComment({ hideProfile, showResolveThreadButton, commentId }: CommentProps) {
+export function CashboardComment({
+  hideProfile,
+  showResolveThreadButton,
+  commentId,
+}: CommentProps) {
   return (
     <Comment.Root commentId={commentId}>
       <div className="flex gap-3 relative">

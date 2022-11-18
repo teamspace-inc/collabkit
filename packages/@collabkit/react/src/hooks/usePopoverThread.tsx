@@ -76,7 +76,6 @@ export function usePopoverThread(props: ObjectProps) {
     }
   });
 
-
   return {
     threadId,
     hasThread,

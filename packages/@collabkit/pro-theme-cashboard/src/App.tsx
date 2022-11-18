@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { CollabKitProvider, usePopoverThread } from '@collabkit/react';
-import { PopoverThread } from './PopoverThread';
+import { PopoverThread } from './components/PopoverThread';
 import { theme } from './';
 import './index.css';
 

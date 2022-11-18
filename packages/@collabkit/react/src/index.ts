@@ -33,6 +33,7 @@ import { useComments } from './hooks/public/useComments';
 import { useIsResolved } from './hooks/public/useIsResolved';
 import { useResolveThread } from './hooks/public/useResolveThread';
 import { useThreadUsers } from './hooks/public/useThreadUsers';
+import { useComposer } from './hooks/public/useComposer';
 import { ThreadFacepile } from './components/ThreadFacepile';
 import { useReplyCount } from './hooks/useReplyCount';
 import { ResolveThreadIconButton } from './components/ResolveThreadIconButton';
@@ -45,6 +46,7 @@ import Composer from './components/composer/Composer';
 import { Scrollable } from './components/Scrollable';
 import CommentList from './components/CommentList';
 import { Popover } from './components/Popover';
+import { Button } from './components/Button';
 
 export {
   CollabKitProvider as Provider,
@@ -62,6 +64,7 @@ export {
   useUnreadThreadsCount,
   useUnreadCommentsCount as useUnreadCount,
   // advanced
+  Button,
   Comment,
   CommentList,
   Composer,
@@ -78,6 +81,7 @@ export {
   useReplyCount,
   useResolveThread,
   useThreadUsers,
+  useComposer,
   // internal
   createValtioStore as internal_createStore,
   PopoverThreadContent as InternalPopoverThreadContent,
