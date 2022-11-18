@@ -19,11 +19,11 @@ export default defineConfig(({ mode }) => {
     build: {
       lib: {
         entry: resolve(__dirname, 'src/index.ts'),
-        name: 'CollabKitCashboardTheme',
-        fileName: 'collabkit-custom-theme-cashboard',
+        fileName: 'collabkit-cashboard',
+        formats: ['es'],
       },
       rollupOptions: {
-        external: ['react', 'react-dom'],
+        external: ['react', 'react-dom', '@collabkit/react'],
         output: {
           // Provide global variables to use in the UMD build
           // for externalized deps

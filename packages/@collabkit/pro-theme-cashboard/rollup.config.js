@@ -2,10 +2,10 @@ import dts from 'rollup-plugin-dts';
 
 const config = [
   {
-    input: './types/packages/@collabkit/custom-theme-cashboard/src/index.d.ts',
-    output: [{ file: 'dist/collabkit-custom-theme-cashboard.d.ts', format: 'es' }],
+    input: './types/packages/@collabkit/pro-theme-cashboard/src/index.d.ts',
+    output: [{ file: 'dist/collabkit-cashboard.d.ts', format: 'es' }],
     plugins: [dts({ respectExternal: true })],
-    external: ['react', 'react-dom', 'date-fns', 'date-fns/locale', '@collabkit/react'],
+    external: ['react', 'react-dom', '@collabkit/react'],
   },
 ];
 

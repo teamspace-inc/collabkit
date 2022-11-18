@@ -1,22 +1,18 @@
 {
   "name": "@collabkit/pro-theme-cashboard",
-  "version": "0.6.3",
+  "version": "0.0.0",
   "type": "module",
   "files": [
-    "dist/collabkit-react.d.ts",
-    "dist/collabkit-react.js",
-    "dist/collabkit-react.umd.cjs",
-    "dist/style.css"
+    "dist/collabkit-cashboard.d.ts",
+    "dist/collabkit-cashboard.js"
   ],
-  "types": "./dist/collabkit-react.d.ts",
-  "main": "./dist/collabkit-react.umd.cjs",
-  "module": "./dist/collabkit-react.js",
+  "types": "./dist/collabkit-cashboard.d.ts",
+  "module": "./dist/collabkit-cashboard.js",
   "exports": {
-    "./dist/style.css": "./dist/style.css",
     ".": {
-      "types": "./dist/collabkit-react.d.ts",
-      "import": "./dist/collabkit-react.js",
-      "require": "./dist/collabkit-react.umd.cjs"
+      "types": "./dist/collabkit-cashboard.d.ts",
+      "import": "./dist/collabkit-cashboard.js",
+      "require": "./dist/collabkit-cashboard.umd.cjs"
     }
   },
   "sideEffects": false,
@@ -28,6 +24,9 @@
     "prepublishOnly": "yarn build",
     "test": "vitest",
     "coverage": "vitest run --coverage"
+  },
+  "peerDependencies": {
+    "@collabkit/react": ">=0.7.0"
   },
   "devDependencies": {
     "@collabkit/react": "*",
