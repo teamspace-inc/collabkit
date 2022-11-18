@@ -22,6 +22,7 @@ import {
 } from '@floating-ui/react-dom-interactions';
 
 import { mergeRefs } from 'react-merge-refs';
+import { ThemeWrapper } from './ThemeWrapper';
 
 export type PopoverTriggerProps =
   | {
@@ -272,7 +273,19 @@ type PopoverProps = PopoverTriggerProps & {
   content: React.ReactNode;
 } & AdvancedPopoverProps;
 
-export const PopoverPortal = FloatingPortal;
+export function PopoverPortal({
+  children,
+  root,
+}: {
+  children?: React.ReactNode;
+  root?: HTMLElement | null | undefined;
+}) {
+  return (
+    <FloatingPortal id="collabkit-floating-root" root={root}>
+      <ThemeWrapper>{children}</ThemeWrapper>
+    </FloatingPortal>
+  );
+}
 
 export function Popover(props: PopoverProps) {
   const [open, setOpen] = useState(() => props.defaultOpen ?? false);

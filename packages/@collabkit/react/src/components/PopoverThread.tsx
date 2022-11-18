@@ -17,26 +17,22 @@ export type PopoverThreadProps = PopoverContentProps &
 
 function PopoverThreadPreview(props: {}) {
   return (
-    <ThemeWrapper>
-      <div className={previewRoot} data-collabkit-internal="true">
-        <Scrollable autoScroll="bottom">
-          <CommentList />
-        </Scrollable>
-      </div>
-    </ThemeWrapper>
+    <div className={previewRoot}>
+      <Scrollable autoScroll="bottom">
+        <CommentList />
+      </Scrollable>
+    </div>
   );
 }
 
 export function PopoverThreadThread(props: {}) {
   return (
-    <ThemeWrapper>
-      <div className={root} data-collabkit-internal="true">
-        <Scrollable autoScroll="bottom">
-          <CommentList />
-        </Scrollable>
-        <Composer />
-      </div>
-    </ThemeWrapper>
+    <div className={root}>
+      <Scrollable autoScroll="bottom">
+        <CommentList />
+      </Scrollable>
+      <Composer />
+    </div>
   );
 }
 
