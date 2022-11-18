@@ -6,58 +6,52 @@ import { usePopoverThread } from '../hooks/usePopoverThread';
 import { previewRoot, root } from '../styles/components/PopoverThread.css';
 import CommentList from './CommentList';
 import { Scrollable } from './Scrollable';
-import { ThemeWrapper } from './ThemeWrapper';
 import Composer from './composer/Composer';
-import { OptionalThreadProps } from '../types';
+import { OptionalThreadProps, ThreadProps } from '../types';
 
 export type PopoverThreadProps = PopoverContentProps &
   PopoverTriggerProps &
   ObjectProps &
   OptionalThreadProps;
 
-function PopoverThreadPreview(props: {}) {
+function PopoverThreadPreview({ threadId }: { threadId: string }) {
   return (
-    <div className={previewRoot}>
-      <Scrollable autoScroll="bottom">
-        <CommentList />
-      </Scrollable>
-    </div>
+    <Thread.Provider threadId={threadId}>
+      <div className={previewRoot}>
+        <Scrollable autoScroll="bottom">
+          <CommentList />
+        </Scrollable>
+      </div>
+    </Thread.Provider>
   );
 }
 
-export function PopoverThreadThread(props: {}) {
+export function PopoverThreadContent(props: ThreadProps) {
   return (
-    <div className={root}>
-      <Scrollable autoScroll="bottom">
-        <CommentList />
-      </Scrollable>
-      <Composer />
-    </div>
+    <Thread.Provider {...props}>
+      <div className={root}>
+        <Scrollable autoScroll="bottom">
+          <CommentList />
+        </Scrollable>
+        <Composer />
+      </div>
+    </Thread.Provider>
   );
 }
 
 export function PopoverThread(props: PopoverThreadProps) {
   const { threadId, ...popoverProps } = usePopoverThread(props);
-  const { objectId, lockScroll, ...otherProps } = props;
+  const { objectId, lockScroll, ...triggerProps } = props;
 
   return (
     <Popover.Root {...popoverProps}>
-      <Popover.Trigger {...otherProps} />
+      <Popover.Trigger {...triggerProps} />
       <Popover.Portal>
         <Popover.Preview>
-          {/* todo @nc: consider adding 
-          hasPreview and hasPopover 
-          to avoid this */}
-          {popoverProps.hasThread ? (
-            <Thread.Provider threadId={threadId} {...props}>
-              <PopoverThreadPreview />
-            </Thread.Provider>
-          ) : null}
+          {popoverProps.hasThread && <PopoverThreadPreview threadId={threadId} />}
         </Popover.Preview>
         <Popover.Content lockScroll={lockScroll}>
-          <Thread.Provider threadId={threadId} {...props}>
-            <PopoverThreadThread />
-          </Thread.Provider>
+          <PopoverThreadContent threadId={threadId} />
         </Popover.Content>
       </Popover.Portal>
     </Popover.Root>

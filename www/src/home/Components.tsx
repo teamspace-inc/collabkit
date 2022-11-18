@@ -2,7 +2,13 @@ import React, { useEffect } from 'react';
 import { dark, vars } from '../styles/Theme.css';
 import * as styles from '../styles/home/Demos.css';
 import 'pure-react-carousel/dist/react-carousel.es.css';
-import { Inbox, Thread, usePopoverThread, InternalPopoverThreadThread } from '@collabkit/react';
+import {
+  Inbox,
+  Thread,
+  usePopoverThread,
+  InternalPopoverThreadContent,
+  ThemeWrapper,
+} from '@collabkit/react';
 import {
   component,
   card,
@@ -32,7 +38,7 @@ function PopoverThreadComponent() {
   }, []);
 
   return (
-    <Thread.Provider threadId="thread4" autoFocus={false}>
+    <ThemeWrapper>
       <div style={{ display: 'flex', gap: '4px' }}>
         <div
           style={{
@@ -55,10 +61,10 @@ function PopoverThreadComponent() {
           Component
         </div>
         <div style={{ position: 'relative', left: 0 }}>
-          <InternalPopoverThreadThread />
+          <InternalPopoverThreadContent threadId="thread4" autoFocus={false} />
         </div>
       </div>
-    </Thread.Provider>
+    </ThemeWrapper>
   );
 }
 
