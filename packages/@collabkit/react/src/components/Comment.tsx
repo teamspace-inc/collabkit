@@ -195,12 +195,6 @@ export const CommentHeader = (props: React.ComponentProps<'div'>) => (
 export const CommentNameAndTimestampWrapper = (props: React.ComponentProps<'div'>) => (
   <div {...props} className={props.className ?? styles.nameAndTimestampWrapper} />
 );
-export const CommentContent = (
-  props: { profileIndent?: boolean } & React.ComponentProps<'div'>
-) => {
-  const { profileIndent, ...forwardProps } = props;
-  return <div {...forwardProps} className={props.className ?? styles.content} />;
-};
 
 type CommentMenuItemType = 'commentEditButton' | 'commentDeleteButton' | 'reopenThreadButton';
 
