@@ -15,7 +15,7 @@ import { CashboardComment } from './Comment';
 function PopoverThreadPreview({ threadId }: { threadId: string }) {
   return (
     <Thread.Provider threadId={threadId}>
-      <div className="rounded-lg w-[270px] border border-solid border-cb-bg3 shadow-cb-standard">
+      <div className="rounded-lg w-[270px] border border-solid border-cb-bg3 shadow-cb-standard hover:shadow-cb-high">
         <Scrollable autoScroll="bottom">
           <CommentList renderComment={(props) => <CashboardComment {...props} />} />
         </Scrollable>
