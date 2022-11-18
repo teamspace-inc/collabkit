@@ -117,7 +117,6 @@ function Demo() {
       mentionableUsers={'allWorkspace'}
     >
       <Switch>
-        <Route path="/cashboard" component={TableExample} />
         <Route path="/table" component={TableExample} />
         <Route path="/custominbox" component={CustomInbox} />
         <Route component={Home} />

@@ -97,13 +97,13 @@ export const cashboardTheme: CustomTheme = {
         alignItems: 'center',
       },
     },
-    composer: {
-      form: {
-        borderTop: '1px solid #E3E9ED',
-        padding: '16px 16px 16px',
-        gap: '12px',
-      },
-    },
+    // composer: {
+    //   form: {
+    //     borderTop: '1px solid #E3E9ED',
+    //     padding: '16px 16px 16px',
+    //     gap: '12px',
+    //   },
+    // },
   },
   composer: {
     input: {
