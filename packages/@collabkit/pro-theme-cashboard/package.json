@@ -1,6 +1,6 @@
 {
   "name": "@collabkit/pro-theme-cashboard",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "files": [
     "dist/collabkit-cashboard.d.ts",
