@@ -153,21 +153,19 @@ export const CommentEditor = (props: React.ComponentProps<'div'>) => {
   }
 
   return (
-    <div {...props} className={props.className ?? styles.editor}>
-      <Composer.Root autoFocus={true} body={body}>
-        <Composer.Editor contentEditable={<Composer.ContentEditable />} placeholder={<span />} />
-        <ButtonGroup
-          onCancel={(e) => {
-            if (e.button === 0) {
-              actions.stopEditing(store);
-            }
-          }}
-          onConfirm={onPointerDown}
-          confirmButtonEnabled={isEnabled}
-          confirmButtonText={'Save'}
-        />
-      </Composer.Root>
-    </div>
+    <Composer.Root className={props.className ?? styles.editor} autoFocus={true} body={body}>
+      <Composer.Editor contentEditable={<Composer.ContentEditable />} placeholder={<span />} />
+      <ButtonGroup
+        onCancel={(e) => {
+          if (e.button === 0) {
+            actions.stopEditing(store);
+          }
+        }}
+        onConfirm={onPointerDown}
+        confirmButtonEnabled={isEnabled}
+        confirmButtonText={'Save'}
+      />
+    </Composer.Root>
   );
 };
 

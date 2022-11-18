@@ -6,6 +6,7 @@ import { collabkit } from './Root.css';
 export const paddingLeft = fallbackVar(vars.comment.paddingLeft, vars.space[4]);
 export const paddingRight = fallbackVar(vars.comment.paddingRight, vars.space[4]);
 export const headerGap = fallbackVar(vars.comment.header.gap, vars.space[2]);
+export const actionsGap = fallbackVar(vars.comment.actions.gap, vars.space[2]);
 
 export const nameAndTimestampWrapper = style({
   flex: 1,
@@ -44,17 +45,16 @@ export const body = style({
   paddingRight: `${calc(vars.space[3]).multiply(3)}`,
 });
 
-export const editor = style([
-  {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: vars.space[1],
-    marginTop: vars.space[1],
-    marginRight: `${calc(paddingRight).negate()}`,
-    marginLeft: paddingLeft,
-    fontFamily: vars.fontFamily,
-  },
-]);
+export const editor = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: vars.space[2],
+  marginTop: vars.space[1],
+  marginRight: `${calc(paddingRight).negate()}`,
+  marginLeft: paddingLeft,
+  fontFamily: vars.fontFamily,
+  padding: vars.space[4],
+});
 
 export const header = style({
   flex: '1',
