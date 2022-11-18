@@ -84,20 +84,3 @@ export const composerForm = style({
   gap: fallbackVar(vars.popoverThread.composer.form.gap, vars.space[2]),
   fontFamily: vars.fontFamily,
 });
-
-export const composerInput = style([
-  composerStyles.input({ disabled: false }),
-  {
-    border: fallbackVar(vars.popoverThread.composer.input.border, `1px solid ${vars.color.border}`),
-    minHeight: fallbackVar(vars.popoverThread.composer.input.minHeight, '40px'),
-    fontFamily: vars.fontFamily,
-    selectors: {
-      '&:focus': {
-        borderColor: fallbackVar(
-          vars.popoverThread.composer.input.focus.border,
-          `1px solid ${vars.color.border}`
-        ),
-      },
-    },
-  },
-]);
