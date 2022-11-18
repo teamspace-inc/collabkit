@@ -36,7 +36,7 @@ import {
 } from '@floating-ui/react-dom-interactions';
 import { ThemeWrapper } from '../ThemeWrapper';
 import Profile from '../Profile';
-import { Scrollable } from '../ScrollArea';
+import { Scrollable } from '../Scrollable';
 
 type MentionMatch = {
   leadOffset: number;

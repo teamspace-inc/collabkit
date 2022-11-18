@@ -14,7 +14,7 @@ import { ThreadUnreadDot } from './ThreadUnreadDot';
 import { ResolveThreadIconButton } from './ResolveThreadIconButton';
 import { ThreadProps } from '../types';
 import { useSaveThreadInfo } from '../hooks/useSaveThreadInfo';
-import { Scrollable } from './ScrollArea';
+import { Scrollable } from './Scrollable';
 
 function ThreadProvider(props: ThreadProps & { children: React.ReactNode }) {
   const { store } = useApp();

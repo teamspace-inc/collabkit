@@ -2,7 +2,7 @@ import React from 'react';
 import { useSnapshot } from 'valtio';
 import { useApp } from '../hooks/useApp';
 import * as styles from '../styles/components/Inbox.css';
-import { Scrollable } from './ScrollArea';
+import { Scrollable } from './Scrollable';
 import { InboxItem } from './InboxItem';
 import { ThemeWrapper } from './ThemeWrapper';
 import { ChatCentered } from './icons';

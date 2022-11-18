@@ -37,6 +37,7 @@ import { usePopoverThread } from './hooks/usePopoverThread';
 import Comment from './components/Comment';
 import CollabKitRecharts from './components/Recharts';
 import Profile from './components/Profile';
+import { Scrollable } from './components/Scrollable';
 
 export {
   CollabKitProvider as Provider,
@@ -66,6 +67,7 @@ export {
   ThreadProvider,
   Comment,
   Profile,
+  Scrollable,
   // internal
   createValtioStore as internal_createStore,
   PopoverThreadThread as InternalPopoverThreadThread,

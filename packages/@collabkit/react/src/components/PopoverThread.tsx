@@ -5,7 +5,7 @@ import { Popover, PopoverTriggerProps, PopoverContentProps } from './Popover';
 import { usePopoverThread } from '../hooks/usePopoverThread';
 import { previewRoot, root } from '../styles/components/PopoverThread.css';
 import CommentList from './CommentList';
-import { Scrollable } from './ScrollArea';
+import { Scrollable } from './Scrollable';
 import { ThemeWrapper } from './ThemeWrapper';
 import Composer from './composer/Composer';
 import { OptionalThreadProps } from '../types';
