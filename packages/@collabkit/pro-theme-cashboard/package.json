@@ -1,6 +1,6 @@
 {
   "name": "@collabkit/pro-theme-cashboard",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
   "files": [
     "dist/collabkit-cashboard.d.ts",
@@ -11,8 +11,7 @@
   "exports": {
     ".": {
       "types": "./dist/collabkit-cashboard.d.ts",
-      "import": "./dist/collabkit-cashboard.js",
-      "require": "./dist/collabkit-cashboard.umd.cjs"
+      "import": "./dist/collabkit-cashboard.js"
     }
   },
   "sideEffects": false,
