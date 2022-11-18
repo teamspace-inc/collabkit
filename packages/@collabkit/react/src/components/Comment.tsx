@@ -23,6 +23,13 @@ import Composer from './composer/Composer';
 import { ButtonGroup } from './ButtonGroup';
 import { actions } from '@collabkit/client';
 
+function useIsEditing() {
+  const { store } = useApp();
+  const { editingId } = useSnapshot(store);
+  const { eventId, treeId } = useCommentContext();
+  return editingId?.eventId === eventId && editingId.treeId == treeId;
+}
+
 // tidy up root and provider
 export function CommentProvider(props: { children: React.ReactNode; eventId: string }) {
   const { threadId, workspaceId } = useThreadContext();
@@ -116,13 +123,9 @@ function CommentRoot({ commentId: eventId, ...props }: CommentRootProps) {
 
 export function CommentBody({ ...props }: React.ComponentPropsWithoutRef<'div'>) {
   const { body } = useSnapshot(useCommentStore());
-  const { store } = useApp();
-
-  const { callbacks, editingId } = useSnapshot(store);
-  const { eventId, treeId } = useCommentContext();
-  const isEditing = editingId?.eventId === eventId && editingId.treeId == treeId;
-
+  const { callbacks } = useSnapshot(useApp().store);
   const canClickLinks = !!callbacks?.onMentionClick || !!callbacks?.onTimestampClick;
+  const isEditing = useIsEditing();
 
   if (isEditing) {
     return null;
@@ -140,9 +143,8 @@ export function CommentBody({ ...props }: React.ComponentPropsWithoutRef<'div'>)
 
 export const CommentEditor = (props: React.ComponentProps<'div'>) => {
   const { store } = useApp();
-  const { editingId } = useSnapshot(store);
-  const { eventId, treeId } = useCommentContext();
-  const isEditing = editingId?.eventId === eventId && editingId.treeId == treeId;
+  const { eventId } = useCommentContext();
+  const isEditing = useIsEditing();
 
   const { threadId, workspaceId } = useThreadContext();
   const { body } = useCommentStore();
@@ -236,6 +238,10 @@ const CommentMenu = (props: { className?: string }) => {
 export { CommentMenu as Menu };
 
 export const CommentActions = (props: React.ComponentProps<'div'>) => {
+  const isEditng = useIsEditing();
+  if (isEditng) {
+    return null;
+  }
   return <div className={styles.actions}>{props.children}</div>;
 };
 
