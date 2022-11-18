@@ -22,7 +22,7 @@ import { Sidebar } from './components/Sidebar';
 import { ThemeWrapper } from './components/ThemeWrapper';
 import { SidebarInboxButton } from './components/SidebarInboxButton';
 import { SidebarInbox } from './components/SidebarInbox';
-import { PopoverThread, PopoverThreadThread } from './components/PopoverThread';
+import { PopoverThread, PopoverThreadProps, PopoverThreadThread } from './components/PopoverThread';
 import { useInbox } from './hooks/public/useInbox';
 import { ThreadProvider } from './components/ThreadProvider';
 import { useComments } from './hooks/public/useComments';
@@ -76,6 +76,7 @@ export type {
   Config,
   Mention,
   MentionProps,
+  PopoverThreadProps,
   Store,
   Subscriptions,
   CustomTheme,
