@@ -18,7 +18,7 @@ export function CustomComment({ hideProfile, showResolveThreadButton, commentId 
         </Comment.Actions>
       </div>
       <Comment.Body />
-      <Comment.Editor />
+      <Comment.Editor className="flex flex-col gap-3" />
     </Comment.Root>
   );
 }
