@@ -9,12 +9,14 @@ export function CashboardComment({
   return (
     <Comment.Root commentId={commentId}>
       <div className="flex gap-3 relative">
-        {!hideProfile && <Profile.Avatar />}
         {!hideProfile && (
-          <div className="flex flex-col">
-            <Comment.CreatorName />
-            <Comment.Timestamp />
-          </div>
+          <>
+            <Profile.Avatar />
+            <div className="flex flex-col mb-3">
+              <Comment.CreatorName />
+              <Comment.Timestamp />
+            </div>
+          </>
         )}
         <Comment.Actions>
           {showResolveThreadButton && <Thread.ResolveIconButton />}
