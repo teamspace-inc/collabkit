@@ -1,9 +1,6 @@
 import React, { useEffect } from 'react';
-import {
-  CollabKitProvider,
-  PopoverThread,
-  usePopoverThread,
-} from '@collabkit/react';
+import { CollabKitProvider, usePopoverThread } from '@collabkit/react';
+import { PopoverThread } from './PopoverThread';
 import { theme } from './';
 import './index.css';
 
@@ -34,7 +31,10 @@ function PopoverExample() {
 
   return (
     <PopoverThread objectId={objectId}>
-      <div className="border-2 border-prime-dark w-40 h-20 m-2 bg-cb-bg3 text-prime-dark rounded-lg flex items-center justify-center">
+      <div
+        className="border-2 border-prime-dark w-40 h-20 m-2 text-prime-dark rounded-lg flex items-center justify-center"
+        onClick={showThread}
+      >
         Popover
       </div>
     </PopoverThread>

@@ -24,6 +24,7 @@
       "@collabkit/client": ["../client/src"],
       "@collabkit/colors": ["../colors/src"],
       "@collabkit/core": ["../core/src"],
+      "@collabkit/react": ["../react/src"],
       "@collabkit/react-scroll-area": ["../react-scroll-area/src"],
       "@collabkit/theme": ["../theme/src"]
     },
@@ -34,6 +35,7 @@
     "../client/src",
     "../colors/src",
     "../core/src",
+    "../react/src",
     "../react-scroll-area/src",
     "../theme/src"
   ]

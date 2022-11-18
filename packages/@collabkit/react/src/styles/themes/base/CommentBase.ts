@@ -21,9 +21,6 @@ export const CommentBase = {
     actions: {
       gap: 'initial',
     },
-    content: {
-      gap: 'initial',
-    },
     body: {
       color: 'initial',
       fontSize: 'initial',

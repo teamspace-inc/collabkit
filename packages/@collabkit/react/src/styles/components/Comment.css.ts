@@ -6,7 +6,6 @@ import { collabkit } from './Root.css';
 export const paddingLeft = fallbackVar(vars.comment.paddingLeft, vars.space[4]);
 export const paddingRight = fallbackVar(vars.comment.paddingRight, vars.space[4]);
 export const headerGap = fallbackVar(vars.comment.header.gap, vars.space[2]);
-export const actionsGap = fallbackVar(vars.comment.actions.gap, vars.space[2]);
 
 export const nameAndTimestampWrapper = style({
   flex: 1,
@@ -20,15 +19,6 @@ export const nameAndTimestampWrapper = style({
 export const inlineModal = style({
   background: vars.color.surface,
   borderRadius: '6px',
-});
-
-export const content = style({
-  display: 'flex',
-  position: 'relative',
-  flexDirection: 'column',
-  flex: '1',
-  gap: fallbackVar(vars.comment.content.gap, vars.space[0]),
-  fontFamily: vars.fontFamily,
 });
 
 export const indent = style({
@@ -92,8 +82,9 @@ export const timestamp = style({
 
 export const root = style({
   flex: '1',
-  flexDirection: 'row',
-  gap: fallbackVar(vars.comment.gap, vars.space[2]),
+  display: 'flex',
+  flexDirection: 'column',
+  gap: fallbackVar(vars.comment.gap, vars.space[0]),
   position: 'relative',
   // account for scrollbar
   // maxWidth: calc.subtract('100%', vars.space[2]),
@@ -102,7 +93,6 @@ export const root = style({
   paddingTop: fallbackVar(vars.comment.paddingTop, vars.space[1]),
   paddingBottom: fallbackVar(vars.comment.paddingBottom, vars.space[1]),
   fontFamily: vars.fontFamily,
-  display: 'flex',
 });
 
 export const actions = style({

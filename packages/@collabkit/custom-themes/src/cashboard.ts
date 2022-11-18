@@ -79,9 +79,6 @@ export const cashboard: CustomTheme = {
         gap: '0px',
       },
     },
-    content: {
-      gap: '12px',
-    },
     timestamp: {
       fontSize: '12px',
       lineHeight: '18px',

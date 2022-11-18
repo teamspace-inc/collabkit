@@ -22,7 +22,11 @@ import { Sidebar } from './components/Sidebar';
 import { ThemeWrapper } from './components/ThemeWrapper';
 import { SidebarInboxButton } from './components/SidebarInboxButton';
 import { SidebarInbox } from './components/SidebarInbox';
-import { PopoverThread, PopoverThreadProps, PopoverThreadThread } from './components/PopoverThread';
+import {
+  PopoverThread,
+  PopoverThreadProps,
+  PopoverThreadContent,
+} from './components/PopoverThread';
 import { useInbox } from './hooks/public/useInbox';
 import { ThreadProvider } from './components/ThreadProvider';
 import { useComments } from './hooks/public/useComments';
@@ -34,10 +38,13 @@ import { useReplyCount } from './hooks/useReplyCount';
 import { ResolveThreadIconButton } from './components/ResolveThreadIconButton';
 import { usePopoverThread } from './hooks/usePopoverThread';
 
-import Comment from './components/Comment';
+import Comment, { CommentProps } from './components/Comment';
 import CollabKitRecharts from './components/Recharts';
 import Profile from './components/Profile';
+import Composer from './components/composer/Composer';
 import { Scrollable } from './components/Scrollable';
+import CommentList from './components/CommentList';
+import { Popover } from './components/Popover';
 
 export {
   CollabKitProvider as Provider,
@@ -55,22 +62,25 @@ export {
   useUnreadThreadsCount,
   useUnreadCommentsCount as useUnreadCount,
   // advanced
-  usePopoverThread,
-  ResolveThreadIconButton,
-  ThreadFacepile,
-  useInbox,
-  useComments,
-  useIsResolved,
-  useThreadUsers,
-  useResolveThread,
-  useReplyCount,
-  ThreadProvider,
   Comment,
+  CommentList,
+  Composer,
+  Popover,
   Profile,
+  ResolveThreadIconButton,
   Scrollable,
+  ThreadFacepile,
+  ThreadProvider,
+  useComments,
+  useInbox,
+  useIsResolved,
+  usePopoverThread,
+  useReplyCount,
+  useResolveThread,
+  useThreadUsers,
   // internal
   createValtioStore as internal_createStore,
-  PopoverThreadThread as InternalPopoverThreadThread,
+  PopoverThreadContent as InternalPopoverThreadContent,
 };
 
 export type {
@@ -81,6 +91,7 @@ export type {
   PopoverThreadProps,
   Store,
   Subscriptions,
+  CommentProps,
   CustomTheme,
   Workspace,
 };

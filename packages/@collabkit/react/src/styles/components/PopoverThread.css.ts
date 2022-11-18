@@ -74,7 +74,7 @@ export const commentHeader = recipe({
   variants: {},
 });
 
-export const composerRoot = composerStyles.root;
+//export const composerRoot = composerStyles.root;
 
 export const composerForm = style({
   borderTop: fallbackVar(vars.popoverThread.composer.form.borderTop, 'none'),

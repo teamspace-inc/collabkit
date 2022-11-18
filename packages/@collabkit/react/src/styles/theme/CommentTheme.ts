@@ -21,9 +21,6 @@ export const CommentTheme = {
     actions: {
       gap: 'comment-actions-gap',
     },
-    content: {
-      gap: 'comment-content-gap',
-    },
     body: {
       color: 'comment-body-color',
       fontSize: 'comment-body-font-size',

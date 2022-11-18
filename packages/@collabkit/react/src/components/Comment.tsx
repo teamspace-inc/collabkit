@@ -19,6 +19,12 @@ import { Thread } from './Thread';
 import { ThreadCommentEditor } from './ThreadCommentEditor';
 import { useHovering } from '../hooks/useHovering';
 import { mergeRefs } from 'react-merge-refs';
+import { useComposer } from '../hooks/useComposer';
+import Composer from './composer/Composer';
+import { ButtonGroup } from './ButtonGroup';
+import { actions } from '@collabkit/client';
+// TODO(ville): This should not be a popover thread style
+import { composerForm } from '../styles/components/PopoverThread.css';
 
 // tidy up root and provider
 export function CommentProvider(props: { children: React.ReactNode; eventId: string }) {
@@ -135,17 +141,37 @@ export function CommentBody({ ...props }: React.ComponentPropsWithoutRef<'div'>)
   );
 }
 
-export const Editor = (props: React.ComponentProps<'div'>) => {
+export const CommentEditor = (props: React.ComponentProps<'div'>) => {
   const { store } = useApp();
   const { editingId } = useSnapshot(store);
   const { eventId, treeId } = useCommentContext();
   const isEditing = editingId?.eventId === eventId && editingId.treeId == treeId;
 
+  const { threadId, workspaceId } = useThreadContext();
+  const { body } = useCommentStore();
+  const { isEnabled, onPointerDown } = useComposer({ threadId, workspaceId, eventId });
+
   if (!isEditing) {
     return null;
   }
 
-  return <div {...props} className={props.className ?? styles.editor} />;
+  return (
+    <div {...props} className={props.className ?? styles.editor}>
+      <Composer.Root className={composerForm} autoFocus={true} body={body}>
+        <Composer.Editor contentEditable={<Composer.ContentEditable />} placeholder={<span />} />
+        <ButtonGroup
+          onCancel={(e) => {
+            if (e.button === 0) {
+              actions.stopEditing(store);
+            }
+          }}
+          onConfirm={onPointerDown}
+          confirmButtonEnabled={isEnabled}
+          confirmButtonText={'Save'}
+        />
+      </Composer.Root>
+    </div>
+  );
 };
 
 export function CommentTimestamp(
@@ -229,43 +255,41 @@ export const CommentIndent = (props: React.ComponentProps<'div'>) => {
   return <div {...forwardProps} className={props.className ?? styles.indent} />;
 };
 
-export default function Comment(props: {
+export type CommentProps = {
   commentId: string;
   hideProfile?: boolean;
   showResolveThreadButton?: boolean;
-}) {
+};
+
+export default function Comment(props: CommentProps) {
   const hideProfile = props.hideProfile ?? false;
   const showResolveThreadButton = props.showResolveThreadButton ?? false;
   return (
     <Comment.Root commentId={props.commentId}>
-      <Comment.Content>
-        {/* do we need content? or can root take care of the same job */}
-        <Comment.Header>
-          {!hideProfile && <Profile.Avatar />}
-          {!hideProfile && (
-            <Comment.NameAndTimestampWrapper>
-              <Comment.CreatorName />
-              <Comment.Timestamp />
-            </Comment.NameAndTimestampWrapper>
-          )}
-          <Comment.Actions>
-            {showResolveThreadButton && <Thread.ResolveIconButton />}
-            <Comment.MoreMenu />
-          </Comment.Actions>
-        </Comment.Header>
-        <Comment.Indent>
-          <Comment.Body />
-        </Comment.Indent>
-        <ThreadCommentEditor />
-        {/* this should be autorendered in Body, if the user has rendered the edit menu? */}
-      </Comment.Content>
+      <Comment.Header>
+        {!hideProfile && <Profile.Avatar />}
+        {!hideProfile && (
+          <Comment.NameAndTimestampWrapper>
+            <Comment.CreatorName />
+            <Comment.Timestamp />
+          </Comment.NameAndTimestampWrapper>
+        )}
+        <Comment.Actions>
+          {showResolveThreadButton && <Thread.ResolveIconButton />}
+          <Comment.MoreMenu />
+        </Comment.Actions>
+      </Comment.Header>
+      <Comment.Indent>
+        <Comment.Body />
+      </Comment.Indent>
+      <ThreadCommentEditor />
+      {/* this should be autorendered in Body, if the user has rendered the edit menu? */}
     </Comment.Root>
   );
 }
 
 Comment.Provider = CommentProvider;
 Comment.Root = CommentRoot;
-Comment.Content = CommentContent;
 Comment.Header = CommentHeader;
 Comment.NameAndTimestampWrapper = CommentNameAndTimestampWrapper;
 Comment.CreatorName = CommentCreatorName;
@@ -275,7 +299,7 @@ Comment.Body = CommentBody;
 Comment.Indent = CommentIndent;
 Comment.Actions = CommentActions;
 Comment.MoreMenu = CommentMenu;
-Comment.Editor = Editor;
+Comment.Editor = CommentEditor;
 
 // Anatomy
 
@@ -290,13 +314,11 @@ Comment.Editor = Editor;
 // export default function ExampleComment(props: { eventId: string }) {
 //   return (
 //     <Comment.Root eventId={props.eventId}>
-//       <Comment.Content>
-//         <Comment.Header>
-//           <Profile.Avatar />
-//           <Comment.Timestamp />
-//         </Comment.Header>
-//         <Comment.Body />
-//       </Comment.Content>
+//       <Comment.Header>
+//         <Profile.Avatar />
+//         <Comment.Timestamp />
+//       </Comment.Header>
+//       <Comment.Body />
 //     </Comment.Root>
 //   );
 // }

@@ -74,9 +74,7 @@ export default {
         gap: 0,
       },
     },
-    content: {
-      gap: '12px',
-    },
+    gap: '12px',
     timestamp: {
       fontSize: '12px',
       lineHeight: '18px',
