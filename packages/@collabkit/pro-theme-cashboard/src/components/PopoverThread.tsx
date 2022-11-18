@@ -12,22 +12,20 @@ import {
 } from '@collabkit/react';
 import { CashboardComment } from './Comment';
 
-function PopoverThreadPreview({ threadId }: { threadId: string }) {
+function PopoverThreadPreview() {
   return (
-    <Thread.Provider threadId={threadId}>
-      <div className="rounded-lg w-[270px] border border-solid border-cb-bg3 shadow-cb-standard hover:shadow-cb-high">
-        <Scrollable autoScroll="bottom">
-          <CommentList renderComment={(props) => <CashboardComment {...props} />} />
-        </Scrollable>
-      </div>
-    </Thread.Provider>
+    <div className="bg-white rounded-lg w-[270px] border border-solid border-cb-bg3 shadow-cb-standard hover:shadow-cb-high">
+      <Scrollable autoScroll="bottom">
+        <CommentList renderComment={(props) => <CashboardComment {...props} />} />
+      </Scrollable>
+    </div>
   );
 }
 
 export function PopoverThreadContent({ hideThread }: { hideThread: () => void }) {
   const { canSend, send, hasMentions } = useComposer();
   return (
-    <div className="rounded-lg w-[270px] border border-solid border-cb-bg3 shadow-cb-high">
+    <div className="bg-white rounded-lg w-[270px] border border-solid border-cb-bg3 shadow-cb-high">
       <Scrollable autoScroll="bottom">
         <CommentList renderComment={(props) => <CashboardComment {...props} />} />
       </Scrollable>
@@ -60,7 +58,7 @@ export function PopoverThread(props: PopoverThreadProps) {
         <Popover.Preview>
           {popoverProps.hasThread && (
             <Thread.Provider {...popoverProps}>
-              <PopoverThreadPreview threadId={popoverProps.threadId} />
+              <PopoverThreadPreview />
             </Thread.Provider>
           )}
         </Popover.Preview>
