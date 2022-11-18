@@ -20,6 +20,7 @@ const Cell = ({ value, row, column }: CellProps) => {
 
   const { threadVisible, previewVisible, showThread, hasThread } = usePopoverThread({
     objectId: cellId,
+    objectName: name,
   });
   const [menuProps, toggleMenu] = useMenuState();
   const [anchorPoint, setAnchorPoint] = useState({ x: 0, y: 0 });
