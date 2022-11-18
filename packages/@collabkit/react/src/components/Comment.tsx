@@ -16,15 +16,12 @@ import * as styles from '../styles/components/Comment.css';
 import { DotsThree } from './icons';
 import { Menu, MenuItem } from './Menu';
 import { Thread } from './Thread';
-import { ThreadCommentEditor } from './ThreadCommentEditor';
 import { useHovering } from '../hooks/useHovering';
 import { mergeRefs } from 'react-merge-refs';
 import { useComposer } from '../hooks/useComposer';
 import Composer from './composer/Composer';
 import { ButtonGroup } from './ButtonGroup';
 import { actions } from '@collabkit/client';
-// TODO(ville): This should not be a popover thread style
-import { composerForm } from '../styles/components/PopoverThread.css';
 
 // tidy up root and provider
 export function CommentProvider(props: { children: React.ReactNode; eventId: string }) {
@@ -157,7 +154,7 @@ export const CommentEditor = (props: React.ComponentProps<'div'>) => {
 
   return (
     <div {...props} className={props.className ?? styles.editor}>
-      <Composer.Root className={composerForm} autoFocus={true} body={body}>
+      <Composer.Root autoFocus={true} body={body}>
         <Composer.Editor contentEditable={<Composer.ContentEditable />} placeholder={<span />} />
         <ButtonGroup
           onCancel={(e) => {
@@ -276,8 +273,7 @@ export default function Comment(props: CommentProps) {
       <Comment.Indent>
         <Comment.Body />
       </Comment.Indent>
-      <ThreadCommentEditor />
-      {/* this should be autorendered in Body, if the user has rendered the edit menu? */}
+      <Comment.Editor />
     </Comment.Root>
   );
 }

@@ -73,14 +73,3 @@ export const commentHeader = recipe({
   },
   variants: {},
 });
-
-//export const composerRoot = composerStyles.root;
-
-export const composerForm = style({
-  borderTop: fallbackVar(vars.popoverThread.composer.form.borderTop, 'none'),
-  display: 'flex',
-  flexDirection: 'column',
-  padding: fallbackVar(vars.popoverThread.composer.form.padding, `0 ${vars.space[4]} 0`),
-  gap: fallbackVar(vars.popoverThread.composer.form.gap, vars.space[2]),
-  fontFamily: vars.fontFamily,
-});
