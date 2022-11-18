@@ -10,15 +10,13 @@ import {
 } from '@collabkit/react';
 import { CustomComment } from './CustomComment';
 
-const shadowHigh = '0px -12px 24px rgba(0, 0, 0, 0.02), 0px 12px 24px rgba(0, 0, 0, 0.06)';
-
 function PopoverThreadPreview({ threadId }: { threadId: string }) {
   return (
     <Thread.Provider threadId={threadId}>
       <div
-        className="w-[270px]"
+        className="rounded-lg w-[270px] border border-solid border-cb-bg3"
         style={{
-          boxShadow: shadowHigh,
+          boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.05)',
         }}
       >
         <Scrollable autoScroll="bottom">
@@ -39,9 +37,9 @@ export function PopoverThreadContent({
   return (
     <Thread.Provider threadId={threadId}>
       <div
-        className="w-[270px]"
+        className="rounded-lg w-[270px] border border-solid border-cb-bg3"
         style={{
-          boxShadow: shadowHigh,
+          boxShadow: '0px -12px 24px rgba(0, 0, 0, 0.02), 0px 12px 24px rgba(0, 0, 0, 0.06)',
         }}
       >
         <Scrollable autoScroll="bottom">
