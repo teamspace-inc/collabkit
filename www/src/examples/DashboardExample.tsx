@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Info } from 'phosphor-react';
+import Info from 'phosphor-react/dist/icons/Info.esm.js';
 import {
   AreaChart,
   BadgeDelta,

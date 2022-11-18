@@ -17,7 +17,9 @@ import {
 } from '../styles/Docs.css';
 import { dark, vars } from '../styles/Theme.css';
 import { Nav } from './DocNav';
-import { ArrowLeft, ArrowRight, IconContext } from 'phosphor-react';
+import ArrowLeft from 'phosphor-react/dist/icons/ArrowLeft.esm.js';
+import ArrowRight from 'phosphor-react/dist/icons/ArrowRight.esm.js';
+import { IconContext } from 'phosphor-react/dist/lib/index.esm.js';
 import { store, Header } from '../home/Header';
 import { useIsSmallScreen } from '../hooks/useIsSmallScreen';
 import { SmallHeader } from '../home/small/SmallHeader';

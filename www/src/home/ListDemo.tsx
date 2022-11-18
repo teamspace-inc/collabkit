@@ -3,7 +3,7 @@ import { ThemeProvider, Thread } from '@collabkit/react';
 import { light } from '../styles/Theme.css';
 import { AcmeLogo, Container, DemoTip, Heading, HeadingRow, UI } from './DemoUI';
 import * as styles from './ListDemo.css';
-import { default as X } from 'phosphor-react/dist/icons/X.esm.js';
+import X from 'phosphor-react/dist/icons/X.esm.js';
 
 import avatar1 from '../assets/home/list/employees/5e6802566d3b380006d3f13b_transparent.png';
 import avatar2 from '../assets/home/list/employees/5e685b006d3b380006e7ad45_transparent.png';

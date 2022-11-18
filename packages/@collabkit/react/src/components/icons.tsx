@@ -1,4 +1,5 @@
 import '../phosphor-react.d.ts';
+export { IconContext } from 'phosphor-react/dist/lib/index.esm.js';
 export { default as ArrowUp } from 'phosphor-react/dist/icons/ArrowUp.esm.js';
 export { default as ChatCentered } from 'phosphor-react/dist/icons/ChatCentered.esm.js';
 export { default as CheckCircle } from 'phosphor-react/dist/icons/CheckCircle.esm.js';

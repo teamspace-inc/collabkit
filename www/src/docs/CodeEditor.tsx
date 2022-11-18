@@ -8,7 +8,7 @@ import reactTypes from './react.types.d.ts?raw';
 import collabKitTypes from './types.d.ts?raw';
 import { useBreakpoint } from '../hooks/useWindowSize';
 import { codeEditor, copyButton } from '../styles/CodeEditor.css';
-import { Copy } from 'phosphor-react';
+import Copy from 'phosphor-react/dist/icons/Copy.esm.js';
 import { vars } from '../styles/Theme.css';
 
 function CopyButton({ codeString }: { codeString: string }) {

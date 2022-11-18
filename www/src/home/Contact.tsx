@@ -1,7 +1,8 @@
 import ycLogoSvg from '../assets/yc-logo.svg';
 // import ycLogoSvg from '../assets/yc-logo.svg';
 
-import { DiscordLogo, TwitterLogo } from 'phosphor-react';
+import DiscordLogo from 'phosphor-react/dist/icons/DiscordLogo.esm.js';
+import TwitterLogo from 'phosphor-react/dist/icons/TwitterLogo.esm.js';
 import { useIsSmallScreen } from '../hooks/useIsSmallScreen';
 
 import * as styles from '../styles/home/Contact.css';

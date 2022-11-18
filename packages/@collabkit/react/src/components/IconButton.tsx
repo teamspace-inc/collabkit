@@ -1,5 +1,5 @@
 import { fallbackVar } from '@vanilla-extract/css';
-import { IconContext } from 'phosphor-react';
+import { IconContext } from './icons';
 import React, { forwardRef } from 'react';
 import * as styles from '../styles/components/IconButton.css';
 import { vars } from '../styles/theme';

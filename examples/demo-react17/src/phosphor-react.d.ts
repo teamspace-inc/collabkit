@@ -1,3 +1,7 @@
+declare module 'phosphor-react/dist/lib/index.esm.js' {
+  import { IconContext } from 'phosphor-react';
+  export { IconContext };
+}
 declare module 'phosphor-react/dist/icons/Activity.esm.js' {
   import React from 'react';
   import { IconProps } from 'phosphor-react';
