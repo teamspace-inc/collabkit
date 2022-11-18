@@ -18,7 +18,7 @@ export function CashboardComment({
             </div>
           </>
         )}
-        <Comment.Actions>
+        <Comment.Actions className="absolute top-0 right-0 flex">
           {showResolveThreadButton && <Thread.ResolveIconButton />}
           <Comment.MoreMenu />
         </Comment.Actions>

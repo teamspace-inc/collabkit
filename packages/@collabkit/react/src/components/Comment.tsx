@@ -242,7 +242,7 @@ export const CommentActions = (props: React.ComponentProps<'div'>) => {
   if (isEditng) {
     return null;
   }
-  return <div className={styles.actions}>{props.children}</div>;
+  return <div className={props.className ?? styles.actions} {...props} />;
 };
 
 export const CommentIndent = (props: React.ComponentProps<'div'>) => {
