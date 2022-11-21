@@ -39,7 +39,7 @@ function ThreadProvider(props: ThreadProps & { children: React.ReactNode }) {
   return <ThreadContext.Provider value={value}>{props.children}</ThreadContext.Provider>;
 }
 
-export function Thread(props: ThreadProps & { className?: string; children?: React.ReactNode }) {
+export function Thread(props: ThreadProps) {
   const { threadId, info } = props;
   const { store } = useApp();
   const { userId, workspaceId } = useSnapshot(store);
@@ -55,10 +55,10 @@ export function Thread(props: ThreadProps & { className?: string; children?: Rea
     <ThreadProvider {...props}>
       <Profile.Provider profileId={userId}>
         <ThemeWrapper>
-          <div className={styles.root}>
+          <div className={styles.root} style={props.style}>
             {props.showHeader && <div className={styles.header}>Comments</div>}
             <Scrollable autoScroll="bottom">
-              <CommentList />
+              <CommentList hideResolveButton={props.hideResolveButton} />
             </Scrollable>
             {props.hideComposer ? null : <Composer />}
           </div>

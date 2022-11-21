@@ -142,7 +142,6 @@ function Home() {
         autoFocus={true}
         info={{ name: 'Demo thread' }}
         showHeader={true}
-        style={{ borderRadius: 0, height: '100%' }}
         threadId={threadId}
       />
     </div>

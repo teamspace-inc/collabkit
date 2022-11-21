@@ -13,6 +13,7 @@ const CommentListRoot = (props: React.ComponentProps<'div'>) => (
 export default function CommentList(
   props: React.ComponentProps<'div'> & {
     renderComment?: (props: CommentProps) => ReactNode;
+    hideResolveButton?: boolean;
   }
 ) {
   const { renderComment, ...rootProps } = props;
@@ -28,7 +29,8 @@ export default function CommentList(
           const commentProps = {
             commentId: event.id,
             hideProfile: index > 0,
-            showResolveThreadButton: !isResolved && groupIndex === 0 && index === 0,
+            showResolveThreadButton:
+              !props.hideResolveButton && !isResolved && groupIndex === 0 && index === 0,
           };
           const comment = renderComment ? (
             renderComment(commentProps)
