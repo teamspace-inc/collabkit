@@ -1,14 +1,11 @@
 import { fallbackVar, globalStyle, style } from '@vanilla-extract/css';
 import { vars } from '../theme';
-import * as composerStyles from './Composer.css';
 import * as commentStyles from './Comment.css';
-import { recipe } from '@vanilla-extract/recipes';
 import * as profileStyles from './Profile.css';
 import { calc } from '@vanilla-extract/css-utils';
 import { iconButtonWidth } from './IconButton.css';
 
 const width = fallbackVar(vars.popoverThread.width, '264px');
-const maxWidth = width;
 
 export const root = style({
   boxSizing: 'border-box',
@@ -44,19 +41,5 @@ export const previewRoot = style([
   {
     boxShadow: fallbackVar(vars.popoverThread.preview.boxShadow, vars.shadow.standard),
     cursor: 'pointer',
-  },
-]);
-
-export const commentList = style({
-  display: 'flex',
-  flexDirection: 'column',
-  flex: '1',
-});
-
-export const comment = style([
-  commentStyles,
-  {
-    padding: '16px',
-    gap: '12px',
   },
 ]);
