@@ -5,7 +5,6 @@ import { sendMail } from '../emails';
 import NotificationEmail from '../emails/NotificationEmail';
 import { onConnect } from './data/onConnect';
 import { setNotifiedUntil } from './data/setNotifiedUntil';
-import { isDefaultWorkspace } from './helpers/isDefaultWorkspace';
 import { fetchWorkspaceProfiles } from './data/fetchWorkspaceProfiles';
 import { fetchThreadInfo } from './data/fetchThreadInfo';
 import { getThreadProfiles } from './helpers/getThreadProfiles';
@@ -260,8 +259,7 @@ export async function generateAndSendEmailNotifications(props: {
 
     const { timeline } = await fetchTimeline({ appId, workspaceId, threadId });
 
-    const threadOnly =
-      isDefaultWorkspace(workspaceId) || app.defaultNotificationPreference === 'threadOnly';
+    const threadOnly = app.defaultNotificationPreference === 'threadOnly';
 
     const profileIds = threadOnly
       ? getThreadProfiles({ timeline })
