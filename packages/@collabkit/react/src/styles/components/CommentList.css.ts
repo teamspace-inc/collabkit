@@ -14,3 +14,11 @@ export const root = style({
     height: vars.space[4],
   },
 });
+
+export const group = style({
+  selectors: {
+    '&:empty': {
+      display: 'none',
+    },
+  },
+});

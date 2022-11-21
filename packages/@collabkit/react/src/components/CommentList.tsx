@@ -24,7 +24,7 @@ export default function CommentList(
   return (
     <CommentListRoot {...rootProps}>
       {list.map((group, groupIndex) => {
-        const groupedComments = group.map((event, index) => {
+        const groupedComments: ReactNode[] = group.map((event, index) => {
           const commentProps = {
             commentId: event.id,
             hideProfile: index > 0,
@@ -42,9 +42,11 @@ export default function CommentList(
             </React.Fragment>
           );
         });
-        // only add a fragment if the group has comments in it
-        return groupedComments ? (
-          <React.Fragment key={groupIndex}>{groupedComments}</React.Fragment>
+
+        return groupedComments.length > 0 ? (
+          <div key={groupIndex} className={styles.group}>
+            {groupedComments}
+          </div>
         ) : null;
       })}
     </CommentListRoot>
