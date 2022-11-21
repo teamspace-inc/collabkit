@@ -31,10 +31,10 @@ export function AdvancedProps(props: {
       <tbody>
         {props.props.map((row, i) => (
           <tr key={`row-${i}`}>
-            <td style={{ verticalAlign: 'top', maxWidth: 175 }}>
+            <td style={{ verticalAlign: 'top', maxWidth: 200 }}>
               <code>{row[0]}</code>
             </td>
-            <td style={{ verticalAlign: 'top', maxWidth: 225 }}>
+            <td style={{ verticalAlign: 'top', maxWidth: 200 }}>
               <code style={{ color: vars.color.textContrastMedium }}>{row[1]}</code>
             </td>
             <td style={{ verticalAlign: 'top', maxWidth: 320, fontSize: 14 }}>{row[2]}</td>

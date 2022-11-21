@@ -1,6 +1,7 @@
 import { AdvancedProps } from '../advanced/AdvancedCommon';
 import { renderCodeSnippet } from '../CodeEditor';
 import { DocLink } from '../Doc';
+import Usage from './CollabKitProviderDocUsage.tsx?raw';
 
 export function CollabKitProviderDoc() {
   return (
@@ -26,25 +27,7 @@ export function CollabKitProviderDoc() {
           into your root <code className="ReactNode">App</code> component.
         </p>
 
-        {renderCodeSnippet(`import { CollabKitProvider } from '@collabkit/react';
-
-export const App() {
-  return <CollabKitProvider 
-    appId={APP_ID} 
-    apiKey={API_KEY} 
-    theme={'light'}
-    workspace={{ 
-      id: 'acme', 
-      name: 'ACME Corporation' 
-    }} 
-    user={{ 
-      id: 'jane', 
-      name: 'Jane Doe', 
-      email: 'jane@acme.com' 
-  }}>
-    {'your app code here'}
-  </CollabKitProvider>
-}`)}
+        {renderCodeSnippet(Usage)}
         <p>
           Once you've got this working you'll be able to use CollabKit components like{' '}
           <DocLink to="/docs/components/thread">Thread</DocLink> or{' '}
@@ -72,6 +55,14 @@ export const App() {
               'Workspace',
               <>
                 User's <DocLink to="/docs/workspaces">Workspace</DocLink>
+              </>,
+            ],
+            [
+              'mentionableUsers',
+              `'Mention[] | 'allWorkspace'`,
+              <>
+                Array of users that can be mentioned in comments or <code>'allWorkspace'</code>
+                (each user in the same workspace)
               </>,
             ],
           ]}
