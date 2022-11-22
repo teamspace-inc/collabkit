@@ -43,5 +43,6 @@ async function get(id: string) {
   if (app == null) {
     throw new Error('not found');
   }
+  app.keys = { '*********************': true };
   console.log(JSON.stringify(app, null, 2));
 }
