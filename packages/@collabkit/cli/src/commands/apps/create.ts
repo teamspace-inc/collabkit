@@ -108,7 +108,9 @@ async function createFromSignups(options: Options) {
       continue;
     }
     await createApp(name, options.dryRun);
-    await db.ref('/website/signups').child(signup.id).child('status').set(null);
+    if (!options.dryRun) {
+      await db.ref('/website/signups').child(signup.id).child('status').set('created');
+    }
   }
 }
 
