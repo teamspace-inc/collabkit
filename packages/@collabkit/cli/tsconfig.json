@@ -1,0 +1,4 @@
+{
+  "extends": "@tsconfig/node18-strictest-esm/tsconfig.json",
+  "include": ["bin", "src"]
+}

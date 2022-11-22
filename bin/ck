@@ -1,0 +1,3 @@
+#/bin/bash
+
+npx tsx "$(dirname "$0")/../packages/@collabkit/cli/bin/cli.ts" "$@"
