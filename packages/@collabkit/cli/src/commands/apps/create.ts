@@ -34,7 +34,7 @@ const APP_DEFAULTS = {
 const APP_ID_LENGTH = 21;
 const API_SECRET_LENGTH = 32;
 
-async function createApp(name: string, dryRun: boolean) {
+async function createApp(name: string, dryRun: boolean): Promise<string> {
   const id = nanoid(APP_ID_LENGTH);
   const db = admin.database();
   const apiSecret = nanoid(API_SECRET_LENGTH);
