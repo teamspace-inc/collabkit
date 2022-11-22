@@ -89,13 +89,13 @@ async function createFromSignups(options: Options) {
     console.log('Not created');
     process.exit(1);
   }
-  for (let i = 0; i < newSignups.length; i++) {
-    const signup = newSignups[i];
+  let i = 0;
+  for (const signup of newSignups) {
     const { name } = await prompts(
       {
         type: 'text',
         name: 'name',
-        message: `[${i + 1}/${newSignups.length}] Name for ${
+        message: `[${++i}/${newSignups.length}] Name for ${
           signup.email
         }'s app (leave empty to skip)`,
       },
