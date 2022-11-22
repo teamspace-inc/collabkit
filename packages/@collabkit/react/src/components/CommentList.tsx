@@ -16,7 +16,7 @@ export default function CommentList(
     hideResolveButton?: boolean;
   }
 ) {
-  const { renderComment, ...rootProps } = props;
+  const { renderComment, hideResolveButton, ...rootProps } = props;
   const timeline = useTimeline();
   const isResolved = computeIsResolved(timeline);
   const { list } = groupedTimeline(timeline ?? {});
@@ -30,7 +30,7 @@ export default function CommentList(
             commentId: event.id,
             hideProfile: index > 0,
             showResolveThreadButton:
-              !props.hideResolveButton && !isResolved && groupIndex === 0 && index === 0,
+              !hideResolveButton && !isResolved && groupIndex === 0 && index === 0,
           };
           const comment = renderComment ? (
             renderComment(commentProps)
