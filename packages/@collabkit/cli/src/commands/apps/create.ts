@@ -32,17 +32,17 @@ const APP_DEFAULTS = {
   mode: 'UNSECURED',
 };
 const APP_ID_LENGTH = 21;
-const API_SECRET_LENGTH = 32;
+const API_KEY_LENGTH = 32;
 
 async function createApp(name: string, dryRun: boolean): Promise<string> {
   const id = nanoid(APP_ID_LENGTH);
   const db = admin.database();
-  const apiSecret = nanoid(API_SECRET_LENGTH);
+  const apiKey = nanoid(API_KEY_LENGTH);
   const app = {
     ...APP_DEFAULTS,
     name,
     keys: {
-      [apiSecret]: true,
+      [apiKey]: true,
     },
   };
   const ref = db.ref('/apps').child(id);
@@ -56,8 +56,8 @@ async function createApp(name: string, dryRun: boolean): Promise<string> {
     creating.succeed(`Created ${kleur.bold(name)} [${id}]`);
   } else {
     console.log(kleur.yellow(`[dry-run]: Skipping set of ${ref}`));
-    console.log(app);
   }
+  console.log(`appId="${id}"\napiKey="${apiKey}"`);
   return id;
 }
 
