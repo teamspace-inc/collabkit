@@ -23,7 +23,7 @@
   "scripts": {
     "dev": "ladle serve",
     "build": "yarn clean && tsc && vite build && rollup --config rollup.config.js",
-    "clean": "rimraf dist types *.tsbuildinfo src/**/*.js",
+    "clean": "rimraf dist types *.tsbuildinfo",
     "preview": "vite preview",
     "prepublishOnly": "yarn build",
     "test": "vitest",

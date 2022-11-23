@@ -5,10 +5,12 @@ import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin';
 
 export default defineConfig(() => {
   return {
-    plugins: [react(), vanillaExtractPlugin()],
+    plugins: [react(), vanillaExtractPlugin() as any],
     resolve: {
       alias: {
         '@collabkit/react': resolve(__dirname, '../packages/@collabkit/react/src/index.ts'),
+        'rehype-react': resolve(__dirname, 'src/vendor/rehype-react.bundle.js'),
+        'remark-rehype': resolve(__dirname, 'src/vendor/remark-rehype.bundle.js'),
       },
     },
     optimizeDeps: {

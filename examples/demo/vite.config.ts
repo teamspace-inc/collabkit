@@ -18,6 +18,14 @@ export default defineConfig({
         __dirname,
         '../../packages/@collabkit/custom-themes/src/index.ts'
       ),
+      'rehype-react': resolve(
+        __dirname,
+        '../../packages/@collabkit/react/src/vendor/rehype-react.bundle.js'
+      ),
+      'remark-rehype': resolve(
+        __dirname,
+        '../../packages/@collabkit/react/src/vendor/remark-rehype.bundle.js'
+      ),
     },
   },
   build: {

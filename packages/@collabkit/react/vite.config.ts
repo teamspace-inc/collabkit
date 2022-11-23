@@ -35,7 +35,12 @@ export default defineConfig(({ mode }) => {
         },
       },
     },
-
+    resolve: {
+      alias: {
+        'rehype-react': resolve(__dirname, 'src/vendor/rehype-react.bundle.js'),
+        'remark-rehype': resolve(__dirname, 'src/vendor/remark-rehype.bundle.js'),
+      },
+    },
     server: {
       port: 3003,
     },
