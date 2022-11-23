@@ -39,6 +39,9 @@ export default defineConfig(({ mode }) => {
       alias: {
         'rehype-react': resolve(__dirname, 'src/vendor/rehype-react.bundle.js'),
         'remark-rehype': resolve(__dirname, 'src/vendor/remark-rehype.bundle.js'),
+
+        // @lexical/code is rather large (because of prismjs), and unused, so we stub it out
+        '@lexical/code': resolve(__dirname, 'src/vendor/lexical-markdown.stub.ts'),
       },
     },
     server: {
