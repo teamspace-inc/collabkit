@@ -50,7 +50,6 @@ function onBlur(e: FocusEvent) {
 }
 
 function onChange(editorState: EditorState, editor: LexicalEditor) {
-  // @ts-expect-error this fails until lexical-vue is updated to a version that uses lexical@4
   //events.onComposerChange(props.target, editorState, editor);
 }
 
