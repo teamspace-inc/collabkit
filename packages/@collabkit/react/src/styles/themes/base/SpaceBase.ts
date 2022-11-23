@@ -1,5 +1,5 @@
 import { calc } from '@vanilla-extract/css-utils';
-import { vars } from '../../theme';
+import { vars } from '../../theme/index.css';
 
 export const SpaceBase = {
   space: {

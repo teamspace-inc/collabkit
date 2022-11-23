@@ -1,9 +1,11 @@
 import { fallbackVar } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
-import { vars } from '../theme';
+import { vars } from '../theme/index.css';
 
 export const iconButtonWidth = fallbackVar(vars.iconButton.width, '24px');
 export const iconButtonHeight = fallbackVar(vars.iconButton.height, '20px');
+
+export const iconColor = fallbackVar(vars.iconButton.color, vars.color.icon);
 
 export const button = recipe({
   base: {

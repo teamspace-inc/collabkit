@@ -1,5 +1,5 @@
 import { fallbackVar, globalStyle, style } from '@vanilla-extract/css';
-import { vars } from '../theme';
+import { vars } from '../theme/index.css';
 import * as commentStyles from './Comment.css';
 import * as profileStyles from './Profile.css';
 import { calc } from '@vanilla-extract/css-utils';

@@ -1,5 +1,5 @@
 import { style, fallbackVar } from '@vanilla-extract/css';
-import { vars } from '../theme';
+import { vars } from '../theme/index.css';
 
 export const root = style({
   width: '100%',

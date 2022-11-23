@@ -1,4 +1,4 @@
-import { vars } from '../../theme';
+import { vars } from '../../theme/index.css';
 
 export const MenuBase = {
   menu: {

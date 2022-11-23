@@ -1,6 +1,6 @@
 import { fallbackVar, style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
-import { vars } from '../theme';
+import { vars } from '../theme/index.css';
 
 export const typeahead = style({
   position: 'absolute',

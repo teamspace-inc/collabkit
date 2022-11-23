@@ -1,6 +1,6 @@
 import { fallbackVar, globalStyle, style } from '@vanilla-extract/css';
 import { calc } from '@vanilla-extract/css-utils';
-import { vars } from '../theme';
+import { vars } from '../theme/index.css';
 import { collabkit } from './Root.css';
 
 export const paddingLeft = fallbackVar(vars.comment.paddingLeft, vars.space[4]);

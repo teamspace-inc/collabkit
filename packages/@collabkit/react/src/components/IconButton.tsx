@@ -1,8 +1,7 @@
-import { fallbackVar } from '@vanilla-extract/css';
 import { IconContext } from './icons';
 import React, { forwardRef } from 'react';
 import * as styles from '../styles/components/IconButton.css';
-import { vars } from '../styles/theme';
+import { vars } from '../styles/theme/index.css';
 
 type Props = {
   children: React.ReactNode;
@@ -13,7 +12,7 @@ type Props = {
 } & React.ComponentProps<'div'>;
 
 const iconContextValue = {
-  color: fallbackVar(vars.iconButton.color, vars.color.icon),
+  color: styles.iconColor,
   weight: 'bold',
   size: 16,
 } as const;

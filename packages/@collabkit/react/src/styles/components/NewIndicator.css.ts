@@ -1,6 +1,6 @@
 import { fallbackVar, style } from '@vanilla-extract/css';
 import { calc } from '@vanilla-extract/css-utils';
-import { vars } from '../theme';
+import { vars } from '../theme/index.css';
 import { paddingLeft, paddingRight } from './Comment.css';
 
 const lineHeight = fallbackVar(vars.newIndicator.lineHeight, '16px');

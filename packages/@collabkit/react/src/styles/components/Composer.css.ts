@@ -1,7 +1,7 @@
 import { fallbackVar, globalStyle, style } from '@vanilla-extract/css';
 import { calc } from '@vanilla-extract/css-utils';
 import { recipe } from '@vanilla-extract/recipes';
-import { vars } from '../theme';
+import { vars } from '../theme/index.css';
 import type { CSSTransitionClassNames } from 'react-transition-group/CSSTransition';
 
 const ltr = style({

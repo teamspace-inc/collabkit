@@ -1,5 +1,5 @@
 import { fallbackVar, style } from '@vanilla-extract/css';
-import { vars } from '../theme';
+import { vars } from '../theme/index.css';
 
 export const avatarSize = fallbackVar(vars.avatar.size, '24px');
 

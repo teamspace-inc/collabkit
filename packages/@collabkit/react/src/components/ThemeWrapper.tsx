@@ -1,7 +1,7 @@
 import React, { ComponentProps, useContext } from 'react';
 import { assignInlineVars } from '@vanilla-extract/dynamic';
 import { Theme, darkThemeClassName } from '../styles/themes.css';
-import { vars } from '../styles/theme';
+import { vars } from '../styles/theme/index.css';
 import { ThemeContext } from './ThemeContext';
 import { collabkit } from '../styles/components/Root.css';
 

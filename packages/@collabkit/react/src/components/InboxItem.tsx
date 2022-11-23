@@ -10,8 +10,7 @@ import { ReplyCount } from './ReplyCount';
 import { actions } from '../../../client/src/actions';
 import { ThreadTarget } from '@collabkit/core';
 import * as styles from '../styles/components/InboxItem.css';
-import { vars } from '../styles/theme';
-import { fallbackVar } from '@vanilla-extract/css';
+import { vars } from '../styles/theme/index.css';
 import { Thread } from '..';
 
 export function InboxItem(props: { formatTimestamp?: (timestamp: number) => string }) {
@@ -68,9 +67,7 @@ export function InboxItem(props: { formatTimestamp?: (timestamp: number) => stri
       >
         <div className={styles.header}>
           <Thread.UnreadDot />
-          <Thread.Facepile
-            size={fallbackVar(vars.inbox.item.facepile.avatar.size, vars.avatar.size)}
-          />
+          <Thread.Facepile size={styles.facepileSize} />
           <div style={{ flex: 1 }}></div>
           {firstComment.createdById === userId ? <Thread.ResolveIconButton /> : null}
         </div>

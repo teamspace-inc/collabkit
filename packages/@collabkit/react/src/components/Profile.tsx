@@ -4,7 +4,7 @@ import React from 'react';
 import { useSnapshot } from 'valtio';
 import { useApp } from '../hooks/useApp';
 import * as styles from '../styles/components/Profile.css';
-import { vars } from '../styles/theme';
+import { vars } from '../styles/theme/index.css';
 
 type ProfileContextValue = {
   profileId: string;

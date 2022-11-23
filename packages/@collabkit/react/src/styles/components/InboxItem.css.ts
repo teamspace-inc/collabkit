@@ -1,9 +1,11 @@
 import { fallbackVar, globalStyle, style } from '@vanilla-extract/css';
 import { name as profileName } from './Profile.css';
 import { timestamp as commentTimestamp, body as commentBody } from './Comment.css';
-import { vars } from '../theme';
+import { vars } from '../theme/index.css';
 import { calc } from '@vanilla-extract/css-utils';
 import { recipe } from '@vanilla-extract/recipes';
+
+export const facepileSize = fallbackVar(vars.inbox.item.facepile.avatar.size, vars.avatar.size);
 
 export const replyCount = style({
   color: fallbackVar(vars.inbox.item.replyCount.color, vars.color.textSecondary),

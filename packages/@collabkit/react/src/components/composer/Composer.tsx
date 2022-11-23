@@ -14,7 +14,6 @@ import { MentionsPlugin } from './MentionsPlugin';
 import { PasteTextPlugin } from './PasteTextPlugin';
 import { useApp } from '../../hooks/useApp';
 import { useOnMarkdownLinkClick } from '../../hooks/useOnMarkdownLinkClick';
-import { composerStyles } from '@collabkit/theme';
 import { useThreadContext } from '../../hooks/useThreadContext';
 import { TargetContext } from '../Target';
 import { useTarget } from '../../hooks/useTarget';
@@ -35,7 +34,7 @@ function onError(error: any) {
 
 const initialConfigDefaults = {
   namespace: 'Composer',
-  theme: composerStyles.lexicalTheme,
+  theme: styles.lexicalTheme,
   nodes: [MentionNode, TimestampNode],
   onError,
 };
