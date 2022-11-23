@@ -9,8 +9,14 @@ export default defineConfig(() => {
     resolve: {
       alias: {
         '@collabkit/react': resolve(__dirname, '../packages/@collabkit/react/src/index.ts'),
-        'rehype-react': resolve(__dirname, 'src/vendor/rehype-react.bundle.js'),
-        'remark-rehype': resolve(__dirname, 'src/vendor/remark-rehype.bundle.js'),
+        'rehype-react': resolve(
+          __dirname,
+          '../packages/@collabkit/react/src/vendor/rehype-react.bundle.js'
+        ),
+        'remark-rehype': resolve(
+          __dirname,
+          '../packages/@collabkit/react/src/vendor/remark-rehype.bundle.js'
+        ),
       },
     },
     optimizeDeps: {
