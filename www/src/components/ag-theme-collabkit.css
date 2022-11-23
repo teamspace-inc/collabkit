@@ -141,7 +141,7 @@
   --ag-input-disabled-border-color: rgba(104, 104, 110, 0.3);
   --ag-input-disabled-background-color: rgba(104, 104, 110, 0.07);
 }
-*/ .ag-theme-collabkit .ag-filter-toolpanel-header,
+.ag-theme-collabkit .ag-filter-toolpanel-header,
 .ag-theme-collabkit .ag-filter-toolpanel-search,
 .ag-theme-collabkit .ag-status-bar,
 .ag-theme-collabkit .ag-header-row,
