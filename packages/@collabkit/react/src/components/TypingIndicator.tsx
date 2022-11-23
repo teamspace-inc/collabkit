@@ -3,8 +3,6 @@ import { useSnapshot } from 'valtio';
 import { useApp } from '../hooks/useApp';
 import type { Profile } from '@collabkit/core';
 import { useThreadContext } from '../hooks/useThreadContext';
-// import { transitionClassNames } from '../styles/components/TypingIndicator.css';
-// import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { typing } from '../styles/components/Composer.css';
 
 function getNames(props: {
