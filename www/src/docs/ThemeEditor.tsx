@@ -2,8 +2,7 @@ import { CodeEditor } from './CodeEditor';
 import { useEffect, useState } from 'react';
 import { docs, themeDemoContainer } from '../styles/Docs.css';
 import ExampleThemeRaw from './ExampleTheme.json?raw';
-import { ThemeWrapper, ThemeProvider } from '@collabkit/react';
-import { Theme } from 'packages/@collabkit/react/src/styles/theme';
+import { ThemeWrapper, ThemeProvider, CustomTheme } from '@collabkit/react';
 
 import { ThreadDemo } from './demos/ThreadDemo';
 import { InboxDemo } from './demos/InboxDemo';
@@ -34,7 +33,7 @@ const components = [
 
 export function ThemeEditor() {
   const [code, setCode] = useState(() => ExampleThemeRaw);
-  const [theme, setTheme] = useState<Theme | null>({} as Theme);
+  const [theme, setTheme] = useState<CustomTheme | null>({} as CustomTheme);
   const [component, setComponent] = useState<keyof typeof components>(
     'Thread' as keyof typeof components
   );
