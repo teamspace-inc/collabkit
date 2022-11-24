@@ -5,12 +5,13 @@ import { useHeaderStyle } from '../hooks/useHeaderStyle';
 import { useIsSmallScreen } from '../hooks/useIsSmallScreen';
 import { light, vars } from '../styles/Theme.css';
 import { button, website } from '../styles/Website.css';
-import { push, getDatabase, ref } from 'firebase/database';
+import { push, getDatabase, ref, serverTimestamp } from 'firebase/database';
 import { getApp } from 'firebase/app';
 
 async function signup(params: { email: string }) {
   await push(ref(getDatabase(getApp('CollabKit')), '/website/signups'), {
     email: params.email,
+    createdAt: serverTimestamp(),
   });
 }
 

@@ -8,6 +8,9 @@
           ".write": "!data.exists()",
           "email": {
             ".validate": "newData.isString()"
+          },
+          "createdAt": {
+            ".validate": "newData.isNumber()"
           }
         }
       }
