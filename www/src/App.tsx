@@ -268,9 +268,9 @@ export default function App() {
         <Route path="/ui" component={UIPage} />
         <Route path="/" component={HomePage} />
         <Route path="/getstarted" component={GetStartedPage} />
-        <Route path="/dashboard" component={DashboardPage} />
+        {/* <Route path="/dashboard" component={DashboardPage} />
         <Route path="/signedin" component={DashboardPage} />
-        <Route path="/signup" component={DashboardPage} />
+        <Route path="/signup" component={DashboardPage} /> */}
         <Route path="/theme-editor" component={ThemeEditorPage} />
         <Route path="/examples/dashboard" component={DashboardExample} />
         <Route path="/examples/table" component={DataGridPage} />
