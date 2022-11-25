@@ -103,7 +103,6 @@
     },
     "apps": {
       "$appId": {
-        ".write": "!root.child('apps').child($appId).exists()",
         ".read": "root.child('apps').child($appId).child('admins').child(auth.uid).exists()",
         // display name for dashboard
         "label": {
