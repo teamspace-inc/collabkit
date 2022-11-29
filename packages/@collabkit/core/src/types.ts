@@ -156,7 +156,6 @@ export type Target =
   | Commentable
   | MenuTarget
   | CommentMenuTarget
-  | PinTarget
   | CommentEditButtonTarget
   | CommentDeleteButtonTarget
   | ShowSidebarButtonTarget
@@ -174,22 +173,9 @@ export type CommentMenuTarget = MenuTarget & CommentTarget;
 export type Commentable = {
   type: 'commentable';
   workspaceId: string;
-  pin: BasicPinProps;
 };
 
 export type CommentType = 'default' | 'inline-start' | 'inline' | 'inline-end';
-
-export type BasicPinProps = {
-  selector: string;
-  url: string;
-  offset: { x: number; y: number };
-};
-
-export type PinTarget = {
-  type: 'pin';
-  pinId: string;
-  workspaceId: string;
-};
 
 export type CommentableContainer = { type: 'commentableContainer'; workspaceId: string };
 
@@ -211,12 +197,6 @@ export type ShowSidebarButtonTarget = { type: 'showSidebarButton'; workspaceId: 
 export type HideSidebarButtonTarget = {
   type: 'hideSidebarButton';
   workspaceId: string;
-};
-
-export type ClickedOutsidePinTarget = {
-  type: 'clickedOutsidePin';
-  workspaceId: string;
-  pinId: string;
 };
 
 export type CommentReactionTarget = {
@@ -327,15 +307,6 @@ export interface SeenBy {
   [userId: string]: { seenAt: number; seenUntilId: string };
 }
 
-export interface Pin {
-  selector: string;
-  offset: { x: number; y: number };
-  url: string;
-  createdById: string;
-  createdAt: number;
-  state: 'new' | 'pending' | 'open' | 'resolved' | 'deleted';
-}
-
 type OpenThreadIds = string[];
 
 export interface Workspace {
@@ -345,7 +316,6 @@ export interface Workspace {
   pendingThreadInfo: { [threadId: string]: ThreadInfo };
   pendingThreads: { [objectId: string]: string };
   objects: { [objectId: string]: OpenThreadIds };
-  pins: { [threadId: string]: Pin };
   inbox: { [threadId: string]: WithID<Event> };
   timeline: { [threadId: string]: Timeline };
   composers: { [threadId: string]: Composer };

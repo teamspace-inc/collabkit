@@ -15,39 +15,6 @@
         }
       }
     },
-
-    "pins": {
-      "$appId": {
-        "$workspaceId": {
-          ".read": "auth.token.appId === $appId",
-          "$threadId": {
-            ".write": "(root.child('apps').child(auth.token.appId).child('mode').val() === 'UNSECURED' || (root.child('apps').child(auth.token.appId).child('mode').val() === 'SECURED' && !root.child('pins').child($appId).child($workspaceId).child($threadId).exists()))",
-            "state": {
-              ".validate": "newData.isString() && (newData.val() === 'open' || newData.val() === 'resolved' || newData.val() === 'deleted')"
-            },
-            "url": { ".validate": "newData.isString()" },
-            "selector": {
-              ".validate": "newData.isString()"
-            },
-            "createdById": {
-              ".validate": "(auth.token.appId === $appId) && (root.child('apps').child(auth.token.appId).child('mode').val() === 'UNSECURED' || (root.child('apps').child(auth.token.appId).child('mode').val() === 'SECURED' && newData.val() === auth.token.userId))"
-            },
-            "createdAt": {
-              ".validate": "newData.isNumber()"
-            },
-            "offset": {
-              ".validate": "newData.hasChildren(['x', 'y'])",
-              "x": {
-                ".validate": "newData.isNumber()"
-              },
-              "y": {
-                ".validate": "newData.isNumber()"
-              }
-            }
-          }
-        }
-      }
-    },
     "workspaces": {
       "$appId": {
         "$workspaceId": {

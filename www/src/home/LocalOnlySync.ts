@@ -73,10 +73,6 @@ export class LocalOnlySync implements SyncAdapter {
     // noop
   }
 
-  subscribePins(): void {
-    // noop
-  }
-
   subscribeThread(): void {
     // noop
   }

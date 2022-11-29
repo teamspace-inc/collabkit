@@ -23,39 +23,12 @@ const workspace = {
 };
 
 import { createDemoStore, mentionableUsers } from './home/demoStore';
-import { DashboardPage } from './pages/DashboardPage';
 import { DashboardExample } from './examples/DashboardExample';
 import { CarouselPage } from './pages/CarouselPage';
 import { useLayoutEffect } from 'react';
 import { GetStartedPage } from './pages/GetStartedPage';
 
 const defaultWorkspace: Partial<Workspace> = {
-  // pins: {
-  //   B0ENawPadDHvTyyILKWz2: {
-  //     createdAt: 1658843343088,
-  //     createdById: 'alicia-1',
-  //     offset: { x: 0.5791564580251479, y: 0.7686934621710526 },
-  //     selector: '#demo-0-ui',
-  //     state: 'open',
-  //     url: '/',
-  //   },
-  //   IdNMQ8uP07YfJtxyNqH28: {
-  //     createdAt: 1658843169471,
-  //     createdById: 'dom-1',
-  //     offset: { x: 0.5128657775517751, y: 0.29183799342105265 },
-  //     selector: '#demo-0-ui',
-  //     state: 'open',
-  //     url: '/',
-  //   },
-  //   thread3: {
-  //     createdAt: 1658842883088,
-  //     createdById: 'ville-1',
-  //     offset: { x: 0.2997497919748521, y: 0.5798673930921052 },
-  //     selector: '#demo-0-ui',
-  //     state: 'open',
-  //     url: '/',
-  //   },
-  // },
   inbox: {},
   objects: {
     row003_budget: ['thread5'],

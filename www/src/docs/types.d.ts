@@ -971,7 +971,6 @@ interface SyncAdapter {
     workspaceId: string;
     threadId: string;
     preview: string;
-    pin?: Pin;
     event: Event;
   }): Promise<{ id: string }>;
 
@@ -983,15 +982,6 @@ interface SyncAdapter {
       subs: Subscriptions;
     },
     onSeenChange: SeenEventHandler
-  ): void;
-
-  subscribePins(
-    params: {
-      appId: string;
-      workspaceId: string;
-      subs: Subscriptions;
-    },
-    onPinChange: PinEventHandler
   ): void;
 
   subscribeOpenThreads(
@@ -1026,7 +1016,6 @@ interface SyncAdapter {
 
 type ServerProfile = Partial<UserProps> & { color?: Color };
 type SeenEventHandler = (event: { threadId: string; seenUntilId: string }) => void;
-type PinEventHandler = (event: { pinId: string; pin: Pin }) => void;
 type OpenThreadEventHandler = (event: {
   threadId: string;
   info: { meta: ThreadMeta } | null;
@@ -1175,19 +1164,6 @@ type Target =
 type Commentable = {
   type: 'commentable';
   workspaceId: string;
-  pin: BasicPinProps;
-};
-
-type BasicPinProps = {
-  selector: string;
-  url: string;
-  offset: { x: number; y: number };
-};
-
-type PinTarget = {
-  type: 'pin';
-  pinId: string;
-  workspaceId: string;
 };
 
 type CommentableContainer = { type: 'commentableContainer'; workspaceId: string };
@@ -1326,7 +1302,6 @@ interface Workspace {
   profiles: { [userId: string]: boolean };
   name: string;
   openThreads: { [threadId: string]: { meta: ThreadMeta } };
-  pins: { [threadId: string]: Pin };
   inbox: { [threadId: string]: WithHasProfile<WithID<WithName<Event>>> };
   timeline: { [threadId: string]: Timeline };
   composers: { [threadId: string]: Composer };

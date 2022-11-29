@@ -22,7 +22,6 @@ import {
 import type {
   Event,
   OptionalWorkspaceProps,
-  Pin,
   Subscriptions,
   ThreadInfo,
   ThreadMeta,
@@ -166,7 +165,6 @@ export class FirebaseSync implements Sync.SyncAdapter {
     threadId: string;
   }) {
     await update(ref(getDatabase(getApp('CollabKit'))), {
-      [`/pins/${appId}/${workspaceId}/${threadId}/state`]: 'resolved',
       [`/views/openThreads/${appId}/${workspaceId}/${threadId}`]: null,
     });
   }
@@ -225,7 +223,6 @@ export class FirebaseSync implements Sync.SyncAdapter {
     workspaceId,
     threadId,
     preview,
-    pin,
     event,
   }: {
     appId: string;
@@ -233,7 +230,6 @@ export class FirebaseSync implements Sync.SyncAdapter {
     workspaceId: string;
     threadId: string;
     preview: string;
-    pin?: Pin;
     event: Event;
   }): Promise<{ id: string }> {
     // generate an id for the message
@@ -255,15 +251,6 @@ export class FirebaseSync implements Sync.SyncAdapter {
         mentions: event.mentions ?? null,
       },
     };
-
-    if (pin) {
-      data[`/pins/${appId}/${workspaceId}/${threadId}`] = {
-        ...pin,
-        state: 'open',
-        createdAt: serverTimestamp(),
-        createdById: userId,
-      };
-    }
 
     // write the data to firebase
     try {
@@ -311,36 +298,6 @@ export class FirebaseSync implements Sync.SyncAdapter {
     subs[`${appId}-${workspaceId}-seen-added`] ||= onChildAdded(seenQuery, childCallback, onError);
 
     subs[`${appId}-${workspaceId}-seen-moved`] ||= onChildMoved(seenQuery, childCallback, onError);
-  }
-
-  subscribePins(
-    {
-      appId,
-      workspaceId,
-      subs,
-    }: {
-      appId: string;
-      workspaceId: string;
-      subs: Subscriptions;
-    },
-    onPinChange: Sync.PinEventHandler
-  ): void {
-    const onError = (e: Error) => {
-      console.error({ e });
-    };
-
-    const onChange = (child: DataSnapshot) => {
-      const pin = child.val() as Pin;
-      const pinId = child.key;
-      if (pinId) {
-        onPinChange({ pinId, pin });
-      }
-    };
-
-    const pinsRef = ref(getDatabase(getApp('CollabKit')), `/pins/${appId}/${workspaceId}`);
-
-    subs[`${pinsRef.toString()}#added`] ||= onChildAdded(pinsRef, onChange, onError);
-    subs[`${pinsRef.toString()}#changed`] ||= onChildChanged(pinsRef, onChange, onError);
   }
 
   subscribeOpenThreads(

@@ -38,9 +38,6 @@ export async function resolveThread(store: Store, workspaceId: string, threadId:
   };
   try {
     await store.sync.markResolved({ appId, workspaceId, threadId });
-    if (store.workspaces[workspaceId].pins[threadId]) {
-      store.workspaces[workspaceId].pins[threadId].state = 'resolved';
-    }
   } catch (e) {
     console.error('failed to set thread state', e);
   }

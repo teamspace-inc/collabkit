@@ -173,7 +173,6 @@ export function createEvents(store: Store) {
         }
       } else if (store.viewingId) {
         if (e.key === 'Escape') {
-          actions.removePendingPins(store);
           actions.closeAll(store);
           e.stopPropagation();
           e.preventDefault();
@@ -213,7 +212,7 @@ export function createEvents(store: Store) {
               break;
             }
             case 'commentable': {
-              actions.startThread(store, { threadId: nanoid(), ...props.target });
+              break;
             }
           }
         }
@@ -254,12 +253,7 @@ export function createEvents(store: Store) {
           break;
         }
         case 'selecting': {
-          if (props.target.type === 'commentable') {
-            actions.startThread(store, {
-              threadId: nanoid(),
-              ...props.target,
-            });
-          } else if (props.target.type === 'floatingCommentButton') {
+          if (props.target.type === 'floatingCommentButton') {
             actions.stopSelecting(store);
           }
           break;

@@ -17,16 +17,13 @@ import { subscribeInbox } from './subscribeInbox';
 import { subscribeSeen } from './subscribeSeen';
 import { toggleCommentReaction } from './toggleCommentReaction';
 import { toggleEmojiReactionPicker } from './toggleEmojiReactionPicker';
-import { placePinAndStartComposingThread } from './placePinAndStartComposingThread';
 import { focus } from './focus';
 import { blur } from './blur';
 import { subscribeThread } from './subscribeThread';
 import { reopenThread } from './reopenThread';
 import { subscribeOpenThreads } from './subscribeOpenThreads';
-import { subscribePins } from './subscribePins';
 import { subscribeWorkspace } from './subscribeWorkspace';
 import { subscribeProfiles } from './subscribeProfiles';
-import { removePendingPins } from './removePendingPins';
 import { hover } from './hover';
 import { unhover } from './unhover';
 import { viewThread } from './viewThread';
@@ -130,8 +127,6 @@ export const actions = {
   closeMenu,
   isTyping: debounce(isTyping, 1000, { leading: true, maxWait: 1000 }),
   monitorConnection,
-  placePinAndStartComposingThread,
-  removePendingPins,
   reopenThread,
   resolveThread,
   saveMentionableUsers,
@@ -141,13 +136,11 @@ export const actions = {
   sendMessage,
   startEditing,
   startSelecting,
-  startThread: placePinAndStartComposingThread,
   stopSelecting,
   stopEditing,
   stopTyping,
   subscribeInbox,
   subscribeOpenThreads,
-  subscribePins,
   subscribeProfiles,
   subscribeSeen,
   subscribeThread,

@@ -2,7 +2,6 @@ import type { Color } from '@collabkit/colors';
 import type {
   Event,
   OptionalWorkspaceProps,
-  Pin,
   Subscriptions,
   UserProps,
   ThreadInfo,
@@ -83,7 +82,6 @@ export interface SyncAdapter {
     workspaceId: string;
     threadId: string;
     preview: string;
-    pin?: Pin;
     event: Event;
   }): Promise<{ id: string }>;
 
@@ -95,15 +93,6 @@ export interface SyncAdapter {
       subs: Subscriptions;
     },
     onSeenChange: SeenEventHandler
-  ): void;
-
-  subscribePins(
-    params: {
-      appId: string;
-      workspaceId: string;
-      subs: Subscriptions;
-    },
-    onPinChange: PinEventHandler
   ): void;
 
   subscribeOpenThreads(
@@ -145,7 +134,6 @@ export interface SyncAdapter {
 
 export type ServerProfile = Partial<UserProps> & { color?: Color };
 export type SeenEventHandler = (event: { threadId: string; seenUntilId: string }) => void;
-export type PinEventHandler = (event: { pinId: string; pin: Pin }) => void;
 export type OpenThreadEventHandler = (event: {
   threadId: string;
   info: { meta: ThreadMeta } | null;

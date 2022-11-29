@@ -32,9 +32,6 @@ export async function sendMessage(store: Store, props: { workspaceId: string; th
     $getRoot().getChildren()[0].replace($createTextNode(''));
   });
 
-  // a pending pin is marked as 'open' on first message send
-  const hasPendingPin = workspace.pins[threadId]?.state === 'pending';
-
   const isFirstMessage = Object.keys(workspace.timeline[threadId] ?? {}).length === 0;
 
   if (isFirstMessage && store.workspaces[workspaceId].pendingThreadInfo[threadId]) {
@@ -55,11 +52,6 @@ export async function sendMessage(store: Store, props: { workspaceId: string; th
       body,
       preview: body,
       type: 'message',
-      ...(hasPendingPin
-        ? {
-            pin: { ...workspace.pins[threadId] },
-          }
-        : {}),
       mentions,
     });
 
@@ -67,16 +59,9 @@ export async function sendMessage(store: Store, props: { workspaceId: string; th
       return;
     }
 
-    // is first message in thread
-
-    if (hasPendingPin) {
-      workspace.pins[threadId].state = 'open';
-    }
-
     store.callbacks?.onCommentSend?.({ workspaceId, threadId, userId, event });
   } catch (e) {
     console.error('[CollabKit]: failed to send message ', e);
-    workspace.pins[threadId].state = 'pending';
     return;
   }
 }

@@ -1,4 +1,4 @@
-import type { Event, Pin, Store, WithID } from '@collabkit/core';
+import type { Event, Store, WithID } from '@collabkit/core';
 import { actions } from './';
 
 export async function writeMessageToFirebase(
@@ -10,11 +10,10 @@ export async function writeMessageToFirebase(
     preview: string;
     parentId?: string;
     type: 'message' | 'reaction' | 'edit';
-    pin?: Pin;
     mentions?: string[];
   }
 ) {
-  const { type, workspaceId, threadId, body, preview, pin, parentId, mentions } = props;
+  const { type, workspaceId, threadId, body, preview, parentId, mentions } = props;
 
   if (store.isReadOnly) {
     console.warn('CollabKit: cannot send message in read-only mode');
@@ -55,7 +54,6 @@ export async function writeMessageToFirebase(
       workspaceId,
       threadId,
       preview,
-      pin,
       event,
     });
 
