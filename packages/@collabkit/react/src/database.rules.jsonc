@@ -285,18 +285,6 @@
         }
       }
     },
-    "emails": {
-      "$appId": {
-        "$workspaceId": {
-          ".read": "auth.token.appId === $appId",
-          "$threadId": {
-            ".read": "auth.token.appId === $appId",
-            ".write": "(auth.token.appId === $appId) && ((root.child('apps').child(auth.token.appId).child('mode').val() === 'UNSECURED' || (root.child('apps').child(auth.token.appId).child('mode').val() === 'SECURED' && $workspaceId === auth.token.workspaceId)))",
-            "$profileId": {}
-          }
-        }
-      }
-    },
     "threadInfo": {
       "$appId": {
         "$workspaceId": {
