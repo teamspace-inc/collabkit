@@ -259,6 +259,12 @@
           "$threadId": {
             ".read": "auth.token.appId === $appId",
             ".write": "newData.hasChildren(['url']) && (auth.token.appId === $appId) && ((root.child('apps').child(auth.token.appId).child('mode').val() === 'UNSECURED' || (root.child('apps').child(auth.token.appId).child('mode').val() === 'SECURED' && $workspaceId === auth.token.workspaceId)))",
+            // used to mark users that should receive notifications by default, e.g. owner, assignee
+            "defaultSubscribers": {
+              "$endUserId": {
+                ".validate": "newData.isBoolean()"
+              }
+            },
             "name": {
               ".validate": "newData.isString()"
             },
@@ -327,15 +333,13 @@
           ".read": "auth.token.appId === $appId",
           "$threadId": {
             "$endUserId": {
-              ".read": true,
-              ".write": "auth.token.unsubAppId === $appId && auth.token.unsubWorkspaceId === $workspaceId && auth.token.unsubProfileId === $endUserId && auth.token.unsubThreadId === $threadId",
-              // mirrors Slack notification settings
+              // overrides the above setting
               // "notifyFor": {
               //   ".validate": "newData.isString() && (newData.val() === 'allMessages' || newData.val() === 'onlyMentions' || newData.val() === 'off')"
               // },
-
-              // overrides the above setting
+              // overrides the above settings
               "isMuted": {
+                ".write": "auth.token.unsubAppId === $appId && auth.token.unsubWorkspaceId === $workspaceId && auth.token.unsubProfileId === $endUserId && auth.token.unsubThreadId === $threadId",
                 ".validate": "newData.isBoolean()"
               }
             }

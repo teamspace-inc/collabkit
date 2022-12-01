@@ -9,8 +9,9 @@ export function useSaveThreadInfo(props: {
   workspaceId: string | null;
   threadId: string;
   info?: ThreadInfo;
+  defaultSubscribers?: string[];
 }) {
-  const { workspaceId, threadId, info } = props;
+  const { workspaceId, threadId, info, defaultSubscribers } = props;
   const { store } = useApp();
   useEffect(() => {
     if (!workspaceId) {
@@ -21,8 +22,9 @@ export function useSaveThreadInfo(props: {
     // undefined should be a noop
     store.workspaces[workspaceId].pendingThreadInfo[threadId] = {
       url: info?.url ?? window.location.href.toString(),
+      defaultSubscribers,
       ...(info?.name ? { name: info.name } : null),
       ...(info?.meta ? { meta: info.meta } : null),
     };
-  }, [info && info?.name, workspaceId]);
+  }, [info?.name, info?.url, workspaceId, threadId, defaultSubscribers?.toString()]);
 }

@@ -252,17 +252,18 @@ export async function generateAndSendEmailNotifications(props: {
 
     let workspaceName: string | undefined = undefined;
     try {
-      workspaceName = await (await fetchWorkspaceName({ appId, workspaceId })).workspaceName;
+      workspaceName = (await fetchWorkspaceName({ appId, workspaceId })).workspaceName;
     } catch (e) {
       console.error('fetchWorkspaceName failed', e);
     }
 
     const { timeline } = await fetchTimeline({ appId, workspaceId, threadId });
+    const { threadInfo } = await fetchThreadInfo({ appId, workspaceId, threadId });
 
     const threadOnly = app.defaultNotificationPreference === 'threadOnly';
 
     const profileIds = threadOnly
-      ? getThreadProfiles({ timeline })
+      ? getThreadProfiles({ timeline, threadInfo })
       : await fetchWorkspaceProfiles({
           appId,
           workspaceId,
@@ -279,8 +280,6 @@ export async function generateAndSendEmailNotifications(props: {
       console.debug('1 profileIds, exiting');
       return null;
     }
-
-    const { threadInfo } = await fetchThreadInfo({ appId, workspaceId, threadId });
 
     const { profiles } = await fetchProfiles({ appId, profileIds });
 
@@ -330,12 +329,12 @@ export async function generateAndSendEmailNotifications(props: {
 //   credential: admin.credential.cert(path.join(os.homedir(), 'collabkit-dev-service-account.json')),
 //   databaseURL: 'https://collabkit-dev-default-rtdb.europe-west1.firebasedatabase.app/',
 // });
-
+//
 // generateAndSendEmailNotifications({
-//   appId: '<your-app-id>',
-//   eventId: '-NA5tT6WrPFAZ6PVIVfo',
-//   threadId: 'your-thread-id',
-//   workspaceId: 'foobar',
+//   appId: '000Bit2tYBWjC5eXcItqH',
+//   eventId: '',
+//   threadId: 'test-2022-11-30',
+//   workspaceId: 'collabkit',
 // })
 //   .then(() => {
 //     console.log('done');

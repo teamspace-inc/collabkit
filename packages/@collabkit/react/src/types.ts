@@ -9,7 +9,8 @@ export type Handle = HTMLDivElement | null;
 
 export type ThreadProps = {
   threadId: string;
-  info?: ThreadInfo;
+  info?: Omit<ThreadInfo, 'defaultSubscribers'>;
+  defaultSubscribers?: string[];
   style?: React.CSSProperties;
 } & OptionalThreadProps;
 

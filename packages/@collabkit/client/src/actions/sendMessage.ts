@@ -32,9 +32,7 @@ export async function sendMessage(store: Store, props: { workspaceId: string; th
     $getRoot().getChildren()[0].replace($createTextNode(''));
   });
 
-  const isFirstMessage = Object.keys(workspace.timeline[threadId] ?? {}).length === 0;
-
-  if (isFirstMessage && store.workspaces[workspaceId].pendingThreadInfo[threadId]) {
+  if (store.workspaces[workspaceId].pendingThreadInfo[threadId]) {
     console.log('saving thread info');
     // save thread info
     await actions.saveThreadInfo(store, {

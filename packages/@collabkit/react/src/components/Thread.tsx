@@ -40,12 +40,12 @@ function ThreadProvider(props: ThreadProps & { children: React.ReactNode }) {
 }
 
 export function Thread(props: ThreadProps) {
-  const { threadId, info } = props;
+  const { threadId, info, defaultSubscribers } = props;
   const { store } = useApp();
   const { userId, workspaceId } = useSnapshot(store);
 
   useThreadSubscription({ store, threadId, workspaceId });
-  useSaveThreadInfo({ threadId, workspaceId, info });
+  useSaveThreadInfo({ threadId, workspaceId, info, defaultSubscribers });
 
   if (!userId) {
     return null;

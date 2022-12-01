@@ -63,7 +63,12 @@ export class FirebaseSync implements Sync.SyncAdapter {
     info?: ThreadInfo;
   }): Promise<void> {
     const values = {
-      [`/threadInfo/${data.appId}/${data.workspaceId}/${data.threadId}`]: data.info,
+      [`/threadInfo/${data.appId}/${data.workspaceId}/${data.threadId}`]: data.info
+        ? {
+            ...data.info,
+            defaultSubscribers: idArrayToObject(data.info.defaultSubscribers),
+          }
+        : null,
 
       // there's a pitfall here, if info is null the thread will not be marked as open... we should keep info separate or just say it has no info here
       [`/views/openThreads/${data.appId}/${data.workspaceId}/${data.threadId}`]: data.isOpen
@@ -410,4 +415,14 @@ export class FirebaseSync implements Sync.SyncAdapter {
   getUser(props: { appId: string; workspaceId: string; userId: string }) {
     return get(ref(getDatabase(getApp('CollabKit')), `/profiles/${props.appId}/${props.userId}`));
   }
+}
+
+function idArrayToObject(ids: string[] | undefined): { [userId: string]: true } | null {
+  if (!ids) {
+    return null;
+  }
+  return ids.reduce((result, id) => {
+    result[id] = true;
+    return result;
+  }, {} as { [userId: string]: true });
 }

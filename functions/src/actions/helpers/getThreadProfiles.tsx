@@ -1,11 +1,11 @@
-import { Timeline } from '../../types';
-import uniq from 'lodash.uniq';
+import { ThreadInfo, Timeline } from '../../types';
 
-export function getThreadProfiles(props: { timeline: Timeline }) {
-  const createdByIds = uniq(Object.values(props.timeline).map((event) => event.createdById));
+export function getThreadProfiles(props: { timeline: Timeline; threadInfo: ThreadInfo }) {
+  const defaultSubscriberIds = Object.keys(props.threadInfo.defaultSubscribers);
+  const createdByIds = Object.values(props.timeline).map((event) => event.createdById);
   const mentionedIds = Object.values(props.timeline)
     .map((event) => Object.keys(event.mentions ?? {}))
     .flat(1);
-  const profileIds = uniq([...createdByIds, ...mentionedIds]);
-  return profileIds;
+  const profileIds = new Set([...defaultSubscriberIds, ...createdByIds, ...mentionedIds]);
+  return [...profileIds];
 }

@@ -80,6 +80,16 @@ export function App() {
                 Set this to <code>true</code> to hide the composer.
               </>,
             ],
+            [
+              'defaultSubscribers',
+              'string[] | undefined',
+              <>
+                Defaults to <code>[]</code>. <br />
+                An list of user IDs that will receive notifications for all messages in this thread,
+                in addition to users who have commented or been mentioned in the thread. (For
+                example: the contributors of a document, an owner of a task etc.)
+              </>,
+            ],
           ]}
         />
       </div>

@@ -37,7 +37,12 @@ describe('getThreadProfiles', () => {
             parentId: 'event1',
           },
         },
-      })
-    ).toStrictEqual(['user1', 'user2', 'user3', 'user4']);
+        threadInfo: {
+          defaultSubscribers: {
+            user5: true,
+          },
+        },
+      }).sort()
+    ).toStrictEqual(['user1', 'user2', 'user3', 'user4', 'user5']);
   });
 });
