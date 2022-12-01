@@ -417,7 +417,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
   }
 }
 
-function idArrayToObject(ids: string[] | undefined): { [userId: string]: true } | null {
+function idArrayToObject(ids: readonly string[] | undefined): { [userId: string]: true } | null {
   if (!ids) {
     return null;
   }

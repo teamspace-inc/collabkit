@@ -22,7 +22,7 @@ export type ThreadInfo = {
   name?: string | null;
   url?: string | null;
   meta?: ThreadMeta | null;
-  defaultSubscribers?: string[];
+  defaultSubscribers?: readonly string[];
 };
 
 export type DeepPartial<T> = T extends object
