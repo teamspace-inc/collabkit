@@ -1,8 +1,6 @@
 import {
-  child,
   DataSnapshot,
   get,
-  getDatabase,
   limitToLast,
   onChildAdded,
   onChildChanged,
@@ -12,7 +10,6 @@ import {
   orderByChild,
   push,
   query,
-  ref,
   remove,
   serverTimestamp,
   set,
@@ -27,13 +24,21 @@ import type {
   ThreadMeta,
   Sync,
 } from '@collabkit/core';
+import { FirebaseId } from '@collabkit/core';
 
 import { subscribeThreadIsTyping } from './subscribeThreadIsTyping';
 import { subscribeThreadSeenBy } from './subscribeThreadSeenBy';
 import { subscribeTimeline } from './subscribeTimeline';
-import { timelineRef, userTypingRef } from './refs';
+import { ref, timelineRef, userTypingRef } from './refs';
 
-import { getApp, initializeApp } from 'firebase/app';
+import { initializeApp } from 'firebase/app';
+import {
+  eventToObject,
+  idArrayToObject,
+  snapshotToEvent,
+  snapshotToProfile,
+  snapshotToUser,
+} from './converters';
 
 export function initFirebase() {
   initializeApp(
@@ -75,7 +80,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
         ? { meta: data.info?.meta ?? null }
         : null,
     };
-    return update(ref(getDatabase(getApp('CollabKit'))), values);
+    return update(ref`/`, values);
   }
 
   saveWorkspace(params: {
@@ -90,10 +95,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
       (typeof params.workspace.name === 'string' || params.workspace.name === null)
     ) {
       return set(
-        ref(
-          getDatabase(getApp('CollabKit')),
-          `/workspaces/${params.appId}/${params.workspaceId}/name/`
-        ),
+        ref`/workspaces/${params.appId}/${params.workspaceId}/name/`,
         params.workspace.name
       );
     } else {
@@ -117,29 +119,21 @@ export class FirebaseSync implements Sync.SyncAdapter {
   }): Promise<void> {
     const { appId, userId, workspaceId, profile } = data;
     try {
-      await set(ref(getDatabase(getApp('CollabKit')), `/profiles/${appId}/${userId}`), profile);
+      await set(ref`/profiles/${appId}/${userId}`, profile);
     } catch (e) {
       console.error('CollabKit: failed to set profile', e);
     }
 
     try {
-      await set(
-        ref(
-          getDatabase(getApp('CollabKit')),
-          `/workspaces/${appId}/${workspaceId}/profiles/${userId}`
-        ),
-        true
-      );
+      await set(ref`/workspaces/${appId}/${workspaceId}/profiles/${userId}`, true);
     } catch (e) {
       console.error('CollabKit: failed to join workspace', e);
     }
   }
 
   async getProfile(params: { appId: string; userId: string }) {
-    const snapshot = await get(
-      ref(getDatabase(getApp('CollabKit')), `/profiles/${params.appId}/${params.userId}`)
-    );
-    return snapshot.val();
+    const snapshot = await get(ref`/profiles/${params.appId}/${params.userId}`);
+    return snapshotToProfile(snapshot);
   }
 
   async saveEvent({
@@ -153,7 +147,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
     threadId: string;
     event: Event;
   }): Promise<{ id: string }> {
-    const eventRef = await push(timelineRef(appId, workspaceId, threadId), event);
+    const eventRef = await push(timelineRef(appId, workspaceId, threadId), eventToObject(event));
     if (!eventRef.key) {
       throw new Error('CollabKit: failed to save event');
     }
@@ -169,8 +163,8 @@ export class FirebaseSync implements Sync.SyncAdapter {
     workspaceId: string;
     threadId: string;
   }) {
-    await update(ref(getDatabase(getApp('CollabKit'))), {
-      [`/views/openThreads/${appId}/${workspaceId}/${threadId}`]: null,
+    await update(ref`/`, {
+      [ref.path`/views/openThreads/${appId}/${workspaceId}/${threadId}`]: null,
     });
   }
 
@@ -188,9 +182,9 @@ export class FirebaseSync implements Sync.SyncAdapter {
     eventId: string;
   }): Promise<void> {
     const data = { seenUntilId: eventId, seenAt: serverTimestamp() };
-    await update(ref(getDatabase(getApp('CollabKit'))), {
-      [`/seen/${appId}/${userId}/${workspaceId}/${threadId}/`]: data,
-      [`/views/seenBy/${appId}/${workspaceId}/${threadId}/${userId}`]: data,
+    await update(ref`/`, {
+      [ref.path`/seen/${appId}/${userId}/${workspaceId}/${threadId}/`]: data,
+      [ref.path`/views/seenBy/${appId}/${workspaceId}/${threadId}/${userId}`]: data,
     });
   }
 
@@ -247,9 +241,10 @@ export class FirebaseSync implements Sync.SyncAdapter {
     }
 
     let data: { [key: string]: any } = {
-      [`/timeline/${appId}/${workspaceId}/${threadId}/${eventRef.key}`]: event,
-      [`/views/inbox/${appId}/${workspaceId}/${threadId}`]: {
-        ...event,
+      [ref.path`/timeline/${appId}/${workspaceId}/${threadId}/${eventRef.key}`]:
+        eventToObject(event),
+      [ref.path`/views/inbox/${appId}/${workspaceId}/${threadId}`]: {
+        ...eventToObject(event),
         id,
         body: preview,
         name: threadId,
@@ -259,7 +254,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
 
     // write the data to firebase
     try {
-      await update(ref(getDatabase(getApp('CollabKit'))), data);
+      await update(ref`/`, data);
     } catch (e: any) {
       const error = new Error('failed to write msg: ' + e.message);
       error.stack += e.stack;
@@ -283,13 +278,13 @@ export class FirebaseSync implements Sync.SyncAdapter {
     onSeenChange: Sync.SeenEventHandler
   ): void {
     const seenQuery = query(
-      ref(getDatabase(getApp('CollabKit')), `/seen/${appId}/${userId}/${workspaceId}`),
+      ref`/seen/${appId}/${userId}/${workspaceId}`,
       orderByChild('seenUntilId'),
       limitToLast(100)
     );
 
     function childCallback(snapshot: DataSnapshot) {
-      const threadId = snapshot.key;
+      const threadId = snapshot.key && FirebaseId.decode(snapshot.key);
       if (threadId && workspaceId) {
         const { seenUntilId } = snapshot.val();
         onSeenChange({ threadId, seenUntilId });
@@ -338,10 +333,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
       }
     };
 
-    const viewRef = ref(
-      getDatabase(getApp('CollabKit')),
-      `/views/openThreads/${appId}/${workspaceId}`
-    );
+    const viewRef = ref`/views/openThreads/${appId}/${workspaceId}`;
     subs[`${viewRef.toString()}#added`] ||= onChildAdded(viewRef, onChange, onError);
     subs[`${viewRef.toString()}#changed`] ||= onChildChanged(viewRef, onChange, onError);
     subs[`${viewRef.toString()}#removed`] ||= onChildRemoved(viewRef, onRemoved, onError);
@@ -354,10 +346,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
     subs: Subscriptions;
     onThreadInfo: (props: Sync.ThreadInfoChangeEvent) => void;
   }) {
-    const threadInfoRef = ref(
-      getDatabase(getApp('CollabKit')),
-      `/threadInfo/${props.appId}/${props.workspaceId}/${props.threadId}`
-    );
+    const threadInfoRef = ref`/threadInfo/${props.appId}/${props.workspaceId}/${props.threadId}`;
 
     props.subs[`${threadInfoRef.toString()}#onValue`] ||= onValue(threadInfoRef, (snapshot) => {
       const info = snapshot.val();
@@ -372,19 +361,19 @@ export class FirebaseSync implements Sync.SyncAdapter {
     onInboxChange: Sync.InboxChangeEventHandler;
   }) {
     const inboxRef = query(
-      ref(getDatabase(getApp('CollabKit')), `views/inbox/${props.appId}/${props.workspaceId}`),
+      ref`/views/inbox/${props.appId}/${props.workspaceId}`,
       orderByChild('createdAt'),
       limitToLast(20)
     );
 
     function childCallback(snapshot: DataSnapshot) {
-      const threadId = snapshot.key;
-
-      if (!threadId) {
+      const threadId = snapshot.key && FirebaseId.decode(snapshot.key);
+      const event = snapshotToEvent(snapshot, snapshot.val()?.id);
+      if (!threadId || !event) {
         return;
       }
 
-      props.onInboxChange({ event: snapshot.val(), threadId });
+      props.onInboxChange({ event, threadId });
     }
 
     props.subs[`${inboxRef.toString()}#added`] ||= onChildAdded(inboxRef, childCallback, (e) => {
@@ -412,17 +401,8 @@ export class FirebaseSync implements Sync.SyncAdapter {
     this.subscribeThreadInfo(props);
   }
 
-  getUser(props: { appId: string; workspaceId: string; userId: string }) {
-    return get(ref(getDatabase(getApp('CollabKit')), `/profiles/${props.appId}/${props.userId}`));
+  async getUser(props: { appId: string; workspaceId: string; userId: string }) {
+    const snapshot = await get(ref`/profiles/${props.appId}/${props.userId}`);
+    return snapshotToUser(snapshot);
   }
-}
-
-function idArrayToObject(ids: readonly string[] | undefined): { [userId: string]: true } | null {
-  if (!ids) {
-    return null;
-  }
-  return ids.reduce((result, id) => {
-    result[id] = true;
-    return result;
-  }, {} as { [userId: string]: true });
 }

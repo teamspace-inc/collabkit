@@ -12,7 +12,6 @@ export const Item = () => (
     result={{
       color: 'amber',
       id: '1',
-      workspaceId: 'acme',
       name: 'John Doe',
       email: 'john@example.com',
     }}
@@ -29,7 +28,6 @@ export const SelectedItem = () => (
     result={{
       color: 'amber',
       id: '1',
-      workspaceId: 'acme',
       name: 'John Doe',
       email: 'john@example.com',
     }}
