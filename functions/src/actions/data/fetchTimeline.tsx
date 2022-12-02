@@ -1,16 +1,16 @@
 import * as admin from 'firebase-admin';
 import { Event } from '../../types';
 import { isValidTimeline } from '../helpers/isValidTimeline';
+import * as FirebaseId from './FirebaseId';
+import { ref } from './refs';
 
 export async function fetchTimeline(props: {
   threadId: string;
   appId: string;
   workspaceId: string;
 }) {
-  const db = admin.database();
   const { threadId, appId, workspaceId } = props;
-  const timelineSnapshot = await db
-    .ref(`/timeline/${appId}/${workspaceId}/${threadId}`)
+  const timelineSnapshot = await ref`/timeline/${appId}/${workspaceId}/${threadId}`
     .orderByKey()
     .get();
 
@@ -24,7 +24,17 @@ export async function fetchTimeline(props: {
   const timelineWithEventIds: { [eventId: string]: Event & { id: string } } = {};
 
   for (const eventId in timeline) {
-    timelineWithEventIds[eventId] = { ...timeline[eventId], id: eventId };
+    const event = timeline[eventId];
+    const mentions: Event['mentions'] = {};
+    for (const id of Object.keys(event.mentions ?? {})) {
+      mentions[FirebaseId.decode(id)] = true;
+    }
+    timelineWithEventIds[eventId] = {
+      ...event,
+      id: eventId,
+      createdById: FirebaseId.decode(event.createdById),
+      mentions,
+    };
   }
 
   return {

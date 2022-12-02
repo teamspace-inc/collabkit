@@ -1,18 +1,14 @@
-import * as admin from 'firebase-admin';
 import fetch from 'node-fetch';
+import { fetchSeenBy } from './data/fetchSeenBy';
+import { fetchThreadInfo } from './data/fetchThreadInfo';
 
 async function fetchEventContext(props: { appId: string; workspaceId: string; threadId: string }) {
   const { appId, workspaceId, threadId } = props;
 
-  const db = admin.database();
-
-  const [seenBySnapshot, threadInfoSnapshot] = await Promise.all([
-    db.ref(`/views/seenBy/${appId}/${workspaceId}/${threadId}/`).get(),
-    db.ref(`/threadInfo/${appId}/${workspaceId}/${threadId}`).get(),
+  const [seenBy, threadInfo] = await Promise.all([
+    fetchSeenBy({ appId, workspaceId, threadId }),
+    fetchThreadInfo({ appId, workspaceId, threadId }),
   ]);
-
-  const threadInfo = threadInfoSnapshot.val();
-  const seenBy = seenBySnapshot.val();
 
   return {
     threadInfo,

@@ -1,15 +1,21 @@
-import * as admin from 'firebase-admin';
 import { isValidSeenBy } from '../helpers/isValidSeenBy';
+import { ref } from './refs';
+import * as FirebaseId from './FirebaseId';
+import { SeenBy } from '../../types';
 
 export async function fetchSeenBy(props: { appId: string; workspaceId: string; threadId: string }) {
-  const db = admin.database();
-  const seenBy = await (
-    await db.ref(`/views/seenBy/${props.appId}/${props.workspaceId}/${props.threadId}/`).get()
-  ).val();
+  const snapshot =
+    await ref`/views/seenBy/${props.appId}/${props.workspaceId}/${props.threadId}/`.get();
+  const result = snapshot.val();
 
-  if (!isValidSeenBy(seenBy)) {
-    console.debug('invalid seenBy, exiting', seenBy);
+  if (!isValidSeenBy(result)) {
+    console.debug('invalid seenBy, exiting', result);
     throw new Error('invalid seenBy');
+  }
+
+  const seenBy: SeenBy = {};
+  for (const [userId, data] of Object.entries(result ?? {})) {
+    seenBy[FirebaseId.decode(userId)] = data;
   }
 
   return seenBy;

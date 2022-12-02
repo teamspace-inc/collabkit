@@ -32,7 +32,7 @@ export function snapshotToEvent(snapshot: DataSnapshot, id = snapshot.key): With
   }
   event.id = FirebaseId.decode(id);
   event.createdById = FirebaseId.decode(event.createdById);
-  event.mentions = Object.keys(event.mentions ?? []).map((id) => FirebaseId.decode(id));
+  event.mentions = Object.keys(event.mentions ?? {}).map((id) => FirebaseId.decode(id));
   return event;
 }
 

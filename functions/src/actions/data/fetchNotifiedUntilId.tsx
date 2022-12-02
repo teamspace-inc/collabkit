@@ -1,5 +1,5 @@
-import * as admin from 'firebase-admin';
 import { isValidNotifiedUntilId } from '../helpers/isValidNotifiedUntilId';
+import { ref } from './refs';
 
 export async function fetchNotifiedUntilId(props: {
   appId: string;
@@ -8,9 +8,8 @@ export async function fetchNotifiedUntilId(props: {
   threadId: string;
 }) {
   const { appId, workspaceId, profileId, threadId } = props;
-  const db = admin.database();
   const notifiedUntil = (
-    await db.ref(`/notifiedUntil/${appId}/${workspaceId}/${threadId}/${profileId}`).get()
+    await ref`/notifiedUntil/${appId}/${workspaceId}/${threadId}/${profileId}`.get()
   ).val();
 
   if (notifiedUntil === null) {
