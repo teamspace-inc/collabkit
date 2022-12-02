@@ -2,7 +2,7 @@ import { fetchThreadInfo } from '../../../actions/data/fetchThreadInfo';
 
 describe('fetchThreadInfo', () => {
   it('thread info', async () => {
-    const { threadInfo } = await fetchThreadInfo({
+    const threadInfo = await fetchThreadInfo({
       appId: 'QLVIR4HE-wvV_mTjoMJP5',
       workspaceId: 'acme',
       threadId: 'thread-1',

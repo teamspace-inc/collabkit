@@ -1,4 +1,5 @@
 import * as admin from 'firebase-admin';
+import { ref } from './refs';
 
 export async function fetchIsMuted(props: {
   appId: string;
@@ -6,14 +7,9 @@ export async function fetchIsMuted(props: {
   threadId: string;
   profileId: string;
 }): Promise<boolean> {
-  const db = admin.database();
   const isMuted =
     (await (
-      await db
-        .ref(
-          `/notificationPreferences/${props.appId}/${props.workspaceId}/${props.threadId}/${props.profileId}/isMuted`
-        )
-        .get()
+      await ref`/notificationPreferences/${props.appId}/${props.workspaceId}/${props.threadId}/${props.profileId}/isMuted`.get()
     ).val()) ?? false;
 
   if (typeof isMuted !== 'boolean') {

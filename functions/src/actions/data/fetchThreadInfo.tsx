@@ -1,5 +1,6 @@
-import * as admin from 'firebase-admin';
 import { isValidThreadInfo } from '../helpers/isValidThreadInfo';
+import { ref } from './refs';
+import * as FirebaseId from './FirebaseId';
 
 export async function fetchThreadInfo(props: {
   appId: string;
@@ -7,10 +8,13 @@ export async function fetchThreadInfo(props: {
   threadId: string;
 }) {
   const { appId, workspaceId, threadId } = props;
-  const db = admin.database();
-  const threadInfo = await (
-    await db.ref(`/threadInfo/${appId}/${workspaceId}/${threadId}`).get()
-  ).val();
+  const threadInfo = (await ref`/threadInfo/${appId}/${workspaceId}/${threadId}`.get()).val();
+
+  if (threadInfo?.defaultSubscribers) {
+    threadInfo.defaultSubscribers = Object.keys(threadInfo.defaultSubscribers).map((id) =>
+      FirebaseId.decode(id)
+    );
+  }
 
   if (!isValidThreadInfo(threadInfo)) {
     console.debug('invalid thread info, exiting', threadInfo);
@@ -22,7 +26,5 @@ export async function fetchThreadInfo(props: {
     throw new Error('no thread url');
   }
 
-  return {
-    threadInfo,
-  };
+  return threadInfo;
 }

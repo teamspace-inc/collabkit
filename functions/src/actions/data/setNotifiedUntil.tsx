@@ -1,4 +1,5 @@
 import * as admin from 'firebase-admin';
+import { ref } from './refs';
 
 export function setNotifiedUntil(props: {
   appId: string;
@@ -7,8 +8,7 @@ export function setNotifiedUntil(props: {
   profileId: string;
   notifiedUntilId: string;
 }) {
-  const db = admin.database();
-  return db
-    .ref(`/notifiedUntil/${props.appId}/${props.workspaceId}/${props.threadId}/${props.profileId}`)
-    .set(props.notifiedUntilId);
+  return ref`/notifiedUntil/${props.appId}/${props.workspaceId}/${props.threadId}/${props.profileId}`.set(
+    props.notifiedUntilId
+  );
 }

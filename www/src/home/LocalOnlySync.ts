@@ -9,20 +9,11 @@ export class LocalOnlySync implements SyncAdapter {
 
   async saveWorkspace(): Promise<void> {}
 
-  getProfile(params: { appId: string; userId: string }): Promise<
-    | {
-        name?: string | undefined;
-        email?: string | undefined;
-        color?: string | undefined;
-        avatar?: string | undefined;
-      }
-    | null
-    | undefined
-  > {
+  getProfile() {
     return Promise.resolve(null);
   }
 
-  getUser(params: { userId: string; appId: string }): Promise<DataSnapshot> {
+  getUser(): never {
     throw new Error('Method not implemented.');
   }
   saveThreadInfo(): Promise<void> {

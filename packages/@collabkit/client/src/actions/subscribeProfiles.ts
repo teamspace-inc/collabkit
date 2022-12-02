@@ -1,14 +1,11 @@
-import {
-  DataSnapshot,
-  onChildAdded,
-  onChildChanged,
-  ref,
-  onValue,
-  getDatabase,
-} from 'firebase/database';
+import type { DataSnapshot } from 'firebase/database';
+import { onChildAdded, onChildChanged, onValue } from 'firebase/database';
+import { ref } from '../sync/firebase/refs';
 import type { Store } from '@collabkit/core';
+import { FirebaseId } from '@collabkit/core';
 import { getConfig } from './index';
-import { getApp } from 'firebase/app';
+import { snapshotToProfile } from '../sync/firebase/converters';
+import { ensureColor } from './saveProfile';
 
 function setHasProfile(store: Store, userId: string) {
   for (const workspaceId in store.workspaces) {
@@ -30,10 +27,10 @@ export async function subscribeProfiles(store: Store) {
     console.error({ e });
   };
 
-  const onChange = (child: DataSnapshot) => {
-    if (child.key) {
-      const id = child.key;
-      const profileRef = ref(getDatabase(getApp('CollabKit')), `/profiles/${appId}/${id}`);
+  const onChange = (snapshot: DataSnapshot) => {
+    if (snapshot.key) {
+      const id = FirebaseId.decode(snapshot.key);
+      const profileRef = ref`/profiles/${appId}/${id}`;
       store.subs[profileRef.toString()] ||= onValue(
         profileRef,
         (profileSnapshot) => {
@@ -45,12 +42,13 @@ export async function subscribeProfiles(store: Store) {
             }, 32);
             gotFirstProfile = true;
           }
-          const profile = profileSnapshot.val();
+          const profile = snapshotToProfile(profileSnapshot);
           // todo validate profile data here
-          if (profile) {
-            store.profiles[id] = { ...profile, id };
+          if (profile && profile.name !== 'John Doe') {
+            store.profiles[id] = ensureColor(profile);
             if (store.config.mentionableUsers === 'allWorkspace') {
-              store.mentionableUsers[id] = { ...profile, id };
+              console.log('mentionableUsers: id', id, 'profile', profile);
+              store.mentionableUsers[id] = profile;
             }
             setHasProfile(store, id);
           }
@@ -60,10 +58,7 @@ export async function subscribeProfiles(store: Store) {
     }
   };
 
-  const profilesRef = ref(
-    getDatabase(getApp('CollabKit')),
-    `/workspaces/${appId}/${workspaceId}/profiles`
-  );
+  const profilesRef = ref`/workspaces/${appId}/${workspaceId}/profiles`;
   const addedKey = `${profilesRef.toString()}#added`;
   const changedKey = `${profilesRef.toString()}#changed`;
   if (!store.subs[addedKey]) {

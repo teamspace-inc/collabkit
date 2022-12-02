@@ -258,7 +258,7 @@ export async function generateAndSendEmailNotifications(props: {
     }
 
     const { timeline } = await fetchTimeline({ appId, workspaceId, threadId });
-    const { threadInfo } = await fetchThreadInfo({ appId, workspaceId, threadId });
+    const threadInfo = await fetchThreadInfo({ appId, workspaceId, threadId });
 
     const threadOnly = app.defaultNotificationPreference === 'threadOnly';
 

@@ -43,7 +43,7 @@ export async function saveProfile(store: Store) {
   }
 }
 
-function ensureColor(profile: Partial<UserProps> & { color?: string; id: string }): Profile {
+export function ensureColor(profile: Partial<UserProps> & { color?: string; id: string }): Profile {
   let color = profile.color;
   if (isColor(color)) {
     return { ...profile, color };

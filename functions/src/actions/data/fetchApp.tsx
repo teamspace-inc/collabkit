@@ -1,9 +1,9 @@
 import * as admin from 'firebase-admin';
 import { isValidApp } from '../helpers/isValidApp';
+import { ref } from './refs';
 
 export async function fetchApp(props: { appId: string }) {
-  const db = admin.database();
-  const appSnapshot = await db.ref(`/apps/${props.appId}`).get();
+  const appSnapshot = await ref`/apps/${props.appId}`.get();
   const app = appSnapshot.val();
   if (!isValidApp(app)) {
     console.debug('invalid app, exiting', app);

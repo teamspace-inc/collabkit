@@ -8,14 +8,13 @@ import type {
   ThreadMeta,
   WithID,
 } from '../types';
-import type { DataSnapshot } from 'firebase/database';
 
 export interface SyncAdapter {
   shouldAuthenticate(): boolean;
 
   serverTimestamp(): object;
 
-  getUser(params: { userId: string; appId: string }): Promise<DataSnapshot>;
+  getUser(params: { userId: string; appId: string }): Promise<UserProps | null>;
 
   saveThreadInfo(params: {
     appId: string;
@@ -35,7 +34,9 @@ export interface SyncAdapter {
     appId: string;
     userId: string;
   }): Promise<
-    undefined | null | { name?: string; email?: string; color?: string; avatar?: string }
+    | undefined
+    | null
+    | { id: string; name?: string; email?: string; color?: string; avatar?: string }
   >;
 
   saveProfile(params: {

@@ -30,17 +30,12 @@ export async function writeMessageToFirebase(
   // close emoji picker on send
   store.reactingId = null;
 
-  const mentionsMap: { [userId: string]: boolean } = {};
-  mentions?.forEach((mention) => {
-    mentionsMap[mention] = true;
-  });
-
   const event: Event = {
     type,
     body,
     createdAt: store.sync.serverTimestamp(),
     createdById: userId,
-    mentions: mentionsMap,
+    mentions,
   };
 
   if (parentId) {

@@ -13,10 +13,7 @@ export async function saveMentionableUsers(store: Store, mentionableUsers: Menti
     mentionableUsers.forEach((mentionableUser) => {
       const existingProfile = store.profiles[mentionableUser.id];
       if (existingProfile) {
-        store.mentionableUsers[mentionableUser.id] = {
-          ...existingProfile,
-          workspaceId,
-        };
+        store.mentionableUsers[mentionableUser.id] = existingProfile;
 
         // only support saving colors for users like this
         // if unsecured mode, as we don't need to verify the user
@@ -25,7 +22,6 @@ export async function saveMentionableUsers(store: Store, mentionableUsers: Menti
           store.mentionableUsers[mentionableUser.id] = {
             ...mentionableUser,
             color: getRandomColor(),
-            workspaceId,
           };
         }
         store.sync.saveProfile({

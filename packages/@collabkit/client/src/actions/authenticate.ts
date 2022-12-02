@@ -38,24 +38,16 @@ export async function authenticate(store: Store) {
       throw new Error('`workspaceId` must be a string');
     }
 
-    const userSnapshot = await store.sync.getUser({ appId, userId });
-    // store.sync.getWorkspaceName({ workspaceId }),
+    const user = await store.sync.getUser({ appId, userId });
 
-    const user = userSnapshot.val();
     if (!user) {
       throw new Error('User not found');
     }
 
-    // const workspaceName = workspaceNameSnapshot.val();
-    // if (!workspaceName) {
-    //   throw new Error('Workspace not found');
-    // }
-
     store.userId = userId;
-    store.user = { ...user, userId };
+    store.user = user;
     store.workspaceId = workspaceId;
     store.workspaces[workspaceId] = createWorkspace();
-    // store.workspaces[workspaceId].name = workspaceName;
 
     actions.subscribeProfiles(store);
     actions.subscribeWorkspace(store);

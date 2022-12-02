@@ -82,7 +82,7 @@ export type WorkspaceProps = {
 export type ThreadInfo = {
   name?: string;
   url?: string;
-  defaultSubscribers: { [userId: string]: true };
+  defaultSubscribers: string[];
 };
 
 export type EventType = 'message' | 'reaction' | 'adminMessage' | 'system' | 'delete' | 'edit';

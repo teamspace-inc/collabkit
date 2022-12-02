@@ -38,9 +38,7 @@ describe('getThreadProfiles', () => {
           },
         },
         threadInfo: {
-          defaultSubscribers: {
-            user5: true,
-          },
+          defaultSubscribers: ['user5'],
         },
       }).sort()
     ).toStrictEqual(['user1', 'user2', 'user3', 'user4', 'user5']);

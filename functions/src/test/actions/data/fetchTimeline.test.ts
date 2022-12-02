@@ -13,6 +13,7 @@ describe('fetchTimeline', () => {
         body: 'Hello, world!',
         createdById: 'alice',
         createdAt: 1660844360801,
+        mentions: {},
         id: 'event-1',
       },
     });

@@ -252,9 +252,7 @@ export type Event = {
   createdAt: number | object;
   createdById: string;
   parentId?: string;
-  mentions?: {
-    [userId: string]: boolean;
-  } | null;
+  mentions?: readonly string[];
 };
 
 export type WithName<T> = T & {
@@ -272,7 +270,6 @@ export type WithHasProfile<T> = T & {
 export type MentionProps = readonly Mention[] | 'allWorkspace';
 
 export interface Mention extends BasicProfile {
-  workspaceId: string;
   id: string;
 }
 

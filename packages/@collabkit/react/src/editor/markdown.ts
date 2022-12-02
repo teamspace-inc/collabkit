@@ -17,7 +17,7 @@ const MENTION: TextMatchTransformer = {
     if (!$isMentionNode(node)) {
       return null;
     }
-    const linkContent = `[${node.getTextContent()}](#@${node.__id})`;
+    const linkContent = `[${node.getTextContent()}](#@${encodeURIComponent(node.__id)})`;
     return linkContent;
   },
   importRegExp: /(?:\[([^[]+)\])(?:\(#@([^(]+)\))/,

@@ -304,7 +304,7 @@
                 ".validate": "newData.val() === 'resolve' || newData.val() === 'reopen'"
               },
               "mentions": {
-                "$userId": {
+                "$endUserId": {
                   ".validate": "newData.isBoolean()"
                 }
               }

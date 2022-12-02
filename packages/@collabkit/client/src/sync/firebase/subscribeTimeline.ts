@@ -1,6 +1,7 @@
 import { onChildAdded, orderByChild, query } from 'firebase/database';
 import type { Sync, Subscriptions } from '@collabkit/core';
 import { timelineRef } from './refs';
+import { snapshotToEvent } from './converters';
 
 export function subscribeTimeline({
   subs,
@@ -24,8 +25,11 @@ export function subscribeTimeline({
 
   try {
     subs[timelineQuery.toString()] = onChildAdded(timelineQuery, (snapshot) => {
-      const event = snapshot.val();
-      const eventId = snapshot.key;
+      const event = snapshotToEvent(snapshot);
+      if (!event) {
+        return;
+      }
+      const eventId = event.id;
       const workspaceId = snapshot.ref.parent?.ref.parent?.key;
       const threadId = snapshot.ref.parent?.key;
 
