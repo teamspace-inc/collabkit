@@ -21,6 +21,7 @@ import { fetchIsMuted } from './data/fetchIsMuted';
 import { fetchSeenBy } from './data/fetchSeenBy';
 import uniq from 'lodash.uniq';
 import { fetchApiKey } from './data/fetchApiKey';
+import * as FirebaseId from './data/FirebaseId';
 
 async function sendMailForProfile(props: {
   eventId: string;
@@ -174,10 +175,10 @@ async function sendMailForProfile(props: {
 
   const unsubscribeToken = await admin.auth().createCustomToken(props.apiKey, {
     // These are all prefixed 'unsub' to distinguish them from claims in secure mode tokens.
-    unsubAppId: appId,
+    unsubAppId: FirebaseId.encode(appId),
     unsubWorkspaceId: workspaceId,
-    unsubProfileId: profileId,
-    unsubThreadId: threadId,
+    unsubProfileId: FirebaseId.encode(profileId),
+    unsubThreadId: FirebaseId.encode(threadId),
   });
 
   if (!threadInfo.url) {

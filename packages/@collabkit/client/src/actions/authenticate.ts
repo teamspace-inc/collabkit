@@ -1,4 +1,4 @@
-import type { Store } from '@collabkit/core';
+import { FirebaseId, Store } from '@collabkit/core';
 import { signInWithCustomToken, initializeAuth, inMemoryPersistence } from 'firebase/auth';
 import { getApp } from 'firebase/app';
 import { createWorkspace } from '../store';
@@ -20,7 +20,7 @@ export async function authenticate(store: Store) {
   if ('token' in config && config.token != null) {
     const userCredential = await signInWithCustomToken(auth, config.token);
     const result = await userCredential.user.getIdTokenResult();
-    const { appId, userId, workspaceId, mode } = result.claims;
+    let { appId, userId, workspaceId, mode } = result.claims;
 
     if (!appId || !userId || !workspaceId || !mode) {
       throw new Error('invalid claims: ' + JSON.stringify(result.claims));
@@ -37,6 +37,10 @@ export async function authenticate(store: Store) {
     if (typeof workspaceId !== 'string') {
       throw new Error('`workspaceId` must be a string');
     }
+
+    appId = FirebaseId.decode(appId);
+    userId = FirebaseId.decode(userId);
+    workspaceId = FirebaseId.decode(workspaceId);
 
     const user = await store.sync.getUser({ appId, userId });
 

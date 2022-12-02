@@ -3,6 +3,7 @@ import * as cors from 'cors';
 import * as admin from 'firebase-admin';
 import { updateUserAndWorkspace } from './actions/helpers/updateUserAndWorkspace';
 import { isValidUser } from './actions/helpers/isValidUser';
+import * as FirebaseId from './actions/data/FirebaseId';
 
 const corsHandler = cors.default({ origin: true });
 
@@ -137,10 +138,10 @@ export async function handleRequest(
 
         const token = await admin.auth().createCustomToken(apiKey.toString(), {
           api: true,
-          appId,
           mode,
-          userId,
-          workspaceId,
+          appId: FirebaseId.encode(appId),
+          userId: FirebaseId.encode(userId),
+          workspaceId: FirebaseId.encode(workspaceId),
         });
 
         response.set('Cache-Control', 'public, max-age=300, s-maxage=600').status(201).send({
