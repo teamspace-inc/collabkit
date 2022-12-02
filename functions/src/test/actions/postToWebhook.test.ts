@@ -41,7 +41,7 @@ describe('postToWebhook', () => {
           createdAt: 1660844360801,
         },
         context: {
-          seenBy: null,
+          seenBy: {},
           threadInfo: {
             name: 'Your first thread',
             url: 'https://example.com',
