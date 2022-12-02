@@ -1,4 +1,5 @@
-import { FirebaseId, Store } from '@collabkit/core';
+import type { Store } from '@collabkit/core';
+import { FirebaseId } from '@collabkit/core';
 import { signInWithCustomToken, initializeAuth, inMemoryPersistence } from 'firebase/auth';
 import { getApp } from 'firebase/app';
 import { createWorkspace } from '../store';
