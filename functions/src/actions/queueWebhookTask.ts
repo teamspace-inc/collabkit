@@ -1,6 +1,6 @@
 import { createTask } from './helpers/createTask';
 import { isValidUrl } from './helpers/isValidUrl';
-import * as admin from 'firebase-admin';
+import { ref } from './data/refs';
 
 export async function queueWebhookTask(
   props: {
@@ -13,11 +13,9 @@ export async function queueWebhookTask(
   },
   createTaskFn: typeof createTask = createTask
 ) {
-  const db = admin.database();
-
   const { projectId, appId, workspaceId, threadId, eventId, event } = props;
 
-  const url = (await db.ref(`/apps/${appId}/webhook/`).get()).val();
+  const url = (await ref`/apps/${appId}/webhook/`.get()).val();
 
   if (!url) {
     // console.log('No webhook url found for app', appId);

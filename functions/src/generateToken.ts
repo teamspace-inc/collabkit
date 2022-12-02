@@ -4,6 +4,7 @@ import * as admin from 'firebase-admin';
 import { updateUserAndWorkspace } from './actions/helpers/updateUserAndWorkspace';
 import { isValidUser } from './actions/helpers/isValidUser';
 import * as FirebaseId from './actions/data/FirebaseId';
+import { ref } from './actions/data/refs';
 
 const corsHandler = cors.default({ origin: true });
 
@@ -28,22 +29,19 @@ export async function handleRequest(
       case 'UNSECURED': {
         const { appId, apiKey } = request.query;
 
-        if (!appId) {
+        if (!appId || typeof appId !== 'string') {
           console.debug('"appId" not provided', appId);
           response.status(400).send({ status: 400, error: '"appId" not provided' });
           return;
         }
 
-        if (!apiKey) {
+        if (!apiKey || typeof apiKey !== 'string') {
           console.debug('"apiKey" not provided', apiKey);
           response.status(400).send({ status: 400, error: '"apiKey" not provided' });
           return;
         }
 
-        const snapshot = await admin
-          .database()
-          .ref(`/apps/${appId}/keys/${apiKey.toString()}/`)
-          .once('value');
+        const snapshot = await ref`/apps/${appId}/keys/${apiKey}/`.once('value');
 
         if (!snapshot.exists()) {
           console.debug('"apiKey" not found', appId);
@@ -84,7 +82,7 @@ export async function handleRequest(
           return;
         }
 
-        if (!apiKey) {
+        if (!apiKey || typeof apiKey !== 'string') {
           console.debug('"apiKey" not provided', apiKey);
           response.status(400).send({ status: 400, error: '"apiKey" not provided', apiKey });
           return;
@@ -123,10 +121,7 @@ export async function handleRequest(
           return;
         }
 
-        const snapshot = await admin
-          .database()
-          .ref(`/apps/${appId}/keys/${apiKey.toString()}/`)
-          .once('value');
+        const snapshot = await ref`/apps/${appId}/keys/${apiKey}/`.once('value');
 
         if (!snapshot.exists()) {
           console.debug('"apiKey" not found', appId);
@@ -136,7 +131,7 @@ export async function handleRequest(
 
         await updateUserAndWorkspace({ appId, userId, workspaceId, workspace, user });
 
-        const token = await admin.auth().createCustomToken(apiKey.toString(), {
+        const token = await admin.auth().createCustomToken(apiKey, {
           api: true,
           mode,
           appId: FirebaseId.encode(appId),

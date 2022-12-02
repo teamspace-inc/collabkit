@@ -1,6 +1,7 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 import * as cors from 'cors';
+import { ref } from './actions/data/refs';
 const corsHandler = cors.default({ origin: true });
 
 export const createApp = functions.https.onRequest(async (request, response) => {
@@ -28,12 +29,12 @@ export const createApp = functions.https.onRequest(async (request, response) => 
       };
 
       try {
-        const appRef = await admin.database().ref('/apps').push(app);
+        const appRef = await ref`/apps`.push(app);
         if (appRef.key) {
           try {
-            const adminRef = await admin.database().ref(`/adminApps/${uid}/${appRef.key}`);
+            const adminRef = ref`/adminApps/${uid}/${appRef.key}`;
             // create ".default" workspace here
-            adminRef.set(true);
+            await adminRef.set(true);
             response.status(201).send({
               status: 201,
               data: {

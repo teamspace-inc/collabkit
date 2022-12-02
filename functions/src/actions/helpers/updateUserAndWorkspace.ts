@@ -1,10 +1,10 @@
-import * as admin from 'firebase-admin';
 import * as functions from 'firebase-functions';
 import { isValidUser } from './isValidUser';
 import { deleteUndefinedProps } from './deleteUndefinedProps';
 import { WorkspaceProps, UserProps } from '../../types';
 import { isValidWorkspace } from './isValidWorkspace';
 import shuffle from 'lodash.shuffle';
+import { ref } from '../data/refs';
 
 const colors = [
   'amber',
@@ -52,7 +52,7 @@ export async function updateUserAndWorkspace(props: {
 
   const updates: { [path: string]: object | string | boolean } = {};
 
-  const colorSnapshot = await admin.database().ref(`/profiles/${appId}/${userId}/color`).get();
+  const colorSnapshot = await ref`/profiles/${appId}/${userId}/color`.get();
   if (!colorSnapshot.exists()) {
     user.color = getRandomColor();
   }
@@ -60,18 +60,15 @@ export async function updateUserAndWorkspace(props: {
   // contains an ancestor of the next set of updates
   // so we need to do this one first
   if (workspaceId !== 'default' && isValidWorkspace(workspace)) {
-    await admin
-      .database()
-      .ref(`/workspaces/${appId}/${workspaceId}/`)
-      .update(deleteUndefinedProps(workspace));
+    await ref`/workspaces/${appId}/${workspaceId}/`.update(deleteUndefinedProps(workspace));
   }
 
   if (isValidUser(user)) {
-    updates[`/profiles/${appId}/${userId}/`] = deleteUndefinedProps(user);
-    updates[`/workspaces/${appId}/${workspaceId}/profiles/${userId}/`] = true;
+    updates[ref.path`/profiles/${appId}/${userId}/`] = deleteUndefinedProps(user);
+    updates[ref.path`/workspaces/${appId}/${workspaceId}/profiles/${userId}/`] = true;
   } else if (user != null) {
     functions.logger.warn('Invalid profile. Skipping user profile update.', { user });
   }
 
-  await admin.database().ref('/').update(updates);
+  await ref`/`.update(updates);
 }

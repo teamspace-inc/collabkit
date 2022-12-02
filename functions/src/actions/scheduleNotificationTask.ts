@@ -1,7 +1,5 @@
 import { createTask } from './helpers/createTask';
-import * as admin from 'firebase-admin';
-
-const db = admin.database();
+import { ref } from './data/refs';
 
 export async function scheduleNotificationTask(props: {
   appId: string;
@@ -13,7 +11,7 @@ export async function scheduleNotificationTask(props: {
 }) {
   const { appId, workspaceId, threadId, eventId, projectId, event } = props;
 
-  const delayMs = (await db.ref(`/apps/${appId}/emailBatchDelayMs/`).get()).val();
+  const delayMs = (await ref`/apps/${appId}/emailBatchDelayMs/`.get()).val();
 
   if (!delayMs || typeof delayMs !== 'number') {
     console.log('[scheduleNotificationTask] no emailBatchDelayMs');

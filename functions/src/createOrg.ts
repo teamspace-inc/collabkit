@@ -2,6 +2,7 @@ import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 import * as cors from 'cors';
 import { App, Org, OrgApps } from './types';
+import { ref } from './actions/data/refs';
 const corsHandler = cors.default({ origin: true });
 
 async function generateId() {
@@ -76,17 +77,14 @@ export const createOrg = functions.https.onRequest(async (request, response) => 
       };
 
       try {
-        await admin
-          .database()
-          .ref(`/`)
-          .update({
-            [`orgs/${orgId}`]: org,
-            [`apps/${appId}`]: app,
-            [`apps/${secureAppId}`]: secureApp,
-            [`orgApps/${orgId}/${appId}`]: true,
-            [`orgApps/${orgId}/${secureAppId}`]: true,
-            [`adminOrgs/${uid}/${orgId}`]: true,
-          });
+        await ref`/`.update({
+          [ref.path`orgs/${orgId}`]: org,
+          [ref.path`apps/${appId}`]: app,
+          [ref.path`apps/${secureAppId}`]: secureApp,
+          [ref.path`orgApps/${orgId}/${appId}`]: true,
+          [ref.path`orgApps/${orgId}/${secureAppId}`]: true,
+          [ref.path`adminOrgs/${uid}/${orgId}`]: true,
+        });
         try {
           response.status(201).send({
             status: 201,

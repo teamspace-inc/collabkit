@@ -1,4 +1,5 @@
 import * as admin from 'firebase-admin';
+import { ref } from '../../../actions/data/refs';
 
 import { updateUserAndWorkspace } from '../../../actions/helpers/updateUserAndWorkspace';
 
@@ -16,7 +17,7 @@ describe('updateUserAndWorkspace', () => {
       },
     });
 
-    const user = await (await admin.database().ref(`/profiles/${appId}/${userId}`).get()).val();
+    const user = (await ref`/profiles/${appId}/${userId}`.get()).val();
     expect(user).toStrictEqual({
       name: 'Bob',
       email: 'bob@example.com',
