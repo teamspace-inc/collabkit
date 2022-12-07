@@ -1,18 +1,18 @@
 import { Link } from 'wouter';
-import { vars } from '../styles/Theme.css';
 import * as styles from '../styles/Website.css';
 
 export function GetStartedButton(props: {
   style?: React.CSSProperties;
   size?: 'small' | 'medium' | 'large';
+  type?: 'primary' | 'secondary' | 'tertiary'
 }) {
   return (
     <Link
-      className={styles.button({ type: 'primary', size: props.size ?? 'large' })}
-      style={{ ...props.style, color: `${vars.color.bgContrastLowest}` }}
+      className={styles.button({ type: props.type ?? 'secondary', size: props.size ?? 'medium' })}
+      style={{ ...props.style }}
       to="/getstarted"
     >
-      Get started
+      Start for free
     </Link>
   );
 }
