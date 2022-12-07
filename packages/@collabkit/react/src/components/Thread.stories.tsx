@@ -34,22 +34,52 @@ export const Threads = () => (
   </ProviderPropsContext.Consumer>
 );
 
-export const WithThemeProvider = () => (
+export const DarkTheme = () => (
   <>
     <ThemeProvider theme="dark">
-      <Thread threadId="thread-stories" />
-    </ThemeProvider>
-    <ThemeProvider theme="light">
-      <Thread threadId="thread-stories" />
+      <FixedSize>
+        <Thread threadId="thread-stories" />
+      </FixedSize>
     </ThemeProvider>
   </>
 );
 
-export const WithHeader = () => (
+
+export const ShowHeader = () => (
   <FixedSize>
     <Thread threadId="thread-stories" showHeader />
   </FixedSize>
 );
+
+export const AutoFocusOff = () => (
+  <FixedSize>
+    <Thread threadId="thread-stories" autoFocus={false} />
+  </FixedSize>
+)
+
+export const HideComposer = () => (
+  <FixedSize>
+    <Thread threadId="thread-stories" hideComposer={true} />
+  </FixedSize>
+)
+
+export const ThreadInfoName = () => (
+  <FixedSize>
+    <Thread threadId="thread-stories" info={{ name: "Thread Stories" }} />
+  </FixedSize>
+)
+
+export const ThreadInfoURL = () => (
+  <FixedSize>
+    <Thread threadId="thread-stories" info={{ url: "https://localhost:61000/something" }} />
+  </FixedSize>
+)
+
+export const DefaultSubscribers = () => (
+  <FixedSize>
+    <Thread threadId="thread-stories" defaultSubscribers={['user1']} />
+  </FixedSize>
+)
 
 export default {
   decorators: [

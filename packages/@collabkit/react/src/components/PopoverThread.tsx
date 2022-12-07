@@ -9,7 +9,7 @@ import { Scrollable } from './Scrollable';
 import Composer from './composer/Composer';
 import { OptionalThreadProps, ThreadProps } from '../types';
 
-export type PopoverThreadProps = PopoverContentProps &
+export type PopoverThreadProps = Omit<PopoverContentProps, 'children'> &
   PopoverTriggerProps &
   ObjectProps &
   OptionalThreadProps;
