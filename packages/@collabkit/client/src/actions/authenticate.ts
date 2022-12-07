@@ -47,7 +47,9 @@ export async function authenticate(store: Store) {
 
     store.userId = userId;
 
-    // user is null when generateToken is called with user={}
+    // user is null when we have an anonymous user
+    // as we know given a valid token generateToken succeeded
+    // for anonymous users we fallback to a blankish user object
     store.user = user ?? { id: userId, userId };
 
     store.workspaceId = workspaceId;
