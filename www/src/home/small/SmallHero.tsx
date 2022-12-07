@@ -4,6 +4,7 @@ import UISmallPng from '../../assets/graph.png';
 import { useHeaderStyle } from '../../hooks/useHeaderStyle';
 import { vars } from '../../styles/Theme.css';
 import { GetStartedButton } from '../GetStartedButton';
+import { CTA } from '../CTA';
 
 export function SmallHero() {
   const { ref } = useHeaderStyle({ backgroundColor: vars.color.yellow, theme: 'light' });
@@ -20,7 +21,7 @@ export function SmallHero() {
           <br /> your product with our
           <br /> customisable React SDK
         </h3>
-        <GetStartedButton size="medium" />
+        <CTA />
         <div
           style={{
             display: 'flex',

@@ -1,6 +1,5 @@
 import * as styles from '../styles/home/Hero.css';
 import { useFloatingNodeId, useFloating, autoUpdate } from '@floating-ui/react-dom-interactions';
-import { GetStartedButton } from './GetStartedButton';
 
 import UISvg from '../assets/home/hero/ui.svg';
 import { HeroMessage, HERO_MESSAGES } from './HeroMessage';
@@ -9,6 +8,7 @@ import { vars } from '../styles/Theme.css';
 import { store } from './Header';
 import { useEffect } from 'react';
 import { useWindowSize } from '../hooks/useWindowSize';
+import { CTA } from './CTA';
 
 export function Hero() {
   const { ref } = useHeaderStyle({
@@ -52,7 +52,7 @@ export function Hero() {
     <section ref={ref} className={styles.section}>
       <h1 className={styles.h1}>{title}</h1>
       <h3>{description}</h3>
-      <GetStartedButton />
+      <CTA size="large" />
       <div
         ref={floating}
         style={{

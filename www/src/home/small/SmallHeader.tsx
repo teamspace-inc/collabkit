@@ -67,7 +67,10 @@ export function SmallHeader(props: { children?: React.ReactNode }) {
                   Docs
                 </Link>
                 <Link className={smallLink} onClick={() => setLocation('/getstarted')}>
-                  Get Started
+                  Start building
+                </Link>
+                <Link className={smallLink} onClick={() => window.location.href = ('https://calendly.com/namit-chadha/collabkit-demo')}>
+                  Request demo
                 </Link>
               </>
             )}

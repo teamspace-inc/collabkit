@@ -37,6 +37,13 @@ export const rightLinks = style({
   flexDirection: 'row',
   gap: '80px',
   alignItems: 'center',
+
+
+  '@media': {
+    'screen and (max-width: 960px)': {
+      gap: 40,
+    },
+  },
 });
 
 globalStyle(`${rightLinks} a`, {
@@ -61,6 +68,7 @@ export const smallLink = style({
   lineHeight: '36px',
   textAlign: 'center',
   color: vars.color.textContrastHigh,
+  cursor: 'pointer'
 });
 
 export const smallLinkList = style({

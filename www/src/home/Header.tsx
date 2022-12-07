@@ -1,12 +1,12 @@
 import { Link } from '../UIKit';
 import { LogoImg } from '../Logo';
-import { GetStartedButton } from './GetStartedButton';
 import { a, website } from '../styles/Website.css';
 import { content, rightLinks, root } from '../styles/Header.css';
 import { proxy, useSnapshot } from 'valtio';
 import { dark, light } from '../styles/Theme.css';
 import { useLocation } from 'wouter';
 import React, { useCallback } from 'react';
+import { CTA } from './CTA';
 
 export const store = proxy<{
   backgroundColor: string;
@@ -96,9 +96,7 @@ function HeaderRightLinks() {
       <Link className={a} onClick={() => setLocation('/docs/introduction')}>
         Docs
       </Link>
-      <div style={{ position: 'relative' }}>
-        <GetStartedButton />
-      </div>
+      <CTA />
     </div>
   );
 }

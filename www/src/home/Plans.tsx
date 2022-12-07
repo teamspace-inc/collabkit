@@ -5,6 +5,7 @@ import { card, li, ul } from '../styles/Home.css';
 import { V12 } from '../UIKit';
 import { vars } from '../styles/Theme.css';
 import { useHeaderStyle } from '../hooks/useHeaderStyle';
+import { RequestDemoButton } from './RequestDemoButton';
 
 function FeatureList(props: { children: React.ReactNode }) {
   return (
@@ -46,11 +47,10 @@ export const PLANS = (
       <small>$0.50 per additonal user.</small>
       <V12 />
       <GetStartedButton
+        type="secondary"
         style={{
           display: 'flex',
           width: '100%',
-          background: vars.color.textContrastHigh,
-          color: 'white',
         }}
       />
     </div>
@@ -74,7 +74,7 @@ export const PLANS = (
       </FeatureList>
       <small>$0.50 per additonal user.</small>
       <V12 />
-      <GetStartedButton
+      <RequestDemoButton
         style={{
           display: 'flex',
           width: '100%',
@@ -104,7 +104,7 @@ export const PLANS = (
       </FeatureList>
       <small>$0.50 per additonal user.</small>
       <V12 />
-      <GetStartedButton
+      <RequestDemoButton
         style={{
           display: 'flex',
           width: '100%',
@@ -133,7 +133,7 @@ export const PLANS = (
       <br />
       <br />
       <V12 />
-      <GetStartedButton
+      <RequestDemoButton
         style={{
           width: '100%',
           textAlign: 'center',
