@@ -45,12 +45,13 @@ export async function authenticate(store: Store) {
 
     const user = await store.sync.getUser({ appId, userId });
 
-    if (!user) {
-      throw new Error('User not found');
-    }
-
     store.userId = userId;
-    store.user = user;
+
+    // user is null when we have an anonymous user
+    // as we know given a valid token generateToken succeeded
+    // for anonymous users we fallback to a blankish user object 
+    store.user = user ?? { id: userId, userId };
+
     store.workspaceId = workspaceId;
     store.workspaces[workspaceId] = createWorkspace();
 
