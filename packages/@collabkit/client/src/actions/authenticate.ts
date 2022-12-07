@@ -47,12 +47,7 @@ export async function authenticate(store: Store) {
 
     store.userId = userId;
 
-    // user is null when we have an anonymous user
-    // as we know given a valid token generateToken succeeded
-    // for anonymous users we fallback to a blankish user object
-    // the reason this occurs is because you can provide user={} to
-    // generateToken, which is then saved to firebase
-    // and firebase marks empty objects as null
+    // user is null when generateToken is called with user={}
     store.user = user ?? { id: userId, userId };
 
     store.workspaceId = workspaceId;
