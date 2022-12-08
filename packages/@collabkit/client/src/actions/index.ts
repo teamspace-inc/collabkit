@@ -21,6 +21,7 @@ import { focus } from './focus';
 import { blur } from './blur';
 import { subscribeThread } from './subscribeThread';
 import { reopenThread } from './reopenThread';
+import { subscribeProfile } from './subscribeProfile';
 import { subscribeOpenThreads } from './subscribeOpenThreads';
 import { subscribeWorkspace } from './subscribeWorkspace';
 import { subscribeProfiles } from './subscribeProfiles';
@@ -147,6 +148,7 @@ export const actions = {
   subscribeWorkspace,
   toggleCommentReaction,
   toggleEmojiReactionPicker,
+  subscribeProfile,
   unhover,
   updateComment,
   viewThread,

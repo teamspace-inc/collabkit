@@ -1,4 +1,4 @@
-import { getConfig } from './index';
+import { actions, getConfig } from './index';
 import type { Sync, ThreadInfo, Store } from '@collabkit/core';
 import { createComposer } from '../store';
 
@@ -26,10 +26,10 @@ export async function subscribeThread(
         ...event.event,
         id: event.eventId,
       };
-      if (store.profiles[event.event.createdById]) {
+      actions.subscribeProfile(store, event.event.createdById, () => {
         store.workspaces[event.workspaceId].timeline[event.threadId][event.eventId].hasProfile =
           true;
-      }
+      });
     },
     onThreadTypingChange: ({ workspaceId, threadId, userId, isTyping }: Sync.TypingEvent) => {
       store.workspaces[workspaceId].composers[threadId].isTyping[userId] = isTyping;
