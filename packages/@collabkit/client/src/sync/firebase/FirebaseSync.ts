@@ -56,7 +56,8 @@ export function initFirebase() {
 }
 
 export class FirebaseSync implements Sync.SyncAdapter {
-  constructor() {
+  constructor(options = { test: false }) {
+    if (options.test) return;
     initFirebase();
   }
 
@@ -75,7 +76,8 @@ export class FirebaseSync implements Sync.SyncAdapter {
           }
         : null,
 
-      // there's a pitfall here, if info is null the thread will not be marked as open... we should keep info separate or just say it has no info here
+      // there's a pitfall here, if info is null the thread will not be marked as open...
+      // we should keep info separate or just say it has no info here
       [`/views/openThreads/${data.appId}/${data.workspaceId}/${data.threadId}`]: data.isOpen
         ? { meta: data.info?.meta ?? null }
         : null,
