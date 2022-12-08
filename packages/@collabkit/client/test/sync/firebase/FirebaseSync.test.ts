@@ -2,7 +2,7 @@ import { get } from 'firebase/database';
 import { nanoid } from 'nanoid';
 import { expect, test, describe, beforeAll } from 'vitest';
 import { FirebaseSync } from '../../../src/sync/firebase/FirebaseSync';
-import { ref } from '../../../src/sync/firebase/refs';
+import { ref, userTypingRef } from '../../../src/sync/firebase/refs';
 import { setup } from '../../setup';
 
 setup();
@@ -64,8 +64,6 @@ describe('FirebaseSync', () => {
     expect(sync).toBeDefined();
   });
 
-  test('updateUserAndWorkspace', () => {});
-
   test('start+stop typing', async () => {
     const threadId = nanoid();
 
@@ -76,7 +74,7 @@ describe('FirebaseSync', () => {
       threadId,
     });
 
-    const snapshot = await get(ref`/isTyping/${appId}/${workspaceId}/${threadId}/${userId}`);
+    let snapshot = await get(ref`/isTyping/${appId}/${workspaceId}/${threadId}/${userId}`);
     expect(snapshot.exists()).toBe(true);
     expect(snapshot.val()).toBe(true);
 
@@ -87,8 +85,9 @@ describe('FirebaseSync', () => {
       threadId,
     });
 
+    snapshot = await get(ref`/isTyping/${appId}/${workspaceId}/${threadId}/${userId}`);
     expect(snapshot.exists()).toBe(false);
-    expect(snapshot.val()).toBe(false);
+    expect(snapshot.val()).toBe(null);
   });
 
   test('sendMessage', () => {});
