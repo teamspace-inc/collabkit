@@ -2,7 +2,7 @@ import { get } from 'firebase/database';
 import { nanoid } from 'nanoid';
 import { expect, test, describe, beforeAll } from 'vitest';
 import { FirebaseSync } from '../../../src/sync/firebase/FirebaseSync';
-import { ref, userTypingRef } from '../../../src/sync/firebase/refs';
+import { ref } from '../../../src/sync/firebase/refs';
 import { setup } from '../../setup';
 
 setup();
@@ -19,6 +19,7 @@ let token: string;
 import admin from 'firebase-admin';
 import { getAuth, signInWithCustomToken } from 'firebase/auth';
 import { getApp } from 'firebase/app';
+import { Sync } from '@collabkit/core';
 
 describe('FirebaseSync', () => {
   beforeAll(async () => {
@@ -88,6 +89,20 @@ describe('FirebaseSync', () => {
     snapshot = await get(ref`/isTyping/${appId}/${workspaceId}/${threadId}/${userId}`);
     expect(snapshot.exists()).toBe(false);
     expect(snapshot.val()).toBe(null);
+  });
+
+  test('saveProfile + getProfile', async () => {
+    let newUserId = nanoid();
+
+    const profile: Sync.ServerProfile = {
+      name: 'Test User',
+      email: 'test@acme.com',
+    };
+
+    await sync.saveProfile({ appId, userId: newUserId, workspaceId, profile });
+
+    const savedProfile = await sync.getProfile({ appId, userId: newUserId });
+    expect(savedProfile).toStrictEqual({ ...profile, id: newUserId, color: expect.any(String) });
   });
 
   test('sendMessage', () => {});

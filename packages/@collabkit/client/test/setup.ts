@@ -29,5 +29,5 @@ import { initializeAuth } from 'firebase/auth';
 admin.initializeApp({
   databaseURL: TEST_DB.databaseURL,
   // @ts-ignore
-  credential: admin.credential.cert(require(process.env.VITE_FIREBASE_TEST_SERVICE_ACCOUNT)),
+  credential: admin.credential.cert(JSON.parse(process.env.VITE_FIREBASE_TEST_SERVICE_ACCOUNT)),
 });
