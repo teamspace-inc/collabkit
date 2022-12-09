@@ -17,7 +17,7 @@ import { useOnMarkdownLinkClick } from '../../hooks/useOnMarkdownLinkClick';
 import { useThreadContext } from '../../hooks/useThreadContext';
 import { TargetContext } from '../Target';
 import { useTarget } from '../../hooks/useTarget';
-import * as styles from '../../styles/components/Composer.css';
+import * as styles from '@collabkit/theme/components/Composer.css';
 import { useOptionalCommentContext } from '../../hooks/useCommentContext';
 import { useSnapshot } from 'valtio';
 import { $getRoot, $setSelection } from 'lexical';

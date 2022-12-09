@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSidebarButton } from '../hooks/public/useSidebarButton';
 import { useUnreadThreadsCount } from '../hooks/public/useUnreadThreadsCount';
-import { inboxButton } from '../styles/components/InboxButton.css';
+import { inboxButton } from '@collabkit/theme/components/InboxButton.css';
 
 import CommentIcon from './Comment.svg';
 import CommentNotificationIcon from './CommentNotification.svg';

@@ -6,7 +6,7 @@ import { ThreadContext } from '../hooks/useThreadContext';
 import Profile from './Profile';
 import Composer from './composer/Composer';
 import { ThemeWrapper } from './ThemeWrapper';
-import * as styles from '../styles/components/Thread.css';
+import * as styles from '@collabkit/theme/components/Thread.css';
 import { ChatCentered } from './icons';
 import CommentList from './CommentList';
 import { ThreadFacepile } from './ThreadFacepile';

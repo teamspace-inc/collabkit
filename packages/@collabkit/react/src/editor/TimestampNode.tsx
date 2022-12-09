@@ -26,7 +26,6 @@ function convertTimestampElement(domNode: Node): DOMConversionOutput {
   };
 }
 
-// find a way to hook this up to the Stitches theme
 const timestampStyle = `font-weight: 700`;
 export class TimestampNode extends TextNode {
   __timestamp: string;

@@ -9,7 +9,7 @@ import {
   SerializedTextNode,
   TextNode,
 } from 'lexical';
-import { mentionStyle } from '../styles/components/MentionsPlugin.css';
+import { mentionStyle } from '@collabkit/theme/components/MentionsPlugin.css';
 
 export type SerializedMentionNode = Spread<
   {
@@ -34,8 +34,6 @@ function convertMentionElement(domNode: Node): DOMConversionOutput {
     node,
   };
 }
-
-// find a way to hook this up to the Stitches theme
 
 export class MentionNode extends TextNode {
   __id: string;

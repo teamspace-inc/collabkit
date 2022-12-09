@@ -25,7 +25,8 @@
       "@collabkit/colors": ["../colors/src"],
       "@collabkit/core": ["../core/src"],
       "@collabkit/react-scroll-area": ["../react-scroll-area/src"],
-      "@collabkit/theme": ["../theme/src"]
+      "@collabkit/theme": ["../theme/src"],
+      "@collabkit/theme/*": ["../theme/src/*"]
     },
     "rootDir": "../../../"
   },

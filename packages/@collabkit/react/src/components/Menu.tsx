@@ -31,7 +31,7 @@ import { IconButton } from './IconButton';
 import { ThemeWrapper } from './ThemeWrapper';
 import { useApp } from '../hooks/useApp';
 import { useSnapshot } from 'valtio';
-import { menu, menuItem } from '../styles/components/Menu.css';
+import { menu, menuItem } from '@collabkit/theme/components/Menu.css';
 import { MenuTarget, Target } from '@collabkit/core';
 
 export const MenuItem = forwardRef<

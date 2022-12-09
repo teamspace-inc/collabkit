@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import * as ScrollArea from '@collabkit/react-scroll-area';
-import * as styles from '../styles/components/ScrollArea.css';
+import * as styles from '@collabkit/theme/components/ScrollArea.css';
 
 const ScrollAreaRoot: React.ForwardRefExoticComponent<
   ScrollArea.ScrollAreaProps & React.RefAttributes<HTMLDivElement>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useThreadContext } from '../hooks/useThreadContext';
 import { useUnreadCount } from '..';
-import { unreadDot } from '../styles/components/InboxItem.css';
+import { unreadDot } from '@collabkit/theme/components/InboxItem.css';
 
 export function ThreadUnreadDot(props: React.ComponentPropsWithoutRef<'div'>) {
   const { threadId } = useThreadContext();

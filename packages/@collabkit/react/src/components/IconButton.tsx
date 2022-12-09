@@ -1,7 +1,7 @@
 import { IconContext } from './icons';
 import React, { forwardRef } from 'react';
-import * as styles from '../styles/components/IconButton.css';
-import { vars } from '../styles/theme/index.css';
+import * as styles from '@collabkit/theme/components/IconButton.css';
+import { vars } from '@collabkit/theme/theme/index.css';
 
 type Props = {
   children: React.ReactNode;

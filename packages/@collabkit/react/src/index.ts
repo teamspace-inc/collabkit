@@ -8,7 +8,7 @@ import type {
 } from '@collabkit/core';
 
 import type { AvatarProps } from './types';
-import type { CustomTheme } from './styles/themes.css';
+import type { CustomTheme } from '@collabkit/theme/themes.css';
 
 import { CollabKitProvider } from './components/Provider';
 import { Thread } from './components/Thread';

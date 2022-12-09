@@ -4,9 +4,13 @@
   "private": true,
   "main": "src/index.ts",
   "module": "src/index.ts",
+  "exports": {
+    ".": "./src/index.css.ts",
+    "./themes.css": "./src/themes.css.ts",
+    "./theme/": "./src/theme/",
+    "./components/": "./src/components/"
+  },
   "dependencies": {
-    "@collabkit/colors": "^0.0.0",
-    "@collabkit/core": "^0.0.0",
-    "@stitches/react": "^1.2.8"
+    "@collabkit/core": "^0.0.0"
   }
 }
