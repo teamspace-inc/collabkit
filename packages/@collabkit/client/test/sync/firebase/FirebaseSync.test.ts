@@ -105,5 +105,54 @@ describe('FirebaseSync', () => {
     expect(savedProfile).toStrictEqual({ ...profile, id: newUserId, color: expect.any(String) });
   });
 
-  test('sendMessage', () => {});
+  test('sendMessage + subscribeThread', async () => {
+    const subs = {};
+
+    const threadId = nanoid();
+
+    const event = new Promise((resolve) => {
+      sync.subscribeThread({
+        appId,
+        workspaceId,
+        threadId,
+        subs,
+        onTimelineEventAdded: (event) => {
+          console.log(event);
+          resolve(event);
+        },
+        onThreadTypingChange: (event) => {},
+        onThreadSeenByUser: (event) => {},
+        onThreadInfo: (event) => {},
+      });
+    });
+
+    const { id } = await sync.sendMessage({
+      appId,
+      userId,
+      workspaceId,
+      threadId,
+      preview: 'Test Message',
+      event: {
+        type: 'message',
+        body: 'Test Message',
+        createdAt: Date.now(),
+        createdById: userId,
+      },
+    });
+
+    const savedEvent = await event;
+    expect(savedEvent).toStrictEqual({
+      event: {
+        type: 'message',
+        body: 'Test Message',
+        createdAt: expect.any(Number),
+        createdById: userId,
+        mentions: [],
+        id,
+      },
+      eventId: id,
+      threadId,
+      workspaceId,
+    });
+  });
 });
