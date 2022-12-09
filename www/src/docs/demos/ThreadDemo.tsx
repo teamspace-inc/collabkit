@@ -5,11 +5,11 @@ export function ThreadDemo(props: { className?: string }) {
     <div className={props.className}>
       <div
         style={{
-          height: '320px',
-          width: '280px',
+          height: 320,
+          width: 320,
         }}
       >
-        <Thread threadId={'thread3'} style={{ width: 320 }} autoFocus={false} />
+        <Thread threadId={'thread3'} autoFocus={false} />
       </div>
     </div>
   );

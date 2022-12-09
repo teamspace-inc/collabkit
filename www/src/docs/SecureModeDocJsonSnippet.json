@@ -1,0 +1,15 @@
+{
+  "mode": "SECURED",
+  "appId": "your APP ID here",
+  "apiKey": "your API Key here",
+  "userId": "your user ID here",
+  "user": {
+    "name": "Jane Doe", // optional
+    "email": "jane@example.com", // optional
+    "avatar": "https://example.com/jane.jpg" // optional
+  },
+  "workspaceId": "acme",
+  "workspace": {
+    "name": "ACME Corporation" // optional
+  }
+}

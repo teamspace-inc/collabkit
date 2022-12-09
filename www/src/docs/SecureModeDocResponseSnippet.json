@@ -1,0 +1,10 @@
+{
+  "status": 201,
+  "data": {
+    "appId": "given APP ID",
+    "mode": "SECURED",
+    "token": "generated per user token", // pass this to <CollabKitProvider token={token}/>
+    "userId": "user ID",
+    "workspaceId": "workspace ID"
+  }
+}

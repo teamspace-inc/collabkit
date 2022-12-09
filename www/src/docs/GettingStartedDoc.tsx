@@ -2,6 +2,8 @@ import { docStep, inset } from '../styles/Docs.css';
 import { renderCodeSnippet } from './CodeEditor';
 import { ThreadDemo } from './demos/ThreadDemo';
 import { DocDemoContainer, DocLink } from './Doc';
+import GettingStartedDocProviderSnippet from './GettingStartedDocProviderSnippet?raw';
+import GettingStartedDocThreadSnippet from './GettingStartedDocThreadSnippet?raw';
 
 export function GettingStartedDoc() {
   return (
@@ -36,35 +38,11 @@ export function GettingStartedDoc() {
         <p>
           Be sure to pass in <code>user</code> and <code>workspace</code> details.
         </p>
-        {renderCodeSnippet(`import { CollabKitProvider } from '@collabkit/react';
-
-export default function App() {
-  return (
-    <CollabKitProvider 
-      appId={'your APP ID here'} 
-      apiKey={'your API Key here'}
-      user={{
-        id: 'jane',
-        name: 'Jane Doe',
-        email: 'jane@example.com'
-      }}
-      workspace={{
-        id: 'acme',
-        name: 'ACME Corporation'
-      }}>
-      mentionableUsers={[]}
-      {/* your app code here */}
-    </CollabKitProvider>
-  );
-}`)}
+        {renderCodeSnippet(GettingStartedDocProviderSnippet)}
       </div>
       <div className={inset}>
         <h3 className={docStep}>Add a Thread to your app</h3>
-        {renderCodeSnippet(`import { Thread } from '@collabkit/react';
-
-<div style={{ width: 280, height: 320 }}>
-  <Thread threadId={'unique ID here'} />
-</div>;`)}
+        {renderCodeSnippet(GettingStartedDocThreadSnippet)}
         <div>
           <p>
             You should see a <code className="ReactNode">{'<Thread />'}</code> like the one below:

@@ -1,9 +1,5 @@
 import { docStep, inset } from '../styles/Docs.css';
 import { renderCodeSnippet } from './CodeEditor';
-import SecureModeDocNodeSnippet from './SecureModeDocNodeSnippet?raw';
-import SecureModeDocResponseSnippet from './SecureModeDocResponseSnippet?raw';
-import SecureModeDocJsonSnippet from './SecureModeDocJsonSnippet?raw';
-import SecureModeDocReactSnippet from './SecureModeDocReactSnippet?raw';
 
 export function SecureModeDoc() {
   return (
@@ -30,7 +26,30 @@ export function SecureModeDoc() {
           <p>
             Install <code>@collabkit/node</code> and call <code>getUserToken</code>.
           </p>
-          {renderCodeSnippet(SecureModeDocNodeSnippet)}
+          {renderCodeSnippet(`import { getUserToken } from '@collabkit/node';
+          
+cons response = await getUserToken({
+  appId: 'your APP ID here',
+  apiKey: 'your API Key here',
+  userId: 'jane',
+  workspaceId: 'acme'
+  user: {
+    name: 'Jane Doe', // optional
+    email: 'jane@example.com' // optional
+    avatar: 'https://example.com/jane.jpg' // optional
+  },
+  workspace: {
+    name: 'ACME Corporation' // optional
+  }
+});
+
+let token;
+if (response?.status === 201) {
+  token = response.data.token;
+  // pass token to client
+} else {
+  throw new Error('Failed to generate token');
+}`)}
           <br />
           <h4>For everything else (HTTP request)</h4>
 
@@ -38,15 +57,48 @@ export function SecureModeDoc() {
             Generate a token by making a <code>POST</code> request to{' '}
             <code>https://token.collabkit.dev</code> with the following JSON payload. <br />
             <br />
-            {renderCodeSnippet(SecureModeDocJsonSnippet)}
+            {renderCodeSnippet(`{
+  "mode": "SECURED",
+  "appId": "your APP ID here",
+  "apiKey": "your API Key here",
+  "userId": "your user ID here",
+  "user": {
+    "name": "Jane Doe", // optional
+    "email": "jane@example.com", // optional
+    "avatar": "https://example.com/jane.jpg" // optional
+  },
+  "workspaceId": "acme",
+  "workspace": {
+    "name": "ACME Corporation" // optional
+  },
+}`)}
             <p>You'll receive a response of the format:</p>
-            {renderCodeSnippet(SecureModeDocResponseSnippet)}
+            {renderCodeSnippet(`{
+  "status": 201,
+  "data": {
+    "appId": "given APP ID",;
+    "mode": "SECURED";
+    "token": "generated per user token"; // pass this to <CollabKitProvider token={token}/>
+    "userId": "user ID";
+    "workspaceId": "workspace ID";
+  }
+}`)}
           </p>
         </div>
       </div>
       <div className={inset}>
         <h3 className={docStep}>Pass the token to the CollabKitProvider on the client</h3>
-        {renderCodeSnippet(SecureModeDocReactSnippet)}
+        {renderCodeSnippet(`import { CollabKitProvider } from '@collabkit/react';
+
+export default function App() {
+  return (
+    <CollabKitProvider 
+      appId={'your APP ID here'} 
+      token={'per user token generated on the server here'}
+      mentionableUsers={'allWorkspace'}
+    </CollabKitProvider>
+  );
+}`)}
       </div>
       <div className={inset}>
         <h3 className={docStep}>Done!</h3>
