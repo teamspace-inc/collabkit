@@ -39,6 +39,14 @@ function ThreadProvider(props: ThreadProps & { children: React.ReactNode }) {
   return <ThreadContext.Provider value={value}>{props.children}</ThreadContext.Provider>;
 }
 
+function ThreadRoot(props: React.ComponentPropsWithoutRef<'div'>) {
+  return <div {...props} className={props.className ?? styles.root} />;
+}
+
+function ThreadHeader(props: React.ComponentPropsWithoutRef<'div'>) {
+  return <div {...props} className={props.className ?? styles.header} />;
+}
+
 export function Thread(props: ThreadProps) {
   const { threadId, info, defaultSubscribers } = props;
   const { store } = useApp();
@@ -52,22 +60,24 @@ export function Thread(props: ThreadProps) {
   }
 
   return (
-    <ThreadProvider {...props}>
+    <Thread.Provider {...props}>
       <Profile.Provider profileId={userId}>
         <ThemeWrapper>
-          <div className={styles.root} style={props.style}>
-            {props.showHeader && <div className={styles.header}>Comments</div>}
+          <Thread.Root className={props.className} style={props.style}>
+            {props.showHeader && <Thread.Header>Comments</Thread.Header>}
             <Scrollable autoScroll="bottom">
               <CommentList hideResolveButton={props.hideResolveButton} />
             </Scrollable>
             {props.hideComposer ? null : <Composer />}
-          </div>
+          </Thread.Root>
         </ThemeWrapper>
       </Profile.Provider>
-    </ThreadProvider>
+    </Thread.Provider>
   );
 }
 
+Thread.Root = ThreadRoot;
+Thread.Header = ThreadHeader;
 Thread.Provider = ThreadProvider;
 Thread.Facepile = ThreadFacepile;
 Thread.UnreadDot = ThreadUnreadDot;

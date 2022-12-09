@@ -12,6 +12,7 @@ export type ThreadProps = {
   info?: Omit<ThreadInfo, 'defaultSubscribers'>;
   defaultSubscribers?: string[];
   style?: React.CSSProperties;
+  className?: string;
 } & OptionalThreadProps;
 
 export type OptionalThreadProps = {
