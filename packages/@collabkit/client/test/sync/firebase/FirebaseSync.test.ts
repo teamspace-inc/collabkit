@@ -19,7 +19,7 @@ let token: string;
 import admin from 'firebase-admin';
 import { getAuth, signInWithCustomToken } from 'firebase/auth';
 import { getApp } from 'firebase/app';
-import { Sync } from '@collabkit/core';
+import { Subscriptions, Sync, ThreadInfo } from '@collabkit/core';
 
 describe('FirebaseSync', () => {
   beforeAll(async () => {
@@ -105,8 +105,8 @@ describe('FirebaseSync', () => {
     expect(savedProfile).toStrictEqual({ ...profile, id: newUserId, color: expect.any(String) });
   });
 
-  test('sendMessage + subscribeThread', async () => {
-    const subs = {};
+  test('sendMessage', async () => {
+    const subs: Subscriptions = {};
 
     const threadId = nanoid();
 
@@ -117,7 +117,6 @@ describe('FirebaseSync', () => {
         threadId,
         subs,
         onTimelineEventAdded: (event) => {
-          console.log(event);
           resolve(event);
         },
         onThreadTypingChange: (event) => {},
@@ -141,6 +140,9 @@ describe('FirebaseSync', () => {
     });
 
     const savedEvent = await event;
+
+    Object.values(subs).map((sub) => sub());
+
     expect(savedEvent).toStrictEqual({
       event: {
         type: 'message',
@@ -153,6 +155,107 @@ describe('FirebaseSync', () => {
       eventId: id,
       threadId,
       workspaceId,
+    });
+  });
+
+  test('subscribeInbox', async () => {
+    const subs: Subscriptions = {};
+
+    const inbox = new Promise((resolve) => {
+      sync.subscribeInbox({
+        appId,
+        workspaceId,
+        subs,
+        onInboxChange: resolve,
+      });
+    });
+
+    const threadId = nanoid();
+
+    const { id } = await sync.sendMessage({
+      appId,
+      userId,
+      workspaceId,
+      threadId,
+      preview: 'Test Message',
+      event: {
+        type: 'message',
+        body: 'Test Message',
+        createdAt: Date.now(),
+        createdById: userId,
+      },
+    });
+
+    const updatedInbox = await inbox;
+
+    Object.values(subs).map((sub) => sub());
+
+    expect(updatedInbox).toStrictEqual({
+      event: {
+        type: 'message',
+        body: 'Test Message',
+        createdAt: expect.any(Number),
+        createdById: userId,
+        mentions: [],
+        id,
+        name: threadId,
+      },
+      threadId,
+    });
+  });
+
+  async function testThreadInfo(threadId: string, value?: ThreadInfo, expected: any = value) {
+    const subs: Subscriptions = {};
+
+    const threadInfo = new Promise((resolve) => {
+      sync.subscribeThreadInfo({
+        appId,
+        workspaceId,
+        threadId,
+        subs,
+        onThreadInfo: resolve,
+      });
+    });
+
+    await sync.saveThreadInfo({ appId, workspaceId, threadId, isOpen: true, info: value });
+
+    const updatedThreadInfo = await threadInfo;
+
+    Object.values(subs).map((sub) => sub());
+
+    expect(updatedThreadInfo).toStrictEqual({
+      info: expected,
+      threadId,
+      workspaceId,
+    });
+  }
+
+  test('saveThreadInfo + subscribeThreadInfo { url: string }', async () => {
+    await testThreadInfo(nanoid(), { url: 'https://google.com' });
+  });
+
+  test('saveThreadInfo + subscribeThreadInfo { name: string, url: string }', async () => {
+    await testThreadInfo(nanoid(), { name: 'Google Thread', url: 'https://google.com' });
+  });
+
+  test('saveThreadInfo + subscribeThreadInfo { name: string, url: string, meta: {} }', async () => {
+    await testThreadInfo(nanoid(), {
+      name: 'Google Thread',
+      url: 'https://google.com',
+      meta: { x: 200, y: 200 },
+    });
+  });
+
+  test('saveThreadInfo + subscribeThreadInfo { name: string, url: string, meta: {} } + delete', async () => {
+    const threadId = nanoid();
+    await testThreadInfo(threadId, {
+      name: 'Google Thread',
+      url: 'https://google.com',
+      meta: { x: 200, y: 200 },
+    });
+    await testThreadInfo(threadId, {
+      name: 'Google Thread',
+      url: 'https://google.com',
     });
   });
 });
