@@ -235,7 +235,14 @@ describe('FirebaseSync', () => {
   });
 
   test('saveThreadInfo + subscribeThreadInfo { name: string, url: string }', async () => {
-    await testThreadInfo(nanoid(), { name: 'Google Thread', url: 'https://google.com' });
+    const threadId = nanoid();
+    await testThreadInfo(threadId, { name: 'Google Thread', url: 'https://google.com' });
+    // delete name
+    await testThreadInfo(
+      threadId,
+      { name: null, url: 'https://google.com' },
+      { url: 'https://google.com' }
+    );
   });
 
   test('saveThreadInfo + subscribeThreadInfo { name: string, url: string, meta: {} }', async () => {
