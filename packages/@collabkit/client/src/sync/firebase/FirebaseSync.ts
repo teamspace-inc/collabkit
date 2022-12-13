@@ -76,7 +76,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
           }
         : null,
 
-      // there's a pitfall here, if info is null the thread will not be marked as open...
+      // there's a pitfall here, if meta is null the thread will not be marked as open...
       // we should keep info separate or just say it has no info here
       [`/views/openThreads/${data.appId}/${data.workspaceId}/${data.threadId}`]: data.isOpen
         ? { meta: data.info?.meta ?? null }
@@ -302,18 +302,17 @@ export class FirebaseSync implements Sync.SyncAdapter {
     subs[`${appId}-${workspaceId}-seen-moved`] ||= onChildMoved(seenQuery, childCallback, onError);
   }
 
-  subscribeOpenThreads(
-    {
-      appId,
-      workspaceId,
-      subs,
-    }: {
-      appId: string;
-      workspaceId: string;
-      subs: Subscriptions;
-    },
-    onThreadChange: Sync.OpenThreadEventHandler
-  ): void {
+  subscribeOpenThreads({
+    appId,
+    workspaceId,
+    subs,
+    onThreadChange,
+  }: {
+    appId: string;
+    workspaceId: string;
+    subs: Subscriptions;
+    onThreadChange: Sync.OpenThreadEventHandler;
+  }): void {
     const onError = (e: Error) => {
       console.error(e);
     };
@@ -331,7 +330,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
       const threadId = child.key;
 
       if (threadId) {
-        onThreadChange({ threadId, info: null });
+        onThreadChange({ threadId, info: null, wasRemoved: true });
       }
     };
 
@@ -339,6 +338,27 @@ export class FirebaseSync implements Sync.SyncAdapter {
     subs[`${viewRef.toString()}#added`] ||= onChildAdded(viewRef, onChange, onError);
     subs[`${viewRef.toString()}#changed`] ||= onChildChanged(viewRef, onChange, onError);
     subs[`${viewRef.toString()}#removed`] ||= onChildRemoved(viewRef, onRemoved, onError);
+  }
+
+  async getOpenThreads({ appId, workspaceId }: { appId: string; workspaceId: string }) {
+    const snapshot = await get(ref`/views/openThreads/${appId}/${workspaceId}`);
+
+    if (!snapshot.exists()) {
+      return [];
+    }
+
+    const object = snapshot.val();
+    if (typeof object !== 'object') {
+      return [];
+    }
+
+    const openThreads: { threadId: string; info: ThreadInfo }[] = [];
+    for (const threadId in object) {
+      const info = object[threadId];
+      openThreads.push({ threadId, info });
+    }
+
+    return openThreads;
   }
 
   subscribeThreadInfo(props: {

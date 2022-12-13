@@ -158,6 +158,96 @@ describe('FirebaseSync', () => {
     });
   });
 
+  test('markResolved', async () => {
+    const threadId = nanoid();
+
+    await sync.saveThreadInfo({
+      appId,
+      workspaceId,
+      threadId,
+      isOpen: true,
+      info: {
+        url: 'https://www.acme.com',
+        meta: {
+          title: 'Test Title',
+        },
+      },
+    });
+
+    let openThreads = await sync.getOpenThreads({
+      appId,
+      workspaceId,
+    });
+
+    expect(openThreads.find((thread) => thread.threadId === threadId)).toBeDefined();
+
+    await sync.markResolved({
+      appId,
+      workspaceId,
+      threadId,
+    });
+
+    openThreads = await sync.getOpenThreads({
+      appId,
+      workspaceId,
+    });
+
+    expect(openThreads.find((thread) => thread.threadId === threadId)).toBeUndefined();
+  });
+
+  test('saveEvent', async () => {
+    const subs: Subscriptions = {};
+
+    const threadId = nanoid();
+
+    const event = new Promise((resolve) => {
+      sync.subscribeThread({
+        appId,
+        workspaceId,
+        threadId,
+        subs,
+        onTimelineEventAdded: (event) => {
+          resolve(event);
+        },
+        onThreadTypingChange: (event) => {},
+        onThreadSeenByUser: (event) => {},
+        onThreadInfo: (event) => {},
+      });
+    });
+
+    const { id } = await sync.saveEvent({
+      appId,
+      workspaceId,
+      threadId,
+      event: {
+        type: 'system',
+        body: '',
+        system: 'reopen',
+        createdAt: Date.now(),
+        createdById: userId,
+      },
+    });
+
+    const savedEvent = await event;
+
+    Object.values(subs).map((sub) => sub());
+
+    expect(savedEvent).toStrictEqual({
+      event: {
+        type: 'system',
+        body: '',
+        system: 'reopen',
+        createdAt: expect.any(Number),
+        createdById: userId,
+        mentions: [],
+        id,
+      },
+      eventId: id,
+      threadId,
+      workspaceId,
+    });
+  });
+
   test('subscribeInbox', async () => {
     const subs: Subscriptions = {};
 

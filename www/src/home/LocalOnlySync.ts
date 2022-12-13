@@ -1,3 +1,4 @@
+import { ThreadInfo } from '@collabkit/core';
 import type { Subscriptions, SyncAdapter } from '@collabkit/react/src/constants';
 import { DataSnapshot } from 'firebase/database';
 
@@ -22,6 +23,16 @@ export class LocalOnlySync implements SyncAdapter {
 
   shouldAuthenticate(): boolean {
     return false;
+  }
+
+  getOpenThreads({
+    appId,
+    workspaceId,
+  }: {
+    appId: string;
+    workspaceId: string;
+  }): Promise<{ threadId: string; info: ThreadInfo }[]> {
+    return Promise.resolve([]);
   }
 
   serverTimestamp(): object {
