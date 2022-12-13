@@ -248,6 +248,51 @@ describe('FirebaseSync', () => {
     });
   });
 
+  test('markSeen', async () => {
+    const subs: Subscriptions = {};
+
+    const threadId = nanoid();
+
+    const { id } = await sync.sendMessage({
+      appId,
+      userId,
+      workspaceId,
+      threadId,
+      preview: 'Test Message',
+      event: {
+        type: 'message',
+        body: 'Test Message',
+        createdAt: Date.now(),
+        createdById: userId,
+      },
+    });
+
+    const seen = new Promise((resolve, reject) =>
+      sync.subscribeSeen({
+        appId,
+        workspaceId,
+        userId,
+        subs,
+        onSeenChange: (event) => {
+          resolve(event);
+        },
+      })
+    );
+
+    await sync.markSeen({
+      appId,
+      workspaceId,
+      userId,
+      threadId,
+      eventId: id,
+    });
+
+    expect(await seen).toStrictEqual({
+      threadId,
+      seenUntilId: id,
+    });
+  });
+
   test('subscribeInbox', async () => {
     const subs: Subscriptions = {};
 

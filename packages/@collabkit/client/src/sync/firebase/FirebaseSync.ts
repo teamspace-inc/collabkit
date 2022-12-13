@@ -265,20 +265,19 @@ export class FirebaseSync implements Sync.SyncAdapter {
     return { id };
   }
 
-  subscribeSeen(
-    {
-      appId,
-      userId,
-      workspaceId,
-      subs,
-    }: {
-      appId: string;
-      userId: string;
-      workspaceId: string;
-      subs: Subscriptions;
-    },
-    onSeenChange: Sync.SeenEventHandler
-  ): void {
+  subscribeSeen({
+    appId,
+    userId,
+    workspaceId,
+    subs,
+    onSeenChange,
+  }: {
+    appId: string;
+    userId: string;
+    workspaceId: string;
+    subs: Subscriptions;
+    onSeenChange: Sync.SeenEventHandler;
+  }): void {
     const seenQuery = query(
       ref`/seen/${appId}/${userId}/${workspaceId}`,
       orderByChild('seenUntilId'),
