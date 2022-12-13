@@ -1,5 +1,9 @@
 {
   "projects": {
-    "default": "collabkit-dev"
-  }
+    "default": "collabkit-test",
+    "test": "collabkit-test",
+    "prod": "collabkit-dev"
+  },
+  "targets": {},
+  "etags": {}
 }
