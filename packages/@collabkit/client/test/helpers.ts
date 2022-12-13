@@ -30,7 +30,7 @@ export async function setupApp({ appId, apiKey }: { appId: string; apiKey: strin
       .set({
         name: 'Test App',
         admins: {},
-        keys: { keys: { [apiKey]: true } },
+        keys: { [apiKey]: true },
         mode: 'UNSECURED',
         isEmailDisabled: true,
         defaultNotificationPreference: 'off',

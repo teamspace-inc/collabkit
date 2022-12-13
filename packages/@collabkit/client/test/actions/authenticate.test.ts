@@ -1,23 +1,20 @@
 import { expect, test } from 'vitest';
-import { createStore } from '../../src/store';
-import { blur } from '../../src/actions/blur';
-import { focus } from '../../src/actions/focus';
-import { FirebaseSync } from '../../src/sync/firebase/FirebaseSync';
-import { CommentTarget, Store } from '@collabkit/core';
 import { nanoid } from 'nanoid';
+import { generateToken } from '../../src/actions/generateToken';
+import { setupApp } from '../helpers';
+import { setupFirebase } from '../setupFirebase';
 
-test('authenticate', () => {
-  // const store = createStore();
-  // store.sync = new FirebaseSync({ test: true });
-  // expect(store.editingId).toBe(null);
-  // const target: CommentTarget = {
-  //   type: 'comment',
-  //   threadId: nanoid(),
-  //   workspaceId: nanoid(),
-  //   eventId: nanoid(),
-  //   treeId: nanoid(),
-  // };
-  // focus(store as Store, { target });
-  // blur(store as Store);
-  // expect(store.focusedId).toBe(target);
+setupFirebase();
+
+test('authenticate', async () => {
+  const apiKey = nanoid();
+  const appId = nanoid();
+  const apiHost = 'https://europe-west2-collabkit-test.cloudfunctions.net/generateToken';
+  await setupApp({ apiKey, appId });
+  const token = await generateToken({ apiHost, apiKey, appId });
+  expect(token).toStrictEqual({
+    appId,
+    mode: 'UNSECURED',
+    token: expect.any(String),
+  });
 });
