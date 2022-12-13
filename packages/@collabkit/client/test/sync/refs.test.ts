@@ -1,8 +1,8 @@
-import { setup } from '../setup';
+import { setupFirebase } from '../setupFirebase';
 import { expect, test } from 'vitest';
 import { ref } from '../../src/sync/firebase/refs';
 
-setup();
+setupFirebase();
 
 test('ref encodes unsupported characters', () => {
   const id = 'baz/';

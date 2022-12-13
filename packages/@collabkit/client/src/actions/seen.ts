@@ -7,7 +7,7 @@ export async function seen(store: Store, target: CommentTarget) {
     return;
   }
 
-  if (!document.hasFocus()) {
+  if (typeof document !== 'undefined' && !document.hasFocus()) {
     return;
   }
 

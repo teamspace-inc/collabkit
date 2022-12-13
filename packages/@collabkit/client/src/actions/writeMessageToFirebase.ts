@@ -23,7 +23,13 @@ export async function writeMessageToFirebase(
   const userId = store.userId;
   const appId = store.config.appId;
 
-  if (!appId || !userId) {
+  if (!appId) {
+    console.warn('CollabKit: cannot send a message, no appId');
+    return;
+  }
+
+  if (!userId) {
+    console.warn('CollabKit: cannot send a message, no userId');
     return;
   }
 
