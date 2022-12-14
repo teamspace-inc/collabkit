@@ -1,7 +1,6 @@
 import type React from 'react';
 import { $getSelection } from 'lexical';
 import type { LexicalEditor } from 'lexical';
-import { nanoid } from 'nanoid';
 import type {
   CommentReactionTarget,
   CommentTarget,
@@ -92,7 +91,7 @@ export function createEvents(store: Store) {
     },
 
     onFocus: (e: React.FocusEvent | FocusEvent, props: { target: Target }) => {
-      actions.focus(store, props.target);
+      actions.focus(store, props);
     },
 
     onClick: <T extends Target>(e: React.MouseEvent, props: { target: T }) => {
@@ -119,7 +118,7 @@ export function createEvents(store: Store) {
     },
 
     onBlur: (e: React.FocusEvent | FocusEvent, props: { target: Target }) => {
-      actions.blur(store, props.target);
+      actions.blur(store);
     },
 
     onMenuOpen: (props: { target: MenuTarget }) => {
@@ -185,7 +184,7 @@ export function createEvents(store: Store) {
     },
 
     onMouseOut: (e: React.MouseEvent, props: { target: Target }) => {
-      actions.unhover(store, props);
+      actions.unhover(store);
     },
 
     onPointerDown: (e: React.PointerEvent, props: { target: Target }) => {
@@ -204,7 +203,7 @@ export function createEvents(store: Store) {
               break;
             }
             case 'resolveThreadButton': {
-              actions.resolveThread(store, props.target.workspaceId, props.target.threadId);
+              actions.resolveThread(store, props.target);
               break;
             }
             case 'reopenThreadButton': {
@@ -242,7 +241,7 @@ export function createEvents(store: Store) {
               break;
             }
             case 'resolveThreadButton': {
-              actions.resolveThread(store, props.target.workspaceId, props.target.threadId);
+              actions.resolveThread(store, props.target);
               break;
             }
             case 'reopenThreadButton': {
