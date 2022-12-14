@@ -18,6 +18,7 @@ test('blur', () => {
     treeId: nanoid(),
   };
   focus(store as Store, { target });
-  blur(store as Store);
   expect(store.focusedId).toBe(target);
+  blur(store as Store);
+  expect(store.focusedId).toBe(null);
 });
