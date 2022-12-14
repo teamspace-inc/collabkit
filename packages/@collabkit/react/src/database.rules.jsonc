@@ -208,8 +208,8 @@
       "inbox": {
         "$appId": {
           "$workspaceId": {
-            ".indexOn": "createdAt",
             ".read": "auth.token.appId === $appId",
+            ".indexOn": "createdAt",
             "$threadId": {
               ".write": "newData.hasChildren(['type', 'body', 'createdById', 'createdAt', 'name']) && (auth.token.appId === $appId) && ((root.child('apps').child(auth.token.appId).child('mode').val() === 'UNSECURED' || (root.child('apps').child(auth.token.appId).child('mode').val() === 'SECURED' && $workspaceId === auth.token.workspaceId && newData.child('createdById').val() === auth.token.userId)))",
               "name": {
@@ -279,9 +279,9 @@
       "$appId": {
         "$workspaceId": {
           ".read": "auth.token.appId === $appId",
-          ".indexOn": "createdAt",
           "$threadId": {
             ".read": "auth.token.appId === $appId",
+            ".indexOn": "createdAt",
             "$eventId": {
               ".write": "newData.hasChildren(['type', 'body', 'createdById', 'createdAt']) && (auth.token.appId === $appId) && ((root.child('apps').child(auth.token.appId).child('mode').val() === 'UNSECURED' || (root.child('apps').child(auth.token.appId).child('mode').val() === 'SECURED' && $workspaceId === auth.token.workspaceId && newData.child('createdById').val() === auth.token.userId))) && !root.child('timeline').child($appId).child($workspaceId).child($threadId).child($eventId).exists()",
               ".read": "auth.token.appId === $appId",
