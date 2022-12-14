@@ -42,6 +42,9 @@ jobs:
         working-directory: packages/@collabkit/client
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
       - run: yarn install --frozen-lockfile --prefer-offline
       - run: yarn test
         env:
