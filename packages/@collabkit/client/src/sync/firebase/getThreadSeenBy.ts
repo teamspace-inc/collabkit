@@ -1,5 +1,4 @@
-import type { Sync, Subscriptions } from '@collabkit/core';
-import { FirebaseId } from '@collabkit/core';
+import type { Sync } from '@collabkit/core';
 import { get, orderByChild, query } from 'firebase/database';
 import { ref } from './refs';
 
@@ -20,9 +19,8 @@ export async function getThreadSeenBy(props: {
 
   let seenBy: Record<string, Sync.ThreadSeenEvent['data']> = {};
   snapshot.forEach((childSnapshot) => {
-    const userId = childSnapshot.key && FirebaseId.decode(childSnapshot.key);
-    if (userId) {
-      seenBy[userId] = childSnapshot.val();
+    if (childSnapshot.key) {
+      seenBy[childSnapshot.key] = childSnapshot.val();
     }
   });
 

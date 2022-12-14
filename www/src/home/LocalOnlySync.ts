@@ -7,6 +7,14 @@ import { InboxChangeEventHandler, ThreadInfoChangeEvent } from 'packages/@collab
 
 export class LocalOnlySync implements SyncAdapter {
   constructor(public workspaceData: any) {}
+  getIsTyping(props: {
+    appId: string;
+    userId: string;
+    workspaceId: string;
+    threadId: string;
+  }): Promise<{ [userId: string]: boolean } | null> {
+    throw new Error('Method not implemented.');
+  }
 
   async saveWorkspace(): Promise<void> {}
 

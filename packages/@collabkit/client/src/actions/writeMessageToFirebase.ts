@@ -82,11 +82,13 @@ export async function writeMessageToFirebase(
 
       promises.push(
         actions.seen(store, {
-          workspaceId,
-          threadId,
-          eventId: id,
-          type: 'comment',
-          treeId: '',
+          target: {
+            workspaceId,
+            threadId,
+            eventId: id,
+            type: 'comment',
+            treeId: '',
+          },
         })
       );
 
