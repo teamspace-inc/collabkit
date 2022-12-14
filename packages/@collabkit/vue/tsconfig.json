@@ -8,11 +8,13 @@
       "@collabkit/client": ["../client/src"],
       "@collabkit/colors": ["../colors/src"],
       "@collabkit/core": ["../core/src"],
-      "@collabkit/theme": ["../theme/src"]
+      "@collabkit/theme": ["../theme/src"],
+      "@collabkit/theme/*": ["../theme/src/*"]
     },
     "declaration": true,
     "declarationDir": "./types",
-    "emitDeclarationOnly": true
+    "emitDeclarationOnly": true,
+    "types": ["vite/client"]
   },
 
   "references": [
