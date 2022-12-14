@@ -4,6 +4,7 @@ export async function isTyping(store: Store, props: { target: ComposerTarget }) 
   const { config } = store;
 
   if (!store.userId) {
+    console.warn('CollabKit: cannot start typing, no userId');
     return;
   }
 
