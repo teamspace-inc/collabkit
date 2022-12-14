@@ -32,6 +32,7 @@ export default function CommentList(
             showResolveThreadButton:
               !hideResolveButton && !isResolved && groupIndex === 0 && index === 0,
           };
+
           const comment = renderComment ? (
             renderComment(commentProps)
           ) : (
