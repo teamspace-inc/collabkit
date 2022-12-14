@@ -31,12 +31,12 @@ export function Provider(props: { children: React.ReactNode; profileId: string }
 
 export function ProfileName(props: React.ComponentPropsWithoutRef<'span'>) {
   const { store } = useApp();
-  const { profiles } = useSnapshot(store);
   const { profileId } = useProfile();
+  const profiles = useSnapshot(store.profiles);
   const profile = profiles[profileId];
   return (
     <span {...props} className={props.className ?? styles.name}>
-      {profile?.name ?? profile?.email ?? 'Anonymous'}
+      {profile?.name ?? profile?.email}
     </span>
   );
 }

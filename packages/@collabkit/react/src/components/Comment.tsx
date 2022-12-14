@@ -85,10 +85,15 @@ function CommentRoot({ commentId: eventId, ...props }: CommentRootProps) {
     eventId,
   });
 
-  const timeline = useSnapshot(useWorkspaceStore().timeline[threadId]);
   const { menuId } = useSnapshot(useApp().store);
-  const event = timeline?.[eventId];
-  const createdById = event?.createdById;
+
+  const timeline = useSnapshot(useWorkspaceStore().timeline[threadId]);
+
+  const profiles = useSnapshot(useApp().store.profiles);
+
+  const event = timeline[eventId];
+
+  const createdById = event.createdById;
 
   const isHovering =
     // hovering or the menu is open and the menu is for this comment
@@ -98,10 +103,15 @@ function CommentRoot({ commentId: eventId, ...props }: CommentRootProps) {
       menuId.context.eventId === event.id);
 
   if (!createdById) {
+    console.warn('CommentRoot: no createdById', { eventId });
     return null;
   }
 
-  if (event.type === 'system' || !event.hasProfile) {
+  if (event.type === 'system') {
+    return null;
+  }
+
+  if (!profiles[event.createdById]) {
     return null;
   }
 
