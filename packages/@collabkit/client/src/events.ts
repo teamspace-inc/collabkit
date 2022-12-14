@@ -261,7 +261,7 @@ export function createEvents(store: Store) {
     },
 
     onSeen: (props: { target: CommentTarget }) => {
-      actions.seen(store, props.target);
+      actions.seen(store, props);
     },
 
     onPopoverPreviewChange: (props: { target: ThreadTarget; open: boolean }) => {
