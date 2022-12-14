@@ -3,7 +3,7 @@ import { getConfig } from './index';
 
 export function subscribeOpenThreads(store: Store) {
   const { appId, workspaceId } = getConfig(store);
-  const onChange: Sync.OpenThreadEventHandler = ({
+  const onThreadChange: Sync.OpenThreadEventHandler = ({
     threadId,
     info,
   }: {
@@ -28,5 +28,5 @@ export function subscribeOpenThreads(store: Store) {
       }
     }
   };
-  store.sync.subscribeOpenThreads({ appId, workspaceId, subs: store.subs }, onChange);
+  store.sync.subscribeOpenThreads({ appId, workspaceId, subs: store.subs, onThreadChange });
 }

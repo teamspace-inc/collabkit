@@ -101,24 +101,20 @@ export interface SyncAdapter {
     event: Event;
   }): Promise<{ id: string }>;
 
-  subscribeSeen(
-    params: {
-      appId: string;
-      userId: string;
-      workspaceId: string;
-      subs: Subscriptions;
-    },
-    onSeenChange: SeenEventHandler
-  ): void;
+  subscribeSeen(params: {
+    appId: string;
+    userId: string;
+    workspaceId: string;
+    subs: Subscriptions;
+    onSeenChange: SeenEventHandler;
+  }): void;
 
-  subscribeOpenThreads(
-    params: {
-      appId: string;
-      workspaceId: string;
-      subs: Subscriptions;
-    },
-    onThreadChange: OpenThreadEventHandler
-  ): void;
+  subscribeOpenThreads(params: {
+    appId: string;
+    workspaceId: string;
+    subs: Subscriptions;
+    onThreadChange: OpenThreadEventHandler;
+  }): void;
 
   subscribeInbox(props: {
     appId: string;
