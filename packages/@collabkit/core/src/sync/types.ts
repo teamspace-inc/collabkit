@@ -24,6 +24,13 @@ export interface SyncAdapter {
     workspaceId: string;
   }): Promise<{ threadId: string; info: ThreadInfo }[]>;
 
+  getIsTyping(props: {
+    appId: string;
+    userId: string;
+    workspaceId: string;
+    threadId: string;
+  }): Promise<null | { [userId: string]: boolean }>;
+
   saveThreadInfo(params: {
     appId: string;
     workspaceId: string;

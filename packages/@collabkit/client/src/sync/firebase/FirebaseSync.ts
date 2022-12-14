@@ -218,6 +218,25 @@ export class FirebaseSync implements Sync.SyncAdapter {
     await remove(userTypingRef(appId, workspaceId, threadId, userId));
   }
 
+  async getIsTyping({
+    appId,
+    userId,
+    workspaceId,
+    threadId,
+  }: {
+    appId: string;
+    userId: string;
+    workspaceId: string;
+    threadId: string;
+  }) {
+    const snapshot = await get(userTypingRef(appId, workspaceId, threadId, userId));
+    if (!snapshot.exists()) {
+      return null;
+    }
+
+    return snapshot.val();
+  }
+
   async sendMessage({
     appId,
     userId,
