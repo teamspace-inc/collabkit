@@ -17,7 +17,7 @@ export function useResolveThread() {
   const isResolved = timelineUtils.computeIsResolved(timeline);
 
   const resolve = () => {
-    actions.resolveThread(store, workspaceId, threadId);
+    actions.resolveThread(store, { workspaceId, threadId });
   };
 
   const reopen = () => {
