@@ -1,8 +1,0 @@
-{
-  "name": "@collabkit/theme",
-  "version": "0.0.0",
-  "private": true,
-  "dependencies": {
-    "@collabkit/core": "^0.0.0"
-  }
-}
