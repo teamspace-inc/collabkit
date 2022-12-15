@@ -15,7 +15,7 @@
   },
   "scripts": {
     "dev": "pnpm --recursive --parallel --filter '!@collabkit/vue' run dev",
-    "build": "pnpm --parallel --filter '@collabkit/react' --filter '@collabkit/vue' run build",
+    "build": "pnpm --parallel --filter '@collabkit/react' run build",
     "server": "yarn workspace server dev",
     "typecheck": "tsc -b examples/demo www",
     "snapshots": "yarn workspace @collabkit/react start-server-and-test dev http://localhost:61000 'playwright test'"
