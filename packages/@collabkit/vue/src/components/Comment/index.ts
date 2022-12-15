@@ -1,0 +1,11 @@
+export { default as CommentActions } from './CommentActions.vue';
+export { default as CommentBody } from './CommentBody.vue';
+export { ProfileAvatar as CommentCreatorAvatar } from '../Profile';
+export { ProfileName as CommentCreatorName } from '../Profile';
+export { default as CommentEditor } from './CommentEditor.vue';
+export { default as CommentHeader } from './CommentHeader.vue';
+export { default as CommentIndent } from './CommentIndent.vue';
+export { default as CommentMoreMenu } from './CommentMoreMenu.vue';
+export { default as CommentNameAndTimestampWrapper } from './CommentNameAndTimestampWrapper.vue';
+export { default as CommentRoot } from './CommentRoot.vue';
+export { default as CommentTimestamp } from './CommentTimestamp.vue';

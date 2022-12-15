@@ -2,11 +2,12 @@ import { resolve } from 'path';
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import replace from '@rollup/plugin-replace';
+import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin';
 import { visualizer } from 'rollup-plugin-visualizer';
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
-  const plugins = [vue(), visualizer()];
+  const plugins = [vue(), vanillaExtractPlugin(), visualizer()];
 
   if (mode === 'production') {
     plugins.push(
@@ -34,11 +35,6 @@ export default defineConfig(({ mode }) => {
             vue: 'Vue',
           },
         },
-      },
-    },
-    resolve: {
-      alias: {
-        '@stitches/react': '@stitches/core',
       },
     },
     envDir: resolve(__dirname, '../../../env'),

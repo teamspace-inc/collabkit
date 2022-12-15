@@ -16,26 +16,22 @@ export type PopoverThreadProps = Omit<PopoverContentProps, 'children'> &
 
 function PopoverThreadPreview({ threadId }: { threadId: string }) {
   return (
-    <Thread.Provider threadId={threadId}>
-      <div className={previewRoot}>
-        <Scrollable autoScroll="bottom">
-          <CommentList />
-        </Scrollable>
-      </div>
-    </Thread.Provider>
+    <Thread.Root threadId={threadId} className={previewRoot}>
+      <Scrollable autoScroll="bottom">
+        <CommentList />
+      </Scrollable>
+    </Thread.Root>
   );
 }
 
 export function PopoverThreadContent(props: ThreadProps) {
   return (
-    <Thread.Provider {...props}>
-      <div className={root}>
-        <Scrollable autoScroll="bottom">
-          <CommentList />
-        </Scrollable>
-        <Composer />
-      </div>
-    </Thread.Provider>
+    <Thread.Root {...props} className={root}>
+      <Scrollable autoScroll="bottom">
+        <CommentList />
+      </Scrollable>
+      <Composer />
+    </Thread.Root>
   );
 }
 

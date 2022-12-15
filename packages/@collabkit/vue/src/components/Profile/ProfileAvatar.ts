@@ -1,7 +1,7 @@
 import { defineComponent, h, inject } from 'vue';
-import { ProvidedSlotsKey } from '../constants';
-import DefaultAvatar from './DefaultAvatar.vue';
-import type { ProvidedSlots } from '../types';
+import { ProvidedSlotsKey } from '../../constants';
+import Avatar from './Avatar.vue';
+import type { ProvidedSlots } from '../../types';
 
 export default defineComponent({
   props: {
@@ -13,7 +13,7 @@ export default defineComponent({
       if (slots?.avatar) {
         return slots.avatar({ ...attrs, ...props });
       }
-      return h(DefaultAvatar as any, { ...attrs, ...props });
+      return h(Avatar as any, { ...attrs, ...props });
     };
   },
 });

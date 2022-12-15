@@ -1,10 +1,10 @@
 import { createGlobalTheme, createTheme } from '@vanilla-extract/css';
-import { MapLeafNodes } from './types';
+import type { DeepPartial } from '@collabkit/core';
 
+import type { MapLeafNodes } from './types';
 import { vars } from './theme/index.css';
 import { DarkTheme } from './themes/DarkTheme';
 import { BaseTheme } from './themes/BaseTheme';
-import { DeepPartial } from '@collabkit/core';
 
 export type Theme = MapLeafNodes<typeof vars, string>;
 export type CustomTheme = DeepPartial<Theme>;

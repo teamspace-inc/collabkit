@@ -9,8 +9,6 @@ const workspace = {
   name: import.meta.env.VITE_COLLABKIT_WORKSPACE_NAME,
 };
 const user = { id: 'vueuser', name: 'Vue User', email: 'vue@example.com' };
-
-const name = location.pathname.slice(1);
 </script>
 
 <template>

@@ -39,15 +39,7 @@ function ThreadProvider(props: ThreadProps & { children: React.ReactNode }) {
   return <ThreadContext.Provider value={value}>{props.children}</ThreadContext.Provider>;
 }
 
-function ThreadRoot(props: React.ComponentPropsWithoutRef<'div'>) {
-  return <div {...props} className={props.className ?? styles.root} />;
-}
-
-function ThreadHeader(props: React.ComponentPropsWithoutRef<'div'>) {
-  return <div {...props} className={props.className ?? styles.header} />;
-}
-
-export function Thread(props: ThreadProps) {
+function ThreadRoot(props: ThreadProps & React.ComponentPropsWithoutRef<'div'>) {
   const { threadId, info, defaultSubscribers } = props;
   const { store } = useApp();
   const { userId, workspaceId } = useSnapshot(store);
@@ -58,21 +50,30 @@ export function Thread(props: ThreadProps) {
   if (!userId) {
     return null;
   }
-
   return (
-    <Thread.Provider {...props}>
+    <ThreadProvider {...props}>
       <Profile.Provider profileId={userId}>
         <ThemeWrapper>
-          <Thread.Root className={props.className} style={props.style}>
-            {props.showHeader && <Thread.Header>Comments</Thread.Header>}
-            <Scrollable autoScroll="bottom">
-              <CommentList hideResolveButton={props.hideResolveButton} />
-            </Scrollable>
-            {props.hideComposer ? null : <Composer />}
-          </Thread.Root>
+          <div {...props} className={props.className ?? styles.root} />
         </ThemeWrapper>
       </Profile.Provider>
-    </Thread.Provider>
+    </ThreadProvider>
+  );
+}
+
+function ThreadHeader(props: React.ComponentPropsWithoutRef<'div'>) {
+  return <div {...props} className={props.className ?? styles.header} />;
+}
+
+export function Thread(props: ThreadProps) {
+  return (
+    <Thread.Root {...props}>
+      {props.showHeader && <Thread.Header>Comments</Thread.Header>}
+      <Scrollable autoScroll="bottom">
+        <CommentList hideResolveButton={props.hideResolveButton} />
+      </Scrollable>
+      {props.hideComposer ? null : <Composer />}
+    </Thread.Root>
   );
 }
 

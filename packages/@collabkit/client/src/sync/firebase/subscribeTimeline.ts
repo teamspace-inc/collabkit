@@ -6,7 +6,7 @@ import {
   query,
   startAfter,
 } from 'firebase/database';
-import { Sync, Subscriptions, FirebaseId } from '@collabkit/core';
+import { type Sync, type Subscriptions, FirebaseId } from '@collabkit/core';
 import { ref, timelineRef } from './refs';
 import { snapshotToEvent } from './converters';
 
@@ -75,7 +75,7 @@ export async function subscribeTimeline({
   }
 
   if (snapshots[0].status === 'fulfilled') {
-    snapshots[0].value.forEach((childSnapshot) => {
+    snapshots[0].value.forEach((childSnapshot: DataSnapshot) => {
       lastEventId = childSnapshot.key;
       handleChild(childSnapshot, props.onTimelineEventAdded);
     });
