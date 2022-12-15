@@ -1,8 +1,13 @@
 import type { Event, Store } from '@collabkit/core';
 import { getConfig, actions } from './index';
 
-export async function resolveThread(store: Store, workspaceId: string, threadId: string) {
+export async function resolveThread(
+  store: Store,
+  props: { workspaceId: string; threadId: string }
+) {
   const { appId, userId } = getConfig(store);
+  const { workspaceId, threadId } = props;
+
   if (!userId) {
     console.warn('CollabKit: cannot resolve thread, anonymous user');
     return;

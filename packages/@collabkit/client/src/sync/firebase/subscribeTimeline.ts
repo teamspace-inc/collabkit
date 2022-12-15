@@ -15,6 +15,8 @@ export function subscribeTimeline({
 }) {
   const timelineQuery = query(
     timelineRef(props.appId, props.workspaceId, props.threadId),
+    // this is going to cause problems on larger threads...
+    // todo: add pagination
     // limitToLast(50),
     orderByChild('createdAt')
   );

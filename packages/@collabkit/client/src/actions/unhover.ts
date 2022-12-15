@@ -1,5 +1,5 @@
-import type { Target, Store } from '@collabkit/core';
+import type { Store } from '@collabkit/core';
 
-export function unhover(store: Store, props: { target: Target }) {
+export function unhover(store: Store) {
   store.hoveringId = null;
 }

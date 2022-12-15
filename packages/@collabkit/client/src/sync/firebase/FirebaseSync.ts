@@ -56,7 +56,8 @@ export function initFirebase() {
 }
 
 export class FirebaseSync implements Sync.SyncAdapter {
-  constructor() {
+  constructor(options = { test: false }) {
+    if (options.test) return;
     initFirebase();
   }
 
@@ -75,7 +76,8 @@ export class FirebaseSync implements Sync.SyncAdapter {
           }
         : null,
 
-      // there's a pitfall here, if info is null the thread will not be marked as open... we should keep info separate or just say it has no info here
+      // there's a pitfall here, if meta is null the thread will not be marked as open...
+      // we should keep info separate or just say it has no info here
       [`/views/openThreads/${data.appId}/${data.workspaceId}/${data.threadId}`]: data.isOpen
         ? { meta: data.info?.meta ?? null }
         : null,
@@ -216,6 +218,25 @@ export class FirebaseSync implements Sync.SyncAdapter {
     await remove(userTypingRef(appId, workspaceId, threadId, userId));
   }
 
+  async getIsTyping({
+    appId,
+    userId,
+    workspaceId,
+    threadId,
+  }: {
+    appId: string;
+    userId: string;
+    workspaceId: string;
+    threadId: string;
+  }) {
+    const snapshot = await get(userTypingRef(appId, workspaceId, threadId, userId));
+    if (!snapshot.exists()) {
+      return null;
+    }
+
+    return snapshot.val();
+  }
+
   async sendMessage({
     appId,
     userId,
@@ -263,20 +284,19 @@ export class FirebaseSync implements Sync.SyncAdapter {
     return { id };
   }
 
-  subscribeSeen(
-    {
-      appId,
-      userId,
-      workspaceId,
-      subs,
-    }: {
-      appId: string;
-      userId: string;
-      workspaceId: string;
-      subs: Subscriptions;
-    },
-    onSeenChange: Sync.SeenEventHandler
-  ): void {
+  subscribeSeen({
+    appId,
+    userId,
+    workspaceId,
+    subs,
+    onSeenChange,
+  }: {
+    appId: string;
+    userId: string;
+    workspaceId: string;
+    subs: Subscriptions;
+    onSeenChange: Sync.SeenEventHandler;
+  }): void {
     const seenQuery = query(
       ref`/seen/${appId}/${userId}/${workspaceId}`,
       orderByChild('seenUntilId'),
@@ -300,18 +320,17 @@ export class FirebaseSync implements Sync.SyncAdapter {
     subs[`${appId}-${workspaceId}-seen-moved`] ||= onChildMoved(seenQuery, childCallback, onError);
   }
 
-  subscribeOpenThreads(
-    {
-      appId,
-      workspaceId,
-      subs,
-    }: {
-      appId: string;
-      workspaceId: string;
-      subs: Subscriptions;
-    },
-    onThreadChange: Sync.OpenThreadEventHandler
-  ): void {
+  subscribeOpenThreads({
+    appId,
+    workspaceId,
+    subs,
+    onThreadChange,
+  }: {
+    appId: string;
+    workspaceId: string;
+    subs: Subscriptions;
+    onThreadChange: Sync.OpenThreadEventHandler;
+  }): void {
     const onError = (e: Error) => {
       console.error(e);
     };
@@ -329,7 +348,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
       const threadId = child.key;
 
       if (threadId) {
-        onThreadChange({ threadId, info: null });
+        onThreadChange({ threadId, info: null, wasRemoved: true });
       }
     };
 
@@ -337,6 +356,27 @@ export class FirebaseSync implements Sync.SyncAdapter {
     subs[`${viewRef.toString()}#added`] ||= onChildAdded(viewRef, onChange, onError);
     subs[`${viewRef.toString()}#changed`] ||= onChildChanged(viewRef, onChange, onError);
     subs[`${viewRef.toString()}#removed`] ||= onChildRemoved(viewRef, onRemoved, onError);
+  }
+
+  async getOpenThreads({ appId, workspaceId }: { appId: string; workspaceId: string }) {
+    const snapshot = await get(ref`/views/openThreads/${appId}/${workspaceId}`);
+
+    if (!snapshot.exists()) {
+      return [];
+    }
+
+    const object = snapshot.val();
+    if (typeof object !== 'object') {
+      return [];
+    }
+
+    const openThreads: { threadId: string; info: ThreadInfo }[] = [];
+    for (const threadId in object) {
+      const info = object[threadId];
+      openThreads.push({ threadId, info });
+    }
+
+    return openThreads;
   }
 
   subscribeThreadInfo(props: {

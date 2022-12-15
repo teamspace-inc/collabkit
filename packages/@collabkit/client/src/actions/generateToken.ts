@@ -1,11 +1,11 @@
 import { API_HOST } from '../constants';
 import type { FunctionResponse, GenerateToken } from './index';
 
-export async function generateToken(props: { appId: string; apiKey: string }) {
-  const { appId, apiKey } = props;
+export async function generateToken(props: { appId: string; apiKey: string; apiHost?: string }) {
+  const { appId, apiKey, apiHost } = props;
   try {
     const response = await fetch(
-      `${API_HOST}/generateToken?apiKey=${apiKey}&appId=${appId}&mode=UNSECURED`
+      `${apiHost ?? API_HOST}/generateToken?apiKey=${apiKey}&appId=${appId}&mode=UNSECURED`
     );
 
     if (response.ok) {

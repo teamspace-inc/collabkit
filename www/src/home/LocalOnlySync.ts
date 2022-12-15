@@ -1,3 +1,4 @@
+import { ThreadInfo } from '@collabkit/core';
 import type { Subscriptions, SyncAdapter } from '@collabkit/react/src/constants';
 import { DataSnapshot } from 'firebase/database';
 
@@ -6,6 +7,14 @@ import { InboxChangeEventHandler, ThreadInfoChangeEvent } from 'packages/@collab
 
 export class LocalOnlySync implements SyncAdapter {
   constructor(public workspaceData: any) {}
+  getIsTyping(props: {
+    appId: string;
+    userId: string;
+    workspaceId: string;
+    threadId: string;
+  }): Promise<{ [userId: string]: boolean } | null> {
+    throw new Error('Method not implemented.');
+  }
 
   async saveWorkspace(): Promise<void> {}
 
@@ -22,6 +31,16 @@ export class LocalOnlySync implements SyncAdapter {
 
   shouldAuthenticate(): boolean {
     return false;
+  }
+
+  getOpenThreads({
+    appId,
+    workspaceId,
+  }: {
+    appId: string;
+    workspaceId: string;
+  }): Promise<{ threadId: string; info: ThreadInfo }[]> {
+    return Promise.resolve([]);
   }
 
   serverTimestamp(): object {

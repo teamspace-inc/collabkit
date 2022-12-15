@@ -5,18 +5,7 @@ import { FirebaseId } from '@collabkit/core';
 import { getConfig } from './index';
 import { snapshotToProfile } from '../sync/firebase/converters';
 import { ensureColor } from './saveProfile';
-
-function setHasProfile(store: Store, userId: string) {
-  for (const workspaceId in store.workspaces) {
-    for (const threadId in store.workspaces[workspaceId].timeline) {
-      for (const eventId in store.workspaces[workspaceId].timeline[threadId]) {
-        if (store.workspaces[workspaceId].timeline[threadId][eventId].createdById === userId) {
-          store.workspaces[workspaceId].timeline[threadId][eventId].hasProfile = true;
-        }
-      }
-    }
-  }
-}
+import { setHasProfile } from './setHasProfile';
 
 export async function subscribeProfile(store: Store, profileId: string, onSubscribe: () => void) {
   const { appId } = getConfig(store);

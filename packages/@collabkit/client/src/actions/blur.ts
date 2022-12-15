@@ -1,5 +1,5 @@
-import type { Store, Target } from '@collabkit/core';
+import type { Store } from '@collabkit/core';
 
-export function blur(store: Store, target: Target) {
+export function blur(store: Store) {
   store.focusedId = null;
 }

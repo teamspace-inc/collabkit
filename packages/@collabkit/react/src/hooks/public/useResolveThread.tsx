@@ -7,6 +7,6 @@ export function useResolveThread() {
   const { store } = useApp();
   const { threadId, workspaceId } = useThreadContext();
   return useCallback(() => {
-    actions.resolveThread(store, workspaceId, threadId);
+    actions.resolveThread(store, { workspaceId, threadId });
   }, [store, workspaceId, threadId]);
 }

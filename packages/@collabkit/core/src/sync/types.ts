@@ -16,6 +16,21 @@ export interface SyncAdapter {
 
   getUser(params: { userId: string; appId: string }): Promise<UserProps | null>;
 
+  getOpenThreads({
+    appId,
+    workspaceId,
+  }: {
+    appId: string;
+    workspaceId: string;
+  }): Promise<{ threadId: string; info: ThreadInfo }[]>;
+
+  getIsTyping(props: {
+    appId: string;
+    userId: string;
+    workspaceId: string;
+    threadId: string;
+  }): Promise<null | { [userId: string]: boolean }>;
+
   saveThreadInfo(params: {
     appId: string;
     workspaceId: string;
@@ -138,6 +153,7 @@ export type SeenEventHandler = (event: { threadId: string; seenUntilId: string }
 export type OpenThreadEventHandler = (event: {
   threadId: string;
   info: { meta: ThreadMeta } | null;
+  wasRemoved?: boolean;
 }) => void;
 export type InboxChangeEventHandler = (props: { event: WithID<Event>; threadId: string }) => void;
 

@@ -8,14 +8,14 @@ on:
 
 jobs:
   typecheck:
-    runs-on: buildjet-32vcpu-ubuntu-2004
+    runs-on: buildjet-32vcpu-ubuntu-2204
     steps:
       - uses: actions/checkout@v2
       - run: yarn install --frozen-lockfile --prefer-offline
       - run: yarn typecheck
       - run: yarn build
   test-functions:
-    runs-on: buildjet-32vcpu-ubuntu-2004
+    runs-on: buildjet-32vcpu-ubuntu-2204
     defaults:
       run:
         working-directory: functions
@@ -27,7 +27,7 @@ jobs:
         env:
           FIREBASE_TEST_SERVICE_ACCOUNT: '${{ secrets.FIREBASE_TEST_SERVICE_ACCOUNT }}'
   test-core:
-    runs-on: buildjet-32vcpu-ubuntu-2004
+    runs-on: buildjet-32vcpu-ubuntu-2204
     defaults:
       run:
         working-directory: packages/@collabkit/core
@@ -35,3 +35,17 @@ jobs:
       - uses: actions/checkout@v2
       - run: yarn install --frozen-lockfile --prefer-offline
       - run: yarn test
+  test-client:
+    runs-on: buildjet-32vcpu-ubuntu-2204
+    defaults:
+      run:
+        working-directory: packages/@collabkit/client
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - run: yarn install --frozen-lockfile --prefer-offline
+      - run: yarn test
+        env:
+          VITE_FIREBASE_TEST_SERVICE_ACCOUNT: ${{ secrets.VITE_FIREBASE_TEST_SERVICE_ACCOUNT }}

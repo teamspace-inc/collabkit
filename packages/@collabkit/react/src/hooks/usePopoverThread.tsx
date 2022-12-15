@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { useMemo } from 'react';
 import { useApp } from '../hooks/useApp';
 import { useSnapshot } from 'valtio';
 import { useCallbackRef } from '@radix-ui/react-use-callback-ref';
