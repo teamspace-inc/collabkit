@@ -107,9 +107,12 @@ async function createFromSignups(options: Options) {
       console.log(kleur.yellow(`Skipping ${signup.email}`));
       continue;
     }
-    await createApp(name, options.dryRun);
+    const appId = await createApp(name, options.dryRun);
     if (!options.dryRun) {
-      await db.ref('/website/signups').child(signup.id).child('status').set('created');
+      await db.ref('/website/signups').child(signup.id).update({
+        status: 'created',
+        appId,
+      });
     }
   }
 }
