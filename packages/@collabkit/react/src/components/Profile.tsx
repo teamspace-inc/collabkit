@@ -3,8 +3,8 @@ import type { Profile as ProfileType } from '@collabkit/core';
 import React from 'react';
 import { useSnapshot } from 'valtio';
 import { useApp } from '../hooks/useApp';
-import * as styles from '@collabkit/theme/components/Profile.css';
-import { vars } from '@collabkit/theme/theme/index.css';
+import * as styles from '../theme/components/Profile.css';
+import { vars } from '../theme/theme/index.css';
 
 type ProfileContextValue = {
   profileId: string;

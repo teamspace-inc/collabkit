@@ -1,5 +1,5 @@
 import React, { createContext } from 'react';
-import type { CustomTheme } from '@collabkit/theme/themes.css';
+import type { CustomTheme } from '../theme/themes.css';
 
 export type ThemeContextValue = undefined | 'light' | 'dark' | CustomTheme;
 

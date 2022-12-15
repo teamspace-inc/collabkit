@@ -8,7 +8,7 @@ import { SaveMentionableUsers } from './SaveMentionableUsers';
 import { AvatarProps } from '../types';
 import { FloatingTree } from '@floating-ui/react-dom-interactions';
 import { UserContextProvider } from '../hooks/useUserContext';
-import { CustomTheme } from '@collabkit/theme/themes.css';
+import { CustomTheme } from '../theme/themes.css';
 import { ThemeProvider } from './ThemeContext';
 
 export type ProviderProps = {

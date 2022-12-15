@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import * as styles from '@collabkit/theme/components/CommentList.css';
+import * as styles from '../theme/components/CommentList.css';
 import { NewIndicator } from './NewIndicator';
 import { useNewIndicator } from '../hooks/useNewIndicator';
 import Comment, { CommentProps } from './Comment';

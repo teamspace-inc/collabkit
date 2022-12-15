@@ -1,9 +1,9 @@
 import React, { ComponentProps, useContext } from 'react';
 import { assignInlineVars } from '@vanilla-extract/dynamic';
-import { Theme, darkThemeClassName } from '@collabkit/theme/themes.css';
-import { vars } from '@collabkit/theme/theme/index.css';
+import { Theme, darkThemeClassName } from '../theme/themes.css';
+import { vars } from '../theme/theme/index.css';
 import { ThemeContext } from './ThemeContext';
-import { collabkit } from '@collabkit/theme/components/Root.css';
+import { collabkit } from '../theme/components/Root.css';
 
 export function ThemeWrapper(props: ComponentProps<'div'>) {
   const theme = useContext(ThemeContext);

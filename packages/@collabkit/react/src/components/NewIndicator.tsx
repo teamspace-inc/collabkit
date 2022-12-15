@@ -1,5 +1,5 @@
 import React from 'react';
-import * as styles from '@collabkit/theme/components/NewIndicator.css';
+import * as styles from '../theme/components/NewIndicator.css';
 
 export function NewIndicator() {
   return (

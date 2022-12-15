@@ -3,7 +3,7 @@ import { useSnapshot } from 'valtio';
 import { useApp } from '../hooks/useApp';
 import type { Profile } from '@collabkit/core';
 import { useThreadContext } from '../hooks/useThreadContext';
-import { typing } from '@collabkit/theme/components/Composer.css';
+import { typing } from '../theme/components/Composer.css';
 
 function getNames(props: {
   userId: string;

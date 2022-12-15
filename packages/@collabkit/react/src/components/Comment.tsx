@@ -12,7 +12,7 @@ import Profile from './Profile';
 import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
 import { useApp } from '../hooks/useApp';
 import { CommentTarget, timelineUtils } from '@collabkit/core';
-import * as styles from '@collabkit/theme/components/Comment.css';
+import * as styles from '../theme/components/Comment.css';
 import { DotsThree } from './icons';
 import { Menu, MenuItem } from './Menu';
 import { Thread } from './Thread';

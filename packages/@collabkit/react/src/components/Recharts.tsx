@@ -38,7 +38,7 @@ import { ThreadMeta } from '@collabkit/core';
 import { useUserContext } from '../hooks/useUserContext';
 import { PopoverThread } from './PopoverThread';
 import { usePopoverThread } from '../hooks/usePopoverThread';
-import * as styles from '@collabkit/theme/components/Recharts.css';
+import * as styles from '../theme/components/Recharts.css';
 
 type CursorInfo = {
   objectId: string | null;

@@ -1,5 +1,5 @@
 import React from 'react';
-import * as styles from '@collabkit/theme/components/Button.css';
+import * as styles from '../theme/components/Button.css';
 
 export function Button(props: {
   type: 'primary' | 'secondary';

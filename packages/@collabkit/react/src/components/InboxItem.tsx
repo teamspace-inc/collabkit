@@ -9,7 +9,7 @@ import Comment from './Comment';
 import { ReplyCount } from './ReplyCount';
 import { actions } from '../../../client/src/actions';
 import { ThreadTarget } from '@collabkit/core';
-import * as styles from '@collabkit/theme/components/InboxItem.css';
+import * as styles from '../theme/components/InboxItem.css';
 import { Thread } from '..';
 
 export function InboxItem(props: { formatTimestamp?: (timestamp: number) => string }) {

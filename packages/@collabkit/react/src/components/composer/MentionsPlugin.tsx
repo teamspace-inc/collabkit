@@ -20,7 +20,7 @@ import { $createMentionNode, MentionNode } from '../../editor';
 import { snapshot } from 'valtio';
 import { Store } from '../../constants';
 import { useApp } from '../../hooks/useApp';
-import * as styles from '@collabkit/theme/components/MentionsPlugin.css';
+import * as styles from '../../theme/components/MentionsPlugin.css';
 
 import { MentionWithColor } from '@collabkit/core';
 import {

@@ -9,7 +9,7 @@ import {
   SerializedTextNode,
   TextNode,
 } from 'lexical';
-import { mentionStyle } from '@collabkit/theme/components/MentionsPlugin.css';
+import { mentionStyle } from '../theme/components/MentionsPlugin.css';
 
 export type SerializedMentionNode = Spread<
   {

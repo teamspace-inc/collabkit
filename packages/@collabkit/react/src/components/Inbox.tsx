@@ -1,12 +1,12 @@
 import React from 'react';
 import { useSnapshot } from 'valtio';
 import { useApp } from '../hooks/useApp';
-import * as styles from '@collabkit/theme/components/Inbox.css';
+import * as styles from '../theme/components/Inbox.css';
 import { Scrollable } from './Scrollable';
 import { InboxItem } from './InboxItem';
 import { ThemeWrapper } from './ThemeWrapper';
 import { ChatCentered } from './icons';
-import { emptyState } from '@collabkit/theme/components/Thread.css';
+import { emptyState } from '../theme/components/Thread.css';
 import { useOptionalSidebarContext } from './Sidebar';
 import { useInbox } from '../hooks/public/useInbox';
 import { Thread } from './Thread';
