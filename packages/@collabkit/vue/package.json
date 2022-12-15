@@ -28,7 +28,6 @@
     "vue": "^3.2.0"
   },
   "devDependencies": {
-    "@collabkit/theme": "^0.0.0",
     "@rollup/plugin-replace": "^4.0.0",
     "@stitches/core": "^1.2.8",
     "@types/node": "^16.11.47",
