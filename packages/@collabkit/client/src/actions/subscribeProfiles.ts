@@ -6,7 +6,6 @@ import { FirebaseId } from '@collabkit/core';
 import { getConfig } from './index';
 import { snapshotToProfile } from '../sync/firebase/converters';
 import { ensureColor } from './saveProfile';
-import { setHasProfile } from './setHasProfile';
 
 export async function subscribeProfiles(store: Store) {
   let gotFirstProfile = false;
@@ -39,7 +38,6 @@ export async function subscribeProfiles(store: Store) {
               // console.log('mentionableUsers: id', id, 'profile', profile);
               store.mentionableUsers[id] = profile;
             }
-            setHasProfile(store, id);
           }
         },
         onError

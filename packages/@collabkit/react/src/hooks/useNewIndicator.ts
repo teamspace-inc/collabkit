@@ -32,7 +32,7 @@ export function useNewIndicator() {
         }
       }
     }
-  }, [newIndicatorId, isWindowFocused, seenUntil, userId, messageEvents]);
+  }, [newIndicatorId, isWindowFocused, seenUntil, userId, messageEvents.length]);
 
   return newIndicatorId;
 }

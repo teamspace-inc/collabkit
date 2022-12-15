@@ -11,5 +11,5 @@ export async function subscribeSeen(store: Store) {
     store.workspaces[workspaceId].seen[event.threadId] = event.seenUntilId;
   };
 
-  store.sync.subscribeSeen({ appId, userId, workspaceId, subs: store.subs }, onSeenChange);
+  store.sync.subscribeSeen({ appId, userId, workspaceId, subs: store.subs, onSeenChange });
 }
