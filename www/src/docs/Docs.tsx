@@ -7,6 +7,7 @@ import { IntroductionDoc } from './IntroductionDoc';
 // import { DetailViewsDoc } from './patterns/DetailViewsDoc';
 // import { ListViewsDoc } from './patterns/ListViewsDoc';
 // import { TableViewsDoc } from './patterns/TableViewsDoc';
+import { CanvasCommentingDoc } from './cookbook/CanvasCommentingDoc';
 import { GettingStartedDoc } from './GettingStartedDoc';
 // import { AvatarDoc } from './components/AvatarDoc';
 // import { FacepileDoc } from './components/FacepileDoc';
@@ -37,7 +38,7 @@ export function getDocHref(path: string[], key: string) {
 }
 
 export function getPathHref(path: string[]) {
-  return `/docs/${path.join('/').replace(' ', '').toLowerCase()}`;
+  return `/docs/${path.join('/').replace(' ', '-').toLowerCase()}`;
 }
 
 export const DOCS: RootDocNode = {
@@ -87,6 +88,12 @@ export const DOCS: RootDocNode = {
       ['Thread.Provider']: { component: AdvancedThreadProviderDoc },
       Comment: { component: CommentDoc },
       Profile: { component: ProfileDoc },
+    },
+  },
+  Cookbook: {
+    title: 'Cookbook',
+    children: {
+      'Canvas Commenting': { component: CanvasCommentingDoc },
     },
   },
 };
