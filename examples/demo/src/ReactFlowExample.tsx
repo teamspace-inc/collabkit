@@ -1,4 +1,4 @@
-import { Inbox, Scrollable, ThemeProvider } from '@collabkit/react';
+import { Inbox, Scrollable, ThemeProvider, useUnreadThreadsCount } from '@collabkit/react';
 import * as Popover from '@radix-ui/react-popover';
 import { MouseEvent as ReactMouseEvent, CSSProperties, useCallback } from 'react';
 import ReactFlow, {
@@ -258,6 +258,7 @@ function Menu() {
 }
 
 function CommentsPopover() {
+  const unreadCount = useUnreadThreadsCount();
   return (
     <Popover.Root>
       <Popover.Trigger asChild>
@@ -266,7 +267,7 @@ function CommentsPopover() {
           className="relative font-medium text-sm flex justify-center items-center space-x-1 focus:outline-none shadow-none bg-white border-gray-200 border px-0 rounded-l-lg w-8 h-8 hover:bg-gray-100"
           aria-label="Open comments"
         >
-          <MessageIcon hasUnread />
+          <MessageIcon hasUnread={unreadCount > 0} />
         </button>
       </Popover.Trigger>
       <Popover.Portal>
