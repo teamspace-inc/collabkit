@@ -342,7 +342,7 @@ function MessageIcon({ hasUnread }: { hasUnread?: boolean }) {
           rx="5"
           fill="#0080FF"
           stroke="white"
-          stroke-width="2"
+          strokeWidth="2"
         />
       )}
     </svg>
