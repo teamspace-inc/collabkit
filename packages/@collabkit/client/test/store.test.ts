@@ -1,5 +1,5 @@
 import { createComposer, createStore, createWorkspace } from '../src/store';
-import { expect, test } from 'vitest'
+import { expect, test } from 'vitest';
 
 test('createWorkspace', () => {
   expect(createWorkspace()).toStrictEqual({
@@ -14,6 +14,10 @@ test('createWorkspace', () => {
     seenBy: {},
     threadInfo: {},
     likelyFetchedAllProfiles: false,
+    threadProfiles: {},
+
+    timelineInitialFetchComplete: {},
+    fetchedProfiles: {},
 
     pendingThreads: {},
     pendingThreadInfo: {},
@@ -58,4 +62,4 @@ test('createStore', () => {
     callbacks: {},
     mentionableUsers: {},
   });
-})
+});
