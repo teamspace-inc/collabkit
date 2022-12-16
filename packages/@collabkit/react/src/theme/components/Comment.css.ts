@@ -53,7 +53,7 @@ export const editor = style({
   marginRight: `${calc(paddingRight).negate()}`,
   marginLeft: paddingLeft,
   fontFamily: vars.fontFamily,
-  padding: vars.space[4],
+  padding: `0 ${vars.space[4]}`,
 });
 
 export const header = style({
