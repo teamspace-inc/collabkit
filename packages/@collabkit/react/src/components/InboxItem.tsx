@@ -21,7 +21,6 @@ export function InboxItem(props: { formatTimestamp?: (timestamp: number) => stri
   const timeline = workspace.timeline[threadId];
   const info = workspace.threadInfo[threadId];
   const replyCount = useReplyCount();
-  console.log(replyCount);
 
   if (!timeline) {
     return null;
