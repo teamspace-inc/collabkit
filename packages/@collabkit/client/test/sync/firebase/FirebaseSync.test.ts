@@ -17,7 +17,7 @@ describe('FirebaseSync', async () => {
   let store;
   let apiKey;
   let appId;
-  let sync;
+  let sync: FirebaseSync;
 
   beforeAll(async () => {
     appId = nanoid();
@@ -95,6 +95,8 @@ describe('FirebaseSync', async () => {
         onThreadTypingChange: (event) => {},
         onThreadSeenByUser: (event) => {},
         onThreadInfo: (event) => {},
+        onThreadProfile: (event) => {},
+        onThreadProfiles(props) {},
       });
     });
 
@@ -185,6 +187,8 @@ describe('FirebaseSync', async () => {
         onThreadTypingChange: (event) => {},
         onThreadSeenByUser: (event) => {},
         onThreadInfo: (event) => {},
+        onThreadProfile: (event) => {},
+        onThreadProfiles(props) {},
       });
     });
 
