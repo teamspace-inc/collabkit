@@ -91,6 +91,18 @@ export async function subscribeTimeline({
 
   props.onTimelineGetComplete?.();
 
+  if (!subs[threadProfilesQuery.toString()]) {
+    subs[threadProfilesQuery.toString()] = onChildAdded(threadProfilesQuery, (snapshot) => {
+      if (snapshot.key) {
+        props.onThreadProfile({
+          threadId,
+          workspaceId,
+          userId: snapshot.key,
+        });
+      }
+    });
+  }
+
   if (subs[timelineQuery.toString()]) {
     return;
   }
