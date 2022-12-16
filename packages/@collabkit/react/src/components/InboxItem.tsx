@@ -21,6 +21,7 @@ export function InboxItem(props: { formatTimestamp?: (timestamp: number) => stri
   const timeline = workspace.timeline[threadId];
   const info = workspace.threadInfo[threadId];
   const replyCount = useReplyCount();
+  console.log(replyCount);
 
   if (!timeline) {
     return null;
@@ -79,17 +80,11 @@ export function InboxItem(props: { formatTimestamp?: (timestamp: number) => stri
           <Comment.Body />
         </Comment.Root>
         <Comment.Provider eventId={lastComment.id}>
-          {replyCount > 0 ? (
-            <div>
-              <div className={styles.nameAndTimestampWrapper}>
-                <ReplyCount className={styles.replyCount} />
-                <span className={styles.timestamp}>
-                  Last reply{' '}
-                  <Comment.Timestamp className={styles.timestamp} format={props.formatTimestamp} />
-                </span>
-              </div>
+          <div>
+            <div className={styles.nameAndTimestampWrapper}>
+              <ReplyCount className={styles.replyCount} />
             </div>
-          ) : null}
+          </div>
         </Comment.Provider>
       </div>
     </Thread.Provider>
