@@ -133,6 +133,9 @@ export interface SyncAdapter {
     onThreadTypingChange: (event: TypingEvent) => void;
     onThreadSeenByUser: (event: ThreadSeenEvent) => void;
     onThreadInfo: (props: ThreadInfoChangeEvent) => void;
+    onThreadProfile: (props: ThreadProfileEvent) => void;
+    onTimelineGetComplete: () => void;
+    onThreadProfiles: (props: ThreadProfilesEvent) => void;
   }): void;
 
   subscribeThreadInfo(props: {
@@ -157,6 +160,20 @@ export type ThreadInfoChangeEvent = {
   threadId: string;
   info: { meta: ThreadMeta } | null;
   workspaceId: string;
+};
+
+export type ThreadProfileEvent = {
+  threadId: string;
+  workspaceId: string;
+  userId: string;
+};
+
+export type ThreadProfilesEvent = {
+  threadId: string;
+  workspaceId: string;
+  profiles: {
+    [userId: string]: true;
+  };
 };
 
 export type InboxChangeEvent = {

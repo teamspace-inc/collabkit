@@ -5,10 +5,27 @@ import { useNewIndicator } from '../hooks/useNewIndicator';
 import Comment, { CommentProps } from './Comment';
 import { useTimeline } from '../hooks/useTimeline';
 import { groupedTimeline, computeIsResolved } from '@collabkit/core/src/timelineUtils';
+import { useSnapshot } from 'valtio';
+import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
+import { useThreadContext } from '../hooks/useThreadContext';
 
 const CommentListRoot = (props: React.ComponentProps<'div'>) => (
   <div className={styles.root} {...props} />
 );
+
+function useHasFetchedThreadTimeline() {
+  const { threadId } = useThreadContext();
+  const { fetchedProfiles, threadProfiles } = useSnapshot(useWorkspaceStore());
+
+  // -1 to handle case where a new profile and comment are created at the same time
+  const numFetchedProfiles = Object.keys(fetchedProfiles[threadId] ?? {}).length;
+  const numThreadProfiles = Object.keys(threadProfiles[threadId] ?? {}).length;
+
+  const hasFetched =
+    numFetchedProfiles - 1 === numThreadProfiles || numFetchedProfiles === numThreadProfiles;
+
+  return hasFetched;
+}
 
 export default function CommentList(
   props: React.ComponentProps<'div'> & {
@@ -22,7 +39,9 @@ export default function CommentList(
   const { list } = groupedTimeline(timeline ?? {});
   const newIndicatorId = useNewIndicator();
 
-  return (
+  const hasFetched = useHasFetchedThreadTimeline();
+
+  return hasFetched ? (
     <CommentListRoot {...rootProps}>
       {list.map((group, groupIndex) => {
         const groupedComments: ReactNode[] = group.map((event, index) => {
@@ -53,7 +72,7 @@ export default function CommentList(
         ) : null;
       })}
     </CommentListRoot>
-  );
+  ) : null;
 }
 
 export { CommentListRoot as Root };

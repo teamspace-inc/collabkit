@@ -60,6 +60,8 @@ test('writes a message to a threads timeline', async () => {
       threadId,
       subs: {},
       onTimelineEventAdded: resolve,
+      onThreadProfile: () => {},
+      onThreadProfiles(props) {},
     });
   });
 
