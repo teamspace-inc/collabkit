@@ -49,7 +49,7 @@ export function CommentProvider(props: { children: React.ReactNode; eventId: str
     return null;
   }
 
-  if (event.type === 'system' || !event.hasProfile) {
+  if (event.type === 'system') {
     return null;
   }
 
