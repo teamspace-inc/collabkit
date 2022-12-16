@@ -14,6 +14,16 @@ export const root = style({
   fontFamily: vars.fontFamily,
 });
 
+export const header = style({
+  padding: vars.space[4],
+  display: 'flex',
+  color: fallbackVar(vars.inbox.header.color, vars.color.textPrimary),
+  fontSize: fallbackVar(vars.inbox.header.fontSize, vars.text.large.fontSize),
+  fontWeight: fallbackVar(vars.inbox.header.fontWeight, vars.fontWeight.bold),
+  lineHeight: fallbackVar(vars.inbox.header.lineHeight, vars.text.large.lineHeight),
+  letterSpacing: fallbackVar(vars.inbox.header.letterSpacing, vars.text.large.letterSpacing),
+  fontFamily: vars.fontFamily,
+});
 // export const emptyState = {
 //   root: style({
 //     display: 'flex',

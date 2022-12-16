@@ -24,7 +24,10 @@ export function EmptyState() {
   );
 }
 
-export function Inbox(props: { formatTimestamp?: (timestamp: number) => string }) {
+export function Inbox(props: {
+  formatTimestamp?: (timestamp: number) => string;
+  maxHeight?: string;
+}) {
   const { store } = useApp();
   const { workspaceId, userId } = useSnapshot(store);
 
@@ -58,9 +61,15 @@ export function Inbox(props: { formatTimestamp?: (timestamp: number) => string }
         {threadIds.length === 0 ? (
           <EmptyState />
         ) : (
-          <Scrollable maxHeight={'unset'}>{inboxItems}</Scrollable>
+          <Scrollable maxHeight={props.maxHeight ?? 'unset'}>{inboxItems}</Scrollable>
         )}
       </div>
     </ThemeWrapper>
   );
 }
+
+function InboxHeader(props: React.ComponentPropsWithoutRef<'div'>) {
+  return <div {...props} className={props.className ?? styles.header} />;
+}
+
+Inbox.Header = InboxHeader;

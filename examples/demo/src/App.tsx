@@ -9,6 +9,7 @@ import { GoogleLogin } from '@react-oauth/google';
 import { proxy, useSnapshot, subscribe } from 'valtio';
 import { Route, Switch, useLocation } from 'wouter';
 import { CustomInbox } from './CustomInboxExample';
+import ReactFlowExample from './ReactFlowExample';
 
 const store = proxy<{ user: User | null }>(
   JSON.parse(localStorage.getItem('store') ?? '{ "user": null }') || { user: null }
@@ -119,6 +120,7 @@ function Demo() {
       <Switch>
         <Route path="/table" component={TableExample} />
         <Route path="/custominbox" component={CustomInbox} />
+        <Route path="/reactflow" component={ReactFlowExample} />
         <Route component={Home} />
       </Switch>
     </CollabKitProvider>

@@ -3,6 +3,13 @@ export const InboxBase = {
     gap: 'initial',
     width: 'initial',
     background: 'initial',
+    header: {
+      color: 'initial',
+      fontSize: 'initial',
+      fontWeight: 'initial',
+      lineHeight: 'initial',
+      letterSpacing: 'initial',
+    },
     item: {
       gap: 'initial',
       paddingTop: 'initial',

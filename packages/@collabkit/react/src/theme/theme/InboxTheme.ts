@@ -4,6 +4,14 @@ export const InboxTheme = {
     background: 'inbox-background',
     width: 'inbox-width',
 
+    header: {
+      color: 'inbox-header-color',
+      fontSize: 'inbox-header-font-size',
+      fontWeight: 'inbox-header-font-weight',
+      lineHeight: 'inbox-header-line-height',
+      letterSpacing: 'inbox-header-letter-spacing',
+    },
+
     item: {
       background: 'inbox-item-background',
       borderBottom: 'inbox-item-border-bottom',
