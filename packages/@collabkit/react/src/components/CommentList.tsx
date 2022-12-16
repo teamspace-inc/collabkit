@@ -17,9 +17,12 @@ function useHasFetchedThreadTimeline() {
   const { threadId } = useThreadContext();
   const { fetchedProfiles, threadProfiles } = useSnapshot(useWorkspaceStore());
 
+  // -1 to handle case where a new profile and comment are created at the same time
+  const numFetchedProfiles = Object.keys(fetchedProfiles[threadId] ?? {}).length;
+  const numThreadProfiles = Object.keys(threadProfiles[threadId] ?? {}).length;
+
   const hasFetched =
-    Object.keys(fetchedProfiles[threadId] ?? {}).length ===
-    Object.keys(threadProfiles[threadId] ?? {}).length;
+    numFetchedProfiles - 1 === numThreadProfiles || numFetchedProfiles === numThreadProfiles;
 
   return hasFetched;
 }
