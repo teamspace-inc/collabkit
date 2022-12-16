@@ -277,8 +277,11 @@ function CommentsPopover() {
           arrowPadding={20}
           align="end"
         >
-          <div className="uppercase text-[#63676D] font-bold text-xs p-3 border-b border-[#EFF0F1]">
-            Comments
+          <div className="flex justify-between px-4 py-3 border-b border-[#EFF0F1]">
+            <div className="uppercase text-[#63676D] font-bold text-xs">Comments</div>
+            <Popover.Close className="">
+              <CloseIcon />
+            </Popover.Close>
           </div>
           <ThemeProvider
             theme={{
@@ -379,6 +382,27 @@ function EllipsisIcon() {
       <path
         d="M17.8333 14.1654C19.03 14.1654 20 13.1953 20 11.9987C20 10.8021 19.03 9.83203 17.8333 9.83203C16.6367 9.83203 15.6667 10.8021 15.6667 11.9987C15.6667 13.1953 16.6367 14.1654 17.8333 14.1654Z"
         fill="#A2A6AC"
+      />
+    </svg>
+  );
+}
+
+function CloseIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M12 4L4 12"
+        stroke="#A2A6AB"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M12 12L4 4"
+        stroke="#A2A6AB"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
       />
     </svg>
   );
