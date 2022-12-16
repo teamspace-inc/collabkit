@@ -44,7 +44,6 @@ export const DarkTheme = () => (
   </>
 );
 
-
 export const ShowHeader = () => (
   <FixedSize>
     <Thread threadId="thread-stories" showHeader />
@@ -55,31 +54,31 @@ export const AutoFocusOff = () => (
   <FixedSize>
     <Thread threadId="thread-stories" autoFocus={false} />
   </FixedSize>
-)
+);
 
 export const HideComposer = () => (
   <FixedSize>
     <Thread threadId="thread-stories" hideComposer={true} />
   </FixedSize>
-)
+);
 
 export const ThreadInfoName = () => (
   <FixedSize>
-    <Thread threadId="thread-stories" info={{ name: "Thread Stories" }} />
+    <Thread threadId="thread-stories" info={{ name: 'Thread Stories' }} />
   </FixedSize>
-)
+);
 
 export const ThreadInfoURL = () => (
   <FixedSize>
-    <Thread threadId="thread-stories" info={{ url: "https://localhost:61000/something" }} />
+    <Thread threadId="thread-stories" info={{ url: 'https://localhost:61000/something' }} />
   </FixedSize>
-)
+);
 
 export const DefaultSubscribers = () => (
   <FixedSize>
     <Thread threadId="thread-stories" defaultSubscribers={['user1']} />
   </FixedSize>
-)
+);
 
 export default {
   decorators: [

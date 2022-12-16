@@ -36,7 +36,7 @@
     "@ladle/react": "^2.4.2",
     "@lexical/markdown": "^0.4.1",
     "@lexical/react": "^0.4.1",
-    "@playwright/test": "^1.25.0",
+    "@playwright/test": "^1.28.1",
     "@radix-ui/colors": "^0.1.8",
     "@radix-ui/popper": "^0.1.0",
     "@radix-ui/react-scroll-area": "^0.1.4",
