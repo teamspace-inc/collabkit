@@ -6,7 +6,7 @@ import {
   query,
   startAfter,
 } from 'firebase/database';
-import type { Sync, Subscriptions } from '@collabkit/core';
+import { Sync, Subscriptions, FirebaseId } from '@collabkit/core';
 import { ref, timelineRef } from './refs';
 import { snapshotToEvent } from './converters';
 
@@ -97,7 +97,7 @@ export async function subscribeTimeline({
         props.onThreadProfile({
           threadId,
           workspaceId,
-          userId: snapshot.key,
+          userId: FirebaseId.decode(snapshot.key),
         });
       }
     });
