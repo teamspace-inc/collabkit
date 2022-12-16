@@ -98,7 +98,7 @@ export const root = recipe({
     flex: 1,
     cursor: 'pointer',
     boxSizing: 'border-box',
-    background: fallbackVar(vars.color.background, vars.color.background),
+    background: fallbackVar(vars.inbox.item.background, vars.color.background),
     paddingTop: fallbackVar(vars.inbox.item.paddingTop, vars.space[4]),
     paddingBottom: fallbackVar(vars.inbox.item.paddingBottom, vars.space[4]),
     paddingLeft: fallbackVar(vars.inbox.item.paddingLeft, vars.space[4]),
@@ -108,7 +108,7 @@ export const root = recipe({
     gap: '12px',
     selectors: {
       '&:hover': {
-        background: fallbackVar(vars.color.surfaceOverlay, vars.color.surface),
+        background: fallbackVar(vars.inbox.item.hover.background, vars.color.surfaceOverlay),
       },
       '&:last-of-type': {
         marginBottom: fallbackVar(vars.inbox.item.paddingBottom, vars.color.surface),
