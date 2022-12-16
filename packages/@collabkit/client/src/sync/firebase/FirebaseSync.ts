@@ -271,6 +271,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
         name: threadId,
         mentions: event.mentions ?? null,
       },
+      [ref.path`/views/threadProfiles/${appId}/${workspaceId}/${threadId}/${userId}`]: true,
     };
 
     // write the data to firebase
@@ -434,6 +435,8 @@ export class FirebaseSync implements Sync.SyncAdapter {
     onThreadTypingChange: (event: Sync.TypingEvent) => void;
     onThreadSeenByUser: (event: Sync.ThreadSeenEvent) => void;
     onThreadInfo: (props: Sync.ThreadInfoChangeEvent) => void;
+    onThreadProfile: (props: Sync.ThreadProfileEvent) => void;
+    onThreadProfiles: (props: Sync.ThreadProfilesEvent) => void;
   }) {
     subscribeTimeline(props);
     subscribeThreadIsTyping(props);

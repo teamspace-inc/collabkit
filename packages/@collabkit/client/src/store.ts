@@ -34,6 +34,9 @@ export function createWorkspace(): Workspace {
     seenBy: {},
     threadInfo: {},
     likelyFetchedAllProfiles: false,
+    timelineInitialFetchComplete: {},
+    threadProfiles: {},
+    fetchedProfiles: {},
 
     pendingThreads: {},
     pendingThreadInfo: {},

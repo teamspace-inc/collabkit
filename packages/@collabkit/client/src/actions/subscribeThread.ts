@@ -1,6 +1,7 @@
 import { actions, getConfig } from './index';
 import type { Sync, ThreadInfo, Store } from '@collabkit/core';
 import { createComposer } from '../store';
+import { subscribeProfile } from './subscribeProfile';
 
 export async function subscribeThread(
   store: Store,
@@ -14,6 +15,7 @@ export async function subscribeThread(
   store.workspaces[props.workspaceId].composers[props.threadId] ||= createComposer();
   const { workspaceId, threadId } = props;
   const { appId, userId } = getConfig(store);
+
   store.sync.subscribeThread({
     appId,
     userId,
@@ -26,7 +28,15 @@ export async function subscribeThread(
         ...event.event,
         id: event.eventId,
       };
-      actions.subscribeProfile(store, event.event.createdById);
+      actions.subscribeProfile(store, {
+        profileId: event.event.createdById,
+        onSubscribe: () => {
+          store.workspaces[event.workspaceId].fetchedProfiles[event.threadId] ||= {};
+          store.workspaces[event.workspaceId].fetchedProfiles[event.threadId][
+            event.event.createdById
+          ] = true;
+        },
+      });
     },
     onThreadTypingChange: ({ workspaceId, threadId, userId, isTyping }: Sync.TypingEvent) => {
       store.workspaces[workspaceId].composers[threadId].isTyping[userId] = isTyping;
@@ -41,6 +51,21 @@ export async function subscribeThread(
       } else {
         delete store.workspaces[event.workspaceId].threadInfo[event.threadId];
       }
+    },
+    onThreadProfile: (event: Sync.ThreadProfileEvent) => {
+      subscribeProfile(store, {
+        profileId: event.userId,
+        onSubscribe: () => {
+          store.workspaces[event.workspaceId].fetchedProfiles[event.threadId] ||= {};
+          store.workspaces[event.workspaceId].fetchedProfiles[event.threadId][event.userId] = true;
+        },
+      });
+    },
+    onTimelineGetComplete: () => {
+      // store.workspaces[workspaceId].timelineInitialFetchComplete[threadId] = true;
+    },
+    onThreadProfiles: (event: Sync.ThreadProfilesEvent) => {
+      store.workspaces[event.workspaceId].threadProfiles[event.threadId] = event.profiles;
     },
   });
 }
