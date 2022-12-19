@@ -33,8 +33,6 @@ export async function sendMessage(store: Store, props: { workspaceId: string; th
   });
 
   if (store.workspaces[workspaceId].pendingThreadInfo[threadId]) {
-    console.log('saving thread info');
-    // save thread info
     await actions.saveThreadInfo(store, {
       workspaceId,
       threadId,
