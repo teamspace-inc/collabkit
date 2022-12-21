@@ -7,14 +7,14 @@ import CommentIcon from './Comment.svg';
 import CommentNotificationIcon from './CommentNotification.svg';
 import { ThemeWrapper } from './ThemeWrapper';
 
-export function SidebarInboxButton(props: { children?: React.ReactNode }) {
+export function SidebarInboxButton(props: { children?: React.ReactNode; className?: string }) {
   const { onPointerDown } = useSidebarButton();
   const unreadThreadCount = useUnreadThreadsCount();
   const showUnreadDot = unreadThreadCount > 0;
 
   return (
     <ThemeWrapper>
-      <button className={inboxButton} onPointerDown={onPointerDown}>
+      <button className={props.className ?? inboxButton} onPointerDown={onPointerDown}>
         {props.children ? (
           props.children
         ) : (
