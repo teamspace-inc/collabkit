@@ -7,7 +7,7 @@ import Usage from './PopoverUsage.tsx?raw';
 export function PopoverThreadDoc() {
   return (
     <>
-      <h2>A popover comment thread that can anchor to any component in your app.</h2>
+      <h2>A popover comment thread that can be attached to any component in your app.</h2>
       <DocHeroDemoContainer style={{ padding: '100px 20px 280px' }}>
         <PopoverDemo />
       </DocHeroDemoContainer>
@@ -29,10 +29,10 @@ export function PopoverThreadDoc() {
           popover thread's state and actions.
           <br />
           <br />
-          The main action you'll need to use is <code>{'showThread()'}</code>. This will open the
-          comment thread popover for you. We recommend binding this to the <code>onClick</code>{' '}
-          event of your component, a context menu, or another button in your product. This vary's
-          based on your use case.
+          One important action to use is <code>{'showThread()'}</code>. This will open the comment
+          thread popover for you. You can bind this action to the <code>onClick</code> event of your
+          component, a context menu, or another button in your product, depending on your specific
+          use case
           <br />
           <br />
           The following code sample shows how to put it all together:

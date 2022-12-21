@@ -6,27 +6,19 @@ import Usage from './CollabKitProviderDocUsage.tsx?raw';
 export function CollabKitProviderDoc() {
   return (
     <>
-      <h2>Identifies users and sync data. Required to use other components.</h2>
-
+      <h2>Authenticates users and syncs data.</h2>
       <div>
         <h3>Usage</h3>
         <p>
-          <code className="ReactNode">CollabKitProvider</code> is the React context provider that
-          handles authentication with CollabKit's servers and all other components fetch data from
-          it.
+          <code className="ReactNode">CollabKitProvider</code> is the central component that manages
+          authentication with CollabKit's servers and provides data to all other components. To
+          ensure smooth data fetching, we recommend wrapping it in your root component (or as close
+          to it as possible) to prevent it from unmounting while your app is in use.
+          <br />
+          <br /> To set up
+          <code className="ReactNode">CollabKitProvider</code>, simply copy the following code into
+          your root App component.
         </p>
-
-        <p>
-          Because it handles data fetching we recommend wrapping it in your apps root component (or
-          as close as possible to it) so it does not unmount while a user is using your app.
-        </p>
-
-        <p>
-          The following example shows how to setup{' '}
-          <code className="ReactNode">CollabKitProvider</code> for your app. Copy the code below
-          into your root <code className="ReactNode">App</code> component.
-        </p>
-
         {renderCodeSnippet(Usage)}
         <p>
           Once you've got this working you'll be able to use CollabKit components like{' '}
@@ -34,12 +26,13 @@ export function CollabKitProviderDoc() {
           <DocLink to="/docs/components/popoverthread">PopoverThread</DocLink> within your app.
         </p>
         <blockquote>
-          <h4 style={{ marginTop: 0 }}>Secure Mode</h4>By default CollabKit lets you provide your{' '}
-          <code>apiKey</code> client side so it's easy to get started. <br />
-          <br />
-          Before going live you'll want to enable{' '}
-          <DocLink href="/docs/secureMode">Secure Mode</DocLink> which requires an additional step
-          to generate a per-user token from your server. Which keeps your <code>apiKey</code> safe.
+          <h4 style={{ marginTop: 0 }}>
+            <DocLink href="/docs/secureMode">Secure Mode</DocLink>
+          </h4>
+          CollabKit's default mode allows you to provide your API key on the client side for easy
+          setup. However, for added security, you can enable{' '}
+          <DocLink href="/docs/secureMode">Secure Mode</DocLink>. This requires an additional step
+          of generating a per-user token from your server, which helps to protect your API key.
         </blockquote>
       </div>
       <div>

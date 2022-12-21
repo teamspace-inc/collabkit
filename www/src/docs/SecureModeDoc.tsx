@@ -11,9 +11,10 @@ export function SecureModeDoc() {
       <div>
         <h2>Make sure you turn this on before shipping to production</h2>
         <p>
-          Secure Mode requires fetching a per user token and passing it to the client. This keeps
-          your <code>apiKey</code> safe and prevents anyone from writing or reading comments
-          indended for other users or workspaces.
+          To ensure the security of your API key and protect against unauthorized access to
+          comments, CollabKit offers Secure Mode. This mode requires fetching a per-user token and
+          passing it to the client. This helps to keep your API key safe and prevents users from
+          reading or writing comments intended for other users or workspaces.
         </p>
         <p>
           In this tutorial we'll show you how to enable it. Set aside 30 minutes to get it done.
