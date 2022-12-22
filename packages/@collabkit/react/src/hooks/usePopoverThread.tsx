@@ -11,7 +11,7 @@ export type PopoverState = 'open' | 'preview' | 'closed';
 
 export function usePopoverThread(props: ObjectProps) {
   const { store, events } = useApp();
-  const { objectId, objectName } = props;
+  const { objectId, objectName, objectUrl } = props;
   const { workspaceId, viewingId, previewingId } = useSnapshot(store);
 
   const existingThreadId = useExistingThreadId({ objectId });
@@ -22,7 +22,11 @@ export function usePopoverThread(props: ObjectProps) {
   useSaveThreadInfo({
     workspaceId,
     threadId,
-    info: { name: objectName, meta: { cellId: objectId } },
+    info: {
+      name: objectName,
+      meta: { cellId: objectId },
+      url: objectUrl,
+    },
   });
 
   const threadVisible =
