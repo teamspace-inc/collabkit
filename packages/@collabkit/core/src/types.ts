@@ -16,6 +16,7 @@ export interface ObjectMeta {
 export type ObjectProps = {
   objectId: string;
   objectName?: string;
+  objectUrl?: string;
 };
 
 export type ThreadInfo = {
