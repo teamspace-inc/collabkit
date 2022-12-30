@@ -1,23 +1,8 @@
-import type { Store, ThreadInfo } from '@collabkit/core';
+import type { Store } from '@collabkit/core';
 import { $createTextNode, $getRoot } from 'lexical';
 import { writeMessageToFirebase } from './writeMessageToFirebase';
 import { actions, getConfig } from '.';
-
-function generateObjectIdFromCellId(info: ThreadInfo) {
-  const meta = info.meta;
-  const cellId = meta?.cellId;
-  if (!cellId) {
-    return info;
-  } else {
-    return {
-      ...info,
-      meta: {
-        ...meta,
-        objectId: cellId,
-      },
-    };
-  }
-}
+import { generateObjectIdFromCellId } from '../utils/generateObjectIdFromCellId';
 
 export async function sendMessage(store: Store, props: { workspaceId: string; threadId: string }) {
   const { workspaceId, threadId } = props;

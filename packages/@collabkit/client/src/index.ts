@@ -4,3 +4,4 @@ export type { Events } from './events';
 export { createStore, createWorkspace, markRaw } from './store';
 export * from './constants';
 export { initFirebase, FirebaseSync } from './sync/firebase/FirebaseSync';
+export { generateObjectIdFromCellId } from './utils/generateObjectIdFromCellId';
