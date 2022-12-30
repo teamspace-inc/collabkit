@@ -4,22 +4,6 @@ import { writeMessageToFirebase } from './writeMessageToFirebase';
 import { actions, getConfig } from '.';
 import { generateObjectIdFromCellId } from '../utils/generateObjectIdFromCellId';
 
-function generateObjectIdFromCellId(info: ThreadInfo) {
-  const meta = info.meta;
-  const cellId = meta?.cellId;
-  if (!cellId) {
-    return info;
-  } else {
-    return {
-      ...info,
-      meta: {
-        ...meta,
-        objectId: cellId,
-      },
-    };
-  }
-}
-
 export async function sendMessage(store: Store, props: { workspaceId: string; threadId: string }) {
   const { workspaceId, threadId } = props;
   const { userId } = getConfig(store);
