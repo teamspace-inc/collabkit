@@ -1,7 +1,23 @@
-import type { Store } from '@collabkit/core';
+import type { Store, ThreadInfo } from '@collabkit/core';
 import { $createTextNode, $getRoot } from 'lexical';
 import { writeMessageToFirebase } from './writeMessageToFirebase';
 import { actions, getConfig } from '.';
+
+function generateObjectIdFromCellId(info: ThreadInfo) {
+  const meta = info.meta;
+  const cellId = meta?.cellId;
+  if (!cellId) {
+    return info;
+  } else {
+    return {
+      ...info,
+      meta: {
+        ...meta,
+        objectId: cellId,
+      },
+    };
+  }
+}
 
 export async function sendMessage(store: Store, props: { workspaceId: string; threadId: string }) {
   const { workspaceId, threadId } = props;
@@ -41,6 +57,8 @@ export async function sendMessage(store: Store, props: { workspaceId: string; th
     });
   }
 
+  const isFirstEvent = Object.keys(!store.workspaces[workspaceId].timeline[threadId]).length === 0;
+
   try {
     const event = await writeMessageToFirebase(store, {
       workspaceId,
@@ -56,6 +74,15 @@ export async function sendMessage(store: Store, props: { workspaceId: string; th
     }
 
     store.callbacks?.onCommentSend?.({ workspaceId, threadId, userId, event });
+    if (isFirstEvent) {
+      store.callbacks?.onThreadCreated?.({
+        workspaceId,
+        threadId,
+        userId,
+        event,
+        info: generateObjectIdFromCellId(store.workspaces[workspaceId].threadInfo[threadId]),
+      });
+    }
   } catch (e) {
     console.error('[CollabKit]: failed to send message ', e);
     return;

@@ -66,6 +66,13 @@ export type UnsecureProps = {
 };
 
 export type Callbacks = {
+  onThreadCreated?: (data: {
+    userId: string;
+    workspaceId: string;
+    threadId: string;
+    info: ThreadInfo;
+    event: WithID<Event>;
+  }) => void;
   onCommentSend?: (data: {
     userId: string;
     workspaceId: string;
