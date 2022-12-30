@@ -10,7 +10,7 @@ import {} from '../../../client/src/actions';
 import { ThreadTarget } from '@collabkit/core';
 import * as styles from '../theme/components/InboxItem.css';
 import { Thread } from '..';
-import { generateObjectIdFromCellId, actions } from '@collabkit/client';
+import { generateObjectIdFromCellId, actions } from '../../../client/src/index';
 
 export function InboxItem(props: { formatTimestamp?: (timestamp: number) => string }) {
   const { threadId, workspaceId, userId } = useThreadContext();
