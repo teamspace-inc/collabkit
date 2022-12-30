@@ -2,6 +2,7 @@ import type { Store, ThreadInfo } from '@collabkit/core';
 import { $createTextNode, $getRoot } from 'lexical';
 import { writeMessageToFirebase } from './writeMessageToFirebase';
 import { actions, getConfig } from '.';
+import { generateObjectIdFromCellId } from '../utils/generateObjectIdFromCellId';
 
 function generateObjectIdFromCellId(info: ThreadInfo) {
   const meta = info.meta;
