@@ -85,6 +85,9 @@ function Demo() {
         onTimestampClick: (data) => {
           console.log('timestamp, click', data);
         },
+        onThreadCreated: (data) => {
+          console.log('thread, created', data);
+        },
         // onCommentSend: (data) => {
         //   console.log(data);
         // },
