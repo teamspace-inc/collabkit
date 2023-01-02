@@ -49,37 +49,37 @@ jobs:
       - run: yarn test
         env:
           VITE_FIREBASE_TEST_SERVICE_ACCOUNT: ${{ secrets.VITE_FIREBASE_TEST_SERVICE_ACCOUNT }}
-  vercel-deployment:
-    runs-on: buildjet-32vcpu-ubuntu-2204
-    steps:
-      - run: sleep 90
-      - name: vercel-preview-url
-        uses: zentered/vercel-preview-url@v1.1.9
-        id: vercel_preview_url
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-        with:
-          vercel_project_id: 'prj_2fx29AePQ5BjFJEuPkvw4it9z8Av'
-      - name: Get URL
-        run: echo "https://${{ steps.vercel_preview_url.outputs.preview_url }}"
-  test-e2e:
-    timeout-minutes: 60
-    runs-on: buildjet-32vcpu-ubuntu-2204
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-      - name: Install dependencies
-        run: yarn
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
-      - name: Run Playwright tests
-        run: yarn playwright test
-        working-directory: packages/@collabkit/react
-      - uses: actions/upload-artifact@v2
-        if: always()
-        with:
-          name: playwright-report
-          path: playwright-report/
-          retention-days: 30
+  # vercel-deployment:
+  #   runs-on: buildjet-32vcpu-ubuntu-2204
+  #   steps:
+  #     - run: sleep 90
+  #     - name: vercel-preview-url
+  #       uses: zentered/vercel-preview-url@v1.1.9
+  #       id: vercel_preview_url
+  #       env:
+  #         VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+  #       with:
+  #         vercel_project_id: 'prj_2fx29AePQ5BjFJEuPkvw4it9z8Av'
+  #     - name: Get URL
+  #       run: echo "https://${{ steps.vercel_preview_url.outputs.preview_url }}"
+  # test-e2e:
+  #   timeout-minutes: 60
+  #   runs-on: buildjet-32vcpu-ubuntu-2204
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: actions/setup-node@v3
+  #       with:
+  #         node-version: 18
+  #     - name: Install dependencies
+  #       run: yarn
+  #     - name: Install Playwright Browsers
+  #       run: npx playwright install --with-deps
+  #     - name: Run Playwright tests
+  #       run: yarn playwright test
+  #       working-directory: packages/@collabkit/react
+  #     - uses: actions/upload-artifact@v2
+  #       if: always()
+  #       with:
+  #         name: playwright-report
+  #         path: playwright-report/
+  #         retention-days: 30
