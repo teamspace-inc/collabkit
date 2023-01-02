@@ -59,7 +59,7 @@ jobs:
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         with:
-          vercel_project_id: 'collabkit-demo'
+          vercel_project_id: 'prj_2fx29AePQ5BjFJEuPkvw4it9z8Av'
       - name: Get URL
         run: echo "https://${{ steps.vercel_preview_url.outputs.preview_url }}"
   test-e2e:
