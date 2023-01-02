@@ -19,7 +19,24 @@ subscribe(store, () => {
   localStorage.setItem('store', JSON.stringify(store));
 });
 
+// reads user details from url params and sets them in the store
+// used by e2e tests to bypass google authentication as it's not
+// easy to automate using playwright
+function useUserParams() {
+  const urlSearchParams = new URLSearchParams(window.location.search);
+  const params = Object.fromEntries(urlSearchParams.entries());
+  if (params.userId && params.userName && params.userEmail) {
+    store.user = {
+      id: params.userId,
+      name: params.userName,
+      email: params.userEmail,
+      avatar: params.userAvatar,
+    };
+  }
+}
+
 export default function App() {
+  useUserParams();
   const { user } = useSnapshot(store);
 
   return (
@@ -57,15 +74,21 @@ export default function App() {
   );
 }
 
-const apiKey = import.meta.env.VITE_COLLABKIT_API_KEY;
-const appId = import.meta.env.VITE_COLLABKIT_APP_ID;
-const workspace = {
-  id: import.meta.env.VITE_COLLABKIT_WORKSPACE_ID,
-  name: import.meta.env.VITE_COLLABKIT_WORKSPACE_NAME,
-};
+// reads app details from url params
+function useAppParams() {
+  const urlSearchParams = new URLSearchParams(window.location.search);
+  const params = Object.fromEntries(urlSearchParams.entries());
+  return {
+    apiKey: params.apiKey ?? import.meta.env.VITE_COLLABKIT_APP_ID,
+    appId: params.appId ?? import.meta.env.VITE_COLLABKIT_APP_ID,
+    workspaceId: params.workspaceId ?? import.meta.env.VITE_COLLABKIT_WORKSPACE_ID,
+    workspaceName: params.workspaceName ?? import.meta.env.VITE_COLLABKIT_WORKSPACE_NAME,
+  };
+}
 
 function Demo() {
   const { user } = useSnapshot(store);
+  const { apiKey, appId, workspaceId, workspaceName } = useAppParams();
 
   const [pathname] = useLocation();
   const name = pathname.slice(1);
@@ -76,7 +99,7 @@ function Demo() {
     <CollabKitProvider
       apiKey={apiKey}
       appId={appId}
-      workspace={workspace}
+      workspace={{ id: workspaceId, name: workspaceName }}
       callbacks={{
         // onInboxThreadClick: (data) => {
         //   // defining this overrides the default action for clicking an inbox item
