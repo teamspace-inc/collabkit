@@ -49,6 +49,19 @@ jobs:
       - run: yarn test
         env:
           VITE_FIREBASE_TEST_SERVICE_ACCOUNT: ${{ secrets.VITE_FIREBASE_TEST_SERVICE_ACCOUNT }}
+  vercel-deployment:
+    runs-on: buildjet-32vcpu-ubuntu-2204
+    steps:
+      - run: sleep 90
+      - name: vercel-preview-url
+        uses: zentered/vercel-preview-url@v1.1.3
+        id: vercel_preview_url
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        with:
+          vercel_project_id: 'collabkit-demo'
+      - name: Get URL
+        run: echo "https://${{ steps.vercel_preview_url.outputs.preview_url }}"
   test-e2e:
     timeout-minutes: 60
     runs-on: buildjet-32vcpu-ubuntu-2204
