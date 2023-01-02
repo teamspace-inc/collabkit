@@ -1,7 +1,7 @@
 import { expect, test, beforeAll } from 'vitest';
 import { nanoid } from 'nanoid';
-import { setupApp, setupWorkspaceProfile } from '../helpers';
-import { setupFirebase } from '../setupFirebase';
+import { setupApp, setupFirebase, setupWorkspaceProfile } from '../../../test-utils/src';
+
 import { writeMessageToFirebase } from '../../src/actions/writeMessageToFirebase';
 import { subscribeTimeline } from '../../src/sync/firebase/subscribeTimeline';
 import { init } from '../../src/actions/init';

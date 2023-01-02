@@ -18,12 +18,8 @@
     "composite": true,
     "outDir": "types",
     "emitDeclarationOnly": true,
-    "paths": {
-      "@collabkit/colors": ["../colors/src"],
-      "@collabkit/core": ["../core/src"],
-      "@collabkit/test-utils": ["../test-utils/src"]
-    },
+    "paths": {},
     "rootDir": "../../../"
   },
-  "include": ["src", "../colors/src", "../core/src", "../theme/src", "../test-utils/src"]
+  "include": ["src"]
 }

@@ -1,0 +1,13 @@
+{
+  "name": "@collabkit/test-utils",
+  "version": "0.0.0",
+  "private": true,
+  "module": "src/index.ts",
+  "scripts": {
+    "clean": "rimraf dist types *.tsbuildinfo"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "firebase-admin": "^11.3.0"
+  }
+}

@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest';
 import { nanoid } from 'nanoid';
-import { setupFirebase } from '../setupFirebase';
+import { setupFirebase } from '../../../test-utils/src';
 import { createComposer, createStore, createWorkspace } from '../../src/store';
 import { ComposerTarget, Store } from '@collabkit/core';
 import { disableComposerCommentButton } from '../../src/actions/disableComposerCommentButton';

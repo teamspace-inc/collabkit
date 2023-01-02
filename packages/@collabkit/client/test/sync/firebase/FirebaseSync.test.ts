@@ -2,14 +2,13 @@ import { get } from 'firebase/database';
 import { nanoid } from 'nanoid';
 import { expect, beforeAll, test, describe } from 'vitest';
 import { ref } from '../../../src/sync/firebase/refs';
-import { setupFirebase } from '../../setupFirebase';
+import { setupApp, setupFirebase, setupWorkspaceProfile } from '../../../../test-utils/src';
 
 setupFirebase();
 
 import { Subscriptions, Sync, ThreadInfo } from '@collabkit/core';
 import { createStore, createWorkspace, createComposer } from '../../../src/store';
 import { FirebaseSync } from '../../../src/sync/firebase/FirebaseSync';
-import { setupApp, setupWorkspaceProfile } from '../../helpers';
 
 describe('FirebaseSync', async () => {
   let userId;

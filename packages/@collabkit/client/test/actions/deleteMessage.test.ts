@@ -1,7 +1,6 @@
 import { expect, test } from 'vitest';
 import { nanoid } from 'nanoid';
-import { setupApp, setupWorkspaceProfile } from '../helpers';
-import { setupFirebase } from '../setupFirebase';
+import { setupApp, setupFirebase, setupWorkspaceProfile } from '../../../test-utils/src';
 import { createComposer, createStore, createWorkspace } from '../../src/store';
 import { init } from '../../src/actions/init';
 import { FirebaseSync } from '../../src/sync/firebase/FirebaseSync';

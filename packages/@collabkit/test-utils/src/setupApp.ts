@@ -2,25 +2,6 @@ import admin from 'firebase-admin';
 import { getApp } from 'firebase/app';
 import { getAuth, signInWithCustomToken } from 'firebase/auth';
 
-export async function setupWorkspaceProfile({
-  appId,
-  workspaceId,
-  userId,
-}: {
-  appId: string;
-  userId: string;
-  workspaceId: string;
-}) {
-  await admin
-    .database()
-    .ref('workspaces')
-    .child(appId)
-    .child(workspaceId)
-    .child('profiles')
-    .child(userId)
-    .set(true);
-}
-
 export async function setupApp({ appId, apiKey }: { appId: string; apiKey: string }) {
   try {
     await admin
