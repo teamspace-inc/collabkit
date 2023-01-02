@@ -1128,7 +1128,7 @@ type ConfigProps = {
   readOnly?: boolean;
   _demoStore?: Store;
   _isDemo?: boolean;
-  _firebaseConfig?: FirebaseConfig;
+  _test?: boolean;
 };
 
 type FirebaseConfig = {

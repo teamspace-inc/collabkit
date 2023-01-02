@@ -1,8 +1,6 @@
-import { useEffect } from 'react';
 import { CollabKitProvider, CustomTheme, Thread, useUnreadCount } from '@collabkit/react';
 import * as themes from '@collabkit/custom-themes';
 import { User } from './types';
-import jwtDecode from 'jwt-decode';
 import { TableExample } from './TableExample';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { GoogleLogin } from '@react-oauth/google';
@@ -11,29 +9,19 @@ import { Route, Switch, useLocation } from 'wouter';
 import { CustomInbox } from './CustomInboxExample';
 import ReactFlowExample from './ReactFlowExample';
 
-const store = proxy<{ user: User | null }>(
+import { useTestParams } from './hooks/useTestParams';
+import { useAppParams } from './hooks/useAppParams';
+import { useUserParams } from './hooks/useUserParams';
+import { userFromGoogleToken } from './hooks/userFromGoogleToken';
+import { useDocumentTitle } from './hooks/useDocumentTitle';
+
+export const store = proxy<{ user: User | null }>(
   JSON.parse(localStorage.getItem('store') ?? '{ "user": null }') || { user: null }
 );
 
 subscribe(store, () => {
   localStorage.setItem('store', JSON.stringify(store));
 });
-
-// reads user details from url params and sets them in the store
-// used by e2e tests to bypass google authentication as it's not
-// easy to automate using playwright
-function useUserParams() {
-  const urlSearchParams = new URLSearchParams(window.location.search);
-  const params = Object.fromEntries(urlSearchParams.entries());
-  if (params.userId && params.userName && params.userEmail) {
-    store.user = {
-      id: params.userId,
-      name: params.userName,
-      email: params.userEmail,
-      avatar: params.userAvatar,
-    };
-  }
-}
 
 export default function App() {
   useUserParams();
@@ -74,21 +62,10 @@ export default function App() {
   );
 }
 
-// reads app details from url params
-function useAppParams() {
-  const urlSearchParams = new URLSearchParams(window.location.search);
-  const params = Object.fromEntries(urlSearchParams.entries());
-  return {
-    apiKey: params.apiKey ?? import.meta.env.VITE_COLLABKIT_APP_ID,
-    appId: params.appId ?? import.meta.env.VITE_COLLABKIT_APP_ID,
-    workspaceId: params.workspaceId ?? import.meta.env.VITE_COLLABKIT_WORKSPACE_ID,
-    workspaceName: params.workspaceName ?? import.meta.env.VITE_COLLABKIT_WORKSPACE_NAME,
-  };
-}
-
 function Demo() {
   const { user } = useSnapshot(store);
   const { apiKey, appId, workspaceId, workspaceName } = useAppParams();
+  const test = useTestParams();
 
   const [pathname] = useLocation();
   const name = pathname.slice(1);
@@ -97,6 +74,7 @@ function Demo() {
 
   return (
     <CollabKitProvider
+      _test={test}
       apiKey={apiKey}
       appId={appId}
       workspace={{ id: workspaceId, name: workspaceName }}
@@ -147,7 +125,7 @@ function Demo() {
         <Route path="/table" component={TableExample} />
         <Route path="/custominbox" component={CustomInbox} />
         <Route path="/reactflow" component={ReactFlowExample} />
-        <Route component={Home} />
+        <Route path="/" component={Home} />
       </Switch>
     </CollabKitProvider>
   );
@@ -174,20 +152,4 @@ function Home() {
       />
     </div>
   );
-}
-
-function userFromGoogleToken(token: string) {
-  const { sub, name, picture, email } = jwtDecode(token) as any;
-  return {
-    id: sub,
-    name,
-    email,
-    avatar: picture,
-  };
-}
-
-function useDocumentTitle(title: string) {
-  useEffect(() => {
-    document.title = title;
-  }, [title]);
 }

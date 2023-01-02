@@ -62,6 +62,7 @@ export async function authenticate(store: Store) {
     const tokenResponse = await generateToken({
       appId: config.appId,
       apiKey: config.apiKey,
+      apiHost: config._test ? 'https://europe-west2-collabkit-test.cloudfunctions.net' : undefined,
     });
 
     // userId is the legacy config param, consider depcrecating it
