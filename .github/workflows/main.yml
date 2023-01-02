@@ -54,7 +54,7 @@ jobs:
     steps:
       - run: sleep 90
       - name: vercel-preview-url
-        uses: zentered/vercel-preview-url@v1.1.3
+        uses: zentered/vercel-preview-url@v1.1.9
         id: vercel_preview_url
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
