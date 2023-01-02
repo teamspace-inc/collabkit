@@ -10,7 +10,7 @@ jobs:
   typecheck:
     runs-on: buildjet-32vcpu-ubuntu-2204
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - run: yarn install --frozen-lockfile --prefer-offline
       - run: yarn typecheck
       - run: yarn build
@@ -20,7 +20,7 @@ jobs:
       run:
         working-directory: functions
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - run: yarn install --frozen-lockfile --prefer-offline
       - run: yarn build
       - run: yarn test
@@ -32,7 +32,7 @@ jobs:
       run:
         working-directory: packages/@collabkit/core
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - run: yarn install --frozen-lockfile --prefer-offline
       - run: yarn test
   test-client:
@@ -41,7 +41,7 @@ jobs:
       run:
         working-directory: packages/@collabkit/client
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           node-version: 18
@@ -66,7 +66,7 @@ jobs:
     timeout-minutes: 60
     runs-on: buildjet-32vcpu-ubuntu-2204
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           node-version: 18
