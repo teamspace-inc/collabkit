@@ -63,6 +63,7 @@ jobs:
         run: npx playwright install --with-deps
       - name: Run Playwright tests
         run: yarn playwright test
+        working-directory: packages/@collabkit/react
       - uses: actions/upload-artifact@v2
         if: always()
         with:
