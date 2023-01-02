@@ -1,8 +1,7 @@
 import { expect, test, beforeAll, describe } from 'vitest';
 import { init } from '../../src/actions/init';
 import { Store } from '@collabkit/core';
-import { setupApp } from '../helpers';
-import { setupFirebase } from '../setupFirebase';
+import { setupApp, setupFirebase } from '../../../test-utils/src';
 import { nanoid } from 'nanoid';
 import { FirebaseSync } from '../../src/sync/firebase/FirebaseSync';
 import { createStore } from '../../src/store';

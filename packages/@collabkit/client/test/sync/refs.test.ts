@@ -1,4 +1,4 @@
-import { setupFirebase } from '../setupFirebase';
+import { setupFirebase } from '../../../test-utils/src';
 import { expect, test } from 'vitest';
 import { ref } from '../../src/sync/firebase/refs';
 

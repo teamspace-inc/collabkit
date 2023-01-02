@@ -37,7 +37,7 @@ export function CollabKitProvider({
   const [context, setContext] = useState<{ store: Store; events: Events } | null>(null);
 
   useEffect(() => {
-    const sync = new FirebaseSync();
+    const sync = new FirebaseSync({ test: !!config._test });
     const store = config._demoStore ?? createValtioStore(config, sync);
     const events = createEvents(store);
     actions.monitorConnection(store, events);

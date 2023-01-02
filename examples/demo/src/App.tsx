@@ -1,8 +1,6 @@
-import { useEffect } from 'react';
 import { CollabKitProvider, CustomTheme, Thread, useUnreadCount } from '@collabkit/react';
 import * as themes from '@collabkit/custom-themes';
 import { User } from './types';
-import jwtDecode from 'jwt-decode';
 import { TableExample } from './TableExample';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { GoogleLogin } from '@react-oauth/google';
@@ -11,7 +9,13 @@ import { Route, Switch, useLocation } from 'wouter';
 import { CustomInbox } from './CustomInboxExample';
 import ReactFlowExample from './ReactFlowExample';
 
-const store = proxy<{ user: User | null }>(
+import { useTestParams } from './hooks/useTestParams';
+import { useAppParams } from './hooks/useAppParams';
+import { useUserParams } from './hooks/useUserParams';
+import { userFromGoogleToken } from './hooks/userFromGoogleToken';
+import { useDocumentTitle } from './hooks/useDocumentTitle';
+
+export const store = proxy<{ user: User | null }>(
   JSON.parse(localStorage.getItem('store') ?? '{ "user": null }') || { user: null }
 );
 
@@ -20,6 +24,7 @@ subscribe(store, () => {
 });
 
 export default function App() {
+  useUserParams();
   const { user } = useSnapshot(store);
 
   return (
@@ -57,15 +62,10 @@ export default function App() {
   );
 }
 
-const apiKey = import.meta.env.VITE_COLLABKIT_API_KEY;
-const appId = import.meta.env.VITE_COLLABKIT_APP_ID;
-const workspace = {
-  id: import.meta.env.VITE_COLLABKIT_WORKSPACE_ID,
-  name: import.meta.env.VITE_COLLABKIT_WORKSPACE_NAME,
-};
-
 function Demo() {
   const { user } = useSnapshot(store);
+  const { apiKey, appId, workspaceId, workspaceName } = useAppParams();
+  const test = useTestParams();
 
   const [pathname] = useLocation();
   const name = pathname.slice(1);
@@ -74,9 +74,10 @@ function Demo() {
 
   return (
     <CollabKitProvider
+      _test={test}
       apiKey={apiKey}
       appId={appId}
-      workspace={workspace}
+      workspace={{ id: workspaceId, name: workspaceName }}
       callbacks={{
         // onInboxThreadClick: (data) => {
         //   // defining this overrides the default action for clicking an inbox item
@@ -124,7 +125,7 @@ function Demo() {
         <Route path="/table" component={TableExample} />
         <Route path="/custominbox" component={CustomInbox} />
         <Route path="/reactflow" component={ReactFlowExample} />
-        <Route component={Home} />
+        <Route path="/" component={Home} />
       </Switch>
     </CollabKitProvider>
   );
@@ -151,20 +152,4 @@ function Home() {
       />
     </div>
   );
-}
-
-function userFromGoogleToken(token: string) {
-  const { sub, name, picture, email } = jwtDecode(token) as any;
-  return {
-    id: sub,
-    name,
-    email,
-    avatar: picture,
-  };
-}
-
-function useDocumentTitle(title: string) {
-  useEffect(() => {
-    document.title = title;
-  }, [title]);
 }

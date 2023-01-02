@@ -40,25 +40,34 @@ import {
   snapshotToUser,
 } from './converters';
 
-export function initFirebase() {
+export function initFirebase(options = { test: false }) {
   initializeApp(
-    {
-      apiKey: 'AIzaSyDYl8MwTEgsIzXO7EHgBlvuN5BLVJqPZ6k',
-      authDomain: 'collabkit-dev.firebaseapp.com',
-      databaseURL: 'https://collabkit-dev-default-rtdb.europe-west1.firebasedatabase.app',
-      projectId: 'collabkit-dev',
-      storageBucket: 'collabkit-dev.appspot.com',
-      messagingSenderId: '927079647438',
-      appId: '1:927079647438:web:3535f7ba40a758167ee89f',
-    },
+    options.test
+      ? {
+          apiKey: 'AIzaSyBj5LhfGbP_UrXYOTzJK5e70iZuI-itsxc',
+          authDomain: 'collabkit-test.firebaseapp.com',
+          databaseURL: 'https://collabkit-test-default-rtdb.europe-west1.firebasedatabase.app',
+          projectId: 'collabkit-test',
+          storageBucket: 'collabkit-test.appspot.com',
+          messagingSenderId: '847051916849',
+          appId: '1:847051916849:web:417a95d387d2e3d8f57710',
+        }
+      : {
+          apiKey: 'AIzaSyDYl8MwTEgsIzXO7EHgBlvuN5BLVJqPZ6k',
+          authDomain: 'collabkit-dev.firebaseapp.com',
+          databaseURL: 'https://collabkit-dev-default-rtdb.europe-west1.firebasedatabase.app',
+          projectId: 'collabkit-dev',
+          storageBucket: 'collabkit-dev.appspot.com',
+          messagingSenderId: '927079647438',
+          appId: '1:927079647438:web:3535f7ba40a758167ee89f',
+        },
     'CollabKit'
   );
 }
 
 export class FirebaseSync implements Sync.SyncAdapter {
   constructor(options = { test: false }) {
-    if (options.test) return;
-    initFirebase();
+    initFirebase(options);
   }
 
   saveThreadInfo(data: {

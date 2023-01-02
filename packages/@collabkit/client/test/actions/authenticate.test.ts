@@ -1,8 +1,7 @@
 import { expect, test } from 'vitest';
 import { nanoid } from 'nanoid';
 import { generateToken } from '../../src/actions/generateToken';
-import { setupApp } from '../helpers';
-import { setupFirebase } from '../setupFirebase';
+import { setupApp, setupFirebase } from '../../../test-utils/src';
 
 setupFirebase();
 
