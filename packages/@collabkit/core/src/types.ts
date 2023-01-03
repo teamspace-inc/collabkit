@@ -99,6 +99,18 @@ export type Callbacks = {
     threadId: string;
     info: ThreadInfo;
   }) => void;
+  onThreadResolve?: (data: {
+    userId: string;
+    workspaceId: string;
+    threadId: string;
+    info: ThreadInfo;
+  }) => void;
+  onThreadReopen?: (data: {
+    userId: string;
+    workspaceId: string;
+    threadId: string;
+    info: ThreadInfo;
+  }) => void;
   onInboxCloseButtonClick?: (data: { userId: string; workspaceId: string }) => void;
 };
 

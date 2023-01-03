@@ -1,4 +1,5 @@
 import type { Event, Store } from '@collabkit/core';
+import { generateObjectIdFromCellId } from '..';
 import { actions, getConfig } from './index';
 
 export async function reopenThread(store: Store, workspaceId: string, threadId: string) {
@@ -33,6 +34,12 @@ export async function reopenThread(store: Store, workspaceId: string, threadId: 
       createdAt: +Date.now(),
       id,
     };
+    store.config.callbacks?.onThreadReopen?.({
+      userId,
+      workspaceId,
+      threadId,
+      info: generateObjectIdFromCellId(store.workspaces[workspaceId].threadInfo[threadId]),
+    });
   } catch (e) {
     console.error(e);
     // handle failure here

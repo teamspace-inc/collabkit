@@ -99,6 +99,8 @@ function Demo() {
         // onInboxCloseButtonClick: (data) => {
         //   console.log('inbox close button, click', data);
         // },
+        // onThreadResolve: (data) => console.log('resolve', data),
+        // onThreadReopen: (data) => console.log('reopen', data),
       }}
       onAuthenticationRequired={() => {
         console.log('authRequired');
