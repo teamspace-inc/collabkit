@@ -27,8 +27,6 @@ test('homepage has title and links to intro page', async ({ page }) => {
 
   const url = HOST + '/thread?' + params.toString();
 
-  console.log(url);
-
   await page.goto(url);
 
   // Expect a title "to contain" a substring.
