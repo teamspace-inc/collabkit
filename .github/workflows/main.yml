@@ -49,8 +49,10 @@ jobs:
   #     - run: yarn test
   #       env:
   #         VITE_FIREBASE_TEST_SERVICE_ACCOUNT: ${{ secrets.VITE_FIREBASE_TEST_SERVICE_ACCOUNT }}
-  vercel-deployment:
+  vercel:
     runs-on: buildjet-32vcpu-ubuntu-2204
+    outputs:
+      url: ${{ steps.waitFor200.outputs.url }}
     steps:
       - name: Waiting for 200 from the Vercel Preview
         uses: patrickedqvist/wait-for-vercel-preview@v1.2.0
@@ -59,7 +61,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           max_timeout: 60
   test-e2e:
-    needs: vercel-deployment
+    needs: vercel
     timeout-minutes: 60
     runs-on: buildjet-32vcpu-ubuntu-2204
     steps:
@@ -67,7 +69,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-      - run: echo ${{needs.vercel-deployment.outputs.url}}
+      - run: echo ${{needs.vercel.outputs.url}}
       - name: Install dependencies
         run: yarn
       - name: Install Playwright Browsers
