@@ -1,6 +1,5 @@
 import { getApps, initializeApp } from 'firebase/app';
 import { loadEnv } from 'vite';
-import { resolve } from 'path';
 
 export const TEST_DB = {
   apiKey: 'AIzaSyBj5LhfGbP_UrXYOTzJK5e70iZuI-itsxc',
@@ -21,7 +20,7 @@ export function setupFirebase() {
 // load env variables
 Object.assign(process.env, {
   ...process.env,
-  ...loadEnv('development', resolve(__dirname + '/../../../../env')),
+  ...loadEnv('development', './../../../env'),
 });
 
 import admin from 'firebase-admin';

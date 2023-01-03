@@ -75,7 +75,7 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
       - name: Run Playwright tests
-        run: yarn playwright test
+        run: PREVIEW_URL=${{needs.vercel.outputs.url}} yarn playwright test ./e2e
         working-directory: packages/@collabkit/react
       - uses: actions/upload-artifact@v2
         if: always()
