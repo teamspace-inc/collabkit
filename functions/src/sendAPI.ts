@@ -19,11 +19,19 @@ export const sendAPI = functions
       return;
     }
 
-    const snapshot = await ref`/apps/${appId}/keys/${apiKey}/`.once('value');
+    let snapshot = await ref`/apps/${appId}/keys/${apiKey}/`.once('value');
 
     if (!snapshot.exists()) {
-      console.debug('"apiKey" not found', appId);
+      console.debug('"apiKey" is invalid', apiKey);
       response.status(400).send({ status: 400, error: '"apiKey" is invalid' });
+      return;
+    }
+
+    snapshot = await ref`/profiles/${appId}/${userId}`.get();
+
+    if (!snapshot.exists()) {
+      console.debug('"userId" is invalid', userId);
+      response.status(400).send({ status: 400, error: '"userId" is invalid' });
       return;
     }
 
@@ -40,13 +48,13 @@ export const sendAPI = functions
     }
 
     if (!body) {
-      console.debug('message "body" not provided', threadId);
+      console.debug('message "body" not provided', body);
       response.status(400).send({ status: 400, error: 'message "body" not provided'});
       return;
     }
 
     if (typeof body !== 'string') {
-      console.debug('message "body" is not a string', threadId);
+      console.debug('message "body" is not a string', body);
       response.status(400).send({ status: 400, error: 'message "body" is not a string'});
       return;
     }

@@ -41,9 +41,24 @@ it('sendAPI: apiKey invalid', async () => {
   expect(args[0]).toEqual({ status: 400, error: '"apiKey" is invalid' });
 });
 
+it('sendAPI: userId invalid', async () => {
+  const http = mockHttp({
+    query: {},
+    body: { apiKey: 'testkey', appId: 'testid', userId: 'baduserId' },
+  });
+  await sendAPI(http.req, http.res);
+  const send = http.res.send as sinon.SinonSpy;
+  const { args } = send.getCalls()[0];
+  expect(args[0]).toEqual({ status: 400, error: '"userId" is invalid' });
+});
+
 it('sendAPI: workspaceId not provided', async () => {
   const http = mockHttp({
-    body: { appId: 'h9UlqR5HPxigSOoj--yL3', apiKey: 'ea7Q5CcwNTPYkZUVy9J5E' },
+    body: {
+      appId: '-3jf3F_LNBbcya2uHr4O_',
+      apiKey: 'D3cnLLd29_4wQNeFazjXu',
+      userId: '107328433542458292407',
+    },
   });
   await sendAPI(http.req, http.res);
   const send = http.res.send as sinon.SinonSpy;
@@ -54,8 +69,9 @@ it('sendAPI: workspaceId not provided', async () => {
 it('sendAPI: threadId not provided', async () => {
   const http = mockHttp({
     body: {
-      appId: 'h9UlqR5HPxigSOoj--yL3',
-      apiKey: 'ea7Q5CcwNTPYkZUVy9J5E',
+      appId: '-3jf3F_LNBbcya2uHr4O_',
+      apiKey: 'D3cnLLd29_4wQNeFazjXu',
+      userId: '107328433542458292407',
       workspaceId: 'testid',
     },
   });
@@ -68,8 +84,9 @@ it('sendAPI: threadId not provided', async () => {
 it('sendAPI: message body not provided', async () => {
   const http = mockHttp({
     body: {
-      appId: 'h9UlqR5HPxigSOoj--yL3',
-      apiKey: 'ea7Q5CcwNTPYkZUVy9J5E',
+      appId: '-3jf3F_LNBbcya2uHr4O_',
+      apiKey: 'D3cnLLd29_4wQNeFazjXu',
+      userId: '107328433542458292407',
       workspaceId: 'testid',
       threadId: 'testid',
     },
@@ -83,8 +100,9 @@ it('sendAPI: message body not provided', async () => {
 it('sendAPI: body is not a string', async () => {
   const http = mockHttp({
     body: {
-      appId: 'h9UlqR5HPxigSOoj--yL3',
-      apiKey: 'ea7Q5CcwNTPYkZUVy9J5E',
+      appId: '-3jf3F_LNBbcya2uHr4O_',
+      apiKey: 'D3cnLLd29_4wQNeFazjXu',
+      userId: '107328433542458292407',
       workspaceId: 'testid',
       threadId: 'testid',
       body: {},
@@ -99,11 +117,12 @@ it('sendAPI: body is not a string', async () => {
 it('sendAPI: message sent', async () => {
   const http = mockHttp({
     body: {
-      appId: 'h9UlqR5HPxigSOoj--yL3',
-      apiKey: 'ea7Q5CcwNTPYkZUVy9J5E',
-      workspaceId: 'testid',
-      threadId: 'testid',
-      body: 'test message',
+      appId: '-3jf3F_LNBbcya2uHr4O_',
+      userId: '107328433542458292407',
+      workspaceId: 'collabkit',
+      threadId: 'new-your-thread-id2',
+      body: 'test',
+      apiKey: 'D3cnLLd29_4wQNeFazjXu',
     },
   });
   await sendAPI(http.req, http.res);
