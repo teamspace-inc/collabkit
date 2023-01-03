@@ -62,7 +62,7 @@ it('sendAPI: threadId not provided', async () => {
   await sendAPI(http.req, http.res);
   const send = http.res.send as sinon.SinonSpy;
   const { args } = send.getCalls()[0];
-  expect(args[0]).toEqual({ status: 400, error: '"workspaceId" not provided' });
+  expect(args[0]).toEqual({ status: 400, error: '"threadId" not provided' });
 });
 
 it('sendAPI: message body not provided', async () => {
