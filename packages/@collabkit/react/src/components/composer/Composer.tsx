@@ -69,7 +69,11 @@ function ComposerRoot(props: {
   };
 
   return (
-    <div className={props.className ?? styles.root} onClick={onClick}>
+    <div
+      data-testid="collabkit-composer-root"
+      className={props.className ?? styles.root}
+      onClick={onClick}
+    >
       <Profile.Provider profileId={userId}>
         <ComposerContext.Provider
           value={{ body: props.body ?? '', autoFocus: props.autoFocus ?? true }}
@@ -87,6 +91,7 @@ function ComposerContentEditable(props: { className?: string }) {
   const { autoFocus } = useComposerContext();
   return (
     <div
+      data-testid="collabkit-composer-contenteditable"
       style={{ display: 'contents' }}
       onFocus={(e) => events.onFocus(e, { target })}
       onBlur={(e) => events.onBlur(e, { target })}
@@ -127,6 +132,7 @@ function ComposerEditor(props: {
 
   return (
     <div
+      data-testid="collabkit-composer-editor"
       className={props.className ?? `${styles.editor({ active })} ${styles.composerGlobalStyles}`}
     >
       <LexicalComposer initialConfig={initialConfig}>
@@ -158,7 +164,13 @@ function ComposerEditor(props: {
 }
 
 function ComposerPlaceholder(props: ComponentProps<'span'>) {
-  return <span {...props} className={props.className ?? styles.placeholder} />;
+  return (
+    <span
+      data-testid="collabkit-composer-placeholder"
+      {...props}
+      className={props.className ?? styles.placeholder}
+    />
+  );
 }
 
 export default function Composer(props: { placeholder?: string }) {

@@ -119,6 +119,7 @@ function CommentRoot({ commentId: eventId, ...props }: CommentRootProps) {
     <CommentContext.Provider value={target}>
       <Profile.Provider profileId={createdById}>
         <div
+          data-testid="collabkit-comment-root"
           className={`${props.className ?? styles.root} ${isHovering ? styles.hover : ''}`}
           onClick={onClick}
           ref={ref}
@@ -142,7 +143,7 @@ export function CommentBody({ ...props }: React.ComponentPropsWithoutRef<'div'>)
   }
 
   return (
-    <div {...props} className={props.className ?? styles.body}>
+    <div data-testid="collabkit-comment-body" {...props} className={props.className ?? styles.body}>
       <Markdown
         className={canClickLinks ? styles.markdown : styles.markdownLinksNotClickable}
         body={body}
@@ -165,7 +166,12 @@ export const CommentEditor = (props: React.ComponentProps<'div'>) => {
   }
 
   return (
-    <Composer.Root className={props.className ?? styles.editor} autoFocus={true} body={body}>
+    <Composer.Root
+      data-testid="collabkit-comment-composer-root"
+      className={props.className ?? styles.editor}
+      autoFocus={true}
+      body={body}
+    >
       <Composer.Editor contentEditable={<Composer.ContentEditable />} placeholder={<span />} />
       <ButtonGroup
         onCancel={(e) => {
@@ -187,6 +193,7 @@ export function CommentTimestamp(
   const { createdAt } = useSnapshot(useCommentStore());
   return (
     <RawTimestamp
+      data-testid="collabkit-comment-timestamp"
       {...props}
       className={props.className ?? styles.timestamp}
       timestamp={+createdAt}
