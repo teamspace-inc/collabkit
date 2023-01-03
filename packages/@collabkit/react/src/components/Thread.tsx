@@ -40,11 +40,23 @@ function ThreadProvider(props: ThreadProps & { children: React.ReactNode }) {
 }
 
 function ThreadRoot(props: React.ComponentPropsWithoutRef<'div'>) {
-  return <div {...props} className={props.className ?? styles.root} />;
+  return (
+    <div
+      data-testid="collabkit-thread-root"
+      {...props}
+      className={props.className ?? styles.root}
+    />
+  );
 }
 
 function ThreadHeader(props: React.ComponentPropsWithoutRef<'div'>) {
-  return <div {...props} className={props.className ?? styles.header} />;
+  return (
+    <div
+      data-testid="collabkit-thread-header"
+      {...props}
+      className={props.className ?? styles.header}
+    />
+  );
 }
 
 export function Thread(props: ThreadProps) {
@@ -84,7 +96,7 @@ Thread.UnreadDot = ThreadUnreadDot;
 Thread.ResolveIconButton = ResolveThreadIconButton;
 
 const emptyState = (
-  <div className={styles.emptyState}>
+  <div data-testid="collabkit-thread-empty-state" className={styles.emptyState}>
     <ChatCentered weight="thin" size={32} />
     <span>No comments yet</span>
   </div>

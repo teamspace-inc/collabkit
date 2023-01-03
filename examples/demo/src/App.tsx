@@ -128,6 +128,7 @@ function Demo() {
         <Route path="/custominbox" component={CustomInbox} />
         <Route path="/reactflow" component={ReactFlowExample} />
         <Route path="/" component={Home} />
+        <Route path="/thread" component={Home} />
       </Switch>
     </CollabKitProvider>
   );
