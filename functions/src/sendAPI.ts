@@ -5,7 +5,7 @@ import { ref } from './actions/data/refs';
 export const sendAPI = functions
 .runWith({ minInstances: 1 })
 .https.onRequest(async (request, response) => {
-  const { apiKey, appId, userId, workspaceId, threadId, message } = request.body;
+  const { apiKey, appId, userId, workspaceId, threadId, body } = request.body;
 
   if (!appId || typeof appId !== 'string') {
     console.debug('"appId" not provided', appId);
@@ -43,6 +43,22 @@ export const sendAPI = functions
     return;
   }
 
+  if (!body) {
+    console.debug('message "body" not provided', threadId);
+    response
+      .status(400)
+      .send({ status: 400, error: 'message "body" not provided', threadId });
+    return;
+  }
+  
+  if(typeof body !== 'string'){
+    console.debug('message "body" is not a string', threadId);
+    response
+      .status(400)
+      .send({ status: 400, error: 'message "body" is not a string', threadId });
+    return;
+  }
+
   const dbRef = ref`/timeline/${appId}/${workspaceId}/${threadId}`;
   const eventRef = await dbRef.push();
 
@@ -52,14 +68,14 @@ export const sendAPI = functions
 
   let data: { [key: string]: any } = {
     [ref.path`/timeline/${appId}/${workspaceId}/${threadId}/${eventRef.key}`]: {
-      body: message,
+      body: body,
       type: 'message',
       createdById: userId,
       createdAt: admin.database.ServerValue.TIMESTAMP,
       mentions: null, // TODO : handle mentions
     },
     [ref.path`/views/inbox/${appId}/${workspaceId}/${threadId}`]: {
-      body: message,
+      body: body,
       type: 'message',
       createdById: userId,
       createdAt: admin.database.ServerValue.TIMESTAMP,
