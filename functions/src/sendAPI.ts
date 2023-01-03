@@ -35,27 +35,37 @@ export const sendAPI = functions
       return;
     }
 
+    let isUserInWorkspace =
+      (await (await ref`/workspaces/${appId}/${workspaceId}/profiles/${userId}/`.get()).val()) ==
+      true;
+
+    if (!isUserInWorkspace) {
+      console.debug('"userId" is not in workspace', userId);
+      response.status(400).send({ status: 400, error: '"userId" is not in workspace' });
+      return;
+    }
+    
     if (!workspaceId || typeof workspaceId !== 'string') {
       console.debug('"workspaceId" not provided', workspaceId);
-      response.status(400).send({ status: 400, error: '"workspaceId" not provided'});
+      response.status(400).send({ status: 400, error: '"workspaceId" not provided' });
       return;
     }
 
     if (!threadId || typeof threadId !== 'string') {
       console.debug('"threadId" not provided', threadId);
-      response.status(400).send({ status: 400, error: '"threadId" not provided'});
+      response.status(400).send({ status: 400, error: '"threadId" not provided' });
       return;
     }
 
     if (!body) {
       console.debug('message "body" not provided', body);
-      response.status(400).send({ status: 400, error: 'message "body" not provided'});
+      response.status(400).send({ status: 400, error: 'message "body" not provided' });
       return;
     }
 
     if (typeof body !== 'string') {
       console.debug('message "body" is not a string', body);
-      response.status(400).send({ status: 400, error: 'message "body" is not a string'});
+      response.status(400).send({ status: 400, error: 'message "body" is not a string' });
       return;
     }
 
