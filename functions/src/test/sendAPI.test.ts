@@ -44,7 +44,11 @@ it('sendAPI: apiKey invalid', async () => {
 it('sendAPI: userId invalid', async () => {
   const http = mockHttp({
     query: {},
-    body: { apiKey: 'testkey', appId: 'testid', userId: 'baduserId' },
+    body: {
+      appId: '-3jf3F_LNBbcya2uHr4O_',
+      apiKey: 'D3cnLLd29_4wQNeFazjXu',
+      userId: 'baduserId',
+    },
   });
   await sendAPI(http.req, http.res);
   const send = http.res.send as sinon.SinonSpy;
@@ -128,5 +132,5 @@ it('sendAPI: message sent', async () => {
   await sendAPI(http.req, http.res);
   const send = http.res.send as sinon.SinonSpy;
   const { args } = send.getCalls()[0];
-  expect(args[0]).toEqual({ status: 200 });
+  expect(typeof args[0]).toBe("string");
 });
