@@ -34,6 +34,12 @@ export const sendAPI = functions
       response.status(400).send({ status: 400, error: '"userId" is invalid' });
       return;
     }
+ 
+    if (!workspaceId || typeof workspaceId !== 'string') {
+      console.debug('"workspaceId" not provided', workspaceId);
+      response.status(400).send({ status: 400, error: '"workspaceId" not provided' });
+      return;
+    }
 
     let isUserInWorkspace =
       (await (await ref`/workspaces/${appId}/${workspaceId}/profiles/${userId}/`.get()).val()) ==
@@ -42,12 +48,6 @@ export const sendAPI = functions
     if (!isUserInWorkspace) {
       console.debug('"userId" is not in workspace', userId);
       response.status(400).send({ status: 400, error: '"userId" is not in workspace' });
-      return;
-    }
-    
-    if (!workspaceId || typeof workspaceId !== 'string') {
-      console.debug('"workspaceId" not provided', workspaceId);
-      response.status(400).send({ status: 400, error: '"workspaceId" not provided' });
       return;
     }
 

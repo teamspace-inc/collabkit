@@ -56,21 +56,6 @@ it('sendAPI: userId invalid', async () => {
   expect(args[0]).toEqual({ status: 400, error: '"userId" is invalid' });
 });
 
-it('sendAPI: userId is not in workspace', async () => {
-  const http = mockHttp({
-    query: {},
-    body: {
-      appId: '-3jf3F_LNBbcya2uHr4O_',
-      apiKey: 'D3cnLLd29_4wQNeFazjXu',
-      userId: '123456789',
-    },
-  });
-  await sendAPI(http.req, http.res);
-  const send = http.res.send as sinon.SinonSpy;
-  const { args } = send.getCalls()[0];
-  expect(args[0]).toEqual({ status: 400, error: '"userId" is not in workspace' });
-});
-
 it('sendAPI: workspaceId not provided', async () => {
   const http = mockHttp({
     body: {
@@ -85,13 +70,29 @@ it('sendAPI: workspaceId not provided', async () => {
   expect(args[0]).toEqual({ status: 400, error: '"workspaceId" not provided' });
 });
 
+it('sendAPI: userId is not in workspace', async () => {
+  const http = mockHttp({
+    query: {},
+    body: {
+      appId: '-3jf3F_LNBbcya2uHr4O_',
+      apiKey: 'D3cnLLd29_4wQNeFazjXu',
+      userId: '123456789',
+      workspaceId : "collabkit",
+    },
+  });
+  await sendAPI(http.req, http.res);
+  const send = http.res.send as sinon.SinonSpy;
+  const { args } = send.getCalls()[0];
+  expect(args[0]).toEqual({ status: 400, error: '"userId" is not in workspace' });
+});
+
 it('sendAPI: threadId not provided', async () => {
   const http = mockHttp({
     body: {
       appId: '-3jf3F_LNBbcya2uHr4O_',
       apiKey: 'D3cnLLd29_4wQNeFazjXu',
       userId: '107328433542458292407',
-      workspaceId: 'testid',
+      workspaceId : "collabkit",
     },
   });
   await sendAPI(http.req, http.res);
@@ -106,7 +107,7 @@ it('sendAPI: message body not provided', async () => {
       appId: '-3jf3F_LNBbcya2uHr4O_',
       apiKey: 'D3cnLLd29_4wQNeFazjXu',
       userId: '107328433542458292407',
-      workspaceId: 'testid',
+      workspaceId : "collabkit",
       threadId: 'testid',
     },
   });
@@ -122,7 +123,7 @@ it('sendAPI: body is not a string', async () => {
       appId: '-3jf3F_LNBbcya2uHr4O_',
       apiKey: 'D3cnLLd29_4wQNeFazjXu',
       userId: '107328433542458292407',
-      workspaceId: 'testid',
+      workspaceId : "collabkit",
       threadId: 'testid',
       body: {},
     },
