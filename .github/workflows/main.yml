@@ -77,6 +77,8 @@ jobs:
       - name: Run Playwright tests
         run: PREVIEW_URL=${{needs.vercel.outputs.url}} yarn playwright test ./e2e
         working-directory: packages/@collabkit/react
+        env:
+          VITE_FIREBASE_TEST_SERVICE_ACCOUNT: ${{ secrets.VITE_FIREBASE_TEST_SERVICE_ACCOUNT }}
       - uses: actions/upload-artifact@v2
         if: always()
         with:
