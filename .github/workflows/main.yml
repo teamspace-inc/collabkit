@@ -49,19 +49,17 @@ jobs:
       - run: yarn test
         env:
           VITE_FIREBASE_TEST_SERVICE_ACCOUNT: ${{ secrets.VITE_FIREBASE_TEST_SERVICE_ACCOUNT }}
-  # vercel-deployment:
-  #   runs-on: buildjet-32vcpu-ubuntu-2204
-  #   steps:
-  #     - run: sleep 90
-  #     - name: vercel-preview-url
-  #       uses: zentered/vercel-preview-url@v1.1.9
-  #       id: vercel_preview_url
-  #       env:
-  #         VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-  #       with:
-  #         vercel_project_id: 'prj_2fx29AePQ5BjFJEuPkvw4it9z8Av'
-  #     - name: Get URL
-  #       run: echo "https://${{ steps.vercel_preview_url.outputs.preview_url }}"
+  vercel-deployment:
+    runs-on: buildjet-32vcpu-ubuntu-2204
+    steps:
+      - name: Waiting for 200 from the Vercel Preview
+        uses: patrickedqvist/wait-for-vercel-preview@v1.2.0
+        id: waitFor200
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          max_timeout: 60
+      # access preview url
+      - run: echo ${{steps.waitFor200.outputs.url}}
   # test-e2e:
   #   timeout-minutes: 60
   #   runs-on: buildjet-32vcpu-ubuntu-2204
