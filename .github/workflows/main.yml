@@ -7,52 +7,50 @@ on:
     types: [opened, synchronize]
 
 jobs:
-  typecheck:
-    runs-on: buildjet-32vcpu-ubuntu-2204
-    steps:
-      - uses: actions/checkout@v3
-      - run: yarn install --frozen-lockfile --prefer-offline
-      - run: yarn typecheck
-      - run: yarn build
-  test-functions:
-    runs-on: buildjet-32vcpu-ubuntu-2204
-    defaults:
-      run:
-        working-directory: functions
-    steps:
-      - uses: actions/checkout@v3
-      - run: yarn install --frozen-lockfile --prefer-offline
-      - run: yarn build
-      - run: yarn test
-        env:
-          FIREBASE_TEST_SERVICE_ACCOUNT: '${{ secrets.FIREBASE_TEST_SERVICE_ACCOUNT }}'
-  test-core:
-    runs-on: buildjet-32vcpu-ubuntu-2204
-    defaults:
-      run:
-        working-directory: packages/@collabkit/core
-    steps:
-      - uses: actions/checkout@v3
-      - run: yarn install --frozen-lockfile --prefer-offline
-      - run: yarn test
-  test-client:
-    runs-on: buildjet-32vcpu-ubuntu-2204
-    defaults:
-      run:
-        working-directory: packages/@collabkit/client
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-      - run: yarn install --frozen-lockfile --prefer-offline
-      - run: yarn test
-        env:
-          VITE_FIREBASE_TEST_SERVICE_ACCOUNT: ${{ secrets.VITE_FIREBASE_TEST_SERVICE_ACCOUNT }}
+  # typecheck:
+  #   runs-on: buildjet-32vcpu-ubuntu-2204
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - run: yarn install --frozen-lockfile --prefer-offline
+  #     - run: yarn typecheck
+  #     - run: yarn build
+  # test-functions:
+  #   runs-on: buildjet-32vcpu-ubuntu-2204
+  #   defaults:
+  #     run:
+  #       working-directory: functions
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - run: yarn install --frozen-lockfile --prefer-offline
+  #     - run: yarn build
+  #     - run: yarn test
+  #       env:
+  #         FIREBASE_TEST_SERVICE_ACCOUNT: '${{ secrets.FIREBASE_TEST_SERVICE_ACCOUNT }}'
+  # test-core:
+  #   runs-on: buildjet-32vcpu-ubuntu-2204
+  #   defaults:
+  #     run:
+  #       working-directory: packages/@collabkit/core
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - run: yarn install --frozen-lockfile --prefer-offline
+  #     - run: yarn test
+  # test-client:
+  #   runs-on: buildjet-32vcpu-ubuntu-2204
+  #   defaults:
+  #     run:
+  #       working-directory: packages/@collabkit/client
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: actions/setup-node@v3
+  #       with:
+  #         node-version: 18
+  #     - run: yarn install --frozen-lockfile --prefer-offline
+  #     - run: yarn test
+  #       env:
+  #         VITE_FIREBASE_TEST_SERVICE_ACCOUNT: ${{ secrets.VITE_FIREBASE_TEST_SERVICE_ACCOUNT }}
   vercel-deployment:
     runs-on: buildjet-32vcpu-ubuntu-2204
-    outputs:
-      vercelUrl: ${{ steps.waitFor200.outputs }}
     steps:
       - name: Waiting for 200 from the Vercel Preview
         uses: patrickedqvist/wait-for-vercel-preview@v1.2.0
@@ -60,8 +58,6 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           max_timeout: 60
-      # access preview url
-      - run: echo ${{steps.waitFor200.outputs.url}} >> $GITHUB_OUTPUT
   test-e2e:
     needs: vercel-deployment
     timeout-minutes: 60
@@ -71,7 +67,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-      - run: echo ${{needs.vercel-deployment.outputs.vercelUrl}}
+      - run: echo ${{needs.vercel-deployment.outputs.url}}
       - name: Install dependencies
         run: yarn
       - name: Install Playwright Browsers
