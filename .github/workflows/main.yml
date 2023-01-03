@@ -59,7 +59,8 @@ jobs:
         id: waitFor200
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          max_timeout: 60
+          max_timeout: 90
+          check_interval: 10
   test-e2e:
     needs: vercel
     timeout-minutes: 60
