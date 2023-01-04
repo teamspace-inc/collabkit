@@ -60,7 +60,7 @@ function ThreadHeader(props: React.ComponentPropsWithoutRef<'div'>) {
 }
 
 export function Thread(props: ThreadProps) {
-  const { threadId, info, defaultSubscribers } = props;
+  const { threadId, info, defaultSubscribers, placeholder } = props;
   const { store } = useApp();
   const { userId, workspaceId } = useSnapshot(store);
 
@@ -80,7 +80,7 @@ export function Thread(props: ThreadProps) {
             <Scrollable autoScroll="bottom">
               <CommentList hideResolveButton={props.hideResolveButton} />
             </Scrollable>
-            {props.hideComposer ? null : <Composer placeholder={props.placeholder} />}
+            {props.hideComposer ? null : <Composer placeholder={placeholder} />}
           </Thread.Root>
         </ThemeWrapper>
       </Profile.Provider>

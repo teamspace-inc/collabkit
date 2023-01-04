@@ -41,7 +41,7 @@ export function PopoverThreadContent(props: ThreadProps) {
 
 export function PopoverThread(props: PopoverThreadProps) {
   const { threadId, ...popoverProps } = usePopoverThread(props);
-  const { objectId, lockScroll, ...triggerProps } = props;
+  const { objectId, lockScroll, placeholder, ...triggerProps } = props;
 
   return (
     <Popover.Root {...popoverProps}>
@@ -51,7 +51,7 @@ export function PopoverThread(props: PopoverThreadProps) {
           {popoverProps.hasThread && <PopoverThreadPreview threadId={threadId} />}
         </Popover.Preview>
         <Popover.Content lockScroll={lockScroll}>
-          <PopoverThreadContent threadId={threadId} placeholder={props.placeholder}/>
+          <PopoverThreadContent threadId={threadId} placeholder={placeholder}/>
         </Popover.Content>
       </Popover.Portal>
     </Popover.Root>
