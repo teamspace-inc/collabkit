@@ -33,7 +33,7 @@ export function PopoverThreadContent(props: ThreadProps) {
         <Scrollable autoScroll="bottom">
           <CommentList />
         </Scrollable>
-        <Composer />
+        <Composer placeholder={props.placeholder}/>
       </div>
     </Thread.Provider>
   );
@@ -51,7 +51,7 @@ export function PopoverThread(props: PopoverThreadProps) {
           {popoverProps.hasThread && <PopoverThreadPreview threadId={threadId} />}
         </Popover.Preview>
         <Popover.Content lockScroll={lockScroll}>
-          <PopoverThreadContent threadId={threadId} />
+          <PopoverThreadContent threadId={threadId} placeholder={props.placeholder}/>
         </Popover.Content>
       </Popover.Portal>
     </Popover.Root>

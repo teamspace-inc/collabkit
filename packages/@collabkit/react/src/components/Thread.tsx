@@ -80,7 +80,7 @@ export function Thread(props: ThreadProps) {
             <Scrollable autoScroll="bottom">
               <CommentList hideResolveButton={props.hideResolveButton} />
             </Scrollable>
-            {props.hideComposer ? null : <Composer />}
+            {props.hideComposer ? null : <Composer placeholder={props.placeholder} />}
           </Thread.Root>
         </ThemeWrapper>
       </Profile.Provider>

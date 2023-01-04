@@ -20,6 +20,7 @@ export type OptionalThreadProps = {
   autoFocus?: boolean;
   hideComposer?: boolean;
   hideResolveButton?: boolean;
+  placeholder?: string;
 };
 
 // export type PopoverThreadProps = ThreadProps & {
