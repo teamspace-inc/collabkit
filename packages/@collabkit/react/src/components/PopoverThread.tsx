@@ -33,7 +33,7 @@ export function PopoverThreadContent(props: ThreadProps) {
         <Scrollable autoScroll="bottom">
           <CommentList />
         </Scrollable>
-        <Composer placeholder={props.placeholder}/>
+        <Composer />
       </div>
     </Thread.Provider>
   );

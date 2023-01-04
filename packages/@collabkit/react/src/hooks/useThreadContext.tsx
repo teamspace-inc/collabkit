@@ -7,7 +7,7 @@ export type ThreadContextValue = {
   workspaceId: string;
 
   // config
-  composerPrompt?: string;
+  placeholder?: string;
   autoFocus?: boolean;
   showHeader?: boolean;
   info?: ThreadInfo;

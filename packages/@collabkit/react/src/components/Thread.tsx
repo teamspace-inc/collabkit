@@ -32,8 +32,9 @@ function ThreadProvider(props: ThreadProps & { children: React.ReactNode }) {
       workspaceId,
       userId,
       autoFocus: props.autoFocus,
+      placeholder: props.placeholder,
     }),
-    [threadId, workspaceId, userId, props.autoFocus]
+    [threadId, workspaceId, userId, props.autoFocus, props.placeholder]
   );
 
   return <ThreadContext.Provider value={value}>{props.children}</ThreadContext.Provider>;
@@ -60,7 +61,7 @@ function ThreadHeader(props: React.ComponentPropsWithoutRef<'div'>) {
 }
 
 export function Thread(props: ThreadProps) {
-  const { threadId, info, defaultSubscribers, placeholder } = props;
+  const { threadId, info, defaultSubscribers } = props;
   const { store } = useApp();
   const { userId, workspaceId } = useSnapshot(store);
 
@@ -80,7 +81,7 @@ export function Thread(props: ThreadProps) {
             <Scrollable autoScroll="bottom">
               <CommentList hideResolveButton={props.hideResolveButton} />
             </Scrollable>
-            {props.hideComposer ? null : <Composer placeholder={placeholder} />}
+            {props.hideComposer ? null : <Composer />}
           </Thread.Root>
         </ThemeWrapper>
       </Profile.Provider>
