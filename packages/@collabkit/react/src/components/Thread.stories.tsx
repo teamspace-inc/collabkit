@@ -80,6 +80,12 @@ export const DefaultSubscribers = () => (
   </FixedSize>
 );
 
+export const CustomPlaceholder = () => (
+  <FixedSize>
+    <Thread threadId="thread-stories" placeholder='custom placeholder here' />
+  </FixedSize>
+);
+
 export default {
   decorators: [
     (Component) => (
