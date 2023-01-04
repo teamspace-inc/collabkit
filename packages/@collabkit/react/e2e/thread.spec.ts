@@ -57,56 +57,59 @@ async function createAppAndVisitThreadAsUser(context: BrowserContext, user: type
     appId,
     apiKey,
   });
-  return page;
+  return { page, appId, apiKey };
 }
 
 test.describe('Thread', () => {
   test('renders page title', async ({ context }) => {
-    const page = await createAppAndVisitThreadAsUser(context, alice);
+    const { page } = await createAppAndVisitThreadAsUser(context, alice);
     // Expect a title "to contain" a substring.
     await expect(page).toHaveTitle(/CollabKit Demo/);
   });
 
   test('renders thread header', async ({ context }) => {
-    const page = await createAppAndVisitThreadAsUser(context, alice);
-
+    const { page } = await createAppAndVisitThreadAsUser(context, alice);
     const threadHeader = await page.getByText('Comments');
-
     const threadHeaderText = await threadHeader.innerText();
-
     await expect(threadHeaderText).toStrictEqual('Comments');
   });
 
   test('renders thread composer', async ({ context }) => {
-    const page = await createAppAndVisitThreadAsUser(context, alice);
-
+    const { page } = await createAppAndVisitThreadAsUser(context, alice);
     // Expect a title "to contain" a substring.
     await expect(page).toHaveTitle(/CollabKit Demo/);
-
     const placeholder = await page.getByTestId('collabkit-composer-placeholder');
-
     const text = await placeholder.innerText();
-
     await expect(text).toStrictEqual('Write a comment');
   });
 
   test('can comment', async ({ context }) => {
-    const page = await createAppAndVisitThreadAsUser(context, alice);
-
+    const { page } = await createAppAndVisitThreadAsUser(context, alice);
     const composer = await page.locator(
       '[data-testid="collabkit-composer-contenteditable"] [contenteditable=true]'
     );
-
     await composer.click();
-
     await composer.fill('Hello World');
-
     await page.keyboard.press('Enter');
-
     const comment = await page.getByTestId('collabkit-comment-body');
-
     const text = await comment.innerText();
-
     await expect(text).toStrictEqual('Hello World');
+  });
+
+  test('multiple users can comment', async ({ context }) => {
+    const { page, appId, apiKey } = await createAppAndVisitThreadAsUser(context, alice);
+    const page2 = await visitThreadAsUser(context, { ...bob, appId, apiKey });
+    const composer = await page.locator(
+      '[data-testid="collabkit-composer-contenteditable"] [contenteditable=true]'
+    );
+    await composer.click();
+    await page.keyboard.insertText('Hello World');
+    await page.keyboard.press('Enter');
+    const comment = await page.getByTestId('collabkit-comment-body');
+    const text = await comment.innerText();
+    await expect(text).toStrictEqual('Hello World');
+    const comment2 = await page2.getByTestId('collabkit-comment-body');
+    const text2 = await comment2.innerText();
+    await expect(text2).toStrictEqual('Hello World');
   });
 });
