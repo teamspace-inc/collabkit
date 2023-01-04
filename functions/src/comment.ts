@@ -2,7 +2,7 @@ import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 import { ref } from './actions/data/refs';
 
-export const sendAPI = functions
+export const comment = functions
   .runWith({ minInstances: 1 })
   .https.onRequest(async (request, response) => {
     const { apiKey, appId, userId, workspaceId, threadId, body } = request.body;

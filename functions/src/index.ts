@@ -9,6 +9,6 @@ import { generateToken } from './generateToken';
 import { onEvent } from './onEvent';
 import { sendNotification } from './sendNotification';
 import { triggerWebhook } from './triggerWebhook';
-import { sendAPI } from './sendAPI';
+import { comment } from './comment';
 
-export { createOrg, createApp, generateToken, onEvent, sendNotification, triggerWebhook, sendAPI };
+export { createOrg, createApp, generateToken, onEvent, sendNotification, triggerWebhook, comment };

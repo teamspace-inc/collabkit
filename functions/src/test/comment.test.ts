@@ -2,7 +2,7 @@ import sinon from 'sinon';
 
 import * as functions from 'firebase-functions';
 
-import { sendAPI } from '../sendAPI';
+import { comment } from '../comment';
 
 const mockHttp = (props: { query?: object; body?: object; headers?: object }) => {
   const req = { headers: { origin: '' }, query: {}, body: {}, ...props } as functions.https.Request;
@@ -17,31 +17,31 @@ const mockHttp = (props: { query?: object; body?: object; headers?: object }) =>
   };
 };
 
-it('sendAPI: apiKey not provided', async () => {
+it('comment: apiKey not provided', async () => {
   const http = mockHttp({ query: {}, body: {} });
-  await sendAPI(http.req, http.res);
+  await comment(http.req, http.res);
   const send = http.res.send as sinon.SinonSpy;
   const { args } = send.getCalls()[0];
   expect(args[0]).toEqual({ status: 400, error: '"apiKey" not provided' });
 });
 
-it('sendAPI: appId not provided', async () => {
+it('comment: appId not provided', async () => {
   const http = mockHttp({ query: {}, body: { apiKey: 'testkey' } });
-  await sendAPI(http.req, http.res);
+  await comment(http.req, http.res);
   const send = http.res.send as sinon.SinonSpy;
   const { args } = send.getCalls()[0];
   expect(args[0]).toEqual({ status: 400, error: '"appId" not provided' });
 });
 
-it('sendAPI: apiKey invalid', async () => {
+it('comment: apiKey invalid', async () => {
   const http = mockHttp({ query: {}, body: { apiKey: 'testkey', appId: 'testid' } });
-  await sendAPI(http.req, http.res);
+  await comment(http.req, http.res);
   const send = http.res.send as sinon.SinonSpy;
   const { args } = send.getCalls()[0];
   expect(args[0]).toEqual({ status: 400, error: '"apiKey" is invalid' });
 });
 
-it('sendAPI: userId invalid', async () => {
+it('comment: userId invalid', async () => {
   const http = mockHttp({
     query: {},
     body: {
@@ -50,13 +50,13 @@ it('sendAPI: userId invalid', async () => {
       userId: 'baduserId',
     },
   });
-  await sendAPI(http.req, http.res);
+  await comment(http.req, http.res);
   const send = http.res.send as sinon.SinonSpy;
   const { args } = send.getCalls()[0];
   expect(args[0]).toEqual({ status: 400, error: '"userId" is invalid' });
 });
 
-it('sendAPI: workspaceId not provided', async () => {
+it('comment: workspaceId not provided', async () => {
   const http = mockHttp({
     body: {
       appId: '-3jf3F_LNBbcya2uHr4O_',
@@ -64,77 +64,77 @@ it('sendAPI: workspaceId not provided', async () => {
       userId: '107328433542458292407',
     },
   });
-  await sendAPI(http.req, http.res);
+  await comment(http.req, http.res);
   const send = http.res.send as sinon.SinonSpy;
   const { args } = send.getCalls()[0];
   expect(args[0]).toEqual({ status: 400, error: '"workspaceId" not provided' });
 });
 
-it('sendAPI: userId is not in workspace', async () => {
+it('comment: userId is not in workspace', async () => {
   const http = mockHttp({
     query: {},
     body: {
       appId: '-3jf3F_LNBbcya2uHr4O_',
       apiKey: 'D3cnLLd29_4wQNeFazjXu',
       userId: '123456789',
-      workspaceId : "collabkit",
+      workspaceId: 'collabkit',
     },
   });
-  await sendAPI(http.req, http.res);
+  await comment(http.req, http.res);
   const send = http.res.send as sinon.SinonSpy;
   const { args } = send.getCalls()[0];
   expect(args[0]).toEqual({ status: 400, error: '"userId" is not in workspace' });
 });
 
-it('sendAPI: threadId not provided', async () => {
+it('comment: threadId not provided', async () => {
   const http = mockHttp({
     body: {
       appId: '-3jf3F_LNBbcya2uHr4O_',
       apiKey: 'D3cnLLd29_4wQNeFazjXu',
       userId: '107328433542458292407',
-      workspaceId : "collabkit",
+      workspaceId: 'collabkit',
     },
   });
-  await sendAPI(http.req, http.res);
+  await comment(http.req, http.res);
   const send = http.res.send as sinon.SinonSpy;
   const { args } = send.getCalls()[0];
   expect(args[0]).toEqual({ status: 400, error: '"threadId" not provided' });
 });
 
-it('sendAPI: message body not provided', async () => {
+it('comment: message body not provided', async () => {
   const http = mockHttp({
     body: {
       appId: '-3jf3F_LNBbcya2uHr4O_',
       apiKey: 'D3cnLLd29_4wQNeFazjXu',
       userId: '107328433542458292407',
-      workspaceId : "collabkit",
+      workspaceId: 'collabkit',
       threadId: 'testid',
     },
   });
-  await sendAPI(http.req, http.res);
+  await comment(http.req, http.res);
   const send = http.res.send as sinon.SinonSpy;
   const { args } = send.getCalls()[0];
   expect(args[0]).toEqual({ status: 400, error: 'message "body" not provided' });
 });
 
-it('sendAPI: body is not a string', async () => {
+it('comment: body is not a string', async () => {
   const http = mockHttp({
     body: {
       appId: '-3jf3F_LNBbcya2uHr4O_',
       apiKey: 'D3cnLLd29_4wQNeFazjXu',
       userId: '107328433542458292407',
-      workspaceId : "collabkit",
+      workspaceId: 'collabkit',
       threadId: 'testid',
       body: {},
     },
   });
-  await sendAPI(http.req, http.res);
+  await comment(http.req, http.res);
   const send = http.res.send as sinon.SinonSpy;
   const { args } = send.getCalls()[0];
   expect(args[0]).toEqual({ status: 400, error: 'message "body" is not a string' });
 });
 
-it('sendAPI: message sent', async () => {
+it('comment: message sent', async () => {
   const http = mockHttp({
     body: {
       appId: '-3jf3F_LNBbcya2uHr4O_',
@@ -145,8 +145,8 @@ it('sendAPI: message sent', async () => {
       apiKey: 'D3cnLLd29_4wQNeFazjXu',
     },
   });
-  await sendAPI(http.req, http.res);
+  await comment(http.req, http.res);
   const send = http.res.send as sinon.SinonSpy;
   const { args } = send.getCalls()[0];
-  expect(typeof args[0]).toBe("string");
+  expect(typeof args[0]).toBe('string');
 });
