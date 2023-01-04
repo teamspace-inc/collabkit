@@ -6,6 +6,10 @@ export function CommentAPI() {
             <h2>Send a new comment via HTTP request</h2>
             <div>
                 <h3>Usage</h3>
+                
+                <p>
+                  The userId creating the comment should already be registered with CollabKit.
+                </p>
                 <h4>Javascript</h4>
                 <div>
                     {renderCodeSnippet(`var myHeaders = new Headers();
@@ -32,6 +36,7 @@ fetch('https://api.collabkit.dev/comment', requestOptions)
   .then(result => console.log(result))
   .catch(error => console.log('error', error));`)}
                 </div>
+                <br/>
                 <h4>cURL</h4>
                 <div>
                     {renderCodeSnippet(`curl --location --request POST 'https://api.collabkit.dev/comment' \
@@ -45,6 +50,7 @@ fetch('https://api.collabkit.dev/comment', requestOptions)
     "apiKey": <your-api-key>
 }'`)}
                 </div>
+                <br/>
                 <h4>NodeJs</h4>
                 <div>
                     {renderCodeSnippet(`var request = require('request');
