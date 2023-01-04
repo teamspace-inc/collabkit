@@ -1,4 +1,4 @@
-import { test, expect, BrowserContext } from '@playwright/test';
+import { test, expect, BrowserContext, Page } from '@playwright/test';
 
 // @ts-expect-error
 import { setupApp, setupFirebase } from './setup.ts';
@@ -60,6 +60,15 @@ async function createAppAndVisitThreadAsUser(context: BrowserContext, user: type
   return { page, appId, apiKey };
 }
 
+async function sendComment(page: Page, body: string) {
+  const composer = await page.locator(
+    '[data-testid="collabkit-composer-contenteditable"] [contenteditable=true]'
+  );
+  await composer.click();
+  await composer.fill(body);
+  await page.keyboard.press('Enter');
+}
+
 test.describe('Thread', () => {
   test('renders page title', async ({ context }) => {
     const { page } = await createAppAndVisitThreadAsUser(context, alice);
@@ -85,12 +94,9 @@ test.describe('Thread', () => {
 
   test('can comment', async ({ context }) => {
     const { page } = await createAppAndVisitThreadAsUser(context, alice);
-    const composer = await page.locator(
-      '[data-testid="collabkit-composer-contenteditable"] [contenteditable=true]'
-    );
-    await composer.click();
-    await composer.fill('Hello World');
-    await page.keyboard.press('Enter');
+
+    await sendComment(page, 'Hello World');
+
     const comment = await page.getByTestId('collabkit-comment-body');
     const text = await comment.innerText();
     await expect(text).toStrictEqual('Hello World');
@@ -99,12 +105,8 @@ test.describe('Thread', () => {
   test('multiple users can comment', async ({ context }) => {
     const { page, appId, apiKey } = await createAppAndVisitThreadAsUser(context, alice);
     const page2 = await visitThreadAsUser(context, { ...bob, appId, apiKey });
-    const composer = await page.locator(
-      '[data-testid="collabkit-composer-contenteditable"] [contenteditable=true]'
-    );
-    await composer.click();
-    await page.keyboard.insertText('Hello World');
-    await page.keyboard.press('Enter');
+    await sendComment(page, 'Hello World');
+
     const comment = await page.getByTestId('collabkit-comment-body');
     const text = await comment.innerText();
     await expect(text).toStrictEqual('Hello World');
