@@ -60,6 +60,14 @@ export function PopoverThreadDoc() {
               'string | undefined',
               'A name for the object. Used in email notifications to refer to the object.',
             ],
+            [
+              'placeholder',
+              'string | undefined',
+              <>
+                Defaults to <code>"Write a comment"</code>. <br />
+                Set this to create a custom placeholder for the composer.
+              </>
+            ],
           ]}
         />
       </div>
