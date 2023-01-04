@@ -12,10 +12,10 @@ export function CommentAPI() {
                 </p>
                 <h4>Javascript</h4>
                 <div>
-                    {renderCodeSnippet(`var myHeaders = new Headers();
+                    {renderCodeSnippet(`const myHeaders = new Headers();
 myHeaders.append("Content-Type", "application/json");
 
-var raw = JSON.stringify({
+const raw = JSON.stringify({
   "appId": <your-app-id>,
   "userId": <your-user-id>,
   "workspaceId": <your-workspace-id>,
@@ -24,7 +24,7 @@ var raw = JSON.stringify({
   "apiKey": <your-api-key>
 });
 
-var requestOptions = {
+const requestOptions = {
   method: 'POST',
   headers: myHeaders,
   body: raw,
@@ -53,8 +53,8 @@ fetch('https://api.collabkit.dev/comment', requestOptions)
                 <br/>
                 <h4>NodeJs</h4>
                 <div>
-                    {renderCodeSnippet(`var request = require('request');
-var options = {
+                    {renderCodeSnippet(`const request = require('request');
+const options = {
   'method': 'POST',
   'url': 'https://api.collabkit.dev/comment',
   'headers': {

@@ -82,7 +82,7 @@ export const DOCS: RootDocNode = {
   Notifications: { component: NotificationsDoc },
   Customisation: { component: CustomisationDoc },
   'Api Reference': { 
-    title: 'HTTP API Reference',
+    title: 'HTTP API',
     children: {
       'CreateComment' : { component: CommentAPI},
     }
