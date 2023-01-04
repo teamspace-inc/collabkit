@@ -69,6 +69,14 @@ async function sendComment(page: Page, body: string) {
   await page.keyboard.press('Enter');
 }
 
+async function typeCommentSlowly(page: Page, body: string) {
+  const composer = await page.locator(
+    '[data-testid="collabkit-composer-contenteditable"] [contenteditable=true]'
+  );
+  await composer.click();
+  await composer.type(body, { delay: 100 });
+}
+
 test.describe('Thread', () => {
   test('renders page title', async ({ context }) => {
     const { page } = await createAppAndVisitThreadAsUser(context, alice);
@@ -102,7 +110,7 @@ test.describe('Thread', () => {
     await expect(text).toStrictEqual('Hello World');
   });
 
-  test('multiple users can comment', async ({ context }) => {
+  test('can comment and another user sees it', async ({ context }) => {
     const { page, appId, apiKey } = await createAppAndVisitThreadAsUser(context, alice);
     const page2 = await visitThreadAsUser(context, { ...bob, appId, apiKey });
     await sendComment(page, 'Hello World');
@@ -113,5 +121,14 @@ test.describe('Thread', () => {
     const comment2 = await page2.getByTestId('collabkit-comment-body');
     const text2 = await comment2.innerText();
     await expect(text2).toStrictEqual('Hello World');
+  });
+
+  test('while typing a comment others see typing indicator', async ({ context }) => {
+    const { page, appId, apiKey } = await createAppAndVisitThreadAsUser(context, alice);
+    const page2 = await visitThreadAsUser(context, { ...bob, appId, apiKey });
+    await sendComment(page, 'Hello World');
+    typeCommentSlowly(page, 'Hello this is a really long comment to test the typing indicator');
+    const indicator = await page2.getByTestId('collabkit-typing-indicator');
+    await expect(indicator).toContainText('Alice is typing…');
   });
 });

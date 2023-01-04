@@ -5,7 +5,7 @@ import { TableExample } from './TableExample';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { GoogleLogin } from '@react-oauth/google';
 import { proxy, useSnapshot, subscribe } from 'valtio';
-import { Route, Switch, useLocation } from 'wouter';
+import { Redirect, Route, Switch, useLocation } from 'wouter';
 import { CustomInbox } from './CustomInboxExample';
 import ReactFlowExample from './ReactFlowExample';
 
@@ -14,6 +14,7 @@ import { useAppParams } from './hooks/useAppParams';
 import { useUserParams } from './hooks/useUserParams';
 import { userFromGoogleToken } from './hooks/userFromGoogleToken';
 import { useDocumentTitle } from './hooks/useDocumentTitle';
+import { useEffect } from 'react';
 
 export const store = proxy<{ user: User | null }>(
   JSON.parse(localStorage.getItem('store') ?? '{ "user": null }') || { user: null }
@@ -129,9 +130,18 @@ function Demo() {
         <Route path="/reactflow" component={ReactFlowExample} />
         <Route path="/" component={Home} />
         <Route path="/thread" component={Home} />
+        <Route path="/logout" component={Logout} />
       </Switch>
     </CollabKitProvider>
   );
+}
+
+function Logout() {
+  useEffect(() => {
+    store.user = null;
+  }, []);
+
+  return <div>Logged out</div>;
 }
 
 // function CustomAvatar(props: AvatarProps) {
