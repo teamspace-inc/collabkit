@@ -69,7 +69,11 @@ export function TypingIndicator(props: { className?: string }) {
     //       ]
     //     : []}
     // </TransitionGroup>
-    <div ref={nodeRef} className={props.className ?? typing}>
+    <div
+      data-testid="collabkit-typing-indicator"
+      ref={nodeRef}
+      className={props.className ?? typing}
+    >
       <TypingIndicatorText names={names} />
     </div>
   );

@@ -11,7 +11,7 @@ export function useUserParams() {
       id: params.userId,
       name: params.userName,
       email: params.userEmail,
-      avatar: params.userAvatar,
+      avatar: params.userAvatar ?? null,
     };
   }
 }
