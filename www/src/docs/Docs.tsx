@@ -31,6 +31,7 @@ import { ProfileDoc } from './advanced/profile/ProfileDoc';
 import { AdvancedThreadProviderDoc } from './advanced/AdvancedThreadProviderDoc';
 import { CommentDoc } from './advanced/comment/CommentDoc';
 import { UsePopoverThreadDoc } from './hooks/usePopover/UsePopoverThreadDoc';
+import { CommentAPI } from './hooks/commentAPI';
 
 export function getDocHref(path: string[], key: string) {
   return getPathHref(path.concat([key]));
@@ -80,6 +81,12 @@ export const DOCS: RootDocNode = {
   Workspaces: { component: WorkspacesDoc },
   Notifications: { component: NotificationsDoc },
   Customisation: { component: CustomisationDoc },
+  'Api Reference': { 
+    title: 'HTTP API',
+    children: {
+      'CreateComment' : { component: CommentAPI},
+    }
+  },
   'Advanced Customisation': {
     title: 'Advanced Customisation',
     children: {
