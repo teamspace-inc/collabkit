@@ -3,7 +3,7 @@ import { readFileSync } from 'fs';
 import { resolveCname } from 'dns';
 
 async function run() {
-  const data = readFileSync('./saas-usa-series-a-golden-05012023.csv', 'utf8');
+  const data = readFileSync('./saas-usa-golden-05012023.csv', 'utf8');
 
   const rows = parse(data);
 
