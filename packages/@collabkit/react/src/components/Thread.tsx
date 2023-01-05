@@ -32,8 +32,9 @@ function ThreadProvider(props: ThreadProps & { children: React.ReactNode }) {
       workspaceId,
       userId,
       autoFocus: props.autoFocus,
+      placeholder: props.placeholder,
     }),
-    [threadId, workspaceId, userId, props.autoFocus]
+    [threadId, workspaceId, userId, props.autoFocus, props.placeholder]
   );
 
   return <ThreadContext.Provider value={value}>{props.children}</ThreadContext.Provider>;

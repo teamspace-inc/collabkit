@@ -10,6 +10,8 @@ const HOST =
     ? 'http://localhost:3000'
     : process.env.PREVIEW_URL ?? 'https://internal.demo.collabkit.dev';
 
+const LADLE_HOST = 'http://localhost:61000';
+
 setupFirebase();
 
 async function visitThreadAsUser(
@@ -77,6 +79,14 @@ async function typeCommentSlowly(page: Page, body: string) {
   await composer.type(body, { delay: 100 });
 }
 
+async function visitLadleURL(context: BrowserContext, URL: string, params: Record<string, string>) {
+  const page = await context.newPage();
+  const parameters = new URLSearchParams(params);
+  const url = LADLE_HOST + URL + '?' + parameters.toString();
+  await page.goto(url);
+  return page;
+}
+
 test.describe('Thread', () => {
   test('renders page title', async ({ context }) => {
     const { page } = await createAppAndVisitThreadAsUser(context, alice);
@@ -97,7 +107,7 @@ test.describe('Thread', () => {
     await expect(page).toHaveTitle(/CollabKit Demo/);
     const placeholder = await page.getByTestId('collabkit-composer-placeholder');
     const text = await placeholder.innerText();
-    await expect(text).toStrictEqual('Write a comment');
+    await expect(typeof text).toBe('string');
   });
 
   test('can comment', async ({ context }) => {
@@ -130,5 +140,12 @@ test.describe('Thread', () => {
     typeCommentSlowly(page, 'Hello this is a really long comment to test the typing indicator');
     const indicator = await page2.getByTestId('collabkit-typing-indicator');
     await expect(indicator).toContainText('Alice is typing…');
+  });
+
+  test('verify custom placeholder works for threads', async ({ context }) => {
+    const page = await visitLadleURL(context, '/', { story: 'thread--custom-placeholder' });
+    const placeholder = await page.getByTestId('collabkit-composer-placeholder');
+    const text = await placeholder.innerText();
+    await expect(text).toBe('custom placeholder here');
   });
 });

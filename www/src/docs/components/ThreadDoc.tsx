@@ -73,6 +73,14 @@ export function App() {
               </>,
             ],
             [
+              'placeholder',
+              'string | undefined',
+              <>
+                Defaults to <code>"Write a comment"</code>. <br />
+                Set this to create a custom placeholder for the composer.
+              </>
+            ],
+            [
               'hideComposer',
               'boolean | undefined',
               <>

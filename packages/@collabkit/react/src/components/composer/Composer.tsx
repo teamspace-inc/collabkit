@@ -173,15 +173,15 @@ function ComposerPlaceholder(props: ComponentProps<'span'>) {
   );
 }
 
-export default function Composer(props: { placeholder?: string }) {
-  const { autoFocus } = useThreadContext();
+export default function Composer() {
+  const { autoFocus , placeholder} = useThreadContext();
   return (
     <Composer.Root autoFocus={autoFocus ?? true}>
       <Profile.Avatar />
       <Composer.Editor
         contentEditable={<Composer.ContentEditable />}
         placeholder={
-          <Composer.Placeholder>{props.placeholder ?? 'Write a comment'}</Composer.Placeholder>
+          <Composer.Placeholder>{placeholder ?? 'Write a comment'}</Composer.Placeholder>
         }
       />
       <Composer.TypingIndicator />
