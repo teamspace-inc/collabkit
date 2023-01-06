@@ -8,9 +8,12 @@ import { nanoid } from 'nanoid';
 const HOST =
   process.env.NODE_ENV === 'development'
     ? 'http://localhost:3000'
-    : process.env.PREVIEW_URL ?? 'https://internal.demo.collabkit.dev';
+    : process.env.PREVIEW_URL_DEMO ?? 'https://internal.demo.collabkit.dev';
 
-const LADLE_HOST = 'http://localhost:61000';
+const LADLE_HOST = process.env.NODE_ENV === 'development'
+? 'http://localhost:61000'
+: process.env.PREVIEW_URL_LADLE;
+;
 
 setupFirebase();
 

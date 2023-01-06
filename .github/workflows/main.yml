@@ -51,20 +51,37 @@ jobs:
       - run: yarn test
         env:
           VITE_FIREBASE_TEST_SERVICE_ACCOUNT: ${{ secrets.VITE_FIREBASE_TEST_SERVICE_ACCOUNT }}
-  vercel:
+
+  vercel-demo:
     runs-on: buildjet-32vcpu-ubuntu-2204
     outputs:
       url: ${{ steps.waitFor200.outputs.url }}
     steps:
-      - name: Waiting for 200 from the Vercel Preview
-        uses: patrickedqvist/wait-for-vercel-preview@v1.2.0
+      - name: Wait for Vercel Preview Test
+        uses: meetcshah19/wait-for-vercel-preview@test18
         id: waitFor200
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           max_timeout: 120
           check_interval: 5
+          regex: 'collabkit-demo'
+  
+  vercel-ladle:
+    runs-on: buildjet-32vcpu-ubuntu-2204
+    outputs:
+      url: ${{ steps.waitFor200.outputs.url }}
+    steps:
+      - name: Wait for Vercel Preview Collabkit
+        uses: meetcshah19/wait-for-vercel-preview@prod
+        id: waitFor200
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          max_timeout: 120
+          check_interval: 5
+          regex: 'collabkit-react-ladle'
+  
   test-e2e:
-    needs: vercel
+    needs: [vercel-demo, vercel-ladle]
     timeout-minutes: 60
     runs-on: buildjet-32vcpu-ubuntu-2204
     steps:
@@ -72,13 +89,13 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-      - run: echo ${{needs.vercel.outputs.url}}
+      - run: echo ${{needs.vercel-demo.outputs.url}} && echo ${{needs.vercel-ladle.outputs.url}}
       - name: Install dependencies
         run: yarn
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
       - name: Run Playwright tests
-        run: PREVIEW_URL=${{needs.vercel.outputs.url}} yarn playwright test ./e2e
+        run: PREVIEW_URL_DEMO=${{needs.vercel-demo.outputs.url}} PREVIEW_URL_LADLE=${{needs.vercel-ladle.outputs.url}} yarn playwright test ./e2e
         working-directory: packages/@collabkit/react
         env:
           VITE_FIREBASE_TEST_SERVICE_ACCOUNT: ${{ secrets.VITE_FIREBASE_TEST_SERVICE_ACCOUNT }}
