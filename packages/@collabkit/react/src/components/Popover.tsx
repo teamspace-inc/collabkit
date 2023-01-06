@@ -282,7 +282,7 @@ export function PopoverPortal({
 }) {
   return (
     <FloatingPortal id="collabkit-floating-root" root={root}>
-      <ThemeWrapper>{children}</ThemeWrapper>
+      {children ?? <ThemeWrapper>{children}</ThemeWrapper>}
     </FloatingPortal>
   );
 }
