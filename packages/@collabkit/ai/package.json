@@ -1,0 +1,11 @@
+{
+  "name": "ai",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "license": "MIT",
+  "dependencies": {
+    "openai": "^3.1.0",
+    "pinecone": "^0.1.0",
+    "pinecone-client": "^1.0.1"
+  }
+}
