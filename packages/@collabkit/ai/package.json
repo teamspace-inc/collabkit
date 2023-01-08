@@ -8,7 +8,7 @@
     "node": ">=14.16"
   },
   "dependencies": {
-    "cli-progress": "^3.11.2",
+    "@types/terminal-kit": "^2.5.1",
     "csv": "^6.2.5",
     "multi-progress-bars": "^5.0.2",
     "object-hash": "^3.0.0",
@@ -16,11 +16,10 @@
     "p-map": "^5.5.0",
     "pinecone": "^0.1.0",
     "pinecone-client": "^1.0.1",
-    "progress-bar-cli": "^1.0.4",
-    "ts-progress": "^0.1.7"
+    "terminal-kit": "^3.0.0"
   },
   "devDependencies": {
-    "@types/cli-progress": "^3.11.0",
+    "@types/node": "^18.11.18",
     "@types/object-hash": "^3.0.2",
     "ts-node": "^10.9.1"
   }

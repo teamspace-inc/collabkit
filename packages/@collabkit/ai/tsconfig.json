@@ -1,8 +1,9 @@
 {
   "compilerOptions": {
-    "module": "ES6",
+    "module": "NodeNext",
     "noImplicitReturns": true,
-    "moduleResolution": "node",
+    "moduleResolution": "NodeNext",
+    "types": ["node"],
     "noUnusedLocals": false,
     "outDir": "lib",
     "sourceMap": true,
