@@ -8,7 +8,13 @@ import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
 import { $convertFromMarkdownString, $convertToMarkdownString } from '@lexical/markdown';
-import { TRANSFORMERS, MentionNode, TimestampNode, $isMentionNode } from '../../editor';
+import {
+  TRANSFORMERS,
+  PinNode,
+  MentionNode,
+  TimestampNode,
+  $isMentionNode,
+} from '@collabkit/editor';
 import { TimestampPlugin } from './TimestampPlugin';
 import { MentionsPlugin } from './MentionsPlugin';
 import { PasteTextPlugin } from './PasteTextPlugin';
@@ -37,7 +43,7 @@ function onError(error: any) {
 const initialConfigDefaults = {
   namespace: 'Composer',
   theme: styles.lexicalTheme,
-  nodes: [MentionNode, TimestampNode],
+  nodes: [MentionNode, TimestampNode, PinNode],
   onError,
 };
 
@@ -87,7 +93,7 @@ function ComposerRoot(props: {
           value={{
             body: props.body ?? '',
             autoFocus: props.autoFocus ?? true,
-            canPin: props.canPin ?? false,
+            canPin: props.canPin ?? true,
           }}
         >
           <TargetContext.Provider value={target}>{props.children}</TargetContext.Provider>
@@ -120,12 +126,17 @@ function ComposerContentEditable(props: { className?: string }) {
 
 function ComposerPinButton(props: { className?: string }) {
   const { events } = useApp();
+  const { threadId, workspaceId } = useThreadContext();
+  const { eventId } = useOptionalCommentContext() ?? { eventId: 'default' };
 
   return (
     <button
+      style={{ zIndex: 999 }}
       data-testid="collabkit-composer-pin-button"
       className={props.className ?? styles.pinButton}
-      onClick={(e) => events.onClick(e, { target: { type: 'composerPinButton' } })}
+      onClick={(e) =>
+        events.onClick(e, { target: { type: 'composerPinButton', threadId, workspaceId, eventId } })
+      }
     >
       <img src={PinButtonSvg} />
     </button>
@@ -168,6 +179,7 @@ function ComposerEditor(props: {
         <PlainTextPlugin
           contentEditable={props.contentEditable ?? <Composer.ContentEditable />}
           placeholder={props.placeholder}
+          ErrorBoundary={() => <>Error</>}
         />
         <OnChangePlugin
           onChange={(editorState, editor) => {

@@ -176,6 +176,9 @@ export type Target =
 
 export type ComposerPinButtonTarget = {
   type: 'composerPinButton';
+  threadId: string;
+  workspaceId: string;
+  eventId: string | 'default';
 };
 
 export type MenuTarget = {

@@ -1,4 +1,4 @@
-import { fallbackVar, style } from '@vanilla-extract/css';
+import { fallbackVar, style, globalStyle } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
 import { vars } from '../theme/index.css';
 
@@ -142,7 +142,7 @@ export const email = style({
   ),
 });
 
-export const mentionStyle = style({
+globalStyle('.collabkit-mention', {
   fontWeight: fallbackVar(vars.mentions.pill.fontWeight, vars.fontWeight.bold),
   color: fallbackVar(vars.mentions.pill.color, vars.color.textPrimary),
   background: vars.mentions.pill.background,

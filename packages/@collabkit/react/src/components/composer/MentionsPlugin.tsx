@@ -16,7 +16,7 @@ import {
 import { useCallback, useEffect, useLayoutEffect, useState } from 'react';
 import escapeStringRegexp from 'escape-string-regexp';
 import { startTransition } from '../../utils/startTransition';
-import { $createMentionNode, MentionNode } from '../../editor';
+import { $createMentionNode, MentionNode } from '@collabkit/editor';
 import { snapshot } from 'valtio';
 import { Store } from '../../constants';
 import { useApp } from '../../hooks/useApp';

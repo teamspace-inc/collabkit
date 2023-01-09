@@ -20,9 +20,10 @@
     "emitDeclarationOnly": true,
     "paths": {
       "@collabkit/colors": ["./packages/@collabkit/colors/src"],
+      "@collabkit/editor": ["./packages/@collabkit/editor/src"],
       "@collabkit/core": ["./packages/@collabkit/core/src"]
     },
     "rootDir": "."
   },
-  "include": ["src", "../colors/src", "../core/src", "../theme/src"]
+  "include": ["src", "../colors/src", "../core/src", "../theme/src", "../editor/src"]
 }
