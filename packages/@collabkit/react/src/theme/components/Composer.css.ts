@@ -148,6 +148,8 @@ export const editor = recipe({
     verticalAlign: 'top',
     boxSizing: 'border-box',
     fontFamily: vars.fontFamily,
+    display: 'flex',
+    alignItems: 'center',
   },
   variants: {
     active: {
