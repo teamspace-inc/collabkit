@@ -196,29 +196,6 @@ export function createEvents(store: Store) {
         return;
       }
       switch (store.uiState) {
-        case 'continuous': {
-          switch (props.target.type) {
-            // case 'pin': {
-            //   actions.viewThread(store, { ...props, isPreview: false });
-            //   break;
-            // }
-            case 'closeThreadButton': {
-              actions.closeAll(store);
-              break;
-            }
-            case 'resolveThreadButton': {
-              actions.resolveThread(store, props.target);
-              break;
-            }
-            case 'reopenThreadButton': {
-              actions.reopenThread(store, props.target.workspaceId, props.target.threadId);
-              break;
-            }
-            case 'commentable': {
-              break;
-            }
-          }
-        }
         case 'idle': {
           switch (props.target.type) {
             case 'showSidebarButton': {
@@ -237,7 +214,8 @@ export function createEvents(store: Store) {
             //   actions.viewThread(store, { ...props, isPreview: false });
             //   break;
             // }
-            case 'commentButton': {
+            case 'addCommentButton': {
+              actions.startSelecting(store);
               break;
             }
             case 'closeThreadButton': {
@@ -256,7 +234,7 @@ export function createEvents(store: Store) {
           break;
         }
         case 'selecting': {
-          if (props.target.type === 'floatingCommentButton') {
+          if (props.target.type === 'addCommentButton') {
             actions.stopSelecting(store);
           }
           break;

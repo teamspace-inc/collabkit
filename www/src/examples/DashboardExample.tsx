@@ -33,6 +33,7 @@ import '@tremor/react/dist/esm/tremor.css';
 import { isAfter, isBefore, isEqual } from 'date-fns';
 
 import { performance } from './data';
+import { AddCommentButton } from '@collabkit/react';
 // import './examples.css';
 
 type Kpi = {
@@ -345,6 +346,7 @@ export function DashboardExample() {
           <Title>Dashboard</Title>
           <Text>View core metrics on the state of your company.</Text>
         </Block>
+        <AddCommentButton />
         <Datepicker
           minDate={minDate}
           maxDate={maxDate}

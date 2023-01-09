@@ -47,6 +47,7 @@ import { Scrollable } from './components/Scrollable';
 import CommentList from './components/CommentList';
 import { Popover } from './components/Popover';
 import { Button } from './components/Button';
+import { AddCommentButton } from './components/AddCommentButton';
 
 export {
   CollabKitProvider as Provider,
@@ -64,6 +65,7 @@ export {
   useUnreadThreadsCount,
   useUnreadCommentsCount as useUnreadCount,
   // advanced
+  AddCommentButton,
   Button,
   Comment,
   CommentList,

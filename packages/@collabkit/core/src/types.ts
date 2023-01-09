@@ -163,6 +163,7 @@ export type Target =
   | ThreadCloseButtonTarget
   | ReopenThreadButtonTarget
   | FloatingCommentButtonTarget
+  | AddCommentButtonTarget
   | CommentableContainer
   | Commentable
   | MenuTarget
@@ -196,6 +197,8 @@ export type CommentType = 'default' | 'inline-start' | 'inline' | 'inline-end';
 export type CommentableContainer = { type: 'commentableContainer'; workspaceId: string };
 
 export type FloatingCommentButtonTarget = { type: 'floatingCommentButton' };
+
+export type AddCommentButtonTarget = { type: 'addCommentButton'; workspaceId: string };
 
 export type ComposerTarget = {
   type: 'composer';
@@ -367,7 +370,7 @@ export interface UnconfiguredStore {
   };
   mentionableUsers: { [userId: string]: MentionWithColor };
   appState: 'blank' | 'config' | 'ready';
-  uiState: 'idle' | 'selecting' | 'continuous';
+  uiState: 'idle' | 'selecting';
   subs: Subscriptions;
   callbacks?: Callbacks;
 }
