@@ -3,8 +3,8 @@ import type { StoryDecorator } from '@ladle/react';
 import { PopoverThread } from './PopoverThread';
 import { usePopoverThread } from '../hooks/usePopoverThread';
 import { DefaultProviderProps, ProviderPropsContext } from './__stories__/context';
-import { useUnreadCommentsCount } from '../hooks/public/useUnreadCommentsCount';
 import { CollabKitProvider } from './Provider';
+import { usePopoverThreadUnreadCommentsCount } from '../hooks/public/usePopoverThreadUnreadCommentsCount';
 
 const objectId = 'object-1';
 
@@ -19,7 +19,7 @@ export function Popover() {
 
 export const UnreadCount = () => {
   const objectId = 'object-1';
-  const unreadCount = useUnreadCommentsCount({objectId: objectId});
+  const unreadCount = usePopoverThreadUnreadCommentsCount({objectId: objectId});
   const { showThread } = usePopoverThread({ objectId })
   return <div>
     <ProviderPropsContext.Consumer>
