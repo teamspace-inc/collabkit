@@ -31,22 +31,37 @@ export const typing = style({
   fontFamily: vars.fontFamily,
 });
 
-export const placeholder = style({
-  color: fallbackVar(vars.composer.input.placeholder.color, vars.color.textSecondary),
-  fontSize: fallbackVar(vars.composer.input.fontSize, vars.text.base.fontSize),
-  fontWeight: fallbackVar(vars.composer.input.fontWeight, vars.fontWeight.regular),
-  letterSpacing: fallbackVar(vars.composer.input.letterSpacing, vars.text.base.letterSpacing),
-  lineHeight: fallbackVar(vars.composer.input.lineHeight, vars.text.base.lineHeight),
-  overflow: 'hidden',
+export const pinButton = style({
   position: 'absolute',
-  textOverflow: 'ellipsis',
-  top: '50%',
-  transform: 'translateY(-50%)',
-  left: vars.space[2],
-  userSelect: 'none',
-  display: 'inline-block',
-  pointerEvents: 'none',
-  fontFamily: vars.fontFamily,
+  top: 8,
+  left: 8,
+});
+
+export const placeholder = recipe({
+  base: {
+    color: fallbackVar(vars.composer.input.placeholder.color, vars.color.textSecondary),
+    fontSize: fallbackVar(vars.composer.input.fontSize, vars.text.base.fontSize),
+    fontWeight: fallbackVar(vars.composer.input.fontWeight, vars.fontWeight.regular),
+    letterSpacing: fallbackVar(vars.composer.input.letterSpacing, vars.text.base.letterSpacing),
+    lineHeight: fallbackVar(vars.composer.input.lineHeight, vars.text.base.lineHeight),
+    overflow: 'hidden',
+    position: 'absolute',
+    textOverflow: 'ellipsis',
+    top: '50%',
+    transform: 'translateY(-50%)',
+    left: vars.space[2],
+    userSelect: 'none',
+    display: 'inline-block',
+    pointerEvents: 'none',
+    fontFamily: vars.fontFamily,
+  },
+  variants: {
+    canPin: {
+      true: {
+        textIndent: '24px',
+      },
+    },
+  },
 });
 
 const paragraph = style({
@@ -101,6 +116,11 @@ export const input = recipe({
       true: {
         color: vars.composer.input.disabled.color,
         background: vars.composer.input.disabled.background,
+      },
+    },
+    canPin: {
+      true: {
+        textIndent: '24px',
       },
     },
   },

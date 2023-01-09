@@ -25,6 +25,8 @@ import { TypingIndicator } from '../TypingIndicator';
 
 import Profile from '../Profile';
 
+import PinButtonSvg from '../../pin-button.svg';
+
 // Catch any errors that occur during Lexical updates and log them
 // or throw them as needed. If you don't throw them, Lexical will
 // try to recover gracefully without losing user data.
@@ -39,9 +41,14 @@ const initialConfigDefaults = {
   onError,
 };
 
-export const ComposerContext = React.createContext<{ body: string; autoFocus: boolean }>({
+export const ComposerContext = React.createContext<{
+  body: string;
+  autoFocus: boolean;
+  canPin: boolean;
+}>({
   body: '',
   autoFocus: true,
+  canPin: false,
 });
 
 function useComposerContext() {
@@ -53,6 +60,7 @@ function ComposerRoot(props: {
   children: React.ReactNode;
   autoFocus?: boolean;
   body?: string;
+  canPin?: boolean;
 }) {
   const commentContext = useOptionalCommentContext();
 
@@ -76,7 +84,11 @@ function ComposerRoot(props: {
     >
       <Profile.Provider profileId={userId}>
         <ComposerContext.Provider
-          value={{ body: props.body ?? '', autoFocus: props.autoFocus ?? true }}
+          value={{
+            body: props.body ?? '',
+            autoFocus: props.autoFocus ?? true,
+            canPin: props.canPin ?? false,
+          }}
         >
           <TargetContext.Provider value={target}>{props.children}</TargetContext.Provider>
         </ComposerContext.Provider>
@@ -88,7 +100,7 @@ function ComposerRoot(props: {
 function ComposerContentEditable(props: { className?: string }) {
   const { events } = useApp();
   const target = useTarget();
-  const { autoFocus } = useComposerContext();
+  const { autoFocus, canPin } = useComposerContext();
   return (
     <div
       data-testid="collabkit-composer-contenteditable"
@@ -96,11 +108,27 @@ function ComposerContentEditable(props: { className?: string }) {
       onFocus={(e) => events.onFocus(e, { target })}
       onBlur={(e) => events.onBlur(e, { target })}
     >
+      {canPin && <Composer.PinButton />}
       <LexicalContentEditable
-        className={props.className ?? styles.input()}
+        className={props.className ?? styles.input({ canPin })}
         tabIndex={autoFocus ? 1 : 0}
       />
     </div>
+  );
+}
+``;
+
+function ComposerPinButton(props: { className?: string }) {
+  const { events } = useApp();
+
+  return (
+    <button
+      data-testid="collabkit-composer-pin-button"
+      className={props.className ?? styles.pinButton}
+      onClick={(e) => events.onClick(e, { target: { type: 'composerPinButton' } })}
+    >
+      <img src={PinButtonSvg} />
+    </button>
   );
 }
 
@@ -164,17 +192,18 @@ function ComposerEditor(props: {
 }
 
 function ComposerPlaceholder(props: ComponentProps<'span'>) {
+  const { canPin } = useComposerContext();
   return (
     <span
       data-testid="collabkit-composer-placeholder"
       {...props}
-      className={props.className ?? styles.placeholder}
+      className={props.className ?? styles.placeholder({ canPin })}
     />
   );
 }
 
 export default function Composer() {
-  const { autoFocus , placeholder} = useThreadContext();
+  const { autoFocus, placeholder } = useThreadContext();
   return (
     <Composer.Root autoFocus={autoFocus ?? true}>
       <Profile.Avatar />
@@ -194,3 +223,4 @@ Composer.ContentEditable = ComposerContentEditable;
 Composer.Editor = ComposerEditor;
 Composer.Placeholder = ComposerPlaceholder;
 Composer.TypingIndicator = TypingIndicator;
+Composer.PinButton = ComposerPinButton;

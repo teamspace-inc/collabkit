@@ -106,6 +106,10 @@ export function createEvents(store: Store) {
           actions.reopenThread(store, props.target.workspaceId, props.target.threadId);
           break;
         }
+        case 'composerPinButton': {
+          // todod toggle pin mode here
+          break;
+        }
       }
     },
 
