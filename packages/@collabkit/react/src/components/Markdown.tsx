@@ -3,12 +3,16 @@ import rehypeReact from 'rehype-react';
 import remarkRehype from 'remark-rehype';
 import remarkParse from 'remark-parse';
 import { unified } from 'unified';
+import { ComposerPin } from '@collabkit/editor';
 
 function MarkdownLink(props: any) {
+  if (props.href.startsWith('#PIN')) {
+    return <ComposerPin id={'foo'} />;
+  }
   return <a {...props} />;
 }
 
-function useMarkdown(md: string) {
+function useMarkdown(markdown: string) {
   const [reactContent, setReactContent] = useState<React.ReactNode>(null);
   useEffect(() => {
     unified()
@@ -21,11 +25,11 @@ function useMarkdown(md: string) {
           a: MarkdownLink,
         },
       })
-      .process(md)
+      .process(markdown)
       .then((file) => {
         setReactContent(file.result as React.ReactNode);
       });
-  }, [md]);
+  }, [markdown]);
   return reactContent;
 }
 

@@ -14,6 +14,7 @@ import {
   MentionNode,
   TimestampNode,
   $isMentionNode,
+  ComposerPin,
 } from '@collabkit/editor';
 import { TimestampPlugin } from './TimestampPlugin';
 import { MentionsPlugin } from './MentionsPlugin';
@@ -179,7 +180,10 @@ function ComposerEditor(props: {
         <PlainTextPlugin
           contentEditable={props.contentEditable ?? <Composer.ContentEditable />}
           placeholder={props.placeholder}
-          ErrorBoundary={() => <>Error</>}
+          ErrorBoundary={(props) => {
+            console.log(props);
+            return <>{props.children}</>;
+          }}
         />
         <OnChangePlugin
           onChange={(editorState, editor) => {
@@ -236,3 +240,4 @@ Composer.Editor = ComposerEditor;
 Composer.Placeholder = ComposerPlaceholder;
 Composer.TypingIndicator = TypingIndicator;
 Composer.PinButton = ComposerPinButton;
+Composer.Pin = ComposerPin;
