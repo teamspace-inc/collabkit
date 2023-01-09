@@ -6,7 +6,7 @@ export function countUnread({
   userId,
 }: {
   workspace: Workspace;
-  threadId: string;
+  threadId: string ;
   userId: string;
 }) {
   const seenUntilId = workspace?.seen[threadId];

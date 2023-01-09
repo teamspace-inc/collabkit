@@ -3,12 +3,14 @@ import { useSnapshot } from 'valtio';
 import { useApp } from '../useApp';
 import { useThreadSubscription } from '../useThread';
 import { countUnread } from '../../utils/countUnread';
+import { useExistingThreadId } from '../useExistingThreadId';
 
-export function useUnreadCommentsCount(props: { threadId: string }): number {
+export function useUnreadCommentsCount(props: { threadId?: string; objectId?: string }): number {
   const { store } = useApp();
   const { workspaceId, workspaces, userId } = useSnapshot(store);
+  const threadId = props.threadId ? props.threadId : (props.objectId ? useExistingThreadId({ objectId : props.objectId}) : null);
   const workspace = workspaceId ? workspaces[workspaceId] : null;
-  useThreadSubscription({ store, threadId: props.threadId, workspaceId });
+  useThreadSubscription({ store, threadId: threadId, workspaceId });
 
   if (!userId) {
     return 0;
@@ -18,5 +20,9 @@ export function useUnreadCommentsCount(props: { threadId: string }): number {
     return 0;
   }
 
-  return countUnread({ workspace: workspace as Workspace, threadId: props.threadId, userId });
+  if(!threadId){
+    return 0;
+  }
+  
+  return countUnread({ workspace: workspace as Workspace, threadId: threadId, userId });
 }
