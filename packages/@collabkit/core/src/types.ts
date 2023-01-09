@@ -170,7 +170,12 @@ export type Target =
   | CommentEditButtonTarget
   | CommentDeleteButtonTarget
   | ShowSidebarButtonTarget
-  | HideSidebarButtonTarget;
+  | HideSidebarButtonTarget
+  | ComposerPinButtonTarget;
+
+export type ComposerPinButtonTarget = {
+  type: 'composerPinButton';
+};
 
 export type MenuTarget = {
   type: 'menu';
