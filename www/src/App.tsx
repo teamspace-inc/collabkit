@@ -23,7 +23,6 @@ const workspace = {
 };
 
 import { createDemoStore, mentionableUsers } from './home/demoStore';
-import { DashboardExample } from './examples/DashboardExample';
 import { CarouselPage } from './pages/CarouselPage';
 import { useLayoutEffect } from 'react';
 import { GetStartedPage } from './pages/GetStartedPage';
@@ -245,7 +244,6 @@ export default function App() {
         <Route path="/signedin" component={DashboardPage} />
         <Route path="/signup" component={DashboardPage} /> */}
         <Route path="/theme-editor" component={ThemeEditorPage} />
-        <Route path="/examples/dashboard" component={DashboardExample} />
         <Route path="/examples/table" component={DataGridPage} />
         <Route path="/examples/chart" component={ChartDemo} />
         <Route path="/carousel" component={CarouselPage} />

@@ -5,7 +5,7 @@ import { TableExample } from './TableExample';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { GoogleLogin } from '@react-oauth/google';
 import { proxy, useSnapshot, subscribe } from 'valtio';
-import { Redirect, Route, Switch, useLocation } from 'wouter';
+import { Route, Switch, useLocation } from 'wouter';
 import { CustomInbox } from './CustomInboxExample';
 import ReactFlowExample from './ReactFlowExample';
 
@@ -15,6 +15,7 @@ import { useUserParams } from './hooks/useUserParams';
 import { userFromGoogleToken } from './hooks/userFromGoogleToken';
 import { useDocumentTitle } from './hooks/useDocumentTitle';
 import { useEffect } from 'react';
+import { DashboardExample } from './dashboard/DashboardExample';
 
 export const store = proxy<{ user: User | null }>(
   JSON.parse(localStorage.getItem('store') ?? '{ "user": null }') || { user: null }
@@ -128,6 +129,7 @@ function Demo() {
         <Route path="/table" component={TableExample} />
         <Route path="/custominbox" component={CustomInbox} />
         <Route path="/reactflow" component={ReactFlowExample} />
+        <Route path="/dashboard" component={DashboardExample} />
         <Route path="/" component={Home} />
         <Route path="/thread" component={Home} />
         <Route path="/logout" component={Logout} />
