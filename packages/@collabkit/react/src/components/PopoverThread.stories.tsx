@@ -4,7 +4,7 @@ import { PopoverThread } from './PopoverThread';
 import { usePopoverThread } from '../hooks/usePopoverThread';
 import { DefaultProviderProps, ProviderPropsContext } from './__stories__/context';
 import { CollabKitProvider } from './Provider';
-import { usePopoverThreadUnreadCommentsCount } from '../hooks/public/usePopoverThreadUnreadCommentsCount';
+import { usePopoverUnreadCommentsCount } from '../hooks/public/usePopoverUnreadCommentsCount';
 
 const objectId = 'object-1';
 
@@ -19,7 +19,7 @@ export function Popover() {
 
 export const UnreadCount = () => {
   const objectId = 'object-1';
-  const unreadCount = usePopoverThreadUnreadCommentsCount({objectId: objectId});
+  const unreadCount = usePopoverUnreadCommentsCount({ objectId: objectId });
   const { showThread } = usePopoverThread({ objectId })
   return <div>
     <ProviderPropsContext.Consumer>
@@ -34,8 +34,8 @@ export const UnreadCount = () => {
             <p>Unread count : {unreadCount}</p>
 
           </CollabKitProvider>
-            Bob :
-            <br /> <br />
+          Bob :
+          <br /> <br />
           <CollabKitProvider {...config} user={{ id: 'bob', name: 'Bob' }}>
             <PopoverThread objectId={objectId}>
               <button onClick={() => showThread()}>Show Thread</button>

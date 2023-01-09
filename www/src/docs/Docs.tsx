@@ -32,6 +32,7 @@ import { AdvancedThreadProviderDoc } from './advanced/AdvancedThreadProviderDoc'
 import { CommentDoc } from './advanced/comment/CommentDoc';
 import { UsePopoverThreadDoc } from './hooks/usePopover/UsePopoverThreadDoc';
 import { CommentAPI } from './hooks/commentAPI';
+import { usePopoverUnreadCommentsCount } from './hooks/usePopover/usePopoverUnreadCommentsCount';
 
 export function getDocHref(path: string[], key: string) {
   return getPathHref(path.concat([key]));
@@ -73,6 +74,7 @@ export const DOCS: RootDocNode = {
     title: 'Hooks',
     children: {
       usePopoverThread: { component: UsePopoverThreadDoc },
+      usePopoverUnreadCommentsCount: { component: usePopoverUnreadCommentsCount },
       useUnreadCommentsCount: { component: UseUnreadCommentsCountDoc },
       useUnreadThreadsCount: { component: UseUnreadThreadsCountDoc },
     },
@@ -81,10 +83,10 @@ export const DOCS: RootDocNode = {
   Workspaces: { component: WorkspacesDoc },
   Notifications: { component: NotificationsDoc },
   Customisation: { component: CustomisationDoc },
-  'Api Reference': { 
+  'Api Reference': {
     title: 'HTTP API',
     children: {
-      'CreateComment' : { component: CommentAPI},
+      'CreateComment': { component: CommentAPI },
     }
   },
   'Advanced Customisation': {
@@ -140,12 +142,12 @@ export type RootDocNode = {
 
 export type DocNode =
   | {
-      component: React.FunctionComponent;
-    }
+    component: React.FunctionComponent;
+  }
   | {
-      title: string;
-      children: RootDocNode;
-    }
+    title: string;
+    children: RootDocNode;
+  }
   | { isEmpty: boolean };
 
 type RelatedNodeReturnValue = {
