@@ -24,7 +24,6 @@ import { $getRoot, $setSelection } from 'lexical';
 import { TypingIndicator } from '../TypingIndicator';
 
 import Profile from '../Profile';
-import { AddCommentButton } from '../AddCommentButton';
 
 import PinButtonSvg from '../../pin-button.svg';
 
@@ -164,7 +163,6 @@ function ComposerEditor(props: {
       data-testid="collabkit-composer-editor"
       className={props.className ?? `${styles.editor({ active })} ${styles.composerGlobalStyles}`}
     >
-      <AddCommentButton />
       <LexicalComposer initialConfig={initialConfig}>
         <PasteTextPlugin />
         <PlainTextPlugin
