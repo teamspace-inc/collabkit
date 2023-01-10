@@ -34,7 +34,6 @@ import { isAfter, isBefore, isEqual } from 'date-fns';
 
 import { performance } from './data';
 import { AddCommentButton } from '@collabkit/react';
-// import './examples.css';
 
 type Kpi = {
   title: string;
