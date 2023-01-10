@@ -11,9 +11,6 @@
     "test": "jest",
     "build-and-test": "yarn run build && yarn run test"
   },
-  "engines": {
-    "node": "16"
-  },
   "main": "lib/index.js",
   "dependencies": {
     "@google-cloud/tasks": "^3.0.0",
