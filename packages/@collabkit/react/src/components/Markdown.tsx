@@ -35,5 +35,9 @@ function useMarkdown(markdown: string) {
 
 export const Markdown = React.memo(function Markdown(props: { className?: string; body: string }) {
   const reactContent = useMarkdown(props.body);
-  return <div className={props.className}>{reactContent}</div>;
+  return reactContent ? (
+    <div data-testId="collabkit-markdown" className={props.className}>
+      {reactContent}
+    </div>
+  ) : null;
 });

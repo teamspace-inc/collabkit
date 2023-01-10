@@ -181,7 +181,6 @@ function ComposerEditor(props: {
           contentEditable={props.contentEditable ?? <Composer.ContentEditable />}
           placeholder={props.placeholder}
           ErrorBoundary={(props) => {
-            console.log(props);
             return <>{props.children}</>;
           }}
         />
