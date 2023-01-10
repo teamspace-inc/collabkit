@@ -49,6 +49,8 @@ import { Popover } from './components/Popover';
 import { Button } from './components/Button';
 import { AddCommentButton } from './components/AddCommentButton';
 
+import { Markdown } from './components/Markdown';
+
 export {
   CollabKitProvider as Provider,
   CollabKitProvider,
@@ -60,6 +62,7 @@ export {
   CollabKitRecharts,
   Sidebar,
   SidebarInbox,
+  Markdown,
   SidebarInboxButton,
   PopoverThread,
   useUnreadThreadsCount,

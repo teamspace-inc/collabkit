@@ -1,5 +1,4 @@
-import { Markdown } from '../Markdown';
-
+import { Markdown } from '@collabkit/react';
 export function FacepileDoc() {
   return (
     <div>

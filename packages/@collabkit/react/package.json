@@ -67,15 +67,18 @@
     "react-dom": "^18.0.0",
     "react-intersection-observer": "^9.4.0",
     "react-merge-refs": "^2.0.1",
-    "react-remark": "^2.1.0",
-    "react-string-replace": "^1.1.0",
     "react-test-renderer": "^18.2.0",
     "react-transition-group": "^4.4.5",
+    "rehype-react": "^7.1.1",
+    "remark": "^14.0.2",
+    "remark-parse": "^10.0.1",
+    "remark-rehype": "^10.1.0",
     "rollup": "2.77.3",
     "rollup-plugin-dts": "^4.2.2",
     "rollup-plugin-visualizer": "^5.8.0",
     "start-server-and-test": "^1.14.0",
     "sync-fetch": "^0.4.1",
+    "unified": "^10.1.2",
     "valtio": "^1.6.1",
     "vite": "^3.0.9",
     "vitest": "^0.22.1"
@@ -83,9 +86,5 @@
   "prettier": {
     "singleQuote": true,
     "printWidth": 100
-  },
-  "dependencies": {
-    "rehype-stringify": "^9.0.3",
-    "remark": "^14.0.2"
   }
 }

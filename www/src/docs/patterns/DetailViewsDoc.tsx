@@ -1,6 +1,5 @@
 import { DocDemoContainer } from '../Doc';
-import { Markdown } from '../Markdown';
-
+import { Markdown } from '@collabkit/react';
 export function DetailViewsDoc() {
   return (
     <>
