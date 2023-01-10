@@ -18,7 +18,7 @@ function Raw({ tag, html }: { tag: string; html: string }) {
   });
 }
 
-export function Markdown(props: { body: string; onLinkClick?: (e: React.MouseEvent) => void }) {
+export function Markdown(props: { body: string }) {
   return <Raw tag="span" html={md.render(props.body)} />;
 }
 

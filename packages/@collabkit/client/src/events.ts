@@ -95,19 +95,20 @@ export function createEvents(store: Store) {
     },
 
     onClick: <T extends Target>(e: React.MouseEvent, props: { target: T }) => {
-      switch (props.target.type) {
+      const { target } = props;
+      switch (target.type) {
         case 'commentDeleteButton':
-          actions.deleteMessage(store, props.target.comment);
+          actions.deleteMessage(store, target.comment);
           return;
         case 'commentEditButton':
-          actions.startEditing(store, props.target.comment);
+          actions.startEditing(store, target.comment);
           return;
         case 'reopenThreadButton': {
-          actions.reopenThread(store, props.target.workspaceId, props.target.threadId);
+          actions.reopenThread(store, target.workspaceId, target.threadId);
           break;
         }
         case 'composerPinButton': {
-          // todod toggle pin mode here
+          actions.insertComposerPin(store, target);
           break;
         }
       }

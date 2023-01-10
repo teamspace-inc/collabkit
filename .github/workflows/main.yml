@@ -65,7 +65,7 @@ jobs:
           max_timeout: 120
           check_interval: 5
           regex: 'collabkit-demo'
-  
+
   vercel-ladle:
     runs-on: buildjet-32vcpu-ubuntu-2204
     outputs:
@@ -79,7 +79,7 @@ jobs:
           max_timeout: 120
           check_interval: 5
           regex: 'collabkit-react-ladle'
-  
+
   test-e2e:
     needs: [vercel-demo, vercel-ladle]
     timeout-minutes: 60
@@ -91,9 +91,7 @@ jobs:
           node-version: 18
       - run: echo ${{needs.vercel-demo.outputs.url}} && echo ${{needs.vercel-ladle.outputs.url}}
       - name: Install dependencies
-        run: yarn
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
+        run: yarn install --frozen-lockfile --prefer-offline
       - name: Run Playwright tests
         run: PREVIEW_URL_DEMO=${{needs.vercel-demo.outputs.url}} PREVIEW_URL_LADLE=${{needs.vercel-ladle.outputs.url}} yarn playwright test ./e2e
         working-directory: packages/@collabkit/react

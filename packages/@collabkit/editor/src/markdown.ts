@@ -5,6 +5,9 @@ import {
   TextMatchTransformer,
 } from '@lexical/markdown';
 import { $createMentionNode, $isMentionNode, MentionNode } from './MentionNode';
+import { $createPinNode } from './PinNode';
+import { PinNode } from './PinNode';
+import { $isPinNode } from './PinNode';
 import { $createTimestampNode, $isTimestampNode, TimestampNode } from './TimestampNode';
 
 // Order of text transformers matters:
@@ -14,10 +17,12 @@ import { $createTimestampNode, $isTimestampNode, TimestampNode } from './Timesta
 const MENTION: TextMatchTransformer = {
   dependencies: [MentionNode],
   export: (node) => {
-    if (!$isMentionNode(node)) {
+    if (node.getType() !== 'mention') {
       return null;
     }
-    const linkContent = `[${node.getTextContent()}](#@${encodeURIComponent(node.__id)})`;
+    const linkContent = `[${node.getTextContent()}](#@${encodeURIComponent(
+      (node as MentionNode).__id
+    )})`;
     return linkContent;
   },
   importRegExp: /(?:\[([^[]+)\])(?:\(#@([^(]+)\))/,
@@ -44,14 +49,34 @@ const TIMESTAMP: TextMatchTransformer = {
   regExp: /(?:\[([^[]+)\])(?:\(#T([^(]+)\))$/,
   replace: (textNode, match) => {
     const [, timestampText] = match;
-    const mentionNode = $createTimestampNode(timestampText);
-    textNode.replace(mentionNode);
+    const node = $createTimestampNode(timestampText);
+    textNode.replace(node);
   },
   trigger: ')',
   type: 'text-match',
 };
 
-const TEXT_MATCH_TRANSFORMERS: Array<TextMatchTransformer> = [MENTION, TIMESTAMP];
+const PIN: TextMatchTransformer = {
+  dependencies: [PinNode],
+  export: (node) => {
+    if (!$isPinNode(node)) {
+      return null;
+    }
+    const linkContent = `[PIN](#PIN${(node as PinNode).__pinId})`;
+    return linkContent;
+  },
+  importRegExp: /(?:\[([^[]+)\])(?:\(#PIN([^(]+)\))/,
+  regExp: /(?:\[([^[]+)\])(?:\(#PIN([^(]+)\))$/,
+  replace: (textNode, match) => {
+    const [, , pinId] = match;
+    const node = $createPinNode(pinId);
+    textNode.replace(node);
+  },
+  trigger: ')',
+  type: 'text-match',
+};
+
+const TEXT_MATCH_TRANSFORMERS: Array<TextMatchTransformer> = [MENTION, TIMESTAMP, PIN];
 
 export const TRANSFORMERS: Array<Transformer> = [
   ...ELEMENT_TRANSFORMERS,

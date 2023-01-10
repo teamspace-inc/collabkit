@@ -1,4 +1,4 @@
-import { Markdown } from './Markdown';
+import { Markdown } from '@collabkit/react';
 import ConceptsMd from './markdown/Concepts.md?raw';
 
 export function ConceptsDoc() {

@@ -58,7 +58,7 @@ export const placeholder = recipe({
   variants: {
     canPin: {
       true: {
-        textIndent: '24px',
+        left: `${calc(vars.space[2]).add('24px')}`,
       },
     },
   },
@@ -93,6 +93,11 @@ globalStyle(`${composerGlobalStyles} p`, {
   fontFamily: `${vars.fontFamily} !important`,
 });
 
+globalStyle('.collabkit-composer-pin', {
+  display: 'inline',
+  margin: '-4px 0px 0px',
+});
+
 export const input = recipe({
   base: {
     resize: 'none',
@@ -120,7 +125,7 @@ export const input = recipe({
     },
     canPin: {
       true: {
-        textIndent: '24px',
+        left: '24px',
       },
     },
   },

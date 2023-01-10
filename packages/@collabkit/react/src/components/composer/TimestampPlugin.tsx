@@ -3,7 +3,7 @@ import { TextNode } from 'lexical';
 
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { useEffect } from 'react';
-import { $createTimestampNode, TimestampNode } from '../../editor';
+import { $createTimestampNode, TimestampNode } from '@collabkit/editor';
 
 const REGEX = /(([0-5]{0,1}[0-9]{1}:)?[0-5]{0,1}[0-9]{1}:[0-5]{1}[0-9]{1})\b/i;
 

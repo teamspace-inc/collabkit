@@ -2,14 +2,13 @@ import type { Spread } from 'lexical';
 import {
   DOMConversionMap,
   DOMConversionOutput,
-  DOMExportOutput,
   EditorConfig,
-  LexicalNode,
   NodeKey,
   SerializedTextNode,
   TextNode,
+  $applyNodeReplacement,
+  LexicalNode,
 } from 'lexical';
-import { mentionStyle } from '../theme/components/MentionsPlugin.css';
 
 export type SerializedMentionNode = Spread<
   {
@@ -69,13 +68,13 @@ export class MentionNode extends TextNode {
     };
   }
 
-  createDOM(config: EditorConfig): HTMLElement {
+  createDOM(config: EditorConfig) {
     const dom = super.createDOM(config);
-    dom.className = 'mention ' + mentionStyle;
+    dom.className = 'collabit-mention';
     return dom;
   }
 
-  exportDOM(): DOMExportOutput {
+  exportDOM() {
     const element = document.createElement('span');
     element.setAttribute('data-lexical-mention', JSON.stringify(this.__id));
     element.textContent = this.__text;
@@ -84,7 +83,6 @@ export class MentionNode extends TextNode {
 
   static importDOM(): DOMConversionMap | null {
     return {
-      // @ts-ignore
       span: (domNode: HTMLElement) => {
         if (!domNode.hasAttribute('data-lexical-mention')) {
           return null;
@@ -105,7 +103,7 @@ export class MentionNode extends TextNode {
 export function $createMentionNode(id: string, text: string): MentionNode {
   const mentionNode = new MentionNode(id, text);
   mentionNode.setMode('segmented').toggleDirectionless();
-  return mentionNode;
+  return $applyNodeReplacement(mentionNode);
 }
 
 export function $isMentionNode(node: LexicalNode | null | undefined): node is MentionNode {
