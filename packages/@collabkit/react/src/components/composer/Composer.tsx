@@ -94,7 +94,7 @@ function ComposerRoot(props: {
           value={{
             body: props.body ?? '',
             autoFocus: props.autoFocus ?? true,
-            canPin: props.canPin ?? true,
+            canPin: props.canPin ?? false,
           }}
         >
           <TargetContext.Provider value={target}>{props.children}</TargetContext.Provider>
