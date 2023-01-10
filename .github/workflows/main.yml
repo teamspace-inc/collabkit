@@ -91,7 +91,7 @@ jobs:
           node-version: 18
       - run: echo ${{needs.vercel-demo.outputs.url}} && echo ${{needs.vercel-ladle.outputs.url}}
       - name: Install dependencies
-        run: yarn
+        run: yarn install --frozen-lockfile --prefer-offline
       - name: Run Playwright tests
         run: PREVIEW_URL_DEMO=${{needs.vercel-demo.outputs.url}} PREVIEW_URL_LADLE=${{needs.vercel-ladle.outputs.url}} yarn playwright test ./e2e
         working-directory: packages/@collabkit/react
