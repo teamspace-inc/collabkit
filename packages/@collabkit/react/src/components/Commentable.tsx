@@ -1,12 +1,11 @@
 import { Store } from '@collabkit/core';
 import { FloatingPortal } from '@floating-ui/react-dom-interactions';
-import { child } from 'firebase/database';
-import React, { forwardRef, useCallback, useRef, useState } from 'react';
+import React, { forwardRef, useCallback, useRef } from 'react';
 import { useSnapshot } from 'valtio';
 import { useCommentableRef } from '../hooks/useCommentableRef';
 import { useStore } from '../hooks/useStore';
 import * as styles from '../theme/components/Commentable.css';
-import Profile, { Avatar } from './Profile';
+import Profile from './Profile';
 
 function findCommentableElement(
   store: Store,
@@ -16,7 +15,7 @@ function findCommentableElement(
   if (element == null) {
     return null;
   }
-  const commentable = Object.values(store.commentableElements).find(
+  const commentable = [...store.commentableElements.values()].find(
     (el) => el === element || el.contains(element)
   );
   return commentable ?? null;

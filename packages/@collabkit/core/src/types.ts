@@ -402,7 +402,7 @@ export interface UnconfiguredStore {
 
   clientX: number;
   clientY: number;
-  commentableElements: { [objectId: string]: HTMLElement | SVGElement };
+  commentableElements: Map<string, HTMLElement | SVGElement>;
 }
 
 export interface Store extends UnconfiguredStore {

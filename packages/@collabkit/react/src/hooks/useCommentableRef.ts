@@ -8,9 +8,9 @@ export function useCommentableRef(objectId: string) {
     (element: HTMLElement | SVGElement | null) => {
       console.log('setElement', objectId, element);
       if (element) {
-        store.commentableElements[objectId] = element;
+        store.commentableElements.set(objectId, element);
       } else {
-        delete store.commentableElements[objectId];
+        store.commentableElements.delete(objectId);
       }
     },
     [store]
