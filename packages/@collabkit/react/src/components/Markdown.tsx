@@ -12,18 +12,19 @@ function MarkdownLink(props: any) {
   return <a {...props} />;
 }
 
+const COMPILER = unified()
+  .use(remarkParse)
+  .use(remarkRehype)
+  .use(rehypeReact, {
+    createElement,
+    Fragment,
+    components: {
+      a: MarkdownLink,
+    },
+  });
+
 export const Markdown = React.memo(function Markdown(props: { className?: string; body: string }) {
-  const reactContent = unified()
-    .use(remarkParse)
-    .use(remarkRehype)
-    .use(rehypeReact, {
-      createElement,
-      Fragment,
-      components: {
-        a: MarkdownLink,
-      },
-    })
-    .processSync(props.body).result;
+  const reactContent = COMPILER.processSync(props.body).result;
   return reactContent ? (
     <div data-testId="collabkit-markdown" className={props.className}>
       {reactContent}
