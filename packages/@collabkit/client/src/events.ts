@@ -4,6 +4,7 @@ import type { LexicalEditor } from 'lexical';
 import type {
   CommentReactionTarget,
   CommentTarget,
+  ComposerTarget,
   MenuTarget,
   Store,
   Target,
@@ -111,6 +112,11 @@ export function createEvents(store: Store) {
           actions.insertComposerPin(store, target);
           break;
         }
+        case 'composerMentionsButton': {
+          console.log('composerMentionsButton');
+          actions.toggleComposerMentionsPicker(store, target);
+          break;
+        }
       }
     },
 
@@ -177,6 +183,7 @@ export function createEvents(store: Store) {
         }
       } else if (store.viewingId) {
         if (e.key === 'Escape') {
+          console.log('escape');
           actions.closeAll(store);
           e.stopPropagation();
           e.preventDefault();

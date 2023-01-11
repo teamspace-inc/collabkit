@@ -172,7 +172,15 @@ export type Target =
   | CommentDeleteButtonTarget
   | ShowSidebarButtonTarget
   | HideSidebarButtonTarget
-  | ComposerPinButtonTarget;
+  | ComposerPinButtonTarget
+  | ComposerMentionsButtonTarget;
+
+export type ComposerMentionsButtonTarget = {
+  type: 'composerMentionsButton';
+  threadId: string;
+  workspaceId: string;
+  eventId: string | 'default';
+};
 
 export type ComposerPinButtonTarget = {
   type: 'composerPinButton';
@@ -320,6 +328,7 @@ export interface Composer {
   enabled: { [eventId: string]: boolean; default: boolean };
   isTypingTimeoutID?: ReturnType<typeof setTimeout>;
   isTyping: { [endUserId: string]: boolean };
+  isMentioning: boolean;
 }
 
 export interface SeenBy {

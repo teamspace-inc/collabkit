@@ -18,6 +18,7 @@ export function createComposer(): Composer {
     isTyping: {},
     editor: null,
     enabled: { default: false },
+    isMentioning: false,
   };
 }
 

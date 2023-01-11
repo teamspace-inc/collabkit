@@ -1,4 +1,4 @@
-import React, { ComponentProps, useContext } from 'react';
+import React, { ComponentProps, useCallback, useContext } from 'react';
 
 import { ComposerTarget } from '../../constants';
 import { ContentEditable as LexicalContentEditable } from '@lexical/react/LexicalContentEditable';
@@ -27,12 +27,15 @@ import { useTarget } from '../../hooks/useTarget';
 import * as styles from '../../theme/components/Composer.css';
 import { useOptionalCommentContext } from '../../hooks/useCommentContext';
 import { useSnapshot } from 'valtio';
-import { $getRoot, $setSelection } from 'lexical';
+import { $getRoot, $setSelection, EditorState, LexicalEditor } from 'lexical';
 import { TypingIndicator } from '../TypingIndicator';
 
 import Profile from '../Profile';
 
 import PinButtonSvg from '../../pin-button.svg';
+import { IconButton } from '../IconButton';
+import { EditorPlugin } from './EditorPlugin';
+import { At } from '../icons';
 
 // Catch any errors that occur during Lexical updates and log them
 // or throw them as needed. If you don't throw them, Lexical will
@@ -123,7 +126,26 @@ function ComposerContentEditable(props: { className?: string }) {
     </div>
   );
 }
-``;
+
+function ComposerMentionsButton(props: { className?: string }) {
+  const { events } = useApp();
+  const { threadId, workspaceId } = useThreadContext();
+  const { eventId } = useOptionalCommentContext() ?? { eventId: 'default' };
+  const target = { type: 'composerMentionsButton', threadId, workspaceId, eventId } as const;
+  return (
+    <IconButton
+      style={{ zIndex: 999 }}
+      className={props.className}
+      onClick={(e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        events.onClick(e, { target });
+      }}
+    >
+      <At />
+    </IconButton>
+  );
+}
 
 function ComposerPinButton(props: { className?: string }) {
   const { events } = useApp();
@@ -154,6 +176,7 @@ function ComposerEditor(props: {
   const { events, store } = useApp();
   const { body } = useContext(ComposerContext);
   const { focusedId } = useSnapshot(store);
+  const { threadId, workspaceId } = useThreadContext();
   const active = !!(
     focusedId &&
     focusedId.type === 'composer' &&
@@ -170,12 +193,28 @@ function ComposerEditor(props: {
     },
   };
 
+  const handleChange = useCallback(
+    (editorState: EditorState, editor: LexicalEditor) => {
+      editorState.read(() => {
+        const newBody = $convertToMarkdownString(TRANSFORMERS);
+        const mentions = $getRoot()
+          .getAllTextNodes()
+          .filter((node) => $isMentionNode(node))
+          .map((node) => node.__id)
+          .filter((id) => typeof id === 'string');
+        events.onComposerChange(target, editor, newBody, mentions);
+      });
+    },
+    [events.onComposerChange, target]
+  );
+
   return (
     <div
       data-testid="collabkit-composer-editor"
       className={props.className ?? `${styles.editor({ active })} ${styles.composerGlobalStyles}`}
     >
       <LexicalComposer initialConfig={initialConfig}>
+        <EditorPlugin onMount={handleChange} />
         <PasteTextPlugin />
         <PlainTextPlugin
           contentEditable={props.contentEditable ?? <Composer.ContentEditable />}
@@ -184,22 +223,19 @@ function ComposerEditor(props: {
             return <>{props.children}</>;
           }}
         />
-        <OnChangePlugin
-          onChange={(editorState, editor) => {
-            editorState.read(() => {
-              const newBody = $convertToMarkdownString(TRANSFORMERS);
-              const mentions = $getRoot()
-                .getAllTextNodes()
-                .filter((node) => $isMentionNode(node))
-                .map((node) => node.__id)
-                .filter((id) => typeof id === 'string');
-              events.onComposerChange(target, editor, newBody, mentions);
-            });
-          }}
-        />
+        <OnChangePlugin onChange={handleChange} />
         {autoFocus ? <AutoFocusPlugin /> : <></>}
         <HistoryPlugin />
-        <MentionsPlugin />
+        <MentionsPlugin
+          onOpenChange={(isOpen) => {
+            // todo move this to an action
+            const workspace = store.workspaces[workspaceId];
+            if (!workspace) return;
+            const composer = workspace.composers[threadId];
+            if (!composer) return;
+            composer.isMentioning = isOpen;
+          }}
+        />
         <TimestampPlugin />
       </LexicalComposer>
     </div>
@@ -222,6 +258,7 @@ export default function Composer() {
   return (
     <Composer.Root autoFocus={autoFocus ?? true}>
       <Profile.Avatar />
+      <ComposerMentionsButton />
       <Composer.Editor
         contentEditable={<Composer.ContentEditable />}
         placeholder={

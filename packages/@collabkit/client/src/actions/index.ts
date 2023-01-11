@@ -47,6 +47,7 @@ import { closeMenu } from './closeMenu';
 import { openMenu } from './openMenu';
 import { closeAll } from './closeAll';
 import { insertComposerPin } from './insertComposerPin';
+import { toggleComposerMentions } from './toggleComposerMentionsPicker';
 
 export type GenerateToken =
   | {
@@ -155,6 +156,7 @@ export const actions = {
   subscribeThread,
   subscribeWorkspace,
   toggleCommentReaction,
+  toggleComposerMentionsPicker: toggleComposerMentions,
   toggleEmojiReactionPicker,
   unhover,
   updateComment,

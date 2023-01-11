@@ -26,7 +26,7 @@ const COMPILER = unified()
 export const Markdown = React.memo(function Markdown(props: { className?: string; body: string }) {
   const reactContent = COMPILER.processSync(props.body).result;
   return reactContent ? (
-    <div data-testId="collabkit-markdown" className={props.className}>
+    <div data-testid="collabkit-markdown" className={props.className}>
       {reactContent}
     </div>
   ) : null;
