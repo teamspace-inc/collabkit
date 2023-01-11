@@ -1,5 +1,5 @@
 import React from 'react';
-import { createCommand, LexicalCommand, LexicalEditor, RangeSelection } from 'lexical';
+import { LexicalEditor, RangeSelection } from 'lexical';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { mergeRegister } from '@lexical/utils';
 import {
@@ -32,9 +32,7 @@ import {
   autoUpdate,
   flip,
   FloatingFocusManager,
-  FloatingNode,
   FloatingPortal,
-  offset,
   size,
   useFloating,
   useFloatingNodeId,
@@ -236,10 +234,12 @@ export function MentionsTypeahead({
   close,
   editor,
   resolution,
+  onResultsChange,
 }: {
   close: () => void;
   editor: LexicalEditor;
   resolution: Resolution;
+  onResultsChange?: (results: MentionWithColor[] | null) => void;
 }) {
   const match = resolution.match;
   const results = useMentionLookupService(match.matchingString);
@@ -255,10 +255,9 @@ export function MentionsTypeahead({
     open: (results?.length ?? 0) > 0,
     whileElementsMounted: autoUpdate,
     middleware: [
-      offset(4),
       flip(),
       size({
-        padding: 12,
+        padding: 0,
         apply({ availableWidth, availableHeight, elements }) {
           Object.assign(elements.floating.style, {
             maxWidth: `${availableWidth}px`,
@@ -410,12 +409,16 @@ export function MentionsTypeahead({
     [applyCurrentSelected, close, editor, results, selectedIndex, updateSelectedIndex]
   );
 
+  useEffect(() => {
+    onResultsChange?.(results);
+  }, [onResultsChange, results]);
+
   if (results === null) {
     return null;
   }
 
   return (
-    <FloatingNode id={nodeId}>
+    <FloatingPortal>
       <FloatingFocusManager context={context}>
         <ThemeWrapper>
           <div
@@ -428,9 +431,10 @@ export function MentionsTypeahead({
               top: context.y ?? 0,
               left: context.x ?? 0,
               width,
+              maxHeight: maxAvailableSize.height > 0 ? maxAvailableSize.height : 'unset',
             }}
           >
-            <Scrollable maxHeight={maxAvailableSize.height}>
+            <Scrollable maxHeight={maxAvailableSize.height > 0 ? maxAvailableSize.height : 'unset'}>
               <div className={styles.list}>
                 {results.slice(0, SUGGESTION_LIST_LENGTH_LIMIT).map((result, i) => (
                   <MentionsTypeaheadItem
@@ -453,7 +457,7 @@ export function MentionsTypeahead({
           </div>
         </ThemeWrapper>
       </FloatingFocusManager>
-    </FloatingNode>
+    </FloatingPortal>
   );
 }
 
@@ -647,7 +651,7 @@ function isSelectionOnEntityBoundary(editor: LexicalEditor, offset: number): boo
 }
 
 export function MentionsPlugin(props: {
-  onOpenChange?: (isOpen: boolean) => void;
+  onOpenChange?: (open: boolean) => void;
 }): JSX.Element | null {
   const [editor] = useLexicalComposerContext();
   const [resolution, setResolution] = useState<Resolution | null>(null);
@@ -732,13 +736,20 @@ export function MentionsPlugin(props: {
     setResolution(null);
   }, []);
 
+  const [results, setResults] = useState<MentionWithColor[] | null>(null);
+
   useEffect(() => {
-    props.onOpenChange?.(resolution != null);
-  }, [resolution]);
+    props.onOpenChange?.(resolution != null && results !== null);
+  }, [resolution, props.onOpenChange, results !== null]);
 
   const typeahead =
     resolution != null && editor != null ? (
-      <MentionsTypeahead close={closeTypeahead} resolution={resolution} editor={editor} />
+      <MentionsTypeahead
+        onResultsChange={setResults}
+        close={closeTypeahead}
+        resolution={resolution}
+        editor={editor}
+      />
     ) : null;
 
   return <FloatingPortal>{typeahead}</FloatingPortal>;

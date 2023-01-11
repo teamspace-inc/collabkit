@@ -10,6 +10,7 @@ export const ColorTheme = {
     textLink: 'color-text-link',
     border: 'color-border',
     icon: 'color-icon',
+    iconSecondary: 'color-icon-secondary',
     attention: 'color-attention',
   },
 };

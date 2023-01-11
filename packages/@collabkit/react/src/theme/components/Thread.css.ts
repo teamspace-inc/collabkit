@@ -12,7 +12,7 @@ export const root = style({
   overflow: 'hidden',
   background: fallbackVar(vars.thread.background, vars.color.background),
   border: fallbackVar(vars.thread.border, 'none'),
-  borderRadius: fallbackVar(vars.thread.borderRadius, vars.space[3]),
+  borderRadius: fallbackVar(vars.thread.borderRadius, vars.space[0]),
   boxShadow: fallbackVar(vars.thread.boxShadow, 'none'),
   textAlign: 'left',
   minWidth: '240px',

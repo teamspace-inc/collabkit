@@ -2,14 +2,14 @@ import type { ComposerTarget, Store } from '@collabkit/core';
 
 export async function isTyping(store: Store, props: { target: ComposerTarget }) {
   const { config } = store;
+  const { workspaceId, threadId, eventId } = props.target;
 
   if (!store.userId) {
     console.warn('CollabKit: cannot start typing, no userId');
     return;
   }
 
-  const timeoutID =
-    store.workspaces[props.target.workspaceId].composers[props.target.threadId].isTypingTimeoutID;
+  const timeoutID = store.workspaces[workspaceId].composers[threadId][eventId].isTypingTimeoutID;
 
   if (timeoutID) {
     clearTimeout(timeoutID);
@@ -17,15 +17,14 @@ export async function isTyping(store: Store, props: { target: ComposerTarget }) 
 
   const params = {
     appId: config.appId,
-    workspaceId: props.target.workspaceId,
-    threadId: props.target.threadId,
+    workspaceId,
+    threadId,
     userId: store.userId,
   };
 
   await store.sync.startTyping(params);
 
-  store.workspaces[props.target.workspaceId].composers[props.target.threadId].isTypingTimeoutID =
-    setTimeout(() => {
-      store.sync.stopTyping(params);
-    }, 1000);
+  store.workspaces[workspaceId].composers[threadId][eventId].isTypingTimeoutID = setTimeout(() => {
+    store.sync.stopTyping(params);
+  }, 1000);
 }

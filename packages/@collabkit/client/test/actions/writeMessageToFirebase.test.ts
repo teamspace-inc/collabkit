@@ -5,9 +5,10 @@ import { setupApp, setupFirebase, setupWorkspaceProfile } from '../../../test-ut
 import { writeMessageToFirebase } from '../../src/actions/writeMessageToFirebase';
 import { subscribeTimeline } from '../../src/sync/firebase/subscribeTimeline';
 import { init } from '../../src/actions/init';
-import { createComposer, createStore, createWorkspace } from '../../src/store';
+import { createStore, createWorkspace } from '../../src/store';
 import { FirebaseSync } from '../../src/sync/firebase/FirebaseSync';
 import { Store, SyncAdapter } from '@collabkit/core';
+import { initComposer } from '../../src/actions/initComposer';
 
 setupFirebase();
 
@@ -49,7 +50,7 @@ beforeAll(async () => {
   store.userId = userId;
   store.workspaceId = workspaceId;
   store.workspaces[workspaceId] = createWorkspace();
-  store.workspaces[workspaceId].composers[threadId] = createComposer();
+  initComposer(store, { workspaceId, threadId, eventId: 'default' });
 });
 
 test('writes a message to a threads timeline', async () => {

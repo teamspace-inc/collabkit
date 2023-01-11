@@ -92,45 +92,44 @@ const rows: Car[] = [
 
 export const TableExample = () => {
   return (
-    <div>
-      <div style={{ display: 'flex', flex: 1, padding: '20px 20px', flexDirection: 'column' }}>
-        <h1 style={{ margin: 0 }}>Table</h1>
-        <p>Right click a table cell and click comment.</p>
-      </div>
+    <ThemeProvider theme="light">
+      <div>
+        <div style={{ display: 'flex', flex: 1, padding: '20px 20px', flexDirection: 'column' }}>
+          <h1 style={{ margin: 0 }}>Table</h1>
+          <p>Right click a table cell and click comment.</p>
+        </div>
 
-      <div style={{ display: 'flex', position: 'fixed', top: 20, right: 20 }}>
-        <ThemeProvider theme="light">
+        <div style={{ display: 'flex', position: 'fixed', top: 20, right: 20 }}>
           <SidebarInboxButton />
-        </ThemeProvider>
-      </div>
+        </div>
 
-      <table className="TableExample">
-        <thead>
-          <tr>
-            <th>Make</th>
-            <th>Model</th>
-            <th>Price</th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((row) => (
-            <tr key={row.id}>
-              {columns.map((column) => (
-                <Cell
-                  key={column.key}
-                  value={column.format(row[column.key])}
-                  row={row}
-                  column={column}
-                />
-              ))}
+        <table className="TableExample">
+          <thead>
+            <tr>
+              <th>Make</th>
+              <th>Model</th>
+              <th>Price</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-
-      <Sidebar>
-        <Inbox />
-      </Sidebar>
-    </div>
+          </thead>
+          <tbody>
+            {rows.map((row) => (
+              <tr key={row.id}>
+                {columns.map((column) => (
+                  <Cell
+                    key={column.key}
+                    value={column.format(row[column.key])}
+                    row={row}
+                    column={column}
+                  />
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <Sidebar>
+          <Inbox />
+        </Sidebar>
+      </div>
+    </ThemeProvider>
   );
 };

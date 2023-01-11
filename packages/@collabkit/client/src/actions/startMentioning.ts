@@ -1,12 +1,13 @@
 import type { Store } from '@collabkit/core';
-import { $createRangeSelection, $getSelection, $isRangeSelection } from 'lexical';
+import { $createRangeSelection, $getRoot, $getSelection, $isRangeSelection } from 'lexical';
 import { CLOSE_MENTIONS_COMMAND, OPEN_MENTIONS_COMMAND } from '@collabkit/editor';
 
-export function toggleComposerMentions(
+export function startMentioning(
   store: Store,
   props: { threadId: string; workspaceId: string; eventId: string }
 ) {
-  const { isMentioning, editor } = store.workspaces[props.workspaceId].composers[props.threadId];
+  const { isMentioning, editor } =
+    store.workspaces[props.workspaceId].composers[props.threadId][props.eventId];
 
   if (!editor) {
     return;
@@ -31,7 +32,7 @@ export function toggleComposerMentions(
             const prevCharText = prevChar.getTextContent();
             if (prevCharText.endsWith('@')) {
               editor.dispatchCommand(OPEN_MENTIONS_COMMAND, undefined);
-            } else if (prevCharText.endsWith(' ')) {
+            } else if (prevCharText.endsWith(' ') || $getRoot().isEmpty()) {
               selection.insertRawText('@');
             } else {
               selection.insertRawText(' @');

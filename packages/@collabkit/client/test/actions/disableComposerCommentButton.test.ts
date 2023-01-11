@@ -4,6 +4,7 @@ import { setupFirebase } from '../../../test-utils/src';
 import { createComposer, createStore, createWorkspace } from '../../src/store';
 import { ComposerTarget, Store } from '@collabkit/core';
 import { disableComposerCommentButton } from '../../src/actions/disableComposerCommentButton';
+import { initComposer } from '../../src/actions/initComposer';
 import { enableComposerCommentButton } from '../../src/actions/enableComposerCommentButton';
 
 setupFirebase();
@@ -13,7 +14,7 @@ test('disableCommentComposerButton', async () => {
   const store = createStore();
   store.workspaces[workspaceId] = createWorkspace();
   const threadId = nanoid();
-  store.workspaces[workspaceId].composers[threadId] = createComposer();
+  initComposer(store, { workspaceId, threadId, eventId: 'default' });
   const target: ComposerTarget = {
     type: 'composer',
     threadId,

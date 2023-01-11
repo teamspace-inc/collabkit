@@ -12,7 +12,9 @@ export function useComposer(props: {
   const { workspaces } = useSnapshot(store);
   const eventId = props.eventId ?? 'default';
   const isEnabled =
-    workspaceId && threadId ? workspaces[workspaceId]?.composers[threadId]?.enabled[eventId] : true;
+    workspaceId && threadId
+      ? workspaces[workspaceId]?.composers[threadId]?.[eventId]?.enabled
+      : true;
 
   return {
     isEnabled,

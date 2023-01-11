@@ -1,4 +1,4 @@
-import React, { ComponentProps, useCallback, useContext } from 'react';
+import React, { ComponentProps, useCallback, useContext, useEffect } from 'react';
 
 import { ComposerTarget } from '../../constants';
 import { ContentEditable as LexicalContentEditable } from '@lexical/react/LexicalContentEditable';
@@ -36,10 +36,36 @@ import PinButtonSvg from '../../pin-button.svg';
 import { IconButton } from '../IconButton';
 import { EditorPlugin } from './EditorPlugin';
 import { At } from '../icons';
+import { MapPin } from 'phosphor-react';
+import { vars } from '../../theme/theme/index.css';
+import { createComposer } from '../../../../client/src/store';
 
 // Catch any errors that occur during Lexical updates and log them
 // or throw them as needed. If you don't throw them, Lexical will
 // try to recover gracefully without losing user data.
+
+import { proxy } from 'valtio';
+import { initComposer } from '../../../../client/src/events';
+
+type ComposerContextValue = {
+  body: string;
+  autoFocus: boolean;
+  canPin: boolean;
+  isMentioning: boolean;
+};
+
+// you can use valtio instead of React context for
+// more performant and usable context updates
+// retaining the context naming so it's clear
+// when where using the global store or one local to a
+// tree of components
+export const ComposerContext = proxy<ComposerContextValue>({
+  body: '',
+  autoFocus: true,
+  canPin: false,
+  isMentioning: false,
+});
+
 function onError(error: any) {
   console.error(error);
 }
@@ -51,18 +77,8 @@ const initialConfigDefaults = {
   onError,
 };
 
-export const ComposerContext = React.createContext<{
-  body: string;
-  autoFocus: boolean;
-  canPin: boolean;
-}>({
-  body: '',
-  autoFocus: true,
-  canPin: false,
-});
-
 function useComposerContext() {
-  return useContext(ComposerContext);
+  return useSnapshot(ComposerContext);
 }
 
 function ComposerRoot(props: {
@@ -70,8 +86,10 @@ function ComposerRoot(props: {
   children: React.ReactNode;
   autoFocus?: boolean;
   body?: string;
-  canPin?: boolean;
 }) {
+  ComposerContext.body = props.body ?? '';
+  ComposerContext.autoFocus = props.autoFocus ?? false;
+
   const commentContext = useOptionalCommentContext();
 
   const { threadId, workspaceId, userId } = useThreadContext();
@@ -86,6 +104,9 @@ function ComposerRoot(props: {
     eventId,
   };
 
+  const { store } = useApp();
+  initComposer(store, target);
+
   return (
     <div
       data-testid="collabkit-composer-root"
@@ -93,15 +114,7 @@ function ComposerRoot(props: {
       onClick={onClick}
     >
       <Profile.Provider profileId={userId}>
-        <ComposerContext.Provider
-          value={{
-            body: props.body ?? '',
-            autoFocus: props.autoFocus ?? true,
-            canPin: props.canPin ?? false,
-          }}
-        >
-          <TargetContext.Provider value={target}>{props.children}</TargetContext.Provider>
-        </ComposerContext.Provider>
+        <TargetContext.Provider value={target}>{props.children}</TargetContext.Provider>
       </Profile.Provider>
     </div>
   );
@@ -132,9 +145,14 @@ function ComposerMentionsButton(props: { className?: string }) {
   const { threadId, workspaceId } = useThreadContext();
   const { eventId } = useOptionalCommentContext() ?? { eventId: 'default' };
   const target = { type: 'composerMentionsButton', threadId, workspaceId, eventId } as const;
+  const { isMentioning } = useComposerContext();
+
   return (
     <IconButton
+      active={isMentioning}
       style={{ zIndex: 999 }}
+      weight="regular"
+      color={vars.color.iconSecondary}
       className={props.className}
       onClick={(e) => {
         e.stopPropagation();
@@ -151,18 +169,22 @@ function ComposerPinButton(props: { className?: string }) {
   const { events } = useApp();
   const { threadId, workspaceId } = useThreadContext();
   const { eventId } = useOptionalCommentContext() ?? { eventId: 'default' };
+  const target = { type: 'composerPinButton', threadId, workspaceId, eventId } as const;
 
   return (
-    <button
+    <IconButton
+      active={false}
       style={{ zIndex: 999 }}
-      data-testid="collabkit-composer-pin-button"
-      className={props.className ?? styles.pinButton}
-      onClick={(e) =>
-        events.onClick(e, { target: { type: 'composerPinButton', threadId, workspaceId, eventId } })
-      }
+      className={props.className}
+      weight="regular"
+      onClick={(e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        events.onClick(e, { target });
+      }}
     >
-      <img src={PinButtonSvg} />
-    </button>
+      <MapPin />
+    </IconButton>
   );
 }
 
@@ -172,11 +194,10 @@ function ComposerEditor(props: {
   contentEditable?: JSX.Element;
 }) {
   const target = useTarget();
-  const { autoFocus } = useComposerContext();
+  const { autoFocus, body } = useComposerContext();
   const { events, store } = useApp();
-  const { body } = useContext(ComposerContext);
   const { focusedId } = useSnapshot(store);
-  const { threadId, workspaceId } = useThreadContext();
+  console.log(target);
   const active = !!(
     focusedId &&
     focusedId.type === 'composer' &&
@@ -227,17 +248,16 @@ function ComposerEditor(props: {
         {autoFocus ? <AutoFocusPlugin /> : <></>}
         <HistoryPlugin />
         <MentionsPlugin
-          onOpenChange={(isOpen) => {
-            // todo move this to an action
-            const workspace = store.workspaces[workspaceId];
-            if (!workspace) return;
-            const composer = workspace.composers[threadId];
-            if (!composer) return;
-            composer.isMentioning = isOpen;
+          onOpenChange={(open) => {
+            ComposerContext.isMentioning = open;
           }}
         />
         <TimestampPlugin />
       </LexicalComposer>
+      <Composer.ButtonGroup>
+        <Composer.PinButton />
+        <Composer.MentionsButton />
+      </Composer.ButtonGroup>
     </div>
   );
 }
@@ -253,12 +273,15 @@ function ComposerPlaceholder(props: ComponentProps<'span'>) {
   );
 }
 
+function ComposerButtonGroup(props: { className?: string; children: React.ReactNode }) {
+  return <div className={props.className ?? styles.buttonGroup}>{props.children}</div>;
+}
+
 export default function Composer() {
   const { autoFocus, placeholder } = useThreadContext();
   return (
     <Composer.Root autoFocus={autoFocus ?? true}>
       <Profile.Avatar />
-      <ComposerMentionsButton />
       <Composer.Editor
         contentEditable={<Composer.ContentEditable />}
         placeholder={
@@ -275,5 +298,8 @@ Composer.ContentEditable = ComposerContentEditable;
 Composer.Editor = ComposerEditor;
 Composer.Placeholder = ComposerPlaceholder;
 Composer.TypingIndicator = TypingIndicator;
+
+Composer.ButtonGroup = ComposerButtonGroup;
+Composer.MentionsButton = ComposerMentionsButton;
 Composer.PinButton = ComposerPinButton;
 Composer.Pin = ComposerPin;

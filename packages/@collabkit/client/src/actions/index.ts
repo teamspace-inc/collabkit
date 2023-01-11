@@ -47,7 +47,8 @@ import { closeMenu } from './closeMenu';
 import { openMenu } from './openMenu';
 import { closeAll } from './closeAll';
 import { insertComposerPin } from './insertComposerPin';
-import { toggleComposerMentions } from './toggleComposerMentionsPicker';
+import { startMentioning } from './startMentioning';
+import { initComposer } from './initComposer';
 
 export type GenerateToken =
   | {
@@ -129,6 +130,7 @@ export const actions = {
   hideSidebar,
   hover,
   init,
+  initComposer,
   insertComposerPin,
   isTyping: debounce(isTyping, 1000, { leading: true, maxWait: 1000 }),
   monitorConnection,
@@ -144,6 +146,7 @@ export const actions = {
   showPreview,
   showSidebar,
   startEditing,
+  startMentioning,
   startSelecting,
   stopEditing,
   stopSelecting,
@@ -156,7 +159,6 @@ export const actions = {
   subscribeThread,
   subscribeWorkspace,
   toggleCommentReaction,
-  toggleComposerMentionsPicker: toggleComposerMentions,
   toggleEmojiReactionPicker,
   unhover,
   updateComment,

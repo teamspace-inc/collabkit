@@ -325,7 +325,7 @@ export interface Composer {
   editor: LexicalEditor | null;
   $$body: string;
   mentions: string[];
-  enabled: { [eventId: string]: boolean; default: boolean };
+  enabled: boolean;
   isTypingTimeoutID?: ReturnType<typeof setTimeout>;
   isTyping: { [endUserId: string]: boolean };
   isMentioning: boolean;
@@ -347,7 +347,7 @@ export interface Workspace {
   inbox: { [threadId: string]: WithID<Event> };
   timeline: { [threadId: string]: Timeline };
   timelineInitialFetchComplete: { [threadId: string]: boolean };
-  composers: { [threadId: string]: Composer };
+  composers: { [threadId: string]: { [eventId: string]: Composer } };
   seen: { [threadId: string]: string }; // lastSeenEventId
   seenBy: { [threadId: string]: SeenBy };
   threadInfo: { [threadId: string]: ThreadInfo };
