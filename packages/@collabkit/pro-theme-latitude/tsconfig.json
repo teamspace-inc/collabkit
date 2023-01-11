@@ -1,0 +1,41 @@
+{
+  "extends": "../../../tsconfig.base.json",
+  "compilerOptions": {
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "allowJs": false,
+    "skipLibCheck": true,
+    "esModuleInterop": false,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": false,
+    "jsx": "react",
+    "composite": true,
+    "outDir": "types",
+    "emitDeclarationOnly": true,
+    "types": ["vite/client", "jest"],
+    "paths": {
+      "@collabkit/client": ["../client/src"],
+      "@collabkit/colors": ["../colors/src"],
+      "@collabkit/core": ["../core/src"],
+      "@collabkit/react": ["../react/src"],
+      "@collabkit/react-scroll-area": ["../react-scroll-area/src"]
+    },
+    "rootDir": "../../../"
+  },
+  "include": [
+    "src",
+    "../client/src",
+    "../colors/src",
+    "../core/src",
+    "../react/src",
+    "../react-scroll-area/src",
+    "../theme/src"
+  ]
+}

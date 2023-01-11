@@ -1,0 +1,50 @@
+{
+  "name": "@collabkit/pro-theme-latitude",
+  "version": "1.0.1",
+  "type": "module",
+  "files": [
+    "dist/collabkit-latitude.d.ts",
+    "dist/collabkit-latitude.js"
+  ],
+  "types": "./dist/collabkit-latitude.d.ts",
+  "module": "./dist/collabkit-latitude.js",
+  "exports": {
+    ".": {
+      "types": "./dist/collabkit-latitude.d.ts",
+      "import": "./dist/collabkit-latitude.js"
+    }
+  },
+  "sideEffects": false,
+  "scripts": {
+    "dev": "vite dev",
+    "build": "yarn clean && tsc && vite build && rollup --config rollup.config.js",
+    "clean": "rimraf dist types *.tsbuildinfo src/**/*.js",
+    "preview": "vite preview",
+    "prepublishOnly": "yarn build",
+    "test": "vitest",
+    "coverage": "vitest run --coverage"
+  },
+  "peerDependencies": {
+    "@collabkit/react": ">=0.7.0"
+  },
+  "devDependencies": {
+    "@collabkit/react": "*",
+    "@types/react": "^18.0.18",
+    "@types/react-dom": "^18.0.6",
+    "@vitejs/plugin-react": "^2.0.1",
+    "autoprefixer": "^10.4.13",
+    "postcss": "^8.4.19",
+    "prettier": "^2.6.2",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "rollup": "2.77.3",
+    "rollup-plugin-dts": "^4.2.2",
+    "rollup-plugin-visualizer": "^5.8.0",
+    "tailwindcss": "^3.2.4",
+    "vite": "^3.0.9"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "printWidth": 100
+  }
+}
