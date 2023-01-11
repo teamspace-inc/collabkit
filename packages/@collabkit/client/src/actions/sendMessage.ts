@@ -30,7 +30,7 @@ export async function sendMessage(store: Store, props: { workspaceId: string; th
   }
 
   editor?.update(() => {
-    $getRoot().getChildren()[0].replace($createTextNode(''));
+    $getRoot().clear();
   });
 
   if (store.workspaces[workspaceId].pendingThreadInfo[threadId]) {
