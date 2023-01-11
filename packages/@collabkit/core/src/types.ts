@@ -399,6 +399,10 @@ export interface UnconfiguredStore {
   uiState: 'idle' | 'selecting';
   subs: Subscriptions;
   callbacks?: Callbacks;
+
+  clientX: number;
+  clientY: number;
+  commentableElements: { [objectId: string]: HTMLElement | SVGElement };
 }
 
 export interface Store extends UnconfiguredStore {

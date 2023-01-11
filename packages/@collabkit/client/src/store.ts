@@ -73,6 +73,7 @@ export function createStore(): UnconfiguredStore {
     subs: {},
     callbacks: {},
     mentionableUsers: {},
+    commentableElements: markRaw({}),
   };
   return store;
 }

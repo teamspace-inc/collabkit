@@ -38,7 +38,7 @@ import { ThreadFacepile } from './components/ThreadFacepile';
 import { useReplyCount } from './hooks/useReplyCount';
 import { ResolveThreadIconButton } from './components/ResolveThreadIconButton';
 import { usePopoverThread } from './hooks/usePopoverThread';
-
+import { useCommentableRef } from './hooks/useCommentableRef';
 import Comment, { CommentProps } from './components/Comment';
 import CollabKitRecharts from './components/Recharts';
 import Profile from './components/Profile';
@@ -48,6 +48,7 @@ import CommentList from './components/CommentList';
 import { Popover } from './components/Popover';
 import { Button } from './components/Button';
 import { AddCommentButton } from './components/AddCommentButton';
+import { Commentable } from './components/Commentable';
 
 import { Markdown } from './components/Markdown';
 import { useThread } from './hooks/public/useThread';
@@ -60,6 +61,7 @@ export {
   Inbox,
   InboxButton,
   Markdown,
+  Commentable,
   PopoverThread,
   Sidebar,
   SidebarInbox,
@@ -67,6 +69,7 @@ export {
   ThemeProvider,
   ThemeWrapper,
   Thread,
+  useCommentableRef,
   useUnreadCommentsCount as useUnreadCount,
   useUnreadThreadsCount,
   // advanced

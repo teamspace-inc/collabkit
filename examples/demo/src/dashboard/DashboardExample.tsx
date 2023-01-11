@@ -33,7 +33,7 @@ import '@tremor/react/dist/esm/tremor.css';
 import { isAfter, isBefore, isEqual } from 'date-fns';
 
 import { performance } from './data';
-import { AddCommentButton } from '@collabkit/react';
+import { AddCommentButton, Commentable, useCommentableRef } from '@collabkit/react';
 
 type Kpi = {
   title: string;
@@ -75,20 +75,22 @@ function KpiCardGrid() {
   return (
     <ColGrid numColsMd={2} numColsLg={3} marginTop="mt-6" gapX="gap-x-6" gapY="gap-y-6">
       {kpiData.map((item) => (
-        <Card key={item.title}>
-          <Flex alignItems="items-start">
-            <Block truncate={true}>
-              <Text>{item.title}</Text>
-              <Metric truncate={true}>{item.metric}</Metric>
-            </Block>
-            <BadgeDelta deltaType={item.deltaType} text={item.delta} />
-          </Flex>
-          <Flex marginTop="mt-4" spaceX="space-x-2">
-            <Text truncate={true}>{`${item.progress}% (${item.metric})`}</Text>
-            <Text>{item.target}</Text>
-          </Flex>
-          <ProgressBar percentageValue={item.progress} marginTop="mt-2" />
-        </Card>
+        <Commentable.Container objectId={`dashboard-kpi-${item.title}`}>
+          <Card key={item.title}>
+            <Flex alignItems="items-start">
+              <Block truncate={true}>
+                <Text>{item.title}</Text>
+                <Metric truncate={true}>{item.metric}</Metric>
+              </Block>
+              <BadgeDelta deltaType={item.deltaType} text={item.delta} />
+            </Flex>
+            <Flex marginTop="mt-4" spaceX="space-x-2">
+              <Text truncate={true}>{`${item.progress}% (${item.metric})`}</Text>
+              <Text>{item.target}</Text>
+            </Flex>
+            <ProgressBar percentageValue={item.progress} marginTop="mt-2" />
+          </Card>
+        </Commentable.Container>
       ))}
     </ColGrid>
   );
@@ -109,9 +111,11 @@ function ChartView({ chartData }: { chartData: any }) {
     Customers: numberFormatter,
   };
 
+  const ref = useCommentableRef('dashboard-chart-legend');
+
   return (
     <Card marginTop="mt-6">
-      <div className="md:flex justify-between">
+      <div className="md:flex justify-between" ref={ref}>
         <Block>
           <Flex justifyContent="justify-start" spaceX="space-x-0.5" alignItems="items-center">
             <Title> Performance History </Title>
@@ -135,17 +139,19 @@ function ChartView({ chartData }: { chartData: any }) {
           </Toggle>
         </div>
       </div>
-      <AreaChart
-        data={chartData}
-        dataKey="date"
-        categories={[selectedKpi]}
-        colors={['blue']}
-        showLegend={false}
-        valueFormatter={formatters[selectedKpi]}
-        yAxisWidth="w-14"
-        height="h-96"
-        marginTop="mt-8"
-      />
+      <Commentable.Container objectId="dashboard-performance-chart">
+        <AreaChart
+          data={chartData}
+          dataKey="date"
+          categories={[selectedKpi]}
+          colors={['blue']}
+          showLegend={false}
+          valueFormatter={formatters[selectedKpi]}
+          yAxisWidth="w-14"
+          height="h-96"
+          marginTop="mt-8"
+        />
+      </Commentable.Container>
     </Card>
   );
 }
@@ -242,9 +248,11 @@ function TableView() {
     (salesPerson.status === selectedStatus || selectedStatus === 'all') &&
     (selectedNames.includes(salesPerson.name) || selectedNames.length === 0);
 
+  const ref = useCommentableRef('dashboard-table');
+
   return (
     <Card marginTop="mt-6">
-      <div className="sm:mt-6 hidden sm:block sm:flex sm:justify-start sm:space-x-2">
+      <div className="sm:mt-6 hidden sm:block sm:flex sm:justify-start sm:space-x-2" ref={ref}>
         <MultiSelectBox
           handleSelect={(value) => setSelectedNames(value)}
           placeholder="Select Salespeople"
@@ -287,37 +295,39 @@ function TableView() {
         </Dropdown>
       </div>
 
-      <Table marginTop="mt-6">
-        <TableHead>
-          <TableRow>
-            <TableHeaderCell>Name</TableHeaderCell>
-            <TableHeaderCell textAlignment="text-right">Leads</TableHeaderCell>
-            <TableHeaderCell textAlignment="text-right">Sales ($)</TableHeaderCell>
-            <TableHeaderCell textAlignment="text-right">Quota ($)</TableHeaderCell>
-            <TableHeaderCell textAlignment="text-right">Variance</TableHeaderCell>
-            <TableHeaderCell textAlignment="text-right">Region</TableHeaderCell>
-            <TableHeaderCell textAlignment="text-right">Status</TableHeaderCell>
-          </TableRow>
-        </TableHead>
+      <Commentable.Container objectId="dashboard-table">
+        <Table marginTop="mt-6">
+          <TableHead>
+            <TableRow>
+              <TableHeaderCell>Name</TableHeaderCell>
+              <TableHeaderCell textAlignment="text-right">Leads</TableHeaderCell>
+              <TableHeaderCell textAlignment="text-right">Sales ($)</TableHeaderCell>
+              <TableHeaderCell textAlignment="text-right">Quota ($)</TableHeaderCell>
+              <TableHeaderCell textAlignment="text-right">Variance</TableHeaderCell>
+              <TableHeaderCell textAlignment="text-right">Region</TableHeaderCell>
+              <TableHeaderCell textAlignment="text-right">Status</TableHeaderCell>
+            </TableRow>
+          </TableHead>
 
-        <TableBody>
-          {salesPeople
-            .filter((item) => isSalesPersonSelected(item))
-            .map((item) => (
-              <TableRow key={item.name}>
-                <TableCell>{item.name}</TableCell>
-                <TableCell textAlignment="text-right">{item.leads}</TableCell>
-                <TableCell textAlignment="text-right">{item.sales}</TableCell>
-                <TableCell textAlignment="text-right">{item.quota}</TableCell>
-                <TableCell textAlignment="text-right">{item.variance}</TableCell>
-                <TableCell textAlignment="text-right">{item.region}</TableCell>
-                <TableCell textAlignment="text-right">
-                  <BadgeDelta deltaType={item.deltaType} text={item.status} size="xs" />
-                </TableCell>
-              </TableRow>
-            ))}
-        </TableBody>
-      </Table>
+          <TableBody>
+            {salesPeople
+              .filter((item) => isSalesPersonSelected(item))
+              .map((item) => (
+                <TableRow key={item.name}>
+                  <TableCell>{item.name}</TableCell>
+                  <TableCell textAlignment="text-right">{item.leads}</TableCell>
+                  <TableCell textAlignment="text-right">{item.sales}</TableCell>
+                  <TableCell textAlignment="text-right">{item.quota}</TableCell>
+                  <TableCell textAlignment="text-right">{item.variance}</TableCell>
+                  <TableCell textAlignment="text-right">{item.region}</TableCell>
+                  <TableCell textAlignment="text-right">
+                    <BadgeDelta deltaType={item.deltaType} text={item.status} size="xs" />
+                  </TableCell>
+                </TableRow>
+              ))}
+          </TableBody>
+        </Table>
+      </Commentable.Container>
     </Card>
   );
 }
@@ -339,40 +349,42 @@ export function DashboardExample() {
   });
 
   return (
-    <main className="bg-slate-50 p-6 sm:p-10 h-full">
-      <Flex>
-        <Block truncate>
-          <Title>Dashboard</Title>
-          <Text>View core metrics on the state of your company.</Text>
-        </Block>
-        <AddCommentButton />
-        <Datepicker
-          minDate={minDate}
-          maxDate={maxDate}
-          defaultStartDate={minDate}
-          defaultEndDate={maxDate}
-          enableRelativeDates={false}
-          handleSelect={(start, end) => {
-            setStartDate(start);
-            setEndDate(end);
-          }}
-          maxWidth="max-w-xs"
-        />
-      </Flex>
+    <Commentable.Root>
+      <main className="bg-slate-50 p-6 sm:p-10 h-full">
+        <Flex>
+          <Block truncate>
+            <Title>Dashboard</Title>
+            <Text>View core metrics on the state of your company.</Text>
+          </Block>
+          <AddCommentButton />
+          <Datepicker
+            minDate={minDate}
+            maxDate={maxDate}
+            defaultStartDate={minDate}
+            defaultEndDate={maxDate}
+            enableRelativeDates={false}
+            handleSelect={(start, end) => {
+              setStartDate(start);
+              setEndDate(end);
+            }}
+            maxWidth="max-w-xs"
+          />
+        </Flex>
 
-      <TabList defaultValue={1} handleSelect={(value) => setSelectedView(value)} marginTop="mt-6">
-        <Tab value={1} text="Overview" />
-        <Tab value={2} text="Detail" />
-      </TabList>
+        <TabList defaultValue={1} handleSelect={(value) => setSelectedView(value)} marginTop="mt-6">
+          <Tab value={1} text="Overview" />
+          <Tab value={2} text="Detail" />
+        </TabList>
 
-      {selectedView === 1 ? (
-        <>
-          <KpiCardGrid />
-          <ChartView chartData={chartData} />
-        </>
-      ) : (
-        <TableView />
-      )}
-    </main>
+        {selectedView === 1 ? (
+          <>
+            <KpiCardGrid />
+            <ChartView chartData={chartData} />
+          </>
+        ) : (
+          <TableView />
+        )}
+      </main>
+    </Commentable.Root>
   );
 }

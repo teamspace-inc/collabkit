@@ -15,8 +15,6 @@ export function AddCommentButton() {
     workspaceId,
   };
 
-  console.log();
-
   return (
     <IconButton
       data-testid="collabkit-add-comment-button"
