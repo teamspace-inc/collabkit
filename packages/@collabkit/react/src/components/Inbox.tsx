@@ -52,7 +52,7 @@ export function Inbox(props: {
   // account for sidebar title height
   const sidebarContext = useOptionalSidebarContext();
   const style = sidebarContext?.titleHeight
-    ? { height: `calc(${props.maxHeight} - ${sidebarContext.titleHeight}px)` }
+    ? { height: `calc(${props.maxHeight ? props.maxHeight : "100%"} - ${sidebarContext.titleHeight}px)` }
     : {};
 
   return (

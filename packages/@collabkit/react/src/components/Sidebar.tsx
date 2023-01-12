@@ -82,7 +82,7 @@ export function Sidebar(props: {
           {inboxActive ?
             <>
               <div style={{ display: 'contents' }}>{props.children}</div>
-
+              <hr color='#EEEEEE' style={{marginTop : 0 }} />
               {store.userId && newThreadId ?
                 <Thread.Provider threadId={newThreadId}>
                   <Profile.Provider profileId={store.userId}>
