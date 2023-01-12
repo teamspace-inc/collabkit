@@ -53,7 +53,7 @@ export const iconButton = recipe({
     
     selectors: {
       '&:active': {
-        background: '#3494FA1A',
+        background: fallbackVar(vars.iconButton.hover.background, vars.color.surfaceOverlay),
       },
       '&:hover': {
         background: fallbackVar(vars.iconButton.hover.background, vars.color.surfaceOverlay),
@@ -63,7 +63,7 @@ export const iconButton = recipe({
   variants: {
     active: {
       true: {
-        background: '#3494FA1A',
+        background: fallbackVar(vars.iconButton.hover.background, vars.color.surfaceOverlay),
       },
     },
   },

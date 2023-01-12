@@ -5,5 +5,9 @@ export const SpaceTheme = {
     2: 'space-2',
     3: 'space-3',
     4: 'space-4',
+    5: 'space-5',
+    6: 'space-6',
+    7: 'space-7',
+    8: 'space-8',
   },
 };

@@ -122,9 +122,9 @@ export const root = recipe({
 });
 
 export const composerWrapper = style({
-  paddingLeft: 16
+  paddingLeft: vars.space[4]
 });
 
 export const threadReplyWrapper = style({
-  paddingLeft: 32
+  paddingLeft: vars.space[8]
 });

@@ -3,7 +3,7 @@ import { useApp } from '../hooks/useApp';
 import { ThreadResolveButtonTarget } from '@collabkit/core';
 import { useThreadContext } from '../hooks/useThreadContext';
 import { IconButton } from './IconButton';
-import { CheckCircle } from 'phosphor-react';
+import { CheckCircle } from './icons';
 
 export function ResolveThreadIconButton(props: {
   className?: string;
