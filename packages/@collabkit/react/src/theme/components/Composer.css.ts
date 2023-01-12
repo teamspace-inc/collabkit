@@ -183,3 +183,9 @@ export const buttonGroup = style({
   padding: '0px 4px 8px',
   gap: '0px',
 });
+
+globalStyle('.collabkit-pin-node', {
+  background: 'red',
+  width: '16px',
+  height: '16px',
+});

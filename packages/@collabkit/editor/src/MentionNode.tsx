@@ -69,9 +69,9 @@ export class MentionNode extends TextNode {
   }
 
   createDOM(config: EditorConfig) {
-    const dom = super.createDOM(config);
-    dom.className = 'collabit-mention';
-    return dom;
+    const el = super.createDOM(config);
+    el.className = 'collabkit-mention-node';
+    return el;
   }
 
   exportDOM() {

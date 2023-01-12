@@ -142,7 +142,7 @@ export const email = style({
   ),
 });
 
-globalStyle('.collabkit-mention', {
+globalStyle('.collabkit-mention-node', {
   fontWeight: fallbackVar(vars.mentions.pill.fontWeight, vars.fontWeight.bold),
   color: fallbackVar(vars.mentions.pill.color, vars.color.textPrimary),
   background: vars.mentions.pill.background,

@@ -3,3 +3,4 @@ export * from './MentionNode';
 export * from './TimestampNode';
 export * from './PinNode';
 export * from './commands';
+export * from './InlineTextNode';

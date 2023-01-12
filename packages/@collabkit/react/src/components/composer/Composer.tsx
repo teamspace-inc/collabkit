@@ -1,4 +1,4 @@
-import React, { ComponentProps, useCallback, useContext, useEffect } from 'react';
+import React, { ComponentProps, useCallback } from 'react';
 
 import { ComposerTarget } from '../../constants';
 import { ContentEditable as LexicalContentEditable } from '@lexical/react/LexicalContentEditable';
@@ -15,6 +15,7 @@ import {
   TimestampNode,
   $isMentionNode,
   ComposerPin,
+  InlineTextNode,
 } from '@collabkit/editor';
 import { TimestampPlugin } from './TimestampPlugin';
 import { MentionsPlugin } from './MentionsPlugin';
@@ -32,13 +33,11 @@ import { TypingIndicator } from '../TypingIndicator';
 
 import Profile from '../Profile';
 
-import PinButtonSvg from '../../pin-button.svg';
 import { IconButton } from '../IconButton';
 import { EditorPlugin } from './EditorPlugin';
 import { At } from '../icons';
 import { MapPin } from 'phosphor-react';
 import { vars } from '../../theme/theme/index.css';
-import { createComposer } from '../../../../client/src/store';
 
 // Catch any errors that occur during Lexical updates and log them
 // or throw them as needed. If you don't throw them, Lexical will
@@ -73,7 +72,7 @@ function onError(error: any) {
 const initialConfigDefaults = {
   namespace: 'Composer',
   theme: styles.lexicalTheme,
-  nodes: [MentionNode, TimestampNode, PinNode],
+  nodes: [MentionNode, TimestampNode, PinNode, InlineTextNode],
   onError,
 };
 
@@ -177,6 +176,7 @@ function ComposerPinButton(props: { className?: string }) {
       style={{ zIndex: 999 }}
       className={props.className}
       weight="regular"
+      color={vars.color.iconSecondary}
       onClick={(e) => {
         e.stopPropagation();
         e.preventDefault();
@@ -194,10 +194,12 @@ function ComposerEditor(props: {
   contentEditable?: JSX.Element;
 }) {
   const target = useTarget();
+  const { workspaceId, threadId } = useThreadContext();
+  const { eventId } = useOptionalCommentContext() ?? { eventId: 'default' };
   const { autoFocus, body } = useComposerContext();
   const { events, store } = useApp();
   const { focusedId } = useSnapshot(store);
-  console.log(target);
+
   const active = !!(
     focusedId &&
     focusedId.type === 'composer' &&
@@ -249,7 +251,7 @@ function ComposerEditor(props: {
         <HistoryPlugin />
         <MentionsPlugin
           onOpenChange={(open) => {
-            ComposerContext.isMentioning = open;
+            store.workspaces[workspaceId].composers[threadId][eventId].isMentioning = open;
           }}
         />
         <TimestampPlugin />
