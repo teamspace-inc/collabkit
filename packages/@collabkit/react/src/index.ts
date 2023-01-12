@@ -7,7 +7,7 @@ import type {
   Workspace,
 } from '@collabkit/core';
 
-import type { AvatarProps } from './types';
+import type { AvatarProps, ThreadProps } from './types';
 import type { CustomTheme } from './theme/themes.css';
 
 import { CollabKitProvider } from './components/Provider';
@@ -50,23 +50,24 @@ import { Button } from './components/Button';
 import { AddCommentButton } from './components/AddCommentButton';
 
 import { Markdown } from './components/Markdown';
+import { useThread } from './hooks/public/useThread';
 
 export {
   CollabKitProvider as Provider,
   CollabKitProvider,
-  ThemeProvider,
-  Thread,
-  InboxButton,
-  ThemeWrapper,
-  Inbox,
   CollabKitRecharts,
+  Inbox,
+  InboxButton,
+  Markdown,
+  PopoverThread,
   Sidebar,
   SidebarInbox,
-  Markdown,
   SidebarInboxButton,
-  PopoverThread,
-  useUnreadThreadsCount,
+  ThemeProvider,
+  ThemeWrapper,
+  Thread,
   useUnreadCommentsCount as useUnreadCount,
+  useUnreadThreadsCount,
   // advanced
   AddCommentButton,
   Button,
@@ -86,6 +87,7 @@ export {
   useReplyCount,
   useResolveThread,
   useThreadUsers,
+  useThread,
   useComposer,
   // internal
   createValtioStore as internal_createStore,
@@ -94,13 +96,14 @@ export {
 
 export type {
   AvatarProps,
+  CommentProps,
   Config,
+  CustomTheme,
   Mention,
   MentionProps,
   PopoverThreadProps,
   Store,
   Subscriptions,
-  CommentProps,
-  CustomTheme,
+  ThreadProps,
   Workspace,
 };

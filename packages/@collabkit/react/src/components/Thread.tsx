@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react';
 import { useApp } from '../hooks/useApp';
-import { useThreadSubscription } from '../hooks/useThread';
 import { useSnapshot } from 'valtio';
 import { ThreadContext } from '../hooks/useThreadContext';
 import Profile from './Profile';
@@ -13,8 +12,8 @@ import { ThreadFacepile } from './ThreadFacepile';
 import { ThreadUnreadDot } from './ThreadUnreadDot';
 import { ResolveThreadIconButton } from './ResolveThreadIconButton';
 import { ThreadProps } from '../types';
-import { useSaveThreadInfo } from '../hooks/useSaveThreadInfo';
 import { Scrollable } from './Scrollable';
+import { useThread } from '../hooks/public/useThread';
 
 function ThreadProvider(props: ThreadProps & { children: React.ReactNode }) {
   const { store } = useApp();
@@ -61,12 +60,7 @@ function ThreadHeader(props: React.ComponentPropsWithoutRef<'div'>) {
 }
 
 export function Thread(props: ThreadProps) {
-  const { threadId, info, defaultSubscribers } = props;
-  const { store } = useApp();
-  const { userId, workspaceId } = useSnapshot(store);
-
-  useThreadSubscription({ store, threadId, workspaceId });
-  useSaveThreadInfo({ threadId, workspaceId, info, defaultSubscribers });
+  const { userId } = useThread(props);
 
   if (!userId) {
     return null;
