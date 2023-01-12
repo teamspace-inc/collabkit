@@ -134,7 +134,7 @@ export function createEvents(store: Store) {
       actions.toggleEmojiReactionPicker(store, props);
     },
 
-    onBlur: (e: React.FocusEvent | FocusEvent, props: { target: Target }) => {
+    onBlur: (e: React.FocusEvent | FocusEvent | null, props: { target: Target }) => {
       actions.blur(store);
     },
 

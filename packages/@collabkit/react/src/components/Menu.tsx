@@ -39,7 +39,14 @@ export const MenuItem = forwardRef<
   { label: string; disabled?: boolean; targetType: unknown; className?: string }
 >(({ label, disabled, targetType, ...props }, ref) => {
   return (
-    <button className={menuItem} {...props} ref={ref} role="menuitem" disabled={disabled}>
+    <button
+      className={menuItem}
+      key={label}
+      {...props}
+      ref={ref}
+      role="menuitem"
+      disabled={disabled}
+    >
       {label}
     </button>
   );
@@ -162,12 +169,14 @@ export function Menu<ItemType>({
     };
   }, [allowHover]);
 
+  const { icon, ...otherProps } = props;
+
   return (
     <FloatingNode id={nodeId}>
       <IconButton
         active={open}
         {...getReferenceProps({
-          ...props,
+          ...otherProps,
           ref: reference,
           onClick(event: React.MouseEvent) {
             event.stopPropagation();
@@ -175,7 +184,7 @@ export function Menu<ItemType>({
           },
         })}
       >
-        {props.icon}
+        {icon}
       </IconButton>
       <FloatingPortal>
         {open && (
@@ -207,14 +216,14 @@ export function Menu<ItemType>({
                   },
                 })}
               >
-                {Children.map(
-                  children,
-                  (child, index) =>
+                {Children.map(children, (child, index) => {
+                  const el =
                     isValidElement(child) &&
                     cloneElement(
                       child,
                       getItemProps({
                         role: 'menuitem',
+                        key: `menu-item-${index}`,
                         ref(node: HTMLButtonElement) {
                           listItemsRef.current[index] = node;
                         },
@@ -232,8 +241,9 @@ export function Menu<ItemType>({
                           }
                         },
                       })
-                    )
-                )}
+                    );
+                  return el;
+                })}
               </div>
             </ThemeWrapper>
           </FloatingFocusManager>

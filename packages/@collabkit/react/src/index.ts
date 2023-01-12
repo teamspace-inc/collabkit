@@ -51,6 +51,7 @@ import { AddCommentButton } from './components/AddCommentButton';
 
 import { Markdown } from './components/Markdown';
 import { useThread } from './hooks/public/useThread';
+import { Debug } from './components/Debug';
 
 export {
   CollabKitProvider as Provider,
@@ -74,6 +75,7 @@ export {
   Comment,
   CommentList,
   Composer,
+  Debug,
   Popover,
   Profile,
   ResolveThreadIconButton,
