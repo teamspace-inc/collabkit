@@ -7,8 +7,8 @@ import {
   ThemeWrapper,
   Thread as CollabKitThread,
   ThreadProps,
+  useThread,
 } from '@collabkit/react';
-import { useThread } from '@collabkit/react/src/hooks/public/useThread';
 
 export function Thread(props: ThreadProps & { maxHeight?: number }) {
   const { userId } = useThread(props);
