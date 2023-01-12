@@ -49,7 +49,7 @@ globalStyle(`${commentRoot} p`, {
 export const nameAndTimestampWrapper = style({
   display: 'flex',
   flexDirection: 'row',
-  alignItems: 'baseline',
+  alignItems: 'center',
   gap: '8px',
   fontFamily: vars.fontFamily,
 });
@@ -96,7 +96,6 @@ export const root = recipe({
     borderBottom: fallbackVar(vars.inbox.item.borderBottom, `none`),
     flexDirection: 'column',
     flex: 1,
-    cursor: 'pointer',
     boxSizing: 'border-box',
     background: fallbackVar(vars.inbox.item.background, vars.color.background),
     paddingTop: fallbackVar(vars.inbox.item.paddingTop, vars.space[4]),
@@ -107,9 +106,6 @@ export const root = recipe({
     fontFamily: vars.fontFamily,
     gap: '12px',
     selectors: {
-      '&:hover': {
-        background: fallbackVar(vars.inbox.item.hover.background, vars.color.surfaceOverlay),
-      },
       '&:last-of-type': {
         marginBottom: fallbackVar(vars.inbox.item.paddingBottom, vars.color.surface),
       },
@@ -123,4 +119,12 @@ export const root = recipe({
       },
     },
   },
+});
+
+export const composerWrapper = style({
+  paddingLeft: 16
+});
+
+export const threadReplyWrapper = style({
+  paddingLeft: 32
 });

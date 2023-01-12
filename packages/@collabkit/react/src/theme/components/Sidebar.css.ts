@@ -1,5 +1,6 @@
 import { fallbackVar, style } from '@vanilla-extract/css';
 import { calc } from '@vanilla-extract/css-utils';
+import { recipe } from '@vanilla-extract/recipes';
 import { vars } from '../theme/index.css';
 
 export const root = style({
@@ -35,10 +36,35 @@ export const title = style({
   boxSizing: 'border-box',
   display: 'flex',
   alignItems: 'center',
-  paddingTop: fallbackVar(vars.sidebar.title.paddingTop, vars.space[4]),
-  paddingBottom: fallbackVar(vars.sidebar.title.paddingBottom, vars.space[2]),
   paddingLeft: fallbackVar(vars.inbox.item.paddingLeft, vars.space[4]),
   paddingRight: fallbackVar(vars.inbox.item.paddingRight, vars.space[4]),
   borderBottom: fallbackVar(vars.sidebar.title.borderBottom, 'none'),
   fontFamily: vars.fontFamily,
+});
+
+export const iconButton = recipe({
+  base: {
+    padding: 12,
+    paddingTop: 10.25,
+    paddingBottom: 10.25,
+    cursor: 'pointer',
+    userSelect: 'none',
+    pointerEvents: 'all',
+    
+    selectors: {
+      '&:active': {
+        background: '#3494FA1A',
+      },
+      '&:hover': {
+        background: fallbackVar(vars.iconButton.hover.background, vars.color.surfaceOverlay),
+      },
+    },
+  },
+  variants: {
+    active: {
+      true: {
+        background: '#3494FA1A',
+      },
+    },
+  },
 });

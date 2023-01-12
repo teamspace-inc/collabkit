@@ -5,11 +5,11 @@ import { useInboxStore } from '../hooks/useInboxStore';
 import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
 import { useApp } from '../hooks/useApp';
 import Comment from './Comment';
-import { ReplyCount } from './ReplyCount';
-import {} from '../../../client/src/actions';
+import { ArrowBendUpLeft, DotsThree, Smiley } from './icons';
+import { } from '../../../client/src/actions';
 import { ThreadTarget } from '@collabkit/core';
 import * as styles from '../theme/components/InboxItem.css';
-import { Thread } from '..';
+import { Composer, Profile, Thread, useComments } from '..';
 import { generateObjectIdFromCellId, actions } from '@collabkit/client';
 
 export function InboxItem(props: { formatTimestamp?: (timestamp: number) => string }) {
@@ -20,6 +20,7 @@ export function InboxItem(props: { formatTimestamp?: (timestamp: number) => stri
   const { viewingId } = useSnapshot(store);
   const timeline = workspace.timeline[threadId];
   const info = workspace.threadInfo[threadId];
+  const commentIds = useComments();
 
   if (!timeline) {
     return null;
@@ -68,12 +69,6 @@ export function InboxItem(props: { formatTimestamp?: (timestamp: number) => stri
           }
         }}
       >
-        <div className={styles.header}>
-          <Thread.UnreadDot />
-          <Thread.Facepile size={styles.facepileSize} />
-          <div style={{ flex: 1 }}></div>
-          {firstComment.createdById === userId ? <Thread.ResolveIconButton /> : null}
-        </div>
         {renderThreadContextPreview?.({
           threadId,
           workspaceId,
@@ -82,18 +77,48 @@ export function InboxItem(props: { formatTimestamp?: (timestamp: number) => stri
         })}
         <Comment.Root commentId={firstCommentId} className={styles.commentRoot}>
           <div className={styles.nameAndTimestampWrapper}>
+            <Comment.CreatorAvatar />
             <Comment.CreatorName className={styles.name} />
             <Comment.Timestamp className={styles.timestamp} format={props.formatTimestamp} />
+            <div style={{ flex: 1 }}></div>
+            {firstComment.createdById === userId ? <Thread.ResolveIconButton /> : null}
+            <ArrowBendUpLeft size={16} />
+            <Smiley size={16} />
+            <DotsThree size={16} />
           </div>
+          <div style={{paddingLeft:32}}>
           <Comment.Body />
-        </Comment.Root>
-        <Comment.Provider eventId={lastComment.id}>
-          <div>
-            <div className={styles.nameAndTimestampWrapper}>
-              <ReplyCount className={styles.replyCount} />
-            </div>
           </div>
-        </Comment.Provider>
+          <Thread.UnreadDot />
+        </Comment.Root>
+      </div>
+      {commentIds.length > 1 ?
+        <div className={styles.root()} style={{ paddingLeft: 32 }}>
+          {commentIds.slice(1).map((commentId) => (
+            <Comment.Root commentId={commentId} className={styles.commentRoot}>
+              <div className={styles.nameAndTimestampWrapper}>
+                <Comment.CreatorAvatar />
+                <Comment.CreatorName className={styles.name} />
+                <Comment.Timestamp className={styles.timestamp} format={props.formatTimestamp} />
+                <div style={{ flex: 1 }}></div>
+                <Smiley size={16} />
+                <DotsThree size={16} />
+              </div>
+              <div className={styles.threadReplyWrapper}>
+                <Comment.Body />
+              </div>
+            </Comment.Root>
+          ))}
+
+        </div>
+        : null}
+      <div className={styles.composerWrapper}>
+        {store.userId ?
+          <Profile.Provider profileId={store.userId}>
+            <Composer />
+          </Profile.Provider>
+          : null
+        }
       </div>
     </Thread.Provider>
   );
