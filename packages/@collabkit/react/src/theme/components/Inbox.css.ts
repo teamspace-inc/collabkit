@@ -7,7 +7,7 @@ export const root = style({
   flex: 1,
   gap: fallbackVar(vars.inbox.gap, vars.space[2]),
   boxSizing: 'border-box',
-  height: '100%',
+  height: '89.5%',
   width: fallbackVar(vars.inbox.width, '292px'),
   borderRadius: 0,
   background: fallbackVar(vars.inbox.background, vars.color.background),
