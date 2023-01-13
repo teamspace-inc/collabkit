@@ -248,11 +248,9 @@ function TableView() {
     (salesPerson.status === selectedStatus || selectedStatus === 'all') &&
     (selectedNames.includes(salesPerson.name) || selectedNames.length === 0);
 
-  const ref = useCommentableRef('dashboard-table');
-
   return (
     <Card marginTop="mt-6">
-      <div className="sm:mt-6 hidden sm:block sm:flex sm:justify-start sm:space-x-2" ref={ref}>
+      <div className="sm:mt-6 hidden sm:block sm:flex sm:justify-start sm:space-x-2">
         <MultiSelectBox
           handleSelect={(value) => setSelectedNames(value)}
           placeholder="Select Salespeople"
