@@ -295,39 +295,59 @@ function TableView() {
         </Dropdown>
       </div>
 
-      <Commentable.Container objectId="dashboard-table">
-        <Table marginTop="mt-6">
-          <TableHead>
-            <TableRow>
-              <TableHeaderCell>Name</TableHeaderCell>
-              <TableHeaderCell textAlignment="text-right">Leads</TableHeaderCell>
-              <TableHeaderCell textAlignment="text-right">Sales ($)</TableHeaderCell>
-              <TableHeaderCell textAlignment="text-right">Quota ($)</TableHeaderCell>
-              <TableHeaderCell textAlignment="text-right">Variance</TableHeaderCell>
-              <TableHeaderCell textAlignment="text-right">Region</TableHeaderCell>
-              <TableHeaderCell textAlignment="text-right">Status</TableHeaderCell>
-            </TableRow>
-          </TableHead>
+      <Table marginTop="mt-6">
+        <TableHead>
+          <TableRow>
+            <TableHeaderCell>Name</TableHeaderCell>
+            <TableHeaderCell textAlignment="text-right">Leads</TableHeaderCell>
+            <TableHeaderCell textAlignment="text-right">Sales ($)</TableHeaderCell>
+            <TableHeaderCell textAlignment="text-right">Quota ($)</TableHeaderCell>
+            <TableHeaderCell textAlignment="text-right">Variance</TableHeaderCell>
+            <TableHeaderCell textAlignment="text-right">Region</TableHeaderCell>
+            <TableHeaderCell textAlignment="text-right">Status</TableHeaderCell>
+          </TableRow>
+        </TableHead>
 
-          <TableBody>
-            {salesPeople
-              .filter((item) => isSalesPersonSelected(item))
-              .map((item) => (
-                <TableRow key={item.name}>
-                  <TableCell>{item.name}</TableCell>
-                  <TableCell textAlignment="text-right">{item.leads}</TableCell>
-                  <TableCell textAlignment="text-right">{item.sales}</TableCell>
-                  <TableCell textAlignment="text-right">{item.quota}</TableCell>
-                  <TableCell textAlignment="text-right">{item.variance}</TableCell>
-                  <TableCell textAlignment="text-right">{item.region}</TableCell>
-                  <TableCell textAlignment="text-right">
+        <TableBody>
+          {salesPeople
+            .filter((item) => isSalesPersonSelected(item))
+            .map((item) => (
+              <TableRow key={item.name}>
+                <TableCell>{item.name}</TableCell>
+                <TableCell textAlignment="text-right">
+                  <Commentable.Container objectId={`${item.name}-leads`}>
+                    {item.leads}
+                  </Commentable.Container>
+                </TableCell>
+                <TableCell textAlignment="text-right">
+                  <Commentable.Container objectId={`${item.name}-sales`}>
+                    {item.sales}
+                  </Commentable.Container>
+                </TableCell>
+                <TableCell textAlignment="text-right">
+                  <Commentable.Container objectId={`${item.name}-quota`}>
+                    {item.quota}
+                  </Commentable.Container>
+                </TableCell>
+                <TableCell textAlignment="text-right">
+                  <Commentable.Container objectId={`${item.name}-variance`}>
+                    {item.variance}
+                  </Commentable.Container>
+                </TableCell>
+                <TableCell textAlignment="text-right">
+                  <Commentable.Container objectId={`${item.name}-region`}>
+                    {item.region}
+                  </Commentable.Container>
+                </TableCell>
+                <TableCell textAlignment="text-right">
+                  <Commentable.Container objectId={`${item.name}-status`}>
                     <BadgeDelta deltaType={item.deltaType} text={item.status} size="xs" />
-                  </TableCell>
-                </TableRow>
-              ))}
-          </TableBody>
-        </Table>
-      </Commentable.Container>
+                  </Commentable.Container>
+                </TableCell>
+              </TableRow>
+            ))}
+        </TableBody>
+      </Table>
     </Card>
   );
 }
