@@ -185,7 +185,13 @@ export const buttonGroup = style({
 });
 
 globalStyle('.collabkit-pin-node', {
-  background: 'red',
   width: '16px',
   height: '16px',
+  margin: '-4px 0px 0px',
+});
+
+globalStyle('.collabkit-composer-pin', {
+  width: '16px',
+  height: '16px',
+  margin: '-4px 0px 0px',
 });
