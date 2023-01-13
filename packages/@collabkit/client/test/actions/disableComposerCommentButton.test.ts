@@ -21,15 +21,9 @@ test('disableCommentComposerButton', async () => {
     workspaceId,
     eventId: 'default',
   };
-  expect(store.workspaces[workspaceId].composers[threadId].enabled).toStrictEqual({
-    default: false,
-  });
+  expect(store.workspaces[workspaceId].composers[threadId]['default'].enabled).toBe(false);
   await enableComposerCommentButton(store as Store, { target });
-  expect(store.workspaces[workspaceId].composers[threadId].enabled).toStrictEqual({
-    default: true,
-  });
+  expect(store.workspaces[workspaceId].composers[threadId]['default'].enabled).toBe(true);
   await disableComposerCommentButton(store as Store, { target });
-  expect(store.workspaces[workspaceId].composers[threadId].enabled).toStrictEqual({
-    default: false,
-  });
+  expect(store.workspaces[workspaceId].composers[threadId]['default'].enabled).toBe(false);
 });

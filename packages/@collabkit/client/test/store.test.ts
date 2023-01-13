@@ -30,7 +30,8 @@ test('createComposer', () => {
     mentions: [],
     isTyping: {},
     editor: null,
-    enabled: { default: false },
+    enabled: false,
+    isMentioning: false,
   });
 });
 

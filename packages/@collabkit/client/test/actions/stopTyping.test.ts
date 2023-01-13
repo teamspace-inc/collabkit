@@ -45,7 +45,7 @@ test('stopTyping', async () => {
 
   initComposer(store, { workspaceId, threadId, eventId: 'default' });
 
-  const { id } = await sync.sendMessage({
+  await sync.sendMessage({
     appId,
     workspaceId,
     threadId,
@@ -74,7 +74,7 @@ test('stopTyping', async () => {
     type: 'composer',
     workspaceId,
     threadId,
-    eventId: id,
+    eventId: 'default',
   };
 
   await isTyping(store as Store, {
