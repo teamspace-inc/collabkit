@@ -180,7 +180,7 @@ export const editor = recipe({
 
 export const buttonGroup = style({
   display: 'flex',
-  padding: '0px 4px 8px',
+  padding: '0px 6px 6px',
   gap: '0px',
 });
 

@@ -50,7 +50,6 @@ type ComposerContextValue = {
   body: string;
   autoFocus: boolean;
   canPin: boolean;
-  isMentioning: boolean;
 };
 
 // you can use valtio instead of React context for
@@ -62,7 +61,6 @@ export const ComposerContext = proxy<ComposerContextValue>({
   body: '',
   autoFocus: true,
   canPin: false,
-  isMentioning: false,
 });
 
 function onError(error: any) {
@@ -140,18 +138,21 @@ function ComposerContentEditable(props: { className?: string }) {
 }
 
 function ComposerMentionsButton(props: { className?: string }) {
-  const { events } = useApp();
+  const { store, events } = useApp();
   const { threadId, workspaceId } = useThreadContext();
   const { eventId } = useOptionalCommentContext() ?? { eventId: 'default' };
   const target = { type: 'composerMentionsButton', threadId, workspaceId, eventId } as const;
-  const { isMentioning } = useComposerContext();
+  const { workspaces } = useSnapshot(store);
+  const composers = workspaces[workspaceId].composers;
+  const composer = composers[threadId][eventId];
+  const { isMentioning } = composer;
 
   return (
     <IconButton
       active={isMentioning}
       style={{ zIndex: 999 }}
       weight="regular"
-      color={vars.color.iconSecondary}
+      color={isMentioning ? vars.color.icon : vars.color.iconSecondary}
       className={props.className}
       onClick={(e) => {
         e.stopPropagation();
@@ -257,7 +258,7 @@ function ComposerEditor(props: {
         <TimestampPlugin />
       </LexicalComposer>
       <Composer.ButtonGroup>
-        <Composer.PinButton />
+        {/* <Composer.PinButton /> */}
         <Composer.MentionsButton />
       </Composer.ButtonGroup>
     </div>

@@ -1,7 +1,6 @@
 import type { Store } from '@collabkit/core';
 import { $createParagraphNode, $getSelection, $isRangeSelection, $getRoot } from 'lexical';
-import { $createInlineTextNode, $createPinNode } from '@collabkit/editor';
-import { $getPrevChar } from './startMentioning';
+import { $getPrevChar, $createInlineTextNode, $createPinNode } from '@collabkit/editor';
 
 export function insertComposerPin(
   store: Store,
