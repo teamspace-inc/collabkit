@@ -149,6 +149,7 @@ function ComposerMentionsButton(props: { className?: string }) {
 
   return (
     <IconButton
+      data-testid="collabkit-composer-mentions-button"
       active={isMentioning}
       style={{ zIndex: 999 }}
       weight="regular"

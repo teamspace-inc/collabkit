@@ -93,6 +93,23 @@ async function hasComment(page: Page, comment: { body: string }) {
   await expect(text).toStrictEqual(comment.body);
 }
 
+async function startMentioning(page: Page) {
+  const composer = await page.getByTestId('collabkit-composer-contenteditable');
+  await composer.click();
+  await page.waitForTimeout(500);
+  await composer.type('@');
+}
+
+async function hasMentionInTypeahead(page: Page, name: string) {
+  const text = await await page.getByTestId('collabkit-mentions-typeahead-item-name').innerText();
+  await expect(text).toBe(name);
+}
+
+async function hasMentionInComposer(page: Page, name: string) {
+  await page.waitForSelector('.collabkit-mention-node');
+  expect(await await page.locator('.collabkit-mention-node').innerText()).toBe('@' + name);
+}
+
 test.describe('Thread', () => {
   test('renders page title', async ({ context }) => {
     const { page } = await createAppAndVisitThreadAsUser(context, alice);
@@ -145,5 +162,16 @@ test.describe('Thread', () => {
     const placeholder = await page.getByTestId('collabkit-composer-placeholder');
     const text = await placeholder.innerText();
     await expect(text).toBe('custom placeholder here');
+  });
+
+  test('can mention users with @', async ({ context }) => {
+    const { page, appId, apiKey } = await createAppAndVisitThreadAsUser(context, alice);
+    const page2 = await visitThreadAsUser(context, { ...bob, appId, apiKey });
+    await sendComment(page2, 'Hello World');
+    await startMentioning(page);
+    await hasMentionInTypeahead(page, 'Bob');
+    await page.keyboard.press('Enter');
+    await page.waitForTimeout(500);
+    await hasMentionInComposer(page, 'Bob');
   });
 });

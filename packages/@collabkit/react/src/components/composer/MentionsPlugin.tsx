@@ -206,6 +206,7 @@ export function MentionsTypeaheadItem({
 }) {
   return (
     <div
+      data-testid="collabkit-mentions-typeahead-item"
       className={styles.item({ active })}
       key={result.id}
       tabIndex={-1}
@@ -219,10 +220,10 @@ export function MentionsTypeaheadItem({
         <Profile.Avatar />
       </Profile.Provider>
       <div className={styles.nameAndEmailWrapper}>
-        <div className={styles.name}>
+        <div className={styles.name} data-testid="collabkit-mentions-typeahead-item-name">
           <Highlighted text={result.name ?? ''} highlight={query}></Highlighted>
         </div>
-        <div className={styles.email}>
+        <div className={styles.email} data-testid="collabkit-mentions-typeahead-item-email">
           <Highlighted text={result.email ?? ''} highlight={query}></Highlighted>
         </div>
       </div>
