@@ -93,10 +93,20 @@ async function hasComment(page: Page, comment: { body: string }) {
   await expect(text).toStrictEqual(comment.body);
 }
 
-async function startMentioning(page: Page) {
+async function startMentioningButton(page: Page) {
+  await focusComposer(page);
+  await page.click('[data-testid="collabkit-composer-mentions-button"]');
+}
+
+async function focusComposer(page: Page) {
   const composer = await page.getByTestId('collabkit-composer-contenteditable');
   await composer.click();
   await page.waitForTimeout(500);
+  return composer;
+}
+
+async function startMentioningKeyboard(page: Page) {
+  const composer = await focusComposer(page);
   await composer.type('@');
 }
 
@@ -168,7 +178,18 @@ test.describe('Thread', () => {
     const { page, appId, apiKey } = await createAppAndVisitThreadAsUser(context, alice);
     const page2 = await visitThreadAsUser(context, { ...bob, appId, apiKey });
     await sendComment(page2, 'Hello World');
-    await startMentioning(page);
+    await startMentioningKeyboard(page);
+    await hasMentionInTypeahead(page, 'Bob');
+    await page.keyboard.press('Enter');
+    await page.waitForTimeout(500);
+    await hasMentionInComposer(page, 'Bob');
+  });
+
+  test('can mention users by clicking the @ mention button', async ({ context }) => {
+    const { page, appId, apiKey } = await createAppAndVisitThreadAsUser(context, alice);
+    const page2 = await visitThreadAsUser(context, { ...bob, appId, apiKey });
+    await sendComment(page2, 'Hello World');
+    await startMentioningButton(page);
     await hasMentionInTypeahead(page, 'Bob');
     await page.keyboard.press('Enter');
     await page.waitForTimeout(500);
