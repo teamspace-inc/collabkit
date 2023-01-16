@@ -130,6 +130,10 @@ function ComposerEditor(props: {
     },
   };
 
+  if (typeof document === 'undefined') {
+    return null;
+  }
+
   return (
     <div
       data-testid="collabkit-composer-editor"
@@ -174,7 +178,7 @@ function ComposerPlaceholder(props: ComponentProps<'span'>) {
 }
 
 export default function Composer() {
-  const { autoFocus , placeholder} = useThreadContext();
+  const { autoFocus, placeholder } = useThreadContext();
   return (
     <Composer.Root autoFocus={autoFocus ?? true}>
       <Profile.Avatar />

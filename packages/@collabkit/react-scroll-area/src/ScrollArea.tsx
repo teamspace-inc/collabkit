@@ -715,14 +715,16 @@ const ScrollAreaScrollbarImpl = React.forwardRef<
    * mode for document wheel event to allow it to be prevented
    */
   React.useEffect(() => {
-    const handleWheel = (event: WheelEvent) => {
-      const element = event.target as HTMLElement;
-      const isScrollbarWheel = scrollbar?.contains(element);
-      if (isScrollbarWheel) handleWheelScroll(event, maxScrollPos);
-    };
-    document.addEventListener('wheel', handleWheel, { passive: false });
-    return () => document.removeEventListener('wheel', handleWheel, { passive: false } as any);
-  }, [viewport, scrollbar, maxScrollPos, handleWheelScroll]);
+    if (typeof document !== 'undefined') {
+      const handleWheel = (event: WheelEvent) => {
+        const element = event.target as HTMLElement;
+        const isScrollbarWheel = scrollbar?.contains(element);
+        if (isScrollbarWheel) handleWheelScroll(event, maxScrollPos);
+      };
+      document.addEventListener('wheel', handleWheel, { passive: false });
+      return () => document.removeEventListener('wheel', handleWheel, { passive: false } as any);
+    }
+  }, [viewport, scrollbar, maxScrollPos, handleWheelScroll, typeof document !== 'undefined']);
 
   /**
    * Update thumb position on sizes change

@@ -48,13 +48,13 @@ export function CollabKitProvider({
   }, [config.appId, 'token' in config ? config.token : config.apiKey]);
 
   useEffect(() => {
-    if (context) {
+    if (context && typeof document !== 'undefined') {
       document.addEventListener('keydown', context.events.onKeyDown);
       return () => {
         document.removeEventListener('keydown', context.events.onKeyDown);
       };
     }
-  }, [context]);
+  }, [context, typeof document !== 'undefined']);
 
   if (!context) {
     return null;
