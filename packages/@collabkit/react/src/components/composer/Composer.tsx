@@ -1,4 +1,4 @@
-import React, { ComponentProps, useCallback } from 'react';
+import React, { ComponentProps, useCallback, useContext, useState } from 'react';
 
 import { ComposerTarget } from '../../constants';
 import { ContentEditable as LexicalContentEditable } from '@lexical/react/LexicalContentEditable';
@@ -57,7 +57,7 @@ type ComposerContextValue = {
 // retaining the context naming so it's clear
 // when where using the global store or one local to a
 // tree of components
-export const ComposerContext = proxy<ComposerContextValue>({
+export const ComposerContext = React.createContext<ComposerContextValue>({
   body: '',
   autoFocus: true,
   canPin: false,
@@ -75,7 +75,7 @@ const initialConfigDefaults = {
 };
 
 function useComposerContext() {
-  return useSnapshot(ComposerContext);
+  return useContext(ComposerContext);
 }
 
 function ComposerRoot(props: {
@@ -84,8 +84,11 @@ function ComposerRoot(props: {
   autoFocus?: boolean;
   body?: string;
 }) {
-  ComposerContext.body = props.body ?? '';
-  ComposerContext.autoFocus = props.autoFocus ?? false;
+  const [context, setContext] = useState<ComposerContextValue>({
+    body: props.body ?? '',
+    autoFocus: props.autoFocus ?? false,
+    canPin: false,
+  });
 
   const commentContext = useOptionalCommentContext();
 
@@ -111,7 +114,9 @@ function ComposerRoot(props: {
       onClick={onClick}
     >
       <Profile.Provider profileId={userId}>
-        <TargetContext.Provider value={target}>{props.children}</TargetContext.Provider>
+        <ComposerContext.Provider value={context}>
+          <TargetContext.Provider value={target}>{props.children}</TargetContext.Provider>
+        </ComposerContext.Provider>
       </Profile.Provider>
     </div>
   );
