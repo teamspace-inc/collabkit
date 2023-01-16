@@ -53,7 +53,7 @@ export function TypingIndicator(props: { className?: string }) {
   const { store } = useApp();
   const { profiles, workspaces } = useSnapshot(store);
   const workspace = workspaces[workspaceId];
-  const isTyping = workspace?.composers[threadId]['default'].isTyping;
+  const isTyping = workspace?.composers[threadId].default.isTyping;
   const names = getNames({ userId, isTyping, profiles });
   const nodeRef = React.useRef(null);
 
