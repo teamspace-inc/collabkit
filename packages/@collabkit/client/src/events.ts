@@ -190,7 +190,6 @@ export function createEvents(store: Store) {
         }
       } else if (store.viewingId) {
         if (e.key === 'Escape') {
-          console.log('escape');
           actions.closeAll(store);
           e.stopPropagation();
           e.preventDefault();
