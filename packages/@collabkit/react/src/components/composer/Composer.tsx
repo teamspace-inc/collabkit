@@ -90,6 +90,10 @@ function ComposerRoot(props: {
     canPin: false,
   });
 
+  useEffect(() => {
+    setContext((context) => ({ ...context, body: props.body ?? '' }));
+  }, [props.autoFocus, props.body]);
+
   const commentContext = useOptionalCommentContext();
 
   const { threadId, workspaceId, userId } = useThreadContext();
