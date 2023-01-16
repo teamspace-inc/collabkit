@@ -1,7 +1,8 @@
 import { IconContext } from './icons';
 import React, { forwardRef } from 'react';
 import * as styles from '../theme/components/IconButton.css';
-import { vars } from '../theme/theme/index.css';
+
+import { IconProps } from 'phosphor-react';
 
 type Props = {
   children: React.ReactNode;
@@ -9,9 +10,10 @@ type Props = {
   tabIndex?: number;
   className?: string;
   active?: boolean;
-} & React.ComponentProps<'div'>;
+} & IconProps &
+  React.ComponentProps<'div'>;
 
-const iconContextValue = {
+const iconContextBase = {
   color: styles.iconColor,
   weight: 'bold',
   size: 16,
@@ -20,6 +22,7 @@ const iconContextValue = {
 export const IconButton = forwardRef<HTMLDivElement, Props>(function IconButton(props: Props, ref) {
   const { active, ...otherProps } = props;
   const className = props.className ?? styles.button({ active });
+  const iconContextValue = { ...iconContextBase, ...props };
 
   return (
     <div {...otherProps} className={className} ref={ref}>

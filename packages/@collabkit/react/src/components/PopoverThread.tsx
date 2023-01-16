@@ -51,7 +51,7 @@ export function PopoverThread(props: PopoverThreadProps) {
           {popoverProps.hasThread && <PopoverThreadPreview threadId={threadId} />}
         </Popover.Preview>
         <Popover.Content lockScroll={lockScroll}>
-          <PopoverThreadContent threadId={threadId} placeholder={placeholder}/>
+          <PopoverThreadContent threadId={threadId} placeholder={placeholder} />
         </Popover.Content>
       </Popover.Portal>
     </Popover.Root>

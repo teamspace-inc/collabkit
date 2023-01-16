@@ -1,5 +1,5 @@
 import React from 'react';
-import type { LexicalEditor, RangeSelection } from 'lexical';
+import { LexicalEditor, RangeSelection } from 'lexical';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { mergeRegister } from '@lexical/utils';
 import {
@@ -16,7 +16,12 @@ import {
 import { useCallback, useEffect, useLayoutEffect, useState } from 'react';
 import escapeStringRegexp from 'escape-string-regexp';
 import { startTransition } from '../../utils/startTransition';
-import { $createMentionNode, MentionNode } from '@collabkit/editor';
+import {
+  $createMentionNode,
+  CLOSE_MENTIONS_COMMAND,
+  MentionNode,
+  OPEN_MENTIONS_COMMAND,
+} from '@collabkit/editor';
 import { snapshot } from 'valtio';
 import { Store } from '../../constants';
 import { useApp } from '../../hooks/useApp';
@@ -27,9 +32,7 @@ import {
   autoUpdate,
   flip,
   FloatingFocusManager,
-  FloatingNode,
   FloatingPortal,
-  offset,
   size,
   useFloating,
   useFloatingNodeId,
@@ -203,6 +206,7 @@ export function MentionsTypeaheadItem({
 }) {
   return (
     <div
+      data-testid="collabkit-mentions-typeahead-item"
       className={styles.item({ active })}
       key={result.id}
       tabIndex={-1}
@@ -216,10 +220,10 @@ export function MentionsTypeaheadItem({
         <Profile.Avatar />
       </Profile.Provider>
       <div className={styles.nameAndEmailWrapper}>
-        <div className={styles.name}>
+        <div className={styles.name} data-testid="collabkit-mentions-typeahead-item-name">
           <Highlighted text={result.name ?? ''} highlight={query}></Highlighted>
         </div>
-        <div className={styles.email}>
+        <div className={styles.email} data-testid="collabkit-mentions-typeahead-item-email">
           <Highlighted text={result.email ?? ''} highlight={query}></Highlighted>
         </div>
       </div>
@@ -231,10 +235,12 @@ export function MentionsTypeahead({
   close,
   editor,
   resolution,
+  onResultsChange,
 }: {
   close: () => void;
   editor: LexicalEditor;
   resolution: Resolution;
+  onResultsChange?: (results: MentionWithColor[] | null) => void;
 }) {
   const match = resolution.match;
   const results = useMentionLookupService(match.matchingString);
@@ -250,10 +256,9 @@ export function MentionsTypeahead({
     open: (results?.length ?? 0) > 0,
     whileElementsMounted: autoUpdate,
     middleware: [
-      offset(4),
       flip(),
       size({
-        padding: 12,
+        padding: 0,
         apply({ availableWidth, availableHeight, elements }) {
           Object.assign(elements.floating.style, {
             maxWidth: `${availableWidth}px`,
@@ -314,93 +319,107 @@ export function MentionsTypeahead({
     }
   }, [results, selectedIndex, updateSelectedIndex]);
 
+  useEffect(
+    () =>
+      mergeRegister(
+        editor.registerCommand<KeyboardEvent>(
+          KEY_ARROW_DOWN_COMMAND,
+          (payload) => {
+            const event = payload;
+            if (results !== null && selectedIndex !== null) {
+              if (
+                selectedIndex < SUGGESTION_LIST_LENGTH_LIMIT - 1 &&
+                selectedIndex !== results.length - 1
+              ) {
+                updateSelectedIndex(selectedIndex + 1);
+              }
+              event.preventDefault();
+              event.stopImmediatePropagation();
+            }
+            return true;
+          },
+          COMMAND_PRIORITY_LOW
+        ),
+        editor.registerCommand<KeyboardEvent>(
+          KEY_ARROW_UP_COMMAND,
+          (payload) => {
+            const event = payload;
+            if (results !== null && selectedIndex !== null) {
+              if (selectedIndex !== 0) {
+                updateSelectedIndex(selectedIndex - 1);
+              }
+              event.preventDefault();
+              event.stopImmediatePropagation();
+            }
+            return true;
+          },
+          COMMAND_PRIORITY_LOW
+        ),
+        editor.registerCommand<KeyboardEvent>(
+          KEY_ESCAPE_COMMAND,
+          (payload) => {
+            const event = payload;
+            if (results === null || selectedIndex === null) {
+              return false;
+            }
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            close();
+            return true;
+          },
+          COMMAND_PRIORITY_LOW
+        ),
+        editor.registerCommand<KeyboardEvent>(
+          KEY_TAB_COMMAND,
+          (payload) => {
+            const event = payload;
+            if (results === null || selectedIndex === null) {
+              return false;
+            }
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            applyCurrentSelected();
+            return true;
+          },
+          COMMAND_PRIORITY_LOW
+        ),
+        editor.registerCommand<any>(
+          CLOSE_MENTIONS_COMMAND,
+          () => {
+            close();
+            return true;
+          },
+          COMMAND_PRIORITY_LOW
+        ),
+        editor.registerCommand(
+          KEY_ENTER_COMMAND,
+          (event: KeyboardEvent | null) => {
+            if (results === null || selectedIndex === null) {
+              return false;
+            }
+            if (event !== null) {
+              event.preventDefault();
+              event.stopImmediatePropagation();
+            }
+            applyCurrentSelected();
+            return true;
+          },
+          COMMAND_PRIORITY_LOW
+        )
+      ),
+    [applyCurrentSelected, close, editor, results, selectedIndex, updateSelectedIndex]
+  );
+
   useEffect(() => {
-    return mergeRegister(
-      editor.registerCommand<KeyboardEvent>(
-        KEY_ARROW_DOWN_COMMAND,
-        (payload) => {
-          const event = payload;
-          if (results !== null && selectedIndex !== null) {
-            if (
-              selectedIndex < SUGGESTION_LIST_LENGTH_LIMIT - 1 &&
-              selectedIndex !== results.length - 1
-            ) {
-              updateSelectedIndex(selectedIndex + 1);
-            }
-            event.preventDefault();
-            event.stopImmediatePropagation();
-          }
-          return true;
-        },
-        COMMAND_PRIORITY_LOW
-      ),
-      editor.registerCommand<KeyboardEvent>(
-        KEY_ARROW_UP_COMMAND,
-        (payload) => {
-          const event = payload;
-          if (results !== null && selectedIndex !== null) {
-            if (selectedIndex !== 0) {
-              updateSelectedIndex(selectedIndex - 1);
-            }
-            event.preventDefault();
-            event.stopImmediatePropagation();
-          }
-          return true;
-        },
-        COMMAND_PRIORITY_LOW
-      ),
-      editor.registerCommand<KeyboardEvent>(
-        KEY_ESCAPE_COMMAND,
-        (payload) => {
-          const event = payload;
-          if (results === null || selectedIndex === null) {
-            return false;
-          }
-          event.preventDefault();
-          event.stopImmediatePropagation();
-          close();
-          return true;
-        },
-        COMMAND_PRIORITY_LOW
-      ),
-      editor.registerCommand<KeyboardEvent>(
-        KEY_TAB_COMMAND,
-        (payload) => {
-          const event = payload;
-          if (results === null || selectedIndex === null) {
-            return false;
-          }
-          event.preventDefault();
-          event.stopImmediatePropagation();
-          applyCurrentSelected();
-          return true;
-        },
-        COMMAND_PRIORITY_LOW
-      ),
-      editor.registerCommand(
-        KEY_ENTER_COMMAND,
-        (event: KeyboardEvent | null) => {
-          if (results === null || selectedIndex === null) {
-            return false;
-          }
-          if (event !== null) {
-            event.preventDefault();
-            event.stopImmediatePropagation();
-          }
-          applyCurrentSelected();
-          return true;
-        },
-        COMMAND_PRIORITY_LOW
-      )
-    );
-  }, [applyCurrentSelected, close, editor, results, selectedIndex, updateSelectedIndex]);
+    onResultsChange?.(results);
+  }, [onResultsChange, results]);
 
   if (results === null) {
     return null;
   }
 
   return (
-    <FloatingNode id={nodeId}>
+    <FloatingPortal>
       <FloatingFocusManager context={context}>
         <ThemeWrapper>
           <div
@@ -413,9 +432,10 @@ export function MentionsTypeahead({
               top: context.y ?? 0,
               left: context.x ?? 0,
               width,
+              maxHeight: maxAvailableSize.height > 0 ? maxAvailableSize.height : 'unset',
             }}
           >
-            <Scrollable maxHeight={maxAvailableSize.height}>
+            <Scrollable maxHeight={maxAvailableSize.height > 0 ? maxAvailableSize.height : 'unset'}>
               <div className={styles.list}>
                 {results.slice(0, SUGGESTION_LIST_LENGTH_LIMIT).map((result, i) => (
                   <MentionsTypeaheadItem
@@ -438,7 +458,7 @@ export function MentionsTypeahead({
           </div>
         </ThemeWrapper>
       </FloatingFocusManager>
-    </FloatingNode>
+    </FloatingPortal>
   );
 }
 
@@ -631,7 +651,9 @@ function isSelectionOnEntityBoundary(editor: LexicalEditor, offset: number): boo
   });
 }
 
-export function MentionsPlugin(): JSX.Element | null {
+export function MentionsPlugin(props: {
+  onOpenChange?: (open: boolean) => void;
+}): JSX.Element | null {
   const [editor] = useLexicalComposerContext();
   const [resolution, setResolution] = useState<Resolution | null>(null);
 
@@ -639,6 +661,39 @@ export function MentionsPlugin(): JSX.Element | null {
     if (!editor.hasNodes([MentionNode])) {
       throw new Error('MentionsPlugin: MentionNode not registered on editor');
     }
+  }, [editor]);
+
+  const handleUpdate = useCallback(() => {
+    let activeRange: Range | null = document.createRange();
+    let previousText: string | null = null;
+
+    const range = activeRange;
+    const text = getMentionsTextToSearch(editor);
+
+    if (text === previousText || range === null) {
+      return false;
+    }
+    previousText = text;
+
+    const match = getPossibleMentionMatch(text ?? '');
+    if (match !== null && !isSelectionOnEntityBoundary(editor, match.leadOffset)) {
+      const isRangePositioned = tryToPositionRange(match, range);
+      if (isRangePositioned !== null) {
+        startTransition(() =>
+          setResolution({
+            match,
+            range,
+          })
+        );
+        return false;
+      }
+    }
+    startTransition(() => setResolution(null));
+    return true;
+  }, []);
+
+  useEffect(() => {
+    editor.registerCommand(OPEN_MENTIONS_COMMAND, handleUpdate, COMMAND_PRIORITY_LOW);
   }, [editor]);
 
   useEffect(() => {
@@ -682,9 +737,20 @@ export function MentionsPlugin(): JSX.Element | null {
     setResolution(null);
   }, []);
 
+  const [results, setResults] = useState<MentionWithColor[] | null>(null);
+
+  useEffect(() => {
+    props.onOpenChange?.(resolution != null && results !== null);
+  }, [resolution, props.onOpenChange, results !== null]);
+
   const typeahead =
     resolution != null && editor != null ? (
-      <MentionsTypeahead close={closeTypeahead} resolution={resolution} editor={editor} />
+      <MentionsTypeahead
+        onResultsChange={setResults}
+        close={closeTypeahead}
+        resolution={resolution}
+        editor={editor}
+      />
     ) : null;
 
   return <FloatingPortal>{typeahead}</FloatingPortal>;

@@ -9,6 +9,7 @@ const colors = {
   grey60: 'hsl(0, 0%, 60%)', // Grey 60
   grey73: 'hsl(0, 0%, 73%)', // Grey 73
   grey89: 'hsl(0, 0%, 89%, 1)',
+  grey7: 'hsl(0, 0%, 7%)', // Grey 7
   white: 'hsl(0, 0%, 100%)', // White
   opacity7: 'hsla(0, 0%, 100%, 0.08)', // White Opacity 7
   red: 'hsl(2, 73%, 62%)', // Red
@@ -18,12 +19,14 @@ export const DarkTheme = merge(BaseTheme, {
   color: {
     background: colors.black13,
     surface: colors.grey24,
+    surfaceHover: colors.grey7,
     surfaceOverlay: colors.opacity7,
     textPrimary: colors.white,
     textSecondary: colors.grey60,
     textDisabled: colors.grey24,
     border: colors.opacity7,
     icon: colors.grey73,
+    iconSecondary: colors.grey60,
   },
   composer: {},
   mentions: {

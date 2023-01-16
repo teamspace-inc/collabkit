@@ -7,6 +7,7 @@ import { init } from '../../src/actions/init';
 import { FirebaseSync } from '../../src/sync/firebase/FirebaseSync';
 import { Store } from '@collabkit/core';
 import { subscribeThreadIsTyping } from '../../src/sync/firebase/subscribeThreadIsTyping';
+import { initComposer } from '../../src/actions/initComposer';
 
 setupFirebase();
 
@@ -38,9 +39,9 @@ test('isTyping', async () => {
     sync
   );
   const threadId = nanoid();
-  store.workspaces[workspaceId].composers[threadId] = createComposer();
+  initComposer(store, { workspaceId, threadId, eventId: 'default' });
 
-  const { id } = await sync.sendMessage({
+  await sync.sendMessage({
     appId,
     workspaceId,
     threadId,
@@ -70,7 +71,7 @@ test('isTyping', async () => {
       type: 'composer',
       workspaceId,
       threadId,
-      eventId: id,
+      eventId: 'default',
     },
   });
 

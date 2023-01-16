@@ -1,4 +1,4 @@
-import React, { ComponentProps, useContext } from 'react';
+import React, { ComponentProps, useCallback, useContext, useState } from 'react';
 
 import { ComposerTarget } from '../../constants';
 import { ContentEditable as LexicalContentEditable } from '@lexical/react/LexicalContentEditable';
@@ -15,6 +15,7 @@ import {
   TimestampNode,
   $isMentionNode,
   ComposerPin,
+  InlineTextNode,
 } from '@collabkit/editor';
 import { TimestampPlugin } from './TimestampPlugin';
 import { MentionsPlugin } from './MentionsPlugin';
@@ -27,16 +28,41 @@ import { useTarget } from '../../hooks/useTarget';
 import * as styles from '../../theme/components/Composer.css';
 import { useOptionalCommentContext } from '../../hooks/useCommentContext';
 import { useSnapshot } from 'valtio';
-import { $getRoot, $setSelection } from 'lexical';
+import { $getRoot, $setSelection, EditorState, LexicalEditor } from 'lexical';
 import { TypingIndicator } from '../TypingIndicator';
 
 import Profile from '../Profile';
 
-import PinButtonSvg from '../../pin-button.svg';
+import { IconButton } from '../IconButton';
+import { EditorPlugin } from './EditorPlugin';
+import { At } from '../icons';
+import { MapPin } from 'phosphor-react';
+import { vars } from '../../theme/theme/index.css';
 
 // Catch any errors that occur during Lexical updates and log them
 // or throw them as needed. If you don't throw them, Lexical will
 // try to recover gracefully without losing user data.
+
+import { proxy } from 'valtio';
+import { initComposer } from '../../../../client/src/events';
+
+type ComposerContextValue = {
+  body: string;
+  autoFocus: boolean;
+  canPin: boolean;
+};
+
+// you can use valtio instead of React context for
+// more performant and usable context updates
+// retaining the context naming so it's clear
+// when where using the global store or one local to a
+// tree of components
+export const ComposerContext = React.createContext<ComposerContextValue>({
+  body: '',
+  autoFocus: true,
+  canPin: false,
+});
+
 function onError(error: any) {
   console.error(error);
 }
@@ -44,19 +70,9 @@ function onError(error: any) {
 const initialConfigDefaults = {
   namespace: 'Composer',
   theme: styles.lexicalTheme,
-  nodes: [MentionNode, TimestampNode, PinNode],
+  nodes: [MentionNode, TimestampNode, PinNode, InlineTextNode],
   onError,
 };
-
-export const ComposerContext = React.createContext<{
-  body: string;
-  autoFocus: boolean;
-  canPin: boolean;
-}>({
-  body: '',
-  autoFocus: true,
-  canPin: false,
-});
 
 function useComposerContext() {
   return useContext(ComposerContext);
@@ -67,8 +83,13 @@ function ComposerRoot(props: {
   children: React.ReactNode;
   autoFocus?: boolean;
   body?: string;
-  canPin?: boolean;
 }) {
+  const [context, setContext] = useState<ComposerContextValue>({
+    body: props.body ?? '',
+    autoFocus: props.autoFocus ?? false,
+    canPin: false,
+  });
+
   const commentContext = useOptionalCommentContext();
 
   const { threadId, workspaceId, userId } = useThreadContext();
@@ -83,6 +104,9 @@ function ComposerRoot(props: {
     eventId,
   };
 
+  const { store } = useApp();
+  initComposer(store, target);
+
   return (
     <div
       data-testid="collabkit-composer-root"
@@ -90,13 +114,7 @@ function ComposerRoot(props: {
       onClick={onClick}
     >
       <Profile.Provider profileId={userId}>
-        <ComposerContext.Provider
-          value={{
-            body: props.body ?? '',
-            autoFocus: props.autoFocus ?? true,
-            canPin: props.canPin ?? false,
-          }}
-        >
+        <ComposerContext.Provider value={context}>
           <TargetContext.Provider value={target}>{props.children}</TargetContext.Provider>
         </ComposerContext.Provider>
       </Profile.Provider>
@@ -123,24 +141,57 @@ function ComposerContentEditable(props: { className?: string }) {
     </div>
   );
 }
-``;
+
+function ComposerMentionsButton(props: { className?: string }) {
+  const { store, events } = useApp();
+  const { threadId, workspaceId } = useThreadContext();
+  const { eventId } = useOptionalCommentContext() ?? { eventId: 'default' };
+  const target = { type: 'composerMentionsButton', threadId, workspaceId, eventId } as const;
+  const { workspaces } = useSnapshot(store);
+  const composers = workspaces[workspaceId].composers;
+  const composer = composers[threadId][eventId];
+  const { isMentioning } = composer;
+
+  return (
+    <IconButton
+      data-testid="collabkit-composer-mentions-button"
+      active={isMentioning}
+      style={{ zIndex: 999 }}
+      weight="regular"
+      color={isMentioning ? vars.color.icon : vars.color.iconSecondary}
+      className={props.className}
+      onClick={(e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        events.onClick(e, { target });
+      }}
+    >
+      <At />
+    </IconButton>
+  );
+}
 
 function ComposerPinButton(props: { className?: string }) {
   const { events } = useApp();
   const { threadId, workspaceId } = useThreadContext();
   const { eventId } = useOptionalCommentContext() ?? { eventId: 'default' };
+  const target = { type: 'composerPinButton', threadId, workspaceId, eventId } as const;
 
   return (
-    <button
+    <IconButton
+      active={false}
       style={{ zIndex: 999 }}
-      data-testid="collabkit-composer-pin-button"
-      className={props.className ?? styles.pinButton}
-      onClick={(e) =>
-        events.onClick(e, { target: { type: 'composerPinButton', threadId, workspaceId, eventId } })
-      }
+      className={props.className}
+      weight="regular"
+      color={vars.color.iconSecondary}
+      onClick={(e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        events.onClick(e, { target });
+      }}
     >
-      <img src={PinButtonSvg} />
-    </button>
+      <MapPin />
+    </IconButton>
   );
 }
 
@@ -150,10 +201,12 @@ function ComposerEditor(props: {
   contentEditable?: JSX.Element;
 }) {
   const target = useTarget();
-  const { autoFocus } = useComposerContext();
+  const { workspaceId, threadId } = useThreadContext();
+  const { eventId } = useOptionalCommentContext() ?? { eventId: 'default' };
+  const { autoFocus, body } = useComposerContext();
   const { events, store } = useApp();
-  const { body } = useContext(ComposerContext);
   const { focusedId } = useSnapshot(store);
+
   const active = !!(
     focusedId &&
     focusedId.type === 'composer' &&
@@ -170,12 +223,28 @@ function ComposerEditor(props: {
     },
   };
 
+  const handleChange = useCallback(
+    (editorState: EditorState, editor: LexicalEditor) => {
+      editorState.read(() => {
+        const newBody = $convertToMarkdownString(TRANSFORMERS);
+        const mentions = $getRoot()
+          .getAllTextNodes()
+          .filter((node) => $isMentionNode(node))
+          .map((node) => node.__id)
+          .filter((id) => typeof id === 'string');
+        events.onComposerChange(target, editor, newBody, mentions);
+      });
+    },
+    [events.onComposerChange, target]
+  );
+
   return (
     <div
       data-testid="collabkit-composer-editor"
       className={props.className ?? `${styles.editor({ active })} ${styles.composerGlobalStyles}`}
     >
       <LexicalComposer initialConfig={initialConfig}>
+        <EditorPlugin onMount={handleChange} />
         <PasteTextPlugin />
         <PlainTextPlugin
           contentEditable={props.contentEditable ?? <Composer.ContentEditable />}
@@ -184,24 +253,20 @@ function ComposerEditor(props: {
             return <>{props.children}</>;
           }}
         />
-        <OnChangePlugin
-          onChange={(editorState, editor) => {
-            editorState.read(() => {
-              const newBody = $convertToMarkdownString(TRANSFORMERS);
-              const mentions = $getRoot()
-                .getAllTextNodes()
-                .filter((node) => $isMentionNode(node))
-                .map((node) => node.__id)
-                .filter((id) => typeof id === 'string');
-              events.onComposerChange(target, editor, newBody, mentions);
-            });
-          }}
-        />
+        <OnChangePlugin onChange={handleChange} />
         {autoFocus ? <AutoFocusPlugin /> : <></>}
         <HistoryPlugin />
-        <MentionsPlugin />
+        <MentionsPlugin
+          onOpenChange={(open) => {
+            store.workspaces[workspaceId].composers[threadId][eventId].isMentioning = open;
+          }}
+        />
         <TimestampPlugin />
       </LexicalComposer>
+      <Composer.ButtonGroup>
+        {/* <Composer.PinButton /> */}
+        <Composer.MentionsButton />
+      </Composer.ButtonGroup>
     </div>
   );
 }
@@ -215,6 +280,10 @@ function ComposerPlaceholder(props: ComponentProps<'span'>) {
       className={props.className ?? styles.placeholder({ canPin })}
     />
   );
+}
+
+function ComposerButtonGroup(props: { className?: string; children: React.ReactNode }) {
+  return <div className={props.className ?? styles.buttonGroup}>{props.children}</div>;
 }
 
 export default function Composer() {
@@ -238,5 +307,8 @@ Composer.ContentEditable = ComposerContentEditable;
 Composer.Editor = ComposerEditor;
 Composer.Placeholder = ComposerPlaceholder;
 Composer.TypingIndicator = TypingIndicator;
+
+Composer.ButtonGroup = ComposerButtonGroup;
+Composer.MentionsButton = ComposerMentionsButton;
 Composer.PinButton = ComposerPinButton;
 Composer.Pin = ComposerPin;

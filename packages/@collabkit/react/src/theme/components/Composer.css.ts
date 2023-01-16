@@ -47,7 +47,7 @@ export const placeholder = recipe({
     overflow: 'hidden',
     position: 'absolute',
     textOverflow: 'ellipsis',
-    top: '50%',
+    top: '17px',
     transform: 'translateY(-50%)',
     left: vars.space[2],
     userSelect: 'none',
@@ -154,7 +154,7 @@ export const editor = recipe({
     boxSizing: 'border-box',
     fontFamily: vars.fontFamily,
     display: 'flex',
-    alignItems: 'center',
+    flexDirection: 'column',
   },
   variants: {
     active: {
@@ -176,4 +176,22 @@ export const editor = recipe({
       },
     },
   },
+});
+
+export const buttonGroup = style({
+  display: 'flex',
+  padding: '0px 6px 6px',
+  gap: '0px',
+});
+
+globalStyle('.collabkit-pin-node', {
+  width: '16px',
+  height: '16px',
+  margin: '-4px 0px 0px',
+});
+
+globalStyle('.collabkit-composer-pin', {
+  width: '16px',
+  height: '16px',
+  margin: '-4px 0px 0px',
 });

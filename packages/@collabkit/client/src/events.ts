@@ -4,6 +4,7 @@ import type { LexicalEditor } from 'lexical';
 import type {
   CommentReactionTarget,
   CommentTarget,
+  ComposerTarget,
   MenuTarget,
   Store,
   Target,
@@ -14,10 +15,18 @@ import { createComposer, markRaw } from './store';
 
 export type Events = ReturnType<typeof createEvents>;
 
+export function initComposer(store: Store, target: ComposerTarget) {
+  const composers = store.workspaces[target.workspaceId].composers;
+  composers[target.threadId] ??= { [target.eventId]: createComposer() };
+  composers[target.threadId][target.eventId] ??= createComposer();
+  return composers[target.threadId][target.eventId];
+}
+
 export function createEvents(store: Store) {
   return {
     onInsertText: (target: ThreadTarget, text: string) => {
-      const editor = store.workspaces[target.workspaceId].composers[target.threadId].editor;
+      const editor =
+        store.workspaces[target.workspaceId].composers[target.threadId]?.['default']?.editor;
       if (!editor) {
         return;
       }
@@ -37,13 +46,12 @@ export function createEvents(store: Store) {
         return;
       }
 
-      const composers = store.workspaces[target.workspaceId].composers;
-      composers[target.threadId] ||= createComposer();
-      composers[target.threadId].editor = markRaw(editor);
+      const composer = initComposer(store, target);
+      composer.editor = markRaw(editor);
 
-      const body = composers[target.threadId].$$body;
-      composers[target.threadId].$$body = newBody;
-      composers[target.threadId].mentions = mentions;
+      const body = composer.$$body;
+      composer.$$body = newBody;
+      composer.mentions = mentions;
 
       if (newBody.length === 0) {
         actions.isTyping.cancel();
@@ -78,7 +86,7 @@ export function createEvents(store: Store) {
 
     // make this fetch workspaceId and threadId from store
     onSend: (workspaceId: string, threadId: string) => {
-      actions.sendMessage(store, { workspaceId, threadId });
+      actions.sendMessage(store, { workspaceId, threadId, eventId: 'default' });
     },
 
     onEdit: () => {
@@ -109,6 +117,10 @@ export function createEvents(store: Store) {
         }
         case 'composerPinButton': {
           actions.insertComposerPin(store, target);
+          break;
+        }
+        case 'composerMentionsButton': {
+          actions.startMentioning(store, target);
           break;
         }
       }

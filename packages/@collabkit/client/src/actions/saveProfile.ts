@@ -15,6 +15,7 @@ export async function saveProfile(store: Store) {
       const userId = config.user?.userId ?? config.user?.id;
 
       if (!userId) {
+        console.log('CollabKit: cannot save profile without userId');
         return;
       }
 

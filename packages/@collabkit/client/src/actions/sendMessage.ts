@@ -4,8 +4,11 @@ import { writeMessageToFirebase } from './writeMessageToFirebase';
 import { actions, getConfig } from '.';
 import { generateObjectIdFromCellId } from '../utils/generateObjectIdFromCellId';
 
-export async function sendMessage(store: Store, props: { workspaceId: string; threadId: string }) {
-  const { workspaceId, threadId } = props;
+export async function sendMessage(
+  store: Store,
+  props: { workspaceId: string; threadId: string; eventId: string }
+) {
+  const { workspaceId, threadId, eventId } = props;
   const { userId } = getConfig(store);
   if (!userId) {
     console.warn('[CollabKit]: cannot send a message, anonymous user');
@@ -21,7 +24,7 @@ export async function sendMessage(store: Store, props: { workspaceId: string; th
   }
 
   const workspace = store.workspaces[workspaceId];
-  const { editor, $$body: body, mentions } = workspace.composers[threadId];
+  const { editor, $$body: body, mentions } = workspace.composers[threadId][eventId];
 
   if (`${body}`.trim().length === 0) {
     console.warn('[CollabKit] tried to send an empty message');

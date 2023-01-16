@@ -8,3 +8,4 @@ export { default as Smiley } from 'phosphor-react/dist/icons/Smiley.esm.js';
 export { default as X } from 'phosphor-react/dist/icons/X.esm.js';
 export { default as Check } from 'phosphor-react/dist/icons/Check.esm.js';
 export { default as DotsThree } from 'phosphor-react/dist/icons/DotsThree.esm.js';
+export { default as At } from 'phosphor-react/dist/icons/At.esm.js';

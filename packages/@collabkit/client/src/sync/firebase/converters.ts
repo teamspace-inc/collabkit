@@ -27,7 +27,7 @@ export function eventToObject(event: Event): object {
 export function snapshotToEvent(snapshot: DataSnapshot, id = snapshot.key): WithID<Event> | null {
   const event = snapshot.val();
   if (!event || !id) {
-    console.warn('[snapshotToEvent]: could not convert snapshot');
+    console.warn('[snapshotToEvent]: could not convert snapshot', event);
     return null;
   }
   event.id = FirebaseId.decode(id);
@@ -39,7 +39,7 @@ export function snapshotToEvent(snapshot: DataSnapshot, id = snapshot.key): With
 export function snapshotToUser(snapshot: DataSnapshot): UserProps | null {
   const user = snapshot.val();
   if (!user || !snapshot.key) {
-    console.warn('[snapshotToUser]: could not convert snapshot');
+    console.warn('[snapshotToUser]: could not convert snapshot', user);
     return null;
   }
   user.userId = FirebaseId.decode(snapshot.key);
@@ -51,7 +51,7 @@ export function snapshotToProfile(
 ): { id: string; name?: string; email?: string; color: Color; avatar?: string } | null {
   const profile = snapshot.val();
   if (!profile || !snapshot.key) {
-    console.warn('[snapshotToProfile]: could not convert snapshot');
+    console.warn('[snapshotToProfile]: could not convert snapshot', profile);
     return null;
   }
   profile.id = FirebaseId.decode(snapshot.key);

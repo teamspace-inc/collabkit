@@ -30,6 +30,10 @@ export class PinNode extends DecoratorNode<ReactNode> {
     this.__id = id;
   }
 
+  getTextContent(): string {
+    return ' ';
+  }
+
   exportJSON(): SerializedPinNode {
     return {
       ...super.exportJSON(),
@@ -37,6 +41,10 @@ export class PinNode extends DecoratorNode<ReactNode> {
       type: 'pin',
       version: 1,
     };
+  }
+
+  static importJSON(serializedNode: SerializedPinNode): PinNode {
+    return $createPinNode(serializedNode.pinId);
   }
 
   isInline() {
@@ -68,9 +76,7 @@ export function ComposerPin(props: { id: string }) {
   return (
     <svg
       data-pin-id={props.id}
-      width="16"
       className="collabkit-composer-pin"
-      height="16"
       viewBox="0 0 16 16"
       key="collabkit-composer-pin"
       fill="none"

@@ -1,7 +1,7 @@
 import { actions, getConfig } from './index';
 import type { Sync, ThreadInfo, Store } from '@collabkit/core';
-import { createComposer } from '../store';
 import { subscribeProfile } from './subscribeProfile';
+import { initComposer } from './initComposer';
 
 export async function subscribeThread(
   store: Store,
@@ -12,7 +12,11 @@ export async function subscribeThread(
   }
 ) {
   // console.log('subscribeThread', props.threadId);
-  store.workspaces[props.workspaceId].composers[props.threadId] ||= createComposer();
+  initComposer(store, {
+    workspaceId: props.workspaceId,
+    threadId: props.threadId,
+    eventId: 'default',
+  });
   const { workspaceId, threadId } = props;
   const { appId, userId } = getConfig(store);
 
@@ -39,7 +43,7 @@ export async function subscribeThread(
       });
     },
     onThreadTypingChange: ({ workspaceId, threadId, userId, isTyping }: Sync.TypingEvent) => {
-      store.workspaces[workspaceId].composers[threadId].isTyping[userId] = isTyping;
+      store.workspaces[workspaceId].composers[threadId]['default'].isTyping[userId] = isTyping;
     },
     onThreadSeenByUser: (event: Sync.ThreadSeenEvent) => {
       store.workspaces[event.workspaceId].seenBy[event.threadId] ||= {};

@@ -8,6 +8,7 @@ import { FirebaseSync } from '../../src/sync/firebase/FirebaseSync';
 import { CommentTarget, Store } from '@collabkit/core';
 import { seen } from '../../src/actions/seen';
 import { getThreadSeenBy } from '../../src/sync/firebase/getThreadSeenBy';
+import { initComposer } from '../../src/actions/initComposer';
 
 setupFirebase();
 
@@ -42,7 +43,7 @@ test('seen', async () => {
 
   const threadId = nanoid();
 
-  store.workspaces[workspaceId].composers[threadId] = createComposer();
+  initComposer(store, { workspaceId, threadId, eventId: 'default' });
   store.workspaces[workspaceId].timeline[threadId] = {};
 
   const { id: firstEventId } = await sync.sendMessage({

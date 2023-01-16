@@ -8,6 +8,7 @@ import { FirebaseSync } from '../../src/sync/firebase/FirebaseSync';
 import { Store } from '@collabkit/core';
 import { getTimeline } from '../../src/sync/firebase/getTimeline';
 import { resolveThread } from '../../src/actions/resolveThread';
+import { initComposer } from '../../src/actions/initComposer';
 
 setupFirebase();
 
@@ -42,7 +43,7 @@ test('resolveThread', async () => {
 
   const threadId = nanoid();
 
-  store.workspaces[workspaceId].composers[threadId] = createComposer();
+  initComposer(store, { workspaceId, threadId, eventId: 'default' });
   store.workspaces[workspaceId].timeline[threadId] = {};
 
   await sync.sendMessage({

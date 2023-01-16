@@ -3,6 +3,7 @@ import { getConfig } from './index';
 
 export async function stopTyping(store: Store, props: { target: ComposerTarget }) {
   const { userId, appId } = getConfig(store);
+  const { workspaceId, threadId, eventId } = props.target;
   if (!userId) {
     return;
   }
@@ -12,8 +13,7 @@ export async function stopTyping(store: Store, props: { target: ComposerTarget }
     return;
   }
 
-  const timeoutID =
-    store.workspaces[props.target.workspaceId].composers[props.target.threadId].isTypingTimeoutID;
+  const timeoutID = store.workspaces[workspaceId].composers[threadId][eventId].isTypingTimeoutID;
 
   if (timeoutID) {
     clearTimeout(timeoutID);
@@ -21,8 +21,8 @@ export async function stopTyping(store: Store, props: { target: ComposerTarget }
 
   await store.sync.stopTyping({
     appId,
-    workspaceId: props.target.workspaceId,
-    threadId: props.target.threadId,
+    workspaceId,
+    threadId,
     userId,
   });
 }
