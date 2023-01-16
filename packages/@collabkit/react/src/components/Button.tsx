@@ -7,9 +7,11 @@ export function Button(props: {
   disabled?: boolean;
   onPointerDown: (e: React.PointerEvent) => void;
   className?: string;
+  ['data-testid']?: string;
 }) {
   return (
     <div
+      data-testid={props['data-testid'] ?? 'collabkit-button'}
       className={
         props.className ??
         styles.button({

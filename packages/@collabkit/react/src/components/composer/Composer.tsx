@@ -83,6 +83,7 @@ function ComposerRoot(props: {
   children: React.ReactNode;
   autoFocus?: boolean;
   body?: string;
+  ['data-testid']?: string;
 }) {
   const [context, setContext] = useState<ComposerContextValue>({
     body: props.body ?? '',
@@ -109,7 +110,7 @@ function ComposerRoot(props: {
 
   return (
     <div
-      data-testid="collabkit-composer-root"
+      data-testid={props['data-testid'] ?? 'collabkit-composer-root'}
       className={props.className ?? styles.root}
       onClick={onClick}
     >

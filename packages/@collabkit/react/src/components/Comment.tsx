@@ -174,6 +174,7 @@ export const CommentEditor = (props: React.ComponentProps<'div'>) => {
     >
       <Composer.Editor contentEditable={<Composer.ContentEditable />} placeholder={<span />} />
       <ButtonGroup
+        data-testid="collabkit-comment-composer-button-group"
         onCancel={(e) => {
           if (e.button === 0) {
             actions.stopEditing(store);
@@ -238,14 +239,29 @@ const CommentMenu = (props: { className?: string }) => {
     <>
       {createdById === userId && (
         <Menu<CommentMenuItemType>
+          data-testid="collabkit-comment-menu"
           className={props.className}
           icon={<DotsThree size={16} />}
           onItemClick={onItemClick}
           context={comment}
         >
-          <MenuItem label="Edit" targetType="commentEditButton" />
-          <MenuItem label="Delete" targetType="commentDeleteButton" />
-          {isResolved && <MenuItem label="Re-open" targetType="reopenThreadButton" />}
+          <MenuItem
+            label="Edit"
+            targetType="commentEditButton"
+            data-testid="collabkit-comment-menu-edit-button"
+          />
+          <MenuItem
+            label="Delete"
+            targetType="commentDeleteButton"
+            data-testid="collabkit-comment-menu-delete-button"
+          />
+          {isResolved && (
+            <MenuItem
+              label="Re-open"
+              targetType="reopenThreadButton"
+              data-testid="collabkit-comment-menu-re-open-button"
+            />
+          )}
         </Menu>
       )}
     </>
