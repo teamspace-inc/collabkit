@@ -1,4 +1,4 @@
-import React, { ComponentProps, useCallback, useContext, useState } from 'react';
+import React, { ComponentProps, useContext, useEffect, useState, useCallback } from 'react';
 
 import { ComposerTarget } from '../../constants';
 import { ContentEditable as LexicalContentEditable } from '@lexical/react/LexicalContentEditable';
@@ -38,12 +38,12 @@ import { EditorPlugin } from './EditorPlugin';
 import { At } from '../icons';
 import { MapPin } from 'phosphor-react';
 import { vars } from '../../theme/theme/index.css';
+import { KeyPlugin } from './KeyPlugin';
 
 // Catch any errors that occur during Lexical updates and log them
 // or throw them as needed. If you don't throw them, Lexical will
 // try to recover gracefully without losing user data.
 
-import { proxy } from 'valtio';
 import { initComposer } from '../../../../client/src/events';
 
 type ComposerContextValue = {
@@ -126,6 +126,10 @@ function ComposerContentEditable(props: { className?: string }) {
   const { events } = useApp();
   const target = useTarget();
   const { autoFocus, canPin } = useComposerContext();
+  useEffect(() => {
+    return () => events.onBlur(null, { target });
+  }, [events.onBlur]);
+
   return (
     <div
       data-testid="collabkit-composer-contenteditable"
@@ -245,6 +249,7 @@ function ComposerEditor(props: {
     >
       <LexicalComposer initialConfig={initialConfig}>
         <EditorPlugin onMount={handleChange} />
+        <KeyPlugin onKeyDown={(event) => events.onKeyDown(event)} />
         <PasteTextPlugin />
         <PlainTextPlugin
           contentEditable={props.contentEditable ?? <Composer.ContentEditable />}

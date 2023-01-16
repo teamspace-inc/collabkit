@@ -1,12 +1,17 @@
 import React from 'react';
-import { LexicalEditor, RangeSelection } from 'lexical';
+import {
+  COMMAND_PRIORITY_HIGH,
+  COMMAND_PRIORITY_LOW,
+  COMMAND_PRIORITY_NORMAL,
+  LexicalEditor,
+  RangeSelection,
+} from 'lexical';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { mergeRegister } from '@lexical/utils';
 import {
   $getSelection,
   $isRangeSelection,
   $isTextNode,
-  COMMAND_PRIORITY_LOW,
   KEY_ARROW_DOWN_COMMAND,
   KEY_ARROW_UP_COMMAND,
   KEY_ENTER_COMMAND,
@@ -404,7 +409,7 @@ export function MentionsTypeahead({
             applyCurrentSelected();
             return true;
           },
-          COMMAND_PRIORITY_LOW
+          COMMAND_PRIORITY_HIGH
         )
       ),
     [applyCurrentSelected, close, editor, results, selectedIndex, updateSelectedIndex]

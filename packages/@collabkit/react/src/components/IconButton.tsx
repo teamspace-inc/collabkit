@@ -1,8 +1,7 @@
 import { IconContext } from './icons';
 import React, { forwardRef } from 'react';
 import * as styles from '../theme/components/IconButton.css';
-
-import { IconProps } from 'phosphor-react';
+import type { IconProps } from 'phosphor-react';
 
 type Props = {
   children: React.ReactNode;
