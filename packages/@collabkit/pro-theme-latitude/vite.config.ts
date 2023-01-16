@@ -19,7 +19,7 @@ export default defineConfig(({ mode }) => {
     build: {
       lib: {
         entry: resolve(__dirname, 'src/index.ts'),
-        fileName: 'collabkit-cashboard',
+        fileName: 'collabkit-latitude',
         formats: ['es'],
       },
       rollupOptions: {
