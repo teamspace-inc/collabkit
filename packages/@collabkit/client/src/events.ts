@@ -120,7 +120,6 @@ export function createEvents(store: Store) {
           break;
         }
         case 'composerMentionsButton': {
-          console.log('composerMentionsButton');
           actions.startMentioning(store, target);
           break;
         }
