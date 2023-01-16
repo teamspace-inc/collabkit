@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  COMMAND_PRIORITY_HIGH,
   COMMAND_PRIORITY_LOW,
   COMMAND_PRIORITY_NORMAL,
   LexicalEditor,
@@ -408,7 +409,7 @@ export function MentionsTypeahead({
             applyCurrentSelected();
             return true;
           },
-          COMMAND_PRIORITY_LOW
+          COMMAND_PRIORITY_HIGH
         )
       ),
     [applyCurrentSelected, close, editor, results, selectedIndex, updateSelectedIndex]
