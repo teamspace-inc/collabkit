@@ -93,8 +93,14 @@ async function hasComment(page: Page, comment: { body: string }, nth: number = 0
   await expect(text).toStrictEqual(comment.body);
 }
 
+async function doesNotHaveComment(page: Page, comment: { body: string }) {
+  const markdown = await page.$(`text=${comment.body}`);
+  await expect(markdown).toBeNull();
+}
+
 async function clickMentionButton(page: Page) {
   await focusComposer(page);
+  await page.waitForTimeout(500);
   await page.click('[data-testid="collabkit-composer-mentions-button"]');
 }
 
@@ -123,8 +129,15 @@ async function hasMentionInComposer(page: Page, name: string, nth: number = 0) {
   expect(await await page.locator('.collabkit-mention-node').nth(nth).innerText()).toBe('@' + name);
 }
 
-async function clickCommentMenuEditButton(page: Page, nth: number = 0) {
+async function clickCommentMenuButton(page: Page, nth: number = 0) {
   await page.getByTestId('collabkit-comment-menu').nth(nth).click();
+}
+
+async function clickCommentMenuDeleteButton(page: Page) {
+  await page.getByTestId('collabkit-comment-menu-delete-button').click();
+}
+
+async function clickCommentMenuEditButton(page: Page) {
   await page.getByTestId('collabkit-comment-menu-edit-button').click();
 }
 
@@ -191,12 +204,26 @@ test.describe('Thread', () => {
     const page2 = await visitThreadAsUser(context, { ...bob, appId, apiKey });
     await sendComment(page, 'Hello World');
     await hasComment(page, { body: 'Hello World' });
+    await clickCommentMenuButton(page);
     await clickCommentMenuEditButton(page);
     await focusCommentComposer(page);
     await typeInCommentComposer(page, ' Edited');
     await saveEditedComment(page);
+    await page.waitForTimeout(500);
     await hasComment(page, { body: 'Hello World Edited' });
     await hasComment(page2, { body: 'Hello World Edited' });
+  });
+
+  test('can comment and delete a comment', async ({ context }) => {
+    const { page, appId, apiKey } = await createAppAndVisitThreadAsUser(context, alice);
+    const page2 = await visitThreadAsUser(context, { ...bob, appId, apiKey });
+    await sendComment(page, 'Hello World');
+    await hasComment(page, { body: 'Hello World' });
+    await clickCommentMenuButton(page);
+    await clickCommentMenuDeleteButton(page);
+    await page.waitForTimeout(500);
+    await doesNotHaveComment(page, { body: 'Hello World' });
+    await doesNotHaveComment(page2, { body: 'Hello World' });
   });
 
   test('while typing a comment others see typing indicator', async ({ context }) => {
