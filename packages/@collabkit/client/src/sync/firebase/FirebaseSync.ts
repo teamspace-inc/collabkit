@@ -138,7 +138,6 @@ export class FirebaseSync implements Sync.SyncAdapter {
     await get(openPinsRef)
       .then((snapshot) => {
         const pins = snapshot.val();
-        console.log(pins);
         onGet(pins || {});
       })
       .catch((e) => {

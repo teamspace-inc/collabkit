@@ -1,15 +1,16 @@
 import type { Pin, Store } from '@collabkit/core';
 import { getConfig } from './index';
+import has from 'has';
 
 function isPin(pin: unknown): pin is Pin {
   return (
     typeof pin === 'object' &&
     pin !== null &&
-    'x' in pin &&
-    'y' in pin &&
+    has(pin, 'x') &&
+    has(pin, 'y') &&
     typeof pin['x'] === 'number' &&
     typeof pin['y'] === 'number' &&
-    'threadId' in pin &&
+    has(pin, 'threadId') &&
     typeof pin['threadId'] === 'string'
   );
 }
