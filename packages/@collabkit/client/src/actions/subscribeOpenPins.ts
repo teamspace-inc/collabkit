@@ -15,31 +15,37 @@ function isPin(pin: unknown): pin is Pin {
   );
 }
 
-function isRoot(
-  objectPins: unknown
-): objectPins is { [objectId: string]: { [pinId: string]: Pin } } {
-  if (typeof objectPins !== 'object' || objectPins === null) {
+function isRoot(objects: unknown): objects is { [objectId: string]: { [pinId: string]: Pin } } {
+  if (typeof objects !== 'object' || objects === null) {
     return false;
   }
 
-  for (const objectId in objectPins) {
-    for (const pinId in objectPins[objectId]) {
-      if (!isPin(objectPins[pinId])) {
-        return false;
-      }
+  const _objects = objects as { [objectId: string]: unknown };
+
+  for (const objectId in _objects) {
+    if (typeof _objects[objectId] !== 'object' || _objects[objectId] === null) {
+      return false;
+    }
+
+    const pins = _objects[objectId] as { [pinId: string]: unknown };
+
+    if (!isPins(pins)) {
+      return false;
     }
   }
 
   return true;
 }
 
-function isPins(objectPins: unknown): objectPins is { [pinId: string]: Pin } {
-  if (typeof objectPins !== 'object' || objectPins === null) {
+function isPins(pins: unknown): pins is { [pinId: string]: Pin } {
+  if (typeof pins !== 'object' || pins === null) {
     return false;
   }
 
-  for (const pinId in objectPins) {
-    if (!isPin(objectPins[pinId])) {
+  const _pins = pins as { [pinId: string]: unknown };
+
+  for (const pinId in _pins) {
+    if (!isPin(_pins[pinId])) {
       return false;
     }
   }
