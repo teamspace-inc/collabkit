@@ -49,6 +49,7 @@ import { closeAll } from './closeAll';
 import { insertComposerPin } from './insertComposerPin';
 import { startMentioning } from './startMentioning';
 import { initComposer } from './initComposer';
+import { placePin } from './placePin';
 
 import { savePin } from './savePin';
 import { deletePin } from './deletePin';
@@ -141,6 +142,7 @@ export const actions = {
   monitorConnection,
   movePin,
   openMenu,
+  placePin,
   reopenThread,
   resolveThread,
   saveMentionableUsers,

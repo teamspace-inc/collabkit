@@ -75,7 +75,7 @@ function KpiCardGrid() {
   return (
     <ColGrid numColsMd={2} numColsLg={3} marginTop="mt-6" gapX="gap-x-6" gapY="gap-y-6">
       {kpiData.map((item) => (
-        <Commentable.Container objectId={`dashboard-kpi-${item.title}`}>
+        <Commentable.Container key={item.title} objectId={`dashboard-kpi-${item.title}`}>
           <Card key={item.title}>
             <Flex alignItems="items-start">
               <Block truncate={true}>

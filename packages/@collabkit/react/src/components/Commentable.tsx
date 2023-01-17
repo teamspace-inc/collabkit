@@ -1,6 +1,8 @@
-import { Store } from '@collabkit/core';
-import { FloatingPortal } from '@floating-ui/react-dom-interactions';
-import React, { forwardRef, useCallback, useRef } from 'react';
+import { actions } from '@collabkit/client';
+import { Pin, Store } from '@collabkit/core';
+import { FloatingPortal, offset, useFloating } from '@floating-ui/react-dom-interactions';
+import { nanoid } from 'nanoid';
+import React, { forwardRef, useCallback, useEffect, useRef } from 'react';
 import { useSnapshot } from 'valtio';
 import { useCommentableRef } from '../hooks/useCommentableRef';
 import { useStore } from '../hooks/useStore';
@@ -10,25 +12,29 @@ import Profile from './Profile';
 function findCommentableElement(
   store: Store,
   e: React.PointerEvent
-): HTMLElement | SVGElement | null {
+): { objectId: string; element: HTMLElement | SVGElement } | null {
   const element = document.elementFromPoint(e.clientX, e.clientY);
   if (element == null) {
     return null;
   }
-  const commentable = [...store.commentableElements.values()].find(
-    (el) => el === element || el.contains(element)
+  const commentable = [...store.commentableElements.entries()].find(
+    ([, el]) => el === element || el.contains(element)
   );
-  return commentable ?? null;
+  return commentable ? { objectId: commentable[0], element: commentable[1] } : null;
 }
 
-const Pin = forwardRef<HTMLDivElement>(function Pin(_props, ref) {
+type PinProps = {
+  style?: React.CSSProperties;
+};
+
+const PinMarker = forwardRef<HTMLDivElement, PinProps>(function Pin(props, ref) {
   const { userId } = useSnapshot(useStore());
   if (userId == null) {
     return null;
   }
   return (
     <Profile.Provider profileId={userId}>
-      <div className={styles.pin} ref={ref}>
+      <div className={styles.pin} ref={ref} style={props.style}>
         <svg
           width="40"
           height="40"
@@ -52,12 +58,29 @@ const Pin = forwardRef<HTMLDivElement>(function Pin(_props, ref) {
   );
 });
 
+function SavedPin({ pin }: { pin: Pin }) {
+  const { reference, floating } = useFloating({
+    placement: 'top-start',
+    middleware: [
+      offset(({ rects }) => ({
+        crossAxis: rects.reference.width * pin.x,
+        mainAxis: -rects.reference.height * pin.y,
+      })),
+    ],
+  });
+  useEffect(() => {
+    //reference()
+  }, []);
+
+  return <PinMarker ref={floating} />;
+}
+
 export function CommentableRoot(props: { children?: React.ReactNode }) {
   const cursorRef = useRef<HTMLDivElement | null>(null);
   const overlayRef = useRef<HTMLDivElement | null>(null);
   const hoveredElementRef = useRef<HTMLElement | SVGElement | null>(null);
   const store = useStore();
-  const { uiState } = useSnapshot(store);
+  const { uiState, workspaces, workspaceId } = useSnapshot(store);
 
   const updateCursor = useCallback(
     (e: React.PointerEvent) => {
@@ -68,13 +91,13 @@ export function CommentableRoot(props: { children?: React.ReactNode }) {
       if (!cursorRef.current || !overlayRef.current) {
         return;
       }
-      console.log('updateCursor', e.clientX, e.clientY);
       cursorRef.current.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
       store.clientX = e.clientX;
       store.clientY = e.clientY;
 
-      const element = findCommentableElement(store, e);
-      if (element) {
+      const commentable = findCommentableElement(store, e);
+      if (commentable) {
+        const { element } = commentable;
         element.classList.add(styles.activeContainer);
         hoveredElementRef.current = element;
         cursorRef.current.style.display = 'block';
@@ -92,33 +115,43 @@ export function CommentableRoot(props: { children?: React.ReactNode }) {
     [cursorRef, store]
   );
 
-  if (props.children == null) {
+  const onPointerDown = useCallback((e: React.PointerEvent) => {
+    const commentable = findCommentableElement(store, e);
+    if (commentable && workspaceId) {
+      const { x, y, width, height } = commentable.element.getBoundingClientRect();
+      actions.placePin(store, {
+        workspaceId,
+        objectId: commentable.objectId,
+        x: (e.clientX - x) / width,
+        y: (e.clientY - y) / height,
+        threadId: nanoid(),
+      });
+    }
+  }, []);
+
+  if (props.children == null || !workspaceId) {
     return null;
   }
+  const { pins } = workspaces[workspaceId];
 
   return (
     <div
-      onPointerOver={(e) => {
-        console.log(`[${uiState}] pointer over: ${e.clientX}, ${e.clientY}`);
-        updateCursor(e);
-      }}
-      onPointerMove={(e) => {
-        console.log(`[${uiState}] pointer move: ${e.clientX}, ${e.clientY}`);
-        updateCursor(e);
-      }}
-      onPointerOut={(e) => {
-        console.log(`[${uiState}] pointer out: ${e.clientX}, ${e.clientY}`);
-        updateCursor(e);
-      }}
+      onPointerOver={updateCursor}
+      onPointerMove={updateCursor}
+      onPointerOut={updateCursor}
+      onPointerDown={onPointerDown}
     >
       {props.children}
       <FloatingPortal id="collabkit-floating-root">
         {uiState === 'selecting' && (
           <>
             <div ref={overlayRef} className={styles.overlay} />
-            <Pin ref={cursorRef} />
+            <PinMarker ref={cursorRef} />
           </>
         )}
+        {Object.values(pins).map((pin, i) => {
+          return null && <SavedPin key={i} pin={pin} />;
+        })}
       </FloatingPortal>
     </div>
   );

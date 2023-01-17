@@ -6,7 +6,6 @@ export function useCommentableRef(objectId: string) {
 
   const setElement = useCallback(
     (element: HTMLElement | SVGElement | null) => {
-      console.log('setElement', objectId, element);
       if (element) {
         store.commentableElements.set(objectId, element);
       } else {
