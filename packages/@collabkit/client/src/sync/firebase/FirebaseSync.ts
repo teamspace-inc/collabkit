@@ -94,22 +94,15 @@ export class FirebaseSync implements Sync.SyncAdapter {
     appId: string;
     workspaceId: string;
     objectId: string;
-    threadId: string;
-    x: number;
-    y: number;
-  }): Promise<string | null> {
-    const { appId, workspaceId, objectId, threadId, x, y } = params;
-    const pin = {
-      threadId,
-      x,
-      y,
+    pinId: string;
+    pin: {
+      threadId: string;
+      x: number;
+      y: number;
     };
-    const pinRef = await push(ref`/pins/${appId}/${workspaceId}/${objectId}`, pin);
-    const pinId = pinRef.key;
-    if (!pinId) return null;
-    console.log('pinRef.key', pinRef.key);
-    await set(ref`/views/openPins/${appId}/${workspaceId}/${objectId}/${pinId}`, pin);
-    return pinId;
+  }): Promise<void> {
+    const { appId, workspaceId, objectId, pin, pinId } = params;
+    return set(ref`/views/openPins/${appId}/${workspaceId}/${objectId}/${pinId}`, pin);
   }
 
   async deletePin(params: {
@@ -127,20 +120,45 @@ export class FirebaseSync implements Sync.SyncAdapter {
     return update(ref`/`, updates);
   }
 
-  subscribeOpenPins(params: {
+  async subscribeOpenPins(params: {
     appId: string;
     workspaceId: string;
     subs: Subscriptions;
-    callback: (pins: { [objectId: string]: { [pinId: string]: { x: number; y: number } } }) => void;
-  }): Subscriptions {
-    params.subs[`pins-${params.appId}-${params.workspaceId}`] ||= onValue(
-      ref`/views/openPins/${params.appId}/${params.workspaceId}`,
-      (snapshot) => {
+    onGet: (pins: { [objectId: string]: { [pinId: string]: { x: number; y: number } } }) => void;
+    onObjectChange: (objectId: string, pins: { [pinId: string]: { x: number; y: number } }) => void;
+    onObjectRemove: (objectId: string) => void;
+  }): Promise<void> {
+    const { subs, appId, workspaceId, onObjectChange, onObjectRemove, onGet } = params;
+    const openPinsRef = ref`/views/openPins/${appId}/${workspaceId}`;
+
+    await get(openPinsRef)
+      .then((snapshot) => {
         const pins = snapshot.val();
-        params.callback(pins || {});
+        console.log(pins);
+        onGet(pins || {});
+      })
+      .catch((e) => {
+        console.error('CollabKit pin fetch failed', e);
+      });
+
+    subs[openPinsRef.toString() + 'onChildAdded'] ||= onChildAdded(
+      openPinsRef,
+      (objectSnapshot) => {
+        const objectId = objectSnapshot.key;
+        const objectPins = objectSnapshot.val();
+        if (objectId == null) return;
+        onObjectChange(objectId, objectPins);
       }
     );
-    return params.subs;
+
+    subs[openPinsRef.toString() + 'onChildRemoved'] ||= onChildRemoved(
+      openPinsRef,
+      (objectSnapshot) => {
+        const objectId = objectSnapshot.key;
+        if (objectId == null) return;
+        onObjectRemove(objectId);
+      }
+    );
   }
 
   saveThreadInfo(data: {

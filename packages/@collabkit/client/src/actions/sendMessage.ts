@@ -1,5 +1,5 @@
-import type { Store, ThreadInfo } from '@collabkit/core';
-import { $createTextNode, $getRoot } from 'lexical';
+import type { Store } from '@collabkit/core';
+import { $getRoot } from 'lexical';
 import { writeMessageToFirebase } from './writeMessageToFirebase';
 import { actions, getConfig } from '.';
 import { generateObjectIdFromCellId } from '../utils/generateObjectIdFromCellId';

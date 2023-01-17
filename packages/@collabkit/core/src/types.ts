@@ -354,6 +354,7 @@ export interface Workspace {
   likelyFetchedAllProfiles: boolean;
   threadProfiles: { [threadId: string]: { [userId: string]: boolean } };
   fetchedProfiles: { [threadId: string]: { [userId: string]: boolean } };
+  pendingPins: { [objectId: string]: { [pinId: string]: PendingPin } };
   pins: { [objectId: string]: { [pinId: string]: Pin } };
   openPins: { [objectId: string]: { [pinId: string]: Pin } };
 }
@@ -361,10 +362,12 @@ export interface Workspace {
 // get all pins for the workspace that have an open thread attached to them (we don't want resolved ones)
 // get all threads for these pins in one query (comment sidebar speed)
 
-export type Pin = {
-  id: string;
+type PendingPin = {
   x: number;
   y: number;
+};
+
+export type Pin = PendingPin & {
   threadId: string;
 };
 

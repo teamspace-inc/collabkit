@@ -58,10 +58,13 @@ export interface SyncAdapter {
     appId: string;
     workspaceId: string;
     objectId: string;
-    threadId: string;
-    x: number;
-    y: number;
-  }): Promise<string | null>;
+    pinId: string;
+    pin: {
+      x: number;
+      y: number;
+      threadId: string;
+    };
+  }): Promise<void>;
 
   deletePin(params: {
     appId: string;
@@ -74,8 +77,10 @@ export interface SyncAdapter {
     appId: string;
     workspaceId: string;
     subs: Subscriptions;
-    callback: (pins: { [objectId: string]: { [pinId: string]: { x: number; y: number } } }) => void;
-  }): Subscriptions;
+    onGet: (pins: { [objectId: string]: { [pinId: string]: { x: number; y: number } } }) => void;
+    onObjectChange: (objectId: string, pins: { [pinId: string]: { x: number; y: number } }) => void;
+    onObjectRemove: (objectId: string) => void;
+  }): Promise<void>;
 
   movePin(params: {
     appId: string;
@@ -185,6 +190,7 @@ export type OpenThreadEventHandler = (event: {
   info: { meta: ThreadMeta } | null;
   wasRemoved?: boolean;
 }) => void;
+
 export type InboxChangeEventHandler = (props: { event: WithID<Event>; threadId: string }) => void;
 
 export type ThreadInfoChangeEvent = {

@@ -11,11 +11,13 @@ export class LocalOnlySync implements SyncAdapter {
     appId: string;
     workspaceId: string;
     objectId: string;
-    threadId: string;
-    x: number;
-    y: number;
-  }): Promise<string | null> {
-    throw new Error('Method not implemented.');
+    pin: {
+      threadId: string;
+      x: number;
+      y: number;
+    };
+  }): Promise<void> {
+    return Promise.resolve();
   }
   deletePin(params: {
     appId: string;
@@ -23,7 +25,7 @@ export class LocalOnlySync implements SyncAdapter {
     objectId: string;
     pinId: string;
   }): Promise<void> {
-    throw new Error('Method not implemented.');
+    return Promise.resolve();
   }
   subscribeOpenPins(params: {
     appId: string;

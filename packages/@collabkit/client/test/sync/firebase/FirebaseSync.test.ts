@@ -176,7 +176,9 @@ describe('FirebaseSync', async () => {
         appId,
         workspaceId,
         subs,
-        callback: resolve,
+        onGet: resolve,
+        onObjectChange: () => {},
+        onObjectRemove: () => {},
       })
     );
     const pins = await promise;
@@ -184,7 +186,7 @@ describe('FirebaseSync', async () => {
     return pins as { [objectId: string]: { [id: string]: Pin } } | null;
   }
 
-  test('savePin + movePin + deletePin + subscribePins', async () => {
+  test('savePin + movePin + deletePin', async () => {
     const threadId = nanoid();
 
     await sync.sendMessage({
@@ -207,20 +209,23 @@ describe('FirebaseSync', async () => {
 
     expect(pins).toStrictEqual({});
 
-    const id = await sync.savePin({
+    const pinId = nanoid();
+
+    await sync.savePin({
       appId,
-      threadId,
       workspaceId,
       objectId,
-      x: 0,
-      y: 0,
+      pinId,
+      pin: {
+        threadId,
+        x: 0,
+        y: 0,
+      },
     });
 
     pins = await getPins();
 
-    expect(id).toBeTypeOf('string');
-
-    expect(pins?.[objectId]?.[id as string]).toStrictEqual({
+    expect(pins?.[objectId]?.[pinId]).toStrictEqual({
       threadId,
       x: 0,
       y: 0,
@@ -230,14 +235,14 @@ describe('FirebaseSync', async () => {
       appId,
       workspaceId,
       objectId,
-      pinId: id as string,
+      pinId,
       x: 10,
       y: 20,
     });
 
     pins = await getPins();
 
-    expect(pins?.[objectId]?.[id as string]).toStrictEqual({
+    expect(pins?.[objectId]?.[pinId]).toStrictEqual({
       threadId,
       x: 10,
       y: 20,
@@ -247,12 +252,12 @@ describe('FirebaseSync', async () => {
       appId,
       workspaceId,
       objectId,
-      pinId: id as string,
+      pinId,
     });
 
     pins = await getPins();
 
-    expect(pins?.[objectId]?.[id as string]).toBeUndefined();
+    expect(pins?.[objectId]?.[pinId]).toBe(undefined);
   });
 
   test('saveEvent', async () => {

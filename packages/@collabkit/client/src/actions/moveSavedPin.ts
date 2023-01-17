@@ -1,6 +1,6 @@
 import type { Store } from '@collabkit/core';
 
-export async function movePin(
+export async function moveSavedPin(
   store: Store,
   props: { workspaceId: string; objectId: string; pinId: string; x: number; y: number }
 ) {
