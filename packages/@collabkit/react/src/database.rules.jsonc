@@ -182,6 +182,7 @@
           "$objectId": {
             "pinId": {
               ".write": "(auth.token.appId === $appId) && ((root.child('apps').child(auth.token.appId).child('mode').val() === 'UNSECURED' || (root.child('apps').child(auth.token.appId).child('mode').val() === 'SECURED' && $workspaceId === auth.token.workspaceId)))",
+              ".validate": "newData.hasChildren(['x', 'y', 'threadId'])",
               "x": {
                 ".validate": "newData.isNumber()"
               },
@@ -229,7 +230,7 @@
             "$objectId": {
               "pinId": {
                 ".write": "(auth.token.appId === $appId) && ((root.child('apps').child(auth.token.appId).child('mode').val() === 'UNSECURED' || (root.child('apps').child(auth.token.appId).child('mode').val() === 'SECURED' && $workspaceId === auth.token.workspaceId)))",
-                ".validate": "newData.isString()",
+                ".validate": "newData.hasChildren(['x', 'y', 'threadId'])",
                 "x": {
                   ".validate": "newData.isNumber()"
                 },
