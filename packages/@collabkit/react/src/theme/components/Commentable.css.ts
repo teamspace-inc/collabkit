@@ -27,7 +27,7 @@ export const pin = style({
   width: '40px',
   height: '40px',
   marginLeft: '-20px',
-  marginTop: '-20px',
+  marginTop: '-40px',
   pointerEvents: 'none',
 });
 
