@@ -54,6 +54,37 @@ export interface SyncAdapter {
     | { id: string; name?: string; email?: string; color?: string; avatar?: string }
   >;
 
+  savePin(params: {
+    appId: string;
+    workspaceId: string;
+    objectId: string;
+    threadId: string;
+    x: number;
+    y: number;
+  }): Promise<string | null>;
+
+  deletePin(params: {
+    appId: string;
+    workspaceId: string;
+    objectId: string;
+    pinId: string;
+  }): Promise<void>;
+
+  subscribeOpenPins(params: {
+    appId: string;
+    workspaceId: string;
+    subs: Subscriptions;
+    callback: (pins: { [objectId: string]: { [pinId: string]: { x: number; y: number } } }) => void;
+  }): Subscriptions;
+
+  movePin(params: {
+    appId: string;
+    workspaceId: string;
+    pinId: string;
+    x: number;
+    y: number;
+  }): Promise<void>;
+
   saveProfile(params: {
     appId: string;
     userId: string;

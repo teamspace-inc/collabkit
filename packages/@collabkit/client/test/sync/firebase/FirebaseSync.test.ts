@@ -6,7 +6,7 @@ import { setupApp, setupFirebase, setupWorkspaceProfile } from '../../../../test
 
 setupFirebase();
 
-import { Subscriptions, Sync, ThreadInfo } from '@collabkit/core';
+import { Pin, Subscriptions, Sync, ThreadInfo } from '@collabkit/core';
 import { createStore, createWorkspace, createComposer } from '../../../src/store';
 import { FirebaseSync } from '../../../src/sync/firebase/FirebaseSync';
 
@@ -167,6 +167,92 @@ describe('FirebaseSync', async () => {
     });
 
     expect(openThreads.find((thread) => thread.threadId === threadId)).toBeUndefined();
+  });
+
+  async function getPins() {
+    let subs: Subscriptions = {};
+    const promise = new Promise((resolve) =>
+      sync.subscribeOpenPins({
+        appId,
+        workspaceId,
+        subs,
+        callback: resolve,
+      })
+    );
+    const pins = await promise;
+    Object.values(subs).map((sub) => sub());
+    return pins as { [objectId: string]: { [id: string]: Pin } } | null;
+  }
+
+  test('savePin + movePin + deletePin + subscribePins', async () => {
+    const threadId = nanoid();
+
+    await sync.sendMessage({
+      appId,
+      userId,
+      workspaceId,
+      threadId,
+      preview: 'Test Message',
+      event: {
+        type: 'message',
+        body: 'Test Message',
+        createdAt: Date.now(),
+        createdById: userId,
+      },
+    });
+
+    const objectId = 'task-4';
+
+    let pins = await getPins();
+
+    expect(pins).toStrictEqual({});
+
+    const id = await sync.savePin({
+      appId,
+      threadId,
+      workspaceId,
+      objectId,
+      x: 0,
+      y: 0,
+    });
+
+    pins = await getPins();
+
+    expect(id).toBeTypeOf('string');
+
+    expect(pins?.[objectId]?.[id as string]).toStrictEqual({
+      threadId,
+      x: 0,
+      y: 0,
+    });
+
+    await sync.movePin({
+      appId,
+      workspaceId,
+      objectId,
+      pinId: id as string,
+      x: 10,
+      y: 20,
+    });
+
+    pins = await getPins();
+
+    expect(pins?.[objectId]?.[id as string]).toStrictEqual({
+      threadId,
+      x: 10,
+      y: 20,
+    });
+
+    await sync.deletePin({
+      appId,
+      workspaceId,
+      objectId,
+      pinId: id as string,
+    });
+
+    pins = await getPins();
+
+    expect(pins?.[objectId]?.[id as string]).toBeUndefined();
   });
 
   test('saveEvent', async () => {

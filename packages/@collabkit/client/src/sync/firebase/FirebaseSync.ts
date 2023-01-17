@@ -70,6 +70,79 @@ export class FirebaseSync implements Sync.SyncAdapter {
     initFirebase(options);
   }
 
+  movePin(params: {
+    appId: string;
+    objectId: string;
+    workspaceId: string;
+    pinId: string;
+    x: number;
+    y: number;
+  }): Promise<void> {
+    const { appId, objectId, workspaceId, pinId, x, y } = params;
+    const pinPath = ref.path`/pins/${appId}/${workspaceId}/${objectId}/${pinId}`;
+    const openPinPath = ref.path`/views/openPins/${appId}/${workspaceId}/${objectId}/${pinId}`;
+    const updates = {
+      [`${pinPath}/x`]: x,
+      [`${pinPath}/y`]: y,
+      [`${openPinPath}/x`]: x,
+      [`${openPinPath}/y`]: y,
+    };
+    return update(ref`/`, updates);
+  }
+
+  async savePin(params: {
+    appId: string;
+    workspaceId: string;
+    objectId: string;
+    threadId: string;
+    x: number;
+    y: number;
+  }): Promise<string | null> {
+    const { appId, workspaceId, objectId, threadId, x, y } = params;
+    const pin = {
+      threadId,
+      x,
+      y,
+    };
+    const pinRef = await push(ref`/pins/${appId}/${workspaceId}/${objectId}`, pin);
+    const pinId = pinRef.key;
+    if (!pinId) return null;
+    console.log('pinRef.key', pinRef.key);
+    await set(ref`/views/openPins/${appId}/${workspaceId}/${objectId}/${pinId}`, pin);
+    return pinId;
+  }
+
+  async deletePin(params: {
+    appId: string;
+    workspaceId: string;
+    objectId: string;
+    pinId: string;
+  }): Promise<void> {
+    const updates = {
+      [ref.path`/pins/${params.appId}/${params.workspaceId}/${params.objectId}/${params.pinId}`]:
+        null,
+      [ref.path`/views/openPins/${params.appId}/${params.workspaceId}/${params.objectId}/${params.pinId}`]:
+        null,
+    };
+    return update(ref`/`, updates);
+  }
+
+  subscribeOpenPins(params: {
+    appId: string;
+    workspaceId: string;
+    subs: Subscriptions;
+    callback: (pins: { [objectId: string]: { [pinId: string]: { x: number; y: number } } }) => void;
+  }): Subscriptions {
+    params.subs[`pins-${params.appId}-${params.workspaceId}`] ||= onValue(
+      ref`/views/openPins/${params.appId}/${params.workspaceId}`,
+      (snapshot) => {
+        const pins = snapshot.val();
+        params.callback(pins || {});
+      }
+    );
+    return params.subs;
+  }
+
   saveThreadInfo(data: {
     appId: string;
     workspaceId: string;
@@ -78,7 +151,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
     info?: ThreadInfo;
   }): Promise<void> {
     const values = {
-      [`/threadInfo/${data.appId}/${data.workspaceId}/${data.threadId}`]: data.info
+      [ref.path`/threadInfo/${data.appId}/${data.workspaceId}/${data.threadId}`]: data.info
         ? {
             ...data.info,
             defaultSubscribers: idArrayToObject(data.info.defaultSubscribers),
@@ -87,7 +160,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
 
       // there's a pitfall here, if meta is null the thread will not be marked as open...
       // we should keep info separate or just say it has no info here
-      [`/views/openThreads/${data.appId}/${data.workspaceId}/${data.threadId}`]: data.isOpen
+      [ref.path`/views/openThreads/${data.appId}/${data.workspaceId}/${data.threadId}`]: data.isOpen
         ? { meta: data.info?.meta ?? null }
         : null,
     };
@@ -165,18 +238,31 @@ export class FirebaseSync implements Sync.SyncAdapter {
     return { id: eventRef.key };
   }
 
-  async markResolved({
+  markResolved({
     appId,
     workspaceId,
     threadId,
+    pin,
   }: {
     appId: string;
     workspaceId: string;
     threadId: string;
+    pin?: {
+      objectId: string;
+      pinId: string;
+    };
   }) {
-    await update(ref`/`, {
+    const updates = {
       [ref.path`/views/openThreads/${appId}/${workspaceId}/${threadId}`]: null,
-    });
+    };
+
+    if (pin) {
+      // clear open pins for this thread
+      updates[ref.path`/views/openPins/${appId}/${workspaceId}/${pin.objectId}/${pin.pinId}`] =
+        null;
+    }
+
+    return update(ref`/`, updates);
   }
 
   async markSeen({

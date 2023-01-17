@@ -21,6 +21,9 @@ test('createWorkspace', () => {
 
     pendingThreads: {},
     pendingThreadInfo: {},
+
+    pins: {},
+    openPins: {},
   });
 });
 
