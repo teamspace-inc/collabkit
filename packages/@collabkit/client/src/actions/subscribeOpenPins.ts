@@ -5,11 +5,11 @@ function isPin(pin: unknown): pin is Pin {
   return (
     typeof pin === 'object' &&
     pin !== null &&
-    pin.hasOwnProperty('x') &&
-    pin.hasOwnProperty('y') &&
+    'x' in pin &&
+    'y' in pin &&
     typeof pin['x'] === 'number' &&
     typeof pin['y'] === 'number' &&
-    pin.hasOwnProperty('threadId') &&
+    'threadId' in pin &&
     typeof pin['threadId'] === 'string'
   );
 }
