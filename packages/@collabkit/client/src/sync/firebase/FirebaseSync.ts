@@ -90,7 +90,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
     return update(ref`/`, updates);
   }
 
-  async savePin(params: {
+  savePin(params: {
     appId: string;
     workspaceId: string;
     objectId: string;
@@ -102,7 +102,11 @@ export class FirebaseSync implements Sync.SyncAdapter {
     };
   }): Promise<void> {
     const { appId, workspaceId, objectId, pin, pinId } = params;
-    return set(ref`/views/openPins/${appId}/${workspaceId}/${objectId}/${pinId}`, pin);
+    const updates = {
+      [ref.path`/pins/${appId}/${workspaceId}/${objectId}/${pinId}`]: pin,
+      [ref.path`/views/openPins/${appId}/${workspaceId}/${objectId}/${pinId}`]: pin,
+    };
+    return update(ref`/`, updates);
   }
 
   async deletePin(params: {
