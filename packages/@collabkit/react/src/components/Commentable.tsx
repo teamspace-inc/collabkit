@@ -65,7 +65,7 @@ function SavedPin({ pin }: { pin: Pin & { objectId: string } }) {
     middleware: [
       offset(({ rects }) => ({
         crossAxis: rects.reference.width * pin.x,
-        mainAxis: -rects.reference.height * pin.y,
+        mainAxis: -(rects.reference.height * pin.y + rects.floating.height),
       })),
     ],
   });
@@ -122,7 +122,6 @@ export function CommentableRoot(props: { children?: React.ReactNode }) {
   const onPointerDown = useCallback(
     (e: React.PointerEvent) => {
       const commentable = findCommentableElement(store, e);
-      console.log('pointerdown', { commentable, workspaceId });
       if (commentable && workspaceId) {
         const { x, y, width, height } = commentable.element.getBoundingClientRect();
         actions.placePin(store, {
