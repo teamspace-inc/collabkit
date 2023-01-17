@@ -7,6 +7,50 @@ import { InboxChangeEventHandler, ThreadInfoChangeEvent } from 'packages/@collab
 
 export class LocalOnlySync implements SyncAdapter {
   constructor(public workspaceData: any) {}
+  savePin(params: {
+    appId: string;
+    workspaceId: string;
+    objectId: string;
+    threadId: string;
+    x: number;
+    y: number;
+  }): Promise<string | null> {
+    throw new Error('Method not implemented.');
+  }
+  deletePin(params: {
+    appId: string;
+    workspaceId: string;
+    objectId: string;
+    pinId: string;
+  }): Promise<void> {
+    throw new Error('Method not implemented.');
+  }
+  subscribeOpenPins(params: {
+    appId: string;
+    workspaceId: string;
+    subs: Subscriptions;
+    callback: (pins: {
+      [objectId: string]: {
+        [pinId: string]: {
+          // noop
+          x: number;
+          y: number;
+        };
+      };
+    }) => void;
+  }): Subscriptions {
+    throw new Error('Method not implemented.');
+  }
+  movePin(params: {
+    appId: string; // noop
+    // noop
+    workspaceId: string;
+    pinId: string;
+    x: number;
+    y: number;
+  }): Promise<void> {
+    throw new Error('Method not implemented.');
+  }
   getIsTyping(props: {
     appId: string;
     userId: string;
