@@ -58,8 +58,9 @@ const PinMarker = forwardRef<HTMLDivElement, PinProps>(function Pin(props, ref) 
   );
 });
 
-function SavedPin({ pin }: { pin: Pin }) {
-  const { reference, floating } = useFloating({
+function SavedPin({ pin }: { pin: Pin & { objectId: string } }) {
+  const store = useStore();
+  const { reference, floating, strategy, x, y } = useFloating({
     placement: 'top-start',
     middleware: [
       offset(({ rects }) => ({
@@ -69,10 +70,13 @@ function SavedPin({ pin }: { pin: Pin }) {
     ],
   });
   useEffect(() => {
-    //reference()
-  }, []);
+    const element = store.commentableElements.get(pin.objectId);
+    if (element) {
+      reference(element);
+    }
+  });
 
-  return <PinMarker ref={floating} />;
+  return <PinMarker ref={floating} style={{ position: strategy, top: y ?? 0, left: x ?? 0 }} />;
 }
 
 export function CommentableRoot(props: { children?: React.ReactNode }) {
@@ -115,24 +119,31 @@ export function CommentableRoot(props: { children?: React.ReactNode }) {
     [cursorRef, store]
   );
 
-  const onPointerDown = useCallback((e: React.PointerEvent) => {
-    const commentable = findCommentableElement(store, e);
-    if (commentable && workspaceId) {
-      const { x, y, width, height } = commentable.element.getBoundingClientRect();
-      actions.placePin(store, {
-        workspaceId,
-        objectId: commentable.objectId,
-        x: (e.clientX - x) / width,
-        y: (e.clientY - y) / height,
-        threadId: nanoid(),
-      });
-    }
-  }, []);
+  const onPointerDown = useCallback(
+    (e: React.PointerEvent) => {
+      const commentable = findCommentableElement(store, e);
+      console.log('pointerdown', { commentable, workspaceId });
+      if (commentable && workspaceId) {
+        const { x, y, width, height } = commentable.element.getBoundingClientRect();
+        actions.placePin(store, {
+          workspaceId,
+          objectId: commentable.objectId,
+          x: (e.clientX - x) / width,
+          y: (e.clientY - y) / height,
+          threadId: nanoid(),
+        });
+      }
+    },
+    [workspaceId]
+  );
 
   if (props.children == null || !workspaceId) {
     return null;
   }
-  const { pins } = workspaces[workspaceId];
+  const workspace = workspaces[workspaceId];
+  const pins = Object.entries(workspace?.pins ?? {})
+    .map(([objectId, pinMap]) => Object.values(pinMap).map((pin) => ({ ...pin, objectId })))
+    .flat();
 
   return (
     <div
@@ -150,7 +161,7 @@ export function CommentableRoot(props: { children?: React.ReactNode }) {
           </>
         )}
         {Object.values(pins).map((pin, i) => {
-          return null && <SavedPin key={i} pin={pin} />;
+          return <SavedPin key={i} pin={pin} />;
         })}
       </FloatingPortal>
     </div>
