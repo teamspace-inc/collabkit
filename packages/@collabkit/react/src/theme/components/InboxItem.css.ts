@@ -126,5 +126,14 @@ export const composerWrapper = style({
 });
 
 export const threadReplyWrapper = style({
-  paddingLeft: vars.space[8]
+  paddingLeft: vars.space[8],
+  color: "#888888",
+  fontFamily: vars.fontFamily,
+  fontSize: vars.text.base.fontSize,
+  cursor: 'pointer',
+  display: "flex"
+});
+
+export const threadReplyCommentWrapper = style({
+  paddingLeft: vars.space[8],
 });

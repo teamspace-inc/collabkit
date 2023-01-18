@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSnapshot } from 'valtio';
 import { useThreadContext } from '../hooks/useThreadContext';
 import { useInboxStore } from '../hooks/useInboxStore';
 import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
 import { useApp } from '../hooks/useApp';
 import Comment from './Comment';
-import { ArrowBendUpLeft, DotsThree, Smiley } from './icons';
+import { ArrowBendDownRight, ArrowBendUpLeft, DotsThree, Smiley } from './icons';
 import { } from '../../../client/src/actions';
 import { ThreadTarget } from '@collabkit/core';
 import * as styles from '../theme/components/InboxItem.css';
@@ -21,6 +21,7 @@ export function ThreadsInboxItem(props: { formatTimestamp?: (timestamp: number) 
   const timeline = workspace.timeline[threadId];
   const info = workspace.threadInfo[threadId];
   const commentIds = useComments();
+  const [repliesVisible, setrepliesVisible] = useState(false);
 
   if (!timeline) {
     return null;
@@ -49,25 +50,6 @@ export function ThreadsInboxItem(props: { formatTimestamp?: (timestamp: number) 
     <Thread.Provider threadId={threadId} key={`inboxThread-${threadId}`}>
       <div
         className={styles.root({ active })}
-        onClick={() => {
-          const onInboxThreadClick = store.callbacks?.onInboxThreadClick;
-          if (onInboxThreadClick) {
-            onInboxThreadClick({
-              threadId,
-              userId,
-              workspaceId,
-              info: generateObjectIdFromCellId(info),
-            });
-          } else {
-            const pathname = info && info.url && new URL(info.url).pathname;
-            if (pathname && pathname !== window.location.pathname) {
-              window.history.pushState(null, '', pathname);
-            } else {
-              const target: ThreadTarget = { type: 'thread', threadId, workspaceId };
-              actions.viewThread(store, { target });
-            }
-          }
-        }}
       >
         {renderThreadContextPreview?.({
           threadId,
@@ -82,44 +64,58 @@ export function ThreadsInboxItem(props: { formatTimestamp?: (timestamp: number) 
             <Comment.Timestamp className={styles.timestamp} format={props.formatTimestamp} />
             <div style={{ flex: 1 }}></div>
             {firstComment.createdById === userId ? <Thread.ResolveIconButton /> : null}
-            <ArrowBendUpLeft size={16} />
+            <ArrowBendUpLeft size={16} onClick={() => { setrepliesVisible(true) }}/>
             <Smiley size={16} />
             <DotsThree size={16} />
           </div>
-          <div style={{paddingLeft:32}}>
-          <Comment.Body />
+          <div style={{ paddingLeft: 32 }}>
+            <Comment.Body />
           </div>
-          <Thread.UnreadDot />
+          {!repliesVisible && commentIds.length > 1 ?
+            <div className={styles.threadReplyWrapper} onClick={() => { setrepliesVisible(true) }}>
+              <ArrowBendDownRight size={16} color="#888888" style={{ paddingTop: 1 }} /> <div> &nbsp;{commentIds.length - 1} {commentIds.length != 2 ? "replies" : "reply"} </div>
+            </div>
+            :
+            null
+          }
         </Comment.Root>
       </div>
-      {commentIds.length > 1 ?
-        <div className={styles.root()} style={{ paddingLeft: 32 }}>
-          {commentIds.slice(1).map((commentId) => (
-            <Comment.Root commentId={commentId} className={styles.commentRoot}>
-              <div className={styles.nameAndTimestampWrapper}>
-                <Comment.CreatorAvatar />
-                <Comment.CreatorName className={styles.name} />
-                <Comment.Timestamp className={styles.timestamp} format={props.formatTimestamp} />
-                <div style={{ flex: 1 }}></div>
-                <Smiley size={16} />
-                <DotsThree size={16} />
-              </div>
-              <div className={styles.threadReplyWrapper}>
-                <Comment.Body />
-              </div>
-            </Comment.Root>
-          ))}
+      {repliesVisible ?
+        <>
+          {commentIds.length > 1 ?
+            <div className={styles.root()} style={{ paddingLeft: 32 }}>
+              {commentIds.slice(1).map((commentId) => (
+                <Comment.Root commentId={commentId} className={styles.commentRoot}>
+                  <div className={styles.nameAndTimestampWrapper}>
+                    <Comment.CreatorAvatar />
+                    <Comment.CreatorName className={styles.name} />
+                    <Comment.Timestamp className={styles.timestamp} format={props.formatTimestamp} />
+                    <div style={{ flex: 1 }}></div>
+                    <Smiley size={16} />
+                    <DotsThree size={16} />
+                  </div>
+                  <div className={styles.threadReplyCommentWrapper}>
+                    <Comment.Body />
+                  </div>
+                </Comment.Root>
+              ))}
 
-        </div>
-        : null}
-      <div className={styles.composerWrapper}>
-        {store.userId ?
-          <Profile.Provider profileId={store.userId}>
-            <Composer />
-          </Profile.Provider>
-          : null
-        }
-      </div>
+            </div>
+            : null}
+
+          <div className={styles.composerWrapper}>
+            {store.userId ?
+              <Profile.Provider profileId={store.userId}>
+                <Composer />
+              </Profile.Provider>
+              : null
+            }
+          </div>
+        </>
+        :
+        null
+      }
+
     </Thread.Provider>
   );
 }
