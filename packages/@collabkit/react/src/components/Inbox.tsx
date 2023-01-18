@@ -52,7 +52,11 @@ export function Inbox(props: {
   // account for sidebar title height
   const sidebarContext = useOptionalSidebarContext();
   const style = sidebarContext?.titleHeight
-    ? { height: `calc(${props.maxHeight ? props.maxHeight : "100%"} - ${sidebarContext.titleHeight}px)` }
+    ? {
+        height: `calc(${props.maxHeight ? props.maxHeight : '100%'} - ${
+          sidebarContext.titleHeight
+        }px)`,
+      }
     : {};
 
   return (
@@ -61,7 +65,9 @@ export function Inbox(props: {
         {threadIds.length === 0 ? (
           <EmptyState />
         ) : (
-          <Scrollable maxHeight={props.maxHeight ?? 'unset'} autoScroll='bottom'>{inboxItems}</Scrollable>
+          <Scrollable maxHeight={props.maxHeight ?? 'unset'} autoScroll="bottom">
+            {inboxItems}
+          </Scrollable>
         )}
       </div>
     </ThemeWrapper>

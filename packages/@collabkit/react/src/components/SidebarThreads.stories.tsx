@@ -5,12 +5,6 @@ import { CollabKitProvider, SidebarInbox, SidebarInboxButton, ThemeProvider, Thr
 import { SidebarThreadsInbox } from './SidebarThreadsInbox';
 import { ProviderPropsContext, DefaultProviderProps } from './__stories__/context';
 
-const FixedSize = ({ children }: { children: ReactNode }) => (
-  <div style={{ width: 292, height: 300 }}>{children}</div>
-);
-
-const newThreadId = nanoid();
-
 export const SidebarThreads = () => (
   <ProviderPropsContext.Consumer>
     {(config: DefaultProviderProps) => (

@@ -6,7 +6,6 @@ import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
 import { useApp } from '../hooks/useApp';
 import Comment from './Comment';
 import { ArrowBendUpLeft, DotsThree, Smiley } from './icons';
-import { } from '../../../client/src/actions';
 import { ThreadTarget } from '@collabkit/core';
 import * as styles from '../theme/components/InboxItem.css';
 import { Composer, Profile, Thread, useComments } from '..';
