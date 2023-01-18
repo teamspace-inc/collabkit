@@ -38,7 +38,8 @@ export const title = style({
   alignItems: 'center',
   paddingLeft: fallbackVar(vars.inbox.item.paddingLeft, vars.space[4]),
   paddingRight: fallbackVar(vars.inbox.item.paddingRight, vars.space[4]),
-  borderBottom: fallbackVar(vars.sidebar.title.borderBottom, 'none'),
+  borderBottom: fallbackVar(vars.sidebar.title.borderBottom, '2px solid'),
+  borderBottomColor: fallbackVar(vars.sidebar.title.borderBottomColor, vars.color.border),
   fontFamily: vars.fontFamily,
 });
 

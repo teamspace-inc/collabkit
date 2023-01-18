@@ -10,7 +10,8 @@ export const SidebarBase = {
       fontWeight: 'initial',
       paddingTop: 'initial',
       paddingBottom: 'initial',
-      borderBottom: 'initial',
+      borderBottom: '2px solid',
+      borderBottomColor: 'initial',
     },
   },
 };

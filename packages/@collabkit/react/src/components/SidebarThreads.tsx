@@ -78,7 +78,6 @@ export function SidebarThreads(props: {
             </div>
             <CloseSidebarButton />
           </span>
-          <hr color='#EEEEEE' style={{ margin: 0 }} />
           {inboxActive ?
             <>
               <div style={{ display: 'contents' }}>{props.children}</div>
