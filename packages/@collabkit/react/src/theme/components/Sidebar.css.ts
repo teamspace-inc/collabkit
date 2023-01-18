@@ -51,6 +51,8 @@ export const iconButton = recipe({
     cursor: 'pointer',
     userSelect: 'none',
     pointerEvents: 'all',
+    // Hidden till we have notifications ready
+    visibility: 'hidden',
     
     selectors: {
       '&:active': {
