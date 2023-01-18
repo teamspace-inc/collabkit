@@ -2,7 +2,6 @@ import React from 'react';
 import {
   COMMAND_PRIORITY_HIGH,
   COMMAND_PRIORITY_LOW,
-  COMMAND_PRIORITY_NORMAL,
   LexicalEditor,
   RangeSelection,
 } from 'lexical';

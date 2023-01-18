@@ -54,6 +54,42 @@ export interface SyncAdapter {
     | { id: string; name?: string; email?: string; color?: string; avatar?: string }
   >;
 
+  savePin(params: {
+    appId: string;
+    workspaceId: string;
+    objectId: string;
+    pin: {
+      x: number;
+      y: number;
+      threadId: string;
+      eventId: 'default' | string;
+    };
+  }): Promise<string>;
+
+  deletePin(params: {
+    appId: string;
+    workspaceId: string;
+    objectId: string;
+    pinId: string;
+  }): Promise<void>;
+
+  subscribeOpenPins(params: {
+    appId: string;
+    workspaceId: string;
+    subs: Subscriptions;
+    onGet: (pins: { [objectId: string]: { [pinId: string]: { x: number; y: number } } }) => void;
+    onObjectChange: (objectId: string, pins: { [pinId: string]: { x: number; y: number } }) => void;
+    onObjectRemove: (objectId: string) => void;
+  }): Promise<void>;
+
+  movePin(params: {
+    appId: string;
+    workspaceId: string;
+    pinId: string;
+    x: number;
+    y: number;
+  }): Promise<void>;
+
   saveProfile(params: {
     appId: string;
     userId: string;
@@ -154,6 +190,7 @@ export type OpenThreadEventHandler = (event: {
   info: { meta: ThreadMeta } | null;
   wasRemoved?: boolean;
 }) => void;
+
 export type InboxChangeEventHandler = (props: { event: WithID<Event>; threadId: string }) => void;
 
 export type ThreadInfoChangeEvent = {

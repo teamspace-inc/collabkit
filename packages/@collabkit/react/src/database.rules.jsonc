@@ -175,6 +175,31 @@
         }
       }
     },
+    "pins": {
+      "$appId": {
+        "$workspaceId": {
+          ".read": "(auth.token.appId === $appId) && ((root.child('apps').child(auth.token.appId).child('mode').val() === 'UNSECURED' || (root.child('apps').child(auth.token.appId).child('mode').val() === 'SECURED' && $workspaceId === auth.token.workspaceId)))",
+          "$objectId": {
+            "$pinId": {
+              ".write": "(auth.token.appId === $appId) && ((root.child('apps').child(auth.token.appId).child('mode').val() === 'UNSECURED' || (root.child('apps').child(auth.token.appId).child('mode').val() === 'SECURED' && $workspaceId === auth.token.workspaceId)))",
+              ".validate": "newData.hasChildren(['x', 'y', 'threadId', 'eventId'])",
+              "x": {
+                ".validate": "newData.isNumber()"
+              },
+              "y": {
+                ".validate": "newData.isNumber()"
+              },
+              "threadId": {
+                ".validate": "newData.isString() && (root.child('timeline').child($appId).child($workspaceId).child(newData.val()).exists())"
+              },
+              "eventId": {
+                ".validate": "newData.isString() && (root.child('timeline').child($appId).child($workspaceId).child(newData.parent().child('threadId').val()).child(newData.val()).exists())"
+              }
+            }
+          }
+        }
+      }
+    },
     "views": {
       "threadProfiles": {
         "$appId": {
@@ -191,13 +216,52 @@
           }
         }
       },
-
+      "threadPins": {
+        "$appId": {
+          "$workspaceId": {
+            ".read": "auth.token.appId === $appId",
+            "$threadId": {
+              ".read": "auth.token.appId === $appId",
+              "$eventId": {
+                ".read": "auth.token.appId === $appId",
+                ".write": "auth.token.appId === $appId && ((root.child('apps').child(auth.token.appId).child('mode').val() === 'UNSECURED' || (root.child('apps').child(auth.token.appId).child('mode').val() === 'SECURED' && $workspaceId === auth.token.workspaceId)))",
+                ".validate": "newData.isString()"
+              }
+            }
+          }
+        }
+      },
       "openThreads": {
         "$appId": {
           "$workspaceId": {
             ".read": "(auth.token.appId === $appId) && ((root.child('apps').child(auth.token.appId).child('mode').val() === 'UNSECURED' || (root.child('apps').child(auth.token.appId).child('mode').val() === 'SECURED' && $workspaceId === auth.token.workspaceId)))",
             "$threadId": {
               ".write": "(auth.token.appId === $appId) && ((root.child('apps').child(auth.token.appId).child('mode').val() === 'UNSECURED' || (root.child('apps').child(auth.token.appId).child('mode').val() === 'SECURED' && $workspaceId === auth.token.workspaceId)))"
+            }
+          }
+        }
+      },
+      "openPins": {
+        "$appId": {
+          "$workspaceId": {
+            ".read": "(auth.token.appId === $appId) && ((root.child('apps').child(auth.token.appId).child('mode').val() === 'UNSECURED' || (root.child('apps').child(auth.token.appId).child('mode').val() === 'SECURED' && $workspaceId === auth.token.workspaceId)))",
+            "$objectId": {
+              "$pinId": {
+                ".write": "(auth.token.appId === $appId) && ((root.child('apps').child(auth.token.appId).child('mode').val() === 'UNSECURED' || (root.child('apps').child(auth.token.appId).child('mode').val() === 'SECURED' && $workspaceId === auth.token.workspaceId)))",
+                ".validate": "newData.hasChildren(['x', 'y', 'threadId', 'eventId'])",
+                "x": {
+                  ".validate": "newData.isNumber()"
+                },
+                "y": {
+                  ".validate": "newData.isNumber()"
+                },
+                "threadId": {
+                  ".validate": "newData.isString() && (root.child('timeline').child($appId).child($workspaceId).child(newData.val()).exists())"
+                },
+                "eventId": {
+                  ".validate": "newData.isString() && (root.child('timeline').child($appId).child($workspaceId).child(newData.parent().child('threadId').val()).child(newData.val()).exists())"
+                }
+              }
             }
           }
         }

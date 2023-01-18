@@ -80,6 +80,10 @@ export async function writeMessageToFirebase(
         );
       }
 
+      if (store.workspaces[workspaceId].pendingPin) {
+        promises.push(actions.savePin(store));
+      }
+
       promises.push(
         actions.seen(store, {
           target: {

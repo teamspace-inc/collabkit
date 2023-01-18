@@ -41,6 +41,8 @@ export function createWorkspace(): Workspace {
 
     pendingThreads: {},
     pendingThreadInfo: {},
+    pendingPin: null,
+    openPins: {},
   };
 }
 

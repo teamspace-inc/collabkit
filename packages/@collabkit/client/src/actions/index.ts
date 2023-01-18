@@ -50,6 +50,10 @@ import { insertComposerPin } from './insertComposerPin';
 import { startMentioning } from './startMentioning';
 import { initComposer } from './initComposer';
 
+import { savePin } from './savePin';
+import { deletePin } from './deletePin';
+import { movePin } from './movePin';
+
 export type GenerateToken =
   | {
       appId: string;
@@ -124,6 +128,7 @@ export const actions = {
   closePreview,
   closeThread,
   deleteMessage,
+  deletePin,
   disableComposerCommentButton,
   enableComposerCommentButton,
   focus,
@@ -134,10 +139,12 @@ export const actions = {
   insertComposerPin,
   isTyping: debounce(isTyping, 1000, { leading: true, maxWait: 1000 }),
   monitorConnection,
+  movePin,
   openMenu,
   reopenThread,
   resolveThread,
   saveMentionableUsers,
+  savePin,
   saveProfile,
   saveThreadInfo,
   seen,
