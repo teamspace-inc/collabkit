@@ -20,7 +20,6 @@ export async function movePin(
       console.warn('CollabKit: could not find pin to move', pinId, objectId);
     }
   } else if (pendingPin !== null) {
-    store.workspaces[workspaceId].pendingPin;
     pendingPin.x = x;
     pendingPin.y = y;
   } else {
