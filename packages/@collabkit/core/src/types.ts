@@ -397,6 +397,7 @@ export interface UnconfiguredStore {
   mentionableUsers: { [userId: string]: MentionWithColor };
   appState: 'blank' | 'config' | 'ready';
   uiState: 'idle' | 'selecting';
+  nextThreadId: null | string;
   subs: Subscriptions;
   callbacks?: Callbacks;
 }

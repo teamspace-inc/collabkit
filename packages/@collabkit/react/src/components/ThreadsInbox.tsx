@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSnapshot } from 'valtio';
 import { useApp } from '../hooks/useApp';
 import * as styles from '../theme/components/Inbox.css';
@@ -30,7 +30,7 @@ export function ThreadsInbox(props: {
 }) {
   const { store } = useApp();
   const { workspaceId, userId } = useSnapshot(store);
-
+  // const [openThreadsMap, setOpenThreadsMap] = useState(new Map());
   const threadIds = useInbox({ filter: 'open' });
 
   if (!workspaceId) {

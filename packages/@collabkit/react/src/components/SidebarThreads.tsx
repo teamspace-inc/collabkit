@@ -1,5 +1,5 @@
 import { HideSidebarButtonTarget } from '@collabkit/core';
-import React, { useLayoutEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { useSnapshot } from 'valtio';
 import { useApp } from '../hooks/useApp';
 import { useOptionalUserContext } from '../hooks/useUserContext';
@@ -8,9 +8,10 @@ import { Bell, ChatText, X } from './icons';
 import * as styles from '../theme/components/Sidebar.css';
 import { ThemeWrapper } from './ThemeWrapper';
 import Composer from './composer/Composer';
-import { useNewThreadId } from '../hooks/useNewThreadId';
 import { Thread } from './Thread';
 import Profile from './Profile';
+import { useNewThreadId } from '../hooks/useNewThreadId';
+import { nanoid } from 'nanoid';
 
 function CloseSidebarButton() {
   const { store, events } = useApp();
@@ -49,8 +50,7 @@ export function SidebarThreads(props: {
 }) {
   const titleRef = React.useRef<HTMLDivElement>(null);
   const { store } = useApp();
-  const { isSidebarOpen: isSidebarOpen } = useSnapshot(store);
-  const newThreadId = useNewThreadId();
+  const { isSidebarOpen: isSidebarOpen, nextThreadId: nextThreadId } = useSnapshot(store);
   const [inboxActive, setInboxActive] = useState(true);
 
   // set the title height so we can adjust the inbox scrollbar accordingly
@@ -63,6 +63,9 @@ export function SidebarThreads(props: {
     }
   }, [isSidebarOpen]);
 
+  useEffect(() => {
+    store.nextThreadId = nanoid();
+  }, []);
 
   return isSidebarOpen ?
     <ThemeWrapper>
@@ -80,10 +83,10 @@ export function SidebarThreads(props: {
           </span>
           {inboxActive ?
             <>
-              <div style={{ display: 'contents' }}>{props.children}</div>
-              <hr color='#EEEEEE' style={{marginTop : 0 }} />
-              {store.userId && newThreadId ?
-                <Thread.Provider threadId={newThreadId}>
+              <div style={{ display: 'contents' }} >{props.children}</div>
+              <hr color='#EEEEEE' style={{ marginTop: 0 }} />
+              {store.userId && nextThreadId ?
+                <Thread.Provider threadId={nextThreadId} autoFocus={true}>
                   <Profile.Provider profileId={store.userId}>
                     <Composer />
                   </Profile.Provider>

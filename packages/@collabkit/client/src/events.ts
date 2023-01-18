@@ -12,6 +12,7 @@ import type {
 } from '@collabkit/core';
 import { actions } from './actions';
 import { createComposer, markRaw } from './store';
+import { nanoid } from 'nanoid';
 
 export type Events = ReturnType<typeof createEvents>;
 
@@ -167,6 +168,8 @@ export function createEvents(store: Store) {
           e.preventDefault();
           if (store.focusedId.eventId === 'default') {
             actions.sendMessage(store, { ...store.focusedId });
+            store.nextThreadId = nanoid();
+            store.focusedId.threadId = store.nextThreadId;
           }
         }
       }
