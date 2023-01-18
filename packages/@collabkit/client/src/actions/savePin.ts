@@ -1,4 +1,4 @@
-import type { Store } from '@collabkit/core';
+import type { Pin, Store } from '@collabkit/core';
 
 export async function savePin(store: Store) {
   const { appId } = store.config;
@@ -6,14 +6,25 @@ export async function savePin(store: Store) {
   if (!workspaceId) {
     throw new Error('CollabKit: no workspaceId');
   }
-  const pin = store.workspaces[workspaceId].pendingPin;
-  if (!pin) {
+  const { pendingPin } = store.workspaces[workspaceId];
+  if (!pendingPin) {
     console.warn('CollabKit: no pending pin to save');
     return;
   }
-  const id = await store.sync.savePin({ appId, workspaceId, objectId: pin.objectId, pin });
-  store.workspaces[workspaceId].openPins[pin.objectId] ||= {};
-  store.workspaces[workspaceId].openPins[pin.objectId][id] = pin;
+  const pin: Pin = {
+    x: pendingPin.x,
+    y: pendingPin.y,
+    threadId: pendingPin.threadId,
+    eventId: pendingPin.eventId,
+  };
+  const id = await store.sync.savePin({
+    appId,
+    workspaceId,
+    objectId: pendingPin.objectId,
+    pin,
+  });
+  store.workspaces[workspaceId].openPins[pendingPin.objectId] ||= {};
+  store.workspaces[workspaceId].openPins[pendingPin.objectId][id] = pin;
   store.workspaces[workspaceId].pendingPin = null;
   return id;
 }

@@ -9,8 +9,6 @@ import { Store } from '@collabkit/core';
 import { addPin } from '../../src/actions/addPin';
 import { movePin } from '../../src/actions/movePin';
 import { savePin } from '../../src/actions/savePin';
-import { sendMessage } from '../../src/actions/sendMessage';
-import { writeMessageToFirebase } from '../../src/actions/writeMessageToFirebase';
 
 setupFirebase();
 
@@ -80,6 +78,7 @@ test('pin', async () => {
   await movePin(store as Store, { x: 10, y: 20 });
 
   expect(store.workspaces[workspaceId].pendingPin).toStrictEqual({
+    objectId,
     threadId,
     eventId,
     x: 10,
@@ -96,7 +95,7 @@ test('pin', async () => {
 
   expect(store.workspaces[workspaceId].openPins.test[pinId]).toStrictEqual({
     x: 10,
-    y: 10,
+    y: 20,
     threadId,
     eventId,
   });
