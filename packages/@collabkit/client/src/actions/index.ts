@@ -49,8 +49,8 @@ import { closeAll } from './closeAll';
 import { insertComposerPin } from './insertComposerPin';
 import { startMentioning } from './startMentioning';
 import { initComposer } from './initComposer';
-import { placePin } from './placePin';
 
+import { addPin } from './addPin';
 import { savePin } from './savePin';
 import { deletePin } from './deletePin';
 import { movePin } from './movePin';
@@ -121,6 +121,7 @@ export function getConfig(store: Store) {
 }
 
 export const actions = {
+  addPin,
   authenticate,
   blur,
   closeAll,
@@ -142,7 +143,6 @@ export const actions = {
   monitorConnection,
   movePin,
   openMenu,
-  placePin,
   reopenThread,
   resolveThread,
   saveMentionableUsers,

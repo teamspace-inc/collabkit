@@ -130,12 +130,15 @@ export function CommentableRoot(props: { children?: React.ReactNode }) {
       const commentable = findCommentableElement(store, e);
       if (commentable && workspaceId) {
         const { x, y, width, height } = commentable.element.getBoundingClientRect();
-        actions.placePin(store, {
+        actions.addPin(store, {
           workspaceId,
-          objectId: commentable.objectId,
-          x: (e.clientX - x) / width,
-          y: (e.clientY - y) / height,
-          threadId: nanoid(),
+          pin: {
+            x: (e.clientX - x) / width,
+            y: (e.clientY - y) / height,
+            objectId: commentable.objectId,
+            threadId: nanoid(),
+            eventId: nanoid(),
+          },
         });
       }
     },
@@ -146,7 +149,8 @@ export function CommentableRoot(props: { children?: React.ReactNode }) {
     return null;
   }
   const workspace = workspaces[workspaceId];
-  const pins = Object.entries(workspace?.pins ?? {})
+
+  const pins = Object.entries(workspace?.openPins ?? {})
     .map(([objectId, pinMap]) => Object.values(pinMap).map((pin) => ({ ...pin, objectId })))
     .flat();
 
