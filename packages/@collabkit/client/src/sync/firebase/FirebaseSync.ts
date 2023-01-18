@@ -112,10 +112,9 @@ export class FirebaseSync implements Sync.SyncAdapter {
     if (!pinId) {
       throw new Error('pinId is undefined');
     }
-    const { eventId, ...firebasePin } = pin;
     const updates = {
-      [ref.path`/pins/${appId}/${workspaceId}/${objectId}/${pinId}`]: firebasePin,
-      [ref.path`/views/openPins/${appId}/${workspaceId}/${objectId}/${pinId}`]: firebasePin,
+      [ref.path`/pins/${appId}/${workspaceId}/${objectId}/${pinId}`]: pin,
+      [ref.path`/views/openPins/${appId}/${workspaceId}/${objectId}/${pinId}`]: pin,
       [ref.path`/views/threadPins/${appId}/${workspaceId}/${pin.threadId}/${pin.eventId}`]: pinId,
     };
     await update(ref`/`, updates);
