@@ -189,7 +189,7 @@ describe('FirebaseSync', async () => {
   test('savePin + movePin + deletePin', async () => {
     const threadId = nanoid();
 
-    await sync.sendMessage({
+    const { id } = await sync.sendMessage({
       appId,
       userId,
       workspaceId,
@@ -209,14 +209,12 @@ describe('FirebaseSync', async () => {
 
     expect(pins).toStrictEqual({});
 
-    const pinId = nanoid();
-
-    await sync.savePin({
+    const pinId = await sync.savePin({
       appId,
       workspaceId,
       objectId,
-      pinId,
       pin: {
+        eventId: id,
         threadId,
         x: 0,
         y: 0,
@@ -225,7 +223,15 @@ describe('FirebaseSync', async () => {
 
     pins = await getPins();
 
-    expect(pins?.[objectId]?.[pinId]).toStrictEqual({
+    if (!pins) {
+      throw new Error('pins is null');
+    }
+
+    if (!pins[objectId]) {
+      throw new Error('pins[objectId] is null');
+    }
+
+    expect(pins[objectId][pinId]).toStrictEqual({
       threadId,
       x: 0,
       y: 0,
@@ -253,6 +259,8 @@ describe('FirebaseSync', async () => {
       workspaceId,
       objectId,
       pinId,
+      threadId,
+      eventId: id,
     });
 
     pins = await getPins();

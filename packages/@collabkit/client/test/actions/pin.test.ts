@@ -6,8 +6,8 @@ import { init } from '../../src/actions/init';
 import { FirebaseSync } from '../../src/sync/firebase/FirebaseSync';
 import { Store } from '@collabkit/core';
 
-import { placePin } from '../../src/actions/placePin';
-import { movePlacedPin } from '../../src/actions/movePlacedPin';
+import { addPin } from '../../src/actions/addPin';
+import { movePin } from '../../src/actions/movePin';
 import { savePin } from '../../src/actions/savePin';
 import { sendMessage } from '../../src/actions/sendMessage';
 import { writeMessageToFirebase } from '../../src/actions/writeMessageToFirebase';
@@ -45,7 +45,11 @@ test('pin', async () => {
     sync
   );
 
-  await store.sync?.sendMessage({
+  if (!store.sync) {
+    throw new Error('store.sync is null');
+  }
+
+  const { id: eventId } = await store.sync.sendMessage({
     appId,
     userId,
     workspaceId,
@@ -54,44 +58,46 @@ test('pin', async () => {
     event: {
       type: 'message',
       body: 'test',
-      createdAt: store.sync?.serverTimestamp(),
+      createdAt: store.sync.serverTimestamp(),
       createdById: userId,
     },
   });
 
-  const pinId = nanoid();
+  const objectId = 'test';
+  const x = 0;
+  const y = 0;
 
-  placePin(store as Store, { pinId, workspaceId, objectId: 'test', x: 0, y: 0 });
+  addPin(store as Store, { workspaceId, objectId, pin: { x, y, threadId, eventId } });
 
-  expect(store.workspaces[workspaceId].pendingPins.test).toStrictEqual({
-    [pinId]: {
-      x: 0,
-      y: 0,
-    },
+  expect(store.workspaces[workspaceId].pendingPin).toStrictEqual({
+    objectId,
+    threadId,
+    eventId,
+    x,
+    y,
   });
 
-  movePlacedPin(store as Store, { workspaceId, objectId: 'test', pinId, x: 10, y: 10 });
+  await movePin(store as Store, { x: 10, y: 20 });
 
-  expect(store.workspaces[workspaceId].pendingPins.test[pinId]).toStrictEqual({
+  expect(store.workspaces[workspaceId].pendingPin).toStrictEqual({
+    threadId,
+    eventId,
     x: 10,
-    y: 10,
+    y: 20,
   });
 
-  await savePin(store as Store, { workspaceId, objectId: 'test', pinId, threadId });
+  const pinId = await savePin(store as Store);
 
-  // expect(store.workspaces[workspaceId].pendingPins.test).toStrictEqual({});
+  if (!pinId) {
+    throw new Error('pinId is null');
+  }
 
-  expect(store.workspaces[workspaceId].pins.test).toStrictEqual({
-    [pinId]: {
-      x: 10,
-      y: 10,
-      threadId,
-    },
-  });
+  expect(store.workspaces[workspaceId].pendingPin).toBeNull();
 
   expect(store.workspaces[workspaceId].openPins.test[pinId]).toStrictEqual({
     x: 10,
     y: 10,
     threadId,
+    eventId,
   });
 });

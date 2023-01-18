@@ -23,6 +23,8 @@ import type {
   ThreadInfo,
   ThreadMeta,
   Sync,
+  Pin,
+  PendingPin,
 } from '@collabkit/core';
 import { FirebaseId } from '@collabkit/core';
 
@@ -90,23 +92,34 @@ export class FirebaseSync implements Sync.SyncAdapter {
     return update(ref`/`, updates);
   }
 
-  savePin(params: {
+  async savePin(params: {
     appId: string;
     workspaceId: string;
     objectId: string;
-    pinId: string;
     pin: {
+      eventId: string;
       threadId: string;
       x: number;
       y: number;
     };
-  }): Promise<void> {
-    const { appId, workspaceId, objectId, pin, pinId } = params;
+  }): Promise<string> {
+    const { appId, workspaceId, objectId, pin } = params;
+    if (pin.eventId === 'default') {
+      throw new Error('Cannot save pin with eventId "default"');
+    }
+    const pinRef = await push(ref`/pins/${appId}/${workspaceId}/${objectId}`);
+    const pinId = pinRef.key;
+    if (!pinId) {
+      throw new Error('pinId is undefined');
+    }
+    const { eventId, ...firebasePin } = pin;
     const updates = {
-      [ref.path`/pins/${appId}/${workspaceId}/${objectId}/${pinId}`]: pin,
-      [ref.path`/views/openPins/${appId}/${workspaceId}/${objectId}/${pinId}`]: pin,
+      [ref.path`/pins/${appId}/${workspaceId}/${objectId}/${pinId}`]: firebasePin,
+      [ref.path`/views/openPins/${appId}/${workspaceId}/${objectId}/${pinId}`]: firebasePin,
+      [ref.path`/views/threadPins/${appId}/${workspaceId}/${pin.threadId}/${pin.eventId}`]: pinId,
     };
-    return update(ref`/`, updates);
+    await update(ref`/`, updates);
+    return pinId;
   }
 
   async deletePin(params: {
@@ -114,12 +127,14 @@ export class FirebaseSync implements Sync.SyncAdapter {
     workspaceId: string;
     objectId: string;
     pinId: string;
+    threadId: string;
+    eventId: string;
   }): Promise<void> {
+    const { appId, workspaceId, objectId, pinId, threadId, eventId } = params;
     const updates = {
-      [ref.path`/pins/${params.appId}/${params.workspaceId}/${params.objectId}/${params.pinId}`]:
-        null,
-      [ref.path`/views/openPins/${params.appId}/${params.workspaceId}/${params.objectId}/${params.pinId}`]:
-        null,
+      [ref.path`/pins/${appId}/${workspaceId}/${objectId}/${pinId}`]: null,
+      [ref.path`/views/openPins/${appId}/${workspaceId}/${objectId}/${pinId}`]: null,
+      [ref.path`/views/threadPins/${appId}/${workspaceId}/${threadId}/${eventId}`]: null,
     };
     return update(ref`/`, updates);
   }
@@ -171,11 +186,13 @@ export class FirebaseSync implements Sync.SyncAdapter {
     isOpen: boolean;
     info?: ThreadInfo;
   }): Promise<void> {
+    const { appId, workspaceId, threadId, info } = data;
+    // bug here can't save undefined info to firebase
     const values = {
-      [ref.path`/threadInfo/${data.appId}/${data.workspaceId}/${data.threadId}`]: data.info
+      [ref.path`/threadInfo/${appId}/${workspaceId}/${threadId}`]: info
         ? {
-            ...data.info,
-            defaultSubscribers: idArrayToObject(data.info.defaultSubscribers),
+            ...info,
+            defaultSubscribers: idArrayToObject(info.defaultSubscribers),
           }
         : null,
 
@@ -360,6 +377,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
     threadId,
     preview,
     event,
+    pin,
   }: {
     appId: string;
     userId: string;
@@ -367,8 +385,10 @@ export class FirebaseSync implements Sync.SyncAdapter {
     threadId: string;
     preview: string;
     event: Event;
+    pin?: PendingPin | null;
   }): Promise<{ id: string }> {
     // generate an id for the message
+    // use firebase ids as they are chronological
     const eventRef = await push(timelineRef(appId, workspaceId, threadId));
 
     const id = eventRef.key;

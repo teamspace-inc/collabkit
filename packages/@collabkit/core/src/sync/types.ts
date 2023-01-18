@@ -58,13 +58,13 @@ export interface SyncAdapter {
     appId: string;
     workspaceId: string;
     objectId: string;
-    pinId: string;
     pin: {
       x: number;
       y: number;
       threadId: string;
+      eventId: 'default' | string;
     };
-  }): Promise<void>;
+  }): Promise<string>;
 
   deletePin(params: {
     appId: string;

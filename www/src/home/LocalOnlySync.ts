@@ -12,12 +12,13 @@ export class LocalOnlySync implements SyncAdapter {
     workspaceId: string;
     objectId: string;
     pin: {
+      eventId: string;
       threadId: string;
       x: number;
       y: number;
     };
-  }): Promise<void> {
-    return Promise.resolve();
+  }): Promise<string> {
+    return Promise.resolve('foo');
   }
   deletePin(params: {
     appId: string;
