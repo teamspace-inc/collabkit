@@ -1,6 +1,11 @@
 import { actions } from '@collabkit/client';
 import { Pin, Store } from '@collabkit/core';
-import { FloatingPortal, offset, useFloating } from '@floating-ui/react-dom-interactions';
+import {
+  autoUpdate,
+  FloatingPortal,
+  offset,
+  useFloating,
+} from '@floating-ui/react-dom-interactions';
 import { nanoid } from 'nanoid';
 import React, { forwardRef, useCallback, useEffect, useRef } from 'react';
 import { useSnapshot } from 'valtio';
@@ -68,6 +73,7 @@ function SavedPin({ pin }: { pin: Pin & { objectId: string } }) {
         mainAxis: -(rects.reference.height * pin.y + rects.floating.height),
       })),
     ],
+    whileElementsMounted: autoUpdate,
   });
   useEffect(() => {
     const element = store.commentableElements.get(pin.objectId);
