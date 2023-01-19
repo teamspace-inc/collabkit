@@ -14,7 +14,6 @@ import {
   MentionNode,
   TimestampNode,
   $isMentionNode,
-  ComposerPin,
   InlineTextNode,
 } from '@collabkit/editor';
 import { TimestampPlugin } from './TimestampPlugin';
@@ -35,8 +34,7 @@ import Profile from '../Profile';
 
 import { IconButton } from '../IconButton';
 import { EditorPlugin } from './EditorPlugin';
-import { At } from '../icons';
-import { MapPin } from 'phosphor-react';
+import { MapPin, At } from '../icons';
 import { vars } from '../../theme/theme/index.css';
 import { KeyPlugin } from './KeyPlugin';
 
@@ -315,4 +313,3 @@ Composer.TypingIndicator = TypingIndicator;
 Composer.ButtonGroup = ComposerButtonGroup;
 Composer.MentionsButton = ComposerMentionsButton;
 Composer.PinButton = ComposerPinButton;
-Composer.Pin = ComposerPin;

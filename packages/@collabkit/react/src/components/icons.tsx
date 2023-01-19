@@ -9,3 +9,4 @@ export { default as X } from 'phosphor-react/dist/icons/X.esm.js';
 export { default as Check } from 'phosphor-react/dist/icons/Check.esm.js';
 export { default as DotsThree } from 'phosphor-react/dist/icons/DotsThree.esm.js';
 export { default as At } from 'phosphor-react/dist/icons/At.esm.js';
+export { default as MapPin } from 'phosphor-react/dist/icons/MapPin.esm.js';
