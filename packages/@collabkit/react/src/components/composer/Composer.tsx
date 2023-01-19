@@ -14,7 +14,6 @@ import {
   MentionNode,
   TimestampNode,
   $isMentionNode,
-  ComposerPin,
   InlineTextNode,
 } from '@collabkit/editor';
 import { TimestampPlugin } from './TimestampPlugin';
@@ -315,4 +314,3 @@ Composer.TypingIndicator = TypingIndicator;
 Composer.ButtonGroup = ComposerButtonGroup;
 Composer.MentionsButton = ComposerMentionsButton;
 Composer.PinButton = ComposerPinButton;
-Composer.Pin = ComposerPin;
