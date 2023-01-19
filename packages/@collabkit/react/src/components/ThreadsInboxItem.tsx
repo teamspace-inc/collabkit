@@ -9,6 +9,7 @@ import { ArrowBendDownRight, ArrowBendUpLeft, DotsThree, Smiley } from './icons'
 import * as styles from '../theme/components/ThreadsInboxItem.css';
 import { Composer, Profile, Thread, useComments } from '..';
 import { generateObjectIdFromCellId, actions } from '@collabkit/client';
+import { SidebarThreadActionButton } from './SidebarThreadActionButton';
 
 export function ThreadsInboxItem(props: { formatTimestamp?: (timestamp: number) => string }) {
   const { threadId, workspaceId, userId } = useThreadContext();
@@ -61,9 +62,13 @@ export function ThreadsInboxItem(props: { formatTimestamp?: (timestamp: number) 
             <Comment.CreatorName className={styles.name} />
             <Comment.Timestamp className={styles.timestamp} format={props.formatTimestamp} />
             <div style={{ flex: 1 }}></div>
-            {firstComment.createdById === userId ? <Thread.ResolveIconButton /> : null}
-            <ArrowBendUpLeft size={16} onClick={() => { setrepliesVisible(true) }}/>
-            <DotsThree size={16} />
+            <div className={styles.actionButtonWrapper}>
+              {firstComment.createdById === userId ? <SidebarThreadActionButton type='resolveThreadButton'/> : null}
+              <div onClick={() => { setrepliesVisible(true) }}>
+                <SidebarThreadActionButton type='sidebarReplyButton' />
+              </div>
+              <SidebarThreadActionButton type='sidebarElementOptionsButton' />
+            </div>
           </div>
           <div style={{ paddingLeft: 32 }}>
             <Comment.Body />
@@ -88,8 +93,9 @@ export function ThreadsInboxItem(props: { formatTimestamp?: (timestamp: number) 
                     <Comment.CreatorName className={styles.name} />
                     <Comment.Timestamp className={styles.timestamp} format={props.formatTimestamp} />
                     <div style={{ flex: 1 }}></div>
-                    <Smiley size={16} />
-                    <DotsThree size={16} />
+                    <div className={styles.actionButtonWrapper}>
+              <SidebarThreadActionButton type='sidebarElementOptionsButton' />
+            </div>
                   </div>
                   <div className={styles.threadReplyCommentWrapper}>
                     <Comment.Body />

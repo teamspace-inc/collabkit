@@ -20,9 +20,25 @@ globalStyle(`${commentRoot} p`, {
   textOverflow: 'ellipsis',
 });
 
-export const nameAndTimestampWrapper = style([styles.nameAndTimestampWrapper,{
-  alignItems: 'center',
-}]);
+export const nameAndTimestampWrapper = style([
+  styles.nameAndTimestampWrapper,
+  {
+    alignItems: 'center',
+  },
+]);
+
+export const actionButtonWrapper = style([
+  styles.nameAndTimestampWrapper,
+  {
+    gap: '0',
+    visibility: 'hidden',
+    selectors: {
+      '&:hover': {
+        visibility: 'visible',
+      },
+    },
+  },
+]);
 
 export const unreadDot = style([styles.unreadDot]);
 

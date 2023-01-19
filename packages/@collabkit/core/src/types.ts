@@ -173,7 +173,9 @@ export type Target =
   | ShowSidebarButtonTarget
   | HideSidebarButtonTarget
   | ComposerPinButtonTarget
-  | ComposerMentionsButtonTarget;
+  | ComposerMentionsButtonTarget
+  | SidebarThreadActonButtonTarget
+  ;
 
 export type ComposerMentionsButtonTarget = {
   type: 'composerMentionsButton';
@@ -409,3 +411,11 @@ export interface Store extends UnconfiguredStore {
 
 export type Unsubscribe = () => void;
 export type Subscriptions = { [subId: string]: Unsubscribe };
+
+export type SidebarButtonType = 'resolveThreadButton' | 'sidebarEmojiButton' | 'sidebarElementOptionsButton' | 'sidebarReplyButton';
+
+export type SidebarThreadActonButtonTarget = {
+  type: SidebarButtonType;
+  threadId: string;
+  workspaceId: string;
+};
