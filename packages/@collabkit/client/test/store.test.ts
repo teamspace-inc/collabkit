@@ -65,5 +65,6 @@ test('createStore', () => {
     subs: {},
     callbacks: {},
     mentionableUsers: {},
+    nextThreadId: null,
   });
 });
