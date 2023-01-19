@@ -7,8 +7,7 @@ import { useApp } from '../hooks/useApp';
 import Comment from './Comment';
 import { ArrowBendDownRight, ArrowBendUpLeft, DotsThree, Smiley } from './icons';
 import { } from '../../../client/src/actions';
-import { ThreadTarget } from '@collabkit/core';
-import * as styles from '../theme/components/InboxItem.css';
+import * as styles from '../theme/components/ThreadsInboxItem.css';
 import { Composer, Profile, Thread, useComments } from '..';
 import { generateObjectIdFromCellId, actions } from '@collabkit/client';
 
