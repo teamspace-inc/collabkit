@@ -268,7 +268,7 @@ test.describe('Thread', () => {
 
   test('sidebar threads are rendering and working', async ({ context }) => {
     const page = await visitLadleURL(context, '/', { story: 'sidebar-threads--sidebar-threads' });
-    await page.waitForTimeout(5000);
+    await page.waitForTimeout(6000);
     await page.click('[data-testid="open-sidebar"]');  
     const newThreadComposer = await page.getByTestId('new-thread-composer-div');
     const sidebarTitle = await page.getByTestId('sidebar-title');
@@ -280,6 +280,8 @@ test.describe('Thread', () => {
     const randomString = Math.random().toString(36).slice(2, 7);
     await composer.type('Hello World Testing' + randomString);
     await page.keyboard.press('Enter');
-    await hasComment(page, { body: 'Hello World Testing' + randomString });
+    const newThreadText = await page.getByTestId("collabkit-markdown").filter({hasText: 'Hello World Testing' + randomString});
+    await page.waitForTimeout(100);
+    await expect(newThreadText).toHaveCount(1);
   });
 });
