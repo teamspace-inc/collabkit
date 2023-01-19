@@ -1,4 +1,26 @@
-const colors = {
+export type Color =
+  | 'amber'
+  | 'blue'
+  | 'brown'
+  | 'crimson'
+  | 'cyan'
+  | 'grass'
+  | 'green'
+  | 'indigo'
+  | 'lime'
+  | 'mint'
+  | 'orange'
+  | 'pink'
+  | 'plum'
+  | 'purple'
+  | 'red'
+  | 'sky'
+  | 'teal'
+  | 'tomato'
+  | 'violet'
+  | 'yellow';
+
+const colors: Record<Color, string> = {
   amber: 'hsla(41, 95%, 66%, 1)',
   blue: 'hsla(211, 94%, 62%, 1)',
   brown: 'hsla(28, 36%, 54%, 1)',
@@ -33,5 +55,3 @@ export function getRandomColor(): Color {
 export function getProfileColor(color: Color) {
   return colors[color as Color];
 }
-
-export type Color = keyof typeof colors;
