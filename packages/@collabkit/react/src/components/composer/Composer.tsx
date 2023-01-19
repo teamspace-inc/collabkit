@@ -268,10 +268,9 @@ function ComposerEditor(props: {
         />
         <TimestampPlugin />
       </LexicalComposer>
-      <Composer.ButtonGroup>
-        {/* <Composer.PinButton /> */}
+      {/* <Composer.ButtonGroup>
         <Composer.MentionsButton />
-      </Composer.ButtonGroup>
+      </Composer.ButtonGroup> */}
     </div>
   );
 }
