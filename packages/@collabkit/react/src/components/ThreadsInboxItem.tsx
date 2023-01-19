@@ -64,7 +64,6 @@ export function ThreadsInboxItem(props: { formatTimestamp?: (timestamp: number) 
             <div style={{ flex: 1 }}></div>
             {firstComment.createdById === userId ? <Thread.ResolveIconButton /> : null}
             <ArrowBendUpLeft size={16} onClick={() => { setrepliesVisible(true) }}/>
-            <Smiley size={16} />
             <DotsThree size={16} />
           </div>
           <div style={{ paddingLeft: 32 }}>
