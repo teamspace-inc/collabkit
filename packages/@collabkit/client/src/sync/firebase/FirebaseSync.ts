@@ -24,7 +24,6 @@ import type {
   ThreadMeta,
   Sync,
   Pin,
-  PendingPin,
 } from '@collabkit/core';
 import { FirebaseId } from '@collabkit/core';
 
@@ -92,28 +91,38 @@ export class FirebaseSync implements Sync.SyncAdapter {
     return update(ref`/`, updates);
   }
 
+  nextPinId(params: { appId: string; objectId: string; workspaceId: string }): string {
+    const { appId, objectId, workspaceId } = params;
+    const pinRef = push(ref`/pins/${appId}/${workspaceId}/${objectId}`);
+    if (!pinRef.key) throw new Error('pinId is undefined');
+    return pinRef.key;
+  }
+
   async savePin(params: {
     appId: string;
     workspaceId: string;
-    objectId: string;
+    pinId: string;
     pin: {
+      objectId: string;
       eventId: string;
       threadId: string;
       x: number;
       y: number;
     };
   }): Promise<string> {
-    const { appId, workspaceId, objectId, pin } = params;
+    const { appId, workspaceId, pin } = params;
+    const { objectId } = pin;
     if (pin.eventId === 'default') {
       throw new Error('Cannot save pin with eventId "default"');
     }
-    const pinRef = await push(ref`/pins/${appId}/${workspaceId}/${objectId}`);
-    const pinId = pinRef.key;
-    if (!pinId) {
-      throw new Error('pinId is undefined');
-    }
+    const pinId = params.pinId;
     const updates = {
-      [ref.path`/pins/${appId}/${workspaceId}/${objectId}/${pinId}`]: pin,
+      [ref.path`/pins/${appId}/${workspaceId}/${objectId}/${pinId}`]: {
+        x: pin.x,
+        y: pin.y,
+        eventId: pin.eventId,
+        threadId: pin.threadId,
+      },
       [ref.path`/views/openPins/${appId}/${workspaceId}/${objectId}/${pinId}`]: pin,
       [ref.path`/views/threadPins/${appId}/${workspaceId}/${pin.threadId}/${pin.eventId}`]: pinId,
     };
@@ -384,7 +393,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
     threadId: string;
     preview: string;
     event: Event;
-    pin?: PendingPin | null;
+    pin?: Pin | null;
   }): Promise<{ id: string }> {
     // generate an id for the message
     // use firebase ids as they are chronological

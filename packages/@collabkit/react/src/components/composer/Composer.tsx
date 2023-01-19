@@ -231,6 +231,7 @@ function ComposerEditor(props: {
   const handleChange = useCallback(
     (editorState: EditorState, editor: LexicalEditor) => {
       editorState.read(() => {
+        console.log(editor);
         const newBody = $convertToMarkdownString(TRANSFORMERS);
         const mentions = $getRoot()
           .getAllTextNodes()
@@ -270,7 +271,7 @@ function ComposerEditor(props: {
         <TimestampPlugin />
       </LexicalComposer>
       <Composer.ButtonGroup>
-        {/* <Composer.PinButton /> */}
+        <Composer.PinButton />
         <Composer.MentionsButton />
       </Composer.ButtonGroup>
     </div>

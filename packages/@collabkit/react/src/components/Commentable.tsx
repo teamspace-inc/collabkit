@@ -6,7 +6,6 @@ import {
   offset,
   useFloating,
 } from '@floating-ui/react-dom-interactions';
-import { nanoid } from 'nanoid';
 import React, { forwardRef, useCallback, useEffect, useRef } from 'react';
 import { useSnapshot } from 'valtio';
 import { useCommentableRef } from '../hooks/useCommentableRef';
@@ -90,7 +89,7 @@ export function CommentableRoot(props: { children?: React.ReactNode }) {
   const overlayRef = useRef<HTMLDivElement | null>(null);
   const hoveredElementRef = useRef<HTMLElement | SVGElement | null>(null);
   const store = useStore();
-  const { uiState, workspaces, workspaceId } = useSnapshot(store);
+  const { uiState, workspaces, workspaceId, pin } = useSnapshot(store);
 
   const updateCursor = useCallback(
     (e: React.PointerEvent) => {
@@ -130,15 +129,10 @@ export function CommentableRoot(props: { children?: React.ReactNode }) {
       const commentable = findCommentableElement(store, e);
       if (commentable && workspaceId) {
         const { x, y, width, height } = commentable.element.getBoundingClientRect();
-        actions.addPin(store, {
-          workspaceId,
-          pin: {
-            x: (e.clientX - x) / width,
-            y: (e.clientY - y) / height,
-            objectId: commentable.objectId,
-            threadId: nanoid(),
-            eventId: nanoid(),
-          },
+        actions.attachPin(store, {
+          x: (e.clientX - x) / width,
+          y: (e.clientY - y) / height,
+          objectId: commentable.objectId,
         });
       }
     },
@@ -153,6 +147,10 @@ export function CommentableRoot(props: { children?: React.ReactNode }) {
   const pins = Object.entries(workspace?.openPins ?? {})
     .map(([objectId, pinMap]) => Object.values(pinMap).map((pin) => ({ ...pin, objectId })))
     .flat();
+
+  if (pin) {
+    pins.push(pin);
+  }
 
   return (
     <div

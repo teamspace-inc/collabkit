@@ -55,6 +55,7 @@ export async function sendMessage(
       preview: body,
       type: 'message',
       mentions,
+      composerEventId: eventId,
     });
 
     if (!event) {

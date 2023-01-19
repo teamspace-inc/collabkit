@@ -116,12 +116,19 @@ export function createEvents(store: Store) {
           break;
         }
         case 'composerPinButton': {
-          actions.insertComposerPin(store, target);
+          actions.startSelecting(store);
+
+          // ideally we use this for more than just the pin button
+          // it stores which composer is active atm
+          store.composerId = { ...target, type: 'composer' };
           break;
         }
         case 'composerMentionsButton': {
           actions.startMentioning(store, target);
           break;
+        }
+        case 'attachPin': {
+          actions.attachPin(store, target);
         }
       }
     },
@@ -196,13 +203,9 @@ export function createEvents(store: Store) {
       }
     },
 
-    onMouseOver: (e: React.MouseEvent, props: { target: Target }) => {
-      actions.hover(store, props);
-    },
+    onMouseOver: (e: React.MouseEvent, props: { target: Target }) => {},
 
-    onMouseOut: (e: React.MouseEvent, props: { target: Target }) => {
-      actions.unhover(store);
-    },
+    onMouseOut: (e: React.MouseEvent, props: { target: Target }) => {},
 
     onPointerDown: (e: React.PointerEvent, props: { target: Target }) => {
       if (e.button !== 0) {
@@ -243,12 +246,6 @@ export function createEvents(store: Store) {
               actions.reopenThread(store, props.target.workspaceId, props.target.threadId);
               break;
             }
-          }
-          break;
-        }
-        case 'selecting': {
-          if (props.target.type === 'addCommentButton') {
-            actions.stopSelecting(store);
           }
           break;
         }

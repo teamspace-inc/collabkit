@@ -33,7 +33,7 @@ import '@tremor/react/dist/esm/tremor.css';
 import { isAfter, isBefore, isEqual } from 'date-fns';
 
 import { performance } from './data';
-import { AddCommentButton, Commentable, useCommentableRef } from '@collabkit/react';
+import { AddCommentButton, Commentable, Thread, useCommentableRef } from '@collabkit/react';
 
 type Kpi = {
   title: string;
@@ -367,44 +367,51 @@ export function DashboardExample() {
   });
 
   return (
-    <Commentable.Root>
-      <main className="bg-slate-50 p-6 sm:p-10 h-full">
-        <Flex>
-          <Block truncate>
-            <Title>Dashboard</Title>
-            <Text>View core metrics on the state of your company.</Text>
-          </Block>
-          <div className="px-2">
-            <AddCommentButton />
-          </div>
-          <Datepicker
-            minDate={minDate}
-            maxDate={maxDate}
-            defaultStartDate={minDate}
-            defaultEndDate={maxDate}
-            enableRelativeDates={false}
-            handleSelect={(start, end) => {
-              setStartDate(start);
-              setEndDate(end);
-            }}
-            maxWidth="max-w-xs"
-          />
-        </Flex>
+    <div>
+      <Commentable.Root>
+        <main className="bg-slate-50 p-6 sm:p-10 h-full">
+          <Flex>
+            <Block truncate>
+              <Title>Dashboard</Title>
+              <Text>View core metrics on the state of your company.</Text>
+            </Block>
+            <div className="px-2">
+              <AddCommentButton />
+            </div>
+            <Datepicker
+              minDate={minDate}
+              maxDate={maxDate}
+              defaultStartDate={minDate}
+              defaultEndDate={maxDate}
+              enableRelativeDates={false}
+              handleSelect={(start, end) => {
+                setStartDate(start);
+                setEndDate(end);
+              }}
+              maxWidth="max-w-xs"
+            />
+          </Flex>
 
-        <TabList defaultValue={1} handleSelect={(value) => setSelectedView(value)} marginTop="mt-6">
-          <Tab value={1} text="Overview" />
-          <Tab value={2} text="Detail" />
-        </TabList>
+          <TabList
+            defaultValue={1}
+            handleSelect={(value) => setSelectedView(value)}
+            marginTop="mt-6"
+          >
+            <Tab value={1} text="Overview" />
+            <Tab value={2} text="Detail" />
+          </TabList>
 
-        {selectedView === 1 ? (
-          <>
-            <KpiCardGrid />
-            <ChartView chartData={chartData} />
-          </>
-        ) : (
-          <TableView />
-        )}
-      </main>
-    </Commentable.Root>
+          {selectedView === 1 ? (
+            <>
+              <KpiCardGrid />
+              <ChartView chartData={chartData} />
+            </>
+          ) : (
+            <TableView />
+          )}
+        </main>
+      </Commentable.Root>
+      <Thread threadId="test123" />
+    </div>
   );
 }

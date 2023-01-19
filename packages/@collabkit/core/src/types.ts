@@ -173,7 +173,18 @@ export type Target =
   | ShowSidebarButtonTarget
   | HideSidebarButtonTarget
   | ComposerPinButtonTarget
-  | ComposerMentionsButtonTarget;
+  | ComposerMentionsButtonTarget
+  | AttachPinTarget;
+
+export type AttachPinTarget = {
+  type: 'attachPin';
+  threadId: string;
+  workspaceId: string;
+  eventId: string | 'default';
+  objectId: string;
+  x: number;
+  y: number;
+};
 
 export type ComposerMentionsButtonTarget = {
   type: 'composerMentionsButton';
@@ -331,6 +342,18 @@ export interface Composer {
   isMentioning: boolean;
 }
 
+export type Pin = PinEvent & {
+  objectId: string;
+  x: number;
+  y: number;
+};
+
+export type PinEvent = {
+  workspaceId: string;
+  threadId: string;
+  eventId: string;
+};
+
 export interface SeenBy {
   [userId: string]: { seenAt: number; seenUntilId: string };
 }
@@ -355,20 +378,10 @@ export interface Workspace {
   threadProfiles: { [threadId: string]: { [userId: string]: boolean } };
   fetchedProfiles: { [threadId: string]: { [userId: string]: boolean } };
   openPins: { [objectId: string]: { [pinId: string]: Pin } };
-  pendingPin: PendingPin | null;
 }
 
 // get all pins for the workspace that have an open thread attached to them (we don't want resolved ones)
 // get all threads for these pins in one query (comment sidebar speed)
-
-export type PendingPin = Pin & { objectId: string };
-
-export type Pin = {
-  threadId: string;
-  eventId: string;
-  x: number;
-  y: number;
-};
 
 export interface UnconfiguredStore {
   sync: null | SyncAdapter;
@@ -379,15 +392,13 @@ export interface UnconfiguredStore {
   userId: string | null;
   user: UserProps | null;
   workspaceId: string | null;
-  selectedId: null | Target;
   focusedId: null | Target;
-  hoveringId: null | Target;
   reactingId: null | Target;
-  // composingId: null | ThreadTarget;
   menuId: null | Target;
   viewingId: null | Target;
   previewingId: null | Target;
   editingId: null | CommentTarget;
+  composerId: null | ComposerTarget;
   config: null | Config;
   avatarErrors: { [avatar: string]: boolean };
   profiles: { [profileId: string]: Profile | undefined };
@@ -397,9 +408,9 @@ export interface UnconfiguredStore {
   mentionableUsers: { [userId: string]: MentionWithColor };
   appState: 'blank' | 'config' | 'ready';
   uiState: 'idle' | 'selecting';
+  pin: null | WithID<Pin>;
   subs: Subscriptions;
   callbacks?: Callbacks;
-
   clientX: number;
   clientY: number;
   commentableElements: Map<string, HTMLElement | SVGElement>;

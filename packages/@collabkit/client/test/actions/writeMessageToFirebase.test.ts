@@ -72,6 +72,7 @@ test('writes a message to a threads timeline', async () => {
     body: 'Hello world',
     preview: 'Hello world',
     type: 'message',
+    composerEventId: 'default',
   });
 
   expect(await message).toStrictEqual({

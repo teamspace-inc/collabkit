@@ -38,10 +38,8 @@ export function createWorkspace(): Workspace {
     timelineInitialFetchComplete: {},
     threadProfiles: {},
     fetchedProfiles: {},
-
     pendingThreads: {},
     pendingThreadInfo: {},
-    pendingPin: null,
     openPins: {},
   };
 }
@@ -61,12 +59,12 @@ export function createStore(): UnconfiguredStore {
     workspaceId: null,
     focusedId: null,
     menuId: null,
-    selectedId: null,
     reactingId: null,
     viewingId: null,
     previewingId: null,
     editingId: null,
-    hoveringId: null,
+    pin: null,
+    composerId: null,
     workspaces: {},
     profiles: {},
     avatarErrors: {},

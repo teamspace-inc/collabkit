@@ -44,4 +44,6 @@ export async function deleteMessage(
     delete store.workspaces[workspaceId].openThreads[threadId];
     await store.sync.markResolved({ appId, workspaceId, threadId });
   }
+
+  // find pins and delete them
 }
