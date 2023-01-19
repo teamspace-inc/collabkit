@@ -28,7 +28,7 @@ import * as styles from '../../theme/components/Composer.css';
 import { useOptionalCommentContext } from '../../hooks/useCommentContext';
 import { useSnapshot } from 'valtio';
 import { $getRoot, $setSelection, EditorState, LexicalEditor } from 'lexical';
-import { TypingIndicator } from '../TypingIndicator';
+import { ComposerTypingIndicator } from '../TypingIndicator';
 
 import Profile from '../Profile';
 
@@ -308,7 +308,7 @@ Composer.Root = ComposerRoot;
 Composer.ContentEditable = ComposerContentEditable;
 Composer.Editor = ComposerEditor;
 Composer.Placeholder = ComposerPlaceholder;
-Composer.TypingIndicator = TypingIndicator;
+Composer.TypingIndicator = ComposerTypingIndicator;
 
 Composer.ButtonGroup = ComposerButtonGroup;
 Composer.MentionsButton = ComposerMentionsButton;
