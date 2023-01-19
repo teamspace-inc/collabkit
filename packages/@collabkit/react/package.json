@@ -22,7 +22,8 @@
   "sideEffects": false,
   "scripts": {
     "dev": "ladle serve",
-    "build": "yarn clean && tsc && vite build && rollup --config rollup.config.js",
+    "build": "yarn clean && tsc && vite build && rollup --config rollup.config.js && yarn check-build",
+    "check-build": "yarn tsc --noEmit --esModuleInterop dist/collabkit-react.d.ts",
     "clean": "rimraf dist types *.tsbuildinfo",
     "preview": "vite preview",
     "prepublishOnly": "yarn build",
