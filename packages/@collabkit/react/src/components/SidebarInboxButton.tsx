@@ -14,7 +14,7 @@ export function SidebarInboxButton(props: { children?: React.ReactNode; classNam
 
   return (
     <ThemeWrapper>
-      <button className={props.className ?? inboxButton} onPointerDown={onPointerDown}>
+      <button className={props.className ?? inboxButton} onPointerDown={onPointerDown} data-testid="open-sidebar">
         {props.children ? (
           props.children
         ) : (

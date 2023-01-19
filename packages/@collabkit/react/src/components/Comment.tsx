@@ -143,7 +143,7 @@ export function CommentBody({ ...props }: React.ComponentPropsWithoutRef<'div'>)
   }
 
   return (
-    <div data-testid="collabkit-comment-body" {...props} className={props.className ?? styles.body}>
+    <div {...props} className={props.className ?? styles.body}>
       <Markdown
         className={canClickLinks ? styles.markdown : styles.markdownLinksNotClickable}
         body={body}

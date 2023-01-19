@@ -72,7 +72,7 @@ export function SidebarThreads(props: {
       <SidebarContext.Provider value={{ titleHeight }}>
         <div className={styles.root} style={{ position: props.strategy ?? 'fixed' }}>
           <span ref={titleRef} className={styles.title}>
-            <div style={{ flex: 1 }}>{props.title ?? 'Comments'}</div>
+            <div style={{ flex: 1 }} data-testid="sidebar-title">{props.title ?? 'Comments'}</div>
             <div className={styles.iconButton({ active: inboxActive })} onClick={() => { setInboxActive(true) }}>
               <ChatText size={16} mirrored={true} />
             </div>
@@ -86,7 +86,7 @@ export function SidebarThreads(props: {
               <div style={{ display: 'contents' }} >{props.children}</div>
               <hr color='#EEEEEE' style={{ marginTop: 0 }} />
               {store.userId && nextThreadId ?
-                <Thread.Provider threadId={nextThreadId} autoFocus={true}>
+                <Thread.Provider threadId={nextThreadId} autoFocus={true} data-testid="new-thread-composer-div">
                   <Profile.Provider profileId={store.userId}>
                     <Composer />
                   </Profile.Provider>

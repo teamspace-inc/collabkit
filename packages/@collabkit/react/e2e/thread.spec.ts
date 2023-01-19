@@ -3,7 +3,7 @@ import { test, expect, BrowserContext, Page } from '@playwright/test';
 // @ts-expect-error
 import { setupApp, setupFirebase } from './setup.ts';
 
-import { nanoid } from 'nanoid';
+import { nanoid, random } from 'nanoid';
 
 const HOST =
   process.env.NODE_ENV === 'development'
@@ -11,7 +11,7 @@ const HOST =
     : process.env.PREVIEW_URL_DEMO ?? 'https://internal.demo.collabkit.dev';
 
 const LADLE_HOST =
-  process.env.NODE_ENV === 'development' ? 'http://localhost:61000' : process.env.PREVIEW_URL_LADLE;
+process.env.PREVIEW_URL_LADLE ? process.env.PREVIEW_URL_LADLE : 'http://localhost:61000';
 setupFirebase();
 
 async function visitThreadAsUser(
@@ -83,6 +83,7 @@ async function visitLadleURL(context: BrowserContext, URL: string, params: Recor
   const page = await context.newPage();
   const parameters = new URLSearchParams(params);
   const url = LADLE_HOST + URL + '?' + parameters.toString();
+  console.error("meet", url)
   await page.goto(url);
   return page;
 }
@@ -264,4 +265,21 @@ test.describe('Thread', () => {
   //   await page.waitForTimeout(500);
   //   await hasMentionInComposer(page, 'Bob');
   // });
+
+  test('sidebar threads are rendering and working', async ({ context }) => {
+    const page = await visitLadleURL(context, '/', { story: 'sidebar-threads--sidebar-threads' });
+    await page.waitForTimeout(5000);
+    await page.click('[data-testid="open-sidebar"]');  
+    const newThreadComposer = await page.getByTestId('new-thread-composer-div');
+    const sidebarTitle = await page.getByTestId('sidebar-title');
+    await expect(await sidebarTitle.innerText()).toBe("Comments")
+    await expect(newThreadComposer).toBeTruthy();
+    const composer = await page.getByTestId('collabkit-composer-contenteditable');
+    await composer.click();
+    await page.waitForTimeout(100);
+    const randomString = Math.random().toString(36).slice(2, 7);
+    await composer.type('Hello World Testing' + randomString);
+    await page.keyboard.press('Enter');
+    await hasComment(page, { body: 'Hello World Testing' + randomString });
+  });
 });
