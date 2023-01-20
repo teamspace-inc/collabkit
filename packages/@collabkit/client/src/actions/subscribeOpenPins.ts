@@ -58,7 +58,6 @@ export function subscribeOpenPins(store: Store) {
 
   function onGet(pins: any) {
     if (isRoot(pins)) {
-      console.log('[CollabKit] got pins', pins);
       store.workspaces[workspaceId].openPins = pins;
     } else {
       console.error('[CollabKit] invalid pins', pins);
