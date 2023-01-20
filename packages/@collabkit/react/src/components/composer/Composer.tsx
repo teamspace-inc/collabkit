@@ -231,7 +231,6 @@ function ComposerEditor(props: {
   const handleChange = useCallback(
     (editorState: EditorState, editor: LexicalEditor) => {
       editorState.read(() => {
-        console.log(editor);
         const newBody = $convertToMarkdownString(TRANSFORMERS);
         const mentions = $getRoot()
           .getAllTextNodes()

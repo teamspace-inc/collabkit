@@ -50,6 +50,7 @@ import { toggleCommentReaction } from './toggleCommentReaction';
 import { toggleEmojiReactionPicker } from './toggleEmojiReactionPicker';
 import { updateComment } from './updateComment';
 import { viewThread } from './viewThread';
+import { subscribeOpenPins } from './subscribeOpenPins';
 
 export type GenerateToken =
   | {
@@ -131,7 +132,6 @@ export const actions = {
   enableComposerCommentButton,
   focus,
   hideSidebar,
-
   init,
   initComposer,
   insertComposerPin,
@@ -156,6 +156,7 @@ export const actions = {
   stopSelecting,
   stopTyping,
   subscribeInbox,
+  subscribeOpenPins,
   subscribeOpenThreads,
   subscribeProfile,
   subscribeProfiles,
@@ -164,7 +165,6 @@ export const actions = {
   subscribeWorkspace,
   toggleCommentReaction,
   toggleEmojiReactionPicker,
-
   updateComment,
   viewThread,
 };

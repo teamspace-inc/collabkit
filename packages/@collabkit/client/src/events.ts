@@ -128,7 +128,9 @@ export function createEvents(store: Store) {
           break;
         }
         case 'attachPin': {
-          actions.attachPin(store, target);
+          if (store.uiState === 'selecting') {
+            actions.attachPin(store, target);
+          }
         }
       }
     },

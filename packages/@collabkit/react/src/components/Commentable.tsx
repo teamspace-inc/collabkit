@@ -1,4 +1,3 @@
-import { actions } from '@collabkit/client';
 import { Pin, Store } from '@collabkit/core';
 import {
   autoUpdate,
@@ -8,6 +7,7 @@ import {
 } from '@floating-ui/react-dom-interactions';
 import React, { forwardRef, useCallback, useEffect, useRef } from 'react';
 import { useSnapshot } from 'valtio';
+import { useApp } from '../hooks/useApp';
 import { useCommentableRef } from '../hooks/useCommentableRef';
 import { useStore } from '../hooks/useStore';
 import * as styles from '../theme/components/Commentable.css';
@@ -89,6 +89,7 @@ export function CommentableRoot(props: { children?: React.ReactNode }) {
   const overlayRef = useRef<HTMLDivElement | null>(null);
   const hoveredElementRef = useRef<HTMLElement | SVGElement | null>(null);
   const store = useStore();
+  const { events } = useApp();
   const { uiState, workspaces, workspaceId, pin } = useSnapshot(store);
 
   const updateCursor = useCallback(
@@ -129,10 +130,13 @@ export function CommentableRoot(props: { children?: React.ReactNode }) {
       const commentable = findCommentableElement(store, e);
       if (commentable && workspaceId) {
         const { x, y, width, height } = commentable.element.getBoundingClientRect();
-        actions.attachPin(store, {
-          x: (e.clientX - x) / width,
-          y: (e.clientY - y) / height,
-          objectId: commentable.objectId,
+        events.onClick(e, {
+          target: {
+            type: 'attachPin',
+            objectId: commentable.objectId,
+            x: (e.clientX - x) / width,
+            y: (e.clientY - y) / height,
+          },
         });
       }
     },

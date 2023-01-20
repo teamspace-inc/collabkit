@@ -178,9 +178,6 @@ export type Target =
 
 export type AttachPinTarget = {
   type: 'attachPin';
-  threadId: string;
-  workspaceId: string;
-  eventId: string | 'default';
   objectId: string;
   x: number;
   y: number;
