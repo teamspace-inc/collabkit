@@ -267,7 +267,9 @@ test.describe('Thread', () => {
 
   test('sidebar threads are rendering and working', async ({ context }) => {
     const page = await visitLadleURL(context, '/', { story: 'sidebar-threads--sidebar-threads' });
-    await page.waitForTimeout(6000);
+    const maxTimeToLoad = 5000;
+    // To make sure that the page loads in constant maximum amount of time, we want the test to break if time taken is more than this
+    await page.waitForTimeout(maxTimeToLoad);
     await page.click('[data-testid="open-sidebar"]');  
     const newThreadComposer = await page.getByTestId('new-thread-composer-div');
     const sidebarTitle = await page.getByTestId('sidebar-title');
