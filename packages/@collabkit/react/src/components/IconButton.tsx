@@ -21,7 +21,7 @@ const iconContextBase = {
 export const IconButton = forwardRef<HTMLDivElement, Props>(function IconButton(props: Props, ref) {
   const { active, ...otherProps } = props;
   const className = props.className ?? styles.button({ active });
-  const iconContextValue = { ...iconContextBase, ...props };
+  const iconContextValue = { ...iconContextBase, ...otherProps };
 
   return (
     <div {...otherProps} className={className} ref={ref}>
