@@ -231,15 +231,15 @@ test.describe('Thread', () => {
     const page2 = await visitThreadAsUser(context, { ...bob, appId, apiKey });
     await sendComment(page, 'Hello World');
     typeCommentSlowly(page, 'Hello this is a really long comment to test the typing indicator');
-    const indicator = await page2.getByTestId('collabkit-typing-indicator');
+    const indicator = page2.getByTestId('collabkit-typing-indicator');
     await expect(indicator).toContainText('Alice is typing…');
   });
 
   test('verify custom placeholder works for threads', async ({ context }) => {
     const page = await visitLadleURL(context, '/', { story: 'thread--custom-placeholder' });
-    const placeholder = await page.getByTestId('collabkit-composer-placeholder');
+    const placeholder = page.getByTestId('collabkit-composer-placeholder');
     const text = await placeholder.innerText();
-    await expect(text).toBe('custom placeholder here');
+    expect(text).toBe('custom placeholder here');
   });
 
   test('can mention users with @', async ({ context }) => {
@@ -253,14 +253,15 @@ test.describe('Thread', () => {
     await hasMentionInComposer(page, 'Bob');
   });
 
-  test('can mention users by clicking the @ mention button', async ({ context }) => {
-    const { page, appId, apiKey } = await createAppAndVisitThreadAsUser(context, alice);
-    const page2 = await visitThreadAsUser(context, { ...bob, appId, apiKey });
-    await sendComment(page2, 'Hello World');
-    await clickMentionButton(page);
-    await hasMentionInTypeahead(page, 'Bob');
-    await page.keyboard.press('Enter');
-    await page.waitForTimeout(500);
-    await hasMentionInComposer(page, 'Bob');
-  });
+  // XXX: This test is temporarily disable because the @ mention button is hidden for now
+  // test('can mention users by clicking the @ mention button', async ({ context }) => {
+  //   const { page, appId, apiKey } = await createAppAndVisitThreadAsUser(context, alice);
+  //   const page2 = await visitThreadAsUser(context, { ...bob, appId, apiKey });
+  //   await sendComment(page2, 'Hello World');
+  //   await clickMentionButton(page);
+  //   await hasMentionInTypeahead(page, 'Bob');
+  //   await page.keyboard.press('Enter');
+  //   await page.waitForTimeout(500);
+  //   await hasMentionInComposer(page, 'Bob');
+  // });
 });
