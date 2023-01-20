@@ -35,8 +35,7 @@ import Profile from '../Profile';
 
 import { IconButton } from '../IconButton';
 import { EditorPlugin } from './EditorPlugin';
-import { At } from '../icons';
-import { MapPin } from 'phosphor-react';
+import { At, MapPin } from '../icons';
 import { vars } from '../../theme/theme/index.css';
 import { KeyPlugin } from './KeyPlugin';
 
