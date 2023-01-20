@@ -18,7 +18,7 @@ export function SidebarThreadActionButton(props: {
     workspaceId,
     type: props.type,
   };
-  const className = props.className ?? styles.button({ active: true });
+  const className = props.className ?? styles.button();
 
   return (
     <div

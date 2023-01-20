@@ -83,7 +83,6 @@ async function visitLadleURL(context: BrowserContext, URL: string, params: Recor
   const page = await context.newPage();
   const parameters = new URLSearchParams(params);
   const url = LADLE_HOST + URL + '?' + parameters.toString();
-  console.error("meet", url)
   await page.goto(url);
   return page;
 }

@@ -19,12 +19,12 @@ export const button = recipe({
     pointerEvents: 'all',
     borderRadius: fallbackVar(vars.iconButton.borderRadius, '4px'),
     color: fallbackVar(vars.iconButton.color, vars.color.icon),
-    background: fallbackVar(vars.iconButton.background, 'transparent'),
     fontFamily: vars.fontFamily,
-    
+    background: fallbackVar(vars.color.surface, 'transparent'),
+
     selectors: {
       '&:hover': {
-        background: fallbackVar(vars.iconButton.active.background, vars.color.surfaceOverlay),
+        background: fallbackVar(vars.iconButton.hover.background, vars.color.surfaceOverlay),
       },
     },
   },
