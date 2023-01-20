@@ -84,7 +84,7 @@ function SavedPin({ pin }: { pin: Pin & { objectId: string } }) {
   return <PinMarker ref={floating} style={{ position: strategy, top: y ?? 0, left: x ?? 0 }} />;
 }
 
-export function CommentableRoot(props: { children?: React.ReactNode }) {
+export function CommentableRoot(props: { className?: string; children?: React.ReactNode }) {
   const cursorRef = useRef<HTMLDivElement | null>(null);
   const overlayRef = useRef<HTMLDivElement | null>(null);
   const hoveredElementRef = useRef<HTMLElement | SVGElement | null>(null);
@@ -162,6 +162,7 @@ export function CommentableRoot(props: { children?: React.ReactNode }) {
       onPointerMove={updateCursor}
       onPointerOut={updateCursor}
       onPointerDown={onPointerDown}
+      className={props.className}
     >
       {props.children}
       <FloatingPortal id="collabkit-floating-root">

@@ -33,7 +33,7 @@ import '@tremor/react/dist/esm/tremor.css';
 import { isAfter, isBefore, isEqual } from 'date-fns';
 
 import { performance } from './data';
-import { AddCommentButton, Commentable, Thread, useCommentableRef } from '@collabkit/react';
+import { Commentable, Thread, useCommentableRef } from '@collabkit/react';
 
 type Kpi = {
   title: string;
@@ -367,17 +367,14 @@ export function DashboardExample() {
   });
 
   return (
-    <div>
-      <Commentable.Root>
-        <main className="bg-slate-50 p-6 sm:p-10 h-full">
+    <Commentable.Root>
+      <div className="flex h-screen w-screen">
+        <main className="bg-slate-50 p-8 sm:p-10 flex-1 h-screen overflow-scroll">
           <Flex>
             <Block truncate>
               <Title>Dashboard</Title>
               <Text>View core metrics on the state of your company.</Text>
             </Block>
-            <div className="px-2">
-              <AddCommentButton />
-            </div>
             <Datepicker
               minDate={minDate}
               maxDate={maxDate}
@@ -410,8 +407,10 @@ export function DashboardExample() {
             <TableView />
           )}
         </main>
-      </Commentable.Root>
-      <Thread threadId="test123" />
-    </div>
+        <div className="h-screen border">
+          <Thread threadId="test123" />
+        </div>
+      </div>
+    </Commentable.Root>
   );
 }
