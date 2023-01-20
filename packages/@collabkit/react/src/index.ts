@@ -47,7 +47,6 @@ import { Scrollable } from './components/Scrollable';
 import CommentList from './components/CommentList';
 import { Popover } from './components/Popover';
 import { Button } from './components/Button';
-import { AddCommentButton } from './components/AddCommentButton';
 import { Commentable } from './components/Commentable';
 
 import { Markdown } from './components/Markdown';
@@ -73,7 +72,6 @@ export {
   useUnreadCommentsCount as useUnreadCount,
   useUnreadThreadsCount,
   // advanced
-  AddCommentButton,
   Button,
   Comment,
   CommentList,

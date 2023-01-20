@@ -163,7 +163,6 @@ export type Target =
   | ThreadCloseButtonTarget
   | ReopenThreadButtonTarget
   | FloatingCommentButtonTarget
-  | AddCommentButtonTarget
   | CommentableContainer
   | Commentable
   | MenuTarget
@@ -216,8 +215,6 @@ export type CommentType = 'default' | 'inline-start' | 'inline' | 'inline-end';
 export type CommentableContainer = { type: 'commentableContainer'; workspaceId: string };
 
 export type FloatingCommentButtonTarget = { type: 'floatingCommentButton' };
-
-export type AddCommentButtonTarget = { type: 'addCommentButton'; workspaceId: string };
 
 export type ComposerTarget = {
   type: 'composer';

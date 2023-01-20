@@ -232,10 +232,6 @@ export function createEvents(store: Store) {
             //   actions.viewThread(store, { ...props, isPreview: false });
             //   break;
             // }
-            case 'addCommentButton': {
-              actions.startSelecting(store);
-              break;
-            }
             case 'closeThreadButton': {
               actions.closeAll(store);
               break;
