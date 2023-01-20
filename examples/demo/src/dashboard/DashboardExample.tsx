@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { ComponentPropsWithoutRef, forwardRef, useState } from 'react';
 import Info from 'phosphor-react/dist/icons/Info.esm.js';
 import {
   AreaChart,
@@ -19,7 +19,6 @@ import {
   Tab,
   Table,
   TableBody,
-  TableCell,
   TableHead,
   TableHeaderCell,
   TableRow,
@@ -311,36 +310,14 @@ function TableView() {
             .filter((item) => isSalesPersonSelected(item))
             .map((item) => (
               <TableRow key={item.name}>
-                <TableCell>{item.name}</TableCell>
-                <TableCell textAlignment="text-right">
-                  <Commentable.Container objectId={`${item.name}-leads`}>
-                    {item.leads}
-                  </Commentable.Container>
-                </TableCell>
-                <TableCell textAlignment="text-right">
-                  <Commentable.Container objectId={`${item.name}-sales`}>
-                    {item.sales}
-                  </Commentable.Container>
-                </TableCell>
-                <TableCell textAlignment="text-right">
-                  <Commentable.Container objectId={`${item.name}-quota`}>
-                    {item.quota}
-                  </Commentable.Container>
-                </TableCell>
-                <TableCell textAlignment="text-right">
-                  <Commentable.Container objectId={`${item.name}-variance`}>
-                    {item.variance}
-                  </Commentable.Container>
-                </TableCell>
-                <TableCell textAlignment="text-right">
-                  <Commentable.Container objectId={`${item.name}-region`}>
-                    {item.region}
-                  </Commentable.Container>
-                </TableCell>
-                <TableCell textAlignment="text-right">
-                  <Commentable.Container objectId={`${item.name}-status`}>
-                    <BadgeDelta deltaType={item.deltaType} text={item.status} size="xs" />
-                  </Commentable.Container>
+                <TableCell objectId={`${item.name}-name`}>{item.name}</TableCell>
+                <TableCell objectId={`${item.name}-leads`}>{item.leads}</TableCell>
+                <TableCell objectId={`${item.name}-sales`}>{item.sales}</TableCell>
+                <TableCell objectId={`${item.name}-quota`}>{item.quota}</TableCell>
+                <TableCell objectId={`${item.name}-variance`}>{item.variance}</TableCell>
+                <TableCell objectId={`${item.name}-region`}>{item.region}</TableCell>
+                <TableCell objectId={`${item.name}-status`}>
+                  <BadgeDelta deltaType={item.deltaType} text={item.status} size="xs" />
                 </TableCell>
               </TableRow>
             ))}
@@ -414,3 +391,17 @@ export function DashboardExample() {
     </Commentable.Root>
   );
 }
+
+const TableCell = forwardRef<
+  HTMLTableCellElement,
+  { objectId: string } & ComponentPropsWithoutRef<'td'>
+>((props) => {
+  const ref = useCommentableRef(props.objectId);
+  return (
+    <td
+      className="tr-align-middle tr-whitespace-nowrap tr-tabular-nums tr-text-left tr-pl-4 tr-pr-4 tr-pt-4 tr-pb-4"
+      ref={ref}
+      {...props}
+    />
+  );
+});
