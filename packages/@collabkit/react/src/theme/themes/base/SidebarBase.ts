@@ -1,3 +1,5 @@
+import { vars } from '../../theme/index.css';
+
 export const SidebarBase = {
   sidebar: {
     boxShadow: 'initial',
@@ -13,5 +15,8 @@ export const SidebarBase = {
       borderBottom: '2px solid',
       borderBottomColor: 'initial',
     },
-  },
+    unreadDot: {
+      background: vars.color.attentionBlue
+    },
+  }
 };

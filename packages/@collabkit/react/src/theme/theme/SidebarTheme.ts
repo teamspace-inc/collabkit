@@ -15,5 +15,9 @@ export const SidebarTheme = {
       paddingBottom: 'sidebar-title-padding-bottom',
       paddingTop: 'sidebar-title-padding-top',
     },
+
+    unreadDot: {
+      background: 'sidebar-unreadDot-color'
+    }
   },
 };

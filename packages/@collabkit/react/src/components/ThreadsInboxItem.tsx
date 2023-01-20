@@ -10,6 +10,7 @@ import * as styles from '../theme/components/ThreadsInboxItem.css';
 import { Composer, Profile, Thread, useComments } from '..';
 import { generateObjectIdFromCellId, actions } from '@collabkit/client';
 import { SidebarThreadActionButton } from './SidebarThreadActionButton';
+import { SidebarThreadUnreadDot } from './SidebarThreadUnreadDot';
 
 export function ThreadsInboxItem(props: { formatTimestamp?: (timestamp: number) => string }) {
   const { threadId, workspaceId, userId } = useThreadContext();
@@ -70,8 +71,13 @@ export function ThreadsInboxItem(props: { formatTimestamp?: (timestamp: number) 
               <SidebarThreadActionButton type='sidebarElementOptionsButton' />
             </div>
           </div>
-          <div style={{ paddingLeft: 32 }}>
-            <Comment.Body />
+          <div className={styles.commentThreadWrapper}>
+            <div style={{ flex: 1 }}>
+              <Comment.Body />
+            </div>
+            <div style={{justifyContent: 'center', alignItems: 'center',   display: "flex"}}>
+              <SidebarThreadUnreadDot />
+            </div>
           </div>
           {!repliesVisible && commentIds.length > 1 ?
             <div className={styles.threadReplyWrapper} onClick={() => { setrepliesVisible(true) }}>

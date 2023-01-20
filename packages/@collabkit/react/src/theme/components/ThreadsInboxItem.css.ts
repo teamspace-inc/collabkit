@@ -40,7 +40,11 @@ export const actionButtonWrapper = style([
   },
 ]);
 
-export const unreadDot = style([styles.unreadDot]);
+export const unreadDot = style([styles.unreadDot, {
+  position: 'inherit',
+  left: 'inherit',
+  background: fallbackVar(vars.sidebar.unreadDot.background, vars.color.attentionBlue),
+}]);
 
 export const header = style([styles.header]);
 
@@ -106,4 +110,10 @@ export const threadReplyWrapper = style({
 
 export const threadReplyCommentWrapper = style({
   paddingLeft: vars.space[8],
+});
+
+export const commentThreadWrapper = style({
+  paddingLeft: vars.space[8],   
+  display: 'flex',
+  flexDirection: 'row'
 });
