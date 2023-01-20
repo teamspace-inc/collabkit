@@ -249,7 +249,7 @@ function TableView() {
 
   return (
     <Card marginTop="mt-6">
-      <div className="sm:mt-6 hidden sm:block sm:flex sm:justify-start sm:space-x-2">
+      <div className="sm:mt-6 hidden sm:flex sm:justify-start sm:space-x-2">
         <MultiSelectBox
           handleSelect={(value) => setSelectedNames(value)}
           placeholder="Select Salespeople"
