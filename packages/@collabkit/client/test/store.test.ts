@@ -22,7 +22,6 @@ test('createWorkspace', () => {
     pendingThreads: {},
     pendingThreadInfo: {},
 
-    pendingPin: null,
     openPins: {},
   });
 });
@@ -57,12 +56,16 @@ test('createStore', () => {
     viewingId: null,
     previewingId: null,
     editingId: null,
-    hoveringId: null,
     workspaces: {},
     profiles: {},
     avatarErrors: {},
     subs: {},
     callbacks: {},
     mentionableUsers: {},
+    pin: null,
+    clientX: 0,
+    clientY: 0,
+    composerId: null,
+    commentableElements: new Map(),
   });
 });

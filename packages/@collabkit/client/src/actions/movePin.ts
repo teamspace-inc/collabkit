@@ -9,7 +9,7 @@ export async function movePin(
   const { workspaceId } = store;
   if (!workspaceId) throw new Error('CollabKit: no workspaceId set');
   const { objectId, pinId, x, y } = props;
-  const { pendingPin } = store.workspaces[workspaceId];
+  const { pin } = store;
   if (pinId && objectId) {
     await store.sync.movePin({ appId, workspaceId, pinId, x, y });
     const pin = store.workspaces[workspaceId].openPins[pinId]?.[objectId];
@@ -19,10 +19,10 @@ export async function movePin(
     } else {
       console.warn('CollabKit: could not find pin to move', pinId, objectId);
     }
-  } else if (pendingPin !== null) {
-    pendingPin.x = x;
-    pendingPin.y = y;
+  } else if (pin !== null) {
+    pin.x = x;
+    pin.y = y;
   } else {
-    console.warn('CollabKit: no pending pin or pinId to move', pendingPin);
+    console.warn('CollabKit: no pending pin or pinId to move', pin);
   }
 }

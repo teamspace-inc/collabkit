@@ -1,7 +1,7 @@
 import type { Store } from '@collabkit/core';
 import { insertComposerPin } from './insertComposerPin';
 
-export async function attachPin(
+export function attachPin(
   store: Store,
   props: {
     x: number;
@@ -26,4 +26,5 @@ export async function attachPin(
   insertComposerPin(store, {
     pinId: id,
   });
+  return id;
 }

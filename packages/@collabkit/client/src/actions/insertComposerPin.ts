@@ -9,6 +9,7 @@ export function insertComposerPin(store: Store, props: { pinId: string }) {
   const { workspaceId, threadId, eventId } = composerId;
   const workspace = store.workspaces[workspaceId];
   const { editor } = workspace.composers[threadId][eventId];
+  // editor is not present in unit tests
   editor?.update(() => {
     const selection = $getSelection();
     if ($isRangeSelection(selection)) {

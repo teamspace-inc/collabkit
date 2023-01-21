@@ -59,7 +59,6 @@ export async function writeMessageToFirebase(
   }
 
   const { pin } = store;
-  console.log(pin);
 
   // close emoji picker on send
   store.reactingId = null;
@@ -124,7 +123,7 @@ export async function writeMessageToFirebase(
         })
       );
 
-      await Promise.all(promises);
+      await Promise.allSettled(promises);
     } catch (e) {
       console.error('CollabKit: error stopping typing indicator', e);
     }

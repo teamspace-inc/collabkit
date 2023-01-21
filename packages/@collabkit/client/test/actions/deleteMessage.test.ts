@@ -1,12 +1,13 @@
 import { expect, test } from 'vitest';
 import { nanoid } from 'nanoid';
 import { setupApp, setupFirebase, setupWorkspaceProfile } from '../../../test-utils/src';
-import { createComposer, createStore, createWorkspace } from '../../src/store';
+import { createStore, createWorkspace } from '../../src/store';
 import { init } from '../../src/actions/init';
 import { FirebaseSync } from '../../src/sync/firebase/FirebaseSync';
 import { Store } from '@collabkit/core';
 import { deleteMessage } from '../../src/actions/deleteMessage';
 import { getTimeline } from '../../src/sync/firebase/getTimeline';
+import { initComposer } from '../../src/actions/initComposer';
 
 setupFirebase();
 
@@ -41,7 +42,7 @@ test('deleteMessage', async () => {
 
   const threadId = nanoid();
 
-  store.workspaces[workspaceId].composers[threadId] = createComposer();
+  initComposer(store, { workspaceId, threadId, eventId: 'default' });
   store.workspaces[workspaceId].timeline[threadId] = {};
 
   const { id } = await sync.sendMessage({

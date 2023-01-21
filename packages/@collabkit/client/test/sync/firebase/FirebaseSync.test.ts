@@ -209,11 +209,14 @@ describe('FirebaseSync', async () => {
 
     expect(pins).toStrictEqual({});
 
-    const pinId = await sync.savePin({
+    const pinId = sync.nextPinId({ appId, workspaceId, objectId });
+
+    await sync.savePin({
       appId,
       workspaceId,
-      objectId,
+      pinId,
       pin: {
+        objectId,
         eventId,
         threadId,
         x: 0,
@@ -234,6 +237,7 @@ describe('FirebaseSync', async () => {
     expect(pins[objectId][pinId]).toStrictEqual({
       eventId,
       threadId,
+      objectId,
       x: 0,
       y: 0,
     });
@@ -252,6 +256,7 @@ describe('FirebaseSync', async () => {
     expect(pins?.[objectId]?.[pinId]).toStrictEqual({
       eventId,
       threadId,
+      objectId,
       x: 10,
       y: 20,
     });
