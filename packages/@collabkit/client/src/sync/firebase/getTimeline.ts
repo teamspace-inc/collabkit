@@ -1,5 +1,5 @@
 import { get, orderByChild, query } from 'firebase/database';
-import type { Event } from '@collabkit/core';
+import type { Event, Timeline, WithID } from '@collabkit/core';
 import { timelineRef } from './refs';
 import { snapshotToEvent } from './converters';
 
@@ -23,7 +23,7 @@ export async function getTimeline({
     return null;
   }
 
-  const events: Event[] = [];
+  const events: WithID<Event>[] = [];
   snapshot.forEach((childSnapshot) => {
     const event = snapshotToEvent(childSnapshot);
     if (!event) {
@@ -31,5 +31,9 @@ export async function getTimeline({
     }
     events.push(event);
   });
-  return events;
+  const timeline: Timeline = {};
+  for (const event of events) {
+    timeline[event.id] = event;
+  }
+  return timeline;
 }

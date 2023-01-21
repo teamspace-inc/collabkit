@@ -97,7 +97,7 @@ function CommentRoot({ commentId: eventId, ...props }: CommentRootProps) {
 
   const isHovering =
     // hovering or the menu is open and the menu is for this comment
-    useHovering(divRef, target) ||
+    useHovering(divRef) ||
     (menuId?.type === 'menu' &&
       menuId.context?.type === 'comment' &&
       menuId.context.eventId === event.id);

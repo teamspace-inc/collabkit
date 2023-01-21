@@ -11,7 +11,7 @@ async function savePin(
     return;
   }
   try {
-    console.log('CollabKit: saving pin', pin);
+    // console.log('CollabKit: saving pin', pin);
     await store.sync.savePin({
       appId,
       workspaceId,

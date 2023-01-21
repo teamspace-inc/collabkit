@@ -1,17 +1,19 @@
 import { ThreadInfo } from '@collabkit/core';
 import type { Subscriptions, SyncAdapter } from '@collabkit/react/src/constants';
-import { DataSnapshot } from 'firebase/database';
-
 import { nanoid } from 'nanoid';
 import { InboxChangeEventHandler, ThreadInfoChangeEvent } from 'packages/@collabkit/core/src/sync';
 
 export class LocalOnlySync implements SyncAdapter {
   constructor(public workspaceData: any) {}
+  nextPinId(params: { appId: string; workspaceId: string; objectId: string }): string {
+    return nanoid();
+  }
+
   savePin(params: {
     appId: string;
     workspaceId: string;
-    objectId: string;
     pin: {
+      objectId: string;
       eventId: string;
       threadId: string;
       x: number;

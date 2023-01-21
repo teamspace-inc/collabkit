@@ -56,8 +56,8 @@ export function createEvents(store: Store) {
       if (newBody.length === 0) {
         actions.isTyping.cancel();
         actions.disableComposerCommentButton(store, { target });
-        setTimeout(() => {
-          actions.stopTyping(store, { target });
+        setTimeout(async () => {
+          await actions.stopTyping(store, { target });
         }, 100);
       } else if (newBody.length !== body.length) {
         actions.enableComposerCommentButton(store, { target });
@@ -112,7 +112,7 @@ export function createEvents(store: Store) {
           actions.startEditing(store, target.comment);
           return;
         case 'reopenThreadButton': {
-          actions.reopenThread(store, target.workspaceId, target.threadId);
+          actions.reopenThread(store, target);
           break;
         }
         case 'composerPinButton': {
@@ -241,7 +241,7 @@ export function createEvents(store: Store) {
               break;
             }
             case 'reopenThreadButton': {
-              actions.reopenThread(store, props.target.workspaceId, props.target.threadId);
+              actions.reopenThread(store, props.target);
               break;
             }
           }

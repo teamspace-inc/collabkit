@@ -39,6 +39,7 @@ test('createComposer', () => {
 
 test('createStore', () => {
   expect(createStore()).toStrictEqual({
+    appId: null,
     sync: null,
     isReadOnly: false,
     isConnected: false,

@@ -28,6 +28,5 @@ export async function updateComment(store: Store) {
     mentions,
     type: 'edit',
     parentId: eventId,
-    composerEventId: eventId,
   });
 }

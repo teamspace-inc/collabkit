@@ -1,13 +1,18 @@
 import type { Event, Store } from '@collabkit/core';
 import { generateObjectIdFromCellId } from '..';
-import { getConfig, actions } from './index';
+import { actions } from './index';
 
 export async function resolveThread(
   store: Store,
   props: { workspaceId: string; threadId: string }
 ) {
-  const { appId, userId } = getConfig(store);
+  const { appId, userId } = store;
   const { workspaceId, threadId } = props;
+
+  if (!appId) {
+    console.warn('CollabKit: cannot resolve thread, no appId');
+    return;
+  }
 
   if (!userId) {
     console.warn('CollabKit: cannot resolve thread, anonymous user');
@@ -53,7 +58,8 @@ export async function resolveThread(
   } catch (e) {
     console.error('failed to set thread state', e);
   }
-  actions.stopTyping(store, {
+  await actions.stopTyping(store, {
     target: { type: 'composer', workspaceId, threadId, eventId: 'default' },
   });
+  return id;
 }
