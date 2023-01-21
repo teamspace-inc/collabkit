@@ -1,5 +1,5 @@
 import React from 'react';
-import * as admin from 'firebase-admin';
+import admin from 'firebase-admin';
 
 import { sendMail } from '../emails';
 import NotificationEmail from '../emails/NotificationEmail';

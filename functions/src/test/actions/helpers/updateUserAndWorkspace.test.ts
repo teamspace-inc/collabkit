@@ -1,4 +1,5 @@
-import * as admin from 'firebase-admin';
+import { it, describe, expect } from 'vitest';
+import admin from 'firebase-admin';
 import { ref } from '../../../actions/data/refs';
 
 import { updateUserAndWorkspace } from '../../../actions/helpers/updateUserAndWorkspace';

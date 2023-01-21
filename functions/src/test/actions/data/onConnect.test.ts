@@ -1,3 +1,4 @@
+import { it, describe } from 'vitest';
 import { onConnect } from '../../../actions/data/onConnect';
 
 describe('onConnect', () => {

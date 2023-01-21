@@ -1,3 +1,4 @@
+import { it, describe, expect } from 'vitest';
 import { isValidWorkspace } from '../../../actions/helpers/isValidWorkspace';
 
 describe('isValidWorkspace', () => {

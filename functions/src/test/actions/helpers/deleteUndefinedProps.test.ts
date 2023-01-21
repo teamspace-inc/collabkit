@@ -1,3 +1,4 @@
+import { it, describe, expect } from 'vitest';
 import { deleteUndefinedProps } from '../../../actions/helpers/deleteUndefinedProps';
 
 describe('deleteUndefinedProps', () => {

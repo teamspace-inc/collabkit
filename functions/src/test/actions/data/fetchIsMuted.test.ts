@@ -1,3 +1,4 @@
+import { it, describe, expect } from 'vitest';
 import { fetchIsMuted } from '../../../actions/data/fetchIsMuted';
 
 describe('fetchIsMuted', () => {

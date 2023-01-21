@@ -1,3 +1,4 @@
+import { it, describe, expect } from 'vitest';
 import { fetchWorkspaceProfiles } from '../../../actions/data/fetchWorkspaceProfiles';
 
 describe('fetchWorkspaceProfiles', () => {
