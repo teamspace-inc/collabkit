@@ -385,7 +385,7 @@ export function DashboardExample() {
             <TableView />
           )}
         </main>
-        <div className="h-screen border">
+        <div className="h-screen border" style={{ width: 360 }}>
           <Thread threadId="test123" />
         </div>
       </div>
