@@ -173,7 +173,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
         const objectId = objectSnapshot.key;
         const objectPins = objectSnapshot.val();
         if (objectId == null) return;
-        onObjectChange(objectId, objectPins);
+        onObjectChange(FirebaseId.decode(objectId), objectPins);
       }
     );
 
@@ -182,7 +182,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
       (objectSnapshot) => {
         const objectId = objectSnapshot.key;
         if (objectId == null) return;
-        onObjectRemove(objectId);
+        onObjectRemove(FirebaseId.decode(objectId));
       }
     );
   }

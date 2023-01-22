@@ -1,6 +1,8 @@
-import type { Pin, Store } from '@collabkit/core';
+import { FirebaseId, Pin, Store } from '@collabkit/core';
 import { getConfig } from './index';
 import has from 'has';
+
+// move this to FirebaseSync
 
 function isPin(pin: unknown): pin is Pin {
   return (
@@ -58,7 +60,14 @@ export function subscribeOpenPins(store: Store) {
 
   function onGet(pins: any) {
     if (isRoot(pins)) {
-      store.workspaces[workspaceId].openPins = pins;
+      for (const objectId in pins) {
+        const decodedObjectId = FirebaseId.decode(objectId);
+        store.workspaces[workspaceId].openPins[decodedObjectId] ||= {};
+        for (const pinId in pins[decodedObjectId]) {
+          const pin = { ...pins[decodedObjectId][pinId], id: pinId };
+          store.workspaces[workspaceId].openPins[decodedObjectId][pinId] = pin;
+        }
+      }
     } else {
       console.error('[CollabKit] invalid pins', pins);
     }
@@ -66,7 +75,11 @@ export function subscribeOpenPins(store: Store) {
 
   function onObjectChange(objectId: string, pins: any) {
     if (isPins(pins)) {
-      store.workspaces[workspaceId].openPins[objectId] = pins;
+      store.workspaces[workspaceId].openPins[objectId] ||= {};
+      for (const pinId in pins) {
+        const pin = { ...pins[pinId], id: pinId };
+        store.workspaces[workspaceId].openPins[objectId][pinId] = pin;
+      }
     } else {
       console.error('[CollabKit] invalid pins', pins);
     }

@@ -104,7 +104,15 @@ export function createEvents(store: Store) {
 
     onClick: <T extends Target>(e: React.MouseEvent, props: { target: T }) => {
       const { target } = props;
+      console.log('onClick', { target });
       switch (target.type) {
+        case 'pinDeleteButton':
+          if (target.pin.isPending) {
+            actions.removePendingPin(store);
+          } else {
+            actions.deletePinAndMessage(store, target.pin);
+          }
+          return;
         case 'commentDeleteButton':
           actions.deleteMessage(store, target.comment);
           return;
@@ -255,7 +263,6 @@ export function createEvents(store: Store) {
     },
 
     onPopoverPreviewChange: (props: { target: ThreadTarget; open: boolean }) => {
-      // console.log('onPopoverPreviewChange', props);
       if (props.open) {
         actions.showPreview(store, props);
       } else {
@@ -264,7 +271,6 @@ export function createEvents(store: Store) {
     },
 
     onPopoverThreadOpenChange: (props: { target: ThreadTarget; open: boolean }) => {
-      // console.log('onPopoverThreadOpenChange', props);
       if (props.open) {
         actions.viewThread(store, props);
       } else {

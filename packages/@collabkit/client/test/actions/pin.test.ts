@@ -55,7 +55,7 @@ describe('pin', () => {
     const x = 0;
     const y = 0;
 
-    expect(store.pin).toStrictEqual({
+    expect(store.pendingPin).toStrictEqual({
       objectId: 'test',
       threadId,
       id: pinId,
@@ -69,7 +69,7 @@ describe('pin', () => {
   test('movePin', async () => {
     await movePin(store as Store, { x: 10, y: 20 });
 
-    expect(store.pin).toStrictEqual({
+    expect(store.pendingPin).toStrictEqual({
       id: pinId,
       workspaceId,
       objectId: 'test',
@@ -97,7 +97,7 @@ describe('pin', () => {
       throw new Error('event is null');
     }
 
-    expect(store.pin).toBeNull();
+    expect(store.pendingPin).toBeNull();
 
     expect(store.workspaces[workspaceId].openPins.test[pinId]).toStrictEqual({
       x: 10,

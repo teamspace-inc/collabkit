@@ -22,6 +22,7 @@ import { useComposer } from '../hooks/useComposer';
 import Composer from './composer/Composer';
 import { ButtonGroup } from './ButtonGroup';
 import { actions } from '@collabkit/client';
+import { IconButton } from './IconButton';
 
 function useIsEditing() {
   const { store } = useApp();
@@ -85,11 +86,13 @@ function CommentRoot({ commentId: eventId, ...props }: CommentRootProps) {
     eventId,
   });
 
-  const { menuId } = useSnapshot(useApp().store);
+  const app = useApp();
+
+  const { menuId } = useSnapshot(app.store);
 
   const timeline = useSnapshot(useWorkspaceStore().timeline[threadId]);
 
-  const profiles = useSnapshot(useApp().store.profiles);
+  const profiles = useSnapshot(app.store.profiles);
 
   const event = timeline[eventId];
 
@@ -235,36 +238,45 @@ const CommentMenu = (props: { className?: string }) => {
     [comment, threadId, workspaceId]
   );
 
+  if (createdById !== userId) {
+    return null;
+  }
+
+  const items: React.ReactNode[] = useMemo(
+    () => [
+      <MenuItem
+        label="Edit"
+        targetType="commentEditButton"
+        data-testid="collabkit-comment-menu-edit-button"
+      />,
+      <MenuItem
+        label="Delete"
+        targetType="commentDeleteButton"
+        data-testid="collabkit-comment-menu-delete-button"
+      />,
+      isResolved && (
+        <MenuItem
+          label="Re-open"
+          targetType="reopenThreadButton"
+          data-testid="collabkit-comment-menu-re-open-button"
+        />
+      ),
+    ],
+    [isResolved]
+  );
+
   return (
-    <>
-      {createdById === userId && (
-        <Menu<CommentMenuItemType>
-          data-testid="collabkit-comment-menu"
-          className={props.className}
-          icon={<DotsThree size={16} />}
-          onItemClick={onItemClick}
-          context={comment}
-        >
-          <MenuItem
-            label="Edit"
-            targetType="commentEditButton"
-            data-testid="collabkit-comment-menu-edit-button"
-          />
-          <MenuItem
-            label="Delete"
-            targetType="commentDeleteButton"
-            data-testid="collabkit-comment-menu-delete-button"
-          />
-          {isResolved && (
-            <MenuItem
-              label="Re-open"
-              targetType="reopenThreadButton"
-              data-testid="collabkit-comment-menu-re-open-button"
-            />
-          )}
-        </Menu>
-      )}
-    </>
+    <Menu<CommentMenuItemType>
+      data-testid="collabkit-comment-menu"
+      className={props.className}
+      onItemClick={onItemClick}
+      context={comment}
+      items={items}
+    >
+      <IconButton>
+        <DotsThree size={16} />
+      </IconButton>
+    </Menu>
   );
 };
 

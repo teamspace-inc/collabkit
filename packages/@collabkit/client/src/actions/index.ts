@@ -11,7 +11,7 @@ import { closeMenu } from './closeMenu';
 import { closePreview } from './closePreview';
 import { closeThread } from './closeThread';
 import { deleteMessage } from './deleteMessage';
-import { deletePin } from './deletePin';
+import { deletePinAndMessage } from './deletePinAndMessage';
 import { disableComposerCommentButton } from './disableComposerCommentButton';
 import { enableComposerCommentButton } from './enableComposerCommentButton';
 import { focus } from './focus';
@@ -51,6 +51,7 @@ import { toggleEmojiReactionPicker } from './toggleEmojiReactionPicker';
 import { updateComment } from './updateComment';
 import { viewThread } from './viewThread';
 import { subscribeOpenPins } from './subscribeOpenPins';
+import { deletePendingPin } from './deletePendingPin';
 
 export type GenerateToken =
   | {
@@ -127,7 +128,7 @@ export const actions = {
   closePreview,
   closeThread,
   deleteMessage,
-  deletePin,
+  deletePinAndMessage,
   disableComposerCommentButton,
   enableComposerCommentButton,
   focus,
@@ -139,6 +140,7 @@ export const actions = {
   monitorConnection,
   movePin,
   openMenu,
+  removePendingPin: deletePendingPin,
   reopenThread,
   resolveThread,
   saveMentionableUsers,

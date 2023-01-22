@@ -20,7 +20,7 @@ async function savePin(
     });
     store.workspaces[workspaceId].openPins[pin.objectId] ||= {};
     store.workspaces[workspaceId].openPins[pin.objectId][pin.id] = pin;
-    store.pin = null;
+    store.pendingPin = null;
   } catch (e) {
     console.error('CollabKit: failed to save pin', e);
   }
@@ -58,7 +58,7 @@ export async function writeMessageToFirebase(
     return;
   }
 
-  const { pin } = store;
+  const { pendingPin: pin } = store;
 
   // close emoji picker on send
   store.reactingId = null;

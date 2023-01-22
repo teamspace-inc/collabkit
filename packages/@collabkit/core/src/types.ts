@@ -173,7 +173,18 @@ export type Target =
   | HideSidebarButtonTarget
   | ComposerPinButtonTarget
   | ComposerMentionsButtonTarget
-  | AttachPinTarget;
+  | AttachPinTarget
+  | PinTarget
+  | PinDeleteButton;
+
+export type PinTarget = {
+  type: 'pin';
+  objectId: string;
+  id: string;
+  threadId: string;
+  workspaceId: string;
+  isPending?: boolean;
+};
 
 export type AttachPinTarget = {
   type: 'attachPin';
@@ -201,6 +212,11 @@ export type MenuTarget = {
   nodeId: string;
   parentId: string | null;
   context?: Target;
+};
+
+export type PinDeleteButton = {
+  type: 'pinDeleteButton';
+  pin: PinTarget;
 };
 
 export type CommentMenuTarget = MenuTarget & CommentTarget;
@@ -336,16 +352,18 @@ export interface Composer {
   isMentioning: boolean;
 }
 
-export type Pin = PinEvent & {
+export type Pin = {
+  id: string;
   objectId: string;
   x: number;
   y: number;
-};
-
-export type PinEvent = {
   workspaceId: string;
   threadId: string;
   eventId: string;
+};
+
+export type PendingPin = Pin & {
+  isPending: true;
 };
 
 export interface SeenBy {
@@ -403,7 +421,7 @@ export interface UnconfiguredStore {
   mentionableUsers: { [userId: string]: MentionWithColor };
   appState: 'blank' | 'config' | 'ready';
   uiState: 'idle' | 'selecting';
-  pin: null | WithID<Pin>;
+  pendingPin: null | PendingPin;
   subs: Subscriptions;
   callbacks?: Callbacks;
   clientX: number;

@@ -28,7 +28,7 @@ export const pin = style({
   height: '40px',
   marginLeft: '-20px',
   marginTop: '-40px',
-  pointerEvents: 'none',
+  pointerEvents: 'all',
 });
 
 export const pinAvatar = style({

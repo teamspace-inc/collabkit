@@ -9,7 +9,7 @@ export async function movePin(
   const { workspaceId } = store;
   if (!workspaceId) throw new Error('CollabKit: no workspaceId set');
   const { objectId, pinId, x, y } = props;
-  const { pin } = store;
+  const { pendingPin: pin } = store;
   if (pinId && objectId) {
     await store.sync.movePin({ appId, workspaceId, pinId, x, y });
     const pin = store.workspaces[workspaceId].openPins[pinId]?.[objectId];
