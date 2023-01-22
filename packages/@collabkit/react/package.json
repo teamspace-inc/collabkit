@@ -32,6 +32,7 @@
   "devDependencies": {
     "@collabkit/colors": "^0.0.0",
     "@collabkit/core": "^0.0.0",
+    "@floating-ui/react": "^0.18.0",
     "@floating-ui/react-dom-interactions": "0.10.3",
     "@ladle/react": "^2.4.2",
     "@lexical/markdown": "^0.7.5",

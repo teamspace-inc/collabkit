@@ -39,9 +39,6 @@ const PinMenu = (props: { className?: string; children: React.ReactNode }) => {
   const { events } = useApp();
   const target = useContext(TargetContext);
 
-  const type =
-    target?.type === 'pin' && target.isPending ? 'pendingPinDeleteButton' : 'pinDeleteButton';
-
   const onItemClick = useCallback(
     (e: React.MouseEvent) => {
       if (target?.type === 'pin') {
@@ -53,7 +50,7 @@ const PinMenu = (props: { className?: string; children: React.ReactNode }) => {
         });
       }
     },
-    [events.onClick, target, type]
+    [events.onClick, target]
   );
 
   return (
@@ -64,7 +61,7 @@ const PinMenu = (props: { className?: string; children: React.ReactNode }) => {
       items={[
         <MenuItem
           label="Delete pin"
-          targetType={type}
+          targetType="pinDeleteButton"
           data-testid="collabkit-pin-menu-delete-button"
         />,
       ]}

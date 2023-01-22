@@ -19,7 +19,15 @@ async function savePin(
       pinId: pin.id,
     });
     store.workspaces[workspaceId].openPins[pin.objectId] ||= {};
-    store.workspaces[workspaceId].openPins[pin.objectId][pin.id] = pin;
+    store.workspaces[workspaceId].openPins[pin.objectId][pin.id] = {
+      id: pin.id,
+      eventId: pin.eventId,
+      objectId: pin.objectId,
+      workspaceId: pin.workspaceId,
+      threadId: pin.threadId,
+      x: pin.x,
+      y: pin.y,
+    };
     store.pendingPin = null;
   } catch (e) {
     console.error('CollabKit: failed to save pin', e);

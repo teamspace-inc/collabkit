@@ -1,4 +1,4 @@
-import React, { ComponentProps, useContext, useEffect, useState, useCallback } from 'react';
+import React, { ComponentProps, useContext, useEffect, useState, useCallback, useRef } from 'react';
 
 import { ComposerTarget } from '../../constants';
 import { ContentEditable as LexicalContentEditable } from '@lexical/react/LexicalContentEditable';
@@ -36,15 +36,20 @@ import Profile from '../Profile';
 import { IconButton } from '../IconButton';
 import { EditorPlugin } from './EditorPlugin';
 import { At } from '../icons';
-import { MapPin } from 'phosphor-react';
 import { vars } from '../../theme/theme/index.css';
 import { KeyPlugin } from './KeyPlugin';
+import PinButtonSvg from './pin-button.svg';
+import PinButtonHoverSvg from './pin-button-hover.svg';
+import DeletePinButtonSvg from './delete-pin-button.svg';
+import DeletePinButtonHoverSvg from './delete-pin-button-hover.svg';
 
 // Catch any errors that occur during Lexical updates and log them
 // or throw them as needed. If you don't throw them, Lexical will
 // try to recover gracefully without losing user data.
 
 import { initComposer } from '../../../../client/src/events';
+import { useHovering } from '../../hooks/useHovering';
+import { Tooltip } from '../Tooltip';
 
 type ComposerContextValue = {
   body: string;
@@ -176,27 +181,69 @@ function ComposerMentionsButton(props: { className?: string }) {
   );
 }
 
+type ComposerButtonState =
+  | 'pin-default'
+  | 'pin-hover'
+  | 'pin-selecting'
+  | 'empty-default'
+  | 'empty-hover'
+  | 'empty-selecting';
+
 function ComposerPinButton(props: { className?: string }) {
-  const { events } = useApp();
+  const { events, store } = useApp();
   const { threadId, workspaceId } = useThreadContext();
   const { eventId } = useOptionalCommentContext() ?? { eventId: 'default' };
   const target = { type: 'composerPinButton', threadId, workspaceId, eventId } as const;
+  const { pendingPin, uiState } = useSnapshot(store);
+  const ref = useRef(null);
+  const hover = useHovering(ref);
+
+  const state = ((pendingPin !== null ? 'pin' : 'empty') +
+    '-' +
+    (uiState === 'selecting' ? 'selecting' : hover ? 'hover' : 'default')) as ComposerButtonState;
+
+  const icons: { [state: string]: React.ReactElement } = {
+    'pin-default': <img src={DeletePinButtonSvg} />,
+    'pin-hover': <img src={DeletePinButtonHoverSvg} />,
+    'pin-selecting': <img src={DeletePinButtonHoverSvg} />,
+    'empty-default': <img src={PinButtonSvg} />,
+    'empty-hover': <img src={PinButtonHoverSvg} />,
+    'empty-selecting': <img src={PinButtonHoverSvg} />,
+  };
+
+  const tooltip: { [state: string]: string } = {
+    'pin-default': 'Remove pin',
+    'pin-hover': 'Remove pin',
+    'pin-selecting': 'Remove pin',
+    'empty-default': 'Pin',
+    'empty-hover': 'Pin',
+    'empty-selecting': 'Pin',
+  };
+
+  const icon = React.cloneElement(icons[state], {
+    style: { position: 'relative', top: '-1px', width: '18px', height: '18px' },
+  });
 
   return (
-    <IconButton
-      active={false}
-      style={{ zIndex: 999 }}
-      className={props.className}
-      weight="regular"
-      color={vars.color.iconSecondary}
-      onClick={(e) => {
-        e.stopPropagation();
-        e.preventDefault();
-        events.onClick(e, { target });
-      }}
-    >
-      <MapPin />
-    </IconButton>
+    <Tooltip>
+      <Tooltip.Trigger>
+        <div
+          ref={ref}
+          style={{
+            padding: '8px',
+            background: hover ? vars.color.surfaceHover : 'unset',
+            borderTopLeftRadius: '6px',
+            borderBottomLeftRadius: '6px',
+            border: 'none',
+            height: '100%',
+          }}
+          onClick={(e) => events.onClick(e, { target })}
+        >
+          {icon}
+        </div>
+      </Tooltip.Trigger>
+      <Tooltip.Content>{tooltip[state]}</Tooltip.Content>
+    </Tooltip>
   );
 }
 
@@ -248,31 +295,33 @@ function ComposerEditor(props: {
       data-testid="collabkit-composer-editor"
       className={props.className ?? `${styles.editor({ active })} ${styles.composerGlobalStyles}`}
     >
-      <LexicalComposer initialConfig={initialConfig}>
-        <EditorPlugin onMount={handleChange} />
-        <KeyPlugin onKeyDown={(event) => events.onKeyDown(event)} />
-        <PasteTextPlugin />
-        <PlainTextPlugin
-          contentEditable={props.contentEditable ?? <Composer.ContentEditable />}
-          placeholder={props.placeholder}
-          ErrorBoundary={(props) => {
-            return <>{props.children}</>;
-          }}
-        />
-        <OnChangePlugin onChange={handleChange} />
-        {autoFocus ? <AutoFocusPlugin /> : <></>}
-        <HistoryPlugin />
-        <MentionsPlugin
-          onOpenChange={(open) => {
-            store.workspaces[workspaceId].composers[threadId][eventId].isMentioning = open;
-          }}
-        />
-        <TimestampPlugin />
-      </LexicalComposer>
-      <Composer.ButtonGroup>
+      <div style={{ display: 'flex', position: 'relative' }}>
         <Composer.PinButton />
-        <Composer.MentionsButton />
-      </Composer.ButtonGroup>
+        <LexicalComposer initialConfig={initialConfig}>
+          <EditorPlugin onMount={handleChange} />
+          <KeyPlugin onKeyDown={(event) => events.onKeyDown(event)} />
+          <PasteTextPlugin />
+          <PlainTextPlugin
+            contentEditable={props.contentEditable ?? <Composer.ContentEditable />}
+            placeholder={props.placeholder}
+            ErrorBoundary={(props) => {
+              return <>{props.children}</>;
+            }}
+          />
+          <OnChangePlugin onChange={handleChange} />
+          {autoFocus ? <AutoFocusPlugin /> : <></>}
+          <HistoryPlugin />
+          <MentionsPlugin
+            onOpenChange={(open) => {
+              store.workspaces[workspaceId].composers[threadId][eventId].isMentioning = open;
+            }}
+          />
+          <TimestampPlugin />
+        </LexicalComposer>
+        {/* <Composer.ButtonGroup>
+          <Composer.MentionsButton />
+        </Composer.ButtonGroup> */}
+      </div>
     </div>
   );
 }

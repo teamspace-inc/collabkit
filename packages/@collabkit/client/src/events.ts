@@ -108,6 +108,7 @@ export function createEvents(store: Store) {
       switch (target.type) {
         case 'pinDeleteButton':
           if (target.pin.isPending) {
+            console.log('removing pending pin');
             actions.removePendingPin(store);
           } else {
             actions.deletePinAndMessage(store, target.pin);
@@ -124,11 +125,20 @@ export function createEvents(store: Store) {
           break;
         }
         case 'composerPinButton': {
-          actions.startSelecting(store);
+          if (store.pendingPin) {
+            actions.removePendingPin(store);
+            return;
+          }
 
-          // ideally we use this for more than just the pin button
-          // it stores which composer is active atm
-          store.composerId = { ...target, type: 'composer' };
+          if (store.uiState === 'selecting') {
+            actions.stopSelecting(store);
+          } else {
+            actions.startSelecting(store);
+
+            // ideally we use this for more than just the pin button
+            // it stores which composer is active atm
+            store.composerId = { ...target, type: 'composer' };
+          }
           break;
         }
         case 'composerMentionsButton': {

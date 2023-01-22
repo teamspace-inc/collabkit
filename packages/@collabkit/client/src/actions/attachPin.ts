@@ -1,5 +1,4 @@
 import type { Store } from '@collabkit/core';
-import { insertComposerPin } from './insertComposerPin';
 
 export function attachPin(
   store: Store,
@@ -24,8 +23,8 @@ export function attachPin(
     isPending: true,
   };
   store.uiState = 'idle';
-  insertComposerPin(store, {
-    pinId: id,
-  });
+  // insertComposerPin(store, {
+  //   pinId: id,
+  // });
   return id;
 }

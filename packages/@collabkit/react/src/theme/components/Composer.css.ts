@@ -49,7 +49,7 @@ export const placeholder = recipe({
     textOverflow: 'ellipsis',
     top: '17px',
     transform: 'translateY(-50%)',
-    left: vars.space[2],
+    left: 31,
     userSelect: 'none',
     display: 'inline-block',
     pointerEvents: 'none',
@@ -107,7 +107,10 @@ export const input = recipe({
     lineHeight: fallbackVar(vars.composer.input.lineHeight, vars.text.base.lineHeight),
     letterSpacing: fallbackVar(vars.composer.input.letterSpacing, vars.text.base.letterSpacing),
     fontWeight: fallbackVar(vars.composer.input.fontWeight, vars.fontWeight.regular),
-    padding: fallbackVar(vars.composer.input.padding, vars.space[2]),
+    padding: fallbackVar(
+      vars.composer.input.padding,
+      `${vars.space[2]} ${vars.space[2]} ${vars.space[2]} 0px`
+    ),
     position: 'relative',
     tabSize: 1,
     boxSizing: 'border-box',
@@ -139,7 +142,7 @@ export const root = style({
   fontFamily: vars.fontFamily,
   padding: fallbackVar(vars.composer.padding, `0 ${vars.space[4]} 0px`),
   border: fallbackVar(vars.composer.border, `none`),
-  gap: fallbackVar(vars.composer.gap, vars.space[2]),
+  gap: fallbackVar(vars.composer.gap, vars.space[3]),
 });
 
 export const editor = recipe({
