@@ -1,19 +1,19 @@
 import React from 'react';
 import { useApp } from '../hooks/useApp';
-import { SidebarButtonType, SidebarThreadActonButtonTarget, ThreadResolveButtonTarget } from '@collabkit/core';
+import { SidebarButtonType, ChannelActonButtonTarget, ThreadResolveButtonTarget } from '@collabkit/core';
 import { useThreadContext } from '../hooks/useThreadContext';
 import { ArrowBendUpLeft, CheckCircle, DotsThree, Smiley } from './icons';
-import * as styles from '../theme/components/SidebarThreadActionButton.css';
+import * as styles from '../theme/components/ChannelActionButton.css';
 
 
-export function SidebarThreadActionButton(props: {
+export function ChannelActionButton(props: {
   className?: string;
   type: SidebarButtonType;
 }) {
   const { events } = useApp();
   const { threadId, workspaceId } = useThreadContext();
 
-  const target: SidebarThreadActonButtonTarget = {
+  const target: ChannelActonButtonTarget = {
     threadId,
     workspaceId,
     type: props.type,
@@ -39,8 +39,8 @@ export function SidebarThreadActionButton(props: {
         <DotsThree size={16} /> :
         null}
       {props.type === 'sidebarEmojiButton' ?
-      <Smiley size={16} /> :
-      null}
+        <Smiley size={16} /> :
+        null}
     </div>
   );
 }

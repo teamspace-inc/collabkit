@@ -6,13 +6,13 @@ import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
 import { useApp } from '../hooks/useApp';
 import Comment from './Comment';
 import { ArrowBendDownRight, ArrowBendUpLeft, DotsThree, Smiley } from './icons';
-import * as styles from '../theme/components/ThreadsInboxItem.css';
+import * as styles from '../theme/components/ChannelsInboxItem.css';
 import { Composer, Profile, Thread, useComments } from '..';
 import { generateObjectIdFromCellId, actions } from '@collabkit/client';
-import { SidebarThreadActionButton } from './SidebarThreadActionButton';
-import { SidebarThreadUnreadDot } from './SidebarThreadUnreadDot';
+import { ChannelActionButton } from './ChannelActionButton';
+import { ChannelUnreadDot } from './ChannelUnreadDot';
 
-export function ThreadsInboxItem(props: { formatTimestamp?: (timestamp: number) => string }) {
+export function ChannelsInboxItem(props: { formatTimestamp?: (timestamp: number) => string }) {
   const { threadId, workspaceId, userId } = useThreadContext();
   const { store, renderThreadContextPreview } = useApp();
   const workspace = useSnapshot(useWorkspaceStore());
@@ -64,19 +64,19 @@ export function ThreadsInboxItem(props: { formatTimestamp?: (timestamp: number) 
             <Comment.Timestamp className={styles.timestamp} format={props.formatTimestamp} />
             <div style={{ flex: 1 }}></div>
             <div className={styles.actionButtonWrapper}>
-              {firstComment.createdById === userId ? <SidebarThreadActionButton type='resolveThreadButton'/> : null}
+              {firstComment.createdById === userId ? <ChannelActionButton type='resolveThreadButton' /> : null}
               <div onClick={() => { setrepliesVisible(true) }}>
-                <SidebarThreadActionButton type='sidebarReplyButton' />
+                <ChannelActionButton type='sidebarReplyButton' />
               </div>
-              <SidebarThreadActionButton type='sidebarElementOptionsButton' />
+              <ChannelActionButton type='sidebarElementOptionsButton' />
             </div>
           </div>
           <div className={styles.commentThreadWrapper}>
             <div style={{ flex: 1 }}>
               <Comment.Body />
             </div>
-            <div style={{justifyContent: 'center', alignItems: 'center',   display: "flex"}}>
-              <SidebarThreadUnreadDot />
+            <div style={{ justifyContent: 'center', alignItems: 'center', display: "flex" }}>
+              <ChannelUnreadDot />
             </div>
           </div>
           {!repliesVisible && commentIds.length > 1 ?
@@ -100,8 +100,8 @@ export function ThreadsInboxItem(props: { formatTimestamp?: (timestamp: number) 
                     <Comment.Timestamp className={styles.timestamp} format={props.formatTimestamp} />
                     <div style={{ flex: 1 }}></div>
                     <div className={styles.actionButtonWrapper}>
-              <SidebarThreadActionButton type='sidebarElementOptionsButton' />
-            </div>
+                      <ChannelActionButton type='sidebarElementOptionsButton' />
+                    </div>
                   </div>
                   <div className={styles.threadReplyCommentWrapper}>
                     <Comment.Body />

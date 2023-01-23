@@ -9,7 +9,7 @@ import { emptyState } from '../theme/components/Thread.css';
 import { useOptionalSidebarContext } from './Sidebar';
 import { useInbox } from '../hooks/public/useInbox';
 import { Thread } from './Thread';
-import { ThreadsInboxItem } from './ThreadsInboxItem';
+import { ChannelsInboxItem } from './ChannelsInboxItem';
 
 export interface ButtonProps extends React.ComponentPropsWithoutRef<'button'> {
   specialProp?: string;
@@ -44,7 +44,7 @@ export function ThreadsInbox(props: {
   const inboxItems = threadIds.map((threadId) => {
     return (
       <Thread.Provider threadId={threadId} key={`inboxThread-${threadId}`}>
-        <ThreadsInboxItem formatTimestamp={props.formatTimestamp} />
+        <ChannelsInboxItem formatTimestamp={props.formatTimestamp} />
       </Thread.Provider>
     );
   });

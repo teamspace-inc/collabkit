@@ -43,7 +43,7 @@ export function useOptionalSidebarContext() {
   return React.useContext(SidebarContext);
 }
 
-export function SidebarThreads(props: {
+export function Channels(props: {
   title?: React.ReactNode;
   children: React.ReactNode;
   strategy?: 'fixed' | 'absolute';
