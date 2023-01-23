@@ -175,7 +175,9 @@ export type Target =
   | ComposerMentionsButtonTarget
   | AttachPinTarget
   | PinTarget
-  | PinDeleteButton;
+  | PinDeleteButton
+  | CommentSaveButtonTarget
+  | CommentCancelButtonTarget;
 
 export type PinTarget = {
   type: 'pin';
@@ -266,6 +268,16 @@ export type CommentDeleteButtonTarget = {
   comment: CommentTarget;
 };
 
+export type CommentSaveButtonTarget = {
+  type: 'commentSaveButton';
+  comment: CommentTarget;
+};
+
+export type CommentCancelButtonTarget = {
+  type: 'commentCancelButton';
+  comment: CommentTarget;
+};
+
 export type ThreadResolveButtonTarget = {
   type: 'resolveThreadButton';
   threadId: string;
@@ -303,6 +315,7 @@ export type Event = {
   createdById: string;
   parentId?: string;
   mentions?: readonly string[];
+  pinId?: string;
 };
 
 export type WithName<T> = T & {
@@ -350,7 +363,15 @@ export interface Composer {
   isTypingTimeoutID?: ReturnType<typeof setTimeout>;
   isTyping: { [endUserId: string]: boolean };
   isMentioning: boolean;
+  pendingPin: null | PendingPin;
 }
+
+export type FirebasePin = {
+  x: number;
+  y: number;
+  threadId: string;
+  eventId: string;
+};
 
 export type Pin = {
   id: string;
@@ -390,6 +411,7 @@ export interface Workspace {
   threadProfiles: { [threadId: string]: { [userId: string]: boolean } };
   fetchedProfiles: { [threadId: string]: { [userId: string]: boolean } };
   openPins: { [objectId: string]: { [pinId: string]: Pin } };
+  eventPins: { [eventId: string]: Pin };
 }
 
 // get all pins for the workspace that have an open thread attached to them (we don't want resolved ones)
@@ -422,7 +444,6 @@ export interface UnconfiguredStore {
   mentionableUsers: { [userId: string]: MentionWithColor };
   appState: 'blank' | 'config' | 'ready';
   uiState: 'idle' | 'selecting';
-  pendingPin: null | PendingPin;
   subs: Subscriptions;
   callbacks?: Callbacks;
   clientX: number;
@@ -433,6 +454,7 @@ export interface UnconfiguredStore {
 export interface Store extends UnconfiguredStore {
   sync: SyncAdapter;
   config: Config;
+  allPins: Pin[];
 }
 
 export type Unsubscribe = () => void;

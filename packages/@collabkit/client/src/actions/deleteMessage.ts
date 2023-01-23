@@ -2,7 +2,6 @@ import type { Event, Store } from '@collabkit/core';
 import { timelineUtils } from '@collabkit/core';
 import { messageEvents } from '@collabkit/core/src/timelineUtils';
 import { getConfig } from '.';
-import { findPinByEventId } from '../utils/findPinByEventId';
 
 export async function deleteMessage(
   store: Store,
@@ -42,7 +41,8 @@ export async function deleteMessage(
     id,
   };
 
-  const pin = findPinByEventId(store, eventId);
+  const pin = workspace.eventPins[eventId];
+
   if (pin) {
     try {
       await store.sync.deletePin({ appId, ...pin, pinId: pin.id });

@@ -40,7 +40,7 @@ export function useTooltip({
     onOpenChange: setOpen,
     whileElementsMounted: autoUpdate,
     middleware: [
-      offset(-4),
+      offset(5),
       flip({
         fallbackAxisSideDirection: 'start',
         crossAxis: placement.includes('-'),
@@ -122,6 +122,7 @@ const TooltipTrigger = React.forwardRef<
       // The user can style the trigger based on the state
       data-state={context.open ? 'open' : 'closed'}
       {...context.getReferenceProps(props)}
+      style={{ border: 'none', background: 'none', padding: 0 }}
     >
       {children}
     </button>

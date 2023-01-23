@@ -23,7 +23,6 @@ import {
 
 import { mergeRefs } from 'react-merge-refs';
 import { ThemeWrapper } from './ThemeWrapper';
-import { useApp } from '../hooks/useApp';
 
 export type PopoverTriggerProps =
   | {

@@ -1,5 +1,4 @@
 import type { Store } from '@collabkit/core';
-import { getConfig } from '.';
 import { writeMessageToFirebase } from './writeMessageToFirebase';
 
 export async function updateComment(store: Store) {
@@ -7,10 +6,10 @@ export async function updateComment(store: Store) {
     console.warn('[CollabKit] cannot update comment, editingId is not defined');
     return;
   }
+  const { userId } = store;
   const { workspaceId, threadId, eventId } = store.editingId;
-  const { userId } = getConfig(store);
   if (!userId) {
-    console.warn('[CollabKit]: cannot send a message, anonymous user');
+    console.warn('[CollabKit]: cannot edit comment, anonymous user');
     if (store.config.onAuthenticationRequired) {
       store.config.onAuthenticationRequired();
     }
@@ -18,7 +17,8 @@ export async function updateComment(store: Store) {
   }
 
   const workspace = store.workspaces[workspaceId];
-  const { $$body: body, mentions } = workspace.composers[threadId][eventId];
+  const composer = workspace.composers[threadId][eventId];
+  const { $$body: body, mentions, pendingPin } = composer;
 
   await writeMessageToFirebase(store, {
     workspaceId,
@@ -28,5 +28,8 @@ export async function updateComment(store: Store) {
     mentions,
     type: 'edit',
     parentId: eventId,
+    pin: pendingPin,
   });
+
+  composer.pendingPin = null;
 }

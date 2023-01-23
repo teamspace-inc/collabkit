@@ -7,7 +7,6 @@ export function initComposer(
 ) {
   const { workspaceId, threadId, eventId } = props;
   const composers = store.workspaces[workspaceId].composers;
-  composers[threadId] ??= { [eventId]: createComposer() };
-  composers[threadId][eventId] ??= createComposer();
-  return composers[threadId][eventId];
+  composers[threadId] ??= {};
+  return (composers[threadId][eventId] ??= createComposer());
 }

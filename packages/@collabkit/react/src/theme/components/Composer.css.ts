@@ -32,9 +32,12 @@ export const typing = style({
 });
 
 export const pinButton = style({
-  position: 'absolute',
-  top: 8,
-  left: 8,
+  padding: '8px',
+  background: 'unset',
+  borderTopLeftRadius: '6px',
+  borderBottomLeftRadius: '6px',
+  border: 'none',
+  height: '100%',
 });
 
 export const placeholder = recipe({
@@ -49,7 +52,7 @@ export const placeholder = recipe({
     textOverflow: 'ellipsis',
     top: '17px',
     transform: 'translateY(-50%)',
-    left: 31,
+    left: 0,
     userSelect: 'none',
     display: 'inline-block',
     pointerEvents: 'none',
@@ -157,7 +160,7 @@ export const editor = recipe({
     boxSizing: 'border-box',
     fontFamily: vars.fontFamily,
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'row',
   },
   variants: {
     active: {
@@ -183,8 +186,10 @@ export const editor = recipe({
 
 export const buttonGroup = style({
   display: 'flex',
-  padding: '0px 6px 6px',
+  padding: '0px 0px 6px',
   gap: '0px',
+  marginLeft: -6,
+  marginTop: -2,
 });
 
 globalStyle('.collabkit-pin-node', {

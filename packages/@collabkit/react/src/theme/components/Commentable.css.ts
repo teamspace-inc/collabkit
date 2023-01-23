@@ -1,4 +1,5 @@
 import { style } from '@vanilla-extract/css';
+import { recipe } from '@vanilla-extract/recipes';
 
 export const activeContainer = style({
   outlineOffset: '2px',
@@ -19,16 +20,27 @@ export const overlay = style({
   pointerEvents: 'none',
 });
 
-export const pin = style({
-  position: 'absolute',
-  top: 0,
-  left: 0,
-  transform: 'translate(0, 0)',
-  width: '40px',
-  height: '40px',
-  marginLeft: '-20px',
-  marginTop: '-40px',
-  pointerEvents: 'all',
+export const pin = recipe({
+  base: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    transform: 'translate(0, 0)',
+    width: '40px',
+    height: '40px',
+    marginLeft: '-20px',
+    marginTop: '-40px',
+  },
+  variants: {
+    pointerEvents: {
+      none: {
+        pointerEvents: 'none',
+      },
+      all: {
+        pointerEvents: 'all',
+      },
+    },
+  },
 });
 
 export const pinAvatar = style({

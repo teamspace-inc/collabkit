@@ -51,7 +51,8 @@ import { toggleEmojiReactionPicker } from './toggleEmojiReactionPicker';
 import { updateComment } from './updateComment';
 import { viewThread } from './viewThread';
 import { subscribeOpenPins } from './subscribeOpenPins';
-import { deletePendingPin } from './deletePendingPin';
+import { removePendingPin } from './removePendingPin';
+import { focusComposer } from './focusComposer';
 
 export type GenerateToken =
   | {
@@ -132,6 +133,7 @@ export const actions = {
   disableComposerCommentButton,
   enableComposerCommentButton,
   focus,
+  focusComposer,
   hideSidebar,
   init,
   initComposer,
@@ -140,7 +142,7 @@ export const actions = {
   monitorConnection,
   movePin,
   openMenu,
-  removePendingPin: deletePendingPin,
+  removePendingPin,
   reopenThread,
   resolveThread,
   saveMentionableUsers,

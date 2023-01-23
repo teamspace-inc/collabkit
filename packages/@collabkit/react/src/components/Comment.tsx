@@ -23,6 +23,7 @@ import Composer from './composer/Composer';
 import { ButtonGroup } from './ButtonGroup';
 import { actions } from '@collabkit/client';
 import { IconButton } from './IconButton';
+import CommentPinSvg from './composer/comment-pin.svg';
 
 function useIsEditing() {
   const { store } = useApp();
@@ -147,6 +148,7 @@ export function CommentBody({ ...props }: React.ComponentPropsWithoutRef<'div'>)
 
   return (
     <div data-testid="collabkit-comment-body" {...props} className={props.className ?? styles.body}>
+      <Comment.Pin />
       <Markdown
         className={canClickLinks ? styles.markdown : styles.markdownLinksNotClickable}
         body={body}
@@ -154,6 +156,21 @@ export function CommentBody({ ...props }: React.ComponentPropsWithoutRef<'div'>)
     </div>
   );
 }
+
+export const CommentPin = (props: React.ComponentProps<'div'>) => {
+  const { eventId } = useCommentContext();
+  const workspace = useSnapshot(useWorkspaceStore());
+  const pin = workspace.eventPins[eventId];
+  if (pin) {
+    return (
+      <div className={styles.pin} {...props}>
+        <img src={CommentPinSvg} />
+      </div>
+    );
+  } else {
+    return null;
+  }
+};
 
 export const CommentEditor = (props: React.ComponentProps<'div'>) => {
   const { store } = useApp();
@@ -339,6 +356,7 @@ Comment.Indent = CommentIndent;
 Comment.Actions = CommentActions;
 Comment.MoreMenu = CommentMenu;
 Comment.Editor = CommentEditor;
+Comment.Pin = CommentPin;
 
 // Anatomy
 

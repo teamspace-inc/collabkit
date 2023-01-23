@@ -14,7 +14,9 @@ export function attachPin(
   if (!composerId) throw new Error('CollabKit: no composerId set');
   const { type, ...composerProps } = composerId;
   const id = store.sync.nextPinId({ appId, ...composerProps, objectId });
-  store.pendingPin = {
+  const composer =
+    store.workspaces[composerId.workspaceId].composers[composerId.threadId][composerId.eventId];
+  composer.pendingPin = {
     id,
     ...composerProps,
     x,

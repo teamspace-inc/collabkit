@@ -19,6 +19,7 @@ export function createComposer(): Composer {
     editor: null,
     enabled: false,
     isMentioning: false,
+    pendingPin: null,
   };
 }
 
@@ -41,6 +42,7 @@ export function createWorkspace(): Workspace {
     pendingThreads: {},
     pendingThreadInfo: {},
     openPins: {},
+    eventPins: {},
   };
 }
 
@@ -65,7 +67,6 @@ export function createStore(): UnconfiguredStore {
     viewingId: null,
     previewingId: null,
     editingId: null,
-    pendingPin: null,
     composerId: null,
     workspaces: {},
     profiles: {},
@@ -73,7 +74,6 @@ export function createStore(): UnconfiguredStore {
     subs: {},
     callbacks: {},
     mentionableUsers: {},
-
     clientX: 0,
     clientY: 0,
     commentableElements: markRaw(new Map()),

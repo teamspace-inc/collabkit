@@ -26,13 +26,18 @@ export const indent = style({
   marginLeft: calc.add(vars.avatar.size, fallbackVar(vars.comment.gap, vars.space[2])),
 });
 
+export const pin = style({
+  flex: '0 0 16px',
+});
+
 export const body = style({
   fontSize: fallbackVar(vars.comment.body.fontSize, vars.text.base.fontSize),
   fontWeight: fallbackVar(vars.comment.body.fontWeight, vars.fontWeight.regular),
   letterSpacing: fallbackVar(vars.comment.body.letterSpacing, vars.text.base.letterSpacing),
   lineHeight: fallbackVar(vars.comment.body.lineHeight, vars.text.base.lineHeight),
   fontFamily: vars.fontFamily,
-
+  display: 'flex',
+  gap: vars.space[1],
   textAlign: 'left',
   position: 'relative',
   wordBreak: 'break-word',

@@ -1,6 +1,8 @@
 import { style } from '@vanilla-extract/css';
 import { vars } from '../theme/index.css';
 
+const arrowSize = 6;
+
 export const root = style({
   backgroundColor: vars.color.textPrimary,
   color: vars.color.background,
@@ -14,11 +16,16 @@ export const root = style({
   maxWidth: 'calc(100vw - 10px)',
   selectors: {
     '&:before': {
+      position: 'absolute',
+      bottom: -arrowSize,
+      content: ' ',
+      left: '50%',
+      transform: 'translateX(-50%)',
       width: 0,
       height: 0,
-      borderLeft: '20px solid transparent',
-      borderRight: '20px solid transparent',
-      borderTop: '20px solid #f00',
+      borderLeft: `${arrowSize}px solid transparent`,
+      borderRight: `${arrowSize}px solid transparent`,
+      borderTop: `${arrowSize}px solid ${vars.color.textPrimary}`,
     },
   },
 });

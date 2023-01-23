@@ -31,10 +31,6 @@ function findCommentableElement(
   return commentable ? { objectId: commentable[0], element: commentable[1] } : null;
 }
 
-type PinProps = {
-  style?: React.CSSProperties;
-};
-
 const PinMenu = (props: { className?: string; children: React.ReactNode }) => {
   const { events } = useApp();
   const target = useContext(TargetContext);
@@ -71,15 +67,21 @@ const PinMenu = (props: { className?: string; children: React.ReactNode }) => {
   );
 };
 
-const PinMarker = forwardRef<HTMLDivElement, PinProps>(function PinMarker(props, ref) {
+type PinMarkerProps = {
+  style?: React.CSSProperties;
+  pointerEvents: 'all' | 'none';
+};
+
+const PinMarker = forwardRef<HTMLDivElement, PinMarkerProps>(function PinMarker(props, ref) {
   // this might be better accessed via context?
   const { userId } = useSnapshot(useStore());
   if (userId == null) {
     return null;
   }
+  const { pointerEvents } = props;
   return (
     <Profile.Provider profileId={userId}>
-      <div className={styles.pin} ref={ref} style={props.style}>
+      <div className={styles.pin({ pointerEvents })} ref={ref} style={props.style}>
         <PinMenu>
           <div>
             <svg
@@ -139,7 +141,11 @@ function SavedPin({ pin }: { pin: WithID<Pin> & { objectId: string } }) {
   return (
     <TargetContext.Provider value={target}>
       <FloatingNode id={id}>
-        <PinMarker ref={floating} style={{ position: strategy, top: y ?? 0, left: x ?? 0 }} />
+        <PinMarker
+          pointerEvents="all"
+          ref={floating}
+          style={{ position: strategy, top: y ?? 0, left: x ?? 0 }}
+        />
       </FloatingNode>
     </TargetContext.Provider>
   );
@@ -151,7 +157,7 @@ export function CommentableRoot(props: { className?: string; children?: React.Re
   const hoveredElementRef = useRef<HTMLElement | SVGElement | null>(null);
   const store = useStore();
   const { events } = useApp();
-  const { uiState, workspaces, workspaceId, pendingPin: pin } = useSnapshot(store);
+  const { uiState, workspaceId, allPins } = useSnapshot(store);
 
   const updateCursor = useCallback(
     (e: React.PointerEvent) => {
@@ -207,15 +213,6 @@ export function CommentableRoot(props: { className?: string; children?: React.Re
   if (props.children == null || !workspaceId) {
     return null;
   }
-  const workspace = workspaces[workspaceId];
-
-  const pins = Object.entries(workspace?.openPins ?? {})
-    .map(([objectId, pinMap]) => Object.values(pinMap).map((pin) => ({ ...pin, objectId })))
-    .flat();
-
-  if (pin) {
-    pins.push(pin);
-  }
 
   return (
     <div
@@ -230,11 +227,11 @@ export function CommentableRoot(props: { className?: string; children?: React.Re
         {uiState === 'selecting' && (
           <>
             <div ref={overlayRef} className={styles.overlay} />
-            <PinMarker ref={cursorRef} />
+            <PinMarker pointerEvents="none" ref={cursorRef} />
           </>
         )}
-        {Object.values(pins).map((pin, i) => {
-          return <SavedPin key={i} pin={pin} />;
+        {allPins.map((pin) => {
+          return <SavedPin key={pin.id} pin={pin} />;
         })}
       </FloatingPortal>
     </div>

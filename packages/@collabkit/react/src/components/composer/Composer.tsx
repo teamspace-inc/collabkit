@@ -47,9 +47,9 @@ import DeletePinButtonHoverSvg from './delete-pin-button-hover.svg';
 // or throw them as needed. If you don't throw them, Lexical will
 // try to recover gracefully without losing user data.
 
-import { initComposer } from '../../../../client/src/events';
 import { useHovering } from '../../hooks/useHovering';
 import { Tooltip } from '../Tooltip';
+import { actions } from '@collabkit/client';
 
 type ComposerContextValue = {
   body: string;
@@ -111,7 +111,7 @@ function ComposerRoot(props: {
   };
 
   const { store } = useApp();
-  initComposer(store, target);
+  actions.initComposer(store, target);
 
   return (
     <div
@@ -189,60 +189,58 @@ type ComposerButtonState =
   | 'empty-hover'
   | 'empty-selecting';
 
+// we could just use one icon with svg edits, this was quicker
+const COMPOSER_PIN_ICONS: { [state: string]: React.ReactElement } = {
+  'pin-default': <img src={DeletePinButtonSvg} />,
+  'pin-hover': <img src={DeletePinButtonHoverSvg} />,
+  'pin-selecting': <img src={DeletePinButtonHoverSvg} />,
+  'empty-default': <img src={PinButtonSvg} />,
+  'empty-hover': <img src={PinButtonHoverSvg} />,
+  'empty-selecting': <img src={DeletePinButtonHoverSvg} />,
+};
+
+const COMPOSER_PIN_TOOLTIPS: { [state: string]: string | null } = {
+  'pin-default': 'Remove pin',
+  'pin-hover': 'Remove pin',
+  'pin-selecting': 'Remove pin',
+  'empty-default': 'Pin',
+  'empty-hover': 'Pin',
+  'empty-selecting': null,
+};
+
 function ComposerPinButton(props: { className?: string }) {
   const { events, store } = useApp();
   const { threadId, workspaceId } = useThreadContext();
   const { eventId } = useOptionalCommentContext() ?? { eventId: 'default' };
   const target = { type: 'composerPinButton', threadId, workspaceId, eventId } as const;
-  const { pendingPin, uiState } = useSnapshot(store);
+  const { uiState, workspaces } = useSnapshot(store);
   const ref = useRef(null);
   const hover = useHovering(ref);
+  const { pendingPin } = workspaces[workspaceId].composers[threadId][eventId];
 
-  const state = ((pendingPin !== null ? 'pin' : 'empty') +
+  const state = ((pendingPin ? 'pin' : 'empty') +
     '-' +
     (uiState === 'selecting' ? 'selecting' : hover ? 'hover' : 'default')) as ComposerButtonState;
 
-  const icons: { [state: string]: React.ReactElement } = {
-    'pin-default': <img src={DeletePinButtonSvg} />,
-    'pin-hover': <img src={DeletePinButtonHoverSvg} />,
-    'pin-selecting': <img src={DeletePinButtonHoverSvg} />,
-    'empty-default': <img src={PinButtonSvg} />,
-    'empty-hover': <img src={PinButtonHoverSvg} />,
-    'empty-selecting': <img src={PinButtonHoverSvg} />,
-  };
-
-  const tooltip: { [state: string]: string } = {
-    'pin-default': 'Remove pin',
-    'pin-hover': 'Remove pin',
-    'pin-selecting': 'Remove pin',
-    'empty-default': 'Pin',
-    'empty-hover': 'Pin',
-    'empty-selecting': 'Pin',
-  };
-
-  const icon = React.cloneElement(icons[state], {
-    style: { position: 'relative', top: '-1px', width: '18px', height: '18px' },
+  const icon = React.cloneElement(COMPOSER_PIN_ICONS[state], {
+    style: { position: 'relative', top: '0px', width: '16px', height: '16px' },
   });
+
+  const tooltip = COMPOSER_PIN_TOOLTIPS[state];
 
   return (
     <Tooltip>
       <Tooltip.Trigger>
         <div
           ref={ref}
-          style={{
-            padding: '8px',
-            background: hover ? vars.color.surfaceHover : 'unset',
-            borderTopLeftRadius: '6px',
-            borderBottomLeftRadius: '6px',
-            border: 'none',
-            height: '100%',
-          }}
+          className={styles.pinButton}
+          {...props}
           onClick={(e) => events.onClick(e, { target })}
         >
           {icon}
         </div>
       </Tooltip.Trigger>
-      <Tooltip.Content>{tooltip[state]}</Tooltip.Content>
+      {tooltip && <Tooltip.Content>{tooltip}</Tooltip.Content>}
     </Tooltip>
   );
 }
@@ -255,9 +253,11 @@ function ComposerEditor(props: {
   const target = useTarget();
   const { workspaceId, threadId } = useThreadContext();
   const { eventId } = useOptionalCommentContext() ?? { eventId: 'default' };
+  // body is initial body, it does not update live
   const { autoFocus, body } = useComposerContext();
   const { events, store } = useApp();
   const { focusedId } = useSnapshot(store);
+  const [hasText, setHasText] = useState(false);
 
   const active = !!(
     focusedId &&
@@ -279,6 +279,7 @@ function ComposerEditor(props: {
     (editorState: EditorState, editor: LexicalEditor) => {
       editorState.read(() => {
         const newBody = $convertToMarkdownString(TRANSFORMERS);
+        setHasText(newBody.length > 0);
         const mentions = $getRoot()
           .getAllTextNodes()
           .filter((node) => $isMentionNode(node))
@@ -294,33 +295,49 @@ function ComposerEditor(props: {
     <div
       data-testid="collabkit-composer-editor"
       className={props.className ?? `${styles.editor({ active })} ${styles.composerGlobalStyles}`}
+      onClick={(e) => events.onClick(e, { target })}
     >
-      <div style={{ display: 'flex', position: 'relative' }}>
-        <Composer.PinButton />
-        <LexicalComposer initialConfig={initialConfig}>
-          <EditorPlugin onMount={handleChange} />
-          <KeyPlugin onKeyDown={(event) => events.onKeyDown(event)} />
-          <PasteTextPlugin />
-          <PlainTextPlugin
-            contentEditable={props.contentEditable ?? <Composer.ContentEditable />}
-            placeholder={props.placeholder}
-            ErrorBoundary={(props) => {
-              return <>{props.children}</>;
+      <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+        <div style={{ display: 'flex', flexDirection: 'row' }}>
+          <div style={{ display: 'flex', height: '100%' }}>
+            <Composer.PinButton />
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              flex: 1,
+              flexDirection: 'column',
+              position: 'relative',
             }}
-          />
-          <OnChangePlugin onChange={handleChange} />
-          {autoFocus ? <AutoFocusPlugin /> : <></>}
-          <HistoryPlugin />
-          <MentionsPlugin
-            onOpenChange={(open) => {
-              store.workspaces[workspaceId].composers[threadId][eventId].isMentioning = open;
-            }}
-          />
-          <TimestampPlugin />
-        </LexicalComposer>
-        {/* <Composer.ButtonGroup>
-          <Composer.MentionsButton />
-        </Composer.ButtonGroup> */}
+          >
+            <LexicalComposer initialConfig={initialConfig}>
+              <EditorPlugin onMount={handleChange} />
+              <KeyPlugin onKeyDown={(event) => events.onKeyDown(event)} />
+              <PasteTextPlugin />
+              <PlainTextPlugin
+                contentEditable={props.contentEditable ?? <Composer.ContentEditable />}
+                placeholder={props.placeholder}
+                ErrorBoundary={(props) => {
+                  return <>{props.children}</>;
+                }}
+              />
+              <OnChangePlugin onChange={handleChange} />
+              {autoFocus ? <AutoFocusPlugin /> : <></>}
+              <HistoryPlugin />
+              <MentionsPlugin
+                onOpenChange={(open) => {
+                  store.workspaces[workspaceId].composers[threadId][eventId].isMentioning = open;
+                }}
+              />
+              <TimestampPlugin />
+            </LexicalComposer>
+            {hasText && (
+              <Composer.ButtonGroup>
+                <Composer.MentionsButton />
+              </Composer.ButtonGroup>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );
