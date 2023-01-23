@@ -1,4 +1,5 @@
-import React, { ReactNode } from 'react';
+import type { ComponentProps, ReactNode } from 'react';
+import React, { Fragment } from 'react';
 import * as styles from '../theme/components/CommentList.css';
 import { NewIndicator } from './NewIndicator';
 import { useNewIndicator } from '../hooks/useNewIndicator';
@@ -9,7 +10,7 @@ import { useSnapshot } from 'valtio';
 import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
 import { useThreadContext } from '../hooks/useThreadContext';
 
-const CommentListRoot = (props: React.ComponentProps<'div'>) => (
+const CommentListRoot = (props: ComponentProps<'div'>) => (
   <div className={styles.root} {...props} />
 );
 
@@ -28,7 +29,7 @@ function useHasFetchedThreadTimeline() {
 }
 
 export default function CommentList(
-  props: React.ComponentProps<'div'> & {
+  props: ComponentProps<'div'> & {
     renderComment?: (props: CommentProps) => ReactNode;
     hideResolveButton?: boolean;
   }
@@ -58,10 +59,10 @@ export default function CommentList(
             <Comment {...commentProps} />
           );
           return (
-            <React.Fragment key={event.id}>
+            <Fragment key={event.id}>
               {newIndicatorId === event.id && <NewIndicator />}
               {comment}
-            </React.Fragment>
+            </Fragment>
           );
         });
 
