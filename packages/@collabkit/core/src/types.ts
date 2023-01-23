@@ -418,7 +418,6 @@ export interface Workspace {
 // get all threads for these pins in one query (comment sidebar speed)
 
 export interface UnconfiguredStore {
-  featureToggles: { [feature: string]: boolean };
   appId: null | string;
   sync: null | SyncAdapter;
   isReadOnly: boolean;
