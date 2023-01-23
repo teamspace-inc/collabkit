@@ -186,7 +186,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
         const objectId = objectSnapshot.key;
         const objectPins = objectSnapshot.val();
         if (objectId == null) return;
-        console.log('[network] openPins child added', objectId, objectPins);
+        DEBUG && console.log('[network] openPins child added', objectId, objectPins);
         onObjectChange(FirebaseId.decode(objectId), objectPins);
       }
     );
@@ -197,7 +197,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
         const objectId = objectSnapshot.key;
         const objectPins = objectSnapshot.val();
         if (objectId == null) return;
-        console.log('[network] openPins child changed', objectId, objectPins);
+        DEBUG && console.log('[network] openPins child changed', objectId, objectPins);
         onObjectChange(FirebaseId.decode(objectId), objectPins);
       }
     );
@@ -207,7 +207,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
       (objectSnapshot) => {
         const objectId = objectSnapshot.key;
         if (objectId == null) return;
-        console.log('[network] openPins child removed', objectId);
+        DEBUG && console.log('[network] openPins child removed', objectId);
         onObjectRemove(FirebaseId.decode(objectId));
       }
     );
