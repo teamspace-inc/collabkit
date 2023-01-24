@@ -34,7 +34,7 @@ import Profile from '../Profile';
 
 import { IconButton } from '../IconButton';
 import { EditorPlugin } from './EditorPlugin';
-import { At, MapPin } from '../icons';
+import { At } from '../icons';
 import { vars } from '../../theme/theme/index.css';
 import { KeyPlugin } from './KeyPlugin';
 import PinButtonSvg from './pin-button.svg';
@@ -191,18 +191,18 @@ type ComposerButtonState =
 const COMPOSER_PIN_ICONS: { [state: string]: React.ReactElement } = {
   'pin-default': <img src={DeletePinButtonSvg} />,
   'pin-hover': <img src={DeletePinButtonHoverSvg} />,
-  'pin-selecting': <img src={DeletePinButtonHoverSvg} />,
+  'pin-selecting': <img src={PinButtonHoverSvg} />,
   'empty-default': <img src={PinButtonSvg} />,
   'empty-hover': <img src={PinButtonHoverSvg} />,
-  'empty-selecting': <img src={DeletePinButtonHoverSvg} />,
+  'empty-selecting': <img src={PinButtonHoverSvg} />,
 };
 
 const COMPOSER_PIN_TOOLTIPS: { [state: string]: string | null } = {
   'pin-default': 'Remove pin',
   'pin-hover': 'Remove pin',
   'pin-selecting': 'Remove pin',
-  'empty-default': 'Pin',
-  'empty-hover': 'Pin',
+  'empty-default': 'Annotate',
+  'empty-hover': 'Annotate',
   'empty-selecting': null,
 };
 
