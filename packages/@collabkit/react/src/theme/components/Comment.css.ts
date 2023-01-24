@@ -73,6 +73,8 @@ export const timestamp = style({
   color: fallbackVar(vars.comment.timestamp.color, vars.color.textSecondary),
 });
 
+const verticalPadding = calc.multiply(vars.space[1], 1.5).toString();
+
 export const root = style({
   display: 'grid',
   gridTemplateColumns: `${vars.avatar.size} 1fr`,
@@ -80,21 +82,23 @@ export const root = style({
   position: 'relative',
   paddingLeft: fallbackVar(vars.comment.paddingLeft, vars.space[4]),
   paddingRight: fallbackVar(vars.comment.paddingRight, vars.space[4]),
-  paddingTop: fallbackVar(vars.comment.paddingTop, vars.space[2]),
-  paddingBottom: fallbackVar(vars.comment.paddingBottom, vars.space[2]),
+  paddingTop: fallbackVar(vars.comment.paddingTop, verticalPadding),
+  paddingBottom: fallbackVar(vars.comment.paddingBottom, verticalPadding),
   fontFamily: vars.fontFamily,
 });
 
 export const actions = style({
   display: 'flex',
-  gap: vars.space[1],
+  // gap: vars.space[1],
   flexDirection: 'row',
   zIndex: 2, // higher than scrollbar
   fontFamily: vars.fontFamily,
   position: 'absolute',
-  right: '0px',
-  top: '-1px',
-  background: vars.color.surfaceOverlay,
+  right: vars.space[4],
+  top: '2px',
+  transform: 'translateY(0%)',
+  background: vars.color.background,
+  border: `1px solid ${vars.color.border}`,
   borderRadius: '6px',
 
   opacity: 0,

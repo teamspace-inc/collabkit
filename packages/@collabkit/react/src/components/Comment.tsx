@@ -282,8 +282,8 @@ const CommentMenu = (props: { className?: string }) => {
 export { CommentMenu as Menu };
 
 export const CommentActions = (props: React.ComponentProps<'div'>) => {
-  const isEditng = useIsEditing();
-  if (isEditng) {
+  const isEditing = useIsEditing();
+  if (isEditing) {
     return null;
   }
   return <div className={props.className ?? styles.actions} {...props} />;
