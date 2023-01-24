@@ -222,7 +222,7 @@ export const button = recipe({
 
 export const buttonGroup = style({
   display: 'flex',
-  padding: '0px 8px 6px 0px',
+  padding: `0px ${vars.space[2]} 6px 0px`,
   gap: '0px',
   marginLeft: -6,
   marginTop: -2,
