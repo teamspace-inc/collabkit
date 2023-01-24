@@ -131,7 +131,7 @@ export async function writeMessageToFirebase(
         })
       );
 
-      await Promise.allSettled(promises);
+      await Promise.all(promises);
     } catch (e) {
       console.error('CollabKit: error stopping typing indicator', e);
     }
