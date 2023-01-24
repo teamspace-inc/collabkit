@@ -82,7 +82,7 @@
     "valtio": "^1.6.1",
     "vite": "^4.0.4",
     "vite-plugin-svgr": "^2.4.0",
-    "vitest": "^0.22.1"
+    "vitest": "^0.28.1"
   },
   "prettier": {
     "singleQuote": true,
