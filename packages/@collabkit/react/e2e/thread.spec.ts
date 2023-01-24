@@ -5,10 +5,7 @@ import { setupApp, setupFirebase } from './setup.ts';
 
 import { nanoid, random } from 'nanoid';
 
-const HOST =
-  process.env.NODE_ENV === 'development'
-    ? 'http://localhost:3000'
-    : process.env.PREVIEW_URL_DEMO ?? 'https://internal.demo.collabkit.dev';
+const HOST = process.env.PREVIEW_URL_DEMO ? process.env.PREVIEW_URL_DEMO : 'http://localhost:3000';
 
 const LADLE_HOST =
 process.env.PREVIEW_URL_LADLE ? process.env.PREVIEW_URL_LADLE : 'http://localhost:61000';
@@ -24,6 +21,7 @@ async function visitThreadAsUser(
     ...props,
   });
   const url = HOST + '/thread?' + params.toString();
+  console.log(url);
   await page.goto(url);
   return page;
 }
@@ -66,6 +64,7 @@ async function sendComment(page: Page, body: string) {
   const composer = await page.locator(
     '[data-testid="collabkit-composer-contenteditable"] [contenteditable=true]'
   );
+  page.waitForTimeout(2000)
   await composer.click();
   await composer.fill(body);
   await page.keyboard.press('Enter');
@@ -266,7 +265,7 @@ test.describe('Thread', () => {
   // });
 
   test('sidebar threads are rendering and working', async ({ context }) => {
-    const page = await visitLadleURL(context, '/', { story: 'sidebar-threads--sidebar-threads' });
+    const page = await visitLadleURL(context, '/', { story: 'channels--channels' });
     const maxTimeToLoad = 5000;
     // To make sure that the page loads in constant maximum amount of time, we want the test to break if time taken is more than this
     await page.waitForTimeout(maxTimeToLoad);
