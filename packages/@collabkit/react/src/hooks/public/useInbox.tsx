@@ -34,14 +34,21 @@ export function useInbox(props: { filter: 'all' | 'open' }) {
     ? // show threads with latest activity first
     Object.keys(inbox)
       // filter out resolved threads
+      .sort((a, b) => {
+        const aTime = +inbox[a].createdAt ?? 0;
+        const bTime = +inbox[b].createdAt ?? 0;
+        return bTime - aTime;
+      })
+      // filter out resolved threads
       ?.filter((threadId) =>
-        ((props.filter === 'open')
+        props.filter === 'open'
           ? !(
-            workspace.timeline?.[threadId] &&
-            timelineUtils.computeIsResolved(workspace.timeline?.[threadId])
-          )
-          : true) && !inbox[threadId].parentId
+              workspace.timeline?.[threadId] &&
+              timelineUtils.computeIsResolved(workspace.timeline?.[threadId])
+            )
+          : true
       )
+      .filter(Boolean)
     : [];
 
   return threadIds;
