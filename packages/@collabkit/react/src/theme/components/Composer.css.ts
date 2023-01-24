@@ -184,12 +184,47 @@ export const editor = recipe({
   },
 });
 
+export const button = recipe({
+  base: {
+    border: 'none',
+    background: 'none',
+    height: '24px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: `${vars.space[1]} ${vars.space[2]}`,
+    borderRadius: '4px',
+    selectors: {
+      '&:hover': {
+        background: vars.color.surfaceOverlay,
+      },
+    },
+  },
+  variants: {
+    type: {
+      primary: {
+        color: vars.color.textPrimary,
+        fontSize: vars.text.base.fontSize,
+        lineHeight: vars.text.base.lineHeight,
+        letterSpacing: vars.text.base.letterSpacing,
+        fontWeight: vars.fontWeight.bold,
+      },
+      secondary: {
+        color: vars.color.textSecondary,
+        fontSize: vars.text.base.fontSize,
+        lineHeight: vars.text.base.lineHeight,
+        letterSpacing: vars.text.base.letterSpacing,
+        fontWeight: vars.fontWeight.regular,
+      },
+    },
+  },
+});
+
 export const buttonGroup = style({
   display: 'flex',
-  padding: '0px 0px 6px',
+  padding: `0px ${vars.space[2]} ${calc(vars.space[1]).add(calc(vars.space[1]).divide(2))} 0px`,
   gap: '0px',
-  marginLeft: -6,
-  marginTop: -2,
+  marginLeft: `${calc(vars.space[1]).negate()}`,
 });
 
 globalStyle('.collabkit-pin-node', {

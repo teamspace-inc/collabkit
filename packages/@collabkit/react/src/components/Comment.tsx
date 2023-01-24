@@ -18,10 +18,7 @@ import { Menu, MenuItem } from './Menu';
 import { Thread } from './Thread';
 import { useHovering } from '../hooks/useHovering';
 import { mergeRefs } from 'react-merge-refs';
-import { useComposer } from '../hooks/useComposer';
 import Composer from './composer/Composer';
-import { ButtonGroup } from './ButtonGroup';
-import { actions } from '@collabkit/client';
 import { IconButton } from './IconButton';
 import CommentPinSvg from './composer/comment-pin.svg';
 
@@ -173,13 +170,8 @@ export const CommentPin = (props: React.ComponentProps<'div'>) => {
 };
 
 export const CommentEditor = (props: React.ComponentProps<'div'>) => {
-  const { store } = useApp();
-  const { eventId } = useCommentContext();
   const isEditing = useIsEditing();
-
-  const { threadId, workspaceId } = useThreadContext();
   const { body } = useCommentStore();
-  const { isEnabled, onPointerDown } = useComposer({ threadId, workspaceId, eventId });
 
   if (!isEditing) {
     return null;
@@ -193,17 +185,6 @@ export const CommentEditor = (props: React.ComponentProps<'div'>) => {
       initialBody={body}
     >
       <Composer.Editor contentEditable={<Composer.ContentEditable />} placeholder={<span />} />
-      <ButtonGroup
-        data-testid="collabkit-comment-composer-button-group"
-        onCancel={(e) => {
-          if (e.button === 0) {
-            actions.stopEditing(store);
-          }
-        }}
-        onConfirm={onPointerDown}
-        confirmButtonEnabled={isEnabled}
-        confirmButtonText={'Save'}
-      />
     </Composer.Root>
   );
 };
