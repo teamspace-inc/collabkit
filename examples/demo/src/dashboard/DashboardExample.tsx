@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { ComponentPropsWithoutRef, forwardRef, useState } from 'react';
 import Info from 'phosphor-react/dist/icons/Info.esm.js';
 import {
   AreaChart,
@@ -19,7 +19,6 @@ import {
   Tab,
   Table,
   TableBody,
-  TableCell,
   TableHead,
   TableHeaderCell,
   TableRow,
@@ -33,7 +32,7 @@ import '@tremor/react/dist/esm/tremor.css';
 import { isAfter, isBefore, isEqual } from 'date-fns';
 
 import { performance } from './data';
-import { AddCommentButton } from '@collabkit/react';
+import { Commentable, Thread, useCommentableRef } from '@collabkit/react';
 
 type Kpi = {
   title: string;
@@ -75,20 +74,22 @@ function KpiCardGrid() {
   return (
     <ColGrid numColsMd={2} numColsLg={3} marginTop="mt-6" gapX="gap-x-6" gapY="gap-y-6">
       {kpiData.map((item) => (
-        <Card key={item.title}>
-          <Flex alignItems="items-start">
-            <Block truncate={true}>
-              <Text>{item.title}</Text>
-              <Metric truncate={true}>{item.metric}</Metric>
-            </Block>
-            <BadgeDelta deltaType={item.deltaType} text={item.delta} />
-          </Flex>
-          <Flex marginTop="mt-4" spaceX="space-x-2">
-            <Text truncate={true}>{`${item.progress}% (${item.metric})`}</Text>
-            <Text>{item.target}</Text>
-          </Flex>
-          <ProgressBar percentageValue={item.progress} marginTop="mt-2" />
-        </Card>
+        <Commentable.Container key={item.title} objectId={`dashboard-kpi-${item.title}`}>
+          <Card key={item.title}>
+            <Flex alignItems="items-start">
+              <Block truncate={true}>
+                <Text>{item.title}</Text>
+                <Metric truncate={true}>{item.metric}</Metric>
+              </Block>
+              <BadgeDelta deltaType={item.deltaType} text={item.delta} />
+            </Flex>
+            <Flex marginTop="mt-4" spaceX="space-x-2">
+              <Text truncate={true}>{`${item.progress}% (${item.metric})`}</Text>
+              <Text>{item.target}</Text>
+            </Flex>
+            <ProgressBar percentageValue={item.progress} marginTop="mt-2" />
+          </Card>
+        </Commentable.Container>
       ))}
     </ColGrid>
   );
@@ -109,9 +110,11 @@ function ChartView({ chartData }: { chartData: any }) {
     Customers: numberFormatter,
   };
 
+  const ref = useCommentableRef('dashboard-chart-legend');
+
   return (
     <Card marginTop="mt-6">
-      <div className="md:flex justify-between">
+      <div className="md:flex justify-between" ref={ref}>
         <Block>
           <Flex justifyContent="justify-start" spaceX="space-x-0.5" alignItems="items-center">
             <Title> Performance History </Title>
@@ -135,17 +138,19 @@ function ChartView({ chartData }: { chartData: any }) {
           </Toggle>
         </div>
       </div>
-      <AreaChart
-        data={chartData}
-        dataKey="date"
-        categories={[selectedKpi]}
-        colors={['blue']}
-        showLegend={false}
-        valueFormatter={formatters[selectedKpi]}
-        yAxisWidth="w-14"
-        height="h-96"
-        marginTop="mt-8"
-      />
+      <Commentable.Container objectId="dashboard-performance-chart">
+        <AreaChart
+          data={chartData}
+          dataKey="date"
+          categories={[selectedKpi]}
+          colors={['blue']}
+          showLegend={false}
+          valueFormatter={formatters[selectedKpi]}
+          yAxisWidth="w-14"
+          height="h-96"
+          marginTop="mt-8"
+        />
+      </Commentable.Container>
     </Card>
   );
 }
@@ -244,7 +249,7 @@ function TableView() {
 
   return (
     <Card marginTop="mt-6">
-      <div className="sm:mt-6 hidden sm:block sm:flex sm:justify-start sm:space-x-2">
+      <div className="sm:mt-6 hidden sm:flex sm:justify-start sm:space-x-2">
         <MultiSelectBox
           handleSelect={(value) => setSelectedNames(value)}
           placeholder="Select Salespeople"
@@ -305,13 +310,13 @@ function TableView() {
             .filter((item) => isSalesPersonSelected(item))
             .map((item) => (
               <TableRow key={item.name}>
-                <TableCell>{item.name}</TableCell>
-                <TableCell textAlignment="text-right">{item.leads}</TableCell>
-                <TableCell textAlignment="text-right">{item.sales}</TableCell>
-                <TableCell textAlignment="text-right">{item.quota}</TableCell>
-                <TableCell textAlignment="text-right">{item.variance}</TableCell>
-                <TableCell textAlignment="text-right">{item.region}</TableCell>
-                <TableCell textAlignment="text-right">
+                <TableCell objectId={`${item.name}-name`}>{item.name}</TableCell>
+                <TableCell objectId={`${item.name}-leads`}>{item.leads}</TableCell>
+                <TableCell objectId={`${item.name}-sales`}>{item.sales}</TableCell>
+                <TableCell objectId={`${item.name}-quota`}>{item.quota}</TableCell>
+                <TableCell objectId={`${item.name}-variance`}>{item.variance}</TableCell>
+                <TableCell objectId={`${item.name}-region`}>{item.region}</TableCell>
+                <TableCell objectId={`${item.name}-status`}>
                   <BadgeDelta deltaType={item.deltaType} text={item.status} size="xs" />
                 </TableCell>
               </TableRow>
@@ -339,40 +344,65 @@ export function DashboardExample() {
   });
 
   return (
-    <main className="bg-slate-50 p-6 sm:p-10 h-full">
-      <Flex>
-        <Block truncate>
-          <Title>Dashboard</Title>
-          <Text>View core metrics on the state of your company.</Text>
-        </Block>
-        <AddCommentButton />
-        <Datepicker
-          minDate={minDate}
-          maxDate={maxDate}
-          defaultStartDate={minDate}
-          defaultEndDate={maxDate}
-          enableRelativeDates={false}
-          handleSelect={(start, end) => {
-            setStartDate(start);
-            setEndDate(end);
-          }}
-          maxWidth="max-w-xs"
-        />
-      </Flex>
+    <Commentable.Root>
+      <div className="flex h-screen w-screen">
+        <main className="bg-slate-50 p-8 sm:p-10 flex-1 h-screen overflow-scroll">
+          <Flex>
+            <Block truncate>
+              <Title>Dashboard</Title>
+              <Text>View core metrics on the state of your company.</Text>
+            </Block>
+            <div className="px-2">{/* <AddCommentButton /> */}</div>
+            <Datepicker
+              minDate={minDate}
+              maxDate={maxDate}
+              defaultStartDate={minDate}
+              defaultEndDate={maxDate}
+              enableRelativeDates={false}
+              handleSelect={(start, end) => {
+                setStartDate(start);
+                setEndDate(end);
+              }}
+              maxWidth="max-w-xs"
+            />
+          </Flex>
 
-      <TabList defaultValue={1} handleSelect={(value) => setSelectedView(value)} marginTop="mt-6">
-        <Tab value={1} text="Overview" />
-        <Tab value={2} text="Detail" />
-      </TabList>
+          <TabList
+            defaultValue={1}
+            handleSelect={(value) => setSelectedView(value)}
+            marginTop="mt-6"
+          >
+            <Tab value={1} text="Overview" />
+            <Tab value={2} text="Detail" />
+          </TabList>
 
-      {selectedView === 1 ? (
-        <>
-          <KpiCardGrid />
-          <ChartView chartData={chartData} />
-        </>
-      ) : (
-        <TableView />
-      )}
-    </main>
+          {selectedView === 1 ? (
+            <>
+              <KpiCardGrid />
+              <ChartView chartData={chartData} />
+            </>
+          ) : (
+            <TableView />
+          )}
+        </main>
+        <div className="h-screen border" style={{ width: 360 }}>
+          <Thread threadId="test123" />
+        </div>
+      </div>
+    </Commentable.Root>
   );
 }
+
+const TableCell = forwardRef<
+  HTMLTableCellElement,
+  { objectId: string } & ComponentPropsWithoutRef<'td'>
+>((props) => {
+  const ref = useCommentableRef(props.objectId);
+  return (
+    <td
+      className="tr-align-middle tr-whitespace-nowrap tr-tabular-nums tr-text-left tr-pl-4 tr-pr-4 tr-pt-4 tr-pb-4"
+      ref={ref}
+      {...props}
+    />
+  );
+});

@@ -163,7 +163,6 @@ export type Target =
   | ThreadCloseButtonTarget
   | ReopenThreadButtonTarget
   | FloatingCommentButtonTarget
-  | AddCommentButtonTarget
   | CommentableContainer
   | Commentable
   | MenuTarget
@@ -174,7 +173,28 @@ export type Target =
   | HideSidebarButtonTarget
   | ComposerPinButtonTarget
   | ComposerMentionsButtonTarget
-  | ChannelActonButtonTarget;
+  | ChannelActonButtonTarget
+  | AttachPinTarget
+  | PinTarget
+  | PinDeleteButton
+  | CommentSaveButtonTarget
+  | CommentCancelButtonTarget;
+
+export type PinTarget = {
+  type: 'pin';
+  objectId: string;
+  id: string;
+  threadId: string;
+  workspaceId: string;
+  isPending?: boolean;
+};
+
+export type AttachPinTarget = {
+  type: 'attachPin';
+  objectId: string;
+  x: number;
+  y: number;
+};
 
 export type ComposerMentionsButtonTarget = {
   type: 'composerMentionsButton';
@@ -197,6 +217,11 @@ export type MenuTarget = {
   context?: Target;
 };
 
+export type PinDeleteButton = {
+  type: 'pinDeleteButton';
+  pin: PinTarget;
+};
+
 export type CommentMenuTarget = MenuTarget & CommentTarget;
 
 export type Commentable = {
@@ -209,8 +234,6 @@ export type CommentType = 'default' | 'inline-start' | 'inline' | 'inline-end';
 export type CommentableContainer = { type: 'commentableContainer'; workspaceId: string };
 
 export type FloatingCommentButtonTarget = { type: 'floatingCommentButton' };
-
-export type AddCommentButtonTarget = { type: 'addCommentButton'; workspaceId: string };
 
 export type ComposerTarget = {
   type: 'composer';
@@ -244,6 +267,20 @@ export type CommentEditButtonTarget = {
 export type CommentDeleteButtonTarget = {
   type: 'commentDeleteButton';
   comment: CommentTarget;
+};
+
+export type CommentSaveButtonTarget = {
+  type: 'commentSaveButton';
+  workspaceId: string;
+  threadId: string;
+  eventId: string;
+};
+
+export type CommentCancelButtonTarget = {
+  type: 'commentCancelButton';
+  workspaceId: string;
+  threadId: string;
+  eventId: string;
 };
 
 export type ThreadResolveButtonTarget = {
@@ -283,6 +320,7 @@ export type Event = {
   createdById: string;
   parentId?: string;
   mentions?: readonly string[];
+  pinId?: string;
 };
 
 export type WithName<T> = T & {
@@ -330,7 +368,29 @@ export interface Composer {
   isTypingTimeoutID?: ReturnType<typeof setTimeout>;
   isTyping: { [endUserId: string]: boolean };
   isMentioning: boolean;
+  pendingPin: null | PendingPin;
 }
+
+export type FirebasePin = {
+  x: number;
+  y: number;
+  threadId: string;
+  eventId: string;
+};
+
+export type Pin = {
+  id: string;
+  objectId: string;
+  x: number;
+  y: number;
+  workspaceId: string;
+  threadId: string;
+  eventId: string;
+};
+
+export type PendingPin = Pin & {
+  isPending: true;
+};
 
 export interface SeenBy {
   [userId: string]: { seenAt: number; seenUntilId: string };
@@ -356,22 +416,14 @@ export interface Workspace {
   threadProfiles: { [threadId: string]: { [userId: string]: boolean } };
   fetchedProfiles: { [threadId: string]: { [userId: string]: boolean } };
   openPins: { [objectId: string]: { [pinId: string]: Pin } };
-  pendingPin: PendingPin | null;
+  eventPins: { [eventId: string]: Pin };
 }
 
 // get all pins for the workspace that have an open thread attached to them (we don't want resolved ones)
 // get all threads for these pins in one query (comment sidebar speed)
 
-export type PendingPin = Pin & { objectId: string };
-
-export type Pin = {
-  threadId: string;
-  eventId: string;
-  x: number;
-  y: number;
-};
-
 export interface UnconfiguredStore {
+  appId: null | string;
   sync: null | SyncAdapter;
   isReadOnly: boolean;
   isConnected: boolean;
@@ -380,15 +432,13 @@ export interface UnconfiguredStore {
   userId: string | null;
   user: UserProps | null;
   workspaceId: string | null;
-  selectedId: null | Target;
   focusedId: null | Target;
-  hoveringId: null | Target;
   reactingId: null | Target;
-  // composingId: null | ThreadTarget;
   menuId: null | Target;
   viewingId: null | Target;
   previewingId: null | Target;
   editingId: null | CommentTarget;
+  composerId: null | ComposerTarget;
   config: null | Config;
   avatarErrors: { [avatar: string]: boolean };
   profiles: { [profileId: string]: Profile | undefined };
@@ -401,11 +451,15 @@ export interface UnconfiguredStore {
   nextThreadId: null | string;
   subs: Subscriptions;
   callbacks?: Callbacks;
+  clientX: number;
+  clientY: number;
+  commentableElements: Map<string, HTMLElement | SVGElement>;
 }
 
 export interface Store extends UnconfiguredStore {
   sync: SyncAdapter;
   config: Config;
+  allPins: Pin[];
 }
 
 export type Unsubscribe = () => void;

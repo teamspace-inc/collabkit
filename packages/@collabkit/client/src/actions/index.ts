@@ -1,58 +1,58 @@
 import debounce from 'lodash.debounce';
 
 import type { Store } from '@collabkit/core';
-import { sendMessage } from './sendMessage';
-import { startSelecting } from './startSelecting';
+
+import { attachPin } from './attachPin';
 import { authenticate } from './authenticate';
+import { blur } from './blur';
+import { closeAll } from './closeAll';
 import { closeEmojiReactionPicker } from './closeEmojiReactionPicker';
-import { closeThread } from './closeThread';
+import { closeMenu } from './closeMenu';
 import { closePreview } from './closePreview';
+import { closeThread } from './closeThread';
+import { deleteMessage } from './deleteMessage';
+import { deletePin } from './deletePin';
+import { disableComposerCommentButton } from './disableComposerCommentButton';
+import { enableComposerCommentButton } from './enableComposerCommentButton';
+import { focus } from './focus';
+import { hideSidebar } from './hideSidebar';
+import { init } from './init';
+import { initComposer } from './initComposer';
+import { insertComposerPin } from './insertComposerPin';
+import { isTyping } from './isTyping';
 import { monitorConnection } from './monitorConnection';
+import { movePin } from './movePin';
+import { openMenu } from './openMenu';
+import { reopenThread } from './reopenThread';
 import { resolveThread } from './resolveThread';
+import { saveMentionableUsers } from './saveMentionableUsers';
 import { saveProfile } from './saveProfile';
+import { saveThreadInfo } from './saveThreadInfo';
 import { seen } from './seen';
+import { sendMessage } from './sendMessage';
+import { setAvatarError } from './setAvatarError';
+import { showPreview } from './showPreview';
+import { showSidebar } from './showSidebar';
+import { startEditing } from './startEditing';
+import { startMentioning } from './startMentioning';
+import { startSelecting } from './startSelecting';
+import { stopEditing } from './stopEditing';
 import { stopSelecting } from './stopSelecting';
 import { stopTyping } from './stopTyping';
 import { subscribeInbox } from './subscribeInbox';
+import { subscribeOpenThreads } from './subscribeOpenThreads';
+import { subscribeProfile } from './subscribeProfile';
+import { subscribeProfiles } from './subscribeProfiles';
 import { subscribeSeen } from './subscribeSeen';
+import { subscribeThread } from './subscribeThread';
+import { subscribeWorkspace } from './subscribeWorkspace';
 import { toggleCommentReaction } from './toggleCommentReaction';
 import { toggleEmojiReactionPicker } from './toggleEmojiReactionPicker';
-import { focus } from './focus';
-import { blur } from './blur';
-import { subscribeThread } from './subscribeThread';
-import { reopenThread } from './reopenThread';
-import { subscribeProfile } from './subscribeProfile';
-import { subscribeOpenThreads } from './subscribeOpenThreads';
-import { subscribeWorkspace } from './subscribeWorkspace';
-import { subscribeProfiles } from './subscribeProfiles';
-import { hover } from './hover';
-import { unhover } from './unhover';
-import { viewThread } from './viewThread';
-import { isTyping } from './isTyping';
-import { showPreview } from './showPreview';
-
-import { saveThreadInfo } from './saveThreadInfo';
-import { init } from './init';
-import { saveMentionableUsers } from './saveMentionableUsers';
-import { enableComposerCommentButton } from './enableComposerCommentButton';
-import { disableComposerCommentButton } from './disableComposerCommentButton';
-import { deleteMessage } from './deleteMessage';
-import { startEditing } from './startEditing';
-import { stopEditing } from './stopEditing';
 import { updateComment } from './updateComment';
-import { showSidebar } from './showSidebar';
-import { hideSidebar } from './hideSidebar';
-import { setAvatarError } from './setAvatarError';
-import { closeMenu } from './closeMenu';
-import { openMenu } from './openMenu';
-import { closeAll } from './closeAll';
-import { insertComposerPin } from './insertComposerPin';
-import { startMentioning } from './startMentioning';
-import { initComposer } from './initComposer';
-
-import { savePin } from './savePin';
-import { deletePin } from './deletePin';
-import { movePin } from './movePin';
+import { viewThread } from './viewThread';
+import { subscribeOpenPins } from './subscribeOpenPins';
+import { removePendingPin } from './removePendingPin';
+import { focusComposer } from './focusComposer';
 
 export type GenerateToken =
   | {
@@ -120,6 +120,7 @@ export function getConfig(store: Store) {
 }
 
 export const actions = {
+  attachPin,
   authenticate,
   blur,
   closeAll,
@@ -132,8 +133,8 @@ export const actions = {
   disableComposerCommentButton,
   enableComposerCommentButton,
   focus,
+  focusComposer,
   hideSidebar,
-  hover,
   init,
   initComposer,
   insertComposerPin,
@@ -141,10 +142,10 @@ export const actions = {
   monitorConnection,
   movePin,
   openMenu,
+  removePendingPin,
   reopenThread,
   resolveThread,
   saveMentionableUsers,
-  savePin,
   saveProfile,
   saveThreadInfo,
   seen,
@@ -159,6 +160,7 @@ export const actions = {
   stopSelecting,
   stopTyping,
   subscribeInbox,
+  subscribeOpenPins,
   subscribeOpenThreads,
   subscribeProfile,
   subscribeProfiles,
@@ -167,7 +169,6 @@ export const actions = {
   subscribeWorkspace,
   toggleCommentReaction,
   toggleEmojiReactionPicker,
-  unhover,
   updateComment,
   viewThread,
 };

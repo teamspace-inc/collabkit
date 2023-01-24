@@ -116,7 +116,7 @@ export function ProfileAvatar({
       src={profile.avatar}
       className={props.className ?? styles.avatar}
       {...props}
-      style={{ ...(size ? { width: size, height: size, lineHeight: size } : {}) }}
+      style={{ ...(size ? { width: size, height: size, lineHeight: size } : null) }}
       onError={() => actions.setAvatarError(store, { avatar })}
     />
   );

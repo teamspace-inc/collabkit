@@ -2,14 +2,14 @@ import type { Store } from '@collabkit/core';
 import { $createParagraphNode, $getSelection, $isRangeSelection, $getRoot } from 'lexical';
 import { $getPrevChar, $createInlineTextNode, $createPinNode } from '@collabkit/editor';
 
-export function insertComposerPin(
-  store: Store,
-  props: { threadId: string; workspaceId: string; eventId: string }
-) {
-  const { workspaceId, threadId, eventId } = props;
+export function insertComposerPin(store: Store, props: { pinId: string }) {
+  const { composerId } = store;
+  if (!composerId) throw new Error('CollabKit: no composerId set');
+  const { pinId } = props;
+  const { workspaceId, threadId, eventId } = composerId;
   const workspace = store.workspaces[workspaceId];
   const { editor } = workspace.composers[threadId][eventId];
-  const pinId = 'foo'; // todo replace this
+  // editor is not present in unit tests
   editor?.update(() => {
     const selection = $getSelection();
     if ($isRangeSelection(selection)) {

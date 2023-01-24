@@ -186,88 +186,100 @@ describe('FirebaseSync', async () => {
     return pins as { [objectId: string]: { [id: string]: Pin } } | null;
   }
 
-  test('savePin + movePin + deletePin', async () => {
+  describe('pin', async () => {
     const threadId = nanoid();
+    const objectId = 'task-4';
+    let pinId;
+    let eventId;
 
-    const { id: eventId } = await sync.sendMessage({
-      appId,
-      userId,
-      workspaceId,
-      threadId,
-      preview: 'Test Message',
-      event: {
-        type: 'message',
-        body: 'Test Message',
-        createdAt: Date.now(),
-        createdById: userId,
-      },
+    beforeAll(async () => {
+      const { id } = await sync.sendMessage({
+        appId,
+        userId,
+        workspaceId,
+        threadId,
+        preview: 'Test Message',
+        event: {
+          type: 'message',
+          body: 'Test Message',
+          createdAt: Date.now(),
+          createdById: userId,
+        },
+      });
+
+      eventId = id;
     });
 
-    const objectId = 'task-4';
+    test('savePin', async () => {
+      expect(await getPins()).toStrictEqual({});
 
-    let pins = await getPins();
+      pinId = sync.nextPinId({ appId, workspaceId, objectId });
 
-    expect(pins).toStrictEqual({});
+      await sync.savePin({
+        appId,
+        workspaceId,
+        pinId,
+        pin: {
+          objectId,
+          eventId,
+          threadId,
+          x: 0,
+          y: 0,
+        },
+      });
 
-    const pinId = await sync.savePin({
-      appId,
-      workspaceId,
-      objectId,
-      pin: {
+      const pins = await getPins();
+
+      if (!pins) {
+        throw new Error('pins is null');
+      }
+
+      if (!pins[objectId]) {
+        throw new Error('pins[objectId] is null');
+      }
+
+      expect(pins[objectId][pinId]).toStrictEqual({
         eventId,
         threadId,
         x: 0,
         y: 0,
-      },
+      });
     });
 
-    pins = await getPins();
+    test('movePin', async () => {
+      await sync.movePin({
+        appId,
+        workspaceId,
+        objectId,
+        pinId,
+        x: 10,
+        y: 20,
+      });
 
-    if (!pins) {
-      throw new Error('pins is null');
-    }
+      const pins = await getPins();
 
-    if (!pins[objectId]) {
-      throw new Error('pins[objectId] is null');
-    }
-
-    expect(pins[objectId][pinId]).toStrictEqual({
-      eventId,
-      threadId,
-      x: 0,
-      y: 0,
+      expect(pins?.[objectId]?.[pinId]).toStrictEqual({
+        eventId,
+        threadId,
+        x: 10,
+        y: 20,
+      });
     });
 
-    await sync.movePin({
-      appId,
-      workspaceId,
-      objectId,
-      pinId,
-      x: 10,
-      y: 20,
+    test('deletePin', async () => {
+      await sync.deletePin({
+        appId,
+        workspaceId,
+        objectId,
+        pinId,
+        threadId,
+        eventId,
+      });
+
+      const pins = await getPins();
+
+      expect(pins?.[objectId]?.[pinId]).toBe(undefined);
     });
-
-    pins = await getPins();
-
-    expect(pins?.[objectId]?.[pinId]).toStrictEqual({
-      eventId,
-      threadId,
-      x: 10,
-      y: 20,
-    });
-
-    await sync.deletePin({
-      appId,
-      workspaceId,
-      objectId,
-      pinId,
-      threadId,
-      eventId,
-    });
-
-    pins = await getPins();
-
-    expect(pins?.[objectId]?.[pinId]).toBe(undefined);
   });
 
   test('saveEvent', async () => {

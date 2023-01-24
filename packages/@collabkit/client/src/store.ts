@@ -19,6 +19,7 @@ export function createComposer(): Composer {
     editor: null,
     enabled: false,
     isMentioning: false,
+    pendingPin: null,
   };
 }
 
@@ -38,16 +39,16 @@ export function createWorkspace(): Workspace {
     timelineInitialFetchComplete: {},
     threadProfiles: {},
     fetchedProfiles: {},
-
     pendingThreads: {},
     pendingThreadInfo: {},
-    pendingPin: null,
     openPins: {},
+    eventPins: {},
   };
 }
 
 export function createStore(): UnconfiguredStore {
   const store: UnconfiguredStore = {
+    appId: null,
     sync: null as unknown as SyncAdapter,
     isReadOnly: false,
     isConnected: false,
@@ -61,19 +62,21 @@ export function createStore(): UnconfiguredStore {
     workspaceId: null,
     focusedId: null,
     menuId: null,
-    selectedId: null,
     reactingId: null,
     viewingId: null,
     previewingId: null,
     editingId: null,
-    hoveringId: null,
+    composerId: null,
     workspaces: {},
     profiles: {},
     avatarErrors: {},
     subs: {},
     callbacks: {},
     mentionableUsers: {},
-    nextThreadId: null
+    nextThreadId: null,
+    clientX: 0,
+    clientY: 0,
+    commentableElements: markRaw(new Map()),
   };
   return store;
 }

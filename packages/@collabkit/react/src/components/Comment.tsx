@@ -18,10 +18,9 @@ import { Menu, MenuItem } from './Menu';
 import { Thread } from './Thread';
 import { useHovering } from '../hooks/useHovering';
 import { mergeRefs } from 'react-merge-refs';
-import { useComposer } from '../hooks/useComposer';
 import Composer from './composer/Composer';
-import { ButtonGroup } from './ButtonGroup';
-import { actions } from '@collabkit/client';
+import { IconButton } from './IconButton';
+import CommentPinSvg from './composer/comment-pin.svg';
 
 function useIsEditing() {
   const { store } = useApp();
@@ -85,11 +84,13 @@ function CommentRoot({ commentId: eventId, ...props }: CommentRootProps) {
     eventId,
   });
 
-  const { menuId } = useSnapshot(useApp().store);
+  const app = useApp();
+
+  const { menuId } = useSnapshot(app.store);
 
   const timeline = useSnapshot(useWorkspaceStore().timeline[threadId]);
 
-  const profiles = useSnapshot(useApp().store.profiles);
+  const profiles = useSnapshot(app.store.profiles);
 
   const event = timeline[eventId];
 
@@ -97,7 +98,7 @@ function CommentRoot({ commentId: eventId, ...props }: CommentRootProps) {
 
   const isHovering =
     // hovering or the menu is open and the menu is for this comment
-    useHovering(divRef, target) ||
+    useHovering(divRef) ||
     (menuId?.type === 'menu' &&
       menuId.context?.type === 'comment' &&
       menuId.context.eventId === event.id);
@@ -143,7 +144,8 @@ export function CommentBody({ ...props }: React.ComponentPropsWithoutRef<'div'>)
   }
 
   return (
-    <div {...props} className={props.className ?? styles.body}>
+    <div data-testid="collabkit-comment-body" {...props} className={props.className ?? styles.body}>
+      <Comment.Pin />
       <Markdown
         className={canClickLinks ? styles.markdown : styles.markdownLinksNotClickable}
         body={body}
@@ -152,14 +154,24 @@ export function CommentBody({ ...props }: React.ComponentPropsWithoutRef<'div'>)
   );
 }
 
-export const CommentEditor = (props: React.ComponentProps<'div'>) => {
-  const { store } = useApp();
+export const CommentPin = (props: React.ComponentProps<'div'>) => {
   const { eventId } = useCommentContext();
-  const isEditing = useIsEditing();
+  const workspace = useSnapshot(useWorkspaceStore());
+  const pin = workspace.eventPins[eventId];
+  if (pin) {
+    return (
+      <div className={styles.pin} {...props}>
+        <img src={CommentPinSvg} />
+      </div>
+    );
+  } else {
+    return null;
+  }
+};
 
-  const { threadId, workspaceId } = useThreadContext();
+export const CommentEditor = (props: React.ComponentProps<'div'>) => {
+  const isEditing = useIsEditing();
   const { body } = useCommentStore();
-  const { isEnabled, onPointerDown } = useComposer({ threadId, workspaceId, eventId });
 
   if (!isEditing) {
     return null;
@@ -170,20 +182,9 @@ export const CommentEditor = (props: React.ComponentProps<'div'>) => {
       data-testid="collabkit-comment-composer-root"
       className={props.className ?? styles.editor}
       autoFocus={true}
-      body={body}
+      initialBody={body}
     >
       <Composer.Editor contentEditable={<Composer.ContentEditable />} placeholder={<span />} />
-      <ButtonGroup
-        data-testid="collabkit-comment-composer-button-group"
-        onCancel={(e) => {
-          if (e.button === 0) {
-            actions.stopEditing(store);
-          }
-        }}
-        onConfirm={onPointerDown}
-        confirmButtonEnabled={isEnabled}
-        confirmButtonText={'Save'}
-      />
     </Composer.Root>
   );
 };
@@ -235,36 +236,45 @@ const CommentMenu = (props: { className?: string }) => {
     [comment, threadId, workspaceId]
   );
 
+  if (createdById !== userId) {
+    return null;
+  }
+
+  const items: React.ReactNode[] = useMemo(
+    () => [
+      <MenuItem
+        label="Edit"
+        targetType="commentEditButton"
+        data-testid="collabkit-comment-menu-edit-button"
+      />,
+      <MenuItem
+        label="Delete"
+        targetType="commentDeleteButton"
+        data-testid="collabkit-comment-menu-delete-button"
+      />,
+      isResolved && (
+        <MenuItem
+          label="Re-open"
+          targetType="reopenThreadButton"
+          data-testid="collabkit-comment-menu-re-open-button"
+        />
+      ),
+    ],
+    [isResolved]
+  );
+
   return (
-    <>
-      {createdById === userId && (
-        <Menu<CommentMenuItemType>
-          data-testid="collabkit-comment-menu"
-          className={props.className}
-          icon={<DotsThree size={16} />}
-          onItemClick={onItemClick}
-          context={comment}
-        >
-          <MenuItem
-            label="Edit"
-            targetType="commentEditButton"
-            data-testid="collabkit-comment-menu-edit-button"
-          />
-          <MenuItem
-            label="Delete"
-            targetType="commentDeleteButton"
-            data-testid="collabkit-comment-menu-delete-button"
-          />
-          {isResolved && (
-            <MenuItem
-              label="Re-open"
-              targetType="reopenThreadButton"
-              data-testid="collabkit-comment-menu-re-open-button"
-            />
-          )}
-        </Menu>
-      )}
-    </>
+    <Menu<CommentMenuItemType>
+      data-testid="collabkit-comment-menu"
+      className={props.className}
+      onItemClick={onItemClick}
+      context={comment}
+      items={items}
+    >
+      <IconButton>
+        <DotsThree size={16} />
+      </IconButton>
+    </Menu>
   );
 };
 
@@ -327,6 +337,7 @@ Comment.Indent = CommentIndent;
 Comment.Actions = CommentActions;
 Comment.MoreMenu = CommentMenu;
 Comment.Editor = CommentEditor;
+Comment.Pin = CommentPin;
 
 // Anatomy
 

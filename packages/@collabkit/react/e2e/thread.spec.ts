@@ -109,6 +109,11 @@ async function focusComposer(page: Page) {
   return composer;
 }
 
+async function typeInComposer(page: Page, text: string) {
+  const composer = await focusComposer(page);
+  await composer.type(text);
+}
+
 async function typeAtSymbol(page: Page) {
   const composer = await focusComposer(page);
   await composer.type('@');
@@ -153,7 +158,7 @@ async function typeInCommentComposer(page: Page, text: string, nth: number = 0) 
 }
 
 async function saveEditedComment(page: Page, nth: number = 0) {
-  await page.getByTestId('collabkit-button-group-confirm-button').nth(nth).click();
+  await page.getByTestId('collabkit-comment-save-button').nth(nth).click();
 }
 
 test.describe('Thread', () => {
@@ -257,6 +262,7 @@ test.describe('Thread', () => {
   //   const { page, appId, apiKey } = await createAppAndVisitThreadAsUser(context, alice);
   //   const page2 = await visitThreadAsUser(context, { ...bob, appId, apiKey });
   //   await sendComment(page2, 'Hello World');
+  //   await typeInComposer(page, 'H');
   //   await clickMentionButton(page);
   //   await hasMentionInTypeahead(page, 'Bob');
   //   await page.keyboard.press('Enter');
