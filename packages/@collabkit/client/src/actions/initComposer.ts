@@ -20,6 +20,5 @@ export function initComposer(
     }
   }
 
-  composers[threadId][eventId] ??= createComposer();
   return composers[threadId][eventId];
 }
