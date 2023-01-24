@@ -14,7 +14,6 @@ import {
   MentionNode,
   TimestampNode,
   $isMentionNode,
-  ComposerPin,
   InlineTextNode,
 } from '@collabkit/editor';
 import { TimestampPlugin } from './TimestampPlugin';
@@ -29,13 +28,13 @@ import * as styles from '../../theme/components/Composer.css';
 import { useOptionalCommentContext } from '../../hooks/useCommentContext';
 import { useSnapshot } from 'valtio';
 import { $getRoot, $setSelection, EditorState, LexicalEditor } from 'lexical';
-import { TypingIndicator } from '../TypingIndicator';
+import { ComposerTypingIndicator } from '../TypingIndicator';
 
 import Profile from '../Profile';
 
 import { IconButton } from '../IconButton';
 import { EditorPlugin } from './EditorPlugin';
-import { At } from '../icons';
+import { At, MapPin } from '../icons';
 import { vars } from '../../theme/theme/index.css';
 import { KeyPlugin } from './KeyPlugin';
 import PinButtonSvg from './pin-button.svg';
@@ -377,9 +376,8 @@ Composer.Root = ComposerRoot;
 Composer.ContentEditable = ComposerContentEditable;
 Composer.Editor = ComposerEditor;
 Composer.Placeholder = ComposerPlaceholder;
-Composer.TypingIndicator = TypingIndicator;
+Composer.TypingIndicator = ComposerTypingIndicator;
 
 Composer.ButtonGroup = ComposerButtonGroup;
 Composer.MentionsButton = ComposerMentionsButton;
 Composer.PinButton = ComposerPinButton;
-Composer.Pin = ComposerPin;

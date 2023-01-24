@@ -48,7 +48,7 @@ const TypingIndicatorText = function TypingIndicatorText({ names }: { names: str
   );
 };
 
-export function TypingIndicator(props: { className?: string }) {
+export function ComposerTypingIndicator(props: { className?: string }) {
   const { threadId, workspaceId, userId } = useThreadContext();
   const { store } = useApp();
   const { profiles, workspaces } = useSnapshot(store);

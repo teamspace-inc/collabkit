@@ -21,7 +21,7 @@ function useProfile() {
   return { profileId };
 }
 
-export function Provider(props: { children: React.ReactNode; profileId: string }) {
+export function ProfileProvider(props: { children: React.ReactNode; profileId: string }) {
   return (
     <ProfileContext.Provider value={{ profileId: props.profileId }}>
       {props.children}
@@ -64,7 +64,7 @@ function AvatarPlaceholder({
   );
 }
 
-export function NumberedAvatarPlaceholder({
+export function ProfileNumberedAvatarPlaceholder({
   size,
   number,
   ...props
@@ -86,7 +86,7 @@ export function NumberedAvatarPlaceholder({
   );
 }
 
-export function Avatar({
+export function ProfileAvatar({
   size,
   ...props
 }: { size?: string } & React.ComponentPropsWithoutRef<'div'>) {
@@ -133,7 +133,7 @@ export default function Profile(props: { profileId: string }) {
   );
 }
 
-Profile.Provider = Provider;
-Profile.Avatar = Avatar;
+Profile.Provider = ProfileProvider;
+Profile.Avatar = ProfileAvatar;
 Profile.Name = ProfileName;
-Profile.NumberedAvatarPlaceholder = NumberedAvatarPlaceholder;
+Profile.NumberedAvatarPlaceholder = ProfileNumberedAvatarPlaceholder;
