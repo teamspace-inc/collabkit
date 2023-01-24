@@ -5,7 +5,7 @@ export const root = style({
   display: 'flex',
   flexDirection: 'column',
   padding: fallbackVar(vars.commentList.padding, `${vars.space[4]} 0`),
-  gap: fallbackVar(vars.commentList.gap, vars.space[2]),
+  gap: fallbackVar(vars.commentList.gap, vars.space[0]),
 
   ':empty': {
     padding: 0,

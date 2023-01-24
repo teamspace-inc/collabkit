@@ -15,6 +15,7 @@ export const nameAndTimestampWrapper = style({
   alignItems: 'baseline',
   gap: fallbackVar(vars.comment.header.nameAndTimestamp.gap, `${calc(vars.space[2])}`),
   fontFamily: vars.fontFamily,
+  marginBottom: vars.space[1],
 });
 
 export const inlineModal = style({
@@ -54,22 +55,9 @@ export const editor = style({
   display: 'flex',
   flexDirection: 'column',
   gap: vars.space[2],
-  marginTop: vars.space[1],
   marginRight: `${calc(paddingRight).negate()}`,
-  marginLeft: paddingLeft,
   fontFamily: vars.fontFamily,
-  padding: `0 ${vars.space[4]}`,
-});
-
-export const header = style({
-  flex: '1',
-  gap: fallbackVar(vars.comment.header.gap, vars.space[2]),
-  display: 'flex',
-  flexDirection: 'row',
-  alignItems: 'flex-start',
-  justifyContent: 'space-between',
-  fontFamily: vars.fontFamily,
-  position: 'relative',
+  padding: `0 ${vars.space[4]} 0 0`,
 });
 
 export const timestamp = style({
@@ -86,17 +74,14 @@ export const timestamp = style({
 });
 
 export const root = style({
-  flex: '1',
-  display: 'flex',
-  flexDirection: 'column',
-  gap: fallbackVar(vars.comment.gap, vars.space[0]),
+  display: 'grid',
+  gridTemplateColumns: `${vars.avatar.size} 1fr`,
+  columnGap: fallbackVar(vars.comment.gap, vars.space[3]),
   position: 'relative',
-  // account for scrollbar
-  // maxWidth: calc.subtract('100%', vars.space[2]),
   paddingLeft: fallbackVar(vars.comment.paddingLeft, vars.space[4]),
   paddingRight: fallbackVar(vars.comment.paddingRight, vars.space[4]),
-  paddingTop: fallbackVar(vars.comment.paddingTop, vars.space[1]),
-  paddingBottom: fallbackVar(vars.comment.paddingBottom, vars.space[1]),
+  paddingTop: fallbackVar(vars.comment.paddingTop, vars.space[2]),
+  paddingBottom: fallbackVar(vars.comment.paddingBottom, vars.space[2]),
   fontFamily: vars.fontFamily,
 });
 

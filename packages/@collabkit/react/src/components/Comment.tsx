@@ -205,12 +205,13 @@ export function CommentTimestamp(
 
 export const CommentCreatorAvatar = Profile.Avatar;
 export const CommentCreatorName = Profile.Name;
-export const CommentHeader = (props: React.ComponentProps<'div'>) => (
-  <div {...props} className={props.className ?? styles.header} />
-);
-export const CommentNameAndTimestampWrapper = (props: React.ComponentProps<'div'>) => (
-  <div {...props} className={props.className ?? styles.nameAndTimestampWrapper} />
-);
+
+export const CommentNameAndTimestampWrapper = (props: React.ComponentProps<'div'>) => {
+  const isEditing = useIsEditing();
+  return isEditing ? null : (
+    <div {...props} className={props.className ?? styles.nameAndTimestampWrapper} />
+  );
+};
 
 type CommentMenuItemType = 'commentEditButton' | 'commentDeleteButton' | 'reopenThreadButton';
 
@@ -288,11 +289,6 @@ export const CommentActions = (props: React.ComponentProps<'div'>) => {
   return <div className={props.className ?? styles.actions} {...props} />;
 };
 
-export const CommentIndent = (props: React.ComponentProps<'div'>) => {
-  const { ...forwardProps } = props;
-  return <div {...forwardProps} className={props.className ?? styles.indent} />;
-};
-
 export type CommentProps = {
   commentId: string;
   hideProfile?: boolean;
@@ -304,8 +300,8 @@ export default function Comment(props: CommentProps) {
   const showResolveThreadButton = props.showResolveThreadButton ?? false;
   return (
     <Comment.Root commentId={props.commentId}>
-      <Comment.Header>
-        {!hideProfile && <Profile.Avatar />}
+      {!hideProfile ? <Profile.Avatar /> : <div></div>}
+      <div>
         {!hideProfile && (
           <Comment.NameAndTimestampWrapper>
             <Comment.CreatorName />
@@ -316,24 +312,20 @@ export default function Comment(props: CommentProps) {
           {showResolveThreadButton && <Thread.ResolveIconButton />}
           <Comment.MoreMenu />
         </Comment.Actions>
-      </Comment.Header>
-      <Comment.Indent>
         <Comment.Body />
-      </Comment.Indent>
-      <Comment.Editor />
+        <Comment.Editor />
+      </div>
     </Comment.Root>
   );
 }
 
 Comment.Provider = CommentProvider;
 Comment.Root = CommentRoot;
-Comment.Header = CommentHeader;
 Comment.NameAndTimestampWrapper = CommentNameAndTimestampWrapper;
 Comment.CreatorName = CommentCreatorName;
 Comment.CreatorAvatar = CommentCreatorAvatar;
 Comment.Timestamp = CommentTimestamp;
 Comment.Body = CommentBody;
-Comment.Indent = CommentIndent;
 Comment.Actions = CommentActions;
 Comment.MoreMenu = CommentMenu;
 Comment.Editor = CommentEditor;
