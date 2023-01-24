@@ -52,7 +52,7 @@ import { Tooltip } from '../Tooltip';
 import { actions } from '@collabkit/client';
 
 type ComposerContextValue = {
-  body: string;
+  initialBody: string;
   autoFocus: boolean;
   canPin: boolean;
 };
@@ -63,7 +63,7 @@ type ComposerContextValue = {
 // when where using the global store or one local to a
 // tree of components
 export const ComposerContext = React.createContext<ComposerContextValue>({
-  body: '',
+  initialBody: '',
   autoFocus: true,
   canPin: false,
 });
@@ -87,11 +87,11 @@ function ComposerRoot(props: {
   className?: string;
   children: React.ReactNode;
   autoFocus?: boolean;
-  body?: string;
+  initialBody?: string;
   ['data-testid']?: string;
 }) {
   const [context, setContext] = useState<ComposerContextValue>({
-    body: props.body ?? '',
+    initialBody: props.initialBody ?? '',
     autoFocus: props.autoFocus ?? false,
     canPin: false,
   });
@@ -253,7 +253,7 @@ function ComposerEditor(props: {
   const { workspaceId, threadId } = useThreadContext();
   const { eventId } = useOptionalCommentContext() ?? { eventId: 'default' };
   // body is initial body, it does not update live
-  const { autoFocus, body } = useComposerContext();
+  const { autoFocus, initialBody } = useComposerContext();
   const { events, store } = useApp();
   const { focusedId } = useSnapshot(store);
   const [hasText, setHasText] = useState(false);
@@ -269,7 +269,7 @@ function ComposerEditor(props: {
   const initialConfig = {
     ...initialConfigDefaults,
     editorState: () => {
-      $convertFromMarkdownString(body, TRANSFORMERS);
+      $convertFromMarkdownString(initialBody, TRANSFORMERS);
       $setSelection(null);
     },
   };

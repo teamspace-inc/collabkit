@@ -190,7 +190,7 @@ export const CommentEditor = (props: React.ComponentProps<'div'>) => {
       data-testid="collabkit-comment-composer-root"
       className={props.className ?? styles.editor}
       autoFocus={true}
-      body={body}
+      initialBody={body}
     >
       <Composer.Editor contentEditable={<Composer.ContentEditable />} placeholder={<span />} />
       <ButtonGroup
