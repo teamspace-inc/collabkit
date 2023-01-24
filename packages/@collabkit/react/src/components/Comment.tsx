@@ -18,10 +18,7 @@ import { Menu, MenuItem } from './Menu';
 import { Thread } from './Thread';
 import { useHovering } from '../hooks/useHovering';
 import { mergeRefs } from 'react-merge-refs';
-import { useComposer } from '../hooks/useComposer';
 import Composer from './composer/Composer';
-import { ButtonGroup } from './ButtonGroup';
-import { actions } from '@collabkit/client';
 import { IconButton } from './IconButton';
 import CommentPinSvg from './composer/comment-pin.svg';
 
