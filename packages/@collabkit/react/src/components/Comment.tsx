@@ -157,16 +157,12 @@ export function CommentBody({ ...props }: React.ComponentPropsWithoutRef<'div'>)
   );
 }
 
-export const CommentPin = (props: React.ComponentProps<'div'>) => {
+export const CommentPin = (props: React.ComponentProps<'img'>) => {
   const { eventId } = useCommentContext();
   const workspace = useSnapshot(useWorkspaceStore());
   const pin = workspace.eventPins[eventId];
   if (pin) {
-    return (
-      <div className={styles.pin} {...props}>
-        <img src={CommentPinSvg} />
-      </div>
-    );
+    return <img className={styles.pin} {...props} src={CommentPinSvg} />;
   } else {
     return null;
   }
