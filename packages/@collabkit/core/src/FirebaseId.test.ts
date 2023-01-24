@@ -1,3 +1,4 @@
+import { it, expect } from 'vitest';
 import { encode, decode } from './FirebaseId';
 
 it('encodes all forbidden charactes', () => {
