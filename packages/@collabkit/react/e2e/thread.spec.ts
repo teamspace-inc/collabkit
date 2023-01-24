@@ -64,6 +64,7 @@ async function sendComment(page: Page, body: string) {
   const composer = await page.locator(
     '[data-testid="collabkit-composer-contenteditable"] [contenteditable=true]'
   );
+  page.waitForTimeout(2000)
   await composer.click();
   await composer.fill(body);
   await page.keyboard.press('Enter');
