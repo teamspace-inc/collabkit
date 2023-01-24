@@ -146,7 +146,7 @@ const TooltipContent = React.forwardRef<HTMLDivElement, React.HTMLProps<HTMLDivE
               visibility: context.x == null ? 'hidden' : 'visible',
               ...props.style,
             }}
-            className={root}
+            className={root({ arrow: true })}
             {...context.getFloatingProps(props)}
           />
         )}
