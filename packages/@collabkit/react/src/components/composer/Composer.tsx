@@ -131,7 +131,7 @@ function ComposerRoot(props: {
 function ComposerContentEditable(props: { className?: string }) {
   const { events } = useApp();
   const target = useTarget();
-  const { autoFocus, canPin } = useComposerContext();
+  const { autoFocus } = useComposerContext();
   useEffect(() => {
     return () => events.onBlur(null, { target });
   }, [events.onBlur]);
@@ -143,9 +143,8 @@ function ComposerContentEditable(props: { className?: string }) {
       onFocus={(e) => events.onFocus(e, { target })}
       onBlur={(e) => events.onBlur(e, { target })}
     >
-      {canPin && <Composer.PinButton />}
       <LexicalContentEditable
-        className={props.className ?? styles.input({ canPin })}
+        className={props.className ?? styles.input()}
         tabIndex={autoFocus ? 1 : 0}
       />
     </div>
