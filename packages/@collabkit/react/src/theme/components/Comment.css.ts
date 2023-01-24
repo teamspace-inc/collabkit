@@ -37,7 +37,6 @@ export const body = style({
   letterSpacing: fallbackVar(vars.comment.body.letterSpacing, vars.text.base.letterSpacing),
   lineHeight: fallbackVar(vars.comment.body.lineHeight, vars.text.base.lineHeight),
   fontFamily: vars.fontFamily,
-  // display: 'inline-flex',
   gap: vars.space[1],
   textAlign: 'left',
   position: 'relative',
