@@ -16,6 +16,7 @@ export function useComposer(props: {
       ? workspaces[workspaceId]?.composers[threadId]?.[eventId]?.enabled
       : true;
 
+  // move this to global event handling
   return {
     isEnabled,
     onFocus: (e: React.FocusEvent) => {
@@ -54,6 +55,7 @@ export function useComposer(props: {
       }
 
       if (eventId === 'default') {
+        events.onClick(e, { target: { type: 'composer', workspaceId, threadId, eventId } });
         events.onSend(workspaceId, threadId);
 
         // if we pass an eventId, it's an edit

@@ -1321,7 +1321,6 @@ interface UnconfiguredStore {
   userId: string | null;
   user: UserProps | null;
   workspaceId: string | null;
-  selectedId: null | Target;
   focusedId: null | Target;
   hoveringId: null | Target;
   reactingId: null | Target;

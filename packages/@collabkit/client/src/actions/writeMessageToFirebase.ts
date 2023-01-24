@@ -1,5 +1,37 @@
-import type { Event, Store, WithID } from '@collabkit/core';
+import type { Event, Pin, Store, WithID } from '@collabkit/core';
 import { actions } from './';
+
+async function savePin(
+  store: Store,
+  props: { pin: WithID<Pin>; appId: string; workspaceId: string }
+) {
+  const { pin, appId, workspaceId } = props;
+  if (!pin) {
+    console.warn('CollabKit: no pending pin to save');
+    return;
+  }
+  try {
+    // console.log('CollabKit: saving pin', pin);
+    await store.sync.savePin({
+      appId,
+      workspaceId,
+      pin,
+      pinId: pin.id,
+    });
+    store.workspaces[workspaceId].openPins[pin.objectId] ||= {};
+    store.workspaces[workspaceId].openPins[pin.objectId][pin.id] = {
+      id: pin.id,
+      eventId: pin.eventId,
+      objectId: pin.objectId,
+      workspaceId: pin.workspaceId,
+      threadId: pin.threadId,
+      x: pin.x,
+      y: pin.y,
+    };
+  } catch (e) {
+    console.error('CollabKit: failed to save pin', e);
+  }
+}
 
 export async function writeMessageToFirebase(
   store: Store,
@@ -11,9 +43,10 @@ export async function writeMessageToFirebase(
     parentId?: string;
     type: 'message' | 'reaction' | 'edit';
     mentions?: string[];
+    pin?: Pin | null;
   }
 ) {
-  const { type, workspaceId, threadId, body, preview, parentId, mentions } = props;
+  const { type, workspaceId, threadId, body, preview, parentId, mentions, pin } = props;
 
   if (store.isReadOnly) {
     console.warn('CollabKit: cannot send message in read-only mode');
@@ -80,8 +113,10 @@ export async function writeMessageToFirebase(
         );
       }
 
-      if (store.workspaces[workspaceId].pendingPin) {
-        promises.push(actions.savePin(store));
+      if (pin) {
+        promises.push(
+          savePin(store, { pin: { ...pin, eventId: parentId ?? id }, appId, workspaceId })
+        );
       }
 
       promises.push(

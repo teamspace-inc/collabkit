@@ -7,6 +7,7 @@ import type {
   ThreadInfo,
   ThreadMeta,
   WithID,
+  Pin,
 } from '../types';
 
 export interface SyncAdapter {
@@ -54,17 +55,9 @@ export interface SyncAdapter {
     | { id: string; name?: string; email?: string; color?: string; avatar?: string }
   >;
 
-  savePin(params: {
-    appId: string;
-    workspaceId: string;
-    objectId: string;
-    pin: {
-      x: number;
-      y: number;
-      threadId: string;
-      eventId: 'default' | string;
-    };
-  }): Promise<string>;
+  nextPinId(params: { appId: string; workspaceId: string; objectId: string }): string;
+
+  savePin(params: { appId: string; workspaceId: string; pinId: string; pin: Pin }): Promise<string>;
 
   deletePin(params: {
     appId: string;

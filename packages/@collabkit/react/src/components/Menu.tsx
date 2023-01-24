@@ -27,7 +27,6 @@ import {
   FloatingNode,
   FloatingFocusManager,
 } from '@floating-ui/react-dom-interactions';
-import { IconButton } from './IconButton';
 import { ThemeWrapper } from './ThemeWrapper';
 import { useApp } from '../hooks/useApp';
 import { useSnapshot } from 'valtio';
@@ -53,29 +52,33 @@ export const MenuItem = forwardRef<
 });
 
 interface Props<ItemType> {
-  icon?: React.ReactNode;
   label?: string;
+  trigger?: React.ReactNode;
   nested?: boolean;
-  children?: React.ReactNode;
+  items?: React.ReactNode;
   onItemClick: (e: React.MouseEvent, id: ItemType) => void;
   className?: string;
+  children?: React.ReactNode;
   context?: Target;
+  rightClick?: boolean;
 }
 
-export function Menu<ItemType>({
-  children,
-  label,
-  onItemClick,
-  className,
-  context: rootTarget,
-  ...props
-}: Props<ItemType>) {
+export function Menu<ItemType>(props: Props<ItemType>) {
+  const {
+    className,
+    children,
+    items,
+    onItemClick,
+    context: rootTarget,
+    rightClick,
+    ...otherProps
+  } = props;
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [allowHover, setAllowHover] = useState(false);
 
   const listItemsRef = useRef<Array<HTMLButtonElement | null>>([]);
   const listContentRef = useRef(
-    Children.map(children, (child) => (isValidElement(child) ? child.props.label : null)) as Array<
+    Children.map(items, (child) => (isValidElement(child) ? child.props.label : null)) as Array<
       string | null
     >
   );
@@ -169,23 +172,29 @@ export function Menu<ItemType>({
     };
   }, [allowHover]);
 
-  const { icon, ...otherProps } = props;
+  if (!Children.only(props.children)) {
+    throw new Error('Menu must have exactly one child as trigger');
+  }
 
-  return (
-    <FloatingNode id={nodeId}>
-      <IconButton
-        active={open}
-        {...getReferenceProps({
+  const trigger = Children.map(props.children, (child) => {
+    if (React.isValidElement(child)) {
+      return React.cloneElement(child, {
+        ...getReferenceProps({
           ...otherProps,
           ref: reference,
           onClick(event: React.MouseEvent) {
             event.stopPropagation();
             (event.currentTarget as HTMLButtonElement).focus();
           },
-        })}
-      >
-        {icon}
-      </IconButton>
+        }),
+      });
+    }
+    return child;
+  });
+
+  return (
+    <FloatingNode id={nodeId}>
+      {trigger}
       <FloatingPortal>
         {open && (
           <FloatingFocusManager
@@ -216,7 +225,7 @@ export function Menu<ItemType>({
                   },
                 })}
               >
-                {Children.map(children, (child, index) => {
+                {Children.map(items, (child, index) => {
                   const el =
                     isValidElement(child) &&
                     cloneElement(

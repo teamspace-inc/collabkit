@@ -1,8 +1,10 @@
-import type { Pin, Store } from '@collabkit/core';
+import { FirebaseId, FirebasePin, Store } from '@collabkit/core';
 import { getConfig } from './index';
 import has from 'has';
 
-function isPin(pin: unknown): pin is Pin {
+// move this to FirebaseSync
+
+function isPin(pin: unknown): pin is FirebasePin {
   return (
     typeof pin === 'object' &&
     pin !== null &&
@@ -15,7 +17,9 @@ function isPin(pin: unknown): pin is Pin {
   );
 }
 
-function isRoot(objects: unknown): objects is { [objectId: string]: { [pinId: string]: Pin } } {
+function isRoot(
+  objects: unknown
+): objects is { [objectId: string]: { [pinId: string]: FirebasePin } } {
   if (typeof objects !== 'object' || objects === null) {
     return false;
   }
@@ -37,7 +41,7 @@ function isRoot(objects: unknown): objects is { [objectId: string]: { [pinId: st
   return true;
 }
 
-function isPins(pins: unknown): pins is { [pinId: string]: Pin } {
+function isPins(pins: unknown): pins is { [pinId: string]: FirebasePin } {
   if (typeof pins !== 'object' || pins === null) {
     return false;
   }
@@ -57,22 +61,55 @@ export function subscribeOpenPins(store: Store) {
   const { appId, workspaceId } = getConfig(store);
 
   function onGet(pins: any) {
+    const workspace = store.workspaces[workspaceId];
     if (isRoot(pins)) {
-      store.workspaces[workspaceId].openPins = pins;
+      for (const objectId in pins) {
+        const decodedObjectId = FirebaseId.decode(objectId);
+        workspace.openPins[decodedObjectId] ||= {};
+        for (const pinId in pins[decodedObjectId]) {
+          const pin = {
+            ...pins[decodedObjectId][pinId],
+            id: pinId,
+            workspaceId,
+            objectId: decodedObjectId,
+          };
+          workspace.eventPins[pin.eventId] = pin;
+          workspace.openPins[decodedObjectId][pinId] = pin;
+        }
+      }
     } else {
       console.error('[CollabKit] invalid pins', pins);
     }
   }
 
-  function onObjectChange(objectId: string, pins: any) {
+  function onObjectChange(objectId: string, pins: unknown) {
     if (isPins(pins)) {
-      store.workspaces[workspaceId].openPins[objectId] = pins;
+      const workspace = store.workspaces[workspaceId];
+      workspace.openPins[objectId] ||= {};
+      const currentPinIds = Object.keys(workspace.openPins[objectId]);
+      const newPinIds = Object.keys(pins);
+      const removedPinIds = currentPinIds.filter((id) => !newPinIds.includes(id));
+      for (const pinId of removedPinIds) {
+        const pin = workspace.openPins[objectId][pinId];
+        delete workspace.eventPins[pin.eventId];
+        delete workspace.openPins[objectId][pinId];
+      }
+      for (const pinId in pins) {
+        const pin = { ...pins[pinId], id: pinId, workspaceId, objectId };
+        workspace.openPins[objectId][pinId] = pin;
+        workspace.eventPins[pin.eventId] = pin;
+      }
     } else {
       console.error('[CollabKit] invalid pins', pins);
     }
   }
 
   function onObjectRemove(objectId: string) {
+    for (const pinId in store.workspaces[workspaceId].openPins[objectId]) {
+      const pin = store.workspaces[workspaceId].openPins[objectId][pinId];
+      delete store.workspaces[workspaceId].eventPins[pin.eventId];
+    }
+
     delete store.workspaces[workspaceId].openPins[objectId];
   }
 

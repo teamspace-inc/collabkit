@@ -15,15 +15,12 @@ test('createWorkspace', () => {
     threadInfo: {},
     likelyFetchedAllProfiles: false,
     threadProfiles: {},
-
     timelineInitialFetchComplete: {},
     fetchedProfiles: {},
-
     pendingThreads: {},
     pendingThreadInfo: {},
-
-    pendingPin: null,
     openPins: {},
+    eventPins: {},
   });
 });
 
@@ -35,11 +32,13 @@ test('createComposer', () => {
     editor: null,
     enabled: false,
     isMentioning: false,
+    pendingPin: null,
   });
 });
 
 test('createStore', () => {
   expect(createStore()).toStrictEqual({
+    appId: null,
     sync: null,
     isReadOnly: false,
     isConnected: false,
@@ -53,17 +52,19 @@ test('createStore', () => {
     workspaceId: null,
     focusedId: null,
     menuId: null,
-    selectedId: null,
     reactingId: null,
     viewingId: null,
     previewingId: null,
     editingId: null,
-    hoveringId: null,
     workspaces: {},
     profiles: {},
     avatarErrors: {},
     subs: {},
     callbacks: {},
     mentionableUsers: {},
+    clientX: 0,
+    clientY: 0,
+    composerId: null,
+    commentableElements: new Map(),
   });
 });
