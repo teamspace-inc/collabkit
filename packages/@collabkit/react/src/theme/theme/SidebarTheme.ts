@@ -10,9 +10,14 @@ export const SidebarTheme = {
       lineHeight: 'sidebar-title-line-height',
 
       borderBottom: 'sidebar-title-border-bottom',
+      borderBottomColor: 'sidebar-title-border-bottom-color',
       color: 'sidebar-title-color',
       paddingBottom: 'sidebar-title-padding-bottom',
       paddingTop: 'sidebar-title-padding-top',
     },
+
+    unreadDot: {
+      background: 'sidebar-unreadDot-color'
+    }
   },
 };

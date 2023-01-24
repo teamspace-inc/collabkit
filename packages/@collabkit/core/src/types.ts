@@ -173,6 +173,7 @@ export type Target =
   | HideSidebarButtonTarget
   | ComposerPinButtonTarget
   | ComposerMentionsButtonTarget
+  | ChannelActonButtonTarget
   | AttachPinTarget
   | PinTarget
   | PinDeleteButton
@@ -447,6 +448,7 @@ export interface UnconfiguredStore {
   mentionableUsers: { [userId: string]: MentionWithColor };
   appState: 'blank' | 'config' | 'ready';
   uiState: 'idle' | 'selecting';
+  nextThreadId: null | string;
   subs: Subscriptions;
   callbacks?: Callbacks;
   clientX: number;
@@ -462,3 +464,15 @@ export interface Store extends UnconfiguredStore {
 
 export type Unsubscribe = () => void;
 export type Subscriptions = { [subId: string]: Unsubscribe };
+
+export type SidebarButtonType =
+  | 'resolveThreadButton'
+  | 'sidebarEmojiButton'
+  | 'sidebarElementOptionsButton'
+  | 'sidebarReplyButton';
+
+export type ChannelActonButtonTarget = {
+  type: SidebarButtonType;
+  threadId: string;
+  workspaceId: string;
+};

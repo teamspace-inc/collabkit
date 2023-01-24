@@ -12,5 +12,6 @@ export const ColorTheme = {
     icon: 'color-icon',
     iconSecondary: 'color-icon-secondary',
     attention: 'color-attention',
+    attentionBlue: 'color-attention-blue'
   },
 };

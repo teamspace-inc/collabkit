@@ -2,8 +2,8 @@ import React from 'react';
 import { useApp } from '../hooks/useApp';
 import { ThreadResolveButtonTarget } from '@collabkit/core';
 import { useThreadContext } from '../hooks/useThreadContext';
-import { Check } from './icons';
 import { IconButton } from './IconButton';
+import { CheckCircle } from './icons';
 
 export function ResolveThreadIconButton(props: {
   className?: string;
@@ -30,7 +30,7 @@ export function ResolveThreadIconButton(props: {
         })
       }
     >
-      <Check size={14} weight={'bold'} />
+      <CheckCircle size={16} />
     </IconButton>
   );
 }

@@ -14,6 +14,7 @@ const colors = {
   opacity7: 'rgba(0, 0, 0, 0.08)', // White Opacity 7
   opacity4: 'rgba(0, 0, 0, 0.04)', // White Opacity 7
   red: 'hsl(2, 73%, 62%)', // Red
+  blue: 'hsl(211, 95%, 59%)' // Blue
 };
 
 export const ColorBase = {
@@ -30,5 +31,6 @@ export const ColorBase = {
     icon: colors.grey24,
     iconSecondary: colors.grey53,
     attention: colors.red,
+    attentionBlue: colors.blue
   },
 };

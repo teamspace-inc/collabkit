@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSnapshot } from 'valtio';
 import { useApp } from '../hooks/useApp';
 import * as styles from '../theme/components/Inbox.css';
 import { Scrollable } from './Scrollable';
-import { InboxItem } from './InboxItem';
 import { ThemeWrapper } from './ThemeWrapper';
 import { ChatCentered } from './icons';
 import { emptyState } from '../theme/components/Thread.css';
 import { useOptionalSidebarContext } from './Sidebar';
 import { useInbox } from '../hooks/public/useInbox';
 import { Thread } from './Thread';
+import { ChannelsInboxItem } from './ChannelsInboxItem';
 
 export interface ButtonProps extends React.ComponentPropsWithoutRef<'button'> {
   specialProp?: string;
@@ -24,13 +24,13 @@ export function EmptyState() {
   );
 }
 
-export function Inbox(props: {
+export function ThreadsInbox(props: {
   formatTimestamp?: (timestamp: number) => string;
   maxHeight?: string;
 }) {
   const { store } = useApp();
   const { workspaceId, userId } = useSnapshot(store);
-
+  // const [openThreadsMap, setOpenThreadsMap] = useState(new Map());
   const threadIds = useInbox({ filter: 'open' });
 
   if (!workspaceId) {
@@ -44,7 +44,7 @@ export function Inbox(props: {
   const inboxItems = threadIds.map((threadId) => {
     return (
       <Thread.Provider threadId={threadId} key={`inboxThread-${threadId}`}>
-        <InboxItem formatTimestamp={props.formatTimestamp} />
+        <ChannelsInboxItem formatTimestamp={props.formatTimestamp} />
       </Thread.Provider>
     );
   });
@@ -52,11 +52,7 @@ export function Inbox(props: {
   // account for sidebar title height
   const sidebarContext = useOptionalSidebarContext();
   const style = sidebarContext?.titleHeight
-    ? {
-        height: `calc(${props.maxHeight ? props.maxHeight : '100%'} - ${
-          sidebarContext.titleHeight
-        }px)`,
-      }
+    ? { height: `calc(${props.maxHeight} - ${sidebarContext.titleHeight}px)` }
     : {};
 
   return (
@@ -65,9 +61,7 @@ export function Inbox(props: {
         {threadIds.length === 0 ? (
           <EmptyState />
         ) : (
-          <Scrollable maxHeight={props.maxHeight ?? 'unset'} autoScroll="bottom">
-            {inboxItems}
-          </Scrollable>
+          <Scrollable maxHeight={props.maxHeight ?? 'unset'} autoScroll='bottom'>{inboxItems}</Scrollable>
         )}
       </div>
     </ThemeWrapper>
@@ -78,4 +72,4 @@ function InboxHeader(props: React.ComponentPropsWithoutRef<'div'>) {
   return <div {...props} className={props.className ?? styles.header} />;
 }
 
-Inbox.Header = InboxHeader;
+ThreadsInbox.Header = InboxHeader;

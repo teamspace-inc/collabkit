@@ -62,6 +62,7 @@ test('createStore', () => {
     subs: {},
     callbacks: {},
     mentionableUsers: {},
+    nextThreadId: null,
     clientX: 0,
     clientY: 0,
     composerId: null,

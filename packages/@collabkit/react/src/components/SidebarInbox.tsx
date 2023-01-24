@@ -4,7 +4,7 @@ import { Inbox, Sidebar } from '..';
 export function SidebarInbox() {
   return (
     <Sidebar>
-      <Inbox />
+      <Inbox maxHeight='93.5%'/>
     </Sidebar>
   );
 }
