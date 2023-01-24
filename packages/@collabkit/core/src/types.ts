@@ -270,12 +270,16 @@ export type CommentDeleteButtonTarget = {
 
 export type CommentSaveButtonTarget = {
   type: 'commentSaveButton';
-  comment: CommentTarget;
+  workspaceId: string;
+  threadId: string;
+  eventId: string;
 };
 
 export type CommentCancelButtonTarget = {
   type: 'commentCancelButton';
-  comment: CommentTarget;
+  workspaceId: string;
+  threadId: string;
+  eventId: string;
 };
 
 export type ThreadResolveButtonTarget = {

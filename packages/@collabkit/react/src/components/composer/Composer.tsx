@@ -250,12 +250,12 @@ function ComposerEditor(props: {
 }) {
   const target = useTarget();
   const { workspaceId, threadId } = useThreadContext();
-  const { eventId } = useOptionalCommentContext() ?? { eventId: 'default' };
   // body is initial body, it does not update live
   const { autoFocus, initialBody } = useComposerContext();
   const { events, store } = useApp();
   const { focusedId } = useSnapshot(store);
   const [hasText, setHasText] = useState(false);
+  const { eventId } = useOptionalCommentContext() ?? { eventId: 'default' };
 
   const active = !!(
     focusedId &&
@@ -329,9 +329,46 @@ function ComposerEditor(props: {
               />
               <TimestampPlugin />
             </LexicalComposer>
-            {hasText && (
+            {(hasText || initialBody.length > 0) && (
               <Composer.ButtonGroup>
-                <Composer.MentionsButton />
+                {hasText && <Composer.MentionsButton />}
+                <div style={{ flex: 1 }} />
+                {initialBody.length > 0 && (
+                  <>
+                    <button
+                      data-testid="collabkit-comment-cancel-button"
+                      onClick={(e) =>
+                        events.onClick(e, {
+                          target: {
+                            type: 'commentCancelButton',
+                            eventId,
+                            workspaceId,
+                            threadId,
+                          },
+                        })
+                      }
+                      className={styles.button({ type: 'secondary' })}
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      data-testid="collabkit-comment-save-button"
+                      onClick={(e) => {
+                        events.onClick(e, {
+                          target: {
+                            type: 'commentSaveButton',
+                            eventId,
+                            workspaceId,
+                            threadId,
+                          },
+                        });
+                      }}
+                      className={styles.button({ type: 'primary' })}
+                    >
+                      Save
+                    </button>
+                  </>
+                )}
               </Composer.ButtonGroup>
             )}
           </div>
