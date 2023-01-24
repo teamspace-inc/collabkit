@@ -1,6 +1,6 @@
 {
   "name": "@collabkit/react",
-  "version": "0.8.17-alpha-11",
+  "version": "0.8.17-alpha-14",
   "type": "module",
   "files": [
     "dist/collabkit-react.d.ts",
@@ -88,8 +88,5 @@
   "prettier": {
     "singleQuote": true,
     "printWidth": 100
-  },
-  "resolutions": {
-    "micromark": "2.11.4"
   }
 }
