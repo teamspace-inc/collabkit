@@ -10,7 +10,7 @@ import type {
   ThreadTarget,
 } from '@collabkit/core';
 import { actions } from './actions';
-import { createComposer, markRaw } from './store';
+import { markRaw } from './store';
 import { nanoid } from 'nanoid';
 
 export type Events = ReturnType<typeof createEvents>;
@@ -103,15 +103,7 @@ export function createEvents(store: Store) {
           actions.focusComposer(store, target);
           return;
         case 'pinDeleteButton':
-          // move to deletePin
-          if (target.pin.isPending) {
-            const { composerId } = store;
-            if (composerId) {
-              actions.removePendingPin(store, composerId);
-            }
-          } else {
-            actions.deletePin(store, target.pin);
-          }
+          actions.deletePin(store, target.pin);
           return;
         case 'commentDeleteButton':
           actions.deleteMessage(store, target.comment);
@@ -133,25 +125,20 @@ export function createEvents(store: Store) {
           break;
         }
         case 'composerPinButton': {
-          store.composerId = { ...target, type: 'composer' };
-
-          if (
-            store.workspaces[target.workspaceId].composers[target.threadId][target.eventId]
-              .pendingPin
-          ) {
-            actions.removePendingPin(store, target);
+          if (target.pendingPin) {
+            actions.deletePin(store, target);
             return;
           }
 
-          if (store.uiState === 'selecting') {
-            actions.stopSelecting(store);
-          } else {
-            actions.startSelecting(store, target);
-
-            // ideally we use this for more than just the pin button
-            // it stores which composer is active atm
-            store.composerId = { ...target, type: 'composer' };
+          switch (store.uiState) {
+            case 'selecting':
+              actions.stopSelecting(store);
+              break;
+            case 'idle':
+              actions.startSelecting(store, target);
+              break;
           }
+
           break;
         }
         case 'composerMentionsButton': {

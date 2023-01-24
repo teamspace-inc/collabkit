@@ -210,7 +210,6 @@ function ComposerPinButton(props: { className?: string }) {
   const { events, store } = useApp();
   const { threadId, workspaceId } = useThreadContext();
   const { eventId } = useOptionalCommentContext() ?? { eventId: 'default' };
-  const target = { type: 'composerPinButton', threadId, workspaceId, eventId } as const;
   const { uiState, workspaces } = useSnapshot(store);
   const ref = useRef(null);
   const hover = useHovering(ref);
@@ -223,6 +222,8 @@ function ComposerPinButton(props: { className?: string }) {
   const icon = React.cloneElement(COMPOSER_PIN_ICONS[state], {
     style: { position: 'relative', top: '0px', width: '16px', height: '16px' },
   });
+
+  const target = { type: 'composerPinButton', threadId, workspaceId, eventId, pendingPin } as const;
 
   const tooltip = COMPOSER_PIN_TOOLTIPS[state];
 

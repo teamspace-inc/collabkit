@@ -1,11 +1,26 @@
 import type { Store } from '@collabkit/core';
-import { actions } from '..';
+import { getConfig } from '.';
 
 export async function deletePin(
   store: Store,
-  props: { workspaceId: string; objectId: string; id: string }
+  props: {
+    workspaceId: string;
+    threadId: string;
+    eventId: string;
+  }
 ) {
-  const { workspaceId, objectId, id } = props;
-  const { threadId, eventId } = store.workspaces[workspaceId].openPins[objectId][id];
-  await actions.deleteMessage(store, { workspaceId, threadId, eventId });
+  const { appId } = getConfig(store);
+  const { workspaceId } = props;
+
+  const composer = store.workspaces[workspaceId].composers[props.threadId][props.eventId];
+
+  const pin = store.workspaces[workspaceId].eventPins[props.eventId];
+
+  if (composer.pendingPin) {
+    composer.pendingPin = null;
+  }
+
+  if (pin) {
+    await store.sync.deletePin({ appId, ...pin, pinId: pin.id });
+  }
 }
