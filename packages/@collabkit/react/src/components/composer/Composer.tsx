@@ -1,4 +1,4 @@
-import React, { ComponentProps, useContext, useEffect, useState, useCallback } from 'react';
+import React, { ComponentProps, useContext, useEffect, useState, useCallback, useRef } from 'react';
 
 import { ComposerTarget } from '../../constants';
 import { ContentEditable as LexicalContentEditable } from '@lexical/react/LexicalContentEditable';
@@ -36,18 +36,23 @@ import Profile from '../Profile';
 import { IconButton } from '../IconButton';
 import { EditorPlugin } from './EditorPlugin';
 import { At } from '../icons';
-import { MapPin } from 'phosphor-react';
 import { vars } from '../../theme/theme/index.css';
 import { KeyPlugin } from './KeyPlugin';
+import PinButtonSvg from './pin-button.svg';
+import PinButtonHoverSvg from './pin-button-hover.svg';
+import DeletePinButtonSvg from './delete-pin-button.svg';
+import DeletePinButtonHoverSvg from './delete-pin-button-hover.svg';
 
 // Catch any errors that occur during Lexical updates and log them
 // or throw them as needed. If you don't throw them, Lexical will
 // try to recover gracefully without losing user data.
 
-import { initComposer } from '../../../../client/src/events';
+import { useHovering } from '../../hooks/useHovering';
+import { Tooltip } from '../Tooltip';
+import { actions } from '@collabkit/client';
 
 type ComposerContextValue = {
-  body: string;
+  initialBody: string;
   autoFocus: boolean;
   canPin: boolean;
 };
@@ -58,7 +63,7 @@ type ComposerContextValue = {
 // when where using the global store or one local to a
 // tree of components
 export const ComposerContext = React.createContext<ComposerContextValue>({
-  body: '',
+  initialBody: '',
   autoFocus: true,
   canPin: false,
 });
@@ -82,11 +87,11 @@ function ComposerRoot(props: {
   className?: string;
   children: React.ReactNode;
   autoFocus?: boolean;
-  body?: string;
+  initialBody?: string;
   ['data-testid']?: string;
 }) {
   const [context, setContext] = useState<ComposerContextValue>({
-    body: props.body ?? '',
+    initialBody: props.initialBody ?? '',
     autoFocus: props.autoFocus ?? false,
     canPin: false,
   });
@@ -106,7 +111,7 @@ function ComposerRoot(props: {
   };
 
   const { store } = useApp();
-  initComposer(store, target);
+  actions.initComposer(store, target);
 
   return (
     <div
@@ -126,7 +131,7 @@ function ComposerRoot(props: {
 function ComposerContentEditable(props: { className?: string }) {
   const { events } = useApp();
   const target = useTarget();
-  const { autoFocus, canPin } = useComposerContext();
+  const { autoFocus } = useComposerContext();
   useEffect(() => {
     return () => events.onBlur(null, { target });
   }, [events.onBlur]);
@@ -138,9 +143,8 @@ function ComposerContentEditable(props: { className?: string }) {
       onFocus={(e) => events.onFocus(e, { target })}
       onBlur={(e) => events.onBlur(e, { target })}
     >
-      {canPin && <Composer.PinButton />}
       <LexicalContentEditable
-        className={props.className ?? styles.input({ canPin })}
+        className={props.className ?? styles.input()}
         tabIndex={autoFocus ? 1 : 0}
       />
     </div>
@@ -176,27 +180,67 @@ function ComposerMentionsButton(props: { className?: string }) {
   );
 }
 
+type ComposerButtonState =
+  | 'pin-default'
+  | 'pin-hover'
+  | 'pin-selecting'
+  | 'empty-default'
+  | 'empty-hover'
+  | 'empty-selecting';
+
+// we could just use one icon with svg edits, this was quicker
+const COMPOSER_PIN_ICONS: { [state: string]: React.ReactElement } = {
+  'pin-default': <img src={DeletePinButtonSvg} />,
+  'pin-hover': <img src={DeletePinButtonHoverSvg} />,
+  'pin-selecting': <img src={DeletePinButtonHoverSvg} />,
+  'empty-default': <img src={PinButtonSvg} />,
+  'empty-hover': <img src={PinButtonHoverSvg} />,
+  'empty-selecting': <img src={DeletePinButtonHoverSvg} />,
+};
+
+const COMPOSER_PIN_TOOLTIPS: { [state: string]: string | null } = {
+  'pin-default': 'Remove pin',
+  'pin-hover': 'Remove pin',
+  'pin-selecting': 'Remove pin',
+  'empty-default': 'Pin',
+  'empty-hover': 'Pin',
+  'empty-selecting': null,
+};
+
 function ComposerPinButton(props: { className?: string }) {
-  const { events } = useApp();
+  const { events, store } = useApp();
   const { threadId, workspaceId } = useThreadContext();
   const { eventId } = useOptionalCommentContext() ?? { eventId: 'default' };
   const target = { type: 'composerPinButton', threadId, workspaceId, eventId } as const;
+  const { uiState, workspaces } = useSnapshot(store);
+  const ref = useRef(null);
+  const hover = useHovering(ref);
+  const { pendingPin } = workspaces[workspaceId].composers[threadId][eventId];
+
+  const state = ((pendingPin ? 'pin' : 'empty') +
+    '-' +
+    (uiState === 'selecting' ? 'selecting' : hover ? 'hover' : 'default')) as ComposerButtonState;
+
+  const icon = React.cloneElement(COMPOSER_PIN_ICONS[state], {
+    style: { position: 'relative', top: '0px', width: '16px', height: '16px' },
+  });
+
+  const tooltip = COMPOSER_PIN_TOOLTIPS[state];
 
   return (
-    <IconButton
-      active={false}
-      style={{ zIndex: 999 }}
-      className={props.className}
-      weight="regular"
-      color={vars.color.iconSecondary}
-      onClick={(e) => {
-        e.stopPropagation();
-        e.preventDefault();
-        events.onClick(e, { target });
-      }}
-    >
-      <MapPin />
-    </IconButton>
+    <Tooltip>
+      <Tooltip.Trigger>
+        <div
+          ref={ref}
+          className={styles.pinButton}
+          {...props}
+          onClick={(e) => events.onClick(e, { target })}
+        >
+          {icon}
+        </div>
+      </Tooltip.Trigger>
+      {tooltip && <Tooltip.Content>{tooltip}</Tooltip.Content>}
+    </Tooltip>
   );
 }
 
@@ -208,9 +252,11 @@ function ComposerEditor(props: {
   const target = useTarget();
   const { workspaceId, threadId } = useThreadContext();
   const { eventId } = useOptionalCommentContext() ?? { eventId: 'default' };
-  const { autoFocus, body } = useComposerContext();
+  // body is initial body, it does not update live
+  const { autoFocus, initialBody } = useComposerContext();
   const { events, store } = useApp();
   const { focusedId } = useSnapshot(store);
+  const [hasText, setHasText] = useState(false);
 
   const active = !!(
     focusedId &&
@@ -223,7 +269,7 @@ function ComposerEditor(props: {
   const initialConfig = {
     ...initialConfigDefaults,
     editorState: () => {
-      $convertFromMarkdownString(body, TRANSFORMERS);
+      $convertFromMarkdownString(initialBody, TRANSFORMERS);
       $setSelection(null);
     },
   };
@@ -232,6 +278,7 @@ function ComposerEditor(props: {
     (editorState: EditorState, editor: LexicalEditor) => {
       editorState.read(() => {
         const newBody = $convertToMarkdownString(TRANSFORMERS);
+        setHasText(newBody.length > 0);
         const mentions = $getRoot()
           .getAllTextNodes()
           .filter((node) => $isMentionNode(node))
@@ -247,32 +294,50 @@ function ComposerEditor(props: {
     <div
       data-testid="collabkit-composer-editor"
       className={props.className ?? `${styles.editor({ active })} ${styles.composerGlobalStyles}`}
+      onClick={(e) => events.onClick(e, { target })}
     >
-      <LexicalComposer initialConfig={initialConfig}>
-        <EditorPlugin onMount={handleChange} />
-        <KeyPlugin onKeyDown={(event) => events.onKeyDown(event)} />
-        <PasteTextPlugin />
-        <PlainTextPlugin
-          contentEditable={props.contentEditable ?? <Composer.ContentEditable />}
-          placeholder={props.placeholder}
-          ErrorBoundary={(props) => {
-            return <>{props.children}</>;
-          }}
-        />
-        <OnChangePlugin onChange={handleChange} />
-        {autoFocus ? <AutoFocusPlugin /> : <></>}
-        <HistoryPlugin />
-        <MentionsPlugin
-          onOpenChange={(open) => {
-            store.workspaces[workspaceId].composers[threadId][eventId].isMentioning = open;
-          }}
-        />
-        <TimestampPlugin />
-      </LexicalComposer>
-      <Composer.ButtonGroup>
-        <Composer.PinButton />
-        <Composer.MentionsButton />
-      </Composer.ButtonGroup>
+      <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+        <div style={{ display: 'flex', flexDirection: 'row' }}>
+          <div style={{ display: 'flex', height: '100%' }}>
+            <Composer.PinButton />
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              flex: 1,
+              flexDirection: 'column',
+              position: 'relative',
+            }}
+          >
+            <LexicalComposer initialConfig={initialConfig}>
+              <EditorPlugin onMount={handleChange} />
+              <KeyPlugin onKeyDown={(event) => events.onKeyDown(event)} />
+              <PasteTextPlugin />
+              <PlainTextPlugin
+                contentEditable={props.contentEditable ?? <Composer.ContentEditable />}
+                placeholder={props.placeholder}
+                ErrorBoundary={(props) => {
+                  return <>{props.children}</>;
+                }}
+              />
+              <OnChangePlugin onChange={handleChange} />
+              {autoFocus ? <AutoFocusPlugin /> : <></>}
+              <HistoryPlugin />
+              <MentionsPlugin
+                onOpenChange={(open) => {
+                  store.workspaces[workspaceId].composers[threadId][eventId].isMentioning = open;
+                }}
+              />
+              <TimestampPlugin />
+            </LexicalComposer>
+            {hasText && (
+              <Composer.ButtonGroup>
+                <Composer.MentionsButton />
+              </Composer.ButtonGroup>
+            )}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

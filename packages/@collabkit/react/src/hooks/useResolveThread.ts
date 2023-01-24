@@ -21,7 +21,7 @@ export function useResolveThread() {
   };
 
   const reopen = () => {
-    actions.reopenThread(store, workspaceId, threadId);
+    actions.reopenThread(store, { workspaceId, threadId });
   };
 
   return { isResolved, canResolve, resolve, reopen };

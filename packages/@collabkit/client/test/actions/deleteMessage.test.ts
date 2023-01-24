@@ -1,12 +1,13 @@
 import { expect, test } from 'vitest';
 import { nanoid } from 'nanoid';
 import { setupApp, setupFirebase, setupWorkspaceProfile } from '../../../test-utils/src';
-import { createComposer, createStore, createWorkspace } from '../../src/store';
+import { createStore, createWorkspace } from '../../src/store';
 import { init } from '../../src/actions/init';
 import { FirebaseSync } from '../../src/sync/firebase/FirebaseSync';
 import { Store } from '@collabkit/core';
 import { deleteMessage } from '../../src/actions/deleteMessage';
 import { getTimeline } from '../../src/sync/firebase/getTimeline';
+import { initComposer } from '../../src/actions/initComposer';
 
 setupFirebase();
 
@@ -41,10 +42,10 @@ test('deleteMessage', async () => {
 
   const threadId = nanoid();
 
-  store.workspaces[workspaceId].composers[threadId] = createComposer();
+  initComposer(store, { workspaceId, threadId, eventId: 'default' });
   store.workspaces[workspaceId].timeline[threadId] = {};
 
-  const { id } = await sync.sendMessage({
+  const { id: eventId } = await sync.sendMessage({
     appId,
     workspaceId,
     threadId,
@@ -58,19 +59,25 @@ test('deleteMessage', async () => {
     },
   });
 
-  await deleteMessage(store as Store, { workspaceId, threadId, eventId: id });
+  const id = await deleteMessage(store as Store, { workspaceId, threadId, eventId });
 
-  const events = await getTimeline({
+  expect(id).toBeDefined();
+  if (!id) throw new Error('ID is undefined');
+
+  const timeline = await getTimeline({
     appId,
     workspaceId,
     threadId,
   });
 
-  expect(events?.[1]).toStrictEqual({
+  expect(timeline).toBeDefined();
+  if (!timeline) throw new Error('Timeline is undefined');
+
+  expect(timeline[id]).toStrictEqual({
     id: expect.any(String),
     type: 'delete',
     body: '',
-    parentId: id,
+    parentId: eventId,
     createdAt: expect.any(Number),
     createdById: userId,
     mentions: [],

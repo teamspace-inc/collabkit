@@ -1,15 +1,15 @@
 import type { Store } from '@collabkit/core';
 import { $getRoot } from 'lexical';
 import { writeMessageToFirebase } from './writeMessageToFirebase';
-import { actions, getConfig } from '.';
+import { actions } from '.';
 import { generateObjectIdFromCellId } from '../utils/generateObjectIdFromCellId';
 
 export async function sendMessage(
   store: Store,
   props: { workspaceId: string; threadId: string; eventId: string }
 ) {
+  const { userId } = store;
   const { workspaceId, threadId, eventId } = props;
-  const { userId } = getConfig(store);
   if (!userId) {
     console.warn('[CollabKit]: cannot send a message, anonymous user');
     if (store.config.onAuthenticationRequired) {
@@ -24,8 +24,10 @@ export async function sendMessage(
   }
 
   const workspace = store.workspaces[workspaceId];
-  const { editor, $$body: body, mentions } = workspace.composers[threadId][eventId];
+  const composer = workspace.composers[threadId][eventId];
+  const { editor, $$body: body, mentions, pendingPin } = composer;
 
+  // we can move this check elsewhere
   if (`${body}`.trim().length === 0) {
     console.warn('[CollabKit] tried to send an empty message');
     // can't send empty messages
@@ -36,16 +38,18 @@ export async function sendMessage(
     $getRoot().clear();
   });
 
-  if (store.workspaces[workspaceId].pendingThreadInfo[threadId]) {
+  const pendingThreadInfo = workspace.pendingThreadInfo[threadId];
+
+  if (pendingThreadInfo) {
     await actions.saveThreadInfo(store, {
       workspaceId,
       threadId,
       isOpen: true,
-      info: store.workspaces[workspaceId].pendingThreadInfo[threadId],
+      info: pendingThreadInfo,
     });
   }
 
-  const isFirstEvent = Object.keys(!store.workspaces[workspaceId].timeline[threadId]).length === 0;
+  const isFirstEvent = Object.keys(!workspace.timeline[threadId]).length === 0;
 
   try {
     const event = await writeMessageToFirebase(store, {
@@ -55,12 +59,14 @@ export async function sendMessage(
       preview: body,
       type: 'message',
       mentions,
-      composerEventId: eventId,
+      pin: pendingPin,
     });
 
     if (!event) {
       return;
     }
+
+    composer.pendingPin = null;
 
     store.callbacks?.onCommentSend?.({ workspaceId, threadId, userId, event });
     if (isFirstEvent) {
@@ -69,7 +75,7 @@ export async function sendMessage(
         threadId,
         userId,
         event,
-        info: generateObjectIdFromCellId(store.workspaces[workspaceId].threadInfo[threadId]),
+        info: generateObjectIdFromCellId(workspace.threadInfo[threadId]),
       });
     }
   } catch (e) {

@@ -173,7 +173,20 @@ export type Target =
   | HideSidebarButtonTarget
   | ComposerPinButtonTarget
   | ComposerMentionsButtonTarget
-  | AttachPinTarget;
+  | AttachPinTarget
+  | PinTarget
+  | PinDeleteButton
+  | CommentSaveButtonTarget
+  | CommentCancelButtonTarget;
+
+export type PinTarget = {
+  type: 'pin';
+  objectId: string;
+  id: string;
+  threadId: string;
+  workspaceId: string;
+  isPending?: boolean;
+};
 
 export type AttachPinTarget = {
   type: 'attachPin';
@@ -201,6 +214,11 @@ export type MenuTarget = {
   nodeId: string;
   parentId: string | null;
   context?: Target;
+};
+
+export type PinDeleteButton = {
+  type: 'pinDeleteButton';
+  pin: PinTarget;
 };
 
 export type CommentMenuTarget = MenuTarget & CommentTarget;
@@ -250,6 +268,16 @@ export type CommentDeleteButtonTarget = {
   comment: CommentTarget;
 };
 
+export type CommentSaveButtonTarget = {
+  type: 'commentSaveButton';
+  comment: CommentTarget;
+};
+
+export type CommentCancelButtonTarget = {
+  type: 'commentCancelButton';
+  comment: CommentTarget;
+};
+
 export type ThreadResolveButtonTarget = {
   type: 'resolveThreadButton';
   threadId: string;
@@ -287,6 +315,7 @@ export type Event = {
   createdById: string;
   parentId?: string;
   mentions?: readonly string[];
+  pinId?: string;
 };
 
 export type WithName<T> = T & {
@@ -334,18 +363,28 @@ export interface Composer {
   isTypingTimeoutID?: ReturnType<typeof setTimeout>;
   isTyping: { [endUserId: string]: boolean };
   isMentioning: boolean;
+  pendingPin: null | PendingPin;
 }
 
-export type Pin = PinEvent & {
+export type FirebasePin = {
+  x: number;
+  y: number;
+  threadId: string;
+  eventId: string;
+};
+
+export type Pin = {
+  id: string;
   objectId: string;
   x: number;
   y: number;
-};
-
-export type PinEvent = {
   workspaceId: string;
   threadId: string;
   eventId: string;
+};
+
+export type PendingPin = Pin & {
+  isPending: true;
 };
 
 export interface SeenBy {
@@ -372,12 +411,14 @@ export interface Workspace {
   threadProfiles: { [threadId: string]: { [userId: string]: boolean } };
   fetchedProfiles: { [threadId: string]: { [userId: string]: boolean } };
   openPins: { [objectId: string]: { [pinId: string]: Pin } };
+  eventPins: { [eventId: string]: Pin };
 }
 
 // get all pins for the workspace that have an open thread attached to them (we don't want resolved ones)
 // get all threads for these pins in one query (comment sidebar speed)
 
 export interface UnconfiguredStore {
+  appId: null | string;
   sync: null | SyncAdapter;
   isReadOnly: boolean;
   isConnected: boolean;
@@ -402,7 +443,6 @@ export interface UnconfiguredStore {
   mentionableUsers: { [userId: string]: MentionWithColor };
   appState: 'blank' | 'config' | 'ready';
   uiState: 'idle' | 'selecting';
-  pin: null | WithID<Pin>;
   subs: Subscriptions;
   callbacks?: Callbacks;
   clientX: number;
@@ -413,6 +453,7 @@ export interface UnconfiguredStore {
 export interface Store extends UnconfiguredStore {
   sync: SyncAdapter;
   config: Config;
+  allPins: Pin[];
 }
 
 export type Unsubscribe = () => void;

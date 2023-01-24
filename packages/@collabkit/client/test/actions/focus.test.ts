@@ -1,11 +1,12 @@
-import { expect, test } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import { createStore } from '../../src/store';
+import { blur } from '../../src/actions/blur';
 import { focus } from '../../src/actions/focus';
 import { FirebaseSync } from '../../src/sync/firebase/FirebaseSync';
 import { CommentTarget, Store } from '@collabkit/core';
 import { nanoid } from 'nanoid';
 
-test('focus', () => {
+describe('focus & blur', async () => {
   const store = createStore();
   store.sync = new FirebaseSync({ test: true });
   expect(store.editingId).toBe(null);
@@ -16,6 +17,14 @@ test('focus', () => {
     eventId: nanoid(),
     treeId: nanoid(),
   };
-  focus(store as Store, { target });
-  expect(store.focusedId).toBe(target);
+
+  test('focus', () => {
+    focus(store as Store, { target });
+    expect(store.focusedId).toBe(target);
+  });
+
+  test('blur', () => {
+    blur(store as Store);
+    expect(store.focusedId).toBe(null);
+  });
 });

@@ -352,6 +352,7 @@ export function DashboardExample() {
               <Title>Dashboard</Title>
               <Text>View core metrics on the state of your company.</Text>
             </Block>
+            <div className="px-2">{/* <AddCommentButton /> */}</div>
             <Datepicker
               minDate={minDate}
               maxDate={maxDate}
@@ -384,7 +385,7 @@ export function DashboardExample() {
             <TableView />
           )}
         </main>
-        <div className="h-screen border">
+        <div className="h-screen border" style={{ width: 360 }}>
           <Thread threadId="test123" />
         </div>
       </div>

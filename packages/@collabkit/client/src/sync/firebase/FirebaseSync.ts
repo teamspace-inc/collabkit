@@ -66,6 +66,8 @@ export function initFirebase(options = { test: false }) {
   );
 }
 
+const DEBUG = false;
+
 export class FirebaseSync implements Sync.SyncAdapter {
   constructor(options = { test: false }) {
     initFirebase(options);
@@ -79,6 +81,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
     x: number;
     y: number;
   }): Promise<void> {
+    DEBUG && console.log('[network] movePin', params);
     const { appId, objectId, workspaceId, pinId, x, y } = params;
     const pinPath = ref.path`/pins/${appId}/${workspaceId}/${objectId}/${pinId}`;
     const openPinPath = ref.path`/views/openPins/${appId}/${workspaceId}/${objectId}/${pinId}`;
@@ -92,6 +95,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
   }
 
   nextPinId(params: { appId: string; objectId: string; workspaceId: string }): string {
+    DEBUG && console.log('[network] nextPinId', params);
     const { appId, objectId, workspaceId } = params;
     const pinRef = push(ref`/pins/${appId}/${workspaceId}/${objectId}`);
     if (!pinRef.key) throw new Error('pinId is undefined');
@@ -110,20 +114,22 @@ export class FirebaseSync implements Sync.SyncAdapter {
       y: number;
     };
   }): Promise<string> {
+    DEBUG && console.log('[network] savePin', params);
     const { appId, workspaceId, pin } = params;
     const { objectId } = pin;
     if (pin.eventId === 'default') {
       throw new Error('Cannot save pin with eventId "default"');
     }
     const pinId = params.pinId;
+    const firebasePin = {
+      x: pin.x,
+      y: pin.y,
+      eventId: pin.eventId,
+      threadId: pin.threadId,
+    };
     const updates = {
-      [ref.path`/pins/${appId}/${workspaceId}/${objectId}/${pinId}`]: {
-        x: pin.x,
-        y: pin.y,
-        eventId: pin.eventId,
-        threadId: pin.threadId,
-      },
-      [ref.path`/views/openPins/${appId}/${workspaceId}/${objectId}/${pinId}`]: pin,
+      [ref.path`/pins/${appId}/${workspaceId}/${objectId}/${pinId}`]: firebasePin,
+      [ref.path`/views/openPins/${appId}/${workspaceId}/${objectId}/${pinId}`]: firebasePin,
       [ref.path`/views/threadPins/${appId}/${workspaceId}/${pin.threadId}/${pin.eventId}`]: pinId,
     };
     await update(ref`/`, updates);
@@ -138,13 +144,19 @@ export class FirebaseSync implements Sync.SyncAdapter {
     threadId: string;
     eventId: string;
   }): Promise<void> {
+    DEBUG && console.log('[network] deletePin', params);
     const { appId, workspaceId, objectId, pinId, threadId, eventId } = params;
     const updates = {
       [ref.path`/pins/${appId}/${workspaceId}/${objectId}/${pinId}`]: null,
       [ref.path`/views/openPins/${appId}/${workspaceId}/${objectId}/${pinId}`]: null,
       [ref.path`/views/threadPins/${appId}/${workspaceId}/${threadId}/${eventId}`]: null,
     };
-    return update(ref`/`, updates);
+    try {
+      const result = await update(ref`/`, updates);
+    } catch (e) {
+      console.error('CollabKit pin delete failed', e);
+    }
+    return Promise.resolve();
   }
 
   async subscribeOpenPins(params: {
@@ -155,6 +167,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
     onObjectChange: (objectId: string, pins: { [pinId: string]: { x: number; y: number } }) => void;
     onObjectRemove: (objectId: string) => void;
   }): Promise<void> {
+    DEBUG && console.log('[network] subscribeOpenPins', params);
     const { subs, appId, workspaceId, onObjectChange, onObjectRemove, onGet } = params;
     const openPinsRef = ref`/views/openPins/${appId}/${workspaceId}`;
 
@@ -173,7 +186,19 @@ export class FirebaseSync implements Sync.SyncAdapter {
         const objectId = objectSnapshot.key;
         const objectPins = objectSnapshot.val();
         if (objectId == null) return;
-        onObjectChange(objectId, objectPins);
+        DEBUG && console.log('[network] openPins child added', objectId, objectPins);
+        onObjectChange(FirebaseId.decode(objectId), objectPins);
+      }
+    );
+
+    subs[openPinsRef.toString() + 'onChildChanged'] ||= onChildChanged(
+      openPinsRef,
+      (objectSnapshot) => {
+        const objectId = objectSnapshot.key;
+        const objectPins = objectSnapshot.val();
+        if (objectId == null) return;
+        DEBUG && console.log('[network] openPins child changed', objectId, objectPins);
+        onObjectChange(FirebaseId.decode(objectId), objectPins);
       }
     );
 
@@ -182,7 +207,8 @@ export class FirebaseSync implements Sync.SyncAdapter {
       (objectSnapshot) => {
         const objectId = objectSnapshot.key;
         if (objectId == null) return;
-        onObjectRemove(objectId);
+        DEBUG && console.log('[network] openPins child removed', objectId);
+        onObjectRemove(FirebaseId.decode(objectId));
       }
     );
   }
@@ -194,6 +220,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
     isOpen: boolean;
     info?: ThreadInfo;
   }): Promise<void> {
+    DEBUG && console.log('[network] saveThreadInfo', data);
     const { appId, workspaceId, threadId, info } = data;
     // bug here can't save undefined info to firebase
     const values = {
@@ -218,6 +245,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
     workspaceId: string;
     workspace?: OptionalWorkspaceProps | null;
   }) {
+    DEBUG && console.log('[network] saveWorkspace', params);
     if (
       params.workspace &&
       params.workspace.name &&
@@ -247,6 +275,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
     workspaceId: string;
     profile: Sync.ServerProfile;
   }): Promise<void> {
+    DEBUG && console.log('[network] saveProfile', data);
     const { appId, userId, workspaceId, profile } = data;
     try {
       await set(ref`/profiles/${appId}/${userId}`, profile);
@@ -262,6 +291,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
   }
 
   async getProfile(params: { appId: string; userId: string }) {
+    DEBUG && console.log('[network] getProfile', params);
     const snapshot = await get(ref`/profiles/${params.appId}/${params.userId}`);
     return snapshotToProfile(snapshot);
   }
@@ -277,6 +307,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
     threadId: string;
     event: Event;
   }): Promise<{ id: string }> {
+    DEBUG && console.log('[network] saveEvent', { appId, workspaceId, threadId, event });
     const eventRef = await push(timelineRef(appId, workspaceId, threadId), eventToObject(event));
     if (!eventRef.key) {
       throw new Error('CollabKit: failed to save event');
@@ -298,6 +329,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
       pinId: string;
     };
   }) {
+    DEBUG && console.log('[network] markResolved', { appId, workspaceId, threadId, pin });
     const updates = {
       [ref.path`/views/openThreads/${appId}/${workspaceId}/${threadId}`]: null,
     };
@@ -324,6 +356,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
     threadId: string;
     eventId: string;
   }): Promise<void> {
+    DEBUG && console.log('[network] markSeen', { appId, userId, workspaceId, threadId, eventId });
     const data = { seenUntilId: eventId, seenAt: serverTimestamp() };
     await update(ref`/`, {
       [ref.path`/seen/${appId}/${userId}/${workspaceId}/${threadId}/`]: data,
@@ -342,6 +375,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
     workspaceId: string;
     threadId: string;
   }): Promise<void> {
+    DEBUG && console.log('[network] startTyping', { appId, userId, workspaceId, threadId });
     await set(userTypingRef(appId, workspaceId, threadId, userId), true);
   }
 
@@ -356,6 +390,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
     workspaceId: string;
     threadId: string;
   }): Promise<void> {
+    DEBUG && console.log('[network] stopTyping', { appId, userId, workspaceId, threadId });
     await remove(userTypingRef(appId, workspaceId, threadId, userId));
   }
 
@@ -370,6 +405,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
     workspaceId: string;
     threadId: string;
   }) {
+    DEBUG && console.log('[network] getIsTyping', { appId, userId, workspaceId, threadId });
     const snapshot = await get(userTypingRef(appId, workspaceId, threadId, userId));
     if (!snapshot.exists()) {
       return null;
@@ -395,6 +431,15 @@ export class FirebaseSync implements Sync.SyncAdapter {
     event: Event;
     pin?: Pin | null;
   }): Promise<{ id: string }> {
+    DEBUG &&
+      console.log('[network] sendMessage', {
+        appId,
+        userId,
+        workspaceId,
+        threadId,
+        preview,
+        event,
+      });
     // generate an id for the message
     // use firebase ids as they are chronological
     const eventRef = await push(timelineRef(appId, workspaceId, threadId));
@@ -442,6 +487,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
     subs: Subscriptions;
     onSeenChange: Sync.SeenEventHandler;
   }): void {
+    DEBUG && console.log('[network] subscribeSeen', { appId, userId, workspaceId });
     const seenQuery = query(
       ref`/seen/${appId}/${userId}/${workspaceId}`,
       orderByChild('seenUntilId'),
@@ -476,6 +522,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
     subs: Subscriptions;
     onThreadChange: Sync.OpenThreadEventHandler;
   }): void {
+    DEBUG && console.log('[network] subscribeOpenThreads', { appId, workspaceId });
     const onError = (e: Error) => {
       console.error(e);
     };
@@ -531,6 +578,12 @@ export class FirebaseSync implements Sync.SyncAdapter {
     subs: Subscriptions;
     onThreadInfo: (props: Sync.ThreadInfoChangeEvent) => void;
   }) {
+    DEBUG &&
+      console.log('[network] subscribeThreadInfo', {
+        appId: props.appId,
+        workspaceId: props.workspaceId,
+        threadId: props.threadId,
+      });
     const threadInfoRef = ref`/threadInfo/${props.appId}/${props.workspaceId}/${props.threadId}`;
 
     props.subs[`${threadInfoRef.toString()}#onValue`] ||= onValue(threadInfoRef, (snapshot) => {
@@ -545,6 +598,12 @@ export class FirebaseSync implements Sync.SyncAdapter {
     subs: Subscriptions;
     onInboxChange: Sync.InboxChangeEventHandler;
   }) {
+    DEBUG &&
+      console.log('[network] subscribeInbox', {
+        appId: props.appId,
+        workspaceId: props.workspaceId,
+      });
+
     const inboxRef = query(
       ref`/views/inbox/${props.appId}/${props.workspaceId}`,
       orderByChild('createdAt'),
@@ -582,6 +641,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
     onThreadProfile: (props: Sync.ThreadProfileEvent) => void;
     onThreadProfiles: (props: Sync.ThreadProfilesEvent) => void;
   }) {
+    DEBUG && console.log('[network] subscribeThread', { threadId: props.threadId });
     subscribeTimeline(props);
     subscribeThreadIsTyping(props);
     subscribeThreadSeenBy(props);
@@ -589,6 +649,12 @@ export class FirebaseSync implements Sync.SyncAdapter {
   }
 
   async getUser(props: { appId: string; workspaceId: string; userId: string }) {
+    DEBUG &&
+      console.log('[network] getUser', {
+        appId: props.appId,
+        workspaceId: props.workspaceId,
+        userId: props.userId,
+      });
     const snapshot = await get(ref`/profiles/${props.appId}/${props.userId}`);
     return snapshotToUser(snapshot);
   }

@@ -1,4 +1,4 @@
-import { expect, test } from 'vitest';
+import { expect, test, describe, beforeAll } from 'vitest';
 import { nanoid } from 'nanoid';
 import { setupApp, setupFirebase, setupWorkspaceProfile } from '../../../test-utils/src';
 import { createStore, createWorkspace } from '../../src/store';
@@ -6,97 +6,112 @@ import { init } from '../../src/actions/init';
 import { FirebaseSync } from '../../src/sync/firebase/FirebaseSync';
 import { Store } from '@collabkit/core';
 
-import { addPin } from '../../src/actions/addPin';
+import { attachPin } from '../../src/actions/attachPin';
 import { movePin } from '../../src/actions/movePin';
-import { savePin } from '../../src/actions/savePin';
+import { initComposer } from '../../src/actions/initComposer';
+import { writeMessageToFirebase } from '../../src/actions/writeMessageToFirebase';
 
 setupFirebase();
 
-test('pin', async () => {
+describe('pin', () => {
   const apiKey = nanoid();
   const appId = nanoid();
   const userId = nanoid();
   const workspaceId = nanoid();
   const threadId = nanoid();
-
-  await setupApp({ apiKey, appId });
-  await setupWorkspaceProfile({ appId, workspaceId, userId });
   const store = createStore();
-  store.userId = userId;
-  store.workspaceId = workspaceId;
-  store.workspaces[workspaceId] = createWorkspace();
-  const sync = new FirebaseSync({ test: true });
-
-  await init(
-    store,
-    {
-      apiKey,
-      appId,
-      mentionableUsers: [],
-      user: {
-        id: userId,
+  let pinId;
+  let composer;
+  beforeAll(async () => {
+    await setupApp({ apiKey, appId });
+    await setupWorkspaceProfile({ appId, workspaceId, userId });
+    store.userId = userId;
+    store.workspaceId = workspaceId;
+    store.workspaces[workspaceId] = createWorkspace();
+    const sync = new FirebaseSync({ test: true });
+    await init(
+      store,
+      {
+        apiKey,
+        appId,
+        mentionableUsers: [],
+        user: {
+          id: userId,
+        },
+        workspace: {
+          id: workspaceId,
+        },
       },
-      workspace: {
-        id: workspaceId,
-      },
-    },
-    sync
-  );
-
-  if (!store.sync) {
-    throw new Error('store.sync is null');
-  }
-
-  const { id: eventId } = await store.sync.sendMessage({
-    appId,
-    userId,
-    workspaceId,
-    threadId,
-    preview: 'test',
-    event: {
-      type: 'message',
-      body: 'test',
-      createdAt: store.sync.serverTimestamp(),
-      createdById: userId,
-    },
+      sync
+    );
   });
 
-  const objectId = 'test';
-  const x = 0;
-  const y = 0;
+  test('attachPin', async () => {
+    store.composerId = { type: 'composer', eventId: 'default', threadId, workspaceId };
+    initComposer(store as Store, { threadId, workspaceId, eventId: 'default' });
+    composer = store.workspaces[workspaceId].composers[threadId].default;
+    composer.editor = null;
+    pinId = attachPin(store as Store, { x: 0, y: 0, objectId: 'test' });
 
-  addPin(store as Store, { workspaceId, objectId, pin: { x, y, threadId, eventId } });
+    const x = 0;
+    const y = 0;
 
-  expect(store.workspaces[workspaceId].pendingPin).toStrictEqual({
-    objectId,
-    threadId,
-    eventId,
-    x,
-    y,
+    expect(composer.pendingPin).toStrictEqual({
+      objectId: 'test',
+      threadId,
+      id: pinId,
+      workspaceId,
+      eventId: 'default',
+      x,
+      y,
+      isPending: true,
+    });
   });
 
-  await movePin(store as Store, { x: 10, y: 20 });
+  test('movePin', async () => {
+    await movePin(store as Store, { x: 10, y: 20, threadId, eventId: 'default', type: 'pending' });
 
-  expect(store.workspaces[workspaceId].pendingPin).toStrictEqual({
-    objectId,
-    threadId,
-    eventId,
-    x: 10,
-    y: 20,
+    expect(composer.pendingPin).toStrictEqual({
+      id: pinId,
+      workspaceId,
+      objectId: 'test',
+      threadId,
+      eventId: 'default',
+      x: 10,
+      y: 20,
+      isPending: true,
+    });
   });
 
-  const pinId = await savePin(store as Store);
+  // requires refactoring sendMessage etc.
+  // will bring this back in a separate PR
+  // test('sendMessage to save pin', async () => {
+  //   if (!store.sync) {
+  //     throw new Error('store.sync is null');
+  //   }
 
-  if (!pinId) {
-    throw new Error('pinId is null');
-  }
+  //   const event = await writeMessageToFirebase(store as Store, {
+  //     workspaceId,
+  //     threadId,
+  //     preview: 'test',
+  //     type: 'message',
+  //     body: 'test',
+  //   });
 
-  expect(store.workspaces[workspaceId].pendingPin).toBeNull();
+  //   if (!event) {
+  //     throw new Error('event is null');
+  //   }
 
-  expect(store.workspaces[workspaceId].openPins.test[pinId]).toStrictEqual({
-    x: 10,
-    y: 20,
-    threadId,
-    eventId,
-  });
+  //   expect(composer.pendingPin).toBeNull();
+
+  //   expect(store.workspaces[workspaceId].openPins.test[pinId]).toStrictEqual({
+  //     x: 10,
+  //     y: 20,
+  //     objectId: 'test',
+  //     workspaceId,
+  //     id: pinId,
+  //     threadId,
+  //     eventId: event.id,
+  //   });
+  // });
 });

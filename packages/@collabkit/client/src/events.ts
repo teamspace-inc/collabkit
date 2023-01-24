@@ -4,23 +4,15 @@ import type { LexicalEditor } from 'lexical';
 import type {
   CommentReactionTarget,
   CommentTarget,
-  ComposerTarget,
   MenuTarget,
   Store,
   Target,
   ThreadTarget,
 } from '@collabkit/core';
 import { actions } from './actions';
-import { createComposer, markRaw } from './store';
+import { markRaw } from './store';
 
 export type Events = ReturnType<typeof createEvents>;
-
-export function initComposer(store: Store, target: ComposerTarget) {
-  const composers = store.workspaces[target.workspaceId].composers;
-  composers[target.threadId] ??= { [target.eventId]: createComposer() };
-  composers[target.threadId][target.eventId] ??= createComposer();
-  return composers[target.threadId][target.eventId];
-}
 
 export function createEvents(store: Store) {
   return {
@@ -46,7 +38,8 @@ export function createEvents(store: Store) {
         return;
       }
 
-      const composer = initComposer(store, target);
+      // move this to composer mount
+      const composer = actions.initComposer(store, target);
       composer.editor = markRaw(editor);
 
       const body = composer.$$body;
@@ -56,8 +49,8 @@ export function createEvents(store: Store) {
       if (newBody.length === 0) {
         actions.isTyping.cancel();
         actions.disableComposerCommentButton(store, { target });
-        setTimeout(() => {
-          actions.stopTyping(store, { target });
+        setTimeout(async () => {
+          await actions.stopTyping(store, { target });
         }, 100);
       } else if (newBody.length !== body.length) {
         actions.enableComposerCommentButton(store, { target });
@@ -105,6 +98,20 @@ export function createEvents(store: Store) {
     onClick: <T extends Target>(e: React.MouseEvent, props: { target: T }) => {
       const { target } = props;
       switch (target.type) {
+        case 'composer':
+          actions.focusComposer(store, target);
+          return;
+        case 'pinDeleteButton':
+          // move to deletePin
+          if (target.pin.isPending) {
+            const { composerId } = store;
+            if (composerId) {
+              actions.removePendingPin(store, composerId);
+            }
+          } else {
+            actions.deletePin(store, target.pin);
+          }
+          return;
         case 'commentDeleteButton':
           actions.deleteMessage(store, target.comment);
           return;
@@ -112,15 +119,29 @@ export function createEvents(store: Store) {
           actions.startEditing(store, target.comment);
           return;
         case 'reopenThreadButton': {
-          actions.reopenThread(store, target.workspaceId, target.threadId);
+          actions.reopenThread(store, target);
           break;
         }
         case 'composerPinButton': {
-          actions.startSelecting(store);
-
-          // ideally we use this for more than just the pin button
-          // it stores which composer is active atm
           store.composerId = { ...target, type: 'composer' };
+
+          if (
+            store.workspaces[target.workspaceId].composers[target.threadId][target.eventId]
+              .pendingPin
+          ) {
+            actions.removePendingPin(store, target);
+            return;
+          }
+
+          if (store.uiState === 'selecting') {
+            actions.stopSelecting(store);
+          } else {
+            actions.startSelecting(store, target);
+
+            // ideally we use this for more than just the pin button
+            // it stores which composer is active atm
+            store.composerId = { ...target, type: 'composer' };
+          }
           break;
         }
         case 'composerMentionsButton': {
@@ -129,7 +150,15 @@ export function createEvents(store: Store) {
         }
         case 'attachPin': {
           if (store.uiState === 'selecting') {
+            e.stopPropagation();
+            e.preventDefault();
             actions.attachPin(store, target);
+            // for some reason this is needed to focus the composer
+            // this is buggy need to debug events
+            setTimeout(
+              () => store.composerId && actions.focusComposer(store, store.composerId),
+              32
+            );
           }
         }
       }
@@ -156,6 +185,15 @@ export function createEvents(store: Store) {
     },
 
     onKeyDown: (e: KeyboardEvent) => {
+      if (store.uiState === 'selecting') {
+        if (e.key === 'Escape') {
+          actions.stopSelecting(store);
+          e.stopPropagation();
+          e.preventDefault();
+          return;
+        }
+      }
+
       if (store.editingId) {
         if (e.key === 'Enter' && !e.shiftKey) {
           e.stopPropagation();
@@ -189,14 +227,7 @@ export function createEvents(store: Store) {
         }
       }
 
-      if (store.uiState === 'selecting') {
-        if (e.key === 'Escape') {
-          actions.stopSelecting(store);
-          e.stopPropagation();
-          e.preventDefault();
-          return;
-        }
-      } else if (store.viewingId) {
+      if (store.viewingId) {
         if (e.key === 'Escape') {
           actions.closeAll(store);
           e.stopPropagation();
@@ -224,14 +255,6 @@ export function createEvents(store: Store) {
               actions.hideSidebar(store);
               break;
             }
-            case 'floatingCommentButton': {
-              actions.startSelecting(store);
-              break;
-            }
-            // case 'pin': {
-            //   actions.viewThread(store, { ...props, isPreview: false });
-            //   break;
-            // }
             case 'closeThreadButton': {
               actions.closeAll(store);
               break;
@@ -241,7 +264,7 @@ export function createEvents(store: Store) {
               break;
             }
             case 'reopenThreadButton': {
-              actions.reopenThread(store, props.target.workspaceId, props.target.threadId);
+              actions.reopenThread(store, props.target);
               break;
             }
           }
@@ -255,7 +278,6 @@ export function createEvents(store: Store) {
     },
 
     onPopoverPreviewChange: (props: { target: ThreadTarget; open: boolean }) => {
-      // console.log('onPopoverPreviewChange', props);
       if (props.open) {
         actions.showPreview(store, props);
       } else {
@@ -264,7 +286,6 @@ export function createEvents(store: Store) {
     },
 
     onPopoverThreadOpenChange: (props: { target: ThreadTarget; open: boolean }) => {
-      // console.log('onPopoverThreadOpenChange', props);
       if (props.open) {
         actions.viewThread(store, props);
       } else {

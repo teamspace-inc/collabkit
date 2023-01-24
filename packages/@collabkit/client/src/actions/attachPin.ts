@@ -1,7 +1,6 @@
 import type { Store } from '@collabkit/core';
-import { insertComposerPin } from './insertComposerPin';
 
-export async function attachPin(
+export function attachPin(
   store: Store,
   props: {
     x: number;
@@ -15,15 +14,19 @@ export async function attachPin(
   if (!composerId) throw new Error('CollabKit: no composerId set');
   const { type, ...composerProps } = composerId;
   const id = store.sync.nextPinId({ appId, ...composerProps, objectId });
-  store.pin = {
+  const composer =
+    store.workspaces[composerId.workspaceId].composers[composerId.threadId][composerId.eventId];
+  composer.pendingPin = {
     id,
     ...composerProps,
     x,
     y,
     objectId,
+    isPending: true,
   };
   store.uiState = 'idle';
-  insertComposerPin(store, {
-    pinId: id,
-  });
+  // insertComposerPin(store, {
+  //   pinId: id,
+  // });
+  return id;
 }

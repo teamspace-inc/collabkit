@@ -17,6 +17,8 @@ export async function deleteMessage(
     return;
   }
 
+  const workspace = store.workspaces[workspaceId];
+
   const event: Event = {
     type: 'delete',
     body: '',
@@ -24,6 +26,7 @@ export async function deleteMessage(
     createdById: userId,
     parentId: eventId,
   };
+
   const { id } = await store.sync.saveEvent({
     appId,
     workspaceId,
@@ -31,12 +34,24 @@ export async function deleteMessage(
     event,
   });
 
-  const timeline = store.workspaces[workspaceId].timeline[threadId];
+  const timeline = workspace.timeline[threadId];
   timeline[id] = {
     ...event,
     createdAt: +Date.now(),
     id,
   };
+
+  const pin = workspace.eventPins[eventId];
+
+  if (pin) {
+    try {
+      await store.sync.deletePin({ appId, ...pin, pinId: pin.id });
+      console.log('CollabKit: deleted pin', pin.id);
+    } catch (e) {
+      console.error('CollabKit: failed to delete pin', e);
+    }
+  }
+
   const isEmpty = messageEvents(timeline).length === 0;
   const isResolved = timelineUtils.computeIsResolved(timeline);
   const isOpen = !isEmpty && !isResolved;
@@ -45,5 +60,5 @@ export async function deleteMessage(
     await store.sync.markResolved({ appId, workspaceId, threadId });
   }
 
-  // find pins and delete them
+  return id;
 }
