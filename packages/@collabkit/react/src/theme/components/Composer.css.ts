@@ -224,7 +224,7 @@ export const buttonGroup = style({
   display: 'flex',
   padding: `0px ${vars.space[2]} ${calc(vars.space[1]).add(calc(vars.space[1]).divide(2))} 0px`,
   gap: '0px',
-  marginLeft: `${calc(vars.space[2]).negate()}`,
+  marginLeft: `${calc(vars.space[1]).negate()}`,
 });
 
 globalStyle('.collabkit-pin-node', {
