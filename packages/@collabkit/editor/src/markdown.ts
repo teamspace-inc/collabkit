@@ -4,7 +4,7 @@ import {
   Transformer,
   TextMatchTransformer,
 } from '@lexical/markdown';
-import { $createMentionNode, $isMentionNode, MentionNode } from './MentionNode';
+import { $createMentionNode, MentionNode } from './MentionNode';
 import { $createPinNode } from './PinNode';
 import { PinNode } from './PinNode';
 import { $isPinNode } from './PinNode';

@@ -15,14 +15,12 @@ test('createWorkspace', () => {
     threadInfo: {},
     likelyFetchedAllProfiles: false,
     threadProfiles: {},
-
     timelineInitialFetchComplete: {},
     fetchedProfiles: {},
-
     pendingThreads: {},
     pendingThreadInfo: {},
-
     openPins: {},
+    eventPins: {},
   });
 });
 
@@ -34,6 +32,7 @@ test('createComposer', () => {
     editor: null,
     enabled: false,
     isMentioning: false,
+    pendingPin: null,
   });
 });
 
@@ -63,7 +62,6 @@ test('createStore', () => {
     subs: {},
     callbacks: {},
     mentionableUsers: {},
-    pin: null,
     clientX: 0,
     clientY: 0,
     composerId: null,

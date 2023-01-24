@@ -11,7 +11,7 @@ import { closeMenu } from './closeMenu';
 import { closePreview } from './closePreview';
 import { closeThread } from './closeThread';
 import { deleteMessage } from './deleteMessage';
-import { deletePinAndMessage } from './deletePinAndMessage';
+import { deletePin } from './deletePin';
 import { disableComposerCommentButton } from './disableComposerCommentButton';
 import { enableComposerCommentButton } from './enableComposerCommentButton';
 import { focus } from './focus';
@@ -129,7 +129,7 @@ export const actions = {
   closePreview,
   closeThread,
   deleteMessage,
-  deletePinAndMessage,
+  deletePin,
   disableComposerCommentButton,
   enableComposerCommentButton,
   focus,

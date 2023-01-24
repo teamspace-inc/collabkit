@@ -109,7 +109,7 @@ export function createEvents(store: Store) {
               actions.removePendingPin(store, composerId);
             }
           } else {
-            actions.deletePinAndMessage(store, target.pin);
+            actions.deletePin(store, target.pin);
           }
           return;
         case 'commentDeleteButton':
@@ -185,6 +185,15 @@ export function createEvents(store: Store) {
     },
 
     onKeyDown: (e: KeyboardEvent) => {
+      if (store.uiState === 'selecting') {
+        if (e.key === 'Escape') {
+          actions.stopSelecting(store);
+          e.stopPropagation();
+          e.preventDefault();
+          return;
+        }
+      }
+
       if (store.editingId) {
         if (e.key === 'Enter' && !e.shiftKey) {
           e.stopPropagation();
@@ -218,14 +227,7 @@ export function createEvents(store: Store) {
         }
       }
 
-      if (store.uiState === 'selecting') {
-        if (e.key === 'Escape') {
-          actions.stopSelecting(store);
-          e.stopPropagation();
-          e.preventDefault();
-          return;
-        }
-      } else if (store.viewingId) {
+      if (store.viewingId) {
         if (e.key === 'Escape') {
           actions.closeAll(store);
           e.stopPropagation();
