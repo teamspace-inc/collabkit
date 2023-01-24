@@ -90,12 +90,6 @@ function ComposerRoot(props: {
   initialBody?: string;
   ['data-testid']?: string;
 }) {
-  const [context, setContext] = useState<ComposerContextValue>({
-    initialBody: props.initialBody ?? '',
-    autoFocus: props.autoFocus ?? false,
-    canPin: false,
-  });
-
   const commentContext = useOptionalCommentContext();
 
   const { threadId, workspaceId, userId } = useThreadContext();
@@ -120,7 +114,13 @@ function ComposerRoot(props: {
       onClick={onClick}
     >
       <Profile.Provider profileId={userId}>
-        <ComposerContext.Provider value={context}>
+        <ComposerContext.Provider
+          value={{
+            initialBody: props.initialBody ?? '',
+            autoFocus: props.autoFocus ?? false,
+            canPin: false,
+          }}
+        >
           <TargetContext.Provider value={target}>{props.children}</TargetContext.Provider>
         </ComposerContext.Provider>
       </Profile.Provider>
