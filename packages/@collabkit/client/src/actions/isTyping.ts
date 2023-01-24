@@ -25,9 +25,7 @@ export async function isTyping(store: Store, props: { target: ComposerTarget }) 
   await store.sync.startTyping(params);
 
   store.workspaces[workspaceId].composers[threadId][eventId].isTypingTimeoutID = setTimeout(
-    async () => {
-      await store.sync.stopTyping(params);
-    },
+    () => store.sync.stopTyping(params),
     1000
   );
 }
