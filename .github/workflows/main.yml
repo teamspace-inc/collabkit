@@ -62,7 +62,7 @@ jobs:
         id: waitFor200
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          max_timeout: 120
+          max_timeout: 180
           check_interval: 5
           regex: 'collabkit-demo'
 
@@ -76,7 +76,7 @@ jobs:
         id: waitFor200
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          max_timeout: 120
+          max_timeout: 180
           check_interval: 5
           regex: 'collabkit-react-ladle'
 
