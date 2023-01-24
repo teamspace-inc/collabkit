@@ -87,6 +87,7 @@ async function visitLadleURL(context: BrowserContext, URL: string, params: Recor
 
 async function hasComment(page: Page, comment: { body: string }, nth: number = 0) {
   const markdown = await page.getByTestId('collabkit-markdown').nth(nth);
+  await page.waitForTimeout(200);
   const text = await markdown.innerText();
   await expect(text).toStrictEqual(comment.body);
 }
