@@ -196,6 +196,7 @@ test.describe('Thread', () => {
     const page2 = await visitThreadAsUser(context, { ...bob, appId, apiKey });
     await sendComment(page, 'Hello World');
     await sendComment(page, 'Hello World 1');
+    await page.waitForTimeout(2000);
     await hasComment(page, { body: 'Hello World' });
     await hasComment(page, { body: 'Hello World 1' }, 1);
     await hasComment(page2, { body: 'Hello World' });
@@ -229,15 +230,14 @@ test.describe('Thread', () => {
     await doesNotHaveComment(page2, { body: 'Hello World' });
   });
 
-  // TODO: fix this test, temporarily disabled
-  // test('while typing a comment others see typing indicator', async ({ context }) => {
-  //   const { page, appId, apiKey } = await createAppAndVisitThreadAsUser(context, alice);
-  //   const page2 = await visitThreadAsUser(context, { ...bob, appId, apiKey });
-  //   await sendComment(page, 'Hello World');
-  //   typeCommentSlowly(page, 'Hello this is a really long comment to test the typing indicator');
-  //   const indicator = page2.getByTestId('collabkit-typing-indicator');
-  //   await expect(indicator).toContainText('Alice is typing…');
-  // });
+  test('while typing a comment others see typing indicator', async ({ context }) => {
+    const { page, appId, apiKey } = await createAppAndVisitThreadAsUser(context, alice);
+    const page2 = await visitThreadAsUser(context, { ...bob, appId, apiKey });
+    await sendComment(page, 'Hello World');
+    typeCommentSlowly(page, 'Hello this is a really long comment to test the typing indicator');
+    const indicator = page2.getByTestId('collabkit-typing-indicator');
+    await expect(indicator).toContainText('Alice is typing…');
+  });
 
   test('verify custom placeholder works for threads', async ({ context }) => {
     const page = await visitLadleURL(context, '/', { story: 'thread--custom-placeholder' });
