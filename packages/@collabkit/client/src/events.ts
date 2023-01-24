@@ -12,7 +12,6 @@ import type {
 import { actions } from './actions';
 import { createComposer, markRaw } from './store';
 import { nanoid } from 'nanoid';
-import { markRaw } from './store';
 
 export type Events = ReturnType<typeof createEvents>;
 
