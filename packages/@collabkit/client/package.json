@@ -23,7 +23,6 @@
     "firebase-admin": "^11.3.0",
     "has": "^1.0.3",
     "nanoid": "^4.0.0",
-    "proxy-memoize": "^2.0.1",
     "vitest": "^0.25.5"
   }
 }
