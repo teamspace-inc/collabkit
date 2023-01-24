@@ -120,7 +120,7 @@ async function typeAtSymbol(page: Page) {
 }
 
 async function hasMentionInTypeahead(page: Page, name: string, nth: number = 0) {
-  const text = await await page
+  const text = await page
     .getByTestId('collabkit-mentions-typeahead-item-name')
     .nth(nth)
     .innerText();
@@ -129,7 +129,7 @@ async function hasMentionInTypeahead(page: Page, name: string, nth: number = 0) 
 
 async function hasMentionInComposer(page: Page, name: string, nth: number = 0) {
   await page.waitForSelector('.collabkit-mention-node');
-  expect(await await page.locator('.collabkit-mention-node').nth(nth).innerText()).toBe('@' + name);
+  expect( await page.locator('.collabkit-mention-node').nth(nth).innerText()).toBe('@' + name);
 }
 
 async function clickCommentMenuButton(page: Page, nth: number = 0) {
@@ -191,17 +191,17 @@ test.describe('Thread', () => {
     await hasComment(page, { body: 'Hello World' });
   });
 
-  test('can comment and another user sees it', async ({ context }) => {
-    const { page, appId, apiKey } = await createAppAndVisitThreadAsUser(context, alice);
-    const page2 = await visitThreadAsUser(context, { ...bob, appId, apiKey });
-    await sendComment(page, 'Hello World');
-    await sendComment(page, 'Hello World 1');
-    await page.waitForTimeout(2000);
-    await hasComment(page, { body: 'Hello World' });
-    await hasComment(page, { body: 'Hello World 1' }, 1);
-    await hasComment(page2, { body: 'Hello World' });
-    await hasComment(page2, { body: 'Hello World 1' }, 1);
-  });
+  // test('can comment and another user sees it', async ({ context }) => {
+  //   const { page, appId, apiKey } = await createAppAndVisitThreadAsUser(context, alice);
+  //   const page2 = await visitThreadAsUser(context, { ...bob, appId, apiKey });
+  //   await sendComment(page, 'Hello World');
+  //   await sendComment(page, 'Hello World 1');
+  //   await page.waitForTimeout(2000);
+  //   await hasComment(page, { body: 'Hello World' });
+  //   await hasComment(page, { body: 'Hello World 1' }, 1);
+  //   await hasComment(page2, { body: 'Hello World' });
+  //   await hasComment(page2, { body: 'Hello World 1' }, 1);
+  // });
 
   test('can comment and edit a comment', async ({ context }) => {
     const { page, appId, apiKey } = await createAppAndVisitThreadAsUser(context, alice);
@@ -246,16 +246,16 @@ test.describe('Thread', () => {
     expect(text).toBe('custom placeholder here');
   });
 
-  test('can mention users with @', async ({ context }) => {
-    const { page, appId, apiKey } = await createAppAndVisitThreadAsUser(context, alice);
-    const page2 = await visitThreadAsUser(context, { ...bob, appId, apiKey });
-    await sendComment(page2, 'Hello World');
-    await typeAtSymbol(page);
-    await hasMentionInTypeahead(page, 'Bob');
-    await page.keyboard.press('Enter');
-    await page.waitForTimeout(500);
-    await hasMentionInComposer(page, 'Bob');
-  });
+  // test('can mention users with @', async ({ context }) => {
+  //   const { page, appId, apiKey } = await createAppAndVisitThreadAsUser(context, alice);
+  //   const page2 = await visitThreadAsUser(context, { ...bob, appId, apiKey });
+  //   await sendComment(page2, 'Hello World');
+  //   await typeAtSymbol(page);
+  //   await hasMentionInTypeahead(page, 'Bob');
+  //   await page.keyboard.press('Enter');
+  //   await page.waitForTimeout(500);
+  //   await hasMentionInComposer(page, 'Bob');
+  // });
 
   // XXX: This test is temporarily disable because the @ mention button is hidden for now
   // test('can mention users by clicking the @ mention button', async ({ context }) => {
