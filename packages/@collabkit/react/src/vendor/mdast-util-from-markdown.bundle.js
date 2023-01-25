@@ -1,3 +1,4 @@
+/* esm.sh - esbuild bundle(mdast-util-from-markdown@1.2.0) es2022 production */
 var Ft = Object.defineProperty,
   St = (e, r) => {
     for (var t in r) Ft(e, t, { get: r[t], enumerable: !0 });

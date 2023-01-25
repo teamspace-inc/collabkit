@@ -1,3 +1,4 @@
+/* esm.sh - esbuild bundle(micromark@2.11.4) es2022 production */
 var wt = Object.create,
   Re = Object.defineProperty,
   _t = Object.getOwnPropertyDescriptor,
