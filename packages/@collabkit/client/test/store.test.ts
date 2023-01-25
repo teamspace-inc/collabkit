@@ -64,6 +64,6 @@ test('createStore', () => {
     clientX: 0,
     clientY: 0,
     composerId: null,
-    commentableElements: new Map(),
+    commentables: {},
   });
 });

@@ -28,10 +28,10 @@ function findCommentableElement(
   if (element == null) {
     return null;
   }
-  const commentable = [...store.commentableElements.entries()].find(
-    ([, el]) => el === element || el.contains(element)
+  const commentable = Object.values(store.commentables).find(
+    (commentable) => commentable.element === element || commentable.element.contains(element)
   );
-  return commentable ? { objectId: commentable[0], element: commentable[1] } : null;
+  return commentable ?? null;
 }
 
 const PinMenu = (props: { className?: string; children: React.ReactNode }) => {
@@ -149,9 +149,9 @@ function SavedPin({
   });
 
   useEffect(() => {
-    const element = store.commentableElements.get(pin.objectId);
-    if (element) {
-      reference(element);
+    const commentable = store.commentables[pin.objectId];
+    if (commentable) {
+      reference(commentable.element);
     }
   });
 

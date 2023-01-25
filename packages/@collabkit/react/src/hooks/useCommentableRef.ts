@@ -1,4 +1,5 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
+import { markRaw } from '@collabkit/client';
 import { useStore } from './useStore';
 
 export function useCommentableRef(objectId: string) {
@@ -7,9 +8,9 @@ export function useCommentableRef(objectId: string) {
   const setElement = useCallback(
     (element: HTMLElement | SVGElement | null) => {
       if (element) {
-        store.commentableElements.set(objectId, element);
+        store.commentables[objectId] = { objectId, element: markRaw(element) };
       } else {
-        store.commentableElements.delete(objectId);
+        delete store.commentables[objectId];
       }
     },
     [store]
