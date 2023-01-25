@@ -393,10 +393,7 @@ export function DashboardExample() {
   );
 }
 
-const TableCell = forwardRef<
-  HTMLTableCellElement,
-  { objectId: string } & ComponentPropsWithoutRef<'td'>
->((props) => {
+const TableCell = (props: { objectId: string } & ComponentPropsWithoutRef<'td'>) => {
   const ref = useCommentableRef(props.objectId);
   return (
     <td
@@ -405,4 +402,4 @@ const TableCell = forwardRef<
       {...props}
     />
   );
-});
+};
