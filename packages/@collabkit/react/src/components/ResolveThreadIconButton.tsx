@@ -22,6 +22,7 @@ export function ResolveThreadIconButton(props: {
     <IconButton
       className={props.className}
       style={props.style}
+      weight="regular"
       // TODO: tooltip hijacks focus when used within a modal popover
       // tooltip={isResolved ? 'Re-open' : 'Mark as Resolved and Hide'}
       onPointerDown={(e) =>

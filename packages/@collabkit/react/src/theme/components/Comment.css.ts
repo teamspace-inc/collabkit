@@ -15,6 +15,7 @@ export const nameAndTimestampWrapper = style({
   alignItems: 'baseline',
   gap: fallbackVar(vars.comment.header.nameAndTimestamp.gap, `${calc(vars.space[2])}`),
   fontFamily: vars.fontFamily,
+  marginBottom: vars.space[1],
 });
 
 export const inlineModal = style({
@@ -54,22 +55,9 @@ export const editor = style({
   display: 'flex',
   flexDirection: 'column',
   gap: vars.space[2],
-  marginTop: vars.space[1],
   marginRight: `${calc(paddingRight).negate()}`,
-  marginLeft: paddingLeft,
   fontFamily: vars.fontFamily,
-  padding: `0 ${vars.space[4]}`,
-});
-
-export const header = style({
-  flex: '1',
-  gap: fallbackVar(vars.comment.header.gap, vars.space[2]),
-  display: 'flex',
-  flexDirection: 'row',
-  alignItems: 'flex-start',
-  justifyContent: 'space-between',
-  fontFamily: vars.fontFamily,
-  position: 'relative',
+  padding: `0 ${vars.space[4]} 0 0`,
 });
 
 export const timestamp = style({
@@ -85,31 +73,32 @@ export const timestamp = style({
   color: fallbackVar(vars.comment.timestamp.color, vars.color.textSecondary),
 });
 
+const verticalPadding = calc.multiply(vars.space[1], 1.5).toString();
+
 export const root = style({
-  flex: '1',
-  display: 'flex',
-  flexDirection: 'column',
-  gap: fallbackVar(vars.comment.gap, vars.space[0]),
+  display: 'grid',
+  gridTemplateColumns: `${vars.avatar.size} 1fr`,
+  columnGap: fallbackVar(vars.comment.gap, vars.space[3]),
   position: 'relative',
-  // account for scrollbar
-  // maxWidth: calc.subtract('100%', vars.space[2]),
   paddingLeft: fallbackVar(vars.comment.paddingLeft, vars.space[4]),
   paddingRight: fallbackVar(vars.comment.paddingRight, vars.space[4]),
-  paddingTop: fallbackVar(vars.comment.paddingTop, vars.space[1]),
-  paddingBottom: fallbackVar(vars.comment.paddingBottom, vars.space[1]),
+  paddingTop: fallbackVar(vars.comment.paddingTop, verticalPadding),
+  paddingBottom: fallbackVar(vars.comment.paddingBottom, verticalPadding),
   fontFamily: vars.fontFamily,
 });
 
 export const actions = style({
   display: 'flex',
-  gap: vars.space[1],
+  // gap: vars.space[1],
   flexDirection: 'row',
   zIndex: 2, // higher than scrollbar
   fontFamily: vars.fontFamily,
   position: 'absolute',
-  right: '0px',
-  top: '-1px',
-  background: vars.color.surfaceOverlay,
+  right: vars.space[4],
+  top: '2px',
+  transform: 'translateY(0%)',
+  background: vars.color.background,
+  border: `1px solid ${vars.color.border}`,
   borderRadius: '6px',
 
   opacity: 0,

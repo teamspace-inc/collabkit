@@ -116,35 +116,7 @@ export default () => (<Thread.Provider threadId="thread1">
 
 export default () => (<Thread.Provider threadId="thread1">
   <Comment.Root commentId="event1">
-    <Comment.Header>{/* insert header components here */}</Comment.Header>
-  </Comment.Root>
-</Thread.Provider>);`}
-        demo={
-          <CommentDemo>
-            <Comment.Header />
-          </CommentDemo>
-        }
-        description={
-          <>
-            A convenience component that renders the header of a comment and lays out children
-            horizontally.
-            <br />
-            <br />
-            It's recommended you use this component to render the header of a comment as it may
-            include more functionality in the future.
-          </>
-        }
-        title={'Comment.Header'}
-      />
-
-      <AdvancedPart
-        code={`import { Comment } from '@collabkit/react';
-
-export default () => (<Thread.Provider threadId="thread1">
-  <Comment.Root commentId="event1">
-    <Comment.Header>
       <Comment.CreatorAvatar />
-    <Comment.Header />
   </Comment.Root>
 </Thread.Provider>);`}
         demo={
@@ -270,33 +242,6 @@ export default () => (<Thread.Provider threadId="thread1">
           </>
         }
         title={'Comment.Body'}
-      />
-
-      <AdvancedPart
-        code={`import { Comment } from '@collabkit/react';
-
-export default () => (<Thread.Provider threadId="thread1">
-  <Comment.Root commentId="event1">
-    <Comment.Indent>
-      <Comment.Body />
-    </Comment.Indent>
-  </Comment.Root>
-</Thread.Provider>);`}
-        demo={
-          <CommentDemo>
-            <Comment.Indent>
-              <Comment.Body />
-            </Comment.Indent>
-          </CommentDemo>
-        }
-        description={
-          <>
-            A convenience component to indent children by the avatar size and comment padding. So
-            the comment body lines up correctly in the stock CollabKit UI.
-            <br />
-          </>
-        }
-        title={'Comment.Indent'}
       />
 
       <AdvancedPart
