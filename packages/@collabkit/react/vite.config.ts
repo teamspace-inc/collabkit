@@ -38,6 +38,11 @@ export default defineConfig(({ mode }) => {
     },
     resolve: {
       alias: {
+        'mdast-util-from-markdown': resolve(
+          __dirname,
+          'src/vendor/mdast-util-from-markdown.bundle.js'
+        ),
+        micromark: resolve(__dirname, 'src/vendor/micromark.bundle.js'),
         'rehype-react': resolve(__dirname, 'src/vendor/rehype-react.bundle.js'),
         'remark-rehype': resolve(__dirname, 'src/vendor/remark-rehype.bundle.js'),
 

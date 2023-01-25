@@ -12,16 +12,24 @@ function MarkdownLink(props: any) {
   return <a {...props} />;
 }
 
-const COMPILER = unified()
-  .use(remarkParse)
-  .use(remarkRehype)
-  .use(rehypeReact, {
-    createElement,
-    Fragment,
-    components: {
-      a: MarkdownLink,
-    },
-  });
+const canUseDOM = !!(
+  typeof window !== 'undefined' &&
+  window.document &&
+  window.document.createElement
+);
+
+const COMPILER = canUseDOM
+  ? unified()
+      .use(remarkParse)
+      .use(remarkRehype)
+      .use(rehypeReact, {
+        createElement,
+        Fragment,
+        components: {
+          a: MarkdownLink,
+        },
+      })
+  : { processSync: () => ({ result: null }) };
 
 export const Markdown = React.memo(function Markdown(props: { className?: string; body: string }) {
   const reactContent = COMPILER.processSync(props.body).result;

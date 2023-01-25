@@ -1699,6 +1699,11 @@
   resolved "https://registry.npmjs.org/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
+"@collabkit/react@*":
+  version "0.8.16"
+  resolved "https://registry.yarnpkg.com/@collabkit/react/-/react-0.8.16.tgz#ffbf3c89153ffd6e8d6867b782e551856cf3fb43"
+  integrity sha512-+rrcZww1DZ2aKjtVqFe7VUoFTJA7A6+rgvg4uVlk0k59+sgAUQ3xMb2AXZzNLQpGFb6j3Cx9j/rPXuke1/rPpw==
+
 "@colors/colors@1.5.0":
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/@colors/colors/-/colors-1.5.0.tgz#bb504579c1cae923e6576a4f5da43d25f97bdbd9"
