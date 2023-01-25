@@ -253,7 +253,7 @@ function ComposerEditor(props: {
   // body is initial body, it does not update live
   const { autoFocus, initialBody } = useComposerContext();
   const { events, store } = useApp();
-  const { focusedId } = useSnapshot(store);
+  const { focusedId, isPinningEnabled } = useSnapshot(store);
   const [hasText, setHasText] = useState(false);
   const { eventId } = useOptionalCommentContext() ?? { eventId: 'default' };
 
@@ -298,7 +298,11 @@ function ComposerEditor(props: {
       <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
         <div style={{ display: 'flex', flexDirection: 'row' }}>
           <div style={{ display: 'flex', height: '100%' }}>
-            <Composer.PinButton />
+            {isPinningEnabled ? (
+              <Composer.PinButton />
+            ) : (
+              <div className={styles.composerLeftPadding} />
+            )}
           </div>
           <div
             style={{
