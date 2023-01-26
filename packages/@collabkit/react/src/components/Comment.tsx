@@ -85,13 +85,13 @@ function CommentRoot({ commentId: eventId, ...props }: CommentRootProps) {
     eventId,
   });
 
-  const app = useApp();
+  const { store } = useApp();
 
-  const { menuId } = useSnapshot(app.store);
+  const { menuId } = useSnapshot(store);
 
   const timeline = useSnapshot(useWorkspaceStore().timeline[threadId]);
 
-  const profiles = useSnapshot(app.store.profiles);
+  const profiles = useSnapshot(store.profiles);
 
   const event = timeline[eventId];
 
