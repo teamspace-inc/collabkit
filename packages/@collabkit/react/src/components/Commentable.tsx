@@ -238,7 +238,7 @@ export function CommentableRoot(props: { className?: string; children?: React.Re
         });
       }
     },
-    [events.onClick, workspaceId]
+    [events.onPointerDown, workspaceId]
   );
 
   if (props.children == null || !workspaceId) {
