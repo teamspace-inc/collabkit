@@ -50,6 +50,7 @@ test('createStore', () => {
     userId: null,
     user: null,
     workspaceId: null,
+    selectedId: null,
     focusedId: null,
     menuId: null,
     reactingId: null,
