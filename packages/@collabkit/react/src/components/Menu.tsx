@@ -5,6 +5,7 @@ import React, {
   isValidElement,
   useCallback,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from 'react';
@@ -26,6 +27,9 @@ import {
   useFloatingParentNodeId,
   FloatingNode,
   FloatingFocusManager,
+  FloatingContext,
+  ElementProps,
+  ReferenceType,
 } from '@floating-ui/react-dom-interactions';
 import { ThemeWrapper } from './ThemeWrapper';
 import { useApp } from '../hooks/useApp';
@@ -60,7 +64,21 @@ interface Props<ItemType> {
   className?: string;
   children?: React.ReactNode;
   context?: Target;
-  rightClick?: boolean;
+  event?: 'contextmenu' | 'click';
+}
+
+function useContextMenu<T extends ReferenceType>(context: FloatingContext<T>): ElementProps {
+  return useMemo(
+    () => ({
+      reference: {
+        onContextMenu(event) {
+          event.preventDefault();
+          context.onOpenChange(true);
+        },
+      },
+    }),
+    []
+  );
 }
 
 export function Menu<ItemType>(props: Props<ItemType>) {
@@ -70,7 +88,7 @@ export function Menu<ItemType>(props: Props<ItemType>) {
     items,
     onItemClick,
     context: rootTarget,
-    rightClick,
+    event = 'click',
     ...otherProps
   } = props;
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -112,11 +130,13 @@ export function Menu<ItemType>(props: Props<ItemType>) {
   });
 
   const { getReferenceProps, getFloatingProps, getItemProps } = useInteractions([
-    useClick(context, {
-      toggle: true,
-      event: 'mousedown',
-      ignoreMouse: false,
-    }),
+    event === 'click'
+      ? useClick(context, {
+          toggle: true,
+          event: 'mousedown',
+          ignoreMouse: false,
+        })
+      : useContextMenu(context),
     useRole(context, { role: 'menu' }),
     useDismiss(context, { bubbles: false }),
     useListNavigation(context, {
