@@ -167,6 +167,7 @@ export const CommentPin = (props: React.ComponentProps<'img'>) => {
     () => ({
       type: 'pin',
       threadId,
+      eventId,
       workspaceId,
       objectId: pin?.objectId,
       id: pin?.id,
