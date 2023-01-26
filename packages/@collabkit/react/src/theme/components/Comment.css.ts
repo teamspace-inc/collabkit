@@ -28,16 +28,9 @@ export const indent = style({
   marginLeft: calc.add(vars.avatar.size, fallbackVar(vars.comment.gap, vars.space[2])),
 });
 
-<<<<<<< HEAD
 export const pin = style({
   paddingRight: vars.space[1],
   float: 'left',
-=======
-export const pin = recipe({
-  base: {
-    flex: '0 0 16px',
-  },
->>>>>>> f75847ba (selecting wip)
 });
 
 export const body = style({
