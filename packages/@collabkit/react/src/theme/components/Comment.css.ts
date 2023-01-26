@@ -28,7 +28,8 @@ export const indent = style({
 });
 
 export const pin = style({
-  flex: '0 0 16px',
+  paddingRight: vars.space[1],
+  float: 'left',
 });
 
 export const body = style({
@@ -37,7 +38,6 @@ export const body = style({
   letterSpacing: fallbackVar(vars.comment.body.letterSpacing, vars.text.base.letterSpacing),
   lineHeight: fallbackVar(vars.comment.body.lineHeight, vars.text.base.lineHeight),
   fontFamily: vars.fontFamily,
-  display: 'flex',
   gap: vars.space[1],
   textAlign: 'left',
   position: 'relative',
