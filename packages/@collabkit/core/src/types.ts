@@ -178,7 +178,12 @@ export type Target =
   | PinTarget
   | PinDeleteButton
   | CommentSaveButtonTarget
-  | CommentCancelButtonTarget;
+  | CommentCancelButtonTarget
+  | PinCursorTarget;
+
+export type PinCursorTarget = {
+  type: 'pinCursor';
+};
 
 export type PinTarget = {
   type: 'pin';
@@ -437,6 +442,7 @@ export interface UnconfiguredStore {
   workspaceId: string | null;
   focusedId: null | Target;
   reactingId: null | Target;
+  selectedId: null | Target;
   menuId: null | Target;
   viewingId: null | Target;
   previewingId: null | Target;

@@ -11,7 +11,7 @@ import { useId } from '../hooks/useId';
 import Profile from './Profile';
 import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
 import { useApp } from '../hooks/useApp';
-import { CommentTarget, timelineUtils } from '@collabkit/core';
+import { CommentTarget, PinTarget, timelineUtils } from '@collabkit/core';
 import * as styles from '../theme/components/Comment.css';
 import { DotsThree } from './icons';
 import { Menu, MenuItem } from './Menu';
@@ -21,6 +21,7 @@ import { mergeRefs } from 'react-merge-refs';
 import Composer from './composer/Composer';
 import { IconButton } from './IconButton';
 import CommentPinSvg from './composer/comment-pin.svg';
+import CommentPinSelectedSvg from './composer/comment-pin-hover.svg';
 
 function useIsEditing() {
   const { store } = useApp();
@@ -155,14 +156,45 @@ export function CommentBody({ ...props }: React.ComponentPropsWithoutRef<'div'>)
 }
 
 export const CommentPin = (props: React.ComponentProps<'img'>) => {
-  const { eventId } = useCommentContext();
+  const { eventId, threadId, workspaceId } = useCommentContext();
+  const { events, store } = useApp();
+  const { selectedId } = useSnapshot(store);
   const workspace = useSnapshot(useWorkspaceStore());
   const pin = workspace.eventPins[eventId];
-  if (pin) {
-    return <img className={styles.pin} {...props} src={CommentPinSvg} />;
-  } else {
+  const isSelected = selectedId?.type === 'pin' && selectedId.id === pin?.id;
+
+  const target: PinTarget = useMemo(
+    () => ({
+      type: 'pin',
+      threadId,
+      workspaceId,
+      objectId: pin?.objectId,
+      id: pin?.id,
+    }),
+    [pin]
+  );
+
+  const onClick = useCallback(
+    (e: React.MouseEvent) => {
+      events.onClick(e, {
+        target,
+      });
+    },
+    [target]
+  );
+
+  if (!pin) {
     return null;
   }
+
+  return (
+    <img
+      className={styles.pin}
+      {...props}
+      onClick={onClick}
+      src={isSelected ? CommentPinSelectedSvg : CommentPinSvg}
+    />
+  );
 };
 
 export const CommentEditor = (props: React.ComponentProps<'div'>) => {

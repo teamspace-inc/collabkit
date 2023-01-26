@@ -96,21 +96,28 @@ export function createEvents(store: Store) {
       actions.focus(store, props);
     },
 
+    onGlobalClick: (e: MouseEvent) => {
+      actions.deselectAll(store);
+    },
+
     onClick: <T extends Target>(e: React.MouseEvent, props: { target: T }) => {
       const { target } = props;
       switch (target.type) {
+        case 'pin':
+          actions.select(store, { target });
+          break;
         case 'composer':
           actions.focusComposer(store, target);
-          return;
+          break;
         case 'pinDeleteButton':
           actions.deletePin(store, target.pin);
           return;
         case 'commentDeleteButton':
           actions.deleteMessage(store, target.comment);
-          return;
+          break;
         case 'commentEditButton':
           actions.startEditing(store, target.comment);
-          return;
+          break;
         case 'reopenThreadButton': {
           actions.reopenThread(store, target);
           break;

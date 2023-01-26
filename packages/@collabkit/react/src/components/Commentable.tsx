@@ -12,6 +12,7 @@ import { useSnapshot } from 'valtio';
 import { useApp } from '../hooks/useApp';
 import { useCommentableRef } from '../hooks/useCommentableRef';
 import { useStore } from '../hooks/useStore';
+import { useTarget } from '../hooks/useTarget';
 import * as styles from '../theme/components/Commentable.css';
 import { Menu, MenuItem } from './Menu';
 import Profile from './Profile';
@@ -76,13 +77,20 @@ type PinMarkerProps = {
 const PinMarker = forwardRef<HTMLDivElement, PinMarkerProps>(function PinMarker(props, ref) {
   // this might be better accessed via context?
   const { userId } = useSnapshot(useStore());
+  const { events } = useApp();
+  const target = useTarget();
   if (userId == null) {
     return null;
   }
   const { pointerEvents } = props;
   return (
     <Profile.Provider profileId={userId}>
-      <div className={styles.pin({ pointerEvents })} ref={ref} style={props.style}>
+      <div
+        className={styles.pin({ pointerEvents })}
+        ref={ref}
+        style={props.style}
+        onClick={(e) => events.onClick(e, { target })}
+      >
         <PinMenu>
           <div>
             <svg
@@ -228,7 +236,9 @@ export function CommentableRoot(props: { className?: string; children?: React.Re
         {uiState === 'selecting' && (
           <>
             <div ref={overlayRef} className={styles.overlay} />
-            <PinMarker pointerEvents="none" ref={cursorRef} />
+            <TargetContext.Provider value={{ type: 'pinCursor' }}>
+              <PinMarker pointerEvents="none" ref={cursorRef} />
+            </TargetContext.Provider>
           </>
         )}
         {allPins.map((pin) => {
