@@ -19,7 +19,7 @@ export function ThemeWrapper(props: ComponentProps<'div'>) {
   return (
     <div
       {...props}
-      className={`${collabkit} ${themeClassName}`}
+      className={`collabkit ${collabkit} ${themeClassName}`}
       data-collabkit-internal="true"
       style={{
         display: 'contents',

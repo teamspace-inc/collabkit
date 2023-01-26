@@ -18,8 +18,12 @@ export function createValtioStore(config: Config, sync: SyncAdapter): Store {
         const composers = workspace.composers[threadId];
         for (const eventId in composers) {
           const composer = composers[eventId];
-          if (composer.pendingPin) {
-            pins.push(composer.pendingPin);
+          const { pendingPin } = composer;
+          if (pendingPin) {
+            const exists = pins.find((pin) => pin.id === pendingPin.id);
+            if (!exists) {
+              pins.push(pendingPin);
+            }
           }
         }
       }

@@ -179,7 +179,8 @@ export type Target =
   | PinDeleteButton
   | CommentSaveButtonTarget
   | CommentCancelButtonTarget
-  | PinCursorTarget;
+  | PinCursorTarget
+  | OverlayTarget;
 
 export type PinCursorTarget = {
   type: 'pinCursor';
@@ -197,6 +198,13 @@ export type PinTarget = {
 
 export type AttachPinTarget = {
   type: 'attachPin';
+  objectId: string;
+  x: number;
+  y: number;
+};
+
+export type OverlayTarget = {
+  type: 'overlay';
   objectId: string;
   x: number;
   y: number;
@@ -468,7 +476,7 @@ export interface UnconfiguredStore {
 export interface Store extends UnconfiguredStore {
   sync: SyncAdapter;
   config: Config;
-  allPins: Pin[];
+  allPins: (Pin | PendingPin)[];
 }
 
 export type Unsubscribe = () => void;
