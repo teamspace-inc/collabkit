@@ -187,6 +187,7 @@ export type PinTarget = {
   threadId: string;
   workspaceId: string;
   isPending?: boolean;
+  eventId: string;
 };
 
 export type AttachPinTarget = {
@@ -208,6 +209,8 @@ export type ComposerPinButtonTarget = {
   threadId: string;
   workspaceId: string;
   eventId: string | 'default';
+  pinId?: string | null;
+  objectId?: string | null;
 };
 
 export type MenuTarget = {
