@@ -223,7 +223,14 @@ function ComposerPinButton(props: { className?: string }) {
     style: { position: 'relative', top: '0px', width: '16px', height: '16px' },
   });
 
-  const target = { type: 'composerPinButton', threadId, workspaceId, eventId, pendingPin } as const;
+  const target = {
+    type: 'composerPinButton',
+    threadId,
+    workspaceId,
+    eventId,
+    objectId: pendingPin?.objectId,
+    pinId: pendingPin?.id,
+  } as const;
 
   const tooltip = COMPOSER_PIN_TOOLTIPS[state];
 

@@ -209,7 +209,8 @@ export type ComposerPinButtonTarget = {
   threadId: string;
   workspaceId: string;
   eventId: string | 'default';
-  pendingPin?: PendingPin | null;
+  pinId?: string | null;
+  objectId?: string | null;
 };
 
 export type MenuTarget = {

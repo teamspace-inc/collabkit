@@ -125,7 +125,7 @@ export function createEvents(store: Store) {
           break;
         }
         case 'composerPinButton': {
-          if (target.pendingPin) {
+          if (target.objectId && target.pinId) {
             actions.deletePin(store, target);
             return;
           }
