@@ -12,7 +12,9 @@ import { useSnapshot } from 'valtio';
 import { useApp } from '../hooks/useApp';
 import { useCommentableRef } from '../hooks/useCommentableRef';
 import { useStore } from '../hooks/useStore';
+import { useTarget } from '../hooks/useTarget';
 import * as styles from '../theme/components/Commentable.css';
+import { vars } from '../theme/theme/index.css';
 import { Menu, MenuItem } from './Menu';
 import Profile from './Profile';
 import { TargetContext } from './Target';
@@ -71,18 +73,34 @@ const PinMenu = (props: { className?: string; children: React.ReactNode }) => {
 type PinMarkerProps = {
   style?: React.CSSProperties;
   pointerEvents: 'all' | 'none';
+  isSelected: boolean;
 };
 
 const PinMarker = forwardRef<HTMLDivElement, PinMarkerProps>(function PinMarker(props, ref) {
+  const { isSelected } = props;
   // this might be better accessed via context?
   const { userId } = useSnapshot(useStore());
+  const { events } = useApp();
+  const target = useTarget();
   if (userId == null) {
     return null;
   }
   const { pointerEvents } = props;
+  const onPointerDown = useCallback(
+    (e: React.PointerEvent) => {
+      events.onPointerDown(e, { target });
+    },
+    [events, target]
+  );
+
   return (
     <Profile.Provider profileId={userId}>
-      <div className={styles.pin({ pointerEvents })} ref={ref} style={props.style}>
+      <div
+        className={`collabkit ${styles.pin({ pointerEvents, isSelected })}`}
+        ref={ref}
+        style={props.style}
+        onPointerDown={onPointerDown}
+      >
         <PinMenu>
           <div>
             <svg
@@ -94,8 +112,8 @@ const PinMarker = forwardRef<HTMLDivElement, PinMarkerProps>(function PinMarker(
             >
               <path
                 d="M21.2288 37.4788L30.8539 27.8536C33.7325 24.9751 35.3496 21.0709 35.3496 17C35.3496 12.9291 33.7325 9.02492 30.8539 6.14635L30.8539 6.14633C29.4286 4.72101 27.7365 3.59038 25.8742 2.819C24.0119 2.04762 22.0159 1.6506 20.0002 1.6506C17.9845 1.6506 15.9885 2.04762 14.1263 2.819C12.264 3.59038 10.5719 4.72101 9.14656 6.14633L9.14654 6.14636C7.72122 7.57168 6.59059 9.26378 5.81921 11.126C5.04783 12.9883 4.65081 14.9843 4.65081 17C4.65081 19.0157 5.04783 21.0117 5.81921 22.8739C6.59059 24.7362 7.72122 26.4283 9.14654 27.8536L18.7717 37.4788C19.0975 37.8046 19.5394 37.9877 20.0002 37.9877C20.461 37.9877 20.903 37.8046 21.2288 37.4788Z"
-                fill="white"
-                stroke="#222222"
+                fill={isSelected ? vars.color.attentionBlue : vars.color.background}
+                stroke={isSelected ? vars.color.attentionBlue : vars.color.textPrimary}
                 strokeLinecap="round"
                 strokeLinejoin="round"
               />
@@ -110,7 +128,13 @@ const PinMarker = forwardRef<HTMLDivElement, PinMarkerProps>(function PinMarker(
   );
 });
 
-function SavedPin({ pin }: { pin: WithID<Pin> & { objectId: string } }) {
+function SavedPin({
+  pin,
+  isSelected,
+}: {
+  isSelected: boolean;
+  pin: WithID<Pin> & { objectId: string };
+}) {
   const store = useStore();
   const { reference, floating, strategy, x, y } = useFloating({
     placement: 'top-start',
@@ -122,6 +146,7 @@ function SavedPin({ pin }: { pin: WithID<Pin> & { objectId: string } }) {
     ],
     whileElementsMounted: autoUpdate,
   });
+
   useEffect(() => {
     const element = store.commentableElements.get(pin.objectId);
     if (element) {
@@ -143,6 +168,7 @@ function SavedPin({ pin }: { pin: WithID<Pin> & { objectId: string } }) {
     <TargetContext.Provider value={target}>
       <FloatingNode id={id}>
         <PinMarker
+          isSelected={isSelected}
           pointerEvents="all"
           ref={floating}
           style={{ position: strategy, top: y ?? 0, left: x ?? 0 }}
@@ -158,7 +184,7 @@ export function CommentableRoot(props: { className?: string; children?: React.Re
   const hoveredElementRef = useRef<HTMLElement | SVGElement | null>(null);
   const store = useStore();
   const { events } = useApp();
-  const { uiState, workspaceId, allPins } = useSnapshot(store);
+  const { uiState, workspaceId, allPins, selectedId } = useSnapshot(store);
 
   useEffect(() => {
     store.isPinningEnabled = true;
@@ -202,9 +228,9 @@ export function CommentableRoot(props: { className?: string; children?: React.Re
       const commentable = findCommentableElement(store, e);
       if (commentable && workspaceId) {
         const { x, y, width, height } = commentable.element.getBoundingClientRect();
-        events.onClick(e, {
+        events.onPointerDown(e, {
           target: {
-            type: 'attachPin',
+            type: 'overlay',
             objectId: commentable.objectId,
             x: (e.clientX - x) / width,
             y: (e.clientY - y) / height,
@@ -232,11 +258,19 @@ export function CommentableRoot(props: { className?: string; children?: React.Re
         {uiState === 'selecting' && (
           <>
             <div ref={overlayRef} className={styles.overlay} />
-            <PinMarker pointerEvents="none" ref={cursorRef} />
+            <TargetContext.Provider value={{ type: 'pinCursor' }}>
+              <PinMarker isSelected={false} pointerEvents="none" ref={cursorRef} />
+            </TargetContext.Provider>
           </>
         )}
         {allPins.map((pin) => {
-          return <SavedPin key={pin.id} pin={pin} />;
+          return (
+            <SavedPin
+              key={pin.id}
+              pin={pin}
+              isSelected={selectedId?.type === 'pin' && selectedId.id === pin.id}
+            />
+          );
         })}
       </FloatingPortal>
     </div>

@@ -17,7 +17,7 @@ export const cursor = style({
 export const overlay = style({
   position: 'absolute',
   backgroundColor: 'rgba(255, 255, 127, 0.5)',
-  pointerEvents: 'none',
+  // pointerEvents: 'none',
 });
 
 export const pin = recipe({
@@ -39,6 +39,10 @@ export const pin = recipe({
       all: {
         pointerEvents: 'all',
       },
+    },
+    isSelected: {
+      true: {},
+      false: {},
     },
   },
 });

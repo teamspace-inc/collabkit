@@ -178,7 +178,13 @@ export type Target =
   | PinTarget
   | PinDeleteButton
   | CommentSaveButtonTarget
-  | CommentCancelButtonTarget;
+  | CommentCancelButtonTarget
+  | PinCursorTarget
+  | OverlayTarget;
+
+export type PinCursorTarget = {
+  type: 'pinCursor';
+};
 
 export type PinTarget = {
   type: 'pin';
@@ -192,6 +198,13 @@ export type PinTarget = {
 
 export type AttachPinTarget = {
   type: 'attachPin';
+  objectId: string;
+  x: number;
+  y: number;
+};
+
+export type OverlayTarget = {
+  type: 'overlay';
   objectId: string;
   x: number;
   y: number;
@@ -438,6 +451,7 @@ export interface UnconfiguredStore {
   workspaceId: string | null;
   focusedId: null | Target;
   reactingId: null | Target;
+  selectedId: null | Target;
   menuId: null | Target;
   viewingId: null | Target;
   previewingId: null | Target;
@@ -463,7 +477,7 @@ export interface UnconfiguredStore {
 export interface Store extends UnconfiguredStore {
   sync: SyncAdapter;
   config: Config;
-  allPins: Pin[];
+  allPins: (Pin | PendingPin)[];
 }
 
 export type Unsubscribe = () => void;

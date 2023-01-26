@@ -99,18 +99,21 @@ export function createEvents(store: Store) {
     onClick: <T extends Target>(e: React.MouseEvent, props: { target: T }) => {
       const { target } = props;
       switch (target.type) {
+        case 'pin':
+          actions.select(store, { target });
+          break;
         case 'composer':
           actions.focusComposer(store, target);
-          return;
+          break;
         case 'pinDeleteButton':
           actions.deletePin(store, target.pin);
           return;
         case 'commentDeleteButton':
           actions.deleteMessage(store, target.comment);
-          return;
+          break;
         case 'commentEditButton':
           actions.startEditing(store, target.comment);
-          return;
+          break;
         case 'reopenThreadButton': {
           actions.reopenThread(store, target);
           break;
@@ -144,19 +147,6 @@ export function createEvents(store: Store) {
         case 'composerMentionsButton': {
           actions.startMentioning(store, target);
           break;
-        }
-        case 'attachPin': {
-          if (store.uiState === 'selecting') {
-            e.stopPropagation();
-            e.preventDefault();
-            actions.attachPin(store, target);
-            // for some reason this is needed to focus the composer
-            // this is buggy need to debug events
-            setTimeout(
-              () => store.composerId && actions.focusComposer(store, store.composerId),
-              32
-            );
-          }
         }
       }
     },
@@ -239,13 +229,49 @@ export function createEvents(store: Store) {
 
     onMouseOut: (e: React.MouseEvent, props: { target: Target }) => {},
 
+    onGlobalPointerDown: (e: PointerEvent) => {
+      const el = e.target;
+      if (el instanceof HTMLElement) {
+        if (el.closest(`.collabkit`)) {
+          return;
+        }
+      }
+      actions.deselectAll(store);
+    },
+
     onPointerDown: (e: React.PointerEvent, props: { target: Target }) => {
+      const { target } = props;
+      const { type } = target;
       if (e.button !== 0) {
         return;
       }
       switch (store.uiState) {
+        case 'selecting': {
+          switch (type) {
+            case 'overlay': {
+              e.stopPropagation();
+              e.preventDefault();
+              actions.attachPin(store, target);
+              // for some reason this is needed to focus the composer
+              // this is buggy need to debug events
+              setTimeout(
+                () => store.composerId && actions.focusComposer(store, store.composerId),
+                32
+              );
+            }
+          }
+          break;
+        }
         case 'idle': {
-          switch (props.target.type) {
+          switch (type) {
+            case 'overlay': {
+              actions.deselectAll(store);
+              break;
+            }
+            case 'pin': {
+              actions.select(store, props);
+              break;
+            }
             case 'showSidebarButton': {
               actions.showSidebar(store);
               break;
@@ -259,11 +285,11 @@ export function createEvents(store: Store) {
               break;
             }
             case 'resolveThreadButton': {
-              actions.resolveThread(store, props.target);
+              actions.resolveThread(store, target);
               break;
             }
             case 'reopenThreadButton': {
-              actions.reopenThread(store, props.target);
+              actions.reopenThread(store, target);
               break;
             }
           }

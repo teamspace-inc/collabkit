@@ -52,6 +52,8 @@ import { updateComment } from './updateComment';
 import { viewThread } from './viewThread';
 import { subscribeOpenPins } from './subscribeOpenPins';
 import { focusComposer } from './focusComposer';
+import { select } from './select';
+import { deselectAll } from './deselectAll';
 
 export type GenerateToken =
   | {
@@ -129,6 +131,7 @@ export const actions = {
   closeThread,
   deleteMessage,
   deletePin,
+  deselectAll,
   disableComposerCommentButton,
   enableComposerCommentButton,
   focus,
@@ -147,6 +150,7 @@ export const actions = {
   saveProfile,
   saveThreadInfo,
   seen,
+  select,
   sendMessage,
   setAvatarError,
   showPreview,

@@ -50,7 +50,11 @@ export function CollabKitProvider({
   useEffect(() => {
     if (context) {
       document.addEventListener('keydown', context.events.onKeyDown);
-      return () => document.removeEventListener('keydown', context.events.onKeyDown);
+      document.addEventListener('pointerdown', context.events.onGlobalPointerDown);
+      return () => {
+        document.removeEventListener('pointerdown', context.events.onGlobalPointerDown);
+        document.removeEventListener('keydown', context.events.onKeyDown);
+      };
     }
   }, [context?.events]);
 
