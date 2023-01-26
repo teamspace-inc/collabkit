@@ -38,6 +38,7 @@ test('createComposer', () => {
 
 test('createStore', () => {
   expect(createStore()).toStrictEqual({
+    isPinningEnabled: false,
     appId: null,
     sync: null,
     isReadOnly: false,

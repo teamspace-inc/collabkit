@@ -160,6 +160,10 @@ export function CommentableRoot(props: { className?: string; children?: React.Re
   const { events } = useApp();
   const { uiState, workspaceId, allPins } = useSnapshot(store);
 
+  useEffect(() => {
+    store.isPinningEnabled = true;
+  }, []);
+
   const updateCursor = useCallback(
     (e: React.PointerEvent) => {
       if (hoveredElementRef.current) {

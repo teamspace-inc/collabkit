@@ -48,6 +48,7 @@ export function createWorkspace(): Workspace {
 
 export function createStore(): UnconfiguredStore {
   const store: UnconfiguredStore = {
+    isPinningEnabled: false,
     appId: null,
     sync: null as unknown as SyncAdapter,
     isReadOnly: false,

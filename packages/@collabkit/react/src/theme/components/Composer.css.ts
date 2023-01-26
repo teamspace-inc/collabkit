@@ -31,6 +31,10 @@ export const typing = style({
   fontFamily: vars.fontFamily,
 });
 
+export const composerLeftPadding = style({
+  width: vars.space[2],
+});
+
 export const pinButton = style({
   padding: '8px',
   background: 'unset',

@@ -428,6 +428,7 @@ export interface Workspace {
 export interface UnconfiguredStore {
   appId: null | string;
   sync: null | SyncAdapter;
+  isPinningEnabled: boolean;
   isReadOnly: boolean;
   isConnected: boolean;
   isSidebarOpen: boolean;
