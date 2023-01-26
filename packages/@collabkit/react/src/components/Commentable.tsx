@@ -54,6 +54,7 @@ const PinMenu = (props: { className?: string; children: React.ReactNode }) => {
       data-testid="collabkit-pin-menu"
       className={props.className}
       onItemClick={onItemClick}
+      event="contextmenu"
       items={[
         <MenuItem
           label="Delete pin"
