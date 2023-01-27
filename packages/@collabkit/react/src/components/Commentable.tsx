@@ -1,12 +1,4 @@
-import {
-  Pin,
-  PinTarget,
-  PinDeleteButton,
-  Store,
-  WithID,
-  CommentableObject,
-  VirtualElement,
-} from '@collabkit/core';
+import { Pin, PinTarget, PinDeleteButton, Store, WithID, CommentableObject } from '@collabkit/core';
 import {
   autoUpdate,
   FloatingNode,
@@ -188,7 +180,7 @@ function SavedPin({
 export function CommentableRoot(props: { className?: string; children?: React.ReactNode }) {
   const cursorRef = useRef<HTMLDivElement | null>(null);
   const overlayRef = useRef<HTMLDivElement | null>(null);
-  const hoveredElementRef = useRef<HTMLElement | SVGElement | VirtualElement | null>(null);
+  const hoveredElementRef = useRef<HTMLElement | SVGElement | null>(null);
   const store = useStore();
   const { events } = useApp();
   const { uiState, workspaceId, allPins, selectedId } = useSnapshot(store);
