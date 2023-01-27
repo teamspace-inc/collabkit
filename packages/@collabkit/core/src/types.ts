@@ -1,6 +1,7 @@
 import type { Color } from '@collabkit/colors';
 import type { LexicalEditor } from 'lexical';
 import type { SyncAdapter } from './sync';
+import type { ClientRectObject } from '@floating-ui/core';
 
 export * as Sync from './sync';
 export interface ThreadMeta {
@@ -430,9 +431,10 @@ export interface Workspace {
   eventPins: { [eventId: string]: Pin };
 }
 
-type CommentableObject = {
+export type CommentableObject = {
   objectId: string;
   element: HTMLElement | SVGElement;
+  transformCoordinates?: (e: { clientX: number; clientY: number }) => { x: number; y: number };
 };
 
 // get all pins for the workspace that have an open thread attached to them (we don't want resolved ones)

@@ -1,4 +1,12 @@
-import { Pin, PinTarget, PinDeleteButton, Store, WithID } from '@collabkit/core';
+import {
+  Pin,
+  PinTarget,
+  PinDeleteButton,
+  Store,
+  WithID,
+  CommentableObject,
+  VirtualElement,
+} from '@collabkit/core';
 import {
   autoUpdate,
   FloatingNode,
@@ -9,6 +17,7 @@ import {
 } from '@floating-ui/react-dom-interactions';
 import React, { forwardRef, useCallback, useContext, useEffect, useMemo, useRef } from 'react';
 import { useSnapshot } from 'valtio';
+import { Dot } from 'recharts';
 import { useApp } from '../hooks/useApp';
 import { useCommentableRef } from '../hooks/useCommentableRef';
 import { useStore } from '../hooks/useStore';
@@ -20,10 +29,7 @@ import { Menu, MenuItem } from './Menu';
 import Profile from './Profile';
 import { TargetContext } from './Target';
 
-function findCommentableElement(
-  store: Store,
-  e: React.PointerEvent
-): { objectId: string; element: HTMLElement | SVGElement } | null {
+function findCommentableElement(store: Store, e: React.PointerEvent): CommentableObject | null {
   const element = document.elementFromPoint(e.clientX, e.clientY);
   if (element == null) {
     return null;
@@ -182,7 +188,7 @@ function SavedPin({
 export function CommentableRoot(props: { className?: string; children?: React.ReactNode }) {
   const cursorRef = useRef<HTMLDivElement | null>(null);
   const overlayRef = useRef<HTMLDivElement | null>(null);
-  const hoveredElementRef = useRef<HTMLElement | SVGElement | null>(null);
+  const hoveredElementRef = useRef<HTMLElement | SVGElement | VirtualElement | null>(null);
   const store = useStore();
   const { events } = useApp();
   const { uiState, workspaceId, allPins, selectedId } = useSnapshot(store);
@@ -229,17 +235,22 @@ export function CommentableRoot(props: { className?: string; children?: React.Re
       const commentable = findCommentableElement(store, e);
       if (commentable && workspaceId) {
         const { x, y, width, height } = commentable.element.getBoundingClientRect();
+        const point = commentable.transformCoordinates
+          ? commentable.transformCoordinates(e)
+          : {
+              x: (e.clientX - x) / width,
+              y: (e.clientY - y) / height,
+            };
         events.onPointerDown(e, {
           target: {
             type: 'overlay',
             objectId: commentable.objectId,
-            x: (e.clientX - x) / width,
-            y: (e.clientY - y) / height,
+            ...point,
           },
         });
       }
     },
-    [events.onPointerDown, workspaceId]
+    [workspaceId]
   );
 
   if (props.children == null || !workspaceId) {
@@ -293,7 +304,17 @@ function CommentableContainer({
   return <div ref={ref}>{children}</div>;
 }
 
+function CommentableDot(
+  props: { objectId: string; hidden?: boolean } & React.SVGProps<SVGCircleElement>
+) {
+  const { objectId, ...dotProps } = props;
+  const ref = useCommentableRef(objectId, { transformCoordinates: () => ({ x: 0.5, y: 0.5 }) });
+  // return <circle ref={ref} {...dotProps} fill="transparent" strokeDasharray="5, 5" r={24} />;
+  return <circle ref={ref} {...dotProps} fill="transparent" stroke="transparent" r={24} />;
+}
+
 export const Commentable = {
   Root: CommentableRoot,
   Container: CommentableContainer,
+  Dot: CommentableDot,
 };

@@ -9,7 +9,7 @@ import {
   ResponsiveContainer,
   Customized,
 } from 'recharts';
-import { ThemeProvider, CollabKitRecharts } from '@collabkit/react';
+import { ThemeProvider, CollabKitRecharts, Commentable } from '@collabkit/react';
 
 type EarningsEntry = { date: string; earnings: { actual: number; current: number } };
 
@@ -124,6 +124,14 @@ export function Charts() {
             strokeWidth={2}
             fill="url(#colorProjected)"
             fillOpacity={0.3}
+            dot={(props) => {
+              return (
+                <Commentable.Dot
+                  objectId={`${props.dataKey}-${props.payload.date}-${props.value[1]}`}
+                  {...props}
+                />
+              );
+            }}
           />
           <Area
             name="Current"
@@ -132,6 +140,14 @@ export function Charts() {
             strokeWidth={2}
             fill="url(#colorCurrent)"
             fillOpacity={0.3}
+            dot={(props) => {
+              return (
+                <Commentable.Dot
+                  objectId={`${props.dataKey}-${props.payload.date}-${props.value[1]}`}
+                  {...props}
+                />
+              );
+            }}
           />
           <Customized
             component={
