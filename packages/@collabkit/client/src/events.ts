@@ -6,6 +6,7 @@ import type {
   CommentTarget,
   EmojiTarget,
   MenuTarget,
+  PinTarget,
   Store,
   Target,
   ThreadTarget,
@@ -309,6 +310,15 @@ export function createEvents(store: Store) {
         actions.viewThread(store, props);
       } else {
         actions.closeAll(store);
+      }
+    },
+
+    onPinHoverChange: <T extends Target>(e: React.MouseEvent, props: { target: PinTarget , open : Boolean}) => {
+      const { target } = props;
+      if (props.open) {
+        actions.showPinPreview(store, { target })
+      } else{
+        actions.hidePinPreview(store, { target })
       }
     },
 

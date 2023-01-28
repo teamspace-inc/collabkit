@@ -66,5 +66,6 @@ test('createStore', () => {
     composerId: null,
     commentables: {},
     expandedThreadIds: [],
+    previewingPinId: null,
   });
 });

@@ -528,6 +528,7 @@ export interface UnconfiguredStore {
   clientY: number;
   commentables: { [objectId: string]: CommentableObject };
   expandedThreadIds: string[];
+  previewingPinId: null | PinTarget;
 }
 
 export interface Store extends UnconfiguredStore {

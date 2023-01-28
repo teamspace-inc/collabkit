@@ -55,6 +55,8 @@ import { deselectAll } from './deselectAll';
 import { updateComposer } from './updateComposer';
 import { expandThread } from './expandThread';
 import { collapseThread } from './collapseThread';
+import { showPinPreview } from './showPinPreview';
+import { hidePinPreview } from './hidePinPreview';
 
 export type GenerateToken =
   | {
@@ -137,6 +139,7 @@ export const actions = {
   expandThread,
   focus,
   focusComposer,
+  hidePinPreview,
   hideSidebar,
   init,
   initComposer,
@@ -154,6 +157,7 @@ export const actions = {
   select,
   sendMessage,
   setAvatarError,
+  showPinPreview,
   showPreview,
   showSidebar,
   startEditing,

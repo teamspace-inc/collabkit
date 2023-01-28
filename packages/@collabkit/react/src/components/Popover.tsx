@@ -277,7 +277,8 @@ function PopoverRoot(props: RootProps) {
 
 type PopoverProps = PopoverTriggerProps & {
   preview: React.ReactNode;
-  content: React.ReactNode;
+  content?: React.ReactNode;
+  previewOpen?: boolean;
 } & AdvancedPopoverProps;
 
 export function PopoverPortal({
@@ -299,12 +300,12 @@ export function Popover(props: PopoverProps) {
   const [preview, setPreview] = useState(false);
 
   // advanced
-  const { dismissOnClickOutside, shouldFlipToKeepInView, defaultOpen } = props;
+  const { dismissOnClickOutside, shouldFlipToKeepInView, defaultOpen, previewOpen } = props;
 
   return (
-    <Popover.Root
+    <PopoverRoot
       contentVisible={open}
-      previewVisible={preview}
+      previewVisible={previewOpen || preview}
       onOpenChange={setOpen}
       onPreviewChange={setPreview}
       // advanced
@@ -317,11 +318,11 @@ export function Popover(props: PopoverProps) {
       ) : (
         <Popover.Trigger trigger={props.trigger} />
       )}
-      <Popover.Portal>
-        <Popover.Preview>{props.preview}</Popover.Preview>
-        <Popover.Content>{props.content}</Popover.Content>
-      </Popover.Portal>
-    </Popover.Root>
+      <PopoverPortal>
+        <PopoverPreview>{props.preview}</PopoverPreview>
+        {props.content && <PopoverContent>{props.content}</PopoverContent>}
+      </PopoverPortal>
+    </PopoverRoot>
   );
 }
 

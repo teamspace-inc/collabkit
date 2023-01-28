@@ -315,7 +315,18 @@ export function CommentPin(props: React.ComponentProps<'img'>) {
     <span className={styles.pin} data-testid="collabkit-comment-pin" {...props} onClick={onClick}>
       <Tooltip>
         <Tooltip.Trigger>
-          <img src={isSelected ? CommentPinSelectedSvg : CommentPinSvg} />
+          <img
+            className={styles.pin}
+            {...props}
+            onClick={onClick}
+            onMouseEnter={(e) => {
+              events.onPinHoverChange(e, { target: target, open: true });
+            }}
+            onMouseLeave={(e) => {
+              events.onPinHoverChange(e, { target: target, open: false });
+            }}
+            src={isSelected ? CommentPinSelectedSvg : CommentPinSvg}
+          />
         </Tooltip.Trigger>
         <Tooltip.Content>See pin preview</Tooltip.Content>
       </Tooltip>
