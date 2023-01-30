@@ -78,7 +78,7 @@ export function App() {
               <>
                 Defaults to <code>"Write a comment"</code>. <br />
                 Set this to create a custom placeholder for the composer.
-              </>
+              </>,
             ],
             [
               'hideComposer',
@@ -93,9 +93,9 @@ export function App() {
               'string[] | undefined',
               <>
                 Defaults to <code>[]</code>. <br />
-                An list of user IDs that will receive notifications for all messages in this thread,
-                in addition to users who have commented or been mentioned in the thread. (For
-                example: the contributors of a document, an owner of a task etc.)
+                An array of user IDs that will receive notifications for all messages in this
+                thread, in addition to users who have commented or been mentioned in the thread.
+                (For example: the contributors of a document, an owner of a task etc.)
               </>,
             ],
           ]}
