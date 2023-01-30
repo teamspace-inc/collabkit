@@ -51,7 +51,7 @@ export function AdvancedProps(props: {
           <tbody>
             {props.optionalProps.map((row, i) => (
               <tr key={`row-${i}`}>
-                <td style={{ verticalAlign: 'top', maxWidth: 175 }}>
+                <td style={{ verticalAlign: 'top', whiteSpace: 'nowrap' }}>
                   <code>{row[0]}</code>
                 </td>
                 <td style={{ verticalAlign: 'top', maxWidth: 225 }}>

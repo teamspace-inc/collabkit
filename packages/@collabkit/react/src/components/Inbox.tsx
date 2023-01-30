@@ -27,11 +27,12 @@ export function EmptyState() {
 export function Inbox(props: {
   formatTimestamp?: (timestamp: number) => string;
   maxHeight?: string;
+  threadIds?: string[];
 }) {
   const { store } = useApp();
   const { workspaceId, userId } = useSnapshot(store);
 
-  const threadIds = useInbox({ filter: 'open' });
+  const threadIds = useInbox({ filter: 'open', threadIds: props.threadIds });
 
   if (!workspaceId) {
     return null;
