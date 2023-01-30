@@ -8,7 +8,7 @@ on:
 
 jobs:
   typecheck:
-    runs-on: ubuntu-latest-16-cores
+    runs-on: ubuntu-latest
     outputs:
       url: ${{ steps.waitFor200.outputs.url }}
     steps:
@@ -17,7 +17,7 @@ jobs:
       - run: yarn typecheck
       - run: yarn build
   test-functions:
-    runs-on: ubuntu-latest-16-cores
+    runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: functions
@@ -29,7 +29,7 @@ jobs:
         env:
           FIREBASE_TEST_SERVICE_ACCOUNT: '${{ secrets.FIREBASE_TEST_SERVICE_ACCOUNT }}'
   test-core:
-    runs-on: ubuntu-latest-16-cores
+    runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: packages/@collabkit/core
@@ -38,7 +38,7 @@ jobs:
       - run: yarn install --frozen-lockfile --prefer-offline
       - run: yarn test
   test-client:
-    runs-on: ubuntu-latest-16-cores
+    runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: packages/@collabkit/client
@@ -53,7 +53,7 @@ jobs:
           VITE_FIREBASE_TEST_SERVICE_ACCOUNT: ${{ secrets.VITE_FIREBASE_TEST_SERVICE_ACCOUNT }}
 
   vercel-demo:
-    runs-on: ubuntu-latest-16-cores
+    runs-on: ubuntu-latest
     outputs:
       url: ${{ steps.waitFor200.outputs.url }}
     steps:
@@ -67,7 +67,7 @@ jobs:
           regex: 'collabkit-demo'
 
   vercel-ladle:
-    runs-on: ubuntu-latest-16-cores
+    runs-on: ubuntu-latest
     outputs:
       url: ${{ steps.waitFor200.outputs.url }}
     steps:
@@ -83,7 +83,7 @@ jobs:
   test-e2e:
     needs: [vercel-demo, vercel-ladle]
     timeout-minutes: 60
-    runs-on: ubuntu-latest-16-cores
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
