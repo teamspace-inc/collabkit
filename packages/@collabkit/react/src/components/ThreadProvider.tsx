@@ -13,7 +13,9 @@ export function ThreadProvider(props: { threadId: string; children?: React.React
     return null;
   }
   return (
-    <ThreadContext.Provider value={{ threadId: props.threadId, userId, workspaceId }}>
+    <ThreadContext.Provider
+      value={{ threadId: props.threadId, isNewThread: false, userId, workspaceId }}
+    >
       {props.children}
     </ThreadContext.Provider>
   );

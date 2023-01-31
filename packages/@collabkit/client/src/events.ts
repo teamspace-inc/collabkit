@@ -129,7 +129,7 @@ export function createEvents(store: Store) {
         }
         case 'composerPinButton': {
           if (target.objectId && target.pinId) {
-            actions.deletePin(store, target);
+            actions.deletePin(store, target.composer);
             return;
           }
 
@@ -138,7 +138,7 @@ export function createEvents(store: Store) {
               actions.stopSelecting(store);
               break;
             case 'idle':
-              actions.startSelecting(store, target);
+              actions.startSelecting(store, target.composer);
               break;
           }
 
@@ -201,8 +201,10 @@ export function createEvents(store: Store) {
           e.preventDefault();
           if (store.focusedId.eventId === 'default') {
             actions.sendMessage(store, { ...store.focusedId });
-            store.nextThreadId = nanoid();
-            store.focusedId.threadId = store.nextThreadId;
+            if (store.focusedId.isNewThread) {
+              store.nextThreadId = nanoid();
+              store.focusedId.threadId = store.nextThreadId;
+            }
           }
         }
       }

@@ -108,7 +108,7 @@ export async function writeMessageToFirebase(
       if (type === 'message') {
         promises.push(
           actions.stopTyping(store, {
-            target: { type: 'composer', workspaceId, threadId, eventId: 'default' },
+            target: { workspaceId, threadId, eventId: 'default' },
           })
         );
       }

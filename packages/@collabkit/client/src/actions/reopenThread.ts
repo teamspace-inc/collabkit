@@ -41,7 +41,7 @@ export async function reopenThread(store: Store, props: { workspaceId: string; t
     info: generateObjectIdFromCellId(store.workspaces[workspaceId].threadInfo[threadId]),
   });
   await actions.stopTyping(store, {
-    target: { type: 'composer', workspaceId, threadId, eventId: 'default' },
+    target: { workspaceId, threadId, eventId: 'default' },
   });
   return id;
 }

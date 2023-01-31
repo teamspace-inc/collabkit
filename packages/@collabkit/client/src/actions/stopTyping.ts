@@ -1,6 +1,9 @@
-import type { ComposerTarget, Store } from '@collabkit/core';
+import type { Store } from '@collabkit/core';
 
-export async function stopTyping(store: Store, props: { target: ComposerTarget }) {
+export async function stopTyping(
+  store: Store,
+  props: { target: { workspaceId: string; threadId: string; eventId: string } }
+) {
   const { userId, appId } = store;
 
   if (!userId) {

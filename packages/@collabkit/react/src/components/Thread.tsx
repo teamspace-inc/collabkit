@@ -15,7 +15,7 @@ import { ThreadProps } from '../types';
 import { Scrollable } from './Scrollable';
 import { useThread } from '../hooks/public/useThread';
 
-function ThreadProvider(props: ThreadProps & { children: React.ReactNode }) {
+function ThreadProvider(props: ThreadProps & { isNewThread?: boolean; children: React.ReactNode }) {
   const { store } = useApp();
   const { userId, workspaceId } = useSnapshot(store);
   const { threadId } = props;
@@ -32,6 +32,7 @@ function ThreadProvider(props: ThreadProps & { children: React.ReactNode }) {
       userId,
       autoFocus: props.autoFocus,
       placeholder: props.placeholder,
+      isNewThread: props.isNewThread ?? false,
     }),
     [threadId, workspaceId, userId, props.autoFocus, props.placeholder]
   );

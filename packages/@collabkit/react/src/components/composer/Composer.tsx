@@ -49,6 +49,7 @@ import DeletePinButtonHoverSvg from './delete-pin-button-hover.svg';
 import { useHovering } from '../../hooks/useHovering';
 import { Tooltip } from '../Tooltip';
 import { actions } from '@collabkit/client';
+import { ComposerPinButtonTarget } from '@collabkit/core';
 
 type ComposerContextValue = {
   initialBody: string;
@@ -91,7 +92,7 @@ function ComposerRoot(props: {
 }) {
   const commentContext = useOptionalCommentContext();
 
-  const { threadId, workspaceId, userId } = useThreadContext();
+  const { threadId, isNewThread, workspaceId, userId } = useThreadContext();
   const eventId = commentContext?.eventId ?? 'default';
 
   const { onClick } = useOnMarkdownLinkClick({ threadId, workspaceId, userId, eventId });
@@ -99,6 +100,7 @@ function ComposerRoot(props: {
   const target: ComposerTarget = {
     workspaceId,
     threadId,
+    isNewThread,
     type: 'composer',
     eventId,
   };
@@ -214,6 +216,7 @@ function ComposerPinButton(props: { className?: string }) {
   const ref = useRef(null);
   const hover = useHovering(ref);
   const { pendingPin } = workspaces[workspaceId].composers[threadId][eventId];
+  const composerTarget = useTarget();
 
   const state = ((pendingPin ? 'pin' : 'empty') +
     '-' +
@@ -223,11 +226,13 @@ function ComposerPinButton(props: { className?: string }) {
     style: { position: 'relative', top: '0px', width: '16px', height: '16px' },
   });
 
-  const target = {
+  if (composerTarget.type !== 'composer') {
+    return null;
+  }
+
+  const buttonTarget: ComposerPinButtonTarget = {
     type: 'composerPinButton',
-    threadId,
-    workspaceId,
-    eventId,
+    composer: composerTarget,
     objectId: pendingPin?.objectId,
     pinId: pendingPin?.id,
   } as const;
@@ -241,7 +246,7 @@ function ComposerPinButton(props: { className?: string }) {
           ref={ref}
           className={styles.pinButton}
           {...props}
-          onClick={(e) => events.onClick(e, { target })}
+          onClick={(e) => events.onClick(e, { target: buttonTarget })}
         >
           {icon}
         </div>

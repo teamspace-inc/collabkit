@@ -5,6 +5,7 @@ export type ThreadContextValue = {
   threadId: string;
   userId: string;
   workspaceId: string;
+  isNewThread: boolean;
 
   // config
   placeholder?: string;
