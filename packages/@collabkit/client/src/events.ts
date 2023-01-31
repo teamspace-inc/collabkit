@@ -10,7 +10,6 @@ import type {
   ThreadTarget,
 } from '@collabkit/core';
 import { actions } from './actions';
-import { markRaw } from './store';
 import { nanoid } from 'nanoid';
 
 export type Events = ReturnType<typeof createEvents>;
@@ -29,34 +28,12 @@ export function createEvents(store: Store) {
       });
     },
 
-    onComposerChange: (
-      target: Target,
-      editor: LexicalEditor,
-      newBody: string,
-      mentions: string[]
-    ) => {
+    onComposerChange: (target: Target, editor: LexicalEditor) => {
       if (target.type !== 'composer') {
         return;
       }
 
-      // move this to composer mount
-      const composer = actions.initComposer(store, target);
-      composer.editor = markRaw(editor);
-
-      const body = composer.$$body;
-      composer.$$body = newBody;
-      composer.mentions = mentions;
-
-      if (newBody.length === 0) {
-        actions.isTyping.cancel();
-        actions.disableComposerCommentButton(store, { target });
-        setTimeout(async () => {
-          await actions.stopTyping(store, { target });
-        }, 100);
-      } else if (newBody.length !== body.length) {
-        actions.enableComposerCommentButton(store, { target });
-        actions.isTyping(store, { target });
-      }
+      actions.updateComposer(store, { target, editor });
     },
 
     onDestroy: () => {

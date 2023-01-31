@@ -213,7 +213,9 @@ export const CommentEditor = (props: React.ComponentProps<'div'>) => {
       autoFocus={true}
       initialBody={body}
     >
-      <Composer.Editor contentEditable={<Composer.ContentEditable />} placeholder={<span />} />
+      <Composer.Editor contentEditable={<Composer.ContentEditable />} placeholder={<span />}>
+        <Composer.Buttons />
+      </Composer.Editor>
     </Composer.Root>
   );
 };

@@ -41,7 +41,7 @@ export function Scrollable(props: {
   const { maxHeight } = props;
   return (
     <ScrollAreaRoot autoScroll={props.autoScroll}>
-      <ScrollAreaViewport className={props.className}>
+      <ScrollAreaViewport className={props.className} style={{ maxHeight }}>
         {props.children}
       </ScrollAreaViewport>
       <ScrollAreaScrollbar orientation="vertical">

@@ -12,8 +12,6 @@ import { closePreview } from './closePreview';
 import { closeThread } from './closeThread';
 import { deleteMessage } from './deleteMessage';
 import { deletePin } from './deletePin';
-import { disableComposerCommentButton } from './disableComposerCommentButton';
-import { enableComposerCommentButton } from './enableComposerCommentButton';
 import { focus } from './focus';
 import { hideSidebar } from './hideSidebar';
 import { init } from './init';
@@ -54,6 +52,7 @@ import { subscribeOpenPins } from './subscribeOpenPins';
 import { focusComposer } from './focusComposer';
 import { select } from './select';
 import { deselectAll } from './deselectAll';
+import { updateComposer } from './updateComposer';
 
 export type GenerateToken =
   | {
@@ -132,8 +131,6 @@ export const actions = {
   deleteMessage,
   deletePin,
   deselectAll,
-  disableComposerCommentButton,
-  enableComposerCommentButton,
   focus,
   focusComposer,
   hideSidebar,
@@ -172,5 +169,6 @@ export const actions = {
   toggleCommentReaction,
   toggleEmojiReactionPicker,
   updateComment,
+  updateComposer,
   viewThread,
 };

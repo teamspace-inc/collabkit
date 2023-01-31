@@ -36,7 +36,9 @@ export const composerLeftPadding = style({
 });
 
 export const pinButton = style({
-  padding: '8px',
+  padding: vars.space[2],
+  marginRight: calc.negate(vars.space[2]),
+  zIndex: 9,
   background: 'unset',
   borderTopLeftRadius: '6px',
   borderBottomLeftRadius: '6px',
@@ -56,7 +58,7 @@ export const placeholder = recipe({
     textOverflow: 'ellipsis',
     top: '17px',
     transform: 'translateY(-50%)',
-    left: 0,
+    left: vars.space[2],
     userSelect: 'none',
     display: 'inline-block',
     pointerEvents: 'none',
@@ -105,7 +107,7 @@ globalStyle('.collabkit-composer-pin', {
   margin: '-4px 0px 0px',
 });
 
-export const input = recipe({
+export const contentEditable = recipe({
   base: {
     resize: 'none',
     caretColor: fallbackVar(vars.composer.input.caretColor, vars.color.textPrimary),
@@ -114,10 +116,7 @@ export const input = recipe({
     lineHeight: fallbackVar(vars.composer.input.lineHeight, vars.text.base.lineHeight),
     letterSpacing: fallbackVar(vars.composer.input.letterSpacing, vars.text.base.letterSpacing),
     fontWeight: fallbackVar(vars.composer.input.fontWeight, vars.fontWeight.regular),
-    padding: fallbackVar(
-      vars.composer.input.padding,
-      `${vars.space[2]} ${vars.space[2]} ${vars.space[2]} 0px`
-    ),
+    padding: fallbackVar(vars.composer.input.padding, `${vars.space[2]}`),
     position: 'relative',
     tabSize: 1,
     boxSizing: 'border-box',
@@ -226,9 +225,15 @@ export const button = recipe({
 
 export const buttonGroup = style({
   display: 'flex',
-  padding: `0px ${vars.space[2]} ${calc(vars.space[1]).add(calc(vars.space[1]).divide(2))} 0px`,
+  marginTop: calc.negate(vars.space[1]),
+  padding: `0px ${vars.space[2]} ${calc(vars.space[1]).add(calc(vars.space[1]).divide(2))} ${
+    vars.space[2]
+  }`,
   gap: '0px',
   marginLeft: `${calc(vars.space[1]).negate()}`,
+  selectors: {
+    '&:empty': { display: 'none' },
+  },
 });
 
 globalStyle('.collabkit-pin-node', {

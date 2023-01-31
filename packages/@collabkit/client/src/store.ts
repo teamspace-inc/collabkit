@@ -13,8 +13,6 @@ export function markRaw<T extends object>(
 
 export function createComposer(): Composer {
   return {
-    $$body: '',
-    mentions: [],
     isTyping: {},
     editor: null,
     enabled: false,
