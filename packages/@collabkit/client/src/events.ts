@@ -129,7 +129,7 @@ export function createEvents(store: Store) {
         }
         case 'composerPinButton': {
           if (target.objectId && target.pinId) {
-            actions.deletePin(store, target);
+            actions.deletePin(store, target.composer);
             return;
           }
 
@@ -138,7 +138,7 @@ export function createEvents(store: Store) {
               actions.stopSelecting(store);
               break;
             case 'idle':
-              actions.startSelecting(store, target);
+              actions.startSelecting(store, target.composer);
               break;
           }
 

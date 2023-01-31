@@ -219,9 +219,7 @@ export type ComposerMentionsButtonTarget = {
 
 export type ComposerPinButtonTarget = {
   type: 'composerPinButton';
-  threadId: string;
-  workspaceId: string;
-  eventId: string | 'default';
+  composer: ComposerTarget;
   pinId?: string | null;
   objectId?: string | null;
 };
@@ -254,6 +252,7 @@ export type FloatingCommentButtonTarget = { type: 'floatingCommentButton' };
 export type ComposerTarget = {
   type: 'composer';
   threadId: string;
+  isNewThread: boolean;
   workspaceId: string;
   eventId: string | 'default';
 };

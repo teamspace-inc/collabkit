@@ -50,7 +50,7 @@ export function Channels(props: {
 }) {
   const titleRef = React.useRef<HTMLDivElement>(null);
   const { store } = useApp();
-  const { isSidebarOpen: isSidebarOpen, nextThreadId: nextThreadId } = useSnapshot(store);
+  const { isSidebarOpen: isSidebarOpen, nextThreadId } = useSnapshot(store);
   const [inboxActive, setInboxActive] = useState(true);
 
   // set the title height so we can adjust the inbox scrollbar accordingly
@@ -67,40 +67,49 @@ export function Channels(props: {
     store.nextThreadId = nanoid();
   }, []);
 
-  return isSidebarOpen ?
+  return isSidebarOpen ? (
     <ThemeWrapper>
       <SidebarContext.Provider value={{ titleHeight }}>
         <div className={styles.root} style={{ position: props.strategy ?? 'fixed' }}>
           <span ref={titleRef} className={styles.title}>
-            <div style={{ flex: 1 }} data-testid="sidebar-title">{props.title ?? 'Comments'}</div>
-            <div className={styles.iconButton({ active: inboxActive })} onClick={() => { setInboxActive(true) }}>
+            <div style={{ flex: 1 }} data-testid="sidebar-title">
+              {props.title ?? 'Comments'}
+            </div>
+            <div
+              className={styles.iconButton({ active: inboxActive })}
+              onClick={() => {
+                setInboxActive(true);
+              }}
+            >
               <ChatText size={16} mirrored={true} />
             </div>
-            <div className={styles.iconButton({ active: !inboxActive })} onClick={() => { setInboxActive(false) }}>
+            <div
+              className={styles.iconButton({ active: !inboxActive })}
+              onClick={() => {
+                setInboxActive(false);
+              }}
+            >
               <Bell size={16} />
             </div>
             <CloseSidebarButton />
           </span>
-          {inboxActive ?
+          {inboxActive ? (
             <>
-              <div style={{ display: 'contents' }} >{props.children}</div>
-              <hr color='#EEEEEE' style={{ marginTop: 0 }} />
-              {store.userId && nextThreadId ?
-                <Thread.Provider threadId={nextThreadId} autoFocus={true} data-testid="new-thread-composer-div">
+              <div style={{ display: 'contents' }}>{props.children}</div>
+              <hr color="#EEEEEE" style={{ marginTop: 0 }} />
+              {store.userId && nextThreadId ? (
+                <Thread.Provider threadId={nextThreadId} autoFocus={true} isNewThread={true}>
                   <Profile.Provider profileId={store.userId}>
                     <Composer />
                   </Profile.Provider>
                 </Thread.Provider>
-                : null}
+              ) : null}
             </>
-            :
-            // TODO : notifs here
-            null
-          }
-
+          ) : // TODO : notifs here
+          null}
         </div>
       </SidebarContext.Provider>
     </ThemeWrapper>
-    : null;
+  ) : null;
   ``;
 }
