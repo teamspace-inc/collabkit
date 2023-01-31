@@ -9,7 +9,7 @@ import { isValidPayload } from './actions/helpers/isValidPayload';
 
 const corsHandler = cors.default({ origin: true });
 
-async function generateCustomTokenImpl(
+export async function generateCustomTokenImpl(
   request: functions.https.Request,
   response: functions.Response
 ) {
@@ -34,6 +34,11 @@ async function generateCustomTokenImpl(
       }
     });
 
+    if (!apiKey) {
+      response.status(400).send({ status: 403, error: '"userToken" invalid', appId, userToken });
+      return
+    }
+
     if(!isValidPayload(payload)){
       response.status(400).send({ status: 400, error: '"jwt payload" not valid', payload });
       return
@@ -49,11 +54,6 @@ async function generateCustomTokenImpl(
       }
     } catch (e) {
       response.status(400).send({ status: 401, error: '"workspaceId not found"', workspaceId });
-      return
-    }
-
-    if (!apiKey) {
-      response.status(403).send({ status: 403, error: '"userToken" invalid', appId, userToken });
       return
     }
 
