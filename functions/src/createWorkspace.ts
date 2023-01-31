@@ -5,7 +5,14 @@ import { updateUserAndWorkspace } from './actions/helpers/updateUserAndWorkspace
 export const createWorkspace = functions
   .runWith({ minInstances: 1 })
   .https.onRequest(async (request, response) => {
-    const { appId, workspaceId, apiKey, workspace } = request.body;
+    if(request.method !== 'PUT'){
+      response.status(405).send({ status: 405, error: 'Method not allowed' });
+      return;
+    }
+    
+    const workspaceId = request.path.split('/').pop();
+
+    const { appId, apiKey, workspace } = request.body;
 
     if (!appId) {
       console.debug('"appId" not provided', appId);

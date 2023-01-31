@@ -6,6 +6,11 @@ import { updateUserAndWorkspace } from './actions/helpers/updateUserAndWorkspace
 export const createUser = functions
   .runWith({ minInstances: 1 })
   .https.onRequest(async (request, response) => {
+    if(request.method !== 'PUT'){
+      response.status(405).send({ status: 405, error: 'Method not allowed' });
+      return;
+    }
+    
     const userId = request.path.split('/').pop();
     const { appId, workspaceId, apiKey, user } = request.body;
 

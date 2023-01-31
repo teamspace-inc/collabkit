@@ -84,13 +84,9 @@ export const generateCustomToken = functions
   .region('europe-west2', 'us-central1', 'asia-east2')
   .runWith({ minInstances: 2 })
   .https.onRequest(async (request, response) => {
-    if(request.method === 'PUT'){
     corsHandler(request, response, async () => {
       await generateCustomTokenImpl(request, response);
     })
-    }else{
-      response.status(405).send({ status: 405, error: 'Method not allowed' });
-    }
   }
 
   );
