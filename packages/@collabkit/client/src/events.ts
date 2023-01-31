@@ -201,8 +201,10 @@ export function createEvents(store: Store) {
           e.preventDefault();
           if (store.focusedId.eventId === 'default') {
             actions.sendMessage(store, { ...store.focusedId });
-            store.nextThreadId = nanoid();
-            store.focusedId.threadId = store.nextThreadId;
+            if (store.focusedId.isNewThread) {
+              store.nextThreadId = nanoid();
+              store.focusedId.threadId = store.nextThreadId;
+            }
           }
         }
       }
