@@ -5,7 +5,7 @@ export type Payload = {
     workspaceId: string;
 }
 
-export function isValidPayload(o: unknown): o is Payload {
+export function isValidPayload(o: any): o is Payload {
     if (typeof o !== 'object' || o == null || Array.isArray(o)) {
         return false;
       }
