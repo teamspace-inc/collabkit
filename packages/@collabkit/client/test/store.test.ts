@@ -24,8 +24,6 @@ test('createWorkspace', () => {
 
 test('createComposer', () => {
   expect(createComposer()).toStrictEqual({
-    $$body: '',
-    mentions: [],
     isTyping: {},
     editor: null,
     enabled: false,
