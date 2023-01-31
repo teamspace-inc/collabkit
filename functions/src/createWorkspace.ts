@@ -17,19 +17,19 @@ export async function createWorkspaceImpl(
 
   if (!appId) {
     console.debug('"appId" not provided', appId);
-    response.status(400).send({ status: 400, error: '"appId" not provided', appId });
+    response.status(400).send({ status: 400, error: '"appId" not provided' });
     return;
   }
 
   if (!apiKey || typeof apiKey !== 'string') {
     console.debug('"apiKey" not provided', apiKey);
-    response.status(400).send({ status: 400, error: '"apiKey" not provided', apiKey });
+    response.status(400).send({ status: 400, error: '"apiKey" not provided' });
     return;
   }
 
   if (!workspaceId || typeof workspaceId !== 'string') {
     console.debug('"workspaceId" not provided', workspaceId);
-    response.status(400).send({ status: 400, error: '"workspaceId" not provided', workspaceId });
+    response.status(400).send({ status: 400, error: '"workspaceId" not provided' });
     return;
   }
 
@@ -37,14 +37,14 @@ export async function createWorkspaceImpl(
 
   if (!snapshot.exists()) {
     console.debug('"apiKey" not found', appId);
-    response.status(400).send({ status: 400, error: '"apiKey" invalid', appId, apiKey });
+    response.status(400).send({ status: 400, error: '"apiKey" invalid' });
     return;
   }
 
   // default workspace has no props
   if (workspaceId.toLowerCase() !== 'default' && !workspace) {
     console.debug('"default workspace"', workspace);
-    response.status(400).send({ status: 400, error: '"workspace" not provided', workspace });
+    response.status(400).send({ status: 400, error: '"workspace" not provided' });
     return;
   }
 

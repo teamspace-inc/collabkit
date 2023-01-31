@@ -45,7 +45,7 @@ it('createWorkspace: apiKey not provided', async () => {
   expect(args[0]).toEqual({ status: 400, error: '"apiKey" not provided' });
 });
 
-it('creatWorkspace: workspaceId not provided', async () => {
+it('createWorkspace: workspaceId not provided', async () => {
   const http = mockHttp({
     query: {},
     body: {
@@ -95,6 +95,9 @@ it('createWorkspace: success', async () => {
     body: {
       appId: '0mO-P6YhtUwKsZNwnDSt9',
       apiKey: 'dHchccA9yszQ3EFftTEQm',
+      workspace:{
+        "name" : "workspace-test" 
+      }
     },
     path: '/workspaceId',
   });
