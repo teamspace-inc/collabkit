@@ -38,7 +38,18 @@ it('generateToken: userToken invalid', async () => {
 it('generateToken: jwt payload Invalid', async () => {
   const http = mockHttp({ query: {}, body: {
     appId: '0mO-P6YhtUwKsZNwnDSt9',
-    userToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZXN0IjoiY29sbGFia2l0cyIsInRlc3RlciI6Im1lZXRjc2hhaDE5In0.qINPvkItnS4WgSMo8BezdWx07xcx1w1YiHxCVLAjMjc'
+    userToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.a9YmVM13mRhw2IzFzRLWTabhJ0bahXvpYtgvzQ9SQZI'
+  } });
+  await generateCustomTokenImpl(http.req, http.res);
+  const send = http.res.send as sinon.SinonSpy;
+  const { args } = send.getCalls()[0];
+  expect(args[0]).toEqual({ status: 400, error: '"jwt payload" not valid' });
+});
+
+it('generateToken: "userId" or "workspaceId" not provided in jwt', async () => {
+  const http = mockHttp({ query: {}, body: {
+    appId: '0mO-P6YhtUwKsZNwnDSt9',
+    userToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZXN0IjoidGVzdCJ9.7OFQcy9eZk93D87pkCfE8hQfNwH8ndA-XerNzlPD8ls'
   } });
   await generateCustomTokenImpl(http.req, http.res);
   const send = http.res.send as sinon.SinonSpy;
