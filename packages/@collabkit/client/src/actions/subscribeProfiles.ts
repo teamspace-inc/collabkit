@@ -29,6 +29,13 @@ export async function subscribeProfiles(store: Store) {
             store.profiles[id] = ensureColor(profile);
             if (store.config.mentionableUsers === 'allWorkspace') {
               store.mentionableUsers[id] = profile;
+              const numMentionableUsers = Object.keys(store.mentionableUsers).length;
+              if (numMentionableUsers > 200) {
+                console.warn(
+                  '[CollabKit] Over 200 mentionable users you may experience performance issues, \n Consider setting mentionableUsers to just those relevant in your apps context or contact support.',
+                  numMentionableUsers
+                );
+              }
             }
           }
         },
