@@ -28,7 +28,6 @@ export async function subscribeProfiles(store: Store) {
           if (profile && profile.name !== 'John Doe') {
             store.profiles[id] = ensureColor(profile);
             if (store.config.mentionableUsers === 'allWorkspace') {
-              // console.log('mentionableUsers: id', id, 'profile', profile);
               store.mentionableUsers[id] = profile;
             }
           }
