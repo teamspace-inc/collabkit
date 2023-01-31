@@ -14,6 +14,7 @@ export function updateComposer(
   composer.editor.getEditorState().read(() => {
     isEmpty = $getRoot().getTextContentSize() === 0;
   });
+  composer.enabled = !isEmpty;
   if (isEmpty) {
     actions.isTyping.cancel();
     setTimeout(() => {
