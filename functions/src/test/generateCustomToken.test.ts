@@ -25,7 +25,7 @@ it('generateToken: appId not provided', async () => {
   expect(args[0]).toEqual({ status: 400, error: '"appId" not provided' });
 });
 
-it('generateToken: appId not provided', async () => {
+it('generateToken: userToken invalid', async () => {
   const http = mockHttp({ query: {}, body: {
     appId: '0mO-P6YhtUwKsZNwnDSt9',
   } });
@@ -35,7 +35,7 @@ it('generateToken: appId not provided', async () => {
   expect(args[0]).toEqual({ status: 400, error: '"userToken" invalid' });
 });
 
-it('generateToken: appId not provided', async () => {
+it('generateToken: jwt payload Invalid', async () => {
   const http = mockHttp({ query: {}, body: {
     appId: '0mO-P6YhtUwKsZNwnDSt9',
     userToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZXN0IjoiY29sbGFia2l0cyIsInRlc3RlciI6Im1lZXRjc2hhaDE5In0.qINPvkItnS4WgSMo8BezdWx07xcx1w1YiHxCVLAjMjc'

@@ -17,7 +17,7 @@ export async function generateCustomTokenImpl(
     const { appId, userToken } = request.body;
 
     if (!appId) {
-      response.status(400).send({ status: 400, error: '"appId" not provided', appId });
+      response.status(400).send({ status: 400, error: '"appId" not provided' });
       return;
     }
 
@@ -35,12 +35,12 @@ export async function generateCustomTokenImpl(
     });
 
     if (!apiKey) {
-      response.status(400).send({ status: 403, error: '"userToken" invalid', appId, userToken });
+      response.status(400).send({ status: 400, error: '"userToken" invalid' });
       return
     }
 
     if(!isValidPayload(payload)){
-      response.status(400).send({ status: 400, error: '"jwt payload" not valid', payload });
+      response.status(400).send({ status: 400, error: '"jwt payload" not valid'});
       return
     }
 
@@ -49,11 +49,11 @@ export async function generateCustomTokenImpl(
     const profiles = await fetchWorkspaceProfiles({ appId, workspaceId });
     try {
       if (!profiles.find((profile) => profile === userId)) {
-        response.status(400).send({ status: 400, error: '"userId" not found', appId });
+        response.status(400).send({ status: 400, error: '"userId" not found' });
         return
       }
     } catch (e) {
-      response.status(400).send({ status: 401, error: '"workspaceId not found"', workspaceId });
+      response.status(400).send({ status: 400, error: '"workspaceId not found"'});
       return
     }
 
@@ -88,5 +88,4 @@ export const generateCustomToken = functions
       await generateCustomTokenImpl(request, response);
     })
   }
-
   );
