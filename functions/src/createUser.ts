@@ -6,7 +6,8 @@ import { updateUserAndWorkspace } from './actions/helpers/updateUserAndWorkspace
 export const createUser = functions
   .runWith({ minInstances: 1 })
   .https.onRequest(async (request, response) => {
-    const { appId, userId, workspaceId, apiKey, user } = request.body;
+    const userId = request.path.split('/').pop();
+    const { appId, workspaceId, apiKey, user } = request.body;
 
     if (!appId) {
       console.debug('"appId" not provided', appId);
@@ -43,6 +44,7 @@ export const createUser = functions
     if (!isValidUser(user)) {
       console.debug('"user" object invalid', user);
       response.status(400).send({ status: 400, error: '"user" object is invalid', user });
+      return;
     }
 
     const snapshot = await ref`/apps/${appId}/keys/${apiKey}/`.once('value');

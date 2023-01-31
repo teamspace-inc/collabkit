@@ -12,6 +12,17 @@ import { triggerWebhook } from './triggerWebhook';
 import { comment } from './comment';
 import { createUser } from './createUser';
 import { createWorkspace } from './createWorkspace';
-import { userToken } from './userToken';
+import { generateCustomToken } from './generateCustomToken';
 
-export { createOrg, createApp, generateToken, onEvent, sendNotification, triggerWebhook, comment, createUser, createWorkspace, userToken };
+export {
+  createOrg,
+  createApp,
+  generateToken,
+  onEvent,
+  sendNotification,
+  triggerWebhook,
+  comment,
+  createUser,
+  createWorkspace,
+  generateCustomToken,
+};

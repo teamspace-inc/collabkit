@@ -5,10 +5,11 @@ import * as FirebaseId from './actions/data/FirebaseId';
 import { ref } from './actions/data/refs';
 import * as jwt from 'jsonwebtoken';
 import { fetchWorkspaceProfiles } from './actions/data/fetchWorkspaceProfiles';
+import { isValidPayload } from './actions/helpers/isValidPayload';
 
 const corsHandler = cors.default({ origin: true });
 
-export async function generateUserToken(
+async function generateCustomTokenImpl(
   request: functions.https.Request,
   response: functions.Response
 ) {
@@ -16,7 +17,6 @@ export async function generateUserToken(
     const { appId, userToken } = request.body;
 
     if (!appId) {
-      console.debug('"appId" not provided', appId);
       response.status(400).send({ status: 400, error: '"appId" not provided', appId });
       return;
     }
@@ -30,10 +30,14 @@ export async function generateUserToken(
           payload = jwt.verify(userToken, data.key);
           apiKey = data.key;
         } catch (err) {
-          console.log(`Verification Failed [apiKey:${apiKey},userToken:${userToken}`);
         }
       }
     });
+
+    if(!isValidPayload(payload)){
+      response.status(400).send({ status: 400, error: '"jwt payload" not valid', payload });
+      return
+    }
 
     const { userId, workspaceId } = payload;
 
@@ -41,13 +45,16 @@ export async function generateUserToken(
     try {
       if (!profiles.find((profile) => profile === userId)) {
         response.status(400).send({ status: 400, error: '"userId" not found', appId });
+        return
       }
     } catch (e) {
       response.status(400).send({ status: 401, error: '"workspaceId not found"', workspaceId });
+      return
     }
 
     if (!apiKey) {
       response.status(403).send({ status: 403, error: '"userToken" invalid', appId, userToken });
+      return
     }
 
     const token = await admin.auth().createCustomToken(apiKey, {
@@ -68,42 +75,22 @@ export async function generateUserToken(
     });
     return;
   } catch (e) {
-    console.error('Error with userToken', { error: e });
     response.status(401).send({ status: 401, error: e });
     return;
   }
 }
 
-export const userToken = functions
+export const generateCustomToken = functions
   .region('europe-west2', 'us-central1', 'asia-east2')
   .runWith({ minInstances: 2 })
-  .https.onRequest(async (request, response) =>
+  .https.onRequest(async (request, response) => {
+    if(request.method === 'PUT'){
     corsHandler(request, response, async () => {
-      await generateUserToken(request, response);
+      await generateCustomTokenImpl(request, response);
     })
+    }else{
+      response.status(405).send({ status: 405, error: 'Method not allowed' });
+    }
+  }
+
   );
-
-// for dev testing
-// admin.initializeApp({
-//   credential: admin.credential.cert('/Users/namitchadha/collabkit-dev-service-account.json'),
-//   databaseURL: 'https://collabkit-dev-default-rtdb.europe-west1.firebasedatabase.app',
-// });
-
-// update({
-//   appId: 'gblfnmjLQwxN0dz9r4mer',
-//   workspaceId: 'acme',
-//   userId: 'alice',
-//   user: {
-//     name: 'Alice',
-//     email: 'alice@example.com',
-//   },
-//   workspace: {
-//     name: 'ACME',
-//   },
-// })
-//   .then(() => {
-//     console.log('complete');
-//   })
-//   .catch((e) => {
-//     console.error(e);
-//   });
