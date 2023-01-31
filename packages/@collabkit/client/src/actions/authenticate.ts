@@ -53,7 +53,10 @@ export async function authenticate(store: Store) {
     store.workspaceId = workspaceId;
     store.workspaces[workspaceId] = createWorkspace();
 
-    // actions.subscribeProfiles(store);
+    if (store.config.mentionableUsers === 'allWorkspace') {
+      actions.subscribeProfiles(store);
+    }
+
     actions.subscribeWorkspace(store);
 
     // UNSECURED mode
@@ -102,7 +105,9 @@ export async function authenticate(store: Store) {
     // console.log('CollabKit authenticated', userCredential, mode);
 
     await actions.saveProfile(store);
-    // actions.subscribeProfiles(store);
+    if (store.config.mentionableUsers === 'allWorkspace') {
+      actions.subscribeProfiles(store);
+    }
     actions.subscribeWorkspace(store);
   } else {
     throw new Error('Missing `token` or `apiKey`');

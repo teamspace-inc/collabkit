@@ -1,4 +1,4 @@
-import type { ComponentProps, ReactNode } from 'react';
+import { ComponentProps, ReactNode, useEffect, useState } from 'react';
 import React, { Fragment } from 'react';
 import * as styles from '../theme/components/CommentList.css';
 import { NewIndicator } from './NewIndicator';
@@ -9,6 +9,7 @@ import { groupedTimeline, computeIsResolved } from '@collabkit/core/src/timeline
 import { useSnapshot } from 'valtio';
 import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
 import { useThreadContext } from '../hooks/useThreadContext';
+import { useApp } from '../hooks/useApp';
 
 const CommentListRoot = (props: ComponentProps<'div'>) => (
   <div className={styles.root} {...props} />
@@ -16,14 +17,27 @@ const CommentListRoot = (props: ComponentProps<'div'>) => (
 
 function useHasFetchedThreadTimeline() {
   const { threadId } = useThreadContext();
-  const { fetchedProfiles, threadProfiles } = useSnapshot(useWorkspaceStore());
+  const { store } = useApp();
+  const { config } = useSnapshot(store);
+  const [hasFetched, setHasFetched] = useState(false);
 
-  // -1 to handle case where a new profile and comment are created at the same time
-  const numFetchedProfiles = Object.keys(fetchedProfiles[threadId] ?? {}).length;
-  const numThreadProfiles = Object.keys(threadProfiles[threadId] ?? {}).length;
+  useEffect(() => {
+    if (config.mentionableUsers === 'allWorkspace') {
+      setHasFetched(true);
 
-  const hasFetched =
-    numFetchedProfiles - 1 === numThreadProfiles || numFetchedProfiles === numThreadProfiles;
+      // we only use threadProfiles for large workspaces
+    } else {
+      const { fetchedProfiles, threadProfiles } = useSnapshot(useWorkspaceStore());
+
+      // -1 to handle case where a new profile and comment are created at the same time
+      const numFetchedProfiles = Object.keys(fetchedProfiles[threadId] ?? {}).length;
+      const numThreadProfiles = Object.keys(threadProfiles[threadId] ?? {}).length;
+
+      setHasFetched(
+        numFetchedProfiles - 1 === numThreadProfiles || numFetchedProfiles === numThreadProfiles
+      );
+    }
+  }, [config.mentionableUsers]);
 
   return hasFetched;
 }

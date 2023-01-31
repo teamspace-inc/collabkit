@@ -422,12 +422,10 @@ export interface Workspace {
   objects: { [objectId: string]: OpenThreadIds };
   inbox: { [threadId: string]: WithID<Event> };
   timeline: { [threadId: string]: Timeline };
-  timelineInitialFetchComplete: { [threadId: string]: boolean };
   composers: { [threadId: string]: { [eventId: string]: Composer } };
   seen: { [threadId: string]: string }; // lastSeenEventId
   seenBy: { [threadId: string]: SeenBy };
   threadInfo: { [threadId: string]: ThreadInfo };
-  likelyFetchedAllProfiles: boolean;
   threadProfiles: { [threadId: string]: { [userId: string]: boolean } };
   fetchedProfiles: { [threadId: string]: { [userId: string]: boolean } };
   openPins: { [objectId: string]: { [pinId: string]: Pin } };
