@@ -17,7 +17,7 @@ const mockHttp = (props: { query?: object; body?: object; headers?: object }) =>
   };
 };
 
-it('generateToken: appId not provided', async () => {
+it('generateCustomToken: appId not provided', async () => {
   const http = mockHttp({ query: {}, body: {} });
   await generateCustomTokenImpl(http.req, http.res);
   const send = http.res.send as sinon.SinonSpy;
@@ -25,7 +25,7 @@ it('generateToken: appId not provided', async () => {
   expect(args[0]).toEqual({ status: 400, error: '"appId" not provided' });
 });
 
-it('generateToken: userToken invalid', async () => {
+it('generateCustomToken: userToken invalid', async () => {
   const http = mockHttp({ query: {}, body: {
     appId: '0mO-P6YhtUwKsZNwnDSt9',
   } });
@@ -35,7 +35,7 @@ it('generateToken: userToken invalid', async () => {
   expect(args[0]).toEqual({ status: 400, error: '"userToken" invalid' });
 });
 
-it('generateToken: jwt payload Invalid', async () => {
+it('generateCustomToken: jwt payload Invalid', async () => {
   const http = mockHttp({ query: {}, body: {
     appId: '0mO-P6YhtUwKsZNwnDSt9',
     userToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.a9YmVM13mRhw2IzFzRLWTabhJ0bahXvpYtgvzQ9SQZI'
@@ -46,7 +46,7 @@ it('generateToken: jwt payload Invalid', async () => {
   expect(args[0]).toEqual({ status: 400, error: '"jwt payload" not valid' });
 });
 
-it('generateToken: userId not found', async () => {
+it('generateCustomToken: userId not found', async () => {
   const http = mockHttp({ query: {}, body: {
     appId: '0mO-P6YhtUwKsZNwnDSt9',
     userToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ3b3Jrc3BhY2VJZCI6ImNvbGxhYmtpdCIsInVzZXJJZCI6Im5vaWQifQ.SboXlssz0ARVqsg2af7AAiUsQuhyhoZOVvkF2xtfjOg'
@@ -57,7 +57,7 @@ it('generateToken: userId not found', async () => {
   expect(args[0]).toEqual({ status: 400, error: '"userId" not found' });
 });
 
-it('generateToken: success', async () => {
+it('generateCustomToken: success', async () => {
   const http = mockHttp({ query: {}, body: {
     appId: '0mO-P6YhtUwKsZNwnDSt9',
     userToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ3b3Jrc3BhY2VJZCI6ImNvbGxhYmtpdCIsInVzZXJJZCI6Im1lZXRjc2hhaDE5In0.npD9lOG5_hsBUCYKXwpJDoeWsDxautsO0U8SqDBof1w'
