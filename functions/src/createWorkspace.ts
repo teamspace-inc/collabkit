@@ -37,7 +37,7 @@ export async function createWorkspaceImpl(
 
   if (!snapshot.exists()) {
     console.debug('"apiKey" not found', appId);
-    response.status(403).send({ status: 403, error: '"apiKey" invalid', appId, apiKey });
+    response.status(400).send({ status: 400, error: '"apiKey" invalid', appId, apiKey });
     return;
   }
 
@@ -50,7 +50,7 @@ export async function createWorkspaceImpl(
 
   await updateUserAndWorkspace({ appId, userId: "", workspaceId, user: {} , workspace});
 
-  response.status(200).send("Created Workspace Successfully.");
+  response.status(200).send('Created/Updated Workspace Successfully.');
 }
 
 export const createWorkspace = functions

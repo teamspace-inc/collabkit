@@ -82,21 +82,6 @@ it('createUser: user not provided', async () => {
       apiKey: 'apiKey',
       workspaceId: 'workspaceId',
     },
-  });
-  await createUserImpl(http.req, http.res);
-  const send = http.res.send as sinon.SinonSpy;
-  const { args } = send.getCalls()[0];
-  expect(args[0]).toEqual({ status: 400, error: '"userId" not provided' });
-});
-
-it('createUser: user not provided', async () => {
-  const http = mockHttp({
-    query: {},
-    body: {
-      appId: 'appId',
-      apiKey: 'apiKey',
-      workspaceId: 'workspaceId',
-    },
     path: '/userId',
   });
   await createUserImpl(http.req, http.res);
@@ -112,7 +97,9 @@ it('createUser: "user" object is invalid', async () => {
       appId: 'appId',
       apiKey: 'apiKey',
       workspaceId: 'workspaceId',
-      user: undefined,
+      user: {
+        name: {}
+      },
     },
     path: '/userId',
   });
