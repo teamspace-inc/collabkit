@@ -14,7 +14,6 @@ test('createWorkspace', () => {
     seenBy: {},
     threadInfo: {},
     threadProfiles: {},
-    timelineInitialFetchComplete: {},
     fetchedProfiles: {},
     pendingThreads: {},
     pendingThreadInfo: {},
