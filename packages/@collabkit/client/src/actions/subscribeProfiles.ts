@@ -8,7 +8,6 @@ import { snapshotToProfile } from '../sync/firebase/converters';
 import { ensureColor } from './saveProfile';
 
 export async function subscribeProfiles(store: Store) {
-  let gotFirstProfile = false;
   const { appId, workspaceId } = getConfig(store);
 
   const onError = (e: Error) => {
@@ -24,9 +23,6 @@ export async function subscribeProfiles(store: Store) {
         (profileSnapshot) => {
           // since we don't know the end of the number of profiles in firebase
           // just yet, we use this little hack to leave a couple of cycles for the data to roll in before we render a threads comment list
-          if (!gotFirstProfile) {
-            gotFirstProfile = true;
-          }
           const profile = snapshotToProfile(profileSnapshot);
           // todo validate profile data here
           if (profile && profile.name !== 'John Doe') {
