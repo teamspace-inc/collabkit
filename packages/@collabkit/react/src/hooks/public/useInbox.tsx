@@ -4,7 +4,11 @@ import { useSnapshot } from 'valtio';
 import { useApp } from '../../hooks/useApp';
 import { timelineUtils } from '@collabkit/core';
 
-export function useInbox(props: { filter: 'all' | 'open'; threadIds?: string[] }) {
+export function useInbox(props: {
+  filter: 'all' | 'open';
+  threadIds?: string[];
+  direction?: 'asc' | 'desc';
+}) {
   const { store } = useApp();
   const { workspaceId, workspaces, userId } = useSnapshot(store);
 
@@ -49,7 +53,7 @@ export function useInbox(props: { filter: 'all' | 'open'; threadIds?: string[] }
       .sort((a, b) => {
         const aTime = +inbox[a]?.createdAt ?? 0;
         const bTime = +inbox[b]?.createdAt ?? 0;
-        return bTime - aTime;
+        return props.direction === 'asc' ? aTime - bTime : bTime - aTime;
       })
   );
 }
