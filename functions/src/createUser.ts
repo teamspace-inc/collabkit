@@ -57,7 +57,7 @@ export async function createUserImpl(
 
   if (!snapshot.exists()) {
     console.debug('"apiKey" not found', appId);
-    response.status(403).send({ status: 403, error: '"apiKey" invalid'});
+    response.status(403).send({ status: 400, error: '"apiKey" invalid'});
     return;
   }
 
