@@ -25,9 +25,6 @@ export async function subscribeProfiles(store: Store) {
           // since we don't know the end of the number of profiles in firebase
           // just yet, we use this little hack to leave a couple of cycles for the data to roll in before we render a threads comment list
           if (!gotFirstProfile) {
-            setTimeout(() => {
-              store.workspaces[workspaceId].likelyFetchedAllProfiles = true;
-            }, 32);
             gotFirstProfile = true;
           }
           const profile = snapshotToProfile(profileSnapshot);

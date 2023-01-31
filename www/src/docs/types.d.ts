@@ -1308,7 +1308,6 @@ interface Workspace {
   seen: { [threadId: string]: string }; // lastSeenEventId
   seenBy: { [threadId: string]: SeenBy };
   threadInfo: { [threadId: string]: ThreadInfo };
-  likelyFetchedAllProfiles: boolean;
 }
 
 interface UnconfiguredStore {

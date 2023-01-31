@@ -13,7 +13,6 @@ test('createWorkspace', () => {
     seen: {},
     seenBy: {},
     threadInfo: {},
-    likelyFetchedAllProfiles: false,
     threadProfiles: {},
     timelineInitialFetchComplete: {},
     fetchedProfiles: {},
