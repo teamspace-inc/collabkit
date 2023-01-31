@@ -2,7 +2,6 @@ import sinon from 'sinon';
 
 import * as functions from 'firebase-functions';
 
-import { handleRequest } from '../generateToken';
 import { createUserImpl } from '../createUser';
 
 const mockHttp = (props: { path?: string; query?: object; body?: object; headers?: object }) => {
@@ -113,6 +112,7 @@ it('createUser: "user" object is invalid', async () => {
       appId: 'appId',
       apiKey: 'apiKey',
       workspaceId: 'workspaceId',
+      user: undefined,
     },
     path: '/userId',
   });
@@ -122,7 +122,7 @@ it('createUser: "user" object is invalid', async () => {
   expect(args[0]).toEqual({ status: 400, error: '"user" object is invalid' });
 });
 
-it('createUser: "user" object is invalid', async () => {
+it('createUser: "apiKey" is invalid', async () => {
   const http = mockHttp({
     query: {},
     body: {
