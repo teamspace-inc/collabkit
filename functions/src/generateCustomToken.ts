@@ -46,11 +46,6 @@ export async function generateCustomTokenImpl(
 
     const { userId, workspaceId } = payload;
 
-    if(!userId || !workspaceId){
-      response.status(400).send({ status: 400, error: '"userId" or "workspaceId" not provided in jwt'});
-      return
-    }
-
     const profiles = await fetchWorkspaceProfiles({ appId, workspaceId });
     try {
       if (!profiles.find((profile) => profile === userId)) {

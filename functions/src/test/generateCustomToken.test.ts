@@ -46,17 +46,6 @@ it('generateToken: jwt payload Invalid', async () => {
   expect(args[0]).toEqual({ status: 400, error: '"jwt payload" not valid' });
 });
 
-it('generateToken: "userId" or "workspaceId" not provided in jwt', async () => {
-  const http = mockHttp({ query: {}, body: {
-    appId: '0mO-P6YhtUwKsZNwnDSt9',
-    userToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZXN0IjoidGVzdCJ9.7OFQcy9eZk93D87pkCfE8hQfNwH8ndA-XerNzlPD8ls'
-  } });
-  await generateCustomTokenImpl(http.req, http.res);
-  const send = http.res.send as sinon.SinonSpy;
-  const { args } = send.getCalls()[0];
-  expect(args[0]).toEqual({ status: 400, error: '"jwt payload" not valid' });
-});
-
 it('generateToken: userId not found', async () => {
   const http = mockHttp({ query: {}, body: {
     appId: '0mO-P6YhtUwKsZNwnDSt9',
