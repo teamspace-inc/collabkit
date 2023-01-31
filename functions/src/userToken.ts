@@ -4,6 +4,7 @@ import * as admin from 'firebase-admin';
 import * as FirebaseId from './actions/data/FirebaseId';
 import { ref } from './actions/data/refs';
 import * as jwt from 'jsonwebtoken';
+import { fetchWorkspaceProfiles } from './actions/data/fetchWorkspaceProfiles';
 
 const corsHandler = cors.default({ origin: true });
 
@@ -20,7 +21,7 @@ export async function generateUserToken(
       return;
     }
 
-    let apiKey: string = "";
+    let apiKey: string = '';
     let payload: any = {};
     let data = await ref`/apps/${appId}/keys`.get();
     data.forEach((data) => {
@@ -28,16 +29,24 @@ export async function generateUserToken(
         try {
           payload = jwt.verify(userToken, data.key);
           apiKey = data.key;
-          }
-        catch(err) {
+        } catch (err) {
           console.log(`Verification Failed [apiKey:${apiKey},userToken:${userToken}`);
         }
       }
-    })
+    });
 
     const { userId, workspaceId } = payload;
 
-    if(!apiKey){
+    const profiles = await fetchWorkspaceProfiles({ appId, workspaceId });
+    try {
+      if (!profiles.find((profile) => profile === userId)) {
+        response.status(400).send({ status: 400, error: '"userId" not found', appId });
+      }
+    } catch (e) {
+      response.status(400).send({ status: 401, error: '"workspaceId not found"', workspaceId });
+    }
+
+    if (!apiKey) {
       response.status(403).send({ status: 403, error: '"userToken" invalid', appId, userToken });
     }
 
@@ -59,7 +68,7 @@ export async function generateUserToken(
     });
     return;
   } catch (e) {
-    console.error('Error with generateToken', { error: e });
+    console.error('Error with userToken', { error: e });
     response.status(401).send({ status: 401, error: e });
     return;
   }
