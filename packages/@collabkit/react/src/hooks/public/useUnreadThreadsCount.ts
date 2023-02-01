@@ -4,7 +4,7 @@ import { useApp } from '../useApp';
 import { countUnread } from '../../utils/countUnread';
 import { useEffect, useState } from 'react';
 
-export function useUnreadThreadsCount(): number {
+export function useUnreadThreadsCount(props?: { threadIds?: string[] }): number {
   const { store } = useApp();
   const { workspaceId, workspaces, userId } = useSnapshot(store);
   const workspace = workspaceId ? workspaces[workspaceId] : null;
@@ -19,6 +19,9 @@ export function useUnreadThreadsCount(): number {
     }
     let unreadCount = 0;
     for (const threadId in workspace?.timeline) {
+      if (props?.threadIds && !props.threadIds.includes(threadId)) {
+        continue;
+      }
       const isResolved = timelineUtils.computeIsResolved(workspace?.timeline[threadId]);
       if (isResolved) {
         continue;
@@ -41,6 +44,7 @@ export function useUnreadThreadsCount(): number {
     // seenUntilId changed
     workspace?.seen ? Object.values(workspace?.seen) : null),
     userId,
+    props?.threadIds,
   ]);
 
   return unreadThreadsCount;
