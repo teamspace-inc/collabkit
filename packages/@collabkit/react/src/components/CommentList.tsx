@@ -22,17 +22,17 @@ function useHasFetchedThreadTimeline() {
   const { fetchedProfiles, threadProfiles } = useSnapshot(useWorkspaceStore());
   const [hasFetched, setHasFetched] = useState(false);
 
+  const numFetchedProfiles = Object.keys(fetchedProfiles[threadId] ?? {}).length;
+  const numThreadProfiles = Object.keys(threadProfiles[threadId] ?? {}).length;
   useEffect(() => {
     if (config.mentionableUsers !== 'allWorkspace') {
       // -1 to handle case where a new profile and comment are created at the same time
       // TODO: make this simpler
-      const numFetchedProfiles = Object.keys(fetchedProfiles[threadId] ?? {}).length;
-      const numThreadProfiles = Object.keys(threadProfiles[threadId] ?? {}).length;
       setHasFetched(
         numFetchedProfiles - 1 === numThreadProfiles || numFetchedProfiles === numThreadProfiles
       );
     }
-  }, [config.mentionableUsers]);
+  }, [config.mentionableUsers, numFetchedProfiles, numThreadProfiles]);
 
   return config.mentionableUsers === 'allWorkspace' || hasFetched;
 }
