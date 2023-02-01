@@ -5,6 +5,7 @@ import { getApp } from 'firebase/app';
 import { createWorkspace } from '../store';
 import { generateToken } from './generateToken';
 import { actions } from './';
+import { signInWithUserToken } from '../utils/signInWithUserToken';
 
 export async function authenticate(store: Store) {
   if (!store.sync.shouldAuthenticate()) {
@@ -19,7 +20,8 @@ export async function authenticate(store: Store) {
 
   // SECURED mode
   if ('token' in config && config.token != null) {
-    const userCredential = await signInWithCustomToken(auth, config.token);
+    const customToken = await signInWithUserToken(config.appId, config.token);
+    const userCredential = await signInWithCustomToken(auth, customToken);
     const result = await userCredential.user.getIdTokenResult();
     let { appId, userId, workspaceId, mode } = result.claims;
 
