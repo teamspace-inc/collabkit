@@ -66,9 +66,7 @@ export function Inbox(props: {
         {threadIds.length === 0 ? (
           <EmptyState />
         ) : (
-          <Scrollable maxHeight={props.maxHeight ?? 'unset'} autoScroll="bottom">
-            {inboxItems}
-          </Scrollable>
+          <Scrollable maxHeight={props.maxHeight ?? 'unset'}>{inboxItems}</Scrollable>
         )}
       </div>
     </ThemeWrapper>
