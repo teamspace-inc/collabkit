@@ -1,5 +1,5 @@
 import * as jwt from 'jsonwebtoken';
 
-export function createUserToken(apiKey: string, userId: string, workspaceId: string) {
-  return jwt.sign({ userId: userId, workspaceId: workspaceId }, apiKey, { expiresIn : "1h" });
+export function createUserToken(props: {apiKey: string, userId: string, workspaceId: string}) {
+  return jwt.sign({ userId: props.userId, workspaceId: props.workspaceId }, props.apiKey, { expiresIn : "1h" });
 }
