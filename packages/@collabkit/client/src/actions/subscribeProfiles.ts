@@ -7,6 +7,17 @@ import { getConfig } from './index';
 import { snapshotToProfile } from '../sync/firebase/converters';
 import { ensureColor } from './saveProfile';
 
+let didWarnLargeWorkspace = false;
+
+function warnLargeWorkspace() {
+  if (!didWarnLargeWorkspace) {
+    console.warn(
+      '[CollabKit] Setting mentionableUsers to "allWorkspace" in workspaces with a large number of users is not recommended. To ensure optimal performance, please consider passing an array of mentionable users instead or contact us for support.'
+    );
+    didWarnLargeWorkspace = true;
+  }
+}
+
 export async function subscribeProfiles(store: Store) {
   const { appId, workspaceId } = getConfig(store);
 
@@ -31,10 +42,7 @@ export async function subscribeProfiles(store: Store) {
               store.mentionableUsers[id] = profile;
               const numMentionableUsers = Object.keys(store.mentionableUsers).length;
               if (numMentionableUsers > 200) {
-                console.warn(
-                  '[CollabKit] Over 200 mentionable users you may experience performance issues, \n Consider setting mentionableUsers to just those relevant in your apps context or contact support.',
-                  numMentionableUsers
-                );
+                warnLargeWorkspace();
               }
             }
           }
