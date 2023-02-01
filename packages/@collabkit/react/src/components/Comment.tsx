@@ -22,6 +22,7 @@ import Composer from './composer/Composer';
 import { IconButton } from './IconButton';
 import CommentPinSvg from './composer/comment-pin.svg';
 import CommentPinSelectedSvg from './composer/comment-pin-hover.svg';
+import { Tooltip } from './Tooltip';
 
 function useIsEditing() {
   const { store } = useApp();
@@ -189,12 +190,14 @@ export const CommentPin = (props: React.ComponentProps<'img'>) => {
   }
 
   return (
-    <img
-      className={styles.pin}
-      {...props}
-      onClick={onClick}
-      src={isSelected ? CommentPinSelectedSvg : CommentPinSvg}
-    />
+    <span className={styles.pin} {...props} onClick={onClick}>
+      <Tooltip>
+        <Tooltip.Trigger>
+          <img src={isSelected ? CommentPinSelectedSvg : CommentPinSvg} />
+        </Tooltip.Trigger>
+        <Tooltip.Content>See pin preview</Tooltip.Content>
+      </Tooltip>
+    </span>
   );
 };
 
