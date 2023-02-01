@@ -193,6 +193,10 @@ async function assertOnePinMarker(page: Page) {
   expect(await page.getByTestId('collabkit-pin-marker').count()).toBe(1);
 }
 
+async function assertNoPinMarker(page: Page) {
+  expect(await page.getByTestId('collabkit-pin-marker').count()).toBe(0);
+}
+
 async function assertNoCommentPin(page: Page) {
   expect(await page.getByTestId('collabkit-comment-pin').count()).toBe(0);
 }
@@ -242,6 +246,13 @@ test.describe('Dashboard', () => {
 
     await assertOnePinMarker(page);
     await assertOneCommentPin(page);
+
+    // deletion
+    await clickCommentMenuButton(page);
+    await clickCommentMenuDeleteButton(page);
+    await page.waitForTimeout(500);
+    await assertNoCommentPin(page);
+    await assertNoPinMarker(page);
   });
 });
 
