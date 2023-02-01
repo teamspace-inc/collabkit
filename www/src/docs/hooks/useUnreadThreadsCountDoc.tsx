@@ -1,3 +1,4 @@
+import { AdvancedProps } from '../advanced/AdvancedCommon';
 import { renderCodeSnippet } from '../CodeEditor';
 
 export function UseUnreadThreadsCountDoc() {
@@ -10,6 +11,13 @@ export function UseUnreadThreadsCountDoc() {
         {renderCodeSnippet(`import { useUnreadThreadsCount } from '@collabkit/react';
 
 const count = useUnreadThreadsCount();`)}
+      </div>
+      <div>
+        <h3>Props</h3>
+        <AdvancedProps
+          props={[]}
+          optionalProps={[['threadIds', 'string[]', 'Thread IDs to check unread for.']]}
+        />
       </div>
     </>
   );
