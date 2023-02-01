@@ -7,13 +7,12 @@ import { PlainTextPlugin } from '@lexical/react/LexicalPlainTextPlugin';
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
-import { $convertFromMarkdownString, $convertToMarkdownString } from '@lexical/markdown';
+import { $convertFromMarkdownString } from '@lexical/markdown';
 import {
   TRANSFORMERS,
   PinNode,
   MentionNode,
   TimestampNode,
-  $isMentionNode,
   InlineTextNode,
 } from '@collabkit/editor';
 import { TimestampPlugin } from './TimestampPlugin';
@@ -55,6 +54,8 @@ type ComposerContextValue = {
   initialBody: string;
   autoFocus: boolean;
   canPin: boolean;
+  hasText: boolean;
+  setHasText: (hasText: boolean) => void;
 };
 
 // you can use valtio instead of React context for
@@ -66,6 +67,8 @@ export const ComposerContext = React.createContext<ComposerContextValue>({
   initialBody: '',
   autoFocus: true,
   canPin: false,
+  hasText: false,
+  setHasText: () => {},
 });
 
 function onError(error: any) {
@@ -90,6 +93,28 @@ function ComposerRoot(props: {
   initialBody?: string;
   ['data-testid']?: string;
 }) {
+  const [hasText, setHasText] = useState(() =>
+    props.initialBody ? props.initialBody.length > 0 : false
+  );
+
+  const [context, setContext] = useState<ComposerContextValue>({
+    initialBody: props.initialBody ?? '',
+    autoFocus: props.autoFocus ?? false,
+    canPin: false,
+    hasText,
+    setHasText,
+  });
+
+  useEffect(() => {
+    setContext({
+      initialBody: props.initialBody ?? '',
+      autoFocus: props.autoFocus ?? false,
+      canPin: false,
+      hasText,
+      setHasText,
+    });
+  }, [hasText, props.initialBody, props.autoFocus]);
+
   const commentContext = useOptionalCommentContext();
 
   const { threadId, isNewThread, workspaceId, userId } = useThreadContext();
@@ -115,13 +140,7 @@ function ComposerRoot(props: {
       onClick={onClick}
     >
       <Profile.Provider profileId={userId}>
-        <ComposerContext.Provider
-          value={{
-            initialBody: props.initialBody ?? '',
-            autoFocus: props.autoFocus ?? false,
-            canPin: false,
-          }}
-        >
+        <ComposerContext.Provider value={context}>
           <TargetContext.Provider value={target}>{props.children}</TargetContext.Provider>
         </ComposerContext.Provider>
       </Profile.Provider>
@@ -145,7 +164,7 @@ function ComposerContentEditable(props: { className?: string }) {
       onBlur={(e) => events.onBlur(e, { target })}
     >
       <LexicalContentEditable
-        className={props.className ?? styles.input()}
+        className={props.className ?? styles.contentEditable()}
         tabIndex={autoFocus ? 1 : 0}
       />
     </div>
@@ -260,14 +279,13 @@ function ComposerEditor(props: {
   placeholder: React.ReactElement;
   className?: string;
   contentEditable?: JSX.Element;
+  children?: React.ReactNode;
 }) {
   const target = useTarget();
   const { workspaceId, threadId } = useThreadContext();
-  // body is initial body, it does not update live
-  const { autoFocus, initialBody } = useComposerContext();
+  const { autoFocus, initialBody, setHasText } = useComposerContext();
   const { events, store } = useApp();
   const { focusedId, isPinningEnabled } = useSnapshot(store);
-  const [hasText, setHasText] = useState(false);
   const { eventId } = useOptionalCommentContext() ?? { eventId: 'default' };
 
   const active = !!(
@@ -288,16 +306,8 @@ function ComposerEditor(props: {
 
   const handleChange = useCallback(
     (editorState: EditorState, editor: LexicalEditor) => {
-      editorState.read(() => {
-        const newBody = $convertToMarkdownString(TRANSFORMERS);
-        setHasText(newBody.length > 0);
-        const mentions = $getRoot()
-          .getAllTextNodes()
-          .filter((node) => $isMentionNode(node))
-          .map((node) => node.__id)
-          .filter((id) => typeof id === 'string');
-        events.onComposerChange(target, editor, newBody, mentions);
-      });
+      setHasText(editorState.read(() => $getRoot().getTextContentSize() > 0));
+      events.onComposerChange(target, editor);
     },
     [events.onComposerChange, target]
   );
@@ -308,88 +318,35 @@ function ComposerEditor(props: {
       className={props.className ?? `${styles.editor({ active })} ${styles.composerGlobalStyles}`}
       onClick={(e) => events.onClick(e, { target })}
     >
-      <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
-        <div style={{ display: 'flex', flexDirection: 'row' }}>
-          <div style={{ display: 'flex', height: '100%' }}>
-            {isPinningEnabled ? (
-              <Composer.PinButton />
-            ) : (
-              <div className={styles.composerLeftPadding} />
-            )}
-          </div>
-          <div
-            style={{
-              display: 'flex',
-              flex: 1,
-              flexDirection: 'column',
-              position: 'relative',
+      {isPinningEnabled && <Composer.PinButton />}
+      <div
+        style={{
+          display: 'flex',
+          flex: 1,
+          flexDirection: 'column',
+          position: 'relative',
+        }}
+      >
+        <LexicalComposer initialConfig={initialConfig}>
+          <EditorPlugin onMount={handleChange} />
+          <KeyPlugin onKeyDown={(event) => events.onKeyDown(event)} />
+          <PasteTextPlugin />
+          <PlainTextPlugin
+            contentEditable={props.contentEditable ?? <Composer.ContentEditable />}
+            placeholder={props.placeholder}
+            ErrorBoundary={(props) => <>{props.children}</>}
+          />
+          <OnChangePlugin onChange={handleChange} />
+          {autoFocus ? <AutoFocusPlugin /> : <></>}
+          <HistoryPlugin />
+          <MentionsPlugin
+            onOpenChange={(open) => {
+              store.workspaces[workspaceId].composers[threadId][eventId].isMentioning = open;
             }}
-          >
-            <LexicalComposer initialConfig={initialConfig}>
-              <EditorPlugin onMount={handleChange} />
-              <KeyPlugin onKeyDown={(event) => events.onKeyDown(event)} />
-              <PasteTextPlugin />
-              <PlainTextPlugin
-                contentEditable={props.contentEditable ?? <Composer.ContentEditable />}
-                placeholder={props.placeholder}
-                ErrorBoundary={(props) => {
-                  return <>{props.children}</>;
-                }}
-              />
-              <OnChangePlugin onChange={handleChange} />
-              {autoFocus ? <AutoFocusPlugin /> : <></>}
-              <HistoryPlugin />
-              <MentionsPlugin
-                onOpenChange={(open) => {
-                  store.workspaces[workspaceId].composers[threadId][eventId].isMentioning = open;
-                }}
-              />
-              <TimestampPlugin />
-            </LexicalComposer>
-            {(hasText || initialBody.length > 0) && (
-              <Composer.ButtonGroup>
-                {hasText && <Composer.MentionsButton />}
-                <div style={{ flex: 1 }} />
-                {initialBody.length > 0 && (
-                  <>
-                    <button
-                      data-testid="collabkit-comment-cancel-button"
-                      onClick={(e) =>
-                        events.onClick(e, {
-                          target: {
-                            type: 'commentCancelButton',
-                            eventId,
-                            workspaceId,
-                            threadId,
-                          },
-                        })
-                      }
-                      className={styles.button({ type: 'secondary' })}
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      data-testid="collabkit-comment-save-button"
-                      onClick={(e) => {
-                        events.onClick(e, {
-                          target: {
-                            type: 'commentSaveButton',
-                            eventId,
-                            workspaceId,
-                            threadId,
-                          },
-                        });
-                      }}
-                      className={styles.button({ type: 'primary' })}
-                    >
-                      Save
-                    </button>
-                  </>
-                )}
-              </Composer.ButtonGroup>
-            )}
-          </div>
-        </div>
+          />
+          <TimestampPlugin />
+        </LexicalComposer>
+        {props.children}
       </div>
     </div>
   );
@@ -406,8 +363,58 @@ function ComposerPlaceholder(props: ComponentProps<'span'>) {
   );
 }
 
-function ComposerButtonGroup(props: { className?: string; children: React.ReactNode }) {
+function ButtonGroup(props: { className?: string; children: React.ReactNode }) {
   return <div className={props.className ?? styles.buttonGroup}>{props.children}</div>;
+}
+
+function ComposerButtons() {
+  const { workspaceId, threadId } = useThreadContext();
+  const { eventId } = useOptionalCommentContext() ?? { eventId: 'default' };
+  const { events } = useApp();
+  const { hasText, initialBody } = useComposerContext();
+
+  return hasText ? (
+    <ButtonGroup>
+      {/* <Composer.MentionsButton /> */}
+      {initialBody.length > 0 ? <div style={{ flex: 1 }} /> : null}
+      {initialBody.length > 0 && (
+        <>
+          <button
+            data-testid="collabkit-comment-cancel-button"
+            onClick={(e) =>
+              events.onClick(e, {
+                target: {
+                  type: 'commentCancelButton',
+                  eventId,
+                  workspaceId,
+                  threadId,
+                },
+              })
+            }
+            className={styles.button({ type: 'secondary' })}
+          >
+            Cancel
+          </button>
+          <button
+            data-testid="collabkit-comment-save-button"
+            onClick={(e) => {
+              events.onClick(e, {
+                target: {
+                  type: 'commentSaveButton',
+                  eventId,
+                  workspaceId,
+                  threadId,
+                },
+              });
+            }}
+            className={styles.button({ type: 'primary' })}
+          >
+            Save
+          </button>
+        </>
+      )}
+    </ButtonGroup>
+  ) : null;
 }
 
 export default function Composer() {
@@ -420,7 +427,9 @@ export default function Composer() {
         placeholder={
           <Composer.Placeholder>{placeholder ?? 'Write a comment'}</Composer.Placeholder>
         }
-      />
+      >
+        <Composer.Buttons />
+      </Composer.Editor>
       <Composer.TypingIndicator />
     </Composer.Root>
   );
@@ -432,6 +441,6 @@ Composer.Editor = ComposerEditor;
 Composer.Placeholder = ComposerPlaceholder;
 Composer.TypingIndicator = ComposerTypingIndicator;
 
-Composer.ButtonGroup = ComposerButtonGroup;
+Composer.Buttons = ComposerButtons;
 Composer.MentionsButton = ComposerMentionsButton;
 Composer.PinButton = ComposerPinButton;

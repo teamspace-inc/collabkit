@@ -9,12 +9,10 @@ export function useComposer() {
   const { eventId } = useOptionalCommentContext() ?? { eventId: 'default' };
   const { workspaces } = useSnapshot(store);
   const canSend = !!workspaces[workspaceId]?.composers[threadId]?.[eventId].enabled;
-  const hasMentions = workspaces[workspaceId]?.composers[threadId]?.[eventId]?.mentions.length > 0;
   return {
     canSend,
     send: () => {
       events.onSend(workspaceId, threadId);
     },
-    hasMentions,
   };
 }

@@ -26,7 +26,15 @@ export function Thread(props: ThreadProps & { maxHeight?: number }) {
             <Scrollable autoScroll="bottom" maxHeight={props.maxHeight}>
               <CommentList hideResolveButton={props.hideResolveButton} />
             </Scrollable>
-            {props.hideComposer ? null : <Composer />}
+            {props.hideComposer ? null : (
+              <Composer.Root autoFocus={true}>
+                <Profile.Avatar />
+                <Composer.Editor
+                  placeholder={<Composer.Placeholder>Write a comment</Composer.Placeholder>}
+                />
+                <Composer.TypingIndicator />
+              </Composer.Root>
+            )}
           </CollabKitThread.Root>
         </ThemeWrapper>
       </Profile.Provider>
