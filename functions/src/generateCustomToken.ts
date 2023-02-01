@@ -59,6 +59,7 @@ export async function generateCustomTokenImpl(
 
     const token = await admin.auth().createCustomToken(apiKey, {
       api: true,
+      mode: 'SECURED',
       appId: FirebaseId.encode(appId),
       userId: FirebaseId.encode(userId),
       workspaceId: FirebaseId.encode(workspaceId),
@@ -70,6 +71,7 @@ export async function generateCustomTokenImpl(
         appId,
         userId,
         workspaceId,
+        mode: 'SECURED',
         token,
       },
     });
