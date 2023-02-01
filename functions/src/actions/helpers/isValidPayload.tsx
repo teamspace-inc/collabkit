@@ -1,5 +1,3 @@
-import has from 'has';
-
 export type Payload = {
     userId: string;
     workspaceId: string;
