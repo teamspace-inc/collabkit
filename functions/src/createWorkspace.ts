@@ -6,12 +6,12 @@ import { updateWorkspace } from './actions/helpers/updateWorkspace';
 export async function createWorkspaceImpl(
   request: functions.https.Request,
   response: functions.Response
-){
-  if(request.method !== 'PUT'){
+) {
+  if (request.method !== 'PUT') {
     response.status(405).send({ status: 405, error: 'Method not allowed' });
     return;
   }
-  
+
   const workspaceId = request.path.split('/').pop();
 
   const { appId, apiKey, workspace } = request.body;
@@ -49,15 +49,13 @@ export async function createWorkspaceImpl(
     return;
   }
 
-  await updateWorkspace({ appId, workspaceId, workspace});
+  await updateWorkspace({ appId, workspaceId, workspace });
 
   response.status(200).send('Created/Updated Workspace Successfully.');
 }
 
 export const createWorkspace = functions
   .runWith({ minInstances: 1 })
-  .https.onRequest(
-    async (request, response) => {
-      await createWorkspaceImpl(request, response);
-    }
-  );
+  .https.onRequest(async (request, response) => {
+    await createWorkspaceImpl(request, response);
+  });

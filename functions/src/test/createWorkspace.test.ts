@@ -86,7 +86,7 @@ it('createWorkspace: workspace not provided', async () => {
   await createWorkspaceImpl(http.req, http.res);
   const send = http.res.send as sinon.SinonSpy;
   const { args } = send.getCalls()[0];
-  expect(args[0]).toEqual({ status: 400, error:  '"workspace" not provided' });
+  expect(args[0]).toEqual({ status: 400, error: '"workspace" not provided' });
 });
 
 it('createWorkspace: success', async () => {
@@ -95,9 +95,9 @@ it('createWorkspace: success', async () => {
     body: {
       appId: '0mO-P6YhtUwKsZNwnDSt9',
       apiKey: 'dHchccA9yszQ3EFftTEQm',
-      workspace:{
-        "name" : "workspace-test" 
-      }
+      workspace: {
+        name: 'workspace-test',
+      },
     },
     path: '/workspaceId',
   });
@@ -106,4 +106,3 @@ it('createWorkspace: success', async () => {
   const { args } = send.getCalls()[0];
   expect(args[0]).toEqual('Created/Updated Workspace Successfully.');
 });
-

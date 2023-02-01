@@ -13,7 +13,8 @@ describe('isValidPayload', () => {
   });
 
   test('userId (undefined)', () => {
-    expect(isValidPayload({ userId: 'test' })).toBe(false);   });
+    expect(isValidPayload({ userId: 'test' })).toBe(false);
+  });
 
   test('userId (object)', () => {
     expect(isValidPayload({ userId: {} })).toBe(false);
@@ -26,13 +27,12 @@ describe('isValidPayload', () => {
   test('workspaceId (undefined)', () => {
     expect(isValidPayload({ workspaceId: undefined })).toBe(false);
   });
-  
+
   test('workspaceId (object)', () => {
     expect(isValidPayload({ workspaceId: {} })).toBe(false);
   });
 
   test('workspaceId + userId', () => {
-    expect(isValidPayload({ userId: "test", workspaceId: "test" })).toBe(true);
+    expect(isValidPayload({ userId: 'test', workspaceId: 'test' })).toBe(true);
   });
-
 });

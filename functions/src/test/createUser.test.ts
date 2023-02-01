@@ -98,7 +98,7 @@ it('createUser: "user" object is invalid', async () => {
       apiKey: 'apiKey',
       workspaceId: 'workspaceId',
       user: {
-        name: {}
+        name: {},
       },
     },
     path: '/userId',

@@ -29,19 +29,18 @@ export async function generateCustomTokenImpl(
         try {
           payload = jwt.verify(userToken, data.key);
           apiKey = data.key;
-        } catch (err) {
-        }
+        } catch (err) {}
       }
     });
 
     if (!apiKey) {
       response.status(400).send({ status: 400, error: '"userToken" invalid' });
-      return
+      return;
     }
 
-    if(!isValidPayload(payload)){
-      response.status(400).send({ status: 400, error: '"jwt payload" not valid'});
-      return
+    if (!isValidPayload(payload)) {
+      response.status(400).send({ status: 400, error: '"jwt payload" not valid' });
+      return;
     }
 
     const { userId, workspaceId } = payload;
@@ -50,11 +49,11 @@ export async function generateCustomTokenImpl(
     try {
       if (!profiles.find((profile) => profile === userId)) {
         response.status(400).send({ status: 400, error: '"userId" not found' });
-        return
+        return;
       }
     } catch (e) {
-      response.status(400).send({ status: 400, error: '"workspaceId not found"'});
-      return
+      response.status(400).send({ status: 400, error: '"workspaceId not found"' });
+      return;
     }
 
     const token = await admin.auth().createCustomToken(apiKey, {
@@ -65,16 +64,19 @@ export async function generateCustomTokenImpl(
       workspaceId: FirebaseId.encode(workspaceId),
     });
 
-    response.set('Cache-Control', 'public, max-age=300, s-maxage=600').status(201).send({
-      status: 201,
-      data: {
-        appId,
-        userId,
-        workspaceId,
-        mode: 'SECURED',
-        token,
-      },
-    });
+    response
+      .set('Cache-Control', 'public, max-age=300, s-maxage=600')
+      .status(201)
+      .send({
+        status: 201,
+        data: {
+          appId,
+          userId,
+          workspaceId,
+          mode: 'SECURED',
+          token,
+        },
+      });
     return;
   } catch (e) {
     response.status(401).send({ status: 401, error: e });
@@ -88,6 +90,5 @@ export const generateCustomToken = functions
   .https.onRequest(async (request, response) => {
     corsHandler(request, response, async () => {
       await generateCustomTokenImpl(request, response);
-    })
-  }
-  );
+    });
+  });

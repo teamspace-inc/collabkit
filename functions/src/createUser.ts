@@ -41,9 +41,7 @@ export async function createUserImpl(
 
   if (!user) {
     console.debug('"user" not provided', user);
-    response
-      .status(400)
-      .send({ status: 400, error: '"user" not provided'});
+    response.status(400).send({ status: 400, error: '"user" not provided' });
     return;
   }
 
@@ -57,7 +55,7 @@ export async function createUserImpl(
 
   if (!snapshot.exists()) {
     console.debug('"apiKey" not found', appId);
-    response.status(403).send({ status: 400, error: '"apiKey" invalid'});
+    response.status(403).send({ status: 400, error: '"apiKey" invalid' });
     return;
   }
 
