@@ -30,8 +30,7 @@ export function Thread(props: ThreadProps & { maxHeight?: number }) {
               <Composer.Root autoFocus={true}>
                 <Profile.Avatar />
                 <Composer.Editor
-                  contentEditable={<Composer.ContentEditable />}
-                  placeholder={<Composer.Placeholder>{'Write a comment'}</Composer.Placeholder>}
+                  placeholder={<Composer.Placeholder>Write a comment</Composer.Placeholder>}
                 />
                 <Composer.TypingIndicator />
               </Composer.Root>

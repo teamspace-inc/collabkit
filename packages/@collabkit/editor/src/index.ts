@@ -5,4 +5,4 @@ export * from './PinNode';
 export * from './commands';
 export * from './InlineTextNode';
 export * from './$getPrevChar';
-export * from './parse';
+export * from './extract';

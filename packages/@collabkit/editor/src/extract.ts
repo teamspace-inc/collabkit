@@ -2,7 +2,7 @@ import { LexicalEditor, $getRoot } from 'lexical';
 import { $isMentionNode, TRANSFORMERS } from '.';
 import { $convertToMarkdownString } from '@lexical/markdown';
 
-export function parse(editor: LexicalEditor) {
+export function extract(editor: LexicalEditor) {
   let mentions: string[] = [];
   let body = '';
   editor.getEditorState().read(() => {

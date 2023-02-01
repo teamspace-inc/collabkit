@@ -1,6 +1,6 @@
 import type { Store } from '@collabkit/core';
 import { writeMessageToFirebase } from './writeMessageToFirebase';
-import { parse } from '@collabkit/editor';
+import { extract } from '@collabkit/editor';
 
 export async function updateComment(store: Store) {
   if (!store.editingId) {
@@ -20,7 +20,7 @@ export async function updateComment(store: Store) {
   const workspace = store.workspaces[workspaceId];
   const composer = workspace.composers[threadId][eventId];
   const { editor, pendingPin } = composer;
-  const { body, mentions } = editor ? parse(editor) : { body: '', mentions: [] };
+  const { body, mentions } = editor ? extract(editor) : { body: '', mentions: [] };
 
   await writeMessageToFirebase(store, {
     workspaceId,

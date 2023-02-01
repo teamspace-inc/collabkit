@@ -3,24 +3,7 @@ import { $getRoot } from 'lexical';
 import { writeMessageToFirebase } from './writeMessageToFirebase';
 import { actions } from '.';
 import { generateObjectIdFromCellId } from '../utils/generateObjectIdFromCellId';
-import { $isMentionNode, TRANSFORMERS } from '@collabkit/editor';
-import { $convertToMarkdownString } from '@lexical/markdown';
-import { LexicalEditor } from 'lexical';
-
-function readComposer(editor: LexicalEditor) {
-  let mentions: string[] = [];
-  let body = '';
-  editor.getEditorState().read(() => {
-    mentions = $getRoot()
-      .getAllTextNodes()
-      .filter((node) => $isMentionNode(node))
-      .map((node) => node.__id)
-      .filter((id) => typeof id === 'string');
-    body = $convertToMarkdownString(TRANSFORMERS);
-  });
-
-  return { body, mentions };
-}
+import { extract } from '@collabkit/editor';
 
 export async function sendMessage(
   store: Store,
@@ -44,7 +27,7 @@ export async function sendMessage(
   const workspace = store.workspaces[workspaceId];
   const composer = workspace.composers[threadId][eventId];
   const { editor } = composer;
-  const { body, mentions } = editor ? readComposer(editor) : { body: '', mentions: [] };
+  const { body, mentions } = editor ? extract(editor) : { body: '', mentions: [] };
   const { pendingPin } = composer;
 
   // we can move this check elsewhere
