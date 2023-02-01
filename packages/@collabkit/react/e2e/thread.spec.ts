@@ -7,9 +7,24 @@ import { nanoid, random } from 'nanoid';
 
 const HOST = process.env.PREVIEW_URL_DEMO ? process.env.PREVIEW_URL_DEMO : 'http://localhost:3000';
 
-const LADLE_HOST =
-process.env.PREVIEW_URL_LADLE ? process.env.PREVIEW_URL_LADLE : 'http://localhost:61000';
+const LADLE_HOST = process.env.PREVIEW_URL_LADLE
+  ? process.env.PREVIEW_URL_LADLE
+  : 'http://localhost:61000';
 setupFirebase();
+
+async function visitDashboardAsUser(
+  context: BrowserContext,
+  props: { appId: string; apiKey: string; userId: string; userName: string; userEmail: string }
+) {
+  const page = await context.newPage();
+  const params = new URLSearchParams({
+    test: 'true',
+    ...props,
+  });
+  const url = HOST + '/dashboard?' + params.toString();
+  await page.goto(url);
+  return page;
+}
 
 async function visitThreadAsUser(
   context: BrowserContext,
@@ -59,11 +74,24 @@ async function createAppAndVisitThreadAsUser(context: BrowserContext, user: type
   return { page, appId, apiKey };
 }
 
+async function createAppAndVisitDashboardAsUser(
+  context: BrowserContext,
+  user: typeof users[number]
+) {
+  const { apiKey, appId } = await createApp();
+  const page = await visitDashboardAsUser(context, {
+    ...user,
+    appId,
+    apiKey,
+  });
+  return { page, appId, apiKey };
+}
+
 async function sendComment(page: Page, body: string) {
   const composer = await page.locator(
     '[data-testid="collabkit-composer-contenteditable"] [contenteditable=true]'
   );
-  page.waitForTimeout(2000)
+  page.waitForTimeout(2000);
   await composer.click();
   await composer.fill(body);
   await page.keyboard.press('Enter');
@@ -129,7 +157,7 @@ async function hasMentionInTypeahead(page: Page, name: string, nth: number = 0) 
 
 async function hasMentionInComposer(page: Page, name: string, nth: number = 0) {
   await page.waitForSelector('.collabkit-mention-node');
-  expect( await page.locator('.collabkit-mention-node').nth(nth).innerText()).toBe('@' + name);
+  expect(await page.locator('.collabkit-mention-node').nth(nth).innerText()).toBe('@' + name);
 }
 
 async function clickCommentMenuButton(page: Page, nth: number = 0) {
@@ -160,6 +188,68 @@ async function typeInCommentComposer(page: Page, text: string, nth: number = 0) 
 async function saveEditedComment(page: Page, nth: number = 0) {
   await page.getByTestId('collabkit-comment-save-button').nth(nth).click();
 }
+
+async function assertOnePinMarker(page: Page) {
+  expect(await page.getByTestId('collabkit-pin-marker').count()).toBe(1);
+}
+
+async function assertNoCommentPin(page: Page) {
+  expect(await page.getByTestId('collabkit-comment-pin').count()).toBe(0);
+}
+
+async function assertOneCommentPin(page: Page) {
+  expect(await page.getByTestId('collabkit-comment-pin').count()).toBe(1);
+}
+
+test.describe('Dashboard', () => {
+  test('renders page title', async ({ context }) => {
+    const { page } = await createAppAndVisitDashboardAsUser(context, alice);
+    await expect(page).toHaveTitle(/Vite App/);
+  });
+
+  test('can pin chart', async ({ context }) => {
+    const { page } = await createAppAndVisitDashboardAsUser(context, alice);
+    await page.getByTestId('collabkit-composer-pin-button').click();
+    const svgPathRect = await page
+      .locator('svg')
+      .filter({
+        hasText: '2021-01-012021-01-102021-01-192021-01-292021-02-082021-02-182021-02-282021-03-13',
+      })
+      .locator('path')
+      .nth(1)
+      .boundingBox();
+    if (!svgPathRect) throw new Error('Chart path not found');
+    await page.mouse.move(0, 0);
+    await page.mouse.move(
+      svgPathRect.x + svgPathRect.width / 2,
+      svgPathRect.y + svgPathRect.height / 2
+    );
+    await assertOnePinMarker(page);
+
+    await page.mouse.down();
+    await page.mouse.up();
+
+    await assertOnePinMarker(page);
+
+    const pinMarker = await page.getByTestId('collabkit-pin-marker');
+    const pinMarkerRect = await pinMarker.boundingBox();
+    if (!pinMarkerRect) throw new Error('Pin marker not found');
+    const pinMarkerY = Math.round(pinMarkerRect.y + pinMarkerRect.height);
+    const pinMarkerX = Math.round(pinMarkerRect.x + pinMarkerRect.width / 2);
+    await expect(pinMarkerY).toEqual(Math.round(svgPathRect.y + svgPathRect.height / 2));
+    await expect(pinMarkerX).toEqual(Math.round(svgPathRect.x + svgPathRect.width / 2));
+
+    await assertNoCommentPin(page);
+
+    await typeInComposer(page, 'This is a pinned comment');
+    await page.keyboard.press('Enter');
+    await page.waitForTimeout(500);
+    await hasComment(page, { body: 'This is a pinned comment' });
+
+    await assertOnePinMarker(page);
+    await assertOneCommentPin(page);
+  });
+});
 
 test.describe('Thread', () => {
   test('renders page title', async ({ context }) => {
@@ -275,10 +365,10 @@ test.describe('Thread', () => {
     const maxTimeToLoad = 5000;
     // To make sure that the page loads in constant maximum amount of time, we want the test to break if time taken is more than this
     await page.waitForTimeout(maxTimeToLoad);
-    await page.click('[data-testid="open-sidebar"]');  
+    await page.click('[data-testid="open-sidebar"]');
     const newThreadComposer = await page.getByTestId('new-thread-composer-div');
     const sidebarTitle = await page.getByTestId('sidebar-title');
-    await expect(await sidebarTitle.innerText()).toBe("Comments")
+    await expect(await sidebarTitle.innerText()).toBe('Comments');
     await expect(newThreadComposer).toBeTruthy();
     const composer = await page.getByTestId('collabkit-composer-contenteditable');
     await composer.click();
@@ -286,7 +376,9 @@ test.describe('Thread', () => {
     const randomString = Math.random().toString(36).slice(2, 7);
     await composer.type('Hello World Testing' + randomString);
     await page.keyboard.press('Enter');
-    const newThreadText = await page.getByTestId("collabkit-markdown").filter({hasText: 'Hello World Testing' + randomString});
+    const newThreadText = await page
+      .getByTestId('collabkit-markdown')
+      .filter({ hasText: 'Hello World Testing' + randomString });
     await page.waitForTimeout(100);
     await expect(newThreadText).toHaveCount(1);
   });

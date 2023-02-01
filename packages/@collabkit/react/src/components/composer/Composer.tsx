@@ -266,6 +266,7 @@ function ComposerPinButton(props: { className?: string }) {
           className={styles.pinButton}
           {...props}
           onClick={(e) => events.onClick(e, { target: buttonTarget })}
+          data-testid="collabkit-composer-pin-button"
         >
           {icon}
         </div>

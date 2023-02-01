@@ -100,6 +100,7 @@ const PinMarker = forwardRef<HTMLDivElement, PinMarkerProps>(function PinMarker(
         ref={ref}
         style={props.style}
         onPointerDown={onPointerDown}
+        data-testid="collabkit-pin-marker"
       >
         <PinMenu>
           <div>
