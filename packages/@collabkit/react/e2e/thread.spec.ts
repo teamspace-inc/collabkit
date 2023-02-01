@@ -262,6 +262,7 @@ test.describe('Thread', () => {
   test('renders thread composer', async ({ context }) => {
     const { page } = await createAppAndVisitThreadAsUser(context, alice);
     // Expect a title "to contain" a substring.
+    await page.waitForSelector('[data-testid="collabkit-composer-placeholder"]');
     await expect(page).toHaveTitle(/CollabKit Demo/);
     const placeholder = await page.getByTestId('collabkit-composer-placeholder');
     const text = await placeholder.innerText();
