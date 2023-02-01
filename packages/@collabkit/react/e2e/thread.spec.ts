@@ -211,14 +211,7 @@ test.describe('Dashboard', () => {
     const { page } = await createAppAndVisitDashboardAsUser(context, alice);
     await page.waitForSelector('[data-testid="collabkit-composer-pin-button"]');
     await page.getByTestId('collabkit-composer-pin-button').click();
-    const svgPathRect = await page
-      .locator('svg')
-      .filter({
-        hasText: '2021-01-012021-01-102021-01-192021-01-292021-02-082021-02-182021-02-282021-03-13',
-      })
-      .locator('path')
-      .nth(1)
-      .boundingBox();
+    const svgPathRect = await page.locator('svg.recharts-surface').boundingBox();
     if (!svgPathRect) throw new Error('Chart path not found');
     await page.mouse.move(0, 0);
     await page.mouse.move(
