@@ -1,6 +1,7 @@
 import * as functions from 'firebase-functions';
 import { ref } from './actions/data/refs';
 import { updateUserAndWorkspace } from './actions/helpers/updateUserAndWorkspace';
+import { updateWorkspace } from './actions/helpers/updateWorkspace';
 
 export async function createWorkspaceImpl(
   request: functions.https.Request,
@@ -48,7 +49,7 @@ export async function createWorkspaceImpl(
     return;
   }
 
-  await updateUserAndWorkspace({ appId, userId: "", workspaceId, user: {} , workspace});
+  await updateWorkspace({ appId, workspaceId, workspace});
 
   response.status(200).send('Created/Updated Workspace Successfully.');
 }
