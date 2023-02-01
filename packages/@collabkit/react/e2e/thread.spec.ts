@@ -209,6 +209,7 @@ test.describe('Dashboard', () => {
 
   test('can pin chart', async ({ context }) => {
     const { page } = await createAppAndVisitDashboardAsUser(context, alice);
+    await page.waitForSelector('[data-testid="collabkit-composer-pin-button"]');
     await page.getByTestId('collabkit-composer-pin-button').click();
     const svgPathRect = await page
       .locator('svg')
