@@ -79,6 +79,10 @@ export function createEvents(store: Store) {
         case 'pin':
           actions.select(store, { target });
           break;
+        case 'comment': {
+          actions.select(store, { target });
+          break;
+        }
         case 'composer':
           actions.focusComposer(store, target);
           break;
