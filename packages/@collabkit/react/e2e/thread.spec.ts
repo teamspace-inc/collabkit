@@ -3,7 +3,7 @@ import { test, expect, BrowserContext, Page } from '@playwright/test';
 // @ts-expect-error
 import { setupApp, setupFirebase } from './setup.ts';
 
-import { nanoid, random } from 'nanoid';
+import { nanoid } from 'nanoid';
 
 const HOST = process.env.PREVIEW_URL_DEMO ? process.env.PREVIEW_URL_DEMO : 'http://localhost:3000';
 
@@ -88,21 +88,15 @@ async function createAppAndVisitDashboardAsUser(
 }
 
 async function sendComment(page: Page, body: string) {
-  const composer = await page.locator(
-    '[data-testid="collabkit-composer-contenteditable"] [contenteditable=true]'
-  );
-  page.waitForTimeout(2000);
-  await composer.click();
-  await composer.fill(body);
+  await page.getByTestId('collabkit-composer-contenteditable').click();
+  await page.keyboard.type(body);
   await page.keyboard.press('Enter');
 }
 
 async function typeCommentSlowly(page: Page, body: string) {
-  const composer = await page.locator(
-    '[data-testid="collabkit-composer-contenteditable"] [contenteditable=true]'
-  );
-  await composer.click();
-  await composer.type(body, { delay: 100 });
+  await page.getByTestId('collabkit-composer-contenteditable').click();
+  await page.keyboard.type(body, { delay: 100 });
+  await page.keyboard.press('Enter');
 }
 
 async function visitLadleURL(context: BrowserContext, URL: string, params: Record<string, string>) {
@@ -331,6 +325,7 @@ test.describe('Thread', () => {
     const page2 = await visitThreadAsUser(context, { ...bob, appId, apiKey });
     await sendComment(page, 'Hello World');
     typeCommentSlowly(page, 'Hello this is a really long comment to test the typing indicator');
+    await page.waitForTimeout(250);
     const indicator = page2.getByTestId('collabkit-typing-indicator');
     await expect(indicator).toContainText('Alice is typing…');
   });
@@ -368,10 +363,10 @@ test.describe('Thread', () => {
 
   test('sidebar threads are rendering and working', async ({ context }) => {
     const page = await visitLadleURL(context, '/', { story: 'channels--channels' });
-    const maxTimeToLoad = 5000;
+    const maxTimeToLoad = 7500;
     // To make sure that the page loads in constant maximum amount of time, we want the test to break if time taken is more than this
-    await page.waitForTimeout(maxTimeToLoad);
-    await page.click('[data-testid="open-sidebar"]');
+    await page.waitForSelector('[data-testid="open-sidebar"]', { timeout: maxTimeToLoad });
+    await page.getByTestId('open-sidebar').click();
     const newThreadComposer = await page.getByTestId('new-thread-composer-div');
     const sidebarTitle = await page.getByTestId('sidebar-title');
     await expect(await sidebarTitle.innerText()).toBe('Comments');

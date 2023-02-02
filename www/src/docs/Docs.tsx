@@ -86,8 +86,8 @@ export const DOCS: RootDocNode = {
   'Api Reference': {
     title: 'HTTP API',
     children: {
-      'CreateComment': { component: CommentAPI },
-    }
+      CreateComment: { component: CommentAPI },
+    },
   },
   'Advanced Customisation': {
     title: 'Advanced Customisation',
@@ -142,12 +142,12 @@ export type RootDocNode = {
 
 export type DocNode =
   | {
-    component: React.FunctionComponent;
-  }
+      component: React.FunctionComponent;
+    }
   | {
-    title: string;
-    children: RootDocNode;
-  }
+      title: string;
+      children: RootDocNode;
+    }
   | { isEmpty: boolean };
 
 type RelatedNodeReturnValue = {
