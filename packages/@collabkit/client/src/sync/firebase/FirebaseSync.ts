@@ -106,7 +106,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
     DEBUG && console.log('[network] nextEventId', params);
     const { appId, threadId, workspaceId } = params;
     const eventRef = push(ref`/timeline/${appId}/${workspaceId}/${threadId}`);
-    if (!eventRef.key) throw new Error('pinId is undefined');
+    if (!eventRef.key) throw new Error('eventId is undefined');
     return eventRef.key;
   }
 
