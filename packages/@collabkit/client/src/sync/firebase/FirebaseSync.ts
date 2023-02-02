@@ -160,7 +160,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
       [ref.path`/views/threadPins/${appId}/${workspaceId}/${threadId}/${eventId}`]: null,
     };
     try {
-      const result = await update(ref`/`, updates);
+      await update(ref`/`, updates);
     } catch (e) {
       console.error('CollabKit pin delete failed', e);
     }
