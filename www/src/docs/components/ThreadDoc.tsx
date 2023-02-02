@@ -1,4 +1,3 @@
-import { vars } from '../../styles/Theme.css';
 import { AdvancedProps } from '../advanced/AdvancedCommon';
 import { renderCodeSnippet } from '../CodeEditor';
 import { ThreadDemo } from '../demos/ThreadDemo';

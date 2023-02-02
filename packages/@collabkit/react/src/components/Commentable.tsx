@@ -13,6 +13,7 @@ import { useApp } from '../hooks/useApp';
 import { useCommentableRef } from '../hooks/useCommentableRef';
 import { useStore } from '../hooks/useStore';
 import { useTarget } from '../hooks/useTarget';
+import { useUserContext } from '../hooks/useUserContext';
 import * as styles from '../theme/components/Commentable.css';
 import { vars } from '../theme/theme/index.css';
 import { Menu, MenuItem } from './Menu';
@@ -78,8 +79,7 @@ type PinMarkerProps = {
 
 const PinMarker = forwardRef<HTMLDivElement, PinMarkerProps>(function PinMarker(props, ref) {
   const { isSelected } = props;
-  // this might be better accessed via context?
-  const { userId } = useSnapshot(useStore());
+  const { userId } = useUserContext();
   const { events } = useApp();
   const target = useTarget();
   if (userId == null) {
@@ -100,6 +100,7 @@ const PinMarker = forwardRef<HTMLDivElement, PinMarkerProps>(function PinMarker(
         ref={ref}
         style={props.style}
         onPointerDown={onPointerDown}
+        data-testid="collabkit-pin-marker"
       >
         <PinMenu>
           <div>
@@ -245,6 +246,25 @@ export function CommentableRoot(props: { className?: string; children?: React.Re
     return null;
   }
 
+  const pendingPin = uiState === 'selecting' && (
+    <>
+      <div ref={overlayRef} className={styles.overlay} />
+      <TargetContext.Provider value={{ type: 'pinCursor' }}>
+        <PinMarker isSelected={false} pointerEvents="none" ref={cursorRef} />
+      </TargetContext.Provider>
+    </>
+  );
+
+  const savedPins = allPins.map((pin) => {
+    return (
+      <SavedPin
+        key={pin.id}
+        pin={pin}
+        isSelected={selectedId?.type === 'pin' && selectedId.id === pin.id}
+      />
+    );
+  });
+
   return (
     <div
       onPointerOver={updateCursor}
@@ -255,23 +275,8 @@ export function CommentableRoot(props: { className?: string; children?: React.Re
     >
       {props.children}
       <FloatingPortal id="collabkit-floating-root">
-        {uiState === 'selecting' && (
-          <>
-            <div ref={overlayRef} className={styles.overlay} />
-            <TargetContext.Provider value={{ type: 'pinCursor' }}>
-              <PinMarker isSelected={false} pointerEvents="none" ref={cursorRef} />
-            </TargetContext.Provider>
-          </>
-        )}
-        {allPins.map((pin) => {
-          return (
-            <SavedPin
-              key={pin.id}
-              pin={pin}
-              isSelected={selectedId?.type === 'pin' && selectedId.id === pin.id}
-            />
-          );
-        })}
+        {pendingPin}
+        {savedPins}
       </FloatingPortal>
     </div>
   );

@@ -190,7 +190,7 @@ export const CommentPin = (props: React.ComponentProps<'img'>) => {
   }
 
   return (
-    <span className={styles.pin} {...props} onClick={onClick}>
+    <span className={styles.pin} data-testid="collabkit-comment-pin" {...props} onClick={onClick}>
       <Tooltip>
         <Tooltip.Trigger>
           <img src={isSelected ? CommentPinSelectedSvg : CommentPinSvg} />
