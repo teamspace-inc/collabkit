@@ -22,7 +22,7 @@ async function visitDashboardAsUser(
     ...props,
   });
   const url = HOST + '/dashboard?' + params.toString();
-  await page.goto(url);
+  await page.goto(url, { waitUntil: 'networkidle' });
   return page;
 }
 
@@ -36,7 +36,7 @@ async function visitThreadAsUser(
     ...props,
   });
   const url = HOST + '/thread?' + params.toString();
-  await page.goto(url);
+  await page.goto(url, { waitUntil: 'networkidle' });
   return page;
 }
 
