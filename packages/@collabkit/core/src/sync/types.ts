@@ -57,6 +57,8 @@ export interface SyncAdapter {
 
   nextPinId(params: { appId: string; workspaceId: string; objectId: string }): string;
 
+  nextEventId(params: { appId: string; workspaceId: string; threadId: string }): string;
+
   savePin(params: { appId: string; workspaceId: string; pinId: string; pin: Pin }): Promise<string>;
 
   deletePin(params: {
@@ -128,6 +130,7 @@ export interface SyncAdapter {
     threadId: string;
     preview: string;
     event: Event;
+    eventId: string;
   }): Promise<{ id: string }>;
 
   subscribeSeen(params: {

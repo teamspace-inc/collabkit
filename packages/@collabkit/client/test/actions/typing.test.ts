@@ -59,6 +59,7 @@ describe('typing', async () => {
         createdAt: +new Date(),
         createdById: userId,
       },
+      eventId: sync.nextEventId({ appId, workspaceId, threadId }),
     });
 
     typing = new Promise((resolve) =>
@@ -78,6 +79,7 @@ describe('typing', async () => {
         workspaceId,
         threadId,
         eventId: 'default',
+        isNewThread: false,
       },
     });
 
@@ -96,7 +98,7 @@ describe('typing', async () => {
       eventId: 'default',
     };
 
-    await stopTyping(store, { target });
+    await stopTyping(store as Store, { target });
 
     typing = await sync.getIsTyping({
       appId,

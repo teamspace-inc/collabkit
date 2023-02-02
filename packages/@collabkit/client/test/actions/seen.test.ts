@@ -46,7 +46,8 @@ test('seen', async () => {
   initComposer(store, { workspaceId, threadId, eventId: 'default' });
   store.workspaces[workspaceId].timeline[threadId] = {};
 
-  const { id: firstEventId } = await sync.sendMessage({
+  const firstEventId = sync.nextEventId({ appId, workspaceId, threadId });
+  await sync.sendMessage({
     appId,
     workspaceId,
     threadId,
@@ -58,9 +59,11 @@ test('seen', async () => {
       createdAt: +new Date(),
       createdById: userId,
     },
+    eventId: firstEventId,
   });
 
-  const { id: secondEventId } = await sync.sendMessage({
+  const secondEventId = sync.nextEventId({ appId, workspaceId, threadId });
+  await sync.sendMessage({
     appId,
     workspaceId,
     threadId,
@@ -72,6 +75,7 @@ test('seen', async () => {
       createdAt: +new Date(),
       createdById: userId,
     },
+    eventId: secondEventId,
   });
 
   const target: CommentTarget = {

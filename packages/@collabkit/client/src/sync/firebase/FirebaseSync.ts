@@ -102,6 +102,14 @@ export class FirebaseSync implements Sync.SyncAdapter {
     return pinRef.key;
   }
 
+  nextEventId(params: { appId: string; workspaceId: string; threadId: string }): string {
+    DEBUG && console.log('[network] nextEventId', params);
+    const { appId, threadId, workspaceId } = params;
+    const eventRef = push(ref`/timeline/${appId}/${workspaceId}/${threadId}`);
+    if (!eventRef.key) throw new Error('eventId is undefined');
+    return eventRef.key;
+  }
+
   async savePin(params: {
     appId: string;
     workspaceId: string;
@@ -152,7 +160,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
       [ref.path`/views/threadPins/${appId}/${workspaceId}/${threadId}/${eventId}`]: null,
     };
     try {
-      const result = await update(ref`/`, updates);
+      await update(ref`/`, updates);
     } catch (e) {
       console.error('CollabKit pin delete failed', e);
     }
@@ -421,6 +429,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
     threadId,
     preview,
     event,
+    eventId,
     pin,
   }: {
     appId: string;
@@ -429,6 +438,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
     threadId: string;
     preview: string;
     event: Event;
+    eventId: string;
     pin?: Pin | null;
   }): Promise<{ id: string }> {
     DEBUG &&
@@ -442,20 +452,12 @@ export class FirebaseSync implements Sync.SyncAdapter {
       });
     // generate an id for the message
     // use firebase ids as they are chronological
-    const eventRef = await push(timelineRef(appId, workspaceId, threadId));
-
-    const id = eventRef.key;
-
-    if (!id) {
-      throw new Error('failed to gen push ref to timeline');
-    }
 
     let data: { [key: string]: any } = {
-      [ref.path`/timeline/${appId}/${workspaceId}/${threadId}/${eventRef.key}`]:
-        eventToObject(event),
+      [ref.path`/timeline/${appId}/${workspaceId}/${threadId}/${eventId}`]: eventToObject(event),
       [ref.path`/views/inbox/${appId}/${workspaceId}/${threadId}`]: {
         ...eventToObject(event),
-        id,
+        id: eventId,
         body: preview,
         name: threadId,
         mentions: event.mentions ?? null,
@@ -471,7 +473,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
       error.stack += e.stack;
       throw error;
     }
-    return { id };
+    return { id: eventId };
   }
 
   subscribeSeen({

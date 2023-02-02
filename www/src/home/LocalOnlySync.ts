@@ -5,6 +5,9 @@ import { InboxChangeEventHandler, ThreadInfoChangeEvent } from 'packages/@collab
 
 export class LocalOnlySync implements SyncAdapter {
   constructor(public workspaceData: any) {}
+  nextEventId(params: { appId: string; workspaceId: string; threadId: string }): string {
+    return nanoid();
+  }
   nextPinId(params: { appId: string; workspaceId: string; objectId: string }): string {
     return nanoid();
   }
