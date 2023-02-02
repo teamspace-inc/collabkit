@@ -182,7 +182,9 @@ export type Target =
   | PinCursorTarget
   | OverlayTarget
   | CommentReplyCountButtonTarget
-  | CommentReplyButtonTarget;
+  | CommentReplyButtonTarget
+  | CommentReactionButtonTarget
+  | EmojiTarget;
 
 export type CommentReplyCountButtonTarget = {
   type: 'commentReplyCountButton';
@@ -196,6 +198,24 @@ export type CommentReplyButtonTarget = {
   threadId: string;
   workspaceId: string;
   eventId: string;
+};
+
+export type EmojiTarget = {
+  type: 'emoji';
+  emoji: Emoji;
+  workspaceId: string;
+  threadId: string;
+  eventId: string;
+};
+
+export type Emoji = {
+  n: string[];
+  u: string;
+  a: string;
+};
+
+export type CommentReactionButtonTarget = {
+  type: 'commentReactionButton';
 };
 
 export type PinCursorTarget = {
@@ -495,6 +515,11 @@ export interface Store extends UnconfiguredStore {
   sync: SyncAdapter;
   config: Config;
   allPins: (Pin | PendingPin)[];
+  reactions: {
+    [threadId: string]: {
+      [eventId: string]: { [emoji: string]: { count: number; userIds: string[] } };
+    };
+  };
 }
 
 export type Unsubscribe = () => void;

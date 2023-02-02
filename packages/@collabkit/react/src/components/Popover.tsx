@@ -9,6 +9,7 @@ import {
   FloatingOverlay,
   FloatingPortal,
   offset,
+  Placement,
   ReferenceType,
   safePolygon,
   size,
@@ -135,9 +136,10 @@ function usePopoverContext() {
 type RootProps = {
   children: React.ReactNode;
   previewVisible: boolean;
-  threadVisible: boolean;
+  contentVisible: boolean;
   onOpenChange: (open: boolean) => void;
   onPreviewChange: (preview: boolean) => void;
+  placement?: Placement;
 } & AdvancedPopoverProps;
 
 export type AdvancedPopoverProps = {
@@ -148,7 +150,8 @@ export type AdvancedPopoverProps = {
 };
 
 function PopoverRoot(props: RootProps) {
-  const { children, previewVisible, threadVisible, onOpenChange, onPreviewChange } = props;
+  const { placement, children, previewVisible, contentVisible, onOpenChange, onPreviewChange } =
+    props;
   const nodeId = useFloatingNodeId();
 
   const defaultOpen = props.defaultOpen ?? false;
@@ -156,7 +159,7 @@ function PopoverRoot(props: RootProps) {
   const shouldFlipToKeepInView = props.shouldFlipToKeepInView ?? true;
 
   const { reference: previewReference, context: previewContext } = useFloating({
-    placement: 'right-start',
+    placement: placement ?? 'right-start',
     open: previewVisible,
     whileElementsMounted: autoUpdate,
     onOpenChange: onPreviewChange,
@@ -177,8 +180,8 @@ function PopoverRoot(props: RootProps) {
   });
 
   const { reference, context } = useFloating({
-    placement: 'right-start',
-    open: threadVisible,
+    placement: placement ?? 'right-start',
+    open: contentVisible,
     whileElementsMounted: autoUpdate,
     onOpenChange,
     nodeId,
@@ -200,7 +203,7 @@ function PopoverRoot(props: RootProps) {
   const { getReferenceProps: getPreviewReferenceProps, getFloatingProps: getPreviewFloatingProps } =
     useInteractions([
       useHover(previewContext, {
-        enabled: !threadVisible,
+        enabled: !contentVisible,
         handleClose: safePolygon(),
       }),
       useDismiss(previewContext, {
@@ -238,7 +241,7 @@ function PopoverRoot(props: RootProps) {
       previewContext,
       context,
       getProps,
-      open: threadVisible,
+      open: contentVisible,
       preview: previewVisible,
       setOpen: onOpenChange,
 
@@ -250,7 +253,7 @@ function PopoverRoot(props: RootProps) {
       previewContext,
       context,
       getProps,
-      threadVisible,
+      contentVisible,
       previewVisible,
       // onOpenChange,
       ref,
@@ -299,8 +302,8 @@ export function Popover(props: PopoverProps) {
   const { dismissOnClickOutside, shouldFlipToKeepInView, defaultOpen } = props;
 
   return (
-    <PopoverRoot
-      threadVisible={open}
+    <Popover.Root
+      contentVisible={open}
       previewVisible={preview}
       onOpenChange={setOpen}
       onPreviewChange={setPreview}
@@ -310,15 +313,15 @@ export function Popover(props: PopoverProps) {
       defaultOpen={defaultOpen}
     >
       {'children' in props ? (
-        <PopoverTrigger>{props.children}</PopoverTrigger>
+        <Popover.Trigger>{props.children}</Popover.Trigger>
       ) : (
-        <PopoverTrigger trigger={props.trigger} />
+        <Popover.Trigger trigger={props.trigger} />
       )}
-      <PopoverPortal>
-        <PopoverPreview>{props.preview}</PopoverPreview>
-        <PopoverContent>{props.content}</PopoverContent>
-      </PopoverPortal>
-    </PopoverRoot>
+      <Popover.Portal>
+        <Popover.Preview>{props.preview}</Popover.Preview>
+        <Popover.Content>{props.content}</Popover.Content>
+      </Popover.Portal>
+    </Popover.Root>
   );
 }
 

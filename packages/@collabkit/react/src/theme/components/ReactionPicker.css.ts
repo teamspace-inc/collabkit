@@ -1,29 +1,49 @@
 import { style } from '@vanilla-extract/css';
+import { recipe } from '@vanilla-extract/recipes';
 import { vars } from '../theme/index.css';
 
-export const root = style({
-  height: 200,
-  width: 240,
-  background: vars.color.surface,
-  borderRadius: '6px',
-});
-
-export const emojiGrid = style({
-  display: 'grid',
-  gridTemplateColumns: 'repeat(7, 1fr)',
-});
-
-export const category = style({
-  padding: vars.space[2],
+export const root = recipe({
+  base: {
+    height: 140,
+    width: 188,
+    background: vars.color.background,
+    borderRadius: '6px',
+    zIndex: 9999,
+    border: '1px solid ' + vars.color.surfaceOverlay,
+  },
+  variants: {
+    type: {
+      quick: {
+        height: 40,
+        padding: vars.space[2],
+      },
+    },
+  },
 });
 
 const size = '24px';
 
+export const emojiGrid = style({
+  display: 'grid',
+  gridTemplateColumns: `repeat(7, ${size})`,
+});
+
+export const category = style({
+  padding: `${vars.space[0]} ${vars.space[2]} ${vars.space[2]} ${vars.space[2]}`,
+  selectors: {
+    '&:first-of-type': {
+      paddingTop: vars.space[2],
+    },
+    '&:last-of-type': {
+      paddingBottom: vars.space[2],
+    },
+  },
+});
+
 export const emoji = style({
   width: size,
   height: size,
-  padding: vars.space[1],
-  fontSize: size,
+  fontSize: vars.text.large.lineHeight,
   lineHeight: vars.text.large.lineHeight,
   cursor: 'pointer',
   display: 'flex',
@@ -39,11 +59,11 @@ export const emoji = style({
 });
 
 export const categoryTitle = style({
-  padding: `0 0 ${vars.space[2]}`,
+  padding: `0 0 ${vars.space[1]}`,
   color: vars.color.textDisabled,
-  fontSize: vars.text.base.fontSize,
+  fontSize: vars.text.small.fontSize,
   fontWeight: vars.fontWeight.regular,
-  letterSpacing: vars.text.base.letterSpacing,
-  lineHeight: vars.text.base.lineHeight,
+  letterSpacing: vars.text.small.letterSpacing,
+  lineHeight: vars.text.small.lineHeight,
   fontFamily: vars.fontFamily,
 });

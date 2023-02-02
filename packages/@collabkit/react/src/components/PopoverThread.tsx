@@ -44,7 +44,7 @@ export function PopoverThread(props: PopoverThreadProps) {
   const { objectId, lockScroll, placeholder, ...triggerProps } = props;
 
   return (
-    <Popover.Root {...popoverProps}>
+    <Popover.Root {...popoverProps} contentVisible={popoverProps.threadVisible}>
       <Popover.Trigger {...triggerProps} />
       <Popover.Portal>
         <Popover.Preview>

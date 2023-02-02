@@ -1,12 +1,8 @@
 import React from 'react';
 import * as styles from '../theme/components/ReactionPicker.css';
 import { Scrollable } from './Scrollable';
-
-type Emoji = {
-  n: string[];
-  u: string;
-  a: string;
-};
+import type { Emoji as EmojiType } from '@collabkit/core';
+import { Emoji } from './Emoji';
 
 const EMOJIS = {
   popular: [
@@ -17,11 +13,7 @@ const EMOJIS = {
       a: '0.6',
     },
     { n: ['heart', 'heavy black heart'], u: '2764-fe0f', a: '0.6' },
-    {
-      n: ['laughing', 'satisfied', 'smiling face with open mouth and tightly-closed eyes'],
-      u: '1f606',
-      a: '0.6',
-    },
+    { n: ['joy', 'face with tears of joy'], u: '1f602', a: '0.6' },
     { n: ['open mouth', 'face with open mouth'], u: '1f62e', a: '1.0' },
     {
       n: ['pray', 'person with folded hands'],
@@ -29,7 +21,6 @@ const EMOJIS = {
       v: ['1f64f-1f3fb', '1f64f-1f3fc', '1f64f-1f3fd', '1f64f-1f3fe', '1f64f-1f3ff'],
       a: '0.6',
     },
-    { n: ['heart eyes', 'smiling face with heart-shaped eyes'], u: '1f60d', a: '0.6' },
     { n: ['fire'], u: '1f525', a: '0.6' },
   ],
   smileys_people: [
@@ -4905,6 +4896,16 @@ const EMOJIS = {
   ],
 };
 
+export const EMOJI_U = Object.keys(EMOJIS).reduce<{ [emojiU: string]: EmojiType }>(
+  (acc, category) => {
+    EMOJIS[category as keyof typeof EMOJIS].forEach((emoji) => {
+      acc[emoji.u] = emoji;
+    });
+    return acc;
+  },
+  {}
+);
+
 const CATEGORIES: { [key in keyof typeof EMOJIS]: string } = {
   popular: 'Popular',
   smileys_people: 'Smileys & People',
@@ -4917,38 +4918,67 @@ const CATEGORIES: { [key in keyof typeof EMOJIS]: string } = {
   flags: 'Flags',
 };
 
-export function Emoji(props: { emoji: Emoji }) {
+function Category(props: {
+  title: string;
+  emojis: EmojiType[];
+  onClick: (e: React.MouseEvent, emoji: EmojiType) => void;
+}) {
   return (
-    <span className={styles.emoji}>
-      {props.emoji.u
-        .split('-')
-        .map((hex) => String.fromCodePoint(parseInt(hex, 16)))
-        .join('')}
-    </span>
-  );
-}
-
-export function ReactionPicker() {
-  return (
-    <div className={styles.root}>
-      <Scrollable>
-        {Object.keys(EMOJIS).map((key) => {
-          const title = CATEGORIES[key as keyof typeof EMOJIS];
-          const emojis = EMOJIS[key as keyof typeof EMOJIS];
-          return (
-            <div className={styles.category}>
-              <div className={styles.categoryTitle}>{title}</div>
-              <div className={styles.emojiGrid}>
-                {(emojis as Emoji[])
-                  .filter((emoji: Emoji) => emoji.u)
-                  .map((emoji, i) => {
-                    return <Emoji emoji={emoji} key={i} />;
-                  })}
-              </div>
-            </div>
-          );
-        })}
-      </Scrollable>
+    <div className={styles.category}>
+      <div className={styles.categoryTitle}>{props.title}</div>
+      <EmojiGrid onClick={props.onClick} emojis={props.emojis} />
     </div>
   );
 }
+
+function EmojiGrid(props: {
+  emojis: EmojiType[];
+  onClick: (e: React.MouseEvent, emoji: EmojiType) => void;
+}) {
+  return (
+    <div className={styles.emojiGrid}>
+      {(props.emojis as EmojiType[])
+        .filter((emoji: EmojiType) => emoji.u)
+        .map((emoji, i) => {
+          return <Emoji onClick={props.onClick} emoji={emoji} key={i} />;
+        })}
+    </div>
+  );
+}
+
+type ReactionPickerProps = {
+  onClick: (e: React.MouseEvent, emoji: EmojiType) => void;
+};
+
+export function QuickReactionPicker(props: ReactionPickerProps) {
+  return (
+    <Root className={styles.root({ type: 'quick' })}>
+      <EmojiGrid onClick={props.onClick} emojis={EMOJIS.popular} />
+    </Root>
+  );
+}
+
+function Root(props: React.ComponentPropsWithoutRef<'div'>) {
+  return (
+    <div className={styles.root()} {...props}>
+      {props.children}
+    </div>
+  );
+}
+
+export const ReactionPicker = React.memo(function ReactionPicker(props: ReactionPickerProps) {
+  return (
+    <Root>
+      <Scrollable>
+        {Object.keys(EMOJIS).map((key) => (
+          <Category
+            onClick={props.onClick}
+            key={key}
+            title={CATEGORIES[key as keyof typeof EMOJIS]}
+            emojis={EMOJIS[key as keyof typeof EMOJIS]}
+          />
+        ))}
+      </Scrollable>
+    </Root>
+  );
+});

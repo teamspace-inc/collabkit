@@ -44,8 +44,8 @@ import { subscribeProfiles } from './subscribeProfiles';
 import { subscribeSeen } from './subscribeSeen';
 import { subscribeThread } from './subscribeThread';
 import { subscribeWorkspace } from './subscribeWorkspace';
-import { toggleCommentReaction } from './toggleCommentReaction';
-import { toggleEmojiReactionPicker } from './toggleEmojiReactionPicker';
+import { toggleEmoji } from './toggleEmoji';
+import { toggleEmojiPicker } from './toggleEmojiPicker';
 import { updateComment } from './updateComment';
 import { viewThread } from './viewThread';
 import { subscribeOpenPins } from './subscribeOpenPins';
@@ -170,8 +170,8 @@ export const actions = {
   subscribeSeen,
   subscribeThread,
   subscribeWorkspace,
-  toggleCommentReaction,
-  toggleEmojiReactionPicker,
+  toggleEmoji,
+  toggleEmojiPicker,
   updateComment,
   updateComposer,
   viewThread,

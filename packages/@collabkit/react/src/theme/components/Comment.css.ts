@@ -24,6 +24,48 @@ export const inlineModal = style({
   borderRadius: '6px',
 });
 
+export const emojiCount = style({
+  marginTop: vars.space[1],
+  border: `1px solid ${vars.color.border}`,
+  borderRadius: '6px',
+  padding: `${vars.space[0]} ${vars.space[1]}`,
+  display: 'flex',
+  gap: vars.space[1],
+  alignItems: 'center',
+  marginRight: vars.space[1],
+  cursor: 'pointer',
+  selectors: {
+    '&:hover': {
+      border: `1px solid ${vars.color.surface}`,
+      background: vars.color.surfaceOverlay,
+    },
+  },
+});
+
+export const emojiCountNumber = style({
+  color: vars.color.textPrimary,
+  fontSize: vars.text.small.fontSize,
+  fontWeight: vars.fontWeight.bold,
+  letterSpacing: vars.text.small.letterSpacing,
+  lineHeight: vars.text.small.lineHeight,
+  fontFamily: vars.fontFamily,
+});
+
+export const emojiCountIcon = style({
+  color: 'red',
+  fontSize: vars.text.base.fontSize,
+  lineHeight: vars.text.base.lineHeight,
+});
+
+export const reactions = style({
+  display: 'flex',
+  alignSelf: 'flex-start',
+});
+
+export const indent = style({
+  marginLeft: calc.add(vars.avatar.size, fallbackVar(vars.comment.gap, vars.space[2])),
+});
+
 export const pin = style({
   paddingRight: vars.space[1],
   float: 'left',
