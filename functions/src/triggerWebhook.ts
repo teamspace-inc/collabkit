@@ -1,7 +1,10 @@
 import * as functions from 'firebase-functions';
 import { postToWebhook } from './actions/postToWebhook';
 
-export const triggerWebhook = functions.https.onRequest(async (request, response) => {
+export async function triggerWebhookImpl(
+  request: functions.https.Request,
+  response: functions.Response
+) {
   const { appId, workspaceId, threadId, eventId, event, url } = request.body;
   console.log(`webhook: ${appId} ${workspaceId} ${threadId} ${eventId} ${event.body}`, event.body);
   try {
@@ -16,4 +19,8 @@ export const triggerWebhook = functions.https.onRequest(async (request, response
 
     response.status(500).send();
   }
+}
+
+export const triggerWebhook = functions.https.onRequest(async (request, response) => {
+  triggerWebhookImpl(request, response);
 });
