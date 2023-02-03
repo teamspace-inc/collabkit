@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSnapshot } from 'valtio';
 import { useApp } from '../hooks/useApp';
-import * as styles from '../theme/components/Inbox.css';
+import * as styles from '../theme/components/ThreadInbox.css';
 import { Scrollable } from './Scrollable';
 import { ThemeWrapper } from './ThemeWrapper';
 import { ChatCentered } from './icons';

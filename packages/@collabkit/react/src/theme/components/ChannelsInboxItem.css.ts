@@ -2,7 +2,6 @@ import { fallbackVar, globalStyle, style } from '@vanilla-extract/css';
 import { name as profileName } from './Profile.css';
 import { timestamp as commentTimestamp, body as commentBody } from './Comment.css';
 import { vars } from '../theme/index.css';
-import { calc } from '@vanilla-extract/css-utils';
 import { recipe } from '@vanilla-extract/recipes';
 import * as styles from './InboxItem.css';
 
@@ -72,8 +71,8 @@ export const root = recipe({
     cursor: 'default',
     boxSizing: 'border-box',
     background: fallbackVar(vars.inbox.item.background, vars.color.background),
-    paddingTop: fallbackVar(vars.inbox.item.paddingTop, vars.space[4]),
-    paddingBottom: fallbackVar(vars.inbox.item.paddingBottom, vars.space[4]),
+    paddingTop: fallbackVar(vars.inbox.item.paddingTop, vars.space[2]),
+    paddingBottom: fallbackVar(vars.inbox.item.paddingBottom, vars.space[2]),
     paddingLeft: fallbackVar(vars.inbox.item.paddingLeft, vars.space[4]),
     paddingRight: fallbackVar(vars.inbox.item.paddingRight, vars.space[4]),
     userSelect: 'none',

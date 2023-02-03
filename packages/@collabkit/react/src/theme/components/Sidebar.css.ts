@@ -10,7 +10,7 @@ export const root = style({
   boxShadow: fallbackVar(vars.sidebar.boxShadow, vars.shadow.high),
   position: 'fixed',
   top: 0,
-  width: fallbackVar(vars.inbox.width, '292px'),
+  width: fallbackVar(vars.inbox.width, '360px'),
   right: 0,
   bottom: 0,
   fontFamily: vars.fontFamily,
@@ -48,10 +48,10 @@ export const iconButton = recipe({
     padding: 12,
     paddingTop: 10.25,
     paddingBottom: 10.25,
-    cursor: 'pointer',
     userSelect: 'none',
     pointerEvents: 'all',
     // Hidden till we have notifications ready
+    // cursor: 'pointer',
     visibility: 'hidden',
     
     selectors: {

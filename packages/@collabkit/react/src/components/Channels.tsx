@@ -72,22 +72,15 @@ export function Channels(props: {
       <SidebarContext.Provider value={{ titleHeight }}>
         <div className={styles.root} style={{ position: props.strategy ?? 'fixed' }}>
           <span ref={titleRef} className={styles.title}>
-            <div style={{ flex: 1 }} data-testid="sidebar-title">
-              {props.title ?? 'Comments'}
-            </div>
-            <div
-              className={styles.iconButton({ active: inboxActive })}
-              onClick={() => {
-                setInboxActive(true);
-              }}
+            <div style={{ flex: 1 }} data-testid="sidebar-title">{props.title ?? 'Comments'}</div>
+             {/* Hidden till we have notifictions ready */}
+            <div className={styles.iconButton({ active: inboxActive })}
+            // onClick={() => { setInboxActive(true) }}
             >
               <ChatText size={16} mirrored={true} />
             </div>
-            <div
-              className={styles.iconButton({ active: !inboxActive })}
-              onClick={() => {
-                setInboxActive(false);
-              }}
+            <div className={styles.iconButton({ active: !inboxActive })}
+            // onClick={() => { setInboxActive(false) }}
             >
               <Bell size={16} />
             </div>
