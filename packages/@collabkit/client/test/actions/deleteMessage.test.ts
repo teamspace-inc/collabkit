@@ -45,7 +45,8 @@ test('deleteMessage', async () => {
   initComposer(store, { workspaceId, threadId, eventId: 'default' });
   store.workspaces[workspaceId].timeline[threadId] = {};
 
-  const { id: eventId } = await sync.sendMessage({
+  const eventId = sync.nextEventId({ appId, workspaceId, threadId });
+  await sync.sendMessage({
     appId,
     workspaceId,
     threadId,
@@ -57,6 +58,7 @@ test('deleteMessage', async () => {
       createdAt: +new Date(),
       createdById: userId,
     },
+    eventId,
   });
 
   const id = await deleteMessage(store as Store, { workspaceId, threadId, eventId });

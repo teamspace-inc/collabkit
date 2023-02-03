@@ -1,14 +1,6 @@
-import type { Store } from '@collabkit/core';
+import type { ComposerTarget, Store } from '@collabkit/core';
 
-export function startSelecting(
-  store: Store,
-  props: { workspaceId: string; threadId: string; eventId: string }
-) {
+export function startSelecting(store: Store, target: ComposerTarget) {
   store.uiState = 'selecting';
-  store.composerId = {
-    type: 'composer',
-    workspaceId: props.workspaceId,
-    threadId: props.threadId,
-    eventId: props.eventId,
-  };
+  store.composerId = target;
 }

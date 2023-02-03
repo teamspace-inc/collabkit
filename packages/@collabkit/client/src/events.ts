@@ -10,7 +10,6 @@ import type {
   ThreadTarget,
 } from '@collabkit/core';
 import { actions } from './actions';
-import { markRaw } from './store';
 import { nanoid } from 'nanoid';
 
 export type Events = ReturnType<typeof createEvents>;
@@ -29,34 +28,12 @@ export function createEvents(store: Store) {
       });
     },
 
-    onComposerChange: (
-      target: Target,
-      editor: LexicalEditor,
-      newBody: string,
-      mentions: string[]
-    ) => {
+    onComposerChange: (target: Target, editor: LexicalEditor) => {
       if (target.type !== 'composer') {
         return;
       }
 
-      // move this to composer mount
-      const composer = actions.initComposer(store, target);
-      composer.editor = markRaw(editor);
-
-      const body = composer.$$body;
-      composer.$$body = newBody;
-      composer.mentions = mentions;
-
-      if (newBody.length === 0) {
-        actions.isTyping.cancel();
-        actions.disableComposerCommentButton(store, { target });
-        setTimeout(async () => {
-          await actions.stopTyping(store, { target });
-        }, 100);
-      } else if (newBody.length !== body.length) {
-        actions.enableComposerCommentButton(store, { target });
-        actions.isTyping(store, { target });
-      }
+      actions.updateComposer(store, { target, editor });
     },
 
     onDestroy: () => {
@@ -129,7 +106,7 @@ export function createEvents(store: Store) {
         }
         case 'composerPinButton': {
           if (target.objectId && target.pinId) {
-            actions.deletePin(store, target);
+            actions.deletePin(store, target.composer);
             return;
           }
 
@@ -138,7 +115,7 @@ export function createEvents(store: Store) {
               actions.stopSelecting(store);
               break;
             case 'idle':
-              actions.startSelecting(store, target);
+              actions.startSelecting(store, target.composer);
               break;
           }
 
@@ -201,8 +178,10 @@ export function createEvents(store: Store) {
           e.preventDefault();
           if (store.focusedId.eventId === 'default') {
             actions.sendMessage(store, { ...store.focusedId });
-            store.nextThreadId = nanoid();
-            store.focusedId.threadId = store.nextThreadId;
+            if (store.focusedId.isNewThread) {
+              store.nextThreadId = nanoid();
+              store.focusedId.threadId = store.nextThreadId;
+            }
           }
         }
       }

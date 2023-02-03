@@ -5,6 +5,7 @@ import { getApp } from 'firebase/app';
 import { createWorkspace } from '../store';
 import { generateToken } from './generateToken';
 import { actions } from './';
+import { signInWithUserToken } from '../utils/signInWithUserToken';
 
 export async function authenticate(store: Store) {
   if (!store.sync.shouldAuthenticate()) {
@@ -19,7 +20,8 @@ export async function authenticate(store: Store) {
 
   // SECURED mode
   if ('token' in config && config.token != null) {
-    const userCredential = await signInWithCustomToken(auth, config.token);
+    const customToken = await signInWithUserToken(config.appId, config.token);
+    const userCredential = await signInWithCustomToken(auth, customToken);
     const result = await userCredential.user.getIdTokenResult();
     let { appId, userId, workspaceId, mode } = result.claims;
 
@@ -53,7 +55,10 @@ export async function authenticate(store: Store) {
     store.workspaceId = workspaceId;
     store.workspaces[workspaceId] = createWorkspace();
 
-    // actions.subscribeProfiles(store);
+    if (store.config.mentionableUsers === 'allWorkspace') {
+      actions.subscribeProfiles(store);
+    }
+
     actions.subscribeWorkspace(store);
 
     // UNSECURED mode
@@ -102,7 +107,9 @@ export async function authenticate(store: Store) {
     // console.log('CollabKit authenticated', userCredential, mode);
 
     await actions.saveProfile(store);
-    // actions.subscribeProfiles(store);
+    if (store.config.mentionableUsers === 'allWorkspace') {
+      actions.subscribeProfiles(store);
+    }
     actions.subscribeWorkspace(store);
   } else {
     throw new Error('Missing `token` or `apiKey`');

@@ -4,7 +4,11 @@ import { useSnapshot } from 'valtio';
 import { useApp } from '../../hooks/useApp';
 import { timelineUtils } from '@collabkit/core';
 
-export function useInbox(props: { filter: 'all' | 'open' }) {
+export function useInbox(props: {
+  filter: 'all' | 'open';
+  threadIds?: string[];
+  direction?: 'asc' | 'desc';
+}) {
   const { store } = useApp();
   const { workspaceId, workspaces, userId } = useSnapshot(store);
 
@@ -30,26 +34,26 @@ export function useInbox(props: { filter: 'all' | 'open' }) {
 
   // todo this won't scale so we should add a view to load
   // inboxResolved and inboxOpen
-  const threadIds = inbox
-    ? // show threads with latest activity first
-    Object.keys(inbox)
-      // filter out resolved threads
-      .sort((a, b) => {
-        const aTime = +inbox[a].createdAt ?? 0;
-        const bTime = +inbox[b].createdAt ?? 0;
-        return bTime - aTime;
-      })
-      // filter out resolved threads
-      ?.filter((threadId) =>
-        props.filter === 'open'
-          ? !(
-              workspace.timeline?.[threadId] &&
-              timelineUtils.computeIsResolved(workspace.timeline?.[threadId])
-            )
-          : true
-      )
-      .filter(Boolean)
-    : [];
 
-  return threadIds;
+  const threadIds = props.threadIds ?? Object.keys(inbox);
+  return (
+    threadIds
+      // filter out resolved threads
+      .filter(
+        (threadId) =>
+          threadId &&
+          (props.filter === 'open'
+            ? !(
+                workspace.timeline?.[threadId] &&
+                timelineUtils.computeIsResolved(workspace.timeline?.[threadId])
+              )
+            : true)
+      )
+      // show threads with latest activity first
+      .sort((a, b) => {
+        const aTime = +inbox[a]?.createdAt ?? 0;
+        const bTime = +inbox[b]?.createdAt ?? 0;
+        return props.direction === 'asc' ? aTime - bTime : bTime - aTime;
+      })
+  );
 }

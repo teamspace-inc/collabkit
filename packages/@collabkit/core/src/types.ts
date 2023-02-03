@@ -219,9 +219,7 @@ export type ComposerMentionsButtonTarget = {
 
 export type ComposerPinButtonTarget = {
   type: 'composerPinButton';
-  threadId: string;
-  workspaceId: string;
-  eventId: string | 'default';
+  composer: ComposerTarget;
   pinId?: string | null;
   objectId?: string | null;
 };
@@ -254,6 +252,7 @@ export type FloatingCommentButtonTarget = { type: 'floatingCommentButton' };
 export type ComposerTarget = {
   type: 'composer';
   threadId: string;
+  isNewThread: boolean;
   workspaceId: string;
   eventId: string | 'default';
 };
@@ -378,8 +377,6 @@ export interface Timeline {
 
 export interface Composer {
   editor: LexicalEditor | null;
-  $$body: string;
-  mentions: string[];
   enabled: boolean;
   isTypingTimeoutID?: ReturnType<typeof setTimeout>;
   isTyping: { [endUserId: string]: boolean };
@@ -423,12 +420,10 @@ export interface Workspace {
   objects: { [objectId: string]: OpenThreadIds };
   inbox: { [threadId: string]: WithID<Event> };
   timeline: { [threadId: string]: Timeline };
-  timelineInitialFetchComplete: { [threadId: string]: boolean };
   composers: { [threadId: string]: { [eventId: string]: Composer } };
   seen: { [threadId: string]: string }; // lastSeenEventId
   seenBy: { [threadId: string]: SeenBy };
   threadInfo: { [threadId: string]: ThreadInfo };
-  likelyFetchedAllProfiles: boolean;
   threadProfiles: { [threadId: string]: { [userId: string]: boolean } };
   fetchedProfiles: { [threadId: string]: { [userId: string]: boolean } };
   openPins: { [objectId: string]: { [pinId: string]: Pin } };

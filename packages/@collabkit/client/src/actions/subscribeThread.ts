@@ -65,9 +65,7 @@ export async function subscribeThread(
         },
       });
     },
-    onTimelineGetComplete: () => {
-      // store.workspaces[workspaceId].timelineInitialFetchComplete[threadId] = true;
-    },
+    onTimelineGetComplete: () => {},
     onThreadProfiles: (event: Sync.ThreadProfilesEvent) => {
       store.workspaces[event.workspaceId].threadProfiles[event.threadId] = event.profiles;
     },

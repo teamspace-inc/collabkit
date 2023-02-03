@@ -59,7 +59,7 @@ export async function resolveThread(
     console.error('failed to set thread state', e);
   }
   await actions.stopTyping(store, {
-    target: { type: 'composer', workspaceId, threadId, eventId: 'default' },
+    target: { workspaceId, threadId, eventId: 'default' },
   });
   return id;
 }

@@ -13,9 +13,7 @@ test('createWorkspace', () => {
     seen: {},
     seenBy: {},
     threadInfo: {},
-    likelyFetchedAllProfiles: false,
     threadProfiles: {},
-    timelineInitialFetchComplete: {},
     fetchedProfiles: {},
     pendingThreads: {},
     pendingThreadInfo: {},
@@ -26,8 +24,6 @@ test('createWorkspace', () => {
 
 test('createComposer', () => {
   expect(createComposer()).toStrictEqual({
-    $$body: '',
-    mentions: [],
     isTyping: {},
     editor: null,
     enabled: false,

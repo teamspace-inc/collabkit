@@ -13,8 +13,6 @@ export function markRaw<T extends object>(
 
 export function createComposer(): Composer {
   return {
-    $$body: '',
-    mentions: [],
     isTyping: {},
     editor: null,
     enabled: false,
@@ -35,8 +33,6 @@ export function createWorkspace(): Workspace {
     seen: {},
     seenBy: {},
     threadInfo: {},
-    likelyFetchedAllProfiles: false,
-    timelineInitialFetchComplete: {},
     threadProfiles: {},
     fetchedProfiles: {},
     pendingThreads: {},

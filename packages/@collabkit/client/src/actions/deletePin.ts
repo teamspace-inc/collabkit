@@ -16,7 +16,7 @@ export async function deletePin(
 
   const pin = store.workspaces[workspaceId].eventPins[props.eventId];
 
-  if (composer.pendingPin) {
+  if (composer?.pendingPin) {
     composer.pendingPin = null;
   }
 

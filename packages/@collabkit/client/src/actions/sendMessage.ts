@@ -3,6 +3,7 @@ import { $getRoot } from 'lexical';
 import { writeMessageToFirebase } from './writeMessageToFirebase';
 import { actions } from '.';
 import { generateObjectIdFromCellId } from '../utils/generateObjectIdFromCellId';
+import { extract } from '@collabkit/editor';
 
 export async function sendMessage(
   store: Store,
@@ -25,7 +26,9 @@ export async function sendMessage(
 
   const workspace = store.workspaces[workspaceId];
   const composer = workspace.composers[threadId][eventId];
-  const { editor, $$body: body, mentions, pendingPin } = composer;
+  const { editor } = composer;
+  const { body, mentions } = editor ? extract(editor) : { body: '', mentions: [] };
+  const { pendingPin } = composer;
 
   // we can move this check elsewhere
   if (`${body}`.trim().length === 0) {
@@ -34,7 +37,7 @@ export async function sendMessage(
     return;
   }
 
-  editor?.update(() => {
+  composer.editor?.update(() => {
     $getRoot().clear();
   });
 

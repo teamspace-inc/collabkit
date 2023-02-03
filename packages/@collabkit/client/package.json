@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "@types/react": "^18.0.17",
-    "firebase-admin": "^11.3.0",
+    "firebase-admin": "^11.5.0",
     "has": "^1.0.3",
     "nanoid": "^4.0.0",
     "vitest": "^0.28.1"

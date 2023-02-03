@@ -27,11 +27,12 @@ export function EmptyState() {
 export function Inbox(props: {
   formatTimestamp?: (timestamp: number) => string;
   maxHeight?: string;
+  threadIds?: string[];
 }) {
   const { store } = useApp();
   const { workspaceId, userId } = useSnapshot(store);
 
-  const threadIds = useInbox({ filter: 'open' });
+  const threadIds = useInbox({ filter: 'open', threadIds: props.threadIds });
 
   if (!workspaceId) {
     return null;
@@ -65,9 +66,7 @@ export function Inbox(props: {
         {threadIds.length === 0 ? (
           <EmptyState />
         ) : (
-          <Scrollable maxHeight={props.maxHeight ?? 'unset'} autoScroll="bottom">
-            {inboxItems}
-          </Scrollable>
+          <Scrollable maxHeight={props.maxHeight ?? 'unset'}>{inboxItems}</Scrollable>
         )}
       </div>
     </ThemeWrapper>

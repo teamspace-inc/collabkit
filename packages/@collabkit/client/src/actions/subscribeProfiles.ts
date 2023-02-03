@@ -7,8 +7,18 @@ import { getConfig } from './index';
 import { snapshotToProfile } from '../sync/firebase/converters';
 import { ensureColor } from './saveProfile';
 
+let didWarnLargeWorkspace = false;
+
+function warnLargeWorkspace() {
+  if (!didWarnLargeWorkspace) {
+    console.warn(
+      '[CollabKit] Setting mentionableUsers to "allWorkspace" in workspaces with a large number of users is not recommended. To ensure optimal performance, please consider passing an array of mentionable users instead or contact us for support.'
+    );
+    didWarnLargeWorkspace = true;
+  }
+}
+
 export async function subscribeProfiles(store: Store) {
-  let gotFirstProfile = false;
   const { appId, workspaceId } = getConfig(store);
 
   const onError = (e: Error) => {
@@ -24,19 +34,16 @@ export async function subscribeProfiles(store: Store) {
         (profileSnapshot) => {
           // since we don't know the end of the number of profiles in firebase
           // just yet, we use this little hack to leave a couple of cycles for the data to roll in before we render a threads comment list
-          if (!gotFirstProfile) {
-            setTimeout(() => {
-              store.workspaces[workspaceId].likelyFetchedAllProfiles = true;
-            }, 32);
-            gotFirstProfile = true;
-          }
           const profile = snapshotToProfile(profileSnapshot);
           // todo validate profile data here
           if (profile && profile.name !== 'John Doe') {
             store.profiles[id] = ensureColor(profile);
             if (store.config.mentionableUsers === 'allWorkspace') {
-              // console.log('mentionableUsers: id', id, 'profile', profile);
               store.mentionableUsers[id] = profile;
+              const numMentionableUsers = Object.keys(store.mentionableUsers).length;
+              if (numMentionableUsers > 200) {
+                warnLargeWorkspace();
+              }
             }
           }
         },

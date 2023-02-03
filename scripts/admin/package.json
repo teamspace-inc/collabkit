@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "firebase-admin": "^11.2.0",
+    "firebase-admin": "^11.5.0",
     "ts-node": "^10.9.1",
     "yargs": "^17.6.0"
   }

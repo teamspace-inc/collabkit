@@ -31,7 +31,7 @@ export function ThreadsInbox(props: {
   const { store } = useApp();
   const { workspaceId, userId } = useSnapshot(store);
   // const [openThreadsMap, setOpenThreadsMap] = useState(new Map());
-  const threadIds = useInbox({ filter: 'open' });
+  const threadIds = useInbox({ filter: 'open', direction: 'asc' });
 
   if (!workspaceId) {
     return null;
@@ -61,7 +61,9 @@ export function ThreadsInbox(props: {
         {threadIds.length === 0 ? (
           <EmptyState />
         ) : (
-          <Scrollable maxHeight={props.maxHeight ?? 'unset'} autoScroll='bottom'>{inboxItems}</Scrollable>
+          <Scrollable maxHeight={props.maxHeight ?? 'unset'} autoScroll="bottom">
+            {inboxItems}
+          </Scrollable>
         )}
       </div>
     </ThemeWrapper>

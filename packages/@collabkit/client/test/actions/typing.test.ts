@@ -5,7 +5,7 @@ import { setupApp, setupFirebase, setupWorkspaceProfile } from '../../../test-ut
 import { createStore, createWorkspace } from '../../src/store';
 import { init } from '../../src/actions/init';
 import { FirebaseSync } from '../../src/sync/firebase/FirebaseSync';
-import { ComposerTarget, Store } from '@collabkit/core';
+import { Store } from '@collabkit/core';
 import { subscribeThreadIsTyping } from '../../src/sync/firebase/subscribeThreadIsTyping';
 import { initComposer } from '../../src/actions/initComposer';
 import { stopTyping } from '../../src/actions/stopTyping';
@@ -59,6 +59,7 @@ describe('typing', async () => {
         createdAt: +new Date(),
         createdById: userId,
       },
+      eventId: sync.nextEventId({ appId, workspaceId, threadId }),
     });
 
     typing = new Promise((resolve) =>
@@ -78,6 +79,7 @@ describe('typing', async () => {
         workspaceId,
         threadId,
         eventId: 'default',
+        isNewThread: false,
       },
     });
 
@@ -90,8 +92,7 @@ describe('typing', async () => {
   });
 
   test('stopTyping', async () => {
-    const target: ComposerTarget = {
-      type: 'composer',
+    const target = {
       workspaceId,
       threadId,
       eventId: 'default',

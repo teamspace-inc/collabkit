@@ -82,7 +82,7 @@ export {
   ResolveThreadIconButton,
   Scrollable,
   ThreadFacepile,
-  ThreadProvider,
+  ThreadProvider /* TODO: remove in favor of Thread.Provider? */,
   useComments,
   useInbox,
   useIsResolved,

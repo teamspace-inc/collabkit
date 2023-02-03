@@ -60,6 +60,7 @@ describe('resolve + reopen', async () => {
         createdAt: +new Date(),
         createdById: userId,
       },
+      eventId: sync.nextEventId({ appId, workspaceId, threadId }),
     });
   });
 

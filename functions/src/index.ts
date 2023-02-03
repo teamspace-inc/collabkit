@@ -10,5 +10,19 @@ import { onEvent } from './onEvent';
 import { sendNotification } from './sendNotification';
 import { triggerWebhook } from './triggerWebhook';
 import { comment } from './comment';
+import { createUser } from './createUser';
+import { createWorkspace } from './createWorkspace';
+import { generateCustomToken } from './generateCustomToken';
 
-export { createOrg, createApp, generateToken, onEvent, sendNotification, triggerWebhook, comment };
+export {
+  createOrg,
+  createApp,
+  generateToken,
+  onEvent,
+  sendNotification,
+  triggerWebhook,
+  comment,
+  createUser,
+  createWorkspace,
+  generateCustomToken,
+};

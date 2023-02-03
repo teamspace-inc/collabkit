@@ -82,23 +82,32 @@ export async function writeMessageToFirebase(
   }
 
   try {
-    const { id } = await store.sync.sendMessage({
-      appId,
-      userId,
-      workspaceId,
-      threadId,
-      preview,
-      event,
-    });
-
-    store.workspaces[workspaceId].seen[threadId] = id;
-    store.workspaces[workspaceId].timeline[threadId] ||= {};
-    store.workspaces[workspaceId].timeline[threadId][id] = {
+    const eventId = store.sync.nextEventId({ appId, workspaceId, threadId });
+    const workspace = store.workspaces[workspaceId];
+    workspace.seen[threadId] = eventId;
+    workspace.timeline[threadId] ||= {};
+    workspace.timeline[threadId][eventId] = {
       ...event,
       hasProfile: true,
       createdAt: +Date.now(),
-      id,
+      id: eventId,
     };
+
+    try {
+      await store.sync.sendMessage({
+        appId,
+        userId,
+        workspaceId,
+        threadId,
+        preview,
+        event,
+        eventId,
+      });
+    } catch (e) {
+      // we don't need to revert seen as it works by comparing ids
+      delete store.workspaces[workspaceId].timeline[threadId][eventId];
+      return;
+    }
 
     // stop typing indicator as we sent the message successfully
     try {
@@ -108,14 +117,15 @@ export async function writeMessageToFirebase(
       if (type === 'message') {
         promises.push(
           actions.stopTyping(store, {
-            target: { type: 'composer', workspaceId, threadId, eventId: 'default' },
+            target: { workspaceId, threadId, eventId: 'default' },
           })
         );
       }
 
       if (pin) {
         promises.push(
-          savePin(store, { pin: { ...pin, eventId: parentId ?? id }, appId, workspaceId })
+          // parent id is only set when we are editing a comment
+          savePin(store, { pin: { ...pin, eventId: parentId ?? eventId }, appId, workspaceId })
         );
       }
 
@@ -124,7 +134,7 @@ export async function writeMessageToFirebase(
           target: {
             workspaceId,
             threadId,
-            eventId: id,
+            eventId,
             type: 'comment',
             treeId: '',
           },
@@ -137,7 +147,7 @@ export async function writeMessageToFirebase(
     }
 
     const eventWithId: WithID<Event> = {
-      id,
+      id: eventId,
       ...event,
     };
 

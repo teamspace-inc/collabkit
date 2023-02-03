@@ -99,7 +99,9 @@ describe('FirebaseSync', async () => {
       });
     });
 
-    const { id } = await sync.sendMessage({
+    const id = sync.nextEventId({ appId, workspaceId, threadId });
+
+    await sync.sendMessage({
       appId,
       userId,
       workspaceId,
@@ -111,6 +113,7 @@ describe('FirebaseSync', async () => {
         createdAt: Date.now(),
         createdById: userId,
       },
+      eventId: id,
     });
 
     const savedEvent = await event;
@@ -193,7 +196,8 @@ describe('FirebaseSync', async () => {
     let eventId;
 
     beforeAll(async () => {
-      const { id } = await sync.sendMessage({
+      const id = sync.nextEventId({ appId, workspaceId, threadId });
+      await sync.sendMessage({
         appId,
         userId,
         workspaceId,
@@ -205,6 +209,7 @@ describe('FirebaseSync', async () => {
           createdAt: Date.now(),
           createdById: userId,
         },
+        eventId: id,
       });
 
       eventId = id;
@@ -342,7 +347,8 @@ describe('FirebaseSync', async () => {
 
     const threadId = nanoid();
 
-    const { id } = await sync.sendMessage({
+    const id = sync.nextEventId({ appId, workspaceId, threadId });
+    await sync.sendMessage({
       appId,
       userId,
       workspaceId,
@@ -354,6 +360,7 @@ describe('FirebaseSync', async () => {
         createdAt: Date.now(),
         createdById: userId,
       },
+      eventId: id,
     });
 
     const seen = new Promise((resolve, reject) =>
@@ -396,7 +403,8 @@ describe('FirebaseSync', async () => {
 
     const threadId = nanoid();
 
-    const { id } = await sync.sendMessage({
+    const id = sync.nextEventId({ appId, workspaceId, threadId });
+    await sync.sendMessage({
       appId,
       userId,
       workspaceId,
@@ -408,6 +416,7 @@ describe('FirebaseSync', async () => {
         createdAt: Date.now(),
         createdById: userId,
       },
+      eventId: id,
     });
 
     const updatedInbox = await inbox;

@@ -34,7 +34,7 @@ export const comment = functions
       response.status(400).send({ status: 400, error: '"userId" is invalid' });
       return;
     }
- 
+
     if (!workspaceId || typeof workspaceId !== 'string') {
       console.debug('"workspaceId" not provided', workspaceId);
       response.status(400).send({ status: 400, error: '"workspaceId" not provided' });
