@@ -30,9 +30,10 @@ import {
 } from '@tremor/react';
 import '@tremor/react/dist/esm/tremor.css';
 import { isAfter, isBefore, isEqual } from 'date-fns';
+import { Commentable, Thread, useCommentableRef } from '@collabkit/react';
 
 import { performance } from './data';
-import { Commentable, Thread, useCommentableRef } from '@collabkit/react';
+import { Charts } from './Charts';
 
 type Kpi = {
   title: string;
@@ -374,16 +375,17 @@ export function DashboardExample() {
           >
             <Tab value={1} text="Overview" />
             <Tab value={2} text="Detail" />
+            <Tab value={3} text="Charts" />
           </TabList>
 
-          {selectedView === 1 ? (
+          {selectedView === 1 && (
             <>
               <KpiCardGrid />
               <ChartView chartData={chartData} />
             </>
-          ) : (
-            <TableView />
           )}
+          {selectedView === 2 && <TableView />}
+          {selectedView === 3 && <Charts />}
         </main>
         <div className="h-screen border" style={{ width: 360 }}>
           <Thread threadId="test123" />

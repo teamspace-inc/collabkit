@@ -430,6 +430,11 @@ export interface Workspace {
   eventPins: { [eventId: string]: Pin };
 }
 
+type CommentableObject = {
+  objectId: string;
+  element: HTMLElement | SVGElement;
+};
+
 // get all pins for the workspace that have an open thread attached to them (we don't want resolved ones)
 // get all threads for these pins in one query (comment sidebar speed)
 
@@ -466,7 +471,7 @@ export interface UnconfiguredStore {
   callbacks?: Callbacks;
   clientX: number;
   clientY: number;
-  commentableElements: Map<string, HTMLElement | SVGElement>;
+  commentables: { [objectId: string]: CommentableObject };
 }
 
 export interface Store extends UnconfiguredStore {

@@ -74,7 +74,7 @@ export function createStore(): UnconfiguredStore {
     nextThreadId: null,
     clientX: 0,
     clientY: 0,
-    commentableElements: markRaw(new Map()),
+    commentables: {},
   };
   return store;
 }
