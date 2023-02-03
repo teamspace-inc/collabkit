@@ -8,6 +8,7 @@ export function useInbox(props: {
   filter: 'all' | 'open';
   threadIds?: string[];
   direction?: 'asc' | 'desc';
+  latestFirst?: boolean;
 }) {
   const { store } = useApp();
   const { workspaceId, workspaces, userId } = useSnapshot(store);
@@ -36,24 +37,25 @@ export function useInbox(props: {
   // inboxResolved and inboxOpen
 
   const threadIds = props.threadIds ?? Object.keys(inbox);
-  return (
-    threadIds
-      // filter out resolved threads
-      .filter(
-        (threadId) =>
-          threadId &&
-          (props.filter === 'open'
-            ? !(
-                workspace.timeline?.[threadId] &&
-                timelineUtils.computeIsResolved(workspace.timeline?.[threadId])
-              )
-            : true)
-      )
-      // show threads with latest activity first
-      .sort((a, b) => {
-        const aTime = +inbox[a]?.createdAt ?? 0;
-        const bTime = +inbox[b]?.createdAt ?? 0;
-        return props.direction === 'asc' ? aTime - bTime : bTime - aTime;
-      })
-  );
+  const openThreadIds = threadIds
+    // filter out resolved threads
+    .filter(
+      (threadId) =>
+        threadId &&
+        (props.filter === 'open'
+          ? !(
+              workspace.timeline?.[threadId] &&
+              timelineUtils.computeIsResolved(workspace.timeline?.[threadId])
+            )
+          : true)
+    );
+  if (props.latestFirst) {
+    // show threads with latest activity first
+    openThreadIds.sort((a, b) => {
+      const aTime = +inbox[a]?.createdAt ?? 0;
+      const bTime = +inbox[b]?.createdAt ?? 0;
+      return props.direction === 'asc' ? aTime - bTime : bTime - aTime;
+    });
+  }
+  return openThreadIds;
 }

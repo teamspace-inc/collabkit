@@ -1,8 +1,6 @@
-import type { StoryDecorator } from '@ladle/react';
-import { nanoid } from 'nanoid';
-import React, { ReactNode } from 'react';
-import { CollabKitProvider, SidebarInbox, SidebarInboxButton, ThemeProvider, Thread } from '..';
-import { ChannelsInbox } from './ChannelsInbox';
+import React from 'react';
+import { CollabKitProvider, Sidebar, SidebarInboxButton } from '..';
+import { Channel } from './Channel';
 import { ProviderPropsContext, DefaultProviderProps } from './__stories__/context';
 
 export const Channels = () => (
@@ -11,7 +9,9 @@ export const Channels = () => (
       <>
         <CollabKitProvider {...config} user={{ id: 'alice', name: 'Alice' }}>
           <SidebarInboxButton />
-          <ChannelsInbox />
+          <Sidebar>
+            <Channel />
+          </Sidebar>
         </CollabKitProvider>
       </>
     )}

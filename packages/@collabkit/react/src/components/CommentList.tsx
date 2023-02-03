@@ -10,10 +10,7 @@ import { useSnapshot } from 'valtio';
 import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
 import { useThreadContext } from '../hooks/useThreadContext';
 import { useApp } from '../hooks/useApp';
-
-const CommentListRoot = (props: ComponentProps<'div'>) => (
-  <div className={styles.root} {...props} />
-);
+import { useOptionalChannelContext } from '../hooks/useChannelContext';
 
 function useHasFetchedThreadTimeline() {
   const { threadId } = useThreadContext();
@@ -39,40 +36,37 @@ function useHasFetchedThreadTimeline() {
 
 export default function CommentList(
   props: ComponentProps<'div'> & {
-    renderComment?: (props: CommentProps) => ReactNode;
     hideResolveButton?: boolean;
+    isCollapsed?: boolean;
   }
 ) {
-  const { renderComment, hideResolveButton, ...rootProps } = props;
+  const { isCollapsed, hideResolveButton, ...otherProps } = props;
   const timeline = useTimeline();
   const isResolved = computeIsResolved(timeline);
   const { list } = groupedTimeline(timeline ?? {});
   const newIndicatorId = useNewIndicator();
-
+  const isChannel = !!useOptionalChannelContext();
   const hasFetched = useHasFetchedThreadTimeline();
+  const { expandedThreadIds } = useSnapshot(useApp().store);
+  const { threadId } = useThreadContext();
+  const isExpanded = !!expandedThreadIds.find((id) => id === threadId);
 
   return hasFetched ? (
-    <CommentListRoot {...rootProps}>
+    <div className={styles.root} {...otherProps}>
       {list.map((group, groupIndex) => {
         const groupedComments: ReactNode[] = group.map((event, index) => {
-          const commentProps = {
+          const commentProps: CommentProps = {
             commentId: event.id,
             hideProfile: index > 0,
-            showResolveThreadButton:
-              !hideResolveButton && !isResolved && groupIndex === 0 && index === 0,
+            isFirstComment: !hideResolveButton && !isResolved && groupIndex === 0 && index === 0,
           };
 
-          const comment = renderComment ? (
-            renderComment(commentProps)
-          ) : (
-            <Comment {...commentProps} />
-          );
-          return (
+          return !isChannel || !isCollapsed || commentProps.isFirstComment || isExpanded ? (
             <Fragment key={event.id}>
               {newIndicatorId === event.id && <NewIndicator />}
-              {comment}
+              <Comment {...commentProps} />
             </Fragment>
-          );
+          ) : null;
         });
 
         return groupedComments.length > 0 ? (
@@ -81,9 +75,6 @@ export default function CommentList(
           </div>
         ) : null;
       })}
-    </CommentListRoot>
+    </div>
   ) : null;
 }
-
-export { CommentListRoot as Root };
-CommentList.Root = CommentListRoot;

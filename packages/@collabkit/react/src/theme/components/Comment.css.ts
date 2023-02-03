@@ -1,5 +1,6 @@
 import { fallbackVar, globalStyle, style } from '@vanilla-extract/css';
 import { calc } from '@vanilla-extract/css-utils';
+import { recipe } from '@vanilla-extract/recipes';
 import { vars } from '../theme/index.css';
 import { collabkit } from './Root.css';
 
@@ -21,10 +22,6 @@ export const nameAndTimestampWrapper = style({
 export const inlineModal = style({
   background: vars.color.surface,
   borderRadius: '6px',
-});
-
-export const indent = style({
-  marginLeft: calc.add(vars.avatar.size, fallbackVar(vars.comment.gap, vars.space[2])),
 });
 
 export const pin = style({
@@ -51,6 +48,51 @@ export const body = style({
   paddingRight: `${calc(vars.space[3]).multiply(3)}`,
 });
 
+export const unreadDot = style({
+  width: fallbackVar(vars.inbox.item.unreadDot.width, vars.space[2]),
+  height: fallbackVar(vars.inbox.item.unreadDot.height, vars.space[2]),
+  borderRadius: fallbackVar(vars.inbox.item.unreadDot.borderRadius, '50%'),
+  fontFamily: vars.fontFamily,
+  position: 'inherit',
+  left: 'inherit',
+  background: fallbackVar(vars.sidebar.unreadDot.background, vars.color.attentionBlue),
+});
+
+export const replyCountButton = style({
+  marginTop: vars.space[1],
+  padding: fallbackVar(vars.comment.replyCountButton.padding, `${vars.space[1]} ${vars.space[0]}`),
+  background: fallbackVar(vars.comment.replyCountButton.background, 'transparent'),
+  display: 'flex',
+  borderRadius: '6px',
+  alignItems: 'flex-end',
+  gap: vars.space[1],
+  cursor: 'pointer',
+});
+
+export const replyCountButtonText = style({
+  fontSize: fallbackVar(vars.comment.replyCountButton.text.fontSize, vars.text.small.fontSize),
+  lineHeight: fallbackVar(
+    vars.comment.replyCountButton.text.lineHeight,
+    vars.text.small.lineHeight
+  ),
+  fontWeight: fallbackVar(vars.comment.replyCountButton.text.fontWeight, vars.fontWeight.regular),
+  letterSpacing: fallbackVar(
+    vars.comment.replyCountButton.text.letterSpacing,
+    vars.text.small.letterSpacing
+  ),
+  color: fallbackVar(vars.comment.replyCountButton.text.color, vars.color.textSecondary),
+  fontFamily: vars.fontFamily,
+});
+
+export const replyCountButtonIcon = style({
+  color: fallbackVar(vars.comment.replyCountButton.icon.color, vars.color.textSecondary),
+  selectors: {
+    '&:hover': {
+      color: fallbackVar(vars.comment.replyCountButton.icon.color, vars.color.textPrimary),
+    },
+  },
+});
+
 export const editor = style({
   display: 'flex',
   flexDirection: 'column',
@@ -66,25 +108,34 @@ export const timestamp = style({
   letterSpacing: fallbackVar(vars.comment.timestamp.letterSpacing, vars.text.small.letterSpacing),
   lineHeight: fallbackVar(vars.comment.timestamp.lineHeight, vars.text.small.lineHeight),
   fontFamily: vars.fontFamily,
-
   textDecoration: 'none',
   overflow: 'hidden',
   textOverflow: 'ellipsis',
   color: fallbackVar(vars.comment.timestamp.color, vars.color.textSecondary),
 });
 
-const verticalPadding = calc.multiply(vars.space[1], 1.5).toString();
+const verticalPadding = calc.multiply(vars.space[1], 2).toString();
 
-export const root = style({
-  display: 'grid',
-  gridTemplateColumns: `${vars.avatar.size} 1fr`,
-  columnGap: fallbackVar(vars.comment.gap, vars.space[3]),
-  position: 'relative',
-  paddingLeft: fallbackVar(vars.comment.paddingLeft, vars.space[4]),
-  paddingRight: fallbackVar(vars.comment.paddingRight, vars.space[4]),
-  paddingTop: fallbackVar(vars.comment.paddingTop, verticalPadding),
-  paddingBottom: fallbackVar(vars.comment.paddingBottom, verticalPadding),
-  fontFamily: vars.fontFamily,
+export const root = recipe({
+  base: {
+    display: 'grid',
+    gridTemplateColumns: `${vars.avatar.size} 1fr`,
+    columnGap: fallbackVar(vars.comment.gap, vars.space[3]),
+    position: 'relative',
+    paddingLeft: fallbackVar(vars.comment.paddingLeft, vars.space[4]),
+    paddingRight: fallbackVar(vars.comment.paddingRight, vars.space[4]),
+    paddingTop: fallbackVar(vars.comment.paddingTop, verticalPadding),
+    paddingBottom: fallbackVar(vars.comment.paddingBottom, verticalPadding),
+    fontFamily: vars.fontFamily,
+  },
+  variants: {
+    indent: {
+      true: {
+        paddingLeft: fallbackVar(vars.comment.paddingLeft, calc.multiply(vars.space[4], 3.25)),
+      },
+      false: {},
+    },
+  },
 });
 
 export const actions = style({
@@ -95,13 +146,19 @@ export const actions = style({
   fontFamily: vars.fontFamily,
   position: 'absolute',
   right: vars.space[4],
-  top: '2px',
+  top: vars.space[1],
   transform: 'translateY(0%)',
   background: vars.color.background,
   border: `1px solid ${vars.color.border}`,
   borderRadius: '6px',
 
   opacity: 0,
+
+  selectors: {
+    '&:empty': {
+      display: 'none',
+    },
+  },
 });
 
 export const hover = style({
@@ -109,23 +166,33 @@ export const hover = style({
   pointerEvents: 'all',
 });
 
-globalStyle(`${collabkit} ${root}:hover`, {
+globalStyle(`${collabkit} ${root()}:hover, ${collabkit} ${root({ indent: true })}:hover`, {
   backgroundColor: fallbackVar(vars.comment.hover.background, vars.color.surfaceHover),
 });
 
-globalStyle(`${collabkit} ${root}${hover}`, {
+globalStyle(`${collabkit} ${root()}:hover, ${collabkit} ${root({ indent: true })}:hover`, {
   backgroundColor: fallbackVar(vars.comment.hover.background, vars.color.surfaceHover),
 });
 
-globalStyle(`${collabkit} ${root}${hover} ${actions}`, {
-  opacity: 1,
-  pointerEvents: 'all',
-});
+globalStyle(
+  `${collabkit} ${root()}${hover} ${actions}, ${collabkit} ${root({
+    indent: true,
+  })}${hover} ${actions}`,
+  {
+    opacity: 1,
+    pointerEvents: 'all',
+  }
+);
 
-globalStyle(`${collabkit} ${root}:hover ${actions}`, {
-  opacity: 1,
-  pointerEvents: 'all',
-});
+globalStyle(
+  `${collabkit} ${root()}:hover ${actions}, ${collabkit} ${root({
+    indent: true,
+  })}:hover ${actions}`,
+  {
+    opacity: 1,
+    pointerEvents: 'all',
+  }
+);
 
 export const markdown = style({});
 export const markdownLinksNotClickable = style({});

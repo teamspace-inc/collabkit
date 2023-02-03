@@ -95,6 +95,10 @@ export function createEvents(store: Store) {
           actions.reopenThread(store, target);
           break;
         }
+        case 'commentReplyCountButton': {
+          actions.expandThread(store, target);
+          break;
+        }
         case 'commentSaveButton': {
           actions.updateComment(store);
           actions.stopEditing(store);

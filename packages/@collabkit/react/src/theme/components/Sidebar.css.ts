@@ -1,11 +1,9 @@
 import { fallbackVar, style } from '@vanilla-extract/css';
-import { calc } from '@vanilla-extract/css-utils';
 import { recipe } from '@vanilla-extract/recipes';
 import { vars } from '../theme/index.css';
 
 export const root = style({
   boxSizing: 'border-box',
-  height: '100%',
   background: fallbackVar(vars.sidebar.background, vars.color.background),
   boxShadow: fallbackVar(vars.sidebar.boxShadow, vars.shadow.high),
   position: 'fixed',
@@ -14,16 +12,7 @@ export const root = style({
   right: 0,
   bottom: 0,
   fontFamily: vars.fontFamily,
-});
-
-export const scrollarea = style({
-  flex: 1,
-  height: `calc(100vh - ${calc(vars.sidebar.title.lineHeight)
-    .add(vars.sidebar.title.paddingBottom)
-    .add(vars.sidebar.title.paddingTop)
-    .add(vars.sidebar.title.paddingBottom)
-    .toString()})`,
-  fontFamily: vars.fontFamily,
+  zIndex: 1,
 });
 
 export const title = style({
@@ -53,7 +42,7 @@ export const iconButton = recipe({
     // Hidden till we have notifications ready
     // cursor: 'pointer',
     visibility: 'hidden',
-    
+
     selectors: {
       '&:active': {
         background: fallbackVar(vars.iconButton.hover.background, vars.color.surfaceOverlay),

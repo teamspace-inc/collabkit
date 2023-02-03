@@ -75,6 +75,7 @@ export function createStore(): UnconfiguredStore {
     clientX: 0,
     clientY: 0,
     commentables: {},
+    expandedThreadIds: [],
   };
   return store;
 }
