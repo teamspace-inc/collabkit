@@ -27,12 +27,16 @@ export const createApp = functions.https.onRequest(async (request, response) => 
         break;
       case 'createOrg':
         createOrgImpl(request, response);
+        break;
       case 'comment':
         commentImpl(request, response);
+        break;
       case 'sendNotification':
         sendNotificationImpl(request, response);
+        break;
       case 'triggerWebhook':
         triggerWebhookImpl(request, response);
+        break;
       default:
         response.status(404).send('Route not found');
     }
