@@ -8,7 +8,7 @@ export const root = style({
   gap: fallbackVar(vars.inbox.gap, vars.space[2]),
   boxSizing: 'border-box',
   height: '89.5%',
-  width: fallbackVar(vars.inbox.width, '360px'),
+  width: fallbackVar(vars.inbox.width, '292px'),
   borderRadius: 0,
   background: fallbackVar(vars.inbox.background, vars.color.background),
   fontFamily: vars.fontFamily,
