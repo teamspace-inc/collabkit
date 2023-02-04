@@ -3,12 +3,58 @@ import { proxyWithComputed } from 'valtio/utils';
 import { Config, Store, SyncAdapter } from './constants';
 import { createStore, actions } from '@collabkit/client';
 
+type Reactions = {
+  [threadId: string]: {
+    [eventId: string]: EventReactions;
+  };
+};
+
+type EventReactions = { [emoji: string]: { count: number; userIds: string[] } };
+
 export function createValtioStore(config: Config, sync: SyncAdapter): Store {
   const store = proxyWithComputed(createStore(), {
-    allPins: (store) => {
-      const { workspaceId } = store;
+    reactions: (snapshot) => {
+      const reactions: Reactions = {};
+      const { workspaceId } = snapshot;
+      if (!workspaceId) return reactions;
+      const workspace = snapshot.workspaces[workspaceId];
+      if (!workspace) return reactions;
+      if (!workspace.timeline) return reactions;
+      for (const threadId in workspace.timeline) {
+        const thread = workspace.timeline[threadId];
+        reactions[threadId] ||= {};
+        for (const eventId in thread) {
+          const event = thread[eventId];
+          if (event.type === 'reaction') {
+            const { parentId } = event;
+            if (!parentId) continue;
+            const isDelete = event.body.startsWith('delete-');
+            const emojiU = isDelete ? event.body.split('delete-')[1] : event.body;
+            reactions[threadId][parentId] ||= {};
+            reactions[threadId][parentId][emojiU] ||= { count: 0, userIds: [] };
+            const reaction = reactions[threadId][parentId][emojiU];
+            if (!isDelete) {
+              reaction.count++;
+              reaction.userIds.push(event.createdById);
+            } else {
+              reaction.count--;
+              const index = reaction.userIds.findIndex((userId) => userId === event.createdById);
+              if (index > -1) {
+                reaction.userIds.splice(index, 1);
+              }
+              if (reaction.count === 0) {
+                delete reactions[threadId][parentId][emojiU];
+              }
+            }
+          }
+        }
+      }
+      return reactions;
+    },
+    allPins: (snapshot) => {
+      const { workspaceId } = snapshot;
       if (!workspaceId) return {};
-      const workspace = store.workspaces[workspaceId];
+      const workspace = snapshot.workspaces[workspaceId];
       if (!workspace) return {};
       const pins = Object.entries(workspace?.openPins ?? {})
         .map(([objectId, pinMap]) => Object.values(pinMap).map((pin) => ({ ...pin, objectId })))

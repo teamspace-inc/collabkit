@@ -2,8 +2,8 @@ import type React from 'react';
 import { $getSelection } from 'lexical';
 import type { LexicalEditor } from 'lexical';
 import type {
-  CommentReactionTarget,
   CommentTarget,
+  EmojiTarget,
   MenuTarget,
   Store,
   Target,
@@ -65,10 +65,6 @@ export function createEvents(store: Store) {
       actions.stopEditing(store);
     },
 
-    onEmojiReactionPickerModalBackgroundClick: (e: React.MouseEvent) => {
-      store.reactingId = null;
-    },
-
     onFocus: (e: React.FocusEvent | FocusEvent, props: { target: Target }) => {
       actions.focus(store, props);
     },
@@ -76,6 +72,10 @@ export function createEvents(store: Store) {
     onClick: <T extends Target>(e: React.MouseEvent, props: { target: T }) => {
       const { target } = props;
       switch (target.type) {
+        case 'emoji': {
+          actions.toggleEmoji(store, { target });
+          break;
+        }
         case 'pin':
           actions.select(store, { target });
           break;
@@ -132,12 +132,8 @@ export function createEvents(store: Store) {
       }
     },
 
-    onEmojiReactionClick: (e: React.MouseEvent, props: { target: CommentReactionTarget }) => {
-      actions.toggleCommentReaction(store, props);
-    },
-
-    onEmojiReactPointerDown: (e: React.PointerEvent, props: { target: CommentTarget }) => {
-      actions.toggleEmojiReactionPicker(store, props);
+    onReactionPick: (props: { target: EmojiTarget }) => {
+      actions.toggleEmoji(store, props);
     },
 
     onBlur: (e: React.FocusEvent | FocusEvent | null, props: { target: Target }) => {
@@ -156,6 +152,15 @@ export function createEvents(store: Store) {
       if (store.uiState === 'selecting') {
         if (e.key === 'Escape') {
           actions.stopSelecting(store);
+          e.stopPropagation();
+          e.preventDefault();
+          return;
+        }
+      }
+
+      if (store.reactingId) {
+        if (e.key === 'Escape') {
+          store.reactingId = null;
           e.stopPropagation();
           e.preventDefault();
           return;
@@ -283,6 +288,10 @@ export function createEvents(store: Store) {
 
     onSeen: (props: { target: CommentTarget }) => {
       actions.seen(store, props);
+    },
+
+    onReactionPickerOpenChange: (props: { target: CommentTarget; open: boolean }) => {
+      actions.toggleEmojiPicker(store, props);
     },
 
     onPopoverPreviewChange: (props: { target: ThreadTarget; open: boolean }) => {
