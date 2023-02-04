@@ -249,7 +249,7 @@ export function EmojiCount(props: { emojiU: string; count: number; userIds: read
   const emoji = EMOJI_U[props.emojiU];
 
   return emoji ? (
-    <Tooltip>
+    <Tooltip placement="bottom-start">
       <Tooltip.Trigger>
         <div key={props.emojiU} className={styles.emojiCount}>
           <Emoji
@@ -260,7 +260,11 @@ export function EmojiCount(props: { emojiU: string; count: number; userIds: read
           <span className={styles.emojiCountNumber}>{props.count}</span>
         </div>
       </Tooltip.Trigger>
-      <Tooltip.Content>{names}</Tooltip.Content>
+      <Tooltip.Content className={styles.emojiCountTooltip}>
+        {names.map((name) => (
+          <span>{name}</span>
+        ))}
+      </Tooltip.Content>
     </Tooltip>
   ) : null;
 }
@@ -270,8 +274,8 @@ export const CommentReactions = (props: React.ComponentPropsWithoutRef<'div'>) =
   const { threadId, eventId } = useCommentContext();
   const { reactions } = useSnapshot(store);
   const reaccs = reactions[threadId][eventId];
-
-  return reaccs ? (
+  const isEditing = useIsEditing();
+  return reaccs && !isEditing ? (
     <div data-testid="collabkit-comment-reactions" className={styles.reactions} {...props}>
       {Object.keys(reaccs).map((emojiU) => {
         const { count, userIds } = reaccs[emojiU as keyof typeof reaccs];
@@ -498,7 +502,7 @@ export type CommentProps = {
   isFirstComment?: boolean;
 };
 
-export default function Comment(props: CommentProps) {
+function Comment(props: CommentProps) {
   const hideProfile = props.hideProfile ?? false;
   const isFirstComment = props.isFirstComment ?? false;
   const isChannel = !!useOptionalChannelContext();
@@ -527,6 +531,8 @@ export default function Comment(props: CommentProps) {
     </Comment.Root>
   );
 }
+
+export default React.memo(Comment);
 
 Comment.Provider = CommentProvider;
 Comment.Root = CommentRoot;
