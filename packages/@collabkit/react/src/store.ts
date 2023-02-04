@@ -11,6 +11,8 @@ type Reactions = {
 
 type EventReactions = { [emoji: string]: { count: number; userIds: string[] } };
 
+const DELETE_ID = 'delete-';
+
 export function createValtioStore(config: Config, sync: SyncAdapter): Store {
   const store = proxyWithComputed(createStore(), {
     reactions: (snapshot) => {
@@ -28,8 +30,8 @@ export function createValtioStore(config: Config, sync: SyncAdapter): Store {
           if (event.type === 'reaction') {
             const { parentId } = event;
             if (!parentId) continue;
-            const isDelete = event.body.startsWith('delete-');
-            const emojiU = isDelete ? event.body.split('delete-')[1] : event.body;
+            const isDelete = event.body.startsWith(DELETE_ID);
+            const emojiU = isDelete ? event.body.split(DELETE_ID)[1] : event.body;
             reactions[threadId][parentId] ||= {};
             reactions[threadId][parentId][emojiU] ||= { count: 0, userIds: [] };
             const reaction = reactions[threadId][parentId][emojiU];
@@ -42,7 +44,7 @@ export function createValtioStore(config: Config, sync: SyncAdapter): Store {
               if (index > -1) {
                 reaction.userIds.splice(index, 1);
               }
-              if (reaction.count === 0) {
+              if (reaction.count <= 0) {
                 delete reactions[threadId][parentId][emojiU];
               }
             }

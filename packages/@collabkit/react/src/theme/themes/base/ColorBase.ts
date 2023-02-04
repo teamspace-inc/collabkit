@@ -14,13 +14,13 @@ const colors = {
   opacity7: 'rgba(0, 0, 0, 0.08)', // White Opacity 7
   opacity4: 'rgba(0, 0, 0, 0.04)', // White Opacity 7
   red: 'hsl(2, 73%, 62%)', // Red
-  blue: 'hsl(211, 95%, 59%)' // Blue
+  blue: 'hsl(211, 95%, 59%)', // Blue
 };
 
 export const ColorBase = {
   color: {
     background: colors.white,
-    surface: '#EEEEEE',
+    surface: '#f6f6f6',
     surfaceHover: colors.grey96,
     surfaceOverlay: colors.opacity7,
     textPrimary: colors.black10,
@@ -31,6 +31,6 @@ export const ColorBase = {
     icon: colors.grey24,
     iconSecondary: colors.grey53,
     attention: colors.red,
-    attentionBlue: colors.blue
+    attentionBlue: colors.blue,
   },
 };

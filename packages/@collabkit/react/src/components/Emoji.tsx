@@ -1,5 +1,5 @@
 import React from 'react';
-import * as styles from '../theme/components/ReactionPicker.css';
+import * as styles from '../theme/components/EmojiPicker.css';
 import { Emoji as EmojiType } from '@collabkit/core';
 
 export function Emoji(props: {

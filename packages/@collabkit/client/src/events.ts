@@ -2,6 +2,7 @@ import type React from 'react';
 import { $getSelection } from 'lexical';
 import type { LexicalEditor } from 'lexical';
 import type {
+  CommentEmojiButtonTargets,
   CommentTarget,
   EmojiTarget,
   MenuTarget,
@@ -290,7 +291,8 @@ export function createEvents(store: Store) {
       actions.seen(store, props);
     },
 
-    onReactionPickerOpenChange: (props: { target: CommentTarget; open: boolean }) => {
+    onReactionPickerOpenChange: (props: { target: CommentEmojiButtonTargets; open: boolean }) => {
+      console.log('onReactionPickerOpenChange', props);
       actions.toggleEmojiPicker(store, props);
     },
 

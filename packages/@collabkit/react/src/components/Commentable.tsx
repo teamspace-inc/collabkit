@@ -255,15 +255,17 @@ export function CommentableRoot(props: { className?: string; children?: React.Re
     </>
   );
 
-  const savedPins = allPins.map((pin) => {
-    return (
-      <SavedPin
-        key={pin.id}
-        pin={pin}
-        isSelected={selectedId?.type === 'pin' && selectedId.id === pin.id}
-      />
-    );
-  });
+  const savedPins = allPins
+    ? allPins.map((pin) => {
+        return (
+          <SavedPin
+            key={pin.id}
+            pin={pin}
+            isSelected={selectedId?.type === 'pin' && selectedId.id === pin.id}
+          />
+        );
+      })
+    : [];
 
   return (
     <div

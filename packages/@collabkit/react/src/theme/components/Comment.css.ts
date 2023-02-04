@@ -61,7 +61,7 @@ export const emojiCountTooltip = style({
   display: 'flex',
   flexDirection: 'column',
   gap: vars.space[1],
-  padding: `${vars.space[1]} ${vars.space[2]}`,
+  padding: `${vars.space[1]} ${vars.space[1]}`,
   fontSize: vars.text.small.fontSize,
   fontWeight: vars.fontWeight.regular,
   letterSpacing: vars.text.small.letterSpacing,
@@ -74,6 +74,7 @@ export const emojiCountTooltip = style({
 export const reactions = style({
   display: 'flex',
   alignSelf: 'flex-start',
+  alignItems: 'flex-end',
 });
 
 export const indent = style({

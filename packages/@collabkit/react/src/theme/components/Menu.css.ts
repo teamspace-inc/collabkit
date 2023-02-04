@@ -9,7 +9,7 @@ export const menu = style({
   pointerEvents: 'all',
   minWidth: 110,
   borderRadius: fallbackVar(vars.menu.borderRadius, '6px'),
-  background: fallbackVar(vars.menu.background, vars.color.background),
+  background: fallbackVar(vars.menu.background, vars.color.surface),
   border: `1px solid ${vars.color.border}`,
   boxShadow: fallbackVar(vars.menu.boxShadow, vars.shadow.standard),
   outline: 'none',
