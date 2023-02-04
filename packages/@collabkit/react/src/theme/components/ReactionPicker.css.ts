@@ -8,7 +8,7 @@ export const root = recipe({
     width: 188,
     background: vars.color.background,
     borderRadius: '6px',
-    zIndex: 9999,
+    zIndex: 999,
     border: '1px solid ' + vars.color.surfaceOverlay,
   },
   variants: {
