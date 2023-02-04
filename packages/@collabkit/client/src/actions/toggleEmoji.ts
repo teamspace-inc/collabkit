@@ -16,7 +16,7 @@ export async function toggleEmoji(store: Store, props: { target: EmojiTarget }) 
   const { workspaceId, threadId, eventId } = props.target;
 
   // check if this user has a last reaction to the comment already
-  const reactions = store.reactions[threadId][eventId][emoji.u];
+  const reactions = store.reactions[threadId][eventId]?.[emoji.u];
   const body = reactions
     ? reactions.userIds.includes(store.userId)
       ? `delete-${emoji.u}`
