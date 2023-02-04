@@ -1,10 +1,10 @@
 import { HideSidebarButtonTarget } from '@collabkit/core';
-import React, { useLayoutEffect } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import { useSnapshot } from 'valtio';
 import { useApp } from '../hooks/useApp';
 import { useOptionalUserContext } from '../hooks/useUserContext';
 import { IconButton } from './IconButton';
-import { X } from './icons';
+import { Bell, ChatText, X } from './icons';
 import * as styles from '../theme/components/Sidebar.css';
 import { ThemeWrapper } from './ThemeWrapper';
 
@@ -28,7 +28,7 @@ function CloseSidebarButton() {
         events.onPointerDown(e, { target });
       }}
     >
-      <X weight={'bold'} />
+      <X size={16} />
     </IconButton>
   );
 }
@@ -45,27 +45,50 @@ export function Sidebar(props: {
 }) {
   const titleRef = React.useRef<HTMLDivElement>(null);
   const { store } = useApp();
-  const { isSidebarOpen: isInboxOpen } = useSnapshot(store);
+  const { isSidebarOpen: isSidebarOpen } = useSnapshot(store);
+  const [inboxActive, setInboxActive] = useState(true);
 
   // set the title height so we can adjust the inbox scrollbar accordingly
   // we need to do this because the inbox scrollbar is a child of the inbox
   const [titleHeight, setTitleHeight] = React.useState(0);
 
   useLayoutEffect(() => {
-    if (isInboxOpen && titleRef.current) {
+    if (isSidebarOpen && titleRef.current) {
       setTitleHeight(titleRef.current.getBoundingClientRect().height);
     }
-  }, [isInboxOpen]);
+  }, [isSidebarOpen]);
 
-  return isInboxOpen ? (
+  const header = (
+    <div ref={titleRef} className={styles.title}>
+      <div style={{ flex: 1 }} data-testid="sidebar-title">
+        {props.title ?? 'Comments'}
+      </div>
+      {/* Hidden till we have notifictions ready */}
+      <div
+        className={styles.iconButton({ active: inboxActive })}
+        // onClick={() => { setInboxActive(true) }}
+      >
+        <ChatText size={16} mirrored={true} />
+      </div>
+      <div
+        className={styles.iconButton({ active: !inboxActive })}
+        // onClick={() => { setInboxActive(false) }}
+      >
+        <Bell size={16} />
+      </div>
+      <CloseSidebarButton />
+    </div>
+  );
+
+  return isSidebarOpen ? (
     <ThemeWrapper>
       <SidebarContext.Provider value={{ titleHeight }}>
         <div className={styles.root} style={{ position: props.strategy ?? 'fixed' }}>
-          <span ref={titleRef} className={styles.title}>
-            <div style={{ flex: 1 }}>{props.title ?? 'Comments'}</div>
-            <CloseSidebarButton />
-          </span>
-          <div style={{ display: 'contents' }}>{props.children}</div>
+          {header}
+          {inboxActive ? (
+            <div style={{ display: 'contents' }}>{props.children}</div>
+          ) : // TODO : notifs here
+          null}
         </div>
       </SidebarContext.Provider>
     </ThemeWrapper>

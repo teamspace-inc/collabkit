@@ -180,7 +180,23 @@ export type Target =
   | CommentSaveButtonTarget
   | CommentCancelButtonTarget
   | PinCursorTarget
-  | OverlayTarget;
+  | OverlayTarget
+  | CommentReplyCountButtonTarget
+  | CommentReplyButtonTarget;
+
+export type CommentReplyCountButtonTarget = {
+  type: 'commentReplyCountButton';
+  threadId: string;
+  workspaceId: string;
+  eventId: string;
+};
+
+export type CommentReplyButtonTarget = {
+  type: 'commentReplyButton';
+  threadId: string;
+  workspaceId: string;
+  eventId: string;
+};
 
 export type PinCursorTarget = {
   type: 'pinCursor';
@@ -472,6 +488,7 @@ export interface UnconfiguredStore {
   clientX: number;
   clientY: number;
   commentables: { [objectId: string]: CommentableObject };
+  expandedThreadIds: string[];
 }
 
 export interface Store extends UnconfiguredStore {

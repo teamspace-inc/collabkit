@@ -439,7 +439,10 @@ export function MentionsTypeahead({
               maxHeight: maxAvailableSize.height > 0 ? maxAvailableSize.height : 'unset',
             }}
           >
-            <Scrollable maxHeight={maxAvailableSize.height > 0 ? maxAvailableSize.height : 'unset'}>
+            <Scrollable
+              maxHeight={maxAvailableSize.height > 0 ? maxAvailableSize.height : 'unset'}
+              // autoScroll="bottom" // todo make this dependent on flip
+            >
               <div className={styles.list}>
                 {results.slice(0, SUGGESTION_LIST_LENGTH_LIMIT).map((result, i) => (
                   <MentionsTypeaheadItem

@@ -4,6 +4,7 @@ export const CommentBase = {
     paddingRight: 'initial',
     paddingTop: 'initial',
     paddingBottom: 'initial',
+    // indent: 'initial',
     gap: 'initial',
     hover: {
       background: 'initial',
@@ -34,6 +35,30 @@ export const CommentBase = {
       lineHeight: 'initial',
       letterSpacing: 'initial',
       fontWeight: 'initial',
+    },
+    replyCountButton: {
+      padding: 'initial',
+      borderRadius: 'initial',
+      background: 'initial',
+      border: 'initial',
+      hover: {
+        background: 'initial',
+        border: 'initial',
+      },
+      text: {
+        color: 'initial',
+        fontSize: 'initial',
+        lineHeight: 'initial',
+        letterSpacing: 'initial',
+        fontWeight: 'initial',
+      },
+      icon: {
+        color: 'initial',
+        fontSize: 'initial',
+        lineHeight: 'initial',
+        letterSpacing: 'initial',
+        fontWeight: 'initial',
+      },
     },
   },
 };

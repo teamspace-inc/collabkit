@@ -65,5 +65,6 @@ test('createStore', () => {
     clientY: 0,
     composerId: null,
     commentables: {},
+    expandedThreadIds: [],
   });
 });

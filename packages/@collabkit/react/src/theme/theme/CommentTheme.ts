@@ -4,6 +4,7 @@ export const CommentTheme = {
     paddingRight: 'comment-padding-right',
     paddingTop: 'comment-padding-top',
     paddingBottom: 'comment-padding-bottom',
+    // indent: 'comment-indent',
     gap: 'comment-gap',
     hover: {
       background: 'comment-hover-background',
@@ -34,6 +35,31 @@ export const CommentTheme = {
       lineHeight: 'comment-timestamp-line-height',
       fontWeight: 'comment-timestamp-font-weight',
       letterSpacing: 'comment-timestamp-letter-spacing',
+    },
+    replyCountButton: {
+      padding: 'comment-reply-count-button-padding',
+      borderRadius: 'comment-reply-count-button-border-radius',
+      background: 'comment-reply-count-button-background',
+      border: 'comment-reply-count-button-border',
+      hover: {
+        background: 'comment-reply-count-button-hover-background',
+        border: 'comment-reply-count-button-hover-border',
+      },
+
+      text: {
+        color: 'comment-reply-count-button-text-color',
+        fontSize: 'comment-reply-count-button-text-font-size',
+        lineHeight: 'comment-reply-count-button-text-line-height',
+        fontWeight: 'comment-reply-count-button-text-font-weight',
+        letterSpacing: 'comment-reply-count-button-text-letter-spacing',
+      },
+      icon: {
+        color: 'comment-reply-count-button-icon-color',
+        fontSize: 'comment-reply-count-button-icon-font-size',
+        lineHeight: 'comment-reply-count-button-icon-line-height',
+        fontWeight: 'comment-reply-count-button-icon-font-weight',
+        letterSpacing: 'comment-reply-count-button-icon-letter-spacing',
+      },
     },
   },
 };

@@ -2,23 +2,23 @@ import { vars } from '../../theme/index.css';
 
 export const MenuBase = {
   menu: {
-    background: vars.color.surface,
-    border: 'none',
-    borderRadius: '6px',
-    boxShadow: vars.shadow.standard,
+    background: 'initial',
+    border: 'initial',
+    borderRadius: 'initial',
+    boxShadow: 'initial',
     item: {
-      color: vars.color.textPrimary,
-      fontSize: vars.text.base.fontSize,
-      fontWeight: vars.fontWeight.regular,
-      letterSpacing: vars.text.base.letterSpacing,
-      lineHeight: vars.text.base.lineHeight,
+      color: 'initial',
+      fontSize: 'initial',
+      fontWeight: 'initial',
+      letterSpacing: 'initial',
+      lineHeight: 'initial',
       active: {
-        color: vars.color.textPrimary,
-        background: vars.color.surfaceOverlay,
+        color: 'initial',
+        background: 'initial',
       },
       hover: {
-        color: vars.color.textPrimary,
-        background: vars.color.surfaceOverlay,
+        color: 'initial',
+        background: 'initial',
       },
     },
   },

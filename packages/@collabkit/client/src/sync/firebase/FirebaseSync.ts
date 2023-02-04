@@ -110,6 +110,14 @@ export class FirebaseSync implements Sync.SyncAdapter {
     return eventRef.key;
   }
 
+  nextThreadId(params: { appId: string; workspaceId: string }): string {
+    DEBUG && console.log('[network] nextThreadId', params);
+    const { appId, workspaceId } = params;
+    const threadRef = push(ref`/timeline/${appId}/${workspaceId}`);
+    if (!threadRef.key) throw new Error('threadId is undefined');
+    return threadRef.key;
+  }
+
   async savePin(params: {
     appId: string;
     workspaceId: string;

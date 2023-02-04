@@ -53,6 +53,8 @@ import { focusComposer } from './focusComposer';
 import { select } from './select';
 import { deselectAll } from './deselectAll';
 import { updateComposer } from './updateComposer';
+import { expandThread } from './expandThread';
+import { collapseThread } from './collapseThread';
 
 export type GenerateToken =
   | {
@@ -128,9 +130,11 @@ export const actions = {
   closeMenu,
   closePreview,
   closeThread,
+  collapseThread,
   deleteMessage,
   deletePin,
   deselectAll,
+  expandThread,
   focus,
   focusComposer,
   hideSidebar,

@@ -13,7 +13,7 @@ import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
 import { useApp } from '../hooks/useApp';
 import { CommentTarget, PinTarget, timelineUtils } from '@collabkit/core';
 import * as styles from '../theme/components/Comment.css';
-import { DotsThree } from './icons';
+import { ArrowBendDownRight, ArrowBendUpRight, DotsThree } from './icons';
 import { Menu, MenuItem } from './Menu';
 import { Thread } from './Thread';
 import { useHovering } from '../hooks/useHovering';
@@ -23,6 +23,10 @@ import { IconButton } from './IconButton';
 import CommentPinSvg from './composer/comment-pin.svg';
 import CommentPinSelectedSvg from './composer/comment-pin-hover.svg';
 import { Tooltip } from './Tooltip';
+import { useComments } from '../hooks/public/useComments';
+import { useUnreadCount } from '..';
+import { vars } from '../theme/theme/index.css';
+import { useOptionalChannelContext } from '../hooks/useChannelContext';
 
 function useIsEditing() {
   const { store } = useApp();
@@ -63,9 +67,10 @@ export function CommentProvider(props: { children: React.ReactNode; eventId: str
 
 type CommentRootProps = {
   commentId: string;
+  indent?: boolean;
 } & React.ComponentPropsWithRef<'div'>;
 
-function CommentRoot({ commentId: eventId, ...props }: CommentRootProps) {
+function CommentRoot({ commentId: eventId, indent = false, ...props }: CommentRootProps) {
   const { threadId, workspaceId, userId } = useThreadContext();
   const treeId = useId();
 
@@ -123,7 +128,9 @@ function CommentRoot({ commentId: eventId, ...props }: CommentRootProps) {
       <Profile.Provider profileId={createdById}>
         <div
           data-testid="collabkit-comment-root"
-          className={`${props.className ?? styles.root} ${isHovering ? styles.hover : ''}`}
+          className={`${props.className ?? styles.root({ indent })} ${
+            isHovering ? styles.hover : ''
+          }`}
           onClick={onClick}
           ref={ref}
           style={props.style}
@@ -132,6 +139,72 @@ function CommentRoot({ commentId: eventId, ...props }: CommentRootProps) {
         </div>
       </Profile.Provider>
     </CommentContext.Provider>
+  );
+}
+
+export function CommentUnreadDot(props: React.ComponentPropsWithoutRef<'div'>) {
+  const { threadId } = useThreadContext();
+  const count = useUnreadCount({ threadId });
+  return count > 0 ? <div className={styles.unreadDot} {...props} /> : null;
+}
+
+export function CommentReplyButton() {
+  const { events } = useApp();
+  const { eventId, workspaceId, threadId } = useCommentContext();
+  const target = {
+    type: 'commentReplyButton',
+    eventId,
+    threadId,
+    workspaceId,
+  } as const;
+  return (
+    <IconButton onClick={(e) => events.onClick(e, { target })}>
+      <ArrowBendUpRight weight="regular" />
+    </IconButton>
+  );
+}
+
+export function CommentReplyCountButton(props: React.ComponentPropsWithoutRef<'div'>) {
+  const commentIds = useComments();
+  const { store, events } = useApp();
+  const { expandedThreadIds } = useSnapshot(store);
+  const { threadId, workspaceId, eventId } = useCommentContext();
+  const isEditing = useIsEditing();
+
+  const target = {
+    type: 'commentReplyCountButton',
+    workspaceId,
+    threadId,
+    eventId,
+  } as const;
+
+  if (isEditing) {
+    return null;
+  }
+
+  if (commentIds.length === 1) {
+    return null;
+  }
+
+  if (expandedThreadIds.find((id) => id === threadId)) {
+    return null;
+  }
+
+  return (
+    <div
+      className={styles.replyCountButton}
+      onClick={(e) => events.onClick(e, { target })}
+      {...props}
+    >
+      <ArrowBendDownRight
+        weight="regular"
+        className={styles.replyCountButtonIcon}
+        color={vars.color.textDisabled}
+      />
+      <span className={styles.replyCountButtonText}>
+        {commentIds.length - 1} {commentIds.length != 2 ? 'replies' : 'reply'}
+      </span>
+    </div>
   );
 }
 
@@ -326,14 +399,15 @@ export const CommentActions = (props: React.ComponentProps<'div'>) => {
 export type CommentProps = {
   commentId: string;
   hideProfile?: boolean;
-  showResolveThreadButton?: boolean;
+  isFirstComment?: boolean;
 };
 
 export default function Comment(props: CommentProps) {
   const hideProfile = props.hideProfile ?? false;
-  const showResolveThreadButton = props.showResolveThreadButton ?? false;
+  const isFirstComment = props.isFirstComment ?? false;
+  const isChannel = !!useOptionalChannelContext();
   return (
-    <Comment.Root commentId={props.commentId}>
+    <Comment.Root commentId={props.commentId} indent={isChannel && !isFirstComment}>
       {!hideProfile ? <Profile.Avatar /> : <div></div>}
       <div>
         {!hideProfile && (
@@ -343,10 +417,13 @@ export default function Comment(props: CommentProps) {
           </Comment.NameAndTimestampWrapper>
         )}
         <Comment.Actions>
-          {showResolveThreadButton && <Thread.ResolveIconButton />}
+          {isFirstComment && <Thread.ResolveIconButton />}
+          {isChannel && isFirstComment && <Comment.ReplyButton />}
           <Comment.MoreMenu />
         </Comment.Actions>
         <Comment.Body />
+        {/* <Comment.UnreadDot /> */}
+        {isChannel && isFirstComment && <Comment.ReplyCountButton />}
         <Comment.Editor />
       </div>
     </Comment.Root>
@@ -364,6 +441,9 @@ Comment.Actions = CommentActions;
 Comment.MoreMenu = CommentMenu;
 Comment.Editor = CommentEditor;
 Comment.Pin = CommentPin;
+Comment.UnreadDot = CommentUnreadDot;
+Comment.ReplyButton = CommentReplyButton;
+Comment.ReplyCountButton = CommentReplyCountButton;
 
 // Anatomy
 

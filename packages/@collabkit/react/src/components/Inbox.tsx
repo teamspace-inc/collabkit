@@ -11,10 +11,6 @@ import { useOptionalSidebarContext } from './Sidebar';
 import { useInbox } from '../hooks/public/useInbox';
 import { Thread } from './Thread';
 
-export interface ButtonProps extends React.ComponentPropsWithoutRef<'button'> {
-  specialProp?: string;
-}
-
 export function EmptyState() {
   return (
     <div className={emptyState}>
@@ -32,7 +28,7 @@ export function Inbox(props: {
   const { store } = useApp();
   const { workspaceId, userId } = useSnapshot(store);
 
-  const threadIds = useInbox({ filter: 'open', threadIds: props.threadIds });
+  const threadIds = useInbox({ filter: 'open', threadIds: props.threadIds, latestFirst: true });
 
   if (!workspaceId) {
     return null;

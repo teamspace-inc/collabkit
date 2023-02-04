@@ -9,4 +9,8 @@ export const root = style([
   },
 ]);
 
+export const threadList = style({
+  padding: `${vars.space[4]} 0`,
+});
+
 export const header = style([styles.header]);

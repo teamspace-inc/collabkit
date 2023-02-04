@@ -11,6 +11,9 @@ export class LocalOnlySync implements SyncAdapter {
   nextPinId(params: { appId: string; workspaceId: string; objectId: string }): string {
     return nanoid();
   }
+  nextThreadId(params: { appId: string; workspaceId: string }): string {
+    return nanoid();
+  }
 
   savePin(params: {
     appId: string;
