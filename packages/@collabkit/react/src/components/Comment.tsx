@@ -266,8 +266,8 @@ export function EmojiCount(props: { emojiU: string; count: number; userIds: read
 }
 
 export const CommentReactions = (props: React.ComponentPropsWithoutRef<'div'>) => {
-  const { store, events } = useApp();
-  const { workspaceId, threadId, eventId } = useCommentContext();
+  const { store } = useApp();
+  const { threadId, eventId } = useCommentContext();
   const { reactions } = useSnapshot(store);
   const reaccs = reactions[threadId][eventId];
 
