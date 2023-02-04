@@ -513,7 +513,6 @@ export default function Comment(props: CommentProps) {
           </Comment.NameAndTimestampWrapper>
         )}
         <Comment.Actions>
-          {isChannel && isFirstComment && <Comment.ReplyCountButton />}
           <Comment.ReactionButton />
           {isChannel && isFirstComment && <Comment.ReplyButton />}
           {isChannel && isFirstComment && <Thread.ResolveIconButton />}
@@ -521,8 +520,8 @@ export default function Comment(props: CommentProps) {
         </Comment.Actions>
         <Comment.Body />
         {/* <Comment.UnreadDot /> */}
-        <Comment.Body />
         <Comment.Reactions />
+        {isChannel && isFirstComment && <Comment.ReplyCountButton />}
         <Comment.Editor />
       </div>
     </Comment.Root>
