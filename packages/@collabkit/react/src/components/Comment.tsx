@@ -13,7 +13,7 @@ import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
 import { useApp } from '../hooks/useApp';
 import { CommentTarget, PinTarget, timelineUtils } from '@collabkit/core';
 import * as styles from '../theme/components/Comment.css';
-import { ArrowBendDownRight, ArrowBendUpRight, DotsThree, Smiley } from './icons';
+import { ArrowBendDownRight, ArrowBendUpRight, DotsThree } from './icons';
 import { Menu, MenuItem } from './Menu';
 import { Thread } from './Thread';
 import { useHovering } from '../hooks/useHovering';
