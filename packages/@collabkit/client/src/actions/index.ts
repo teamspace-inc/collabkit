@@ -9,7 +9,7 @@ import { closeAll } from './closeAll';
 import { closeEmojiReactionPicker } from './closeEmojiReactionPicker';
 import { closeMenu } from './closeMenu';
 import { closePreview } from './closePreview';
-import { closeThread } from './closeThread';
+import { closeContent } from './closeContent';
 import { deleteMessage } from './deleteMessage';
 import { deletePin } from './deletePin';
 import { focus } from './focus';
@@ -129,7 +129,7 @@ export const actions = {
   closeEmojiReactionPicker,
   closeMenu,
   closePreview,
-  closeThread,
+  closeThread: closeContent,
   collapseThread,
   deleteMessage,
   deletePin,
