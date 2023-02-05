@@ -146,6 +146,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
       threadId: pin.threadId,
       createdById: userId,
     };
+    console.log(firebasePin);
     const updates = {
       [ref.path`/pins/${appId}/${workspaceId}/${objectId}/${pinId}`]: firebasePin,
       [ref.path`/views/openPins/${appId}/${workspaceId}/${objectId}/${pinId}`]: firebasePin,
