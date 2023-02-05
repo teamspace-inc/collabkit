@@ -483,7 +483,9 @@ export interface Workspace {
 
 type CommentableObject = {
   objectId: string;
-  element: HTMLElement | SVGElement;
+
+  // null indicates a disconnected pin
+  element: HTMLElement | SVGElement | null;
 };
 
 // get all pins for the workspace that have an open thread attached to them (we don't want resolved ones)
