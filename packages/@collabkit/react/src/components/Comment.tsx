@@ -458,7 +458,7 @@ export function CommentActionsEmojiButton() {
     ...useCommentContext(),
     type: 'commentActionsEmojiButton',
   } as const;
-  return <PopoverEmojiPicker target={target} placement="bottom-end" />;
+  return <PopoverEmojiPicker target={target} placement="left-end" />;
 }
 
 export type CommentProps = {
@@ -497,7 +497,7 @@ function Comment(props: CommentProps) {
   );
 }
 
-export default React.memo(Comment);
+export default Comment;
 
 Comment.Provider = CommentProvider;
 Comment.Root = CommentRoot;
