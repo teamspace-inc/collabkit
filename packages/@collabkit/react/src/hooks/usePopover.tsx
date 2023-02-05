@@ -1,7 +1,8 @@
 import { useApp } from '../hooks/useApp';
 import { useSnapshot } from 'valtio';
 import { useCallbackRef } from '@radix-ui/react-use-callback-ref';
-import { Target, isEqual } from '@collabkit/core';
+import { Target } from '@collabkit/core';
+import isEqual from 'fast-deep-equal';
 
 export function usePopover(props: { target: Target | null }) {
   const { target } = props;

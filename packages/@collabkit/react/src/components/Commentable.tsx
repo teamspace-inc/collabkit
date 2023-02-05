@@ -6,8 +6,7 @@ import { useApp } from '../hooks/useApp';
 import { useCommentableRef } from '../hooks/useCommentableRef';
 import { useStore } from '../hooks/useStore';
 import * as styles from '../theme/components/Commentable.css';
-import { TargetContext } from './Target';
-import { SavedPin, PinMarker } from './Pin';
+import { SavedPin, PinCursor } from './Pin';
 
 function findCommentableElement(
   store: Store,
@@ -99,9 +98,7 @@ export function CommentableRoot(props: { className?: string; children?: React.Re
   const pendingPin = uiState === 'selecting' && (
     <>
       <div ref={overlayRef} className={styles.overlay} />
-      <TargetContext.Provider value={{ type: 'pinCursor' }}>
-        <PinMarker userId={userId} isSelected={false} pointerEvents="none" ref={cursorRef} />
-      </TargetContext.Provider>
+      <PinCursor isSelected={false} ref={cursorRef} />
     </>
   );
 
