@@ -137,7 +137,7 @@ type RootProps = {
   children: React.ReactNode;
   previewVisible: boolean;
   contentVisible: boolean;
-  onOpenChange: (open: boolean) => void;
+  onContentChange: (open: boolean) => void;
   onPreviewChange: (preview: boolean) => void;
   placement?: Placement;
 } & AdvancedPopoverProps;
@@ -150,7 +150,7 @@ export type AdvancedPopoverProps = {
 };
 
 function PopoverRoot(props: RootProps) {
-  const { placement, children, previewVisible, contentVisible, onOpenChange, onPreviewChange } =
+  const { placement, children, previewVisible, contentVisible, onContentChange, onPreviewChange } =
     props;
   const nodeId = useFloatingNodeId();
 
@@ -183,7 +183,7 @@ function PopoverRoot(props: RootProps) {
     placement: placement ?? 'right-start',
     open: contentVisible,
     whileElementsMounted: autoUpdate,
-    onOpenChange,
+    onOpenChange: onContentChange,
     nodeId,
     middleware: [
       offset(4),
@@ -243,7 +243,7 @@ function PopoverRoot(props: RootProps) {
       getProps,
       open: contentVisible,
       preview: previewVisible,
-      setOpen: onOpenChange,
+      setOpen: onContentChange,
 
       ref,
       getPreviewFloatingProps,
@@ -264,7 +264,7 @@ function PopoverRoot(props: RootProps) {
 
   useEffect(() => {
     if (defaultOpen) {
-      onOpenChange(true);
+      onContentChange(true);
     }
   }, [defaultOpen]);
 
@@ -305,7 +305,7 @@ export function Popover(props: PopoverProps) {
     <Popover.Root
       contentVisible={open}
       previewVisible={preview}
-      onOpenChange={setOpen}
+      onContentChange={setOpen}
       onPreviewChange={setPreview}
       // advanced
       dismissOnClickOutside={dismissOnClickOutside}

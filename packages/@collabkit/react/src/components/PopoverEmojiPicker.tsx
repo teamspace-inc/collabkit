@@ -30,7 +30,7 @@ export function PopoverEmojiPicker(props: {
     <Popover.Root
       contentVisible={open}
       previewVisible={false}
-      onOpenChange={onOpenChange}
+      onContentChange={onOpenChange}
       onPreviewChange={() => {}}
       // advanced
       placement={props.placement ?? 'left-start'}
