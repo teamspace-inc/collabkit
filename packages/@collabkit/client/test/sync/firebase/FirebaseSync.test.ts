@@ -2,13 +2,21 @@ import { get } from 'firebase/database';
 import { nanoid } from 'nanoid';
 import { expect, beforeAll, test, describe } from 'vitest';
 import { ref } from '../../../src/sync/firebase/refs';
-import { setupApp, setupFirebase, setupWorkspaceProfile } from '../../../../test-utils/src';
+import {
+  setupApp,
+  setupFirebase,
+  setupProfile,
+  setupWorkspaceProfile,
+} from '../../../../test-utils/src';
 
-setupFirebase();
-
-import { Pin, Subscriptions, Sync, ThreadInfo } from '@collabkit/core';
+import { FirebaseId, Pin, Subscriptions, Sync, ThreadInfo } from '@collabkit/core';
 import { createStore, createWorkspace, createComposer } from '../../../src/store';
 import { FirebaseSync } from '../../../src/sync/firebase/FirebaseSync';
+import { getAuth, signInWithCustomToken } from 'firebase/auth';
+import admin from 'firebase-admin';
+import { getApp } from 'firebase/app';
+
+setupFirebase();
 
 describe('FirebaseSync', async () => {
   let userId;
@@ -25,8 +33,20 @@ describe('FirebaseSync', async () => {
     userId = nanoid();
     workspaceId = nanoid();
     await setupWorkspaceProfile({ appId, workspaceId, userId });
+    await setupProfile({ appId, userId });
     sync = new FirebaseSync({ test: true });
     store = createStore();
+    const token = await admin
+      .app()
+      .auth()
+      .createCustomToken(apiKey, {
+        api: true,
+        mode: 'UNSECURED',
+        appId: FirebaseId.encode(appId),
+        userId: FirebaseId.encode(userId),
+        workspaceId: FirebaseId.encode(workspaceId),
+      });
+    await signInWithCustomToken(getAuth(getApp('CollabKit')), token);
     store.userId = userId;
     store.workspaceId = workspaceId;
     store.workspaces[workspaceId] = createWorkspace();
@@ -224,6 +244,7 @@ describe('FirebaseSync', async () => {
         appId,
         workspaceId,
         pinId,
+        userId,
         pin: {
           objectId,
           eventId,
@@ -246,6 +267,7 @@ describe('FirebaseSync', async () => {
       expect(pins[objectId][pinId]).toStrictEqual({
         eventId,
         threadId,
+        createdById: userId,
         x: 0,
         y: 0,
       });
@@ -266,6 +288,7 @@ describe('FirebaseSync', async () => {
       expect(pins?.[objectId]?.[pinId]).toStrictEqual({
         eventId,
         threadId,
+        createdById: userId,
         x: 10,
         y: 20,
       });

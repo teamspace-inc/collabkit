@@ -5,6 +5,8 @@ async function savePin(
   store: Store,
   props: { pin: WithID<Pin>; appId: string; workspaceId: string }
 ) {
+  const userId = store.userId;
+  if (!userId) throw new Error('CollabKit: no userId set');
   const { pin, appId, workspaceId } = props;
   if (!pin) {
     console.warn('CollabKit: no pending pin to save');
@@ -16,6 +18,7 @@ async function savePin(
       appId,
       workspaceId,
       pin,
+      userId,
       pinId: pin.id,
     });
     store.workspaces[workspaceId].openPins[pin.objectId] ||= {};
@@ -25,6 +28,7 @@ async function savePin(
       objectId: pin.objectId,
       workspaceId: pin.workspaceId,
       threadId: pin.threadId,
+      createdById: pin.createdById,
       x: pin.x,
       y: pin.y,
     };

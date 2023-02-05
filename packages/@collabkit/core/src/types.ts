@@ -440,6 +440,7 @@ export type FirebasePin = {
   y: number;
   threadId: string;
   eventId: string;
+  createdById: string;
 };
 
 export type Pin = {
@@ -450,6 +451,7 @@ export type Pin = {
   workspaceId: string;
   threadId: string;
   eventId: string;
+  createdById: string;
 };
 
 export type PendingPin = Pin & {

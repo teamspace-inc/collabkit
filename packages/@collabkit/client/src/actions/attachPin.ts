@@ -9,19 +9,25 @@ export function attachPin(
   }
 ) {
   const { appId } = store.config;
+  const { userId } = store;
+  if (!userId) throw new Error('CollabKit: no userId set');
   const { x, y, objectId } = props;
   const { composerId } = store;
   if (!composerId) throw new Error('CollabKit: no composerId set');
   const { type, ...composerProps } = composerId;
+  const { threadId, workspaceId, eventId } = composerProps;
   const id = store.sync.nextPinId({ appId, ...composerProps, objectId });
   const composer =
     store.workspaces[composerId.workspaceId].composers[composerId.threadId][composerId.eventId];
   composer.pendingPin = {
     id,
-    ...composerProps,
+    threadId,
+    workspaceId,
+    eventId,
     x,
     y,
     objectId,
+    createdById: userId,
     isPending: true,
   };
   store.uiState = 'idle';

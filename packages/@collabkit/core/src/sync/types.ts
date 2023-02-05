@@ -61,7 +61,13 @@ export interface SyncAdapter {
 
   nextThreadId(params: { appId: string; workspaceId: string }): string;
 
-  savePin(params: { appId: string; workspaceId: string; pinId: string; pin: Pin }): Promise<string>;
+  savePin(params: {
+    appId: string;
+    workspaceId: string;
+    userId: string;
+    pinId: string;
+    pin: Pin;
+  }): Promise<string>;
 
   deletePin(params: {
     appId: string;

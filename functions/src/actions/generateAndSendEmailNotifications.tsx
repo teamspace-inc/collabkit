@@ -108,6 +108,7 @@ async function sendMailForProfile(props: {
 
   const to = profiles[profileId].email;
 
+  // TODO: this is a hack, we should be able to get the profileId from the event body by parsing it, and avoid storing that info on the event itself
   const mentionedInEventId = notifyAboutEventIds.find(
     (eventId) => timeline[eventId]?.mentions?.[profileId]
   );
