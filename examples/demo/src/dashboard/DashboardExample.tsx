@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, forwardRef, useState } from 'react';
+import { ComponentPropsWithoutRef, useState } from 'react';
 import Info from 'phosphor-react/dist/icons/Info.esm.js';
 import {
   AreaChart,
@@ -111,7 +111,7 @@ function ChartView({ chartData }: { chartData: any }) {
     Customers: numberFormatter,
   };
 
-  const ref = useCommentableRef('dashboard-chart-legend');
+  const ref = useCommentableRef(`dashboard-chart-legend-${selectedKpi}`);
 
   return (
     <Card marginTop="mt-6">
@@ -139,7 +139,7 @@ function ChartView({ chartData }: { chartData: any }) {
           </Toggle>
         </div>
       </div>
-      <Commentable.Container objectId="dashboard-performance-chart">
+      <Commentable.Container objectId={`dashboard-performance-chart-${selectedKpi}`}>
         <AreaChart
           data={chartData}
           dataKey="date"

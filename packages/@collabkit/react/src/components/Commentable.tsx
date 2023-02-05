@@ -23,13 +23,15 @@ import { TargetContext } from './Target';
 function findCommentableElement(
   store: Store,
   e: React.PointerEvent
-): { objectId: string; element: HTMLElement | SVGElement } | null {
+): { objectId: string; element: HTMLElement | SVGElement | null } | null {
   const element = document.elementFromPoint(e.clientX, e.clientY);
   if (element == null) {
     return null;
   }
   const commentable = Object.values(store.commentables).find(
-    (commentable) => commentable.element === element || commentable.element.contains(element)
+    (commentable) =>
+      commentable.element &&
+      (commentable.element === element || commentable.element.contains(element))
   );
   return commentable ?? null;
 }
@@ -148,6 +150,8 @@ function SavedPin({
     whileElementsMounted: autoUpdate,
   });
 
+  const { commentables } = useSnapshot(store);
+
   useEffect(() => {
     const commentable = store.commentables[pin.objectId];
     if (commentable) {
@@ -164,6 +168,10 @@ function SavedPin({
   }, [pin.id, pin.objectId, pin.eventId, pin.workspaceId, pin.threadId]);
 
   const id = useFloatingNodeId();
+
+  if (!commentables[pin.objectId]) {
+    return null;
+  }
 
   return (
     <TargetContext.Provider value={target}>
@@ -185,7 +193,9 @@ export function CommentableRoot(props: { className?: string; children?: React.Re
   const hoveredElementRef = useRef<HTMLElement | SVGElement | null>(null);
   const store = useStore();
   const { events } = useApp();
-  const { uiState, workspaceId, allPins, selectedId } = useSnapshot(store);
+  const { uiState, workspaceId, allPins, selectedId, commentables } = useSnapshot(store);
+
+  console.log(Object.keys(commentables));
 
   useEffect(() => {
     store.isPinningEnabled = true;
@@ -205,7 +215,7 @@ export function CommentableRoot(props: { className?: string; children?: React.Re
       store.clientY = e.clientY;
 
       const commentable = findCommentableElement(store, e);
-      if (commentable) {
+      if (commentable && commentable.element) {
         const { element } = commentable;
         element.classList.add(styles.activeContainer);
         hoveredElementRef.current = element;
@@ -227,7 +237,7 @@ export function CommentableRoot(props: { className?: string; children?: React.Re
   const onPointerDown = useCallback(
     (e: React.PointerEvent) => {
       const commentable = findCommentableElement(store, e);
-      if (commentable && workspaceId) {
+      if (commentable && commentable.element && workspaceId) {
         const { x, y, width, height } = commentable.element.getBoundingClientRect();
         events.onPointerDown(e, {
           target: {
