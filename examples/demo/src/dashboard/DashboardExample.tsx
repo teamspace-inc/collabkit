@@ -396,12 +396,13 @@ export function DashboardExample() {
 }
 
 const TableCell = (props: { objectId: string } & ComponentPropsWithoutRef<'td'>) => {
-  const ref = useCommentableRef(props.objectId);
+  const { objectId, ...rest } = props;
+  const ref = useCommentableRef(objectId);
   return (
     <td
       className="tr-align-middle tr-whitespace-nowrap tr-tabular-nums tr-text-left tr-pl-4 tr-pr-4 tr-pt-4 tr-pb-4"
       ref={ref}
-      {...props}
+      {...rest}
     />
   );
 };

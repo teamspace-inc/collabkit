@@ -62,7 +62,7 @@ function CommentRoot({ commentId: eventId, indent = false, ...props }: CommentRo
     eventId,
   });
 
-  const { store } = useApp();
+  const { store, events } = useApp();
   const { menuId, reactingId, editingId } = useSnapshot(store);
   const timeline = useSnapshot(useWorkspaceStore().timeline[threadId]);
   const { profiles } = useSnapshot(store);
@@ -104,6 +104,8 @@ function CommentRoot({ commentId: eventId, indent = false, ...props }: CommentRo
             className={`${props.className ?? styles.root({ indent })} ${
               isHovering ? styles.hover : ''
             }`}
+            onMouseEnter={(e) => events.onMouseEnter(e, { target })}
+            onMouseLeave={(e) => events.onMouseLeave(e, { target })}
             onClick={onClick}
             ref={ref}
             style={props.style}

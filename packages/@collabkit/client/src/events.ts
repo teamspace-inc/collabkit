@@ -214,9 +214,25 @@ export function createEvents(store: Store) {
       }
     },
 
-    onMouseEnter: (e: React.MouseEvent, props: { target: Target }) => {},
+    onMouseEnter: (e: React.MouseEvent, props: { target: Target }) => {
+      const { target } = props;
+      const { type } = target;
+      switch (type) {
+        case 'comment':
+          actions.hover(store, { target });
+          break;
+      }
+    },
 
-    onMouseLeave: (e: React.MouseEvent, props: { target: Target }) => {},
+    onMouseLeave: (e: React.MouseEvent, props: { target: Target }) => {
+      const { target } = props;
+      const { type } = target;
+      switch (type) {
+        case 'comment':
+          actions.unhover(store, { target });
+          break;
+      }
+    },
 
     onMouseOver: (e: React.MouseEvent, props: { target: Target }) => {},
 

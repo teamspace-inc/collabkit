@@ -55,6 +55,8 @@ import { deselectAll } from './deselectAll';
 import { updateComposer } from './updateComposer';
 import { expandThread } from './expandThread';
 import { collapseThread } from './collapseThread';
+import { hover } from './hover';
+import { unhover } from './unhover';
 
 export type GenerateToken =
   | {
@@ -138,6 +140,7 @@ export const actions = {
   focus,
   focusComposer,
   hideSidebar,
+  hover,
   init,
   initComposer,
   insertComposerPin,
@@ -172,6 +175,7 @@ export const actions = {
   subscribeWorkspace,
   toggleEmoji,
   toggleEmojiPicker,
+  unhover,
   updateComment,
   updateComposer,
   viewContent,
