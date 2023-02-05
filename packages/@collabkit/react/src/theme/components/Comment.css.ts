@@ -57,9 +57,24 @@ export const emojiCountIcon = style({
   lineHeight: vars.text.base.lineHeight,
 });
 
+export const emojiCountTooltip = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: vars.space[1],
+  padding: `${vars.space[1]} ${vars.space[1]}`,
+  fontSize: vars.text.small.fontSize,
+  fontWeight: vars.fontWeight.regular,
+  letterSpacing: vars.text.small.letterSpacing,
+  background: vars.color.surface,
+  borderRadius: '6px',
+  boxShadow: vars.shadow.standard,
+  border: `1px solid ${vars.color.border}`,
+});
+
 export const reactions = style({
   display: 'flex',
   alignSelf: 'flex-start',
+  alignItems: 'flex-end',
 });
 
 export const indent = style({

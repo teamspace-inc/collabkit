@@ -11,6 +11,10 @@ export const ButtonBase = {
     hover: {
       background: 'initial',
     },
+    small: {
+      width: 'initial',
+      height: 'initial',
+    },
   },
   buttonGroup: {
     gap: 'initial',

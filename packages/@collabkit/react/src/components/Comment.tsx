@@ -13,7 +13,7 @@ import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
 import { useApp } from '../hooks/useApp';
 import { CommentTarget, PinTarget, timelineUtils } from '@collabkit/core';
 import * as styles from '../theme/components/Comment.css';
-import { ArrowBendDownRight, ArrowBendUpRight, DotsThree, Smiley } from './icons';
+import { ArrowBendDownRight, ArrowBendUpRight, DotsThree } from './icons';
 import { Menu, MenuItem } from './Menu';
 import { Thread } from './Thread';
 import { useHovering } from '../hooks/useHovering';
@@ -27,16 +27,10 @@ import { useComments } from '../hooks/public/useComments';
 import { useUnreadCount } from '..';
 import { vars } from '../theme/theme/index.css';
 import { useOptionalChannelContext } from '../hooks/useChannelContext';
-import { Popover } from './Popover';
-import { EMOJI_U, ReactionPicker } from './ReactionPicker';
+import { EMOJI_U } from './EmojiPicker';
+import { PopoverEmojiPicker } from './PopoverEmojiPicker';
 import { Emoji } from './Emoji';
-
-function useIsEditing() {
-  const { store } = useApp();
-  const { editingId } = useSnapshot(store);
-  const { eventId, treeId } = useCommentContext();
-  return editingId?.eventId === eventId && editingId.treeId == treeId;
-}
+import { useIsEditing } from '../hooks/useIsEditing';
 
 // tidy up root and provider
 export function CommentProvider(props: { children: React.ReactNode; eventId: string }) {
@@ -95,15 +89,10 @@ function CommentRoot({ commentId: eventId, indent = false, ...props }: CommentRo
   });
 
   const { store } = useApp();
-
   const { menuId, reactingId } = useSnapshot(store);
-
   const timeline = useSnapshot(useWorkspaceStore().timeline[threadId]);
-
   const { profiles } = useSnapshot(store);
-
   const event = timeline[eventId];
-
   const createdById = event.createdById;
 
   const isHovering =
@@ -112,7 +101,7 @@ function CommentRoot({ commentId: eventId, indent = false, ...props }: CommentRo
     (menuId?.type === 'menu' &&
       menuId.context?.type === 'comment' &&
       menuId.context.eventId === event.id) ||
-    (reactingId?.type === 'comment' && reactingId.eventId === eventId);
+    (reactingId?.type === 'commentActionsEmojiButton' && reactingId.eventId === eventId);
 
   if (!createdById) {
     console.warn('CommentRoot: no createdById', { eventId });
@@ -152,7 +141,7 @@ export function CommentUnreadDot(props: React.ComponentPropsWithoutRef<'div'>) {
   return count > 0 ? <div className={styles.unreadDot} {...props} /> : null;
 }
 
-export function CommentReplyButton() {
+export function CommentActionsReplyButton() {
   const { events } = useApp();
   const { eventId, workspaceId, threadId } = useCommentContext();
   const target = {
@@ -168,7 +157,7 @@ export function CommentReplyButton() {
   );
 }
 
-export function CommentReplyCountButton(props: React.ComponentPropsWithoutRef<'div'>) {
+export function CommentSeeAllRepliesButton(props: React.ComponentPropsWithoutRef<'div'>) {
   const commentIds = useComments();
   const { store, events } = useApp();
   const { expandedThreadIds } = useSnapshot(store);
@@ -249,7 +238,7 @@ export function EmojiCount(props: { emojiU: string; count: number; userIds: read
   const emoji = EMOJI_U[props.emojiU];
 
   return emoji ? (
-    <Tooltip>
+    <Tooltip placement="bottom-start">
       <Tooltip.Trigger>
         <div key={props.emojiU} className={styles.emojiCount}>
           <Emoji
@@ -260,28 +249,36 @@ export function EmojiCount(props: { emojiU: string; count: number; userIds: read
           <span className={styles.emojiCountNumber}>{props.count}</span>
         </div>
       </Tooltip.Trigger>
-      <Tooltip.Content>{names}</Tooltip.Content>
+      <Tooltip.Content className={styles.emojiCountTooltip}>
+        {names.map((name, i) => (
+          <span key={i}>{name}</span>
+        ))}
+      </Tooltip.Content>
     </Tooltip>
   ) : null;
 }
 
-export const CommentReactions = (props: React.ComponentPropsWithoutRef<'div'>) => {
+export function CommentReactions(props: React.ComponentPropsWithoutRef<'div'>) {
   const { store } = useApp();
   const { threadId, eventId } = useCommentContext();
   const { reactions } = useSnapshot(store);
-  const reaccs = reactions[threadId][eventId];
-
-  return reaccs ? (
+  const reaccs = reactions?.[threadId]?.[eventId];
+  const isEditing = useIsEditing();
+  return reaccs &&
+    Object.keys(reaccs).length > 0 &&
+    Object.values(reaccs).find((reac) => reac.count > 0) &&
+    !isEditing ? (
     <div data-testid="collabkit-comment-reactions" className={styles.reactions} {...props}>
       {Object.keys(reaccs).map((emojiU) => {
         const { count, userIds } = reaccs[emojiU as keyof typeof reaccs];
         return <EmojiCount key={emojiU} emojiU={emojiU} count={count} userIds={userIds} />;
       })}
+      <CommentEmojiAddButton />
     </div>
   ) : null;
-};
+}
 
-export const CommentPin = (props: React.ComponentProps<'img'>) => {
+export function CommentPin(props: React.ComponentProps<'img'>) {
   const { eventId, threadId, workspaceId } = useCommentContext();
   const { events, store } = useApp();
   const { selectedId } = useSnapshot(store);
@@ -324,9 +321,9 @@ export const CommentPin = (props: React.ComponentProps<'img'>) => {
       </Tooltip>
     </span>
   );
-};
+}
 
-export const CommentEditor = (props: React.ComponentProps<'div'>) => {
+export function CommentEditor(props: React.ComponentProps<'div'>) {
   const isEditing = useIsEditing();
   const { body } = useCommentStore();
 
@@ -346,7 +343,7 @@ export const CommentEditor = (props: React.ComponentProps<'div'>) => {
       </Composer.Editor>
     </Composer.Root>
   );
-};
+}
 
 export function CommentTimestamp(
   props: React.ComponentProps<'time'> & { format?: (timestamp: number) => string }
@@ -365,16 +362,16 @@ export function CommentTimestamp(
 export const CommentCreatorAvatar = Profile.Avatar;
 export const CommentCreatorName = Profile.Name;
 
-export const CommentNameAndTimestampWrapper = (props: React.ComponentProps<'div'>) => {
+export function CommentNameAndTimestampWrapper(props: React.ComponentProps<'div'>) {
   const isEditing = useIsEditing();
   return isEditing ? null : (
     <div {...props} className={props.className ?? styles.nameAndTimestampWrapper} />
   );
-};
+}
 
 type CommentMenuItemType = 'commentEditButton' | 'commentDeleteButton' | 'reopenThreadButton';
 
-const CommentMenu = (props: { className?: string }) => {
+function CommentMenu(props: { className?: string }) {
   const { events, store } = useApp();
   const comment = useCommentContext();
 
@@ -436,61 +433,33 @@ const CommentMenu = (props: { className?: string }) => {
       </IconButton>
     </Menu>
   );
-};
+}
 
 export { CommentMenu as Menu };
 
-export const CommentActions = (props: React.ComponentProps<'div'>) => {
+export function CommentActions(props: React.ComponentProps<'div'>) {
   const isEditing = useIsEditing();
   if (isEditing) {
     return null;
   }
   return <div className={props.className ?? styles.actions} {...props} />;
-};
+}
 
-export const CommentReactionButton = () => {
-  const { events, store } = useApp();
-  const { reactingId } = useSnapshot(store);
-  const target = useCommentContext();
+export function CommentEmojiAddButton() {
+  const target = {
+    ...useCommentContext(),
+    type: 'commentAddEmojiButton',
+  } as const;
+  return <PopoverEmojiPicker target={target} smallIconButton={true} placement="bottom-start" />;
+}
 
-  const open = reactingId?.type === 'comment' && reactingId.eventId === target.eventId;
-
-  return (
-    <Popover.Root
-      contentVisible={open}
-      previewVisible={false}
-      onOpenChange={(open) => events.onReactionPickerOpenChange({ target, open })}
-      onPreviewChange={() => {}}
-      // advanced
-      placement="left-start"
-      dismissOnClickOutside={true}
-      shouldFlipToKeepInView={false}
-      defaultOpen={false}
-    >
-      <Popover.Trigger>
-        <IconButton onClick={() => events.onReactionPickerOpenChange({ target, open: !open })}>
-          <Smiley weight="regular" />
-        </IconButton>
-      </Popover.Trigger>
-      <Popover.Portal>
-        <Popover.Content>
-          <ReactionPicker
-            onClick={(e, emoji) => {
-              events.onClick(e, {
-                target: {
-                  ...target,
-                  type: 'emoji',
-                  emoji,
-                },
-              });
-              events.onReactionPickerOpenChange({ target, open: false });
-            }}
-          />
-        </Popover.Content>
-      </Popover.Portal>
-    </Popover.Root>
-  );
-};
+export function CommentActionsEmojiButton() {
+  const target = {
+    ...useCommentContext(),
+    type: 'commentActionsEmojiButton',
+  } as const;
+  return <PopoverEmojiPicker target={target} placement="left-end" />;
+}
 
 export type CommentProps = {
   commentId: string;
@@ -498,7 +467,7 @@ export type CommentProps = {
   isFirstComment?: boolean;
 };
 
-export default function Comment(props: CommentProps) {
+function Comment(props: CommentProps) {
   const hideProfile = props.hideProfile ?? false;
   const isFirstComment = props.isFirstComment ?? false;
   const isChannel = !!useOptionalChannelContext();
@@ -513,20 +482,22 @@ export default function Comment(props: CommentProps) {
           </Comment.NameAndTimestampWrapper>
         )}
         <Comment.Actions>
-          <Comment.ReactionButton />
-          {isChannel && isFirstComment && <Comment.ReplyButton />}
+          <Comment.ActionsEmojiButton />
+          {isChannel && isFirstComment && <Comment.ActionsReplyButton />}
           {isChannel && isFirstComment && <Thread.ResolveIconButton />}
           <Comment.MoreMenu />
         </Comment.Actions>
         <Comment.Body />
         {/* <Comment.UnreadDot /> */}
         <Comment.Reactions />
-        {isChannel && isFirstComment && <Comment.ReplyCountButton />}
+        {isChannel && isFirstComment && <Comment.SeeAllRepliesButton />}
         <Comment.Editor />
       </div>
     </Comment.Root>
   );
 }
+
+export default Comment;
 
 Comment.Provider = CommentProvider;
 Comment.Root = CommentRoot;
@@ -540,9 +511,9 @@ Comment.MoreMenu = CommentMenu;
 Comment.Editor = CommentEditor;
 Comment.Pin = CommentPin;
 Comment.UnreadDot = CommentUnreadDot;
-Comment.ReplyButton = CommentReplyButton;
-Comment.ReplyCountButton = CommentReplyCountButton;
-Comment.ReactionButton = CommentReactionButton;
+Comment.ActionsReplyButton = CommentActionsReplyButton;
+Comment.SeeAllRepliesButton = CommentSeeAllRepliesButton;
+Comment.ActionsEmojiButton = CommentActionsEmojiButton;
 Comment.Reactions = CommentReactions;
 
 // Anatomy

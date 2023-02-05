@@ -37,5 +37,11 @@ export const button = recipe({
         background: fallbackVar(vars.iconButton.active.background, vars.color.surfaceOverlay),
       },
     },
+    small: {
+      true: {
+        height: fallbackVar(vars.iconButton.small.height, '20px'),
+        width: fallbackVar(vars.iconButton.small.width, '20px'),
+      },
+    },
   },
 });

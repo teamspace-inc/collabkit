@@ -1,5 +1,5 @@
 import React from 'react';
-import { ReactionPicker as ReactPickerComponent } from './ReactionPicker';
+import { EmojiPicker as ReactPickerComponent } from './EmojiPicker';
 
 export function ReactionPicker() {
   return <ReactPickerComponent onClick={() => {}} />;

@@ -9,6 +9,7 @@ type Props = {
   tabIndex?: number;
   className?: string;
   active?: boolean;
+  small?: boolean;
 } & IconProps &
   React.ComponentProps<'div'>;
 
@@ -19,16 +20,16 @@ const iconContextBase = {
 } as const;
 
 export const IconButton = forwardRef<HTMLDivElement, Props>(function IconButton(props: Props, ref) {
-  const { active, ...otherProps } = props;
-  const className = props.className ?? styles.button({ active });
+  const { active, color, size, weight, small, ...otherProps } = props;
+  const className = props.className ?? styles.button({ active, small });
   const iconContextValue: IconProps = { ...iconContextBase };
-  if (props.color) {
+  if (color) {
     iconContextValue.color = props.color;
   }
-  if (props.size) {
+  if (size) {
     iconContextValue.size = props.size;
   }
-  if (props.weight) {
+  if (weight) {
     iconContextValue.weight = props.weight;
   }
 

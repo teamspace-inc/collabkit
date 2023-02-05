@@ -6,9 +6,9 @@ export const root = recipe({
   base: {
     height: 140,
     width: 188,
-    background: vars.color.background,
+    background: vars.color.surface,
     borderRadius: '6px',
-    zIndex: 9999,
+    zIndex: 999,
     border: '1px solid ' + vars.color.surfaceOverlay,
   },
   variants: {

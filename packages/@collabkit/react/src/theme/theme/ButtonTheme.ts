@@ -11,6 +11,10 @@ export const ButtonTheme = {
     hover: {
       background: 'icon-button-hover-background',
     },
+    small: {
+      width: 'icon-button-small-width',
+      height: 'icon-button-small-height',
+    },
   },
   buttonGroup: {
     gap: 'button-group-gap',

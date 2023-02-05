@@ -12,7 +12,6 @@ export const root = style({
   right: 0,
   bottom: 0,
   fontFamily: vars.fontFamily,
-  zIndex: 1,
 });
 
 export const title = style({

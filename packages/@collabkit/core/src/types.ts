@@ -183,8 +183,9 @@ export type Target =
   | OverlayTarget
   | CommentReplyCountButtonTarget
   | CommentReplyButtonTarget
-  | CommentReactionButtonTarget
-  | EmojiTarget;
+  | EmojiTarget
+  | CommentAddEmojiButtonTarget
+  | CommentActionsEmojiButtonTarget;
 
 export type CommentReplyCountButtonTarget = {
   type: 'commentReplyCountButton';
@@ -212,10 +213,6 @@ export type Emoji = {
   n: string[];
   u: string;
   a: string;
-};
-
-export type CommentReactionButtonTarget = {
-  type: 'commentReactionButton';
 };
 
 export type PinCursorTarget = {
@@ -302,6 +299,24 @@ export type ShowSidebarButtonTarget = { type: 'showSidebarButton'; workspaceId: 
 export type HideSidebarButtonTarget = {
   type: 'hideSidebarButton';
   workspaceId: string;
+};
+
+export type CommentEmojiButtonTargets =
+  | CommentAddEmojiButtonTarget
+  | CommentActionsEmojiButtonTarget;
+
+export type CommentAddEmojiButtonTarget = {
+  type: 'commentAddEmojiButton';
+  workspaceId: string;
+  threadId: string;
+  eventId: string;
+};
+
+export type CommentActionsEmojiButtonTarget = {
+  type: 'commentActionsEmojiButton';
+  workspaceId: string;
+  threadId: string;
+  eventId: string;
 };
 
 export type CommentReactionTarget = {

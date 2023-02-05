@@ -8,7 +8,7 @@ export const root = style({
   top: 0,
   left: 0,
   right: 0,
-  zIndex: 9999,
+  zIndex: 999,
   display: 'flex',
   justifyContent: 'center',
   background: vars.header.backgroundColor,
@@ -37,7 +37,6 @@ export const rightLinks = style({
   flexDirection: 'row',
   gap: '80px',
   alignItems: 'center',
-
 
   '@media': {
     'screen and (max-width: 960px)': {
@@ -68,7 +67,7 @@ export const smallLink = style({
   lineHeight: '36px',
   textAlign: 'center',
   color: vars.color.textContrastHigh,
-  cursor: 'pointer'
+  cursor: 'pointer',
 });
 
 export const smallLinkList = style({
