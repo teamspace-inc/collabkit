@@ -115,10 +115,9 @@ function ComposerRoot(props: {
     });
   }, [hasText, props.initialBody, props.autoFocus]);
 
-  const commentContext = useOptionalCommentContext();
+  const eventId = useOptionalCommentContext() ?? 'default';
 
   const { threadId, isNewThread, workspaceId, userId } = useThreadContext();
-  const eventId = commentContext?.eventId ?? 'default';
 
   const { onClick } = useOnMarkdownLinkClick({ threadId, workspaceId, userId, eventId });
 
@@ -174,7 +173,7 @@ function ComposerContentEditable(props: { className?: string }) {
 function ComposerMentionsButton(props: { className?: string }) {
   const { store, events } = useApp();
   const { threadId, workspaceId } = useThreadContext();
-  const { eventId } = useOptionalCommentContext() ?? { eventId: 'default' };
+  const eventId = useOptionalCommentContext() ?? 'default';
   const target = { type: 'composerMentionsButton', threadId, workspaceId, eventId } as const;
   const { workspaces } = useSnapshot(store);
   const composers = workspaces[workspaceId].composers;
@@ -230,7 +229,7 @@ const COMPOSER_PIN_TOOLTIPS: { [state: string]: string | null } = {
 function ComposerPinButton(props: { className?: string }) {
   const { events, store } = useApp();
   const { threadId, workspaceId } = useThreadContext();
-  const { eventId } = useOptionalCommentContext() ?? { eventId: 'default' };
+  const eventId = useOptionalCommentContext() ?? 'default';
   const { uiState, workspaces } = useSnapshot(store);
   const ref = useRef(null);
   const hover = useHovering(ref);
@@ -287,7 +286,7 @@ function ComposerEditor(props: {
   const { autoFocus, initialBody, setHasText } = useComposerContext();
   const { events, store } = useApp();
   const { focusedId, isPinningEnabled } = useSnapshot(store);
-  const { eventId } = useOptionalCommentContext() ?? { eventId: 'default' };
+  const eventId = useOptionalCommentContext() ?? 'default';
 
   const active = !!(
     focusedId &&
@@ -370,7 +369,7 @@ function ButtonGroup(props: { className?: string; children: React.ReactNode }) {
 
 function ComposerButtons() {
   const { workspaceId, threadId } = useThreadContext();
-  const { eventId } = useOptionalCommentContext() ?? { eventId: 'default' };
+  const eventId = useOptionalCommentContext() ?? 'default';
   const { events } = useApp();
   const { hasText, initialBody } = useComposerContext();
 

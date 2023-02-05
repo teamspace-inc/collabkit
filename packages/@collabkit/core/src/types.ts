@@ -322,17 +322,25 @@ export type CommentActionsEmojiButtonTarget = {
 export type CommentReactionTarget = {
   type: 'commentReaction';
   emoji: string;
-  comment: CommentTarget;
+  eventId: string;
+  threadId: string;
+  workspaceId: string;
 };
 
 export type CommentEditButtonTarget = {
   type: 'commentEditButton';
-  comment: CommentTarget;
+  workspaceId: string;
+  threadId: string;
+  eventId: string;
+  treeId: string;
 };
 
 export type CommentDeleteButtonTarget = {
   type: 'commentDeleteButton';
-  comment: CommentTarget;
+  workspaceId: string;
+  threadId: string;
+  eventId: string;
+  treeId: string;
 };
 
 export type CommentSaveButtonTarget = {

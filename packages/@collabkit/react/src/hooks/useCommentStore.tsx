@@ -4,7 +4,7 @@ import { useThreadContext } from '../hooks/useThreadContext';
 import { useWorkspaceStore } from './useWorkspaceStore';
 
 export function useCommentStore() {
-  const { eventId } = useCommentContext();
+  const eventId = useCommentContext();
   const eventStore = useOptionalCommentStore({ eventId });
   if (eventStore == null) {
     throw new Error('[useCommentStore] Event not found');

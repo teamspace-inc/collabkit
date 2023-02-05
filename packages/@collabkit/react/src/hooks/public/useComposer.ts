@@ -6,7 +6,7 @@ import { useThreadContext } from '../useThreadContext';
 export function useComposer() {
   const { events, store } = useApp();
   const { threadId, workspaceId } = useThreadContext();
-  const { eventId } = useOptionalCommentContext() ?? { eventId: 'default' };
+  const eventId = useOptionalCommentContext() ?? 'default';
   const { workspaces } = useSnapshot(store);
   const canSend = !!workspaces[workspaceId]?.composers[threadId]?.[eventId].enabled;
   return {
