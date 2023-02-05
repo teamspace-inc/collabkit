@@ -11,12 +11,6 @@ export const TEST_DB = {
   appId: '1:847051916849:web:417a95d387d2e3d8f57710',
 };
 
-export function setupFirebase() {
-  if (getApps().length) return;
-  const app = initializeApp(TEST_DB, 'CollabKit');
-  initializeAuth(app);
-}
-
 // load env variables
 Object.assign(process.env, {
   ...process.env,
@@ -25,8 +19,15 @@ Object.assign(process.env, {
 
 import admin from 'firebase-admin';
 import { initializeAuth } from 'firebase/auth';
-admin.initializeApp({
-  databaseURL: TEST_DB.databaseURL,
-  // @ts-ignore
-  credential: admin.credential.cert(JSON.parse(process.env.VITE_FIREBASE_TEST_SERVICE_ACCOUNT)),
-});
+
+export function setupFirebase() {
+  if (getApps().length) return;
+  admin.initializeApp({
+    databaseURL: TEST_DB.databaseURL,
+    // @ts-ignore
+    credential: admin.credential.cert(JSON.parse(process.env.VITE_FIREBASE_TEST_SERVICE_ACCOUNT)),
+  });
+  const app = initializeApp(TEST_DB, 'CollabKit');
+  initializeAuth(app);
+  return app;
+}

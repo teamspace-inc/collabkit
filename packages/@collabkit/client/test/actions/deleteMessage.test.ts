@@ -1,6 +1,11 @@
 import { expect, test } from 'vitest';
 import { nanoid } from 'nanoid';
-import { setupApp, setupFirebase, setupWorkspaceProfile } from '../../../test-utils/src';
+import {
+  setupApp,
+  setupFirebase,
+  setupProfile,
+  setupWorkspaceProfile,
+} from '../../../test-utils/src';
 import { createStore, createWorkspace } from '../../src/store';
 import { init } from '../../src/actions/init';
 import { FirebaseSync } from '../../src/sync/firebase/FirebaseSync';
@@ -17,6 +22,8 @@ test('deleteMessage', async () => {
   const userId = nanoid();
   const workspaceId = nanoid();
   await setupApp({ apiKey, appId });
+  await setupProfile({ appId, userId });
+
   await setupWorkspaceProfile({ appId, workspaceId, userId });
   const store = createStore();
   store.userId = userId;

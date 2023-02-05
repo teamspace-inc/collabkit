@@ -77,16 +77,13 @@ type PinMarkerProps = {
   style?: React.CSSProperties;
   pointerEvents: 'all' | 'none';
   isSelected: boolean;
+  userId: string;
 };
 
 const PinMarker = forwardRef<HTMLDivElement, PinMarkerProps>(function PinMarker(props, ref) {
-  const { isSelected } = props;
-  const { userId } = useUserContext();
+  const { isSelected, userId } = props;
   const { events } = useApp();
   const target = useTarget();
-  if (userId == null) {
-    return null;
-  }
   const { pointerEvents } = props;
   const onPointerDown = useCallback(
     (e: React.PointerEvent) => {
@@ -177,6 +174,7 @@ function SavedPin({
     <TargetContext.Provider value={target}>
       <FloatingNode id={id}>
         <PinMarker
+          userId={pin.createdById}
           isSelected={isSelected}
           pointerEvents="all"
           ref={floating}
@@ -193,9 +191,7 @@ export function CommentableRoot(props: { className?: string; children?: React.Re
   const hoveredElementRef = useRef<HTMLElement | SVGElement | null>(null);
   const store = useStore();
   const { events } = useApp();
-  const { uiState, workspaceId, allPins, selectedId, commentables } = useSnapshot(store);
-
-  console.log(Object.keys(commentables));
+  const { userId, uiState, workspaceId, allPins, selectedId, commentables } = useSnapshot(store);
 
   useEffect(() => {
     store.isPinningEnabled = true;
@@ -256,11 +252,15 @@ export function CommentableRoot(props: { className?: string; children?: React.Re
     return null;
   }
 
+  if (!userId) {
+    return null;
+  }
+
   const pendingPin = uiState === 'selecting' && (
     <>
       <div ref={overlayRef} className={styles.overlay} />
       <TargetContext.Provider value={{ type: 'pinCursor' }}>
-        <PinMarker isSelected={false} pointerEvents="none" ref={cursorRef} />
+        <PinMarker userId={userId} isSelected={false} pointerEvents="none" ref={cursorRef} />
       </TargetContext.Provider>
     </>
   );

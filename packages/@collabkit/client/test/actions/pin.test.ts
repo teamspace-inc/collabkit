@@ -9,7 +9,6 @@ import { Store } from '@collabkit/core';
 import { attachPin } from '../../src/actions/attachPin';
 import { movePin } from '../../src/actions/movePin';
 import { initComposer } from '../../src/actions/initComposer';
-import { writeMessageToFirebase } from '../../src/actions/writeMessageToFirebase';
 
 setupFirebase();
 
@@ -47,7 +46,13 @@ describe('pin', () => {
   });
 
   test('attachPin', async () => {
-    store.composerId = { type: 'composer', eventId: 'default', threadId, workspaceId };
+    store.composerId = {
+      type: 'composer',
+      eventId: 'default',
+      threadId,
+      workspaceId,
+      isNewThread: false,
+    };
     initComposer(store as Store, { threadId, workspaceId, eventId: 'default' });
     composer = store.workspaces[workspaceId].composers[threadId].default;
     composer.editor = null;
@@ -62,6 +67,7 @@ describe('pin', () => {
       id: pinId,
       workspaceId,
       eventId: 'default',
+      createdById: userId,
       x,
       y,
       isPending: true,
@@ -80,6 +86,7 @@ describe('pin', () => {
       x: 10,
       y: 20,
       isPending: true,
+      createdById: userId,
     });
   });
 

@@ -18,6 +18,7 @@ export class LocalOnlySync implements SyncAdapter {
   savePin(params: {
     appId: string;
     workspaceId: string;
+    userId: string;
     pin: {
       objectId: string;
       eventId: string;

@@ -24,6 +24,7 @@ import type {
   ThreadMeta,
   Sync,
   Pin,
+  FirebasePin,
 } from '@collabkit/core';
 import { FirebaseId } from '@collabkit/core';
 
@@ -122,6 +123,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
     appId: string;
     workspaceId: string;
     pinId: string;
+    userId: string;
     pin: {
       objectId: string;
       eventId: string;
@@ -131,17 +133,18 @@ export class FirebaseSync implements Sync.SyncAdapter {
     };
   }): Promise<string> {
     DEBUG && console.log('[network] savePin', params);
-    const { appId, workspaceId, pin } = params;
+    const { appId, workspaceId, userId, pin } = params;
     const { objectId } = pin;
     if (pin.eventId === 'default') {
       throw new Error('Cannot save pin with eventId "default"');
     }
     const pinId = params.pinId;
-    const firebasePin = {
+    const firebasePin: FirebasePin = {
       x: pin.x,
       y: pin.y,
       eventId: pin.eventId,
       threadId: pin.threadId,
+      createdById: userId,
     };
     const updates = {
       [ref.path`/pins/${appId}/${workspaceId}/${objectId}/${pinId}`]: firebasePin,
