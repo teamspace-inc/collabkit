@@ -31,7 +31,7 @@ export function CommentableRoot(props: { className?: string; children?: React.Re
   const hoveredElementRef = useRef<HTMLElement | SVGElement | null>(null);
   const store = useStore();
   const { events } = useApp();
-  const { userId, uiState, workspaceId, allPins, selectedId, previewingId } = useSnapshot(store);
+  const { userId, uiState, workspaceId, allPins, selectedId } = useSnapshot(store);
 
   useEffect(() => {
     store.isPinningEnabled = true;
