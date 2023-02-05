@@ -6,7 +6,6 @@ import type {
   CommentTarget,
   EmojiTarget,
   MenuTarget,
-  PinTarget,
   Store,
   Target,
   ThreadTarget,
@@ -215,6 +214,10 @@ export function createEvents(store: Store) {
       }
     },
 
+    onMouseEnter: (e: React.MouseEvent, props: { target: Target }) => {},
+
+    onMouseLeave: (e: React.MouseEvent, props: { target: Target }) => {},
+
     onMouseOver: (e: React.MouseEvent, props: { target: Target }) => {},
 
     onMouseOut: (e: React.MouseEvent, props: { target: Target }) => {},
@@ -293,11 +296,10 @@ export function createEvents(store: Store) {
     },
 
     onReactionPickerOpenChange: (props: { target: CommentEmojiButtonTargets; open: boolean }) => {
-      console.log('onReactionPickerOpenChange', props);
       actions.toggleEmojiPicker(store, props);
     },
 
-    onPopoverPreviewChange: (props: { target: ThreadTarget; open: boolean }) => {
+    onPopoverPreviewChange: (props: { target: Target; open: boolean }) => {
       if (props.open) {
         actions.showPreview(store, props);
       } else {
@@ -305,20 +307,11 @@ export function createEvents(store: Store) {
       }
     },
 
-    onPopoverThreadOpenChange: (props: { target: ThreadTarget; open: boolean }) => {
+    onPopoverContentChange: (props: { target: Target; open: boolean }) => {
       if (props.open) {
-        actions.viewThread(store, props);
+        actions.viewContent(store, props);
       } else {
         actions.closeAll(store);
-      }
-    },
-
-    onPinHoverChange: <T extends Target>(e: React.MouseEvent, props: { target: PinTarget , open : Boolean}) => {
-      const { target } = props;
-      if (props.open) {
-        actions.showPinPreview(store, { target })
-      } else{
-        actions.hidePinPreview(store, { target })
       }
     },
 
@@ -332,7 +325,7 @@ export function createEvents(store: Store) {
       switch (state) {
         case 'open':
           actions.closePreview(store, { target });
-          actions.viewThread(store, { target });
+          actions.viewContent(store, { target });
           break;
         case 'preview':
           actions.closeThread(store, { target });

@@ -62,6 +62,7 @@ export function createStore(): UnconfiguredStore {
     reactingId: null,
     viewingId: null,
     previewingId: null,
+    hoveringId: null,
     selectedId: null,
     editingId: null,
     composerId: null,
@@ -76,7 +77,6 @@ export function createStore(): UnconfiguredStore {
     clientY: 0,
     commentables: {},
     expandedThreadIds: [],
-    previewingPinId: null,
   };
   return store;
 }

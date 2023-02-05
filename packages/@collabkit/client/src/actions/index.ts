@@ -47,7 +47,7 @@ import { subscribeWorkspace } from './subscribeWorkspace';
 import { toggleEmoji } from './toggleEmoji';
 import { toggleEmojiPicker } from './toggleEmojiPicker';
 import { updateComment } from './updateComment';
-import { viewThread } from './viewThread';
+import { viewContent } from './viewContent';
 import { subscribeOpenPins } from './subscribeOpenPins';
 import { focusComposer } from './focusComposer';
 import { select } from './select';
@@ -55,8 +55,6 @@ import { deselectAll } from './deselectAll';
 import { updateComposer } from './updateComposer';
 import { expandThread } from './expandThread';
 import { collapseThread } from './collapseThread';
-import { showPinPreview } from './showPinPreview';
-import { hidePinPreview } from './hidePinPreview';
 
 export type GenerateToken =
   | {
@@ -139,7 +137,6 @@ export const actions = {
   expandThread,
   focus,
   focusComposer,
-  hidePinPreview,
   hideSidebar,
   init,
   initComposer,
@@ -157,7 +154,6 @@ export const actions = {
   select,
   sendMessage,
   setAvatarError,
-  showPinPreview,
   showPreview,
   showSidebar,
   startEditing,
@@ -178,5 +174,5 @@ export const actions = {
   toggleEmojiPicker,
   updateComment,
   updateComposer,
-  viewThread,
+  viewContent,
 };
