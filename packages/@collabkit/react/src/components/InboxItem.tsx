@@ -63,7 +63,7 @@ export function InboxItem(props: { formatTimestamp?: (timestamp: number) => stri
               window.history.pushState(null, '', pathname);
             } else {
               const target: ThreadTarget = { type: 'thread', threadId, workspaceId };
-              actions.viewThread(store, { target });
+              actions.viewContent(store, { target });
             }
           }
         }}
@@ -87,13 +87,13 @@ export function InboxItem(props: { formatTimestamp?: (timestamp: number) => stri
           </div>
           <Comment.Body />
         </Comment.Root>
-        <Comment.Provider eventId={lastComment.id}>
+        <Comment.Root commentId={lastComment.id}>
           <div>
             <div className={styles.nameAndTimestampWrapper}>
               <ReplyCount className={styles.replyCount} />
             </div>
           </div>
-        </Comment.Provider>
+        </Comment.Root>
       </div>
     </Thread.Provider>
   );

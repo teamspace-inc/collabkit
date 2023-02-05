@@ -74,7 +74,7 @@ function CollabKitRechartsRoot(props: { children: ReactNode }) {
         threadId,
         isOpen: true,
       });
-      actions.viewThread(store, {
+      actions.viewContent(store, {
         target: { type: 'thread', threadId, workspaceId },
       });
     }

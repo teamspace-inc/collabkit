@@ -507,6 +507,7 @@ export interface UnconfiguredStore {
   focusedId: null | Target;
   reactingId: null | Target;
   selectedId: null | Target;
+  hoveringId: null | Target;
   menuId: null | Target;
   viewingId: null | Target;
   previewingId: null | Target;

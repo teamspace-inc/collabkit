@@ -9,7 +9,7 @@ export const paddingRight = fallbackVar(vars.comment.paddingRight, vars.space[4]
 export const headerGap = fallbackVar(vars.comment.header.gap, vars.space[2]);
 export const actionsGap = fallbackVar(vars.comment.actions.gap, vars.space[2]);
 
-export const nameAndTimestampWrapper = style({
+export const header = style({
   flex: 1,
   display: 'flex',
   flexDirection: 'row',
@@ -82,7 +82,7 @@ export const indent = style({
 });
 
 export const pin = style({
-  paddingRight: vars.space[1],
+  paddingRight: calc.divide(vars.space[1], 2),
   float: 'left',
 });
 
@@ -218,6 +218,9 @@ export const actions = style({
   },
 });
 
+// start hover optimisation
+// use CSS for showing the comment actions menu on
+// hover as the pure react approach feels sluggish
 export const hover = style({
   opacity: 1,
   pointerEvents: 'all',
@@ -250,6 +253,7 @@ globalStyle(
     pointerEvents: 'all',
   }
 );
+// end hover  optimisation
 
 export const markdown = style({});
 export const markdownLinksNotClickable = style({});

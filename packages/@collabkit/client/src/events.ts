@@ -214,6 +214,26 @@ export function createEvents(store: Store) {
       }
     },
 
+    onMouseEnter: (e: React.MouseEvent, props: { target: Target }) => {
+      const { target } = props;
+      const { type } = target;
+      switch (type) {
+        case 'comment':
+          actions.hover(store, { target });
+          break;
+      }
+    },
+
+    onMouseLeave: (e: React.MouseEvent, props: { target: Target }) => {
+      const { target } = props;
+      const { type } = target;
+      switch (type) {
+        case 'comment':
+          actions.unhover(store, { target });
+          break;
+      }
+    },
+
     onMouseOver: (e: React.MouseEvent, props: { target: Target }) => {},
 
     onMouseOut: (e: React.MouseEvent, props: { target: Target }) => {},
@@ -292,11 +312,10 @@ export function createEvents(store: Store) {
     },
 
     onReactionPickerOpenChange: (props: { target: CommentEmojiButtonTargets; open: boolean }) => {
-      console.log('onReactionPickerOpenChange', props);
       actions.toggleEmojiPicker(store, props);
     },
 
-    onPopoverPreviewChange: (props: { target: ThreadTarget; open: boolean }) => {
+    onPopoverPreviewChange: (props: { target: Target; open: boolean }) => {
       if (props.open) {
         actions.showPreview(store, props);
       } else {
@@ -304,9 +323,9 @@ export function createEvents(store: Store) {
       }
     },
 
-    onPopoverThreadOpenChange: (props: { target: ThreadTarget; open: boolean }) => {
+    onPopoverContentChange: (props: { target: Target; open: boolean }) => {
       if (props.open) {
-        actions.viewThread(store, props);
+        actions.viewContent(store, props);
       } else {
         actions.closeAll(store);
       }
@@ -322,7 +341,7 @@ export function createEvents(store: Store) {
       switch (state) {
         case 'open':
           actions.closePreview(store, { target });
-          actions.viewThread(store, { target });
+          actions.viewContent(store, { target });
           break;
         case 'preview':
           actions.closeThread(store, { target });

@@ -49,6 +49,7 @@ test('createStore', () => {
     workspaceId: null,
     selectedId: null,
     focusedId: null,
+    hoveringId: null,
     menuId: null,
     reactingId: null,
     viewingId: null,

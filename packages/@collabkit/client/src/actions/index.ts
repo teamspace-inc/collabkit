@@ -9,7 +9,7 @@ import { closeAll } from './closeAll';
 import { closeEmojiReactionPicker } from './closeEmojiReactionPicker';
 import { closeMenu } from './closeMenu';
 import { closePreview } from './closePreview';
-import { closeThread } from './closeThread';
+import { closeContent } from './closeContent';
 import { deleteMessage } from './deleteMessage';
 import { deletePin } from './deletePin';
 import { focus } from './focus';
@@ -47,7 +47,7 @@ import { subscribeWorkspace } from './subscribeWorkspace';
 import { toggleEmoji } from './toggleEmoji';
 import { toggleEmojiPicker } from './toggleEmojiPicker';
 import { updateComment } from './updateComment';
-import { viewThread } from './viewThread';
+import { viewContent } from './viewContent';
 import { subscribeOpenPins } from './subscribeOpenPins';
 import { focusComposer } from './focusComposer';
 import { select } from './select';
@@ -55,6 +55,8 @@ import { deselectAll } from './deselectAll';
 import { updateComposer } from './updateComposer';
 import { expandThread } from './expandThread';
 import { collapseThread } from './collapseThread';
+import { hover } from './hover';
+import { unhover } from './unhover';
 
 export type GenerateToken =
   | {
@@ -129,7 +131,7 @@ export const actions = {
   closeEmojiReactionPicker,
   closeMenu,
   closePreview,
-  closeThread,
+  closeThread: closeContent,
   collapseThread,
   deleteMessage,
   deletePin,
@@ -138,6 +140,7 @@ export const actions = {
   focus,
   focusComposer,
   hideSidebar,
+  hover,
   init,
   initComposer,
   insertComposerPin,
@@ -172,7 +175,8 @@ export const actions = {
   subscribeWorkspace,
   toggleEmoji,
   toggleEmojiPicker,
+  unhover,
   updateComment,
   updateComposer,
-  viewThread,
+  viewContent,
 };

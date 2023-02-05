@@ -133,18 +133,18 @@ export default () => (<Thread.Provider threadId="thread1">
 
 export default () => (<Thread.Provider threadId="thread1">
   <Comment.Root commentId="event1">
-    <Comment.NameAndTimestampWrapper>
+    <Comment.Header>
       <Comment.CreatorName />
       <Comment.Timestamp />
-    </Comment.NameAndTimestampWrapper>
+    </Comment.Header>
   </Comment.Root>
 </Thread.Provider>);`}
         demo={
           <CommentDemo>
-            <Comment.NameAndTimestampWrapper>
+            <Comment.Header>
               <Comment.CreatorName />
               <Comment.Timestamp />
-            </Comment.NameAndTimestampWrapper>
+            </Comment.Header>
           </CommentDemo>
         }
         description={
@@ -153,7 +153,7 @@ export default () => (<Thread.Provider threadId="thread1">
             timestamp horizontally.
           </>
         }
-        title={'Comment.NameAndTimestampWrapper'}
+        title={'Comment.Header'}
       />
 
       <AdvancedPart

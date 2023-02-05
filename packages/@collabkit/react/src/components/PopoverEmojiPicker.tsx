@@ -6,7 +6,8 @@ import { useApp } from '../hooks/useApp';
 import { Popover } from './Popover';
 import { IconButton } from './IconButton';
 import { Smiley } from './icons';
-import { isEqual, EmojiPicker } from './EmojiPicker';
+import { EmojiPicker } from './EmojiPicker';
+import { isEqual } from '@collabkit/core';
 
 export function PopoverEmojiPicker(props: {
   placement?: Placement;
@@ -29,7 +30,7 @@ export function PopoverEmojiPicker(props: {
     <Popover.Root
       contentVisible={open}
       previewVisible={false}
-      onOpenChange={onOpenChange}
+      onContentChange={onOpenChange}
       onPreviewChange={() => {}}
       // advanced
       placement={props.placement ?? 'left-start'}

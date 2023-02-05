@@ -91,6 +91,7 @@ export function Menu<ItemType>(props: Props<ItemType>) {
     event = 'click',
     ...otherProps
   } = props;
+
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [allowHover, setAllowHover] = useState(false);
 

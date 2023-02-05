@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect } from 'react';
-import { Target } from '@collabkit/core';
 
 export function useHovering(ref: React.RefObject<HTMLElement>) {
   const [isHovering, setIsHovering] = React.useState(false);
