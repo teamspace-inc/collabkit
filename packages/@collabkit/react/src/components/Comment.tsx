@@ -190,11 +190,11 @@ export function CommentMarkdown() {
   );
 }
 
-export function HideIfEditing({ children }: { children: React.ReactNode }) {
+export function CommentHideIfEditing({ children }: { children: React.ReactNode }) {
   return useEditingContext() ? null : <>{children}</>;
 }
 
-export function ShowIfEditing({ children }: { children: React.ReactNode }) {
+export function CommentShowIfEditing({ children }: { children: React.ReactNode }) {
   return useEditingContext() ? <>{children}</> : null;
 }
 
@@ -495,8 +495,8 @@ Comment.SeeAllRepliesButton = CommentSeeAllRepliesButton;
 Comment.ActionsEmojiButton = CommentActionsEmojiButton;
 Comment.Reactions = CommentReactions;
 Comment.Markdown = CommentMarkdown;
-Comment.HideIfEditing = HideIfEditing;
-Comment.ShowIfEditing = ShowIfEditing;
+Comment.HideIfEditing = CommentHideIfEditing;
+Comment.ShowIfEditing = CommentShowIfEditing;
 
 // Anatomy
 
