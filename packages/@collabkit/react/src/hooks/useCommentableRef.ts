@@ -7,13 +7,15 @@ export function useCommentableRef(objectId: string) {
   const prevObjectId = useRef(objectId);
 
   useEffect(() => {
-    // swap out the old objectId for the new one
+    // if objectId has changed then remove
+    // the previous one from the store
     if (prevObjectId.current !== objectId) {
-      console.log('del', prevObjectId.current);
       delete store.commentables[prevObjectId.current];
       prevObjectId.current = objectId;
       store.commentables[objectId] = { objectId, element: null };
     }
+
+    () => delete store.commentables[objectId];
   }, [objectId]);
 
   const setElement = useCallback(
