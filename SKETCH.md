@@ -88,11 +88,7 @@ To do this use the following code:
 
 ```tsx
 const filter = useFilter(); // example app code
-const [context, setContext] = useCommentableContext();
-
-useEffect(() => {
-  setContext({ filter });
-}, [setContext, filter]);
+useCommentableContext({ filter });
 ```
 
 #### Nested context
@@ -101,19 +97,15 @@ Context is assembled by traversing your Component Tree upwards from the closest 
 
 ```tsx
 function Tabs(props: { activeTabId: string }) {
-  const [context, setContext] = useCommentableContext();
-  useEffect(() => {
-    setContext({ activeTabId: props.activeTabId });
-  }, [props.activeTabId]);
+  const { activeTabId } = props;
+  useCommentableContext({ activeTabId });
 }
 ```
 
 ```tsx
 function SubTabs(props: { activeSubTabId: string }) {
-  const [context, setContext] = useCommentableContext();
-  useEffect(() => {
-    setContext({ activeSubTabId: props.activeSubTabId });
-  }, [props.activeSubTabId]);
+  const { activeSubTabId } = props;
+  useCommentableContext({ activeSubTabId });
 }
 ```
 
@@ -135,8 +127,7 @@ Note this is global context and will apply to any pinned comment in your app.
 If you have a piece of context which does not depend on parent contexts, call:
 
 ```tsx
-const [context, setContext] = useCommentableContext();
-setContext({ query: 'foo' }, { isolated: true });
+useCommentableContext({ query: 'foo' }, { isolated: true });
 ```
 
 ### Subscribing to `context` with the `useCommentableContext` hook.
@@ -144,7 +135,7 @@ setContext({ query: 'foo' }, { isolated: true });
 And then elsewhere in your app subscribe to this data when a user is viewing a comment.
 
 ```tsx
-const [context] = useCommentableContext();
+const context = useCommentableContext();
 ```
 
 When the user clicks a pin that has the related context saved it will trigger the hook
