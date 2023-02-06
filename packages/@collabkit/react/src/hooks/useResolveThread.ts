@@ -3,10 +3,15 @@ import { timelineUtils } from '@collabkit/core';
 import { useThreadContext } from '../hooks/useThreadContext';
 import { useSnapshot } from 'valtio';
 import { actions } from '@collabkit/client';
+import { useWorkspaceContext } from './useWorkspaceContext';
+import { useUserContext } from './useUserContext';
+import { useStore } from './useStore';
 
 export function useResolveThread() {
-  const { store } = useApp();
-  const { threadId, workspaceId, userId } = useThreadContext();
+  const store = useStore();
+  const threadId = useThreadContext();
+  const workspaceId = useWorkspaceContext();
+  const userId = useUserContext();
   const { workspaces } = useSnapshot(store);
 
   const workspace = workspaces[workspaceId];

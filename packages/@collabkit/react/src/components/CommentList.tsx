@@ -11,14 +11,14 @@ import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
 import { useThreadContext } from '../hooks/useThreadContext';
 import { useApp } from '../hooks/useApp';
 import { useOptionalChannelContext } from '../hooks/useChannelContext';
+import { useStore } from '../hooks/useStore';
 
 function useHasFetchedThreadTimeline() {
-  const { threadId } = useThreadContext();
-  const { store } = useApp();
+  const threadId = useThreadContext();
+  const store = useStore();
   const { config } = useSnapshot(store);
   const { fetchedProfiles, threadProfiles } = useSnapshot(useWorkspaceStore());
   const [hasFetched, setHasFetched] = useState(false);
-
   const numFetchedProfiles = Object.keys(fetchedProfiles[threadId] ?? {}).length;
   const numThreadProfiles = Object.keys(threadProfiles[threadId] ?? {}).length;
   useEffect(() => {
@@ -48,7 +48,7 @@ export default function CommentList(
   const isChannel = !!useOptionalChannelContext();
   const hasFetched = useHasFetchedThreadTimeline();
   const { expandedThreadIds } = useSnapshot(useApp().store);
-  const { threadId } = useThreadContext();
+  const threadId = useThreadContext();
   const isExpanded = !!expandedThreadIds.find((id) => id === threadId);
 
   return hasFetched ? (

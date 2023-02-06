@@ -14,7 +14,7 @@ export function useCommentStore() {
 
 export function useOptionalCommentStore(props: { eventId: string }) {
   const { eventId } = props;
-  const { threadId } = useThreadContext();
+  const threadId = useThreadContext();
   const timeline = useWorkspaceStore().timeline[threadId];
   const eventStore = timelineUtils.findLatestEdit(timeline, eventId) ?? timeline[eventId];
   return eventStore;

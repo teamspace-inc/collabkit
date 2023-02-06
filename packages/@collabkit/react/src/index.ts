@@ -28,7 +28,6 @@ import {
   PopoverThreadContent,
 } from './components/PopoverThread';
 import { useInbox } from './hooks/public/useInbox';
-import { ThreadProvider } from './components/ThreadProvider';
 import { useComments } from './hooks/public/useComments';
 import { useIsResolved } from './hooks/public/useIsResolved';
 import { useResolveThread } from './hooks/public/useResolveThread';
@@ -82,7 +81,6 @@ export {
   ResolveThreadIconButton,
   Scrollable,
   ThreadFacepile,
-  ThreadProvider /* TODO: remove in favor of Thread.Provider? */,
   useComments,
   useInbox,
   useIsResolved,

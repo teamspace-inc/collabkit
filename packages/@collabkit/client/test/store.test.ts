@@ -29,6 +29,7 @@ test('createComposer', () => {
     enabled: false,
     isMentioning: false,
     pendingPin: null,
+    hasText: false,
   });
 });
 

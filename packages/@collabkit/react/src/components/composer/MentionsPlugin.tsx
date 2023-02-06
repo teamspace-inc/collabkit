@@ -28,7 +28,6 @@ import {
 } from '@collabkit/editor';
 import { snapshot } from 'valtio';
 import { Store } from '../../constants';
-import { useApp } from '../../hooks/useApp';
 import * as styles from '../../theme/components/MentionsPlugin.css';
 
 import { MentionWithColor } from '@collabkit/core';
@@ -44,6 +43,7 @@ import {
 import { ThemeWrapper } from '../ThemeWrapper';
 import Profile from '../Profile';
 import { Scrollable } from '../Scrollable';
+import { useStore } from '../../hooks/useStore';
 
 type MentionMatch = {
   leadOffset: number;
@@ -165,7 +165,7 @@ function searchMentionableUsers(
 }
 
 function useMentionLookupService(mentionString: string) {
-  const { store } = useApp();
+  const store = useStore();
   if (!store) {
     return null;
   }

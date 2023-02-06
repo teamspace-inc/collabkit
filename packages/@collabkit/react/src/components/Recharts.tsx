@@ -39,6 +39,8 @@ import { useUserContext } from '../hooks/useUserContext';
 import { PopoverThread } from './PopoverThread';
 import { usePopoverThread } from '../hooks/usePopoverThread';
 import * as styles from '../theme/components/Recharts.css';
+import { useWorkspaceContext } from '../hooks/useWorkspaceContext';
+import { useStore } from '../hooks/useStore';
 
 type CursorInfo = {
   objectId: string | null;
@@ -55,8 +57,8 @@ function CollabKitRechartsRoot(props: { children: ReactNode }) {
     xValue: null,
     yValue: null,
   });
-  const { workspaceId } = useUserContext();
-  const { store } = useApp();
+  const workspaceId = useWorkspaceContext();
+  const store = useStore();
 
   const onAddComment = useCallback(() => {
     const threadId = nanoid();
@@ -118,7 +120,7 @@ function CollabKitRechartsChart(props: any) {
 
   const objectIds = new Set(props.data.map((entry: any) => props.getObjectId(entry)));
 
-  const { store } = useApp();
+  const store = useStore();
   const { workspaceId, workspaces } = useSnapshot(store);
   const openThreads = workspaceId ? workspaces[workspaceId]?.openThreads : {};
 

@@ -18,6 +18,7 @@ export function createComposer(): Composer {
     enabled: false,
     isMentioning: false,
     pendingPin: null,
+    hasText: false,
   };
 }
 

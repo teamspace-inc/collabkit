@@ -1,12 +1,12 @@
 import { Workspace } from '@collabkit/core';
 import { useSnapshot } from 'valtio';
-import { useApp } from '../useApp';
 import { useThreadSubscription } from '../useThread';
 import { countUnread } from '../../utils/countUnread';
 import { useExistingThreadId } from '../useExistingThreadId';
+import { useStore } from '../useStore';
 
 export function usePopoverUnreadCommentsCount(props: { objectId?: string }): number {
-  const { store } = useApp();
+  const store = useStore();
   const { workspaceId, workspaces, userId } = useSnapshot(store);
   const threadId = props.objectId ? useExistingThreadId({ objectId: props.objectId }) : null;
   const workspace = workspaceId ? workspaces[workspaceId] : null;

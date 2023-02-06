@@ -1,10 +1,8 @@
-import { useApp } from '../hooks/useApp';
-import { useOptionalUserContext, useUserContext } from './useUserContext';
+import { useStore } from './useStore';
+import { useOptionalWorkspaceContext } from './useWorkspaceContext';
 
 export function useWorkspaceStore() {
-  const { store } = useApp();
-  const { workspaceId } = useUserContext();
-  const workspaceStore = store.workspaces[workspaceId];
+  const workspaceStore = useOptionalWorkspaceStore();
   if (workspaceStore == null) {
     throw new Error('[useWorkspaceStore] Workspace not found');
   }
@@ -12,7 +10,7 @@ export function useWorkspaceStore() {
 }
 
 export function useOptionalWorkspaceStore() {
-  const { store } = useApp();
-  const userContext = useOptionalUserContext();
-  return userContext ? store.workspaces[userContext.workspaceId] : null;
+  const store = useStore();
+  const workspaceId = useOptionalWorkspaceContext();
+  return workspaceId ? store.workspaces[workspaceId] : null;
 }

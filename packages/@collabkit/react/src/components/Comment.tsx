@@ -30,6 +30,9 @@ import { useOptionalChannelContext } from '../hooks/useChannelContext';
 import { EMOJI_U } from './EmojiPicker';
 import { PopoverEmojiPicker } from './PopoverEmojiPicker';
 import { Emoji } from './Emoji';
+import { useWorkspaceContext } from '../hooks/useWorkspaceContext';
+import { useUserContext } from '../hooks/useUserContext';
+import { useStore } from '../hooks/useStore';
 
 type CommentRootProps = {
   commentId: string;
@@ -51,7 +54,9 @@ function useTreeContext() {
 }
 
 function CommentRoot({ commentId: eventId, indent = false, ...props }: CommentRootProps) {
-  const { threadId, workspaceId, userId } = useThreadContext();
+  const threadId = useThreadContext();
+  const workspaceId = useWorkspaceContext();
+  const userId = useUserContext();
   const treeId = useId();
 
   const target = useMemo<CommentTarget>(
@@ -73,7 +78,7 @@ function CommentRoot({ commentId: eventId, indent = false, ...props }: CommentRo
 
   const { store, events } = useApp();
   const { menuId, reactingId, editingId } = useSnapshot(store);
-  const timeline = useSnapshot(useWorkspaceStore().timeline[threadId]);
+  const timeline = useSnapshot(useWorkspaceStore()).timeline[threadId];
   const { profiles } = useSnapshot(store);
   const event = timeline[eventId];
   const createdById = event.createdById;
@@ -128,14 +133,15 @@ function CommentRoot({ commentId: eventId, indent = false, ...props }: CommentRo
 }
 
 export function CommentUnreadDot(props: React.ComponentPropsWithoutRef<'div'>) {
-  const { threadId } = useThreadContext();
+  const threadId = useThreadContext();
   const count = useUnreadCount({ threadId });
   return count > 0 ? <div className={styles.unreadDot} {...props} /> : null;
 }
 
 export function CommentActionsReplyButton() {
   const { events } = useApp();
-  const { threadId, workspaceId } = useThreadContext();
+  const threadId = useThreadContext();
+  const workspaceId = useWorkspaceContext();
   const eventId = useCommentContext();
   const target = {
     type: 'commentReplyButton',
@@ -154,7 +160,8 @@ export function CommentSeeAllRepliesButton(props: React.ComponentPropsWithoutRef
   const commentIds = useComments();
   const { store, events } = useApp();
   const { expandedThreadIds } = useSnapshot(store);
-  const { threadId, workspaceId } = useThreadContext();
+  const threadId = useThreadContext();
+  const workspaceId = useWorkspaceContext();
   const eventId = useCommentContext();
 
   const target = {
@@ -223,7 +230,8 @@ export function EmojiCount(props: { emojiU: string; count: number; userIds: read
   const { events, store } = useApp();
   const { profiles } = useSnapshot(store);
   const names = props.userIds.map((id) => profiles[id]?.name).filter((name) => !!name);
-  const { workspaceId, threadId } = useThreadContext();
+  const workspaceId = useWorkspaceContext();
+  const threadId = useThreadContext();
   const eventId = useCommentContext();
   const target = {
     type: 'emoji',
@@ -258,8 +266,8 @@ export function EmojiCount(props: { emojiU: string; count: number; userIds: read
 
 export function CommentReactions(props: React.ComponentPropsWithoutRef<'div'>) {
   const { children, ...otherProps } = props;
-  const { store } = useApp();
-  const { threadId } = useThreadContext();
+  const store = useStore();
+  const threadId = useThreadContext();
   const eventId = useCommentContext();
   const { reactions } = useSnapshot(store);
   const reaccs = reactions?.[threadId]?.[eventId];
@@ -277,8 +285,9 @@ export function CommentReactions(props: React.ComponentPropsWithoutRef<'div'>) {
 }
 
 export function CommentPin(props: React.ComponentProps<'img'>) {
-  const { workspaceId, threadId } = useThreadContext();
+  const threadId = useThreadContext();
   const eventId = useCommentContext();
+  const workspaceId = useWorkspaceContext();
   const { events, store } = useApp();
   const { selectedId } = useSnapshot(store);
   const workspace = useSnapshot(useWorkspaceStore());
@@ -329,11 +338,9 @@ export function CommentEditor(props: React.ComponentProps<'div'>) {
     <Composer.Root
       data-testid="collabkit-comment-composer-root"
       className={styles.editor}
-      autoFocus={true}
-      initialBody={body}
       {...props}
     >
-      <Composer.Editor placeholder={<span />}>
+      <Composer.Editor autoFocus={true} initialBody={body} placeholder={<span />}>
         <Composer.Buttons />
       </Composer.Editor>
     </Composer.Root>
@@ -362,8 +369,10 @@ type CommentMenuItemType = 'commentEditButton' | 'commentDeleteButton' | 'reopen
 function CommentMenu(props: { className?: string }) {
   const { events, store } = useApp();
   const eventId = useCommentContext();
+  const threadId = useThreadContext();
+  const workspaceId = useWorkspaceContext();
+  const userId = useUserContext();
   const { createdById } = useCommentStore();
-  const { threadId, workspaceId, userId } = useThreadContext();
   const treeId = useTreeContext();
 
   // todo @nc: extract this into a hook
@@ -436,7 +445,8 @@ export function CommentActions(props: React.ComponentProps<'div'>) {
 
 export function CommentEmojiAddButton() {
   const eventId = useCommentContext();
-  const { threadId, workspaceId } = useThreadContext();
+  const threadId = useThreadContext();
+  const workspaceId = useWorkspaceContext();
   const target = {
     type: 'commentAddEmojiButton',
     eventId,
@@ -448,7 +458,8 @@ export function CommentEmojiAddButton() {
 
 export function CommentActionsEmojiButton() {
   const eventId = useCommentContext();
-  const { threadId, workspaceId } = useThreadContext();
+  const threadId = useThreadContext();
+  const workspaceId = useWorkspaceContext();
   const target = {
     type: 'commentActionsEmojiButton',
     eventId,

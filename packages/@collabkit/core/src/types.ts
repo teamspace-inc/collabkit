@@ -285,7 +285,14 @@ export type FloatingCommentButtonTarget = { type: 'floatingCommentButton' };
 export type ComposerTarget = {
   type: 'composer';
   threadId: string;
-  isNewThread: boolean;
+  workspaceId: string;
+  eventId: string | 'default';
+  isNewThread?: boolean;
+};
+
+export type ChannelComposerTarget = {
+  type: 'channelComposer';
+  threadId: string;
   workspaceId: string;
   eventId: string | 'default';
 };
@@ -441,6 +448,7 @@ export interface Composer {
   isTyping: { [endUserId: string]: boolean };
   isMentioning: boolean;
   pendingPin: null | PendingPin;
+  hasText: boolean;
 }
 
 export type FirebasePin = {

@@ -1,9 +1,9 @@
 import { ObjectProps } from '@collabkit/core';
 import { nanoid } from 'nanoid';
-import { useApp } from './useApp';
+import { useStore } from './useStore';
 
 export function usePendingThreadId(props: ObjectProps & { workspaceId: string | null }) {
-  const { store } = useApp();
+  const store = useStore();
   if (!props.workspaceId) {
     return '';
   }

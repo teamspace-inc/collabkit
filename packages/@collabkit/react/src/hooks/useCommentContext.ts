@@ -6,6 +6,10 @@ export function useOptionalCommentContext() {
   return React.useContext(CommentContext);
 }
 
+export function useDefaultCommentContext() {
+  return useOptionalCommentContext() ?? 'default';
+}
+
 export function useCommentContext() {
   const context = React.useContext(CommentContext);
   if (!context) {
