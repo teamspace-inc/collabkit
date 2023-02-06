@@ -18,9 +18,13 @@ For example if you're writing a task management app and you have an interface wi
 
 ## ObjectProps
 
+### Overview
+
 When a user leaves a comment on an object, and others want to reply, they'll want to see where the comment was left. To make navigating back to a comment easy you can supply CollabKit with `objectProps`.
 
 ObjectProps accept any JS object which can be converted to JSON. We store them and provide an easy hook for you to access them in your app.
+
+### Setting ObjectProps
 
 For example, if you have a table view with a set of filters, you may want to record which filters were active when a user pins a comment to a table cell. To do this use the following code:
 
@@ -36,10 +40,12 @@ For example, if you have a table view with a set of filters, you may want to rec
 </Commentable>
 ```
 
+### Subscribe via a React Hook
+
 And then elsewhere in your app subscribe to this data when a user is viewing a comment.
 
 ```
-const object  = useSelectedObject()
+const object  = useSelectedObject();
 ```
 
 When the user clicks the pin associated with `customer-4231-name` the hook will trigger.
@@ -49,6 +55,18 @@ console.log(object) // { objectId: 'customer-4231-name`, objectProps: { filter: 
 ```
 
 You can then set the filter in your UI to the appropriate value recreating the context in which the comment was placed.
+
+### Subscribe via a callback
+
+If you're using a state management library as is common in SPAs you may want to subscribe directly to the selected object state from your store. To do so use the following code:
+
+```
+import { subscribe } from '@collabkit/client'
+
+const unsubscribe = subscribe('selectedObject', (selectedObject) => {
+  // update your store here
+})
+```
 
 ## Data Model
 
