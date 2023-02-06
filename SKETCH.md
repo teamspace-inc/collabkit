@@ -6,66 +6,165 @@ CollabKit calls any piece of information in your app an 'object'. It could refer
 
 Just like how the OpenGraph protocol enables any web page to become a rich object on social. Objects in CollabKit enable any part of your apps interface to being a rich object within collaboration.
 
+### Object IDs
+
 Objects have a unique ID which helps CollabKit understand what your users are commenting on.
 
 For example if you're writing a task management app and you have an interface with a list of tasks, you might write the following code to enable commenting per task:
 
-```
+```tsx
 <Commentable objectId="task-1">
   {<!-- code to render Task 1 here-->}
 </Commentable>
 ```
 
-## ObjectProps
+### ObjectProps
 
-### Overview
+Describe your object so CollabKit can render rich previews in conversation and notifications about what you're users are commenting on.
 
-When a user leaves a comment on an object, and others want to reply, they'll want to see where the comment was left. To make navigating back to a comment easy you can supply CollabKit with `objectProps`.
+We adhere to the same specification as OpenGraph, just within React. So you can set things like `name` and `description` to get a rich preview in a comment of a pinned object. Like this:
 
-ObjectProps accept any JS object which can be converted to JSON. We store them and provide an easy hook for you to access them in your app.
+// image of UI when a rich preview
 
-### Setting ObjectProps
+You can go further and add an `imageUrl` to show a preview.
 
-For example, if you have a table view with a set of filters, you may want to record which filters were active when a user pins a comment to a table cell. To do this use the following code:
+// image of a UI with a rich preview with name, description and image
 
+It's also possible to describe the `type` of the object. We support a few out of the box like `video`, `article`, and `task`. So you can add information like:
+
+// image of a UI with a video and an article set and visible within a comment
+
+## Context
+
+Context is used to store the parts of your app's state which help user navigate to a pinned comment.
+
+### How it works
+
+When a user leaves a comment on an object, and others want to reply, they'll want to see where the comment was left. To make navigating back to a comment easy you can supply CollabKit with `context` about your app's state at that time the comment was pinned. Use this state to set your app's state when a pin is viewed.
+
+### Storage and Retrieval
+
+Context accepts any JS object which can be converted to JSON. It's saved in realtime over websockets and is synced across clients instantly.
+
+### Default Context
+
+CollabKit saves the full page URL of the user was on while commenting. You can override this by passing `url` to `setContext`. For example:
+
+It's also possible to provide a transformer function to the `CollabKitProvider` to prevent certain query params being saved, or add some if needed.
+
+```tsx
+const transformContextFn = useCallback((context: CommentableContext) => {
+  context.url = context.url.replace('foo', 'bar');
+  return context;
+});
+
+<CollabKitProvider transformContextFn={transformContextFn}>
+  {/* your app code here */}
+</CollabKitProvider>;
 ```
+
+### Setting Context
+
+#### Setting `context` on Commentable
+
+For example, if you have a table view with a set of filters, you may want to record which filters were active when a user pins a comment to a table cell.
+
+To do this use the following code:
+
+```tsx
 <Commentable
   objectId="customer-4231-name"
-  objectProps={{
-    filter: 'country: uk'
-  }}>
-  <TableCell>
-
-  </TableCell>
+  context={{
+    filter: {
+      country: 'usa',
+    },
+  }}
+>
+  <TableCell>{/* your app code */}</TableCell>
 </Commentable>
 ```
 
-### Subscribe via a React Hook
+#### Setting `context` with the useCommentableContext() hook
+
+```tsx
+const filter = useFilter(); // example app code
+const [context, setContext] = useCommentableContext();
+
+useEffect(() => {
+  setContext({ filter });
+}, [setContext, filter]);
+```
+
+#### Nested context
+
+Context is assembled by traversing your Component Tree upwards from the closest Commentable. So if you have a nested interface with lots of tabs and filters just set context at each level. For example if you have a two tiered tabbed nav you might want to `setContext` twice, once for each tab level. To do so use the following code
+
+```tsx
+function Tabs(props: { activeTabId: string }) {
+  const [context, setContext] = useCommentableContext();
+  useEffect(() => {
+    setContext({ activeTabId: props.activeTabId });
+  }, [props.activeTabId]);
+}
+```
+
+```tsx
+function SubTabs(props: { activeSubTabId: string }) {
+  const [context, setContext] = useCommentableContext();
+  useEffect(() => {
+    setContext({ activeSubTabId: props.activeSubTabId });
+  }, [props.activeSubTabId]);
+}
+```
+
+#### Setting context from a store or state management library
+
+If you have centralised UI state in your app, you can also directly set key context using `setCommentableContext` from `@collabkit/client`. For example in a store event handler you may:
+
+```tsx
+import { setCommentableContext } from '@collabkit/client`
+
+const { activeTabId, activeSubTabId } = store;
+setCommentableContext({ activeTabId, activeSubTabId });
+```
+
+Note this is global context and will apply to any pinned comment in your app.
+
+#### Opt-out of nesting
+
+If you have a piece of context which does not depend on parent contexts, call:
+
+```tsx
+const [context, setContext] = useCommentableContext();
+setContext({ query: 'foo' }, { isolated: true });
+```
+
+### Subscribing to `context` with the `useCommentableContext` hook.
 
 And then elsewhere in your app subscribe to this data when a user is viewing a comment.
 
-```
-const object  = useSelectedObject();
+```tsx
+const [context] = useCommentableContext();
 ```
 
-When the user clicks the pin associated with `customer-4231-name` the hook will trigger.
+When the user clicks a pin that has the related context saved it will trigger the hook
 
-```
-console.log(object) // { objectId: 'customer-4231-name`, objectProps: { filter: 'country-uk' } }
+```tsx
+console.log(context); // { filter: { country: 'usa' } }
 ```
 
 You can then set the filter in your UI to the appropriate value recreating the context in which the comment was placed.
 
-### Subscribe via a callback
+### Subscribe to `context` via a callback
 
 If you're using a state management library as is common in SPAs you may want to subscribe directly to the selected object state from your store. To do so use the following code:
 
-```
-import { subscribe } from '@collabkit/client'
+```tsx
+import { subscribe } from '@collabkit/client';
 
-const unsubscribe = subscribe('selectedObject', (selectedObject) => {
-  // update your store here
-})
+const unsubscribe = subscribe('context', (context) => {
+  console.log(context); // { filter: { country: 'usa' } }
+});
 ```
 
 ## Data Model
