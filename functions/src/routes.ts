@@ -11,7 +11,7 @@ import { triggerWebhookImpl } from './triggerWebhook';
 
 const corsHandler = cors.default({ origin: true });
 
-export const createApp = functions.https.onRequest(async (request, response) => {
+export const routes = functions.https.onRequest(async (request, response) => {
   corsHandler(request, response, async () => {
     const url = new URL(request.url, `http://${request.headers.host}`);
 
