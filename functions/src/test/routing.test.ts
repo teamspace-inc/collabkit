@@ -26,7 +26,7 @@ it('routing: route not found', async () => {
 });
 
 it('routing: route works', async () => {
-  const http = mockHttp({ url: '/v1/createUser/test', query: {}, body: {} });
+  const http = mockHttp({ url: `http://test.host.com/v1/createUser/id`, query: {}, body: {} });
   routesImpl(http.req, http.res);
   const send = http.res.send as sinon.SinonSpy;
   const { args } = send.getCalls()[0];
