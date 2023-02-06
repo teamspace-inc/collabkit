@@ -285,7 +285,14 @@ export type FloatingCommentButtonTarget = { type: 'floatingCommentButton' };
 export type ComposerTarget = {
   type: 'composer';
   threadId: string;
-  isNewThread: boolean;
+  workspaceId: string;
+  eventId: string | 'default';
+  isNewThread?: boolean;
+};
+
+export type ChannelComposerTarget = {
+  type: 'channelComposer';
+  threadId: string;
   workspaceId: string;
   eventId: string | 'default';
 };
@@ -322,17 +329,25 @@ export type CommentActionsEmojiButtonTarget = {
 export type CommentReactionTarget = {
   type: 'commentReaction';
   emoji: string;
-  comment: CommentTarget;
+  eventId: string;
+  threadId: string;
+  workspaceId: string;
 };
 
 export type CommentEditButtonTarget = {
   type: 'commentEditButton';
-  comment: CommentTarget;
+  workspaceId: string;
+  threadId: string;
+  eventId: string;
+  treeId: string;
 };
 
 export type CommentDeleteButtonTarget = {
   type: 'commentDeleteButton';
-  comment: CommentTarget;
+  workspaceId: string;
+  threadId: string;
+  eventId: string;
+  treeId: string;
 };
 
 export type CommentSaveButtonTarget = {
@@ -433,6 +448,7 @@ export interface Composer {
   isTyping: { [endUserId: string]: boolean };
   isMentioning: boolean;
   pendingPin: null | PendingPin;
+  hasText: boolean;
 }
 
 export type FirebasePin = {

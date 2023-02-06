@@ -2,6 +2,7 @@ import { MentionWithColor } from '@collabkit/core';
 import React, { useCallback } from 'react';
 import { useSnapshot } from 'valtio';
 import { useApp } from './useApp';
+import { useStore } from './useStore';
 import { useThreadContext } from './useThreadContext';
 
 // calls onTimestampClick and onMentionClick when a
@@ -15,9 +16,9 @@ export function useOnMarkdownLinkClick(props: {
   userId: string;
   eventId: string | 'default';
 }) {
-  const { threadId } = useThreadContext();
+  const threadId = useThreadContext();
   const { eventId } = props;
-  const { store } = useApp();
+  const store = useStore();
   const { workspaceId, userId } = useSnapshot(store);
 
   if (!workspaceId || !userId) {

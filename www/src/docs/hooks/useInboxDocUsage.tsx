@@ -1,4 +1,4 @@
-import { Comment, ThreadProvider, useComments, useInbox } from '@collabkit/react';
+import { Comment, Thread, useComments, useInbox } from '@collabkit/react';
 
 function InboxItem() {
   const comments = useComments();
@@ -29,9 +29,9 @@ export function App() {
   return (
     <div>
       {threadIds.map((threadId) => (
-        <ThreadProvider key={threadId} threadId={threadId}>
+        <Thread.Provider key={threadId} threadId={threadId}>
           <InboxItem />
-        </ThreadProvider>
+        </Thread.Provider>
       ))}
     </div>
   );

@@ -65,7 +65,7 @@ export const placeholder = recipe({
     fontFamily: vars.fontFamily,
   },
   variants: {
-    canPin: {
+    isPinningEnabled: {
       true: {
         left: `${calc(vars.space[2]).add('24px')}`,
       },
@@ -130,11 +130,6 @@ export const contentEditable = recipe({
       true: {
         color: vars.composer.input.disabled.color,
         background: vars.composer.input.disabled.background,
-      },
-    },
-    canPin: {
-      true: {
-        left: '24px',
       },
     },
   },

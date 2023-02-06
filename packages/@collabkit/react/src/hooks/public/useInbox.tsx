@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { actions } from '@collabkit/client';
 import { useSnapshot } from 'valtio';
-import { useApp } from '../../hooks/useApp';
 import { timelineUtils } from '@collabkit/core';
+import { useStore } from '../useStore';
 
 export function useInbox(props: {
   filter: 'all' | 'open';
@@ -10,7 +10,7 @@ export function useInbox(props: {
   direction?: 'asc' | 'desc';
   latestFirst?: boolean;
 }) {
-  const { store } = useApp();
+  const store = useStore();
   const { workspaceId, workspaces, userId } = useSnapshot(store);
 
   const workspace = workspaceId ? workspaces[workspaceId] : null;

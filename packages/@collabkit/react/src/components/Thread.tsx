@@ -1,5 +1,4 @@
-import React, { useMemo } from 'react';
-import { useApp } from '../hooks/useApp';
+import React from 'react';
 import { useSnapshot } from 'valtio';
 import { ThreadContext } from '../hooks/useThreadContext';
 import Profile from './Profile';
@@ -14,10 +13,10 @@ import { ResolveThreadIconButton } from './ResolveThreadIconButton';
 import { ThreadProps } from '../types';
 import { Scrollable } from './Scrollable';
 import { useThread } from '../hooks/public/useThread';
+import { useStore } from '../hooks/useStore';
 
-function ThreadProvider(props: ThreadProps & { isNewThread?: boolean; children: React.ReactNode }) {
-  const { store } = useApp();
-  const { userId, workspaceId } = useSnapshot(store);
+function ThreadProvider(props: ThreadProps & { children: React.ReactNode }) {
+  const { userId, workspaceId } = useSnapshot(useStore());
   const { threadId } = props;
 
   if (userId == null || workspaceId == null) {
@@ -25,42 +24,19 @@ function ThreadProvider(props: ThreadProps & { isNewThread?: boolean; children: 
     return null;
   }
 
-  const value = useMemo(
-    () => ({
-      threadId,
-      workspaceId,
-      userId,
-      autoFocus: props.autoFocus,
-      placeholder: props.placeholder,
-      isNewThread: props.isNewThread ?? false,
-    }),
-    [threadId, workspaceId, userId, props.autoFocus, props.placeholder]
-  );
-
-  return <ThreadContext.Provider value={value}>{props.children}</ThreadContext.Provider>;
+  return <ThreadContext.Provider value={threadId}>{props.children}</ThreadContext.Provider>;
 }
 
 function ThreadRoot(props: React.ComponentPropsWithoutRef<'div'>) {
-  return (
-    <div
-      data-testid="collabkit-thread-root"
-      {...props}
-      className={props.className ?? styles.root}
-    />
-  );
+  return <div data-testid="collabkit-thread-root" className={styles.root} {...props} />;
 }
 
 function ThreadHeader(props: React.ComponentPropsWithoutRef<'div'>) {
-  return (
-    <div
-      data-testid="collabkit-thread-header"
-      {...props}
-      className={props.className ?? styles.header}
-    />
-  );
+  return <div data-testid="collabkit-thread-header" className={styles.header} {...props} />;
 }
 
 export function Thread(props: ThreadProps) {
+  // todo refactor this usage of userId and move it to a generic guard
   const { userId } = useThread(props);
 
   if (!userId) {
@@ -68,19 +44,21 @@ export function Thread(props: ThreadProps) {
   }
 
   return (
-    <Thread.Provider {...props}>
+    <ThreadContext.Provider value={props.threadId}>
       <Profile.Provider profileId={userId}>
         <ThemeWrapper>
-          <Thread.Root className={props.className} style={props.style}>
+          <Thread.Root>
             {props.showHeader && <Thread.Header>Comments</Thread.Header>}
             <Scrollable autoScroll="bottom">
               <CommentList hideResolveButton={props.hideResolveButton} />
             </Scrollable>
-            {props.hideComposer ? null : <Composer />}
+            {props.hideComposer ? null : (
+              <Composer autoFocus={props.autoFocus} placeholder={props.placeholder} />
+            )}
           </Thread.Root>
         </ThemeWrapper>
       </Profile.Provider>
-    </Thread.Provider>
+    </ThreadContext.Provider>
   );
 }
 

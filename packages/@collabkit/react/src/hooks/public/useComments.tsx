@@ -1,13 +1,11 @@
 import { timelineUtils } from '@collabkit/core';
 import { useSnapshot } from 'valtio';
-import { useApp } from '../useApp';
 import { useThreadContext } from '../useThreadContext';
+import { useWorkspaceStore } from '../useWorkspaceStore';
 
 export function useComments() {
-  const { store } = useApp();
-  const { threadId, workspaceId } = useThreadContext();
-  const { workspaces } = useSnapshot(store);
-  const timeline = workspaces[workspaceId]?.timeline?.[threadId];
+  const threadId = useThreadContext();
+  const timeline = useSnapshot(useWorkspaceStore().timeline)[threadId];
   if (timeline == null) {
     return [];
   }

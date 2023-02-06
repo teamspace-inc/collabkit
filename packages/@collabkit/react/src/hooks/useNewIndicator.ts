@@ -1,12 +1,12 @@
 import { timelineUtils } from '@collabkit/core';
 import { useEffect, useState } from 'react';
 import { useTimeline } from '../hooks/useTimeline';
-import { useUserContext } from '../hooks/useUserContext';
+import { useUserContext } from './useUserContext';
 import { useWindowFocus } from '../hooks/useWindowFocus';
 import { useSeenUntil } from './useSeenUntil';
 
 export function useNewIndicator() {
-  const { userId } = useUserContext();
+  const userId = useUserContext();
   const timeline = useTimeline();
   const seenUntil = useSeenUntil();
   const messageEvents = timelineUtils.messageEvents(timeline ?? {});

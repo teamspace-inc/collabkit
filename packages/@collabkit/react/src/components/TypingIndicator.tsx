@@ -1,9 +1,10 @@
 import React from 'react';
 import { useSnapshot } from 'valtio';
-import { useApp } from '../hooks/useApp';
 import type { Profile } from '@collabkit/core';
-import { useThreadContext } from '../hooks/useThreadContext';
 import { typing } from '../theme/components/Composer.css';
+import { useComposerStore } from '../hooks/useComposerStore';
+import { useStore } from '../hooks/useStore';
+import { useUserContext } from '../hooks/useUserContext';
 
 function getNames(props: {
   userId: string;
@@ -49,11 +50,9 @@ const TypingIndicatorText = function TypingIndicatorText({ names }: { names: str
 };
 
 export function ComposerTypingIndicator(props: { className?: string }) {
-  const { threadId, workspaceId, userId } = useThreadContext();
-  const { store } = useApp();
-  const { profiles, workspaces } = useSnapshot(store);
-  const workspace = workspaces[workspaceId];
-  const isTyping = workspace?.composers[threadId].default.isTyping;
+  const { isTyping } = useSnapshot(useComposerStore());
+  const { profiles } = useSnapshot(useStore());
+  const userId = useUserContext();
   const names = getNames({ userId, isTyping, profiles });
   const nodeRef = React.useRef(null);
 

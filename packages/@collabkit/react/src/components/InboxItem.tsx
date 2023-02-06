@@ -3,7 +3,6 @@ import { useSnapshot } from 'valtio';
 import { useThreadContext } from '../hooks/useThreadContext';
 import { useInboxStore } from '../hooks/useInboxStore';
 import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
-import { useApp } from '../hooks/useApp';
 import Comment from './Comment';
 import { ReplyCount } from './ReplyCount';
 import {} from '../../../client/src/actions';
@@ -11,10 +10,17 @@ import { ThreadTarget } from '@collabkit/core';
 import * as styles from '../theme/components/InboxItem.css';
 import { Thread } from '..';
 import { generateObjectIdFromCellId, actions } from '@collabkit/client';
+import { useUserContext } from '../hooks/useUserContext';
+import { useWorkspaceContext } from '../hooks/useWorkspaceContext';
+import { useStore } from '../hooks/useStore';
+import { useRenderFnContext } from '../hooks/useRenderFnContext';
 
 export function InboxItem(props: { formatTimestamp?: (timestamp: number) => string }) {
-  const { threadId, workspaceId, userId } = useThreadContext();
-  const { store, renderThreadContextPreview } = useApp();
+  const threadId = useThreadContext();
+  const userId = useUserContext();
+  const workspaceId = useWorkspaceContext();
+  const store = useStore();
+  const { renderThreadContextPreview } = useRenderFnContext();
   const workspace = useSnapshot(useWorkspaceStore());
   const inbox = useSnapshot(useInboxStore());
   const { viewingId } = useSnapshot(store);

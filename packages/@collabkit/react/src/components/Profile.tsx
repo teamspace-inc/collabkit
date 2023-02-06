@@ -2,36 +2,21 @@ import { actions } from '@collabkit/client';
 import type { Profile as ProfileType } from '@collabkit/core';
 import React from 'react';
 import { useSnapshot } from 'valtio';
-import { useApp } from '../hooks/useApp';
+import { useStore } from '../hooks/useStore';
 import * as styles from '../theme/components/Profile.css';
 import { vars } from '../theme/theme/index.css';
-
-type ProfileContextValue = {
-  profileId: string;
-};
-
-export const ProfileContext = React.createContext<ProfileContextValue | null>(null);
-
-function useProfile() {
-  const context = React.useContext(ProfileContext);
-  if (context == null) {
-    throw new Error('[useProfile] Profile context not found');
-  }
-  const { profileId } = context;
-  return { profileId };
-}
+import { ProfileContext, useProfile } from '../hooks/useProfile';
+import { useRenderFnContext } from '../hooks/useRenderFnContext';
 
 export function ProfileProvider(props: { children: React.ReactNode; profileId: string }) {
   return (
-    <ProfileContext.Provider value={{ profileId: props.profileId }}>
-      {props.children}
-    </ProfileContext.Provider>
+    <ProfileContext.Provider value={props.profileId}>{props.children}</ProfileContext.Provider>
   );
 }
 
 export function ProfileName(props: React.ComponentPropsWithoutRef<'span'>) {
-  const { store } = useApp();
-  const { profileId } = useProfile();
+  const store = useStore();
+  const profileId = useProfile();
   const profiles = useSnapshot(store.profiles);
   const profile = profiles[profileId];
   return (
@@ -90,9 +75,10 @@ export function ProfileAvatar({
   size,
   ...props
 }: { size?: string } & React.ComponentPropsWithoutRef<'div'>) {
-  const { store, renderAvatar } = useApp();
+  const store = useStore();
+  const { renderAvatar } = useRenderFnContext();
   const { profiles, avatarErrors } = useSnapshot(store);
-  const { profileId } = useProfile();
+  const profileId = useProfile();
   const profile = profiles[profileId];
 
   if (profile == null) {

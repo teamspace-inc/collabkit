@@ -1,11 +1,11 @@
 import { timelineUtils, Workspace } from '@collabkit/core';
 import { useSnapshot } from 'valtio';
-import { useApp } from '../useApp';
 import { countUnread } from '../../utils/countUnread';
 import { useEffect, useState } from 'react';
+import { useStore } from '../useStore';
 
 export function useUnreadThreadsCount(props?: { threadIds?: string[] }): number {
-  const { store } = useApp();
+  const store = useStore();
   const { workspaceId, workspaces, userId } = useSnapshot(store);
   const workspace = workspaceId ? workspaces[workspaceId] : null;
   const [unreadThreadsCount, setUnreadThreadsCount] = useState<number>(0);
