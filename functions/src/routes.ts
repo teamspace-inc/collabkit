@@ -38,10 +38,10 @@ export const routesImpl = (request: functions.https.Request, response: functions
         triggerWebhookImpl(request, response);
         break;
       default:
-        response.status(404).send('Route not found');
+        response.status(404).send({ status: 404, error: 'Route not found' });
     }
   } else {
-    response.status(404).send('Route not found');
+    response.status(404).send({ status: 404, error: 'Route not found' });
   }
 };
 
