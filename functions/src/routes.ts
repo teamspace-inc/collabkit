@@ -46,5 +46,7 @@ export const routesImpl = (request: functions.https.Request, response: functions
 };
 
 export const routes = functions.https.onRequest(async (request, response) => {
-  corsHandler(request, response, async () => {});
+  corsHandler(request, response, async () => {
+    routesImpl(request, response);
+  });
 });
