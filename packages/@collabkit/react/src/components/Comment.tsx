@@ -81,7 +81,6 @@ function CommentRoot({ commentId: eventId, indent = false, ...props }: CommentRo
   const timeline = useSnapshot(useWorkspaceStore()).timeline[threadId];
   const { profiles } = useSnapshot(store);
   const event = timeline[eventId];
-  const createdById = event.createdById;
 
   // todo @nc: move this to events and make it a state in the store
   const isHovering =
@@ -91,6 +90,8 @@ function CommentRoot({ commentId: eventId, indent = false, ...props }: CommentRo
       menuId.context?.type === 'comment' &&
       menuId.context.eventId === event.id) ||
     (reactingId?.type === 'commentActionsEmojiButton' && reactingId.eventId === eventId);
+
+  const createdById = event?.createdById;
 
   const isEditing = editingId?.eventId === eventId && editingId.treeId == treeId;
 
