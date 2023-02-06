@@ -15,7 +15,7 @@ export const routes = functions.https.onRequest(async (request, response) => {
   corsHandler(request, response, async () => {
     const url = new URL(request.url, `http://${request.headers.host}`);
 
-    switch (url.pathname.split('/')[2]) {
+    switch (url.pathname.split('/')[1]) {
       case 'generateCustomToken':
         generateCustomTokenImpl(request, response);
         break;
