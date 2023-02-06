@@ -1,11 +1,64 @@
 # CollabKit
 
+## Objects
+
+CollabKit calls any piece of information in your app an 'object'. It could refer to a cell in a table, an invoice, a task, a customer, any piece of data.
+
+Just like how the OpenGraph protocol enables any web page to become a rich object on social. Objects in CollabKit enable any part of your apps interface to being a rich object within collaboration.
+
+Objects have a unique ID which helps CollabKit understand what your users are commenting on.
+
+For example if you're writing a task management app and you have an interface with a list of tasks, you might write the following code to enable commenting per task:
+
+```
+<Commentable objectId="task-1">
+  {<!-- code to render Task 1 here-->}
+</Commentable>
+```
+
+## ObjectProps
+
+When a user leaves a comment on an object, and others want to reply, they'll want to see where the comment was left. To make navigating back to a comment easy you can supply CollabKit with `objectProps`.
+
+ObjectProps accept any JS object which can be converted to JSON. We store them and provide an easy hook for you to access them in your app.
+
+For example, if you have a table view with a set of filters, you may want to record which filters were active when a user pins a comment to a table cell. To do this use the following code:
+
+```
+<Commentable
+  objectId="customer-4231-name"
+  objectProps={{
+    filter: 'country: uk'
+  }}>
+  <TableCell>
+
+  </TableCell>
+</Commentable>
+```
+
+And then elsewhere in your app subscribe to this data when a user is viewing a comment.
+
+```
+const object  = useSelectedObject()
+```
+
+When the user clicks the pin associated with `customer-4231-name` the hook will trigger.
+
+```
+console.log(object) // { objectId: 'customer-4231-name`, objectProps: { filter: 'country-uk' } }
+```
+
+You can then set the filter in your UI to the appropriate value recreating the context in which the comment was placed.
+
+## Data Model
+
 sending a new message = firebase.push('/$appId/$roomId/timeline')
 get last 20 messages = firebase.get('/$appId/$roomId/timeline', { limit: 20 })
 ... you can paginate backend
 
-```ts
 interface Timeline {
+
+```ts
   [messageId: string]: Message;
 }
 
