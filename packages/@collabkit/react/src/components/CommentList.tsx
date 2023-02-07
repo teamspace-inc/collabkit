@@ -15,23 +15,16 @@ import { useStore } from '../hooks/useStore';
 
 function useHasFetchedThreadTimeline() {
   const threadId = useThreadContext();
-  const store = useStore();
-  const { config } = useSnapshot(store);
-  const { fetchedProfiles, threadProfiles } = useSnapshot(useWorkspaceStore());
+  const { fetchedProfiles, threadProfiles, timeline } = useSnapshot(useWorkspaceStore());
   const [hasFetched, setHasFetched] = useState(false);
   const numFetchedProfiles = Object.keys(fetchedProfiles[threadId] ?? {}).length;
   const numThreadProfiles = Object.keys(threadProfiles[threadId] ?? {}).length;
+  const numEvents = Object.keys(timeline[threadId] ?? {}).length;
   useEffect(() => {
-    if (config.mentionableUsers !== 'allWorkspace') {
-      // -1 to handle case where a new profile and comment are created at the same time
-      // TODO: make this simpler
-      setHasFetched(
-        numFetchedProfiles - 1 === numThreadProfiles || numFetchedProfiles === numThreadProfiles
-      );
-    }
-  }, [config.mentionableUsers, numFetchedProfiles, numThreadProfiles]);
+    setHasFetched(numEvents > 0 ? numFetchedProfiles === numThreadProfiles : false);
+  }, [numEvents, numFetchedProfiles, numThreadProfiles]);
 
-  return config.mentionableUsers === 'allWorkspace' || hasFetched;
+  return hasFetched;
 }
 
 export default function CommentList(
