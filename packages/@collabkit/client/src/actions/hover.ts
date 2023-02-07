@@ -20,7 +20,6 @@ export function hover(store: Store, props: { target: Target }) {
           threadId: target.threadId,
         };
         store.previewingId = pinTarget;
-
         store.callbacks?.onPinHover?.({
           userId: '',
           objectId: pin.objectId,
