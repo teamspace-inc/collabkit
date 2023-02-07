@@ -4,7 +4,7 @@ import { User } from './types';
 import { TableExample } from './TableExample';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { GoogleLogin } from '@react-oauth/google';
-import { proxy, useSnapshot, subscribe, snapshot } from 'valtio';
+import { proxy, useSnapshot, subscribe } from 'valtio';
 import { Route, Router, Switch, useLocation } from 'wouter';
 import { CustomInbox } from './CustomInboxExample';
 import ReactFlowExample from './ReactFlowExample';
@@ -14,9 +14,8 @@ import { useAppParams } from './hooks/useAppParams';
 import { useUserParams } from './hooks/useUserParams';
 import { userFromGoogleToken } from './hooks/userFromGoogleToken';
 import { useDocumentTitle } from './hooks/useDocumentTitle';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect } from 'react';
 import { DashboardExample, DashboardStore, maxDate, minDate } from './dashboard/DashboardExample';
-import React from 'react';
 
 export const store = proxy<{ user: User | null }>(
   JSON.parse(localStorage.getItem('store') ?? '{ "user": null }') || { user: null }
