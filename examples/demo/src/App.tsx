@@ -165,7 +165,7 @@ function Demo() {
           <Route path="/table" component={TableExample} />
           <Route path="/custominbox" component={CustomInbox} />
           <Route path="/reactflow" component={ReactFlowExample} />
-          <Route path="/dashboard/:sub" component={DashboardExample} />
+          <Route path="/dashboard" component={DashboardExample} />
           <Route path="/" component={Home} />
           <Route path="/thread" component={Home} />
           <Route path="/logout" component={Logout} />
