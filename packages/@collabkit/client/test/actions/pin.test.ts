@@ -71,6 +71,7 @@ describe('pin', () => {
       x,
       y,
       isPending: true,
+      state: {},
     });
   });
 
@@ -87,6 +88,7 @@ describe('pin', () => {
       y: 20,
       isPending: true,
       createdById: userId,
+      state: {},
     });
   });
 

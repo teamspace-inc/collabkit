@@ -29,6 +29,7 @@ async function savePin(
       workspaceId: pin.workspaceId,
       threadId: pin.threadId,
       createdById: pin.createdById,
+      state: pin.state,
       x: pin.x,
       y: pin.y,
     };

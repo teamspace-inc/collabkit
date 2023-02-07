@@ -1,6 +1,10 @@
 import { PinTarget, Store, Target } from '@collabkit/core';
 
 export function hover(store: Store, props: { target: Target }) {
+  // we don't want to trigger the hover callback if we're selecting a pin
+  if (store.uiState === 'selecting') {
+    return;
+  }
   const { target } = props;
   store.hoveringId = target;
   switch (target.type) {
@@ -16,6 +20,14 @@ export function hover(store: Store, props: { target: Target }) {
           threadId: target.threadId,
         };
         store.previewingId = pinTarget;
+
+        store.callbacks?.onPinHover?.({
+          userId: '',
+          objectId: pin.objectId,
+          workspaceId: target.workspaceId,
+          threadId: target.threadId,
+          state: pin.state ?? {},
+        });
       }
     }
   }

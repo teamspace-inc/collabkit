@@ -50,6 +50,7 @@ export function CommentableRoot(props: { className?: string; children?: React.Re
       store.clientY = e.clientY;
 
       const commentable = findCommentableElement(store, e);
+
       if (commentable && commentable.element) {
         const { element } = commentable;
         element.classList.add(styles.activeContainer);

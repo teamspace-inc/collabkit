@@ -251,6 +251,7 @@ describe('FirebaseSync', async () => {
           threadId,
           x: 0,
           y: 0,
+          state: {},
         },
       });
 
@@ -291,6 +292,7 @@ describe('FirebaseSync', async () => {
         createdById: userId,
         x: 10,
         y: 20,
+        state: {},
       });
     });
 
