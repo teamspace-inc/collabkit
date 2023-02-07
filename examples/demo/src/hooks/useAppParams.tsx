@@ -8,6 +8,5 @@ export function useAppParams() {
     workspaceId: params.workspaceId ?? import.meta.env.VITE_COLLABKIT_WORKSPACE_ID,
     workspaceName: params.workspaceName ?? import.meta.env.VITE_COLLABKIT_WORKSPACE_NAME,
   };
-  console.log('useAppParams', config);
   return config;
 }
