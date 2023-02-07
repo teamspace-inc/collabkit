@@ -1,7 +1,8 @@
 import { actions, getConfig } from './index';
-import type { Sync, ThreadInfo, Store } from '@collabkit/core';
+import { Sync, ThreadInfo, Store, WithID, Event } from '@collabkit/core';
 import { subscribeProfile } from './subscribeProfile';
 import { initComposer } from './initComposer';
+import { initThread } from './initThread';
 
 export async function subscribeThread(
   store: Store,
@@ -11,14 +12,36 @@ export async function subscribeThread(
     info?: ThreadInfo;
   }
 ) {
-  // console.log('subscribeThread', props.threadId);
+  const { workspaceId, threadId } = props;
+  const key = `${workspaceId}-${threadId}`;
+
+  if (store.subs[key]) {
+    // prevent double-subscription early
+    return;
+  }
+
+  store.subs[key] = () => {};
+
+  initThread(store, { workspaceId, threadId });
+
   initComposer(store, {
-    workspaceId: props.workspaceId,
-    threadId: props.threadId,
+    workspaceId,
+    threadId,
     eventId: 'default',
   });
-  const { workspaceId, threadId } = props;
+
   const { appId, userId } = getConfig(store);
+
+  function onTimelineChangeEvent(event: Sync.TimelineChangeEvent) {
+    store.workspaces[event.workspaceId].timeline[event.threadId][event.eventId] ||= {
+      ...event.event,
+      id: event.eventId,
+    };
+    actions.subscribeProfile(store, {
+      profileId: event.event.createdById,
+      onSubscribe: () => {},
+    });
+  }
 
   store.sync.subscribeThread({
     appId,
@@ -27,20 +50,7 @@ export async function subscribeThread(
     threadId,
     subs: store.subs,
     onTimelineEventAdded: (event: Sync.TimelineChangeEvent) => {
-      store.workspaces[event.workspaceId].timeline[event.threadId] ||= {};
-      store.workspaces[event.workspaceId].timeline[event.threadId][event.eventId] ||= {
-        ...event.event,
-        id: event.eventId,
-      };
-      actions.subscribeProfile(store, {
-        profileId: event.event.createdById,
-        onSubscribe: () => {
-          store.workspaces[event.workspaceId].fetchedProfiles[event.threadId] ||= {};
-          store.workspaces[event.workspaceId].fetchedProfiles[event.threadId][
-            event.event.createdById
-          ] = true;
-        },
-      });
+      onTimelineChangeEvent(event);
     },
     onThreadTypingChange: ({ workspaceId, threadId, userId, isTyping }: Sync.TypingEvent) => {
       store.workspaces[workspaceId].composers[threadId]['default'].isTyping[userId] = isTyping;
@@ -57,17 +67,38 @@ export async function subscribeThread(
       }
     },
     onThreadProfile: (event: Sync.ThreadProfileEvent) => {
+      store.workspaces[event.workspaceId].threadProfiles[event.threadId][event.userId] = true;
       subscribeProfile(store, {
         profileId: event.userId,
-        onSubscribe: () => {
-          store.workspaces[event.workspaceId].fetchedProfiles[event.threadId] ||= {};
-          store.workspaces[event.workspaceId].fetchedProfiles[event.threadId][event.userId] = true;
-        },
+        onSubscribe: () => {},
       });
     },
-    onTimelineGetComplete: () => {},
+    onTimelineGetComplete: (events: Sync.TimelineChangeEvent[]) => {
+      console.log('onTimelineGetComplete', events);
+      const { workspaceId, threadId } = events[0];
+      store.workspaces[workspaceId].timeline[threadId] = events.reduce<{
+        [key: string]: WithID<Event>;
+      }>((acc, event) => {
+        acc[event.eventId] = event.event;
+        return acc;
+      }, {});
+      events
+        .map((event) => event.event.createdById)
+        .filter(function onlyUnique(value, index, self) {
+          return self.indexOf(value) === index;
+        })
+        .map((userId) =>
+          actions.subscribeProfile(store, { profileId: userId, onSubscribe: () => {} })
+        );
+    },
     onThreadProfiles: (event: Sync.ThreadProfilesEvent) => {
       store.workspaces[event.workspaceId].threadProfiles[event.threadId] = event.profiles;
+      for (const profileId of Object.keys(event.profiles)) {
+        subscribeProfile(store, {
+          profileId,
+          onSubscribe: () => {},
+        });
+      }
     },
   });
 }

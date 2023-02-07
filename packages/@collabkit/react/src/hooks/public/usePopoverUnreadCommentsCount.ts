@@ -1,7 +1,5 @@
-import { Workspace } from '@collabkit/core';
 import { useSnapshot } from 'valtio';
 import { useThreadSubscription } from '../useThread';
-import { countUnread } from '../../utils/countUnread';
 import { useExistingThreadId } from '../useExistingThreadId';
 import { useStore } from '../useStore';
 
@@ -24,5 +22,5 @@ export function usePopoverUnreadCommentsCount(props: { objectId?: string }): num
     return 0;
   }
 
-  return countUnread({ workspace: workspace as Workspace, threadId: threadId, userId });
+  return workspace.computed[threadId]?.unreadCount ?? 0;
 }

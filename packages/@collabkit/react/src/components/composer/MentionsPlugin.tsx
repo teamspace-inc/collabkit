@@ -441,6 +441,8 @@ export function MentionsTypeahead({
           >
             <Scrollable
               maxHeight={maxAvailableSize.height > 0 ? maxAvailableSize.height : 'unset'}
+              // todo if the list shows above the composer we want to scroll to bottom and have the top results reversed
+              // if it's below we want to scroll to top abnd use the orignal order
               // autoScroll="bottom" // todo make this dependent on flip
             >
               <div className={styles.list}>

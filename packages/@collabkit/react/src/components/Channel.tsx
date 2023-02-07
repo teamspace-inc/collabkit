@@ -131,7 +131,7 @@ export function Channel() {
       {nextThreadId ? (
         <Thread.Provider threadId={nextThreadId}>
           <div>
-            <Composer />
+            <Composer isNewThread={true} />
           </div>
         </Thread.Provider>
       ) : null}

@@ -1,8 +1,7 @@
-import { timelineUtils, Workspace } from '@collabkit/core';
 import { useSnapshot } from 'valtio';
-import { countUnread } from '../../utils/countUnread';
 import { useEffect, useState } from 'react';
 import { useStore } from '../useStore';
+import { actions } from '@collabkit/client';
 
 export function useUnreadThreadsCount(props?: { threadIds?: string[] }): number {
   const store = useStore();
@@ -11,6 +10,9 @@ export function useUnreadThreadsCount(props?: { threadIds?: string[] }): number 
   const [unreadThreadsCount, setUnreadThreadsCount] = useState<number>(0);
 
   useEffect(() => {
+    if (!workspaceId) {
+      return;
+    }
     if (!workspace) {
       return;
     }
@@ -19,18 +21,15 @@ export function useUnreadThreadsCount(props?: { threadIds?: string[] }): number 
     }
     let unreadCount = 0;
     for (const threadId in workspace?.timeline) {
+      actions.initThread(store, { workspaceId, threadId });
       if (props?.threadIds && !props.threadIds.includes(threadId)) {
         continue;
       }
-      const isResolved = timelineUtils.computeIsResolved(workspace?.timeline[threadId]);
+      const { isResolved } = workspace.computed[threadId];
       if (isResolved) {
         continue;
       }
-      const threadUnreadCount = countUnread({
-        workspace: workspace as Workspace,
-        threadId,
-        userId,
-      });
+      const threadUnreadCount = workspace.computed[threadId].unreadCount;
       if (threadUnreadCount > 0) {
         unreadCount++;
       }

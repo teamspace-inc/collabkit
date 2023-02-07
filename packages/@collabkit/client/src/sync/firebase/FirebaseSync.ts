@@ -521,6 +521,8 @@ export class FirebaseSync implements Sync.SyncAdapter {
       console.error({ e });
     }
 
+    // todo optimise this with a single get and proxy set
+
     subs[`${appId}-${workspaceId}-seen-added`] ||= onChildAdded(seenQuery, childCallback, onError);
 
     subs[`${appId}-${workspaceId}-seen-moved`] ||= onChildMoved(seenQuery, childCallback, onError);

@@ -14,11 +14,11 @@ test('createWorkspace', () => {
     seenBy: {},
     threadInfo: {},
     threadProfiles: {},
-    fetchedProfiles: {},
     pendingThreads: {},
     pendingThreadInfo: {},
     openPins: {},
     eventPins: {},
+    computed: {},
   });
 });
 
