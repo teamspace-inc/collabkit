@@ -1,4 +1,4 @@
-import type { DataSnapshot } from 'firebase/database';
+import { DataSnapshot, get } from 'firebase/database';
 import { onChildAdded, onChildChanged, onValue } from 'firebase/database';
 import { ref } from '../sync/firebase/refs';
 import type { Store } from '@collabkit/core';
@@ -41,7 +41,7 @@ export async function subscribeProfiles(store: Store) {
             if (store.config.mentionableUsers === 'allWorkspace') {
               store.mentionableUsers[id] = profile;
               const numMentionableUsers = Object.keys(store.mentionableUsers).length;
-              if (numMentionableUsers > 200) {
+              if (numMentionableUsers > 100) {
                 warnLargeWorkspace();
               }
             }
@@ -53,6 +53,9 @@ export async function subscribeProfiles(store: Store) {
   };
 
   const profilesRef = ref`/workspaces/${appId}/${workspaceId}/profiles`;
+  const snapshot = await get(profilesRef);
+  snapshot.forEach(onChange);
+
   const addedKey = `${profilesRef.toString()}#added`;
   const changedKey = `${profilesRef.toString()}#changed`;
   if (!store.subs[addedKey]) {
