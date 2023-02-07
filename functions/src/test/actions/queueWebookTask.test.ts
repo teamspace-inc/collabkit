@@ -42,7 +42,7 @@ describe('queueWebhookTask', () => {
         },
         projectId: 'project-1',
         queue: 'webhooks',
-        url: 'https://us-central1-collabkit-dev.cloudfunctions.net/triggerWebhook',
+        url: 'https://test-api.collabkit.dev/triggerWebhook',
       },
     ]);
   });

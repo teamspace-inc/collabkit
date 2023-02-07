@@ -1,5 +1,6 @@
 import { createTask } from './helpers/createTask';
 import { ref } from './data/refs';
+import { API_HOST } from '../apiHost';
 
 export async function scheduleNotificationTask(props: {
   appId: string;
@@ -20,7 +21,7 @@ export async function scheduleNotificationTask(props: {
 
   const response = await createTask({
     projectId,
-    url: 'https://us-central1-collabkit-dev.cloudfunctions.net/sendNotification',
+    url: API_HOST + '/sendNotification',
     queue: 'notifs',
     payload: {
       appId,
