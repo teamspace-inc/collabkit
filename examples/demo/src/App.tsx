@@ -5,7 +5,7 @@ import { TableExample } from './TableExample';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { GoogleLogin } from '@react-oauth/google';
 import { proxy, useSnapshot, subscribe } from 'valtio';
-import { Route, Switch, useLocation } from 'wouter';
+import { Route, Router, Switch, useLocation } from 'wouter';
 import { CustomInbox } from './CustomInboxExample';
 import ReactFlowExample from './ReactFlowExample';
 
@@ -125,15 +125,17 @@ function Demo() {
       // }}
       mentionableUsers={'allWorkspace'}
     >
-      <Switch>
-        <Route path="/table" component={TableExample} />
-        <Route path="/custominbox" component={CustomInbox} />
-        <Route path="/reactflow" component={ReactFlowExample} />
-        <Route path="/dashboard" component={DashboardExample} />
-        <Route path="/" component={Home} />
-        <Route path="/thread" component={Home} />
-        <Route path="/logout" component={Logout} />
-      </Switch>
+      <Router>
+        <Switch>
+          <Route path="/table" component={TableExample} />
+          <Route path="/custominbox" component={CustomInbox} />
+          <Route path="/reactflow" component={ReactFlowExample} />
+          <Route path="/dashboard/:sub" component={DashboardExample} />
+          <Route path="/" component={Home} />
+          <Route path="/thread" component={Home} />
+          <Route path="/logout" component={Logout} />
+        </Switch>
+      </Router>
     </CollabKitProvider>
   );
 }
