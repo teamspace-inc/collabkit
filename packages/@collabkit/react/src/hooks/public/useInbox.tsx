@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { actions } from '@collabkit/client';
 import { useSnapshot } from 'valtio';
-import { timelineUtils } from '@collabkit/core';
 import { useStore } from '../useStore';
 
 export function useInbox(props: {

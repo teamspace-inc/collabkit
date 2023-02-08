@@ -1,6 +1,5 @@
 import { Store, timelineUtils } from '@collabkit/core';
 import { derive } from 'valtio/utils';
-import { DELETE_ID } from '../constants';
 
 export function initThread(store: Store, props: { workspaceId: string; threadId: string }) {
   const { workspaceId, threadId } = props;
@@ -8,21 +7,28 @@ export function initThread(store: Store, props: { workspaceId: string; threadId:
   const workspace = store.workspaces[workspaceId];
 
   workspace.timeline[threadId] ||= {};
-  workspace.fetchedProfiles[threadId] ||= {};
   workspace.threadProfiles[threadId] ||= {};
 
   const timeline = workspace.timeline;
-  const fetchedProfiles = workspace.fetchedProfiles;
-  const threadProfiles = workspace.threadProfiles;
 
   workspace.computed[threadId] ||= derive({
     isResolved: (get) => timelineUtils.computeIsResolved(get(timeline)[threadId]),
     groupedMessages: (get) => timelineUtils.groupedMessages(get(timeline)[threadId]),
     hasFetchedAllProfiles: (get) => {
-      const numFetchedProfiles = Object.keys(get(fetchedProfiles)[threadId] ?? {}).length;
-      const numThreadProfiles = Object.keys(get(threadProfiles)[threadId] ?? {}).length;
-      const numEvents = Object.keys(get(timeline)[threadId] ?? {}).length;
-      return numEvents > 0 ? numFetchedProfiles === numThreadProfiles : false;
+      const missingProfiles = Object.values(get(timeline)[threadId])
+        .map((event) => event.createdById)
+        .filter((id) => get(store.profiles)[id] == null)
+        .filter(function onlyUnique(value, index, self) {
+          return self.indexOf(value) === index;
+        });
+      if (missingProfiles.length > 0)
+        console.warn(
+          '[CollabKit] detected missing profiles, any threads with messages from these users will fail to load, profileIds:',
+          missingProfiles
+        );
+      return Object.values(get(timeline)[threadId])
+        .map((event) => event.createdById)
+        .every((id) => get(store).profiles[id]);
     },
     messageEvents: (get) => timelineUtils.messageEvents(get(timeline)[threadId]),
     unreadCount: (get) => {

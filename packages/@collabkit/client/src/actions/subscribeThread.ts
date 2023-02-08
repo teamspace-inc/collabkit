@@ -13,7 +13,6 @@ export async function subscribeThread(
   }
 ) {
   const { workspaceId, threadId } = props;
-
   const key = `${workspaceId}-${threadId}`;
 
   if (store.subs[key]) {
@@ -40,11 +39,7 @@ export async function subscribeThread(
     };
     actions.subscribeProfile(store, {
       profileId: event.event.createdById,
-      onSubscribe: () => {
-        store.workspaces[event.workspaceId].fetchedProfiles[event.threadId][
-          event.event.createdById
-        ] = true;
-      },
+      onSubscribe: () => {},
     });
   }
 
@@ -72,11 +67,10 @@ export async function subscribeThread(
       }
     },
     onThreadProfile: (event: Sync.ThreadProfileEvent) => {
+      store.workspaces[event.workspaceId].threadProfiles[event.threadId][event.userId] = true;
       subscribeProfile(store, {
         profileId: event.userId,
-        onSubscribe: () => {
-          store.workspaces[event.workspaceId].fetchedProfiles[event.threadId][event.userId] = true;
-        },
+        onSubscribe: () => {},
       });
     },
     onTimelineGetComplete: (events: Sync.TimelineChangeEvent[]) => {
@@ -86,6 +80,12 @@ export async function subscribeThread(
     },
     onThreadProfiles: (event: Sync.ThreadProfilesEvent) => {
       store.workspaces[event.workspaceId].threadProfiles[event.threadId] = event.profiles;
+      for (const profileId of Object.keys(event.profiles)) {
+        subscribeProfile(store, {
+          profileId,
+          onSubscribe: () => {},
+        });
+      }
     },
   });
 }

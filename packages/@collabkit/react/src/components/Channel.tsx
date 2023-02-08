@@ -81,6 +81,7 @@ function ChannelRoot(props: ComponentPropsWithRef<'div'> & ChannelProps) {
 
 function ChannelThreadList() {
   const threadIds = useInbox({ filter: 'open', direction: 'asc' });
+  console.log('threadIds', threadIds);
   const threads = threadIds.map((threadId) => {
     return (
       <Thread.Provider threadId={threadId} key={`inboxThread-${threadId}`}>

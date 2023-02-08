@@ -497,7 +497,6 @@ export interface Workspace {
   seenBy: { [threadId: string]: SeenBy };
   threadInfo: { [threadId: string]: ThreadInfo };
   threadProfiles: { [threadId: string]: { [userId: string]: boolean } };
-  fetchedProfiles: { [threadId: string]: { [userId: string]: boolean } };
   openPins: { [objectId: string]: { [pinId: string]: Pin } };
   eventPins: { [eventId: string]: Pin };
   computed: {

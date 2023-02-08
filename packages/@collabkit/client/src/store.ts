@@ -35,7 +35,6 @@ export function createWorkspace(): Workspace {
     seenBy: {},
     threadInfo: {},
     threadProfiles: {},
-    fetchedProfiles: {},
     pendingThreads: {},
     pendingThreadInfo: {},
     openPins: {},

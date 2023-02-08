@@ -19,6 +19,8 @@ export async function subscribeProfile(
   const id = FirebaseId.decode(props.profileId);
   const profileRef = ref`/profiles/${appId}/${id}`;
 
+  console.log('subscribeProfile', props.profileId);
+
   store.subs[profileRef.toString()] ||= onValue(
     profileRef,
     (profileSnapshot) => {
@@ -27,10 +29,11 @@ export async function subscribeProfile(
       if (profile) {
         store.profiles[id] = ensureColor(profile);
         if (store.config.mentionableUsers === 'allWorkspace') {
-          // console.log('mentionableUsers: id', id, 'profile', profile);
           store.mentionableUsers[id] = profile;
         }
         props.onSubscribe(profile);
+      } else {
+        console.warn('profile not found');
       }
     },
     onError
