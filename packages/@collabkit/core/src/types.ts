@@ -497,6 +497,15 @@ export interface Workspace {
   fetchedProfiles: { [threadId: string]: { [userId: string]: boolean } };
   openPins: { [objectId: string]: { [pinId: string]: Pin } };
   eventPins: { [eventId: string]: Pin };
+  computed: {
+    [threadId: string]: {
+      isResolved: boolean;
+      groupedMessages: WithID<Event>[][];
+      hasFetchedAllProfiles: boolean;
+      messageEvents: WithID<Event>[];
+      unreadCount: number;
+    };
+  };
 }
 
 type CommentableObject = {

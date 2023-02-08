@@ -1,7 +1,8 @@
 import { actions, getConfig } from './index';
-import type { Sync, ThreadInfo, Store } from '@collabkit/core';
+import { Sync, ThreadInfo, Store } from '@collabkit/core';
 import { subscribeProfile } from './subscribeProfile';
 import { initComposer } from './initComposer';
+import { initThread } from './initThread';
 
 export async function subscribeThread(
   store: Store,
@@ -11,13 +12,26 @@ export async function subscribeThread(
     info?: ThreadInfo;
   }
 ) {
-  // console.log('subscribeThread', props.threadId);
+  const { workspaceId, threadId } = props;
+
+  const key = `${workspaceId}-${threadId}`;
+
+  if (store.subs[key]) {
+    // prevent double-subscription early
+    console.log('already subscribed to thread', key);
+    return;
+  }
+
+  store.subs[key] = () => {};
+
+  initThread(store, { workspaceId, threadId });
+
   initComposer(store, {
-    workspaceId: props.workspaceId,
-    threadId: props.threadId,
+    workspaceId,
+    threadId,
     eventId: 'default',
   });
-  const { workspaceId, threadId } = props;
+
   const { appId, userId } = getConfig(store);
 
   store.sync.subscribeThread({
@@ -27,7 +41,6 @@ export async function subscribeThread(
     threadId,
     subs: store.subs,
     onTimelineEventAdded: (event: Sync.TimelineChangeEvent) => {
-      store.workspaces[event.workspaceId].timeline[event.threadId] ||= {};
       store.workspaces[event.workspaceId].timeline[event.threadId][event.eventId] ||= {
         ...event.event,
         id: event.eventId,
@@ -35,7 +48,6 @@ export async function subscribeThread(
       actions.subscribeProfile(store, {
         profileId: event.event.createdById,
         onSubscribe: () => {
-          store.workspaces[event.workspaceId].fetchedProfiles[event.threadId] ||= {};
           store.workspaces[event.workspaceId].fetchedProfiles[event.threadId][
             event.event.createdById
           ] = true;
@@ -60,7 +72,6 @@ export async function subscribeThread(
       subscribeProfile(store, {
         profileId: event.userId,
         onSubscribe: () => {
-          store.workspaces[event.workspaceId].fetchedProfiles[event.threadId] ||= {};
           store.workspaces[event.workspaceId].fetchedProfiles[event.threadId][event.userId] = true;
         },
       });

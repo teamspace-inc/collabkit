@@ -1,5 +1,3 @@
-import { useApp } from '../hooks/useApp';
-import { timelineUtils } from '@collabkit/core';
 import { useThreadContext } from '../hooks/useThreadContext';
 import { useSnapshot } from 'valtio';
 import { actions } from '@collabkit/client';
@@ -18,8 +16,7 @@ export function useResolveThread() {
   const timeline = workspace.timeline[threadId];
   const firstCommentId = timeline ? Object.keys(timeline)[0] : null;
   const canResolve = firstCommentId ? timeline[firstCommentId].createdById === userId : false;
-  canResolve;
-  const isResolved = timelineUtils.computeIsResolved(timeline);
+  const { isResolved } = workspace.computed[threadId];
 
   const resolve = () => {
     actions.resolveThread(store, { workspaceId, threadId });

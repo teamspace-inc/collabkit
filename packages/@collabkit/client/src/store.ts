@@ -40,6 +40,7 @@ export function createWorkspace(): Workspace {
     pendingThreadInfo: {},
     openPins: {},
     eventPins: {},
+    computed: {},
   };
 }
 

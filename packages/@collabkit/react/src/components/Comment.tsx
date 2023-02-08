@@ -368,7 +368,7 @@ export const CommentCreatorName = Profile.Name;
 type CommentMenuItemType = 'commentEditButton' | 'commentDeleteButton' | 'reopenThreadButton';
 
 function CommentMenu(props: { className?: string }) {
-  const { events, store } = useApp();
+  const { events } = useApp();
   const eventId = useCommentContext();
   const threadId = useThreadContext();
   const workspaceId = useWorkspaceContext();
@@ -376,12 +376,7 @@ function CommentMenu(props: { className?: string }) {
   const { createdById } = useCommentStore();
   const treeId = useTreeContext();
 
-  // todo @nc: extract this into a hook
-  // tood @nc: extract computed into the store itself
-  const { workspaces } = useSnapshot(store);
-  const workspace = workspaces[workspaceId];
-  const timeline = workspace.timeline[threadId];
-  const isResolved = timelineUtils.computeIsResolved(timeline);
+  const { isResolved } = useSnapshot(useWorkspaceStore().computed)[threadId];
 
   const onItemClick = useCallback(
     (e: React.MouseEvent, type: CommentMenuItemType) => {
