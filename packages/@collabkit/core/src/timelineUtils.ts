@@ -1,4 +1,5 @@
 import type { Event, Timeline, WithHasProfile, WithID } from './types';
+const DELETE_ID = 'delete-';
 
 export function deletedIds(timeline: Timeline): Readonly<Set<string>> {
   const deleted = new Set<string>();
@@ -50,32 +51,6 @@ export function groupedMessages(timeline: Timeline) {
   return list;
 }
 
-export function reactions(timeline: Timeline) {
-  const eventIds = Object.keys(timeline);
-
-  const events: WithID<Event>[] = eventIds.map((eventId) => ({
-    ...timeline[eventId],
-    id: eventId,
-  }));
-
-  const reactionEvents = events.filter((event) => event.type === 'reaction');
-
-  // filters out reactions so they can be accessed by
-  // comment rendering
-  const reactions = reactionEvents.reduce<{ [parentId: string]: { [createdById: string]: Event } }>(
-    (reactions, event, i) => {
-      if (!event.parentId) {
-        return reactions;
-      }
-      reactions[event.parentId] ||= {};
-      reactions[event.parentId][event.createdById] = event;
-      return reactions;
-    },
-    {}
-  );
-  return reactions;
-}
-
 export function messageEvents(timeline: Timeline) {
   const eventIds = Object.keys(timeline);
   const events: WithHasProfile<WithID<Event>>[] = eventIds.map((eventId) => ({
@@ -107,13 +82,43 @@ export function reactionEvents(timeline: Timeline) {
   return events.filter((event) => event.type === 'reaction');
 }
 
-export function groupedTimeline(timeline: Timeline) {
-  return {
-    reactions: reactions(timeline),
-    list: groupedMessages(timeline),
-    messageEvents: messageEvents(timeline),
-    reactionEvents: reactionEvents(timeline),
-  };
+export function reactions(timeline: Timeline) {
+  const eventIds = Object.keys(timeline);
+
+  const events: WithID<Event>[] = eventIds.map((eventId) => ({
+    ...timeline[eventId],
+    id: eventId,
+  }));
+
+  const reactionEvents = events.filter((event) => event.type === 'reaction');
+
+  // filters out reactions so they can be accessed by
+  // comment rendering
+  return reactionEvents.reduce<{
+    [parentId: string]: { [emojiU: string]: { count: number; userIds: string[] } };
+  }>((reactions, event) => {
+    const { parentId, body, createdById } = event;
+    if (!parentId || event.type !== 'reaction') {
+      return reactions;
+    }
+    reactions[parentId] ||= {};
+    const isDelete = body.startsWith(DELETE_ID);
+    const emojiU = isDelete ? event.body.split(DELETE_ID)[1] : event.body;
+    const reaction = reactions[parentId];
+    reaction[emojiU] ||= { count: 0, userIds: [] };
+    if (isDelete) {
+      reaction[emojiU].count--;
+      const index = reaction[emojiU].userIds.findIndex((userId) => userId === createdById);
+      reaction[emojiU].userIds.splice(index, 1);
+    } else {
+      reaction[emojiU].count++;
+      reaction[emojiU].userIds.push(createdById);
+    }
+    if (reaction[emojiU].count <= 0) {
+      delete reaction[emojiU];
+    }
+    return reactions;
+  }, {});
 }
 
 export function computeIsResolved(timeline: Timeline) {

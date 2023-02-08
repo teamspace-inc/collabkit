@@ -1,4 +1,4 @@
-import { EventReactions, Store, timelineUtils } from '@collabkit/core';
+import { Store, timelineUtils } from '@collabkit/core';
 import { derive } from 'valtio/utils';
 import { DELETE_ID } from '../constants';
 
@@ -24,7 +24,6 @@ export function initThread(store: Store, props: { workspaceId: string; threadId:
       const numEvents = Object.keys(get(timeline)[threadId] ?? {}).length;
       return numEvents > 0 ? numFetchedProfiles === numThreadProfiles : false;
     },
-    reactionEvents: (get) => timelineUtils.reactionEvents(get(timeline)[threadId]),
     messageEvents: (get) => timelineUtils.messageEvents(get(timeline)[threadId]),
     unreadCount: (get) => {
       const userId = get(store).userId;
@@ -51,34 +50,6 @@ export function initThread(store: Store, props: { workspaceId: string; threadId:
           }, 0)
       );
     },
-    reactions: (get) => {
-      const reactions: { [eventId: string]: EventReactions } = {};
-      const reactionEvents = timelineUtils.reactionEvents(get(timeline)[threadId]);
-      for (const eventId in reactionEvents) {
-        const event = reactionEvents[eventId];
-        const { parentId } = event;
-        if (!parentId) continue;
-        const isDelete = event.body.startsWith(DELETE_ID);
-        const emojiU = isDelete ? event.body.split(DELETE_ID)[1] : event.body;
-        reactions[parentId] ||= {};
-        reactions[parentId][emojiU] ||= { count: 0, userIds: [] };
-        const reaction = reactions[parentId][emojiU];
-        if (!isDelete) {
-          reaction.count++;
-          reaction.userIds.push(event.createdById);
-        } else {
-          reaction.count--;
-          const index = reaction.userIds.findIndex((userId) => userId === event.createdById);
-          if (index > -1) {
-            reaction.userIds.splice(index, 1);
-          }
-          if (reaction.count <= 0) {
-            delete reactions[parentId][emojiU];
-          }
-        }
-      }
-
-      return reactions;
-    },
+    reactions: (get) => timelineUtils.reactions(get(timeline)[threadId]),
   });
 }
