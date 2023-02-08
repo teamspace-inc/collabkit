@@ -22,5 +22,5 @@ export function usePopoverUnreadCommentsCount(props: { objectId?: string }): num
     return 0;
   }
 
-  return workspace.computed[threadId].unreadCount;
+  return workspace.computed[threadId]?.unreadCount ?? 0;
 }
