@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback, useRef } from 'react';
+import React, { useMemo, useCallback, useRef, useEffect } from 'react';
 import { useMarkAsSeen } from '../hooks/useMarkAsSeen';
 import { useOnMarkdownLinkClick } from '../hooks/useOnMarkdownLinkClick';
 import { useThreadContext } from '../hooks/useThreadContext';
@@ -23,7 +23,6 @@ import { IconButton } from './IconButton';
 import CommentPinSvg from './composer/comment-pin.svg';
 import CommentPinSelectedSvg from './composer/comment-pin-hover.svg';
 import { Tooltip } from './Tooltip';
-import { useComments } from '../hooks/public/useComments';
 import { useUnreadCount } from '..';
 import { vars } from '../theme/theme/index.css';
 import { useOptionalChannelContext } from '../hooks/useChannelContext';
@@ -63,7 +62,7 @@ function CommentRoot({ commentId: eventId, indent = false, ...props }: CommentRo
     [workspaceId, threadId, eventId, treeId]
   );
 
-  const divRef = useRef(null);
+  const divRef = useRef<HTMLDivElement>(null);
   const { ref: seenRef } = useMarkAsSeen(target);
 
   const ref = mergeRefs([divRef, seenRef]);
@@ -157,12 +156,13 @@ export function CommentActionsReplyButton() {
 }
 
 export function CommentSeeAllRepliesButton(props: React.ComponentPropsWithoutRef<'div'>) {
-  const commentIds = useComments();
   const { store, events } = useApp();
   const { expandedThreadIds } = useSnapshot(store);
   const threadId = useThreadContext();
   const workspaceId = useWorkspaceContext();
   const eventId = useCommentContext();
+  const { computed } = useSnapshot(useWorkspaceStore());
+  const numComments = Object.keys(computed[threadId].messageEvents).length;
 
   const target = {
     type: 'commentReplyCountButton',
@@ -171,7 +171,7 @@ export function CommentSeeAllRepliesButton(props: React.ComponentPropsWithoutRef
     eventId,
   } as const;
 
-  if (commentIds.length === 1) {
+  if (numComments === 1) {
     return null;
   }
 
@@ -191,7 +191,7 @@ export function CommentSeeAllRepliesButton(props: React.ComponentPropsWithoutRef
         color={vars.color.textDisabled}
       />
       <span className={styles.replyCountButtonText}>
-        {commentIds.length - 1} {commentIds.length != 2 ? 'replies' : 'reply'}
+        {numComments - 1} {numComments != 2 ? 'replies' : 'reply'}
       </span>
     </div>
   );

@@ -6,7 +6,6 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import { GoogleLogin } from '@react-oauth/google';
 import { proxy, useSnapshot, subscribe } from 'valtio';
 import { Route, Switch, useLocation } from 'wouter';
-import { CustomInbox } from './CustomInboxExample';
 import ReactFlowExample from './ReactFlowExample';
 
 import { useTestParams } from './hooks/useTestParams';
@@ -130,7 +129,6 @@ function Demo() {
     >
       <Switch>
         <Route path="/table" component={TableExample} />
-        <Route path="/custominbox" component={CustomInbox} />
         <Route path="/reactflow" component={ReactFlowExample} />
         <Route path="/dashboard" component={DashboardExample} />
         <Route path="/" component={Home} />

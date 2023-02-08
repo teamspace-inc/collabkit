@@ -51,5 +51,6 @@ export function initThread(store: Store, props: { workspaceId: string; threadId:
       );
     },
     reactions: (get) => timelineUtils.reactions(get(timeline)[threadId]),
+    replyCount: (get) => timelineUtils.getReplyCount(get(timeline)[threadId]),
   });
 }

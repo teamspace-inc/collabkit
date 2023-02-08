@@ -508,6 +508,7 @@ export interface Workspace {
       messageEvents: WithID<Event>[];
       unreadCount: number;
       reactions: { [eventId: string]: EventReactions | null };
+      replyCount: number;
     };
   };
 }

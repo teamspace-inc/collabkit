@@ -41,13 +41,7 @@ export function useInbox(props: {
     // filter out resolved threads
     .filter(
       (threadId) =>
-        threadId &&
-        (props.filter === 'open'
-          ? !(
-              workspace.timeline?.[threadId] &&
-              timelineUtils.computeIsResolved(workspace.timeline?.[threadId])
-            )
-          : true)
+        threadId && (props.filter === 'open' ? !workspace.computed[threadId]?.isResolved : true)
     );
   if (props.latestFirst) {
     // show threads with latest activity first

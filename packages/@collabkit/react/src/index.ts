@@ -28,7 +28,6 @@ import {
   PopoverThreadContent,
 } from './components/PopoverThread';
 import { useInbox } from './hooks/public/useInbox';
-import { useComments } from './hooks/public/useComments';
 import { useIsResolved } from './hooks/public/useIsResolved';
 import { useResolveThread } from './hooks/public/useResolveThread';
 import { useThreadUsers } from './hooks/public/useThreadUsers';
@@ -81,8 +80,6 @@ export {
   ResolveThreadIconButton,
   Scrollable,
   ThreadFacepile,
-  useComments,
-  useInbox,
   useIsResolved,
   usePopoverThread,
   useReplyCount,
