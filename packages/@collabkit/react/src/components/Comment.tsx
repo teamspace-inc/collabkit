@@ -24,7 +24,7 @@ import CommentPinSvg from './composer/comment-pin.svg';
 import CommentPinSelectedSvg from './composer/comment-pin-hover.svg';
 import { Tooltip } from './Tooltip';
 import { useComments } from '../hooks/public/useComments';
-import { useThread, useUnreadCount } from '..';
+import { useUnreadCount } from '..';
 import { vars } from '../theme/theme/index.css';
 import { useOptionalChannelContext } from '../hooks/useChannelContext';
 import { EMOJI_U } from './EmojiPicker';
