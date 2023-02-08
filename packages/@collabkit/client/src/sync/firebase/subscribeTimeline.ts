@@ -1,4 +1,12 @@
-import { DataSnapshot, get, onChildAdded, orderByKey, query, startAfter } from 'firebase/database';
+import {
+  DataSnapshot,
+  get,
+  onChildAdded,
+  orderByKey,
+  query,
+  QueryConstraint,
+  startAfter,
+} from 'firebase/database';
 import { Sync, Subscriptions, FirebaseId } from '@collabkit/core';
 import { ref, timelineRef } from './refs';
 import { snapshotToEvent } from './converters';
@@ -89,11 +97,13 @@ export async function subscribeTimeline({
     console.error('get timeline', snapshots[0].reason);
   }
 
-  const newTimelineEventsQuery = query(
-    timelineRef(appId, workspaceId, threadId),
-    orderByKey(),
-    startAfter(lastEventId)
-  );
+  const constraints: QueryConstraint[] = [orderByKey()];
+
+  if (lastEventId) {
+    constraints.push(startAfter(lastEventId));
+  }
+
+  const newTimelineEventsQuery = query(timelineRef(appId, workspaceId, threadId), ...constraints);
 
   props.onTimelineGetComplete?.(events);
 
