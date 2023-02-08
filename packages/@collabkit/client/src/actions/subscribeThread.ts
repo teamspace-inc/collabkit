@@ -18,7 +18,6 @@ export async function subscribeThread(
 
   if (store.subs[key]) {
     // prevent double-subscription early
-    console.log('already subscribed to thread', key);
     return;
   }
 
@@ -34,6 +33,21 @@ export async function subscribeThread(
 
   const { appId, userId } = getConfig(store);
 
+  function onTimelineChangeEvent(event: Sync.TimelineChangeEvent) {
+    store.workspaces[event.workspaceId].timeline[event.threadId][event.eventId] ||= {
+      ...event.event,
+      id: event.eventId,
+    };
+    actions.subscribeProfile(store, {
+      profileId: event.event.createdById,
+      onSubscribe: () => {
+        store.workspaces[event.workspaceId].fetchedProfiles[event.threadId][
+          event.event.createdById
+        ] = true;
+      },
+    });
+  }
+
   store.sync.subscribeThread({
     appId,
     userId,
@@ -41,18 +55,7 @@ export async function subscribeThread(
     threadId,
     subs: store.subs,
     onTimelineEventAdded: (event: Sync.TimelineChangeEvent) => {
-      store.workspaces[event.workspaceId].timeline[event.threadId][event.eventId] ||= {
-        ...event.event,
-        id: event.eventId,
-      };
-      actions.subscribeProfile(store, {
-        profileId: event.event.createdById,
-        onSubscribe: () => {
-          store.workspaces[event.workspaceId].fetchedProfiles[event.threadId][
-            event.event.createdById
-          ] = true;
-        },
-      });
+      onTimelineChangeEvent(event);
     },
     onThreadTypingChange: ({ workspaceId, threadId, userId, isTyping }: Sync.TypingEvent) => {
       store.workspaces[workspaceId].composers[threadId]['default'].isTyping[userId] = isTyping;
@@ -76,7 +79,11 @@ export async function subscribeThread(
         },
       });
     },
-    onTimelineGetComplete: () => {},
+    onTimelineGetComplete: (events: Sync.TimelineChangeEvent[]) => {
+      for (const event of events) {
+        onTimelineChangeEvent(event);
+      }
+    },
     onThreadProfiles: (event: Sync.ThreadProfilesEvent) => {
       store.workspaces[event.workspaceId].threadProfiles[event.threadId] = event.profiles;
     },

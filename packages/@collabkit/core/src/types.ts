@@ -402,7 +402,10 @@ export type Event = {
   parentId?: string;
   mentions?: readonly string[];
   pinId?: string;
+  reactions?: EventReactions;
 };
+
+export type EventReactions = { [emojiU: string]: { count: number; userIds: string[] } };
 
 export type WithName<T> = T & {
   name: string;
@@ -504,6 +507,7 @@ export interface Workspace {
       hasFetchedAllProfiles: boolean;
       messageEvents: WithID<Event>[];
       unreadCount: number;
+      reactions: { [eventId: string]: EventReactions | null };
     };
   };
 }

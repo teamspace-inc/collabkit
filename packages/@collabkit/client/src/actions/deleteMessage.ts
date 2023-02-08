@@ -1,6 +1,4 @@
 import type { Event, Store } from '@collabkit/core';
-import { timelineUtils } from '@collabkit/core';
-import { messageEvents } from '@collabkit/core/src/timelineUtils';
 import { getConfig } from '.';
 
 export async function deleteMessage(

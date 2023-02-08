@@ -11,7 +11,7 @@ import { useId } from '../hooks/useId';
 import Profile from './Profile';
 import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
 import { useApp } from '../hooks/useApp';
-import { CommentTarget, PinTarget, timelineUtils } from '@collabkit/core';
+import { CommentTarget, PinTarget } from '@collabkit/core';
 import * as styles from '../theme/components/Comment.css';
 import { ArrowBendDownRight, ArrowBendUpRight, DotsThree } from './icons';
 import { Menu, MenuItem } from './Menu';
@@ -24,7 +24,7 @@ import CommentPinSvg from './composer/comment-pin.svg';
 import CommentPinSelectedSvg from './composer/comment-pin-hover.svg';
 import { Tooltip } from './Tooltip';
 import { useComments } from '../hooks/public/useComments';
-import { useUnreadCount } from '..';
+import { useThread, useUnreadCount } from '..';
 import { vars } from '../theme/theme/index.css';
 import { useOptionalChannelContext } from '../hooks/useChannelContext';
 import { EMOJI_U } from './EmojiPicker';
@@ -32,7 +32,6 @@ import { PopoverEmojiPicker } from './PopoverEmojiPicker';
 import { Emoji } from './Emoji';
 import { useWorkspaceContext } from '../hooks/useWorkspaceContext';
 import { useUserContext } from '../hooks/useUserContext';
-import { useStore } from '../hooks/useStore';
 
 type CommentRootProps = {
   commentId: string;
@@ -267,17 +266,18 @@ export function EmojiCount(props: { emojiU: string; count: number; userIds: read
 
 export function CommentReactions(props: React.ComponentPropsWithoutRef<'div'>) {
   const { children, ...otherProps } = props;
-  const store = useStore();
   const threadId = useThreadContext();
   const eventId = useCommentContext();
-  const { reactions } = useSnapshot(store);
-  const reaccs = reactions?.[threadId]?.[eventId];
-  return reaccs &&
-    Object.keys(reaccs).length > 0 &&
-    Object.values(reaccs).find((reac) => reac.count > 0) ? (
+  const { computed } = useSnapshot(useWorkspaceStore());
+  const { reactions } = computed[threadId];
+  const commentReactions = reactions?.[eventId];
+  const emojiUs = Object.keys(commentReactions || {});
+  return commentReactions &&
+    emojiUs.length > 0 &&
+    Object.values(commentReactions).find((reac) => reac.count > 0) ? (
     <div data-testid="collabkit-comment-reactions" className={styles.reactions} {...otherProps}>
-      {Object.keys(reaccs).map((emojiU) => {
-        const { count, userIds } = reaccs[emojiU as keyof typeof reaccs];
+      {emojiUs.map((emojiU) => {
+        const { count, userIds } = commentReactions[emojiU as keyof typeof commentReactions];
         return <EmojiCount key={emojiU} emojiU={emojiU} count={count} userIds={userIds} />;
       })}
       <CommentEmojiAddButton />
