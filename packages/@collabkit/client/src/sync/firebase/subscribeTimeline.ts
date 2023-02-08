@@ -125,7 +125,6 @@ export async function subscribeTimeline({
 
   try {
     subs[timelineQuery.toString()] = onChildAdded(newTimelineEventsQuery, (snapshot) => {
-      console.log('new event query');
       handleChild(snapshot, props.onTimelineEventAdded);
     });
   } catch (e) {
