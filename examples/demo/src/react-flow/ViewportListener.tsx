@@ -1,13 +1,6 @@
 import { useApp } from '../../../../packages/@collabkit/react/src/hooks/useApp';
 import { useCallback, useEffect, useState } from 'react';
-import {
-  useNodes,
-  useNodesState,
-  useOnViewportChange,
-  useReactFlow,
-  useUpdateNodeInternals,
-  Viewport,
-} from 'reactflow';
+import { useNodes, useOnViewportChange, Viewport } from 'reactflow';
 
 function ViewportListener() {
   const { events, store } = useApp();
@@ -46,6 +39,9 @@ function ViewportListener() {
     }, []),
     onEnd: useCallback((viewport: Viewport) => {
       events.onReactFlowViewportChange({ state: 'stop' });
+    }, []),
+    onChange: useCallback((viewport: Viewport) => {
+      events.onReactFlowViewportChange({ state: 'change' });
     }, []),
   });
 

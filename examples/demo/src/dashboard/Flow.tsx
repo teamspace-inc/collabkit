@@ -1,15 +1,5 @@
-import { useCallback, useMemo, useState } from 'react';
-import ReactFlow, {
-  Controls,
-  Background,
-  applyNodeChanges,
-  applyEdgeChanges,
-  NodeChange,
-  EdgeChange,
-  useOnViewportChange,
-  Viewport,
-} from 'reactflow';
-import { Commentable, Thread } from '@collabkit/react';
+import { useCallback, useState } from 'react';
+import ReactFlow, { Controls, Background, applyNodeChanges, NodeChange } from 'reactflow';
 import 'reactflow/dist/style.css';
 import CommentableNode from '../react-flow/CommentableNode';
 import ViewportListener from '../react-flow/ViewportListener';
@@ -37,7 +27,6 @@ function Flow() {
     },
   ];
 
-  const e = [{ id: '1-2', source: '1', target: '2', label: 'to the', type: 'step' }];
   const [nodes, setNodes] = useState(n);
   const onNodesChange = useCallback(
     (changes: NodeChange[]) => setNodes((nds) => applyNodeChanges(changes, nds)),
@@ -46,8 +35,9 @@ function Flow() {
 
   return (
     <div className="flex h-screen">
-      <div style={{ height: '60%', width: '100%' }}>
+      <div style={{ height: 'calc(100% - 156px)', width: '100%' }}>
         <ReactFlow
+          defaultViewport={{ zoom: 1, x: 250, y: 250 }}
           nodes={nodes}
           onNodeDragStart={() => {}}
           onNodeDragStop={() => {}}

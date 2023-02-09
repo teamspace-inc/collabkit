@@ -1,4 +1,4 @@
-import { CustomTheme, Inbox, ThemeProvider, useUnreadThreadsCount } from '@collabkit/react';
+import { Inbox, useUnreadThreadsCount } from '@collabkit/react';
 import * as Popover from '@radix-ui/react-popover';
 import { MouseEvent as ReactMouseEvent, CSSProperties, useCallback } from 'react';
 import ReactFlow, {
@@ -16,30 +16,6 @@ import ReactFlow, {
   Background,
 } from 'reactflow';
 import 'reactflow/dist/style.css';
-
-const theme: CustomTheme = {
-  color: {
-    background: 'hsl(0, 0%, 100%)',
-    surface: 'rgb(247 247 248)',
-    surfaceOverlay: 'rgba(0, 0, 0, 0.08)',
-    textPrimary: '#071324',
-    textSecondary: '#63676D',
-    textDisabled: 'rgb(99, 103, 109)',
-    textLink: '#0180FE',
-    border: 'rgb(239, 240, 241)',
-    icon: 'rgb(162, 166, 172)',
-    attention: '#0180FE',
-  },
-  inbox: {
-    width: '320px',
-    item: {
-      borderBottom: '1px solid #EFF0F1',
-      hover: {
-        background: '#F7F7F8',
-      },
-    },
-  },
-};
 
 const log = (...args: any[]) => {
   // console.log(...args);
