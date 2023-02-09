@@ -19,8 +19,6 @@ export async function subscribeProfile(
   const id = FirebaseId.decode(props.profileId);
   const profileRef = ref`/profiles/${appId}/${id}`;
 
-  console.log('subscribeProfile', props.profileId);
-
   store.subs[profileRef.toString()] ||= onValue(
     profileRef,
     (profileSnapshot) => {
