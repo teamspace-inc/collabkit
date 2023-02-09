@@ -93,7 +93,6 @@ export async function writeMessageToFirebase(
     workspace.timeline[threadId] ||= {};
     workspace.timeline[threadId][eventId] = {
       ...event,
-      hasProfile: true,
       createdAt: +Date.now(),
       id: eventId,
     };

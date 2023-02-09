@@ -11,14 +11,14 @@ const rtl = style({
   textAlign: 'right',
 });
 
-const typingHeight = fallbackVar(vars.composer.typingIndicator.lineHeight, vars.space[3]);
+const typingHeight = fallbackVar(vars.composer.typingIndicator.lineHeight, vars.space[4]);
 
 export const typing = style({
   height: typingHeight,
-  marginLeft: calc.add(vars.avatar.size, fallbackVar(vars.comment.gap, vars.space[2])),
-  marginTop: calc.negate(fallbackVar(vars.composer.gap, vars.space[2])),
-  paddingTop: `${calc(vars.space[1]).divide(2)}`,
-  paddingBottom: `${calc(vars.space[1]).divide(2)}`,
+  marginLeft: calc.add(vars.avatar.size, fallbackVar(vars.comment.gap, vars.space[5])),
+  marginTop: calc.negate(fallbackVar(vars.composer.gap, vars.space[3])),
+  paddingTop: `0px`,
+  paddingBottom: `${calc(vars.space[1])}`,
   overflow: 'hidden',
   flexBasis: '100%',
   color: fallbackVar(vars.composer.typingIndicator.color, vars.color.textSecondary),

@@ -17,8 +17,9 @@ export function idArrayToObject(
 }
 
 export function eventToObject(event: Event): object {
+  const { reactions, ...rest } = event;
   return {
-    ...event,
+    ...rest,
     createdById: FirebaseId.encode(event.createdById),
     mentions: idArrayToObject(event.mentions),
   };

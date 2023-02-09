@@ -5,8 +5,7 @@ import { TableExample } from './TableExample';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { GoogleLogin } from '@react-oauth/google';
 import { proxy, useSnapshot, subscribe } from 'valtio';
-import { Route, Router, Switch, useLocation } from 'wouter';
-import { CustomInbox } from './CustomInboxExample';
+import { Route, Switch, useLocation } from 'wouter';
 import ReactFlowExample from './ReactFlowExample';
 
 import { useTestParams } from './hooks/useTestParams';
@@ -81,7 +80,6 @@ function Demo() {
   const name = pathname.slice(1);
   const theme: CustomTheme | undefined =
     name in themes ? themes[name as keyof typeof themes] : undefined;
-
   return (
     <CollabKitProvider
       _test={test}
@@ -132,7 +130,10 @@ function Demo() {
       onAuthenticationRequired={() => {
         console.log('authRequired');
       }}
-      user={user}
+      // warning: this is a hack
+      // this is the strangest thing, if we pass a snapshot into our product
+      // it breaks our app, but if we stringify and then parse it, it works
+      user={JSON.parse(JSON.stringify(user))}
       theme={theme}
       // theme="dark"
       // renderAvatar={CustomAvatar}
@@ -152,7 +153,6 @@ function Demo() {
     >
       <Switch>
         <Route path="/table" component={TableExample} />
-        <Route path="/custominbox" component={CustomInbox} />
         <Route path="/reactflow" component={ReactFlowExample} />
         <Route path="/dashboard" component={DashboardExample} />
         <Route path="/" component={Home} />

@@ -4,14 +4,13 @@ import { useOnMarkdownLinkClick } from '../hooks/useOnMarkdownLinkClick';
 import { useThreadContext } from '../hooks/useThreadContext';
 import { Markdown } from './Markdown';
 import { useSnapshot } from 'valtio';
-import { useCommentStore } from '../hooks/useCommentStore';
 import { CommentContext, useCommentContext } from '../hooks/useCommentContext';
 import { Timestamp as RawTimestamp } from './Timestamp';
 import { useId } from '../hooks/useId';
 import Profile from './Profile';
 import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
 import { useApp } from '../hooks/useApp';
-import { CommentTarget, PinTarget, timelineUtils } from '@collabkit/core';
+import { CommentTarget, PinTarget } from '@collabkit/core';
 import * as styles from '../theme/components/Comment.css';
 import { ArrowBendDownRight, ArrowBendUpRight, DotsThree } from './icons';
 import { Menu, MenuItem } from './Menu';
@@ -23,7 +22,6 @@ import { IconButton } from './IconButton';
 import CommentPinSvg from './composer/comment-pin.svg';
 import CommentPinSelectedSvg from './composer/comment-pin-hover.svg';
 import { Tooltip } from './Tooltip';
-import { useComments } from '../hooks/public/useComments';
 import { useUnreadCount } from '..';
 import { vars } from '../theme/theme/index.css';
 import { useOptionalChannelContext } from '../hooks/useChannelContext';
@@ -32,7 +30,7 @@ import { PopoverEmojiPicker } from './PopoverEmojiPicker';
 import { Emoji } from './Emoji';
 import { useWorkspaceContext } from '../hooks/useWorkspaceContext';
 import { useUserContext } from '../hooks/useUserContext';
-import { useStore } from '../hooks/useStore';
+import { useCommentSnapshot } from '../hooks/useCommentSnapshot';
 
 type CommentRootProps = {
   commentId: string;
@@ -64,7 +62,7 @@ function CommentRoot({ commentId: eventId, indent = false, ...props }: CommentRo
     [workspaceId, threadId, eventId, treeId]
   );
 
-  const divRef = useRef(null);
+  const divRef = useRef<HTMLDivElement>(null);
   const { ref: seenRef } = useMarkAsSeen(target);
 
   const ref = mergeRefs([divRef, seenRef]);
@@ -158,12 +156,13 @@ export function CommentActionsReplyButton() {
 }
 
 export function CommentSeeAllRepliesButton(props: React.ComponentPropsWithoutRef<'div'>) {
-  const commentIds = useComments();
   const { store, events } = useApp();
   const { expandedThreadIds } = useSnapshot(store);
   const threadId = useThreadContext();
   const workspaceId = useWorkspaceContext();
   const eventId = useCommentContext();
+  const { computed } = useSnapshot(useWorkspaceStore());
+  const numComments = Object.keys(computed[threadId].messageEvents).length;
 
   const target = {
     type: 'commentReplyCountButton',
@@ -172,7 +171,7 @@ export function CommentSeeAllRepliesButton(props: React.ComponentPropsWithoutRef
     eventId,
   } as const;
 
-  if (commentIds.length === 1) {
+  if (numComments === 1) {
     return null;
   }
 
@@ -192,14 +191,14 @@ export function CommentSeeAllRepliesButton(props: React.ComponentPropsWithoutRef
         color={vars.color.textDisabled}
       />
       <span className={styles.replyCountButtonText}>
-        {commentIds.length - 1} {commentIds.length != 2 ? 'replies' : 'reply'}
+        {numComments - 1} {numComments != 2 ? 'replies' : 'reply'}
       </span>
     </div>
   );
 }
 
 export function CommentMarkdown() {
-  const { body } = useSnapshot(useCommentStore());
+  const { body } = useCommentSnapshot();
   const { callbacks } = useSnapshot(useApp().store);
   const canClickLinks = !!callbacks?.onMentionClick || !!callbacks?.onTimestampClick;
 
@@ -247,12 +246,12 @@ export function EmojiCount(props: { emojiU: string; count: number; userIds: read
   return emoji ? (
     <Tooltip placement="bottom-start">
       <Tooltip.Trigger>
-        <div key={props.emojiU} className={styles.emojiCount}>
-          <Emoji
-            className={styles.emojiCountIcon}
-            emoji={EMOJI_U[props.emojiU]}
-            onClick={(e) => events.onClick(e, { target })}
-          />
+        <div
+          key={props.emojiU}
+          className={styles.emojiCount}
+          onClick={(e) => events.onClick(e, { target })}
+        >
+          <Emoji className={styles.emojiCountIcon} emoji={EMOJI_U[props.emojiU]} />
           <span className={styles.emojiCountNumber}>{props.count}</span>
         </div>
       </Tooltip.Trigger>
@@ -267,17 +266,18 @@ export function EmojiCount(props: { emojiU: string; count: number; userIds: read
 
 export function CommentReactions(props: React.ComponentPropsWithoutRef<'div'>) {
   const { children, ...otherProps } = props;
-  const store = useStore();
   const threadId = useThreadContext();
   const eventId = useCommentContext();
-  const { reactions } = useSnapshot(store);
-  const reaccs = reactions?.[threadId]?.[eventId];
-  return reaccs &&
-    Object.keys(reaccs).length > 0 &&
-    Object.values(reaccs).find((reac) => reac.count > 0) ? (
+  const { computed } = useSnapshot(useWorkspaceStore());
+  const { reactions } = computed[threadId];
+  const commentReactions = reactions?.[eventId];
+  const emojiUs = Object.keys(commentReactions || {});
+  return commentReactions &&
+    emojiUs.length > 0 &&
+    Object.values(commentReactions).find((reac) => reac.count > 0) ? (
     <div data-testid="collabkit-comment-reactions" className={styles.reactions} {...otherProps}>
-      {Object.keys(reaccs).map((emojiU) => {
-        const { count, userIds } = reaccs[emojiU as keyof typeof reaccs];
+      {emojiUs.map((emojiU) => {
+        const { count, userIds } = commentReactions[emojiU as keyof typeof commentReactions];
         return <EmojiCount key={emojiU} emojiU={emojiU} count={count} userIds={userIds} />;
       })}
       <CommentEmojiAddButton />
@@ -333,7 +333,7 @@ export function CommentPin(props: React.ComponentProps<'img'>) {
 }
 
 export function CommentEditor(props: React.ComponentProps<'div'>) {
-  const { body } = useCommentStore();
+  const { body } = useCommentSnapshot();
 
   return (
     <Composer.Root
@@ -351,7 +351,7 @@ export function CommentEditor(props: React.ComponentProps<'div'>) {
 export function CommentTimestamp(
   props: React.ComponentProps<'time'> & { format?: (timestamp: number) => string }
 ) {
-  const { createdAt } = useSnapshot(useCommentStore());
+  const { createdAt } = useCommentSnapshot();
   return (
     <RawTimestamp
       data-testid="collabkit-comment-timestamp"
@@ -368,20 +368,15 @@ export const CommentCreatorName = Profile.Name;
 type CommentMenuItemType = 'commentEditButton' | 'commentDeleteButton' | 'reopenThreadButton';
 
 function CommentMenu(props: { className?: string }) {
-  const { events, store } = useApp();
+  const { events } = useApp();
   const eventId = useCommentContext();
   const threadId = useThreadContext();
   const workspaceId = useWorkspaceContext();
   const userId = useUserContext();
-  const { createdById } = useCommentStore();
+  const { createdById } = useCommentSnapshot();
   const treeId = useTreeContext();
 
-  // todo @nc: extract this into a hook
-  // tood @nc: extract computed into the store itself
-  const { workspaces } = useSnapshot(store);
-  const workspace = workspaces[workspaceId];
-  const timeline = workspace.timeline[threadId];
-  const isResolved = timelineUtils.computeIsResolved(timeline);
+  const { isResolved } = useSnapshot(useWorkspaceStore().computed)[threadId];
 
   const onItemClick = useCallback(
     (e: React.MouseEvent, type: CommentMenuItemType) => {

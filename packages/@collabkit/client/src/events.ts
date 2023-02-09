@@ -189,7 +189,10 @@ export function createEvents(store: Store) {
           if (store.focusedId.eventId === 'default') {
             actions.sendMessage(store, { ...store.focusedId });
             if (store.focusedId.isNewThread) {
-              store.nextThreadId = nanoid();
+              store.nextThreadId = store.sync.nextThreadId({
+                workspaceId: store.workspaceId!,
+                appId: store.appId!,
+              });
               store.focusedId.threadId = store.nextThreadId;
             }
           }

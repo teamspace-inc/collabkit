@@ -1,4 +1,4 @@
-import type { WithHasProfile, WithID, Event } from '@collabkit/core';
+import type { WithID, Event } from '@collabkit/core';
 import { useWindowFocus } from '@vueuse/core';
 import { ref, watchEffect } from 'vue';
 import type { ComputedRef } from 'vue';
@@ -9,7 +9,7 @@ export function useNewIndicator(
     seenUntil?: string;
   },
   timelineEvents: ComputedRef<{
-    messageEvents: WithHasProfile<WithID<Event>>[];
+    messageEvents: WithID<Event>[];
   }>
 ) {
   const newIndicatorId = ref<string | null>(null);

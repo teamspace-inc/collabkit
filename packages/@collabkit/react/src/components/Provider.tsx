@@ -41,9 +41,7 @@ export function CollabKitProvider<T extends object>({
     const events = createEvents(store);
     actions.monitorConnection(store, events);
     setContext({ store, events });
-    return () => {
-      events.onDestroy();
-    };
+    return () => events.onDestroy();
   }, [config.appId, 'token' in config ? config.token : config.apiKey]);
 
   useEffect(() => {
