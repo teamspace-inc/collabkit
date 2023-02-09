@@ -387,6 +387,7 @@ export function DashboardExample() {
             <Tab value={'detail'} text="Detail" />
             <Tab value={'charts'} text="Charts" />
             <Tab value={'flowchart'} text="Flowchart" />
+            {/* <Tab value={'charts'} text="Charts" /> */}
           </TabList>
 
           {selectedTab === 'overview' ? (
