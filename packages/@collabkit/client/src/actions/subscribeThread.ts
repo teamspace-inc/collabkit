@@ -74,7 +74,7 @@ export async function subscribeThread(
       });
     },
     onTimelineGetComplete: (events: Sync.TimelineChangeEvent[]) => {
-      console.log('onTimelineGetComplete', events);
+      // console.log('onTimelineGetComplete', events);
       const { workspaceId, threadId } = events[0];
       store.workspaces[workspaceId].timeline[threadId] = events.reduce<{
         [key: string]: WithID<Event>;

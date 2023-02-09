@@ -22,7 +22,7 @@ export async function subscribeProfile(
   store.subs[profileRef.toString()] ||= onValue(
     profileRef,
     (profileSnapshot) => {
-      console.log('subscribeProfile');
+      // console.log('subscribeProfile');
       const profile = snapshotToProfile(profileSnapshot);
       // todo validate profile data here
       if (profile) {
