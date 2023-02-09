@@ -65,9 +65,10 @@ export function SavedPin({
 
   const target: PinTarget = useMemo(() => {
     const { x, y, createdById, ...pinTarget } = pin;
+    const unproxedPinTarget = JSON.parse(JSON.stringify(pinTarget));
     return {
       type: 'pin',
-      ...pinTarget,
+      ...unproxedPinTarget,
     };
   }, [pin.id, pin.objectId, pin.eventId, pin.workspaceId, pin.threadId]);
 
