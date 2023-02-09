@@ -365,7 +365,7 @@ export function DashboardExample() {
               <Text>View core metrics on the state of your company.</Text>
             </Block>
             <div className="px-2"></div>
-            <Datepicker
+            {/* <Datepicker
               minDate={minDate}
               maxDate={maxDate}
               defaultStartDate={minDate}
@@ -376,7 +376,7 @@ export function DashboardExample() {
                 dashboardStore.endDate = end;
               }}
               maxWidth="max-w-xs"
-            />
+            /> */}
           </Flex>
           <TabList
             defaultValue={'overview'}
