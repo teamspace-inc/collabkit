@@ -43,7 +43,7 @@ export type DashboardStore = {
   selectedKpi: string;
   startDate: Date;
   endDate: Date;
-  selectedTab: 'overview' | 'detail' | 'charts';
+  selectedTab: 'overview' | 'detail' | 'charts' | 'flowchart';
   selectedNames: string[];
   selectedStatus: string;
 };
