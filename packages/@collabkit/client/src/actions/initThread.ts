@@ -15,17 +15,17 @@ export function initThread(store: Store, props: { workspaceId: string; threadId:
     isResolved: (get) => timelineUtils.computeIsResolved(get(timeline)[threadId]),
     groupedMessages: (get) => timelineUtils.groupedMessages(get(timeline)[threadId]),
     hasFetchedAllProfiles: (get) => {
-      const missingProfiles = Object.values(get(timeline)[threadId])
-        .map((event) => event.createdById)
-        .filter((id) => get(store.profiles)[id] == null)
-        .filter(function onlyUnique(value, index, self) {
-          return self.indexOf(value) === index;
-        });
-      if (missingProfiles.length > 0)
-        console.warn(
-          '[CollabKit] detected missing profiles, any threads with messages from these users will fail to load, profileIds:',
-          missingProfiles
-        );
+      // const missingProfiles = Object.values(get(timeline)[threadId])
+      //   .map((event) => event.createdById)
+      //   .filter((id) => get(store.profiles)[id] == null)
+      //   .filter(function onlyUnique(value, index, self) {
+      //     return self.indexOf(value) === index;
+      //   });
+      // if (missingProfiles.length > 0)
+      //   console.warn(
+      //     '[CollabKit] detected missing profiles, any threads with messages from these users will fail to load, profileIds:',
+      //     missingProfiles
+      //   );
       return Object.values(get(timeline)[threadId])
         .map((event) => event.createdById)
         .every((id) => get(store).profiles[id]);
