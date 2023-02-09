@@ -66,6 +66,25 @@ export type UnsecureProps = {
 };
 
 export type Callbacks = {
+  onPinClick?: (data: {
+    userId: string;
+    workspaceId: string;
+    objectId: string;
+    state: object;
+  }) => void;
+  onPinHover?: (data: {
+    userId: string;
+    workspaceId: string;
+    threadId: string;
+    objectId: string;
+    state: object;
+  }) => void;
+  onPinAttach?: (data: {
+    userId: string;
+    threadId: string;
+    workspaceId: string;
+    objectId: string;
+  }) => object;
   onThreadCreated?: (data: {
     userId: string;
     workspaceId: string;
@@ -457,6 +476,7 @@ export type FirebasePin = {
   threadId: string;
   eventId: string;
   createdById: string;
+  state: string;
 };
 
 export type Pin = {
@@ -468,6 +488,7 @@ export type Pin = {
   threadId: string;
   eventId: string;
   createdById: string;
+  state: object;
 };
 
 export type PendingPin = Pin & {

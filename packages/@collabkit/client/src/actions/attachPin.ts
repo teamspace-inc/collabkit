@@ -29,6 +29,7 @@ export function attachPin(
     objectId,
     createdById: userId,
     isPending: true,
+    state: store.callbacks?.onPinAttach?.({ objectId, userId, threadId, workspaceId }) ?? {},
   };
   store.uiState = 'idle';
   // insertComposerPin(store, {

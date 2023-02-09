@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { actions, Events, createEvents } from '@collabkit/client';
 import { AppContext } from '../hooks/useAppContext';
 import { createValtioStore } from '../store';
@@ -22,7 +22,7 @@ export type ProviderProps = {
 
 // Enable using multiple isolated App
 // instances in the same page.
-export function CollabKitProvider({
+export function CollabKitProvider<T extends object>({
   children,
   theme,
   renderAvatar,

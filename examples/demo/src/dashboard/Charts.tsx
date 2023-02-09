@@ -9,7 +9,7 @@ import {
   ResponsiveContainer,
   Customized,
 } from 'recharts';
-import { ThemeProvider, CollabKitRecharts } from '@collabkit/react';
+import { CollabKitRecharts } from '@collabkit/react';
 
 type EarningsEntry = { date: string; earnings: { actual: number; current: number } };
 
