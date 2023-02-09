@@ -401,7 +401,7 @@ export function DashboardExample() {
           {selectedTab === 'flowchart' ? <Flow /> : null}
         </main>
         <div className="h-screen border" style={{ width: 360 }}>
-          <Thread threadId="test123" />
+          <Thread threadId="newdemo" />
         </div>
       </div>
     </Commentable.Root>
