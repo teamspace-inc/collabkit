@@ -174,7 +174,7 @@ export interface SyncAdapter {
     onThreadSeenByUser: (event: ThreadSeenEvent) => void;
     onThreadInfo: (props: ThreadInfoChangeEvent) => void;
     onThreadProfile: (props: ThreadProfileEvent) => void;
-    onTimelineGetComplete: () => void;
+    onTimelineGetComplete: (props: TimelineChangeEvent[]) => void;
     onThreadProfiles: (props: ThreadProfilesEvent) => void;
   }): void;
 
@@ -225,7 +225,7 @@ export type TimelineChangeEvent = {
   threadId: string;
   workspaceId: string;
   eventId: string;
-  event: Event;
+  event: WithID<Event>;
 };
 
 export type TypingEvent = {

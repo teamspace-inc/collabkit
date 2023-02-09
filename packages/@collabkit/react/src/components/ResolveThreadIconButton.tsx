@@ -10,7 +10,8 @@ export function ResolveThreadIconButton(props: {
   style?: React.CSSProperties;
 }) {
   const { events } = useApp();
-  const { threadId, workspaceId } = useThreadContext();
+  const workspaceId = useThreadContext();
+  const threadId = useThreadContext();
 
   const target: ThreadResolveButtonTarget = {
     threadId,

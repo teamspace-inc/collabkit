@@ -1,4 +1,4 @@
-import { FirebaseId, FirebasePin, Store } from '@collabkit/core';
+import { FirebaseId, FirebasePin, Pin, Store } from '@collabkit/core';
 import { getConfig } from './index';
 import has from 'has';
 
@@ -67,11 +67,14 @@ export function subscribeOpenPins(store: Store) {
         const decodedObjectId = FirebaseId.decode(objectId);
         workspace.openPins[decodedObjectId] ||= {};
         for (const pinId in pins[decodedObjectId]) {
-          const pin = {
-            ...pins[decodedObjectId][pinId],
+          const firebasePin = pins[decodedObjectId][pinId];
+          const { state, ...otherProps } = firebasePin;
+          const pin: Pin = {
+            ...otherProps,
             id: pinId,
             workspaceId,
             objectId: decodedObjectId,
+            state: state ? JSON.parse(state) : {},
           };
           workspace.eventPins[pin.eventId] = pin;
           workspace.openPins[decodedObjectId][pinId] = pin;
@@ -95,7 +98,15 @@ export function subscribeOpenPins(store: Store) {
         delete workspace.openPins[objectId][pinId];
       }
       for (const pinId in pins) {
-        const pin = { ...pins[pinId], id: pinId, workspaceId, objectId };
+        const firebasePin = pins[pinId];
+        const { state, ...otherProps } = firebasePin;
+        const pin = {
+          ...otherProps,
+          id: pinId,
+          workspaceId,
+          objectId,
+          state: JSON.parse(state ?? '{}'),
+        };
         workspace.openPins[objectId][pinId] = pin;
         workspace.eventPins[pin.eventId] = pin;
       }

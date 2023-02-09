@@ -70,7 +70,6 @@ const defaultWorkspace: Partial<Workspace> = {
         createdAt: subHours(1)(Date.now()),
         createdById: 'alicia',
         type: 'message',
-        hasProfile: true,
       },
     },
     thread2: {
@@ -80,7 +79,6 @@ const defaultWorkspace: Partial<Workspace> = {
         createdAt: subHours(3)(Date.now()),
         createdById: 'dom',
         type: 'message',
-        hasProfile: true,
       },
       event2: {
         id: 'event2',
@@ -88,7 +86,6 @@ const defaultWorkspace: Partial<Workspace> = {
         createdAt: subHours(2)(Date.now()),
         createdById: 'greta',
         type: 'message',
-        hasProfile: true,
       },
     },
     thread3: {
@@ -98,7 +95,6 @@ const defaultWorkspace: Partial<Workspace> = {
         createdAt: subHours(2)(Date.now()),
         createdById: 'alicia',
         type: 'message',
-        hasProfile: true,
       },
       event2: {
         id: 'event2',
@@ -106,7 +102,6 @@ const defaultWorkspace: Partial<Workspace> = {
         createdAt: subHours(1.4)(Date.now()),
         createdById: 'dom',
         type: 'message',
-        hasProfile: true,
       },
       event3: {
         id: 'event3',
@@ -114,7 +109,6 @@ const defaultWorkspace: Partial<Workspace> = {
         createdAt: subHours(0.2)(Date.now()),
         createdById: 'greta',
         type: 'message',
-        hasProfile: true,
       },
     },
     thread4: {
@@ -124,7 +118,6 @@ const defaultWorkspace: Partial<Workspace> = {
         createdAt: subHours(0.2)(Date.now()),
         createdById: 'alicia',
         type: 'message',
-        hasProfile: true,
       },
       event2: {
         id: 'event2',
@@ -132,7 +125,6 @@ const defaultWorkspace: Partial<Workspace> = {
         createdAt: subHours(0.1)(Date.now()),
         createdById: 'dom',
         type: 'message',
-        hasProfile: true,
       },
     },
     thread5: {
@@ -142,7 +134,6 @@ const defaultWorkspace: Partial<Workspace> = {
         createdAt: subHours(0.2)(Date.now()),
         createdById: 'alicia',
         type: 'message',
-        hasProfile: true,
       },
       event2: {
         id: 'event2',
@@ -150,7 +141,6 @@ const defaultWorkspace: Partial<Workspace> = {
         createdAt: subHours(0.1)(Date.now()),
         createdById: 'julia',
         type: 'message',
-        hasProfile: true,
       },
     },
     employee_8789935W: {
@@ -160,7 +150,6 @@ const defaultWorkspace: Partial<Workspace> = {
         createdAt: subHours(0.2)(Date.now()),
         createdById: 'sara',
         type: 'message',
-        hasProfile: true,
       },
     },
   },

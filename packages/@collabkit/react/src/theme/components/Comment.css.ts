@@ -230,7 +230,7 @@ globalStyle(`${collabkit} ${root()}:hover, ${collabkit} ${root({ indent: true })
   backgroundColor: fallbackVar(vars.comment.hover.background, vars.color.surfaceHover),
 });
 
-globalStyle(`${collabkit} ${root()}:hover, ${collabkit} ${root({ indent: true })}:hover`, {
+globalStyle(`${collabkit} ${root()}:hover, ${collabkit} ${root({ indent: false })}:hover`, {
   backgroundColor: fallbackVar(vars.comment.hover.background, vars.color.surfaceHover),
 });
 
@@ -246,7 +246,7 @@ globalStyle(
 
 globalStyle(
   `${collabkit} ${root()}:hover ${actions}, ${collabkit} ${root({
-    indent: true,
+    indent: false,
   })}:hover ${actions}`,
   {
     opacity: 1,

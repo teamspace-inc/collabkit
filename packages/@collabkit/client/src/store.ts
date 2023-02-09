@@ -18,6 +18,7 @@ export function createComposer(): Composer {
     enabled: false,
     isMentioning: false,
     pendingPin: null,
+    hasText: false,
   };
 }
 
@@ -34,11 +35,11 @@ export function createWorkspace(): Workspace {
     seenBy: {},
     threadInfo: {},
     threadProfiles: {},
-    fetchedProfiles: {},
     pendingThreads: {},
     pendingThreadInfo: {},
     openPins: {},
     eventPins: {},
+    computed: {},
   };
 }
 

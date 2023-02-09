@@ -28,7 +28,6 @@ import {
 } from '@collabkit/editor';
 import { snapshot } from 'valtio';
 import { Store } from '../../constants';
-import { useApp } from '../../hooks/useApp';
 import * as styles from '../../theme/components/MentionsPlugin.css';
 
 import { MentionWithColor } from '@collabkit/core';
@@ -44,6 +43,7 @@ import {
 import { ThemeWrapper } from '../ThemeWrapper';
 import Profile from '../Profile';
 import { Scrollable } from '../Scrollable';
+import { useStore } from '../../hooks/useStore';
 
 type MentionMatch = {
   leadOffset: number;
@@ -165,7 +165,7 @@ function searchMentionableUsers(
 }
 
 function useMentionLookupService(mentionString: string) {
-  const { store } = useApp();
+  const store = useStore();
   if (!store) {
     return null;
   }
@@ -441,6 +441,8 @@ export function MentionsTypeahead({
           >
             <Scrollable
               maxHeight={maxAvailableSize.height > 0 ? maxAvailableSize.height : 'unset'}
+              // todo if the list shows above the composer we want to scroll to bottom and have the top results reversed
+              // if it's below we want to scroll to top abnd use the orignal order
               // autoScroll="bottom" // todo make this dependent on flip
             >
               <div className={styles.list}>

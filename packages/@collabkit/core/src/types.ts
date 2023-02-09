@@ -66,6 +66,25 @@ export type UnsecureProps = {
 };
 
 export type Callbacks = {
+  onPinClick?: (data: {
+    userId: string;
+    workspaceId: string;
+    objectId: string;
+    state: object;
+  }) => void;
+  onPinHover?: (data: {
+    userId: string;
+    workspaceId: string;
+    threadId: string;
+    objectId: string;
+    state: object;
+  }) => void;
+  onPinAttach?: (data: {
+    userId: string;
+    threadId: string;
+    workspaceId: string;
+    objectId: string;
+  }) => object;
   onThreadCreated?: (data: {
     userId: string;
     workspaceId: string;
@@ -285,7 +304,14 @@ export type FloatingCommentButtonTarget = { type: 'floatingCommentButton' };
 export type ComposerTarget = {
   type: 'composer';
   threadId: string;
-  isNewThread: boolean;
+  workspaceId: string;
+  eventId: string | 'default';
+  isNewThread?: boolean;
+};
+
+export type ChannelComposerTarget = {
+  type: 'channelComposer';
+  threadId: string;
   workspaceId: string;
   eventId: string | 'default';
 };
@@ -322,17 +348,25 @@ export type CommentActionsEmojiButtonTarget = {
 export type CommentReactionTarget = {
   type: 'commentReaction';
   emoji: string;
-  comment: CommentTarget;
+  eventId: string;
+  threadId: string;
+  workspaceId: string;
 };
 
 export type CommentEditButtonTarget = {
   type: 'commentEditButton';
-  comment: CommentTarget;
+  workspaceId: string;
+  threadId: string;
+  eventId: string;
+  treeId: string;
 };
 
 export type CommentDeleteButtonTarget = {
   type: 'commentDeleteButton';
-  comment: CommentTarget;
+  workspaceId: string;
+  threadId: string;
+  eventId: string;
+  treeId: string;
 };
 
 export type CommentSaveButtonTarget = {
@@ -387,7 +421,10 @@ export type Event = {
   parentId?: string;
   mentions?: readonly string[];
   pinId?: string;
+  reactions?: EventReactions;
 };
+
+export type EventReactions = { [emojiU: string]: { count: number; userIds: string[] } };
 
 export type WithName<T> = T & {
   name: string;
@@ -395,10 +432,6 @@ export type WithName<T> = T & {
 
 export type WithID<T> = T & {
   id: string;
-};
-
-export type WithHasProfile<T> = T & {
-  hasProfile?: boolean;
 };
 
 export type MentionProps = readonly Mention[] | 'allWorkspace';
@@ -423,7 +456,7 @@ export interface Profile extends BasicProfile {
 }
 
 export interface Timeline {
-  [eventId: string]: WithHasProfile<WithID<Event>>;
+  [eventId: string]: WithID<Event>;
 }
 
 export interface Composer {
@@ -433,6 +466,7 @@ export interface Composer {
   isTyping: { [endUserId: string]: boolean };
   isMentioning: boolean;
   pendingPin: null | PendingPin;
+  hasText: boolean;
 }
 
 export type FirebasePin = {
@@ -441,6 +475,7 @@ export type FirebasePin = {
   threadId: string;
   eventId: string;
   createdById: string;
+  state: string;
 };
 
 export type Pin = {
@@ -452,6 +487,7 @@ export type Pin = {
   threadId: string;
   eventId: string;
   createdById: string;
+  state: object;
 };
 
 export type PendingPin = Pin & {
@@ -478,9 +514,21 @@ export interface Workspace {
   seenBy: { [threadId: string]: SeenBy };
   threadInfo: { [threadId: string]: ThreadInfo };
   threadProfiles: { [threadId: string]: { [userId: string]: boolean } };
-  fetchedProfiles: { [threadId: string]: { [userId: string]: boolean } };
   openPins: { [objectId: string]: { [pinId: string]: Pin } };
   eventPins: { [eventId: string]: Pin };
+  computed: {
+    [threadId: string]: {
+      isResolved: boolean;
+      groupedMessages: WithID<Event>[][];
+      hasFetchedAllProfiles: boolean;
+      messageEvents: WithID<Event>[];
+      unreadCount: number;
+      reactions: { [eventId: string]: EventReactions | null };
+      replyCount: number;
+      // resolves events to their latest edit if available
+      canonicalEvents: { [eventId: string]: WithID<Event> | null };
+    };
+  };
 }
 
 type CommentableObject = {

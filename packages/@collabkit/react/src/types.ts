@@ -23,6 +23,10 @@ export type OptionalThreadProps = {
   placeholder?: string;
 };
 
+export type OptionalComposerProps = {
+  autoFocus?: boolean;
+};
+
 // export type PopoverThreadProps = ThreadProps & {
 //   maxAvailableSize?: { width: number; height: number } | null;
 //   formatTimestamp?: (timestamp: number) => string;

@@ -6,17 +6,23 @@ import { attachPin } from './attachPin';
 import { authenticate } from './authenticate';
 import { blur } from './blur';
 import { closeAll } from './closeAll';
+import { closeContent } from './closeContent';
 import { closeEmojiReactionPicker } from './closeEmojiReactionPicker';
 import { closeMenu } from './closeMenu';
 import { closePreview } from './closePreview';
-import { closeContent } from './closeContent';
+import { collapseThread } from './collapseThread';
 import { deleteMessage } from './deleteMessage';
 import { deletePin } from './deletePin';
 import { dragPin } from './dragPin';
+import { deselectAll } from './deselectAll';
+import { expandThread } from './expandThread';
 import { focus } from './focus';
+import { focusComposer } from './focusComposer';
 import { hideSidebar } from './hideSidebar';
+import { hover } from './hover';
 import { init } from './init';
 import { initComposer } from './initComposer';
+import { initThread } from './initThread';
 import { insertComposerPin } from './insertComposerPin';
 import { isTyping } from './isTyping';
 import { monitorConnection } from './monitorConnection';
@@ -29,6 +35,7 @@ import { saveMentionableUsers } from './saveMentionableUsers';
 import { saveProfile } from './saveProfile';
 import { saveThreadInfo } from './saveThreadInfo';
 import { seen } from './seen';
+import { select } from './select';
 import { sendMessage } from './sendMessage';
 import { setAvatarError } from './setAvatarError';
 import { showPreview } from './showPreview';
@@ -40,6 +47,7 @@ import { stopEditing } from './stopEditing';
 import { stopSelecting } from './stopSelecting';
 import { stopTyping } from './stopTyping';
 import { subscribeInbox } from './subscribeInbox';
+import { subscribeOpenPins } from './subscribeOpenPins';
 import { subscribeOpenThreads } from './subscribeOpenThreads';
 import { subscribeProfile } from './subscribeProfile';
 import { subscribeProfiles } from './subscribeProfiles';
@@ -48,17 +56,10 @@ import { subscribeThread } from './subscribeThread';
 import { subscribeWorkspace } from './subscribeWorkspace';
 import { toggleEmoji } from './toggleEmoji';
 import { toggleEmojiPicker } from './toggleEmojiPicker';
-import { updateComment } from './updateComment';
-import { viewContent } from './viewContent';
-import { subscribeOpenPins } from './subscribeOpenPins';
-import { focusComposer } from './focusComposer';
-import { select } from './select';
-import { deselectAll } from './deselectAll';
-import { updateComposer } from './updateComposer';
-import { expandThread } from './expandThread';
-import { collapseThread } from './collapseThread';
-import { hover } from './hover';
 import { unhover } from './unhover';
+import { updateComment } from './updateComment';
+import { updateComposer } from './updateComposer';
+import { viewContent } from './viewContent';
 
 export type GenerateToken =
   | {
@@ -146,6 +147,7 @@ export const actions = {
   hover,
   init,
   initComposer,
+  initThread,
   insertComposerPin,
   isTyping: debounce(isTyping, 1000, { leading: true, maxWait: 1000 }),
   monitorConnection,

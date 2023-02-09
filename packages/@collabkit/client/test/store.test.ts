@@ -14,11 +14,11 @@ test('createWorkspace', () => {
     seenBy: {},
     threadInfo: {},
     threadProfiles: {},
-    fetchedProfiles: {},
     pendingThreads: {},
     pendingThreadInfo: {},
     openPins: {},
     eventPins: {},
+    computed: {},
   });
 });
 
@@ -29,6 +29,7 @@ test('createComposer', () => {
     enabled: false,
     isMentioning: false,
     pendingPin: null,
+    hasText: false,
   });
 });
 

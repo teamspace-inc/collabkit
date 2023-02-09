@@ -2,27 +2,33 @@ import { HideSidebarButtonTarget } from '@collabkit/core';
 import React, { useLayoutEffect, useState } from 'react';
 import { useSnapshot } from 'valtio';
 import { useApp } from '../hooks/useApp';
-import { useOptionalUserContext } from '../hooks/useUserContext';
+import { useOptionalUserContext } from '../hooks/useOptionalUserContext';
 import { IconButton } from './IconButton';
 import { Bell, ChatText, X } from './icons';
 import * as styles from '../theme/components/Sidebar.css';
 import { ThemeWrapper } from './ThemeWrapper';
+import { useOptionalWorkspaceContext } from '../hooks/useWorkspaceContext';
+import { useStore } from '../hooks/useStore';
 
 function CloseSidebarButton() {
   const { store, events } = useApp();
-  const userContext = useOptionalUserContext();
+  const userId = useOptionalUserContext();
+  const workspaceId = useOptionalWorkspaceContext();
 
   return (
     <IconButton
       onPointerDown={(e) => {
-        if (!userContext) {
+        if (!userId) {
           return null;
         }
-        store.callbacks?.onInboxCloseButtonClick?.(userContext);
+        if (!workspaceId) {
+          return null;
+        }
+        store.callbacks?.onInboxCloseButtonClick?.({ userId, workspaceId });
 
         const target: HideSidebarButtonTarget = {
           type: 'hideSidebarButton',
-          workspaceId: userContext.workspaceId,
+          workspaceId,
         };
 
         events.onPointerDown(e, { target });
@@ -44,7 +50,7 @@ export function Sidebar(props: {
   strategy?: 'fixed' | 'absolute';
 }) {
   const titleRef = React.useRef<HTMLDivElement>(null);
-  const { store } = useApp();
+  const store = useStore();
   const { isSidebarOpen: isSidebarOpen } = useSnapshot(store);
   const [inboxActive, setInboxActive] = useState(true);
 

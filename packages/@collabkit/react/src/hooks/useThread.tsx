@@ -10,6 +10,7 @@ export function useThreadSubscription(props: {
   const { store, threadId, workspaceId } = props;
   useEffect(() => {
     if (workspaceId && threadId) {
+      actions.initThread(store, { workspaceId, threadId });
       actions.subscribeThread(store, {
         workspaceId,
         threadId,

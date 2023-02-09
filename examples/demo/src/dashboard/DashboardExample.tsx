@@ -36,6 +36,21 @@ import { performance } from './data';
 import { Charts } from './Charts';
 import Flow from './Flow';
 
+import { useSnapshot } from 'valtio';
+import { dashboardStore } from '../App';
+
+export type DashboardStore = {
+  selectedKpi: string;
+  startDate: Date;
+  endDate: Date;
+  selectedTab: 'overview' | 'detail' | 'charts';
+  selectedNames: string[];
+  selectedStatus: string;
+};
+
+export const minDate = new Date(performance[0].date);
+export const maxDate = new Date(performance[performance.length - 1].date);
+
 type Kpi = {
   title: string;
   metric: string;
@@ -103,7 +118,7 @@ const dollarFormatter = (value: number) => `$ ${Intl.NumberFormat('us').format(v
 const numberFormatter = (value: number) => `${Intl.NumberFormat('us').format(value).toString()}`;
 
 function ChartView({ chartData }: { chartData: any }) {
-  const [selectedKpi, setSelectedKpi] = useState('Sales');
+  const { selectedKpi } = useSnapshot(dashboardStore);
 
   // map formatters by selectedKpi
   const formatters: { [key: string]: any } = {
@@ -132,7 +147,7 @@ function ChartView({ chartData }: { chartData: any }) {
           <Toggle
             color="zinc"
             defaultValue={selectedKpi}
-            handleSelect={(value) => setSelectedKpi(value)}
+            handleSelect={(value) => (dashboardStore.selectedKpi = value)}
           >
             <ToggleItem value="Sales" text="Sales" />
             <ToggleItem value="Profit" text="Profit" />
@@ -242,8 +257,7 @@ export const salesPeople: SalesPerson[] = [
 ];
 
 function TableView() {
-  const [selectedStatus, setSelectedStatus] = useState('all');
-  const [selectedNames, setSelectedNames] = useState<string[]>([]);
+  const { selectedStatus, selectedNames } = useSnapshot(dashboardStore);
 
   const isSalesPersonSelected = (salesPerson: SalesPerson) =>
     (salesPerson.status === selectedStatus || selectedStatus === 'all') &&
@@ -253,7 +267,7 @@ function TableView() {
     <Card marginTop="mt-6">
       <div className="sm:mt-6 hidden sm:flex sm:justify-start sm:space-x-2">
         <MultiSelectBox
-          handleSelect={(value) => setSelectedNames(value)}
+          handleSelect={(value) => (dashboardStore.selectedNames = value)}
           placeholder="Select Salespeople"
           maxWidth="max-w-xs"
         >
@@ -264,7 +278,7 @@ function TableView() {
         <Dropdown
           maxWidth="max-w-xs"
           defaultValue="all"
-          handleSelect={(value) => setSelectedStatus(value)}
+          handleSelect={(value) => (dashboardStore.selectedNames = value)}
         >
           <DropdownItem value="all" text="All Performances" />
           <DropdownItem value="overperforming" text="Overperforming" />
@@ -274,7 +288,7 @@ function TableView() {
       </div>
       <div className="mt-6 sm:hidden space-y-2 sm:space-y-0">
         <MultiSelectBox
-          handleSelect={(value) => setSelectedNames(value)}
+          handleSelect={(value) => (dashboardStore.selectedNames = value)}
           placeholder="Select Salespeople"
           maxWidth="max-w-full"
         >
@@ -285,7 +299,7 @@ function TableView() {
         <Dropdown
           maxWidth="max-w-full"
           defaultValue="all"
-          handleSelect={(value) => setSelectedStatus(value)}
+          handleSelect={(value) => (dashboardStore.selectedNames = value)}
         >
           <DropdownItem value="all" text="All Performances" />
           <DropdownItem value="overperforming" text="Overperforming" />
@@ -329,13 +343,9 @@ function TableView() {
   );
 }
 
-const minDate = new Date(performance[0].date);
-const maxDate = new Date(performance[performance.length - 1].date);
-
 export function DashboardExample() {
-  const [selectedView, setSelectedView] = useState(1);
-  const [startDate, setStartDate] = useState(minDate);
-  const [endDate, setEndDate] = useState(maxDate);
+  const snapshot = useSnapshot(dashboardStore);
+  const { selectedTab, startDate, endDate } = snapshot;
 
   const chartData = performance.filter((value) => {
     const date = new Date(value.date);
@@ -354,7 +364,7 @@ export function DashboardExample() {
               <Title>Dashboard</Title>
               <Text>View core metrics on the state of your company.</Text>
             </Block>
-            <div className="px-2">{/* <AddCommentButton /> */}</div>
+            <div className="px-2"></div>
             <Datepicker
               minDate={minDate}
               maxDate={maxDate}
@@ -362,33 +372,32 @@ export function DashboardExample() {
               defaultEndDate={maxDate}
               enableRelativeDates={false}
               handleSelect={(start, end) => {
-                setStartDate(start);
-                setEndDate(end);
+                dashboardStore.startDate = start;
+                dashboardStore.endDate = end;
               }}
               maxWidth="max-w-xs"
             />
           </Flex>
-
           <TabList
-            defaultValue={1}
-            handleSelect={(value) => setSelectedView(value)}
+            defaultValue={'overview'}
+            handleSelect={(tab) => (dashboardStore.selectedTab = tab)}
             marginTop="mt-6"
           >
-            <Tab value={1} text="Overview" />
-            <Tab value={2} text="Detail" />
-            <Tab value={3} text="Charts" />
-            <Tab value={4} text="Flowchart" />
+            <Tab value={'overview'} text="Overview" />
+            <Tab value={'detail'} text="Detail" />
+            <Tab value={'charts'} text="Charts" />
+            <Tab value={'flowchart'} text="Flowchart" />
           </TabList>
 
-          {selectedView === 1 && (
+          {selectedTab === 'overview' ? (
             <>
               <KpiCardGrid />
               <ChartView chartData={chartData} />
             </>
-          )}
-          {selectedView === 2 && <TableView />}
-          {selectedView === 3 && <Charts />}
-          {selectedView === 4 && <Flow />}
+          ) : null}
+          {selectedTab === 'detail' ? <TableView /> : null}
+          {selectedTab === 'charts' ? <Charts /> : null}
+          {selectedTab === 'flowchart' ? <Flow /> : null}
         </main>
         <div className="h-screen border" style={{ width: 360 }}>
           <Thread threadId="test123" />

@@ -14,6 +14,7 @@ import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
 import CommentList from './CommentList';
 import { ChannelContext } from '../hooks/useChannelContext';
 import { vars } from '../theme/theme/index.css';
+import { useStore } from '../hooks/useStore';
 
 function EmptyState() {
   return (
@@ -25,8 +26,8 @@ function EmptyState() {
 }
 
 function ChannelThread() {
-  const { threadId } = useThreadContext();
-  const { store } = useApp();
+  const threadId = useThreadContext();
+  const store = useStore();
   const workspace = useSnapshot(useWorkspaceStore());
   const { expandedThreadIds } = useSnapshot(store);
   const timeline = workspace.timeline[threadId];
@@ -98,7 +99,7 @@ function ChannelThreadList() {
 // for now there is one default channel per workspace
 // we may want to introduce channel ids in the future
 export function Channel() {
-  const { store } = useApp();
+  const store = useStore();
 
   // we should refactor this to a simpler hasAuthenticated check we can reuse, which guarantees
   // userId and workspaceId are present, we sort of have this with UnconfiguredStore and Store
@@ -128,9 +129,9 @@ export function Channel() {
     <Channel.Root channelId="default">
       <Channel.ThreadList />
       {nextThreadId ? (
-        <Thread.Provider threadId={nextThreadId} autoFocus={true} isNewThread={true}>
+        <Thread.Provider threadId={nextThreadId}>
           <div>
-            <Composer />
+            <Composer isNewThread={true} />
           </div>
         </Thread.Provider>
       ) : null}

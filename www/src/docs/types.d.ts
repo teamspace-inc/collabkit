@@ -1246,10 +1246,6 @@ type WithID<T> = T & {
   id: string;
 };
 
-type WithHasProfile<T> = T & {
-  hasProfile?: boolean;
-};
-
 type MentionProps = readonly Mention[] | 'allWorkspace';
 
 interface Mention extends BasicProfile {
@@ -1273,7 +1269,7 @@ interface Profile extends BasicProfile {
 }
 
 interface Timeline {
-  [eventId: string]: WithHasProfile<WithID<Event>>;
+  [eventId: string]: WithID<Event>;
 }
 
 interface Composer {
@@ -1302,7 +1298,7 @@ interface Workspace {
   profiles: { [userId: string]: boolean };
   name: string;
   openThreads: { [threadId: string]: { meta: ThreadMeta } };
-  inbox: { [threadId: string]: WithHasProfile<WithID<WithName<Event>>> };
+  inbox: { [threadId: string]: WithID<WithName<Event>> };
   timeline: { [threadId: string]: Timeline };
   composers: { [threadId: string]: Composer };
   seen: { [threadId: string]: string }; // lastSeenEventId

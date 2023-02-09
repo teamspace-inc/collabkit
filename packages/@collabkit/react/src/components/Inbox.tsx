@@ -10,6 +10,7 @@ import { emptyState } from '../theme/components/Thread.css';
 import { useOptionalSidebarContext } from './Sidebar';
 import { useInbox } from '../hooks/public/useInbox';
 import { Thread } from './Thread';
+import { useStore } from '../hooks/useStore';
 
 export function EmptyState() {
   return (
@@ -25,7 +26,7 @@ export function Inbox(props: {
   maxHeight?: string;
   threadIds?: string[];
 }) {
-  const { store } = useApp();
+  const store = useStore();
   const { workspaceId, userId } = useSnapshot(store);
 
   const threadIds = useInbox({ filter: 'open', threadIds: props.threadIds, latestFirst: true });

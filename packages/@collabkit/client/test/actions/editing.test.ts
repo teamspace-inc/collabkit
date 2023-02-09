@@ -18,7 +18,7 @@ test('startEditing', () => {
     treeId: nanoid(),
   };
   startEditing(store as Store, commentTarget);
-  expect(store.editingId).toBe(commentTarget);
+  expect(store.editingId).toStrictEqual(commentTarget);
   stopEditing(store as Store);
-  expect(store.editingId).toBe(null);
+  expect(store.editingId).toBeNull();
 });
