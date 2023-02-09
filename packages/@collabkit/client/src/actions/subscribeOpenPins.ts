@@ -74,7 +74,7 @@ export function subscribeOpenPins(store: Store) {
             id: pinId,
             workspaceId,
             objectId: decodedObjectId,
-            state: JSON.parse(state ?? '{}'),
+            state: state ? JSON.parse(state) : {},
           };
           workspace.eventPins[pin.eventId] = pin;
           workspace.openPins[decodedObjectId][pinId] = pin;

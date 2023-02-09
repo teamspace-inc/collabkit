@@ -37,15 +37,6 @@ export const dashboardStore = proxy<DashboardStore>({
 export default function App() {
   useUserParams();
   const { user } = useSnapshot(store);
-  const dashboardStore = proxy<DashboardStore>({
-    selectedKpi: 'Sales',
-    selectedStatus: 'all',
-    selectedNames: [],
-    selectedTab: 'overview',
-    startDate: minDate,
-    endDate: maxDate,
-  });
-
   return (
     <div>
       {!user ? (
@@ -159,17 +150,15 @@ function Demo() {
       // }}
       mentionableUsers={'allWorkspace'}
     >
-      <Router>
-        <Switch>
-          <Route path="/table" component={TableExample} />
-          <Route path="/custominbox" component={CustomInbox} />
-          <Route path="/reactflow" component={ReactFlowExample} />
-          <Route path="/dashboard" component={DashboardExample} />
-          <Route path="/" component={Home} />
-          <Route path="/thread" component={Home} />
-          <Route path="/logout" component={Logout} />
-        </Switch>
-      </Router>
+      <Switch>
+        <Route path="/table" component={TableExample} />
+        <Route path="/custominbox" component={CustomInbox} />
+        <Route path="/reactflow" component={ReactFlowExample} />
+        <Route path="/dashboard" component={DashboardExample} />
+        <Route path="/" component={Home} />
+        <Route path="/thread" component={Home} />
+        <Route path="/logout" component={Logout} />
+      </Switch>
     </CollabKitProvider>
   );
 }
