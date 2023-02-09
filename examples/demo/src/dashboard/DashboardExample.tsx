@@ -277,8 +277,8 @@ function TableView() {
         </MultiSelectBox>
         <Dropdown
           maxWidth="max-w-xs"
-          defaultValue="all"
-          handleSelect={(value) => (dashboardStore.selectedNames = value)}
+          value={selectedStatus}
+          handleSelect={(value) => (dashboardStore.selectedStatus = value)}
         >
           <DropdownItem value="all" text="All Performances" />
           <DropdownItem value="overperforming" text="Overperforming" />
@@ -298,8 +298,8 @@ function TableView() {
         </MultiSelectBox>
         <Dropdown
           maxWidth="max-w-full"
-          defaultValue="all"
-          handleSelect={(value) => (dashboardStore.selectedNames = value)}
+          value={selectedStatus}
+          handleSelect={(value) => (dashboardStore.selectedStatus = value)}
         >
           <DropdownItem value="all" text="All Performances" />
           <DropdownItem value="overperforming" text="Overperforming" />
