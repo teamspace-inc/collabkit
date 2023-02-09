@@ -1,4 +1,4 @@
-import { createWorkspace } from '@collabkit/client';
+import { createWorkspace, actions } from '@collabkit/client';
 import { internal_createStore as createStore, Config, Workspace } from '@collabkit/react';
 import { LocalOnlySync } from './LocalOnlySync';
 
@@ -16,6 +16,11 @@ export function createDemoStore(config: Config, defaultWorkspace: Partial<Worksp
   store.userId = 'anon';
   store.profiles = profiles as any;
   store.appId = 'demo';
+
+  Object.keys(workspaceStore.timeline).forEach((threadId) => {
+    actions.initThread(store, { workspaceId: 'acme', threadId });
+  });
+
   return store;
 }
 
