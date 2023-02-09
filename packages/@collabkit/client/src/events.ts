@@ -11,7 +11,6 @@ import type {
   ThreadTarget,
 } from '@collabkit/core';
 import { actions } from './actions';
-import { nanoid } from 'nanoid';
 
 export type Events = ReturnType<typeof createEvents>;
 
