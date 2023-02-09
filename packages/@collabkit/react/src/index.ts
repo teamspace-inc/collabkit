@@ -50,6 +50,7 @@ import { Commentable } from './components/Commentable';
 import { Markdown } from './components/Markdown';
 import { useThread } from './hooks/public/useThread';
 import { Debug } from './components/Debug';
+import { Channel } from './components/Channel';
 
 export {
   CollabKitProvider as Provider,
@@ -66,6 +67,7 @@ export {
   ThemeProvider,
   ThemeWrapper,
   Thread,
+  Channel,
   useCommentableRef,
   useUnreadCommentsCount as useUnreadCount,
   useUnreadThreadsCount,
