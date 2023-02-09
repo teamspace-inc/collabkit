@@ -1,5 +1,13 @@
 import { useCallback } from 'react';
-import ReactFlow, { Controls, Background, useNodesState, useEdgesState, addEdge, Connection, Edge } from 'reactflow';
+import ReactFlow, {
+  Controls,
+  Background,
+  useNodesState,
+  useEdgesState,
+  addEdge,
+  Connection,
+  Edge,
+} from 'reactflow';
 import CommentableNode from '../react-flow/CommentableNode';
 import ViewportListener from '../react-flow/ViewportListener';
 import 'reactflow/dist/base.css';
@@ -35,11 +43,19 @@ function Flow() {
     },
   ];
 
-  const initialEdges = [{ id: 'e1-2', source: '1', target: '2' }, { id: 'e1-3', source: '1', target: '3' }, { id: 'e1-4', source: '1', target: '4' }, { id: 'e2-4', source: '2', target: '4' }];
+  const initialEdges = [
+    { id: 'e1-2', source: '1', target: '2' },
+    { id: 'e1-3', source: '1', target: '3' },
+    { id: 'e1-4', source: '1', target: '4' },
+    { id: 'e2-4', source: '2', target: '4' },
+  ];
 
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
-  const onConnect = useCallback((params: Edge<any> | Connection) => setEdges((eds) => addEdge(params, eds)), []);
+  const onConnect = useCallback(
+    (params: Edge<any> | Connection) => setEdges((eds) => addEdge(params, eds)),
+    []
+  );
 
   return (
     <div className="flex h-screen">
@@ -52,7 +68,6 @@ function Flow() {
           edges={edges}
           onEdgesChange={onEdgesChange}
           onConnect={onConnect}
-          fitView
         >
           <ViewportListener />
           <Background />
