@@ -1,4 +1,5 @@
 import { Store, timelineUtils, WithID, Event } from '@collabkit/core';
+import { snapshot } from 'valtio';
 import { derive } from 'valtio/utils';
 
 export function initThread(store: Store, props: { workspaceId: string; threadId: string }) {
@@ -9,7 +10,7 @@ export function initThread(store: Store, props: { workspaceId: string; threadId:
   workspace.timeline[threadId] ||= {};
   workspace.threadProfiles[threadId] ||= {};
 
-  const timeline = workspace.timeline;
+  const { timeline } = workspace;
 
   workspace.computed[threadId] ||= derive({
     isResolved: (get) => timelineUtils.computeIsResolved(get(timeline)[threadId]),

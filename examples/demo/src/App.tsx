@@ -80,7 +80,6 @@ function Demo() {
   const name = pathname.slice(1);
   const theme: CustomTheme | undefined =
     name in themes ? themes[name as keyof typeof themes] : undefined;
-  // return <div>{JSON.stringify(user)}</div>;
   return (
     <CollabKitProvider
       _test={test}

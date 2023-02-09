@@ -30,7 +30,7 @@ import { PopoverEmojiPicker } from './PopoverEmojiPicker';
 import { Emoji } from './Emoji';
 import { useWorkspaceContext } from '../hooks/useWorkspaceContext';
 import { useUserContext } from '../hooks/useUserContext';
-import { useCommentStore } from '../hooks/useCommentStore';
+import { useCommentSnapshot } from '../hooks/useCommentSnapshot';
 
 type CommentRootProps = {
   commentId: string;
@@ -198,7 +198,7 @@ export function CommentSeeAllRepliesButton(props: React.ComponentPropsWithoutRef
 }
 
 export function CommentMarkdown() {
-  const { body } = useSnapshot(useCommentStore());
+  const { body } = useCommentSnapshot();
   const { callbacks } = useSnapshot(useApp().store);
   const canClickLinks = !!callbacks?.onMentionClick || !!callbacks?.onTimestampClick;
 
@@ -333,7 +333,7 @@ export function CommentPin(props: React.ComponentProps<'img'>) {
 }
 
 export function CommentEditor(props: React.ComponentProps<'div'>) {
-  const { body } = useSnapshot(useCommentStore());
+  const { body } = useCommentSnapshot();
 
   return (
     <Composer.Root
@@ -351,7 +351,7 @@ export function CommentEditor(props: React.ComponentProps<'div'>) {
 export function CommentTimestamp(
   props: React.ComponentProps<'time'> & { format?: (timestamp: number) => string }
 ) {
-  const { createdAt } = useSnapshot(useCommentStore());
+  const { createdAt } = useCommentSnapshot();
   return (
     <RawTimestamp
       data-testid="collabkit-comment-timestamp"
@@ -373,7 +373,7 @@ function CommentMenu(props: { className?: string }) {
   const threadId = useThreadContext();
   const workspaceId = useWorkspaceContext();
   const userId = useUserContext();
-  const { createdById } = useSnapshot(useCommentStore());
+  const { createdById } = useCommentSnapshot();
   const treeId = useTreeContext();
 
   const { isResolved } = useSnapshot(useWorkspaceStore().computed)[threadId];
