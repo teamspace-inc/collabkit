@@ -6,6 +6,6 @@ export function showPreview(store: Store, props: { target: Target }) {
   // for now to avoid doubling the re-renders we check if the target
   // is the same as the one we are already previewing
   if (!isEqual(store.previewingId, props.target)) {
-    store.previewingId = props.target;
+    store.previewingId = JSON.parse(JSON.stringify(props.target));
   }
 }
