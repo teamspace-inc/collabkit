@@ -68,7 +68,7 @@ test('createStore', () => {
     commentables: {},
     expandedThreadIds: [],
     pinsVisible: true,
-    dragPinObjectId: "",
+    dragPinObjectId: '',
     dragPinUpdate: [],
   });
 });
