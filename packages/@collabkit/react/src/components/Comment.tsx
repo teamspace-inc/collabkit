@@ -76,15 +76,15 @@ function CommentRoot({ commentId: eventId, indent = false, ...props }: CommentRo
 
   const { store, events } = useApp();
   const { menuId, reactingId, editingId } = useSnapshot(store);
-  const timeline = useSnapshot(useWorkspaceStore()).timeline[threadId];
+  const event = useSnapshot(useWorkspaceStore().computed[threadId]).canonicalEvents[eventId];
   const { profiles } = useSnapshot(store);
-  const event = timeline[eventId];
 
   // todo @nc: move this to events and make it a state in the store
   const isHovering =
     // hovering or the menu is open and the menu is for this comment
     useHovering(divRef) ||
-    (menuId?.type === 'menu' &&
+    (event &&
+      menuId?.type === 'menu' &&
       menuId.context?.type === 'comment' &&
       menuId.context.eventId === event.id) ||
     (reactingId?.type === 'commentActionsEmojiButton' && reactingId.eventId === eventId);
@@ -94,7 +94,6 @@ function CommentRoot({ commentId: eventId, indent = false, ...props }: CommentRo
   const isEditing = editingId?.eventId === eventId && editingId.treeId == treeId;
 
   if (!createdById) {
-    console.warn('CommentRoot: no createdById', { eventId });
     return null;
   }
 

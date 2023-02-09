@@ -13,7 +13,7 @@ import { useAppParams } from './hooks/useAppParams';
 import { useUserParams } from './hooks/useUserParams';
 import { userFromGoogleToken } from './hooks/userFromGoogleToken';
 import { useDocumentTitle } from './hooks/useDocumentTitle';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { DashboardExample, DashboardStore, maxDate, minDate } from './dashboard/DashboardExample';
 
 export const store = proxy<{ user: User | null }>(
@@ -75,7 +75,7 @@ function Demo() {
   const { user } = useSnapshot(store);
   const { apiKey, appId, workspaceId, workspaceName } = useAppParams();
   const test = useTestParams();
-
+  const prevStateRef = useRef<DashboardStore>();
   const [pathname] = useLocation();
   const name = pathname.slice(1);
   const theme: CustomTheme | undefined =
@@ -104,6 +104,17 @@ function Demo() {
             selectedTab: dashboardStore.selectedTab,
           };
         },
+        onPinClick: (props) => {
+          const state = props.state as DashboardStore;
+          if (state) {
+            if (state.selectedKpi) dashboardStore.selectedKpi = state.selectedKpi;
+            if (state.selectedStatus) dashboardStore.selectedStatus = state.selectedStatus;
+            if (state.selectedNames) dashboardStore.selectedNames = state.selectedNames;
+            if (state.selectedTab) dashboardStore.selectedTab = state.selectedTab;
+          }
+        },
+        onPinUnhover: (props) => {},
+        onPinDeselect: (props) => {},
         // onInboxThreadClick: (data) => {
         //   // defining this overrides the default action for clicking an inbox item
         //   console.log('inbox thread, click', data);

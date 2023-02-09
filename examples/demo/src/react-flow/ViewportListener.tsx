@@ -1,19 +1,15 @@
 import { useApp } from '../../../../packages/@collabkit/react/src/hooks/useApp';
 import { useCallback, useEffect, useState } from 'react';
-import {
-  useNodes,
-  useNodesState,
-  useOnViewportChange,
-  useReactFlow,
-  useUpdateNodeInternals,
-  Viewport,
-} from 'reactflow';
+import { useNodes, useOnViewportChange, useReactFlow, Viewport } from 'reactflow';
 
 function ViewportListener() {
   const { events, store } = useApp();
   const nodes = useNodes();
+  const reactFlowInstance = useReactFlow();
+  const viewport = reactFlowInstance.getViewport();
   const [dragging, setDragging] = useState(false);
   const [draggingId, setDraggingId] = useState('');
+  let lastViewport: Viewport | null = null;
   useEffect(() => {
     let dragging = false;
     nodes.map((node) => {
@@ -39,6 +35,13 @@ function ViewportListener() {
       events.onReactFlowNodeDrag({ state: 'stop', pinObjectId: draggingId });
     }
   }, [dragging, draggingId]);
+
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      events.onReactFlowViewportChange({ state: 'stop' });
+    }, 200)
+    return () => clearTimeout(delayDebounceFn)
+  }, [viewport]);
 
   useOnViewportChange({
     onStart: useCallback((viewport: Viewport) => {

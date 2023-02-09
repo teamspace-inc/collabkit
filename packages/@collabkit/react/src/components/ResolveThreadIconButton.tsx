@@ -4,13 +4,14 @@ import { ThreadResolveButtonTarget } from '@collabkit/core';
 import { useThreadContext } from '../hooks/useThreadContext';
 import { IconButton } from './IconButton';
 import { CheckCircle } from './icons';
+import { useWorkspaceContext } from '../hooks/useWorkspaceContext';
 
 export function ResolveThreadIconButton(props: {
   className?: string;
   style?: React.CSSProperties;
 }) {
   const { events } = useApp();
-  const workspaceId = useThreadContext();
+  const workspaceId = useWorkspaceContext();
   const threadId = useThreadContext();
 
   const target: ThreadResolveButtonTarget = {

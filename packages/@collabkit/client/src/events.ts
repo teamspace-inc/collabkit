@@ -11,7 +11,6 @@ import type {
   ThreadTarget,
 } from '@collabkit/core';
 import { actions } from './actions';
-import { nanoid } from 'nanoid';
 
 export type Events = ReturnType<typeof createEvents>;
 
@@ -359,13 +358,16 @@ export function createEvents(store: Store) {
       }
     },
 
-    onReactFlowViewportChange: ({ state }: { state: 'start' | 'stop' }) => {
+    onReactFlowViewportChange: ({ state }: { state: 'start' | 'stop' | 'change' }) => {
       switch (state) {
         case 'start':
           actions.setPinVisibility({ store, visibility: false });
           break;
         case 'stop':
           actions.setPinVisibility({ store, visibility: true });
+          break;
+        case 'change':
+          actions.setPinVisibility({ store, visibility: false });
           break;
       }
     },

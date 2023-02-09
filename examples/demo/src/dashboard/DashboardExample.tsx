@@ -277,8 +277,8 @@ function TableView() {
         </MultiSelectBox>
         <Dropdown
           maxWidth="max-w-xs"
-          defaultValue="all"
-          handleSelect={(value) => (dashboardStore.selectedNames = value)}
+          value={selectedStatus}
+          handleSelect={(value) => (dashboardStore.selectedStatus = value)}
         >
           <DropdownItem value="all" text="All Performances" />
           <DropdownItem value="overperforming" text="Overperforming" />
@@ -298,8 +298,8 @@ function TableView() {
         </MultiSelectBox>
         <Dropdown
           maxWidth="max-w-full"
-          defaultValue="all"
-          handleSelect={(value) => (dashboardStore.selectedNames = value)}
+          value={selectedStatus}
+          handleSelect={(value) => (dashboardStore.selectedStatus = value)}
         >
           <DropdownItem value="all" text="All Performances" />
           <DropdownItem value="overperforming" text="Overperforming" />
@@ -365,7 +365,7 @@ export function DashboardExample() {
               <Text>View core metrics on the state of your company.</Text>
             </Block>
             <div className="px-2"></div>
-            <Datepicker
+            {/* <Datepicker
               minDate={minDate}
               maxDate={maxDate}
               defaultStartDate={minDate}
@@ -376,7 +376,7 @@ export function DashboardExample() {
                 dashboardStore.endDate = end;
               }}
               maxWidth="max-w-xs"
-            />
+            /> */}
           </Flex>
           <TabList
             defaultValue={'overview'}
@@ -385,8 +385,8 @@ export function DashboardExample() {
           >
             <Tab value={'overview'} text="Overview" />
             <Tab value={'detail'} text="Detail" />
-            <Tab value={'charts'} text="Charts" />
             <Tab value={'flowchart'} text="Flowchart" />
+            {/* <Tab value={'charts'} text="Charts" /> */}
           </TabList>
 
           {selectedTab === 'overview' ? (
@@ -400,7 +400,7 @@ export function DashboardExample() {
           {selectedTab === 'flowchart' ? <Flow /> : null}
         </main>
         <div className="h-screen border" style={{ width: 360 }}>
-          <Thread threadId="test123" />
+          <Thread threadId="newdemo" />
         </div>
       </div>
     </Commentable.Root>

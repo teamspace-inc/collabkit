@@ -1,4 +1,5 @@
 import { PinTarget, Store, Target } from '@collabkit/core';
+import { actions } from '..';
 
 export function hover(store: Store, props: { target: Target }) {
   // we don't want to trigger the hover callback if we're selecting a pin
@@ -27,6 +28,7 @@ export function hover(store: Store, props: { target: Target }) {
           threadId: target.threadId,
           state: pin.state ?? {},
         });
+        actions.select(store, { target: pinTarget });
       }
     }
   }

@@ -79,6 +79,18 @@ export type Callbacks = {
     objectId: string;
     state: object;
   }) => void;
+  onPinUnhover?: (data: {
+    userId: string;
+    workspaceId: string;
+    threadId: string;
+    objectId: string;
+  }) => void;
+  onPinDeselect?: (data: {
+    userId: string;
+    workspaceId: string;
+    threadId: string;
+    objectId: string;
+  }) => void;
   onPinAttach?: (data: {
     userId: string;
     threadId: string;

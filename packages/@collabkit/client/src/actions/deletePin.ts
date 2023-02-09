@@ -1,5 +1,6 @@
 import type { Store } from '@collabkit/core';
 import { getConfig } from '.';
+import { deleteMessage } from './deleteMessage';
 
 export async function deletePin(
   store: Store,
@@ -21,6 +22,6 @@ export async function deletePin(
   }
 
   if (pin) {
-    await store.sync.deletePin({ appId, ...pin, pinId: pin.id });
+    await deleteMessage(store, { workspaceId, threadId: props.threadId, eventId: pin.eventId });
   }
 }
