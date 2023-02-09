@@ -18,7 +18,6 @@ import { ThreadDoc } from './components/ThreadDoc';
 import { UseUnreadCommentsCountDoc } from './hooks/useUnreadCommentsCountDoc';
 import { UseUnreadThreadsCountDoc } from './hooks/useUnreadThreadsCountDoc';
 import { CustomisationDoc } from './CustomisationDoc';
-import { UseInboxDoc } from './hooks/useInboxDoc';
 import { Doc } from './Doc';
 import { WorkspacesDoc } from './WorkspacesDoc';
 import { SecureModeDoc } from './SecureModeDoc';
@@ -86,13 +85,12 @@ export const DOCS: RootDocNode = {
   'Api Reference': {
     title: 'HTTP API',
     children: {
-      'CreateComment': { component: CommentAPI },
-    }
+      CreateComment: { component: CommentAPI },
+    },
   },
   'Advanced Customisation': {
     title: 'Advanced Customisation',
     children: {
-      useInbox: { component: UseInboxDoc },
       ['Thread.Provider']: { component: AdvancedThreadProviderDoc },
       Comment: { component: CommentDoc },
       Profile: { component: ProfileDoc },
@@ -142,12 +140,12 @@ export type RootDocNode = {
 
 export type DocNode =
   | {
-    component: React.FunctionComponent;
-  }
+      component: React.FunctionComponent;
+    }
   | {
-    title: string;
-    children: RootDocNode;
-  }
+      title: string;
+      children: RootDocNode;
+    }
   | { isEmpty: boolean };
 
 type RelatedNodeReturnValue = {

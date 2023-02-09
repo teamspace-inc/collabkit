@@ -87,10 +87,10 @@ export function createEvents(store: Store) {
           actions.deletePin(store, target.pin);
           return;
         case 'commentDeleteButton':
-          actions.deleteMessage(store, target.comment);
+          actions.deleteMessage(store, target);
           break;
         case 'commentEditButton':
-          actions.startEditing(store, target.comment);
+          actions.startEditing(store, target);
           break;
         case 'reopenThreadButton': {
           actions.reopenThread(store, target);
@@ -189,7 +189,10 @@ export function createEvents(store: Store) {
           if (store.focusedId.eventId === 'default') {
             actions.sendMessage(store, { ...store.focusedId });
             if (store.focusedId.isNewThread) {
-              store.nextThreadId = nanoid();
+              store.nextThreadId = store.sync.nextThreadId({
+                workspaceId: store.workspaceId!,
+                appId: store.appId!,
+              });
               store.focusedId.threadId = store.nextThreadId;
             }
           }

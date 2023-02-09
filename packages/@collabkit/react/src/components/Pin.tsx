@@ -140,7 +140,7 @@ export const PinCursor = forwardRef<HTMLDivElement, { isSelected: boolean }>(fun
   props,
   ref
 ) {
-  const { userId } = useUserContext();
+  const userId = useUserContext();
   return (
     <Profile.Provider profileId={userId}>
       <div

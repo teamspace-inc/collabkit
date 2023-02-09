@@ -22,15 +22,17 @@ export async function subscribeProfile(
   store.subs[profileRef.toString()] ||= onValue(
     profileRef,
     (profileSnapshot) => {
+      // console.log('subscribeProfile');
       const profile = snapshotToProfile(profileSnapshot);
       // todo validate profile data here
       if (profile) {
         store.profiles[id] = ensureColor(profile);
         if (store.config.mentionableUsers === 'allWorkspace') {
-          // console.log('mentionableUsers: id', id, 'profile', profile);
           store.mentionableUsers[id] = profile;
         }
         props.onSubscribe(profile);
+      } else {
+        console.warn('profile not found');
       }
     },
     onError

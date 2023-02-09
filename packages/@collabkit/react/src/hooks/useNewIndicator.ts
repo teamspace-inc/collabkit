@@ -1,21 +1,22 @@
-import { timelineUtils } from '@collabkit/core';
 import { useEffect, useState } from 'react';
-import { useTimeline } from '../hooks/useTimeline';
-import { useUserContext } from '../hooks/useUserContext';
+import { useUserContext } from './useUserContext';
 import { useWindowFocus } from '../hooks/useWindowFocus';
 import { useSeenUntil } from './useSeenUntil';
+import { useThreadContext } from './useThreadContext';
+import { useWorkspaceStore } from './useWorkspaceStore';
+import { useSnapshot } from 'valtio';
 
 export function useNewIndicator() {
-  const { userId } = useUserContext();
-  const timeline = useTimeline();
+  const userId = useUserContext();
+  const threadId = useThreadContext();
+  const { messageEvents } = useSnapshot(useWorkspaceStore().computed)[threadId] ?? {};
   const seenUntil = useSeenUntil();
-  const messageEvents = timelineUtils.messageEvents(timeline ?? {});
 
   const [newIndicatorId, setNewIndicatorId] = useState<string | null>(null);
   const isWindowFocused = useWindowFocus();
 
   useEffect(() => {
-    if (userId) {
+    if (userId && messageEvents) {
       if (!isWindowFocused && !newIndicatorId) {
         const newEventId =
           messageEvents.find((event) => event.createdById !== userId && event.id > seenUntil!)
@@ -32,7 +33,7 @@ export function useNewIndicator() {
         }
       }
     }
-  }, [newIndicatorId, isWindowFocused, seenUntil, userId, messageEvents.length]);
+  }, [newIndicatorId, isWindowFocused, seenUntil, userId, messageEvents?.length]);
 
   return newIndicatorId;
 }

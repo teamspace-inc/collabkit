@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useApp } from '../hooks/useApp';
 import { ThreadInfo } from '@collabkit/core';
+import { useStore } from './useStore';
 
 // we save this and then write it to firebase
 // in sendMessage, to avoid constantly
@@ -12,7 +13,7 @@ export function useSaveThreadInfo(props: {
   defaultSubscribers?: string[];
 }) {
   const { workspaceId, threadId, info, defaultSubscribers } = props;
-  const { store } = useApp();
+  const store = useStore();
 
   useEffect(() => {
     if (!workspaceId) {

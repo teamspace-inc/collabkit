@@ -1,10 +1,10 @@
 import { ObjectProps } from '@collabkit/core';
 import { useSnapshot } from 'valtio';
-import { useApp } from './useApp';
+import { useStore } from './useStore';
 
 export function useExistingThreadId(props: ObjectProps) {
   const { objectId } = props;
-  const { store } = useApp();
+  const store = useStore();
   const { workspaces, workspaceId } = useSnapshot(store);
   const workspace = workspaceId ? workspaces[workspaceId] : null;
   const objects = workspace ? workspace.objects : null;

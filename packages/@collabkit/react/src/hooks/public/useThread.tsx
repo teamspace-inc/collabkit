@@ -1,12 +1,12 @@
 import { useSnapshot } from 'valtio';
 import { ThreadProps } from '../../types';
-import { useApp } from '../useApp';
 import { useSaveThreadInfo } from '../useSaveThreadInfo';
+import { useStore } from '../useStore';
 import { useThreadSubscription } from '../useThread';
 
 export function useThread(props: ThreadProps) {
   const { threadId, info, defaultSubscribers } = props;
-  const { store } = useApp();
+  const store = useStore();
   const { userId, workspaceId } = useSnapshot(store);
 
   useThreadSubscription({ store, threadId, workspaceId });

@@ -1,16 +1,16 @@
 import { useMemo } from 'react';
-import { useApp } from '../hooks/useApp';
 import { useSnapshot } from 'valtio';
 import { ObjectProps, ThreadTarget } from '@collabkit/core';
 import { useExistingThreadId } from './useExistingThreadId';
 import { usePendingThreadId } from './usePendingThreadId';
 import { useSaveThreadInfo } from './useSaveThreadInfo';
 import { usePopover } from './usePopover';
+import { useStore } from './useStore';
 
 export type PopoverState = 'open' | 'preview' | 'closed';
 
 export function usePopoverThread(props: ObjectProps) {
-  const { store } = useApp();
+  const store = useStore();
   const { objectId, objectName, objectUrl } = props;
   const { workspaceId, viewingId, previewingId } = useSnapshot(store);
 

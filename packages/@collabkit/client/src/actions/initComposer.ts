@@ -11,13 +11,13 @@ export function initComposer(
 
   if (!composers[threadId][eventId]) {
     composers[threadId][eventId] = createComposer();
+  }
 
-    if (store.workspaces[workspaceId].eventPins[eventId]) {
-      composers[threadId][eventId].pendingPin = {
-        ...store.workspaces[workspaceId].eventPins[eventId],
-        isPending: true,
-      };
-    }
+  if (store.workspaces[workspaceId].eventPins[eventId]) {
+    composers[threadId][eventId].pendingPin = {
+      ...store.workspaces[workspaceId].eventPins[eventId],
+      isPending: true,
+    };
   }
 
   return composers[threadId][eventId];

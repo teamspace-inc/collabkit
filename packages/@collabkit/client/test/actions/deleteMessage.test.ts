@@ -13,6 +13,8 @@ import { Store } from '@collabkit/core';
 import { deleteMessage } from '../../src/actions/deleteMessage';
 import { getTimeline } from '../../src/sync/firebase/getTimeline';
 import { initComposer } from '../../src/actions/initComposer';
+import { initThread } from '../../src/actions/initThread';
+import { proxy } from 'valtio/vanilla';
 
 setupFirebase();
 
@@ -25,7 +27,7 @@ test('deleteMessage', async () => {
   await setupProfile({ appId, userId });
 
   await setupWorkspaceProfile({ appId, workspaceId, userId });
-  const store = createStore();
+  const store = proxy(createStore());
   store.userId = userId;
   store.workspaceId = workspaceId;
   store.workspaces[workspaceId] = createWorkspace();
@@ -48,7 +50,7 @@ test('deleteMessage', async () => {
   );
 
   const threadId = nanoid();
-
+  initThread(store as Store, { workspaceId, threadId });
   initComposer(store, { workspaceId, threadId, eventId: 'default' });
   store.workspaces[workspaceId].timeline[threadId] = {};
 

@@ -1,16 +1,17 @@
-import { useOptionalCommentContext } from './useCommentContext';
+import { createComposer } from '../../../client/src/store';
+import { useDefaultCommentContext } from './useCommentContext';
+import { useThreadContext } from './useThreadContext';
 import { useWorkspaceStore } from './useWorkspaceStore';
 
 export function useComposerStore() {
-  const composerStore = useOptionalComposerStore();
-  if (!composerStore) {
-    throw new Error('[useComposerStore] Composer not found');
-  }
-  return composerStore;
-}
-
-export function useOptionalComposerStore() {
   const workspaceStore = useWorkspaceStore();
-  const { eventId } = useOptionalCommentContext() ?? { eventId: 'default' };
-  return workspaceStore.composers[eventId];
+  const eventId = useDefaultCommentContext();
+  const threadId = useThreadContext();
+  if (!workspaceStore.composers[threadId]) {
+    workspaceStore.composers[threadId] = {};
+  }
+  if (!workspaceStore.composers[threadId][eventId]) {
+    workspaceStore.composers[threadId][eventId] = createComposer();
+  }
+  return workspaceStore.composers[threadId][eventId];
 }

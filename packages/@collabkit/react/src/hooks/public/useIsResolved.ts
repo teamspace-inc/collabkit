@@ -1,7 +1,9 @@
-import { timelineUtils } from '@collabkit/core';
-import { useTimeline } from '../useTimeline';
+import { useSnapshot } from 'valtio';
+import { useThreadContext } from '../useThreadContext';
+import { useWorkspaceStore } from '../useWorkspaceStore';
 
 export function useIsResolved() {
-  const timeline = useTimeline();
-  return timeline ? timelineUtils.computeIsResolved(timeline) : false;
+  const threadId = useThreadContext();
+  const { isResolved } = useSnapshot(useWorkspaceStore()).computed[threadId];
+  return isResolved ?? false;
 }
