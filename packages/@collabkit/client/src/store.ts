@@ -78,6 +78,9 @@ export function createStore(): UnconfiguredStore {
     clientY: 0,
     commentables: {},
     expandedThreadIds: [],
+    pinsVisible: true,
+    dragPinObjectId: '',
+    dragPinUpdate: [],
   };
   return store;
 }

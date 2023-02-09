@@ -34,6 +34,7 @@ import { Commentable, Thread, useCommentableRef } from '@collabkit/react';
 
 import { performance } from './data';
 import { Charts } from './Charts';
+import Flow from './Flow';
 
 import { useSnapshot } from 'valtio';
 import { dashboardStore } from '../App';
@@ -42,7 +43,7 @@ export type DashboardStore = {
   selectedKpi: string;
   startDate: Date;
   endDate: Date;
-  selectedTab: 'overview' | 'detail' | 'charts';
+  selectedTab: 'overview' | 'detail' | 'charts' | 'flowchart';
   selectedNames: string[];
   selectedStatus: string;
 };
@@ -385,6 +386,7 @@ export function DashboardExample() {
             <Tab value={'overview'} text="Overview" />
             <Tab value={'detail'} text="Detail" />
             <Tab value={'charts'} text="Charts" />
+            <Tab value={'flowchart'} text="Flowchart" />
           </TabList>
 
           {selectedTab === 'overview' ? (
@@ -395,6 +397,7 @@ export function DashboardExample() {
           ) : null}
           {selectedTab === 'detail' ? <TableView /> : null}
           {selectedTab === 'charts' ? <Charts /> : null}
+          {selectedTab === 'flowchart' ? <Flow /> : null}
         </main>
         <div className="h-screen border" style={{ width: 360 }}>
           <Thread threadId="test123" />

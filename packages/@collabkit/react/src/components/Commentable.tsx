@@ -30,7 +30,7 @@ export function CommentableRoot(props: { className?: string; children?: React.Re
   const hoveredElementRef = useRef<HTMLElement | SVGElement | null>(null);
   const store = useStore();
   const { events } = useApp();
-  const { userId, uiState, workspaceId, allPins, selectedId } = useSnapshot(store);
+  const { userId, uiState, workspaceId, allPins, selectedId, pinsVisible } = useSnapshot(store);
 
   useEffect(() => {
     store.isPinningEnabled = true;
@@ -103,16 +103,16 @@ export function CommentableRoot(props: { className?: string; children?: React.Re
     </>
   );
 
-  const savedPins = allPins
+  const savedPins = pinsVisible && allPins
     ? allPins.map((pin) => {
-        return (
-          <SavedPin
-            key={pin.id}
-            pin={pin}
-            isSelected={selectedId?.type === 'pin' && selectedId.id === pin.id}
-          />
-        );
-      })
+      return (
+        <SavedPin
+          key={pin.id}
+          pin={pin}
+          isSelected={selectedId?.type === 'pin' && selectedId.id === pin.id}
+        />
+      );
+    })
     : [];
 
   return (

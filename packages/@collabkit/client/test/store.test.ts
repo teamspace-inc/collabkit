@@ -68,5 +68,8 @@ test('createStore', () => {
     composerId: null,
     commentables: {},
     expandedThreadIds: [],
+    pinsVisible: true,
+    dragPinObjectId: '',
+    dragPinUpdate: [],
   });
 });

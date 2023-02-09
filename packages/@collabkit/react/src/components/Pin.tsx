@@ -35,7 +35,7 @@ export function SavedPin({
   pin: WithID<Pin> & { objectId: string };
 }) {
   const store = useStore();
-  const { reference, floating, strategy, x, y } = useFloating({
+  const { update, reference, floating, strategy, x, y, refs } = useFloating({
     placement: 'top-start',
     middleware: [
       offset(({ rects }) => ({
@@ -45,6 +45,14 @@ export function SavedPin({
     ],
     whileElementsMounted: autoUpdate,
   });
+  
+  const { dragPinObjectId } = useSnapshot(store);
+
+  useEffect(() => {
+    if (dragPinObjectId == pin.objectId) {
+      store.dragPinUpdate.push(update);
+    }
+  }, [dragPinObjectId]);
 
   const { commentables } = useSnapshot(store);
 

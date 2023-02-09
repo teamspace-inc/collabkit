@@ -13,6 +13,7 @@ import { closePreview } from './closePreview';
 import { collapseThread } from './collapseThread';
 import { deleteMessage } from './deleteMessage';
 import { deletePin } from './deletePin';
+import { dragPin } from './dragPin';
 import { deselectAll } from './deselectAll';
 import { expandThread } from './expandThread';
 import { focus } from './focus';
@@ -27,6 +28,7 @@ import { isTyping } from './isTyping';
 import { monitorConnection } from './monitorConnection';
 import { movePin } from './movePin';
 import { openMenu } from './openMenu';
+import { setPinVisibility } from './pinsVisible';
 import { reopenThread } from './reopenThread';
 import { resolveThread } from './resolveThread';
 import { saveMentionableUsers } from './saveMentionableUsers';
@@ -137,6 +139,7 @@ export const actions = {
   deleteMessage,
   deletePin,
   deselectAll,
+  dragPin,
   expandThread,
   focus,
   focusComposer,
@@ -150,6 +153,7 @@ export const actions = {
   monitorConnection,
   movePin,
   openMenu,
+  setPinVisibility,
   reopenThread,
   resolveThread,
   saveMentionableUsers,
