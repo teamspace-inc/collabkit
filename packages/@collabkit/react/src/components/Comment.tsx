@@ -94,7 +94,6 @@ function CommentRoot({ commentId: eventId, indent = false, ...props }: CommentRo
   const isEditing = editingId?.eventId === eventId && editingId.treeId == treeId;
 
   if (!createdById) {
-    console.warn('CommentRoot: no createdById', { eventId });
     return null;
   }
 
