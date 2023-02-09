@@ -355,5 +355,33 @@ export function createEvents(store: Store) {
           throw new Error(`invalid popover state: ${state}`);
       }
     },
+
+    onReactFlowViewportChange: ({ state }: { state: 'start' | 'stop' }) => {
+      switch (state) {
+        case 'start':
+          actions.setPinVisibility({ store, visibility: false });
+          break;
+        case 'stop':
+          actions.setPinVisibility({ store, visibility: true });
+          break;
+      }
+    },
+
+    onReactFlowNodeDrag: ({
+      state,
+      pinObjectId,
+    }: {
+      state: 'start' | 'stop';
+      pinObjectId: string;
+    }) => {
+      switch (state) {
+        case 'start':
+          actions.dragPin({ store, pinObjectId: pinObjectId, visibility: false });
+          break;
+        case 'stop':
+          actions.dragPin({ store, pinObjectId: pinObjectId, visibility: true });
+          break;
+      }
+    },
   };
 }

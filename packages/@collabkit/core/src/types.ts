@@ -529,6 +529,9 @@ export interface UnconfiguredStore {
   clientY: number;
   commentables: { [objectId: string]: CommentableObject };
   expandedThreadIds: string[];
+  pinsVisible: boolean;
+  dragPinObjectId: string;
+  dragPinUpdate: Function[];
 }
 
 export interface Store extends UnconfiguredStore {

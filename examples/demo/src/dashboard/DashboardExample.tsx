@@ -34,6 +34,7 @@ import { Commentable, Thread, useCommentableRef } from '@collabkit/react';
 
 import { performance } from './data';
 import { Charts } from './Charts';
+import Flow from './Flow';
 
 type Kpi = {
   title: string;
@@ -376,6 +377,7 @@ export function DashboardExample() {
             <Tab value={1} text="Overview" />
             <Tab value={2} text="Detail" />
             <Tab value={3} text="Charts" />
+            <Tab value={4} text="Flowchart" />
           </TabList>
 
           {selectedView === 1 && (
@@ -386,6 +388,7 @@ export function DashboardExample() {
           )}
           {selectedView === 2 && <TableView />}
           {selectedView === 3 && <Charts />}
+          {selectedView === 4 && <Flow />}
         </main>
         <div className="h-screen border" style={{ width: 360 }}>
           <Thread threadId="test123" />
