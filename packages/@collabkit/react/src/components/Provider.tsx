@@ -4,7 +4,7 @@ import { AppContext } from '../hooks/useAppContext';
 import { createValtioStore } from '../store';
 import { FirebaseSync } from '@collabkit/client';
 import { SaveMentionableUsers } from './SaveMentionableUsers';
-import { FloatingTree } from '@floating-ui/react-dom-interactions';
+import { FloatingTree } from '@floating-ui/react';
 import { AuthenticatedContext } from './AuthenticatedContext';
 import { CustomTheme } from '../theme/themes.css';
 import { ThemeProvider } from './ThemeContext';

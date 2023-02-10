@@ -30,7 +30,7 @@ import {
   FloatingContext,
   ElementProps,
   ReferenceType,
-} from '@floating-ui/react-dom-interactions';
+} from '@floating-ui/react';
 import { ThemeWrapper } from './ThemeWrapper';
 import { useApp } from '../hooks/useApp';
 import { useSnapshot } from 'valtio';

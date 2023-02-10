@@ -20,7 +20,7 @@ import {
   useHover,
   useInteractions,
   VirtualElement,
-} from '@floating-ui/react-dom-interactions';
+} from '@floating-ui/react';
 
 import { mergeRefs } from 'react-merge-refs';
 import { ThemeWrapper } from './ThemeWrapper';
