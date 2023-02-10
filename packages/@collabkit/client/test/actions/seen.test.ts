@@ -52,7 +52,7 @@ test('seen', async () => {
     workspaceId,
     threadId,
     userId,
-    preview: 'Hello world',
+    body: 'Hello world',
     event: {
       type: 'message',
       body: 'Hello world',
@@ -68,7 +68,7 @@ test('seen', async () => {
     workspaceId,
     threadId,
     userId,
-    preview: 'Hello world',
+    body: 'Hello world',
     event: {
       type: 'message',
       body: 'Hello world',

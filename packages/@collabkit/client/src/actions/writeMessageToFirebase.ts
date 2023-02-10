@@ -44,14 +44,13 @@ export async function writeMessageToFirebase(
     workspaceId: string;
     threadId: string;
     body: string;
-    preview: string;
     parentId?: string;
     type: 'message' | 'reaction' | 'edit';
     mentions?: string[];
     pin?: Pin | null;
   }
 ) {
-  const { type, workspaceId, threadId, body, preview, parentId, mentions, pin } = props;
+  const { type, workspaceId, threadId, body, parentId, mentions, pin } = props;
 
   if (store.isReadOnly) {
     console.warn('CollabKit: cannot send message in read-only mode');
@@ -103,7 +102,7 @@ export async function writeMessageToFirebase(
         userId,
         workspaceId,
         threadId,
-        preview,
+        body,
         event,
         eventId,
       });

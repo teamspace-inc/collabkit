@@ -31,7 +31,6 @@ export async function toggleEmoji(store: Store, props: { target: EmojiTarget }) 
       body,
       type: 'reaction',
       // todo write different preview message here
-      preview: body,
       parentId: eventId,
     });
   } catch (e) {

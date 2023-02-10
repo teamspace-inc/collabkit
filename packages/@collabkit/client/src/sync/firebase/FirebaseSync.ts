@@ -440,7 +440,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
     userId,
     workspaceId,
     threadId,
-    preview,
+    body,
     event,
     eventId,
     pin,
@@ -449,7 +449,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
     userId: string;
     workspaceId: string;
     threadId: string;
-    preview: string;
+    body: string;
     event: Event;
     eventId: string;
     pin?: Pin | null;
@@ -460,7 +460,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
         userId,
         workspaceId,
         threadId,
-        preview,
+        body,
         event,
       });
     // generate an id for the message
@@ -471,7 +471,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
       [ref.path`/views/inbox/${appId}/${workspaceId}/${threadId}`]: {
         ...eventToObject(event),
         id: eventId,
-        body: preview,
+        body,
         name: threadId,
         mentions: event.mentions ?? null,
       },

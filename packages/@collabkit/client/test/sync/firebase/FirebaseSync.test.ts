@@ -126,7 +126,7 @@ describe('FirebaseSync', async () => {
       userId,
       workspaceId,
       threadId,
-      preview: 'Test Message',
+      body: 'Test Message',
       event: {
         type: 'message',
         body: 'Test Message',
@@ -222,7 +222,7 @@ describe('FirebaseSync', async () => {
         userId,
         workspaceId,
         threadId,
-        preview: 'Test Message',
+        body: 'Test Message',
         event: {
           type: 'message',
           body: 'Test Message',
@@ -379,7 +379,7 @@ describe('FirebaseSync', async () => {
       userId,
       workspaceId,
       threadId,
-      preview: 'Test Message',
+      body: 'Test Message',
       event: {
         type: 'message',
         body: 'Test Message',
@@ -435,7 +435,7 @@ describe('FirebaseSync', async () => {
       userId,
       workspaceId,
       threadId,
-      preview: 'Test Message',
+      body: 'Test Message',
       event: {
         type: 'message',
         body: 'Test Message',

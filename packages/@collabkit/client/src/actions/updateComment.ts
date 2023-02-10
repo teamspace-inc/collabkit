@@ -26,7 +26,6 @@ export async function updateComment(store: Store) {
     workspaceId,
     threadId,
     body,
-    preview: body,
     mentions,
     type: 'edit',
     parentId: eventId,
