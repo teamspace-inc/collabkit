@@ -39,7 +39,7 @@ import {
   size,
   useFloating,
   useFloatingNodeId,
-} from '@floating-ui/react-dom-interactions';
+} from '@floating-ui/react';
 import { ThemeWrapper } from '../ThemeWrapper';
 import Profile from '../Profile';
 import { Scrollable } from '../Scrollable';

@@ -30,7 +30,7 @@ import {
   FloatingContext,
   ElementProps,
   ReferenceType,
-} from '@floating-ui/react-dom-interactions';
+} from '@floating-ui/react';
 import { ThemeWrapper } from './ThemeWrapper';
 import { useApp } from '../hooks/useApp';
 import { useSnapshot } from 'valtio';
@@ -159,7 +159,9 @@ export function Menu<ItemType>(props: Props<ItemType>) {
   useEffect(() => {
     function onTreeClick() {
       events.onMenuClose({ target });
-      refs.reference.current?.focus();
+      if (refs.reference.current) {
+        (refs.reference.current as HTMLElement).focus();
+      }
     }
 
     tree?.events.on('click', onTreeClick);

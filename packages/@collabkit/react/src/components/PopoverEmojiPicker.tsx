@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { CommentEmojiButtonTargets } from '@collabkit/core';
-import { Placement } from '@floating-ui/react-dom-interactions';
+import { Placement } from '@floating-ui/react';
 import { useSnapshot } from 'valtio';
 import { useApp } from '../hooks/useApp';
 import { Popover } from './Popover';

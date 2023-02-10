@@ -1,5 +1,5 @@
 import { Store } from '@collabkit/core';
-import { FloatingPortal } from '@floating-ui/react-dom-interactions';
+import { FloatingPortal } from '@floating-ui/react';
 import React, { useCallback, useEffect, useRef } from 'react';
 import { useSnapshot } from 'valtio';
 import { useApp } from '../hooks/useApp';
@@ -103,17 +103,18 @@ export function CommentableRoot(props: { className?: string; children?: React.Re
     </>
   );
 
-  const savedPins = pinsVisible && allPins
-    ? allPins.map((pin) => {
-      return (
-        <SavedPin
-          key={pin.id}
-          pin={pin}
-          isSelected={selectedId?.type === 'pin' && selectedId.id === pin.id}
-        />
-      );
-    })
-    : [];
+  const savedPins =
+    pinsVisible && allPins
+      ? allPins.map((pin) => {
+          return (
+            <SavedPin
+              key={pin.id}
+              pin={pin}
+              isSelected={selectedId?.type === 'pin' && selectedId.id === pin.id}
+            />
+          );
+        })
+      : [];
 
   return (
     <div
