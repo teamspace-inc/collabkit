@@ -136,7 +136,7 @@ export interface SyncAdapter {
     userId: string;
     workspaceId: string;
     threadId: string;
-    preview: string;
+    body: string;
     event: Event;
     eventId: string;
   }): Promise<{ id: string }>;

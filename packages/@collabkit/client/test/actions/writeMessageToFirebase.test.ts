@@ -74,7 +74,6 @@ test('writes a message to a threads timeline', async () => {
     workspaceId,
     threadId,
     body: 'Hello world',
-    preview: 'Hello world',
     type: 'message',
   });
 

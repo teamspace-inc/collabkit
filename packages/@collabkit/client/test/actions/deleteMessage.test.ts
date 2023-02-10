@@ -60,7 +60,7 @@ test('deleteMessage', async () => {
     workspaceId,
     threadId,
     userId,
-    preview: 'Hello world',
+    body: 'Hello world',
     event: {
       type: 'message',
       body: 'Hello world',

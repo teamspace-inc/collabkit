@@ -59,7 +59,6 @@ export async function sendMessage(
       workspaceId,
       threadId,
       body,
-      preview: body,
       type: 'message',
       mentions,
       pin: pendingPin,
