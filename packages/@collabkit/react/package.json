@@ -77,7 +77,7 @@
     "remark-parse": "^10.0.1",
     "remark-rehype": "^10.1.0",
     "rollup": "3.15.0",
-    "rollup-plugin-dts": "^4.2.2",
+    "rollup-plugin-dts": "^5.1.1",
     "rollup-plugin-visualizer": "^5.8.0",
     "start-server-and-test": "^1.14.0",
     "sync-fetch": "^0.4.1",
