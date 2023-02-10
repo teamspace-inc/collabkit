@@ -159,7 +159,9 @@ export function Menu<ItemType>(props: Props<ItemType>) {
   useEffect(() => {
     function onTreeClick() {
       events.onMenuClose({ target });
-      refs.reference.current?.focus();
+      if (refs.reference.current) {
+        (refs.reference.current as HTMLElement).focus();
+      }
     }
 
     tree?.events.on('click', onTreeClick);
