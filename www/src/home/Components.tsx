@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { dark, vars } from '../styles/Theme.css';
 import * as styles from '../styles/home/Demos.css';
-import 'pure-react-carousel/dist/react-carousel.es.css';
 import {
   Inbox,
   Thread,

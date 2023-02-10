@@ -1,7 +1,6 @@
 import { useHeaderStyle } from '../hooks/useHeaderStyle';
 import { dark } from '../styles/Theme.css';
 import * as styles from '../styles/home/TrustedBy.css';
-import 'pure-react-carousel/dist/react-carousel.es.css';
 import { Carousel } from '../Carousel';
 import { purpleBg } from '../styles/Website.css';
 import zack from '../assets/home/testimonials/zack.png';
