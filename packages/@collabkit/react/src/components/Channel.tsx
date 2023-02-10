@@ -15,6 +15,7 @@ import CommentList from './CommentList';
 import { ChannelContext } from '../hooks/useChannelContext';
 import { vars } from '../theme/theme/index.css';
 import { useStore } from '../hooks/useStore';
+import { actions } from '@collabkit/client';
 
 function EmptyState() {
   return (
@@ -123,7 +124,8 @@ export function Channel() {
 
   useEffect(() => {
     store.nextThreadId = store.sync.nextThreadId({ appId, workspaceId });
-  }, []);
+    actions.subscribeInbox(store);
+  }, [store]);
 
   return (
     <Channel.Root channelId="default">

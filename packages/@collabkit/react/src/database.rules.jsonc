@@ -207,6 +207,29 @@
       }
     },
     "views": {
+      "workspaceProfiles": {
+        "$appId": {
+          "$workspaceId": {
+            ".read": "auth.token.appId === $appId",
+            "$endUserId": {
+              ".read": "auth.token.appId === $appId",
+              ".write": "(auth.token.appId === $appId) && (root.child('apps').child(auth.token.appId).child('mode').val() === 'UNSECURED' || (root.child('apps').child(auth.token.appId).child('mode').val() === 'SECURED' && $endUserId === auth.token.userId))",
+              "name": {
+                ".validate": "newData.isString()"
+              },
+              "email": {
+                ".validate": "newData.isString()"
+              },
+              "avatar": {
+                ".validate": "newData.isString()"
+              },
+              "color": {
+                ".validate": "newData.isString()"
+              }
+            }
+          }
+        }
+      },
       "threadProfiles": {
         "$appId": {
           "$workspaceId": {

@@ -1,0 +1,63 @@
+import admin from 'firebase-admin';
+
+export function deleteUndefinedProps(o: any) {
+  if (typeof o === 'object') {
+    Object.keys(o).forEach((key) => {
+      if (o[key] === undefined) {
+        delete o[key];
+      }
+    });
+  }
+  return o;
+}
+
+async function run() {
+  admin.initializeApp({
+    credential: admin.credential.cert('/Users/nc/collabkit-dev-firebase.json'),
+    databaseURL: 'https://collabkit-dev-default-rtdb.europe-west1.firebasedatabase.app',
+  });
+
+  const apps = await (await admin.database().ref('apps').get()).val();
+  // await admin.database().ref('/views/workspaceProfiles').set({});
+
+  for (const appId in apps) {
+    const workspaces = await (await admin.database().ref(`workspaces/${appId}/`).get()).val();
+    const profiles = await (await admin.database().ref(`profiles/${appId}/`).get()).val();
+    for (const workspaceId in workspaces) {
+      const timeline = await (
+        await admin.database().ref(`timeline/${appId}/${workspaceId}`).get()
+      ).val();
+      for (const threadId in timeline) {
+        const threadProfiles = await (
+          await admin
+            .database()
+            .ref(`views/threadProfiles/${appId}/${workspaceId}/${threadId}`)
+            .get()
+        ).val();
+
+        for (const profileId in threadProfiles) {
+          // console.log('profileId', profileId, profiles[profileId]);
+          console.log('.');
+          if (!profiles[profileId]) {
+            console.log('Missing profile', appId, workspaceId, profileId);
+            continue;
+          }
+          try {
+            await admin
+              .database()
+              .ref(`views/workspaceProfiles/${appId}/${workspaceId}/${profileId}`)
+              .set(deleteUndefinedProps(profiles[profileId]));
+          } catch (e) {
+            console.log('Error', appId, workspaceId, profileId, profiles[profileId]);
+            console.error(e);
+            process.exit(1);
+          }
+        }
+      }
+    }
+  }
+
+  process.exit(0);
+}
+
+run();

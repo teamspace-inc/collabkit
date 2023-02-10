@@ -298,16 +298,17 @@ export class FirebaseSync implements Sync.SyncAdapter {
   }): Promise<void> {
     DEBUG && console.log('[network] saveProfile', data);
     const { appId, userId, workspaceId, profile } = data;
-    try {
-      await set(ref`/profiles/${appId}/${userId}`, profile);
-    } catch (e) {
-      console.error('CollabKit: failed to set profile', e);
-    }
+
+    const updates = {
+      [`/profiles/${appId}/${userId}`]: profile,
+      [`/views/workspaceProfiles/${appId}/${workspaceId}/${userId}`]: profile,
+      [`/workspaces/${appId}/${workspaceId}/profiles/${userId}`]: true,
+    };
 
     try {
-      await set(ref`/workspaces/${appId}/${workspaceId}/profiles/${userId}`, true);
+      await update(ref`/`, updates);
     } catch (e) {
-      console.error('CollabKit: failed to join workspace', e);
+      console.error('CollabKit: failed to save profile', e);
     }
   }
 
@@ -621,7 +622,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
         workspaceId: props.workspaceId,
       });
 
-    const inboxRef = query(
+    const inboxQuery = query(
       ref`/views/inbox/${props.appId}/${props.workspaceId}`,
       orderByChild('createdAt'),
       limitToLast(20)
@@ -637,13 +638,21 @@ export class FirebaseSync implements Sync.SyncAdapter {
       props.onInboxChange({ event, threadId });
     }
 
-    props.subs[`${inboxRef.toString()}#added`] ||= onChildAdded(inboxRef, childCallback, (e) => {
-      console.error(e);
-    });
+    props.subs[`${inboxQuery.toString()}#added`] ||= onChildAdded(
+      inboxQuery,
+      childCallback,
+      (e) => {
+        console.error(e);
+      }
+    );
 
-    props.subs[`${inboxRef.toString()}#moved`] ||= onChildMoved(inboxRef, childCallback, (e) => {
-      console.error(e);
-    });
+    props.subs[`${inboxQuery.toString()}#moved`] ||= onChildMoved(
+      inboxQuery,
+      childCallback,
+      (e) => {
+        console.error(e);
+      }
+    );
   }
 
   subscribeThread(props: {

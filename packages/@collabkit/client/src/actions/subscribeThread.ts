@@ -37,12 +37,14 @@ export async function subscribeThread(
       ...event.event,
       id: event.eventId,
     };
+    if (store.config.mentionableUsers === 'allWorkspace') return;
     actions.subscribeProfile(store, {
       profileId: event.event.createdById,
       onSubscribe: () => {},
     });
   }
 
+  const t0 = performance.now();
   store.sync.subscribeThread({
     appId,
     userId,
@@ -68,13 +70,14 @@ export async function subscribeThread(
     },
     onThreadProfile: (event: Sync.ThreadProfileEvent) => {
       store.workspaces[event.workspaceId].threadProfiles[event.threadId][event.userId] = true;
+      if (store.config.mentionableUsers === 'allWorkspace') return;
       subscribeProfile(store, {
         profileId: event.userId,
         onSubscribe: () => {},
       });
     },
     onTimelineGetComplete: (events: Sync.TimelineChangeEvent[]) => {
-      // console.log('onTimelineGetComplete', events);
+      console.log('onTimelineGetComplete', events.length);
       if (!events.length) {
         return;
       }
@@ -85,6 +88,9 @@ export async function subscribeThread(
         acc[event.eventId] = event.event;
         return acc;
       }, {});
+      const t1 = performance.now();
+      console.log(`onTimelinegGetComplete took ${t1 - t0} milliseconds.`);
+      if (store.config.mentionableUsers === 'allWorkspace') return;
       events
         .map((event) => event.event.createdById)
         .filter(function onlyUnique(value, index, self) {
@@ -96,7 +102,9 @@ export async function subscribeThread(
     },
     onThreadProfiles: (event: Sync.ThreadProfilesEvent) => {
       store.workspaces[event.workspaceId].threadProfiles[event.threadId] = event.profiles;
+      if (store.config.mentionableUsers === 'allWorkspace') return;
       for (const profileId of Object.keys(event.profiles)) {
+        if (store.profiles[profileId]) return;
         subscribeProfile(store, {
           profileId,
           onSubscribe: () => {},

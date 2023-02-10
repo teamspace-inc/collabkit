@@ -3,6 +3,7 @@ import { actions } from './index';
 import { createWorkspace } from '../store';
 
 export async function subscribeInbox(store: Store) {
+  console.log('subscribeInbox');
   const { userId, workspaceId, config } = store;
   const appId = config.appId;
 

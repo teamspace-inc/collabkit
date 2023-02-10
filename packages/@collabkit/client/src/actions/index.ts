@@ -50,7 +50,7 @@ import { subscribeInbox } from './subscribeInbox';
 import { subscribeOpenPins } from './subscribeOpenPins';
 import { subscribeOpenThreads } from './subscribeOpenThreads';
 import { subscribeProfile } from './subscribeProfile';
-import { subscribeProfiles } from './subscribeProfiles';
+import { subscribeWorkspaceProfile } from './subscribeWorkspaceProfiles';
 import { subscribeSeen } from './subscribeSeen';
 import { subscribeThread } from './subscribeThread';
 import { subscribeWorkspace } from './subscribeWorkspace';
@@ -175,7 +175,7 @@ export const actions = {
   subscribeOpenPins,
   subscribeOpenThreads,
   subscribeProfile,
-  subscribeProfiles,
+  subscribeProfiles: subscribeWorkspaceProfile,
   subscribeSeen,
   subscribeThread,
   subscribeWorkspace,
