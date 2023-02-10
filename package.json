@@ -15,7 +15,7 @@
     ]
   },
   "scripts": {
-    "dev": "pnpm --recursive --parallel --filter '!@collabkit/vue' run dev",
+    "dev": "pnpm --recursive --parallel run dev",
     "build": "pnpm --parallel --filter '@collabkit/react' run build",
     "server": "yarn workspace server dev",
     "typecheck": "tsc -b examples/demo www",

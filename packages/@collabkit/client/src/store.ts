@@ -1,6 +1,5 @@
 import type { Composer, SyncAdapter, UnconfiguredStore, Workspace } from '@collabkit/core';
 import { ref as valtioRef } from 'valtio/vanilla';
-import { markRaw as vueMarkRaw } from '@vue/reactivity';
 
 export function markRaw<T extends object>(
   value: T
@@ -8,7 +7,7 @@ export function markRaw<T extends object>(
   __v_skip?: true;
   $$valtioRef: true;
 } {
-  return vueMarkRaw(valtioRef(value));
+  return valtioRef(value);
 }
 
 export function createComposer(): Composer {
