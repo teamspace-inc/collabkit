@@ -6,7 +6,7 @@ import {
   offset,
   useFloating,
   useFloatingNodeId,
-} from '@floating-ui/react-dom-interactions';
+} from '@floating-ui/react';
 
 import React, { forwardRef, useCallback, useContext, useEffect, useMemo } from 'react';
 
@@ -45,7 +45,7 @@ export function SavedPin({
     ],
     whileElementsMounted: autoUpdate,
   });
-  
+
   const { dragPinObjectId } = useSnapshot(store);
 
   useEffect(() => {

@@ -1,5 +1,5 @@
 import * as styles from '../styles/home/Hero.css';
-import { useFloatingNodeId, useFloating, autoUpdate } from '@floating-ui/react-dom-interactions';
+import { useFloatingNodeId, useFloating, autoUpdate } from '@floating-ui/react';
 
 import UISvg from '../assets/home/hero/ui.svg';
 import { HeroMessage, HERO_MESSAGES } from './HeroMessage';
