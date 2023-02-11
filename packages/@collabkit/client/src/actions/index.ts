@@ -5,11 +5,11 @@ import type { Store } from '@collabkit/core';
 import { attachPin } from './attachPin';
 import { authenticate } from './authenticate';
 import { blur } from './blur';
-import { closeAll } from './closeAll';
-import { closeContent } from './closeContent';
+import { closeAllPopovers } from './closeAllPopovers';
+import { closePopoverContent } from './closePopoverContent';
 import { closeEmojiReactionPicker } from './closeEmojiReactionPicker';
 import { closeMenu } from './closeMenu';
-import { closePreview } from './closePreview';
+import { closePopoverPreview } from './closePopoverPreview';
 import { collapseThread } from './collapseThread';
 import { deleteMessage } from './deleteMessage';
 import { deletePin } from './deletePin';
@@ -50,7 +50,7 @@ import { subscribeInbox } from './subscribeInbox';
 import { subscribeOpenPins } from './subscribeOpenPins';
 import { subscribeOpenThreads } from './subscribeOpenThreads';
 import { subscribeProfile } from './subscribeProfile';
-import { subscribeProfiles } from './subscribeProfiles';
+import { subscribeWorkspaceProfiles } from './subscribeWorkspaceProfiles';
 import { subscribeSeen } from './subscribeSeen';
 import { subscribeThread } from './subscribeThread';
 import { subscribeWorkspace } from './subscribeWorkspace';
@@ -130,11 +130,11 @@ export const actions = {
   attachPin,
   authenticate,
   blur,
-  closeAll,
+  closeAllPopovers,
   closeEmojiReactionPicker,
   closeMenu,
-  closePreview,
-  closeThread: closeContent,
+  closePopoverPreview,
+  closePopoverContent,
   collapseThread,
   deleteMessage,
   deletePin,
@@ -175,7 +175,7 @@ export const actions = {
   subscribeOpenPins,
   subscribeOpenThreads,
   subscribeProfile,
-  subscribeProfiles,
+  subscribeWorkspaceProfiles,
   subscribeSeen,
   subscribeThread,
   subscribeWorkspace,

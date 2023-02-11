@@ -10,29 +10,29 @@ export async function subscribeProfile(
   store: Store,
   props: { profileId: string; onSubscribe: (profile: Profile) => void }
 ) {
+  const { profileId } = props;
   const { appId } = getConfig(store);
 
   const onError = (e: Error) => {
     console.error({ e });
   };
 
-  const id = FirebaseId.decode(props.profileId);
+  const id = FirebaseId.decode(profileId);
   const profileRef = ref`/profiles/${appId}/${id}`;
+
+  if (store.profiles[profileId]) return;
 
   store.subs[profileRef.toString()] ||= onValue(
     profileRef,
     (profileSnapshot) => {
-      // console.log('subscribeProfile');
       const profile = snapshotToProfile(profileSnapshot);
       // todo validate profile data here
       if (profile) {
         store.profiles[id] = ensureColor(profile);
-        if (store.config.mentionableUsers === 'allWorkspace') {
-          store.mentionableUsers[id] = profile;
-        }
+        store.mentionableUsers[id] = profile;
         props.onSubscribe(profile);
       } else {
-        console.warn('profile not found');
+        console.warn(`[CollabKit] Profile '${id}' not found'`);
       }
     },
     onError

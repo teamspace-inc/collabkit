@@ -24,7 +24,7 @@ export async function resolveThread(
     return;
   }
 
-  actions.closeThread(store, { target: { type: 'thread', workspaceId, threadId } });
+  actions.closePopoverContent(store, { target: { type: 'thread', workspaceId, threadId } });
   delete store.workspaces[workspaceId].openThreads[threadId];
 
   const event: Event = {

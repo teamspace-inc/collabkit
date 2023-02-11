@@ -65,6 +65,8 @@ export async function updateUserAndWorkspace(props: {
 
   if (isValidUser(user)) {
     updates[ref.path`/profiles/${appId}/${userId}/`] = deleteUndefinedProps(user);
+    updates[ref.path`/views/workspaceProfiles/${appId}/${workspaceId}/${userId}`] =
+      deleteUndefinedProps(user);
     updates[ref.path`/workspaces/${appId}/${workspaceId}/profiles/${userId}/`] = true;
   } else if (user != null) {
     functions.logger.warn('Invalid profile. Skipping user profile update.', { user });

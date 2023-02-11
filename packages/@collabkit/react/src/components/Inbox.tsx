@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSnapshot } from 'valtio';
 import { useApp } from '../hooks/useApp';
 import * as styles from '../theme/components/Inbox.css';
@@ -11,6 +11,7 @@ import { useOptionalSidebarContext } from './Sidebar';
 import { useInbox } from '../hooks/public/useInbox';
 import { Thread } from './Thread';
 import { useStore } from '../hooks/useStore';
+import { actions } from '@collabkit/client';
 
 export function EmptyState() {
   return (
@@ -38,6 +39,10 @@ export function Inbox(props: {
   if (!userId) {
     return null;
   }
+
+  useEffect(() => {
+    actions.subscribeInbox(store);
+  }, [store]);
 
   const inboxItems = threadIds.map((threadId) => {
     return (

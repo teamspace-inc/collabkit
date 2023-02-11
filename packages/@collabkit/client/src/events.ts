@@ -47,9 +47,6 @@ export function createEvents(store: Store) {
       store.isConnected = isConnected;
       try {
         await actions.authenticate(store);
-
-        // todo make this server configurable
-        actions.subscribeInbox(store);
       } catch (e) {
         console.error('[CollabKit] failed to authenticate', { e });
       }
@@ -209,7 +206,7 @@ export function createEvents(store: Store) {
 
       if (store.viewingId) {
         if (e.key === 'Escape') {
-          actions.closeAll(store);
+          actions.closeAllPopovers(store);
           e.stopPropagation();
           e.preventDefault();
         }
@@ -292,7 +289,7 @@ export function createEvents(store: Store) {
               break;
             }
             case 'closeThreadButton': {
-              actions.closeAll(store);
+              actions.closeAllPopovers(store);
               break;
             }
             case 'resolveThreadButton': {
@@ -321,7 +318,7 @@ export function createEvents(store: Store) {
       if (props.open) {
         actions.showPreview(store, props);
       } else {
-        actions.closePreview(store, props);
+        actions.closePopoverPreview(store, props);
       }
     },
 
@@ -329,7 +326,7 @@ export function createEvents(store: Store) {
       if (props.open) {
         actions.viewContent(store, props);
       } else {
-        actions.closeAll(store);
+        actions.closeAllPopovers(store);
       }
     },
 
@@ -342,16 +339,16 @@ export function createEvents(store: Store) {
     }) => {
       switch (state) {
         case 'open':
-          actions.closePreview(store, { target });
+          actions.closePopoverPreview(store, { target });
           actions.viewContent(store, { target });
           break;
         case 'preview':
-          actions.closeThread(store, { target });
+          actions.closePopoverContent(store, { target });
           actions.showPreview(store, { target });
           break;
         case 'closed':
-          actions.closePreview(store, { target });
-          actions.closeThread(store, { target });
+          actions.closePopoverPreview(store, { target });
+          actions.closePopoverContent(store, { target });
           break;
         default:
           throw new Error(`invalid popover state: ${state}`);
