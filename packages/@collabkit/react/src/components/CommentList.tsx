@@ -1,21 +1,64 @@
-import { ComponentProps, ReactNode } from 'react';
-import React, { Fragment } from 'react';
+import { ComponentProps, memo, useRef } from 'react';
+import React from 'react';
 import * as styles from '../theme/components/CommentList.css';
 import { NewIndicator } from './NewIndicator';
 import { useNewIndicator } from '../hooks/useNewIndicator';
 import Comment, { CommentProps } from './Comment';
-import { useSnapshot } from 'valtio';
+import { useSnapshot, INTERNAL_Snapshot } from 'valtio';
 import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
 import { useThreadContext } from '../hooks/useThreadContext';
 import { useApp } from '../hooks/useApp';
 import { useOptionalChannelContext } from '../hooks/useChannelContext';
+import { Virtuoso, VirtuosoHandle } from 'react-virtuoso';
+import type { Event, WithID, WithShowHeader } from '@collabkit/core';
 
-export default function CommentList(
-  props: ComponentProps<'div'> & {
-    hideResolveButton?: boolean;
-    isCollapsed?: boolean;
-  }
-) {
+type CommentListProps = ComponentProps<'div'> & {
+  hideResolveButton?: boolean;
+  isCollapsed?: boolean;
+};
+
+type ItemProps = CommentListProps & {
+  event: INTERNAL_Snapshot<WithShowHeader<WithID<Event>>>;
+  isChannel: boolean;
+  isExpanded: boolean;
+  isResolved: boolean;
+  newIndicatorId: string | null;
+};
+
+const MemoizedComment = memo(function MemoizedComment(props: CommentProps) {
+  return (
+    <Comment
+      commentId={props.commentId}
+      hideProfile={props.hideProfile}
+      isFirstComment={props.isFirstComment}
+    />
+  );
+});
+
+const MemoizedItem = React.memo(function Item({
+  isChannel,
+  isCollapsed,
+  isExpanded,
+  newIndicatorId,
+  event,
+  hideResolveButton,
+  isResolved,
+}: ItemProps) {
+  return !isChannel || !isCollapsed || event.showHeader || isExpanded ? (
+    <div key={event.id} style={{ minHeight: 34 }}>
+      {newIndicatorId === event.id && <NewIndicator />}
+      <MemoizedComment
+        commentId={event.id}
+        hideProfile={!event.showHeader}
+        isFirstComment={!hideResolveButton && !isResolved}
+      />
+    </div>
+  ) : (
+    <div style={{ minHeight: 34 }} />
+  );
+});
+
+export function VirtualCommentList(props: CommentListProps) {
   const { isCollapsed, hideResolveButton, ...otherProps } = props;
   const threadId = useThreadContext();
   const workspaceStore = useWorkspaceStore();
@@ -24,29 +67,58 @@ export default function CommentList(
   const { expandedThreadIds } = useSnapshot(useApp().store);
   const isExpanded = !!expandedThreadIds.find((id) => id === threadId);
   const { computed } = useSnapshot(workspaceStore);
-  const { isResolved, hasFetchedAllProfiles, groupedMessages: list } = computed[threadId] ?? {};
+  const { isResolved, hasFetchedAllProfiles, messageEvents } = computed[threadId] ?? {};
+  const virtuosoRef = useRef<VirtuosoHandle>(null);
+
+  return hasFetchedAllProfiles ? (
+    <div className={styles.root} {...otherProps} style={{ flex: 1 }}>
+      <Virtuoso
+        ref={virtuosoRef}
+        initialTopMostItemIndex={999}
+        defaultItemHeight={34}
+        alignToBottom={true}
+        data={messageEvents}
+        itemContent={(i, event) => {
+          return (
+            <MemoizedItem
+              isChannel={isChannel}
+              isCollapsed={isCollapsed}
+              isExpanded={isExpanded}
+              newIndicatorId={newIndicatorId}
+              event={event}
+              hideResolveButton={hideResolveButton}
+              isResolved={isResolved}
+            />
+          );
+        }}
+        followOutput={'auto'}
+      />
+    </div>
+  ) : null;
+}
+
+export function CommentList(props: CommentListProps) {
+  const { isCollapsed, hideResolveButton, ...otherProps } = props;
+  const threadId = useThreadContext();
+  const workspaceStore = useWorkspaceStore();
+  const newIndicatorId = useNewIndicator();
+  const isChannel = !!useOptionalChannelContext();
+  const { expandedThreadIds } = useSnapshot(useApp().store);
+  const isExpanded = !!expandedThreadIds.find((id) => id === threadId);
+  const { computed } = useSnapshot(workspaceStore);
+  const { isResolved, hasFetchedAllProfiles, messageEvents } = computed[threadId] ?? {};
 
   return hasFetchedAllProfiles ? (
     <div className={styles.root} {...otherProps}>
-      {list.map((group, groupIndex) => {
-        const groupedComments: ReactNode[] = group.map((event, index) => {
-          const commentProps: CommentProps = {
-            commentId: event.id,
-            hideProfile: index > 0,
-            isFirstComment: !hideResolveButton && !isResolved && groupIndex === 0 && index === 0,
-          };
-
-          return !isChannel || !isCollapsed || commentProps.isFirstComment || isExpanded ? (
-            <Fragment key={event.id}>
-              {newIndicatorId === event.id && <NewIndicator />}
-              <Comment {...commentProps} />
-            </Fragment>
-          ) : null;
-        });
-
-        return groupedComments.length > 0 ? (
-          <div key={groupIndex} className={styles.group}>
-            {groupedComments}
+      {messageEvents.map((event) => {
+        return !isChannel || !props.isCollapsed || event.showHeader || isExpanded ? (
+          <div key={event.id} style={{ minHeight: 34 }}>
+            {newIndicatorId === event.id && <NewIndicator />}
+            <MemoizedComment
+              commentId={event.id}
+              hideProfile={!event.showHeader}
+              isFirstComment={!props.hideResolveButton && !isResolved}
+            />
           </div>
         ) : null;
       })}

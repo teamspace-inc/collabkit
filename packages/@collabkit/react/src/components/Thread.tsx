@@ -6,7 +6,7 @@ import Composer from './composer/Composer';
 import { ThemeWrapper } from './ThemeWrapper';
 import * as styles from '../theme/components/Thread.css';
 import { ChatCentered } from './icons';
-import CommentList from './CommentList';
+import { CommentList } from './CommentList';
 import { ThreadFacepile } from './ThreadFacepile';
 import { ThreadUnreadDot } from './ThreadUnreadDot';
 import { ResolveThreadIconButton } from './ResolveThreadIconButton';
