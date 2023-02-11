@@ -8,7 +8,7 @@ import { useId } from '../hooks/useId';
 import Profile from './Profile';
 import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
 import { useApp } from '../hooks/useApp';
-import { CommentTarget, PinTarget } from '@collabkit/core';
+import { CommentTarget, PinTarget, Target } from '@collabkit/core';
 import * as styles from '../theme/components/Comment.css';
 import { ArrowBendDownRight, DotsThree } from './icons';
 import { Menu, MenuItem } from './Menu';
@@ -32,7 +32,7 @@ import { useMarkAsSeen } from '../hooks/useMarkAsSeen';
 import { useOnMarkdownLinkClick } from '../hooks/useOnMarkdownLinkClick';
 import { useStore } from '../hooks/useStore';
 import { ProfileContext } from '../hooks/useProfile';
-import { useIsTargetMatch } from '../hooks/useIsTargetMatch';
+import { useStoreKeyMatches } from '../hooks/useSubscribeStoreKey';
 
 type CommentRootProps = {
   commentId: string;
@@ -77,28 +77,33 @@ function CommentRoot({ commentId: eventId, indent = false, ...props }: CommentRo
     eventId,
   });
 
-  const isHovering = useIsTargetMatch(target, 'hoveringId');
-  const isFocused = useIsTargetMatch(target, 'focusedId');
-  const isEditing = useIsTargetMatch(target, 'editingId');
+  const targetMatch = useCallback(
+    (a: Target | null) => {
+      return !!(
+        a &&
+        a.type === 'comment' &&
+        a.eventId === target.eventId &&
+        a.treeId === target.treeId
+      );
+    },
+    [target]
+  );
+
+  const isHovering = useStoreKeyMatches(store, 'hoveringId', targetMatch);
+  const isFocused = useStoreKeyMatches(store, 'focusedId', targetMatch);
+  const isEditing = useStoreKeyMatches(store, 'editingId', targetMatch);
+
   const event = useSnapshot(store.workspaces[workspaceId].computed[threadId].canonicalEvents)[
     eventId
   ];
   const createdById = event?.createdById ?? null;
   const { profiles } = useSnapshot(store);
-  const profile = profiles[createdById ?? ''] ?? null;
+  const profile = createdById ? profiles[createdById] : null ?? null;
   const hasProfile = !!profile;
 
   const { events } = useApp();
 
-  if (!hasProfile) {
-    return null;
-  }
-
-  if (!createdById) {
-    return null;
-  }
-
-  return (
+  return hasProfile && createdById ? (
     <CommentContext.Provider value={eventId}>
       <TreeContext.Provider value={treeId}>
         <EditingContext.Provider value={isEditing}>
@@ -120,7 +125,7 @@ function CommentRoot({ commentId: eventId, indent = false, ...props }: CommentRo
         </EditingContext.Provider>
       </TreeContext.Provider>
     </CommentContext.Provider>
-  );
+  ) : null;
 }
 
 export function CommentUnreadDot(props: React.ComponentPropsWithoutRef<'div'>) {
@@ -286,6 +291,7 @@ export function CommentPin(props: React.ComponentProps<'img'>) {
   const workspaceId = useWorkspaceContext();
   const { events } = useApp();
   const pin = useSnapshot(useWorkspaceStore().eventPins)[eventId];
+  const store = useStore();
 
   const target: PinTarget = useMemo(
     () => ({
@@ -299,7 +305,16 @@ export function CommentPin(props: React.ComponentProps<'img'>) {
     [pin]
   );
 
-  const isSelected = useIsTargetMatch(target, 'selectedId');
+  const targetMatch = useCallback(
+    (a: Target | null) => {
+      if (!a) {
+        return false;
+      }
+      return a.type === 'pin' && a.eventId === eventId;
+    },
+    [target]
+  );
+  const isSelected = useStoreKeyMatches(store, 'selectedId', targetMatch);
 
   const onClick = useCallback(
     (e: React.MouseEvent) => {
