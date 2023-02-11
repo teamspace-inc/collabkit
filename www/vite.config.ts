@@ -22,7 +22,9 @@ export default defineConfig(() => {
     optimizeDeps: {
       include: ['react/jsx-runtime'],
     },
-
+    build: {
+      sourcemap: false,
+    },
     server: {
       port: 8000,
     },
