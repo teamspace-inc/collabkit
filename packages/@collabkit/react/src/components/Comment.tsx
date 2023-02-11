@@ -31,8 +31,8 @@ import { useCommentSnapshot } from '../hooks/useCommentSnapshot';
 import { useMarkAsSeen } from '../hooks/useMarkAsSeen';
 import { useOnMarkdownLinkClick } from '../hooks/useOnMarkdownLinkClick';
 import { useStore } from '../hooks/useStore';
-import { useHovering } from '../hooks/useHovering';
 import { ProfileContext } from '../hooks/useProfile';
+import { useIsTargetMatch } from '../hooks/useIsTargetMatch';
 
 type CommentRootProps = {
   commentId: string;
@@ -58,6 +58,7 @@ function CommentRoot({ commentId: eventId, indent = false, ...props }: CommentRo
   const workspaceId = useWorkspaceContext();
   const treeId = useId();
   const userId = useUserContext();
+  const store = useStore();
 
   const target = useMemo<CommentTarget>(
     () => ({ type: 'comment', workspaceId, threadId, eventId, treeId }),
@@ -76,34 +77,24 @@ function CommentRoot({ commentId: eventId, indent = false, ...props }: CommentRo
     eventId,
   });
 
-  const store = useStore();
-  const { events } = useApp();
-  const { menuId, reactingId, editingId } = useSnapshot(store);
-  const event = useSnapshot(useWorkspaceStore().computed[threadId]).canonicalEvents[eventId];
+  const isHovering = useIsTargetMatch(target, 'hoveringId');
+  const isFocused = useIsTargetMatch(target, 'focusedId');
+  const isEditing = useIsTargetMatch(target, 'editingId');
+  const event = useSnapshot(store.workspaces[workspaceId].computed[threadId].canonicalEvents)[
+    eventId
+  ];
+  const createdById = event?.createdById ?? null;
   const { profiles } = useSnapshot(store);
+  const profile = profiles[createdById ?? ''] ?? null;
+  const hasProfile = !!profile;
 
-  // todo @nc: move this to events and make it a state in the store
-  const isHovering =
-    useHovering(divRef) ||
-    (event &&
-      menuId?.type === 'menu' &&
-      menuId.context?.type === 'comment' &&
-      menuId.context.eventId === event.id) ||
-    (reactingId?.type === 'commentActionsEmojiButton' && reactingId.eventId === eventId);
+  const { events } = useApp();
 
-  const createdById = event?.createdById;
-
-  const isEditing = editingId?.eventId === eventId && editingId.treeId == treeId;
+  if (!hasProfile) {
+    return null;
+  }
 
   if (!createdById) {
-    return null;
-  }
-
-  if (event.type === 'system') {
-    return null;
-  }
-
-  if (!profiles[event.createdById]) {
     return null;
   }
 
@@ -115,7 +106,7 @@ function CommentRoot({ commentId: eventId, indent = false, ...props }: CommentRo
             <div
               data-testid="collabkit-comment-root"
               className={`${props.className ?? styles.root({ indent })} ${
-                isHovering ? styles.hover : ''
+                isHovering || isFocused ? styles.hover : ''
               }`}
               onMouseEnter={(e) => events.onMouseEnter(e, { target })}
               onMouseLeave={(e) => events.onMouseLeave(e, { target })}
@@ -293,11 +284,8 @@ export function CommentPin(props: React.ComponentProps<'img'>) {
   const threadId = useThreadContext();
   const eventId = useCommentContext();
   const workspaceId = useWorkspaceContext();
-  const { events, store } = useApp();
-  const { selectedId } = useSnapshot(store);
-  const workspace = useSnapshot(useWorkspaceStore());
-  const pin = workspace.eventPins[eventId];
-  const isSelected = selectedId?.type === 'pin' && selectedId.id === pin?.id;
+  const { events } = useApp();
+  const pin = useSnapshot(useWorkspaceStore().eventPins)[eventId];
 
   const target: PinTarget = useMemo(
     () => ({
@@ -310,6 +298,8 @@ export function CommentPin(props: React.ComponentProps<'img'>) {
     }),
     [pin]
   );
+
+  const isSelected = useIsTargetMatch(target, 'selectedId');
 
   const onClick = useCallback(
     (e: React.MouseEvent) => {

@@ -3,13 +3,15 @@ import { actions } from '..';
 
 export function hover(store: Store, props: { target: Target }) {
   // we don't want to trigger the hover callback if we're selecting a pin
-  if (store.uiState === 'selecting') {
-    return;
-  }
+
   const { target } = props;
   store.hoveringId = target;
   switch (target.type) {
     case 'comment': {
+      if (store.uiState === 'selecting') {
+        return;
+      }
+      store.hoveringId = target;
       const pin = store.workspaces[target.workspaceId].eventPins[target.eventId];
       if (pin) {
         const pinTarget: PinTarget = {

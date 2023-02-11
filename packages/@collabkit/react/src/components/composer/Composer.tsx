@@ -41,7 +41,6 @@ import PinButtonHoverSvg from './pin-button-hover.svg';
 import DeletePinButtonSvg from './delete-pin-button.svg';
 import DeletePinButtonHoverSvg from './delete-pin-button-hover.svg';
 
-import { useHovering } from '../../hooks/useHovering';
 import { Tooltip } from '../Tooltip';
 import { actions } from '@collabkit/client';
 import { ComposerPinButtonTarget } from '@collabkit/core';
@@ -182,15 +181,20 @@ const COMPOSER_PIN_TOOLTIPS: { [state: string]: string | null } = {
 
 function ComposerPinButton(props: { className?: string }) {
   const { events, store } = useApp();
-  const { uiState } = useSnapshot(store);
+  const { uiState, hoveringId } = useSnapshot(store);
   const { pendingPin } = useSnapshot(useComposerStore());
   const ref = useRef(null);
-  const hover = useHovering(ref);
   const composerTarget = useTarget();
+
+  const isHovering = hoveringId?.type === 'composerPinButton';
 
   const state = ((pendingPin ? 'pin' : 'empty') +
     '-' +
-    (uiState === 'selecting' ? 'selecting' : hover ? 'hover' : 'default')) as ComposerButtonState;
+    (uiState === 'selecting'
+      ? 'selecting'
+      : isHovering
+      ? 'hover'
+      : 'default')) as ComposerButtonState;
 
   const icon = React.cloneElement(COMPOSER_PIN_ICONS[state], {
     style: { position: 'relative', top: '0px', width: '16px', height: '16px' },
@@ -210,20 +214,20 @@ function ComposerPinButton(props: { className?: string }) {
   const tooltip = COMPOSER_PIN_TOOLTIPS[state];
 
   return (
-    <Tooltip>
-      <Tooltip.Trigger>
-        <div
-          ref={ref}
-          className={styles.pinButton}
-          {...props}
-          onClick={(e) => events.onClick(e, { target: buttonTarget })}
-          data-testid="collabkit-composer-pin-button"
-        >
-          {icon}
-        </div>
-      </Tooltip.Trigger>
-      {tooltip && <Tooltip.Content>{tooltip}</Tooltip.Content>}
-    </Tooltip>
+    <div
+      ref={ref}
+      onMouseEnter={(e) => events.onMouseEnter(e, { target: buttonTarget })}
+      onMouseLeave={(e) => events.onMouseLeave(e, { target: buttonTarget })}
+      className={styles.pinButton}
+      {...props}
+      onClick={(e) => events.onClick(e, { target: buttonTarget })}
+      data-testid="collabkit-composer-pin-button"
+    >
+      <Tooltip>
+        <Tooltip.Trigger>{icon}</Tooltip.Trigger>
+        {tooltip && <Tooltip.Content>{tooltip}</Tooltip.Content>}
+      </Tooltip>
+    </div>
   );
 }
 
