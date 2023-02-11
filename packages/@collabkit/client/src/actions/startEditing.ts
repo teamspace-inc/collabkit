@@ -5,7 +5,7 @@ export function startEditing(
   target: { eventId: string; workspaceId: string; threadId: string; treeId: string }
 ) {
   store.editingId = {
-    type: 'comment',
     ...target,
+    type: 'comment',
   };
 }
