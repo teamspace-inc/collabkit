@@ -2,6 +2,7 @@ import { recipe } from '@vanilla-extract/recipes';
 import { vars } from '../theme/index.css';
 
 const arrowSize = 6;
+const arrowOffset = 2;
 
 export const root = recipe({
   base: {
@@ -19,7 +20,7 @@ export const root = recipe({
     selectors: {
       '&:before': {
         position: 'absolute',
-        bottom: -arrowSize,
+        bottom: -arrowSize + arrowOffset,
         content: ' ',
         left: '50%',
         transform: 'translateX(-50%)',
@@ -50,7 +51,7 @@ export const root = recipe({
         selectors: {
           '&:before': {
             position: 'absolute',
-            bottom: -arrowSize,
+            bottom: -arrowSize + arrowOffset,
             content: ' ',
             left: '50%',
             transform: 'translateX(-50%)',
@@ -66,7 +67,7 @@ export const root = recipe({
         selectors: {
           '&:before': {
             position: 'absolute',
-            top: -arrowSize,
+            top: -arrowSize + arrowOffset,
             content: ' ',
             left: '50%',
             transform: 'translateX(-50%) rotate(180deg)',
@@ -82,7 +83,7 @@ export const root = recipe({
         selectors: {
           '&:before': {
             position: 'absolute',
-            bottom: -arrowSize,
+            bottom: -arrowSize + arrowOffset,
             content: ' ',
             left: '50%',
             transform: 'translateX(-50%)',
