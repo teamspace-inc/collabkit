@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { useSnapshot } from 'valtio';
-import { useApp } from '../hooks/useApp';
 import * as styles from '../theme/components/Inbox.css';
 import { Scrollable } from './Scrollable';
 import { InboxItem } from './InboxItem';
