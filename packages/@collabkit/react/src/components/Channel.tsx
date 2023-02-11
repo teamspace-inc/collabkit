@@ -59,7 +59,7 @@ function ChannelThread() {
       <CommentList isCollapsed={!isExpanded} className="" />
       {isExpanded ? (
         <div style={{ paddingLeft: vars.space[8] }}>
-          <Composer />
+          <Composer placeholder="Reply" autoFocus={true} />
         </div>
       ) : null}
     </Thread.Provider>
@@ -123,9 +123,8 @@ export function Channel() {
   }
 
   useEffect(() => {
-    store.nextThreadId = store.sync.nextThreadId({ appId, workspaceId });
     actions.subscribeInbox(store);
-  }, [store]);
+  }, []);
 
   return (
     <Channel.Root channelId="default">
