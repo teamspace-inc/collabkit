@@ -1,6 +1,6 @@
 import * as functions from 'firebase-functions';
 import * as cors from 'cors';
-import * as admin from 'firebase-admin';
+import admin from 'firebase-admin';
 import * as FirebaseId from './actions/data/FirebaseId';
 import { ref } from './actions/data/refs';
 import * as jwt from 'jsonwebtoken';
