@@ -36,7 +36,7 @@ export function ResolveThreadIconButton(props: {
             })
           }
         >
-          <CheckCircle size={16} weight="fill" />
+          <CheckCircle size={16} weight="regular" />
         </IconButton>
       </Tooltip.Trigger>
       <Tooltip.Content>Resolve</Tooltip.Content>
