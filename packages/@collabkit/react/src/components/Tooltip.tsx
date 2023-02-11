@@ -117,7 +117,7 @@ const TooltipTrigger = React.forwardRef<
   }
 
   return (
-    <button
+    <div
       ref={ref}
       // The user can style the trigger based on the state
       data-state={context.open ? 'open' : 'closed'}
@@ -125,7 +125,7 @@ const TooltipTrigger = React.forwardRef<
       style={{ border: 'none', background: 'none', padding: 0 }}
     >
       {children}
-    </button>
+    </div>
   );
 });
 
@@ -146,7 +146,7 @@ const TooltipContent = React.forwardRef<HTMLDivElement, React.HTMLProps<HTMLDivE
               visibility: context.x == null ? 'hidden' : 'visible',
               ...props.style,
             }}
-            className={root}
+            className={root({ placement: context.placement })}
             {...context.getFloatingProps(props)}
           />
         )}

@@ -5,6 +5,7 @@ import { useThreadContext } from '../hooks/useThreadContext';
 import { IconButton } from './IconButton';
 import { CheckCircle } from './icons';
 import { useWorkspaceContext } from '../hooks/useWorkspaceContext';
+import { Tooltip } from './Tooltip';
 
 export function ResolveThreadIconButton(props: {
   className?: string;
@@ -21,19 +22,24 @@ export function ResolveThreadIconButton(props: {
   };
 
   return (
-    <IconButton
-      className={props.className}
-      style={props.style}
-      weight="regular"
-      // TODO: tooltip hijacks focus when used within a modal popover
-      // tooltip={isResolved ? 'Re-open' : 'Mark as Resolved and Hide'}
-      onPointerDown={(e) =>
-        events.onPointerDown(e, {
-          target,
-        })
-      }
-    >
-      <CheckCircle size={16} />
-    </IconButton>
+    <Tooltip>
+      <Tooltip.Trigger>
+        <IconButton
+          className={props.className}
+          style={props.style}
+          weight="regular"
+          // TODO: tooltip hijacks focus when used within a modal popover
+          // tooltip={isResolved ? 'Re-open' : 'Mark as Resolved and Hide'}
+          onPointerDown={(e) =>
+            events.onPointerDown(e, {
+              target,
+            })
+          }
+        >
+          <CheckCircle size={16} weight="fill" />
+        </IconButton>
+      </Tooltip.Trigger>
+      <Tooltip.Content>Resolve</Tooltip.Content>
+    </Tooltip>
   );
 }

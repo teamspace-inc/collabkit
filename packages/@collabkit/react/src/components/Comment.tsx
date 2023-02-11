@@ -10,7 +10,7 @@ import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
 import { useApp } from '../hooks/useApp';
 import { CommentTarget, PinTarget } from '@collabkit/core';
 import * as styles from '../theme/components/Comment.css';
-import { ArrowBendDownRight, ArrowBendUpRight, DotsThree } from './icons';
+import { ArrowBendDownRight, DotsThree } from './icons';
 import { Menu, MenuItem } from './Menu';
 import { Thread } from './Thread';
 import { mergeRefs } from 'react-merge-refs';
@@ -150,9 +150,14 @@ export function CommentActionsReplyButton() {
     workspaceId,
   } as const;
   return (
-    <IconButton onClick={(e) => events.onClick(e, { target })}>
-      <ArrowBendUpRight weight="regular" />
-    </IconButton>
+    <Tooltip>
+      <Tooltip.Trigger>
+        <IconButton onClick={(e) => events.onClick(e, { target })}>
+          <ArrowBendDownRight weight="regular" />
+        </IconButton>
+      </Tooltip.Trigger>
+      <Tooltip.Content>Reply</Tooltip.Content>
+    </Tooltip>
   );
 }
 
@@ -448,7 +453,14 @@ export function CommentEmojiAddButton() {
     threadId,
     workspaceId,
   } as const;
-  return <PopoverEmojiPicker target={target} smallIconButton={true} placement="bottom-start" />;
+  return (
+    <Tooltip>
+      <Tooltip.Trigger>
+        <PopoverEmojiPicker target={target} smallIconButton={true} placement="bottom-start" />
+      </Tooltip.Trigger>
+      <Tooltip.Content>React</Tooltip.Content>
+    </Tooltip>
+  );
 }
 
 export function CommentActionsEmojiButton() {
@@ -461,7 +473,14 @@ export function CommentActionsEmojiButton() {
     threadId,
     workspaceId,
   } as const;
-  return <PopoverEmojiPicker target={target} placement="left-end" />;
+  return (
+    <Tooltip>
+      <Tooltip.Trigger>
+        <PopoverEmojiPicker target={target} placement="left-end" />
+      </Tooltip.Trigger>
+      <Tooltip.Content>React</Tooltip.Content>
+    </Tooltip>
+  );
 }
 
 export function CommentHeader(props: React.ComponentProps<'div'>) {
