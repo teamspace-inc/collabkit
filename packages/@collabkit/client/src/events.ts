@@ -92,6 +92,7 @@ export function createEvents(store: Store) {
           actions.reopenThread(store, target);
           break;
         }
+        case 'commentReplyButton':
         case 'commentReplyCountButton': {
           actions.expandThread(store, target);
           break;
