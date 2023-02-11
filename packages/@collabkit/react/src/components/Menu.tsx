@@ -81,7 +81,9 @@ function useContextMenu<T extends ReferenceType>(context: FloatingContext<T>): E
   );
 }
 
-export function Menu<ItemType>(props: Props<ItemType>) {
+type MenuFn = <ItemType>(props: Props<ItemType>) => React.ReactElement;
+
+export const Menu = React.memo(function Menu(props) {
   const {
     className,
     children,
@@ -281,4 +283,4 @@ export function Menu<ItemType>(props: Props<ItemType>) {
       </FloatingPortal>
     </FloatingNode>
   );
-}
+}) as MenuFn;
