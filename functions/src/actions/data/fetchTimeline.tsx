@@ -1,4 +1,3 @@
-import * as admin from 'firebase-admin';
 import { Event } from '../../types';
 import { isValidTimeline } from '../helpers/isValidTimeline';
 import * as FirebaseId from './FirebaseId';

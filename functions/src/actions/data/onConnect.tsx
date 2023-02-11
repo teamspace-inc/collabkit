@@ -1,4 +1,4 @@
-import * as admin from 'firebase-admin';
+import admin from 'firebase-admin';
 
 export function onConnect(timeout = 2000) {
   const db = admin.database();

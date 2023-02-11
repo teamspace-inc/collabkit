@@ -1,3 +1,4 @@
+import { it, describe, expect } from 'vitest';
 import { fetchTimeline } from '../../../actions/data/fetchTimeline';
 
 describe('fetchTimeline', () => {

@@ -1,4 +1,3 @@
-import * as admin from 'firebase-admin';
 import { ref } from './refs';
 
 export function setNotifiedUntil(props: {

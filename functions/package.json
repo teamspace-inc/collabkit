@@ -8,7 +8,7 @@
     "start": "yarn run shell",
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log",
-    "test": "jest",
+    "test": "vitest",
     "build-and-test": "yarn run build && yarn run test"
   },
   "main": "lib/index.js",
@@ -49,10 +49,10 @@
     "eslint-config-google": "^0.14.0",
     "eslint-plugin-import": "^2.25.4",
     "firebase-functions-test": "^0.2.0",
-    "jest": "^28.1.3",
     "sinon": "^14.0.0",
     "ts-jest": "^28.0.8",
-    "typescript": "^4.9.5"
+    "typescript": "^4.9.5",
+    "vitest": "^0.27.2"
   },
   "private": true
 }

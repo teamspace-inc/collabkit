@@ -1,3 +1,4 @@
+import { it, describe, expect } from 'vitest';
 import { isValidThreadInfo } from '../../../actions/helpers/isValidThreadInfo';
 
 describe('isValidThreadInfo', () => {

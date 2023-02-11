@@ -1,3 +1,4 @@
+import { it, describe, expect } from 'vitest';
 import { canSendEmail } from '../../../actions/helpers/canSendEmail';
 
 describe('canSendEmail', () => {

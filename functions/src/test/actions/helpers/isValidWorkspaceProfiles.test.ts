@@ -1,3 +1,4 @@
+import { it, describe, expect } from 'vitest';
 import { isValidWorkspaceProfiles } from '../../../actions/helpers/isValidWorkspaceProfiles';
 
 describe('isValidWorkspaceProfiles', () => {

@@ -1,6 +1,6 @@
 import * as functions from 'firebase-functions';
 import * as cors from 'cors';
-import * as admin from 'firebase-admin';
+import admin from 'firebase-admin';
 import { updateUserAndWorkspace } from './actions/helpers/updateUserAndWorkspace';
 import { isValidUser } from './actions/helpers/isValidUser';
 import * as FirebaseId from './actions/data/FirebaseId';

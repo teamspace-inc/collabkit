@@ -1,3 +1,4 @@
+import { it, describe, expect } from 'vitest';
 import { isValidSeenBy } from '../../../actions/helpers/isValidSeenBy';
 
 describe('isValidSeenBy', () => {

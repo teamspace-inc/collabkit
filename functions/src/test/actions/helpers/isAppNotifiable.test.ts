@@ -1,3 +1,4 @@
+import { it, describe, expect, beforeEach } from 'vitest';
 import { isAppNotifiable } from '../../../actions/helpers/isAppNotifiable';
 import { App } from '../../../types';
 

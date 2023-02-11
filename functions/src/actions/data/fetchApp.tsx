@@ -1,4 +1,3 @@
-import * as admin from 'firebase-admin';
 import { isValidApp } from '../helpers/isValidApp';
 import { ref } from './refs';
 
