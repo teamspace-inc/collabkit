@@ -70,12 +70,12 @@ export async function subscribeWorkspaceProfiles(store: Store) {
     const profile = processSnapshot(childSnapshot);
     if (!profile) return;
     profiles[profile.id] = profile;
-    if (store.config.mentionableUsers === 'allWorkspace') {
-      store.mentionableUsers[profile.id] = profile;
-    }
   });
 
   store.profiles = profiles;
+  if (store.config.mentionableUsers === 'allWorkspace') {
+    store.mentionableUsers = profiles;
+  }
 
   const addedKey = `${profilesRef.toString()}#added`;
   const changedKey = `${profilesRef.toString()}#changed`;
