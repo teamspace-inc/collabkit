@@ -7,20 +7,18 @@ import Comment, { CommentProps } from './Comment';
 import { useSnapshot, INTERNAL_Snapshot } from 'valtio';
 import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
 import { useThreadContext } from '../hooks/useThreadContext';
-import { useApp } from '../hooks/useApp';
 import { useOptionalChannelContext } from '../hooks/useChannelContext';
 import { Virtuoso, VirtuosoHandle } from 'react-virtuoso';
 import type { Event, WithID, WithShowHeader } from '@collabkit/core';
 
 type CommentListProps = ComponentProps<'div'> & {
   hideResolveButton?: boolean;
-  isCollapsed?: boolean;
+  shouldCollapse?: boolean;
 };
 
 type ItemProps = CommentListProps & {
   event: INTERNAL_Snapshot<WithShowHeader<WithID<Event>>>;
   isChannel: boolean;
-  isExpanded: boolean;
   isResolved: boolean;
   newIndicatorId: string | null;
 };
@@ -37,14 +35,13 @@ const MemoizedComment = memo(function MemoizedComment(props: CommentProps) {
 
 const MemoizedItem = React.memo(function Item({
   isChannel,
-  isCollapsed,
-  isExpanded,
+  shouldCollapse,
   newIndicatorId,
   event,
   hideResolveButton,
   isResolved,
 }: ItemProps) {
-  return !isChannel || !isCollapsed || event.showHeader || isExpanded ? (
+  return !isChannel || event.showHeader || shouldCollapse ? (
     <div key={event.id} style={{ minHeight: 34 }}>
       {newIndicatorId === event.id && <NewIndicator />}
       <MemoizedComment
@@ -59,13 +56,11 @@ const MemoizedItem = React.memo(function Item({
 });
 
 export function VirtualCommentList(props: CommentListProps) {
-  const { isCollapsed, hideResolveButton, ...otherProps } = props;
+  const { shouldCollapse, hideResolveButton, ...otherProps } = props;
   const threadId = useThreadContext();
   const workspaceStore = useWorkspaceStore();
   const newIndicatorId = useNewIndicator();
   const isChannel = !!useOptionalChannelContext();
-  const { expandedThreadIds } = useSnapshot(useApp().store);
-  const isExpanded = !!expandedThreadIds.find((id) => id === threadId);
   const { computed } = useSnapshot(workspaceStore);
   const { isResolved, hasFetchedAllProfiles, messageEvents } = computed[threadId] ?? {};
   const virtuosoRef = useRef<VirtuosoHandle>(null);
@@ -82,8 +77,7 @@ export function VirtualCommentList(props: CommentListProps) {
           return (
             <MemoizedItem
               isChannel={isChannel}
-              isCollapsed={isCollapsed}
-              isExpanded={isExpanded}
+              shouldCollapse={shouldCollapse}
               newIndicatorId={newIndicatorId}
               event={event}
               hideResolveButton={hideResolveButton}
@@ -98,20 +92,17 @@ export function VirtualCommentList(props: CommentListProps) {
 }
 
 export function CommentList(props: CommentListProps) {
-  const { isCollapsed, hideResolveButton, ...otherProps } = props;
+  const { shouldCollapse, hideResolveButton, ...otherProps } = props;
   const threadId = useThreadContext();
   const workspaceStore = useWorkspaceStore();
   const newIndicatorId = useNewIndicator();
-  const isChannel = !!useOptionalChannelContext();
-  const { expandedThreadIds } = useSnapshot(useApp().store);
-  const isExpanded = !!expandedThreadIds.find((id) => id === threadId);
   const { computed } = useSnapshot(workspaceStore);
-  const { isResolved, hasFetchedAllProfiles, messageEvents } = computed[threadId] ?? {};
+  const { hasFetchedAllProfiles, messageEvents } = computed[threadId] ?? {};
 
   return hasFetchedAllProfiles ? (
     <div className={styles.root} {...otherProps}>
       {messageEvents.map((event, i) => {
-        return !isChannel || !props.isCollapsed || event.showHeader || isExpanded ? (
+        return (shouldCollapse && i == 0) || !shouldCollapse ? (
           <div key={event.id} style={{ minHeight: 34 }}>
             {newIndicatorId === event.id && <NewIndicator />}
             <MemoizedComment

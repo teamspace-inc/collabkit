@@ -16,6 +16,7 @@ import { ChannelContext } from '../hooks/useChannelContext';
 import { vars } from '../theme/theme/index.css';
 import { useStore } from '../hooks/useStore';
 import { actions } from '@collabkit/client';
+import { calc } from '@vanilla-extract/css-utils';
 
 function EmptyState() {
   return (
@@ -56,9 +57,9 @@ function ChannelThread() {
 
   return (
     <Thread.Provider threadId={threadId} key={`channelThread-${threadId}`} placeholder="Reply">
-      <CommentList isCollapsed={!isExpanded} className="" />
+      <CommentList shouldCollapse={!isExpanded} className="" />
       {isExpanded ? (
-        <div style={{ paddingLeft: vars.space[8] }}>
+        <div style={{ paddingLeft: `${calc.multiply(vars.space[1], 9)}` }}>
           <Composer placeholder="Reply" autoFocus={true} />
         </div>
       ) : null}

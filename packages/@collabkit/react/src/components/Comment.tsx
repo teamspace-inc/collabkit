@@ -158,8 +158,7 @@ export function CommentActionsReplyButton() {
 }
 
 export function CommentSeeAllRepliesButton(props: React.ComponentPropsWithoutRef<'div'>) {
-  const { store, events } = useApp();
-  const { expandedThreadIds } = useSnapshot(store);
+  const { events } = useApp();
   const threadId = useThreadContext();
   const workspaceId = useWorkspaceContext();
   const eventId = useCommentContext();
@@ -174,10 +173,6 @@ export function CommentSeeAllRepliesButton(props: React.ComponentPropsWithoutRef
   } as const;
 
   if (numComments === 1) {
-    return null;
-  }
-
-  if (expandedThreadIds.find((id) => id === threadId)) {
     return null;
   }
 
