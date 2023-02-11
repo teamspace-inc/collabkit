@@ -4,8 +4,8 @@ import { vars } from '../theme/index.css';
 
 export const root = recipe({
   base: {
-    height: 140,
-    width: 188,
+    // height: 140,
+    // width: 188,
     background: vars.color.surface,
     borderRadius: '6px',
     zIndex: 999,
@@ -25,7 +25,7 @@ const size = '24px';
 
 export const emojiGrid = style({
   display: 'grid',
-  gridTemplateColumns: `repeat(7, ${size})`,
+  gridTemplateColumns: `repeat(6, ${size})`,
 });
 
 export const category = style({
