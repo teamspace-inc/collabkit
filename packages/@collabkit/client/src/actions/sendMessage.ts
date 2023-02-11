@@ -2,7 +2,6 @@ import type { Store } from '@collabkit/core';
 import { $getRoot } from 'lexical';
 import { writeMessageToFirebase } from './writeMessageToFirebase';
 import { actions } from '.';
-import { generateObjectIdFromCellId } from '../utils/generateObjectIdFromCellId';
 import { extract } from '@collabkit/editor';
 
 export async function sendMessage(
@@ -77,7 +76,7 @@ export async function sendMessage(
         threadId,
         userId,
         event,
-        info: generateObjectIdFromCellId(workspace.threadInfo[threadId]),
+        info: workspace.threadInfo?.[threadId] || {},
       });
     }
   } catch (e) {
