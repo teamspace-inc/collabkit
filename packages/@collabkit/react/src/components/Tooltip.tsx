@@ -135,7 +135,7 @@ const TooltipContent = React.forwardRef<HTMLDivElement, React.HTMLProps<HTMLDivE
     const ref = useMergeRefs([context.refs.setFloating, propRef]);
 
     return (
-      <FloatingPortal>
+      <FloatingPortal id="collabkit-floating-root">
         {context.open && (
           <div
             ref={ref}

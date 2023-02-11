@@ -288,7 +288,7 @@ export function PopoverPortal({
   root?: HTMLElement | null | undefined;
 }) {
   return (
-    <FloatingPortal id="collabkit-floating-root" root={root}>
+    <FloatingPortal id="collabkit-floating-root">
       {children ?? <ThemeWrapper>{children}</ThemeWrapper>}
     </FloatingPortal>
   );

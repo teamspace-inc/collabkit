@@ -34,10 +34,8 @@ import { MentionWithColor } from '@collabkit/core';
 import {
   autoPlacement,
   autoUpdate,
-  flip,
   FloatingFocusManager,
   FloatingPortal,
-  size,
   useFloating,
   useFloatingNodeId,
 } from '@floating-ui/react';
@@ -425,7 +423,7 @@ export function MentionsTypeahead({
   }
 
   return (
-    <FloatingPortal>
+    <FloatingPortal id="collabkit-floating-root">
       <FloatingFocusManager context={context}>
         <ThemeWrapper>
           <div

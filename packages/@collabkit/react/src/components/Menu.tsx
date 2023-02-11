@@ -227,7 +227,7 @@ export const Menu = React.memo(function Menu(props) {
   return (
     <FloatingNode id={nodeId}>
       {trigger}
-      <FloatingPortal>
+      <FloatingPortal id="collabkit-floating-root">
         {open && (
           <FloatingFocusManager
             context={context}
