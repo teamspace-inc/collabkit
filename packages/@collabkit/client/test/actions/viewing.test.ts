@@ -4,8 +4,8 @@ import { FirebaseSync } from '../../src/sync/firebase/FirebaseSync';
 import { PinTarget, Store, ThreadTarget } from '@collabkit/core';
 import { nanoid } from 'nanoid';
 import { viewContent } from '../../src/actions/viewContent';
-import { closeContent } from '../../src/actions/closeContent';
-import { closeAll } from '../../src/actions/closeAll';
+import { closePopoverContent } from '../../src/actions/closePopoverContent';
+import { closeAllPopovers } from '../../src/actions/closeAllPopovers';
 
 describe('viewing and hiding a thread', async () => {
   const store = createStore();
@@ -30,19 +30,19 @@ describe('viewing and hiding a thread', async () => {
   });
 
   test('view another', () => {
-    closeContent(store as Store, { target: anotherTarget });
+    closePopoverContent(store as Store, { target: anotherTarget });
     expect(store.viewingId).toBe(target);
   });
 
   test('close', () => {
-    closeContent(store as Store, { target });
+    closePopoverContent(store as Store, { target });
     expect(store.viewingId).toBe(null);
   });
 
   test('close all', () => {
     viewContent(store as Store, { target });
     expect(store.viewingId).toBe(target);
-    closeAll(store as Store);
+    closeAllPopovers(store as Store);
     expect(store.viewingId).toBe(null);
   });
 });
@@ -76,19 +76,19 @@ describe('viewing and hiding a comment pin', async () => {
   });
 
   test('view another', () => {
-    closeContent(store as Store, { target: anotherTarget });
+    closePopoverContent(store as Store, { target: anotherTarget });
     expect(store.viewingId).toBe(target);
   });
 
   test('close', () => {
-    closeContent(store as Store, { target });
+    closePopoverContent(store as Store, { target });
     expect(store.viewingId).toBe(null);
   });
 
   test('close all', () => {
     viewContent(store as Store, { target });
     expect(store.viewingId).toBe(target);
-    closeAll(store as Store);
+    closeAllPopovers(store as Store);
     expect(store.viewingId).toBe(null);
   });
 });
