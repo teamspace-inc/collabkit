@@ -1,5 +1,5 @@
 import type { Store } from '@collabkit/core';
 
-export function closeAll(store: Store) {
+export function closeAllPopovers(store: Store) {
   store.viewingId = null;
 }

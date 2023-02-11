@@ -1,7 +1,9 @@
 import admin from 'firebase-admin';
+import path from 'path';
+import os from 'os';
 
 export function deleteUndefinedProps(o: any) {
-  if (typeof o === 'object') {
+  if (o != null && typeof o === 'object') {
     Object.keys(o).forEach((key) => {
       if (o[key] === undefined) {
         delete o[key];
@@ -13,12 +15,13 @@ export function deleteUndefinedProps(o: any) {
 
 async function run() {
   admin.initializeApp({
-    credential: admin.credential.cert('/Users/nc/collabkit-dev-firebase.json'),
+    credential: admin.credential.cert(
+      path.join(os.homedir(), '/Users/nc/collabkit-dev-firebase.json')
+    ),
     databaseURL: 'https://collabkit-dev-default-rtdb.europe-west1.firebasedatabase.app',
   });
 
   const apps = await (await admin.database().ref('apps').get()).val();
-  // await admin.database().ref('/views/workspaceProfiles').set({});
 
   for (const appId in apps) {
     const workspaces = await (await admin.database().ref(`workspaces/${appId}/`).get()).val();
@@ -28,7 +31,7 @@ async function run() {
         await admin.database().ref(`timeline/${appId}/${workspaceId}`).get()
       ).val();
       for (const threadId in timeline) {
-        const threadProfiles = await (
+        const threadProfiles = (
           await admin
             .database()
             .ref(`views/threadProfiles/${appId}/${workspaceId}/${threadId}`)

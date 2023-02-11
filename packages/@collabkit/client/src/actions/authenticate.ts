@@ -56,7 +56,7 @@ export async function authenticate(store: Store) {
     store.workspaces[workspaceId] = createWorkspace();
 
     if (store.config.mentionableUsers === 'allWorkspace') {
-      actions.subscribeProfiles(store);
+      actions.subscribeWorkspaceProfiles(store);
     }
 
     actions.subscribeWorkspace(store);
@@ -108,7 +108,7 @@ export async function authenticate(store: Store) {
 
     await actions.saveProfile(store);
     if (store.config.mentionableUsers === 'allWorkspace') {
-      actions.subscribeProfiles(store);
+      actions.subscribeWorkspaceProfiles(store);
     }
     actions.subscribeWorkspace(store);
   } else {

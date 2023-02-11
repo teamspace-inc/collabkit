@@ -20,21 +20,21 @@ export async function subscribeProfile(
   const id = FirebaseId.decode(profileId);
   const profileRef = ref`/profiles/${appId}/${id}`;
 
-  if (store.profiles[profileId])
-    store.subs[profileRef.toString()] ||= onValue(
-      profileRef,
-      (profileSnapshot) => {
-        console.log('subscribeProfile');
-        const profile = snapshotToProfile(profileSnapshot);
-        // todo validate profile data here
-        if (profile) {
-          store.profiles[id] = ensureColor(profile);
-          store.mentionableUsers[id] = profile;
-          props.onSubscribe(profile);
-        } else {
-          console.warn('profile not found');
-        }
-      },
-      onError
-    );
+  if (store.profiles[profileId]) return;
+
+  store.subs[profileRef.toString()] ||= onValue(
+    profileRef,
+    (profileSnapshot) => {
+      const profile = snapshotToProfile(profileSnapshot);
+      // todo validate profile data here
+      if (profile) {
+        store.profiles[id] = ensureColor(profile);
+        store.mentionableUsers[id] = profile;
+        props.onSubscribe(profile);
+      } else {
+        console.warn(`[CollabKit] Profile '${id}' not found'`);
+      }
+    },
+    onError
+  );
 }

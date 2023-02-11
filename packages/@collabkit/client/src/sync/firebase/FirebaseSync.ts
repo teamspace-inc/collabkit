@@ -300,9 +300,9 @@ export class FirebaseSync implements Sync.SyncAdapter {
     const { appId, userId, workspaceId, profile } = data;
 
     const updates = {
-      [`/profiles/${appId}/${userId}`]: profile,
-      [`/views/workspaceProfiles/${appId}/${workspaceId}/${userId}`]: profile,
-      [`/workspaces/${appId}/${workspaceId}/profiles/${userId}`]: true,
+      [ref.path`/profiles/${appId}/${userId}`]: profile,
+      [ref.path`/views/workspaceProfiles/${appId}/${workspaceId}/${userId}`]: profile,
+      [ref.path`/workspaces/${appId}/${workspaceId}/profiles/${userId}`]: true,
     };
 
     try {

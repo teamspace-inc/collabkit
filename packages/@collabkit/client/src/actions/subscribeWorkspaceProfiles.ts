@@ -5,18 +5,6 @@ import type { Profile, Store } from '@collabkit/core';
 import { FirebaseId } from '@collabkit/core';
 import { getConfig } from './index';
 import { snapshotToProfile } from '../sync/firebase/converters';
-import { ensureColor } from './saveProfile';
-
-let didWarnLargeWorkspace = false;
-
-function warnLargeWorkspace() {
-  if (!didWarnLargeWorkspace) {
-    console.warn(
-      '[CollabKit] Setting mentionableUsers to "allWorkspace" in workspaces with a large number of users is not recommended. To ensure optimal performance, please consider passing an array of mentionable users instead or contact us for support.'
-    );
-    didWarnLargeWorkspace = true;
-  }
-}
 
 function processSnapshot(snapshot: DataSnapshot) {
   if (!snapshot.key) {
@@ -31,7 +19,7 @@ function processSnapshot(snapshot: DataSnapshot) {
   return profile;
 }
 
-export async function subscribeWorkspaceProfile(store: Store) {
+export async function subscribeWorkspaceProfiles(store: Store) {
   const { appId, workspaceId } = getConfig(store);
   console.log('subscribeWorkspaceProfiles');
 
@@ -61,7 +49,24 @@ export async function subscribeWorkspaceProfile(store: Store) {
   const profilesQuery = query(profilesRef);
   const profiles: { [id: string]: Profile } = {};
   const workspaceProfiles = await get(profilesQuery);
+
+  let count = 0;
+  let didWarnLargeWorkspace = false;
+
+  function warnLargeWorkspace() {
+    if (!didWarnLargeWorkspace) {
+      console.warn(
+        '[CollabKit] Setting mentionableUsers to "allWorkspace" in workspaces with a large number of users is not recommended. To ensure optimal performance, please consider passing an array of mentionable users instead or contact us for support.'
+      );
+      didWarnLargeWorkspace = true;
+    }
+  }
+
   workspaceProfiles.forEach((childSnapshot: DataSnapshot) => {
+    count++;
+    if (count > 100) {
+      warnLargeWorkspace();
+    }
     const profile = processSnapshot(childSnapshot);
     if (!profile) return;
     profiles[profile.id] = profile;
