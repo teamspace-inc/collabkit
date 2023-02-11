@@ -15,6 +15,7 @@ const transport = nodemailer.createTransport({
 const sendMail = buildSendMail({
   transport,
   defaultFrom: 'noreply@collabkit.dev',
+  configPath: './mailing.config.json',
 });
 
 export { sendMail };

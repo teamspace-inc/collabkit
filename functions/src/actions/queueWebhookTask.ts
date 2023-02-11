@@ -1,6 +1,7 @@
 import { createTask } from './helpers/createTask';
 import { isValidUrl } from './helpers/isValidUrl';
 import { ref } from './data/refs';
+import { API_HOST } from '../apiHost';
 
 export async function queueWebhookTask(
   props: {
@@ -28,7 +29,7 @@ export async function queueWebhookTask(
 
   const response = await createTaskFn({
     projectId,
-    url: 'https://us-central1-collabkit-dev.cloudfunctions.net/triggerWebhook',
+    url: API_HOST + '/triggerWebhook',
     queue: 'webhooks',
     payload: {
       url,
