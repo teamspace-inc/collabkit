@@ -10,7 +10,7 @@ type Signup = { email: string; status?: 'created' | 'contacted' | 'ignored' };
 
 type Options = { fromSignups: boolean; dryRun: boolean };
 
-export default async (options: Options, ...args: string[]) => {
+export default async (options: Options, ..._args: string[]) => {
   initializeApp();
 
   if (options.dryRun) {
@@ -26,10 +26,11 @@ export default async (options: Options, ...args: string[]) => {
 
 const APP_DEFAULTS = {
   defaultNotificationPreference: 'allWorkspace',
-  emailBatchDelayMs: 300_000,
-  isEmailDisabled: true,
+  emailBatchDelayMs: 5_000,
+  isEmailDisabled: false,
   logoUrl: '',
   mode: 'UNSECURED',
+  accentColor: '#000',
 };
 const APP_ID_LENGTH = 21;
 const API_KEY_LENGTH = 32;
