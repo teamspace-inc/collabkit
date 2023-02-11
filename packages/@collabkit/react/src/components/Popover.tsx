@@ -144,7 +144,6 @@ type RootProps = {
 
 export type AdvancedPopoverProps = {
   // optional
-  defaultOpen?: boolean;
   dismissOnClickOutside?: boolean;
   shouldFlipToKeepInView?: boolean;
 };
@@ -154,7 +153,6 @@ function PopoverRoot(props: RootProps) {
     props;
   const nodeId = useFloatingNodeId();
 
-  const defaultOpen = props.defaultOpen ?? false;
   const dismissOnClickOutside = props.dismissOnClickOutside ?? true;
   const shouldFlipToKeepInView = props.shouldFlipToKeepInView ?? true;
 
@@ -262,12 +260,6 @@ function PopoverRoot(props: RootProps) {
     ]
   );
 
-  useEffect(() => {
-    if (defaultOpen) {
-      onContentChange(true);
-    }
-  }, [defaultOpen]);
-
   return (
     <FloatingNode id={nodeId}>
       <PopoverContext.Provider value={popoverContext}>{children}</PopoverContext.Provider>
@@ -295,11 +287,11 @@ export function PopoverPortal({
 }
 
 export function Popover(props: PopoverProps) {
-  const [open, setOpen] = useState(() => props.defaultOpen ?? false);
+  const [open, setOpen] = useState(false);
   const [preview, setPreview] = useState(false);
 
   // advanced
-  const { dismissOnClickOutside, shouldFlipToKeepInView, defaultOpen } = props;
+  const { dismissOnClickOutside, shouldFlipToKeepInView } = props;
 
   return (
     <Popover.Root
@@ -310,7 +302,6 @@ export function Popover(props: PopoverProps) {
       // advanced
       dismissOnClickOutside={dismissOnClickOutside}
       shouldFlipToKeepInView={shouldFlipToKeepInView}
-      defaultOpen={defaultOpen}
     >
       {'children' in props ? (
         <Popover.Trigger>{props.children}</Popover.Trigger>

@@ -36,7 +36,6 @@ export function PopoverEmojiPicker(props: {
       placement={props.placement ?? 'left-start'}
       dismissOnClickOutside={true}
       shouldFlipToKeepInView={false}
-      defaultOpen={false}
     >
       <Popover.Trigger>
         <IconButton small={props.smallIconButton} onClick={() => onOpenChange(!open)}>
