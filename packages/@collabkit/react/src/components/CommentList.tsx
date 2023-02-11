@@ -110,14 +110,14 @@ export function CommentList(props: CommentListProps) {
 
   return hasFetchedAllProfiles ? (
     <div className={styles.root} {...otherProps}>
-      {messageEvents.map((event) => {
+      {messageEvents.map((event, i) => {
         return !isChannel || !props.isCollapsed || event.showHeader || isExpanded ? (
           <div key={event.id} style={{ minHeight: 34 }}>
             {newIndicatorId === event.id && <NewIndicator />}
             <MemoizedComment
               commentId={event.id}
               hideProfile={!event.showHeader}
-              isFirstComment={!props.hideResolveButton && !isResolved}
+              isFirstComment={i == 0}
             />
           </div>
         ) : null;
