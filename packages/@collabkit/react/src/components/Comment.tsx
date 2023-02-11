@@ -1,6 +1,4 @@
 import React, { useMemo, useCallback, useRef } from 'react';
-import { useMarkAsSeen } from '../hooks/useMarkAsSeen';
-import { useOnMarkdownLinkClick } from '../hooks/useOnMarkdownLinkClick';
 import { useThreadContext } from '../hooks/useThreadContext';
 import { Markdown } from './Markdown';
 import { useSnapshot } from 'valtio';
@@ -15,7 +13,6 @@ import * as styles from '../theme/components/Comment.css';
 import { ArrowBendDownRight, ArrowBendUpRight, DotsThree } from './icons';
 import { Menu, MenuItem } from './Menu';
 import { Thread } from './Thread';
-import { useHovering } from '../hooks/useHovering';
 import { mergeRefs } from 'react-merge-refs';
 import Composer from './composer/Composer';
 import { IconButton } from './IconButton';
@@ -31,6 +28,11 @@ import { Emoji } from './Emoji';
 import { useWorkspaceContext } from '../hooks/useWorkspaceContext';
 import { useUserContext } from '../hooks/useUserContext';
 import { useCommentSnapshot } from '../hooks/useCommentSnapshot';
+import { useMarkAsSeen } from '../hooks/useMarkAsSeen';
+import { useOnMarkdownLinkClick } from '../hooks/useOnMarkdownLinkClick';
+import { useStore } from '../hooks/useStore';
+import { useHovering } from '../hooks/useHovering';
+import { ProfileContext } from '../hooks/useProfile';
 
 type CommentRootProps = {
   commentId: string;
@@ -54,8 +56,8 @@ function useTreeContext() {
 function CommentRoot({ commentId: eventId, indent = false, ...props }: CommentRootProps) {
   const threadId = useThreadContext();
   const workspaceId = useWorkspaceContext();
-  const userId = useUserContext();
   const treeId = useId();
+  const userId = useUserContext();
 
   const target = useMemo<CommentTarget>(
     () => ({ type: 'comment', workspaceId, threadId, eventId, treeId }),
@@ -74,14 +76,14 @@ function CommentRoot({ commentId: eventId, indent = false, ...props }: CommentRo
     eventId,
   });
 
-  const { store, events } = useApp();
+  const store = useStore();
+  const { events } = useApp();
   const { menuId, reactingId, editingId } = useSnapshot(store);
   const event = useSnapshot(useWorkspaceStore().computed[threadId]).canonicalEvents[eventId];
   const { profiles } = useSnapshot(store);
 
   // todo @nc: move this to events and make it a state in the store
   const isHovering =
-    // hovering or the menu is open and the menu is for this comment
     useHovering(divRef) ||
     (event &&
       menuId?.type === 'menu' &&
@@ -109,7 +111,7 @@ function CommentRoot({ commentId: eventId, indent = false, ...props }: CommentRo
     <CommentContext.Provider value={eventId}>
       <TreeContext.Provider value={treeId}>
         <EditingContext.Provider value={isEditing}>
-          <Profile.Provider profileId={createdById}>
+          <ProfileContext.Provider value={createdById}>
             <div
               data-testid="collabkit-comment-root"
               className={`${props.className ?? styles.root({ indent })} ${
@@ -123,7 +125,7 @@ function CommentRoot({ commentId: eventId, indent = false, ...props }: CommentRo
             >
               {props.children}
             </div>
-          </Profile.Provider>
+          </ProfileContext.Provider>
         </EditingContext.Provider>
       </TreeContext.Provider>
     </CommentContext.Provider>
@@ -267,16 +269,14 @@ export function CommentReactions(props: React.ComponentPropsWithoutRef<'div'>) {
   const { children, ...otherProps } = props;
   const threadId = useThreadContext();
   const eventId = useCommentContext();
-  const { computed } = useSnapshot(useWorkspaceStore());
-  const { reactions } = computed[threadId];
-  const commentReactions = reactions?.[eventId];
-  const emojiUs = Object.keys(commentReactions || {});
-  return commentReactions &&
+  const reactions = useSnapshot(useWorkspaceStore()).computed[threadId].reactions?.[eventId];
+  const emojiUs = Object.keys(reactions || {});
+  return reactions &&
     emojiUs.length > 0 &&
-    Object.values(commentReactions).find((reac) => reac.count > 0) ? (
+    Object.values(reactions).find((reac) => reac.count > 0) ? (
     <div data-testid="collabkit-comment-reactions" className={styles.reactions} {...otherProps}>
       {emojiUs.map((emojiU) => {
-        const { count, userIds } = commentReactions[emojiU as keyof typeof commentReactions];
+        const { count, userIds } = reactions[emojiU as keyof typeof reactions];
         return <EmojiCount key={emojiU} emojiU={emojiU} count={count} userIds={userIds} />;
       })}
       <CommentEmojiAddButton />

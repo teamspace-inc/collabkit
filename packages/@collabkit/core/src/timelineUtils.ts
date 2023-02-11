@@ -1,4 +1,4 @@
-import type { Event, Timeline, WithID } from './types';
+import type { Event, Timeline, WithID, WithShowHeader } from './types';
 const DELETE_ID = 'delete-';
 
 export function deletedIds(timeline: Timeline): Readonly<Set<string>> {
@@ -12,45 +12,6 @@ export function deletedIds(timeline: Timeline): Readonly<Set<string>> {
   return deleted;
 }
 
-export function groupedMessages(timeline: Timeline) {
-  const eventIds = Object.keys(timeline);
-
-  const events: WithID<Event>[] = eventIds.map((eventId) => ({
-    ...timeline[eventId],
-    id: eventId,
-  }));
-
-  const deleted = deletedIds(timeline);
-  const messageEvents = events.filter(
-    (event) => !deleted.has(event.id) && (event.type === 'message' || event.type === 'system')
-  );
-
-  // groups comments by createdById and createdAt chunks
-  const list = messageEvents.reduce<WithID<Event>[][]>((groupedEvents, event, i) => {
-    const prevEvent = timeline[messageEvents.map((e) => e.id)[i - 1]];
-    // since idiomatic use of firebase does not include the eventId inside
-    // the event, we need to add it here to make passing the event around
-    // in React easier.
-    if (prevEvent) {
-      if (prevEvent.createdById === event.createdById) {
-        if (typeof prevEvent.createdAt === 'number' && typeof event.createdAt === 'number') {
-          // 5 minutes before last message and same person results
-          // in a grouped message.
-          if (prevEvent.createdAt + 1000 * 60 * 5 > event.createdAt) {
-            if (groupedEvents[groupedEvents.length - 1]) {
-              groupedEvents[groupedEvents.length - 1].push(event);
-              return groupedEvents;
-            }
-          }
-        }
-      }
-    }
-    return groupedEvents.concat([[event]]);
-  }, []);
-
-  return list;
-}
-
 export function messageEvents(timeline: Timeline) {
   const eventIds = Object.keys(timeline);
   const events: WithID<Event>[] = eventIds.map((eventId) => ({
@@ -58,10 +19,27 @@ export function messageEvents(timeline: Timeline) {
     id: eventId,
   }));
   const deleted = deletedIds(timeline);
-  return events.filter(
-    (event) => !deleted.has(event.id) && (event.type === 'message' || event.type === 'system')
+  const messageEvents: WithShowHeader<WithID<Event>>[] = events.filter(
+    (event) => !deleted.has(event.id) && event.type === 'message'
   );
+  let prevEventI = -1;
+  messageEvents.forEach((event: WithShowHeader<WithID<Event>>, i) => {
+    const prevEvent = messageEvents[prevEventI];
+    prevEventI = i;
+    if (
+      prevEvent &&
+      prevEvent.createdById === event.createdById &&
+      typeof prevEvent.createdAt === 'number' &&
+      typeof event.createdAt === 'number' &&
+      prevEvent.createdAt + 1000 * 60 * 5 > event.createdAt
+    ) {
+    } else {
+      event.showHeader = true;
+    }
+  });
+  return messageEvents;
 }
+
 export function countMessages(timeline: Timeline) {
   let count = 0;
   const deleted = deletedIds(timeline);

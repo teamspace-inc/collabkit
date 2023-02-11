@@ -3,14 +3,7 @@ import rehypeReact from 'rehype-react';
 import remarkRehype from 'remark-rehype';
 import remarkParse from 'remark-parse';
 import { unified } from 'unified';
-import { ComposerPin } from '@collabkit/editor';
-
-function MarkdownLink(props: any) {
-  if (props.href.startsWith('#PIN')) {
-    return <ComposerPin id={'foo'} />;
-  }
-  return <a {...props} />;
-}
+import { MarkdownLink } from './MarkdownLink';
 
 const canUseDOM = !!(
   typeof window !== 'undefined' &&

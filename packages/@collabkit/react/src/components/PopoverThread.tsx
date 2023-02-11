@@ -4,7 +4,7 @@ import React from 'react';
 import { Popover, PopoverTriggerProps, PopoverContentProps } from './Popover';
 import { usePopoverThread } from '../hooks/usePopoverThread';
 import { previewRoot, root } from '../theme/components/PopoverThread.css';
-import CommentList from './CommentList';
+import { CommentList } from './CommentList';
 import { Scrollable } from './Scrollable';
 import Composer from './composer/Composer';
 import { OptionalThreadProps, ThreadProps } from '../types';

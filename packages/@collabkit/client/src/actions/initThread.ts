@@ -1,5 +1,4 @@
 import { Store, timelineUtils, WithID, Event } from '@collabkit/core';
-import { snapshot } from 'valtio';
 import { derive } from 'valtio/utils';
 
 export function initThread(store: Store, props: { workspaceId: string; threadId: string }) {
@@ -14,12 +13,10 @@ export function initThread(store: Store, props: { workspaceId: string; threadId:
 
   workspace.computed[threadId] ||= derive({
     isResolved: (get) => timelineUtils.computeIsResolved(get(timeline)[threadId]),
-    groupedMessages: (get) => timelineUtils.groupedMessages(get(timeline)[threadId]),
-    hasFetchedAllProfiles: (get) => {
-      return Object.values(get(timeline[threadId]))
-        .map((event) => event.createdById)
-        .every((id) => get(store.profiles)[id]);
-    },
+    hasFetchedAllProfiles: (get) =>
+      Object.values(get(timeline[threadId])).every(
+        (event) => get(store.profiles)[event.createdById]
+      ),
     messageEvents: (get) => timelineUtils.messageEvents(get(timeline)[threadId]),
     unreadCount: (get) => {
       const userId = get(store).userId;

@@ -14,6 +14,7 @@ import { useStateMachine } from './useStateMachine';
 
 import type * as Radix from '@radix-ui/react-primitive';
 import type { Scope } from '@radix-ui/react-context';
+import { useCallback } from 'react';
 
 type Direction = 'ltr' | 'rtl';
 type Sizes = {
@@ -182,8 +183,20 @@ const ScrollAreaViewport = React.forwardRef<ScrollAreaViewportElement, ScrollAre
       }
     }, 10);
 
+    const handleContent = useCallback(() => {
+      if (context.autoScroll === 'bottom' && context.viewport) {
+        const height = context.viewport.scrollHeight;
+        if (height !== prevHeight.current && canAutoScroll.current) {
+          context.viewport.scrollTop = height;
+        }
+        prevHeight.current = height;
+      }
+    }, [context]);
+
+    React.useEffect(() => handleContent, [handleContent]);
+
     useResizeObserver(context.viewport, handleResize);
-    useResizeObserver(context.content, handleResize);
+    useResizeObserver(context.content, handleContent);
 
     return (
       <>

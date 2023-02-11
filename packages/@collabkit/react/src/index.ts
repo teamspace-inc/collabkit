@@ -27,7 +27,6 @@ import {
   PopoverThreadProps,
   PopoverThreadContent,
 } from './components/PopoverThread';
-import { useInbox } from './hooks/public/useInbox';
 import { useIsResolved } from './hooks/public/useIsResolved';
 import { useResolveThread } from './hooks/public/useResolveThread';
 import { useThreadUsers } from './hooks/public/useThreadUsers';
@@ -42,7 +41,7 @@ import CollabKitRecharts from './components/Recharts';
 import Profile from './components/Profile';
 import Composer from './components/composer/Composer';
 import { Scrollable } from './components/Scrollable';
-import CommentList from './components/CommentList';
+import { CommentList } from './components/CommentList';
 import { Popover } from './components/Popover';
 import { Button } from './components/Button';
 import { Commentable } from './components/Commentable';

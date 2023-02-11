@@ -11,7 +11,7 @@ import { Thread } from './Thread';
 import Composer from './composer/Composer';
 import { useThreadContext } from '../hooks/useThreadContext';
 import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
-import CommentList from './CommentList';
+import { CommentList } from './CommentList';
 import { ChannelContext } from '../hooks/useChannelContext';
 import { vars } from '../theme/theme/index.css';
 import { useStore } from '../hooks/useStore';
