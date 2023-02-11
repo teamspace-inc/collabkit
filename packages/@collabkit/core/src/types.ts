@@ -436,6 +436,10 @@ export type Event = {
   reactions?: EventReactions;
 };
 
+export type WithShowHeader<T> = T & {
+  showHeader?: boolean;
+};
+
 export type EventReactions = { [emojiU: string]: { count: number; userIds: string[] } };
 
 export type WithName<T> = T & {
@@ -531,10 +535,10 @@ export interface Workspace {
   computed: {
     [threadId: string]: {
       isResolved: boolean;
-      groupedMessages: WithID<Event>[][];
       hasFetchedAllProfiles: boolean;
-      messageEvents: WithID<Event>[];
+      messageEvents: WithShowHeader<WithID<Event>>[];
       unreadCount: number;
+
       reactions: { [eventId: string]: EventReactions | null };
       replyCount: number;
       // resolves events to their latest edit if available
