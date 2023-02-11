@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback, useRef } from 'react';
+import React, { useMemo, useCallback, useRef, useState, useEffect } from 'react';
 import { useThreadContext } from '../hooks/useThreadContext';
 import { Markdown } from './Markdown';
 import { useSnapshot } from 'valtio';
@@ -487,6 +487,17 @@ export function CommentHeader(props: React.ComponentProps<'div'>) {
   return <div className={styles.header} {...props} />;
 }
 
+function useIsExpanded() {
+  const threadId = useThreadContext();
+  const [isExpanded, setIsExpanded] = useState(false);
+  const store = useStore();
+  const { expandedThreadIds } = useSnapshot(store);
+  useEffect(() => {
+    setIsExpanded(expandedThreadIds.includes(threadId));
+  }, [store, expandedThreadIds, threadId]);
+  return isExpanded;
+}
+
 export type CommentProps = {
   commentId: string;
   hideProfile?: boolean;
@@ -497,6 +508,7 @@ function Comment(props: CommentProps) {
   const hideProfile = props.hideProfile ?? false;
   const isFirstComment = props.isFirstComment ?? false;
   const isChannel = !!useOptionalChannelContext();
+  const isExpanded = useIsExpanded();
 
   return (
     <Comment.Root commentId={props.commentId} indent={isChannel && !isFirstComment}>
@@ -520,7 +532,7 @@ function Comment(props: CommentProps) {
             <Comment.Markdown />
           </Comment.Body>
           <Comment.Reactions />
-          {isChannel && isFirstComment && <Comment.SeeAllRepliesButton />}
+          {isChannel && isFirstComment && !isExpanded && <Comment.SeeAllRepliesButton />}
         </Comment.HideIfEditing>
         <Comment.ShowIfEditing>
           <Comment.Editor />
