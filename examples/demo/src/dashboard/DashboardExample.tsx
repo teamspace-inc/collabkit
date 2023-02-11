@@ -30,7 +30,7 @@ import {
 } from '@tremor/react';
 import '@tremor/react/dist/esm/tremor.css';
 import { isAfter, isBefore, isEqual } from 'date-fns';
-import { Commentable, Thread, useCommentableRef } from '@collabkit/react';
+import { Channel, Commentable, Thread, useCommentableRef } from '@collabkit/react';
 
 import { performance } from './data';
 import { Charts } from './Charts';
@@ -400,7 +400,7 @@ export function DashboardExample() {
           {selectedTab === 'flowchart' ? <Flow /> : null}
         </main>
         <div className="h-screen border" style={{ width: 360 }}>
-          <Thread threadId="newdemo" />
+          <Channel />
         </div>
       </div>
     </Commentable.Root>
