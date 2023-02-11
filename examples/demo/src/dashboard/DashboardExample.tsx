@@ -147,7 +147,7 @@ function ChartView({ chartData }: { chartData: any }) {
           <Toggle
             color="zinc"
             defaultValue={selectedKpi}
-            handleSelect={(value) => (dashboardStore.selectedKpi = value)}
+            onValueChange={(value) => (dashboardStore.selectedKpi = value)}
           >
             <ToggleItem value="Sales" text="Sales" />
             <ToggleItem value="Profit" text="Profit" />
@@ -267,7 +267,9 @@ function TableView() {
     <Card marginTop="mt-6">
       <div className="sm:mt-6 hidden sm:flex sm:justify-start sm:space-x-2">
         <MultiSelectBox
-          handleSelect={(value) => (dashboardStore.selectedNames = value)}
+          onValueChange={(value: DashboardStore['selectedNames']) =>
+            (dashboardStore.selectedNames = value)
+          }
           placeholder="Select Salespeople"
           maxWidth="max-w-xs"
         >
@@ -278,7 +280,7 @@ function TableView() {
         <Dropdown
           maxWidth="max-w-xs"
           value={selectedStatus}
-          handleSelect={(value) => (dashboardStore.selectedStatus = value)}
+          onValueChange={(value) => (dashboardStore.selectedStatus = value)}
         >
           <DropdownItem value="all" text="All Performances" />
           <DropdownItem value="overperforming" text="Overperforming" />
@@ -288,7 +290,9 @@ function TableView() {
       </div>
       <div className="mt-6 sm:hidden space-y-2 sm:space-y-0">
         <MultiSelectBox
-          handleSelect={(value) => (dashboardStore.selectedNames = value)}
+          onValueChange={(value: DashboardStore['selectedNames']) =>
+            (dashboardStore.selectedNames = value)
+          }
           placeholder="Select Salespeople"
           maxWidth="max-w-full"
         >
@@ -299,7 +303,7 @@ function TableView() {
         <Dropdown
           maxWidth="max-w-full"
           value={selectedStatus}
-          handleSelect={(value) => (dashboardStore.selectedStatus = value)}
+          onValueChange={(value) => (dashboardStore.selectedStatus = value)}
         >
           <DropdownItem value="all" text="All Performances" />
           <DropdownItem value="overperforming" text="Overperforming" />
@@ -371,7 +375,7 @@ export function DashboardExample() {
               defaultStartDate={minDate}
               defaultEndDate={maxDate}
               enableRelativeDates={false}
-              handleSelect={(start, end) => {
+              onValueChange={(start, end) => {
                 dashboardStore.startDate = start;
                 dashboardStore.endDate = end;
               }}
@@ -380,7 +384,9 @@ export function DashboardExample() {
           </Flex>
           <TabList
             defaultValue={'overview'}
-            handleSelect={(tab) => (dashboardStore.selectedTab = tab)}
+            onValueChange={(tab: DashboardStore['selectedTab']) =>
+              (dashboardStore.selectedTab = tab)
+            }
             marginTop="mt-6"
           >
             <Tab value={'overview'} text="Overview" />
