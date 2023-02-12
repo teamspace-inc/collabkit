@@ -25,7 +25,7 @@ export const thread = recipe({
     isSelected: {
       true: {
         border: `1px solid ${vars.color.attentionBlue}`,
-        borderRadius: '6px',
+        borderRadius: '8px',
       },
       false: {
         border: `1px solid transparent`,
