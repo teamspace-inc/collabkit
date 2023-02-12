@@ -11,7 +11,7 @@ import type { AvatarProps, CommentProps, ThreadProps } from './types';
 import type { CustomTheme } from './theme/themes.css';
 
 import { CollabKitProvider } from './components/Provider';
-import { Thread, ResolveThreadIconButton } from './components/Thread';
+import { Thread } from './components/Thread';
 import { useUnreadCommentsCount } from './hooks/public/useUnreadCommentsCount';
 import { useUnreadThreadsCount } from './hooks/public/useUnreadThreadsCount';
 import { createValtioStore } from './store';
@@ -77,7 +77,6 @@ export {
   Debug,
   Popover,
   Profile,
-  ResolveThreadIconButton,
   Scrollable,
   ThreadFacepile,
   useIsResolved,

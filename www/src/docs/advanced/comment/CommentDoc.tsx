@@ -254,7 +254,7 @@ export default () => (<Thread.Provider threadId="thread1">
 </Thread.Provider>);`}
         demo={
           <CommentDemo>
-            <Comment.MoreMenu />
+            <Comment.Menu />
           </CommentDemo>
         }
         description={

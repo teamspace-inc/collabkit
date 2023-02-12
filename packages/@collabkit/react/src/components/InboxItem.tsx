@@ -14,7 +14,7 @@ import { useUserContext } from '../hooks/useUserContext';
 import { useWorkspaceContext } from '../hooks/useWorkspaceContext';
 import { useStore } from '../hooks/useStore';
 import { useRenderFnContext } from '../hooks/useRenderFnContext';
-import { ResolveThreadIconButton, ThreadProvider } from './Thread';
+import { ThreadResolveIconButton, ThreadProvider } from './Thread';
 import { ThreadUnreadDot } from './ThreadUnreadDot';
 
 export function InboxItem(props: { formatTimestamp?: (timestamp: number) => string }) {
@@ -80,7 +80,7 @@ export function InboxItem(props: { formatTimestamp?: (timestamp: number) => stri
           <ThreadUnreadDot />
           <ThreadFacepile size={styles.facepileSize} />
           <div style={{ flex: 1 }}></div>
-          {firstComment.createdById === userId ? <ResolveThreadIconButton /> : null}
+          {firstComment.createdById === userId ? <ThreadResolveIconButton /> : null}
         </div>
         {renderThreadContextPreview?.({
           threadId,

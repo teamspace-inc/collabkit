@@ -8,7 +8,7 @@ import { Profile, Comment, Thread } from '@collabkit/react';
   </Comment.Header>
   <Comment.Actions>
     <Thread.ResolveIconButton />
-    <Comment.MoreMenu />
+    <Comment.Menu />
   </Comment.Actions>
   <Comment.Body />
 </Comment.Root>;
