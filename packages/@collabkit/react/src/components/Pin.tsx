@@ -185,7 +185,6 @@ export const PinMarker = forwardRef<HTMLDivElement, PinMarkerProps>(function Pin
               {...popoverProps}
               dismissOnClickOutside={true}
               shouldFlipToKeepInView={true}
-              defaultOpen={false}
             >
               <Popover.Trigger>
                 <div>
