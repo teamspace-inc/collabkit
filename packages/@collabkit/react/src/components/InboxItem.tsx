@@ -3,7 +3,13 @@ import { useSnapshot } from 'valtio';
 import { useThreadContext } from '../hooks/useThreadContext';
 import { useInboxStore } from '../hooks/useInboxStore';
 import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
-import { CommentBody, CommentCreatorName, CommentRoot, CommentTimestamp } from './Comment';
+import {
+  CommentBody,
+  CommentCreatorName,
+  CommentRoot,
+  CommentThreadResolveIconButton,
+  CommentTimestamp,
+} from './Comment';
 import { ReplyCount } from './ReplyCount';
 import {} from '../../../client/src/actions';
 import { ThreadTarget } from '@collabkit/core';
@@ -14,7 +20,7 @@ import { useUserContext } from '../hooks/useUserContext';
 import { useWorkspaceContext } from '../hooks/useWorkspaceContext';
 import { useStore } from '../hooks/useStore';
 import { useRenderFnContext } from '../hooks/useRenderFnContext';
-import { ThreadResolveIconButton, ThreadProvider } from './Thread';
+import { ThreadProvider } from './Thread';
 import { ThreadUnreadDot } from './ThreadUnreadDot';
 
 export function InboxItem(props: { formatTimestamp?: (timestamp: number) => string }) {
@@ -80,7 +86,7 @@ export function InboxItem(props: { formatTimestamp?: (timestamp: number) => stri
           <ThreadUnreadDot />
           <ThreadFacepile size={styles.facepileSize} />
           <div style={{ flex: 1 }}></div>
-          {firstComment.createdById === userId ? <ThreadResolveIconButton /> : null}
+          {firstComment.createdById === userId ? <CommentThreadResolveIconButton /> : null}
         </div>
         {renderThreadContextPreview?.({
           threadId,

@@ -8,9 +8,9 @@ import { useId } from '../hooks/useId';
 import { ProfileAvatar, ProfileName } from './Profile';
 import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
 import { useApp } from '../hooks/useApp';
-import { CommentTarget, PinTarget, Target } from '@collabkit/core';
+import { CommentTarget, PinTarget, Target, ThreadResolveButtonTarget } from '@collabkit/core';
 import * as styles from '../theme/components/Comment.css';
-import { ArrowBendDownRight, DotsThree } from './icons';
+import { ArrowBendDownRight, CheckCircle, DotsThree } from './icons';
 import { Menu, MenuItem } from './Menu';
 import { mergeRefs } from 'react-merge-refs';
 import { ComposerButtons, ComposerEditor, ComposerRoot } from './composer/Composer';
@@ -33,7 +33,6 @@ import { ProfileContext } from '../hooks/useProfile';
 import { useStoreKeyMatches } from '../hooks/useSubscribeStoreKey';
 import { CommentProps } from '../types';
 import { useUnreadCommentsCount } from '../hooks/public/useUnreadCommentsCount';
-import { ThreadResolveIconButton } from './Thread';
 
 type CommentRootProps = {
   commentId: string;
@@ -497,6 +496,43 @@ function useIsExpanded() {
   return isExpanded;
 }
 
+function CommentThreadResolveIconButton(props: {
+  className?: string;
+  style?: React.CSSProperties;
+}) {
+  const { events } = useApp();
+  const workspaceId = useWorkspaceContext();
+  const threadId = useThreadContext();
+
+  const target: ThreadResolveButtonTarget = {
+    threadId,
+    workspaceId,
+    type: 'resolveThreadButton',
+  };
+
+  return (
+    <Tooltip>
+      <TooltipTrigger>
+        <IconButton
+          className={props.className}
+          style={props.style}
+          weight="regular"
+          // TODO: tooltip hijacks focus when used within a modal popover
+          // tooltip={isResolved ? 'Re-open' : 'Mark as Resolved and Hide'}
+          onPointerDown={(e) =>
+            events.onPointerDown(e, {
+              target,
+            })
+          }
+        >
+          <CheckCircle size={16} weight="regular" />
+        </IconButton>
+      </TooltipTrigger>
+      <TooltipContent>Resolve</TooltipContent>
+    </Tooltip>
+  );
+}
+
 function Comment(props: CommentProps) {
   const hideProfile = props.hideProfile ?? false;
   const isFirstComment = props.isFirstComment ?? false;
@@ -517,7 +553,7 @@ function Comment(props: CommentProps) {
           <CommentActions>
             <CommentActionsEmojiButton />
             {isChannel && isFirstComment && <CommentActionsReplyButton />}
-            {isChannel && isFirstComment && <ThreadResolveIconButton />}
+            {isChannel && isFirstComment && <CommentThreadResolveIconButton />}
             <CommentMenu />
           </CommentActions>
           <CommentBody>
@@ -551,6 +587,7 @@ export {
   CommentActionsReplyButton,
   CommentSeeAllRepliesButton,
   CommentActionsEmojiButton,
+  CommentThreadResolveIconButton,
   CommentReactions,
   CommentMarkdown,
   CommentHideIfEditing,

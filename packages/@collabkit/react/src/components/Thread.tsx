@@ -1,10 +1,10 @@
 import React from 'react';
 import { useSnapshot } from 'valtio';
-import { ThreadContext, useThreadContext } from '../hooks/useThreadContext';
+import { ThreadContext } from '../hooks/useThreadContext';
 import { Composer } from './composer/Composer';
 import { ThemeWrapper } from './ThemeWrapper';
 import * as styles from '../theme/components/Thread.css';
-import { ChatCentered, CheckCircle } from './icons';
+import { ChatCentered } from './icons';
 import { CommentList } from './CommentList';
 import { ThreadFacepile } from './ThreadFacepile';
 import { ThreadUnreadDot } from './ThreadUnreadDot';
@@ -13,11 +13,6 @@ import { Scrollable } from './Scrollable';
 import { useThread } from '../hooks/public/useThread';
 import { useStore } from '../hooks/useStore';
 import { ProfileContext } from '../hooks/useProfile';
-import { ThreadResolveButtonTarget } from '@collabkit/core';
-import { useApp } from '../hooks/useApp';
-import { useWorkspaceContext } from '../hooks/useWorkspaceContext';
-import { IconButton } from './IconButton';
-import { Tooltip, TooltipContent, TooltipTrigger } from './Tooltip';
 
 function ThreadProvider(props: ThreadProps & { children: React.ReactNode }) {
   // refactor this to a guard we can use across the app
@@ -38,40 +33,6 @@ function ThreadRoot(props: React.ComponentPropsWithoutRef<'div'>) {
 
 function ThreadHeader(props: React.ComponentPropsWithoutRef<'div'>) {
   return <div data-testid="collabkit-thread-header" className={styles.header} {...props} />;
-}
-
-function ThreadResolveIconButton(props: { className?: string; style?: React.CSSProperties }) {
-  const { events } = useApp();
-  const workspaceId = useWorkspaceContext();
-  const threadId = useThreadContext();
-
-  const target: ThreadResolveButtonTarget = {
-    threadId,
-    workspaceId,
-    type: 'resolveThreadButton',
-  };
-
-  return (
-    <Tooltip>
-      <TooltipTrigger>
-        <IconButton
-          className={props.className}
-          style={props.style}
-          weight="regular"
-          // TODO: tooltip hijacks focus when used within a modal popover
-          // tooltip={isResolved ? 'Re-open' : 'Mark as Resolved and Hide'}
-          onPointerDown={(e) =>
-            events.onPointerDown(e, {
-              target,
-            })
-          }
-        >
-          <CheckCircle size={16} weight="regular" />
-        </IconButton>
-      </TooltipTrigger>
-      <TooltipContent>Resolve</TooltipContent>
-    </Tooltip>
-  );
 }
 
 function Thread(props: ThreadProps) {
@@ -101,15 +62,7 @@ function Thread(props: ThreadProps) {
   );
 }
 
-export {
-  Thread,
-  ThreadRoot,
-  ThreadHeader,
-  ThreadProvider,
-  ThreadFacepile,
-  ThreadUnreadDot,
-  ThreadResolveIconButton,
-};
+export { Thread, ThreadRoot, ThreadHeader, ThreadProvider, ThreadFacepile, ThreadUnreadDot };
 
 // Thread.Root = ThreadRoot;
 // Thread.Header = ThreadHeader;
