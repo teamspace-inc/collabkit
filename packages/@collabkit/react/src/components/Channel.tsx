@@ -34,12 +34,21 @@ function ChannelThread() {
   const workspace = useSnapshot(useWorkspaceStore());
   const { expandedThreadIds } = useSnapshot(store);
   const timeline = workspace.timeline[threadId];
+  const { isResolved } = workspace.computed[threadId];
 
   const isSelected = useStoreKeyMatches(store, 'selectedId', (selectedId) => {
-    return selectedId?.type === 'thread' && selectedId.threadId === threadId;
+    return (
+      (selectedId?.type === 'thread' && selectedId.threadId === threadId) ||
+      (selectedId?.type === 'pin' && selectedId.threadId === threadId) ||
+      (selectedId?.type === 'comment' && selectedId.threadId === threadId)
+    );
   });
 
   if (!timeline) {
+    return null;
+  }
+
+  if (isResolved) {
     return null;
   }
 
@@ -62,19 +71,14 @@ function ChannelThread() {
 
   return (
     <ThreadProvider threadId={threadId} key={`channelThread-${threadId}`} placeholder="Reply">
-      <CommentList
-        shouldCollapse={!isExpanded}
-        className=""
-        style={{
-          border: isSelected ? '1px solid red' : 'blue',
-          padding: '20px',
-        }}
-      />
-      {isExpanded ? (
-        <div style={{ paddingLeft: `${calc.multiply(vars.space[1], 9)}` }}>
-          <Composer placeholder="Reply" autoFocus={true} />
-        </div>
-      ) : null}
+      <div className={styles.thread({ isSelected })}>
+        <CommentList shouldCollapse={!isExpanded} className="" />
+        {isExpanded ? (
+          <div style={{ paddingLeft: `${calc.multiply(vars.space[1], 9)}` }}>
+            <Composer placeholder="Reply" autoFocus={true} />
+          </div>
+        ) : null}
+      </div>
     </ThreadProvider>
   );
 }
@@ -93,7 +97,7 @@ function ChannelRoot(props: ComponentPropsWithRef<'div'> & ChannelProps) {
   ) : null;
 }
 
-function ChannelThreadList() {
+function ChannelThreadList(props: ComponentPropsWithRef<'div'>) {
   const threadIds = useInbox({ filter: 'open', direction: 'asc' });
   const threads = threadIds.map((threadId) => {
     return (
@@ -106,7 +110,11 @@ function ChannelThreadList() {
   return threadIds.length === 0 ? (
     <EmptyState />
   ) : (
-    <Scrollable autoScroll="bottom">{threads}</Scrollable>
+    <Scrollable autoScroll="bottom">
+      <div className={styles.threadList} {...props}>
+        {threads}
+      </div>
+    </Scrollable>
   );
 }
 
