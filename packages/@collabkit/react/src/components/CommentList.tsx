@@ -93,27 +93,37 @@ function VirtualCommentList(props: CommentListProps) {
 }
 
 function CommentList(props: CommentListProps) {
-  const { shouldCollapse, hideResolveButton, ...otherProps } = props;
+  const { shouldCollapse, hideResolveButton, children, ...otherProps } = props;
   const threadId = useThreadContext();
   const workspaceStore = useWorkspaceStore();
   const newIndicatorId = useNewIndicator();
   const { computed } = useSnapshot(workspaceStore);
   const { hasFetchedAllProfiles, messageEvents } = computed[threadId] ?? {};
 
-  return hasFetchedAllProfiles ? (
-    <div className={styles.root} {...otherProps}>
-      {messageEvents.map((event, i) => {
-        return (shouldCollapse && i == 0) || !shouldCollapse ? (
-          <div key={event.id} style={{ minHeight: 34 }}>
-            {newIndicatorId === event.id && <NewIndicator />}
+  if (!hasFetchedAllProfiles) {
+    return null;
+  }
+
+  const comments =
+    props.children ||
+    messageEvents.map((event, i) => {
+      return (shouldCollapse && i == 0) || !shouldCollapse ? (
+        <div key={event.id} style={{ minHeight: 34 }}>
+          {newIndicatorId === event.id && <NewIndicator />}
+          {props.children ?? (
             <MemoizedComment
               commentId={event.id}
               hideProfile={!event.showHeader}
               isFirstComment={i == 0}
             />
-          </div>
-        ) : null;
-      })}
+          )}
+        </div>
+      ) : null;
+    });
+
+  return hasFetchedAllProfiles ? (
+    <div className={styles.root} {...otherProps}>
+      {comments}
     </div>
   ) : null;
 }
