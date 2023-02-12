@@ -17,6 +17,7 @@ import { vars } from '../theme/theme/index.css';
 import { useStore } from '../hooks/useStore';
 import { actions } from '@collabkit/client';
 import { calc } from '@vanilla-extract/css-utils';
+import { useStoreKeyMatches } from '../hooks/useSubscribeStoreKey';
 
 function EmptyState() {
   return (
@@ -33,6 +34,10 @@ function ChannelThread() {
   const workspace = useSnapshot(useWorkspaceStore());
   const { expandedThreadIds } = useSnapshot(store);
   const timeline = workspace.timeline[threadId];
+
+  const isSelected = useStoreKeyMatches(store, 'selectedId', (selectedId) => {
+    return selectedId?.type === 'thread' && selectedId.threadId === threadId;
+  });
 
   if (!timeline) {
     return null;
@@ -57,7 +62,14 @@ function ChannelThread() {
 
   return (
     <ThreadProvider threadId={threadId} key={`channelThread-${threadId}`} placeholder="Reply">
-      <CommentList shouldCollapse={!isExpanded} className="" />
+      <CommentList
+        shouldCollapse={!isExpanded}
+        className=""
+        style={{
+          border: isSelected ? '1px solid red' : 'blue',
+          padding: '20px',
+        }}
+      />
       {isExpanded ? (
         <div style={{ paddingLeft: `${calc.multiply(vars.space[1], 9)}` }}>
           <Composer placeholder="Reply" autoFocus={true} />
@@ -143,6 +155,6 @@ function Channel() {
 
 export { Channel, ChannelRoot, ChannelThreadList, ChannelThread };
 
-Channel.Root = ChannelRoot;
-Channel.ThreadList = ChannelThreadList;
-Channel.Thread = ChannelThread;
+// Channel.Root = ChannelRoot;
+// Channel.ThreadList = ChannelThreadList;
+// Channel.Thread = ChannelThread;

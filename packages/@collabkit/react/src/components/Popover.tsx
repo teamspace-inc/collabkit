@@ -280,7 +280,7 @@ function PopoverPortal({
   root?: HTMLElement | null | undefined;
 }) {
   return (
-    <FloatingPortal id="collabkit-floating-root">
+    <FloatingPortal id="collabkit-popover-root">
       {children ?? <ThemeWrapper>{children}</ThemeWrapper>}
     </FloatingPortal>
   );

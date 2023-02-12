@@ -18,7 +18,7 @@ import { useTarget } from '../hooks/useTarget';
 import { previewRoot } from '../theme/components/PopoverThread.css';
 import { vars } from '../theme/theme/index.css';
 import { Menu, MenuItem } from './Menu';
-import { PopoverPreview, PopoverRoot, PopoverTrigger } from './Popover';
+import { PopoverContent, PopoverPreview, PopoverRoot, PopoverTrigger } from './Popover';
 import { ProfileAvatar, ProfileProvider } from './Profile';
 import {
   CommentBody,
@@ -34,6 +34,8 @@ import { usePopover } from '../hooks/usePopover';
 import { useUserContext } from '../hooks/useUserContext';
 import { PinIcon } from './PinIcon';
 import { ThreadContext } from '../hooks/useThreadContext';
+import { CommentList } from './CommentList';
+import { Composer } from './composer/Composer';
 
 function SavedPin({
   pin,
@@ -187,46 +189,48 @@ const PinMarker = forwardRef<HTMLDivElement, PinMarkerProps>(function PinMarker(
         onPointerDown={onPointerDown}
         data-testid="collabkit-pin-marker"
       >
-        <PinMenu>
-          <div>
-            <PopoverRoot
-              {...popoverProps}
-              dismissOnClickOutside={true}
-              shouldFlipToKeepInView={true}
-            >
-              <PopoverTrigger>
-                <div>
-                  <PinIcon isSelected={isSelected} />
-                  <div className={styles.pinAvatar}>
-                    <ProfileAvatar />
-                  </div>
+        {/* <PinMenu> */}
+        <div>
+          <PopoverRoot {...popoverProps} dismissOnClickOutside={true} shouldFlipToKeepInView={true}>
+            <PopoverTrigger>
+              <div>
+                <PinIcon isSelected={isSelected} />
+                <div className={styles.pinAvatar}>
+                  <ProfileAvatar />
                 </div>
-              </PopoverTrigger>
-              <PopoverPreview>
-                <div>
-                  <ThreadContext.Provider value={pin.threadId}>
-                    <CommentRoot
-                      commentId={pin.eventId}
-                      className={previewRoot}
-                      style={{ padding: `${vars.space[3]} ${vars.space[3]}`, maxWidth: 180 }}
-                    >
-                      <div style={{ display: 'flex', flexDirection: 'column' }}>
-                        <CommentHeader>
-                          <CommentCreatorName />
-                          <CommentTimestamp />
-                        </CommentHeader>
-                        <CommentBody>
-                          <CommentMarkdown />
-                        </CommentBody>
-                        <CommentReactions />
-                      </div>
-                    </CommentRoot>
-                  </ThreadContext.Provider>
-                </div>
-              </PopoverPreview>
-            </PopoverRoot>
-          </div>
-        </PinMenu>
+              </div>
+            </PopoverTrigger>
+            <PopoverPreview>
+              <div>
+                <ThreadContext.Provider value={pin.threadId}>
+                  <CommentRoot
+                    commentId={pin.eventId}
+                    className={previewRoot}
+                    style={{ padding: `${vars.space[3]} ${vars.space[3]}`, maxWidth: 180 }}
+                  >
+                    <div style={{ display: 'flex', flexDirection: 'column' }}>
+                      <CommentHeader>
+                        <CommentCreatorName />
+                        <CommentTimestamp />
+                      </CommentHeader>
+                      <CommentBody>
+                        <CommentMarkdown />
+                      </CommentBody>
+                      <CommentReactions />
+                    </div>
+                  </CommentRoot>
+                </ThreadContext.Provider>
+              </div>
+            </PopoverPreview>
+            <PopoverContent>
+              <ThreadContext.Provider value={pin.threadId}>
+                <CommentList />
+                <Composer />
+              </ThreadContext.Provider>
+            </PopoverContent>
+          </PopoverRoot>
+        </div>
+        {/* </PinMenu> */}
       </div>
     </ProfileProvider>
   ) : null;

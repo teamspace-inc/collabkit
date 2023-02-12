@@ -227,11 +227,11 @@ export const hover = style({
 });
 
 globalStyle(`${collabkit} ${root()}:hover, ${collabkit} ${root({ indent: true })}:hover`, {
-  backgroundColor: fallbackVar(vars.comment.hover.background, vars.color.surfaceHover),
+  // backgroundColor: fallbackVar(vars.comment.hover.background, vars.color.surfaceHover),
 });
 
 globalStyle(`${collabkit} ${root()}:hover, ${collabkit} ${root({ indent: false })}:hover`, {
-  backgroundColor: fallbackVar(vars.comment.hover.background, vars.color.surfaceHover),
+  // backgroundColor: fallbackVar(vars.comment.hover.background, vars.color.surfaceHover),
 });
 
 globalStyle(

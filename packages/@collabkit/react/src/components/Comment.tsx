@@ -33,6 +33,7 @@ import { ProfileContext } from '../hooks/useProfile';
 import { useStoreKeyMatches } from '../hooks/useSubscribeStoreKey';
 import { CommentProps } from '../types';
 import { useUnreadCommentsCount } from '../hooks/public/useUnreadCommentsCount';
+import { ThreadResolveIconButton } from './Thread';
 
 type CommentRootProps = {
   commentId: string;
@@ -516,7 +517,7 @@ function Comment(props: CommentProps) {
           <CommentActions>
             <CommentActionsEmojiButton />
             {isChannel && isFirstComment && <CommentActionsReplyButton />}
-            {/* {isChannel && isFirstComment && <Thread.ResolveIconButton />} */}
+            {isChannel && isFirstComment && <ThreadResolveIconButton />}
             <CommentMenu />
           </CommentActions>
           <CommentBody>
@@ -556,24 +557,24 @@ export {
   CommentShowIfEditing,
 };
 
-Comment.Root = CommentRoot;
-Comment.Header = CommentHeader;
-Comment.CreatorName = CommentCreatorName;
-Comment.CreatorAvatar = CommentCreatorAvatar;
-Comment.Timestamp = CommentTimestamp;
-Comment.Body = CommentBody;
-Comment.Actions = CommentActions;
-Comment.Menu = CommentMenu;
-Comment.Editor = CommentEditor;
-Comment.Pin = CommentPin;
-Comment.UnreadDot = CommentUnreadDot;
-Comment.ActionsReplyButton = CommentActionsReplyButton;
-Comment.SeeAllRepliesButton = CommentSeeAllRepliesButton;
-Comment.ActionsEmojiButton = CommentActionsEmojiButton;
-Comment.Reactions = CommentReactions;
-Comment.Markdown = CommentMarkdown;
-Comment.HideIfEditing = CommentHideIfEditing;
-Comment.ShowIfEditing = CommentShowIfEditing;
+// Comment.Root = CommentRoot;
+// Comment.Header = CommentHeader;
+// Comment.CreatorName = CommentCreatorName;
+// Comment.CreatorAvatar = CommentCreatorAvatar;
+// Comment.Timestamp = CommentTimestamp;
+// Comment.Body = CommentBody;
+// Comment.Actions = CommentActions;
+// Comment.Menu = CommentMenu;
+// Comment.Editor = CommentEditor;
+// Comment.Pin = CommentPin;
+// Comment.UnreadDot = CommentUnreadDot;
+// Comment.ActionsReplyButton = CommentActionsReplyButton;
+// Comment.SeeAllRepliesButton = CommentSeeAllRepliesButton;
+// Comment.ActionsEmojiButton = CommentActionsEmojiButton;
+// Comment.Reactions = CommentReactions;
+// Comment.Markdown = CommentMarkdown;
+// Comment.HideIfEditing = CommentHideIfEditing;
+// Comment.ShowIfEditing = CommentShowIfEditing;
 
 // Anatomy
 
