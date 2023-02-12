@@ -9,6 +9,30 @@ export const paddingRight = fallbackVar(vars.comment.paddingRight, vars.space[4]
 export const headerGap = fallbackVar(vars.comment.header.gap, vars.space[2]);
 export const actionsGap = fallbackVar(vars.comment.actions.gap, vars.space[2]);
 
+const verticalPadding = calc.multiply(vars.space[1], 2).toString();
+
+export const root = recipe({
+  base: {
+    display: 'grid',
+    gridTemplateColumns: `${vars.avatar.size} 1fr`,
+    columnGap: fallbackVar(vars.comment.gap, vars.space[3]),
+    position: 'relative',
+    paddingLeft: fallbackVar(vars.comment.paddingLeft, vars.space[4]),
+    paddingRight: fallbackVar(vars.comment.paddingRight, vars.space[4]),
+    paddingTop: fallbackVar(vars.comment.paddingTop, verticalPadding),
+    paddingBottom: fallbackVar(vars.comment.paddingBottom, verticalPadding),
+    fontFamily: vars.fontFamily,
+  },
+  variants: {
+    indent: {
+      true: {
+        paddingLeft: fallbackVar(vars.comment.paddingLeft, calc.multiply(vars.space[4], 3.25)),
+      },
+      false: {},
+    },
+  },
+});
+
 export const header = style({
   flex: 1,
   display: 'flex',
@@ -169,30 +193,6 @@ export const timestamp = style({
   overflow: 'hidden',
   textOverflow: 'ellipsis',
   color: fallbackVar(vars.comment.timestamp.color, vars.color.textSecondary),
-});
-
-const verticalPadding = calc.multiply(vars.space[1], 2).toString();
-
-export const root = recipe({
-  base: {
-    display: 'grid',
-    gridTemplateColumns: `${vars.avatar.size} 1fr`,
-    columnGap: fallbackVar(vars.comment.gap, vars.space[3]),
-    position: 'relative',
-    paddingLeft: fallbackVar(vars.comment.paddingLeft, vars.space[4]),
-    paddingRight: fallbackVar(vars.comment.paddingRight, vars.space[4]),
-    paddingTop: fallbackVar(vars.comment.paddingTop, verticalPadding),
-    paddingBottom: fallbackVar(vars.comment.paddingBottom, verticalPadding),
-    fontFamily: vars.fontFamily,
-  },
-  variants: {
-    indent: {
-      true: {
-        paddingLeft: fallbackVar(vars.comment.paddingLeft, calc.multiply(vars.space[4], 3.25)),
-      },
-      false: {},
-    },
-  },
 });
 
 export const actions = style({
