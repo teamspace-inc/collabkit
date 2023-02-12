@@ -316,13 +316,13 @@ function Popover(props: PopoverProps) {
   );
 }
 
-export { Popover, PopoverRoot, PopoverTrigger, PopoverPortal, PopoverPreview, PopoverContent };
-
-Popover.Root = PopoverRoot;
-Popover.Trigger = PopoverTrigger;
-Popover.Portal = PopoverPortal;
-Popover.Preview = PopoverPreview;
-Popover.Content = PopoverContent;
+export default Object.assign(Popover, {
+  Root: PopoverRoot,
+  Trigger: PopoverTrigger,
+  Portal: PopoverPortal,
+  Preview: PopoverPreview,
+  Content: PopoverContent,
+});
 
 // Example usage;
 

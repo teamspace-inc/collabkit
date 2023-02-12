@@ -1,11 +1,11 @@
 import React from 'react';
 import { useSnapshot } from 'valtio';
 import { ThreadContext } from '../hooks/useThreadContext';
-import { Composer } from './composer/Composer';
+import Composer from './composer/Composer';
+import CommentList from './CommentList';
 import { ThemeWrapper } from './ThemeWrapper';
 import * as styles from '../theme/components/Thread.css';
 import { ChatCentered } from './icons';
-import { CommentList } from './CommentList';
 import { ThreadFacepile } from './ThreadFacepile';
 import { ThreadUnreadDot } from './ThreadUnreadDot';
 import { ThreadProps } from '../types';
@@ -13,6 +13,17 @@ import { Scrollable } from './Scrollable';
 import { useThread } from '../hooks/public/useThread';
 import { useStore } from '../hooks/useStore';
 import { ProfileContext } from '../hooks/useProfile';
+
+const emptyState = (
+  <div data-testid="collabkit-thread-empty-state" className={styles.emptyState}>
+    <ChatCentered weight="thin" size={32} />
+    <span>No comments yet</span>
+  </div>
+);
+
+function ThreadEmptyState() {
+  return emptyState;
+}
 
 function ThreadProvider(props: ThreadProps & { children: React.ReactNode }) {
   // refactor this to a guard we can use across the app
@@ -62,22 +73,11 @@ function Thread(props: ThreadProps) {
   );
 }
 
-export { Thread, ThreadRoot, ThreadHeader, ThreadProvider, ThreadFacepile, ThreadUnreadDot };
-
-// Thread.Root = ThreadRoot;
-// Thread.Header = ThreadHeader;
-// Thread.Provider = ThreadProvider;
-// Thread.Facepile = ThreadFacepile;
-// Thread.UnreadDot = ThreadUnreadDot;
-// Thread.ResolveIconButton = ThreadResolveIconButton;
-
-const emptyState = (
-  <div data-testid="collabkit-thread-empty-state" className={styles.emptyState}>
-    <ChatCentered weight="thin" size={32} />
-    <span>No comments yet</span>
-  </div>
-);
-
-export function EmptyState() {
-  return emptyState;
-}
+export default Object.assign(Thread, {
+  Root: ThreadRoot,
+  Header: ThreadHeader,
+  Provider: ThreadProvider,
+  Facepile: ThreadFacepile,
+  UnreadDot: ThreadUnreadDot,
+  EmptyState: ThreadEmptyState,
+});

@@ -18,24 +18,16 @@ import { useTarget } from '../hooks/useTarget';
 import { previewRoot } from '../theme/components/PopoverThread.css';
 import { vars } from '../theme/theme/index.css';
 import { Menu, MenuItem } from './Menu';
-import { PopoverContent, PopoverPreview, PopoverRoot, PopoverTrigger } from './Popover';
+import Popover from './Popover';
 import { ProfileAvatar, ProfileProvider } from './Profile';
-import {
-  CommentBody,
-  CommentCreatorName,
-  CommentHeader,
-  CommentMarkdown,
-  CommentReactions,
-  CommentRoot,
-  CommentTimestamp,
-} from './Comment';
+import Comment from './Comment';
 import * as styles from '../theme/components/Commentable.css';
 import { usePopover } from '../hooks/usePopover';
 import { useUserContext } from '../hooks/useUserContext';
 import { PinIcon } from './PinIcon';
 import { ThreadContext } from '../hooks/useThreadContext';
-import { CommentList } from './CommentList';
-import { Composer } from './composer/Composer';
+import CommentList from './CommentList';
+import Composer from './composer/Composer';
 
 function SavedPin({
   pin,
@@ -191,44 +183,48 @@ const PinMarker = forwardRef<HTMLDivElement, PinMarkerProps>(function PinMarker(
       >
         {/* <PinMenu> */}
         <div>
-          <PopoverRoot {...popoverProps} dismissOnClickOutside={true} shouldFlipToKeepInView={true}>
-            <PopoverTrigger>
+          <Popover.Root
+            {...popoverProps}
+            dismissOnClickOutside={true}
+            shouldFlipToKeepInView={true}
+          >
+            <Popover.Trigger>
               <div>
                 <PinIcon isSelected={isSelected} />
                 <div className={styles.pinAvatar}>
                   <ProfileAvatar />
                 </div>
               </div>
-            </PopoverTrigger>
-            <PopoverPreview>
+            </Popover.Trigger>
+            <Popover.Preview>
               <div>
                 <ThreadContext.Provider value={pin.threadId}>
-                  <CommentRoot
+                  <Comment.Root
                     commentId={pin.eventId}
                     className={previewRoot}
                     style={{ padding: `${vars.space[3]} ${vars.space[3]}`, maxWidth: 180 }}
                   >
                     <div style={{ display: 'flex', flexDirection: 'column' }}>
-                      <CommentHeader>
-                        <CommentCreatorName />
-                        <CommentTimestamp />
-                      </CommentHeader>
-                      <CommentBody>
-                        <CommentMarkdown />
-                      </CommentBody>
-                      <CommentReactions />
+                      <Comment.Header>
+                        <Comment.CreatorName />
+                        <Comment.Timestamp />
+                      </Comment.Header>
+                      <Comment.Body>
+                        <Comment.Markdown />
+                      </Comment.Body>
+                      <Comment.Reactions />
                     </div>
-                  </CommentRoot>
+                  </Comment.Root>
                 </ThreadContext.Provider>
               </div>
-            </PopoverPreview>
-            <PopoverContent>
+            </Popover.Preview>
+            <Popover.Content>
               <ThreadContext.Provider value={pin.threadId}>
                 <CommentList />
                 <Composer />
               </ThreadContext.Provider>
-            </PopoverContent>
-          </PopoverRoot>
+            </Popover.Content>
+          </Popover.Root>
         </div>
         {/* </PinMenu> */}
       </div>

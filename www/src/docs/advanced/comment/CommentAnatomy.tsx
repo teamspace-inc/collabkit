@@ -1,4 +1,4 @@
-import { Profile, Comment, Thread } from '@collabkit/react';
+import { Comment, Profile } from '@collabkit/react';
 
 <Comment.Root commentId="comment123">
   <Profile.Avatar />
@@ -7,7 +7,7 @@ import { Profile, Comment, Thread } from '@collabkit/react';
     <Comment.Timestamp />
   </Comment.Header>
   <Comment.Actions>
-    <Thread.ResolveIconButton />
+    <Comment.ThreadResolveIconButton />
     <Comment.Menu />
   </Comment.Actions>
   <Comment.Body />

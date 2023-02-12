@@ -32,3 +32,5 @@ export const Markdown = React.memo(function Markdown(props: { className?: string
     </div>
   ) : null;
 });
+
+export default Markdown;

@@ -155,7 +155,7 @@ const TooltipContent = React.forwardRef<HTMLDivElement, React.HTMLProps<HTMLDivE
   }
 );
 
-Tooltip.Trigger = TooltipTrigger;
-Tooltip.Content = TooltipContent;
-
-export { Tooltip, TooltipTrigger, TooltipContent, useTooltip, useTooltipContext };
+export default Object.assign(Tooltip, {
+  Trigger: TooltipTrigger,
+  Content: TooltipContent,
+});

@@ -1,13 +1,7 @@
 import React, { useEffect } from 'react';
 import { dark, vars } from '../styles/Theme.css';
 import * as styles from '../styles/home/Demos.css';
-import {
-  Inbox,
-  Thread,
-  usePopoverThread,
-  InternalPopoverThreadContent,
-  ThemeWrapper,
-} from '@collabkit/react';
+import { Inbox, Thread, usePopoverThread, PopoverThread, ThemeWrapper } from '@collabkit/react';
 import {
   component,
   card,
@@ -60,7 +54,7 @@ function PopoverThreadComponent() {
           Component
         </div>
         <div style={{ position: 'relative', left: 0 }}>
-          <InternalPopoverThreadContent threadId="thread4" autoFocus={false} />
+          <PopoverThread.Content threadId="thread4" autoFocus={false} />
         </div>
       </div>
     </ThemeWrapper>

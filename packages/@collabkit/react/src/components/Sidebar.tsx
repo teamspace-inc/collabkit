@@ -97,4 +97,6 @@ function Sidebar(props: {
   ``;
 }
 
-export { Sidebar };
+export default Object.assign(Sidebar, {
+  CloseButton: CloseSidebarButton,
+});

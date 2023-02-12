@@ -7,11 +7,10 @@ import { ThemeWrapper } from './ThemeWrapper';
 import { ChatCentered } from './icons';
 import { emptyState } from '../theme/components/Thread.css';
 import { useInbox } from '../hooks/public/useInbox';
-import { ThreadProvider } from './Thread';
-import { Composer } from './composer/Composer';
-import { useThreadContext } from '../hooks/useThreadContext';
+import Composer from './composer/Composer';
+import { ThreadContext, useThreadContext } from '../hooks/useThreadContext';
 import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
-import { CommentList } from './CommentList';
+import CommentList from './CommentList';
 import { ChannelContext } from '../hooks/useChannelContext';
 import { vars } from '../theme/theme/index.css';
 import { useStore } from '../hooks/useStore';
@@ -36,7 +35,11 @@ function ChannelThread() {
   const timeline = workspace.timeline[threadId];
 
   const isSelected = useStoreKeyMatches(store, 'selectedId', (selectedId) => {
-    return selectedId?.type === 'thread' && selectedId.threadId === threadId;
+    return (
+      (selectedId?.type === 'thread' && selectedId.threadId === threadId) ||
+      (selectedId?.type === 'comment' && selectedId.threadId === threadId) ||
+      (selectedId?.type === 'pin' && selectedId.threadId === threadId)
+    );
   });
 
   if (!timeline) {
@@ -61,21 +64,22 @@ function ChannelThread() {
   const isExpanded = expandedThreadIds.includes(threadId);
 
   return (
-    <ThreadProvider threadId={threadId} key={`channelThread-${threadId}`} placeholder="Reply">
-      <CommentList
-        shouldCollapse={!isExpanded}
-        className=""
+    <ThreadContext.Provider value={threadId} key={`channelThread-${threadId}`}>
+      <div
         style={{
-          border: isSelected ? '1px solid red' : 'blue',
-          padding: '20px',
+          margin: `8px 12px 8px 8px`,
+          border: isSelected ? '1px solid ' + vars.color.attentionBlue : '1px solid transparent',
+          borderRadius: '6px',
         }}
-      />
-      {isExpanded ? (
-        <div style={{ paddingLeft: `${calc.multiply(vars.space[1], 9)}` }}>
-          <Composer placeholder="Reply" autoFocus={true} />
-        </div>
-      ) : null}
-    </ThreadProvider>
+      >
+        <CommentList shouldCollapse={!isExpanded} className="" />
+        {isExpanded ? (
+          <div style={{ paddingLeft: `${calc.multiply(vars.space[1], 9)}` }}>
+            <Composer placeholder="Reply" autoFocus={true} />
+          </div>
+        ) : null}
+      </div>
+    </ThreadContext.Provider>
   );
 }
 
@@ -97,9 +101,9 @@ function ChannelThreadList() {
   const threadIds = useInbox({ filter: 'open', direction: 'asc' });
   const threads = threadIds.map((threadId) => {
     return (
-      <ThreadProvider threadId={threadId} key={`inboxThread-${threadId}`}>
+      <ThreadContext.Provider value={threadId} key={`inboxThread-${threadId}`}>
         <ChannelThread />
-      </ThreadProvider>
+      </ThreadContext.Provider>
     );
   });
 
@@ -136,25 +140,26 @@ function Channel() {
   }
 
   useEffect(() => {
+    store.nextThreadId = store.sync.nextThreadId({ appId, workspaceId });
     actions.subscribeInbox(store);
-  }, []);
+  }, [appId, workspaceId]);
 
   return (
     <ChannelRoot channelId="default">
       <ChannelThreadList />
       {nextThreadId ? (
-        <ThreadProvider threadId={nextThreadId}>
+        <ThreadContext.Provider value={nextThreadId}>
           <div>
             <Composer isNewThread={true} />
           </div>
-        </ThreadProvider>
+        </ThreadContext.Provider>
       ) : null}
     </ChannelRoot>
   );
 }
 
-export { Channel, ChannelRoot, ChannelThreadList, ChannelThread };
-
-// Channel.Root = ChannelRoot;
-// Channel.ThreadList = ChannelThreadList;
-// Channel.Thread = ChannelThread;
+export default Object.assign(Channel, {
+  Root: ChannelRoot,
+  ThreadList: ChannelThreadList,
+  Thread: ChannelThread,
+});

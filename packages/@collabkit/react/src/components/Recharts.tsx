@@ -12,7 +12,7 @@ import React, {
 import { actions } from '@collabkit/client';
 import { nanoid } from 'nanoid';
 import { useSnapshot } from 'valtio';
-import { PopoverThread } from './PopoverThread';
+import PopoverThread from './PopoverThread';
 import { usePopoverThread } from '../hooks/usePopoverThread';
 import { useWorkspaceContext } from '../hooks/useWorkspaceContext';
 import { useStore } from '../hooks/useStore';

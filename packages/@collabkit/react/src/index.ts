@@ -10,75 +10,61 @@ import type {
 import type { AvatarProps, CommentProps, ThreadProps } from './types';
 import type { CustomTheme } from './theme/themes.css';
 
-import { CollabKitProvider } from './components/Provider';
-import { Thread } from './components/Thread';
 import { useUnreadCommentsCount } from './hooks/public/useUnreadCommentsCount';
 import { useUnreadThreadsCount } from './hooks/public/useUnreadThreadsCount';
 import { createValtioStore } from './store';
-import { Inbox } from './components/Inbox';
-import { InboxButton } from './components/InboxButton';
-import { ThemeProvider } from './components/ThemeContext';
-import { Sidebar } from './components/Sidebar';
-import { ThemeWrapper } from './components/ThemeWrapper';
-import { SidebarInboxButton } from './components/SidebarInboxButton';
-import { SidebarInbox } from './components/SidebarInbox';
-import {
-  PopoverThread,
-  PopoverThreadProps,
-  PopoverThreadContent,
-} from './components/PopoverThread';
+import PopoverThread, { PopoverThreadProps } from './components/PopoverThread';
 import { useIsResolved } from './hooks/public/useIsResolved';
 import { useResolveThread } from './hooks/public/useResolveThread';
 import { useThreadUsers } from './hooks/public/useThreadUsers';
 import { useComposer } from './hooks/public/useComposer';
-import { ThreadFacepile } from './components/ThreadFacepile';
 import { useReplyCount } from './hooks/useReplyCount';
 import { usePopoverThread } from './hooks/usePopoverThread';
 import { useCommentableRef } from './hooks/useCommentableRef';
-import { Comment } from './components/Comment';
-import CollabKitRecharts from './components/Recharts';
-import { Profile } from './components/Profile';
-import { Composer } from './components/composer/Composer';
-import { Scrollable } from './components/Scrollable';
-import { CommentList } from './components/CommentList';
-import { Popover } from './components/Popover';
-import { Button } from './components/Button';
-import { Commentable } from './components/Commentable';
 
-import { Markdown } from './components/Markdown';
+import Comment from './components/Comment';
+import Profile from './components/Profile';
+import { Commentable } from './components/Commentable';
+import Composer from './components/composer/Composer';
+import Popover from './components/Popover';
+import Inbox from './components/Inbox';
+import Thread from './components/Thread';
+import Channel from './components/Channel';
+import Sidebar from './components/Sidebar';
+import Markdown from './components/Markdown';
+import { SidebarInboxButton } from './components/SidebarInboxButton';
+import { SidebarInbox } from './components/SidebarInbox';
+import Provider from './components/Provider';
+import { ThemeProvider } from './components/ThemeContext';
+import { ThemeWrapper } from './components/ThemeWrapper';
+
+import CollabKitRecharts from './components/Recharts';
+
 import { useThread } from './hooks/public/useThread';
-import { Debug } from './components/Debug';
-import { Channel } from './components/Channel';
 
 export {
-  CollabKitProvider as Provider,
-  CollabKitProvider,
   CollabKitRecharts,
-  Inbox,
-  InboxButton,
-  Markdown,
+  Provider,
+  Provider as CollabKitProvider,
+  Comment,
+  Popover,
   Commentable,
-  PopoverThread,
+  Thread,
+  Inbox,
+  ThemeWrapper,
+  Profile,
+  Channel,
   Sidebar,
+  Markdown,
+  Composer,
+  ThemeProvider,
+  PopoverThread,
   SidebarInbox,
   SidebarInboxButton,
-  ThemeProvider,
-  ThemeWrapper,
-  Thread,
-  Channel,
   useCommentableRef,
   useUnreadCommentsCount as useUnreadCount,
   useUnreadThreadsCount,
   // advanced
-  Button,
-  Comment,
-  CommentList,
-  Composer,
-  Debug,
-  Popover,
-  Profile,
-  Scrollable,
-  ThreadFacepile,
   useIsResolved,
   usePopoverThread,
   useReplyCount,
@@ -88,7 +74,6 @@ export {
   useComposer,
   // internal
   createValtioStore as internal_createStore,
-  PopoverThreadContent as InternalPopoverThreadContent,
 };
 
 export type {

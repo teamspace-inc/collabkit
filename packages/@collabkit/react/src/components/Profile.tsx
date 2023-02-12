@@ -121,7 +121,9 @@ function Profile(props: { profileId: string }) {
 
 export { Profile, ProfileProvider, ProfileAvatar, ProfileName, ProfileNumberedAvatarPlaceholder };
 
-Profile.Provider = ProfileProvider;
-Profile.Avatar = ProfileAvatar;
-Profile.Name = ProfileName;
-Profile.NumberedAvatarPlaceholder = ProfileNumberedAvatarPlaceholder;
+export default Object.assign(Profile, {
+  Provider: ProfileProvider,
+  Avatar: ProfileAvatar,
+  Name: ProfileName,
+  NumberedAvatarPlaceholder: ProfileNumberedAvatarPlaceholder,
+});

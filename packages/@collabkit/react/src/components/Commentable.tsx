@@ -24,7 +24,7 @@ function findCommentableElement(
   return commentable ?? null;
 }
 
-export function CommentableRoot(props: { className?: string; children?: React.ReactNode }) {
+function CommentableRoot(props: { className?: string; children?: React.ReactNode }) {
   const cursorRef = useRef<HTMLDivElement | null>(null);
   const overlayRef = useRef<HTMLDivElement | null>(null);
   const hoveredElementRef = useRef<HTMLElement | SVGElement | null>(null);

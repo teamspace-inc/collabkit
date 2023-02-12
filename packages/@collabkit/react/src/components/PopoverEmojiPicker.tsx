@@ -3,7 +3,7 @@ import { CommentEmojiButtonTargets } from '@collabkit/core';
 import { Placement } from '@floating-ui/react';
 import { useSnapshot } from 'valtio';
 import { useApp } from '../hooks/useApp';
-import { PopoverContent, PopoverPortal, PopoverRoot, PopoverTrigger } from './Popover';
+import Popover from './Popover';
 import { IconButton } from './IconButton';
 import { Smiley } from './icons';
 import { EmojiPicker } from './EmojiPicker';
@@ -27,7 +27,7 @@ export function PopoverEmojiPicker(props: {
   );
 
   return (
-    <PopoverRoot
+    <Popover.Root
       contentVisible={open}
       previewVisible={false}
       onContentChange={onOpenChange}
@@ -37,13 +37,13 @@ export function PopoverEmojiPicker(props: {
       dismissOnClickOutside={true}
       shouldFlipToKeepInView={false}
     >
-      <PopoverTrigger>
+      <Popover.Trigger>
         <IconButton small={props.smallIconButton} onClick={() => onOpenChange(!open)}>
           <Smiley weight="regular" />
         </IconButton>
-      </PopoverTrigger>
-      <PopoverPortal>
-        <PopoverContent>
+      </Popover.Trigger>
+      <Popover.Portal>
+        <Popover.Content>
           <EmojiPicker
             onClick={(e, emoji) => {
               events.onClick(e, {
@@ -55,8 +55,8 @@ export function PopoverEmojiPicker(props: {
               });
             }}
           />
-        </PopoverContent>
-      </PopoverPortal>
-    </PopoverRoot>
+        </Popover.Content>
+      </Popover.Portal>
+    </Popover.Root>
   );
 }

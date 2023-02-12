@@ -1,4 +1,4 @@
-import { InboxButton } from '@collabkit/react';
+import { Inbox } from '@collabkit/react';
 
 export function InboxButtonDemo(props: { className?: string }) {
   return (
@@ -9,7 +9,7 @@ export function InboxButtonDemo(props: { className?: string }) {
           width: '280px',
         }}
       >
-        <InboxButton
+        <Inbox.Button
           onClick={() => {
             console.log('clicked inbox button!');
           }}

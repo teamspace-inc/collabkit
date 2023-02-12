@@ -82,7 +82,7 @@ export const DefaultSubscribers = () => (
 
 export const CustomPlaceholder = () => (
   <FixedSize>
-    <Thread threadId="thread-stories" placeholder='custom placeholder here' />
+    <Thread threadId="thread-stories" placeholder="custom placeholder here" />
   </FixedSize>
 );
 

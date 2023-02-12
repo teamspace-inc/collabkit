@@ -1,21 +1,13 @@
 import { ObjectProps } from '@collabkit/core';
-import { ThreadProvider } from './Thread';
+import Thread from './Thread';
 import React from 'react';
-import {
-  PopoverTriggerProps,
-  PopoverContentProps,
-  PopoverContent,
-  PopoverPortal,
-  PopoverPreview,
-  PopoverRoot,
-  PopoverTrigger,
-} from './Popover';
+import Popover, { PopoverContentProps, PopoverTriggerProps } from './Popover';
 import { usePopoverThread } from '../hooks/usePopoverThread';
 import { previewRoot, root } from '../theme/components/PopoverThread.css';
-import { CommentList } from './CommentList';
+import CommentList from './CommentList';
 import { Scrollable } from './Scrollable';
-import { Composer } from './composer/Composer';
-import { OptionalThreadProps, ThreadProps } from '../types';
+import Composer from './composer/Composer';
+import type { OptionalThreadProps, ThreadProps } from '../types';
 
 export type PopoverThreadProps = Omit<PopoverContentProps, 'children'> &
   PopoverTriggerProps &
@@ -24,48 +16,53 @@ export type PopoverThreadProps = Omit<PopoverContentProps, 'children'> &
 
 function PopoverThreadPreview({ threadId }: { threadId: string }) {
   return (
-    <ThreadProvider threadId={threadId}>
+    <Thread.Provider threadId={threadId}>
       <div className={previewRoot}>
         <Scrollable autoScroll="bottom">
           <CommentList />
         </Scrollable>
       </div>
-    </ThreadProvider>
+    </Thread.Provider>
   );
 }
 
-export function PopoverThreadContent(props: ThreadProps) {
+function PopoverThreadContent(props: ThreadProps) {
   return (
-    <ThreadProvider {...props}>
+    <Thread.Provider {...props}>
       <div className={root}>
         <Scrollable autoScroll="bottom">
           <CommentList />
         </Scrollable>
         <Composer />
       </div>
-    </ThreadProvider>
+    </Thread.Provider>
   );
 }
 
-export function PopoverThread(props: PopoverThreadProps) {
+function PopoverThread(props: PopoverThreadProps) {
   const { threadId, ...popoverProps } = usePopoverThread(props);
   const { objectId, lockScroll, placeholder, ...triggerProps } = props;
 
   return (
-    <PopoverRoot
+    <Popover.Root
       {...popoverProps}
       onContentChange={popoverProps.onOpenChange}
       contentVisible={popoverProps.threadVisible}
     >
-      <PopoverTrigger {...triggerProps} />
-      <PopoverPortal>
-        <PopoverPreview>
+      <Popover.Trigger {...triggerProps} />
+      <Popover.Portal>
+        <Popover.Preview>
           {popoverProps.hasThread && <PopoverThreadPreview threadId={threadId} />}
-        </PopoverPreview>
-        <PopoverContent lockScroll={lockScroll}>
+        </Popover.Preview>
+        <Popover.Content lockScroll={lockScroll}>
           <PopoverThreadContent threadId={threadId} placeholder={placeholder} />
-        </PopoverContent>
-      </PopoverPortal>
-    </PopoverRoot>
+        </Popover.Content>
+      </Popover.Portal>
+    </Popover.Root>
   );
 }
+
+export default Object.assign(PopoverThread, {
+  Preview: PopoverThreadPreview,
+  Content: PopoverThreadContent,
+});

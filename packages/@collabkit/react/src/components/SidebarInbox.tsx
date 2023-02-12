@@ -1,6 +1,6 @@
 import React from 'react';
-import { Inbox } from './Inbox';
-import { Sidebar } from './Sidebar';
+import Inbox from './Inbox';
+import Sidebar from './Sidebar';
 
 export function SidebarInbox() {
   return (

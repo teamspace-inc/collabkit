@@ -1,4 +1,4 @@
-import { InboxButton } from '@collabkit/react';
+import { Inbox } from '@collabkit/react';
 import { AdvancedProps } from '../advanced/AdvancedCommon';
 import { renderCodeSnippet } from '../CodeEditor';
 import { DocDemoContainer } from '../Doc';
@@ -17,7 +17,7 @@ export function InboxButtonDoc() {
         }}
       >
         <div style={{ background: 'white', borderRadius: '8px' }}>
-          <InboxButton
+          <Inbox.Button
             onClick={function (): void {
               throw new Error('Function not implemented.');
             }}
@@ -31,11 +31,11 @@ export function InboxButtonDoc() {
           <code>onClick</code> to show the user's inbox yourself by rendering the
           <code className="ReactNode">{'<Inbox>'}</code> component.
         </p>
-        {renderCodeSnippet(`import { InboxButton } from '@collabkit/react';
+        {renderCodeSnippet(`import { Inbox } from '@collabkit/react';
 
 export function App() {
   return <div>
-    <InboxButton 
+    <Inbox.Button 
       onClick={/* handle showing the users inbox here */} 
     />
   </div>;

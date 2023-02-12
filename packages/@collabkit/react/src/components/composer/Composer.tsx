@@ -41,7 +41,7 @@ import PinButtonHoverSvg from './pin-button-hover.svg';
 import DeletePinButtonSvg from './delete-pin-button.svg';
 import DeletePinButtonHoverSvg from './delete-pin-button-hover.svg';
 
-import { Tooltip, TooltipContent, TooltipTrigger } from '../Tooltip';
+import Tooltip from '../Tooltip';
 import { actions } from '@collabkit/client';
 import { ComposerPinButtonTarget } from '@collabkit/core';
 import { useWorkspaceContext } from '../../hooks/useWorkspaceContext';
@@ -225,8 +225,8 @@ function ComposerPinButton(props: { className?: string }) {
       data-testid="collabkit-composer-pin-button"
     >
       <Tooltip>
-        <TooltipTrigger>{icon}</TooltipTrigger>
-        {tooltip && <TooltipContent>{tooltip}</TooltipContent>}
+        <Tooltip.Trigger>{icon}</Tooltip.Trigger>
+        {tooltip && <Tooltip.Content>{tooltip}</Tooltip.Content>}
       </Tooltip>
     </div>
   );
@@ -391,14 +391,13 @@ function Composer(props: { autoFocus?: boolean; placeholder?: string; isNewThrea
   );
 }
 
-export {
-  Composer,
-  ComposerRoot,
-  ComposerContentEditable,
-  ComposerEditor,
-  ComposerPlaceholder,
-  ComposerTypingIndicator,
-  ComposerButtons,
-  ComposerMentionsButton,
-  ComposerPinButton,
-};
+export default Object.assign(Composer, {
+  Root: ComposerRoot,
+  ContentEditable: ComposerContentEditable,
+  Editor: ComposerEditor,
+  Placeholder: ComposerPlaceholder,
+  TypingIndicator: ComposerTypingIndicator,
+  Buttons: ComposerButtons,
+  MentionsButton: ComposerMentionsButton,
+  PinButton: ComposerPinButton,
+});

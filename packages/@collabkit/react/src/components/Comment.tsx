@@ -13,11 +13,11 @@ import * as styles from '../theme/components/Comment.css';
 import { ArrowBendDownRight, CheckCircle, DotsThree } from './icons';
 import { Menu, MenuItem } from './Menu';
 import { mergeRefs } from 'react-merge-refs';
-import { ComposerButtons, ComposerEditor, ComposerRoot } from './composer/Composer';
+import Composer from './composer/Composer';
 import { IconButton } from './IconButton';
 import CommentPinSvg from './composer/comment-pin.svg';
 import CommentPinSelectedSvg from './composer/comment-pin-hover.svg';
-import { Tooltip, TooltipContent, TooltipTrigger } from './Tooltip';
+import Tooltip from './Tooltip';
 import { vars } from '../theme/theme/index.css';
 import { useOptionalChannelContext } from '../hooks/useChannelContext';
 import { EMOJI_U } from './EmojiPicker';
@@ -147,12 +147,12 @@ function CommentActionsReplyButton() {
   } as const;
   return (
     <Tooltip>
-      <TooltipTrigger>
+      <Tooltip.Trigger>
         <IconButton onClick={(e) => events.onClick(e, { target })}>
           <ArrowBendDownRight weight="regular" />
         </IconButton>
-      </TooltipTrigger>
-      <TooltipContent>Reply</TooltipContent>
+      </Tooltip.Trigger>
+      <Tooltip.Content>Reply</Tooltip.Content>
     </Tooltip>
   );
 }
@@ -242,7 +242,7 @@ function EmojiCount(props: { emojiU: string; count: number; userIds: readonly st
 
   return emoji ? (
     <Tooltip placement="bottom-start">
-      <TooltipTrigger>
+      <Tooltip.Trigger>
         <div
           key={props.emojiU}
           className={styles.emojiCount}
@@ -251,12 +251,12 @@ function EmojiCount(props: { emojiU: string; count: number; userIds: readonly st
           <Emoji className={styles.emojiCountIcon} emoji={EMOJI_U[props.emojiU]} />
           <span className={styles.emojiCountNumber}>{props.count}</span>
         </div>
-      </TooltipTrigger>
-      <TooltipContent className={styles.emojiCountTooltip}>
+      </Tooltip.Trigger>
+      <Tooltip.Content className={styles.emojiCountTooltip}>
         {names.map((name, i) => (
           <span key={i}>{name}</span>
         ))}
-      </TooltipContent>
+      </Tooltip.Content>
     </Tooltip>
   ) : null;
 }
@@ -340,15 +340,15 @@ function CommentEditor(props: React.ComponentProps<'div'>) {
   const { body } = useCommentSnapshot();
 
   return (
-    <ComposerRoot
+    <Composer.Root
       data-testid="collabkit-comment-composer-root"
       className={styles.editor}
       {...props}
     >
-      <ComposerEditor autoFocus={true} initialBody={body} placeholder={<span />}>
-        <ComposerButtons />
-      </ComposerEditor>
-    </ComposerRoot>
+      <Composer.Editor autoFocus={true} initialBody={body} placeholder={<span />}>
+        <Composer.Buttons />
+      </Composer.Editor>
+    </Composer.Root>
   );
 }
 
@@ -453,10 +453,10 @@ function CommentEmojiAddButton() {
   } as const;
   return (
     <Tooltip>
-      <TooltipTrigger>
+      <Tooltip.Trigger>
         <PopoverEmojiPicker target={target} smallIconButton={true} placement="bottom-start" />
-      </TooltipTrigger>
-      <TooltipContent>React</TooltipContent>
+      </Tooltip.Trigger>
+      <Tooltip.Content>React</Tooltip.Content>
     </Tooltip>
   );
 }
@@ -473,10 +473,10 @@ function CommentActionsEmojiButton() {
   } as const;
   return (
     <Tooltip>
-      <TooltipTrigger>
+      <Tooltip.Trigger>
         <PopoverEmojiPicker target={target} placement="left-end" />
-      </TooltipTrigger>
-      <TooltipContent>React</TooltipContent>
+      </Tooltip.Trigger>
+      <Tooltip.Content>React</Tooltip.Content>
     </Tooltip>
   );
 }
@@ -512,7 +512,7 @@ function CommentThreadResolveIconButton(props: {
 
   return (
     <Tooltip>
-      <TooltipTrigger>
+      <Tooltip.Trigger>
         <IconButton
           className={props.className}
           style={props.style}
@@ -527,8 +527,8 @@ function CommentThreadResolveIconButton(props: {
         >
           <CheckCircle size={16} weight="regular" />
         </IconButton>
-      </TooltipTrigger>
-      <TooltipContent>Resolve</TooltipContent>
+      </Tooltip.Trigger>
+      <Tooltip.Content>Resolve</Tooltip.Content>
     </Tooltip>
   );
 }
@@ -571,47 +571,27 @@ function Comment(props: CommentProps) {
   );
 }
 
-export {
-  Comment,
-  CommentRoot,
-  CommentHeader,
-  CommentCreatorName,
-  CommentCreatorAvatar,
-  CommentTimestamp,
-  CommentBody,
-  CommentActions,
-  CommentMenu,
-  CommentEditor,
-  CommentPin,
-  CommentUnreadDot,
-  CommentActionsReplyButton,
-  CommentSeeAllRepliesButton,
-  CommentActionsEmojiButton,
-  CommentThreadResolveIconButton,
-  CommentReactions,
-  CommentMarkdown,
-  CommentHideIfEditing,
-  CommentShowIfEditing,
-};
-
-// Comment.Root = CommentRoot;
-// Comment.Header = CommentHeader;
-// Comment.CreatorName = CommentCreatorName;
-// Comment.CreatorAvatar = CommentCreatorAvatar;
-// Comment.Timestamp = CommentTimestamp;
-// Comment.Body = CommentBody;
-// Comment.Actions = CommentActions;
-// Comment.Menu = CommentMenu;
-// Comment.Editor = CommentEditor;
-// Comment.Pin = CommentPin;
-// Comment.UnreadDot = CommentUnreadDot;
-// Comment.ActionsReplyButton = CommentActionsReplyButton;
-// Comment.SeeAllRepliesButton = CommentSeeAllRepliesButton;
-// Comment.ActionsEmojiButton = CommentActionsEmojiButton;
-// Comment.Reactions = CommentReactions;
-// Comment.Markdown = CommentMarkdown;
-// Comment.HideIfEditing = CommentHideIfEditing;
-// Comment.ShowIfEditing = CommentShowIfEditing;
+export default Object.assign(Comment, {
+  Root: CommentRoot,
+  Header: CommentHeader,
+  CreatorName: CommentCreatorName,
+  CreatorAvatar: CommentCreatorAvatar,
+  Timestamp: CommentTimestamp,
+  Body: CommentBody,
+  Actions: CommentActions,
+  Menu: CommentMenu,
+  Editor: CommentEditor,
+  Pin: CommentPin,
+  UnreadDot: CommentUnreadDot,
+  ActionsReplyButton: CommentActionsReplyButton,
+  SeeAllRepliesButton: CommentSeeAllRepliesButton,
+  ActionsEmojiButton: CommentActionsEmojiButton,
+  ThreadResolveIconButton: CommentThreadResolveIconButton,
+  Reactions: CommentReactions,
+  Markdown: CommentMarkdown,
+  HideIfEditing: CommentHideIfEditing,
+  ShowIfEditing: CommentShowIfEditing,
+});
 
 // Anatomy
 
