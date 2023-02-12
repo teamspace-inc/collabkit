@@ -136,8 +136,9 @@ function Channel() {
   }
 
   useEffect(() => {
+    store.nextThreadId = store.sync.nextThreadId({ appId, workspaceId });
     actions.subscribeInbox(store);
-  }, []);
+  }, [appId, workspaceId]);
 
   return (
     <ChannelRoot channelId="default">
