@@ -1,4 +1,4 @@
-import React, { ComponentPropsWithRef, useEffect } from 'react';
+import React, { ComponentPropsWithRef, useCallback, useEffect } from 'react';
 import { useSnapshot } from 'valtio';
 import { useApp } from '../hooks/useApp';
 import * as styles from '../theme/components/Channel.css';
@@ -147,21 +147,23 @@ function ChannelThread() {
   // const active = !!(viewingId && viewingId.type === 'thread' && viewingId.threadId === threadId);
   const isExpanded = expandedThreadIds.includes(threadId);
 
+  const onClick = useCallback(
+    (e: React.MouseEvent) => {
+      events.onClick(e, {
+        target: {
+          type: 'channel',
+          threadId,
+          workspaceId,
+          channelId,
+        },
+      });
+    },
+    [threadId, workspaceId, channelId]
+  );
+
   return (
     <ThreadProvider threadId={threadId} key={`channelThread-${threadId}`} placeholder="Reply">
-      <div
-        className={styles.thread({ isSelected })}
-        onClick={(e) =>
-          events.onClick(e, {
-            target: {
-              type: 'channel',
-              threadId,
-              workspaceId,
-              channelId,
-            },
-          })
-        }
-      >
+      <div className={styles.thread({ isSelected })} onClick={onClick}>
         <ChannelCommentList />
         {isExpanded || isSelected ? (
           <div style={{ paddingLeft: `${calc.multiply(vars.space[1], 9)}` }}>
