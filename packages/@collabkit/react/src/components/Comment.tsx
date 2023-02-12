@@ -92,7 +92,7 @@ function CommentRoot({ commentId: eventId, indent = false, ...props }: CommentRo
   const isFocused = useStoreKeyMatches(store, 'focusedId', targetMatch);
   const isEditing = useStoreKeyMatches(store, 'editingId', targetMatch);
 
-  const event = useSnapshot(store.workspaces[workspaceId].computed[threadId].canonicalEvents)[
+  const event = useSnapshot(store.workspaces[workspaceId].computed)?.[threadId]?.canonicalEvents?.[
     eventId
   ];
   const createdById = event?.createdById ?? null;
