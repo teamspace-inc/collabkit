@@ -35,9 +35,6 @@ export default defineConfig({
         comments: false,
       },
     },
-    rollupOptions: {
-      cache: false,
-    },
   },
   server: {
     port: 3000,
