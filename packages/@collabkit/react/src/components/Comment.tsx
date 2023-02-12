@@ -594,25 +594,6 @@ export {
   CommentShowIfEditing,
 };
 
-// Comment.Root = CommentRoot;
-// Comment.Header = CommentHeader;
-// Comment.CreatorName = CommentCreatorName;
-// Comment.CreatorAvatar = CommentCreatorAvatar;
-// Comment.Timestamp = CommentTimestamp;
-// Comment.Body = CommentBody;
-// Comment.Actions = CommentActions;
-// Comment.Menu = CommentMenu;
-// Comment.Editor = CommentEditor;
-// Comment.Pin = CommentPin;
-// Comment.UnreadDot = CommentUnreadDot;
-// Comment.ActionsReplyButton = CommentActionsReplyButton;
-// Comment.SeeAllRepliesButton = CommentSeeAllRepliesButton;
-// Comment.ActionsEmojiButton = CommentActionsEmojiButton;
-// Comment.Reactions = CommentReactions;
-// Comment.Markdown = CommentMarkdown;
-// Comment.HideIfEditing = CommentHideIfEditing;
-// Comment.ShowIfEditing = CommentShowIfEditing;
-
 // Anatomy
 
 // No customisation = Dom's design. You just import Thread and Inbox, and it looks like what we provide (oh and yes you can set dark/light mode),

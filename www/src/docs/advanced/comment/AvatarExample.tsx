@@ -1,5 +1,5 @@
-import { Profile } from '@collabkit/react';
+import { ProfileAvatar, ProfileProvider } from '@collabkit/react';
 
-<Profile.Provider profileId="ville">
-  <Profile.Avatar />
-</Profile.Provider>;
+<ProfileProvider profileId="ville">
+  <ProfileAvatar />
+</ProfileProvider>;

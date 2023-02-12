@@ -14,6 +14,17 @@ import { useThread } from '../hooks/public/useThread';
 import { useStore } from '../hooks/useStore';
 import { ProfileContext } from '../hooks/useProfile';
 
+const emptyState = (
+  <div data-testid="collabkit-thread-empty-state" className={styles.emptyState}>
+    <ChatCentered weight="thin" size={32} />
+    <span>No comments yet</span>
+  </div>
+);
+
+function ThreadEmptyState() {
+  return emptyState;
+}
+
 function ThreadProvider(props: ThreadProps & { children: React.ReactNode }) {
   // refactor this to a guard we can use across the app
   const { userId, workspaceId } = useSnapshot(useStore());
@@ -62,15 +73,12 @@ function Thread(props: ThreadProps) {
   );
 }
 
-export { Thread, ThreadRoot, ThreadHeader, ThreadProvider, ThreadFacepile, ThreadUnreadDot };
-
-const emptyState = (
-  <div data-testid="collabkit-thread-empty-state" className={styles.emptyState}>
-    <ChatCentered weight="thin" size={32} />
-    <span>No comments yet</span>
-  </div>
-);
-
-export function EmptyState() {
-  return emptyState;
-}
+export {
+  Thread,
+  ThreadRoot,
+  ThreadHeader,
+  ThreadProvider,
+  ThreadFacepile,
+  ThreadUnreadDot,
+  ThreadEmptyState,
+};
