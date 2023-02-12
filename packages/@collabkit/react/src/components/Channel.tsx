@@ -205,11 +205,12 @@ type ChannelProps = { channelId: string };
 
 function ChannelRoot(props: ComponentPropsWithRef<'div'> & ChannelProps) {
   const { workspaceId } = useSnapshot(useApp().store);
+  const { channelId, ...otherProps } = props;
 
   return workspaceId ? (
     <ThemeWrapper>
       <ChannelContext.Provider value="default">
-        <div className={styles.root} {...props}>
+        <div className={styles.root} {...otherProps}>
           {props.children}
         </div>
       </ChannelContext.Provider>
