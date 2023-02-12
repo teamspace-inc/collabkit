@@ -38,6 +38,7 @@ import {
   CommentTimestamp,
 } from './Comment';
 import { ProfileAvatar } from './Profile';
+import { useIsExpanded } from './useIsExpanded';
 
 function EmptyState() {
   return (
@@ -51,42 +52,42 @@ function EmptyState() {
 function ChannelCommentList(props: ComponentPropsWithRef<'div'>) {
   const threadId = useThreadContext();
   const workspaceStore = useWorkspaceStore();
+  const isExpanded = useIsExpanded();
   const { computed } = useSnapshot(workspaceStore);
   const { messageEvents } = computed[threadId] ?? {};
-  const hideProfile = false;
-  const isFirstComment = false;
-  const isExpanded = false;
 
   return (
-    <CommentList className="">
-      {messageEvents.map((event, i) => (
-        <CommentRoot commentId={event.id} indent={i > 0}>
-          <ProfileAvatar />
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <CommentHideIfEditing>
-              <CommentHeader>
-                <CommentCreatorName />
-                <CommentTimestamp />
-              </CommentHeader>
-              <CommentActions>
-                <CommentActionsEmojiButton />
-                {i == 0 && <CommentActionsReplyButton />}
-                {i == 0 && <CommentThreadResolveIconButton />}
-                <CommentMenu />
-              </CommentActions>
-              <CommentBody>
-                <CommentPin />
-                <CommentMarkdown />
-              </CommentBody>
-              <CommentReactions />
-              {i == 0 && !isExpanded && <CommentSeeAllRepliesButton />}
-            </CommentHideIfEditing>
-            <CommentShowIfEditing>
-              <CommentEditor />
-            </CommentShowIfEditing>
-          </div>
-        </CommentRoot>
-      ))}
+    <CommentList className="" {...props}>
+      {messageEvents.map((event, i) =>
+        !isExpanded && i > 0 ? null : (
+          <CommentRoot commentId={event.id} indent={i > 0}>
+            <ProfileAvatar />
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <CommentHideIfEditing>
+                <CommentHeader>
+                  <CommentCreatorName />
+                  <CommentTimestamp />
+                </CommentHeader>
+                <CommentActions>
+                  <CommentActionsEmojiButton />
+                  {i == 0 && <CommentActionsReplyButton />}
+                  {i == 0 && <CommentThreadResolveIconButton />}
+                  <CommentMenu />
+                </CommentActions>
+                <CommentBody>
+                  <CommentPin />
+                  <CommentMarkdown />
+                </CommentBody>
+                <CommentReactions />
+                {i == 0 && !isExpanded && <CommentSeeAllRepliesButton />}
+              </CommentHideIfEditing>
+              <CommentShowIfEditing>
+                <CommentEditor />
+              </CommentShowIfEditing>
+            </div>
+          </CommentRoot>
+        )
+      )}
     </CommentList>
   );
 }
