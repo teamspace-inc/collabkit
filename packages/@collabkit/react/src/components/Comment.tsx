@@ -12,7 +12,6 @@ import { CommentTarget, PinTarget, Target } from '@collabkit/core';
 import * as styles from '../theme/components/Comment.css';
 import { ArrowBendDownRight, DotsThree } from './icons';
 import { Menu, MenuItem } from './Menu';
-import { Thread } from './Thread';
 import { mergeRefs } from 'react-merge-refs';
 import Composer from './composer/Composer';
 import { IconButton } from './IconButton';
@@ -524,7 +523,7 @@ function Comment(props: CommentProps) {
           <Comment.Actions>
             <Comment.ActionsEmojiButton />
             {isChannel && isFirstComment && <Comment.ActionsReplyButton />}
-            {isChannel && isFirstComment && <Thread.ResolveIconButton />}
+            {/* {isChannel && isFirstComment && <Thread.ResolveIconButton />} */}
             <Comment.MoreMenu />
           </Comment.Actions>
           <Comment.Body>
