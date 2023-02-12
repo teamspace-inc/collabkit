@@ -203,7 +203,7 @@ export const actions = style({
   fontFamily: vars.fontFamily,
   position: 'absolute',
   right: vars.space[4],
-  top: vars.space[1],
+  top: vars.space[2],
   transform: 'translateY(0%)',
   background: vars.color.background,
   border: `1px solid ${vars.color.border}`,
