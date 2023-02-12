@@ -72,7 +72,7 @@ function ChannelThread() {
   return (
     <ThreadProvider threadId={threadId} key={`channelThread-${threadId}`} placeholder="Reply">
       <div className={styles.thread({ isSelected })}>
-        <CommentList shouldCollapse={!isExpanded} className="" />
+        <CommentList shouldCollapse={!isExpanded && !isSelected} className="" />
         {isExpanded ? (
           <div style={{ paddingLeft: `${calc.multiply(vars.space[1], 9)}` }}>
             <Composer placeholder="Reply" autoFocus={true} />
