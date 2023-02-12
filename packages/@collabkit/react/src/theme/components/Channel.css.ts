@@ -14,7 +14,10 @@ export const threadList = style({
   padding: `${vars.space[2]} 0 0`,
 });
 
-export const commentList = recipe({});
+export const commentList = style({
+  display: 'flex',
+  flexDirection: 'column',
+});
 
 export const thread = recipe({
   base: {

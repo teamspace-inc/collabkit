@@ -67,7 +67,8 @@ function ChannelCommentList(props: ComponentPropsWithRef<'div'>) {
   const { messageEvents } = computed[threadId] ?? {};
 
   return (
-    <CommentList className="" {...props}>
+    <CommentList className={styles.commentList} {...props}>
+      <div style={{ flex: 1 }}></div>
       {messageEvents.map((event, i) =>
         !isExpanded && !isSelected && i > 0 ? null : (
           <CommentRoot commentId={event.id} indent={i > 0}>
@@ -183,7 +184,9 @@ function ChannelRoot(props: ComponentPropsWithRef<'div'> & ChannelProps) {
   return workspaceId ? (
     <ThemeWrapper>
       <ChannelContext.Provider value="default">
-        <div className={styles.root}>{props.children}</div>
+        <div className={styles.root} {...props}>
+          {props.children}
+        </div>
       </ChannelContext.Provider>
     </ThemeWrapper>
   ) : null;
@@ -202,7 +205,7 @@ function ChannelThreadList(props: ComponentPropsWithRef<'div'>) {
   return threadIds.length === 0 ? (
     <EmptyState />
   ) : (
-    <Scrollable autoScroll="bottom">
+    <Scrollable autoScroll="bottom" alignToBottom={true}>
       <div className={styles.threadList} {...props}>
         {threads}
       </div>

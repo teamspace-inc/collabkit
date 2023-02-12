@@ -44,6 +44,7 @@ type ScrollAreaContextValue = {
   scrollHideDelay: number;
   scrollArea: ScrollAreaElement | null;
   viewport: ScrollAreaViewportElement | null;
+  alignToBottom: boolean;
   onViewportChange(viewport: ScrollAreaViewportElement | null): void;
   content: HTMLDivElement | null;
   onContentChange(content: HTMLDivElement): void;
@@ -70,6 +71,7 @@ interface ScrollAreaProps extends PrimitiveDivProps {
   autoScroll?: ScrollAreaContextValue['autoScroll'];
   autoScrollThreshold?: number;
   scrollHideDelay?: number;
+  alignToBottom?: boolean;
 }
 
 const ScrollArea = React.forwardRef<ScrollAreaElement, ScrollAreaProps>(
@@ -81,6 +83,7 @@ const ScrollArea = React.forwardRef<ScrollAreaElement, ScrollAreaProps>(
       autoScroll = 'none',
       autoScrollThreshold = 16,
       scrollHideDelay = 600,
+      alignToBottom = false,
       ...scrollAreaProps
     } = props;
     const [scrollArea, setScrollArea] = React.useState<ScrollAreaElement | null>(null);
@@ -118,6 +121,7 @@ const ScrollArea = React.forwardRef<ScrollAreaElement, ScrollAreaProps>(
         onScrollbarYEnabledChange={setScrollbarYEnabled}
         onCornerWidthChange={setCornerWidth}
         onCornerHeightChange={setCornerHeight}
+        alignToBottom={alignToBottom}
       >
         <Primitive.div
           dir={direction}
@@ -234,7 +238,14 @@ const ScrollAreaViewport = React.forwardRef<ScrollAreaViewportElement, ScrollAre
            * widths that change. We'll wait to see what use-cases consumers come up with there
            * before trying to resolve it.
            */}
-          <div ref={context.onContentChange} style={{ minWidth: '100%', display: 'table' }}>
+          <div
+            ref={context.onContentChange}
+            style={{
+              minWidth: '100%',
+              display: 'table',
+              marginTop: context.alignToBottom ? 'auto' : 'unset',
+            }}
+          >
             {children}
           </div>
         </Primitive.div>
