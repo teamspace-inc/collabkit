@@ -26,6 +26,7 @@ export default defineConfig(({ mode }) => {
         fileName: 'collabkit-react',
       },
       rollupOptions: {
+        cache: false,
         external: ['react', 'react-dom'],
         output: {
           // Provide global variables to use in the UMD build
