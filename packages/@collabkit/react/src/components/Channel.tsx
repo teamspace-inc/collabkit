@@ -122,6 +122,20 @@ function ChannelThread() {
     );
   });
 
+  const onClick = useCallback(
+    (e: React.MouseEvent) => {
+      events.onClick(e, {
+        target: {
+          type: 'channel',
+          threadId,
+          workspaceId,
+          channelId,
+        },
+      });
+    },
+    [threadId, workspaceId, channelId]
+  );
+
   if (!timeline) {
     return null;
   }
@@ -146,20 +160,6 @@ function ChannelThread() {
 
   // const active = !!(viewingId && viewingId.type === 'thread' && viewingId.threadId === threadId);
   const isExpanded = expandedThreadIds.includes(threadId);
-
-  const onClick = useCallback(
-    (e: React.MouseEvent) => {
-      events.onClick(e, {
-        target: {
-          type: 'channel',
-          threadId,
-          workspaceId,
-          channelId,
-        },
-      });
-    },
-    [threadId, workspaceId, channelId]
-  );
 
   return (
     <ThreadProvider threadId={threadId} key={`channelThread-${threadId}`} placeholder="Reply">
