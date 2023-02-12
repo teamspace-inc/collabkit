@@ -49,7 +49,7 @@ export const inlineModal = style({
 });
 
 export const emojiCount = style({
-  marginTop: vars.space[1],
+  marginTop: vars.space[2],
   border: `1px solid ${vars.color.border}`,
   borderRadius: '6px',
   padding: `${vars.space[0]} ${vars.space[1]}`,
