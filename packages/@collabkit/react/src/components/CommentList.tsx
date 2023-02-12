@@ -31,13 +31,7 @@ function CommentList(props: CommentListProps) {
       return (shouldCollapse && i == 0) || !shouldCollapse ? (
         <div key={event.id} style={{ minHeight: 34 }}>
           {newIndicatorId === event.id && <NewIndicator />}
-          {props.children ?? (
-            <MemoizedComment
-              commentId={event.id}
-              hideProfile={!event.showHeader}
-              isFirstComment={i == 0}
-            />
-          )}
+          {props.children ?? <MemoizedComment commentId={event.id} />}
         </div>
       ) : null;
     });

@@ -29,11 +29,4 @@ export type OptionalComposerProps = {
 
 export type CommentProps = {
   commentId: string;
-  hideProfile?: boolean;
-  isFirstComment?: boolean;
 };
-
-// export type PopoverThreadProps = ThreadProps & {
-//   maxAvailableSize?: { width: number; height: number } | null;
-//   formatTimestamp?: (timestamp: number) => string;
-// };

@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback, useRef, useState, useEffect } from 'react';
+import React, { useMemo, useCallback, useRef } from 'react';
 import { useThreadContext } from '../hooks/useThreadContext';
 import { Markdown } from './Markdown';
 import { useSnapshot } from 'valtio';
@@ -19,7 +19,6 @@ import CommentPinSvg from './composer/comment-pin.svg';
 import CommentPinSelectedSvg from './composer/comment-pin-hover.svg';
 import { Tooltip, TooltipContent, TooltipTrigger } from './Tooltip';
 import { vars } from '../theme/theme/index.css';
-import { useOptionalChannelContext } from '../hooks/useChannelContext';
 import { EMOJI_U } from './EmojiPicker';
 import { PopoverEmojiPicker } from './PopoverEmojiPicker';
 import { Emoji } from './Emoji';
@@ -485,17 +484,6 @@ function CommentHeader(props: React.ComponentProps<'div'>) {
   return <div className={styles.header} {...props} />;
 }
 
-function useIsExpanded() {
-  const threadId = useThreadContext();
-  const [isExpanded, setIsExpanded] = useState(false);
-  const store = useStore();
-  const { expandedThreadIds } = useSnapshot(store);
-  useEffect(() => {
-    setIsExpanded(expandedThreadIds.includes(threadId));
-  }, [store, expandedThreadIds, threadId]);
-  return isExpanded;
-}
-
 function CommentThreadResolveIconButton(props: {
   className?: string;
   style?: React.CSSProperties;
@@ -534,26 +522,19 @@ function CommentThreadResolveIconButton(props: {
 }
 
 function Comment(props: CommentProps) {
-  const hideProfile = props.hideProfile ?? false;
-  const isFirstComment = props.isFirstComment ?? false;
-  const isChannel = !!useOptionalChannelContext();
-  const isExpanded = useIsExpanded();
-
   return (
-    <CommentRoot commentId={props.commentId} indent={isChannel && !isFirstComment}>
-      {!hideProfile ? <ProfileAvatar /> : <div></div>}
+    <CommentRoot commentId={props.commentId}>
+      <ProfileAvatar />
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <CommentHideIfEditing>
-          {!hideProfile && (
-            <CommentHeader>
-              <CommentCreatorName />
-              <CommentTimestamp />
-            </CommentHeader>
-          )}
+          <CommentHeader>
+            <CommentCreatorName />
+            <CommentTimestamp />
+          </CommentHeader>
           <CommentActions>
             <CommentActionsEmojiButton />
-            {isChannel && isFirstComment && <CommentActionsReplyButton />}
-            {isChannel && isFirstComment && <CommentThreadResolveIconButton />}
+            <CommentActionsReplyButton />
+            <CommentThreadResolveIconButton />
             <CommentMenu />
           </CommentActions>
           <CommentBody>
@@ -561,7 +542,6 @@ function Comment(props: CommentProps) {
             <CommentMarkdown />
           </CommentBody>
           <CommentReactions />
-          {isChannel && isFirstComment && !isExpanded && <CommentSeeAllRepliesButton />}
         </CommentHideIfEditing>
         <CommentShowIfEditing>
           <CommentEditor />

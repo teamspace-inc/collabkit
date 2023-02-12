@@ -18,6 +18,26 @@ import { useStore } from '../hooks/useStore';
 import { actions } from '@collabkit/client';
 import { calc } from '@vanilla-extract/css-utils';
 import { useStoreKeyMatches } from '../hooks/useSubscribeStoreKey';
+import {
+  CommentActions,
+  CommentActionsEmojiButton,
+  CommentActionsReplyButton,
+  CommentBody,
+  CommentCreatorName,
+  CommentEditor,
+  CommentHeader,
+  CommentHideIfEditing,
+  CommentMarkdown,
+  CommentMenu,
+  CommentPin,
+  CommentReactions,
+  CommentRoot,
+  CommentSeeAllRepliesButton,
+  CommentShowIfEditing,
+  CommentThreadResolveIconButton,
+  CommentTimestamp,
+} from './Comment';
+import { ProfileAvatar } from './Profile';
 
 function EmptyState() {
   return (
@@ -25,6 +45,49 @@ function EmptyState() {
       <ChatCentered weight="thin" size={32} />
       <span>No comments yet</span>
     </div>
+  );
+}
+
+function ChannelCommentList(props: ComponentPropsWithRef<'div'>) {
+  const threadId = useThreadContext();
+  const workspaceStore = useWorkspaceStore();
+  const { computed } = useSnapshot(workspaceStore);
+  const { messageEvents } = computed[threadId] ?? {};
+  const hideProfile = false;
+  const isFirstComment = false;
+  const isExpanded = false;
+
+  return (
+    <CommentList className="">
+      {messageEvents.map((event, i) => (
+        <CommentRoot commentId={event.id} indent={i > 0}>
+          <ProfileAvatar />
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <CommentHideIfEditing>
+              <CommentHeader>
+                <CommentCreatorName />
+                <CommentTimestamp />
+              </CommentHeader>
+              <CommentActions>
+                <CommentActionsEmojiButton />
+                {i == 0 && <CommentActionsReplyButton />}
+                {i == 0 && <CommentThreadResolveIconButton />}
+                <CommentMenu />
+              </CommentActions>
+              <CommentBody>
+                <CommentPin />
+                <CommentMarkdown />
+              </CommentBody>
+              <CommentReactions />
+              {i == 0 && !isExpanded && <CommentSeeAllRepliesButton />}
+            </CommentHideIfEditing>
+            <CommentShowIfEditing>
+              <CommentEditor />
+            </CommentShowIfEditing>
+          </div>
+        </CommentRoot>
+      ))}
+    </CommentList>
   );
 }
 
@@ -72,7 +135,7 @@ function ChannelThread() {
   return (
     <ThreadProvider threadId={threadId} key={`channelThread-${threadId}`} placeholder="Reply">
       <div className={styles.thread({ isSelected })}>
-        <CommentList shouldCollapse={!isExpanded && !isSelected} className="" />
+        <ChannelCommentList />
         {isExpanded ? (
           <div style={{ paddingLeft: `${calc.multiply(vars.space[1], 9)}` }}>
             <Composer placeholder="Reply" autoFocus={true} />
@@ -90,7 +153,7 @@ function ChannelRoot(props: ComponentPropsWithRef<'div'> & ChannelProps) {
 
   return workspaceId ? (
     <ThemeWrapper>
-      <ChannelContext.Provider value={{ workspaceId, channelId: 'default' }}>
+      <ChannelContext.Provider value="default">
         <div className={styles.root}>{props.children}</div>
       </ChannelContext.Provider>
     </ThemeWrapper>

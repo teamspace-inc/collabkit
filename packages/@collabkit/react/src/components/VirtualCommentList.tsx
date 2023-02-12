@@ -18,28 +18,24 @@ type ItemProps = CommentListProps & {
   isResolved: boolean;
   newIndicatorId: string | null;
 };
+
 const MemoizedItem = React.memo(function Item({
   isChannel,
   shouldCollapse,
   newIndicatorId,
   event,
-  hideResolveButton,
-  isResolved,
 }: ItemProps) {
   return !isChannel || event.showHeader || shouldCollapse ? (
     <div key={event.id} style={{ minHeight: 34 }}>
       {newIndicatorId === event.id && <NewIndicator />}
-      <MemoizedComment
-        commentId={event.id}
-        hideProfile={!event.showHeader}
-        isFirstComment={!hideResolveButton && !isResolved}
-      />
+      <MemoizedComment commentId={event.id} />
     </div>
   ) : (
     <div style={{ minHeight: 34 }} />
   );
 });
-function VirtualCommentList(props: CommentListProps) {
+
+export function VirtualCommentList(props: CommentListProps) {
   const { shouldCollapse, hideResolveButton, ...otherProps } = props;
   const threadId = useThreadContext();
   const workspaceStore = useWorkspaceStore();
