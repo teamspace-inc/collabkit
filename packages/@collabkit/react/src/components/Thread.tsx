@@ -1,21 +1,26 @@
 import React from 'react';
 import { useSnapshot } from 'valtio';
-import { ThreadContext } from '../hooks/useThreadContext';
-import Profile from './Profile';
-import Composer from './composer/Composer';
+import { ThreadContext, useThreadContext } from '../hooks/useThreadContext';
+import { Composer } from './composer/Composer';
 import { ThemeWrapper } from './ThemeWrapper';
 import * as styles from '../theme/components/Thread.css';
-import { ChatCentered } from './icons';
+import { ChatCentered, CheckCircle } from './icons';
 import { CommentList } from './CommentList';
 import { ThreadFacepile } from './ThreadFacepile';
 import { ThreadUnreadDot } from './ThreadUnreadDot';
-import { ResolveThreadIconButton } from './ResolveThreadIconButton';
 import { ThreadProps } from '../types';
 import { Scrollable } from './Scrollable';
 import { useThread } from '../hooks/public/useThread';
 import { useStore } from '../hooks/useStore';
+import { ProfileContext } from '../hooks/useProfile';
+import { ThreadResolveButtonTarget } from '@collabkit/core';
+import { useApp } from '../hooks/useApp';
+import { useWorkspaceContext } from '../hooks/useWorkspaceContext';
+import { IconButton } from './IconButton';
+import { Tooltip, TooltipContent, TooltipTrigger } from './Tooltip';
 
 function ThreadProvider(props: ThreadProps & { children: React.ReactNode }) {
+  // refactor this to a guard we can use across the app
   const { userId, workspaceId } = useSnapshot(useStore());
   const { threadId } = props;
 
@@ -35,7 +40,41 @@ function ThreadHeader(props: React.ComponentPropsWithoutRef<'div'>) {
   return <div data-testid="collabkit-thread-header" className={styles.header} {...props} />;
 }
 
-export function Thread(props: ThreadProps) {
+function ResolveThreadIconButton(props: { className?: string; style?: React.CSSProperties }) {
+  const { events } = useApp();
+  const workspaceId = useWorkspaceContext();
+  const threadId = useThreadContext();
+
+  const target: ThreadResolveButtonTarget = {
+    threadId,
+    workspaceId,
+    type: 'resolveThreadButton',
+  };
+
+  return (
+    <Tooltip>
+      <TooltipTrigger>
+        <IconButton
+          className={props.className}
+          style={props.style}
+          weight="regular"
+          // TODO: tooltip hijacks focus when used within a modal popover
+          // tooltip={isResolved ? 'Re-open' : 'Mark as Resolved and Hide'}
+          onPointerDown={(e) =>
+            events.onPointerDown(e, {
+              target,
+            })
+          }
+        >
+          <CheckCircle size={16} weight="regular" />
+        </IconButton>
+      </TooltipTrigger>
+      <TooltipContent>Resolve</TooltipContent>
+    </Tooltip>
+  );
+}
+
+function Thread(props: ThreadProps) {
   // todo refactor this usage of userId and move it to a generic guard
   const { userId } = useThread(props);
 
@@ -45,29 +84,39 @@ export function Thread(props: ThreadProps) {
 
   return (
     <ThreadContext.Provider value={props.threadId}>
-      <Profile.Provider profileId={userId}>
+      <ProfileContext.Provider value={userId}>
         <ThemeWrapper>
-          <Thread.Root>
-            {props.showHeader && <Thread.Header>Comments</Thread.Header>}
+          <ThreadRoot>
+            {props.showHeader && <ThreadHeader>Comments</ThreadHeader>}
             <Scrollable autoScroll="bottom">
               <CommentList hideResolveButton={props.hideResolveButton} />
             </Scrollable>
             {props.hideComposer ? null : (
               <Composer autoFocus={props.autoFocus} placeholder={props.placeholder} />
             )}
-          </Thread.Root>
+          </ThreadRoot>
         </ThemeWrapper>
-      </Profile.Provider>
+      </ProfileContext.Provider>
     </ThreadContext.Provider>
   );
 }
+
+export {
+  Thread,
+  ThreadRoot,
+  ThreadHeader,
+  ThreadProvider,
+  ThreadFacepile,
+  ThreadUnreadDot,
+  ResolveThreadIconButton,
+};
 
 Thread.Root = ThreadRoot;
 Thread.Header = ThreadHeader;
 Thread.Provider = ThreadProvider;
 Thread.Facepile = ThreadFacepile;
 Thread.UnreadDot = ThreadUnreadDot;
-Thread.ResolveIconButton = ResolveThreadIconButton;
+Thread.ResolveButton = ResolveThreadIconButton;
 
 const emptyState = (
   <div data-testid="collabkit-thread-empty-state" className={styles.emptyState}>

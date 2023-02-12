@@ -6,13 +6,13 @@ import { InboxItem } from './InboxItem';
 import { ThemeWrapper } from './ThemeWrapper';
 import { ChatCentered } from './icons';
 import { emptyState } from '../theme/components/Thread.css';
-import { useOptionalSidebarContext } from './Sidebar';
+import { useOptionalSidebarContext } from './useOptionalSidebarContext';
 import { useInbox } from '../hooks/public/useInbox';
-import { Thread } from './Thread';
+import { ThreadProvider } from './Thread';
 import { useStore } from '../hooks/useStore';
 import { actions } from '@collabkit/client';
 
-export function EmptyState() {
+function EmptyState() {
   return (
     <div className={emptyState}>
       <ChatCentered weight="thin" size={32} />
@@ -21,7 +21,7 @@ export function EmptyState() {
   );
 }
 
-export function Inbox(props: {
+function Inbox(props: {
   formatTimestamp?: (timestamp: number) => string;
   maxHeight?: string;
   threadIds?: string[];
@@ -45,9 +45,9 @@ export function Inbox(props: {
 
   const inboxItems = threadIds.map((threadId) => {
     return (
-      <Thread.Provider threadId={threadId} key={`inboxThread-${threadId}`}>
+      <ThreadProvider threadId={threadId} key={`inboxThread-${threadId}`}>
         <InboxItem formatTimestamp={props.formatTimestamp} />
-      </Thread.Provider>
+      </ThreadProvider>
     );
   });
 
@@ -74,8 +74,4 @@ export function Inbox(props: {
   );
 }
 
-function InboxHeader(props: React.ComponentPropsWithoutRef<'div'>) {
-  return <div {...props} className={props.className ?? styles.header} />;
-}
-
-Inbox.Header = InboxHeader;
+export { Inbox, EmptyState };

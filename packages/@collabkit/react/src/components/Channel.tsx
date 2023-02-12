@@ -7,8 +7,8 @@ import { ThemeWrapper } from './ThemeWrapper';
 import { ChatCentered } from './icons';
 import { emptyState } from '../theme/components/Thread.css';
 import { useInbox } from '../hooks/public/useInbox';
-import { Thread } from './Thread';
-import Composer from './composer/Composer';
+import { ThreadProvider } from './Thread';
+import { Composer } from './composer/Composer';
 import { useThreadContext } from '../hooks/useThreadContext';
 import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
 import { CommentList } from './CommentList';
@@ -56,14 +56,14 @@ function ChannelThread() {
   const isExpanded = expandedThreadIds.includes(threadId);
 
   return (
-    <Thread.Provider threadId={threadId} key={`channelThread-${threadId}`} placeholder="Reply">
+    <ThreadProvider threadId={threadId} key={`channelThread-${threadId}`} placeholder="Reply">
       <CommentList shouldCollapse={!isExpanded} className="" />
       {isExpanded ? (
         <div style={{ paddingLeft: `${calc.multiply(vars.space[1], 9)}` }}>
           <Composer placeholder="Reply" autoFocus={true} />
         </div>
       ) : null}
-    </Thread.Provider>
+    </ThreadProvider>
   );
 }
 
@@ -85,9 +85,9 @@ function ChannelThreadList() {
   const threadIds = useInbox({ filter: 'open', direction: 'asc' });
   const threads = threadIds.map((threadId) => {
     return (
-      <Thread.Provider threadId={threadId} key={`inboxThread-${threadId}`}>
-        <Channel.Thread />
-      </Thread.Provider>
+      <ThreadProvider threadId={threadId} key={`inboxThread-${threadId}`}>
+        <ChannelThread />
+      </ThreadProvider>
     );
   });
 
@@ -100,7 +100,7 @@ function ChannelThreadList() {
 
 // for now there is one default channel per workspace
 // we may want to introduce channel ids in the future
-export function Channel() {
+function Channel() {
   const store = useStore();
 
   // we should refactor this to a simpler hasAuthenticated check we can reuse, which guarantees
@@ -128,18 +128,20 @@ export function Channel() {
   }, []);
 
   return (
-    <Channel.Root channelId="default">
-      <Channel.ThreadList />
+    <ChannelRoot channelId="default">
+      <ChannelThreadList />
       {nextThreadId ? (
-        <Thread.Provider threadId={nextThreadId}>
+        <ThreadProvider threadId={nextThreadId}>
           <div>
             <Composer isNewThread={true} />
           </div>
-        </Thread.Provider>
+        </ThreadProvider>
       ) : null}
-    </Channel.Root>
+    </ChannelRoot>
   );
 }
+
+export { Channel, ChannelRoot, ChannelThreadList, ChannelThread };
 
 Channel.Root = ChannelRoot;
 Channel.ThreadList = ChannelThreadList;

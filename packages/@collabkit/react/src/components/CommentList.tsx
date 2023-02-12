@@ -3,13 +3,14 @@ import React from 'react';
 import * as styles from '../theme/components/CommentList.css';
 import { NewIndicator } from './NewIndicator';
 import { useNewIndicator } from '../hooks/useNewIndicator';
-import Comment, { CommentProps } from './Comment';
+import { Comment } from './Comment';
 import { useSnapshot, INTERNAL_Snapshot } from 'valtio';
 import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
 import { useThreadContext } from '../hooks/useThreadContext';
 import { useOptionalChannelContext } from '../hooks/useChannelContext';
 import { Virtuoso, VirtuosoHandle } from 'react-virtuoso';
 import type { Event, WithID, WithShowHeader } from '@collabkit/core';
+import type { CommentProps } from '../types';
 
 type CommentListProps = ComponentProps<'div'> & {
   hideResolveButton?: boolean;
@@ -55,7 +56,7 @@ const MemoizedItem = React.memo(function Item({
   );
 });
 
-export function VirtualCommentList(props: CommentListProps) {
+function VirtualCommentList(props: CommentListProps) {
   const { shouldCollapse, hideResolveButton, ...otherProps } = props;
   const threadId = useThreadContext();
   const workspaceStore = useWorkspaceStore();
@@ -91,7 +92,7 @@ export function VirtualCommentList(props: CommentListProps) {
   ) : null;
 }
 
-export function CommentList(props: CommentListProps) {
+function CommentList(props: CommentListProps) {
   const { shouldCollapse, hideResolveButton, ...otherProps } = props;
   const threadId = useThreadContext();
   const workspaceStore = useWorkspaceStore();
@@ -116,3 +117,5 @@ export function CommentList(props: CommentListProps) {
     </div>
   ) : null;
 }
+
+export { CommentList, VirtualCommentList };

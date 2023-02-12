@@ -23,7 +23,7 @@ interface TooltipOptions {
   onOpenChange?: (open: boolean) => void;
 }
 
-export function useTooltip({
+function useTooltip({
   initialOpen = false,
   placement = 'top',
   open: controlledOpen,
@@ -78,7 +78,7 @@ type ContextType = ReturnType<typeof useTooltip> | null;
 
 const TooltipContext = React.createContext<ContextType>(null);
 
-export const useTooltipContext = () => {
+const useTooltipContext = () => {
   const context = React.useContext(TooltipContext);
 
   if (context == null) {
@@ -88,7 +88,7 @@ export const useTooltipContext = () => {
   return context;
 };
 
-export function Tooltip({ children, ...options }: { children: React.ReactNode } & TooltipOptions) {
+function Tooltip({ children, ...options }: { children: React.ReactNode } & TooltipOptions) {
   // This can accept any props as options, e.g. `placement`,
   // or other positioning options.
   const tooltip = useTooltip(options);
@@ -155,5 +155,7 @@ const TooltipContent = React.forwardRef<HTMLDivElement, React.HTMLProps<HTMLDivE
   }
 );
 
-Tooltip.Content = TooltipContent;
 Tooltip.Trigger = TooltipTrigger;
+Tooltip.Content = TooltipContent;
+
+export { Tooltip, TooltipTrigger, TooltipContent, useTooltip, useTooltipContext };

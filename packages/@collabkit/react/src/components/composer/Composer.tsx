@@ -29,7 +29,7 @@ import { useSnapshot } from 'valtio';
 import { $setSelection, EditorState, LexicalEditor } from 'lexical';
 import { ComposerTypingIndicator } from '../TypingIndicator';
 
-import Profile from '../Profile';
+import { ProfileAvatar } from '../Profile';
 
 import { IconButton } from '../IconButton';
 import { EditorPlugin } from './EditorPlugin';
@@ -41,13 +41,14 @@ import PinButtonHoverSvg from './pin-button-hover.svg';
 import DeletePinButtonSvg from './delete-pin-button.svg';
 import DeletePinButtonHoverSvg from './delete-pin-button-hover.svg';
 
-import { Tooltip } from '../Tooltip';
+import { Tooltip, TooltipContent, TooltipTrigger } from '../Tooltip';
 import { actions } from '@collabkit/client';
 import { ComposerPinButtonTarget } from '@collabkit/core';
 import { useWorkspaceContext } from '../../hooks/useWorkspaceContext';
 import { useUserContext } from '../../hooks/useUserContext';
 import { useStore } from '../../hooks/useStore';
 import { useComposerStore } from '../../hooks/useComposerStore';
+import { ProfileContext } from '../../hooks/useProfile';
 
 function onError(error: any) {
   console.error(error);
@@ -89,7 +90,7 @@ function ComposerRoot(props: {
   }, [target]);
 
   return (
-    <Profile.Provider profileId={userId}>
+    <ProfileContext.Provider value={userId}>
       <TargetContext.Provider value={target}>
         <div
           data-testid={props['data-testid'] ?? 'collabkit-composer-root'}
@@ -99,7 +100,7 @@ function ComposerRoot(props: {
           {props.children}
         </div>
       </TargetContext.Provider>
-    </Profile.Provider>
+    </ProfileContext.Provider>
   );
 }
 
@@ -224,8 +225,8 @@ function ComposerPinButton(props: { className?: string }) {
       data-testid="collabkit-composer-pin-button"
     >
       <Tooltip>
-        <Tooltip.Trigger>{icon}</Tooltip.Trigger>
-        {tooltip && <Tooltip.Content>{tooltip}</Tooltip.Content>}
+        <TooltipTrigger>{icon}</TooltipTrigger>
+        {tooltip && <TooltipContent>{tooltip}</TooltipContent>}
       </Tooltip>
     </div>
   );
@@ -275,7 +276,7 @@ function ComposerEditor(props: {
       className={props.className ?? `${styles.editor({ active })} ${styles.composerGlobalStyles}`}
       onClick={(e) => events.onClick(e, { target })}
     >
-      {isPinningEnabled && <Composer.PinButton />}
+      {isPinningEnabled && <ComposerPinButton />}
       <div
         style={{
           display: 'flex',
@@ -290,7 +291,7 @@ function ComposerEditor(props: {
           <PasteTextPlugin />
           <PlainTextPlugin
             contentEditable={
-              props.contentEditable ?? <Composer.ContentEditable autoFocus={props.autoFocus} />
+              props.contentEditable ?? <ComposerContentEditable autoFocus={props.autoFocus} />
             }
             placeholder={props.placeholder}
             ErrorBoundary={(props) => <>{props.children}</>}
@@ -373,33 +374,31 @@ function ComposerButtons() {
   ) : null;
 }
 
-export default function Composer(props: {
-  autoFocus?: boolean;
-  placeholder?: string;
-  isNewThread?: boolean;
-}) {
+function Composer(props: { autoFocus?: boolean; placeholder?: string; isNewThread?: boolean }) {
   return (
-    <Composer.Root isNewThread={props.isNewThread}>
-      <Profile.Avatar />
-      <Composer.Editor
+    <ComposerRoot isNewThread={props.isNewThread}>
+      <ProfileAvatar />
+      <ComposerEditor
         autoFocus={props.autoFocus}
         placeholder={
-          <Composer.Placeholder>{props.placeholder ?? 'Write a comment'}</Composer.Placeholder>
+          <ComposerPlaceholder>{props.placeholder ?? 'Write a comment'}</ComposerPlaceholder>
         }
       >
-        <Composer.Buttons />
-      </Composer.Editor>
-      <Composer.TypingIndicator />
-    </Composer.Root>
+        <ComposerButtons />
+      </ComposerEditor>
+      <ComposerTypingIndicator />
+    </ComposerRoot>
   );
 }
 
-Composer.Root = ComposerRoot;
-Composer.ContentEditable = ComposerContentEditable;
-Composer.Editor = ComposerEditor;
-Composer.Placeholder = ComposerPlaceholder;
-Composer.TypingIndicator = ComposerTypingIndicator;
-
-Composer.Buttons = ComposerButtons;
-Composer.MentionsButton = ComposerMentionsButton;
-Composer.PinButton = ComposerPinButton;
+export {
+  Composer,
+  ComposerRoot,
+  ComposerContentEditable,
+  ComposerEditor,
+  ComposerPlaceholder,
+  ComposerTypingIndicator,
+  ComposerButtons,
+  ComposerMentionsButton,
+  ComposerPinButton,
+};

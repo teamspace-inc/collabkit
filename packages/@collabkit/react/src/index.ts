@@ -7,11 +7,11 @@ import type {
   Workspace,
 } from '@collabkit/core';
 
-import type { AvatarProps, ThreadProps } from './types';
+import type { AvatarProps, CommentProps, ThreadProps } from './types';
 import type { CustomTheme } from './theme/themes.css';
 
 import { CollabKitProvider } from './components/Provider';
-import { Thread } from './components/Thread';
+import { Thread, ResolveThreadIconButton } from './components/Thread';
 import { useUnreadCommentsCount } from './hooks/public/useUnreadCommentsCount';
 import { useUnreadThreadsCount } from './hooks/public/useUnreadThreadsCount';
 import { createValtioStore } from './store';
@@ -33,13 +33,12 @@ import { useThreadUsers } from './hooks/public/useThreadUsers';
 import { useComposer } from './hooks/public/useComposer';
 import { ThreadFacepile } from './components/ThreadFacepile';
 import { useReplyCount } from './hooks/useReplyCount';
-import { ResolveThreadIconButton } from './components/ResolveThreadIconButton';
 import { usePopoverThread } from './hooks/usePopoverThread';
 import { useCommentableRef } from './hooks/useCommentableRef';
-import Comment, { CommentProps } from './components/Comment';
+import { Comment } from './components/Comment';
 import CollabKitRecharts from './components/Recharts';
-import Profile from './components/Profile';
-import Composer from './components/composer/Composer';
+import { Profile } from './components/Profile';
+import { Composer } from './components/composer/Composer';
 import { Scrollable } from './components/Scrollable';
 import { CommentList } from './components/CommentList';
 import { Popover } from './components/Popover';

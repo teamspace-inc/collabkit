@@ -40,9 +40,10 @@ import {
   useFloatingNodeId,
 } from '@floating-ui/react';
 import { ThemeWrapper } from '../ThemeWrapper';
-import Profile from '../Profile';
+import { ProfileAvatar } from '../Profile';
 import { Scrollable } from '../Scrollable';
 import { useStore } from '../../hooks/useStore';
+import { ProfileContext } from '../../hooks/useProfile';
 
 type MentionMatch = {
   leadOffset: number;
@@ -219,9 +220,9 @@ export function MentionsTypeaheadItem({
       onMouseEnter={onMouseEnter}
       onClick={onClick}
     >
-      <Profile.Provider profileId={result.id}>
-        <Profile.Avatar />
-      </Profile.Provider>
+      <ProfileContext.Provider value={result.id}>
+        <ProfileAvatar />
+      </ProfileContext.Provider>
       <div className={styles.nameAndEmailWrapper}>
         <div className={styles.name} data-testid="collabkit-mentions-typeahead-item-name">
           <Highlighted text={result.name ?? ''} highlight={query}></Highlighted>

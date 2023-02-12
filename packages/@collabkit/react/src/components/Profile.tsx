@@ -5,18 +5,18 @@ import { useSnapshot } from 'valtio';
 import { useStore } from '../hooks/useStore';
 import * as styles from '../theme/components/Profile.css';
 import { vars } from '../theme/theme/index.css';
-import { ProfileContext, useProfile } from '../hooks/useProfile';
+import { ProfileContext, useProfileContext } from '../hooks/useProfile';
 import { useRenderFnContext } from '../hooks/useRenderFnContext';
 
-export function ProfileProvider(props: { children: React.ReactNode; profileId: string }) {
+function ProfileProvider(props: { children: React.ReactNode; profileId: string }) {
   return (
     <ProfileContext.Provider value={props.profileId}>{props.children}</ProfileContext.Provider>
   );
 }
 
-export function ProfileName(props: React.ComponentPropsWithoutRef<'span'>) {
+function ProfileName(props: React.ComponentPropsWithoutRef<'span'>) {
   const store = useStore();
-  const profileId = useProfile();
+  const profileId = useProfileContext();
   const profiles = useSnapshot(store.profiles);
   const profile = profiles[profileId];
   return (
@@ -49,7 +49,7 @@ function AvatarPlaceholder({
   );
 }
 
-export function ProfileNumberedAvatarPlaceholder({
+function ProfileNumberedAvatarPlaceholder({
   size,
   number,
   ...props
@@ -71,14 +71,14 @@ export function ProfileNumberedAvatarPlaceholder({
   );
 }
 
-export function ProfileAvatar({
+function ProfileAvatar({
   size,
   ...props
 }: { size?: string } & React.ComponentPropsWithoutRef<'div'>) {
   const store = useStore();
   const { renderAvatar } = useRenderFnContext();
   const { profiles, avatarErrors } = useSnapshot(store);
-  const profileId = useProfile();
+  const profileId = useProfileContext();
   const profile = profiles[profileId];
 
   if (profile == null) {
@@ -108,16 +108,18 @@ export function ProfileAvatar({
   );
 }
 
-export default function Profile(props: { profileId: string }) {
+function Profile(props: { profileId: string }) {
   return (
-    <Profile.Provider profileId={props.profileId}>
+    <ProfileProvider profileId={props.profileId}>
       <div className={styles.root}>
-        <Profile.Avatar />
-        <Profile.Name />
+        <ProfileAvatar />
+        <ProfileName />
       </div>
-    </Profile.Provider>
+    </ProfileProvider>
   );
 }
+
+export { Profile, ProfileProvider, ProfileAvatar, ProfileName, ProfileNumberedAvatarPlaceholder };
 
 Profile.Provider = ProfileProvider;
 Profile.Avatar = ProfileAvatar;
