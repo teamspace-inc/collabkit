@@ -220,9 +220,9 @@ function ComposerPinButton(props: { className?: string }) {
       onMouseEnter={(e) => events.onMouseEnter(e, { target: buttonTarget })}
       onMouseLeave={(e) => events.onMouseLeave(e, { target: buttonTarget })}
       className={styles.pinButton}
-      {...props}
       onClick={(e) => events.onClick(e, { target: buttonTarget })}
       data-testid="collabkit-composer-pin-button"
+      {...props}
     >
       <Tooltip>
         <TooltipTrigger>{icon}</TooltipTrigger>
