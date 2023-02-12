@@ -71,7 +71,12 @@ function ChannelCommentList(props: ComponentPropsWithRef<'div'>) {
       <div style={{ flex: 1 }}></div>
       {messageEvents.map((event, i) =>
         !isExpanded && !isSelected && i > 0 ? null : (
-          <CommentRoot commentId={event.id} indent={i > 0}>
+          <CommentRoot
+            commentId={event.id}
+            indent={i > 0}
+            key={`comment-${event.id}-${i}`}
+            className={styles.comment}
+          >
             <ProfileAvatar />
             <div style={{ display: 'flex', flexDirection: 'column' }}>
               <CommentHideIfEditing>

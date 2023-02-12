@@ -1,10 +1,19 @@
 import { fallbackVar, style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
 import { vars } from '../theme/index.css';
-import * as styles from './Inbox.css';
+import * as inboxStyles from './Inbox.css';
+import * as commentStyles from './Comment.css';
+
+export const comment = style([
+  commentStyles.root(),
+  {
+    paddingLeft: vars.space[2],
+    paddingRight: vars.space[2],
+  },
+]);
 
 export const root = style([
-  styles.root,
+  inboxStyles.root,
   {
     width: fallbackVar(vars.inbox.width, '360px'),
   },
@@ -37,4 +46,4 @@ export const thread = recipe({
   },
 });
 
-export const header = style([styles.header]);
+export const header = style([inboxStyles.header]);
