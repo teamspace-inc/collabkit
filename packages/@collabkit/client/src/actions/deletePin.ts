@@ -1,5 +1,5 @@
 import type { Store } from '@collabkit/core';
-import { getConfig } from 'getConfig';
+import { getConfig } from './getConfig';
 import { deleteMessage } from './deleteMessage';
 
 export async function deletePin(
