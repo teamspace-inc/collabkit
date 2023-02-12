@@ -20,7 +20,7 @@ function ProfileName(props: React.ComponentPropsWithoutRef<'span'>) {
   const profiles = useSnapshot(store.profiles);
   const profile = profiles[profileId];
   return (
-    <span {...props} className={props.className ?? styles.name}>
+    <span className={styles.name} {...props}>
       {profile?.name ?? profile?.email}
     </span>
   );
@@ -100,7 +100,7 @@ function ProfileAvatar({
   ) : (
     <img
       src={profile.avatar}
-      className={props.className ?? styles.avatar}
+      className={styles.avatar}
       {...props}
       style={{ ...(size ? { width: size, height: size, lineHeight: size } : null) }}
       onError={() => actions.setAvatarError(store, { avatar })}
@@ -108,10 +108,10 @@ function ProfileAvatar({
   );
 }
 
-function Profile(props: { profileId: string }) {
+function Profile(props: React.ComponentPropsWithoutRef<'div'> & { profileId: string }) {
   return (
     <ProfileProvider profileId={props.profileId}>
-      <div className={styles.root}>
+      <div className={styles.root} {...props}>
         <ProfileAvatar />
         <ProfileName />
       </div>
