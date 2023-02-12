@@ -155,7 +155,3 @@ function Channel() {
 }
 
 export { Channel, ChannelRoot, ChannelThreadList, ChannelThread };
-
-// Channel.Root = ChannelRoot;
-// Channel.ThreadList = ChannelThreadList;
-// Channel.Thread = ChannelThread;
