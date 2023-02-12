@@ -69,6 +69,10 @@ export function createEvents(store: Store) {
     onClick: <T extends Target>(e: React.MouseEvent, props: { target: T }) => {
       const { target } = props;
       switch (target.type) {
+        case 'channel': {
+          actions.select(store, { target });
+          break;
+        }
         case 'emoji': {
           actions.toggleEmoji(store, { target });
           break;

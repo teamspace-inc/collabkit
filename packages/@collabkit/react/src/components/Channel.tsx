@@ -12,7 +12,7 @@ import { Composer } from './composer/Composer';
 import { useThreadContext } from '../hooks/useThreadContext';
 import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
 import { CommentList } from './CommentList';
-import { ChannelContext } from '../hooks/useChannelContext';
+import { ChannelContext, useChannelContext } from '../hooks/useChannelContext';
 import { vars } from '../theme/theme/index.css';
 import { useStore } from '../hooks/useStore';
 import { actions } from '@collabkit/client';
@@ -39,6 +39,7 @@ import {
 } from './Comment';
 import { ProfileAvatar } from './Profile';
 import { useIsExpanded } from './useIsExpanded';
+import { useWorkspaceContext } from '../hooks/useWorkspaceContext';
 
 function EmptyState() {
   return (
@@ -50,16 +51,25 @@ function EmptyState() {
 }
 
 function ChannelCommentList(props: ComponentPropsWithRef<'div'>) {
+  const store = useStore();
   const threadId = useThreadContext();
   const workspaceStore = useWorkspaceStore();
   const isExpanded = useIsExpanded();
+  const isSelected = useStoreKeyMatches(store, 'selectedId', (selectedId) => {
+    return (
+      (selectedId?.type === 'thread' && selectedId.threadId === threadId) ||
+      (selectedId?.type === 'pin' && selectedId.threadId === threadId) ||
+      (selectedId?.type === 'comment' && selectedId.threadId === threadId) ||
+      (selectedId?.type === 'channel' && selectedId.threadId === threadId)
+    );
+  });
   const { computed } = useSnapshot(workspaceStore);
   const { messageEvents } = computed[threadId] ?? {};
 
   return (
     <CommentList className="" {...props}>
       {messageEvents.map((event, i) =>
-        !isExpanded && i > 0 ? null : (
+        !isExpanded && !isSelected && i > 0 ? null : (
           <CommentRoot commentId={event.id} indent={i > 0}>
             <ProfileAvatar />
             <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -79,7 +89,7 @@ function ChannelCommentList(props: ComponentPropsWithRef<'div'>) {
                   <CommentMarkdown />
                 </CommentBody>
                 <CommentReactions />
-                {i == 0 && !isExpanded && <CommentSeeAllRepliesButton />}
+                {i == 0 && !isExpanded && !isSelected && <CommentSeeAllRepliesButton />}
               </CommentHideIfEditing>
               <CommentShowIfEditing>
                 <CommentEditor />
@@ -93,8 +103,11 @@ function ChannelCommentList(props: ComponentPropsWithRef<'div'>) {
 }
 
 function ChannelThread() {
+  const { events } = useApp();
   const threadId = useThreadContext();
   const store = useStore();
+  const channelId = useChannelContext();
+  const workspaceId = useWorkspaceContext();
   const workspace = useSnapshot(useWorkspaceStore());
   const { expandedThreadIds } = useSnapshot(store);
   const timeline = workspace.timeline[threadId];
@@ -104,7 +117,8 @@ function ChannelThread() {
     return (
       (selectedId?.type === 'thread' && selectedId.threadId === threadId) ||
       (selectedId?.type === 'pin' && selectedId.threadId === threadId) ||
-      (selectedId?.type === 'comment' && selectedId.threadId === threadId)
+      (selectedId?.type === 'comment' && selectedId.threadId === threadId) ||
+      (selectedId?.type === 'channel' && selectedId.threadId === threadId)
     );
   });
 
@@ -135,9 +149,21 @@ function ChannelThread() {
 
   return (
     <ThreadProvider threadId={threadId} key={`channelThread-${threadId}`} placeholder="Reply">
-      <div className={styles.thread({ isSelected })}>
+      <div
+        className={styles.thread({ isSelected })}
+        onClick={(e) =>
+          events.onClick(e, {
+            target: {
+              type: 'channel',
+              threadId,
+              workspaceId,
+              channelId,
+            },
+          })
+        }
+      >
         <ChannelCommentList />
-        {isExpanded ? (
+        {isExpanded || isSelected ? (
           <div style={{ paddingLeft: `${calc.multiply(vars.space[1], 9)}` }}>
             <Composer placeholder="Reply" autoFocus={true} />
           </div>
