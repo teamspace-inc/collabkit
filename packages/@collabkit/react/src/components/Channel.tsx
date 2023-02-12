@@ -7,8 +7,15 @@ import { ThemeWrapper } from './ThemeWrapper';
 import { ChatCentered } from './icons';
 import { emptyState } from '../theme/components/Thread.css';
 import { useInbox } from '../hooks/public/useInbox';
+import * as commentStyles from '../theme/components/Comment.css';
 import { ThreadProvider } from './Thread';
-import { Composer } from './composer/Composer';
+import {
+  Composer,
+  ComposerButtons,
+  ComposerEditor,
+  ComposerPlaceholder,
+  ComposerRoot,
+} from './composer/Composer';
 import { useThreadContext } from '../hooks/useThreadContext';
 import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
 import { CommentList } from './CommentList';
@@ -75,7 +82,7 @@ function ChannelCommentList(props: ComponentPropsWithRef<'div'>) {
             commentId={event.id}
             indent={i > 0}
             key={`comment-${event.id}-${i}`}
-            className={styles.comment}
+            className={`${commentStyles.root({ indent: i > 0 })}`}
           >
             <ProfileAvatar />
             <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -172,8 +179,21 @@ function ChannelThread() {
       <div className={styles.thread({ isSelected })} onClick={onClick}>
         <ChannelCommentList />
         {isExpanded || isSelected ? (
-          <div style={{ paddingLeft: `${calc.multiply(vars.space[1], 9)}` }}>
-            <Composer placeholder="Reply" autoFocus={true} />
+          <div
+            style={{
+              paddingLeft: `${calc.multiply(vars.space[1], 9)}`,
+              paddingBottom: vars.space[2],
+            }}
+          >
+            <ComposerRoot>
+              <ProfileAvatar />
+              <ComposerEditor
+                autoFocus={true}
+                placeholder={<ComposerPlaceholder>Reply</ComposerPlaceholder>}
+              >
+                <ComposerButtons />
+              </ComposerEditor>
+            </ComposerRoot>
           </div>
         ) : null}
       </div>
