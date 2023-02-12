@@ -1,5 +1,5 @@
 import type { Store, Sync, ThreadMeta } from '@collabkit/core';
-import { getConfig } from './index';
+import { getConfig } from './getConfig';
 
 export function subscribeOpenThreads(store: Store) {
   const { appId, workspaceId } = getConfig(store);

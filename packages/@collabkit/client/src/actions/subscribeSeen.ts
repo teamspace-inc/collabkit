@@ -1,4 +1,4 @@
-import { getConfig } from './index';
+import { getConfig } from './getConfig';
 import type { Store } from '@collabkit/core';
 
 export async function subscribeSeen(store: Store) {

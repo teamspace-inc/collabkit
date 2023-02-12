@@ -2,7 +2,7 @@ import { onValue } from 'firebase/database';
 import { ref } from '../sync/firebase/refs';
 import type { Profile, Store } from '@collabkit/core';
 import { FirebaseId } from '@collabkit/core';
-import { getConfig } from './index';
+import { getConfig } from './getConfig';
 import { snapshotToProfile } from '../sync/firebase/converters';
 import { ensureColor } from './saveProfile';
 
