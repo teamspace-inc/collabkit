@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Store, Target } from '@collabkit/core';
+import type { Store, Target } from '@collabkit/core';
 import { subscribeKey } from 'valtio/utils';
 
 export function useStoreKeyMatches(
