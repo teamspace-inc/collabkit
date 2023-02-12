@@ -64,13 +64,6 @@ function Thread(props: ThreadProps) {
 
 export { Thread, ThreadRoot, ThreadHeader, ThreadProvider, ThreadFacepile, ThreadUnreadDot };
 
-// Thread.Root = ThreadRoot;
-// Thread.Header = ThreadHeader;
-// Thread.Provider = ThreadProvider;
-// Thread.Facepile = ThreadFacepile;
-// Thread.UnreadDot = ThreadUnreadDot;
-// Thread.ResolveIconButton = ThreadResolveIconButton;
-
 const emptyState = (
   <div data-testid="collabkit-thread-empty-state" className={styles.emptyState}>
     <ChatCentered weight="thin" size={32} />
