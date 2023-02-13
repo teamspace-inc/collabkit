@@ -41,7 +41,6 @@ import { Profile } from './components/Profile';
 import { Composer } from './components/composer/Composer';
 import { Scrollable } from './components/Scrollable';
 import { CommentList } from './components/CommentList';
-import { Popover } from './components/Popover';
 import { Button } from './components/Button';
 import { Commentable } from './components/Commentable';
 
@@ -98,7 +97,6 @@ export {
   CommentList,
   Composer,
   Debug,
-  Popover,
   Profile,
   Scrollable,
   ThreadFacepile,
