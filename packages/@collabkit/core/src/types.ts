@@ -516,10 +516,6 @@ export type PendingPin = Pin & {
   isPending: true;
 };
 
-export interface SeenBy {
-  [userId: string]: { seenAt: number; seenUntilId: string };
-}
-
 export interface Workspace {
   profiles: { [userId: string]: boolean };
   name: string;
