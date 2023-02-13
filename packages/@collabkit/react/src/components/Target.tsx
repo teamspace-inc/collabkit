@@ -1,4 +1,4 @@
+import { Target } from '@collabkit/core';
 import { createContext } from 'react';
-import { Target as TargetType } from '../constants';
 
-export const TargetContext = createContext<TargetType | null>(null);
+export const TargetContext = createContext<Target | null>(null);

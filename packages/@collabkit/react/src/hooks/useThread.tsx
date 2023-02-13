@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { actions } from '@collabkit/client';
-import { Store } from '../constants';
+import { Store } from '@collabkit/core';
 
 export function useThreadSubscription(props: {
   store: Store;

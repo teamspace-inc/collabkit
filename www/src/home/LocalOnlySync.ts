@@ -1,5 +1,4 @@
-import { ThreadInfo } from '@collabkit/core';
-import type { Subscriptions, SyncAdapter } from '@collabkit/react/src/constants';
+import type { ThreadInfo, Subscriptions, SyncAdapter } from '@collabkit/core';
 import { nanoid } from 'nanoid';
 import { InboxChangeEventHandler, ThreadInfoChangeEvent } from 'packages/@collabkit/core/src/sync';
 

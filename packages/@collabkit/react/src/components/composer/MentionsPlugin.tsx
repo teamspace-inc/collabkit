@@ -27,7 +27,7 @@ import {
   OPEN_MENTIONS_COMMAND,
 } from '@collabkit/editor';
 import { snapshot } from 'valtio';
-import { Store } from '../../constants';
+import { Store } from '@collabkit/core';
 import * as styles from '../../theme/components/MentionsPlugin.css';
 
 import { MentionWithColor } from '@collabkit/core';

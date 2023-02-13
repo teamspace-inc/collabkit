@@ -1,4 +1,4 @@
-import { Target } from '../constants';
+import { Target } from '@collabkit/core';
 
 export function isSameComment(a: Target | null, b: Target | null) {
   return (

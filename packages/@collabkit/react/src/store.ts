@@ -1,6 +1,6 @@
 import { proxy, ref } from 'valtio';
 import { derive } from 'valtio/utils';
-import { Config, Store, SyncAdapter } from './constants';
+import { Config, Store, SyncAdapter } from '@collabkit/core';
 import { createStore } from '@collabkit/client';
 
 export function createValtioStore(config: Config, sync: SyncAdapter): Store {
