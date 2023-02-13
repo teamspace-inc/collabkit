@@ -61,7 +61,7 @@ function Thread(props: ThreadProps) {
           <ThreadRoot>
             {props.showHeader && <ThreadHeader>Comments</ThreadHeader>}
             <Scrollable autoScroll="bottom">
-              <CommentList hideResolveButton={props.hideResolveButton} />
+              <CommentList />
             </Scrollable>
             {props.hideComposer ? null : (
               <Composer autoFocus={props.autoFocus} placeholder={props.placeholder} />

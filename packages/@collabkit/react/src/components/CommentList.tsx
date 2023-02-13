@@ -7,24 +7,27 @@ import { MemoizedComment } from './MemoizedComment';
 import { useCommentList } from '../hooks/useCommentList';
 
 export type CommentListProps = ComponentProps<'div'> & {
-  hideResolveButton?: boolean;
-  shouldCollapse?: boolean;
+  renderComment?: (props: { commentId: string }) => React.ReactNode;
 };
 
 function CommentList(props: CommentListProps) {
-  const { shouldCollapse, hideResolveButton, children, ...otherProps } = props;
+  const { children, ...otherProps } = props;
   const newIndicatorId = useNewIndicator();
   const commentList = useCommentList();
 
   const comments =
     props.children ||
     commentList.map((comment, i) => {
-      return (shouldCollapse && i == 0) || !shouldCollapse ? (
+      return (
         <div key={comment.id} style={{ minHeight: 34 }}>
           {newIndicatorId === comment.id && <NewIndicator />}
-          {props.children ?? <MemoizedComment commentId={comment.id} />}
+          {props.renderComment ? (
+            props.renderComment({ commentId: comment.id })
+          ) : (
+            <MemoizedComment commentId={comment.id} />
+          )}
         </div>
-      ) : null;
+      );
     });
 
   return (
