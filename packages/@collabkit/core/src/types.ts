@@ -520,8 +520,6 @@ export interface SeenBy {
   [userId: string]: { seenAt: number; seenUntilId: string };
 }
 
-type OpenThreadIds = string[];
-
 export interface Workspace {
   profiles: { [userId: string]: boolean };
   name: string;
@@ -532,7 +530,6 @@ export interface Workspace {
   timeline: { [threadId: string]: Timeline };
   composers: { [threadId: string]: { [eventId: string]: Composer } };
   seen: { [threadId: string]: string }; // lastSeenEventId
-  seenBy: { [threadId: string]: SeenBy };
   threadInfo: { [threadId: string]: ThreadInfo };
   threadProfiles: { [threadId: string]: { [userId: string]: boolean } };
   openPins: { [objectId: string]: { [pinId: string]: Pin } };

@@ -30,7 +30,6 @@ export function createWorkspace(): Workspace {
     timeline: {},
     composers: {},
     seen: {},
-    seenBy: {},
     threadInfo: {},
     threadProfiles: {},
     pendingThreads: {},

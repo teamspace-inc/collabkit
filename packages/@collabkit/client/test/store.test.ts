@@ -10,7 +10,6 @@ test('createWorkspace', () => {
     timeline: {},
     composers: {},
     seen: {},
-    seenBy: {},
     threadInfo: {},
     threadProfiles: {},
     pendingThreads: {},
