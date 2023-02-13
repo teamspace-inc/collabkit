@@ -15,6 +15,7 @@
     "lexical": "0.7.5",
     "lodash.debounce": "^4.0.8",
     "nanoid": "^4.0.0",
+    "node-fetch": "^3.3.0",
     "valtio": "^1.10.1"
   },
   "devDependencies": {

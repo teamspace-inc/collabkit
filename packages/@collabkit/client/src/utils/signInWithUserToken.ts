@@ -1,7 +1,6 @@
-import { API_HOST } from '../constants';
-
+import fetch from 'node-fetch';
 export async function signInWithUserToken(appId: string, userToken: string) {
-  const response = await fetch(`${API_HOST}/v1/generateCustomToken`, {
+  const response = await fetch(`https://test-api.collabkit.dev/v1/generateCustomToken`, {
     method: 'POST',
     body: JSON.stringify({
       appId: appId,
@@ -12,7 +11,7 @@ export async function signInWithUserToken(appId: string, userToken: string) {
     },
   });
   if (response.ok) {
-    const json = await response.json();
+    const json : any = await response.json();
     return json.data.token;
   } else {
     console.error('Failed to generateCustomToken', response.status, await response.text());

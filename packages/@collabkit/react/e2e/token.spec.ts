@@ -1,6 +1,7 @@
 import { test, expect, BrowserContext, Page } from '@playwright/test';
-import { createUserToken } from '../../../@collabkit/node/src/index';
-import { signInWithUserToken } from '../../../@collabkit/client/src/utils/signInWithUserToken';
+import jwt from 'jsonwebtoken';
+// @ts-expect-error
+import { signInWithUserToken, createUserToken } from './setup.ts'
 import jwt_decode from 'jwt-decode';
 
 const HOST = process.env.PREVIEW_URL_DEMO ? process.env.PREVIEW_URL_DEMO : 'http://localhost:3000';
@@ -12,19 +13,16 @@ const APP_ID = '0mO-P6YhtUwKsZNwnDSt9';
 test.describe('secure token mechanism', () => {
   test('create user token', async ({ context }) => {
     const token = createUserToken({ apiKey: API_KEY, userId: USER_ID, workspaceId: WORKSPACE_ID });
-    expect(token).toBe(
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ3b3Jrc3BhY2VJZCI6ImNvbGxhYmtpdCIsInVzZXJJZCI6Im1lZXRjc2hhaDE5In0.npD9lOG5_hsBUCYKXwpJDoeWsDxautsO0U8SqDBof1w'
-    );
+    let decodedUserToken : any = jwt.verify(token, API_KEY);
+    expect(decodedUserToken.userId).toBe(USER_ID);
+    expect(decodedUserToken.workspaceId).toBe(WORKSPACE_ID);
   });
 
   test('e2e', async ({ context }) => {
     const token = createUserToken({ apiKey: API_KEY, userId: USER_ID, workspaceId: WORKSPACE_ID });
-    expect(token).toBe(
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ3b3Jrc3BhY2VJZCI6ImNvbGxhYmtpdCIsInVzZXJJZCI6Im1lZXRjc2hhaDE5In0.npD9lOG5_hsBUCYKXwpJDoeWsDxautsO0U8SqDBof1w'
-    );
     const userToken = await signInWithUserToken(APP_ID, token);
-    let decoded: any = jwt_decode(token);
-    expect(decoded.claims).toBe({
+    let decoded: any = jwt_decode(userToken);
+    expect(decoded.claims).toStrictEqual({
       api: true,
       mode: 'SECURED',
       appId: APP_ID,
