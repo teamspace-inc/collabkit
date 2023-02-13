@@ -286,43 +286,37 @@ function PopoverPortal({
   );
 }
 
-function Popover(props: PopoverProps) {
-  const [open, setOpen] = useState(false);
-  const [preview, setPreview] = useState(false);
+// function Popover(props: PopoverProps) {
+//   const [open, setOpen] = useState(false);
+//   const [preview, setPreview] = useState(false);
 
-  // advanced
-  const { dismissOnClickOutside, shouldFlipToKeepInView } = props;
+//   // advanced
+//   const { dismissOnClickOutside, shouldFlipToKeepInView } = props;
 
-  return (
-    <PopoverRoot
-      contentVisible={open}
-      previewVisible={preview}
-      onContentChange={setOpen}
-      onPreviewChange={setPreview}
-      // advanced
-      dismissOnClickOutside={dismissOnClickOutside}
-      shouldFlipToKeepInView={shouldFlipToKeepInView}
-    >
-      {'children' in props ? (
-        <PopoverTrigger>{props.children}</PopoverTrigger>
-      ) : (
-        <PopoverTrigger trigger={props.trigger} />
-      )}
-      <PopoverPortal>
-        <PopoverPreview>{props.preview}</PopoverPreview>
-        {props.content && <PopoverContent>{props.content}</PopoverContent>}
-      </PopoverPortal>
-    </PopoverRoot>
-  );
-}
+//   return (
+//     <PopoverRoot
+//       contentVisible={open}
+//       previewVisible={preview}
+//       onContentChange={setOpen}
+//       onPreviewChange={setPreview}
+//       // advanced
+//       dismissOnClickOutside={dismissOnClickOutside}
+//       shouldFlipToKeepInView={shouldFlipToKeepInView}
+//     >
+//       {'children' in props ? (
+//         <PopoverTrigger>{props.children}</PopoverTrigger>
+//       ) : (
+//         <PopoverTrigger trigger={props.trigger} />
+//       )}
+//       <PopoverPortal>
+//         <PopoverPreview>{props.preview}</PopoverPreview>
+//         {props.content && <PopoverContent>{props.content}</PopoverContent>}
+//       </PopoverPortal>
+//     </PopoverRoot>
+//   );
+// }
 
-export { Popover, PopoverRoot, PopoverTrigger, PopoverPortal, PopoverPreview, PopoverContent };
-
-Popover.Root = PopoverRoot;
-Popover.Trigger = PopoverTrigger;
-Popover.Portal = PopoverPortal;
-Popover.Preview = PopoverPreview;
-Popover.Content = PopoverContent;
+export { PopoverRoot, PopoverTrigger, PopoverPortal, PopoverPreview, PopoverContent };
 
 // Example usage;
 
