@@ -45,7 +45,7 @@ function SavedPin({
   pin: WithID<Pin> & { objectId: string };
 }) {
   const store = useStore();
-  const { update, reference, floating, strategy, x, y, refs } = useFloating({
+  const { update, reference, floating, strategy, x, y } = useFloating({
     placement: 'top-start',
     middleware: [
       offset(({ rects }) => ({
@@ -206,7 +206,7 @@ const PinMarker = forwardRef<HTMLDivElement, PinMarkerProps>(function PinMarker(
                   <CommentRoot
                     commentId={pin.eventId}
                     className={previewRoot}
-                    style={{ padding: `${vars.space[3]} ${vars.space[3]}`, maxWidth: 180 }}
+                    style={{ padding: `${vars.space[3]} ${vars.space[3]}`, maxWidth: 200 }}
                   >
                     <div style={{ display: 'flex', flexDirection: 'column' }}>
                       <CommentHeader>
@@ -224,6 +224,7 @@ const PinMarker = forwardRef<HTMLDivElement, PinMarkerProps>(function PinMarker(
             </PopoverPreview>
             <PopoverContent>
               <ThreadContext.Provider value={pin.threadId}>
+                Content
                 <CommentList />
                 <Composer />
               </ThreadContext.Provider>
