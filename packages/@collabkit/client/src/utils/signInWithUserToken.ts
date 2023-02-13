@@ -1,7 +1,7 @@
 import { API_HOST } from '../constants';
 
 export async function signInWithUserToken(appId: string, userToken: string) {
-  const response = await fetch(`${API_HOST}/generateCustomToken`, {
+  const response = await fetch(`${API_HOST}/v1/generateCustomToken`, {
     method: 'POST',
     body: JSON.stringify({
       appId: appId,
