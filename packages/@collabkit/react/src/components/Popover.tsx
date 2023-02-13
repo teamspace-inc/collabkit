@@ -56,24 +56,22 @@ function PopoverPreview(props: { children: React.ReactNode }) {
     usePopoverContext();
 
   return !context.open && previewContext.open ? (
-    <ThemeWrapper>
-      <FloatingFocusManager context={previewContext}>
-        <div
-          ref={previewContext.floating}
-          style={{
-            position: previewContext.strategy,
-            top: previewContext.y ?? 0,
-            left: previewContext.x ?? 0,
-            outline: 'none',
-          }}
-          {...getPreviewFloatingProps({
-            onClick: () => setOpen(true),
-          })}
-        >
-          {preview && !open ? <div onClick={() => setOpen(true)}>{props.children}</div> : null}
-        </div>
-      </FloatingFocusManager>
-    </ThemeWrapper>
+    <FloatingFocusManager context={previewContext}>
+      <div
+        ref={previewContext.floating}
+        style={{
+          position: previewContext.strategy,
+          top: previewContext.y ?? 0,
+          left: previewContext.x ?? 0,
+          outline: 'none',
+        }}
+        {...getPreviewFloatingProps({
+          onClick: () => setOpen(true),
+        })}
+      >
+        {preview && !open ? <div onClick={() => setOpen(true)}>{props.children}</div> : null}
+      </div>
+    </FloatingFocusManager>
   ) : null;
 }
 
@@ -86,24 +84,22 @@ function PopoverContent(props: PopoverContentProps) {
   const { context, open, getFloatingProps } = usePopoverContext();
 
   return context.open ? (
-    <ThemeWrapper>
-      <FloatingOverlay lockScroll={props.lockScroll}>
-        <FloatingFocusManager context={context}>
-          <div
-            ref={context.floating}
-            style={{
-              position: context.strategy,
-              top: context.y ?? 0,
-              left: context.x ?? 0,
-              outline: 'none',
-            }}
-            {...getFloatingProps({})}
-          >
-            {open ? props.children : null}
-          </div>
-        </FloatingFocusManager>
-      </FloatingOverlay>
-    </ThemeWrapper>
+    <FloatingOverlay lockScroll={props.lockScroll}>
+      <FloatingFocusManager context={context}>
+        <div
+          ref={context.floating}
+          style={{
+            position: context.strategy,
+            top: context.y ?? 0,
+            left: context.x ?? 0,
+            outline: 'none',
+          }}
+          {...getFloatingProps({})}
+        >
+          {open ? props.children : null}
+        </div>
+      </FloatingFocusManager>
+    </FloatingOverlay>
   ) : null;
 }
 
