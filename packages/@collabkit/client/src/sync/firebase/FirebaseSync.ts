@@ -662,7 +662,6 @@ export class FirebaseSync implements Sync.SyncAdapter {
     subs: Subscriptions;
     onTimelineEventAdded: (event: Sync.TimelineChangeEvent) => void;
     onThreadTypingChange: (event: Sync.TypingEvent) => void;
-    onThreadSeenByUser: (event: Sync.ThreadSeenEvent) => void;
     onThreadInfo: (props: Sync.ThreadInfoChangeEvent) => void;
     onThreadProfile: (props: Sync.ThreadProfileEvent) => void;
     onThreadProfiles: (props: Sync.ThreadProfilesEvent) => void;
@@ -670,7 +669,6 @@ export class FirebaseSync implements Sync.SyncAdapter {
     DEBUG && console.log('[network] subscribeThread', { threadId: props.threadId });
     subscribeTimeline(props);
     subscribeThreadIsTyping(props);
-    subscribeThreadSeenBy(props);
     this.subscribeThreadInfo(props);
   }
 

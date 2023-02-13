@@ -516,23 +516,18 @@ export type PendingPin = Pin & {
   isPending: true;
 };
 
-export interface SeenBy {
-  [userId: string]: { seenAt: number; seenUntilId: string };
-}
-
-type OpenThreadIds = string[];
+// move pins to a timeline event as an attachment,
+// break apart thread info
 
 export interface Workspace {
   profiles: { [userId: string]: boolean };
   name: string;
   openThreads: { [threadId: string]: { meta: ThreadMeta } };
   pendingThreadInfo: { [threadId: string]: ThreadInfo };
-  pendingThreads: { [objectId: string]: string };
   inbox: { [threadId: string]: WithID<Event> };
   timeline: { [threadId: string]: Timeline };
   composers: { [threadId: string]: { [eventId: string]: Composer } };
   seen: { [threadId: string]: string }; // lastSeenEventId
-  seenBy: { [threadId: string]: SeenBy };
   threadInfo: { [threadId: string]: ThreadInfo };
   threadProfiles: { [threadId: string]: { [userId: string]: boolean } };
   openPins: { [objectId: string]: { [pinId: string]: Pin } };

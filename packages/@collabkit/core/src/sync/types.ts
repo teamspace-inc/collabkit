@@ -171,7 +171,6 @@ export interface SyncAdapter {
     subs: Subscriptions;
     onTimelineEventAdded: (event: TimelineChangeEvent) => void;
     onThreadTypingChange: (event: TypingEvent) => void;
-    onThreadSeenByUser: (event: ThreadSeenEvent) => void;
     onThreadInfo: (props: ThreadInfoChangeEvent) => void;
     onThreadProfile: (props: ThreadProfileEvent) => void;
     onTimelineGetComplete: (props: TimelineChangeEvent[]) => void;

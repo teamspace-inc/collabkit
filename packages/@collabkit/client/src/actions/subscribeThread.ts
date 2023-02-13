@@ -58,10 +58,6 @@ export async function subscribeThread(
     onThreadTypingChange: ({ workspaceId, threadId, userId, isTyping }: Sync.TypingEvent) => {
       store.workspaces[workspaceId].composers[threadId]['default'].isTyping[userId] = isTyping;
     },
-    onThreadSeenByUser: (event: Sync.ThreadSeenEvent) => {
-      store.workspaces[event.workspaceId].seenBy[event.threadId] ||= {};
-      store.workspaces[event.workspaceId].seenBy[event.threadId][event.userId] = event.data;
-    },
     onThreadInfo: (event: Sync.ThreadInfoChangeEvent) => {
       if (event.info) {
         store.workspaces[event.workspaceId].threadInfo[event.threadId] = event.info;

@@ -1,6 +1,6 @@
 import React, { ComponentProps, useEffect, useCallback, useRef } from 'react';
 
-import { ComposerTarget } from '../../constants';
+import { ComposerTarget } from '@collabkit/core';
 import { ContentEditable as LexicalContentEditable } from '@lexical/react/LexicalContentEditable';
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import { PlainTextPlugin } from '@lexical/react/LexicalPlainTextPlugin';

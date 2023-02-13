@@ -2,13 +2,13 @@ import { expect, test } from 'vitest';
 import { nanoid } from 'nanoid';
 import { setupApp, setupFirebase, setupWorkspaceProfile } from '../../../test-utils/src';
 
-import { createComposer, createStore, createWorkspace } from '../../src/store';
+import { createStore, createWorkspace } from '../../src/store';
 import { init } from '../../src/actions/init';
 import { FirebaseSync } from '../../src/sync/firebase/FirebaseSync';
 import { CommentTarget, Store } from '@collabkit/core';
 import { seen } from '../../src/actions/seen';
-import { getThreadSeenBy } from '../../src/sync/firebase/getThreadSeenBy';
 import { initComposer } from '../../src/actions/initComposer';
+import { getThreadSeenBy } from '../../src/sync/firebase/getThreadSeenBy';
 
 setupFirebase();
 
