@@ -516,6 +516,9 @@ export type PendingPin = Pin & {
   isPending: true;
 };
 
+// move pins to a timeline event as an attachment,
+// break apart thread info
+
 export interface Workspace {
   profiles: { [userId: string]: boolean };
   name: string;

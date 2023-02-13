@@ -8,6 +8,7 @@ import { FirebaseSync } from '../../src/sync/firebase/FirebaseSync';
 import { CommentTarget, Store } from '@collabkit/core';
 import { seen } from '../../src/actions/seen';
 import { initComposer } from '../../src/actions/initComposer';
+import { getThreadSeenBy } from '../../src/sync/firebase/getThreadSeenBy';
 
 setupFirebase();
 
@@ -124,6 +125,3 @@ test('seen', async () => {
     },
   });
 });
-function getThreadSeenBy(arg0: { appId: string; workspaceId: string; threadId: string }): any {
-  throw new Error('Function not implemented.');
-}
