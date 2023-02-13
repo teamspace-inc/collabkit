@@ -5,7 +5,6 @@ test('createWorkspace', () => {
   expect(createWorkspace()).toStrictEqual({
     inbox: {},
     openThreads: {},
-    objects: {},
     profiles: {},
     name: '',
     timeline: {},
