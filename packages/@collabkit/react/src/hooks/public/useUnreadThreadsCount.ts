@@ -3,6 +3,10 @@ import { useEffect, useState } from 'react';
 import { useStore } from '../useStore';
 import { actions } from '@collabkit/client';
 
+// subscribeSeen
+// openThreads || inbox
+// timeline for each thread
+
 export function useUnreadThreadsCount(props?: { threadIds?: string[] }): number {
   const store = useStore();
   const { workspaceId, workspaces, userId } = useSnapshot(store);
@@ -19,6 +23,7 @@ export function useUnreadThreadsCount(props?: { threadIds?: string[] }): number 
     if (!userId) {
       return;
     }
+    actions.subscribeSeen(store);
     let unreadCount = 0;
     for (const threadId in workspace?.timeline) {
       actions.initThread(store, { workspaceId, threadId });

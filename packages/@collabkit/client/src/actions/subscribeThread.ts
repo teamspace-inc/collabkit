@@ -38,12 +38,9 @@ export async function subscribeThread(
       ...event.event,
       id: event.eventId,
     };
-    if (store.config.mentionableUsers === 'allWorkspace') return;
-    actions.subscribeProfile(store, {
-      profileId: event.event.createdById,
-      onSubscribe: () => {},
-    });
   }
+
+  // TODO subscribe to seen for this particular thread
 
   const t0 = performance.now();
   store.sync.subscribeThread({

@@ -28,6 +28,7 @@ export async function reopenThread(store: Store, props: { workspaceId: string; t
     threadId,
     event,
   });
+  // set /views/v2/isOpen here
   store.workspaces[workspaceId].timeline[threadId] ||= {};
   store.workspaces[workspaceId].timeline[threadId][id] = {
     ...event,

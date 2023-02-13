@@ -354,6 +354,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
     DEBUG && console.log('[network] markResolved', { appId, workspaceId, threadId, pin });
     const updates = {
       [ref.path`/views/openThreads/${appId}/${workspaceId}/${threadId}`]: null,
+      [ref.path`/views/v2/isOpen/${appId}/${workspaceId}/${threadId}`]: null,
     };
 
     if (pin) {
@@ -670,7 +671,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
     DEBUG && console.log('[network] subscribeThread', { threadId: props.threadId });
     subscribeTimeline(props);
     subscribeThreadIsTyping(props);
-    subscribeThreadSeenBy(props);
+    // subscribeThreadSeenBy(props);
     this.subscribeThreadInfo(props);
   }
 

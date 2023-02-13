@@ -9,4 +9,5 @@ export async function subscribeWorkspace(store: Store) {
   actions.subscribeSeen(store);
   actions.subscribeOpenThreads(store);
   actions.subscribeOpenPins(store);
+  // actions.subscribeOpenPins(store);
 }
