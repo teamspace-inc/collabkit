@@ -267,15 +267,15 @@ function PopoverRoot(props: RootProps) {
   );
 }
 
-type PopoverProps = PopoverTriggerProps & {
-  preview: React.ReactNode;
-  content?: React.ReactNode;
-} & AdvancedPopoverProps;
+// type PopoverProps = PopoverTriggerProps & {
+//   preview: React.ReactNode;
+//   content?: React.ReactNode;
+// } & AdvancedPopoverProps;
 
 function PopoverPortal({ children }: { children?: React.ReactNode }) {
   return (
     <FloatingPortal id="collabkit-floating-root">
-      {children ?? <ThemeWrapper>{children}</ThemeWrapper>}
+      {children ? <ThemeWrapper>{children}</ThemeWrapper> : null}
     </FloatingPortal>
   );
 }
