@@ -32,7 +32,6 @@ export function createWorkspace(): Workspace {
     seen: {},
     threadInfo: {},
     threadProfiles: {},
-    pendingThreads: {},
     pendingThreadInfo: {},
     openPins: {},
     eventPins: {},

@@ -12,7 +12,6 @@ test('createWorkspace', () => {
     seen: {},
     threadInfo: {},
     threadProfiles: {},
-    pendingThreads: {},
     pendingThreadInfo: {},
     openPins: {},
     eventPins: {},

@@ -521,7 +521,6 @@ export interface Workspace {
   name: string;
   openThreads: { [threadId: string]: { meta: ThreadMeta } };
   pendingThreadInfo: { [threadId: string]: ThreadInfo };
-  pendingThreads: { [objectId: string]: string };
   inbox: { [threadId: string]: WithID<Event> };
   timeline: { [threadId: string]: Timeline };
   composers: { [threadId: string]: { [eventId: string]: Composer } };
