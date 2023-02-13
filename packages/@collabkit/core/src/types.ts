@@ -216,7 +216,8 @@ export type Target =
   | CommentReplyButtonTarget
   | EmojiTarget
   | CommentAddEmojiButtonTarget
-  | CommentActionsEmojiButtonTarget;
+  | CommentActionsEmojiButtonTarget
+  | ChannelTarget;
 
 export type CommentReplyCountButtonTarget = {
   type: 'commentReplyCountButton';
@@ -419,6 +420,13 @@ export type CommentTarget = {
   workspaceId: string;
   eventId: string;
   treeId: string;
+};
+
+export type ChannelTarget = {
+  type: 'channel';
+  threadId: string;
+  workspaceId: string;
+  channelId: string;
 };
 
 export type EventType = 'message' | 'reaction' | 'adminMessage' | 'system' | 'delete' | 'edit';

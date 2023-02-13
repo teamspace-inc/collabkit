@@ -56,24 +56,22 @@ function PopoverPreview(props: { children: React.ReactNode }) {
     usePopoverContext();
 
   return !context.open && previewContext.open ? (
-    <ThemeWrapper>
-      <FloatingFocusManager context={previewContext}>
-        <div
-          ref={previewContext.floating}
-          style={{
-            position: previewContext.strategy,
-            top: previewContext.y ?? 0,
-            left: previewContext.x ?? 0,
-            outline: 'none',
-          }}
-          {...getPreviewFloatingProps({
-            onClick: () => setOpen(true),
-          })}
-        >
-          {preview && !open ? <div onClick={() => setOpen(true)}>{props.children}</div> : null}
-        </div>
-      </FloatingFocusManager>
-    </ThemeWrapper>
+    <FloatingFocusManager context={previewContext}>
+      <div
+        ref={previewContext.floating}
+        style={{
+          position: previewContext.strategy,
+          top: previewContext.y ?? 0,
+          left: previewContext.x ?? 0,
+          outline: 'none',
+        }}
+        {...getPreviewFloatingProps({
+          onClick: () => setOpen(true),
+        })}
+      >
+        {preview && !open ? <div onClick={() => setOpen(true)}>{props.children}</div> : null}
+      </div>
+    </FloatingFocusManager>
   ) : null;
 }
 
@@ -86,24 +84,22 @@ function PopoverContent(props: PopoverContentProps) {
   const { context, open, getFloatingProps } = usePopoverContext();
 
   return context.open ? (
-    <ThemeWrapper>
-      <FloatingOverlay lockScroll={props.lockScroll}>
-        <FloatingFocusManager context={context}>
-          <div
-            ref={context.floating}
-            style={{
-              position: context.strategy,
-              top: context.y ?? 0,
-              left: context.x ?? 0,
-              outline: 'none',
-            }}
-            {...getFloatingProps({})}
-          >
-            {open ? props.children : null}
-          </div>
-        </FloatingFocusManager>
-      </FloatingOverlay>
-    </ThemeWrapper>
+    <FloatingOverlay lockScroll={props.lockScroll}>
+      <FloatingFocusManager context={context}>
+        <div
+          ref={context.floating}
+          style={{
+            position: context.strategy,
+            top: context.y ?? 0,
+            left: context.x ?? 0,
+            outline: 'none',
+          }}
+          {...getFloatingProps({})}
+        >
+          {open ? props.children : null}
+        </div>
+      </FloatingFocusManager>
+    </FloatingOverlay>
   ) : null;
 }
 
@@ -144,7 +140,6 @@ type RootProps = {
 
 export type AdvancedPopoverProps = {
   // optional
-  defaultOpen?: boolean;
   dismissOnClickOutside?: boolean;
   shouldFlipToKeepInView?: boolean;
 };
@@ -154,7 +149,6 @@ function PopoverRoot(props: RootProps) {
     props;
   const nodeId = useFloatingNodeId();
 
-  const defaultOpen = props.defaultOpen ?? false;
   const dismissOnClickOutside = props.dismissOnClickOutside ?? true;
   const shouldFlipToKeepInView = props.shouldFlipToKeepInView ?? true;
 
@@ -262,12 +256,6 @@ function PopoverRoot(props: RootProps) {
     ]
   );
 
-  useEffect(() => {
-    if (defaultOpen) {
-      onContentChange(true);
-    }
-  }, [defaultOpen]);
-
   return (
     <FloatingNode id={nodeId}>
       <PopoverContext.Provider value={popoverContext}>{children}</PopoverContext.Provider>
@@ -275,61 +263,50 @@ function PopoverRoot(props: RootProps) {
   );
 }
 
-type PopoverProps = PopoverTriggerProps & {
-  preview: React.ReactNode;
-  content?: React.ReactNode;
-} & AdvancedPopoverProps;
+// type PopoverProps = PopoverTriggerProps & {
+//   preview: React.ReactNode;
+//   content?: React.ReactNode;
+// } & AdvancedPopoverProps;
 
-export function PopoverPortal({
-  children,
-  root,
-}: {
-  children?: React.ReactNode;
-  root?: HTMLElement | null | undefined;
-}) {
+function PopoverPortal({ children }: { children?: React.ReactNode }) {
   return (
-    <FloatingPortal id="collabkit-floating-root" root={root}>
-      {children ?? <ThemeWrapper>{children}</ThemeWrapper>}
+    <FloatingPortal id="collabkit-floating-root">
+      {children ? <ThemeWrapper>{children}</ThemeWrapper> : null}
     </FloatingPortal>
   );
 }
 
-export function Popover(props: PopoverProps) {
-  const [open, setOpen] = useState(() => props.defaultOpen ?? false);
-  const [preview, setPreview] = useState(false);
+// function Popover(props: PopoverProps) {
+//   const [open, setOpen] = useState(false);
+//   const [preview, setPreview] = useState(false);
 
-  // advanced
-  const { dismissOnClickOutside, shouldFlipToKeepInView, defaultOpen } = props;
+//   // advanced
+//   const { dismissOnClickOutside, shouldFlipToKeepInView } = props;
 
-  return (
-    <Popover.Root
-      contentVisible={open}
-      previewVisible={preview}
-      onContentChange={setOpen}
-      onPreviewChange={setPreview}
-      // advanced
-      dismissOnClickOutside={dismissOnClickOutside}
-      shouldFlipToKeepInView={shouldFlipToKeepInView}
-      defaultOpen={defaultOpen}
-    >
-      {'children' in props ? (
-        <Popover.Trigger>{props.children}</Popover.Trigger>
-      ) : (
-        <Popover.Trigger trigger={props.trigger} />
-      )}
-      <PopoverPortal>
-        <Popover.Preview>{props.preview}</Popover.Preview>
-        {props.content && <Popover.Content>{props.content}</Popover.Content>}
-      </PopoverPortal>
-    </Popover.Root>
-  );
-}
+//   return (
+//     <PopoverRoot
+//       contentVisible={open}
+//       previewVisible={preview}
+//       onContentChange={setOpen}
+//       onPreviewChange={setPreview}
+//       // advanced
+//       dismissOnClickOutside={dismissOnClickOutside}
+//       shouldFlipToKeepInView={shouldFlipToKeepInView}
+//     >
+//       {'children' in props ? (
+//         <PopoverTrigger>{props.children}</PopoverTrigger>
+//       ) : (
+//         <PopoverTrigger trigger={props.trigger} />
+//       )}
+//       <PopoverPortal>
+//         <PopoverPreview>{props.preview}</PopoverPreview>
+//         {props.content && <PopoverContent>{props.content}</PopoverContent>}
+//       </PopoverPortal>
+//     </PopoverRoot>
+//   );
+// }
 
-Popover.Root = PopoverRoot;
-Popover.Trigger = PopoverTrigger;
-Popover.Portal = PopoverPortal;
-Popover.Preview = PopoverPreview;
-Popover.Content = PopoverContent;
+export { PopoverRoot, PopoverTrigger, PopoverPortal, PopoverPreview, PopoverContent };
 
 // Example usage;
 

@@ -8,7 +8,18 @@ import {
   AdvancedPart,
   AdvancedProps,
 } from '../AdvancedCommon';
-import { Comment, Thread } from '@collabkit/react';
+import {
+  Comment,
+  CommentActions,
+  CommentBody,
+  CommentCreatorAvatar,
+  CommentCreatorName,
+  CommentHeader,
+  CommentMenu,
+  CommentRoot,
+  CommentTimestamp,
+  ThreadProvider,
+} from '@collabkit/react';
 import React from 'react';
 
 const commentContainer: React.CSSProperties = {
@@ -18,11 +29,11 @@ const commentContainer: React.CSSProperties = {
 
 function CommentDemo(props: { children?: React.ReactNode }) {
   return (
-    <Thread.Provider threadId="thread3">
+    <ThreadProvider threadId="thread3">
       <div style={commentContainer}>
-        <Comment.Root commentId="event1">{props.children}</Comment.Root>
+        <CommentRoot commentId="event1">{props.children}</CommentRoot>
       </div>
-    </Thread.Provider>
+    </ThreadProvider>
   );
 }
 
@@ -35,11 +46,11 @@ export function CommentDoc() {
       <div>
         <h3>Demo</h3>
         <AdvancedHeroDemo>
-          <Thread.Provider threadId="thread3">
+          <ThreadProvider threadId="thread3">
             <div style={{ ...commentContainer }}>
               <Comment commentId="event1" />
             </div>
-          </Thread.Provider>
+          </ThreadProvider>
         </AdvancedHeroDemo>
       </div>
 
@@ -83,68 +94,68 @@ export function CommentDoc() {
           between the existing ones you can do so. <br />
           <br />
           Ensure components are be rendererd within an instance of{' '}
-          <code className="ReactNode">{'<Comment.Root>'}</code>.
+          <code className="ReactNode">{'<CommentRoot>'}</code>.
         </p>
       </div>
       <AdvancedPart
         code={`import { Comment } from '@collabkit/react';
 
-export default () => (<Thread.Provider threadId="thread1">
-  <Comment.Root commentId="event1">
+export default () => (<ThreadProvider threadId="thread1">
+  <CommentRoot commentId="event1">
     <div>{/* insert components here */}</div>
-  </Comment.Root>
-</Thread.Provider>);`}
+  </CommentRoot>
+</ThreadProvider>);`}
         demo={<CommentDemo />}
         description={
           <>
-            The root component of a Comment. Sets up Comment & Profile providers for you. Is
-            required to other Comment components further down this list.
+            The root component of a Comment Sets up Comment & Profile providers for you. Is required
+            to other Comment components further down this list.
             <br />
-            Creates <code className="ReactNode">{'<Comment.Provider>'}</code> for the provided{' '}
-            <code>commentId</code> and a<code className="ReactNode">{'<Profile.Provider>'}</code>{' '}
-            for the comments author for you. <br />
+            Creates <code className="ReactNode">{'<CommentProvider>'}</code> for the provided{' '}
+            <code>commentId</code> and a<code className="ReactNode">{'<ProfileProvider>'}</code> for
+            the comments author for you. <br />
             <br />
             And automatically marks comment as seen when mounted and visible in the browser
             viewport.
           </>
         }
-        title={'Comment.Root'}
+        title={'CommentRoot'}
       />
 
       <AdvancedPart
         code={`import { Comment } from '@collabkit/react';
 
-export default () => (<Thread.Provider threadId="thread1">
-  <Comment.Root commentId="event1">
-      <Comment.CreatorAvatar />
-  </Comment.Root>
-</Thread.Provider>);`}
+export default () => (<ThreadProvider threadId="thread1">
+  <CommentRoot commentId="event1">
+      <CommentCreatorAvatar />
+  </CommentRoot>
+</ThreadProvider>);`}
         demo={
           <CommentDemo>
-            <Comment.CreatorAvatar />
+            <CommentCreatorAvatar />
           </CommentDemo>
         }
         description={<>A component that renders the comment creator's avatar.</>}
-        title={'Comment.CreatorAvatar'}
+        title={'CommentCreatorAvatar'}
       />
 
       <AdvancedPart
         code={`import { Comment } from '@collabkit/react';
 
-export default () => (<Thread.Provider threadId="thread1">
-  <Comment.Root commentId="event1">
-    <Comment.Header>
-      <Comment.CreatorName />
-      <Comment.Timestamp />
-    </Comment.Header>
-  </Comment.Root>
-</Thread.Provider>);`}
+export default () => (<ThreadProvider threadId="thread1">
+  <CommentRoot commentId="event1">
+    <CommentHeader>
+      <CommentCreatorName />
+      <CommentTimestamp />
+    </CommentHeader>
+  </CommentRoot>
+</ThreadProvider>);`}
         demo={
           <CommentDemo>
-            <Comment.Header>
-              <Comment.CreatorName />
-              <Comment.Timestamp />
-            </Comment.Header>
+            <CommentHeader>
+              <CommentCreatorName />
+              <CommentTimestamp />
+            </CommentHeader>
           </CommentDemo>
         }
         description={
@@ -153,20 +164,20 @@ export default () => (<Thread.Provider threadId="thread1">
             timestamp horizontally.
           </>
         }
-        title={'Comment.Header'}
+        title={'CommentHeader'}
       />
 
       <AdvancedPart
         code={`import { Comment } from '@collabkit/react';
 
-export default () => (<Thread.Provider threadId="thread1">
-  <Comment.Root commentId="event1">
-    <Comment.CreatorName />
-  </Comment.Root>
-</Thread.Provider>);`}
+export default () => (<ThreadProvider threadId="thread1">
+  <CommentRoot commentId="event1">
+    <CommentCreatorName />
+  </CommentRoot>
+</ThreadProvider>);`}
         demo={
           <CommentDemo>
-            <Comment.CreatorName />
+            <CommentCreatorName />
           </CommentDemo>
         }
         description={
@@ -177,37 +188,37 @@ export default () => (<Thread.Provider threadId="thread1">
             </DocLink>
           </>
         }
-        title={'Comment.CreatorName'}
+        title={'CommentCreatorName'}
       />
 
       <AdvancedPart
         code={`import { Comment } from '@collabkit/react';
 
-export default () => (<Thread.Provider threadId="thread1">
-  <Comment.Root commentId="event1">
-    <Comment.Timestamp />
-  </Comment.Root>
-</Thread.Provider>);`}
+export default () => (<ThreadProvider threadId="thread1">
+  <CommentRoot commentId="event1">
+    <CommentTimestamp />
+  </CommentRoot>
+</ThreadProvider>);`}
         demo={
           <CommentDemo>
-            <Comment.Timestamp />
+            <CommentTimestamp />
           </CommentDemo>
         }
         description={<>Renders the comment creation timestamp.</>}
-        title={'Comment.Timestamp'}
+        title={'CommentTimestamp'}
       />
 
       <AdvancedPart
         code={`import { Comment } from '@collabkit/react';
 
-export default () => (<Thread.Provider threadId="thread1">
-  <Comment.Root commentId="event1">
-    <Comment.Actions />
-  </Comment.Root>
-</Thread.Provider>);`}
+export default () => (<ThreadProvider threadId="thread1">
+  <CommentRoot commentId="event1">
+    <CommentActions />
+  </CommentRoot>
+</ThreadProvider>);`}
         demo={
           <CommentDemo>
-            <Comment.Actions />
+            <CommentActions />
           </CommentDemo>
         }
         description={
@@ -218,20 +229,20 @@ export default () => (<Thread.Provider threadId="thread1">
             first comment, and the authenticated user is the comment's author).
           </>
         }
-        title={'Comment.Actions'}
+        title={'CommentActions'}
       />
 
       <AdvancedPart
         code={`import { Comment } from '@collabkit/react';
 
-export default () => (<Thread.Provider threadId="thread1">
-  <Comment.Root commentId="event1">
-    <Comment.Body />
-  </Comment.Root>
-</Thread.Provider>);`}
+export default () => (<ThreadProvider threadId="thread1">
+  <CommentRoot commentId="event1">
+    <CommentBody />
+  </CommentRoot>
+</ThreadProvider>);`}
         demo={
           <CommentDemo>
-            <Comment.Body />
+            <CommentBody />
           </CommentDemo>
         }
         description={
@@ -241,20 +252,20 @@ export default () => (<Thread.Provider threadId="thread1">
             Including mentions, links and rich-text in markdown.
           </>
         }
-        title={'Comment.Body'}
+        title={'CommentBody'}
       />
 
       <AdvancedPart
         code={`import { Comment } from '@collabkit/react';
 
 export default () => (<Thread.Provider threadId="thread1">
-  <Comment.Root commentId="event1">
-    <Comment.MoreMenu>
-  </Comment.Root>
+  <CommentRoot commentId="event1">
+    <CommentMoreMenu>
+  </CommentRoot>
 </Thread.Provider>);`}
         demo={
           <CommentDemo>
-            <Comment.MoreMenu />
+            <CommentMenu />
           </CommentDemo>
         }
         description={
@@ -269,7 +280,7 @@ export default () => (<Thread.Provider threadId="thread1">
             <br />
           </>
         }
-        title={'Comment.MoreMenu'}
+        title={'CommentMoreMenu'}
       />
     </>
   );

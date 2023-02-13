@@ -23,7 +23,7 @@ interface TooltipOptions {
   onOpenChange?: (open: boolean) => void;
 }
 
-export function useTooltip({
+function useTooltip({
   initialOpen = false,
   placement = 'top',
   open: controlledOpen,
@@ -78,7 +78,7 @@ type ContextType = ReturnType<typeof useTooltip> | null;
 
 const TooltipContext = React.createContext<ContextType>(null);
 
-export const useTooltipContext = () => {
+const useTooltipContext = () => {
   const context = React.useContext(TooltipContext);
 
   if (context == null) {
@@ -88,7 +88,7 @@ export const useTooltipContext = () => {
   return context;
 };
 
-export function Tooltip({ children, ...options }: { children: React.ReactNode } & TooltipOptions) {
+function Tooltip({ children, ...options }: { children: React.ReactNode } & TooltipOptions) {
   // This can accept any props as options, e.g. `placement`,
   // or other positioning options.
   const tooltip = useTooltip(options);
@@ -117,7 +117,7 @@ const TooltipTrigger = React.forwardRef<
   }
 
   return (
-    <button
+    <div
       ref={ref}
       // The user can style the trigger based on the state
       data-state={context.open ? 'open' : 'closed'}
@@ -125,7 +125,7 @@ const TooltipTrigger = React.forwardRef<
       style={{ border: 'none', background: 'none', padding: 0 }}
     >
       {children}
-    </button>
+    </div>
   );
 });
 
@@ -135,7 +135,7 @@ const TooltipContent = React.forwardRef<HTMLDivElement, React.HTMLProps<HTMLDivE
     const ref = useMergeRefs([context.refs.setFloating, propRef]);
 
     return (
-      <FloatingPortal>
+      <FloatingPortal id="collabkit-floating-root">
         {context.open && (
           <div
             ref={ref}
@@ -146,7 +146,7 @@ const TooltipContent = React.forwardRef<HTMLDivElement, React.HTMLProps<HTMLDivE
               visibility: context.x == null ? 'hidden' : 'visible',
               ...props.style,
             }}
-            className={root}
+            className={root({ placement: context.placement })}
             {...context.getFloatingProps(props)}
           />
         )}
@@ -155,5 +155,4 @@ const TooltipContent = React.forwardRef<HTMLDivElement, React.HTMLProps<HTMLDivE
   }
 );
 
-Tooltip.Content = TooltipContent;
-Tooltip.Trigger = TooltipTrigger;
+export { Tooltip, TooltipTrigger, TooltipContent, useTooltip, useTooltipContext };

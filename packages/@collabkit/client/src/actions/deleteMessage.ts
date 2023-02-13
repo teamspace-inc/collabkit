@@ -1,5 +1,5 @@
 import type { Event, Store } from '@collabkit/core';
-import { getConfig } from '.';
+import { getConfig } from './getConfig';
 
 export async function deleteMessage(
   store: Store,

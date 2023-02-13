@@ -18,16 +18,26 @@ import { useTarget } from '../hooks/useTarget';
 import { previewRoot } from '../theme/components/PopoverThread.css';
 import { vars } from '../theme/theme/index.css';
 import { Menu, MenuItem } from './Menu';
-import { Popover } from './Popover';
-import { Thread } from './Thread';
-import Profile from './Profile';
-import Comment from './Comment';
+import { PopoverContent, PopoverPreview, PopoverRoot, PopoverTrigger } from './Popover';
+import { ProfileAvatar, ProfileProvider } from './Profile';
+import {
+  CommentBody,
+  CommentCreatorName,
+  CommentHeader,
+  CommentMarkdown,
+  CommentReactions,
+  CommentRoot,
+  CommentTimestamp,
+} from './Comment';
 import * as styles from '../theme/components/Commentable.css';
 import { usePopover } from '../hooks/usePopover';
 import { useUserContext } from '../hooks/useUserContext';
 import { PinIcon } from './PinIcon';
+import { ThreadContext } from '../hooks/useThreadContext';
+import { CommentList } from './CommentList';
+import { Composer } from './composer/Composer';
 
-export function SavedPin({
+function SavedPin({
   pin,
   isSelected,
 }: {
@@ -35,7 +45,7 @@ export function SavedPin({
   pin: WithID<Pin> & { objectId: string };
 }) {
   const store = useStore();
-  const { update, reference, floating, strategy, x, y, refs } = useFloating({
+  const { update, reference, floating, strategy, x, y } = useFloating({
     placement: 'top-start',
     middleware: [
       offset(({ rects }) => ({
@@ -137,13 +147,13 @@ type PinMarkerProps = {
   pin: WithID<Pin>;
 };
 
-export const PinCursor = forwardRef<HTMLDivElement, { isSelected: boolean }>(function PinCursor(
+const PinCursor = forwardRef<HTMLDivElement, { isSelected: boolean }>(function PinCursor(
   props,
   ref
 ) {
   const userId = useUserContext();
   return (
-    <Profile.Provider profileId={userId}>
+    <ProfileProvider profileId={userId}>
       <div
         className={`collabkit ${styles.pin({ pointerEvents: 'none' })}`}
         data-testid="collabkit-pin-marker"
@@ -151,14 +161,14 @@ export const PinCursor = forwardRef<HTMLDivElement, { isSelected: boolean }>(fun
       >
         <PinIcon isSelected={props.isSelected} />
         <div className={styles.pinAvatar}>
-          <Profile.Avatar />
+          <ProfileAvatar />
         </div>
       </div>
-    </Profile.Provider>
+    </ProfileProvider>
   );
 });
 
-export const PinMarker = forwardRef<HTMLDivElement, PinMarkerProps>(function PinMarker(props, ref) {
+const PinMarker = forwardRef<HTMLDivElement, PinMarkerProps>(function PinMarker(props, ref) {
   const { isSelected, pin, pointerEvents } = props;
   const { events } = useApp();
   const target = useTarget();
@@ -171,7 +181,7 @@ export const PinMarker = forwardRef<HTMLDivElement, PinMarkerProps>(function Pin
   const popoverProps = usePopover({ target });
 
   return pin ? (
-    <Profile.Provider profileId={pin.createdById}>
+    <ProfileProvider profileId={pin.createdById}>
       <div
         className={`collabkit ${styles.pin({ pointerEvents, isSelected })}`}
         ref={ref}
@@ -179,48 +189,52 @@ export const PinMarker = forwardRef<HTMLDivElement, PinMarkerProps>(function Pin
         onPointerDown={onPointerDown}
         data-testid="collabkit-pin-marker"
       >
-        <PinMenu>
-          <div>
-            <Popover.Root
-              {...popoverProps}
-              dismissOnClickOutside={true}
-              shouldFlipToKeepInView={true}
-              defaultOpen={false}
-            >
-              <Popover.Trigger>
-                <div>
-                  <PinIcon isSelected={isSelected} />
-                  <div className={styles.pinAvatar}>
-                    <Profile.Avatar />
-                  </div>
+        {/* <PinMenu> */}
+        <div>
+          <PopoverRoot {...popoverProps} dismissOnClickOutside={true} shouldFlipToKeepInView={true}>
+            <PopoverTrigger>
+              <div>
+                <PinIcon isSelected={isSelected} />
+                <div className={styles.pinAvatar}>
+                  <ProfileAvatar />
                 </div>
-              </Popover.Trigger>
-              <Popover.Preview>
-                <div>
-                  <Thread.Provider threadId={pin.threadId}>
-                    <Comment.Root
-                      commentId={pin.eventId}
-                      className={previewRoot}
-                      style={{ padding: `${vars.space[3]} ${vars.space[3]}`, maxWidth: 180 }}
-                    >
-                      <div style={{ display: 'flex', flexDirection: 'column' }}>
-                        <Comment.Header>
-                          <Comment.CreatorName />
-                          <Comment.Timestamp />
-                        </Comment.Header>
-                        <Comment.Body>
-                          <Comment.Markdown />
-                        </Comment.Body>
-                        <Comment.Reactions />
-                      </div>
-                    </Comment.Root>
-                  </Thread.Provider>
-                </div>
-              </Popover.Preview>
-            </Popover.Root>
-          </div>
-        </PinMenu>
+              </div>
+            </PopoverTrigger>
+            <PopoverPreview>
+              <div>
+                <ThreadContext.Provider value={pin.threadId}>
+                  <CommentRoot
+                    commentId={pin.eventId}
+                    className={previewRoot}
+                    style={{ padding: `${vars.space[3]} ${vars.space[3]}`, maxWidth: 200 }}
+                  >
+                    <div style={{ display: 'flex', flexDirection: 'column' }}>
+                      <CommentHeader>
+                        <CommentCreatorName />
+                        <CommentTimestamp />
+                      </CommentHeader>
+                      <CommentBody>
+                        <CommentMarkdown />
+                      </CommentBody>
+                      <CommentReactions />
+                    </div>
+                  </CommentRoot>
+                </ThreadContext.Provider>
+              </div>
+            </PopoverPreview>
+            <PopoverContent>
+              <ThreadContext.Provider value={pin.threadId}>
+                Content
+                <CommentList />
+                <Composer />
+              </ThreadContext.Provider>
+            </PopoverContent>
+          </PopoverRoot>
+        </div>
+        {/* </PinMenu> */}
       </div>
-    </Profile.Provider>
+    </ProfileProvider>
   ) : null;
 });
+
+export { SavedPin, PinMarker, PinCursor };

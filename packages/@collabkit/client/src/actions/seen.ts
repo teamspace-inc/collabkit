@@ -1,5 +1,5 @@
 import type { CommentTarget, Store } from '@collabkit/core';
-import { getConfig } from './index';
+import { getConfig } from './getConfig';
 
 export async function seen(store: Store, props: { target: CommentTarget }) {
   const { appId, userId, workspaceId } = getConfig(store);

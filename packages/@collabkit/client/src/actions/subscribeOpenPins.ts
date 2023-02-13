@@ -1,5 +1,5 @@
 import { FirebaseId, FirebasePin, Pin, Store } from '@collabkit/core';
-import { getConfig } from './index';
+import { getConfig } from './getConfig';
 import has from 'has';
 
 // move this to FirebaseSync

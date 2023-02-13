@@ -1,8 +1,6 @@
 import React from 'react';
 
-type ChannelContextValue = { workspaceId: string; channelId: 'default' };
-
-export const ChannelContext = React.createContext<ChannelContextValue | null>(null);
+export const ChannelContext = React.createContext<string | null>(null);
 
 export function useChannelContext() {
   const context = useOptionalChannelContext();

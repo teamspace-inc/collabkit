@@ -3,7 +3,7 @@ import { onChildAdded, onChildChanged } from 'firebase/database';
 import { ref } from '../sync/firebase/refs';
 import type { Profile, Store } from '@collabkit/core';
 import { FirebaseId } from '@collabkit/core';
-import { getConfig } from './index';
+import { getConfig } from './getConfig';
 import { snapshotToProfile } from '../sync/firebase/converters';
 
 function processSnapshot(snapshot: DataSnapshot) {
@@ -70,12 +70,12 @@ export async function subscribeWorkspaceProfiles(store: Store) {
     const profile = processSnapshot(childSnapshot);
     if (!profile) return;
     profiles[profile.id] = profile;
-    if (store.config.mentionableUsers === 'allWorkspace') {
-      store.mentionableUsers[profile.id] = profile;
-    }
   });
 
   store.profiles = profiles;
+  if (store.config.mentionableUsers === 'allWorkspace') {
+    store.mentionableUsers = profiles;
+  }
 
   const addedKey = `${profilesRef.toString()}#added`;
   const changedKey = `${profilesRef.toString()}#changed`;

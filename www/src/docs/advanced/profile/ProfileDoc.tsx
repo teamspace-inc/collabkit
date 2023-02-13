@@ -1,4 +1,4 @@
-import { Profile } from '@collabkit/react';
+import { Profile, ProfileAvatar, ProfileName, ProfileProvider } from '@collabkit/react';
 import { renderCodeSnippet } from '../../CodeEditor';
 import { DocLink } from '../../Doc';
 import Anatomy from './ProfileAnatomy.tsx?raw';
@@ -54,28 +54,28 @@ export function ProfileDoc() {
         {renderCodeSnippet(Anatomy, [[1, 2]])}
         <p>
           You can render just the individual parts too, if you want to just render a users name or
-          avatar. These components must be rendererd within a <code>{'Profile.Provider'}</code>.
+          avatar. These components must be rendererd within a <code>{'ProfileProvider'}</code>.
         </p>
 
         <AdvancedPart
-          title="Profile.Name"
+          title="ProfileName"
           description="Render a user's name"
           demo={
-            <Profile.Provider profileId="ville">
-              <Profile.Name />
-            </Profile.Provider>
+            <ProfileProvider profileId="ville">
+              <ProfileName />
+            </ProfileProvider>
           }
           code={AnatomyName}
         />
       </div>
       <div>
         <AdvancedPart
-          title="Profile.Avatar"
+          title="ProfileAvatar"
           description="Render a user's avatar"
           demo={
-            <Profile.Provider profileId="ville">
-              <Profile.Avatar />
-            </Profile.Provider>
+            <ProfileProvider profileId="ville">
+              <ProfileAvatar />
+            </ProfileProvider>
           }
           code={AnatomyAvatar}
           props={

@@ -1,7 +1,5 @@
 import debounce from 'lodash.debounce';
 
-import type { Store } from '@collabkit/core';
-
 import { attachPin } from './attachPin';
 import { authenticate } from './authenticate';
 import { blur } from './blur';
@@ -60,71 +58,6 @@ import { unhover } from './unhover';
 import { updateComment } from './updateComment';
 import { updateComposer } from './updateComposer';
 import { viewContent } from './viewContent';
-
-export type GenerateToken =
-  | {
-      appId: string;
-      mode: 'UNSECURED';
-      token: string;
-    }
-  | {
-      appId: string;
-      mode: 'SECURED';
-      token: string;
-      userId: string;
-      workspaceId: string;
-    };
-
-export type FunctionResponse<T> =
-  | {
-      status: 200;
-      data: T;
-    }
-  | {
-      status: 201;
-      data: T;
-    }
-  | {
-      status: 400;
-      error: string;
-    }
-  | {
-      status: 401;
-      error: string;
-    }
-  | {
-      status: 500;
-      error: string;
-    };
-
-// normalises config across secure and unsecure modes for
-// safe access from actions
-export function getConfig(store: Store) {
-  const { config } = store;
-  const appId = config.appId;
-  const apiKey = 'apiKey' in config ? config.apiKey : null;
-  const token = 'token' in config ? config.token : null;
-  const mode = token ? 'SECURED' : 'UNSECURED';
-  const userId = store.userId;
-  const workspaceId = store.workspaceId;
-
-  if (!appId) {
-    throw new Error('Missing `appId`');
-  }
-  if (mode === 'UNSECURED' && !apiKey) {
-    throw new Error('Missing `apiKey`');
-  }
-
-  if (!userId) {
-    throw new Error('Missing `userId`');
-  }
-
-  if (!workspaceId) {
-    throw new Error('Missing `workspaceId`');
-  }
-
-  return { appId, apiKey, token, mode, userId, workspaceId };
-}
 
 export const actions = {
   attachPin,

@@ -1,6 +1,6 @@
 import React from 'react';
-import { Profile as ProfileType } from '@collabkit/core';
-import Profile from './Profile';
+import type { Profile as ProfileType } from '@collabkit/core';
+import { ProfileAvatar, ProfileNumberedAvatarPlaceholder, ProfileProvider } from './Profile';
 import * as styles from '../theme/components/Facepile.css';
 
 const MAX_NUM_PROFILES = 4;
@@ -28,9 +28,9 @@ export function Facepile(
               zIndex: 999 - index,
             }}
           >
-            <Profile.Provider profileId={profile.id}>
-              <Profile.Avatar size={props.size} />
-            </Profile.Provider>
+            <ProfileProvider profileId={profile.id}>
+              <ProfileAvatar size={props.size} />
+            </ProfileProvider>
           </div>
         ) : null;
       })}
@@ -41,7 +41,7 @@ export function Facepile(
             zIndex: 999 - profiles.length,
           }}
         >
-          <Profile.NumberedAvatarPlaceholder size={props.size} number={overflowsBy} />
+          <ProfileNumberedAvatarPlaceholder size={props.size} number={overflowsBy} />
         </div>
       ) : null}
     </div>

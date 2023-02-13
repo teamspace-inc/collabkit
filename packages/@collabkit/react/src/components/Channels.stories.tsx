@@ -1,5 +1,5 @@
 import React from 'react';
-import { CollabKitProvider, Sidebar, SidebarInboxButton } from '..';
+import { CollabKitProvider, Sidebar, SidebarInboxButton } from '../index';
 import { Channel } from './Channel';
 import { ProviderPropsContext, DefaultProviderProps } from './__stories__/context';
 

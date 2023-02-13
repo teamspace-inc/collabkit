@@ -1,7 +1,6 @@
 import { useSnapshot } from 'valtio';
 import { useApp } from '../useApp';
 import { useOptionalCommentContext } from '../useCommentContext';
-import { useWorkspaceContext } from '../useWorkspaceContext';
 import { useThreadContext } from '../useThreadContext';
 import { useUserContext } from '../useUserContext';
 

@@ -1,4 +1,5 @@
-import { actions, getConfig } from './index';
+import { actions } from './index';
+import { getConfig } from './getConfig';
 import { Sync, ThreadInfo, Store, WithID, Event } from '@collabkit/core';
 import { subscribeProfile } from './subscribeProfile';
 import { initComposer } from './initComposer';

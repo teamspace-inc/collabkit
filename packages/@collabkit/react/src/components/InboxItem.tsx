@@ -3,17 +3,25 @@ import { useSnapshot } from 'valtio';
 import { useThreadContext } from '../hooks/useThreadContext';
 import { useInboxStore } from '../hooks/useInboxStore';
 import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
-import Comment from './Comment';
+import {
+  CommentBody,
+  CommentCreatorName,
+  CommentRoot,
+  CommentThreadResolveIconButton,
+  CommentTimestamp,
+} from './Comment';
 import { ReplyCount } from './ReplyCount';
 import {} from '../../../client/src/actions';
 import { ThreadTarget } from '@collabkit/core';
 import * as styles from '../theme/components/InboxItem.css';
-import { Thread } from '..';
+import { ThreadFacepile } from './ThreadFacepile';
 import { generateObjectIdFromCellId, actions } from '@collabkit/client';
 import { useUserContext } from '../hooks/useUserContext';
 import { useWorkspaceContext } from '../hooks/useWorkspaceContext';
 import { useStore } from '../hooks/useStore';
 import { useRenderFnContext } from '../hooks/useRenderFnContext';
+import { ThreadProvider } from './Thread';
+import { ThreadUnreadDot } from './ThreadUnreadDot';
 
 export function InboxItem(props: { formatTimestamp?: (timestamp: number) => string }) {
   const threadId = useThreadContext();
@@ -51,7 +59,7 @@ export function InboxItem(props: { formatTimestamp?: (timestamp: number) => stri
   const active = !!(viewingId && viewingId.type === 'thread' && viewingId.threadId === threadId);
 
   return (
-    <Thread.Provider threadId={threadId} key={`inboxThread-${threadId}`}>
+    <ThreadProvider threadId={threadId} key={`inboxThread-${threadId}`}>
       <div
         className={styles.root({ active })}
         onClick={() => {
@@ -75,10 +83,10 @@ export function InboxItem(props: { formatTimestamp?: (timestamp: number) => stri
         }}
       >
         <div className={styles.header}>
-          <Thread.UnreadDot />
-          <Thread.Facepile size={styles.facepileSize} />
+          <ThreadUnreadDot />
+          <ThreadFacepile size={styles.facepileSize} />
           <div style={{ flex: 1 }}></div>
-          {firstComment.createdById === userId ? <Thread.ResolveIconButton /> : null}
+          {firstComment.createdById === userId ? <CommentThreadResolveIconButton /> : null}
         </div>
         {renderThreadContextPreview?.({
           threadId,
@@ -86,21 +94,21 @@ export function InboxItem(props: { formatTimestamp?: (timestamp: number) => stri
           userId,
           info: generateObjectIdFromCellId(info),
         })}
-        <Comment.Root commentId={firstCommentId} className={styles.commentRoot}>
+        <CommentRoot commentId={firstCommentId} className={styles.commentRoot}>
           <div className={styles.nameAndTimestampWrapper}>
-            <Comment.CreatorName className={styles.name} />
-            <Comment.Timestamp className={styles.timestamp} format={props.formatTimestamp} />
+            <CommentCreatorName className={styles.name} />
+            <CommentTimestamp className={styles.timestamp} format={props.formatTimestamp} />
           </div>
-          <Comment.Body />
-        </Comment.Root>
-        <Comment.Root commentId={lastComment.id}>
+          <CommentBody />
+        </CommentRoot>
+        <CommentRoot commentId={lastComment.id}>
           <div>
             <div className={styles.nameAndTimestampWrapper}>
               <ReplyCount className={styles.replyCount} />
             </div>
           </div>
-        </Comment.Root>
+        </CommentRoot>
       </div>
-    </Thread.Provider>
+    </ThreadProvider>
   );
 }

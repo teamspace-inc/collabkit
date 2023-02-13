@@ -69,6 +69,10 @@ export function createEvents(store: Store) {
     onClick: <T extends Target>(e: React.MouseEvent, props: { target: T }) => {
       const { target } = props;
       switch (target.type) {
+        case 'channel': {
+          actions.select(store, { target });
+          break;
+        }
         case 'emoji': {
           actions.toggleEmoji(store, { target });
           break;
@@ -92,6 +96,7 @@ export function createEvents(store: Store) {
           actions.reopenThread(store, target);
           break;
         }
+        case 'commentReplyButton':
         case 'commentReplyCountButton': {
           actions.expandThread(store, target);
           break;
@@ -217,6 +222,7 @@ export function createEvents(store: Store) {
       const { target } = props;
       const { type } = target;
       switch (type) {
+        case 'composerPinButton':
         case 'comment':
           actions.hover(store, { target });
           break;
@@ -227,6 +233,7 @@ export function createEvents(store: Store) {
       const { target } = props;
       const { type } = target;
       switch (type) {
+        case 'composerPinButton':
         case 'comment':
           actions.unhover(store, { target });
           break;

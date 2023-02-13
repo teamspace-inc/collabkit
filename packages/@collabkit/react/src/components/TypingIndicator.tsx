@@ -49,7 +49,7 @@ const TypingIndicatorText = function TypingIndicatorText({ names }: { names: str
   );
 };
 
-export function ComposerTypingIndicator(props: { className?: string }) {
+function ComposerTypingIndicator(props: { className?: string }) {
   const { isTyping } = useSnapshot(useComposerStore());
   const { profiles } = useSnapshot(useStore());
   const userId = useUserContext();
@@ -77,3 +77,5 @@ export function ComposerTypingIndicator(props: { className?: string }) {
     </div>
   );
 }
+
+export { ComposerTypingIndicator };

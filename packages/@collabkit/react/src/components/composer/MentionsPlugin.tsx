@@ -32,18 +32,18 @@ import * as styles from '../../theme/components/MentionsPlugin.css';
 
 import { MentionWithColor } from '@collabkit/core';
 import {
+  autoPlacement,
   autoUpdate,
-  flip,
   FloatingFocusManager,
   FloatingPortal,
-  size,
   useFloating,
   useFloatingNodeId,
 } from '@floating-ui/react';
 import { ThemeWrapper } from '../ThemeWrapper';
-import Profile from '../Profile';
+import { ProfileAvatar } from '../Profile';
 import { Scrollable } from '../Scrollable';
 import { useStore } from '../../hooks/useStore';
+import { ProfileContext } from '../../hooks/useProfile';
 
 type MentionMatch = {
   leadOffset: number;
@@ -220,9 +220,9 @@ export function MentionsTypeaheadItem({
       onMouseEnter={onMouseEnter}
       onClick={onClick}
     >
-      <Profile.Provider profileId={result.id}>
-        <Profile.Avatar />
-      </Profile.Provider>
+      <ProfileContext.Provider value={result.id}>
+        <ProfileAvatar />
+      </ProfileContext.Provider>
       <div className={styles.nameAndEmailWrapper}>
         <div className={styles.name} data-testid="collabkit-mentions-typeahead-item-name">
           <Highlighted text={result.name ?? ''} highlight={query}></Highlighted>
@@ -260,17 +260,18 @@ export function MentionsTypeahead({
     open: (results?.length ?? 0) > 0,
     whileElementsMounted: autoUpdate,
     middleware: [
-      flip(),
-      size({
-        padding: 0,
-        apply({ availableWidth, availableHeight, elements }) {
-          Object.assign(elements.floating.style, {
-            maxWidth: `${availableWidth}px`,
-            maxHeight: `${availableHeight}px`,
-          });
-          setMaxAvailableSize({ width: availableWidth, height: availableHeight });
-        },
-      }),
+      autoPlacement(),
+      // flip(),
+      // size({
+      //   padding: 0,
+      //   apply({ availableWidth, availableHeight, elements }) {
+      //     Object.assign(elements.floating.style, {
+      //       maxWidth: `${availableWidth}px`,
+      //       maxHeight: `${availableHeight}px`,
+      //     });
+      //     setMaxAvailableSize({ width: availableWidth, height: availableHeight });
+      //   },
+      // }),
     ],
   });
 
@@ -423,7 +424,7 @@ export function MentionsTypeahead({
   }
 
   return (
-    <FloatingPortal>
+    <FloatingPortal id="collabkit-floating-root">
       <FloatingFocusManager context={context}>
         <ThemeWrapper>
           <div

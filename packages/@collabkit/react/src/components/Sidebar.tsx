@@ -9,6 +9,7 @@ import * as styles from '../theme/components/Sidebar.css';
 import { ThemeWrapper } from './ThemeWrapper';
 import { useOptionalWorkspaceContext } from '../hooks/useWorkspaceContext';
 import { useStore } from '../hooks/useStore';
+import { SidebarContext } from './useOptionalSidebarContext';
 
 function CloseSidebarButton() {
   const { store, events } = useApp();
@@ -38,13 +39,7 @@ function CloseSidebarButton() {
     </IconButton>
   );
 }
-const SidebarContext = React.createContext<{ titleHeight: number }>({ titleHeight: 0 });
-
-export function useOptionalSidebarContext() {
-  return React.useContext(SidebarContext);
-}
-
-export function Sidebar(props: {
+function Sidebar(props: {
   title?: React.ReactNode;
   children: React.ReactNode;
   strategy?: 'fixed' | 'absolute';
@@ -101,3 +96,5 @@ export function Sidebar(props: {
   ) : null;
   ``;
 }
+
+export { Sidebar };

@@ -19,6 +19,7 @@ export default defineConfig(({ mode }) => {
   return {
     plugins,
     build: {
+      sourcemap: false,
       lib: {
         entry: resolve(__dirname, 'src/index.ts'),
         name: 'CollabKit',

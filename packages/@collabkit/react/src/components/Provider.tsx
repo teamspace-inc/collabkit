@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { actions, Events, createEvents } from '@collabkit/client';
 import { AppContext } from '../hooks/useAppContext';
 import { createValtioStore } from '../store';

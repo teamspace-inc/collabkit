@@ -1,5 +1,5 @@
 import type { Event, Store } from '@collabkit/core';
-import { generateObjectIdFromCellId } from '..';
+import { generateObjectIdFromCellId } from '../utils/generateObjectIdFromCellId';
 import { actions } from './index';
 
 export async function reopenThread(store: Store, props: { workspaceId: string; threadId: string }) {

@@ -36,6 +36,7 @@ import { useApp } from '../hooks/useApp';
 import { useSnapshot } from 'valtio';
 import { menu, menuItem } from '../theme/components/Menu.css';
 import { MenuTarget, Target } from '@collabkit/core';
+import { useStoreKeyMatches } from '../hooks/useSubscribeStoreKey';
 
 export const MenuItem = forwardRef<
   HTMLButtonElement,
@@ -110,8 +111,13 @@ export const Menu = React.memo(function Menu(props) {
 
   const { events, store } = useApp();
   const { menuId } = useSnapshot(store);
-
-  const open = menuId?.type === 'menu' && menuId.nodeId === nodeId && menuId.parentId === parentId;
+  const targetMatch = useCallback(
+    (target: Target | null) => {
+      return target?.type === 'menu' && target.nodeId === nodeId && target.parentId === parentId;
+    },
+    [menuId, nodeId, parentId]
+  );
+  const open = useStoreKeyMatches(store, 'menuId', targetMatch);
 
   const target: MenuTarget = { type: 'menu', nodeId, parentId, context: rootTarget };
 
@@ -126,6 +132,7 @@ export const Menu = React.memo(function Menu(props) {
   const { x, y, reference, floating, strategy, refs, context } = useFloating<HTMLButtonElement>({
     open,
     onOpenChange,
+    strategy: 'fixed',
     middleware: [offset({ mainAxis: 4, alignmentAxis: 0 }), flip(), shift()],
     placement: 'bottom-end',
     nodeId,
@@ -220,7 +227,7 @@ export const Menu = React.memo(function Menu(props) {
   return (
     <FloatingNode id={nodeId}>
       {trigger}
-      <FloatingPortal>
+      <FloatingPortal id="collabkit-floating-root">
         {open && (
           <FloatingFocusManager
             context={context}

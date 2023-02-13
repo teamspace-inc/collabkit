@@ -1,4 +1,4 @@
-import { getConfig } from '.';
+import { getConfig } from './getConfig';
 import type { Store, ThreadInfo } from '@collabkit/core';
 
 export function saveThreadInfo(

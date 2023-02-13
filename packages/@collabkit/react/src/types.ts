@@ -27,7 +27,6 @@ export type OptionalComposerProps = {
   autoFocus?: boolean;
 };
 
-// export type PopoverThreadProps = ThreadProps & {
-//   maxAvailableSize?: { width: number; height: number } | null;
-//   formatTimestamp?: (timestamp: number) => string;
-// };
+export type CommentProps = {
+  commentId: string;
+};
