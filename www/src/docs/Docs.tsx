@@ -12,7 +12,6 @@ import { GettingStartedDoc } from './GettingStartedDoc';
 // import { FacepileDoc } from './components/FacepileDoc';
 import { InboxDoc } from './components/inbox/InboxDoc';
 import { InboxButtonDoc } from './components/InboxButtonDoc';
-import { PopoverThreadDoc } from './components/PopoverThreadDoc';
 import { CollabKitProviderDoc } from './components/CollabKitProviderDoc';
 import { ThreadDoc } from './components/ThreadDoc';
 import { UseUnreadCommentsCountDoc } from './hooks/useUnreadCommentsCountDoc';
@@ -29,9 +28,7 @@ import { dashboardStore } from '../dashboard/dashboardStore';
 import { ProfileDoc } from './advanced/profile/ProfileDoc';
 import { AdvancedThreadProviderDoc } from './advanced/AdvancedThreadProviderDoc';
 import { CommentDoc } from './advanced/comment/CommentDoc';
-import { UsePopoverThreadDoc } from './hooks/usePopover/UsePopoverThreadDoc';
 import { CommentAPI } from './hooks/commentAPI';
-import { usePopoverUnreadCommentsCount } from './hooks/usePopover/usePopoverUnreadCommentsCount';
 
 export function getDocHref(path: string[], key: string) {
   return getPathHref(path.concat([key]));
@@ -60,7 +57,6 @@ export const DOCS: RootDocNode = {
     children: {
       CollabKitProvider: { component: CollabKitProviderDoc },
       Thread: { component: ThreadDoc },
-      PopoverThread: { component: PopoverThreadDoc },
       Inbox: { component: InboxDoc },
       InboxButton: { component: InboxButtonDoc },
       SidebarInbox: { component: SidebarInboxDoc },
@@ -72,8 +68,6 @@ export const DOCS: RootDocNode = {
   Hooks: {
     title: 'Hooks',
     children: {
-      usePopoverThread: { component: UsePopoverThreadDoc },
-      usePopoverUnreadCommentsCount: { component: usePopoverUnreadCommentsCount },
       useUnreadCommentsCount: { component: UseUnreadCommentsCountDoc },
       useUnreadThreadsCount: { component: UseUnreadThreadsCountDoc },
     },

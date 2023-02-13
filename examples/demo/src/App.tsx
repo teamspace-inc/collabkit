@@ -1,7 +1,6 @@
 import { CollabKitProvider, CustomTheme, Thread, useUnreadCount } from '@collabkit/react';
 import * as themes from '@collabkit/custom-themes';
 import { User } from './types';
-import { TableExample } from './TableExample';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { GoogleLogin } from '@react-oauth/google';
 import { proxy, useSnapshot, subscribe } from 'valtio';
@@ -163,7 +162,6 @@ function Demo() {
       mentionableUsers={'allWorkspace'}
     >
       <Switch>
-        <Route path="/table" component={TableExample} />
         <Route path="/reactflow" component={ReactFlowExample} />
         <Route path="/dashboard" component={DashboardExample} />
         <Route path="/" component={Home} />

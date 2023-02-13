@@ -25,7 +25,6 @@ export function createWorkspace(): Workspace {
   return {
     inbox: {},
     openThreads: {},
-    objects: {},
     profiles: {},
     name: '',
     timeline: {},

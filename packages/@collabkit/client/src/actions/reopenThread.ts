@@ -1,5 +1,4 @@
 import type { Event, Store } from '@collabkit/core';
-import { generateObjectIdFromCellId } from '../utils/generateObjectIdFromCellId';
 import { actions } from './index';
 
 export async function reopenThread(store: Store, props: { workspaceId: string; threadId: string }) {
@@ -38,7 +37,7 @@ export async function reopenThread(store: Store, props: { workspaceId: string; t
     userId,
     workspaceId,
     threadId,
-    info: generateObjectIdFromCellId(store.workspaces[workspaceId].threadInfo[threadId]),
+    info: store.workspaces[workspaceId].threadInfo[threadId],
   });
   await actions.stopTyping(store, {
     target: { workspaceId, threadId, eventId: 'default' },

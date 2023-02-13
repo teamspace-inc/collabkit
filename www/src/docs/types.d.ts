@@ -1048,10 +1048,7 @@ type ThreadSeenEvent = {
   data: { seenUntilId: string; seenAt: number };
 };
 
-interface ThreadMeta {
-  viewId?: string;
-  cellId?: string;
-}
+interface ThreadMeta {}
 
 type ThreadInfo = {
   name?: string | null;
@@ -1656,27 +1653,6 @@ interface FloatingContext<RT extends ReferenceType = ReferenceType> extends UseF
 }
 declare type ReferenceType = Element | VirtualElement;
 
-declare function usePopoverThread({ name, cellId }: { name?: string; cellId: string }): {
-  context: {
-    nodeId: string;
-    getProps: (userProps: any) => Record<string, unknown>;
-    threadContext: FloatingContext<ReferenceType>;
-    previewContext: FloatingContext<ReferenceType>;
-    getThreadFloatingProps: (userProps?: any) => Record<string, unknown>;
-    getPreviewFloatingProps: (userProps?: any) => Record<string, unknown>;
-    setPopoverState: (state: 'open' | 'preview' | 'closed') => void;
-    threadId: string | null;
-    threadInfo: ThreadInfo;
-    getNewThreadId: () => string;
-    maxAvailableSize: {
-      width: number;
-      height: number;
-    } | null;
-  };
-  hasThread: boolean;
-  popoverState: 'open' | 'preview' | 'closed';
-  setPopoverState: (state: 'open' | 'preview' | 'closed') => void;
-};
 interface Props {
   children: JSX.Element;
   context: ReturnType<typeof usePopoverThread>['context'];

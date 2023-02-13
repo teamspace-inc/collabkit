@@ -30,8 +30,7 @@ export function CollabKitProviderDoc() {
         {renderCodeSnippet(Usage)}
         <p>
           Once you've got this working you'll be able to use CollabKit components like{' '}
-          <DocLink to="/docs/components/thread">Thread</DocLink> or{' '}
-          <DocLink to="/docs/components/popoverthread">PopoverThread</DocLink> within your app.
+          <DocLink to="/docs/components/thread">Thread</DocLink>.
         </p>
         <blockquote>
           <h4 style={{ marginTop: 0 }}>Secure Mode</h4>By default CollabKit lets you provide your{' '}

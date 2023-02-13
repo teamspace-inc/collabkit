@@ -1,13 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { dark, vars } from '../styles/Theme.css';
 import * as styles from '../styles/home/Demos.css';
-import {
-  Inbox,
-  Thread,
-  usePopoverThread,
-  InternalPopoverThreadContent,
-  ThemeWrapper,
-} from '@collabkit/react';
+import { Inbox, Thread } from '@collabkit/react';
 import {
   component,
   card,
@@ -25,48 +19,6 @@ type ComponentProps = {
   component: React.ReactNode;
 };
 
-function PopoverThreadComponent() {
-  const objectId = 'object3';
-
-  const { showThread } = usePopoverThread({
-    objectId,
-  });
-
-  useEffect(() => {
-    showThread();
-  }, []);
-
-  return (
-    <ThemeWrapper>
-      <div style={{ display: 'flex', gap: '4px' }}>
-        <div
-          style={{
-            padding: '9px 4px',
-            width: '100px',
-            height: '50px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            boxSizing: 'border-box',
-            borderRadius: '6px',
-            fontSize: '12px',
-            textAlign: 'center',
-            fontWeight: 'bold',
-            background: 'rgba(0,0,0,0.3)',
-            cursor: 'pointer',
-            color: 'white',
-          }}
-        >
-          Component
-        </div>
-        <div style={{ position: 'relative', left: 0 }}>
-          <InternalPopoverThreadContent threadId="thread4" autoFocus={false} />
-        </div>
-      </div>
-    </ThemeWrapper>
-  );
-}
-
 export const COMPONENTS: ComponentProps[] = [
   {
     title: 'Thread',
@@ -74,15 +26,6 @@ export const COMPONENTS: ComponentProps[] = [
     component: (
       <div style={{ width: 256, height: 320 }}>
         <Thread threadId="thread3" autoFocus={false} />
-      </div>
-    ),
-  },
-  {
-    title: 'PopoverThread',
-    description: 'A comment thread that anchors to a component in your app.',
-    component: (
-      <div style={{ display: 'flex', marginTop: '8px' }}>
-        <PopoverThreadComponent />
       </div>
     ),
   },
@@ -139,7 +82,6 @@ export function Components() {
           slides={[
             <Component {...COMPONENTS[0]} />,
             <Component {...COMPONENTS[1]} />,
-            <Component {...COMPONENTS[2]} />,
             <div
               className={card}
               style={{

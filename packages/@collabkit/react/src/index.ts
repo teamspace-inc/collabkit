@@ -22,21 +22,14 @@ import { Sidebar } from './components/Sidebar';
 import { ThemeWrapper } from './components/ThemeWrapper';
 import { SidebarInboxButton } from './components/SidebarInboxButton';
 import { SidebarInbox } from './components/SidebarInbox';
-import {
-  PopoverThread,
-  PopoverThreadProps,
-  PopoverThreadContent,
-} from './components/PopoverThread';
 import { useIsResolved } from './hooks/public/useIsResolved';
 import { useResolveThread } from './hooks/public/useResolveThread';
 import { useThreadUsers } from './hooks/public/useThreadUsers';
 import { useComposer } from './hooks/public/useComposer';
 import { ThreadFacepile } from './components/ThreadFacepile';
 import { useReplyCount } from './hooks/useReplyCount';
-import { usePopoverThread } from './hooks/usePopoverThread';
 import { useCommentableRef } from './hooks/useCommentableRef';
 import { Comment } from './components/Comment';
-import CollabKitRecharts from './components/Recharts';
 import { Profile } from './components/Profile';
 import { Composer } from './components/composer/Composer';
 import { Scrollable } from './components/Scrollable';
@@ -48,7 +41,6 @@ export * from './components/Comment';
 export * from './components/composer/Composer';
 export * from './components/Inbox';
 export * from './components/InboxButton';
-export * from './components/PopoverThread';
 export * from './components/Provider';
 export * from './components/Sidebar';
 export * from './components/SidebarInbox';
@@ -57,7 +49,6 @@ export * from './components/Thread';
 export * from './components/ThreadFacepile';
 export * from './components/ThemeContext';
 export * from './components/ThemeWrapper';
-export * from './components/Recharts';
 export * from './components/Profile';
 export * from './components/Scrollable';
 export * from './components/CommentList';
@@ -75,12 +66,10 @@ import { Channel } from './components/Channel';
 export {
   CollabKitProvider as Provider,
   CollabKitProvider,
-  CollabKitRecharts,
   Inbox,
   InboxButton,
   Markdown,
   Commentable,
-  PopoverThread,
   Sidebar,
   SidebarInbox,
   SidebarInboxButton,
@@ -101,7 +90,6 @@ export {
   Scrollable,
   ThreadFacepile,
   useIsResolved,
-  usePopoverThread,
   useReplyCount,
   useResolveThread,
   useThreadUsers,
@@ -109,7 +97,6 @@ export {
   useComposer,
   // internal
   createValtioStore as internal_createStore,
-  PopoverThreadContent as InternalPopoverThreadContent,
 };
 
 export type {
@@ -119,7 +106,6 @@ export type {
   CustomTheme,
   Mention,
   MentionProps,
-  PopoverThreadProps,
   Store,
   Subscriptions,
   ThreadProps,
