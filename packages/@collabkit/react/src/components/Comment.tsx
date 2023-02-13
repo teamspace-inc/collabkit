@@ -306,7 +306,7 @@ function CommentPin(props: React.ComponentProps<'img'>) {
       }
       return a.type === 'pin' && a.eventId === eventId;
     },
-    [target]
+    [eventId]
   );
   const isSelected = useStoreKeyMatches(store, 'selectedId', targetMatch);
 
