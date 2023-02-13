@@ -1,5 +1,4 @@
 import { Route } from 'wouter';
-import { DataGridPage } from './pages/DataGridPage';
 import { HomePage } from './pages/HomePage';
 import { Docs } from './docs/Docs';
 import { CollabKitProvider, Config, Workspace } from '@collabkit/react';
@@ -7,7 +6,6 @@ import { SetBreakpointContext } from './hooks/useWindowSize';
 import { UIPage } from './pages/UIPage';
 import { ThemeEditorPage } from './pages/ThemeEditorPage';
 import { UnsubscribePage } from './pages/UnsubscribePage';
-import { ChartDemo } from './home/ChartDemo';
 import { subHours } from 'date-fns/fp';
 import { useSnapshot } from 'valtio';
 import { store as wwwStore } from './home/Header';
@@ -29,39 +27,6 @@ import { GetStartedPage } from './pages/GetStartedPage';
 
 const defaultWorkspace: Partial<Workspace> = {
   inbox: {},
-  objects: {
-    row003_budget: ['thread5'],
-    object2: ['thread1'],
-    object3: ['thread2'],
-    object4: ['thread3'],
-  },
-  openThreads: {
-    thread1: {
-      meta: {
-        cellId: 'object1',
-      },
-    },
-    thread2: {
-      meta: {
-        cellId: 'object2',
-      },
-    },
-    thread3: {
-      meta: {
-        cellId: 'object3',
-      },
-    },
-    thread4: {
-      meta: {
-        cellId: 'object4',
-      },
-    },
-    thread5: {
-      meta: {
-        cellId: 'row003_budget',
-      },
-    },
-  },
   timeline: {
     thread1: {
       event1: {
@@ -233,8 +198,6 @@ export default function App() {
         <Route path="/signedin" component={DashboardPage} />
         <Route path="/signup" component={DashboardPage} /> */}
         <Route path="/theme-editor" component={ThemeEditorPage} />
-        <Route path="/examples/table" component={DataGridPage} />
-        <Route path="/examples/chart" component={ChartDemo} />
         <Route path="/carousel" component={CarouselPage} />
         <Route path="/unsubscribe" component={UnsubscribePage} />
         <Docs />

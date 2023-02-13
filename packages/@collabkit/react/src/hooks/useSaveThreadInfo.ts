@@ -20,13 +20,7 @@ export function useSaveThreadInfo(props: {
       return;
     }
 
-    // append the cellId to the url if it exists
     let url = info?.url ?? window.location.href.toString();
-    if (info?.meta?.cellId) {
-      let urlWithObjectId = new URL(url);
-      urlWithObjectId.searchParams.set('collabKitObjectId', info.meta.cellId);
-      url = urlWithObjectId.toString();
-    }
 
     // only make this delete info if null is
     // explicitly provided as a value,

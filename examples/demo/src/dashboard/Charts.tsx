@@ -9,7 +9,6 @@ import {
   ResponsiveContainer,
   Customized,
 } from 'recharts';
-import { CollabKitRecharts } from '@collabkit/react';
 
 type EarningsEntry = { date: string; earnings: { actual: number; current: number } };
 
@@ -82,7 +81,7 @@ const dateFormat = new Intl.DateTimeFormat('en', {
 
 export function Charts() {
   return (
-    <CollabKitRecharts.Root>
+    <>
       <ResponsiveContainer width="100%" height={430}>
         <AreaChart
           data={data}
@@ -133,15 +132,15 @@ export function Charts() {
             fill="url(#colorCurrent)"
             fillOpacity={0.3}
           />
-          <Customized
+          {/* <Customized
             component={
               <CollabKitRecharts.Chart
                 getObjectId={(item: EarningsEntry, dataKey: string) => `acme/earnings/${item.date}`}
               />
             }
-          />
+          /> */}
         </AreaChart>
       </ResponsiveContainer>
-    </CollabKitRecharts.Root>
+    </>
   );
 }

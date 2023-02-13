@@ -4,8 +4,6 @@ import type { SyncAdapter } from './sync';
 
 export * as Sync from './sync';
 export interface ThreadMeta {
-  viewId?: string;
-  cellId?: string; // todo rename to threadId
   [x: string]: unknown;
 }
 
@@ -530,7 +528,6 @@ export interface Workspace {
   openThreads: { [threadId: string]: { meta: ThreadMeta } };
   pendingThreadInfo: { [threadId: string]: ThreadInfo };
   pendingThreads: { [objectId: string]: string };
-  objects: { [objectId: string]: OpenThreadIds };
   inbox: { [threadId: string]: WithID<Event> };
   timeline: { [threadId: string]: Timeline };
   composers: { [threadId: string]: { [eventId: string]: Composer } };

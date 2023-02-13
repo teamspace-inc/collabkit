@@ -15,7 +15,6 @@ import { useStore } from '../hooks/useStore';
 import { TargetContext } from './Target';
 import { useApp } from '../hooks/useApp';
 import { useTarget } from '../hooks/useTarget';
-import { previewRoot } from '../theme/components/PopoverThread.css';
 import { vars } from '../theme/theme/index.css';
 import { Menu, MenuItem } from './Menu';
 import { PopoverContent, PopoverPreview, PopoverRoot, PopoverTrigger } from './Popover';
@@ -205,7 +204,7 @@ const PinMarker = forwardRef<HTMLDivElement, PinMarkerProps>(function PinMarker(
                 <ThreadContext.Provider value={pin.threadId}>
                   <CommentRoot
                     commentId={pin.eventId}
-                    className={previewRoot}
+                    className="" // TODO: add styles
                     style={{ padding: `${vars.space[3]} ${vars.space[3]}`, maxWidth: 200 }}
                   >
                     <div style={{ display: 'flex', flexDirection: 'column' }}>

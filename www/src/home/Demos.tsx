@@ -5,11 +5,10 @@ import { dark, vars } from '../styles/Theme.css';
 import { purpleBg, tab, tabs } from '../styles/Website.css';
 import { useHeaderStyle } from '../hooks/useHeaderStyle';
 import { ListDemo } from './ListDemo';
-import { DataGridDemo } from '../components/DataGridDemo';
 import * as styles from '../styles/home/Demos.css';
 import { usePreloadImages } from '../hooks/usePreloadImages';
 
-const scenarios = ['Lists', 'Tables', 'Charts', 'Text'] as const;
+const scenarios = ['Lists', 'Charts', 'Text'] as const;
 type ScenarioName = typeof scenarios[number];
 
 function Scenario({ scenario }: { scenario: ScenarioName }) {
@@ -17,8 +16,6 @@ function Scenario({ scenario }: { scenario: ScenarioName }) {
   switch (scenario) {
     case 'Lists':
       return <ListDemo />;
-    case 'Tables':
-      return <DataGridDemo />;
     case 'Charts':
       return <img src={ChartSvg} style={imgStyle} />;
     case 'Text':
