@@ -15,17 +15,11 @@ import { CommentListProps } from './CommentList';
 type ItemProps = CommentListProps & {
   event: INTERNAL_Snapshot<WithShowHeader<WithID<Event>>>;
   isChannel: boolean;
-  isResolved: boolean;
   newIndicatorId: string | null;
 };
 
-const MemoizedItem = React.memo(function Item({
-  isChannel,
-  shouldCollapse,
-  newIndicatorId,
-  event,
-}: ItemProps) {
-  return !isChannel || event.showHeader || shouldCollapse ? (
+const MemoizedItem = React.memo(function Item({ isChannel, newIndicatorId, event }: ItemProps) {
+  return !isChannel || event.showHeader ? (
     <div key={event.id} style={{ minHeight: 34 }}>
       {newIndicatorId === event.id && <NewIndicator />}
       <MemoizedComment commentId={event.id} />
@@ -36,17 +30,16 @@ const MemoizedItem = React.memo(function Item({
 });
 
 export function VirtualCommentList(props: CommentListProps) {
-  const { shouldCollapse, hideResolveButton, ...otherProps } = props;
   const threadId = useThreadContext();
   const workspaceStore = useWorkspaceStore();
   const newIndicatorId = useNewIndicator();
   const isChannel = !!useOptionalChannelContext();
   const { computed } = useSnapshot(workspaceStore);
-  const { isResolved, hasFetchedAllProfiles, messageEvents } = computed[threadId] ?? {};
+  const { hasFetchedAllProfiles, messageEvents } = computed[threadId] ?? {};
   const virtuosoRef = useRef<VirtuosoHandle>(null);
 
   return hasFetchedAllProfiles ? (
-    <div className={styles.root} {...otherProps} style={{ flex: 1 }}>
+    <div className={styles.root} {...props} style={{ flex: 1 }}>
       <Virtuoso
         ref={virtuosoRef}
         initialTopMostItemIndex={999}
@@ -55,14 +48,7 @@ export function VirtualCommentList(props: CommentListProps) {
         data={messageEvents}
         itemContent={(i, event) => {
           return (
-            <MemoizedItem
-              isChannel={isChannel}
-              shouldCollapse={shouldCollapse}
-              newIndicatorId={newIndicatorId}
-              event={event}
-              hideResolveButton={hideResolveButton}
-              isResolved={isResolved}
-            />
+            <MemoizedItem isChannel={isChannel} newIndicatorId={newIndicatorId} event={event} />
           );
         }}
         followOutput={'auto'}
