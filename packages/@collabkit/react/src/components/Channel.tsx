@@ -73,7 +73,7 @@ function ChannelCommentList(props: ComponentPropsWithRef<'div'>) {
   const commentList = useCommentList();
 
   return (
-    <CommentList className={styles.commentList} {...props}>
+    <div className={styles.commentList} {...props}>
       <div style={{ flex: 1 }}></div>
       {commentList.map((comment, i) =>
         !isExpanded && !isSelected && i > 0 ? null : (
@@ -110,7 +110,7 @@ function ChannelCommentList(props: ComponentPropsWithRef<'div'>) {
           </CommentRoot>
         )
       )}
-    </CommentList>
+    </div>
   );
 }
 
