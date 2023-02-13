@@ -15,7 +15,7 @@ import {} from '../../../client/src/actions';
 import { ThreadTarget } from '@collabkit/core';
 import * as styles from '../theme/components/InboxItem.css';
 import { ThreadFacepile } from './ThreadFacepile';
-import { generateObjectIdFromCellId, actions } from '@collabkit/client';
+import { actions } from '@collabkit/client';
 import { useUserContext } from '../hooks/useUserContext';
 import { useWorkspaceContext } from '../hooks/useWorkspaceContext';
 import { useStore } from '../hooks/useStore';
@@ -69,7 +69,7 @@ export function InboxItem(props: { formatTimestamp?: (timestamp: number) => stri
               threadId,
               userId,
               workspaceId,
-              info: generateObjectIdFromCellId(info),
+              info,
             });
           } else {
             const pathname = info && info.url && new URL(info.url).pathname;
@@ -92,7 +92,7 @@ export function InboxItem(props: { formatTimestamp?: (timestamp: number) => stri
           threadId,
           workspaceId,
           userId,
-          info: generateObjectIdFromCellId(info),
+          info,
         })}
         <CommentRoot commentId={firstCommentId} className={styles.commentRoot}>
           <div className={styles.nameAndTimestampWrapper}>

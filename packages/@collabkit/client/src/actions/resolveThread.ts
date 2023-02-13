@@ -1,5 +1,4 @@
 import type { Event, Store } from '@collabkit/core';
-import { generateObjectIdFromCellId } from '../utils/generateObjectIdFromCellId';
 import { actions } from './index';
 
 export async function resolveThread(
@@ -53,7 +52,7 @@ export async function resolveThread(
       userId,
       workspaceId,
       threadId,
-      info: generateObjectIdFromCellId(store.workspaces[workspaceId].threadInfo[threadId]),
+      info: store.workspaces[workspaceId].threadInfo[threadId],
     });
   } catch (e) {
     console.error('failed to set thread state', e);
