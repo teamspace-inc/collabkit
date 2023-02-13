@@ -17,7 +17,7 @@ function CommentList(props: CommentListProps) {
 
   const comments =
     props.children ||
-    commentList.map((comment, i) => {
+    commentList.map((comment) => {
       return (
         <div key={comment.id} style={{ minHeight: 34 }}>
           {newIndicatorId === comment.id && <NewIndicator />}
