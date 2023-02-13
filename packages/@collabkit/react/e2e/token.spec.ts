@@ -1,6 +1,6 @@
 import { test, expect, BrowserContext, Page } from '@playwright/test';
-import { createUserToken } from '@collabkit/node/src/index';
-import { signInWithUserToken } from '@collabkit/client/src/utils/signInWithUserToken';
+import { createUserToken } from '../../../@collabkit/node/src/index';
+import { signInWithUserToken } from '../../../@collabkit/client/src/utils/signInWithUserToken';
 import jwt_decode from 'jwt-decode';
 
 const HOST = process.env.PREVIEW_URL_DEMO ? process.env.PREVIEW_URL_DEMO : 'http://localhost:3000';
