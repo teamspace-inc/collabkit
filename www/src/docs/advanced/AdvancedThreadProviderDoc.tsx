@@ -10,8 +10,7 @@ export function AdvancedThreadProviderDoc() {
         <h4 style={{ marginTop: 0 }}>Advanced</h4>
         This doc covers how to set up context for rendering individual Comment or Profile
         components. In most cases you'll want to use a higher level component like{' '}
-        <DocLink href="/docs/components/thread">Thread</DocLink> or{' '}
-        <DocLink href="/docs/components/popoverthread">PopoverThread</DocLink> directly.
+        <DocLink href="/docs/components/thread">Thread</DocLink>.
       </blockquote>
 
       <div>

@@ -10,7 +10,6 @@ import { InboxTheme } from './InboxTheme';
 import { MentionsTheme } from './MentionsTheme';
 import { MenuTheme } from './MenuTheme';
 import { NewIndicatorTheme } from './NewIndicatorTheme';
-import { PopoverThreadTheme } from './PopoverThreadTheme';
 import { ProfileTheme } from './ProfileTheme';
 import { ScrollbarTheme } from './ScrollbarTheme';
 import { ShadowTheme } from './ShadowTheme';
@@ -31,7 +30,6 @@ export const vars = createGlobalThemeContract(
     ...InboxTheme,
     ...MentionsTheme,
     ...MenuTheme,
-    ...PopoverThreadTheme,
     ...ProfileTheme,
     ...ScrollbarTheme,
     ...ShadowTheme,
