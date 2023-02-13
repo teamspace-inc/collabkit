@@ -47,6 +47,7 @@ import {
 import { ProfileAvatar } from './Profile';
 import { useIsExpanded } from './useIsExpanded';
 import { useWorkspaceContext } from '../hooks/useWorkspaceContext';
+import { useCommentList } from '../hooks/useCommentList';
 
 function EmptyState() {
   return (
@@ -60,7 +61,6 @@ function EmptyState() {
 function ChannelCommentList(props: ComponentPropsWithRef<'div'>) {
   const store = useStore();
   const threadId = useThreadContext();
-  const workspaceStore = useWorkspaceStore();
   const isExpanded = useIsExpanded();
   const isSelected = useStoreKeyMatches(store, 'selectedId', (selectedId) => {
     return (
@@ -70,18 +70,17 @@ function ChannelCommentList(props: ComponentPropsWithRef<'div'>) {
       (selectedId?.type === 'channel' && selectedId.threadId === threadId)
     );
   });
-  const { computed } = useSnapshot(workspaceStore);
-  const { messageEvents } = computed[threadId] ?? {};
+  const commentList = useCommentList();
 
   return (
     <CommentList className={styles.commentList} {...props}>
       <div style={{ flex: 1 }}></div>
-      {messageEvents.map((event, i) =>
+      {commentList.map((comment, i) =>
         !isExpanded && !isSelected && i > 0 ? null : (
           <CommentRoot
-            commentId={event.id}
+            commentId={comment.id}
             indent={i > 0}
-            key={`comment-${event.id}-${i}`}
+            key={`comment-${comment.id}-${i}`}
             className={`${commentStyles.root({ indent: i > 0 })}`}
           >
             <ProfileAvatar />
