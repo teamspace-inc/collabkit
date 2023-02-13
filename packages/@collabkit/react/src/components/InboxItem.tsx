@@ -11,7 +11,6 @@ import {
   CommentTimestamp,
 } from './Comment';
 import { ReplyCount } from './ReplyCount';
-import {} from '../../../client/src/actions';
 import { ThreadTarget } from '@collabkit/core';
 import * as styles from '../theme/components/InboxItem.css';
 import { ThreadFacepile } from './ThreadFacepile';
