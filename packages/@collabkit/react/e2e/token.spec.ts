@@ -1,7 +1,9 @@
 import { test, expect, BrowserContext, Page } from '@playwright/test';
 import jwt from 'jsonwebtoken';
-// @ts-expect-error
+
 import { signInWithUserToken, createUserToken } from './setup.ts'
+
+import {} from '@collabkit/node';
 import jwt_decode from 'jwt-decode';
 
 const HOST = process.env.PREVIEW_URL_DEMO ? process.env.PREVIEW_URL_DEMO : 'http://localhost:3000';

@@ -25,7 +25,8 @@
       "@collabkit/colors": ["../colors/src"],
       "@collabkit/core": ["../core/src"],
       "@collabkit/react-scroll-area": ["../react-scroll-area/src"],
-      "@collabkit/editor": ["../editor/src"]
+      "@collabkit/editor": ["../editor/src"],
+      "@collabkit/node": ["../node/src"]
     },
     "rootDir": "../../../"
   },
@@ -35,7 +36,8 @@
     "../colors/src",
     "../core/src",
     "../react-scroll-area/src",
-    "../editor/src"
+    "../editor/src",
+    "../node/src"
   ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
