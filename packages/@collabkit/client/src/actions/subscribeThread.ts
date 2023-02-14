@@ -45,7 +45,6 @@ export async function subscribeThread(
     });
   }
 
-  const t0 = performance.now();
   store.sync.subscribeThread({
     appId,
     userId,
@@ -74,7 +73,6 @@ export async function subscribeThread(
       });
     },
     onTimelineGetComplete: (events: Sync.TimelineChangeEvent[]) => {
-      console.log('onTimelineGetComplete', events.length);
       if (!events.length) {
         return;
       }
@@ -86,7 +84,6 @@ export async function subscribeThread(
         return acc;
       }, {});
       const t1 = performance.now();
-      console.log(`onTimelinegGetComplete took ${t1 - t0} milliseconds.`);
       if (store.config.mentionableUsers === 'allWorkspace') return;
       events
         .map((event) => event.event.createdById)
