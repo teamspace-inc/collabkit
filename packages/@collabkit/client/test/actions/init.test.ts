@@ -1,7 +1,7 @@
 import { expect, test, beforeAll, describe } from 'vitest';
 import { init } from '../../src/actions/init';
 import { Store } from '@collabkit/core';
-import { setupApp, setupFirebase } from '../../../test-utils/src';
+import { createTokenAndSignIn, setupApp, setupFirebase } from '../../../test-utils/src';
 import { nanoid } from 'nanoid';
 import { FirebaseSync } from '../../src/sync/firebase/FirebaseSync';
 import { createStore } from '../../src/store';
@@ -17,6 +17,7 @@ describe('init', async () => {
     appId = nanoid();
     apiKey = nanoid();
     await setupApp({ appId, apiKey });
+    await createTokenAndSignIn({ apiKey, appId });
     sync = new FirebaseSync({ test: true });
   });
 

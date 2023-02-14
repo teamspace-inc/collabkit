@@ -1,6 +1,11 @@
 import { expect, test, beforeAll } from 'vitest';
 import { nanoid } from 'nanoid';
-import { setupApp, setupFirebase, setupWorkspaceProfile } from '../../../test-utils/src';
+import {
+  createTokenAndSignIn,
+  setupApp,
+  setupFirebase,
+  setupWorkspaceProfile,
+} from '../../../test-utils/src';
 
 import { writeMessageToFirebase } from '../../src/actions/writeMessageToFirebase';
 import { subscribeTimeline } from '../../src/sync/firebase/subscribeTimeline';
@@ -28,6 +33,7 @@ beforeAll(async () => {
   await setupApp({ appId, apiKey });
   userId = nanoid();
   workspaceId = nanoid();
+  await createTokenAndSignIn({ apiKey, appId });
   await setupWorkspaceProfile({ appId, workspaceId, userId });
   sync = new FirebaseSync({ test: true });
   const unconfiguredStore = proxy(createStore());

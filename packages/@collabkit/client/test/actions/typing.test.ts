@@ -1,7 +1,12 @@
 import { expect, test, describe, beforeAll } from 'vitest';
 import { nanoid } from 'nanoid';
 import { isTyping } from '../../src/actions/isTyping';
-import { setupApp, setupFirebase, setupWorkspaceProfile } from '../../../test-utils/src';
+import {
+  createTokenAndSignIn,
+  setupApp,
+  setupFirebase,
+  setupWorkspaceProfile,
+} from '../../../test-utils/src';
 import { createStore, createWorkspace } from '../../src/store';
 import { init } from '../../src/actions/init';
 import { FirebaseSync } from '../../src/sync/firebase/FirebaseSync';
@@ -25,6 +30,7 @@ describe('typing', async () => {
   beforeAll(async () => {
     await setupApp({ apiKey, appId });
     await setupWorkspaceProfile({ appId, workspaceId, userId });
+    await createTokenAndSignIn({ apiKey, appId });
     store.userId = userId;
     store.appId = appId;
     store.workspaces[workspaceId] = createWorkspace();
