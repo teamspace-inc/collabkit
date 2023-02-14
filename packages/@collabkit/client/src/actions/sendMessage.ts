@@ -1,8 +1,8 @@
 import type { Store } from '@collabkit/core';
-import { $getRoot } from 'lexical';
 import { writeMessageToFirebase } from './writeMessageToFirebase';
 import { actions } from '.';
 import { extract } from '@collabkit/editor';
+import { clearComposer } from './clearComposer';
 
 export async function sendMessage(
   store: Store,
@@ -36,9 +36,7 @@ export async function sendMessage(
     return;
   }
 
-  composer.editor?.update(() => {
-    $getRoot().clear();
-  });
+  clearComposer(store, { workspaceId, threadId, eventId });
 
   const pendingThreadInfo = workspace.pendingThreadInfo[threadId];
 
