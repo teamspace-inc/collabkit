@@ -70,8 +70,7 @@ export async function writeMessageToFirebase(
     return;
   }
 
-  // close emoji picker on send
-  store.reactingId = null;
+  actions.closeEmojiReactionPicker(store);
 
   const event: Event = {
     type,
