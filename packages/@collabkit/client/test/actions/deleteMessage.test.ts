@@ -5,6 +5,7 @@ import {
   setupFirebase,
   setupProfile,
   setupWorkspaceProfile,
+  createTokenAndSignIn,
 } from '../../../test-utils/src';
 import { createStore, createWorkspace } from '../../src/store';
 import { init } from '../../src/actions/init';
@@ -24,6 +25,7 @@ test('deleteMessage', async () => {
   const userId = nanoid();
   const workspaceId = nanoid();
   await setupApp({ apiKey, appId });
+  await createTokenAndSignIn({ apiKey, appId });
   await setupProfile({ appId, userId });
 
   await setupWorkspaceProfile({ appId, workspaceId, userId });

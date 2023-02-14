@@ -1,6 +1,11 @@
 import { expect, test, describe, beforeAll } from 'vitest';
 import { nanoid } from 'nanoid';
-import { setupApp, setupFirebase, setupWorkspaceProfile } from '../../../test-utils/src';
+import {
+  createTokenAndSignIn,
+  setupApp,
+  setupFirebase,
+  setupWorkspaceProfile,
+} from '../../../test-utils/src';
 
 import { createStore, createWorkspace } from '../../src/store';
 import { init } from '../../src/actions/init';
@@ -24,6 +29,7 @@ describe('resolve + reopen', async () => {
 
   beforeAll(async () => {
     await setupApp({ apiKey, appId });
+    await createTokenAndSignIn({ apiKey, appId });
     await setupWorkspaceProfile({ appId, workspaceId, userId });
     await init(
       store,

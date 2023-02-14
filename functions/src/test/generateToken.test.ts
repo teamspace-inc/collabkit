@@ -1,9 +1,10 @@
-import { expect, it, describe } from 'vitest';
+import { expect, it, describe, beforeEach } from 'vitest';
 import sinon from 'sinon';
-
 import * as functions from 'firebase-functions';
-
 import { handleRequest } from '../generateToken';
+import admin from 'firebase-admin';
+import * as testUtils from '../../../packages/@collabkit/test-utils/src';
+import { nanoid } from 'nanoid';
 
 const mockHttp = (props: { query?: object; body?: object; headers?: object }) => {
   const req = { headers: { origin: '' }, query: {}, body: {}, ...props } as functions.https.Request;
@@ -27,6 +28,15 @@ it('generateToken: mode not provided', async () => {
 });
 
 describe('UNSECURED', () => {
+  let appId: string;
+  let apiKey: string;
+
+  beforeEach(async () => {
+    appId = nanoid();
+    apiKey = nanoid();
+    await testUtils.setupApp({ appId, apiKey });
+  });
+
   it('generateToken: appId not provided', async () => {
     const http = mockHttp({ query: { mode: 'UNSECURED' }, body: {} });
     await handleRequest(http.req, http.res);
@@ -37,7 +47,7 @@ describe('UNSECURED', () => {
 
   it('generateToken: apiKey not provided', async () => {
     const http = mockHttp({
-      query: { mode: 'UNSECURED', appId: 'h9UlqR5HPxigSOoj--yL3' },
+      query: { mode: 'UNSECURED', appId },
       body: {},
     });
     await handleRequest(http.req, http.res);
@@ -48,7 +58,7 @@ describe('UNSECURED', () => {
 
   it('generateToken: apiKey invalid', async () => {
     const http = mockHttp({
-      query: { mode: 'UNSECURED', appId: 'h9UlqR5HPxigSOoj--yL3', apiKey: 'foo' },
+      query: { mode: 'UNSECURED', appId, apiKey: 'foo' },
       body: {},
     });
     await handleRequest(http.req, http.res);
@@ -59,7 +69,7 @@ describe('UNSECURED', () => {
 
   it('generateToken: generates a token', async () => {
     const http = mockHttp({
-      query: { mode: 'UNSECURED', appId: 'h9UlqR5HPxigSOoj--yL3', apiKey: 'ea7Q5CcwNTPYkZUVy9J5E' },
+      query: { mode: 'UNSECURED', appId, apiKey },
       body: {},
     });
     await handleRequest(http.req, http.res);
@@ -68,7 +78,7 @@ describe('UNSECURED', () => {
     expect(args[0]).toEqual({
       status: 201,
       data: {
-        appId: 'h9UlqR5HPxigSOoj--yL3',
+        appId,
         mode: 'UNSECURED',
         token: expect.any(String),
       },
@@ -77,6 +87,15 @@ describe('UNSECURED', () => {
 });
 
 describe('SECURED', () => {
+  let appId: string;
+  let apiKey: string;
+
+  beforeEach(async () => {
+    appId = nanoid();
+    apiKey = nanoid();
+    await testUtils.setupApp({ appId, apiKey });
+  });
+
   it('generateToken: appId not provided', async () => {
     const http = mockHttp({ query: { mode: 'UNSECURED' }, body: {} });
     await handleRequest(http.req, http.res);
@@ -87,7 +106,7 @@ describe('SECURED', () => {
 
   it('generateToken: apiKey not provided', async () => {
     const http = mockHttp({
-      query: { mode: 'UNSECURED', appId: 'QLVIR4HE-wvV_mTjoMJP5' },
+      query: { mode: 'UNSECURED', appId },
       body: {},
     });
     await handleRequest(http.req, http.res);
@@ -98,7 +117,7 @@ describe('SECURED', () => {
 
   it('generateToken: apiKey invalid', async () => {
     const http = mockHttp({
-      query: { mode: 'UNSECURED', appId: 'QLVIR4HE-wvV_mTjoMJP5', apiKey: 'foo' },
+      query: { mode: 'UNSECURED', appId, apiKey: 'foo' },
       body: {},
     });
     await handleRequest(http.req, http.res);
@@ -110,7 +129,7 @@ describe('SECURED', () => {
   it('generateToken: "workspaceId" not provided', async () => {
     const http = mockHttp({
       query: { mode: 'SECURED' },
-      body: { appId: 'QLVIR4HE-wvV_mTjoMJP5', apiKey: 'P7R7nNkFvykMKK17G4URU' },
+      body: { appId, apiKey },
     });
     await handleRequest(http.req, http.res);
     const send = http.res.send as sinon.SinonSpy;
@@ -126,8 +145,8 @@ describe('SECURED', () => {
     const http = mockHttp({
       query: { mode: 'SECURED' },
       body: {
-        appId: 'QLVIR4HE-wvV_mTjoMJP5',
-        apiKey: 'P7R7nNkFvykMKK17G4URU',
+        appId,
+        apiKey,
         workspaceId: 'acme',
       },
     });
@@ -145,8 +164,8 @@ describe('SECURED', () => {
     const http = mockHttp({
       query: { mode: 'SECURED' },
       body: {
-        appId: 'QLVIR4HE-wvV_mTjoMJP5',
-        apiKey: 'P7R7nNkFvykMKK17G4URU',
+        appId,
+        apiKey,
         workspaceId: 'acme',
         userId: 'alice',
       },
@@ -164,11 +183,14 @@ describe('SECURED', () => {
   });
 
   it('generateToken: generates a token', async () => {
+    const workspaceId = 'acme';
+    const userId = 'alice';
+
     const http = mockHttp({
       query: { mode: 'SECURED' },
       body: {
-        appId: 'QLVIR4HE-wvV_mTjoMJP5',
-        apiKey: 'P7R7nNkFvykMKK17G4URU',
+        appId,
+        apiKey,
         workspaceId: 'acme',
         userId: 'alice',
         user: { email: 'alice@example.com' },
@@ -181,12 +203,83 @@ describe('SECURED', () => {
     expect(args[0]).toEqual({
       status: 201,
       data: {
-        appId: 'QLVIR4HE-wvV_mTjoMJP5',
+        appId,
         mode: 'SECURED',
         token: expect.any(String),
         workspaceId: 'acme',
         userId: 'alice',
       },
     });
+
+    const profile = await (await admin.database().ref(`profiles/${appId}/${userId}`).get()).val();
+    expect(profile).toStrictEqual({ email: 'alice@example.com', color: expect.any(String) });
+
+    const workspace = await (
+      await admin.database().ref(`workspaces/${appId}/${workspaceId}`).get()
+    ).val();
+    expect(workspace).toStrictEqual({
+      name: 'Acme',
+      profiles: {
+        [userId]: true,
+      },
+    });
+
+    const workspaceProfile = await (
+      await admin.database().ref(`views/workspaceProfiles/${appId}/${workspaceId}/${userId}`).get()
+    ).val();
+    expect(workspaceProfile).toStrictEqual(profile);
+  });
+});
+
+describe('SECURED workspaceId=default', () => {
+  let appId: string;
+  let apiKey: string;
+
+  beforeEach(async () => {
+    appId = nanoid();
+    apiKey = nanoid();
+    await testUtils.setupApp({ appId, apiKey });
+  });
+
+  it('generateToken: generates a token', async () => {
+    console.log('appId', appId);
+    const workspaceId = 'default';
+    const userId = 'alice';
+    const http = mockHttp({
+      query: { mode: 'SECURED' },
+      body: {
+        appId,
+        apiKey,
+        workspaceId,
+        userId,
+        user: { email: 'alice@example.com' },
+      },
+    });
+    await handleRequest(http.req, http.res);
+    const send = http.res.send as sinon.SinonSpy;
+    const { args } = send.getCalls()[0];
+    expect(args[0]).toEqual({
+      status: 201,
+      data: {
+        appId,
+        mode: 'SECURED',
+        token: expect.any(String),
+        workspaceId: 'default',
+        userId: 'alice',
+      },
+    });
+
+    const profile = await (await admin.database().ref(`/profiles/${appId}/${userId}`).get()).val();
+    expect(profile).toStrictEqual({ email: 'alice@example.com', color: expect.any(String) });
+
+    const workspace = await (
+      await admin.database().ref(`workspaces/${appId}/${workspaceId}`).get()
+    ).val();
+    expect(workspace).toBe(null);
+
+    const workspaceProfile = await (
+      await admin.database().ref(`views/workspaceProfiles/${appId}/${workspaceId}/${userId}`).get()
+    ).val();
+    expect(workspaceProfile).toBe(null);
   });
 });

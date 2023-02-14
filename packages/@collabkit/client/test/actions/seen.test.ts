@@ -1,6 +1,11 @@
 import { expect, test } from 'vitest';
 import { nanoid } from 'nanoid';
-import { setupApp, setupFirebase, setupWorkspaceProfile } from '../../../test-utils/src';
+import {
+  createTokenAndSignIn,
+  setupApp,
+  setupFirebase,
+  setupWorkspaceProfile,
+} from '../../../test-utils/src';
 
 import { createStore, createWorkspace } from '../../src/store';
 import { init } from '../../src/actions/init';
@@ -18,6 +23,7 @@ test('seen', async () => {
   const userId = nanoid();
   const workspaceId = nanoid();
   await setupApp({ apiKey, appId });
+  await createTokenAndSignIn({ apiKey, appId });
   await setupWorkspaceProfile({ appId, workspaceId, userId });
   const store = createStore();
   store.userId = userId;

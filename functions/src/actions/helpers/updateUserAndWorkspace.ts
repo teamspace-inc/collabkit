@@ -41,6 +41,8 @@ function getRandomColor(): string {
   return shuffle(colors)[0];
 }
 
+type Updates = { [path: string]: object | string | boolean };
+
 export async function updateUserAndWorkspace(props: {
   appId: string;
   userId: string;
@@ -49,8 +51,8 @@ export async function updateUserAndWorkspace(props: {
   user: UserProps;
 }) {
   const { appId, workspaceId, userId, workspace, user } = props;
-
-  const updates: { [path: string]: object | string | boolean } = {};
+  const workspaceUpdates: Updates = {};
+  const updates: Updates = {};
 
   const colorSnapshot = await ref`/profiles/${appId}/${userId}/color`.get();
   if (!colorSnapshot.exists()) {
@@ -60,14 +62,18 @@ export async function updateUserAndWorkspace(props: {
   // contains an ancestor of the next set of updates
   // so we need to do this one first
   if (workspaceId !== 'default' && isValidWorkspace(workspace)) {
-    await ref`/workspaces/${appId}/${workspaceId}/`.update(deleteUndefinedProps(workspace));
+    workspaceUpdates[ref.path`/workspaces/${appId}/${workspaceId}/`] =
+      deleteUndefinedProps(workspace);
+    workspaceUpdates[ref.path`/views/workspaceProfiles/${appId}/${workspaceId}/${userId}`] =
+      deleteUndefinedProps(user);
+    await ref`/`.update(workspaceUpdates);
   }
 
   if (isValidUser(user)) {
     updates[ref.path`/profiles/${appId}/${userId}/`] = deleteUndefinedProps(user);
-    updates[ref.path`/views/workspaceProfiles/${appId}/${workspaceId}/${userId}`] =
-      deleteUndefinedProps(user);
-    updates[ref.path`/workspaces/${appId}/${workspaceId}/profiles/${userId}/`] = true;
+    if (workspaceId !== 'default') {
+      updates[ref.path`/workspaces/${appId}/${workspaceId}/profiles/${userId}/`] = true;
+    }
   } else if (user != null) {
     functions.logger.warn('Invalid profile. Skipping user profile update.', { user });
   }
