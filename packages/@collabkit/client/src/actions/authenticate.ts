@@ -59,7 +59,9 @@ export async function authenticate(store: Store) {
       actions.subscribeWorkspaceProfiles(store);
     }
 
-    actions.subscribeWorkspace(store);
+    if (store.workspaceId !== 'default') {
+      actions.subscribeWorkspace(store);
+    }
 
     // UNSECURED mode
   } else if ('apiKey' in config) {
@@ -110,7 +112,9 @@ export async function authenticate(store: Store) {
     if (store.config.mentionableUsers === 'allWorkspace') {
       actions.subscribeWorkspaceProfiles(store);
     }
-    actions.subscribeWorkspace(store);
+    if (store.workspaceId !== 'default') {
+      actions.subscribeWorkspace(store);
+    }
   } else {
     throw new Error('Missing `token` or `apiKey`');
   }
