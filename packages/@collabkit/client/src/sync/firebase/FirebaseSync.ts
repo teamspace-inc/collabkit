@@ -269,6 +269,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
     if (
       params.workspace &&
       params.workspace.name &&
+      params.workspaceId !== 'default' &&
       // setting name to null deletes it
       (typeof params.workspace.name === 'string' || params.workspace.name === null)
     ) {
@@ -298,11 +299,14 @@ export class FirebaseSync implements Sync.SyncAdapter {
     DEBUG && console.log('[network] saveProfile', data);
     const { appId, userId, workspaceId, profile } = data;
 
-    const updates = {
+    const updates: { [path: string]: any } = {
       [ref.path`/profiles/${appId}/${userId}`]: profile,
-      [ref.path`/views/workspaceProfiles/${appId}/${workspaceId}/${userId}`]: profile,
-      [ref.path`/workspaces/${appId}/${workspaceId}/profiles/${userId}`]: true,
     };
+
+    if (workspaceId !== 'default') {
+      updates[ref.path`/views/workspaceProfiles/${appId}/${workspaceId}/${userId}`] = profile;
+      updates[ref.path`/workspaces/${appId}/${workspaceId}/profiles/${userId}`] = true;
+    }
 
     try {
       await update(ref`/`, updates);
