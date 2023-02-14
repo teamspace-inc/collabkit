@@ -28,7 +28,7 @@ it('routing: route not found', async () => {
 
 it('routing: route works', async () => {
   const http = mockHttp({
-    url: `http://test.host.com/v1/createUser/id`,
+    url: `http://test.host.com/v1/createUser/`,
     headers: {
       host: 'test.host.com',
     },
@@ -38,5 +38,5 @@ it('routing: route works', async () => {
   routesImpl(http.req, http.res);
   const send = http.res.send as sinon.SinonSpy;
   const { args } = send.getCalls()[0];
-  expect(args[0]).toEqual({ status: 400, error: '"appId" not provided' });
+  expect(args[0]).toEqual({ status: 405, error: 'Method not allowed' });
 });
