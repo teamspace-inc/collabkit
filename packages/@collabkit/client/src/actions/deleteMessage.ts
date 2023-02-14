@@ -14,9 +14,8 @@ export async function deleteMessage(
     }
     return;
   }
-
   const workspace = store.workspaces[workspaceId];
-
+  const newEventId = store.sync.nextEventId({ appId, workspaceId, threadId });
   const event: Event = {
     type: 'delete',
     body: '',
@@ -24,32 +23,22 @@ export async function deleteMessage(
     createdById: userId,
     parentId: eventId,
   };
-
-  const { id } = await store.sync.saveEvent({
+  const parentEvent = workspace.timeline[threadId][eventId];
+  await store.sync.sendMessage({
     appId,
     workspaceId,
     threadId,
+    userId,
     event,
+    parentEvent,
+    newEventId,
   });
-
   const timeline = workspace.timeline[threadId];
-  timeline[id] = {
+  timeline[newEventId] = {
     ...event,
     createdAt: +Date.now(),
-    id,
+    id: newEventId,
   };
-
-  const pin = workspace.eventPins[eventId];
-
-  if (pin) {
-    try {
-      await store.sync.deletePin({ appId, ...pin, pinId: pin.id });
-      console.log('CollabKit: deleted pin', pin.id);
-    } catch (e) {
-      console.error('CollabKit: failed to delete pin', e);
-    }
-  }
-
   const isEmpty = workspace.computed[threadId].messageEvents.length === 0;
   const isResolved = workspace.computed[threadId].isResolved;
   const isOpen = !isEmpty && !isResolved;
@@ -57,6 +46,5 @@ export async function deleteMessage(
     delete store.workspaces[workspaceId].openThreads[threadId];
     await store.sync.markResolved({ appId, workspaceId, threadId });
   }
-
-  return id;
+  return newEventId;
 }

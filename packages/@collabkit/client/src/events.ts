@@ -98,7 +98,15 @@ export function createEvents(store: Store) {
         }
         case 'commentReplyButton':
         case 'commentReplyCountButton': {
+          e.preventDefault();
+          e.stopPropagation();
           actions.expandThread(store, target);
+          actions.focusComposer(store, {
+            type: 'composer',
+            workspaceId: target.workspaceId,
+            threadId: target.threadId,
+            eventId: 'default',
+          });
           break;
         }
         case 'commentSaveButton': {
@@ -110,12 +118,12 @@ export function createEvents(store: Store) {
           actions.stopEditing(store);
           break;
         }
+        case 'composerPin': {
+          actions.deletePin(store, target.composer);
+          actions.stopSelecting(store);
+          break;
+        }
         case 'composerPinButton': {
-          if (target.objectId && target.pinId) {
-            actions.deletePin(store, target.composer);
-            return;
-          }
-
           switch (store.uiState) {
             case 'selecting':
               actions.stopSelecting(store);

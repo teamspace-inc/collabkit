@@ -1,4 +1,4 @@
-import type { Event, UserProps, WithID } from '@collabkit/core';
+import type { Event, FirebaseAttachments, FirebaseEvent, UserProps, WithID } from '@collabkit/core';
 import { FirebaseId } from '@collabkit/core';
 import type { DataSnapshot } from 'firebase/database';
 import type { Color } from '@collabkit/colors';
@@ -16,13 +16,46 @@ export function idArrayToObject(
   }, {} as { [userId: string]: true });
 }
 
-export function eventToObject(event: Event): object {
-  const { reactions, ...rest } = event;
-  return {
-    ...rest,
+// avoid the use of ... spread operator as
+// it's easy to include unwanted properties
+export function eventToFirebaseEvent(event: Event) {
+  const { attachments } = event;
+  let firebaseAttachments: FirebaseAttachments | null = null;
+  if (attachments) {
+    firebaseAttachments = {};
+    for (const id in attachments) {
+      const attachment = attachments[id];
+      switch (attachment.type) {
+        case 'pin':
+          firebaseAttachments[id] = {
+            type: attachment.type,
+            x: attachment.x,
+            y: attachment.y,
+            objectId: attachment.objectId,
+
+            // move this closer to the pinAttach callback
+            // so the app can recover from errors more easily
+            // perhaps we make this some thing the app does
+            // instead of us doing it and we only store string
+            // state.
+            state: JSON.stringify(attachment.state ?? {}),
+          };
+      }
+    }
+  }
+
+  const firebaseEvent: FirebaseEvent = {
+    type: event.type,
+    body: event.body,
+    system: event.system ?? null,
     createdById: FirebaseId.encode(event.createdById),
     mentions: idArrayToObject(event.mentions),
+    parentId: event.parentId ?? null,
+    createdAt: event.createdAt,
+    attachments: firebaseAttachments,
   };
+
+  return firebaseEvent;
 }
 
 export function snapshotToEvent(snapshot: DataSnapshot, id = snapshot.key): WithID<Event> | null {

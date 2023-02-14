@@ -12,7 +12,6 @@ import { FirebaseSync } from '../../src/sync/firebase/FirebaseSync';
 import { Store } from '@collabkit/core';
 
 import { attachPin } from '../../src/actions/attachPin';
-import { movePin } from '../../src/actions/movePin';
 import { initComposer } from '../../src/actions/initComposer';
 
 setupFirebase();
@@ -67,7 +66,10 @@ describe('pin', () => {
     const x = 0;
     const y = 0;
 
-    expect(composer.pendingPin).toStrictEqual({
+    const keys = Object.keys(composer.attachments);
+    expect(keys.length).toBe(1);
+    expect(keys[0]).toBe(pinId);
+    expect(composer.attachments[pinId]).toStrictEqual({
       objectId: 'test',
       threadId,
       id: pinId,
@@ -80,53 +82,4 @@ describe('pin', () => {
       state: {},
     });
   });
-
-  test('movePin', async () => {
-    await movePin(store as Store, { x: 10, y: 20, threadId, eventId: 'default', type: 'pending' });
-
-    expect(composer.pendingPin).toStrictEqual({
-      id: pinId,
-      workspaceId,
-      objectId: 'test',
-      threadId,
-      eventId: 'default',
-      x: 10,
-      y: 20,
-      isPending: true,
-      createdById: userId,
-      state: {},
-    });
-  });
-
-  // requires refactoring sendMessage etc.
-  // will bring this back in a separate PR
-  // test('sendMessage to save pin', async () => {
-  //   if (!store.sync) {
-  //     throw new Error('store.sync is null');
-  //   }
-
-  //   const event = await writeMessageToFirebase(store as Store, {
-  //     workspaceId,
-  //     threadId,
-  //     preview: 'test',
-  //     type: 'message',
-  //     body: 'test',
-  //   });
-
-  //   if (!event) {
-  //     throw new Error('event is null');
-  //   }
-
-  //   expect(composer.pendingPin).toBeNull();
-
-  //   expect(store.workspaces[workspaceId].openPins.test[pinId]).toStrictEqual({
-  //     x: 10,
-  //     y: 20,
-  //     objectId: 'test',
-  //     workspaceId,
-  //     id: pinId,
-  //     threadId,
-  //     eventId: event.id,
-  //   });
-  // });
 });

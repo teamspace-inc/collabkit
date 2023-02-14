@@ -24,7 +24,6 @@ import { initThread } from './initThread';
 import { insertComposerPin } from './insertComposerPin';
 import { isTyping } from './isTyping';
 import { monitorConnection } from './monitorConnection';
-import { movePin } from './movePin';
 import { openMenu } from './openMenu';
 import { setPinVisibility } from './pinsVisible';
 import { reopenThread } from './reopenThread';
@@ -84,7 +83,6 @@ export const actions = {
   insertComposerPin,
   isTyping: debounce(isTyping, 1000, { leading: true, maxWait: 1000 }),
   monitorConnection,
-  movePin,
   openMenu,
   setPinVisibility,
   reopenThread,

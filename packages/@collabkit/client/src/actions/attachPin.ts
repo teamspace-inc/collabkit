@@ -1,4 +1,4 @@
-import type { Store } from '@collabkit/core';
+import type { Attachment, Store } from '@collabkit/core';
 import { focusComposer } from './focusComposer';
 
 export function attachPin(
@@ -18,20 +18,18 @@ export function attachPin(
   const { type, ...composerProps } = composerId;
   const { threadId, workspaceId, eventId } = composerProps;
   const id = store.sync.nextPinId({ appId, ...composerProps, objectId });
-  const composer =
-    store.workspaces[composerId.workspaceId].composers[composerId.threadId][composerId.eventId];
-  composer.pendingPin = {
-    id,
-    threadId,
-    workspaceId,
-    eventId,
+  const composer = store.workspaces[workspaceId].composers[threadId][eventId];
+  const pinAttachment: Attachment = {
+    type: 'pin',
     x,
     y,
     objectId,
-    createdById: userId,
-    isPending: true,
     state: store.callbacks?.onPinAttach?.({ objectId, userId, threadId, workspaceId }) ?? {},
+    pending: true,
   };
+  composer.attachments ||= { [id]: pinAttachment };
+  composer.attachments[id] = pinAttachment;
+  console.log(composer.attachments);
   store.uiState = 'idle';
   // for some reason this is needed to focus the composer
   // this is buggy need to debug events

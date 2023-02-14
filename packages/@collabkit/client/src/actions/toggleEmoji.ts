@@ -1,42 +1,39 @@
 import type { Store, EmojiTarget } from '@collabkit/core';
-import { writeMessageToFirebase } from './writeMessageToFirebase';
+import { closeEmojiReactionPicker } from './closeEmojiReactionPicker';
+import { createEvent } from './createEvent';
 
 export async function toggleEmoji(store: Store, props: { target: EmojiTarget }) {
-  if (!store.userId) {
+  const { userId } = store;
+  if (!userId) {
     console.warn('[CollabKit] Cannot toggle emoji without userId');
     return;
   }
-
   if (store.isReadOnly) {
     console.warn('[CollabKit] Cannot toggle comment reaction in read-only mode');
     return;
   }
-
   const { emoji } = props.target;
   const { workspaceId, threadId, eventId } = props.target;
-
+  const parentEvent = store.workspaces[workspaceId].timeline[threadId][eventId];
   // check if this user has a last reaction to the comment already
   const reactions =
     store.workspaces[workspaceId].computed[threadId].reactions?.[eventId]?.[emoji.u];
   const body = reactions
-    ? reactions.userIds.includes(store.userId)
+    ? // if they have reacted already, mark this as a delete
+      reactions.userIds.includes(userId)
       ? `delete-${emoji.u}`
       : emoji.u
     : emoji.u;
-
-  try {
-    writeMessageToFirebase(store, {
-      workspaceId,
-      threadId,
-      body,
+  createEvent(store, {
+    event: {
       type: 'reaction',
-      // todo write different preview message here
+      body,
+      createdAt: store.sync.serverTimestamp(),
+      createdById: userId,
       parentId: eventId,
-    });
-  } catch (e) {
-    console.error(e);
-    return;
-  }
-
-  store.reactingId = null;
+    },
+    parentEvent,
+    threadId,
+  });
+  closeEmojiReactionPicker(store);
 }

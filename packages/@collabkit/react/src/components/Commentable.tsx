@@ -96,14 +96,14 @@ export function CommentableRoot(props: { className?: string; children?: React.Re
     return null;
   }
 
-  const pendingPin = uiState === 'selecting' && (
+  const pinCursor = uiState === 'selecting' && (
     <>
       <div ref={overlayRef} className={styles.overlay} />
       <PinCursor isSelected={false} ref={cursorRef} />
     </>
   );
 
-  const savedPins =
+  const pins =
     pinsVisible && allPins
       ? allPins.map((pin) => {
           return (
@@ -126,8 +126,8 @@ export function CommentableRoot(props: { className?: string; children?: React.Re
     >
       {props.children}
       <FloatingPortal id="collabkit-floating-root">
-        {pendingPin}
-        {savedPins}
+        {pinCursor}
+        {pins}
       </FloatingPortal>
     </div>
   );

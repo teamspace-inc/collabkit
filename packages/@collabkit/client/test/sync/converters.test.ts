@@ -1,5 +1,5 @@
 import {
-  eventToObject,
+  eventToFirebaseEvent,
   idArrayToObject,
   snapshotToEvent,
   snapshotToProfile,
@@ -108,14 +108,23 @@ test('idArrayToObject', () => {
   });
 });
 
-test('eventToObject', () => {
+test('eventToFirebaseEvent', () => {
   expect(
-    eventToObject({
+    eventToFirebaseEvent({
       type: 'message',
       body: 'body',
       createdAt: +new Date(),
       createdById: 'user-1',
       mentions: ['user-1', 'user-2'],
+      attachments: {
+        ['foo']: {
+          type: 'pin',
+          x: 10,
+          y: 20,
+          objectId: 'object-1',
+          state: { foo: 'bar' },
+        },
+      },
     })
   ).toStrictEqual({
     body: 'body',
@@ -125,6 +134,15 @@ test('eventToObject', () => {
     mentions: {
       'user-1': true,
       'user-2': true,
+    },
+    attachments: {
+      ['foo']: {
+        type: 'pin',
+        x: 10,
+        y: 20,
+        objectId: 'object-1',
+        state: JSON.stringify({ foo: 'bar' }),
+      },
     },
   });
 });
