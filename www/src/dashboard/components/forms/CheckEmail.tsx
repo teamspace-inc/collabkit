@@ -1,5 +1,5 @@
-import { dashboardStore } from '../../dashboardStore';
-import { dashboardEvents } from '../../dashboardEvents';
+import { dashboardStore } from '../../dashboardActions';
+import { dashboardEvents } from '../../dashboardActions';
 import { useSnapshot } from 'valtio';
 
 export function CheckEmail() {

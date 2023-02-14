@@ -1,4 +1,4 @@
-import { dashboardEvents } from '../../dashboardEvents';
+import { dashboardEvents } from '../../dashboardActions';
 
 export function CreateOrg() {
   return (

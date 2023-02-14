@@ -1,4 +1,4 @@
-import { dashboardStore } from '../dashboardStore';
+import { dashboardStore } from '../dashboardActions';
 import { useSnapshot } from 'valtio';
 
 import { CreateOrg } from './forms/CreateOrg';
@@ -20,7 +20,6 @@ import { docs } from '../../styles/Docs.css';
 import { dark } from '../../styles/Theme.css';
 import { bg } from '../../styles/Website.css';
 import { Org } from './Org';
-import { LogoImg } from '../../Logo';
 
 export function Dashboard() {
   const { authState, org } = useSnapshot(dashboardStore);

@@ -47,6 +47,7 @@ export function snapshotToUser(snapshot: DataSnapshot): UserProps | null {
   return user;
 }
 
+// todo validate profile data here
 export function snapshotToProfile(
   snapshot: DataSnapshot
 ): { id: string; name?: string; email?: string; color: Color; avatar?: string } | null {

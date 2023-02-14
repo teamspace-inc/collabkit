@@ -1,15 +1,113 @@
-import { ref, set, onChildAdded, onChildRemoved, update, onValue } from 'firebase/database';
+import {
+  ref,
+  set,
+  onChildAdded,
+  onChildRemoved,
+  update,
+  onValue,
+  DataSnapshot,
+} from 'firebase/database';
 import { CreateApp, CreateOrg, FunctionResponse } from './dashboardTypes';
 import { database } from './database';
-import { dashboardStore } from './dashboardStore';
 import {
   isSignInWithEmailLink,
   onAuthStateChanged,
   sendSignInLinkToEmail,
   signInWithEmailLink,
 } from 'firebase/auth';
+
 import { auth } from './database';
-import { dashboardEvents } from './dashboardEvents';
+
+import { proxy, subscribe } from 'valtio';
+import { Store } from './dashboardTypes';
+
+const formsJSON = localStorage.getItem('forms');
+const forms = formsJSON ? JSON.parse(formsJSON) : {};
+
+export const dashboardStore = proxy<Store>({
+  user: null,
+  org: null,
+  apps: {},
+  subs: {},
+  forms,
+  authState: 'blank',
+});
+
+subscribe(dashboardStore, () => {
+  localStorage.setItem('forms', JSON.stringify(dashboardStore.forms));
+});
+
+export const dashboardEvents = {
+  onAppChanged: (snapshot: DataSnapshot) => {
+    console.log('onAppChanged');
+    if (snapshot.key) {
+      const app = { ...snapshot.val(), appId: snapshot.key };
+      console.log('adding app', app);
+      dashboardStore.apps[snapshot.key] = app;
+    }
+  },
+
+  onEmailInputChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+    dashboardActions.setEmail(e.target.value);
+  },
+
+  onAuthFormSubmit: () => {
+    if (
+      dashboardStore.authState === 'confirmEmailPrompt' &&
+      window.localStorage.getItem('emailForSignIn')! === dashboardStore.forms.enterEmail?.email
+    ) {
+      dashboardActions.signIn();
+    } else {
+      dashboardActions.sendMagicLink();
+    }
+  },
+
+  onDeleteAppButtonClick: (props: { appId: string; e: React.MouseEvent }) => {
+    dashboardActions.deleteApp(props.appId);
+  },
+
+  onOrgValue: (snapshot: DataSnapshot) => {
+    console.log('on org value');
+    if (snapshot.key) {
+      const org = { ...snapshot.val(), orgId: snapshot.key };
+      console.log('adding org', org);
+      dashboardStore.org = org;
+    }
+  },
+
+  onOrgAppAdded: (snapshot: DataSnapshot) => {
+    console.log('org app added', snapshot.key, snapshot.val());
+    if (snapshot.key) {
+      dashboardStore.subs[snapshot.key] = onValue(
+        ref(database, `/apps/${snapshot.key}`),
+        dashboardEvents.onAppChanged
+      );
+    }
+  },
+
+  onOrgAppRemoved: (snapshot: DataSnapshot) => {
+    if (snapshot.key) {
+      dashboardStore.subs[snapshot.key]?.();
+      delete dashboardStore.apps[snapshot.key];
+    }
+  },
+
+  onCreateAppButtonClick: (e: React.MouseEvent) => {
+    dashboardActions.createApp();
+  },
+
+  onCreateOrgButtonClick: (e: React.MouseEvent) => {
+    dashboardActions.createOrg();
+  },
+
+  onCreateOrgInputChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+    dashboardStore.forms.createOrg = { name: e.target.value };
+  },
+
+  onAppNameChange: (props: { appId: string; name: string }) => {
+    dashboardActions.changeAppName({ appId: props.appId, newName: props.name });
+  },
+};
 
 export const dashboardActions = {
   setEmail: (email: string) => {
@@ -217,3 +315,5 @@ export const dashboardActions = {
     console.error('Failed to create app', response.status, await response.text());
   },
 };
+
+dashboardActions.subscribeAuthState();

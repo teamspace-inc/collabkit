@@ -24,11 +24,11 @@ import { NotificationsDoc } from './NotificationsDoc';
 import { SidebarInboxDoc } from './components/SidebarInboxDoc';
 import { SidebarInboxButtonDoc } from './components/SidebarInboxButtonDoc';
 import { DashboardPage } from '../pages/DashboardPage';
-import { dashboardStore } from '../dashboard/dashboardStore';
 import { ProfileDoc } from './advanced/profile/ProfileDoc';
 import { AdvancedThreadProviderDoc } from './advanced/AdvancedThreadProviderDoc';
 import { CommentDoc } from './advanced/comment/CommentDoc';
 import { CommentAPI } from './hooks/commentAPI';
+import { dashboardStore } from '../dashboard/dashboardActions';
 
 export function getDocHref(path: string[], key: string) {
   return getPathHref(path.concat([key]));
