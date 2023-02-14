@@ -74,7 +74,6 @@ function Demo() {
   const { user } = useSnapshot(store);
   const { apiKey, appId, workspaceId, workspaceName } = useAppParams();
   const test = useTestParams();
-  const prevStateRef = useRef<DashboardStore>();
   const [pathname] = useLocation();
   const name = pathname.slice(1);
   const theme: CustomTheme | undefined =
