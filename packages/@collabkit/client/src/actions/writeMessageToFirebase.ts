@@ -1,42 +1,7 @@
-import type { Event, Pin, Store, WithID } from '@collabkit/core';
-import { actions } from './';
-
-async function savePin(
-  store: Store,
-  props: { pin: WithID<Pin>; appId: string; workspaceId: string }
-) {
-  const userId = store.userId;
-  if (!userId) throw new Error('CollabKit: no userId set');
-  const { pin, appId, workspaceId } = props;
-  if (!pin) {
-    console.warn('CollabKit: no pending pin to save');
-    return;
-  }
-  try {
-    // console.log('CollabKit: saving pin', pin);
-    await store.sync.savePin({
-      appId,
-      workspaceId,
-      pin,
-      userId,
-      pinId: pin.id,
-    });
-    store.workspaces[workspaceId].openPins[pin.objectId] ||= {};
-    store.workspaces[workspaceId].openPins[pin.objectId][pin.id] = {
-      id: pin.id,
-      eventId: pin.eventId,
-      objectId: pin.objectId,
-      workspaceId: pin.workspaceId,
-      threadId: pin.threadId,
-      createdById: pin.createdById,
-      state: pin.state,
-      x: pin.x,
-      y: pin.y,
-    };
-  } catch (e) {
-    console.error('CollabKit: failed to save pin', e);
-  }
-}
+import type { Attachments, Event, Pin, Store, WithID } from '@collabkit/core';
+import { closeEmojiReactionPicker } from './closeEmojiReactionPicker';
+import { seen } from './seen';
+import { stopTyping } from './stopTyping';
 
 export async function writeMessageToFirebase(
   store: Store,
@@ -70,7 +35,7 @@ export async function writeMessageToFirebase(
     return;
   }
 
-  actions.closeEmojiReactionPicker(store);
+  closeEmojiReactionPicker(store);
 
   const event: Event = {
     type,
@@ -118,14 +83,14 @@ export async function writeMessageToFirebase(
       // not for edits or reactions
       if (type === 'message') {
         promises.push(
-          actions.stopTyping(store, {
+          stopTyping(store, {
             target: { workspaceId, threadId, eventId: 'default' },
           })
         );
       }
 
       if (pin) {
-        promises.push(
+      promises.push(
           // parent id is only set when we are editing a comment
           savePin(store, { pin: { ...pin, eventId: parentId ?? eventId }, appId, workspaceId })
         );
