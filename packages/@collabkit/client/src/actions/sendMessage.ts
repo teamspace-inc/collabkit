@@ -49,7 +49,7 @@ export async function sendMessage(
     });
   }
 
-  const isFirstEvent = Object.keys(!workspace.timeline[threadId]).length === 0;
+  const isFirstEvent = Object.keys(workspace.timeline[threadId]).length === 0;
 
   try {
     const event = await writeMessageToFirebase(store, {
