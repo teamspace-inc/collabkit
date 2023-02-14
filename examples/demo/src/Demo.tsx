@@ -5,9 +5,9 @@ import { Route, Switch, useLocation } from 'wouter';
 import ReactFlowExample from './ReactFlowExample';
 import { useTestParams } from './hooks/useTestParams';
 import { useAppParams } from './hooks/useAppParams';
-import { DashboardExample, DashboardStore } from './dashboard/DashboardExample';
+import { DashboardExample } from './dashboard/DashboardExample';
 import { store } from './App';
-import { dashboardStore } from './dashboardStore';
+import { DashboardStore, dashboardStore } from './dashboardStore';
 import { Home } from './Home';
 import { Logout } from './Logout';
 

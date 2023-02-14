@@ -30,62 +30,20 @@ import {
 } from '@tremor/react';
 import '@tremor/react/dist/esm/tremor.css';
 import { isAfter, isBefore, isEqual } from 'date-fns';
-import { Channel, Commentable, Thread, useCommentableRef } from '@collabkit/react';
+import { Channel, Commentable, useCommentableRef } from '@collabkit/react';
 
-import { performance } from './data';
 import { Charts } from './Charts';
 import Flow from './Flow';
 
 import { useSnapshot } from 'valtio';
-import { dashboardStore } from '../dashboardStore';
-
-export type DashboardStore = {
-  selectedKpi: string;
-  startDate: Date;
-  endDate: Date;
-  selectedTab: 'overview' | 'detail' | 'charts' | 'flowchart';
-  selectedNames: string[];
-  selectedStatus: string;
-};
-
-export const minDate = new Date(performance[0].date);
-export const maxDate = new Date(performance[performance.length - 1].date);
-
-type Kpi = {
-  title: string;
-  metric: string;
-  progress: number;
-  target: string;
-  delta: string;
-  deltaType: DeltaType;
-};
-
-const kpiData: Kpi[] = [
-  {
-    title: 'Sales',
-    metric: '$ 12,699',
-    progress: 15.9,
-    target: '$ 80,000',
-    delta: '13.2%',
-    deltaType: 'moderateIncrease',
-  },
-  {
-    title: 'Profit',
-    metric: '$ 45,564',
-    progress: 36.5,
-    target: '$ 125,000',
-    delta: '23.9%',
-    deltaType: 'increase',
-  },
-  {
-    title: 'Customers',
-    metric: '1,072',
-    progress: 53.6,
-    target: '2,000',
-    delta: '10.1%',
-    deltaType: 'moderateDecrease',
-  },
-];
+import {
+  DashboardStore,
+  dashboardStore,
+  kpiData,
+  performanceData,
+  salesPeople,
+  SalesPerson,
+} from '../dashboardStore';
 
 function KpiCardGrid() {
   return (
@@ -171,90 +129,6 @@ function ChartView({ chartData }: { chartData: any }) {
     </Card>
   );
 }
-
-export type SalesPerson = {
-  name: string;
-  leads: number;
-  sales: string;
-  quota: string;
-  variance: string;
-  region: string;
-  status: string;
-  deltaType: DeltaType;
-};
-
-export const salesPeople: SalesPerson[] = [
-  {
-    name: 'Peter Doe',
-    leads: 45,
-    sales: '1,000,000',
-    quota: '1,200,000',
-    variance: 'low',
-    region: 'Region A',
-    status: 'overperforming',
-    deltaType: 'moderateIncrease',
-  },
-  {
-    name: 'Lena Whitehouse',
-    leads: 35,
-    sales: '900,000',
-    quota: '1,000,000',
-    variance: 'low',
-    region: 'Region B',
-    status: 'average',
-    deltaType: 'unchanged',
-  },
-  {
-    name: 'Phil Less',
-    leads: 52,
-    sales: '930,000',
-    quota: '1,000,000',
-    variance: 'medium',
-    region: 'Region C',
-    status: 'underperforming',
-    deltaType: 'moderateDecrease',
-  },
-  {
-    name: 'John Camper',
-    leads: 22,
-    sales: '390,000',
-    quota: '250,000',
-    variance: 'low',
-    region: 'Region A',
-    status: 'overperforming',
-    deltaType: 'increase',
-  },
-  {
-    name: 'Max Balmoore',
-    leads: 49,
-    sales: '860,000',
-    quota: '750,000',
-    variance: 'low',
-    region: 'Region B',
-    status: 'overperforming',
-    deltaType: 'increase',
-  },
-  {
-    name: 'Peter Moore',
-    leads: 82,
-    sales: '1,460,000',
-    quota: '1,500,000',
-    variance: 'low',
-    region: 'Region A',
-    status: 'average',
-    deltaType: 'unchanged',
-  },
-  {
-    name: 'Joe Sachs',
-    leads: 49,
-    sales: '1,230,000',
-    quota: '1,800,000',
-    variance: 'medium',
-    region: 'Region B',
-    status: 'underperforming',
-    deltaType: 'moderateDecrease',
-  },
-];
 
 function TableView() {
   const { selectedStatus, selectedNames } = useSnapshot(dashboardStore);
@@ -351,7 +225,7 @@ export function DashboardExample() {
   const snapshot = useSnapshot(dashboardStore);
   const { selectedTab, startDate, endDate } = snapshot;
 
-  const chartData = performance.filter((value) => {
+  const chartData = performanceData.filter((value) => {
     const date = new Date(value.date);
     return (
       (isAfter(date, startDate) || isEqual(date, startDate)) &&
