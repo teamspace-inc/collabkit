@@ -1,14 +1,9 @@
 import { User } from './types';
 import { proxy, subscribe } from 'valtio';
 
-const initialData =
-  typeof window === 'undefined'
-    ? { user: null }
-    : JSON.parse(window.localStorage?.getItem('store') ?? '{ "user": null }') || { user: null };
-
-export const store = proxy<{ user: User | null }>(initialData);
+export const store = proxy<{ user: User | null }>(
+  JSON.parse(localStorage.getItem('store') ?? '{ "user": null }') || { user: null }
+);
 subscribe(store, () => {
-  if (typeof window !== 'undefined') {
-    window.localStorage?.setItem('store', JSON.stringify(store));
-  }
+  localStorage.setItem('store', JSON.stringify(store));
 });

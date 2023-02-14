@@ -4,9 +4,6 @@ import { store } from '../store';
 // used by e2e tests to bypass google authentication as it's not
 // easy to automate using playwright
 export function useUserParams() {
-  if (typeof window === 'undefined') {
-    return;
-  }
   const urlSearchParams = new URLSearchParams(window.location.search);
   const params = Object.fromEntries(urlSearchParams.entries());
   if (params.userId && params.userName && params.userEmail) {
