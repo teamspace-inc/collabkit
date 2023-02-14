@@ -62,6 +62,8 @@ export async function authenticate(store: Store) {
       actions.subscribeWorkspace(store);
     }
 
+    actions.subscribeSeen(store);
+
     // UNSECURED mode
   } else if ('apiKey' in config) {
     // console.log('authenticating in UNSECURED mode');
@@ -115,6 +117,8 @@ export async function authenticate(store: Store) {
       }
       actions.subscribeWorkspace(store);
     }
+
+    actions.subscribeSeen(store);
   } else {
     throw new Error('Missing `token` or `apiKey`');
   }
