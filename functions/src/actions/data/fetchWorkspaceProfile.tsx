@@ -7,6 +7,7 @@ export async function fetchWorkspaceProfile(props: {
   profileId: string;
 }) {
   const { appId, workspaceId, profileId } = props;
+  console.log('fetchWorkspaceProfile', { appId, workspaceId, profileId });
   const snapshot = await ref`/workspaces/${appId}/${workspaceId}/profiles/${profileId}`.get();
   const profile = await snapshot.val();
   if (!isValidWorkspaceProfile(profile)) {

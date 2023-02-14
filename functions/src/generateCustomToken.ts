@@ -52,6 +52,7 @@ export async function generateCustomTokenImpl(
         return;
       }
     } catch (e) {
+      console.error(e);
       response.status(400).send({ status: 400, error: '"workspaceId not found"' });
       return;
     }

@@ -1,3 +1,3 @@
 export function isValidWorkspaceProfile(data: unknown): data is boolean {
-  return data === true || data === false;
+  return data == null || data === true || data === false;
 }
