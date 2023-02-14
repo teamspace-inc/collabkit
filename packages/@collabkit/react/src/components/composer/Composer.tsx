@@ -232,7 +232,7 @@ function ComposerPinButton(props: { className?: string }) {
   );
 }
 
-function ComposerEditor(props: {
+const ComposerLexicalEditor = React.memo(function ComposerLexicalEditor(props: {
   placeholder: React.ReactElement;
   className?: string;
   contentEditable?: JSX.Element;
@@ -285,27 +285,71 @@ function ComposerEditor(props: {
           position: 'relative',
         }}
       >
-        <LexicalComposer initialConfig={initialConfig}>
-          <EditorPlugin onMount={handleChange} />
-          <KeyPlugin onKeyDown={(event) => events.onKeyDown(event)} />
-          <PasteTextPlugin />
-          <PlainTextPlugin
-            contentEditable={
-              props.contentEditable ?? <ComposerContentEditable autoFocus={props.autoFocus} />
-            }
-            placeholder={props.placeholder}
-            ErrorBoundary={(props) => <>{props.children}</>}
-          />
-          <OnChangePlugin onChange={handleChange} />
-          {props.autoFocus ? <AutoFocusPlugin /> : <></>}
-          <HistoryPlugin />
-          <MentionsPlugin
-            onOpenChange={(open) => {
-              store.workspaces[workspaceId].composers[threadId][eventId].isMentioning = open;
-            }}
-          />
-          <TimestampPlugin />
-        </LexicalComposer>
+    <LexicalComposer initialConfig={initialConfig}>
+      <EditorPlugin onMount={handleChange} />
+      <KeyPlugin onKeyDown={(event) => events.onKeyDown(event)} />
+      <PasteTextPlugin />
+      <PlainTextPlugin
+        contentEditable={
+          props.contentEditable ?? <ComposerContentEditable autoFocus={props.autoFocus} />
+        }
+        placeholder={props.placeholder}
+        ErrorBoundary={(props) => <>{props.children}</>}
+      />
+      <OnChangePlugin onChange={handleChange} />
+      {props.autoFocus ? <AutoFocusPlugin /> : <></>}
+      <HistoryPlugin />
+      <MentionsPlugin
+        onOpenChange={(open) => {
+          store.workspaces[workspaceId].composers[threadId][eventId].isMentioning = open;
+        }}
+      />
+      <TimestampPlugin />
+    </LexicalComposer>
+  );
+});
+
+function ComposerEditor(props: {
+  placeholder: React.ReactElement;
+  className?: string;
+  contentEditable?: JSX.Element;
+  autoFocus?: boolean;
+  initialBody?: string;
+  children?: React.ReactNode;
+}) {
+  const target = useTarget();
+  const { events, store } = useApp();
+  const { focusedId, isPinningEnabled } = useSnapshot(store);
+
+  const active = !!(
+    focusedId &&
+    focusedId.type === 'composer' &&
+    target.type === 'composer' &&
+    focusedId.threadId === target.threadId &&
+    focusedId.eventId === target.eventId
+  );
+
+  return (
+    <div
+      data-testid="collabkit-composer-editor"
+      className={props.className ?? `${styles.editor({ active })} ${styles.composerGlobalStyles}`}
+      onClick={(e) => events.onClick(e, { target })}
+    >
+      {isPinningEnabled && <ComposerPinButton />}
+      <div
+        style={{
+          display: 'flex',
+          flex: 1,
+          flexDirection: 'column',
+          position: 'relative',
+        }}
+      >
+        <ComposerLexicalEditor
+          placeholder={props.placeholder}
+          autoFocus={props.autoFocus}
+          initialBody={props.initialBody}
+          contentEditable={props.contentEditable}
+        />
         {props.children}
       </div>
     </div>
