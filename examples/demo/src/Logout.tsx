@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { store } from './App';
+import { store } from './store';
 
 export function Logout() {
   useEffect(() => {

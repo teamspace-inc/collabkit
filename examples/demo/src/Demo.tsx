@@ -6,7 +6,7 @@ import ReactFlowExample from './ReactFlowExample';
 import { useTestParams } from './hooks/useTestParams';
 import { useAppParams } from './hooks/useAppParams';
 import { DashboardExample } from './dashboard/DashboardExample';
-import { store } from './App';
+import { store } from './store';
 import { DashboardStore, dashboardStore } from './dashboardStore';
 import { Home } from './Home';
 import { Logout } from './Logout';
