@@ -37,7 +37,7 @@ import { Charts } from './Charts';
 import Flow from './Flow';
 
 import { useSnapshot } from 'valtio';
-import { dashboardStore } from '../App';
+import { dashboardStore } from '../dashboardStore';
 
 export type DashboardStore = {
   selectedKpi: string;
