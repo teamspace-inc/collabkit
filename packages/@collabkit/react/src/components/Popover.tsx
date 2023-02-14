@@ -1,4 +1,4 @@
-import React, { cloneElement, isValidElement, useEffect, useMemo, useState } from 'react';
+import React, { cloneElement, isValidElement, useEffect, useMemo } from 'react';
 
 import {
   autoUpdate,
@@ -56,22 +56,20 @@ function PopoverPreview(props: { children: React.ReactNode }) {
     usePopoverContext();
 
   return !context.open && previewContext.open ? (
-    <FloatingFocusManager context={previewContext}>
-      <div
-        ref={previewContext.floating}
-        style={{
-          position: previewContext.strategy,
-          top: previewContext.y ?? 0,
-          left: previewContext.x ?? 0,
-          outline: 'none',
-        }}
-        {...getPreviewFloatingProps({
-          onClick: () => setOpen(true),
-        })}
-      >
-        {preview && !open ? <div onClick={() => setOpen(true)}>{props.children}</div> : null}
-      </div>
-    </FloatingFocusManager>
+    <div
+      ref={previewContext.floating}
+      style={{
+        position: previewContext.strategy,
+        top: previewContext.y ?? 0,
+        left: previewContext.x ?? 0,
+        outline: 'none',
+      }}
+      {...getPreviewFloatingProps({
+        onClick: () => setOpen(true),
+      })}
+    >
+      {preview && !open ? <div onClick={() => setOpen(true)}>{props.children}</div> : null}
+    </div>
   ) : null;
 }
 

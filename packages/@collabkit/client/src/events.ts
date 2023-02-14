@@ -267,12 +267,6 @@ export function createEvents(store: Store) {
               e.stopPropagation();
               e.preventDefault();
               actions.attachPin(store, target);
-              // for some reason this is needed to focus the composer
-              // this is buggy need to debug events
-              setTimeout(
-                () => store.composerId && actions.focusComposer(store, store.composerId),
-                32
-              );
             }
           }
           break;

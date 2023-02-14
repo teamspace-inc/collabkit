@@ -1,4 +1,5 @@
 import type { Store } from '@collabkit/core';
+import { focusComposer } from './focusComposer';
 
 export function attachPin(
   store: Store,
@@ -32,8 +33,9 @@ export function attachPin(
     state: store.callbacks?.onPinAttach?.({ objectId, userId, threadId, workspaceId }) ?? {},
   };
   store.uiState = 'idle';
-  // insertComposerPin(store, {
-  //   pinId: id,
-  // });
+  // for some reason this is needed to focus the composer
+  // this is buggy need to debug events
+  store.composerId ? focusComposer(store, store.composerId) : console.warn('no composer to focus');
+
   return id;
 }
