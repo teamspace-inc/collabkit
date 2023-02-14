@@ -3,8 +3,8 @@ import sinon from 'sinon';
 import * as functions from 'firebase-functions';
 import { handleRequest } from '../generateToken';
 import admin from 'firebase-admin';
-import * as testUtils from '../../../packages/@collabkit/test-utils/src';
 import { nanoid } from 'nanoid';
+import { setupApp } from './utils/setupApp';
 
 const mockHttp = (props: { query?: object; body?: object; headers?: object }) => {
   const req = { headers: { origin: '' }, query: {}, body: {}, ...props } as functions.https.Request;
@@ -34,7 +34,7 @@ describe('UNSECURED', () => {
   beforeEach(async () => {
     appId = nanoid();
     apiKey = nanoid();
-    await testUtils.setupApp({ appId, apiKey });
+    await setupApp({ appId, apiKey });
   });
 
   it('generateToken: appId not provided', async () => {
@@ -93,7 +93,7 @@ describe('SECURED', () => {
   beforeEach(async () => {
     appId = nanoid();
     apiKey = nanoid();
-    await testUtils.setupApp({ appId, apiKey });
+    await setupApp({ appId, apiKey });
   });
 
   it('generateToken: appId not provided', async () => {
@@ -238,7 +238,7 @@ describe('SECURED workspaceId=default', () => {
   beforeEach(async () => {
     appId = nanoid();
     apiKey = nanoid();
-    await testUtils.setupApp({ appId, apiKey });
+    await setupApp({ appId, apiKey });
   });
 
   it('generateToken: generates a token', async () => {
