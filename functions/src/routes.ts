@@ -13,9 +13,10 @@ const corsHandler = cors.default({ origin: true });
 
 export const routesImpl = (request: functions.https.Request, response: functions.Response) => {
   const url = new URL(request.url, `http://${request.headers.host}`);
+  const [_, version, fn] = url.pathname.split('/');
 
-  if (url.pathname.split('/')[1] === 'v1') {
-    switch (url.pathname.split('/')[2]) {
+  if (version === 'v1') {
+    switch (fn) {
       case 'generateCustomToken':
         generateCustomTokenImpl(request, response);
         break;
