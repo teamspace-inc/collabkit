@@ -1,4 +1,4 @@
-import { dashboardStore } from '../dashboardStore';
+import { dashboardStore } from '../dashboardActions';
 import { useSnapshot } from 'valtio';
 import { DashboardApp } from './DashboardApp';
 

@@ -1,4 +1,4 @@
-import { dashboardEvents } from '../../dashboardEvents';
+import { dashboardEvents } from '../../dashboardActions';
 
 // same for signin and signup
 export function EnterEmail(props: { isReentry?: boolean }) {
