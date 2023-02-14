@@ -98,7 +98,7 @@ export function Demo() {
       //     ></div>
       //   );
       // }}
-      mentionableUsers={'allWorkspace'}
+      mentionableUsers="allWorkspace"
     >
       <Switch>
         <Route path="/reactflow" component={ReactFlowExample} />

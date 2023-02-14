@@ -4,8 +4,8 @@ import admin from 'firebase-admin';
 import * as FirebaseId from './actions/data/FirebaseId';
 import { ref } from './actions/data/refs';
 import * as jwt from 'jsonwebtoken';
-import { fetchWorkspaceProfiles } from './actions/data/fetchWorkspaceProfiles';
 import { isValidPayload } from './actions/helpers/isValidPayload';
+import { fetchWorkspaceProfile } from './actions/data/fetchWorkspaceProfile';
 
 const corsHandler = cors.default({ origin: true });
 
@@ -45,9 +45,9 @@ export async function generateCustomTokenImpl(
 
     const { userId, workspaceId } = payload;
 
-    const profiles = await fetchWorkspaceProfiles({ appId, workspaceId });
     try {
-      if (!profiles.find((profile) => profile === userId)) {
+      const profile = await fetchWorkspaceProfile({ appId, workspaceId, profileId: userId });
+      if (!profile) {
         response.status(400).send({ status: 400, error: '"userId" not found' });
         return;
       }
