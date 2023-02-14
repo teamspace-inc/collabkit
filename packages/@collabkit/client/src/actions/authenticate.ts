@@ -55,11 +55,10 @@ export async function authenticate(store: Store) {
     store.workspaceId = workspaceId;
     store.workspaces[workspaceId] = createWorkspace();
 
-    if (store.config.mentionableUsers === 'allWorkspace') {
-      actions.subscribeWorkspaceProfiles(store);
-    }
-
     if (store.workspaceId !== 'default') {
+      if (store.config.mentionableUsers === 'allWorkspace') {
+        actions.subscribeWorkspaceProfiles(store);
+      }
       actions.subscribeWorkspace(store);
     }
 
@@ -109,10 +108,11 @@ export async function authenticate(store: Store) {
     // console.log('CollabKit authenticated', userCredential, mode);
 
     await actions.saveProfile(store);
-    if (store.config.mentionableUsers === 'allWorkspace') {
-      actions.subscribeWorkspaceProfiles(store);
-    }
+
     if (store.workspaceId !== 'default') {
+      if (store.config.mentionableUsers === 'allWorkspace') {
+        actions.subscribeWorkspaceProfiles(store);
+      }
       actions.subscribeWorkspace(store);
     }
   } else {
