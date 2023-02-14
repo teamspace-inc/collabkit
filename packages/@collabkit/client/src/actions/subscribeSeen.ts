@@ -7,10 +7,7 @@ export async function subscribeSeen(store: Store) {
     return;
   }
 
-  // console.log('subscribeSeen', workspaceId);
-
   const onSeenChange = (event: { threadId: string; seenUntilId: string }) => {
-    // console.log('subscribeSeen', workspaceId, event.threadId, event.seenUntilId);
     store.workspaces[workspaceId].seen[event.threadId] = event.seenUntilId;
   };
 

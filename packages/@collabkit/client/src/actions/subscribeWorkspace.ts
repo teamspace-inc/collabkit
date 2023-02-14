@@ -6,7 +6,6 @@ export async function subscribeWorkspace(store: Store) {
     console.warn("CollabKit: won't subscribe to workspace in read-only mode");
     return;
   }
-  actions.subscribeSeen(store);
   actions.subscribeOpenThreads(store);
   actions.subscribeOpenPins(store);
 }

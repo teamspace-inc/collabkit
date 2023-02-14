@@ -29,7 +29,6 @@ import type {
 import { FirebaseId } from '@collabkit/core';
 
 import { subscribeThreadIsTyping } from './subscribeThreadIsTyping';
-import { subscribeThreadSeenBy } from './subscribeThreadSeenBy';
 import { subscribeTimeline } from './subscribeTimeline';
 import { ref, timelineRef, userTypingRef } from './refs';
 

@@ -26,7 +26,6 @@ export async function subscribeProfile(
     profileRef,
     (profileSnapshot) => {
       const profile = snapshotToProfile(profileSnapshot);
-      // todo validate profile data here
       if (profile) {
         store.profiles[id] = ensureColor(profile);
         store.mentionableUsers[id] = profile;

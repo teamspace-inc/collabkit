@@ -18,7 +18,6 @@ import {
 } from './composer/Composer';
 import { useThreadContext } from '../hooks/useThreadContext';
 import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
-import { CommentList } from './CommentList';
 import { ChannelContext, useChannelContext } from '../hooks/useChannelContext';
 import { vars } from '../theme/theme/index.css';
 import { useStore } from '../hooks/useStore';

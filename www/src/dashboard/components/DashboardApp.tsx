@@ -1,6 +1,6 @@
 import { App } from '../dashboardTypes';
 import { useState } from 'react';
-import { dashboardEvents } from '../dashboardEvents';
+import { dashboardEvents } from '../dashboardActions';
 import {
   appName,
   dashboardApp,

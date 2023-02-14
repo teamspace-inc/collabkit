@@ -1,4 +1,4 @@
-import { store } from '../App';
+import { store } from '../store';
 
 // reads user details from url params and sets them in the store
 // used by e2e tests to bypass google authentication as it's not

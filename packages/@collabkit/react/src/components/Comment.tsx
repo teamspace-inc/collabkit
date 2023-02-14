@@ -533,7 +533,6 @@ function Comment(props: CommentProps) {
           </CommentHeader>
           <CommentActions>
             <CommentActionsEmojiButton />
-            <CommentActionsReplyButton />
             <CommentMenu />
           </CommentActions>
           <CommentBody>
