@@ -1,5 +1,6 @@
-export async function signInWithUserToken(appId: string, userToken: string) {
-  const response = await fetch(`https://test-api.collabkit.dev/v1/generateCustomToken`, {
+
+export async function signInWithUserToken(apiHost: string, appId: string, userToken: string) {
+  const response = await fetch(`${apiHost}/v1/generateCustomToken`, {
     method: 'POST',
     body: JSON.stringify({
       appId: appId,

@@ -2,7 +2,7 @@ import { test, expect, BrowserContext, Page } from '@playwright/test';
 import jwt from 'jsonwebtoken';
 
 // @ts-expect-error
-import { signInWithUserToken, createUserToken } from './setup.ts'
+import { signInWithUserToken, createUserToken } from './setup.ts';
 
 import jwt_decode from 'jwt-decode';
 
@@ -15,14 +15,14 @@ const APP_ID = '0mO-P6YhtUwKsZNwnDSt9';
 test.describe('secure token mechanism', () => {
   test('create user token', async ({ context }) => {
     const token = createUserToken({ apiKey: API_KEY, userId: USER_ID, workspaceId: WORKSPACE_ID });
-    let decodedUserToken : any = jwt.verify(token, API_KEY);
+    let decodedUserToken: any = jwt.verify(token, API_KEY);
     expect(decodedUserToken.userId).toBe(USER_ID);
     expect(decodedUserToken.workspaceId).toBe(WORKSPACE_ID);
   });
 
   test('e2e', async ({ context }) => {
     const token = createUserToken({ apiKey: API_KEY, userId: USER_ID, workspaceId: WORKSPACE_ID });
-    const userToken = await signInWithUserToken(APP_ID, token);
+    const userToken = await signInWithUserToken('https://test-api.collabkit.dev', APP_ID, token);
     let decoded: any = jwt_decode(userToken);
     expect(decoded.claims).toStrictEqual({
       api: true,
