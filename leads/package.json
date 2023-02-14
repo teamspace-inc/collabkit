@@ -1,9 +1,0 @@
-{
-  "name": "leads",
-  "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
-  "dependencies": {
-    "playwright": "^1.27.1"
-  }
-}

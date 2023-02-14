@@ -1,5 +1,4 @@
 import { CollabKitProvider, CustomTheme, Thread, useUnreadCount } from '@collabkit/react';
-import * as themes from '@collabkit/custom-themes';
 import { User } from './types';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { GoogleLogin } from '@react-oauth/google';
@@ -77,8 +76,6 @@ function Demo() {
   const prevStateRef = useRef<DashboardStore>();
   const [pathname] = useLocation();
   const name = pathname.slice(1);
-  const theme: CustomTheme | undefined =
-    name in themes ? themes[name as keyof typeof themes] : undefined;
   return (
     <CollabKitProvider
       _test={test}
@@ -144,7 +141,6 @@ function Demo() {
       // this is the strangest thing, if we pass a snapshot into our product
       // it breaks our app, but if we stringify and then parse it, it works
       user={JSON.parse(JSON.stringify(user))}
-      theme={theme}
       // theme="dark"
       // renderAvatar={CustomAvatar}
       // renderThreadContextPreview={() => {

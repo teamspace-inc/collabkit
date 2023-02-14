@@ -14,10 +14,6 @@ export default defineConfig({
         __dirname,
         '../../packages/@collabkit/react-scroll-area/src/index.ts'
       ),
-      '@collabkit/custom-themes': resolve(
-        __dirname,
-        '../../packages/@collabkit/custom-themes/src/index.ts'
-      ),
       'rehype-react': resolve(
         __dirname,
         '../../packages/@collabkit/react/src/vendor/rehype-react.bundle.js'
