@@ -1,4 +1,3 @@
-import fetch from 'node-fetch';
 export async function signInWithUserToken(appId: string, userToken: string) {
   const response = await fetch(`https://test-api.collabkit.dev/v1/generateCustomToken`, {
     method: 'POST',
