@@ -36,8 +36,7 @@ export function Customisable() {
             title="Component"
             options={[
               { node: <div style={padding}>Thread</div>, value: 0 },
-              { node: <div style={padding}>Popover Thread</div>, value: 1 },
-              { node: <div style={padding}>Inbox</div>, value: 2 },
+              { node: <div style={padding}>Inbox</div>, value: 1 },
             ]}
             value={component}
             onChange={setComponent}
