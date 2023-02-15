@@ -28,9 +28,9 @@ it('routing: route not found', async () => {
 
 it('routing: route works', async () => {
   const http = mockHttp({
-    url: `http://test.host.com/v1/createUser/`,
+    url: `http://example.com/v1/createUser/`,
     headers: {
-      host: 'test.host.com',
+      host: 'example.com',
     },
     query: {},
     body: {},

@@ -3,7 +3,7 @@ import sinon from 'sinon';
 
 import * as functions from 'firebase-functions';
 
-import { createUserImpl } from '../createUser';
+import { UserImpl } from '../User';
 
 const mockHttp = (props: { path?: string; query?: object; body?: object; headers?: object }) => {
   const req = {
@@ -27,7 +27,7 @@ const mockHttp = (props: { path?: string; query?: object; body?: object; headers
 
 it('createUser: appId not provided', async () => {
   const http = mockHttp({ query: {}, body: {} });
-  await createUserImpl(http.req, http.res);
+  await UserImpl(http.req, http.res);
   const send = http.res.send as sinon.SinonSpy;
   const { args } = send.getCalls()[0];
   expect(args[0]).toEqual({ status: 400, error: '"appId" not provided' });
@@ -40,7 +40,7 @@ it('createUser: apiKey not provided', async () => {
       appId: 'appId',
     },
   });
-  await createUserImpl(http.req, http.res);
+  await UserImpl(http.req, http.res);
   const send = http.res.send as sinon.SinonSpy;
   const { args } = send.getCalls()[0];
   expect(args[0]).toEqual({ status: 400, error: '"apiKey" not provided' });
@@ -54,7 +54,7 @@ it('createUser: workspaceId not provided', async () => {
       apiKey: 'apiKey',
     },
   });
-  await createUserImpl(http.req, http.res);
+  await UserImpl(http.req, http.res);
   const send = http.res.send as sinon.SinonSpy;
   const { args } = send.getCalls()[0];
   expect(args[0]).toEqual({ status: 400, error: '"workspaceId" not provided' });
@@ -69,7 +69,7 @@ it('createUser: userId not provided', async () => {
       workspaceId: 'workspaceId',
     },
   });
-  await createUserImpl(http.req, http.res);
+  await UserImpl(http.req, http.res);
   const send = http.res.send as sinon.SinonSpy;
   const { args } = send.getCalls()[0];
   expect(args[0]).toEqual({ status: 400, error: '"userId" not provided' });
@@ -85,7 +85,7 @@ it('createUser: user not provided', async () => {
     },
     path: '/userId',
   });
-  await createUserImpl(http.req, http.res);
+  await UserImpl(http.req, http.res);
   const send = http.res.send as sinon.SinonSpy;
   const { args } = send.getCalls()[0];
   expect(args[0]).toEqual({ status: 400, error: '"user" not provided' });
@@ -104,7 +104,7 @@ it('createUser: "user" object is invalid', async () => {
     },
     path: '/userId',
   });
-  await createUserImpl(http.req, http.res);
+  await UserImpl(http.req, http.res);
   const send = http.res.send as sinon.SinonSpy;
   const { args } = send.getCalls()[0];
   expect(args[0]).toEqual({ status: 400, error: '"user" object is invalid' });
@@ -124,7 +124,7 @@ it('createUser: "apiKey" is invalid', async () => {
     },
     path: '/userId',
   });
-  await createUserImpl(http.req, http.res);
+  await UserImpl(http.req, http.res);
   const send = http.res.send as sinon.SinonSpy;
   const { args } = send.getCalls()[0];
   expect(args[0]).toEqual({ status: 400, error: '"apiKey" invalid' });
@@ -144,7 +144,7 @@ it('createUser: sucess', async () => {
     },
     path: '/userId',
   });
-  await createUserImpl(http.req, http.res);
+  await UserImpl(http.req, http.res);
   const send = http.res.send as sinon.SinonSpy;
   const { args } = send.getCalls()[0];
   expect(args[0]).toEqual('Created/Updated User Successfully.');

@@ -10,8 +10,8 @@ import { onEvent } from './onEvent';
 import { sendNotification } from './sendNotification';
 import { triggerWebhook } from './triggerWebhook';
 import { comment } from './comment';
-import { createUser } from './createUser';
-import { createWorkspace } from './createWorkspace';
+import { User } from './User';
+import { Workspace } from './Workspace';
 import { generateCustomToken } from './generateCustomToken';
 
 export {
@@ -22,7 +22,7 @@ export {
   sendNotification,
   triggerWebhook,
   comment,
-  createUser,
-  createWorkspace,
+  User,
+  Workspace,
   generateCustomToken,
 };

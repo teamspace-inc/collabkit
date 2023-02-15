@@ -3,16 +3,12 @@ import { ref } from './actions/data/refs';
 import { isValidUser } from './actions/helpers/isValidUser';
 import { updateUserAndWorkspace } from './actions/helpers/updateUserAndWorkspace';
 
-export async function createUserImpl(
-  request: functions.https.Request,
-  response: functions.Response
-) {
+export async function UserImpl(request: functions.https.Request, response: functions.Response) {
   if (request.method !== 'PUT') {
     response.status(405).send({ status: 405, error: 'Method not allowed' });
     return;
   }
 
-  const userId = request.path.split('/').pop();
   const { appId, workspaceId, apiKey, user } = request.body;
 
   if (!appId) {
@@ -33,7 +29,10 @@ export async function createUserImpl(
     return;
   }
 
-  if (!userId) {
+  let pathParams = request.path.split('/');
+  const userId = pathParams.pop();
+
+  if (!userId || typeof userId !== 'string' || pathParams.length < 2) {
     console.debug('"userId" not provided', userId);
     response.status(400).send({ status: 400, error: '"userId" not provided' });
     return;
@@ -64,8 +63,8 @@ export async function createUserImpl(
   response.status(200).send('Created/Updated User Successfully.');
 }
 
-export const createUser = functions
+export const User = functions
   .runWith({ minInstances: 1 })
   .https.onRequest(async (request, response) => {
-    await createUserImpl(request, response);
+    await UserImpl(request, response);
   });
