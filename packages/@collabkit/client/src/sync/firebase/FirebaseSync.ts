@@ -420,9 +420,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
     };
   }) {
     DEBUG && console.log('[network] markResolved', { appId, workspaceId, threadId, pin });
-    const updates = {
-      [ref.path`/views/openThreads/${appId}/${workspaceId}/${threadId}`]: null,
-    };
+    const updates = UpdateBuilder.resolve({ appId, workspaceId, threadId });
 
     if (pin) {
       // clear open pins for this thread
@@ -447,11 +445,10 @@ export class FirebaseSync implements Sync.SyncAdapter {
     eventId: string;
   }): Promise<void> {
     DEBUG && console.log('[network] markSeen', { appId, userId, workspaceId, threadId, eventId });
-    const data = { seenUntilId: eventId, seenAt: serverTimestamp() };
-    await update(ref`/`, {
-      [ref.path`/seen/${appId}/${userId}/${workspaceId}/${threadId}/`]: data,
-      [ref.path`/views/seenBy/${appId}/${workspaceId}/${threadId}/${userId}`]: data,
-    });
+    await update(
+      ref`/`,
+      UpdateBuilder.seen({ appId, userId, workspaceId, threadId, seenUntilId: eventId })
+    );
   }
 
   async startTyping({
@@ -589,6 +586,12 @@ export class FirebaseSync implements Sync.SyncAdapter {
               ...updates,
               ...UpdateBuilder.resolve({ appId, workspaceId, threadId }),
             };
+            if (parentEvent) {
+              updates = {
+                ...updates,
+                ...UpdateBuilder.removeAttachments({ parentEvent, workspaceId, appId }),
+              };
+            }
             break;
           case 'reopen':
             console.warn('[CollabKit] reopen not implemented');

@@ -121,8 +121,8 @@ export class LocalOnlySync implements SyncAdapter {
     // noop
   }
 
-  async sendMessage(): Promise<{ id: string }> {
-    return { id: nanoid() };
+  async sendMessage(): Promise<void> {
+    return Promise.resolve();
   }
 
   subscribeSeen(): void {
