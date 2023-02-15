@@ -1,6 +1,6 @@
 import type { Store } from '@collabkit/core';
 import { extract } from '@collabkit/editor';
-import { clearComposerAttachments } from './clearAttachments';
+import { clearAttachments } from './clearAttachments';
 import { createEvent } from './createEvent';
 import { getConfig } from './getConfig';
 
@@ -36,5 +36,5 @@ export async function updateComment(store: Store) {
     parentEvent,
     threadId,
   });
-  clearComposerAttachments(store, { workspaceId, threadId, eventId });
+  clearAttachments(store, { workspaceId, threadId, eventId });
 }

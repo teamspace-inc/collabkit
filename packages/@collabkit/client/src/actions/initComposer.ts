@@ -15,7 +15,7 @@ export function initComposer(
 
   const event = store.workspaces?.[workspaceId].timeline?.[threadId]?.[eventId];
   if (event) {
-    composers[threadId][eventId].attachments = event.attachments ?? null;
+    composers[threadId][eventId].attachments = event.attachments ?? {};
   }
 
   return composers[threadId][eventId];

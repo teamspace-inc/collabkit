@@ -68,14 +68,14 @@ export type Callbacks = {
     userId: string;
     workspaceId: string;
     objectId: string;
-    state: object;
+    state: string;
   }) => void;
   onPinHover?: (data: {
     userId: string;
     workspaceId: string;
     threadId: string;
     objectId: string;
-    state: object;
+    state: string;
   }) => void;
   onPinUnhover?: (data: {
     userId: string;
@@ -493,7 +493,7 @@ export type Pin = {
   threadId: string;
   eventId: string;
   createdById: string;
-  state: object;
+  state: string | null;
 };
 
 export type PendingPin = Pin & {
@@ -545,7 +545,7 @@ export interface Composer {
   isTypingTimeoutID?: ReturnType<typeof setTimeout>;
   isTyping: { [endUserId: string]: boolean };
   isMentioning: boolean;
-  attachments: Attachments | null;
+  attachments: Attachments;
   hasText: boolean;
 }
 

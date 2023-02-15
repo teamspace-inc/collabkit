@@ -17,7 +17,7 @@ export function createComposer(): Composer {
     enabled: false,
     isMentioning: false,
     hasText: false,
-    attachments: null,
+    attachments: {},
   };
 }
 

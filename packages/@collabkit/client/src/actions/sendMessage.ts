@@ -2,7 +2,7 @@ import type { Store } from '@collabkit/core';
 import { actions } from '.';
 import { extract } from '@collabkit/editor';
 import { clearComposer } from './clearComposer';
-import { clearComposerAttachments } from './clearAttachments';
+import { clearAttachments } from './clearAttachments';
 import { createEvent } from './createEvent';
 
 export async function sendMessage(
@@ -56,7 +56,7 @@ export async function sendMessage(
     parentEvent: null,
     threadId,
   });
-  clearComposerAttachments(store, { workspaceId, threadId, eventId });
+  clearAttachments(store, { workspaceId, threadId, eventId });
   store.callbacks?.onCommentSend?.({ workspaceId, threadId, userId, event });
   if (isFirstEvent) {
     store.callbacks?.onThreadCreated?.({

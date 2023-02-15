@@ -10,8 +10,14 @@ export async function createEvent(
 ) {
   const { event, parentEvent, threadId } = props;
   const appId = store.config.appId;
-  const userId = store.userId!;
-  const workspaceId = store.workspaceId!;
+  const userId = store.userId;
+  if (!userId) {
+    throw new Error('CollabKit: cannot create event, anonymous user');
+  }
+  const workspaceId = store.workspaceId;
+  if (!workspaceId) {
+    throw new Error('CollabKit: cannot create event, no workspace');
+  }
   const newEventId = store.sync.nextEventId({ appId, workspaceId, threadId });
   const promise = store.sync.sendMessage({
     appId,
