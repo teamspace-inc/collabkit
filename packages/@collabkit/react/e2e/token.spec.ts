@@ -33,7 +33,7 @@ var requestOptions = {
   body: raw,
 };
 
-fetch(`https://test-api.collabkit.dev/v1/createUser/${USER_ID}`, requestOptions)
+fetch(`https://test-api.collabkit.dev/v1/user/${USER_ID}`, requestOptions)
   .then(response => response.text())
   .then(result => console.log(result))
   .catch(error => console.log('error', error));
