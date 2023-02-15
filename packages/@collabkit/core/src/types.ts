@@ -68,14 +68,14 @@ export type Callbacks = {
     userId: string;
     workspaceId: string;
     objectId: string;
-    state: object;
+    state: string;
   }) => void;
   onPinHover?: (data: {
     userId: string;
     workspaceId: string;
     threadId: string;
     objectId: string;
-    state: object;
+    state: string;
   }) => void;
   onPinUnhover?: (data: {
     userId: string;
@@ -94,7 +94,7 @@ export type Callbacks = {
     threadId: string;
     workspaceId: string;
     objectId: string;
-  }) => object;
+  }) => string;
   onThreadCreated?: (data: {
     userId: string;
     workspaceId: string;
@@ -215,7 +215,8 @@ export type Target =
   | EmojiTarget
   | CommentAddEmojiButtonTarget
   | CommentActionsEmojiButtonTarget
-  | ChannelTarget;
+  | ChannelTarget
+  | ComposerPinTarget;
 
 export type CommentReplyCountButtonTarget = {
   type: 'commentReplyCountButton';
@@ -283,8 +284,13 @@ export type ComposerMentionsButtonTarget = {
 export type ComposerPinButtonTarget = {
   type: 'composerPinButton';
   composer: ComposerTarget;
-  pinId?: string | null;
-  objectId?: string | null;
+};
+
+export type ComposerPinTarget = {
+  type: 'composerPin';
+  composer: ComposerTarget;
+  pinId: string | null;
+  objectId: string | null;
 };
 
 export type MenuTarget = {
@@ -440,6 +446,58 @@ export type Event = {
   mentions?: readonly string[];
   pinId?: string;
   reactions?: EventReactions;
+  attachments?: Attachments | null;
+};
+
+export type FirebaseEvent = {
+  type: EventType;
+  body: string;
+  system: 'resolve' | 'reopen' | null;
+  createdAt: number | object;
+  createdById: string;
+  parentId: string | null;
+  mentions: {
+    [userId: string]: boolean;
+  } | null;
+  attachments: Attachments | null;
+};
+
+export type Attachments = {
+  [attachmentId: string]: Attachment;
+};
+
+export type Attachment = {
+  type: 'pin';
+  x: number;
+  y: number;
+  objectId: string;
+  state: string | null;
+  pending?: boolean;
+};
+
+export type FirebasePin = {
+  x: number;
+  y: number;
+  threadId: string;
+  eventId: string;
+  createdById: string;
+  state: string;
+};
+
+export type Pin = {
+  id: string;
+  objectId: string;
+  x: number;
+  y: number;
+  workspaceId: string;
+  threadId: string;
+  eventId: string;
+  createdById: string;
+  state: string | null;
+};
+
+export type PendingPin = Pin & {
+  isPending: true;
 };
 
 export type WithShowHeader<T> = T & {
@@ -487,34 +545,9 @@ export interface Composer {
   isTypingTimeoutID?: ReturnType<typeof setTimeout>;
   isTyping: { [endUserId: string]: boolean };
   isMentioning: boolean;
-  pendingPin: null | PendingPin;
+  attachments: Attachments;
   hasText: boolean;
 }
-
-export type FirebasePin = {
-  x: number;
-  y: number;
-  threadId: string;
-  eventId: string;
-  createdById: string;
-  state: string;
-};
-
-export type Pin = {
-  id: string;
-  objectId: string;
-  x: number;
-  y: number;
-  workspaceId: string;
-  threadId: string;
-  eventId: string;
-  createdById: string;
-  state: object;
-};
-
-export type PendingPin = Pin & {
-  isPending: true;
-};
 
 // move pins to a timeline event as an attachment,
 // break apart thread info

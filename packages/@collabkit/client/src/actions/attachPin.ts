@@ -1,4 +1,5 @@
-import type { Store } from '@collabkit/core';
+import type { Attachment, Store } from '@collabkit/core';
+import { focusComposer } from './focusComposer';
 
 export function attachPin(
   store: Store,
@@ -17,23 +18,22 @@ export function attachPin(
   const { type, ...composerProps } = composerId;
   const { threadId, workspaceId, eventId } = composerProps;
   const id = store.sync.nextPinId({ appId, ...composerProps, objectId });
-  const composer =
-    store.workspaces[composerId.workspaceId].composers[composerId.threadId][composerId.eventId];
-  composer.pendingPin = {
-    id,
-    threadId,
-    workspaceId,
-    eventId,
+  const composer = store.workspaces[workspaceId].composers[threadId][eventId];
+  const pinAttachment: Attachment = {
+    type: 'pin',
     x,
     y,
     objectId,
-    createdById: userId,
-    isPending: true,
-    state: store.callbacks?.onPinAttach?.({ objectId, userId, threadId, workspaceId }) ?? {},
+    state: store.callbacks?.onPinAttach?.({ objectId, userId, threadId, workspaceId }) ?? null,
+    pending: true,
   };
+  composer.attachments[id] = pinAttachment;
   store.uiState = 'idle';
-  // insertComposerPin(store, {
-  //   pinId: id,
-  // });
+  if (store.composerId) {
+    focusComposer(store, store.composerId);
+  } else {
+    console.warn('no composer to focus');
+  }
+
   return id;
 }

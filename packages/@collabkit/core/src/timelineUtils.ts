@@ -1,4 +1,4 @@
-import type { Event, Timeline, WithID, WithShowHeader } from './types';
+import type { Event, Pin, Timeline, WithID, WithShowHeader } from './types';
 const DELETE_ID = 'delete-';
 
 export function deletedIds(timeline: Timeline): Readonly<Set<string>> {

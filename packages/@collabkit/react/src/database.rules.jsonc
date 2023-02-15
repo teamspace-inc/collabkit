@@ -175,37 +175,6 @@
         }
       }
     },
-    "pins": {
-      "$appId": {
-        "$workspaceId": {
-          ".read": "(auth.token.appId === $appId) && ((root.child('apps').child(auth.token.appId).child('mode').val() === 'UNSECURED' || (root.child('apps').child(auth.token.appId).child('mode').val() === 'SECURED' && $workspaceId === auth.token.workspaceId)))",
-          "$objectId": {
-            "$pinId": {
-              ".write": "(auth.token.appId === $appId) && ((root.child('apps').child(auth.token.appId).child('mode').val() === 'UNSECURED' || (root.child('apps').child(auth.token.appId).child('mode').val() === 'SECURED' && $workspaceId === auth.token.workspaceId)))",
-              ".validate": "newData.hasChildren(['x', 'y', 'threadId', 'eventId', 'createdById'])",
-              "x": {
-                ".validate": "newData.isNumber()"
-              },
-              "y": {
-                ".validate": "newData.isNumber()"
-              },
-              "threadId": {
-                ".validate": "newData.isString() && (root.child('timeline').child($appId).child($workspaceId).child(newData.val()).exists())"
-              },
-              "eventId": {
-                ".validate": "newData.isString() && (root.child('timeline').child($appId).child($workspaceId).child(newData.parent().child('threadId').val()).child(newData.val()).exists())"
-              },
-              "createdById": {
-                ".validate": "newData.isString() && (root.child('profiles').child($appId).child(newData.val()).exists())"
-              },
-              "state": {
-                ".validate": "newData.isString()"
-              }
-            }
-          }
-        }
-      }
-    },
     "views": {
       "workspaceProfiles": {
         "$appId": {
@@ -245,21 +214,6 @@
           }
         }
       },
-      "threadPins": {
-        "$appId": {
-          "$workspaceId": {
-            ".read": "auth.token.appId === $appId",
-            "$threadId": {
-              ".read": "auth.token.appId === $appId",
-              "$eventId": {
-                ".read": "auth.token.appId === $appId",
-                ".write": "auth.token.appId === $appId && ((root.child('apps').child(auth.token.appId).child('mode').val() === 'UNSECURED' || (root.child('apps').child(auth.token.appId).child('mode').val() === 'SECURED' && $workspaceId === auth.token.workspaceId)))",
-                ".validate": "newData.isString()"
-              }
-            }
-          }
-        }
-      },
       "openThreads": {
         "$appId": {
           "$workspaceId": {
@@ -285,10 +239,10 @@
                   ".validate": "newData.isNumber()"
                 },
                 "threadId": {
-                  ".validate": "newData.isString() && (root.child('timeline').child($appId).child($workspaceId).child(newData.val()).exists())"
+                  ".validate": "newData.isString()"
                 },
                 "eventId": {
-                  ".validate": "newData.isString() && (root.child('timeline').child($appId).child($workspaceId).child(newData.parent().child('threadId').val()).child(newData.val()).exists())"
+                  ".validate": "newData.isString()"
                 },
                 "createdById": {
                   ".validate": "newData.isString() && (root.child('profiles').child($appId).child(newData.val()).exists())"
@@ -311,7 +265,7 @@
                 ".read": "auth.token.appId === $appId",
                 ".write": "auth.token.appId === $appId && ((root.child('apps').child(auth.token.appId).child('mode').val() === 'UNSECURED' || (root.child('apps').child(auth.token.appId).child('mode').val() === 'SECURED' && $workspaceId === auth.token.workspaceId && $endUserId === auth.token.userId)))",
                 "seenUntilId": {
-                  ".validate": "root.child('timeline').child($appId).child($workspaceId).child($threadId).child(newData.val()).exists()"
+                  ".validate": "newData().isString()"
                 },
                 "seenAt": {
                   ".validate": "newData.isNumber()"
@@ -361,7 +315,7 @@
               ".read": "auth.token.appId === $appId",
               ".write": "newData.hasChildren(['seenUntilId', 'seenAt']) && (auth.token.appId === $appId) && ((root.child('apps').child(auth.token.appId).child('mode').val() === 'UNSECURED' || (root.child('apps').child(auth.token.appId).child('mode').val() === 'SECURED' && $workspaceId === auth.token.workspaceId && $endUserId === auth.token.userId)))",
               "seenUntilId": {
-                ".validate": "root.child('timeline').child($appId).child($workspaceId).child($threadId).child(newData.val()).exists()"
+                ".validate": "newData.isString()"
               },
               "seenAt": {
                 ".validate": "newData.isNumber()"
@@ -425,6 +379,26 @@
               "mentions": {
                 "$endUserId": {
                   ".validate": "newData.isBoolean()"
+                }
+              },
+              "attachments": {
+                "$attachmentId": {
+                  ".validate": "newData.hasChildren(['x', 'y', 'objectId', 'state', 'type'])",
+                  "type": {
+                    ".validate": "newData.isString() && newData.val() === 'pin'"
+                  },
+                  "x": {
+                    ".validate": "newData.isNumber()"
+                  },
+                  "y": {
+                    ".validate": "newData.isNumber()"
+                  },
+                  "objectId": {
+                    ".validate": "newData.isString()"
+                  },
+                  "state": {
+                    ".validate": "newData.isString()"
+                  }
                 }
               }
             }

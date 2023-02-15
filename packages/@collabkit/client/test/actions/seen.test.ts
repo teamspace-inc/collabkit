@@ -58,14 +58,14 @@ test('seen', async () => {
     workspaceId,
     threadId,
     userId,
-    body: 'Hello world',
     event: {
       type: 'message',
       body: 'Hello world',
-      createdAt: +new Date(),
+      createdAt: sync.serverTimestamp(),
       createdById: userId,
     },
-    eventId: firstEventId,
+    parentEvent: null,
+    newEventId: firstEventId,
   });
 
   const secondEventId = sync.nextEventId({ appId, workspaceId, threadId });
@@ -74,14 +74,14 @@ test('seen', async () => {
     workspaceId,
     threadId,
     userId,
-    body: 'Hello world',
     event: {
       type: 'message',
       body: 'Hello world',
-      createdAt: +new Date(),
+      createdAt: sync.serverTimestamp(),
       createdById: userId,
     },
-    eventId: secondEventId,
+    parentEvent: null,
+    newEventId: secondEventId,
   });
 
   const target: CommentTarget = {
@@ -98,7 +98,14 @@ test('seen', async () => {
     threadId,
   });
 
-  expect(seenBy).toStrictEqual({});
+  expect(seenBy).toStrictEqual({
+    [userId]: {
+      seenAt: expect.any(Number),
+      seenUntilId: secondEventId,
+    },
+  });
+
+  store.userId = 'other-user';
 
   await seen(store as Store, { target });
 
@@ -109,13 +116,17 @@ test('seen', async () => {
   });
 
   expect(seenBy).toStrictEqual({
+    ['other-user']: {
+      seenAt: expect.any(Number),
+      seenUntilId: secondEventId,
+    },
     [userId]: {
       seenAt: expect.any(Number),
       seenUntilId: secondEventId,
     },
   });
 
-  // ensure marking earlier events as seen is a no-op
+  // // ensure marking earlier events as seen is a no-op
   await seen(store as Store, { target: { ...target, eventId: firstEventId } });
 
   seenBy = await getThreadSeenBy({
@@ -125,6 +136,10 @@ test('seen', async () => {
   });
 
   expect(seenBy).toStrictEqual({
+    ['other-user']: {
+      seenAt: expect.any(Number),
+      seenUntilId: secondEventId,
+    },
     [userId]: {
       seenAt: expect.any(Number),
       seenUntilId: secondEventId,

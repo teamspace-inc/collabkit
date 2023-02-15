@@ -9,7 +9,7 @@ import {
   setupWorkspaceProfile,
 } from '../../../../test-utils/src';
 
-import { FirebaseId, Pin, Subscriptions, Sync, ThreadInfo } from '@collabkit/core';
+import { Attachment, FirebaseId, Subscriptions, Sync, ThreadInfo } from '@collabkit/core';
 import { createStore, createWorkspace, createComposer } from '../../../src/store';
 import { FirebaseSync } from '../../../src/sync/firebase/FirebaseSync';
 import { getAuth, signInWithCustomToken } from 'firebase/auth';
@@ -112,7 +112,6 @@ describe('FirebaseSync', async () => {
           resolve(event);
         },
         onThreadTypingChange: (event) => {},
-        onThreadSeenByUser: (event) => {},
         onThreadInfo: (event) => {},
         onThreadProfile: (event) => {},
         onThreadProfiles(props) {},
@@ -126,14 +125,16 @@ describe('FirebaseSync', async () => {
       userId,
       workspaceId,
       threadId,
-      body: 'Test Message',
       event: {
         type: 'message',
         body: 'Test Message',
         createdAt: Date.now(),
         createdById: userId,
+        attachments: null,
+        mentions: [],
       },
-      eventId: id,
+      parentEvent: null,
+      newEventId: id,
     });
 
     const savedEvent = await event;
@@ -148,6 +149,79 @@ describe('FirebaseSync', async () => {
         createdById: userId,
         mentions: [],
         id,
+      },
+      eventId: id,
+      threadId,
+      workspaceId,
+    });
+  });
+
+  test('sendMessage with attachments', async () => {
+    const subs: Subscriptions = {};
+
+    const threadId = nanoid();
+
+    const event = new Promise((resolve) => {
+      sync.subscribeThread({
+        appId,
+        workspaceId,
+        threadId,
+        subs,
+        onTimelineEventAdded: (event) => {
+          resolve(event);
+        },
+        onThreadTypingChange: (event) => {},
+        onThreadInfo: (event) => {},
+        onThreadProfile: (event) => {},
+        onThreadProfiles(props) {},
+      });
+    });
+
+    const id = sync.nextEventId({ appId, workspaceId, threadId });
+
+    const attachment: Attachment = {
+      type: 'pin',
+      x: 10,
+      y: 20,
+      objectId: 'task-4',
+      state: JSON.stringify({ something: 'foo' }),
+    };
+    const attachmentId = nanoid();
+    const savedAttachment = attachment;
+
+    await sync.sendMessage({
+      appId,
+      userId,
+      workspaceId,
+      threadId,
+      event: {
+        type: 'message',
+        body: 'Test Message',
+        createdAt: Date.now(),
+        createdById: userId,
+        attachments: {
+          [attachmentId]: attachment,
+        },
+      },
+      parentEvent: null,
+      newEventId: id,
+    });
+
+    const savedEvent = await event;
+
+    Object.values(subs).map((sub) => sub());
+
+    expect(savedEvent).toStrictEqual({
+      event: {
+        type: 'message',
+        body: 'Test Message',
+        createdAt: expect.any(Number),
+        createdById: userId,
+        mentions: [],
+        id,
+        attachments: {
+          [attachmentId]: savedAttachment,
+        },
       },
       eventId: id,
       threadId,
@@ -192,182 +266,6 @@ describe('FirebaseSync', async () => {
     expect(openThreads.find((thread) => thread.threadId === threadId)).toBeUndefined();
   });
 
-  async function getPins() {
-    let subs: Subscriptions = {};
-    const promise = new Promise((resolve) =>
-      sync.subscribeOpenPins({
-        appId,
-        workspaceId,
-        subs,
-        onGet: resolve,
-        onObjectChange: () => {},
-        onObjectRemove: () => {},
-      })
-    );
-    const pins = await promise;
-    Object.values(subs).map((sub) => sub());
-    return pins as { [objectId: string]: { [id: string]: Pin } } | null;
-  }
-
-  describe('pin', async () => {
-    const threadId = nanoid();
-    const objectId = 'task-4';
-    let pinId;
-    let eventId;
-
-    beforeAll(async () => {
-      const id = sync.nextEventId({ appId, workspaceId, threadId });
-      await sync.sendMessage({
-        appId,
-        userId,
-        workspaceId,
-        threadId,
-        body: 'Test Message',
-        event: {
-          type: 'message',
-          body: 'Test Message',
-          createdAt: Date.now(),
-          createdById: userId,
-        },
-        eventId: id,
-      });
-
-      eventId = id;
-    });
-
-    test('savePin', async () => {
-      expect(await getPins()).toStrictEqual({});
-
-      pinId = sync.nextPinId({ appId, workspaceId, objectId });
-
-      await sync.savePin({
-        appId,
-        workspaceId,
-        pinId,
-        userId,
-        pin: {
-          objectId,
-          eventId,
-          threadId,
-          x: 0,
-          y: 0,
-          state: {},
-        },
-      });
-
-      const pins = await getPins();
-
-      if (!pins) {
-        throw new Error('pins is null');
-      }
-
-      if (!pins[objectId]) {
-        throw new Error('pins[objectId] is null');
-      }
-
-      expect(pins[objectId][pinId]).toStrictEqual({
-        eventId,
-        threadId,
-        createdById: userId,
-        x: 0,
-        y: 0,
-        state: '{}',
-      });
-    });
-
-    test('movePin', async () => {
-      await sync.movePin({
-        appId,
-        workspaceId,
-        objectId,
-        pinId,
-        x: 10,
-        y: 20,
-      });
-
-      const pins = await getPins();
-
-      expect(pins?.[objectId]?.[pinId]).toStrictEqual({
-        eventId,
-        threadId,
-        createdById: userId,
-        x: 10,
-        y: 20,
-        state: '{}',
-      });
-    });
-
-    test('deletePin', async () => {
-      await sync.deletePin({
-        appId,
-        workspaceId,
-        objectId,
-        pinId,
-        threadId,
-        eventId,
-      });
-
-      const pins = await getPins();
-
-      expect(pins?.[objectId]?.[pinId]).toBe(undefined);
-    });
-  });
-
-  test('saveEvent', async () => {
-    const subs: Subscriptions = {};
-
-    const threadId = nanoid();
-
-    const event = new Promise((resolve) => {
-      sync.subscribeThread({
-        appId,
-        workspaceId,
-        threadId,
-        subs,
-        onTimelineEventAdded: (event) => {
-          resolve(event);
-        },
-        onThreadTypingChange: (event) => {},
-        onThreadSeenByUser: (event) => {},
-        onThreadInfo: (event) => {},
-        onThreadProfile: (event) => {},
-        onThreadProfiles(props) {},
-      });
-    });
-
-    const { id } = await sync.saveEvent({
-      appId,
-      workspaceId,
-      threadId,
-      event: {
-        type: 'system',
-        body: '',
-        system: 'reopen',
-        createdAt: Date.now(),
-        createdById: userId,
-      },
-    });
-
-    const savedEvent = await event;
-
-    Object.values(subs).map((sub) => sub());
-
-    expect(savedEvent).toStrictEqual({
-      event: {
-        type: 'system',
-        body: '',
-        system: 'reopen',
-        createdAt: expect.any(Number),
-        createdById: userId,
-        mentions: [],
-        id,
-      },
-      eventId: id,
-      threadId,
-      workspaceId,
-    });
-  });
-
   test('markSeen', async () => {
     const subs: Subscriptions = {};
 
@@ -379,14 +277,14 @@ describe('FirebaseSync', async () => {
       userId,
       workspaceId,
       threadId,
-      body: 'Test Message',
       event: {
         type: 'message',
         body: 'Test Message',
         createdAt: Date.now(),
         createdById: userId,
       },
-      eventId: id,
+      parentEvent: null,
+      newEventId: id,
     });
 
     const seen = new Promise((resolve, reject) =>
@@ -401,6 +299,8 @@ describe('FirebaseSync', async () => {
       })
     );
 
+    // todo make this test check seen for another user
+    // as send a message now marks it as seen
     await sync.markSeen({
       appId,
       workspaceId,
@@ -435,14 +335,14 @@ describe('FirebaseSync', async () => {
       userId,
       workspaceId,
       threadId,
-      body: 'Test Message',
       event: {
         type: 'message',
         body: 'Test Message',
         createdAt: Date.now(),
         createdById: userId,
       },
-      eventId: id,
+      parentEvent: null,
+      newEventId: id,
     });
 
     const updatedInbox = await inbox;

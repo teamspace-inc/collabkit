@@ -59,14 +59,14 @@ describe('resolve + reopen', async () => {
       workspaceId,
       threadId,
       userId,
-      body: 'Hello world',
       event: {
         type: 'message',
         body: 'Hello world',
         createdAt: +new Date(),
         createdById: userId,
       },
-      eventId: sync.nextEventId({ appId, workspaceId, threadId }),
+      parentEvent: null,
+      newEventId: sync.nextEventId({ appId, workspaceId, threadId }),
     });
   });
 
@@ -85,11 +85,11 @@ describe('resolve + reopen', async () => {
 
     expect(timelineUtils.computeIsResolved(timeline)).toBe(false);
 
-    const id = await resolveThread(store as Store, { workspaceId, threadId });
+    const event = await resolveThread(store as Store, { workspaceId, threadId });
 
-    expect(id).toBeDefined();
+    expect(event?.id).toBeDefined();
 
-    if (!id) {
+    if (!event?.id) {
       throw new Error('id is undefined');
     }
 
@@ -99,7 +99,7 @@ describe('resolve + reopen', async () => {
       threadId,
     });
 
-    expect(timeline?.[id]).toStrictEqual({
+    expect(timeline?.[event.id]).toStrictEqual({
       id: expect.any(String),
       type: 'system',
       system: 'resolve',
@@ -125,9 +125,9 @@ describe('resolve + reopen', async () => {
   });
 
   test('reopen', async () => {
-    const id = await reopenThread(store as Store, { workspaceId, threadId });
-    expect(id).toBeDefined();
-    if (!id) {
+    const createdEvent = await reopenThread(store as Store, { workspaceId, threadId });
+    expect(createdEvent?.id).toBeDefined();
+    if (!createdEvent?.id) {
       throw new Error('id is undefined');
     }
 
@@ -142,7 +142,7 @@ describe('resolve + reopen', async () => {
       throw new Error('timeline is undefined');
     }
 
-    expect(timeline?.[id]).toStrictEqual({
+    expect(timeline?.[createdEvent.id]).toStrictEqual({
       id: expect.any(String),
       type: 'system',
       system: 'reopen',

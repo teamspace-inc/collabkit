@@ -13,11 +13,9 @@ export function initComposer(
     composers[threadId][eventId] = createComposer();
   }
 
-  if (store.workspaces[workspaceId].eventPins[eventId]) {
-    composers[threadId][eventId].pendingPin = {
-      ...store.workspaces[workspaceId].eventPins[eventId],
-      isPending: true,
-    };
+  const event = store.workspaces?.[workspaceId].timeline?.[threadId]?.[eventId];
+  if (event) {
+    composers[threadId][eventId].attachments = event.attachments ?? {};
   }
 
   return composers[threadId][eventId];

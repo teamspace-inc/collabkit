@@ -7,7 +7,6 @@ import type {
   ThreadInfo,
   ThreadMeta,
   WithID,
-  Pin,
 } from '../types';
 
 export interface SyncAdapter {
@@ -61,20 +60,20 @@ export interface SyncAdapter {
 
   nextThreadId(params: { appId: string; workspaceId: string }): string;
 
-  savePin(params: {
-    appId: string;
-    workspaceId: string;
-    userId: string;
-    pinId: string;
-    pin: Pin;
-  }): Promise<string>;
+  // savePin(params: {
+  //   appId: string;
+  //   workspaceId: string;
+  //   userId: string;
+  //   pinId: string;
+  //   pin: Pin;
+  // }): Promise<string>;
 
-  deletePin(params: {
-    appId: string;
-    workspaceId: string;
-    objectId: string;
-    pinId: string;
-  }): Promise<void>;
+  // deletePin(params: {
+  //   appId: string;
+  //   workspaceId: string;
+  //   objectId: string;
+  //   pinId: string;
+  // }): Promise<void>;
 
   subscribeOpenPins(params: {
     appId: string;
@@ -85,13 +84,13 @@ export interface SyncAdapter {
     onObjectRemove: (objectId: string) => void;
   }): Promise<void>;
 
-  movePin(params: {
-    appId: string;
-    workspaceId: string;
-    pinId: string;
-    x: number;
-    y: number;
-  }): Promise<void>;
+  // movePin(params: {
+  //   appId: string;
+  //   workspaceId: string;
+  //   pinId: string;
+  //   x: number;
+  //   y: number;
+  // }): Promise<void>;
 
   saveProfile(params: {
     appId: string;
@@ -99,13 +98,6 @@ export interface SyncAdapter {
     workspaceId: string;
     profile: ServerProfile;
   }): Promise<void>;
-
-  saveEvent(params: {
-    appId: string;
-    workspaceId: string;
-    threadId: string;
-    event: Event;
-  }): Promise<{ id: string }>;
 
   markResolved(params: { appId: string; workspaceId: string; threadId: string }): Promise<void>;
 
@@ -136,10 +128,10 @@ export interface SyncAdapter {
     userId: string;
     workspaceId: string;
     threadId: string;
-    body: string;
     event: Event;
-    eventId: string;
-  }): Promise<{ id: string }>;
+    parentEvent: Event | null;
+    newEventId: string;
+  }): Promise<void>;
 
   subscribeSeen(params: {
     appId: string;

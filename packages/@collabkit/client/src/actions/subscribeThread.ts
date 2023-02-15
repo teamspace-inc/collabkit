@@ -83,7 +83,6 @@ export async function subscribeThread(
         acc[event.eventId] = event.event;
         return acc;
       }, {});
-      const t1 = performance.now();
       if (store.config.mentionableUsers === 'allWorkspace') return;
       events
         .map((event) => event.event.createdById)

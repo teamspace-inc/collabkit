@@ -1,6 +1,6 @@
-import React, { ComponentProps, useEffect, useCallback, useRef } from 'react';
+import React, { ComponentProps, useEffect, useCallback, useRef, useMemo } from 'react';
 
-import { ComposerTarget } from '@collabkit/core';
+import { ComposerPinTarget, ComposerTarget } from '@collabkit/core';
 import { ContentEditable as LexicalContentEditable } from '@lexical/react/LexicalContentEditable';
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import { PlainTextPlugin } from '@lexical/react/LexicalPlainTextPlugin';
@@ -49,6 +49,7 @@ import { useUserContext } from '../../hooks/useUserContext';
 import { useStore } from '../../hooks/useStore';
 import { useComposerStore } from '../../hooks/useComposerStore';
 import { ProfileContext } from '../../hooks/useProfile';
+import { usePinAttachment } from './usePinAttachment';
 
 function onError(error: any) {
   console.error(error);
@@ -183,13 +184,13 @@ const COMPOSER_PIN_TOOLTIPS: { [state: string]: string | null } = {
 function ComposerPinButton(props: { className?: string }) {
   const { events, store } = useApp();
   const { uiState, hoveringId } = useSnapshot(store);
-  const { pendingPin } = useSnapshot(useComposerStore());
+  const pin = usePinAttachment(useComposerStore());
   const ref = useRef(null);
   const composerTarget = useTarget();
 
   const isHovering = hoveringId?.type === 'composerPinButton';
 
-  const state = ((pendingPin ? 'pin' : 'empty') +
+  const state = ((pin ? 'pin' : 'empty') +
     '-' +
     (uiState === 'selecting'
       ? 'selecting'
@@ -205,22 +206,27 @@ function ComposerPinButton(props: { className?: string }) {
     return null;
   }
 
-  const buttonTarget: ComposerPinButtonTarget = {
-    type: 'composerPinButton',
-    composer: composerTarget,
-    objectId: pendingPin?.objectId,
-    pinId: pendingPin?.id,
-  } as const;
+  const target: ComposerPinButtonTarget | ComposerPinTarget | null = pin
+    ? ({
+        type: 'composerPin',
+        composer: composerTarget,
+        objectId: pin.objectId,
+        pinId: pin.id,
+      } as const)
+    : ({
+        type: 'composerPinButton',
+        composer: composerTarget,
+      } as const);
 
   const tooltip = COMPOSER_PIN_TOOLTIPS[state];
 
   return (
     <div
       ref={ref}
-      onMouseEnter={(e) => events.onMouseEnter(e, { target: buttonTarget })}
-      onMouseLeave={(e) => events.onMouseLeave(e, { target: buttonTarget })}
+      onMouseEnter={(e) => events.onMouseEnter(e, { target })}
+      onMouseLeave={(e) => events.onMouseLeave(e, { target })}
       className={styles.pinButton}
-      onClick={(e) => events.onClick(e, { target: buttonTarget })}
+      onClick={(e) => events.onClick(e, { target })}
       data-testid="collabkit-composer-pin-button"
       {...props}
     >
@@ -232,28 +238,18 @@ function ComposerPinButton(props: { className?: string }) {
   );
 }
 
-function ComposerEditor(props: {
+const ComposerLexicalEditor = React.memo(function ComposerLexicalEditor(props: {
   placeholder: React.ReactElement;
   className?: string;
   contentEditable?: JSX.Element;
   autoFocus?: boolean;
   initialBody?: string;
-  children?: React.ReactNode;
 }) {
   const target = useTarget();
   const threadId = useThreadContext();
   const workspaceId = useWorkspaceContext();
   const { events, store } = useApp();
-  const { focusedId, isPinningEnabled } = useSnapshot(store);
   const eventId = useDefaultCommentContext();
-
-  const active = !!(
-    focusedId &&
-    focusedId.type === 'composer' &&
-    target.type === 'composer' &&
-    focusedId.threadId === target.threadId &&
-    focusedId.eventId === target.eventId
-  );
 
   const initialConfig = {
     ...initialConfigDefaults,
@@ -271,6 +267,51 @@ function ComposerEditor(props: {
   );
 
   return (
+    <LexicalComposer initialConfig={initialConfig}>
+      <EditorPlugin onMount={handleChange} />
+      <KeyPlugin onKeyDown={(event) => events.onKeyDown(event)} />
+      <PasteTextPlugin />
+      <PlainTextPlugin
+        contentEditable={
+          props.contentEditable ?? <ComposerContentEditable autoFocus={props.autoFocus} />
+        }
+        placeholder={props.placeholder}
+        ErrorBoundary={(props) => <>{props.children}</>}
+      />
+      <OnChangePlugin onChange={handleChange} />
+      {props.autoFocus ? <AutoFocusPlugin /> : <></>}
+      <HistoryPlugin />
+      <MentionsPlugin
+        onOpenChange={(open) => {
+          store.workspaces[workspaceId].composers[threadId][eventId].isMentioning = open;
+        }}
+      />
+      <TimestampPlugin />
+    </LexicalComposer>
+  );
+});
+
+function ComposerEditor(props: {
+  placeholder: React.ReactElement;
+  className?: string;
+  contentEditable?: JSX.Element;
+  autoFocus?: boolean;
+  initialBody?: string;
+  children?: React.ReactNode;
+}) {
+  const target = useTarget();
+  const { events, store } = useApp();
+  const { focusedId, isPinningEnabled } = useSnapshot(store);
+
+  const active = !!(
+    focusedId &&
+    focusedId.type === 'composer' &&
+    target.type === 'composer' &&
+    focusedId.threadId === target.threadId &&
+    focusedId.eventId === target.eventId
+  );
+
+  return (
     <div
       data-testid="collabkit-composer-editor"
       className={props.className ?? `${styles.editor({ active })} ${styles.composerGlobalStyles}`}
@@ -285,27 +326,12 @@ function ComposerEditor(props: {
           position: 'relative',
         }}
       >
-        <LexicalComposer initialConfig={initialConfig}>
-          <EditorPlugin onMount={handleChange} />
-          <KeyPlugin onKeyDown={(event) => events.onKeyDown(event)} />
-          <PasteTextPlugin />
-          <PlainTextPlugin
-            contentEditable={
-              props.contentEditable ?? <ComposerContentEditable autoFocus={props.autoFocus} />
-            }
-            placeholder={props.placeholder}
-            ErrorBoundary={(props) => <>{props.children}</>}
-          />
-          <OnChangePlugin onChange={handleChange} />
-          {props.autoFocus ? <AutoFocusPlugin /> : <></>}
-          <HistoryPlugin />
-          <MentionsPlugin
-            onOpenChange={(open) => {
-              store.workspaces[workspaceId].composers[threadId][eventId].isMentioning = open;
-            }}
-          />
-          <TimestampPlugin />
-        </LexicalComposer>
+        <ComposerLexicalEditor
+          placeholder={props.placeholder}
+          autoFocus={props.autoFocus}
+          initialBody={props.initialBody}
+          contentEditable={props.contentEditable}
+        />
         {props.children}
       </div>
     </div>

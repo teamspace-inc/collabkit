@@ -14,29 +14,6 @@ export class LocalOnlySync implements SyncAdapter {
     return nanoid();
   }
 
-  savePin(params: {
-    appId: string;
-    workspaceId: string;
-    userId: string;
-    pin: {
-      objectId: string;
-      eventId: string;
-      threadId: string;
-      x: number;
-      y: number;
-    };
-  }): Promise<string> {
-    return Promise.resolve('foo');
-  }
-  deletePin(params: {
-    appId: string;
-    workspaceId: string;
-    objectId: string;
-    pinId: string;
-  }): Promise<void> {
-    return Promise.resolve();
-  }
-
   subscribeOpenPins(params: {
     appId: string;
     workspaceId: string;
@@ -47,16 +24,7 @@ export class LocalOnlySync implements SyncAdapter {
   }): Promise<void> {
     return Promise.resolve();
   }
-  movePin(params: {
-    appId: string; // noop
-    // noop
-    workspaceId: string;
-    pinId: string;
-    x: number;
-    y: number;
-  }): Promise<void> {
-    throw new Error('Method not implemented.');
-  }
+
   getIsTyping(props: {
     appId: string;
     userId: string;
@@ -101,10 +69,6 @@ export class LocalOnlySync implements SyncAdapter {
     // noop
   }
 
-  async saveEvent(): Promise<{ id: string }> {
-    return { id: nanoid() };
-  }
-
   async markResolved(): Promise<void> {
     // noop
   }
@@ -121,8 +85,8 @@ export class LocalOnlySync implements SyncAdapter {
     // noop
   }
 
-  async sendMessage(): Promise<{ id: string }> {
-    return { id: nanoid() };
+  async sendMessage(): Promise<void> {
+    return Promise.resolve();
   }
 
   subscribeSeen(): void {

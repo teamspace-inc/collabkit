@@ -10,19 +10,4 @@ export function toggleEmojiPicker(
   } else {
     store.reactingId = null;
   }
-
-  // if (
-  //   store.reactingId?.type === props.target.type &&
-  //   store.reactingId?.eventId === props.target.eventId &&
-  //   store.reactingId?.threadId === props.target.threadId &&
-  //   store.reactingId?.workspaceId === props.target.workspaceId
-  // ) {
-  //   if (props.open) {
-  //     store.reactingId = markRaw(props.target);
-  //   } else {
-  //     store.reactingId = null;
-  //   }
-  // } else if (props.open) {
-  //   store.reactingId = markRaw(props.target);
-  // }
 }

@@ -32,6 +32,7 @@ import { ProfileContext } from '../hooks/useProfile';
 import { useStoreKeyMatches } from '../hooks/useSubscribeStoreKey';
 import { CommentProps } from '../types';
 import { useUnreadCommentsCount } from '../hooks/public/useUnreadCommentsCount';
+import { usePinAttachment } from './composer/usePinAttachment';
 
 type CommentRootProps = {
   commentId: string;
@@ -284,18 +285,26 @@ function CommentPin(props: React.ComponentProps<'img'>) {
   const eventId = useCommentContext();
   const workspaceId = useWorkspaceContext();
   const { events } = useApp();
-  const pin = useSnapshot(useWorkspaceStore().eventPins)[eventId];
+  const { attachments } = useCommentSnapshot();
+  const pinId = attachments
+    ? Object.keys(attachments).find((id) => attachments[id].type === 'pin')
+    : null;
+  const pin = pinId ? { id: pinId, ...attachments![pinId] } : null;
+
   const store = useStore();
 
-  const target: PinTarget = useMemo(
-    () => ({
-      type: 'pin',
-      threadId,
-      eventId,
-      workspaceId,
-      objectId: pin?.objectId,
-      id: pin?.id,
-    }),
+  const target: PinTarget | null = useMemo(
+    () =>
+      pin
+        ? {
+            type: 'pin',
+            threadId,
+            eventId,
+            workspaceId,
+            objectId: pin.objectId,
+            id: pin.id,
+          }
+        : null,
     [pin]
   );
 
@@ -312,9 +321,10 @@ function CommentPin(props: React.ComponentProps<'img'>) {
 
   const onClick = useCallback(
     (e: React.MouseEvent) => {
-      events.onClick(e, {
-        target,
-      });
+      target &&
+        events.onClick(e, {
+          target,
+        });
     },
     [target]
   );
@@ -328,6 +338,7 @@ function CommentPin(props: React.ComponentProps<'img'>) {
       <img
         className={styles.pin}
         onClick={onClick}
+        // todo preload or inline these images to avoid loading jank
         src={isSelected ? CommentPinSelectedSvg : CommentPinSvg}
         {...props}
       />

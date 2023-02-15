@@ -98,7 +98,15 @@ export function createEvents(store: Store) {
         }
         case 'commentReplyButton':
         case 'commentReplyCountButton': {
+          e.preventDefault();
+          e.stopPropagation();
           actions.expandThread(store, target);
+          actions.focusComposer(store, {
+            type: 'composer',
+            workspaceId: target.workspaceId,
+            threadId: target.threadId,
+            eventId: 'default',
+          });
           break;
         }
         case 'commentSaveButton': {
@@ -110,12 +118,12 @@ export function createEvents(store: Store) {
           actions.stopEditing(store);
           break;
         }
+        case 'composerPin': {
+          actions.deletePin(store, target.composer);
+          actions.stopSelecting(store);
+          break;
+        }
         case 'composerPinButton': {
-          if (target.objectId && target.pinId) {
-            actions.deletePin(store, target.composer);
-            return;
-          }
-
           switch (store.uiState) {
             case 'selecting':
               actions.stopSelecting(store);
@@ -267,12 +275,6 @@ export function createEvents(store: Store) {
               e.stopPropagation();
               e.preventDefault();
               actions.attachPin(store, target);
-              // for some reason this is needed to focus the composer
-              // this is buggy need to debug events
-              setTimeout(
-                () => store.composerId && actions.focusComposer(store, store.composerId),
-                32
-              );
             }
           }
           break;

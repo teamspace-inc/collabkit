@@ -1,5 +1,5 @@
-import type { Event, Store } from '@collabkit/core';
-import { actions } from './index';
+import type { Store } from '@collabkit/core';
+import { createEvent } from './createEvent';
 
 export async function reopenThread(store: Store, props: { workspaceId: string; threadId: string }) {
   const { workspaceId, threadId } = props;
@@ -8,39 +8,26 @@ export async function reopenThread(store: Store, props: { workspaceId: string; t
     console.warn('CollabKit: cannot reopen thread, anonymous user');
     return;
   }
-
   if (store.isReadOnly) {
     console.warn('CollabKit: cannot reopen thread in read-only mode');
     return;
   }
-  // todo optimistic send
-  const event: Event = {
-    type: 'system',
-    body: '',
-    system: 'reopen',
-    createdAt: store.sync.serverTimestamp(),
-    createdById: userId,
-  };
-  const { id } = await store.sync.saveEvent({
-    appId: store.config.appId,
-    workspaceId,
+  const event = await createEvent(store, {
+    event: {
+      type: 'system',
+      body: '',
+      system: 'reopen',
+      createdAt: store.sync.serverTimestamp(),
+      createdById: userId,
+    },
+    parentEvent: null,
     threadId,
-    event,
   });
-  store.workspaces[workspaceId].timeline[threadId] ||= {};
-  store.workspaces[workspaceId].timeline[threadId][id] = {
-    ...event,
-    createdAt: +Date.now(),
-    id,
-  };
   store.config.callbacks?.onThreadReopen?.({
     userId,
     workspaceId,
     threadId,
     info: store.workspaces[workspaceId].threadInfo[threadId],
   });
-  await actions.stopTyping(store, {
-    target: { workspaceId, threadId, eventId: 'default' },
-  });
-  return id;
+  return event;
 }

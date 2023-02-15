@@ -1,6 +1,6 @@
-import { CollabKitProvider, CustomTheme } from '@collabkit/react';
+import { CollabKitProvider } from '@collabkit/react';
 import { useSnapshot } from 'valtio';
-import { Route, Switch, useLocation } from 'wouter';
+import { Route, Switch } from 'wouter';
 import ReactFlowExample from './ReactFlowExample';
 import { useTestParams } from './hooks/useTestParams';
 import { useAppParams } from './hooks/useAppParams';
@@ -22,7 +22,7 @@ export function Demo() {
       workspace={{ id: workspaceId, name: workspaceName }}
       callbacks={{
         onPinHover: (props) => {
-          const state = props.state as DashboardStore;
+          const state = JSON.parse(props.state) as DashboardStore | null;
           if (state) {
             if (state.selectedKpi) dashboardStore.selectedKpi = state.selectedKpi;
             if (state.selectedStatus) dashboardStore.selectedStatus = state.selectedStatus;
@@ -31,15 +31,15 @@ export function Demo() {
           }
         },
         onPinAttach: () => {
-          return {
+          return JSON.stringify({
             selectedKpi: dashboardStore.selectedKpi,
             selectedStatus: dashboardStore.selectedStatus,
             selectedNames: dashboardStore.selectedNames,
             selectedTab: dashboardStore.selectedTab,
-          };
+          });
         },
         onPinClick: (props) => {
-          const state = props.state as DashboardStore;
+          const state = JSON.parse(props.state) as DashboardStore | null;
           if (state) {
             if (state.selectedKpi) dashboardStore.selectedKpi = state.selectedKpi;
             if (state.selectedStatus) dashboardStore.selectedStatus = state.selectedStatus;

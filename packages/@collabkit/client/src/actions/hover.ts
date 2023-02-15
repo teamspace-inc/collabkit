@@ -1,9 +1,7 @@
 import { PinTarget, Store, Target } from '@collabkit/core';
-// import { select } from './select';
 
 export function hover(store: Store, props: { target: Target }) {
   // we don't want to trigger the hover callback if we're selecting a pin
-
   const { target } = props;
   store.hoveringId = target;
   switch (target.type) {
@@ -28,9 +26,8 @@ export function hover(store: Store, props: { target: Target }) {
           objectId: pin.objectId,
           workspaceId: target.workspaceId,
           threadId: target.threadId,
-          state: pin.state ?? {},
+          state: pin.state ?? 'null',
         });
-        // select(store, { target: pinTarget });
       }
     }
   }
