@@ -26,7 +26,7 @@ test('createComposer', () => {
     enabled: false,
     isMentioning: false,
     hasText: false,
-    attachments: null,
+    attachments: {},
   });
 });
 
