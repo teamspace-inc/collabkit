@@ -28,7 +28,7 @@ import {
   CommentRoot,
   CommentTimestamp,
 } from './Comment';
-import * as styles from '../theme/components/Commentable.css';
+import * as styles from '../theme/components/Pin.css';
 import { usePopover } from '../hooks/usePopover';
 import { useUserContext } from '../hooks/useUserContext';
 import { PinIcon } from './PinIcon';
@@ -167,6 +167,35 @@ const PinCursor = forwardRef<HTMLDivElement, { isSelected: boolean }>(function P
   );
 });
 
+function PinPreview({ pin }: { pin: Pin }) {
+  return (
+    <ThreadContext.Provider value={pin.threadId}>
+      <CommentRoot commentId={pin.eventId} className={styles.pinPreview}>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <CommentHeader>
+            <CommentCreatorName />
+            <CommentTimestamp />
+          </CommentHeader>
+          <CommentBody>
+            <CommentMarkdown />
+          </CommentBody>
+          <CommentReactions />
+        </div>
+      </CommentRoot>
+    </ThreadContext.Provider>
+  );
+}
+
+function PinThread({ pin }: { pin: Pin }) {
+  return (
+    <ThreadContext.Provider value={pin.threadId}>
+      Content
+      <CommentList />
+      <Composer />
+    </ThreadContext.Provider>
+  );
+}
+
 const PinMarker = forwardRef<HTMLDivElement, PinMarkerProps>(function PinMarker(props, ref) {
   const { isSelected, pin, pointerEvents } = props;
   const { events } = useApp();
@@ -200,33 +229,10 @@ const PinMarker = forwardRef<HTMLDivElement, PinMarkerProps>(function PinMarker(
               </div>
             </PopoverTrigger>
             <PopoverPreview>
-              <div>
-                <ThreadContext.Provider value={pin.threadId}>
-                  <CommentRoot
-                    commentId={pin.eventId}
-                    className="" // TODO: add styles
-                    style={{ padding: `${vars.space[3]} ${vars.space[3]}`, maxWidth: 200 }}
-                  >
-                    <div style={{ display: 'flex', flexDirection: 'column' }}>
-                      <CommentHeader>
-                        <CommentCreatorName />
-                        <CommentTimestamp />
-                      </CommentHeader>
-                      <CommentBody>
-                        <CommentMarkdown />
-                      </CommentBody>
-                      <CommentReactions />
-                    </div>
-                  </CommentRoot>
-                </ThreadContext.Provider>
-              </div>
+              <PinPreview pin={pin} />
             </PopoverPreview>
             <PopoverContent>
-              <ThreadContext.Provider value={pin.threadId}>
-                Content
-                <CommentList />
-                <Composer />
-              </ThreadContext.Provider>
+              <PinThread pin={pin} />
             </PopoverContent>
           </PopoverRoot>
         </div>
