@@ -383,28 +383,6 @@ export class FirebaseSync implements Sync.SyncAdapter {
     return snapshotToProfile(snapshot);
   }
 
-  async saveEvent({
-    appId,
-    workspaceId,
-    threadId,
-    event,
-  }: {
-    appId: string;
-    workspaceId: string;
-    threadId: string;
-    event: Event;
-  }): Promise<{ id: string }> {
-    DEBUG && console.log('[network] saveEvent', { appId, workspaceId, threadId, event });
-    const eventRef = await push(
-      timelineRef(appId, workspaceId, threadId),
-      eventToFirebaseEvent(event)
-    );
-    if (!eventRef.key) {
-      throw new Error('CollabKit: failed to save event');
-    }
-    return { id: eventRef.key };
-  }
-
   markResolved({
     appId,
     workspaceId,
@@ -615,10 +593,9 @@ export class FirebaseSync implements Sync.SyncAdapter {
     };
 
     try {
-      console.log('updates', updates);
+      DEBUG && console.log('updates', updates);
       await update(ref`/`, updates);
     } catch (e: any) {
-      console.log(e);
       const error = new Error('[CollabKit] failed to write msg: ' + e.message);
       error.stack += e.stack;
       throw error;

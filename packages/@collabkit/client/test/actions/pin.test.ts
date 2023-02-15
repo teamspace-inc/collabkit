@@ -71,15 +71,11 @@ describe('pin', () => {
     expect(keys[0]).toBe(pinId);
     expect(composer.attachments[pinId]).toStrictEqual({
       objectId: 'test',
-      threadId,
-      id: pinId,
-      workspaceId,
-      eventId: 'default',
-      createdById: userId,
       x,
       y,
-      isPending: true,
-      state: {},
+      pending: true,
+      type: 'pin',
+      state: null,
     });
   });
 });

@@ -16,6 +16,7 @@ import { getTimeline } from '../../src/sync/firebase/getTimeline';
 import { initComposer } from '../../src/actions/initComposer';
 import { initThread } from '../../src/actions/initThread';
 import { proxy } from 'valtio/vanilla';
+import { createEvent } from '../../src/actions/createEvent';
 
 setupFirebase();
 
@@ -56,26 +57,28 @@ test('deleteMessage', async () => {
   initComposer(store, { workspaceId, threadId, eventId: 'default' });
   store.workspaces[workspaceId].timeline[threadId] = {};
 
-  const eventId = sync.nextEventId({ appId, workspaceId, threadId });
-  await sync.sendMessage({
-    appId,
-    workspaceId,
+  const messageEvent = await createEvent(store as Store, {
     threadId,
-    userId,
-    body: 'Hello world',
     event: {
       type: 'message',
       body: 'Hello world',
-      createdAt: +new Date(),
+      createdAt: sync.serverTimestamp(),
       createdById: userId,
     },
-    eventId,
+    parentEvent: null,
   });
 
-  const id = await deleteMessage(store as Store, { workspaceId, threadId, eventId });
+  expect(messageEvent.id).toBeDefined();
+  if (!messageEvent.id) throw new Error('ID is undefined');
 
-  expect(id).toBeDefined();
-  if (!id) throw new Error('ID is undefined');
+  const event = await deleteMessage(store as Store, {
+    workspaceId,
+    threadId,
+    eventId: messageEvent.id,
+  });
+
+  expect(event?.id).toBeDefined();
+  if (!event?.id) throw new Error('ID is undefined');
 
   const timeline = await getTimeline({
     appId,
@@ -86,11 +89,11 @@ test('deleteMessage', async () => {
   expect(timeline).toBeDefined();
   if (!timeline) throw new Error('Timeline is undefined');
 
-  expect(timeline[id]).toStrictEqual({
+  expect(timeline[event?.id]).toStrictEqual({
     id: expect.any(String),
     type: 'delete',
     body: '',
-    parentId: eventId,
+    parentId: messageEvent.id,
     createdAt: expect.any(Number),
     createdById: userId,
     mentions: [],

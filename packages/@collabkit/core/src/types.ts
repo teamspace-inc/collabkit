@@ -94,7 +94,7 @@ export type Callbacks = {
     threadId: string;
     workspaceId: string;
     objectId: string;
-  }) => object;
+  }) => string;
   onThreadCreated?: (data: {
     userId: string;
     workspaceId: string;
@@ -459,15 +459,11 @@ export type FirebaseEvent = {
   mentions: {
     [userId: string]: boolean;
   } | null;
-  attachments: FirebaseAttachments | null;
+  attachments: Attachments | null;
 };
 
 export type Attachments = {
   [attachmentId: string]: Attachment;
-};
-
-export type FirebaseAttachments = {
-  [attachmentId: string]: FirebaseAttachment;
 };
 
 export type Attachment = {
@@ -475,16 +471,8 @@ export type Attachment = {
   x: number;
   y: number;
   objectId: string;
-  state: object;
+  state: string | null;
   pending?: boolean;
-};
-
-export type FirebaseAttachment = {
-  type: 'pin';
-  x: number;
-  y: number;
-  objectId: string;
-  state: string;
 };
 
 export type FirebasePin = {

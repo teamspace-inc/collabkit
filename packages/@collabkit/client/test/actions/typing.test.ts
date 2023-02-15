@@ -58,14 +58,14 @@ describe('typing', async () => {
       workspaceId,
       threadId,
       userId,
-      body: 'Hello world',
       event: {
         type: 'message',
         body: 'Hello world',
         createdAt: +new Date(),
         createdById: userId,
       },
-      eventId: sync.nextEventId({ appId, workspaceId, threadId }),
+      parentEvent: null,
+      newEventId: sync.nextEventId({ appId, workspaceId, threadId }),
     });
 
     typing = new Promise((resolve) =>

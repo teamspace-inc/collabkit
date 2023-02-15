@@ -1,4 +1,4 @@
-import type { Event, FirebaseAttachments, FirebaseEvent, UserProps, WithID } from '@collabkit/core';
+import type { Attachments, Event, FirebaseEvent, UserProps, WithID } from '@collabkit/core';
 import { FirebaseId } from '@collabkit/core';
 import type { DataSnapshot } from 'firebase/database';
 import type { Color } from '@collabkit/colors';
@@ -20,7 +20,7 @@ export function idArrayToObject(
 // it's easy to include unwanted properties
 export function eventToFirebaseEvent(event: Event) {
   const { attachments } = event;
-  let firebaseAttachments: FirebaseAttachments | null = null;
+  let firebaseAttachments: Attachments | null = null;
   if (attachments) {
     firebaseAttachments = {};
     for (const id in attachments) {
@@ -32,13 +32,7 @@ export function eventToFirebaseEvent(event: Event) {
             x: attachment.x,
             y: attachment.y,
             objectId: attachment.objectId,
-
-            // move this closer to the pinAttach callback
-            // so the app can recover from errors more easily
-            // perhaps we make this some thing the app does
-            // instead of us doing it and we only store string
-            // state.
-            state: JSON.stringify(attachment.state ?? {}),
+            state: attachment.state,
           };
       }
     }

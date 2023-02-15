@@ -24,12 +24,11 @@ export function attachPin(
     x,
     y,
     objectId,
-    state: store.callbacks?.onPinAttach?.({ objectId, userId, threadId, workspaceId }) ?? {},
+    state: store.callbacks?.onPinAttach?.({ objectId, userId, threadId, workspaceId }) ?? null,
     pending: true,
   };
   composer.attachments ||= { [id]: pinAttachment };
   composer.attachments[id] = pinAttachment;
-  console.log(composer.attachments);
   store.uiState = 'idle';
   // for some reason this is needed to focus the composer
   // this is buggy need to debug events

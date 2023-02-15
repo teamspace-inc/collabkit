@@ -99,13 +99,6 @@ export interface SyncAdapter {
     profile: ServerProfile;
   }): Promise<void>;
 
-  saveEvent(params: {
-    appId: string;
-    workspaceId: string;
-    threadId: string;
-    event: Event;
-  }): Promise<{ id: string }>;
-
   markResolved(params: { appId: string; workspaceId: string; threadId: string }): Promise<void>;
 
   markSeen(params: {

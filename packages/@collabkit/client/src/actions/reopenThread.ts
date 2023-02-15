@@ -1,4 +1,4 @@
-import type { Event, Store } from '@collabkit/core';
+import type { Store } from '@collabkit/core';
 import { createEvent } from './createEvent';
 
 export async function reopenThread(store: Store, props: { workspaceId: string; threadId: string }) {
@@ -12,7 +12,7 @@ export async function reopenThread(store: Store, props: { workspaceId: string; t
     console.warn('CollabKit: cannot reopen thread in read-only mode');
     return;
   }
-  await createEvent(store, {
+  const event = await createEvent(store, {
     event: {
       type: 'system',
       body: '',
@@ -29,4 +29,5 @@ export async function reopenThread(store: Store, props: { workspaceId: string; t
     threadId,
     info: store.workspaces[workspaceId].threadInfo[threadId],
   });
+  return event;
 }

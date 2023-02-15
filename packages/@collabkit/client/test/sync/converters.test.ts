@@ -122,7 +122,7 @@ test('eventToFirebaseEvent', () => {
           x: 10,
           y: 20,
           objectId: 'object-1',
-          state: { foo: 'bar' },
+          state: JSON.stringify({ foo: 'bar' }),
         },
       },
     })
@@ -131,6 +131,8 @@ test('eventToFirebaseEvent', () => {
     type: 'message',
     createdById: 'user-1',
     createdAt: expect.any(Number),
+    parentId: null,
+    system: null,
     mentions: {
       'user-1': true,
       'user-2': true,

@@ -25,8 +25,8 @@ test('createComposer', () => {
     editor: null,
     enabled: false,
     isMentioning: false,
-    pendingPin: null,
     hasText: false,
+    attachments: null,
   });
 });
 

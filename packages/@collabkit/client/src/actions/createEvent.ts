@@ -32,6 +32,7 @@ export async function createEvent(
   try {
     await promise;
   } catch (e) {
+    console.error(e);
     delete timelines[threadId][newEventId];
   }
   return timelines[threadId][newEventId];
