@@ -105,11 +105,6 @@ export const indent = style({
   marginLeft: calc.add(vars.avatar.size, fallbackVar(vars.comment.gap, vars.space[2])),
 });
 
-export const pin = style({
-  paddingRight: calc.divide(vars.space[1], 2),
-  float: 'left',
-});
-
 export const body = style({
   fontSize: fallbackVar(vars.comment.body.fontSize, vars.text.base.fontSize),
   fontWeight: fallbackVar(vars.comment.body.fontWeight, vars.fontWeight.regular),
@@ -197,9 +192,7 @@ export const timestamp = style({
 
 export const actions = style({
   display: 'flex',
-  // gap: vars.space[1],
   flexDirection: 'row',
-  zIndex: 2, // higher than scrollbar
   fontFamily: vars.fontFamily,
   position: 'absolute',
   right: vars.space[4],
@@ -208,8 +201,7 @@ export const actions = style({
   background: vars.color.background,
   border: `1px solid ${vars.color.border}`,
   borderRadius: '6px',
-
-  opacity: 0,
+  opacity: 1,
 
   selectors: {
     '&:empty': {
@@ -217,43 +209,6 @@ export const actions = style({
     },
   },
 });
-
-// start hover optimisation
-// use CSS for showing the comment actions menu on
-// hover as the pure react approach feels sluggish
-export const hover = style({
-  opacity: 1,
-  pointerEvents: 'all',
-});
-
-globalStyle(`${collabkit} ${root()}:hover, ${collabkit} ${root({ indent: true })}:hover`, {
-  // backgroundColor: fallbackVar(vars.comment.hover.background, vars.color.surfaceHover),
-});
-
-globalStyle(`${collabkit} ${root()}:hover, ${collabkit} ${root({ indent: false })}:hover`, {
-  // backgroundColor: fallbackVar(vars.comment.hover.background, vars.color.surfaceHover),
-});
-
-globalStyle(
-  `${collabkit} ${root()}${hover} ${actions}, ${collabkit} ${root({
-    indent: true,
-  })}${hover} ${actions}`,
-  {
-    opacity: 1,
-    pointerEvents: 'all',
-  }
-);
-
-globalStyle(
-  `${collabkit} ${root()}:hover ${actions}, ${collabkit} ${root({
-    indent: false,
-  })}:hover ${actions}`,
-  {
-    opacity: 1,
-    pointerEvents: 'all',
-  }
-);
-// end hover  optimisation
 
 export const markdown = style({});
 export const markdownLinksNotClickable = style({});

@@ -53,6 +53,7 @@ test('createStore', () => {
     viewingId: null,
     previewingId: null,
     editingId: null,
+    editingEventSnapshots: {},
     workspaces: {},
     profiles: {},
     avatarErrors: {},

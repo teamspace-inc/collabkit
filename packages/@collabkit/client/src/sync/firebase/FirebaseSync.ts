@@ -16,7 +16,7 @@ import {
   update,
 } from 'firebase/database';
 
-import type {
+import {
   Event,
   OptionalWorkspaceProps,
   Subscriptions,
@@ -24,13 +24,16 @@ import type {
   ThreadMeta,
   Sync,
   FirebasePin,
+  Timeline,
+  timelineUtils,
+  Attachment,
 } from '@collabkit/core';
 
 import { FirebaseId } from '@collabkit/core';
 
 import { subscribeThreadIsTyping } from './subscribeThreadIsTyping';
 import { subscribeTimeline } from './subscribeTimeline';
-import { ref, timelineRef, userTypingRef } from './refs';
+import { ref } from './refs';
 import { initializeApp } from 'firebase/app';
 import {
   eventToFirebaseEvent,
@@ -39,6 +42,14 @@ import {
   snapshotToProfile,
   snapshotToUser,
 } from './converters';
+
+function diffKeys(a: object, b: object) {
+  const aKeys = new Set(Object.keys(a));
+  const bKeys = new Set(Object.keys(b));
+  const removed = new Set([...aKeys].filter((key) => !bKeys.has(key)));
+  const added = new Set([...bKeys].filter((key) => !aKeys.has(key)));
+  return { removed, added };
+}
 
 export function initFirebase(options = { test: false }) {
   initializeApp(
@@ -72,7 +83,78 @@ type FirebaseUpdates = {
 };
 
 const UpdateBuilder = {
-  addAttachments({
+  addAttachment({
+    appId,
+    workspaceId,
+    attachment,
+    attachmentId,
+    eventId,
+    userId,
+    threadId,
+  }: {
+    appId: string;
+    eventId: string;
+    threadId: string;
+    userId: string;
+    workspaceId: string;
+    attachment: Attachment;
+    attachmentId: string;
+  }) {
+    const updates: FirebaseUpdates = {};
+    // convert attachments to pin representation
+    switch (attachment.type) {
+      // for 'edit' or 'delete' operations we want delete
+      // the original attachment, it can always be restored
+      // from the previous event, should the 'delete' or 'edit'
+      // be undone (should we add undo functionality).
+      case 'pin': {
+        const pinId = attachmentId;
+        const { objectId, x, y, state } = attachment;
+        const jsonState = JSON.stringify(state);
+        const firebasePin: FirebasePin | null = {
+          x,
+          y,
+          eventId,
+          threadId,
+          createdById: userId,
+          state: jsonState,
+        };
+        updates[ref.path`/views/openPins/${appId}/${workspaceId}/${objectId}/${pinId}`] =
+          firebasePin;
+      }
+    }
+    return updates;
+  },
+  removeAttachment({
+    appId,
+    workspaceId,
+    attachment,
+    attachmentId,
+  }: {
+    appId: string;
+    eventId: string;
+    threadId: string;
+    userId: string;
+    workspaceId: string;
+    attachment: Attachment;
+    attachmentId: string;
+  }) {
+    const updates: FirebaseUpdates = {};
+    // convert attachments to pin representation
+    switch (attachment.type) {
+      // for 'edit' or 'delete' operations we want delete
+      // the original attachment, it can always be restored
+      // from the previous event, should the 'delete' or 'edit'
+      // be undone (should we add undo functionality).
+      case 'pin': {
+        const pinId = attachmentId;
+        const { objectId } = attachment;
+        updates[ref.path`/views/openPins/${appId}/${workspaceId}/${objectId}/${pinId}`] = null;
+      }
+    }
+    return updates;
+  },
+  updateEventAttachments({
     eventId,
     appId,
     workspaceId,
@@ -87,59 +169,144 @@ const UpdateBuilder = {
     event: Event;
     userId: string;
   }) {
-    const updates: FirebaseUpdates = {};
+    let updates: FirebaseUpdates = {};
     if (event.attachments) {
       for (const attachmentId in event.attachments) {
         const attachment = event.attachments[attachmentId];
-        switch (attachment.type) {
-          case 'pin': {
-            const pinId = attachmentId;
-            const { objectId, x, y, state } = attachment;
-            const jsonState = JSON.stringify(state);
-            const firebasePin: FirebasePin | null = {
-              x,
-              y,
-              eventId,
-              threadId,
-              createdById: userId,
-              state: jsonState,
-            };
-            updates[ref.path`/views/openPins/${appId}/${workspaceId}/${objectId}/${pinId}`] =
-              firebasePin;
-          }
-        }
+        updates = {
+          ...updates,
+          ...UpdateBuilder.addAttachment({
+            eventId,
+            appId,
+            workspaceId,
+            threadId,
+            userId,
+            attachmentId,
+            attachment,
+          }),
+        };
       }
     }
     return updates;
   },
-  removeAttachments({
+  editEventAttachments({
     appId,
     workspaceId,
+    event,
     parentEvent,
+    userId,
+    threadId,
+    eventId,
+    parentEventId,
   }: {
     appId: string;
     workspaceId: string;
+    userId: string;
+    threadId: string;
+    event: Event;
     parentEvent: Event;
+    eventId: string;
+    parentEventId: string;
   }) {
-    const updates: FirebaseUpdates = {};
-    if (parentEvent.attachments) {
-      for (const attachmentId in parentEvent.attachments) {
+    let updates: FirebaseUpdates = {};
+    const { added, removed } = diffKeys(parentEvent.attachments ?? {}, event.attachments ?? {});
+    removed.forEach((attachmentId) => {
+      if (parentEvent.attachments) {
         const attachment = parentEvent.attachments[attachmentId];
-        // convert attachments to pin representation
-        switch (attachment.type) {
-          // for 'edit' or 'delete' operations we want delete
-          // the original attachment, it can always be restored
-          // from the previous event, should the 'delete' or 'edit'
-          // be undone (should we add undo functionality).
-          case 'pin': {
-            const pinId = attachmentId;
-            const { objectId } = attachment;
-            updates[ref.path`/views/openPins/${appId}/${workspaceId}/${objectId}/${pinId}`] = null;
-          }
-        }
+        updates = {
+          ...updates,
+          ...UpdateBuilder.removeAttachment({
+            appId,
+            workspaceId,
+            userId,
+            threadId,
+            eventId: parentEventId,
+            attachmentId,
+            attachment,
+          }),
+        };
+      }
+    });
+    added.forEach((attachmentId) => {
+      if (event.attachments) {
+        const attachment = event.attachments[attachmentId];
+        updates = {
+          ...updates,
+          ...UpdateBuilder.addAttachment({
+            appId,
+            workspaceId,
+            userId,
+            threadId,
+            eventId,
+            attachmentId,
+            attachment,
+          }),
+        };
+      }
+    });
+    return updates;
+  },
+  removeEventAttachments({
+    appId,
+    workspaceId,
+    threadId,
+    userId,
+    event,
+    eventId,
+  }: {
+    appId: string;
+    workspaceId: string;
+    threadId: string;
+    userId: string;
+    event: Event;
+    eventId: string;
+  }) {
+    let updates: FirebaseUpdates = {};
+    if (event.attachments) {
+      for (const attachmentId in event.attachments) {
+        const attachment = event.attachments[attachmentId];
+        updates = {
+          ...updates,
+          ...UpdateBuilder.removeAttachment({
+            appId,
+            workspaceId,
+            attachmentId,
+            threadId,
+            userId,
+            attachment,
+            eventId,
+          }),
+        };
       }
     }
     return updates;
+  },
+  removeThreadAttachments({
+    appId,
+    workspaceId,
+    timeline,
+    threadId,
+    userId,
+  }: {
+    appId: string;
+    workspaceId: string;
+    timeline: Timeline;
+    threadId: string;
+    userId: string;
+  }) {
+    return Object.values(timeline).reduce<FirebaseUpdates>((updates, timelineEvent) => {
+      return {
+        ...updates,
+        ...UpdateBuilder.removeEventAttachments({
+          event: timelineEvent,
+          workspaceId,
+          appId,
+          eventId: timelineEvent.id,
+          threadId,
+          userId,
+        }),
+      };
+    }, {});
   },
   stopTyping({
     appId,
@@ -185,7 +352,22 @@ const UpdateBuilder = {
     threadId: string;
   }) {
     return {
-      [ref.path`/views/openThreads/${appId}/${workspaceId}/${threadId}`]: null,
+      [ref.path`/views/isOpen/${appId}/${workspaceId}/${threadId}`]: null,
+      [ref.path`/views/isResolved/${appId}/${workspaceId}/${threadId}`]: true,
+    };
+  },
+  reopen({
+    appId,
+    workspaceId,
+    threadId,
+  }: {
+    appId: string;
+    workspaceId: string;
+    threadId: string;
+  }) {
+    return {
+      [ref.path`/views/isOpen/${appId}/${workspaceId}/${threadId}`]: true,
+      [ref.path`/views/isResolved/${appId}/${workspaceId}/${threadId}`]: null,
     };
   },
 };
@@ -219,38 +401,18 @@ export class FirebaseSync implements Sync.SyncAdapter {
     return threadRef.key;
   }
 
-  async deletePin(params: {
-    appId: string;
-    workspaceId: string;
-    objectId: string;
-    pinId: string;
-    threadId: string;
-    eventId: string;
-  }): Promise<void> {
-    DEBUG && console.log('[network] deletePin', params);
-    const { appId, workspaceId, objectId, pinId, threadId, eventId } = params;
-    const updates = {
-      [ref.path`/pins/${appId}/${workspaceId}/${objectId}/${pinId}`]: null,
-      [ref.path`/views/openPins/${appId}/${workspaceId}/${objectId}/${pinId}`]: null,
-    };
-    try {
-      await update(ref`/`, updates);
-    } catch (e) {
-      console.error('CollabKit pin delete failed', e);
-    }
-    return Promise.resolve();
-  }
-
   async subscribeOpenPins(params: {
     appId: string;
     workspaceId: string;
     subs: Subscriptions;
     onGet: (pins: { [objectId: string]: { [pinId: string]: { x: number; y: number } } }) => void;
+    onObjectAdded: (objectId: string, pins: { [pinId: string]: { x: number; y: number } }) => void;
     onObjectChange: (objectId: string, pins: { [pinId: string]: { x: number; y: number } }) => void;
     onObjectRemove: (objectId: string) => void;
   }): Promise<void> {
     DEBUG && console.log('[network] subscribeOpenPins', params);
-    const { subs, appId, workspaceId, onObjectChange, onObjectRemove, onGet } = params;
+    const { subs, appId, workspaceId, onObjectChange, onObjectAdded, onObjectRemove, onGet } =
+      params;
     const openPinsRef = ref`/views/openPins/${appId}/${workspaceId}`;
 
     await get(openPinsRef)
@@ -269,7 +431,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
         const objectPins = objectSnapshot.val();
         if (objectId == null) return;
         DEBUG && console.log('[network] openPins child added', objectId, objectPins);
-        onObjectChange(FirebaseId.decode(objectId), objectPins);
+        onObjectAdded(FirebaseId.decode(objectId), objectPins);
       }
     );
 
@@ -383,32 +545,6 @@ export class FirebaseSync implements Sync.SyncAdapter {
     return snapshotToProfile(snapshot);
   }
 
-  markResolved({
-    appId,
-    workspaceId,
-    threadId,
-    pin,
-  }: {
-    appId: string;
-    workspaceId: string;
-    threadId: string;
-    pin?: {
-      objectId: string;
-      pinId: string;
-    };
-  }) {
-    DEBUG && console.log('[network] markResolved', { appId, workspaceId, threadId, pin });
-    const updates = UpdateBuilder.resolve({ appId, workspaceId, threadId });
-
-    if (pin) {
-      // clear open pins for this thread
-      updates[ref.path`/views/openPins/${appId}/${workspaceId}/${pin.objectId}/${pin.pinId}`] =
-        null;
-    }
-
-    return update(ref`/`, updates);
-  }
-
   async markSeen({
     appId,
     userId,
@@ -441,7 +577,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
     threadId: string;
   }): Promise<void> {
     DEBUG && console.log('[network] startTyping', { appId, userId, workspaceId, threadId });
-    await set(userTypingRef(appId, workspaceId, threadId, userId), true);
+    await set(ref`/isTyping/${appId}/${workspaceId}/${threadId}/${userId}`, true);
   }
 
   async stopTyping({
@@ -456,7 +592,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
     threadId: string;
   }): Promise<void> {
     DEBUG && console.log('[network] stopTyping', { appId, userId, workspaceId, threadId });
-    await remove(userTypingRef(appId, workspaceId, threadId, userId));
+    await remove(ref`/isTyping/${appId}/${workspaceId}/${threadId}/${userId}`);
   }
 
   async getIsTyping({
@@ -471,7 +607,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
     threadId: string;
   }) {
     DEBUG && console.log('[network] getIsTyping', { appId, userId, workspaceId, threadId });
-    const snapshot = await get(userTypingRef(appId, workspaceId, threadId, userId));
+    const snapshot = await get(ref`/isTyping/${appId}/${workspaceId}/${threadId}/${userId}`);
     if (!snapshot.exists()) {
       return null;
     }
@@ -487,6 +623,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
     event,
     parentEvent,
     newEventId,
+    timeline,
   }: {
     appId: string;
     userId: string;
@@ -495,6 +632,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
     event: Event;
     parentEvent: Event | null;
     newEventId: string;
+    timeline: Timeline;
   }): Promise<void> {
     DEBUG &&
       console.log('[network] sendMessage', {
@@ -510,7 +648,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
       case 'message':
         updates = {
           ...updates,
-          ...UpdateBuilder.addAttachments({
+          ...UpdateBuilder.updateEventAttachments({
             event,
             eventId: newEventId,
             threadId,
@@ -518,6 +656,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
             workspaceId,
             appId,
           }),
+          ...UpdateBuilder.reopen({ appId, workspaceId, threadId }),
         };
         updates[ref.path`/views/inbox/${appId}/${workspaceId}/${threadId}`] = {
           ...firebaseEvent,
@@ -527,52 +666,114 @@ export class FirebaseSync implements Sync.SyncAdapter {
         break;
       case 'delete':
         if (!parentEvent) throw new Error('Cannot delete event without parent event');
+        if (!event.parentId) throw new Error('Cannot delete event without parent id');
+        const messages = timelineUtils.messageEvents(timeline);
+        const lastMessage = messages[messages.length - 1];
+        // one message left, which is about to be deleted
+        const willBeEmpty = messages.length === 1 && event.parentId == lastMessage.id;
+        const resolveEvent = {
+          ...firebaseEvent,
+          type: 'system',
+          system: 'resolve',
+          parentId: null,
+        };
+
         updates = {
           ...updates,
-          ...UpdateBuilder.removeAttachments({ parentEvent, workspaceId, appId }),
+          ...UpdateBuilder.removeEventAttachments({
+            event: parentEvent,
+            workspaceId,
+            appId,
+            userId,
+            threadId,
+            eventId: event.parentId,
+          }),
+          ...(willBeEmpty
+            ? {
+                ...UpdateBuilder.resolve({ appId, workspaceId, threadId }),
+                ...UpdateBuilder.removeThreadAttachments({
+                  appId,
+                  workspaceId,
+                  timeline,
+                  userId,
+                  threadId,
+                }),
+                [ref.path`/timeline/${appId}/${workspaceId}/${threadId}/${this.nextEventId({
+                  appId,
+                  workspaceId,
+                  threadId,
+                })}`]: resolveEvent,
+              }
+            : UpdateBuilder.reopen({ appId, workspaceId, threadId })),
         };
         break;
       case 'edit':
         if (!parentEvent) throw new Error('Cannot edit event without parent event');
+        if (!event.parentId) throw new Error('Cannot edit event without parent id');
         updates = {
           ...updates,
-          // we want to remove the old attachments
-          // note this does not affect timeline events which are immutable
-          // just views of attachments, like /views/openPins
-          ...UpdateBuilder.removeAttachments({ parentEvent, workspaceId, appId }),
-          // and add the new ones back, this covers situations
-          // where a user might have edited an attachment, if it's the same
-          // it will be a no-op, if it's different the old one will be removed and the new one added
-          ...UpdateBuilder.addAttachments({
+          ...UpdateBuilder.editEventAttachments({
             event,
             eventId: newEventId,
             threadId,
             userId,
             workspaceId,
             appId,
+            parentEvent,
+            parentEventId: event.parentId,
           }),
+          ...UpdateBuilder.reopen({ appId, workspaceId, threadId }),
         };
         break;
       case 'adminMessage':
+        updates = {
+          ...updates,
+          ...UpdateBuilder.reopen({ appId, workspaceId, threadId }),
+        };
         break;
       case 'reaction':
+        updates = {
+          ...updates,
+          ...UpdateBuilder.reopen({ appId, workspaceId, threadId }),
+        };
         break;
       case 'system':
         switch (event.system) {
           case 'resolve':
             updates = {
               ...updates,
+              // remove all attachment views for the event
+              ...UpdateBuilder.removeThreadAttachments({
+                appId,
+                workspaceId,
+                timeline,
+                userId,
+                threadId,
+              }),
               ...UpdateBuilder.resolve({ appId, workspaceId, threadId }),
             };
-            if (parentEvent) {
-              updates = {
-                ...updates,
-                ...UpdateBuilder.removeAttachments({ parentEvent, workspaceId, appId }),
-              };
-            }
             break;
           case 'reopen':
             console.warn('[CollabKit] reopen not implemented');
+            const deletedIds = timelineUtils.deletedIds(timeline);
+            updates = {
+              ...updates,
+              ...Object.values(timeline).reduce<FirebaseUpdates>((updates, timelineEvent) => {
+                if (deletedIds.has(timelineEvent.id)) return {};
+                return {
+                  ...updates,
+                  ...UpdateBuilder.updateEventAttachments({
+                    event: timelineEvent,
+                    workspaceId,
+                    appId,
+                    userId: timelineEvent.createdById,
+                    threadId,
+                    eventId: timelineEvent.id,
+                  }),
+                };
+              }, {}),
+              ...UpdateBuilder.reopen({ appId, workspaceId, threadId }),
+            };
             break;
         }
         break;

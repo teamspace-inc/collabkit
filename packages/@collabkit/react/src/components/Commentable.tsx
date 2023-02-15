@@ -1,5 +1,5 @@
 import { Store } from '@collabkit/core';
-import { FloatingPortal } from '@floating-ui/react';
+import { FloatingPortal, FloatingTree } from '@floating-ui/react';
 import React, { useCallback, useEffect, useRef } from 'react';
 import { useSnapshot } from 'valtio';
 import { useApp } from '../hooks/useApp';
@@ -126,8 +126,10 @@ export function CommentableRoot(props: { className?: string; children?: React.Re
     >
       {props.children}
       <FloatingPortal id="collabkit-floating-root">
-        {pinCursor}
-        {pins}
+        <FloatingTree>
+          {pinCursor}
+          {pins}
+        </FloatingTree>
       </FloatingPortal>
     </div>
   );

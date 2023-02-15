@@ -3,7 +3,7 @@ import { assignInlineVars } from '@vanilla-extract/dynamic';
 import { Theme, darkThemeClassName } from '../theme/themes.css';
 import { vars } from '../theme/theme/index.css';
 import { ThemeContext } from './ThemeContext';
-import { collabkit } from '../theme/components/Root.css';
+import { Root } from './Root';
 
 export function ThemeWrapper(props: ComponentProps<'div'>) {
   const theme = useContext(ThemeContext);
@@ -17,9 +17,9 @@ export function ThemeWrapper(props: ComponentProps<'div'>) {
     customTheme = theme;
   }
   return (
-    <div
+    <Root
       {...props}
-      className={`collabkit ${collabkit} ${themeClassName}`}
+      className={`${themeClassName}`}
       data-collabkit-internal="true"
       style={{
         display: 'contents',
@@ -30,6 +30,6 @@ export function ThemeWrapper(props: ComponentProps<'div'>) {
       }}
     >
       {props.children}
-    </div>
+    </Root>
   );
 }

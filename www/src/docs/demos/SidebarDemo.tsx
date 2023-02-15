@@ -6,7 +6,7 @@ export function SidebarDemo() {
       <div style={{ position: 'absolute', top: 12, left: 12 }}>
         <SidebarInboxButton />
       </div>
-      <Sidebar strategy="absolute">
+      <Sidebar>
         <Inbox />
       </Sidebar>
     </>

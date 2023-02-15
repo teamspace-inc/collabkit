@@ -19,6 +19,7 @@ export const avatar = style({
   boxSizing: 'border-box',
   userSelect: 'none',
   fontFamily: vars.fontFamily,
+  textTransform: 'uppercase',
 });
 
 export const name = style({
@@ -28,6 +29,7 @@ export const name = style({
   lineHeight: fallbackVar(vars.profile.name.lineHeight, vars.text.base.lineHeight),
   letterSpacing: fallbackVar(vars.profile.name.letterSpacing, vars.text.base.letterSpacing),
   fontFamily: vars.fontFamily,
+  textTransform: 'capitalize',
 });
 
 export const root = style({

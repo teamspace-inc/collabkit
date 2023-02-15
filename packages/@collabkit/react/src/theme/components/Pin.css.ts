@@ -5,13 +5,12 @@ import { vars } from '../theme/index.css';
 export const pin = recipe({
   base: {
     position: 'absolute',
-    top: 0,
-    left: 0,
-    transform: 'translate(0, 0)',
     width: '40px',
     height: '40px',
     marginLeft: '-20px',
     marginTop: '-40px',
+    top: 0,
+    left: 0,
   },
   variants: {
     pointerEvents: {
@@ -29,17 +28,23 @@ export const pin = recipe({
   },
 });
 
+export const pinIcon = style({});
+
 export const pinAvatar = style({
   position: 'absolute',
   top: 5,
   left: 8,
 });
 
-export const pinPreview = style({
+export const pinPopover = style({
   background: vars.color.background,
   borderRadius: '12px',
-  padding: `${vars.space[3]} ${vars.space[3]}`,
-  width: 200,
+  width: 240,
   border: `1px solid ${vars.color.border}`,
   boxShadow: vars.shadow.high,
+});
+
+export const pinPreview = style({
+  padding: `${vars.space[2]} ${vars.space[4]}`,
+  cursor: 'pointer',
 });

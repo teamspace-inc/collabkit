@@ -6,7 +6,15 @@ export function removeAttachment(
 ) {
   const { workspaceId } = props;
   const composer = store.workspaces[workspaceId].composers[props.threadId][props.eventId];
-  if (composer.attachments && composer.attachments[props.attachmentId]) {
-    delete composer.attachments[props.attachmentId];
+  if (!composer.attachments) return;
+  const attachment = composer.attachments[props.attachmentId];
+  if (!attachment) return;
+  if (attachment.type === 'pin') {
+    const openPin =
+      store.workspaces[workspaceId].openPins[attachment.objectId]?.[props.attachmentId];
+    if (openPin) {
+      delete store.workspaces[workspaceId].openPins[attachment.objectId][props.attachmentId];
+    }
   }
+  delete composer.attachments[props.attachmentId];
 }

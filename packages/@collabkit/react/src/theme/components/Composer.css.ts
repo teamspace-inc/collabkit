@@ -35,42 +35,22 @@ export const composerLeftPadding = style({
   width: vars.space[2],
 });
 
-export const pinButton = style({
-  padding: vars.space[2],
-  marginRight: calc.negate(vars.space[2]),
-  zIndex: 9,
-  background: 'unset',
-  borderTopLeftRadius: '6px',
-  borderBottomLeftRadius: '6px',
-  border: 'none',
-  height: '100%',
-});
-
-export const placeholder = recipe({
-  base: {
-    color: fallbackVar(vars.composer.input.placeholder.color, vars.color.textSecondary),
-    fontSize: fallbackVar(vars.composer.input.fontSize, vars.text.base.fontSize),
-    fontWeight: fallbackVar(vars.composer.input.fontWeight, vars.fontWeight.regular),
-    letterSpacing: fallbackVar(vars.composer.input.letterSpacing, vars.text.base.letterSpacing),
-    lineHeight: fallbackVar(vars.composer.input.lineHeight, vars.text.base.lineHeight),
-    overflow: 'hidden',
-    position: 'absolute',
-    textOverflow: 'ellipsis',
-    top: '17px',
-    transform: 'translateY(-50%)',
-    left: vars.space[2],
-    userSelect: 'none',
-    display: 'inline-block',
-    pointerEvents: 'none',
-    fontFamily: vars.fontFamily,
-  },
-  variants: {
-    isPinningEnabled: {
-      true: {
-        left: `${calc(vars.space[2]).add('24px')}`,
-      },
-    },
-  },
+export const placeholder = style({
+  color: fallbackVar(vars.composer.input.placeholder.color, vars.color.textSecondary),
+  fontSize: fallbackVar(vars.composer.input.fontSize, vars.text.base.fontSize),
+  fontWeight: fallbackVar(vars.composer.input.fontWeight, vars.fontWeight.regular),
+  letterSpacing: fallbackVar(vars.composer.input.letterSpacing, vars.text.base.letterSpacing),
+  lineHeight: fallbackVar(vars.composer.input.lineHeight, vars.text.base.lineHeight),
+  overflow: 'hidden',
+  position: 'absolute',
+  textOverflow: 'ellipsis',
+  top: '17px',
+  transform: 'translateY(-50%)',
+  left: vars.space[2],
+  userSelect: 'none',
+  display: 'inline-block',
+  pointerEvents: 'none',
+  fontFamily: vars.fontFamily,
 });
 
 const paragraph = style({
@@ -100,11 +80,6 @@ globalStyle(`${composerGlobalStyles} p`, {
     vars.text.base.letterSpacing
   )} !important`,
   fontFamily: `${vars.fontFamily} !important`,
-});
-
-globalStyle('.collabkit-composer-pin', {
-  display: 'inline',
-  margin: '-4px 0px 0px',
 });
 
 export const contentEditable = recipe({
@@ -151,14 +126,10 @@ export const editor = recipe({
     background: fallbackVar(vars.composer.input.background, vars.color.surface),
     border: fallbackVar(vars.composer.input.border, 'none'),
     borderRadius: fallbackVar(vars.composer.input.borderRadius, '6px'),
-    flex: '1',
-    width: '100%',
-    position: 'relative',
+    flex: 1,
     verticalAlign: 'top',
     boxSizing: 'border-box',
     fontFamily: vars.fontFamily,
-    display: 'flex',
-    flexDirection: 'row',
   },
   variants: {
     active: {
@@ -230,16 +201,4 @@ export const buttonGroup = style({
   selectors: {
     '&:empty': { display: 'none' },
   },
-});
-
-globalStyle('.collabkit-pin-node', {
-  width: '16px',
-  height: '16px',
-  margin: '-4px 0px 0px',
-});
-
-globalStyle('.collabkit-composer-pin', {
-  width: '16px',
-  height: '16px',
-  margin: '-4px 0px 0px',
 });

@@ -11,6 +11,7 @@ export const typeahead = style({
   boxShadow: fallbackVar(vars.mentions.typeahead.boxShadow, vars.shadow.standard),
   border: fallbackVar(vars.mentions.typeahead.border, `1px solid ${vars.color.border}`),
   fontFamily: vars.fontFamily,
+  minWidth: 200,
 });
 
 export const mark = style({
@@ -28,6 +29,7 @@ export const list = style({
   borderRadius: vars.mentions.typeahead.borderRadius,
   zIndex: 999,
   width: '100%',
+  maxHeight: 320,
 });
 
 export const nameAndEmailWrapper = style({

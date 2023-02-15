@@ -3,7 +3,7 @@ import { test, expect, BrowserContext, Page } from '@playwright/test';
 // @ts-expect-error
 import { setupApp, setupFirebase } from './setup.ts';
 
-import { nanoid, random } from 'nanoid';
+import { nanoid } from 'nanoid';
 
 const HOST = process.env.PREVIEW_URL_DEMO ? process.env.PREVIEW_URL_DEMO : 'http://localhost:3000';
 
@@ -119,6 +119,10 @@ async function hasComment(page: Page, comment: { body: string }, nth: number = 0
   await expect(text).toStrictEqual(comment.body);
 }
 
+async function hoverComment(page: Page, comment: { body: string }, nth: number = 0) {
+  await page.getByText(comment.body).nth(nth).hover();
+}
+
 async function doesNotHaveComment(page: Page, comment: { body: string }) {
   const markdown = await page.$(`text=${comment.body}`);
   await expect(markdown).toBeNull();
@@ -130,15 +134,15 @@ async function clickMentionButton(page: Page) {
   await page.click('[data-testid="collabkit-composer-mentions-button"]');
 }
 
-async function focusComposer(page: Page) {
-  const composer = await page.getByTestId('collabkit-composer-contenteditable');
+async function focusComposer(page: Page, nth: number = 0) {
+  const composer = await page.getByTestId('collabkit-composer-contenteditable').nth(nth);
   await composer.click();
   await page.waitForTimeout(500);
   return composer;
 }
 
-async function typeInComposer(page: Page, text: string) {
-  const composer = await focusComposer(page);
+async function typeInComposer(page: Page, text: string, nth: number = 0) {
+  const composer = await focusComposer(page, nth);
   await composer.type(text);
 }
 
@@ -239,7 +243,7 @@ test.describe('Dashboard', () => {
 
     await assertNoCommentPin(page);
 
-    await typeInComposer(page, 'This is a pinned comment');
+    await typeInComposer(page, 'This is a pinned comment', 1);
     await page.keyboard.press('Enter');
     await page.waitForTimeout(500);
     await hasComment(page, { body: 'This is a pinned comment' });
@@ -304,6 +308,7 @@ test.describe('Thread', () => {
     const page2 = await visitThreadAsUser(context, { ...bob, appId, apiKey });
     await sendComment(page, 'Hello World');
     await hasComment(page, { body: 'Hello World' });
+    await hoverComment(page, { body: 'Hello World' });
     await clickCommentMenuButton(page);
     await clickCommentMenuEditButton(page);
     await focusCommentComposer(page);
@@ -319,6 +324,7 @@ test.describe('Thread', () => {
     const page2 = await visitThreadAsUser(context, { ...bob, appId, apiKey });
     await sendComment(page, 'Hello World');
     await hasComment(page, { body: 'Hello World' });
+    await hoverComment(page, { body: 'Hello World' });
     await clickCommentMenuButton(page);
     await clickCommentMenuDeleteButton(page);
     await page.waitForTimeout(500);

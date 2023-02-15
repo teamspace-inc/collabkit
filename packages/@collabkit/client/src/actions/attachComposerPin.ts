@@ -1,7 +1,8 @@
 import type { Attachment, Store } from '@collabkit/core';
 import { focusComposer } from './focusComposer';
+import { viewContent } from './viewContent';
 
-export function attachPin(
+export function attachComposerPin(
   store: Store,
   props: {
     x: number;
@@ -34,6 +35,10 @@ export function attachPin(
   } else {
     console.warn('no composer to focus');
   }
-
+  setTimeout(() => {
+    viewContent(store, {
+      target: { type: 'pin', objectId, id, threadId, workspaceId, eventId } as const,
+    });
+  }, 32);
   return id;
 }

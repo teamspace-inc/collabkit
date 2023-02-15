@@ -133,6 +133,7 @@ describe('FirebaseSync', async () => {
         attachments: null,
         mentions: [],
       },
+      timeline: {},
       parentEvent: null,
       newEventId: id,
     });
@@ -203,6 +204,7 @@ describe('FirebaseSync', async () => {
           [attachmentId]: attachment,
         },
       },
+      timeline: {},
       parentEvent: null,
       newEventId: id,
     });
@@ -229,43 +231,6 @@ describe('FirebaseSync', async () => {
     });
   });
 
-  test('markResolved', async () => {
-    const threadId = nanoid();
-
-    await sync.saveThreadInfo({
-      appId,
-      workspaceId,
-      threadId,
-      isOpen: true,
-      info: {
-        url: 'https://www.acme.com',
-        meta: {
-          title: 'Test Title',
-        },
-      },
-    });
-
-    let openThreads = await sync.getOpenThreads({
-      appId,
-      workspaceId,
-    });
-
-    expect(openThreads.find((thread) => thread.threadId === threadId)).toBeDefined();
-
-    await sync.markResolved({
-      appId,
-      workspaceId,
-      threadId,
-    });
-
-    openThreads = await sync.getOpenThreads({
-      appId,
-      workspaceId,
-    });
-
-    expect(openThreads.find((thread) => thread.threadId === threadId)).toBeUndefined();
-  });
-
   test('markSeen', async () => {
     const subs: Subscriptions = {};
 
@@ -283,6 +248,7 @@ describe('FirebaseSync', async () => {
         createdAt: Date.now(),
         createdById: userId,
       },
+      timeline: {},
       parentEvent: null,
       newEventId: id,
     });
@@ -341,6 +307,7 @@ describe('FirebaseSync', async () => {
         createdAt: Date.now(),
         createdById: userId,
       },
+      timeline: {},
       parentEvent: null,
       newEventId: id,
     });

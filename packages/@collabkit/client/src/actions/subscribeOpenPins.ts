@@ -1,6 +1,7 @@
 import { FirebaseId, FirebasePin, Pin, Store } from '@collabkit/core';
 import { getConfig } from './getConfig';
 import has from 'has';
+import { subscribeThread } from './subscribeThread';
 
 // move this to FirebaseSync
 
@@ -59,6 +60,7 @@ function isPins(pins: unknown): pins is { [pinId: string]: FirebasePin } {
 
 export function subscribeOpenPins(store: Store) {
   const { appId, workspaceId } = getConfig(store);
+  // console.log('[CollabKit] subscribeOpenPins', appId, workspaceId);
 
   function onGet(pins: any) {
     const workspace = store.workspaces[workspaceId];
@@ -97,6 +99,7 @@ export function subscribeOpenPins(store: Store) {
         delete workspace.eventPins[pin.eventId];
         delete workspace.openPins[objectId][pinId];
       }
+
       for (const pinId in pins) {
         const firebasePin = pins[pinId];
         const { state, ...otherProps } = firebasePin;
@@ -109,6 +112,7 @@ export function subscribeOpenPins(store: Store) {
         };
         workspace.openPins[objectId][pinId] = pin;
         workspace.eventPins[pin.eventId] = pin;
+        subscribeThread(store, { ...pin });
       }
     } else {
       console.error('[CollabKit] invalid pins', pins);
@@ -130,6 +134,7 @@ export function subscribeOpenPins(store: Store) {
     subs: store.subs,
     onGet,
     onObjectChange,
+    onObjectAdded: onObjectChange,
     onObjectRemove,
   });
 }

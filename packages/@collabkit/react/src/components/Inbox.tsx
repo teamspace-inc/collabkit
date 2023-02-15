@@ -6,7 +6,7 @@ import { InboxItem } from './InboxItem';
 import { ThemeWrapper } from './ThemeWrapper';
 import { ChatCentered } from './icons';
 import { emptyState } from '../theme/components/Thread.css';
-import { useOptionalSidebarContext } from './useOptionalSidebarContext';
+import { useOptionalSidebarContext } from '../hooks/useOptionalSidebarContext';
 import { useInbox } from '../hooks/public/useInbox';
 import { ThreadProvider } from './Thread';
 import { useStore } from '../hooks/useStore';

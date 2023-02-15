@@ -1,10 +1,11 @@
 import { Event, Store } from '@collabkit/core';
-
+import { snapshot, getVersion, INTERNAL_Snapshot } from 'valtio';
+const isValtioProxy = (obj: object) => typeof getVersion(obj) === 'number';
 export async function createEvent(
   store: Store,
   props: {
     event: Event;
-    parentEvent: Event | null;
+    parentEvent: Event | INTERNAL_Snapshot<Event> | null;
     threadId: string;
   }
 ) {
@@ -23,10 +24,15 @@ export async function createEvent(
     appId,
     workspaceId,
     threadId,
-    event,
-    parentEvent,
+    event: isValtioProxy(event) ? snapshot(event) : event,
+    parentEvent: parentEvent
+      ? isValtioProxy(parentEvent)
+        ? snapshot(parentEvent)
+        : parentEvent
+      : null,
     newEventId,
     userId,
+    timeline: store.workspaces[workspaceId].timeline[threadId],
   });
   const timelines = store.workspaces[workspaceId].timeline;
   timelines[threadId] ||= {};

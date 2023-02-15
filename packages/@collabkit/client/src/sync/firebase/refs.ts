@@ -15,20 +15,3 @@ function encodePath(strings: TemplateStringsArray, ...substitutions: string[]) {
 }
 
 ref.path = encodePath;
-
-export function timelineRef(appId: string, workspaceId: string, threadId: string) {
-  return ref`/timeline/${appId}/${workspaceId}/${threadId}`;
-}
-
-export function typingRef(appId: string, workspaceId: string, threadId: string) {
-  return ref`/isTyping/${appId}/${workspaceId}/${threadId}`;
-}
-
-export function userTypingRef(
-  appId: string,
-  workspaceId: string,
-  threadId: string,
-  userId: string
-) {
-  return ref`/isTyping/${appId}/${workspaceId}/${threadId}/${userId}`;
-}

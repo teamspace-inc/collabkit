@@ -1,7 +1,7 @@
 import { onChildAdded, onChildRemoved, onDisconnect } from 'firebase/database';
 import type { Subscriptions, Sync } from '@collabkit/core';
 import { FirebaseId } from '@collabkit/core';
-import { typingRef, userTypingRef } from './refs';
+import { ref } from './refs';
 
 export async function subscribeThreadIsTyping(props: {
   appId: string;
@@ -20,10 +20,10 @@ export async function subscribeThreadIsTyping(props: {
   }
 
   if (userId) {
-    await onDisconnect(userTypingRef(appId, workspaceId, threadId, userId)).remove();
+    await onDisconnect(ref`/isTyping/${appId}/${workspaceId}/${threadId}/${userId}`).remove();
   }
 
-  const isTypingRef = typingRef(appId, workspaceId, threadId);
+  const isTypingRef = ref`/isTyping/${appId}/${workspaceId}/${threadId}`;
 
   try {
     subs[addedKey] = onChildAdded(isTypingRef, (snapshot) => {

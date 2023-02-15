@@ -269,6 +269,8 @@ export const Menu = React.memo(function Menu(props) {
                           listItemsRef.current[index] = node;
                         },
                         onClick(e: React.MouseEvent) {
+                          e.preventDefault();
+                          e.stopPropagation();
                           onItemClick(e, child.props.targetType);
                           tree?.events.emit('click');
                         },

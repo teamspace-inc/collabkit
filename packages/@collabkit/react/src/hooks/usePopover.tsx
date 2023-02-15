@@ -1,16 +1,17 @@
 import { useApp } from '../hooks/useApp';
-import { useSnapshot } from 'valtio';
 import { useCallbackRef } from '@radix-ui/react-use-callback-ref';
 import { Target } from '@collabkit/core';
-import isEqual from 'fast-deep-equal';
+import { useStoreKeyMatches } from './useSubscribeStoreKey';
+import equals from 'fast-deep-equal';
 
-export function usePopover(props: { target: Target | null }) {
-  const { target } = props;
+export function usePopover(props: {
+  target: Target;
+  targetMatchFn?: (target: Target | null | undefined) => boolean;
+}) {
+  const { target, targetMatchFn = (target) => equals(target, props.target) } = props;
   const { store, events } = useApp();
-  const { viewingId, previewingId } = useSnapshot(store);
-
-  const contentVisible = isEqual(viewingId, target);
-  const previewVisible = isEqual(previewingId, target);
+  const contentVisible = useStoreKeyMatches(store, 'viewingId', targetMatchFn);
+  const previewVisible = useStoreKeyMatches(store, 'previewingId', targetMatchFn);
 
   const onContentChange = useCallbackRef((open: boolean) => {
     if (target) {
@@ -38,6 +39,7 @@ export function usePopover(props: { target: Target | null }) {
     }
   });
   const hidePreview = useCallbackRef(() => {
+    console.log('hidePreview');
     if (target) {
       events.onPopoverPreviewChange({ target, open: false });
     }

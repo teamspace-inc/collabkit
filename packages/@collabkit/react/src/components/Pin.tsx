@@ -1,4 +1,4 @@
-import type { Pin, PinDeleteButton, PinTarget, WithID } from '@collabkit/core';
+import type { PendingPin, Pin, PinDeleteButton, PinTarget, WithID } from '@collabkit/core';
 
 import {
   autoUpdate,
@@ -15,37 +15,54 @@ import { useStore } from '../hooks/useStore';
 import { TargetContext } from './Target';
 import { useApp } from '../hooks/useApp';
 import { useTarget } from '../hooks/useTarget';
-import { vars } from '../theme/theme/index.css';
 import { Menu, MenuItem } from './Menu';
 import { PopoverContent, PopoverPreview, PopoverRoot, PopoverTrigger } from './Popover';
 import { ProfileAvatar, ProfileProvider } from './Profile';
 import {
+  CommentActions,
   CommentBody,
   CommentCreatorName,
+  CommentReactionsListAddEmojiButton,
   CommentHeader,
   CommentMarkdown,
+  CommentMenu,
   CommentReactions,
+  CommentReactionsList,
   CommentRoot,
+  CommentSeeAllRepliesButton,
   CommentTimestamp,
 } from './Comment';
 import * as styles from '../theme/components/Pin.css';
 import { usePopover } from '../hooks/usePopover';
 import { useUserContext } from '../hooks/useUserContext';
-import { PinIcon } from './PinIcon';
+import { PinIconSVG } from './PinIcon';
 import { ThreadContext } from '../hooks/useThreadContext';
 import { CommentList } from './CommentList';
-import { Composer } from './composer/Composer';
+import {
+  Composer,
+  ComposerEditor,
+  ComposerInput,
+  ComposerPlaceholder,
+  ComposerRoot,
+} from './composer/Composer';
+import { Root } from './Root';
+import has from 'has';
+import { vars } from '../theme/theme/index.css';
+import { useStoreKeyMatches } from '../hooks/useSubscribeStoreKey';
 
 function SavedPin({
   pin,
   isSelected,
 }: {
   isSelected: boolean;
-  pin: WithID<Pin> & { objectId: string };
+  pin: WithID<Pin | PendingPin> & { objectId: string };
 }) {
   const store = useStore();
+  const nodeId = useFloatingNodeId();
+
   const { update, reference, floating, strategy, x, y } = useFloating({
     placement: 'top-start',
+    nodeId,
     middleware: [
       offset(({ rects }) => ({
         crossAxis: rects.reference.width * pin.x,
@@ -74,14 +91,12 @@ function SavedPin({
 
   const target: PinTarget = useMemo(() => {
     const { x, y, createdById, ...pinTarget } = pin;
-    const unproxedPinTarget = JSON.parse(JSON.stringify(pinTarget));
+    const purePinTarget = structuredClone(pinTarget);
     return {
       type: 'pin',
-      ...unproxedPinTarget,
+      ...purePinTarget,
     };
   }, [pin.id, pin.objectId, pin.eventId, pin.workspaceId, pin.threadId]);
-
-  const id = useFloatingNodeId();
 
   if (!commentables[pin.objectId]) {
     return null;
@@ -89,7 +104,7 @@ function SavedPin({
 
   return (
     <TargetContext.Provider value={target}>
-      <FloatingNode id={id}>
+      <FloatingNode id={nodeId}>
         <PinMarker
           isSelected={isSelected}
           pointerEvents="all"
@@ -112,7 +127,11 @@ function PinMenu(props: { className?: string; children: React.ReactNode }) {
         events.onClick(e, {
           target: {
             type: 'pinDeleteButton',
-            pin: target,
+            objectId: target.objectId,
+            pinId: target.id,
+            workspaceId: target.workspaceId,
+            threadId: target.threadId,
+            eventId: target.eventId,
           },
         });
       }
@@ -143,7 +162,7 @@ type PinMarkerProps = {
   style?: React.CSSProperties;
   pointerEvents: 'all' | 'none';
   isSelected: boolean;
-  pin: WithID<Pin>;
+  pin: WithID<Pin | PendingPin>;
 };
 
 const PinCursor = forwardRef<HTMLDivElement, { isSelected: boolean }>(function PinCursor(
@@ -158,7 +177,7 @@ const PinCursor = forwardRef<HTMLDivElement, { isSelected: boolean }>(function P
         data-testid="collabkit-pin-marker"
         ref={ref}
       >
-        <PinIcon isSelected={props.isSelected} />
+        <PinIconSVG isSelected={props.isSelected} />
         <div className={styles.pinAvatar}>
           <ProfileAvatar />
         </div>
@@ -169,44 +188,87 @@ const PinCursor = forwardRef<HTMLDivElement, { isSelected: boolean }>(function P
 
 function PinPreview({ pin }: { pin: Pin }) {
   return (
-    <ThreadContext.Provider value={pin.threadId}>
-      <CommentRoot commentId={pin.eventId} className={styles.pinPreview}>
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <CommentHeader>
-            <CommentCreatorName />
-            <CommentTimestamp />
-          </CommentHeader>
-          <CommentBody>
-            <CommentMarkdown />
-          </CommentBody>
-          <CommentReactions />
+    <Root>
+      <ThreadContext.Provider value={pin.threadId}>
+        <div className={styles.pinPopover}>
+          <CommentRoot commentId={pin.eventId} className={styles.pinPreview}>
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <CommentHeader>
+                <CommentCreatorName />
+                <CommentTimestamp />
+              </CommentHeader>
+              <CommentBody>
+                <CommentMarkdown />
+              </CommentBody>
+              <CommentActions>
+                <CommentMenu />
+              </CommentActions>
+              <CommentReactions>
+                <CommentReactionsList />
+                <CommentReactionsListAddEmojiButton />
+              </CommentReactions>
+              <CommentSeeAllRepliesButton onClick={() => {}} />
+            </div>
+          </CommentRoot>
         </div>
-      </CommentRoot>
-    </ThreadContext.Provider>
+      </ThreadContext.Provider>
+    </Root>
   );
 }
 
 function PinThread({ pin }: { pin: Pin }) {
   return (
-    <ThreadContext.Provider value={pin.threadId}>
-      Content
-      <CommentList />
-      <Composer />
-    </ThreadContext.Provider>
+    <Root>
+      <div className={styles.pinPopover}>
+        <ThreadContext.Provider value={pin.threadId}>
+          <CommentList />
+          <Composer autoFocus={true} />
+        </ThreadContext.Provider>
+      </div>
+    </Root>
+  );
+}
+
+function PinNewThreadComposer({ pin }: { pin: Pin }) {
+  return (
+    <Root>
+      <div className={styles.pinPopover}>
+        <ThreadContext.Provider value={pin.threadId}>
+          <ComposerRoot className="" isNewThread={true}>
+            <ComposerEditor style={{ borderRadius: 12, padding: vars.space[1] }}>
+              <ComposerInput
+                autoFocus={true}
+                placeholder={<ComposerPlaceholder>Add a comment</ComposerPlaceholder>}
+              />
+            </ComposerEditor>
+          </ComposerRoot>
+        </ThreadContext.Provider>
+      </div>
+    </Root>
   );
 }
 
 const PinMarker = forwardRef<HTMLDivElement, PinMarkerProps>(function PinMarker(props, ref) {
   const { isSelected, pin, pointerEvents } = props;
-  const { events } = useApp();
+  const { events, store } = useApp();
   const target = useTarget();
+  const isEditing = useStoreKeyMatches(store, 'editingId', (editingId) => {
+    return editingId?.type === 'comment' && editingId.eventId === pin.eventId;
+  });
 
   const onPointerDown = useCallback(
     (e: React.PointerEvent) => events.onPointerDown(e, { target }),
     [events, target]
   );
 
-  const popoverProps = usePopover({ target });
+  const popoverProps = usePopover({
+    target,
+    targetMatchFn: (otherTarget) =>
+      !!(otherTarget && otherTarget.type === 'pin' && otherTarget.id === pin.id),
+  });
+
+  // todo all check if the thread is empty here
+  const isNewThread = !isEditing && has(pin, 'pending') && pin.pending;
 
   return pin ? (
     <ProfileProvider profileId={pin.createdById}>
@@ -221,18 +283,16 @@ const PinMarker = forwardRef<HTMLDivElement, PinMarkerProps>(function PinMarker(
         <div>
           <PopoverRoot {...popoverProps} dismissOnClickOutside={true} shouldFlipToKeepInView={true}>
             <PopoverTrigger>
-              <div>
-                <PinIcon isSelected={isSelected} />
+              <div className={styles.pinIcon}>
+                <PinIconSVG isSelected={isSelected} />
                 <div className={styles.pinAvatar}>
                   <ProfileAvatar />
                 </div>
               </div>
             </PopoverTrigger>
-            <PopoverPreview>
-              <PinPreview pin={pin} />
-            </PopoverPreview>
+            <PopoverPreview>{isNewThread ? null : <PinPreview pin={pin} />}</PopoverPreview>
             <PopoverContent>
-              <PinThread pin={pin} />
+              {isNewThread ? <PinNewThreadComposer pin={pin} /> : <PinThread pin={pin} />}
             </PopoverContent>
           </PopoverRoot>
         </div>

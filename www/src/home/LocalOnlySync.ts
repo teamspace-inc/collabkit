@@ -69,10 +69,6 @@ export class LocalOnlySync implements SyncAdapter {
     // noop
   }
 
-  async markResolved(): Promise<void> {
-    // noop
-  }
-
   async markSeen(): Promise<void> {
     // noop
   }

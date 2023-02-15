@@ -1,18 +1,18 @@
 import debounce from 'lodash.debounce';
 
-import { attachPin } from './attachPin';
+import { attachComposerPin } from './attachComposerPin';
 import { authenticate } from './authenticate';
 import { blur } from './blur';
 import { closeAllPopovers } from './closeAllPopovers';
-import { closePopoverContent } from './closePopoverContent';
 import { closeEmojiReactionPicker } from './closeEmojiReactionPicker';
 import { closeMenu } from './closeMenu';
+import { closePopoverContent } from './closePopoverContent';
 import { closePopoverPreview } from './closePopoverPreview';
 import { collapseThread } from './collapseThread';
 import { deleteMessage } from './deleteMessage';
 import { deletePin } from './deletePin';
-import { dragPin } from './dragPin';
 import { deselectAll } from './deselectAll';
+import { dragPin } from './dragPin';
 import { expandThread } from './expandThread';
 import { focus } from './focus';
 import { focusComposer } from './focusComposer';
@@ -25,7 +25,7 @@ import { insertComposerPin } from './insertComposerPin';
 import { isTyping } from './isTyping';
 import { monitorConnection } from './monitorConnection';
 import { openMenu } from './openMenu';
-import { setPinVisibility } from './pinsVisible';
+import { removeAttachment } from './removeAttachment';
 import { reopenThread } from './reopenThread';
 import { resolveThread } from './resolveThread';
 import { saveMentionableUsers } from './saveMentionableUsers';
@@ -35,6 +35,8 @@ import { seen } from './seen';
 import { select } from './select';
 import { sendMessage } from './sendMessage';
 import { setAvatarError } from './setAvatarError';
+import { setComposer } from './setComposer';
+import { setPinVisibility } from './pinsVisible';
 import { showPreview } from './showPreview';
 import { showSidebar } from './showSidebar';
 import { startEditing } from './startEditing';
@@ -47,10 +49,10 @@ import { subscribeInbox } from './subscribeInbox';
 import { subscribeOpenPins } from './subscribeOpenPins';
 import { subscribeOpenThreads } from './subscribeOpenThreads';
 import { subscribeProfile } from './subscribeProfile';
-import { subscribeWorkspaceProfiles } from './subscribeWorkspaceProfiles';
 import { subscribeSeen } from './subscribeSeen';
 import { subscribeThread } from './subscribeThread';
 import { subscribeWorkspace } from './subscribeWorkspace';
+import { subscribeWorkspaceProfiles } from './subscribeWorkspaceProfiles';
 import { toggleEmoji } from './toggleEmoji';
 import { toggleEmojiPicker } from './toggleEmojiPicker';
 import { unhover } from './unhover';
@@ -59,14 +61,14 @@ import { updateComposer } from './updateComposer';
 import { viewContent } from './viewContent';
 
 export const actions = {
-  attachPin,
+  attachComposerPin,
   authenticate,
   blur,
   closeAllPopovers,
   closeEmojiReactionPicker,
   closeMenu,
-  closePopoverPreview,
   closePopoverContent,
+  closePopoverPreview,
   collapseThread,
   deleteMessage,
   deletePin,
@@ -84,7 +86,7 @@ export const actions = {
   isTyping: debounce(isTyping, 1000, { leading: true, maxWait: 1000 }),
   monitorConnection,
   openMenu,
-  setPinVisibility,
+  removeAttachment,
   reopenThread,
   resolveThread,
   saveMentionableUsers,
@@ -94,6 +96,8 @@ export const actions = {
   select,
   sendMessage,
   setAvatarError,
+  setComposer,
+  setPinVisibility,
   showPreview,
   showSidebar,
   startEditing,
@@ -106,10 +110,10 @@ export const actions = {
   subscribeOpenPins,
   subscribeOpenThreads,
   subscribeProfile,
-  subscribeWorkspaceProfiles,
   subscribeSeen,
   subscribeThread,
   subscribeWorkspace,
+  subscribeWorkspaceProfiles,
   toggleEmoji,
   toggleEmojiPicker,
   unhover,

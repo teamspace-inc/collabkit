@@ -8,6 +8,7 @@ import type {
   ThreadMeta,
   WithID,
 } from '../types';
+import type { INTERNAL_Snapshot } from 'valtio';
 
 export interface SyncAdapter {
   shouldAuthenticate(): boolean;
@@ -60,37 +61,15 @@ export interface SyncAdapter {
 
   nextThreadId(params: { appId: string; workspaceId: string }): string;
 
-  // savePin(params: {
-  //   appId: string;
-  //   workspaceId: string;
-  //   userId: string;
-  //   pinId: string;
-  //   pin: Pin;
-  // }): Promise<string>;
-
-  // deletePin(params: {
-  //   appId: string;
-  //   workspaceId: string;
-  //   objectId: string;
-  //   pinId: string;
-  // }): Promise<void>;
-
   subscribeOpenPins(params: {
     appId: string;
     workspaceId: string;
     subs: Subscriptions;
     onGet: (pins: { [objectId: string]: { [pinId: string]: { x: number; y: number } } }) => void;
+    onObjectAdded: (objectId: string, pins: { [pinId: string]: { x: number; y: number } }) => void;
     onObjectChange: (objectId: string, pins: { [pinId: string]: { x: number; y: number } }) => void;
     onObjectRemove: (objectId: string) => void;
   }): Promise<void>;
-
-  // movePin(params: {
-  //   appId: string;
-  //   workspaceId: string;
-  //   pinId: string;
-  //   x: number;
-  //   y: number;
-  // }): Promise<void>;
 
   saveProfile(params: {
     appId: string;
@@ -98,8 +77,6 @@ export interface SyncAdapter {
     workspaceId: string;
     profile: ServerProfile;
   }): Promise<void>;
-
-  markResolved(params: { appId: string; workspaceId: string; threadId: string }): Promise<void>;
 
   markSeen(params: {
     appId: string;
@@ -128,9 +105,10 @@ export interface SyncAdapter {
     userId: string;
     workspaceId: string;
     threadId: string;
-    event: Event;
-    parentEvent: Event | null;
+    event: Event | INTERNAL_Snapshot<Event>;
+    parentEvent: Event | null | INTERNAL_Snapshot<Event>;
     newEventId: string;
+    timeline: { [eventId: string]: Event };
   }): Promise<void>;
 
   subscribeSeen(params: {

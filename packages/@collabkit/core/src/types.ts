@@ -1,6 +1,7 @@
 import type { Color } from '@collabkit/colors';
 import type { LexicalEditor } from 'lexical';
 import type { SyncAdapter } from './sync';
+import type { INTERNAL_Snapshot } from 'valtio';
 
 export * as Sync from './sync';
 export interface ThreadMeta {
@@ -213,10 +214,11 @@ export type Target =
   | CommentReplyCountButtonTarget
   | CommentReplyButtonTarget
   | EmojiTarget
-  | CommentAddEmojiButtonTarget
+  | CommentReactionsListAddEmojiButtonTarget
   | CommentActionsEmojiButtonTarget
   | ChannelTarget
-  | ComposerPinTarget;
+  | ComposerPinTarget
+  | AddCommentButtonTarget;
 
 export type CommentReplyCountButtonTarget = {
   type: 'commentReplyCountButton';
@@ -274,6 +276,10 @@ export type OverlayTarget = {
   y: number;
 };
 
+export type AddCommentButtonTarget = {
+  type: 'addCommentButton';
+};
+
 export type ComposerMentionsButtonTarget = {
   type: 'composerMentionsButton';
   threadId: string;
@@ -283,14 +289,18 @@ export type ComposerMentionsButtonTarget = {
 
 export type ComposerPinButtonTarget = {
   type: 'composerPinButton';
-  composer: ComposerTarget;
+  threadId: string;
+  workspaceId: string;
+  eventId: string | 'default';
 };
 
 export type ComposerPinTarget = {
   type: 'composerPin';
-  composer: ComposerTarget;
-  pinId: string | null;
-  objectId: string | null;
+  pinId: string;
+  objectId: string;
+  threadId: string;
+  workspaceId: string;
+  eventId: string | 'default';
 };
 
 export type MenuTarget = {
@@ -302,7 +312,11 @@ export type MenuTarget = {
 
 export type PinDeleteButton = {
   type: 'pinDeleteButton';
-  pin: PinTarget;
+  pinId: string;
+  threadId: string;
+  workspaceId: string;
+  eventId: string;
+  objectId: string;
 };
 
 export type CommentMenuTarget = MenuTarget & CommentTarget;
@@ -345,14 +359,15 @@ export type HideSidebarButtonTarget = {
 };
 
 export type CommentEmojiButtonTargets =
-  | CommentAddEmojiButtonTarget
+  | CommentReactionsListAddEmojiButtonTarget
   | CommentActionsEmojiButtonTarget;
 
-export type CommentAddEmojiButtonTarget = {
-  type: 'commentAddEmojiButton';
+export type CommentReactionsListAddEmojiButtonTarget = {
+  type: 'commentReactionsListAddEmojiButton';
   workspaceId: string;
   threadId: string;
   eventId: string;
+  treeId: string;
 };
 
 export type CommentActionsEmojiButtonTarget = {
@@ -360,6 +375,7 @@ export type CommentActionsEmojiButtonTarget = {
   workspaceId: string;
   threadId: string;
   eventId: string;
+  treeId: string;
 };
 
 export type CommentReactionTarget = {
@@ -598,8 +614,8 @@ export interface UnconfiguredStore {
   isConnected: boolean;
   isSidebarOpen: boolean;
   isDemo: boolean;
-  userId: string | null;
   user: UserProps | null;
+  userId: string | null;
   workspaceId: string | null;
   focusedId: null | Target;
   reactingId: null | Target;
@@ -609,7 +625,9 @@ export interface UnconfiguredStore {
   viewingId: null | Target;
   previewingId: null | Target;
   editingId: null | CommentTarget;
+  editingEventSnapshots: { [eventId: string]: INTERNAL_Snapshot<Event> | null };
   composerId: null | ComposerTarget;
+
   config: null | Config;
   avatarErrors: { [avatar: string]: boolean };
   profiles: { [profileId: string]: Profile | undefined };
