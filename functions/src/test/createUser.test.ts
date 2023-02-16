@@ -83,7 +83,7 @@ it('createUser: user not provided', async () => {
       apiKey: 'apiKey',
       workspaceId: 'workspaceId',
     },
-    path: '/userId',
+    path: '/v1/userId',
   });
   await userImpl(http.req, http.res);
   const send = http.res.send as sinon.SinonSpy;
@@ -102,7 +102,7 @@ it('createUser: "user" object is invalid', async () => {
         name: {},
       },
     },
-    path: '/userId',
+    path: '/v1/userId',
   });
   await userImpl(http.req, http.res);
   const send = http.res.send as sinon.SinonSpy;
@@ -122,7 +122,7 @@ it('createUser: "apiKey" is invalid', async () => {
         email: 'email',
       },
     },
-    path: '/userId',
+    path: '/v1/userId',
   });
   await userImpl(http.req, http.res);
   const send = http.res.send as sinon.SinonSpy;
@@ -142,7 +142,7 @@ it('createUser: sucess', async () => {
         email: 'email',
       },
     },
-    path: '/userId',
+    path: '/v1/userId',
   });
   await userImpl(http.req, http.res);
   const send = http.res.send as sinon.SinonSpy;
