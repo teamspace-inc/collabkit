@@ -1,6 +1,5 @@
 import * as functions from 'firebase-functions';
 import { ref } from './actions/data/refs';
-import { updateUserAndWorkspace } from './actions/helpers/updateUserAndWorkspace';
 import { updateWorkspace } from './actions/helpers/updateWorkspace';
 
 export async function workspaceImpl(
