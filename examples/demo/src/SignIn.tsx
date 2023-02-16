@@ -1,6 +1,5 @@
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { GoogleLogin } from '@react-oauth/google';
-import { userFromGoogleToken } from './hooks/userFromGoogleToken';
 import { store } from './store';
 
 export function SignIn() {
@@ -19,8 +18,17 @@ export function SignIn() {
         <h1>CollabKit Demo</h1>
         <GoogleLogin
           onSuccess={async (credentialResponse) => {
-            if (credentialResponse.credential) {
-              store.user = userFromGoogleToken(credentialResponse.credential);
+            const { credential } = credentialResponse;
+            if (credential) {
+              const response = await fetch('/api/authenticate', {
+                method: 'POST',
+                body: JSON.stringify({ credential }),
+                headers: {
+                  'content-type': 'application/json',
+                },
+              });
+              const result = await response.json();
+              store.token = result.token;
             }
           }}
           onError={() => {

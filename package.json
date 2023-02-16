@@ -11,7 +11,8 @@
     "nohoist": [
       "**/@ladle/react",
       "**/mailing",
-      "**/mailing-core"
+      "**/mailing-core",
+      "**/@swc/helpers"
     ]
   },
   "scripts": {

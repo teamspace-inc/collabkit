@@ -11,14 +11,15 @@ import { Home } from './Home';
 import { Logout } from './Logout';
 
 export function Demo() {
-  const { user } = useSnapshot(store);
-  const { apiKey, appId, workspaceId, workspaceName } = useAppParams();
+  const { token } = useSnapshot(store);
+  const { appId, workspaceId, workspaceName } = useAppParams();
   const test = useTestParams();
+  if (!token) return null;
   return (
     <CollabKitProvider
       _test={test}
-      apiKey={apiKey}
       appId={appId}
+      token={token}
       workspace={{ id: workspaceId, name: workspaceName }}
       onPinHover={(props) => {}}
       onPinAttach={() => {
@@ -56,10 +57,6 @@ export function Demo() {
       onAuthenticationRequired={() => {
         console.log('authRequired');
       }}
-      // warning: this is a hack
-      // this is the strangest thing, if we pass a snapshot into our product
-      // it breaks our app, but if we stringify and then parse it, it works
-      user={JSON.parse(JSON.stringify(user))}
       // theme="dark"
       // renderAvatar={CustomAvatar}
       // renderThreadContextPreview={() => {
