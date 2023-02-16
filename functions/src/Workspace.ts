@@ -3,7 +3,7 @@ import { ref } from './actions/data/refs';
 import { updateUserAndWorkspace } from './actions/helpers/updateUserAndWorkspace';
 import { updateWorkspace } from './actions/helpers/updateWorkspace';
 
-export async function WorkspaceImpl(
+export async function workspaceImpl(
   request: functions.https.Request,
   response: functions.Response
 ) {
@@ -54,8 +54,8 @@ export async function WorkspaceImpl(
   response.status(200).send('Created/Updated Workspace Successfully.');
 }
 
-export const Workspace = functions
+export const workspace = functions
   .runWith({ minInstances: 1 })
   .https.onRequest(async (request, response) => {
-    await WorkspaceImpl(request, response);
+    await workspaceImpl(request, response);
   });

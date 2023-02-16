@@ -2,8 +2,8 @@ import * as functions from 'firebase-functions';
 import admin from 'firebase-admin';
 import * as cors from 'cors';
 import { generateCustomTokenImpl } from './generateCustomToken';
-import { UserImpl } from './User';
-import { WorkspaceImpl } from './Workspace';
+import { userImpl } from './user';
+import { workspaceImpl } from './workspace';
 import { createOrgImpl } from './createOrg';
 import { commentImpl } from './comment';
 import { sendNotificationImpl } from './sendNotification';
@@ -21,10 +21,10 @@ export const routesImpl = (request: functions.https.Request, response: functions
         generateCustomTokenImpl(request, response);
         break;
       case 'user':
-        UserImpl(request, response);
+        userImpl(request, response);
         break;
       case 'workspace':
-        WorkspaceImpl(request, response);
+        workspaceImpl(request, response);
         break;
       case 'createOrg':
         createOrgImpl(request, response);

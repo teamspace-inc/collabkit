@@ -3,7 +3,7 @@ import { ref } from './actions/data/refs';
 import { isValidUser } from './actions/helpers/isValidUser';
 import { updateUserAndWorkspace } from './actions/helpers/updateUserAndWorkspace';
 
-export async function UserImpl(request: functions.https.Request, response: functions.Response) {
+export async function userImpl(request: functions.https.Request, response: functions.Response) {
   if (request.method !== 'PUT') {
     response.status(405).send({ status: 405, error: 'Method not allowed' });
     return;
@@ -63,8 +63,8 @@ export async function UserImpl(request: functions.https.Request, response: funct
   response.status(200).send('Created/Updated User Successfully.');
 }
 
-export const User = functions
+export const user = functions
   .runWith({ minInstances: 1 })
   .https.onRequest(async (request, response) => {
-    await UserImpl(request, response);
+    await userImpl(request, response);
   });
