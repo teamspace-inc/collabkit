@@ -1,17 +1,15 @@
-import { Store } from '@collabkit/core';
+import { CommentableObject, Store } from '@collabkit/core';
 import { FloatingPortal } from '@floating-ui/react';
 import React, { useCallback, useEffect, useRef } from 'react';
 import { useSnapshot } from 'valtio';
 import { useApp } from '../hooks/useApp';
 import { useCommentableRef } from '../hooks/useCommentableRef';
+import { ObjectIdContext, useObjectIdContext } from '../hooks/useObjectIdContext';
 import { useStore } from '../hooks/useStore';
 import * as styles from '../theme/components/Commentable.css';
 import { SavedPin, PinCursor } from './Pin';
 
-function findCommentableElement(
-  store: Store,
-  e: React.PointerEvent
-): { objectId: string; element: HTMLElement | SVGElement | null } | null {
+function findCommentableElement(store: Store, e: React.PointerEvent): CommentableObject | null {
   const element = document.elementFromPoint(e.clientX, e.clientY);
   if (element == null) {
     return null;
@@ -77,10 +75,12 @@ export function CommentableRoot(props: { className?: string; children?: React.Re
         const { x, y, width, height } = commentable.element.getBoundingClientRect();
         events.onPointerDown(e, {
           target: {
-            type: 'overlay',
+            type: 'commentable',
             objectId: commentable.objectId,
             x: (e.clientX - x) / width,
             y: (e.clientY - y) / height,
+            xValue: commentable.xValue,
+            yValue: commentable.yValue,
           },
         });
       }
@@ -141,10 +141,34 @@ function CommentableContainer({
   objectId: string;
 }) {
   const ref = useCommentableRef(objectId);
-  return <div ref={ref}>{children}</div>;
+  return (
+    <ObjectIdContext.Provider value={objectId}>
+      <div ref={ref}>{children}</div>
+    </ObjectIdContext.Provider>
+  );
+}
+
+function CommentableChart(props: any) {
+  const store = useStore();
+  const yAxisId = Object.keys(props.yAxisMap)[0];
+  const yAxis = props.yAxisMap[yAxisId];
+
+  const objectId = useObjectIdContext();
+  let xValue: number | null = null;
+  let yValue: number | null = null;
+  if (props.activeTooltipIndex != null && props.activeTooltipIndex != -1) {
+    xValue = props.tooltipTicks[props.activeTooltipIndex]?.value;
+    yValue = yAxis.scale.invert(props.activeCoordinate.y);
+    if (xValue != null && yValue != null) {
+      store.commentables[objectId].xValue = xValue;
+      store.commentables[objectId].yValue = yValue;
+    }
+  }
+  return null;
 }
 
 export const Commentable = {
   Root: CommentableRoot,
   Container: CommentableContainer,
+  Chart: CommentableChart,
 };

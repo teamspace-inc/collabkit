@@ -36,13 +36,7 @@ import { ThreadContext } from '../hooks/useThreadContext';
 import { CommentList } from './CommentList';
 import { Composer } from './composer/Composer';
 
-function SavedPin({
-  pin,
-  isSelected,
-}: {
-  isSelected: boolean;
-  pin: WithID<Pin> & { objectId: string };
-}) {
+function SavedPin({ pin, isSelected }: { isSelected: boolean; pin: WithID<Pin> }) {
   const store = useStore();
   const { update, reference, floating, strategy, x, y } = useFloating({
     placement: 'top-start',

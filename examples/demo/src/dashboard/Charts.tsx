@@ -1,3 +1,4 @@
+import { Commentable } from '@collabkit/react';
 import {
   AreaChart,
   Area,
@@ -9,8 +10,6 @@ import {
   ResponsiveContainer,
   Customized,
 } from 'recharts';
-
-type EarningsEntry = { date: string; earnings: { actual: number; current: number } };
 
 const data = [
   {
@@ -81,7 +80,7 @@ const dateFormat = new Intl.DateTimeFormat('en', {
 
 export function Charts() {
   return (
-    <>
+    <Commentable.Container objectId="dashboard-earnings-chart">
       <ResponsiveContainer width="100%" height={430}>
         <AreaChart
           data={data}
@@ -132,15 +131,9 @@ export function Charts() {
             fill="url(#colorCurrent)"
             fillOpacity={0.3}
           />
-          {/* <Customized
-            component={
-              <CollabKitRecharts.Chart
-                getObjectId={(item: EarningsEntry, dataKey: string) => `acme/earnings/${item.date}`}
-              />
-            }
-          /> */}
+          <Customized component={<Commentable.Chart />} />
         </AreaChart>
       </ResponsiveContainer>
-    </>
+    </Commentable.Container>
   );
 }

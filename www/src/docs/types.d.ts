@@ -1,5 +1,5 @@
 /// <reference types="react" />
-import { ShowSidebarButtonTarget } from '@collabkit/core';
+import { CommentableTarget, ShowSidebarButtonTarget } from '@collabkit/core';
 import * as React from 'react';
 import React__default, { ReactNode } from 'react';
 
@@ -1143,6 +1143,7 @@ type Config = (SecureProps | UnsecureProps) & ConfigProps;
 type Target =
   | ComposerTarget
   | ThreadTarget
+  | CommentableTarget
   | CommentButtonTarget
   | CommentTarget
   | CommentReactionTarget
@@ -1150,20 +1151,11 @@ type Target =
   | ThreadCloseButtonTarget
   | ReopenThreadButtonTarget
   | FloatingCommentButtonTarget
-  | CommentableContainer
-  | Commentable
   | PinTarget
   | CommentEditButtonTarget
   | CommentDeleteButtonTarget
   | ShowSidebarButtonTarget
   | HideSidebarButtonTarget;
-
-type Commentable = {
-  type: 'commentable';
-  workspaceId: string;
-};
-
-type CommentableContainer = { type: 'commentableContainer'; workspaceId: string };
 
 type FloatingCommentButtonTarget = { type: 'floatingCommentButton' };
 

@@ -192,8 +192,6 @@ export type Target =
   | ThreadCloseButtonTarget
   | ReopenThreadButtonTarget
   | FloatingCommentButtonTarget
-  | CommentableContainer
-  | Commentable
   | MenuTarget
   | CommentMenuTarget
   | CommentEditButtonTarget
@@ -209,7 +207,7 @@ export type Target =
   | CommentSaveButtonTarget
   | CommentCancelButtonTarget
   | PinCursorTarget
-  | OverlayTarget
+  | CommentableTarget
   | CommentReplyCountButtonTarget
   | CommentReplyButtonTarget
   | EmojiTarget
@@ -267,11 +265,13 @@ export type AttachPinTarget = {
   y: number;
 };
 
-export type OverlayTarget = {
-  type: 'overlay';
+export type CommentableTarget = {
+  type: 'commentable';
   objectId: string;
   x: number;
   y: number;
+  xValue?: number;
+  yValue?: number;
 };
 
 export type ComposerMentionsButtonTarget = {
@@ -307,14 +307,7 @@ export type PinDeleteButton = {
 
 export type CommentMenuTarget = MenuTarget & CommentTarget;
 
-export type Commentable = {
-  type: 'commentable';
-  workspaceId: string;
-};
-
 export type CommentType = 'default' | 'inline-start' | 'inline' | 'inline-end';
-
-export type CommentableContainer = { type: 'commentableContainer'; workspaceId: string };
 
 export type FloatingCommentButtonTarget = { type: 'floatingCommentButton' };
 
@@ -466,10 +459,14 @@ export type Attachments = {
   [attachmentId: string]: Attachment;
 };
 
-export type Attachment = {
+export type Attachment = PinAttachment /* | FileAttachment */;
+
+export type PinAttachment = {
   type: 'pin';
   x: number;
   y: number;
+  xValue: number | null;
+  yValue: number | null;
   objectId: string;
   state: string | null;
   pending?: boolean;
@@ -580,11 +577,14 @@ export interface Workspace {
   };
 }
 
-type CommentableObject = {
+export type CommentableObject = {
   objectId: string;
 
   // null indicates a disconnected pin
   element: HTMLElement | SVGElement | null;
+
+  xValue?: number;
+  yValue?: number;
 };
 
 // get all pins for the workspace that have an open thread attached to them (we don't want resolved ones)

@@ -271,7 +271,7 @@ export function createEvents(store: Store) {
       switch (store.uiState) {
         case 'selecting': {
           switch (type) {
-            case 'overlay': {
+            case 'commentable': {
               e.stopPropagation();
               e.preventDefault();
               actions.attachPin(store, target);
@@ -281,7 +281,7 @@ export function createEvents(store: Store) {
         }
         case 'idle': {
           switch (type) {
-            case 'overlay': {
+            case 'commentable': {
               actions.deselectAll(store);
               break;
             }
