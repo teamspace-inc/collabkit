@@ -1,9 +1,8 @@
 import * as functions from 'firebase-functions';
 import { ref } from './actions/data/refs';
-import { updateUserAndWorkspace } from './actions/helpers/updateUserAndWorkspace';
 import { updateWorkspace } from './actions/helpers/updateWorkspace';
 
-export async function createWorkspaceImpl(
+export async function workspaceImpl(
   request: functions.https.Request,
   response: functions.Response
 ) {
@@ -54,8 +53,8 @@ export async function createWorkspaceImpl(
   response.status(200).send('Created/Updated Workspace Successfully.');
 }
 
-export const createWorkspace = functions
+export const workspace = functions
   .runWith({ minInstances: 1 })
   .https.onRequest(async (request, response) => {
-    await createWorkspaceImpl(request, response);
+    await workspaceImpl(request, response);
   });

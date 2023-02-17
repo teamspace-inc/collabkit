@@ -3,7 +3,7 @@ import sinon from 'sinon';
 
 import * as functions from 'firebase-functions';
 
-import { createWorkspaceImpl } from '../createWorkspace';
+import { workspaceImpl } from '../workspace';
 
 const mockHttp = (props: { path?: string; query?: object; body?: object; headers?: object }) => {
   const req = {
@@ -27,7 +27,7 @@ const mockHttp = (props: { path?: string; query?: object; body?: object; headers
 
 it('createWorkspace: appId not provided', async () => {
   const http = mockHttp({ query: {}, body: {} });
-  await createWorkspaceImpl(http.req, http.res);
+  await workspaceImpl(http.req, http.res);
   const send = http.res.send as sinon.SinonSpy;
   const { args } = send.getCalls()[0];
   expect(args[0]).toEqual({ status: 400, error: '"appId" not provided' });
@@ -40,7 +40,7 @@ it('createWorkspace: apiKey not provided', async () => {
       appId: 'appId',
     },
   });
-  await createWorkspaceImpl(http.req, http.res);
+  await workspaceImpl(http.req, http.res);
   const send = http.res.send as sinon.SinonSpy;
   const { args } = send.getCalls()[0];
   expect(args[0]).toEqual({ status: 400, error: '"apiKey" not provided' });
@@ -54,7 +54,7 @@ it('createWorkspace: workspaceId not provided', async () => {
       apiKey: 'apiKey',
     },
   });
-  await createWorkspaceImpl(http.req, http.res);
+  await workspaceImpl(http.req, http.res);
   const send = http.res.send as sinon.SinonSpy;
   const { args } = send.getCalls()[0];
   expect(args[0]).toEqual({ status: 400, error: '"workspaceId" not provided' });
@@ -69,7 +69,7 @@ it('createWorkspace: apiKey invalid', async () => {
     },
     path: '/workspaceId',
   });
-  await createWorkspaceImpl(http.req, http.res);
+  await workspaceImpl(http.req, http.res);
   const send = http.res.send as sinon.SinonSpy;
   const { args } = send.getCalls()[0];
   expect(args[0]).toEqual({ status: 400, error: '"apiKey" invalid' });
@@ -84,7 +84,7 @@ it('createWorkspace: workspace not provided', async () => {
     },
     path: '/workspaceId',
   });
-  await createWorkspaceImpl(http.req, http.res);
+  await workspaceImpl(http.req, http.res);
   const send = http.res.send as sinon.SinonSpy;
   const { args } = send.getCalls()[0];
   expect(args[0]).toEqual({ status: 400, error: '"workspace" not provided' });
@@ -102,7 +102,7 @@ it('createWorkspace: success', async () => {
     },
     path: '/workspaceId',
   });
-  await createWorkspaceImpl(http.req, http.res);
+  await workspaceImpl(http.req, http.res);
   const send = http.res.send as sinon.SinonSpy;
   const { args } = send.getCalls()[0];
   expect(args[0]).toEqual('Created/Updated Workspace Successfully.');

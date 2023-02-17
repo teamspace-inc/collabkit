@@ -1,7 +1,22 @@
-import { API_HOST } from '../constants';
+import has from 'has';
 
-export async function signInWithUserToken(appId: string, userToken: string) {
-  const response = await fetch(`${API_HOST}/generateCustomToken`, {
+type UserTokenResponse = {
+  data: {
+    token: string;
+  };
+};
+
+function isValidResponse(response: unknown): response is UserTokenResponse {
+  if (typeof response !== 'object' || response == null || Array.isArray(response)) {
+    return false;
+  }
+  const tokenValid =
+    !has(response, 'token') || response.token === null || typeof response.token === 'string';
+  return tokenValid;
+}
+
+export async function signInWithUserToken(apiHost: string, appId: string, userToken: string) {
+  const response = await fetch(`${apiHost}/v1/generateCustomToken`, {
     method: 'POST',
     body: JSON.stringify({
       appId: appId,
@@ -11,10 +26,11 @@ export async function signInWithUserToken(appId: string, userToken: string) {
       'Content-Type': 'application/json',
     },
   });
-  if (response.ok) {
-    const json = await response.json();
-    return json.data.token;
+  const res = await response.json();
+  if (response.ok && isValidResponse(res)) {
+    return res.data.token;
   } else {
     console.error('Failed to generateCustomToken', response.status, await response.text());
+    return "";
   }
 }

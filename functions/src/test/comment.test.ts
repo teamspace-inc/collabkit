@@ -3,7 +3,7 @@ import sinon from 'sinon';
 
 import * as functions from 'firebase-functions';
 
-import { comment } from '../comment';
+import { commentImpl } from '../comment';
 
 const mockHttp = (props: { query?: object; body?: object; headers?: object }) => {
   const req = { headers: { origin: '' }, query: {}, body: {}, ...props } as functions.https.Request;
@@ -21,7 +21,7 @@ const mockHttp = (props: { query?: object; body?: object; headers?: object }) =>
 describe('comment', async () => {
   it('comment: apiKey not provided', async () => {
     const http = mockHttp({ query: {}, body: {} });
-    await comment(http.req, http.res);
+    await commentImpl(http.req, http.res);
     const send = http.res.send as sinon.SinonSpy;
     const { args } = send.getCalls()[0];
     expect(args[0]).toEqual({ status: 400, error: '"apiKey" not provided' });
@@ -29,7 +29,7 @@ describe('comment', async () => {
 
   it('comment: appId not provided', async () => {
     const http = mockHttp({ query: {}, body: { apiKey: 'testkey' } });
-    await comment(http.req, http.res);
+    await commentImpl(http.req, http.res);
     const send = http.res.send as sinon.SinonSpy;
     const { args } = send.getCalls()[0];
     expect(args[0]).toEqual({ status: 400, error: '"appId" not provided' });
@@ -37,7 +37,7 @@ describe('comment', async () => {
 
   it('comment: apiKey invalid', async () => {
     const http = mockHttp({ query: {}, body: { apiKey: 'testkey', appId: 'testid' } });
-    await comment(http.req, http.res);
+    await commentImpl(http.req, http.res);
     const send = http.res.send as sinon.SinonSpy;
     const { args } = send.getCalls()[0];
     expect(args[0]).toEqual({ status: 400, error: '"apiKey" is invalid' });
@@ -52,7 +52,7 @@ describe('comment', async () => {
         userId: 'baduserId',
       },
     });
-    await comment(http.req, http.res);
+    await commentImpl(http.req, http.res);
     const send = http.res.send as sinon.SinonSpy;
     const { args } = send.getCalls()[0];
     expect(args[0]).toEqual({ status: 400, error: '"userId" is invalid' });
@@ -66,7 +66,7 @@ describe('comment', async () => {
         userId: '107328433542458292407',
       },
     });
-    await comment(http.req, http.res);
+    await commentImpl(http.req, http.res);
     const send = http.res.send as sinon.SinonSpy;
     const { args } = send.getCalls()[0];
     expect(args[0]).toEqual({ status: 400, error: '"workspaceId" not provided' });
@@ -82,7 +82,7 @@ describe('comment', async () => {
         workspaceId: 'collabkit',
       },
     });
-    await comment(http.req, http.res);
+    await commentImpl(http.req, http.res);
     const send = http.res.send as sinon.SinonSpy;
     const { args } = send.getCalls()[0];
     expect(args[0]).toEqual({ status: 400, error: '"userId" is not in workspace' });
@@ -97,7 +97,7 @@ describe('comment', async () => {
         workspaceId: 'collabkit',
       },
     });
-    await comment(http.req, http.res);
+    await commentImpl(http.req, http.res);
     const send = http.res.send as sinon.SinonSpy;
     const { args } = send.getCalls()[0];
     expect(args[0]).toEqual({ status: 400, error: '"threadId" not provided' });
@@ -113,7 +113,7 @@ describe('comment', async () => {
         threadId: 'testid',
       },
     });
-    await comment(http.req, http.res);
+    await commentImpl(http.req, http.res);
     const send = http.res.send as sinon.SinonSpy;
     const { args } = send.getCalls()[0];
     expect(args[0]).toEqual({ status: 400, error: 'message "body" not provided' });
@@ -130,7 +130,7 @@ describe('comment', async () => {
         body: {},
       },
     });
-    await comment(http.req, http.res);
+    await commentImpl(http.req, http.res);
     const send = http.res.send as sinon.SinonSpy;
     const { args } = send.getCalls()[0];
     expect(args[0]).toEqual({ status: 400, error: 'message "body" is not a string' });
@@ -147,7 +147,7 @@ describe('comment', async () => {
         apiKey: 'D3cnLLd29_4wQNeFazjXu',
       },
     });
-    await comment(http.req, http.res);
+    await commentImpl(http.req, http.res);
     const send = http.res.send as sinon.SinonSpy;
     const { args } = send.getCalls()[0];
     expect(typeof args[0]).toBe('string');

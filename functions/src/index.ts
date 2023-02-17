@@ -3,26 +3,26 @@ if (admin.apps.length === 0) {
   admin.initializeApp();
 }
 
-import { createApp } from './createApp';
+import { routes } from './routes';
 import { createOrg } from './createOrg';
 import { generateToken } from './generateToken';
 import { onEvent } from './onEvent';
 import { sendNotification } from './sendNotification';
 import { triggerWebhook } from './triggerWebhook';
 import { comment } from './comment';
-import { createUser } from './createUser';
-import { createWorkspace } from './createWorkspace';
+import { user } from './user';
+import { workspace } from './workspace';
 import { generateCustomToken } from './generateCustomToken';
 
 export {
   createOrg,
-  createApp,
+  routes as v1,
   generateToken,
   onEvent,
   sendNotification,
   triggerWebhook,
   comment,
-  createUser,
-  createWorkspace,
+  user,
+  workspace,
   generateCustomToken,
 };
