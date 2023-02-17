@@ -1,26 +1,24 @@
 import { CollabKitProvider } from '@collabkit/react';
-import { useSnapshot } from 'valtio';
 import { Route, Switch } from 'wouter';
 import ReactFlowExample from './ReactFlowExample';
 import { useTestParams } from './hooks/useTestParams';
-import { useAppParams } from './hooks/useAppParams';
 import { DashboardExample } from './dashboard/DashboardExample';
-import { store } from './store';
 import { DashboardStore, dashboardStore } from './dashboardStore';
 import { Home } from './Home';
 import { Logout } from './Logout';
 
-export function Demo() {
-  const { token } = useSnapshot(store);
-  const { appId, workspaceId, workspaceName } = useAppParams();
+type Props = {
+  appId: string;
+  token: string;
+};
+
+export function Demo(props: Props) {
   const test = useTestParams();
-  if (!token) return null;
   return (
     <CollabKitProvider
       _test={test}
-      appId={appId}
-      token={token}
-      workspace={{ id: workspaceId, name: workspaceName }}
+      appId={props.appId}
+      token={props.token}
       onPinHover={(props) => {}}
       onPinAttach={() => {
         return JSON.stringify({
