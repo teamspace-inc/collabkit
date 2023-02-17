@@ -1,5 +1,6 @@
 import { test, expect, BrowserContext, Page, Locator } from '@playwright/test';
-import { createUserToken } from '@collabkit/node';
+// @ts-expect-error
+import { createUserToken } from '../../node/src/createUserToken.ts';
 // @ts-expect-error
 import { setupApp, setupFirebase } from './setup.ts';
 import fetch from 'node-fetch';
