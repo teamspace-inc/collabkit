@@ -270,8 +270,10 @@ export type CommentableTarget = {
   objectId: string;
   x: number;
   y: number;
-  xValue?: number;
-  yValue?: number;
+  dataPoint?: {
+    x: number;
+    y: number;
+  };
 };
 
 export type ComposerMentionsButtonTarget = {
@@ -465,8 +467,10 @@ export type PinAttachment = {
   type: 'pin';
   x: number;
   y: number;
-  xValue: number | null;
-  yValue: number | null;
+  dataPoint: {
+    x: number;
+    y: number;
+  } | null;
   objectId: string;
   state: string | null;
   pending?: boolean;
@@ -583,8 +587,10 @@ export type CommentableObject = {
   // null indicates a disconnected pin
   element: HTMLElement | SVGElement | null;
 
-  xValue?: number;
-  yValue?: number;
+  dataPoint?: {
+    x: number;
+    y: number;
+  };
 };
 
 // get all pins for the workspace that have an open thread attached to them (we don't want resolved ones)

@@ -79,8 +79,7 @@ export function CommentableRoot(props: { className?: string; children?: React.Re
             objectId: commentable.objectId,
             x: (e.clientX - x) / width,
             y: (e.clientY - y) / height,
-            xValue: commentable.xValue,
-            yValue: commentable.yValue,
+            dataPoint: commentable.dataPoint,
           },
         });
       }
@@ -160,8 +159,7 @@ function CommentableChart(props: any) {
     xValue = props.tooltipTicks[props.activeTooltipIndex]?.value;
     yValue = yAxis.scale.invert(props.activeCoordinate.y);
     if (xValue != null && yValue != null) {
-      store.commentables[objectId].xValue = xValue;
-      store.commentables[objectId].yValue = yValue;
+      store.commentables[objectId].dataPoint = { x: xValue, y: yValue };
     }
   }
   return null;
