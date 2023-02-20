@@ -5,6 +5,7 @@ const nextConfig = {
   experimental: {
     outputFileTracingRoot: path.join(__dirname, '../../'),
   },
+  transpilePackages: ['@collabkit/node'],
 };
 
 module.exports = nextConfig;
