@@ -30,7 +30,7 @@ export const rootComposerRoot = style([
   {
     padding: fallbackVar(
       vars.composer.padding,
-      `${vars.space[2]} ${vars.space[6]} ${vars.space[2]}`
+      `${vars.space[2]} ${vars.space[6]} ${vars.space[4]}`
     ),
   },
 ]);
