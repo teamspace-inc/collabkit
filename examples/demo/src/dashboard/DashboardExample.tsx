@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, useState } from 'react';
+import { ComponentPropsWithoutRef } from 'react';
 import Info from 'phosphor-react/dist/icons/Info.esm.js';
 import {
   AreaChart,
@@ -30,7 +30,12 @@ import {
 } from '@tremor/react';
 import '@tremor/react/dist/esm/tremor.css';
 import { isAfter, isBefore, isEqual } from 'date-fns';
-import { Channel, Commentable, useCommentableRef } from '@collabkit/react';
+import {
+  Commentable,
+  useCommentableRef,
+  SidebarInboxButton,
+  SidebarChannel,
+} from '@collabkit/react';
 
 import { Charts } from './Charts';
 import Flow from './Flow';
@@ -243,6 +248,7 @@ export function DashboardExample() {
               <Text>View core metrics on the state of your company.</Text>
             </Block>
             <div className="px-2"></div>
+            <SidebarInboxButton />
             {/* <Datepicker
               minDate={minDate}
               maxDate={maxDate}
@@ -279,9 +285,7 @@ export function DashboardExample() {
           {selectedTab === 'charts' ? <Charts /> : null}
           {selectedTab === 'flowchart' ? <Flow /> : null}
         </main>
-        <div className="h-screen border" style={{ width: 360 }}>
-          <Channel />
-        </div>
+        <SidebarChannel />
       </div>
     </Commentable.Root>
   );

@@ -21,7 +21,6 @@ function processSnapshot(snapshot: DataSnapshot) {
 
 export async function subscribeWorkspaceProfiles(store: Store) {
   const { appId, workspaceId } = getConfig(store);
-  console.log('subscribeWorkspaceProfiles');
 
   const onError = (e: Error) => {
     console.error({ e });

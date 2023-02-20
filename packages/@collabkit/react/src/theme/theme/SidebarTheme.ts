@@ -2,6 +2,7 @@ export const SidebarTheme = {
   sidebar: {
     boxShadow: 'sidebar-box-shadow',
     background: 'sidebar-background',
+    borderLeft: 'sidebar-border-left',
 
     title: {
       fontSize: 'sidebar-title-font-size',
@@ -17,7 +18,7 @@ export const SidebarTheme = {
     },
 
     unreadDot: {
-      background: 'sidebar-unreadDot-color'
-    }
+      background: 'sidebar-unreadDot-color',
+    },
   },
 };

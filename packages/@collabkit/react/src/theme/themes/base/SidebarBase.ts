@@ -4,6 +4,7 @@ export const SidebarBase = {
   sidebar: {
     boxShadow: 'initial',
     background: 'initial',
+    borderLeft: 'initial',
     title: {
       fontSize: 'initial',
       lineHeight: 'initial',
@@ -12,11 +13,11 @@ export const SidebarBase = {
       fontWeight: 'initial',
       paddingTop: 'initial',
       paddingBottom: 'initial',
-      borderBottom: '2px solid',
+      borderBottom: 'initial',
       borderBottomColor: 'initial',
     },
     unreadDot: {
-      background: vars.color.attentionBlue
+      background: 'initial',
     },
-  }
+  },
 };

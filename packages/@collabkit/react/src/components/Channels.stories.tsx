@@ -1,6 +1,6 @@
 import React from 'react';
 import { CollabKitProvider, Sidebar, SidebarInboxButton } from '../index';
-import { Channel } from './Channel';
+import { SidebarChannel } from './Channel';
 import { ProviderPropsContext, DefaultProviderProps } from './__stories__/context';
 
 export const Channels = () => (
@@ -9,9 +9,9 @@ export const Channels = () => (
       <>
         <CollabKitProvider {...config} user={{ id: 'alice', name: 'Alice' }}>
           <SidebarInboxButton />
-          <Sidebar>
-            <Channel />
-          </Sidebar>
+          <div style={{ position: 'fixed', top: 0, right: 0, zIndex: 9999 }}>
+            <SidebarChannel />
+          </div>
         </CollabKitProvider>
       </>
     )}

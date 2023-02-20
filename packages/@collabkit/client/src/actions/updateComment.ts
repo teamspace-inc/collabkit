@@ -19,7 +19,11 @@ export async function updateComment(store: Store) {
     return;
   }
   const workspace = store.workspaces[workspaceId];
-  const parentEvent = workspace.timeline[threadId][eventId];
+  const parentEvent = store.editingEventSnapshots[eventId];
+  if (!parentEvent) {
+    console.warn('[CollabKit]: cannot edit comment, parent event not found');
+    return;
+  }
   const composer = workspace.composers[threadId][eventId];
   const { editor, attachments } = composer;
   const { body, mentions } = editor ? extract(editor) : { body: '', mentions: [] };

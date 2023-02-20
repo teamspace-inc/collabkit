@@ -33,12 +33,19 @@ export function PopoverEmojiPicker(props: {
       onContentChange={onOpenChange}
       onPreviewChange={() => {}}
       // advanced
-      placement={props.placement ?? 'left-start'}
+      placement={props.placement ?? 'top-start'}
       dismissOnClickOutside={true}
-      shouldFlipToKeepInView={false}
+      shouldFlipToKeepInView={true}
     >
       <PopoverTrigger>
-        <IconButton small={props.smallIconButton} onClick={() => onOpenChange(!open)}>
+        <IconButton
+          small={props.smallIconButton}
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            onOpenChange(!open);
+          }}
+        >
           <Smiley weight="regular" />
         </IconButton>
       </PopoverTrigger>

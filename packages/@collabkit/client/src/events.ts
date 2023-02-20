@@ -68,23 +68,31 @@ export function createEvents(store: Store) {
 
     onClick: <T extends Target>(e: React.MouseEvent, props: { target: T }) => {
       const { target } = props;
+      e.preventDefault();
+      e.stopPropagation();
       switch (target.type) {
-        case 'channel': {
-          actions.select(store, { target });
+        case 'showSidebarButton':
+          actions.showSidebar(store);
           break;
-        }
-        case 'emoji': {
+        case 'hideSidebarButton':
+          actions.hideSidebar(store);
+          break;
+        case 'channel':
+          actions.select(store, { target });
+          actions.focusComposer(store, { ...target, type: 'composer', eventId: 'default' });
+          break;
+        case 'emoji':
           actions.toggleEmoji(store, { target });
           break;
-        }
         case 'pin':
           actions.select(store, { target });
           break;
         case 'composer':
+          actions.setComposer(store, { target });
           actions.focusComposer(store, target);
           break;
         case 'pinDeleteButton':
-          actions.deletePin(store, target.pin);
+          actions.deletePin(store, target);
           return;
         case 'commentDeleteButton':
           actions.deleteMessage(store, target);
@@ -100,6 +108,7 @@ export function createEvents(store: Store) {
         case 'commentReplyCountButton': {
           e.preventDefault();
           e.stopPropagation();
+          actions.select(store, { target: { ...target, type: 'thread' } });
           actions.expandThread(store, target);
           actions.focusComposer(store, {
             type: 'composer',
@@ -110,29 +119,32 @@ export function createEvents(store: Store) {
           break;
         }
         case 'commentSaveButton': {
+          actions.select(store, { target: { ...target, type: 'thread' } });
           actions.updateComment(store);
           actions.stopEditing(store);
           break;
         }
         case 'commentCancelButton': {
-          actions.stopEditing(store);
+          actions.select(store, { target: { ...target, type: 'thread' } });
+          actions.stopEditing(store, { target });
           break;
         }
         case 'composerPin': {
-          actions.deletePin(store, target.composer);
+          actions.removeAttachment(store, { ...target, attachmentId: target.pinId });
           actions.stopSelecting(store);
           break;
         }
+        // case 'addCommentButton':
         case 'composerPinButton': {
           switch (store.uiState) {
             case 'selecting':
               actions.stopSelecting(store);
               break;
             case 'idle':
-              actions.startSelecting(store, target.composer);
+              actions.setComposer(store, { target: { ...target, type: 'composer' } });
+              actions.startSelecting(store);
               break;
           }
-
           break;
         }
         case 'composerMentionsButton': {
@@ -254,10 +266,8 @@ export function createEvents(store: Store) {
 
     onGlobalPointerDown: (e: PointerEvent) => {
       const el = e.target;
-      if (el instanceof HTMLElement) {
-        if (el.closest(`.collabkit`)) {
-          return;
-        }
+      if (el instanceof Element && el.closest(`.collabkit`)) {
+        return;
       }
       actions.deselectAll(store);
     },
@@ -274,7 +284,7 @@ export function createEvents(store: Store) {
             case 'overlay': {
               e.stopPropagation();
               e.preventDefault();
-              actions.attachPin(store, target);
+              actions.attachComposerPin(store, target);
             }
           }
           break;

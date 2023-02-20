@@ -12,7 +12,7 @@ export function createValtioStore(config: Config, sync: SyncAdapter): Store {
     {
       allPins: (get) => {
         const snapshot = get(store);
-        const { workspaceId } = snapshot;
+        const { workspaceId, viewingId, previewingId } = snapshot;
         if (!workspaceId) return {};
         const workspace = snapshot.workspaces[workspaceId];
         if (!workspace) return {};
@@ -43,6 +43,27 @@ export function createValtioStore(config: Config, sync: SyncAdapter): Store {
             }
           }
         }
+
+        // move previewing or viewing pin to the start of the array
+        // so they appear on top of other pins when either the preview
+        // or popover content is shown
+        if (previewingId && previewingId.type === 'pin') {
+          const index = pins.findIndex((pin) => pin.id === previewingId.id);
+          if (index > -1) {
+            const pin = pins[index];
+            pins.splice(index, 1);
+            pins.push(pin);
+          }
+        }
+        if (viewingId && viewingId.type === 'pin') {
+          const index = pins.findIndex((pin) => pin.id === viewingId.id);
+          if (index > -1) {
+            const pin = pins[index];
+            pins.splice(index, 1);
+            pins.push(pin);
+          }
+        }
+
         return pins;
       },
     },

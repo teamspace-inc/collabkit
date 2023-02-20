@@ -1,6 +1,6 @@
 import { get, orderByChild, query } from 'firebase/database';
 import type { Event, Timeline, WithID } from '@collabkit/core';
-import { timelineRef } from './refs';
+import { ref } from './refs';
 import { snapshotToEvent } from './converters';
 
 export async function getTimeline({
@@ -10,8 +10,9 @@ export async function getTimeline({
   workspaceId: string;
   threadId: string;
 }) {
+  const { appId, workspaceId, threadId } = props;
   const timelineQuery = query(
-    timelineRef(props.appId, props.workspaceId, props.threadId),
+    ref`/timeline/${appId}/${workspaceId}/${threadId}`,
     // this is going to cause problems on larger threads...
     // todo: add pagination
     // limitToLast(50),

@@ -1,4 +1,3 @@
-import { docDemoContainer } from '../../styles/Docs.css';
 import { renderCodeSnippet } from '../CodeEditor';
 import { SidebarDemo } from '../demos/SidebarDemo';
 import { DocDemoContainer } from '../Doc';

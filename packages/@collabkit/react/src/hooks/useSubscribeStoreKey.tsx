@@ -11,13 +11,16 @@ export function useStoreKeyMatches(
     | 'focusedId'
     | 'selectedId'
     | 'reactingId'
+    | 'previewingId'
+    | 'composerId'
     | 'menuId',
   matchFn: (target: Target | null) => boolean
 ) {
-  const [state, setState] = React.useState<boolean>(false);
+  const matchFnRef = React.useRef<typeof matchFn>(matchFn);
+  const [state, setState] = React.useState<boolean>(() => matchFnRef.current(store[key]));
   useEffect(() => {
     return subscribeKey(store, key, (value) => {
-      setState(matchFn(value));
+      setState(matchFnRef.current(value));
     });
   }, [key, setState, store]);
   return state;

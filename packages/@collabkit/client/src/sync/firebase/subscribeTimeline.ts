@@ -8,7 +8,7 @@ import {
   startAfter,
 } from 'firebase/database';
 import { Sync, Subscriptions, FirebaseId } from '@collabkit/core';
-import { ref, timelineRef } from './refs';
+import { ref } from './refs';
 import { snapshotToEvent } from './converters';
 
 function processChild(snapshot: DataSnapshot) {
@@ -60,7 +60,7 @@ export async function subscribeTimeline({
 }) {
   const { appId, workspaceId, threadId } = props;
   const timelineQuery = query(
-    timelineRef(appId, workspaceId, threadId),
+    ref`/timeline/${appId}/${workspaceId}/${threadId}`,
     // this is going to cause problems on larger threads...
     // todo: add pagination
     // limitToLast(50),
@@ -103,7 +103,10 @@ export async function subscribeTimeline({
     constraints.push(startAfter(lastEventId));
   }
 
-  const newTimelineEventsQuery = query(timelineRef(appId, workspaceId, threadId), ...constraints);
+  const newTimelineEventsQuery = query(
+    ref`/timeline/${appId}/${workspaceId}/${threadId}`,
+    ...constraints
+  );
 
   props.onTimelineGetComplete?.(events);
 

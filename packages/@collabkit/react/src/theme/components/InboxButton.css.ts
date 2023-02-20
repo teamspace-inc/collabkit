@@ -5,5 +5,6 @@ export const inboxButton = style([
   button({ type: 'primary' }),
   {
     gap: '8px',
+    width: 200,
   },
 ]);

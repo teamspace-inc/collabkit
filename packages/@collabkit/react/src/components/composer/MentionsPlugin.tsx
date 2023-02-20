@@ -32,10 +32,12 @@ import * as styles from '../../theme/components/MentionsPlugin.css';
 
 import { MentionWithColor } from '@collabkit/core';
 import {
-  autoPlacement,
   autoUpdate,
+  flip,
   FloatingFocusManager,
   FloatingPortal,
+  offset,
+  size,
   useFloating,
   useFloatingNodeId,
 } from '@floating-ui/react';
@@ -260,18 +262,18 @@ export function MentionsTypeahead({
     open: (results?.length ?? 0) > 0,
     whileElementsMounted: autoUpdate,
     middleware: [
-      autoPlacement(),
-      // flip(),
-      // size({
-      //   padding: 0,
-      //   apply({ availableWidth, availableHeight, elements }) {
-      //     Object.assign(elements.floating.style, {
-      //       maxWidth: `${availableWidth}px`,
-      //       maxHeight: `${availableHeight}px`,
-      //     });
-      //     setMaxAvailableSize({ width: availableWidth, height: availableHeight });
-      //   },
-      // }),
+      offset(-8),
+      flip(),
+      size({
+        padding: 0,
+        apply({ availableWidth, availableHeight, elements }) {
+          Object.assign(elements.floating.style, {
+            maxWidth: `${availableWidth}px`,
+            maxHeight: `${availableHeight}px`,
+          });
+          setMaxAvailableSize({ width: availableWidth, height: availableHeight });
+        },
+      }),
     ],
   });
 

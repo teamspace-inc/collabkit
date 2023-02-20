@@ -1,22 +1,22 @@
-import React, { ComponentPropsWithRef, useCallback, useEffect } from 'react';
+import React, { ComponentPropsWithRef, useCallback, useEffect, useRef, useMemo } from 'react';
 import { useSnapshot } from 'valtio';
 import { useApp } from '../hooks/useApp';
 import * as styles from '../theme/components/Channel.css';
 import { Scrollable } from './Scrollable';
-import { ThemeWrapper } from './ThemeWrapper';
 import { ChatCentered } from './icons';
 import { emptyState } from '../theme/components/Thread.css';
 import { useInbox } from '../hooks/public/useInbox';
 import * as commentStyles from '../theme/components/Comment.css';
 import { ThreadProvider } from './Thread';
 import {
-  Composer,
   ComposerButtons,
+  ComposerContentEditable,
   ComposerEditor,
+  ComposerInput,
   ComposerPlaceholder,
   ComposerRoot,
 } from './composer/Composer';
-import { useThreadContext } from '../hooks/useThreadContext';
+import { ThreadContext, useThreadContext } from '../hooks/useThreadContext';
 import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
 import { ChannelContext, useChannelContext } from '../hooks/useChannelContext';
 import { vars } from '../theme/theme/index.css';
@@ -30,12 +30,10 @@ import {
   CommentActionsReplyButton,
   CommentBody,
   CommentCreatorName,
-  CommentEditor,
   CommentHeader,
   CommentHideIfEditing,
   CommentMarkdown,
   CommentMenu,
-  CommentPin,
   CommentReactions,
   CommentRoot,
   CommentSeeAllRepliesButton,
@@ -44,9 +42,28 @@ import {
   CommentTimestamp,
 } from './Comment';
 import { ProfileAvatar } from './Profile';
-import { useIsExpanded } from './useIsExpanded';
+import { useIsExpanded } from '../hooks/useIsExpanded';
 import { useWorkspaceContext } from '../hooks/useWorkspaceContext';
 import { useCommentList } from '../hooks/useCommentList';
+import { ComposerPinButtonTarget, ComposerPinTarget, PinTarget, Target } from '@collabkit/core';
+import { useComposerStore } from '../hooks/useComposerStore';
+import { useTarget } from '../hooks/useTarget';
+import { usePinAttachment } from '../hooks/usePinAttachment';
+import { Tooltip, TooltipTrigger, TooltipContent } from './Tooltip';
+import { useCommentContext, useDefaultCommentContext } from '../hooks/useCommentContext';
+import { useCommentSnapshot } from '../hooks/useCommentSnapshot';
+
+import PinButtonSvg from './pin-button.svg';
+import PinButtonHoverSvg from './pin-button-hover.svg';
+import DeletePinButtonSvg from './delete-pin-button.svg';
+import DeletePinButtonHoverSvg from './delete-pin-button-hover.svg';
+import { Root } from './Root';
+
+import CommentPinSvg from './composer/comment-pin.svg';
+import CommentPinSelectedSvg from './composer/comment-pin-hover.svg';
+import { Authenticated } from './Authenticated';
+import { SidebarCloseButton, SidebarHeader, SidebarRoot, SidebarTitle } from './Sidebar';
+import { useIsSidebarOpen } from '../hooks/useIsSidebarOpen';
 
 function EmptyState() {
   return (
@@ -96,20 +113,44 @@ function ChannelCommentList(props: ComponentPropsWithRef<'div'>) {
                   <CommentMenu />
                 </CommentActions>
                 <CommentBody>
-                  <CommentPin />
+                  <ChannelCommentPin />
                   <CommentMarkdown />
                 </CommentBody>
                 <CommentReactions />
                 {i == 0 && !isExpanded && !isSelected && <CommentSeeAllRepliesButton />}
               </CommentHideIfEditing>
               <CommentShowIfEditing>
-                <CommentEditor />
+                <ChannelCommentEditor />
               </CommentShowIfEditing>
             </div>
           </CommentRoot>
         )
       )}
     </div>
+  );
+}
+
+function ChannelCommentEditor(props: React.ComponentProps<'div'>) {
+  const { body } = useCommentSnapshot();
+
+  return (
+    <ComposerRoot
+      data-testid="collabkit-comment-composer-root"
+      className={styles.commentEditorRoot}
+      {...props}
+    >
+      <ComposerEditor className={styles.composerEditor}>
+        <ChannelComposerPinButton />
+        <ComposerInput
+          autoFocus={true}
+          initialBody={body}
+          placeholder={<span />}
+          contentEditable={<ComposerContentEditable className={styles.composerContentEditable} />}
+        />
+        <div />
+        <ComposerButtons />
+      </ComposerEditor>
+    </ComposerRoot>
   );
 }
 
@@ -172,6 +213,25 @@ function ChannelThread() {
   // const active = !!(viewingId && viewingId.type === 'thread' && viewingId.threadId === threadId);
   const isExpanded = expandedThreadIds.includes(threadId);
 
+  const composer = (
+    <ComposerRoot className={styles.threadComposerRoot}>
+      <ProfileAvatar />
+      <ComposerEditor className={styles.composerEditor}>
+        <ChannelComposerPinButton />
+        <ComposerInput
+          autoFocus={true}
+          contentEditable={<ComposerContentEditable className={styles.composerContentEditable} />}
+          placeholder={
+            <ComposerPlaceholder className={styles.composerPlaceholder}>
+              {'Reply'}
+            </ComposerPlaceholder>
+          }
+        />
+        <ComposerButtons />
+      </ComposerEditor>
+    </ComposerRoot>
+  );
+
   return (
     <ThreadProvider threadId={threadId} key={`channelThread-${threadId}`} placeholder="Reply">
       <div className={styles.thread({ isSelected })} onClick={onClick}>
@@ -183,15 +243,7 @@ function ChannelThread() {
               paddingBottom: vars.space[2],
             }}
           >
-            <ComposerRoot>
-              <ProfileAvatar />
-              <ComposerEditor
-                autoFocus={true}
-                placeholder={<ComposerPlaceholder>Reply</ComposerPlaceholder>}
-              >
-                <ComposerButtons />
-              </ComposerEditor>
-            </ComposerRoot>
+            {composer}
           </div>
         ) : null}
       </div>
@@ -202,17 +254,16 @@ function ChannelThread() {
 type ChannelProps = { channelId: string };
 
 function ChannelRoot(props: ComponentPropsWithRef<'div'> & ChannelProps) {
-  const { workspaceId } = useSnapshot(useApp().store);
+  const store = useStore();
+  const { workspaceId } = useSnapshot(store);
   const { channelId, ...otherProps } = props;
 
   return workspaceId ? (
-    <ThemeWrapper>
-      <ChannelContext.Provider value="default">
-        <div className={styles.root} {...otherProps}>
-          {props.children}
-        </div>
-      </ChannelContext.Provider>
-    </ThemeWrapper>
+    <ChannelContext.Provider value="default">
+      <div className={styles.root} {...otherProps}>
+        {props.children}
+      </div>
+    </ChannelContext.Provider>
   ) : null;
 }
 
@@ -229,56 +280,269 @@ function ChannelThreadList(props: ComponentPropsWithRef<'div'>) {
   return threadIds.length === 0 ? (
     <EmptyState />
   ) : (
-    <Scrollable autoScroll="bottom" alignToBottom={true}>
-      <div className={styles.threadList} {...props}>
-        {threads}
-      </div>
-    </Scrollable>
+    <div className={styles.threadList} {...props}>
+      {threads}
+    </div>
   );
 }
 
-// for now there is one default channel per workspace
-// we may want to introduce channel ids in the future
-function Channel() {
+type ComposerButtonState =
+  | 'pin-default'
+  | 'pin-hover'
+  | 'pin-selecting'
+  | 'empty-default'
+  | 'empty-hover'
+  | 'empty-selecting';
+
+// we could just use one icon with svg edits, this was quicker
+const COMPOSER_PIN_ICONS: { [state: string]: React.ReactElement } = {
+  'pin-default': <img src={DeletePinButtonSvg} />,
+  'pin-hover': <img src={DeletePinButtonHoverSvg} />,
+  'pin-selecting': <img src={PinButtonHoverSvg} />,
+  'empty-default': <img src={PinButtonSvg} />,
+  'empty-hover': <img src={PinButtonHoverSvg} />,
+  'empty-selecting': <img src={PinButtonHoverSvg} />,
+};
+
+const COMPOSER_PIN_TOOLTIPS: { [state: string]: string | null } = {
+  'pin-default': 'Remove pin',
+  'pin-hover': 'Remove pin',
+  'pin-selecting': 'Remove pin',
+  'empty-default': 'Annotate',
+  'empty-hover': 'Annotate',
+  'empty-selecting': null,
+};
+
+function ChannelComposerPinButton(props: { className?: string }) {
+  const { events, store } = useApp();
+  const { uiState } = useSnapshot(store);
+  const workspaceId = useWorkspaceContext();
+  const eventId = useDefaultCommentContext();
+  const threadId = useThreadContext();
+  const pin = usePinAttachment(useComposerStore());
+  const ref = useRef(null);
+  const composerTarget = useTarget();
+  const isHovering = useStoreKeyMatches(store, 'hoveringId', (hoveringId) => {
+    return (
+      hoveringId?.type === 'composerPinButton' &&
+      hoveringId.eventId === eventId &&
+      hoveringId.threadId === threadId &&
+      hoveringId.workspaceId === workspaceId
+    );
+  });
+
+  const isActive = useStoreKeyMatches(store, 'composerId', (composerId) => {
+    return (
+      composerId?.type === 'composer' &&
+      composerId.eventId === eventId &&
+      composerId.threadId === threadId &&
+      composerId.workspaceId === workspaceId
+    );
+  });
+
+  const state = ((pin ? 'pin' : 'empty') +
+    '-' +
+    (isActive && uiState === 'selecting'
+      ? 'selecting'
+      : isHovering
+      ? 'hover'
+      : 'default')) as ComposerButtonState;
+
+  const icon = React.cloneElement(COMPOSER_PIN_ICONS[state], {
+    style: { position: 'relative', top: '0px', width: '16px', height: '16px' },
+  });
+
+  if (composerTarget.type !== 'composer') {
+    return null;
+  }
+
+  const target: ComposerPinButtonTarget | ComposerPinTarget | null = pin
+    ? ({
+        type: 'composerPin',
+        workspaceId,
+        threadId,
+        eventId,
+        objectId: pin.objectId,
+        pinId: pin.id,
+      } as const)
+    : ({
+        type: 'composerPinButton',
+        workspaceId,
+        threadId,
+        eventId,
+      } as const);
+
+  const tooltip = COMPOSER_PIN_TOOLTIPS[state];
+
+  return (
+    <div
+      ref={ref}
+      onMouseEnter={(e) => events.onMouseEnter(e, { target })}
+      onMouseLeave={(e) => events.onMouseLeave(e, { target })}
+      className={styles.composerPinButton}
+      onClick={(e) => events.onClick(e, { target })}
+      data-testid="collabkit-composer-pin-button"
+      {...props}
+    >
+      <Tooltip>
+        <TooltipTrigger>{icon}</TooltipTrigger>
+        {tooltip && <TooltipContent>{tooltip}</TooltipContent>}
+      </Tooltip>
+    </div>
+  );
+}
+
+function ChannelCommentPin(props: React.ComponentProps<'img'>) {
+  const threadId = useThreadContext();
+  const eventId = useCommentContext();
+  const workspaceId = useWorkspaceContext();
+  const { events } = useApp();
+  const { attachments } = useCommentSnapshot();
+  const pinId = attachments
+    ? Object.keys(attachments).find((id) => attachments[id].type === 'pin')
+    : null;
+  const pin = pinId ? { id: pinId, ...attachments![pinId] } : null;
+
   const store = useStore();
 
-  // we should refactor this to a simpler hasAuthenticated check we can reuse, which guarantees
-  // userId and workspaceId are present, we sort of have this with UnconfiguredStore and Store
-  // but we probably want an UnauthenticatedStore as well.
-  // UnconfiguredStore -> UnauthenticatedStore -> Store
-  // We should also look at using React.Suspense to support loading states
-  // for all top level components while authentication is in progress
-  const { appId, userId, workspaceId, nextThreadId } = useSnapshot(store);
+  const target: PinTarget | null = useMemo(
+    () =>
+      pin
+        ? {
+            type: 'pin',
+            threadId,
+            eventId,
+            workspaceId,
+            objectId: pin.objectId,
+            id: pin.id,
+          }
+        : null,
+    [pin]
+  );
 
-  if (!appId) {
+  const targetMatch = useCallback(
+    (a: Target | null) => {
+      if (!a) {
+        return false;
+      }
+      return a.type === 'pin' && a.eventId === eventId;
+    },
+    [eventId]
+  );
+  const isSelected = useStoreKeyMatches(store, 'selectedId', targetMatch);
+
+  const onClick = useCallback(
+    (e: React.MouseEvent) => {
+      target &&
+        events.onClick(e, {
+          target,
+        });
+    },
+    [target]
+  );
+
+  if (!pin) {
     return null;
   }
 
-  if (!workspaceId) {
-    return null;
-  }
+  return (
+    <span
+      className={styles.commentPin}
+      data-testid="collabkit-comment-pin"
+      {...props}
+      onClick={onClick}
+    >
+      <Tooltip>
+        <TooltipTrigger>
+          <img
+            className={styles.commentPin}
+            onClick={onClick}
+            // todo preload or inline these images to avoid loading jank
+            src={isSelected ? CommentPinSelectedSvg : CommentPinSvg}
+            {...props}
+          />
+        </TooltipTrigger>
+        <TooltipContent>View annotation</TooltipContent>
+      </Tooltip>
+    </span>
+  );
+}
 
-  if (!userId) {
-    return null;
-  }
+function ChannelNewThreadComposer() {
+  const store = useStore();
+  const { appId, workspaceId, nextThreadId } = useSnapshot(store);
 
   useEffect(() => {
+    if (!appId || !workspaceId) {
+      return;
+    }
     store.nextThreadId = store.sync.nextThreadId({ appId, workspaceId });
     actions.subscribeInbox(store);
   }, [appId, workspaceId]);
 
+  return nextThreadId ? (
+    <ThreadContext.Provider value={nextThreadId}>
+      <ComposerRoot className={styles.rootComposerRoot} isNewThread={true}>
+        <ProfileAvatar />
+        <ComposerEditor className={styles.composerEditor}>
+          <ChannelComposerPinButton />
+          <ComposerInput
+            autoFocus={false}
+            contentEditable={<ComposerContentEditable className={styles.composerContentEditable} />}
+            placeholder={
+              <ComposerPlaceholder className={styles.composerPlaceholder}>
+                Add a comment
+              </ComposerPlaceholder>
+            }
+          />
+        </ComposerEditor>
+      </ComposerRoot>
+    </ThreadContext.Provider>
+  ) : null;
+}
+
+// for now there is one default channel per workspace
+// we may want to introduce channel ids in the future
+// so we can have full Slack style channels which are a
+// collection of threads
+function Channel() {
   return (
-    <ChannelRoot channelId="default">
-      <ChannelThreadList />
-      {nextThreadId ? (
-        <ThreadProvider threadId={nextThreadId}>
-          <div>
-            <Composer isNewThread={true} />
-          </div>
-        </ThreadProvider>
-      ) : null}
-    </ChannelRoot>
+    <Root>
+      <Authenticated>
+        <ChannelRoot channelId="default">
+          <div id="sidebar-header-portal" />
+          <h1>Comments</h1>
+          <Scrollable autoScroll="bottom" alignToBottom={true} className={styles.scrollable}>
+            <ChannelThreadList />
+          </Scrollable>
+          <ChannelNewThreadComposer />
+        </ChannelRoot>
+      </Authenticated>
+    </Root>
   );
 }
 
-export { Channel, ChannelRoot, ChannelThreadList, ChannelThread };
+function SidebarChannel() {
+  return useIsSidebarOpen() ? (
+    <Root>
+      <Authenticated>
+        <SidebarRoot>
+          <ChannelRoot channelId="default">
+            <div id="sidebar-header-portal" />
+            <SidebarHeader>
+              <SidebarTitle>Comments</SidebarTitle>
+              <div style={{ flex: 1 }} />
+              <SidebarCloseButton />
+            </SidebarHeader>
+            <Scrollable autoScroll="bottom" alignToBottom={true} className={styles.scrollable}>
+              <ChannelThreadList />
+            </Scrollable>
+            <ChannelNewThreadComposer />
+          </ChannelRoot>
+        </SidebarRoot>
+      </Authenticated>
+    </Root>
+  ) : null;
+}
+
+export { Channel, ChannelRoot, ChannelThreadList, ChannelThread, SidebarChannel };

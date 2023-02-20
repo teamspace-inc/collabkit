@@ -11,7 +11,7 @@ import { init } from '../../src/actions/init';
 import { FirebaseSync } from '../../src/sync/firebase/FirebaseSync';
 import { Store } from '@collabkit/core';
 
-import { attachPin } from '../../src/actions/attachPin';
+import { attachComposerPin } from '../../src/actions/attachComposerPin';
 import { initComposer } from '../../src/actions/initComposer';
 
 setupFirebase();
@@ -61,7 +61,7 @@ describe('pin', () => {
     initComposer(store as Store, { threadId, workspaceId, eventId: 'default' });
     composer = store.workspaces[workspaceId].composers[threadId].default;
     composer.editor = null;
-    pinId = attachPin(store as Store, { x: 0, y: 0, objectId: 'test' });
+    pinId = attachComposerPin(store as Store, { x: 0, y: 0, objectId: 'test' });
 
     const x = 0;
     const y = 0;

@@ -21,15 +21,7 @@ export function Demo() {
       appId={appId}
       workspace={{ id: workspaceId, name: workspaceName }}
       callbacks={{
-        onPinHover: (props) => {
-          const state = JSON.parse(props.state) as DashboardStore | null;
-          if (state) {
-            if (state.selectedKpi) dashboardStore.selectedKpi = state.selectedKpi;
-            if (state.selectedStatus) dashboardStore.selectedStatus = state.selectedStatus;
-            if (state.selectedNames) dashboardStore.selectedNames = state.selectedNames;
-            if (state.selectedTab) dashboardStore.selectedTab = state.selectedTab;
-          }
-        },
+        onPinHover: (props) => {},
         onPinAttach: () => {
           return JSON.stringify({
             selectedKpi: dashboardStore.selectedKpi,
@@ -39,13 +31,15 @@ export function Demo() {
           });
         },
         onPinClick: (props) => {
-          const state = JSON.parse(props.state) as DashboardStore | null;
-          if (state) {
-            if (state.selectedKpi) dashboardStore.selectedKpi = state.selectedKpi;
-            if (state.selectedStatus) dashboardStore.selectedStatus = state.selectedStatus;
-            if (state.selectedNames) dashboardStore.selectedNames = state.selectedNames;
-            if (state.selectedTab) dashboardStore.selectedTab = state.selectedTab;
-          }
+          try {
+            const state = JSON.parse(props.state) as DashboardStore | null;
+            if (state) {
+              if (state.selectedKpi) dashboardStore.selectedKpi = state.selectedKpi;
+              if (state.selectedStatus) dashboardStore.selectedStatus = state.selectedStatus;
+              if (state.selectedNames) dashboardStore.selectedNames = state.selectedNames;
+              if (state.selectedTab) dashboardStore.selectedTab = state.selectedTab;
+            }
+          } catch (e) {}
         },
         onPinUnhover: (props) => {},
         onPinDeselect: (props) => {},

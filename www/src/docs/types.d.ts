@@ -941,8 +941,6 @@ interface SyncAdapter {
     event: Event;
   }): Promise<{ id: string }>;
 
-  markResolved(params: { appId: string; workspaceId: string; threadId: string }): Promise<void>;
-
   markSeen(params: {
     appId: string;
     userId: string;

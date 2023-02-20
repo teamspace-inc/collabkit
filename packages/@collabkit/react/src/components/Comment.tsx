@@ -8,15 +8,14 @@ import { useId } from '../hooks/useId';
 import { ProfileAvatar, ProfileName } from './Profile';
 import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
 import { useApp } from '../hooks/useApp';
-import { CommentTarget, PinTarget, Target, ThreadResolveButtonTarget } from '@collabkit/core';
+import { CommentTarget, Target, ThreadResolveButtonTarget } from '@collabkit/core';
 import * as styles from '../theme/components/Comment.css';
 import { ArrowBendDownRight, CheckCircle, DotsThree } from './icons';
 import { Menu, MenuItem } from './Menu';
 import { mergeRefs } from 'react-merge-refs';
-import { ComposerButtons, ComposerEditor, ComposerRoot } from './composer/Composer';
+import { ComposerButtons, ComposerEditor, ComposerInput, ComposerRoot } from './composer/Composer';
 import { IconButton } from './IconButton';
-import CommentPinSvg from './composer/comment-pin.svg';
-import CommentPinSelectedSvg from './composer/comment-pin-hover.svg';
+
 import { Tooltip, TooltipContent, TooltipTrigger } from './Tooltip';
 import { vars } from '../theme/theme/index.css';
 import { EMOJI_U } from './EmojiPicker';
@@ -32,7 +31,9 @@ import { ProfileContext } from '../hooks/useProfile';
 import { useStoreKeyMatches } from '../hooks/useSubscribeStoreKey';
 import { CommentProps } from '../types';
 import { useUnreadCommentsCount } from '../hooks/public/useUnreadCommentsCount';
-import { usePinAttachment } from './composer/usePinAttachment';
+import { TargetContext } from './Target';
+import { useTarget } from '../hooks/useTarget';
+import equals from 'fast-deep-equal';
 
 type CommentRootProps = {
   commentId: string;
@@ -89,8 +90,6 @@ function CommentRoot({ commentId: eventId, indent = false, ...props }: CommentRo
     [target]
   );
 
-  const isHovering = useStoreKeyMatches(store, 'hoveringId', targetMatch);
-  const isFocused = useStoreKeyMatches(store, 'focusedId', targetMatch);
   const isEditing = useStoreKeyMatches(store, 'editingId', targetMatch);
 
   const event = useSnapshot(store.workspaces[workspaceId].computed)?.[threadId]?.canonicalEvents?.[
@@ -104,27 +103,27 @@ function CommentRoot({ commentId: eventId, indent = false, ...props }: CommentRo
   const { events } = useApp();
 
   return hasProfile && createdById ? (
-    <CommentContext.Provider value={eventId}>
-      <TreeContext.Provider value={treeId}>
-        <EditingContext.Provider value={isEditing}>
-          <ProfileContext.Provider value={createdById}>
-            <div
-              data-testid="collabkit-comment-root"
-              className={`${props.className ?? styles.root({ indent })} ${
-                isHovering || isFocused ? styles.hover : ''
-              }`}
-              onMouseEnter={(e) => events.onMouseEnter(e, { target })}
-              onMouseLeave={(e) => events.onMouseLeave(e, { target })}
-              onClick={onClick}
-              ref={ref}
-              style={props.style}
-            >
-              {props.children}
-            </div>
-          </ProfileContext.Provider>
-        </EditingContext.Provider>
-      </TreeContext.Provider>
-    </CommentContext.Provider>
+    <TargetContext.Provider value={target}>
+      <CommentContext.Provider value={eventId}>
+        <TreeContext.Provider value={treeId}>
+          <EditingContext.Provider value={isEditing}>
+            <ProfileContext.Provider value={createdById}>
+              <div
+                data-testid="collabkit-comment-root"
+                className={`${props.className ?? styles.root({ indent })}`}
+                onMouseEnter={(e) => events.onMouseEnter(e, { target })}
+                onMouseLeave={(e) => events.onMouseLeave(e, { target })}
+                onClick={onClick}
+                ref={ref}
+                style={props.style}
+              >
+                {props.children}
+              </div>
+            </ProfileContext.Provider>
+          </EditingContext.Provider>
+        </TreeContext.Provider>
+      </CommentContext.Provider>
+    </TargetContext.Provider>
   ) : null;
 }
 
@@ -261,89 +260,35 @@ function EmojiCount(props: { emojiU: string; count: number; userIds: readonly st
   ) : null;
 }
 
-function CommentReactions(props: React.ComponentPropsWithoutRef<'div'>) {
-  const { children, ...otherProps } = props;
-  const threadId = useThreadContext();
-  const eventId = useCommentContext();
-  const reactions = useSnapshot(useWorkspaceStore()).computed[threadId].reactions?.[eventId];
-  const emojiUs = Object.keys(reactions || {});
-  return reactions &&
-    emojiUs.length > 0 &&
-    Object.values(reactions).find((reac) => reac.count > 0) ? (
-    <div data-testid="collabkit-comment-reactions" className={styles.reactions} {...otherProps}>
-      {emojiUs.map((emojiU) => {
-        const { count, userIds } = reactions[emojiU as keyof typeof reactions];
+function CommentReactionsList(props: React.ComponentPropsWithoutRef<'div'>) {
+  const reactions = useCommentReactions();
+  return reactions ? (
+    <div data-testid="collabkit-comment-reactions" className={styles.reactions} {...props}>
+      {reactions.map(({ emojiU, count, userIds }) => {
         return <EmojiCount key={emojiU} emojiU={emojiU} count={count} userIds={userIds} />;
       })}
-      <CommentEmojiAddButton />
     </div>
   ) : null;
 }
 
-function CommentPin(props: React.ComponentProps<'img'>) {
+function useCommentReactions() {
   const threadId = useThreadContext();
   const eventId = useCommentContext();
-  const workspaceId = useWorkspaceContext();
-  const { events } = useApp();
-  const { attachments } = useCommentSnapshot();
-  const pinId = attachments
-    ? Object.keys(attachments).find((id) => attachments[id].type === 'pin')
-    : null;
-  const pin = pinId ? { id: pinId, ...attachments![pinId] } : null;
+  const reactions = useSnapshot(useWorkspaceStore()).computed[threadId].reactions?.[eventId];
+  const emojiUs = Object.keys(reactions || {});
+  return reactions && emojiUs.length > 0 && Object.values(reactions).find((reac) => reac.count > 0)
+    ? emojiUs.map((emojiU) => ({ emojiU, ...reactions[emojiU as keyof typeof reactions] }))
+    : [];
+}
 
-  const store = useStore();
-
-  const target: PinTarget | null = useMemo(
-    () =>
-      pin
-        ? {
-            type: 'pin',
-            threadId,
-            eventId,
-            workspaceId,
-            objectId: pin.objectId,
-            id: pin.id,
-          }
-        : null,
-    [pin]
-  );
-
-  const targetMatch = useCallback(
-    (a: Target | null) => {
-      if (!a) {
-        return false;
-      }
-      return a.type === 'pin' && a.eventId === eventId;
-    },
-    [eventId]
-  );
-  const isSelected = useStoreKeyMatches(store, 'selectedId', targetMatch);
-
-  const onClick = useCallback(
-    (e: React.MouseEvent) => {
-      target &&
-        events.onClick(e, {
-          target,
-        });
-    },
-    [target]
-  );
-
-  if (!pin) {
-    return null;
-  }
-
-  return (
-    <span className={styles.pin} data-testid="collabkit-comment-pin" {...props} onClick={onClick}>
-      <img
-        className={styles.pin}
-        onClick={onClick}
-        // todo preload or inline these images to avoid loading jank
-        src={isSelected ? CommentPinSelectedSvg : CommentPinSvg}
-        {...props}
-      />
-    </span>
-  );
+function CommentReactions(props: React.ComponentPropsWithoutRef<'div'>) {
+  const reactions = useCommentReactions();
+  return reactions.length > 0 ? (
+    <div data-testid="collabkit-comment-reactions" className={styles.reactions} {...props}>
+      <CommentReactionsList />
+      <CommentReactionsListAddEmojiButton />
+    </div>
+  ) : null;
 }
 
 function CommentEditor(props: React.ComponentProps<'div'>) {
@@ -355,7 +300,8 @@ function CommentEditor(props: React.ComponentProps<'div'>) {
       className={styles.editor}
       {...props}
     >
-      <ComposerEditor autoFocus={true} initialBody={body} placeholder={<span />}>
+      <ComposerEditor>
+        <ComposerInput autoFocus={true} initialBody={body} placeholder={<span />} />
         <ComposerButtons />
       </ComposerEditor>
     </ComposerRoot>
@@ -448,18 +394,22 @@ function CommentMenu(props: { className?: string }) {
 }
 
 function CommentActions(props: React.ComponentProps<'div'>) {
-  return <div className={props.className ?? styles.actions} {...props} />;
+  const target = useTarget();
+  const isHovering = useStoreKeyMatches(useStore(), 'hoveringId', (a) => equals(a, target));
+  return isHovering ? <div className={styles.actions} {...props} /> : null;
 }
 
-function CommentEmojiAddButton() {
+function CommentReactionsListAddEmojiButton() {
   const eventId = useCommentContext();
   const threadId = useThreadContext();
   const workspaceId = useWorkspaceContext();
+  const treeId = useId();
   const target = {
-    type: 'commentAddEmojiButton',
+    type: 'commentReactionsListAddEmojiButton',
     eventId,
     threadId,
     workspaceId,
+    treeId,
   } as const;
   return (
     <Tooltip>
@@ -475,16 +425,18 @@ function CommentActionsEmojiButton() {
   const eventId = useCommentContext();
   const threadId = useThreadContext();
   const workspaceId = useWorkspaceContext();
+  const treeId = useId();
   const target = {
     type: 'commentActionsEmojiButton',
     eventId,
     threadId,
     workspaceId,
+    treeId,
   } as const;
   return (
     <Tooltip>
       <TooltipTrigger>
-        <PopoverEmojiPicker target={target} placement="left-end" />
+        <PopoverEmojiPicker target={target} placement="top-end" />
       </TooltipTrigger>
       <TooltipContent>React</TooltipContent>
     </Tooltip>
@@ -516,8 +468,6 @@ function CommentThreadResolveIconButton(props: {
           className={props.className}
           style={props.style}
           weight="regular"
-          // TODO: tooltip hijacks focus when used within a modal popover
-          // tooltip={isResolved ? 'Re-open' : 'Mark as Resolved and Hide'}
           onPointerDown={(e) =>
             events.onPointerDown(e, {
               target,
@@ -570,13 +520,14 @@ export {
   CommentActions,
   CommentMenu,
   CommentEditor,
-  CommentPin,
   CommentUnreadDot,
   CommentActionsReplyButton,
   CommentSeeAllRepliesButton,
   CommentActionsEmojiButton,
   CommentThreadResolveIconButton,
   CommentReactions,
+  CommentReactionsList,
+  CommentReactionsListAddEmojiButton,
   CommentMarkdown,
   CommentHideIfEditing,
   CommentShowIfEditing,

@@ -57,6 +57,8 @@ export * from './components/Button';
 export * from './components/Commentable';
 export * from './components/Markdown';
 export * from './components/Channel';
+export * from './components/Root';
+export * from './components/FloatingAddCommentButton';
 
 import { Markdown } from './components/Markdown';
 import { useThread } from './hooks/public/useThread';

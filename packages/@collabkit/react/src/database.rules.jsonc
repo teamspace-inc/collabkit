@@ -224,6 +224,28 @@
           }
         }
       },
+      "isOpen": {
+        "$appId": {
+          "$workspaceId": {
+            ".read": "(auth.token.appId === $appId) && ((root.child('apps').child(auth.token.appId).child('mode').val() === 'UNSECURED' || (root.child('apps').child(auth.token.appId).child('mode').val() === 'SECURED' && $workspaceId === auth.token.workspaceId)))",
+            "$threadId": {
+              ".write": "(auth.token.appId === $appId) && ((root.child('apps').child(auth.token.appId).child('mode').val() === 'UNSECURED' || (root.child('apps').child(auth.token.appId).child('mode').val() === 'SECURED' && $workspaceId === auth.token.workspaceId)))",
+              ".validate": "newData.isBoolean()"
+            }
+          }
+        }
+      },
+      "isResolved": {
+        "$appId": {
+          "$workspaceId": {
+            ".read": "(auth.token.appId === $appId) && ((root.child('apps').child(auth.token.appId).child('mode').val() === 'UNSECURED' || (root.child('apps').child(auth.token.appId).child('mode').val() === 'SECURED' && $workspaceId === auth.token.workspaceId)))",
+            "$threadId": {
+              ".write": "(auth.token.appId === $appId) && ((root.child('apps').child(auth.token.appId).child('mode').val() === 'UNSECURED' || (root.child('apps').child(auth.token.appId).child('mode').val() === 'SECURED' && $workspaceId === auth.token.workspaceId)))",
+              ".validate": "newData.isBoolean()"
+            }
+          }
+        }
+      },
       "openPins": {
         "$appId": {
           "$workspaceId": {
@@ -265,7 +287,7 @@
                 ".read": "auth.token.appId === $appId",
                 ".write": "auth.token.appId === $appId && ((root.child('apps').child(auth.token.appId).child('mode').val() === 'UNSECURED' || (root.child('apps').child(auth.token.appId).child('mode').val() === 'SECURED' && $workspaceId === auth.token.workspaceId && $endUserId === auth.token.userId)))",
                 "seenUntilId": {
-                  ".validate": "newData().isString()"
+                  ".validate": "newData.isString()"
                 },
                 "seenAt": {
                   ".validate": "newData.isNumber()"

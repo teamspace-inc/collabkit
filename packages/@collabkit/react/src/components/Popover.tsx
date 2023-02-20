@@ -1,4 +1,4 @@
-import React, { cloneElement, isValidElement, useEffect, useMemo } from 'react';
+import React, { cloneElement, isValidElement, useCallback, useEffect, useMemo } from 'react';
 
 import {
   autoUpdate,
@@ -55,6 +55,15 @@ function PopoverPreview(props: { children: React.ReactNode }) {
   const { context, previewContext, open, preview, setOpen, getPreviewFloatingProps } =
     usePopoverContext();
 
+  const onClick = useCallback(
+    (e: React.MouseEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+      setOpen(true);
+    },
+    [setOpen]
+  );
+
   return !context.open && previewContext.open ? (
     <div
       ref={previewContext.floating}
@@ -63,12 +72,13 @@ function PopoverPreview(props: { children: React.ReactNode }) {
         top: previewContext.y ?? 0,
         left: previewContext.x ?? 0,
         outline: 'none',
+        opacity: 0,
       }}
       {...getPreviewFloatingProps({
-        onClick: () => setOpen(true),
+        onClick,
       })}
     >
-      {preview && !open ? <div onClick={() => setOpen(true)}>{props.children}</div> : null}
+      {preview && !open ? <div onClick={onClick}>{props.children}</div> : null}
     </div>
   ) : null;
 }
@@ -91,10 +101,11 @@ function PopoverContent(props: PopoverContentProps) {
             top: context.y ?? 0,
             left: context.x ?? 0,
             outline: 'none',
+            opacity: 0,
           }}
           {...getFloatingProps({})}
         >
-          {open ? props.children : null}
+          {open ? <ThemeWrapper>{props.children}</ThemeWrapper> : null}
         </div>
       </FloatingFocusManager>
     </FloatingOverlay>
@@ -165,6 +176,7 @@ function PopoverRoot(props: RootProps) {
           Object.assign(elements.floating.style, {
             maxWidth: `${availableWidth}px`,
             maxHeight: `${availableHeight}px`,
+            opacity: 1,
           });
         },
       }),
@@ -186,6 +198,7 @@ function PopoverRoot(props: RootProps) {
           Object.assign(elements.floating.style, {
             maxWidth: `${availableWidth}px`,
             maxHeight: `${availableHeight}px`,
+            opacity: 1,
           });
         },
       }),
@@ -204,11 +217,7 @@ function PopoverRoot(props: RootProps) {
     ]);
 
   const { getReferenceProps, getFloatingProps } = useInteractions([
-    useClick(context, {
-      // we want the preview to enable
-      // showing the popover
-      enabled: false,
-    }),
+    useClick(context, {}),
     useDismiss(context, {
       escapeKey: false,
       enabled: dismissOnClickOutside ?? true,
@@ -273,36 +282,6 @@ function PopoverPortal({ children }: { children?: React.ReactNode }) {
     </FloatingPortal>
   );
 }
-
-// function Popover(props: PopoverProps) {
-//   const [open, setOpen] = useState(false);
-//   const [preview, setPreview] = useState(false);
-
-//   // advanced
-//   const { dismissOnClickOutside, shouldFlipToKeepInView } = props;
-
-//   return (
-//     <PopoverRoot
-//       contentVisible={open}
-//       previewVisible={preview}
-//       onContentChange={setOpen}
-//       onPreviewChange={setPreview}
-//       // advanced
-//       dismissOnClickOutside={dismissOnClickOutside}
-//       shouldFlipToKeepInView={shouldFlipToKeepInView}
-//     >
-//       {'children' in props ? (
-//         <PopoverTrigger>{props.children}</PopoverTrigger>
-//       ) : (
-//         <PopoverTrigger trigger={props.trigger} />
-//       )}
-//       <PopoverPortal>
-//         <PopoverPreview>{props.preview}</PopoverPreview>
-//         {props.content && <PopoverContent>{props.content}</PopoverContent>}
-//       </PopoverPortal>
-//     </PopoverRoot>
-//   );
-// }
 
 export { PopoverRoot, PopoverTrigger, PopoverPortal, PopoverPreview, PopoverContent };
 
