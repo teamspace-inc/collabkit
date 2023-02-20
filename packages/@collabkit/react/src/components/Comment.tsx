@@ -171,10 +171,6 @@ function CommentSeeAllRepliesButton(props: React.ComponentPropsWithoutRef<'div'>
     eventId,
   } as const;
 
-  if (numComments === 1) {
-    return null;
-  }
-
   return (
     <div
       className={styles.replyCountButton}
@@ -187,7 +183,13 @@ function CommentSeeAllRepliesButton(props: React.ComponentPropsWithoutRef<'div'>
         color={vars.color.textDisabled}
       />
       <span className={styles.replyCountButtonText}>
-        {numComments - 1} {numComments != 2 ? 'replies' : 'reply'}
+        {numComments === 1 ? (
+          <>Reply</>
+        ) : (
+          <>
+            {numComments - 1} {numComments != 2 ? 'replies' : 'reply'}
+          </>
+        )}
       </span>
     </div>
   );
