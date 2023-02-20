@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { OAuth2Client } from 'google-auth-library';
-import { createUserToken, getUserToken } from '@collabkit/node';
+import { createUserToken, getUserToken } from '../../../../packages/@collabkit/node/src/index';
 
 type Data = { token: string } | { error: string };
 
