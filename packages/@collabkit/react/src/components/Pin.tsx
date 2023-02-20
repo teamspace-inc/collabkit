@@ -200,9 +200,6 @@ function PinPreview({ pin }: { pin: Pin }) {
               <CommentBody>
                 <CommentMarkdown />
               </CommentBody>
-              <CommentActions>
-                <CommentMenu />
-              </CommentActions>
               <CommentReactions>
                 <CommentReactionsList disabled={true} />
               </CommentReactions>
