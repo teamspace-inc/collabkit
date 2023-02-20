@@ -10,7 +10,6 @@ export const root = style({
   width: fallbackVar(vars.inbox.width, '320px'),
   fontFamily: vars.fontFamily,
   position: 'relative',
-  zIndex: 2, // TODO make this configurable and support a few layers that are easy to understand. i.e. Sidebar, Pins, and Modal
 });
 
 export const title = style({
