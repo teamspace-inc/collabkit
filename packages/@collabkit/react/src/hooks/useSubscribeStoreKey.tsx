@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import type { Store, Target } from '@collabkit/core';
 import { subscribeKey } from 'valtio/utils';
 
@@ -16,12 +16,16 @@ export function useStoreKeyMatches(
     | 'menuId',
   matchFn: (target: Target | null) => boolean
 ) {
-  const matchFnRef = React.useRef<typeof matchFn>(matchFn);
-  const [state, setState] = React.useState<boolean>(() => matchFnRef.current(store[key]));
+  const [state, setState] = React.useState<boolean>(() => matchFn(store[key]));
+  const match = useCallback(
+    (value: Target | null) => {
+      setState(matchFn(value));
+    },
+    [matchFn, setState]
+  );
+
   useEffect(() => {
-    return subscribeKey(store, key, (value) => {
-      setState(matchFnRef.current(value));
-    });
-  }, [key, setState, store]);
+    return subscribeKey(store, key, match);
+  }, [key, setState, store, match]);
   return state;
 }
