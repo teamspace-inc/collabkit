@@ -31,9 +31,7 @@ import {
 import '@tremor/react/dist/esm/tremor.css';
 import { isAfter, isBefore, isEqual } from 'date-fns';
 import {
-  Channel,
   Commentable,
-  Sidebar,
   useCommentableRef,
   SidebarInboxButton,
   SidebarChannel,

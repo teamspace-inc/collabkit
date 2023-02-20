@@ -36,7 +36,7 @@ async function visitThreadAsUser(
     ...props,
   });
   const url = HOST + '/thread?' + params.toString();
-  await page.goto(url);
+  await page.goto(url, { waitUntil: 'networkidle' });
   return page;
 }
 
@@ -217,6 +217,8 @@ test.describe('Dashboard', () => {
 
   test('can pin chart', async ({ context }) => {
     const { page } = await createAppAndVisitDashboardAsUser(context, alice);
+    await page.waitForSelector('[data-testid="collabkit-sidebar-inbox-button"]');
+    await page.getByTestId('collabkit-sidebar-inbox-button').click();
     await page.waitForSelector('[data-testid="collabkit-composer-pin-button"]');
     await page.getByTestId('collabkit-composer-pin-button').click();
     const svgPathRect = await page.locator('svg.recharts-surface').boundingBox();
@@ -377,9 +379,9 @@ test.describe('Thread', () => {
     const maxTimeToLoad = 5000;
     // To make sure that the page loads in constant maximum amount of time, we want the test to break if time taken is more than this
     await page.waitForTimeout(maxTimeToLoad);
-    await page.click('[data-testid="open-sidebar"]');
+    await page.click('[data-testid="collabkit-sidebar-inbox-button"]');
     const newThreadComposer = await page.getByTestId('new-thread-composer-div');
-    const sidebarTitle = await page.getByTestId('sidebar-title');
+    const sidebarTitle = await page.getByTestId('collabkit-sidebar-title');
     await expect(await sidebarTitle.innerText()).toBe('Comments');
     await expect(newThreadComposer).toBeTruthy();
     const composer = await page.getByTestId('collabkit-composer-contenteditable');

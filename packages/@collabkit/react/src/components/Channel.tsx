@@ -62,7 +62,7 @@ import { Root } from './Root';
 import CommentPinSvg from './composer/comment-pin.svg';
 import CommentPinSelectedSvg from './composer/comment-pin-hover.svg';
 import { Authenticated } from './Authenticated';
-import { SidebarCloseButton, SidebarHeader, SidebarTitle } from './Sidebar';
+import { SidebarCloseButton, SidebarHeader, SidebarRoot, SidebarTitle } from './Sidebar';
 import { useIsSidebarOpen } from '../hooks/useIsSidebarOpen';
 
 function EmptyState() {
@@ -526,18 +526,20 @@ function SidebarChannel() {
   return useIsSidebarOpen() ? (
     <Root>
       <Authenticated>
-        <ChannelRoot channelId="default">
-          <div id="sidebar-header-portal" />
-          <SidebarHeader>
-            <SidebarTitle>Comments</SidebarTitle>
-            <div style={{ flex: 1 }} />
-            <SidebarCloseButton />
-          </SidebarHeader>
-          <Scrollable autoScroll="bottom" alignToBottom={true} className={styles.scrollable}>
-            <ChannelThreadList />
-          </Scrollable>
-          <ChannelNewThreadComposer />
-        </ChannelRoot>
+        <SidebarRoot>
+          <ChannelRoot channelId="default">
+            <div id="sidebar-header-portal" />
+            <SidebarHeader>
+              <SidebarTitle>Comments</SidebarTitle>
+              <div style={{ flex: 1 }} />
+              <SidebarCloseButton />
+            </SidebarHeader>
+            <Scrollable autoScroll="bottom" alignToBottom={true} className={styles.scrollable}>
+              <ChannelThreadList />
+            </Scrollable>
+            <ChannelNewThreadComposer />
+          </ChannelRoot>
+        </SidebarRoot>
       </Authenticated>
     </Root>
   ) : null;

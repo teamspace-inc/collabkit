@@ -23,7 +23,7 @@ function SidebarHeader(
   props: React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>
 ) {
   return (
-    <div className={styles.header} {...props}>
+    <div className={styles.header} {...props} data-testid="collabkit-sidebar-header">
       {props.children}
     </div>
   );
@@ -33,7 +33,7 @@ function SidebarTitle(
   props: React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>
 ) {
   return (
-    <div data-testid="sidebar-title" className={styles.title} {...props}>
+    <div className={styles.title} {...props} data-testid="collabkit-sidebar-title">
       {props.children}
     </div>
   );
