@@ -204,8 +204,7 @@ function PinPreview({ pin }: { pin: Pin }) {
                 <CommentMenu />
               </CommentActions>
               <CommentReactions>
-                <CommentReactionsList />
-                <CommentReactionsListAddEmojiButton />
+                <CommentReactionsList disabled={true} />
               </CommentReactions>
               <CommentSeeAllRepliesButton onClick={() => {}} />
             </div>

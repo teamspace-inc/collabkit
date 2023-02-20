@@ -48,20 +48,35 @@ export const inlineModal = style({
   borderRadius: '6px',
 });
 
-export const emojiCount = style({
-  marginTop: vars.space[2],
-  border: `1px solid ${vars.color.border}`,
-  borderRadius: '6px',
-  padding: `${vars.space[0]} ${vars.space[1]}`,
-  display: 'flex',
-  gap: vars.space[1],
-  alignItems: 'center',
-  marginRight: vars.space[1],
-  cursor: 'pointer',
-  selectors: {
-    '&:hover': {
-      border: `1px solid ${vars.color.surface}`,
-      background: vars.color.surfaceOverlay,
+export const emojiCountButton = recipe({
+  base: {
+    marginTop: vars.space[2],
+    border: `1px solid ${vars.color.border}`,
+    borderRadius: '6px',
+    padding: `${vars.space[0]} ${vars.space[1]}`,
+    display: 'flex',
+    gap: vars.space[1],
+    alignItems: 'center',
+    marginRight: vars.space[1],
+    cursor: 'pointer',
+  },
+  variants: {
+    disabled: {
+      false: {
+        selectors: {
+          '&:hover': {
+            border: `1px solid ${vars.color.surface}`,
+            background: vars.color.surfaceOverlay,
+          },
+        },
+      },
+      true: {
+        border: '1px solid transparent',
+        background: vars.color.surface,
+        selectors: {
+          '&:hover': {},
+        },
+      },
     },
   },
 });
