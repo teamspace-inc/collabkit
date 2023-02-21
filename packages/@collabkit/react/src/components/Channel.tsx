@@ -512,7 +512,6 @@ function Channel() {
           <h1>Comments</h1>
           <Scrollable autoScroll="bottom" alignToBottom={true}>
             <ChannelThreadList />
-          </Scrollable>
           <ChannelNewThreadComposer />
         </ChannelRoot>
       </Authenticated>
