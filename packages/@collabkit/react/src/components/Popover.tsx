@@ -1,4 +1,11 @@
-import React, { cloneElement, isValidElement, useCallback, useEffect, useMemo } from 'react';
+import React, {
+  cloneElement,
+  isValidElement,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 
 import {
   autoUpdate,
@@ -105,7 +112,7 @@ function PopoverContent(props: PopoverContentProps) {
           }}
           {...getFloatingProps({})}
         >
-          {open ? <ThemeWrapper>{props.children}</ThemeWrapper> : null}
+          {open ? props.children : null}
         </div>
       </FloatingFocusManager>
     </FloatingOverlay>
@@ -129,6 +136,14 @@ type PopoverContextValue = {
 };
 
 const PopoverContext = React.createContext<PopoverContextValue | null>(null);
+
+export const PopoverMaxSizeContext = React.createContext<null | { width: number; height: number }>(
+  null
+);
+
+export function usePopoverMaxSize() {
+  return React.useContext(PopoverMaxSizeContext);
+}
 
 function usePopoverContext() {
   const context = React.useContext(PopoverContext);
@@ -157,6 +172,7 @@ function PopoverRoot(props: RootProps) {
   const { placement, children, previewVisible, contentVisible, onContentChange, onPreviewChange } =
     props;
   const nodeId = useFloatingNodeId();
+  const [maxSize, setMaxSize] = useState<{ width: number; height: number } | null>(null);
 
   const dismissOnClickOutside = props.dismissOnClickOutside ?? true;
   const shouldFlipToKeepInView = props.shouldFlipToKeepInView ?? true;
@@ -200,6 +216,7 @@ function PopoverRoot(props: RootProps) {
             maxHeight: `${availableHeight}px`,
             opacity: 1,
           });
+          setMaxSize({ width: availableWidth, height: availableHeight });
         },
       }),
     ],
@@ -265,7 +282,9 @@ function PopoverRoot(props: RootProps) {
 
   return (
     <FloatingNode id={nodeId}>
-      <PopoverContext.Provider value={popoverContext}>{children}</PopoverContext.Provider>
+      <PopoverContext.Provider value={popoverContext}>
+        <PopoverMaxSizeContext.Provider value={maxSize}>{children}</PopoverMaxSizeContext.Provider>
+      </PopoverContext.Provider>
     </FloatingNode>
   );
 }

@@ -8,7 +8,16 @@ import {
   useFloatingNodeId,
 } from '@floating-ui/react';
 
-import React, { forwardRef, useCallback, useContext, useEffect, useMemo } from 'react';
+import React, {
+  forwardRef,
+  useCallback,
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 
 import { useSnapshot } from 'valtio';
 import { useStore } from '../hooks/useStore';
@@ -16,16 +25,19 @@ import { TargetContext } from './Target';
 import { useApp } from '../hooks/useApp';
 import { useTarget } from '../hooks/useTarget';
 import { Menu, MenuItem } from './Menu';
-import { PopoverContent, PopoverPreview, PopoverRoot, PopoverTrigger } from './Popover';
+import {
+  PopoverContent,
+  PopoverPreview,
+  PopoverRoot,
+  PopoverTrigger,
+  usePopoverMaxSize,
+} from './Popover';
 import { ProfileAvatar, ProfileProvider } from './Profile';
 import {
-  CommentActions,
   CommentBody,
   CommentCreatorName,
-  CommentReactionsListAddEmojiButton,
   CommentHeader,
   CommentMarkdown,
-  CommentMenu,
   CommentReactions,
   CommentReactionsList,
   CommentRoot,
@@ -54,6 +66,7 @@ import { CaretLeft, CaretRight, CheckCircle, X } from './icons';
 import { Tooltip, TooltipContent, TooltipTrigger } from './Tooltip';
 import { actions } from '@collabkit/client';
 import { useWorkspaceContext } from '../hooks/useWorkspaceContext';
+import { Scrollable } from './Scrollable';
 
 function SavedPin({
   pin,
@@ -103,10 +116,6 @@ function SavedPin({
     };
   }, [pin.id, pin.objectId, pin.eventId, pin.workspaceId, pin.threadId]);
 
-  if (!commentables[pin.objectId]) {
-    return null;
-  }
-
   useEffect(() => {
     if (typeof x === 'number' && typeof y === 'number') {
       const index = store.visiblePinPositions.findIndex((position) => position[0] === pin.id);
@@ -123,6 +132,10 @@ function SavedPin({
       }
     };
   }, [x, y, pin.id]);
+
+  if (!commentables[pin.objectId]) {
+    return null;
+  }
 
   return (
     <TargetContext.Provider value={target}>
@@ -212,7 +225,7 @@ function PinPreview({ pin }: { pin: Pin }) {
   return (
     <Root>
       <ThreadContext.Provider value={pin.threadId}>
-        <div className={styles.pinPopover}>
+        <div className={styles.pinThread}>
           <CommentRoot commentId={pin.eventId} className={styles.pinPreview}>
             <div style={{ display: 'flex', flexDirection: 'column' }}>
               <CommentHeader>
@@ -367,57 +380,106 @@ function PinThreadCloseIconButton() {
   );
 }
 
+// clamps the height of a popover to the max available
+// height as provided by the popover max size context.
+// this is useful for popovers that have a scrollable
+// but where we don't want them to take up too much
+// vertical space all the time.
+function usePopoverMaxHeight(ref: React.RefObject<HTMLDivElement>) {
+  const maxSize = usePopoverMaxSize();
+  const [height, setHeight] = useState<React.CSSProperties['height']>('unset');
+  const [opacity, setOpacity] = useState<React.CSSProperties['opacity']>(0);
+
+  useLayoutEffect(() => {
+    if (!ref.current) return;
+    if (!maxSize) return;
+
+    // first run
+    const height = ref.current.getBoundingClientRect().height;
+    if (height > maxSize.height) {
+      setHeight(maxSize.height);
+      setOpacity(1);
+    } else {
+      setOpacity(1);
+    }
+
+    // if more content is added and make the height
+    // too large, then we need to apply the max height
+    const observer = new ResizeObserver((entries) => {
+      for (let entry of entries) {
+        if (entry.contentBoxSize) {
+          // Firefox implements `contentBoxSize` as a single content rect, rather than an array
+          const contentBoxSize = Array.isArray(entry.contentBoxSize)
+            ? entry.contentBoxSize[0]
+            : entry.contentBoxSize;
+
+          const height = contentBoxSize.blockSize;
+          if (height > maxSize.height) {
+            setHeight(maxSize.height);
+          }
+        }
+      }
+    });
+    observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [maxSize]);
+
+  return { height, opacity };
+}
+
 function PinThread({ pin }: { pin: Pin }) {
   const store = useStore();
+  const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
     actions.subscribeThread(store, pin);
   }, [store]);
 
+  const { height, opacity } = usePopoverMaxHeight(ref);
+
   return (
-    <Root>
-      <div className={styles.pinPopover}>
-        <ThreadContext.Provider value={pin.threadId}>
-          <div
-            style={{
-              paddingTop: 8,
-              fontSize: vars.text.base.fontSize,
-              paddingBottom: 8,
-              paddingLeft: 8,
-              paddingRight: 8,
-              display: 'flex',
-              borderBottom: `1px solid ${vars.color.border}`,
-            }}
-          >
-            <PinPrevThreadIconButton />
-            <PinNextThreadIconButton />
-            <PinThreadResolveIconButton />
-            <div style={{ flex: 1 }} />
-            <PinThreadCloseIconButton />
-          </div>
+    <div className={styles.pinThread} ref={ref} style={{ height, opacity }}>
+      <ThreadContext.Provider value={pin.threadId}>
+        <div
+          style={{
+            paddingTop: 6,
+            fontSize: vars.text.base.fontSize,
+            paddingBottom: 6,
+            paddingLeft: 8,
+            paddingRight: 8,
+            display: 'flex',
+            flex: 1,
+            borderBottom: `1px solid ${vars.color.border}`,
+          }}
+        >
+          <PinPrevThreadIconButton />
+          <PinNextThreadIconButton />
+          <PinThreadResolveIconButton />
+          <div style={{ flex: 1 }} />
+          <PinThreadCloseIconButton />
+        </div>
+        <Scrollable>
           <CommentList />
-          <Composer autoFocus={true} />
-        </ThreadContext.Provider>
-      </div>
-    </Root>
+        </Scrollable>
+        <Composer autoFocus={true} />
+      </ThreadContext.Provider>
+    </div>
   );
 }
 
 function PinNewThreadComposer({ pin }: { pin: Pin }) {
   return (
-    <Root>
-      <div className={styles.pinPopover}>
-        <ThreadContext.Provider value={pin.threadId}>
-          <ComposerRoot className="" isNewThread={true}>
-            <ComposerEditor style={{ borderRadius: 12, padding: vars.space[1] }}>
-              <ComposerInput
-                autoFocus={true}
-                placeholder={<ComposerPlaceholder>Add a comment</ComposerPlaceholder>}
-              />
-            </ComposerEditor>
-          </ComposerRoot>
-        </ThreadContext.Provider>
-      </div>
-    </Root>
+    <div className={styles.pinThread}>
+      <ThreadContext.Provider value={pin.threadId}>
+        <ComposerRoot className="" isNewThread={true}>
+          <ComposerEditor style={{ borderRadius: 12, padding: vars.space[1] }}>
+            <ComposerInput
+              autoFocus={true}
+              placeholder={<ComposerPlaceholder>Add a comment</ComposerPlaceholder>}
+            />
+          </ComposerEditor>
+        </ComposerRoot>
+      </ThreadContext.Provider>
+    </div>
   );
 }
 

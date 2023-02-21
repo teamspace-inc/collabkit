@@ -75,19 +75,6 @@ export const composerPinButton = style({
   height: '100%',
 });
 
-export const scrollable = style({
-  // required for scrollable to work
-  height: '100%',
-
-  // this enables siblings like the channel new thread composer
-  // to be placed correctly and not be hidden by the scrollable
-  // taking up all the space.
-  maxHeight: 0,
-
-  // enables items to stick to bottom
-  display: 'flex',
-});
-
 export const threadList = style({
   padding: `${vars.space[2]} 0 0`,
 });

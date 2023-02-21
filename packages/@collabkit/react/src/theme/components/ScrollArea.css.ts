@@ -11,7 +11,12 @@ export const viewport = style({
   width: '100%',
   height: '100%',
   borderRadius: vars.scrollbar.borderRadius,
+  // this enables siblings like the channel new thread composer
+  // to be placed correctly and not be hidden by the scrollable
+  // taking up all the space.
   display: 'flex',
+  flexDirection: 'column',
+  maxHeight: 0,
 });
 
 export const scrollbar = style({

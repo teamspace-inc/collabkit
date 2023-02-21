@@ -153,7 +153,6 @@ export function createEvents(store: Store) {
             case 'commentReplyCountButton':
               e.preventDefault();
               e.stopPropagation();
-              actions.select(store, { target: { ...target, type: 'thread' } });
               actions.expandThread(store, target);
               actions.focusComposer(store, {
                 type: 'composer',
@@ -163,12 +162,10 @@ export function createEvents(store: Store) {
               });
               break;
             case 'commentSaveButton':
-              actions.select(store, { target: { ...target, type: 'thread' } });
               actions.updateComment(store);
               actions.stopEditing(store);
               break;
             case 'commentCancelButton':
-              actions.select(store, { target: { ...target, type: 'thread' } });
               actions.stopEditing(store, { target });
               break;
             case 'composerPin':

@@ -510,7 +510,7 @@ function Channel() {
         <ChannelRoot channelId="default">
           <div id="sidebar-header-portal" />
           <h1>Comments</h1>
-          <Scrollable autoScroll="bottom" alignToBottom={true} className={styles.scrollable}>
+          <Scrollable autoScroll="bottom" alignToBottom={true}>
             <ChannelThreadList />
           </Scrollable>
           <ChannelNewThreadComposer />
@@ -532,7 +532,7 @@ function SidebarChannel() {
               <div style={{ flex: 1 }} />
               <SidebarCloseButton />
             </SidebarHeader>
-            <Scrollable autoScroll="bottom" alignToBottom={true} className={styles.scrollable}>
+            <Scrollable autoScroll="bottom" alignToBottom={true}>
               <ChannelThreadList />
             </Scrollable>
             <ChannelNewThreadComposer />

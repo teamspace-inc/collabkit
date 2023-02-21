@@ -36,12 +36,15 @@ export const pinAvatar = style({
   left: 8,
 });
 
-export const pinPopover = style({
+export const pinThread = style({
   background: vars.color.background,
   borderRadius: '12px',
   width: 240,
   border: `1px solid ${vars.color.border}`,
   boxShadow: vars.shadow.high,
+  display: 'flex',
+  flexDirection: 'column',
+  height: '100%',
 });
 
 export const pinPreview = style({
