@@ -230,7 +230,7 @@ export const markdownLinksNotClickable = style({});
 
 // since we are using a globalStyle we need to override any
 // app specific styles
-globalStyle(`${collabkit} ${markdown} p`, {
+globalStyle(`${markdown} p`, {
   margin: '0',
   padding: '0',
   fontSize: `${fallbackVar(vars.comment.body.fontSize, vars.text.base.fontSize)}`,
@@ -241,14 +241,14 @@ globalStyle(`${collabkit} ${markdown} p`, {
   fontFamily: vars.fontFamily,
 });
 
-globalStyle(`${collabkit} ${markdown} a`, {
+globalStyle(`${markdown} a`, {
   textDecoration: 'none',
   fontWeight: `${fallbackVar(vars.mentions.pill.fontWeight, vars.fontWeight.bold)}`,
   color: `${fallbackVar(vars.mentions.pill.color, vars.color.textPrimary)}`,
   fontFamily: vars.fontFamily,
 });
 
-globalStyle(`${collabkit} ${markdownLinksNotClickable} p`, {
+globalStyle(`${markdownLinksNotClickable} p`, {
   margin: '0',
   padding: '0',
   fontSize: `${fallbackVar(vars.comment.body.fontSize, vars.text.base.fontSize)}`,
@@ -259,7 +259,7 @@ globalStyle(`${collabkit} ${markdownLinksNotClickable} p`, {
   fontFamily: vars.fontFamily,
 });
 
-globalStyle(`${collabkit} ${markdownLinksNotClickable} a`, {
+globalStyle(`${markdownLinksNotClickable} a`, {
   textDecoration: 'none',
   fontWeight: `${fallbackVar(vars.mentions.pill.fontWeight, vars.fontWeight.bold)}`,
   color: `${fallbackVar(vars.mentions.pill.color, vars.color.textPrimary)}`,
