@@ -99,6 +99,10 @@ export function createEvents(store: Store) {
             case 'overlay':
               actions.deselectAll(store);
               break;
+            case 'pinThreadCloseIconButton':
+              actions.deselectAll(store);
+              actions.closeAllPopovers(store);
+              break;
             case 'pinNextThreadIconButton':
               actions.select(store, { target });
               break;
