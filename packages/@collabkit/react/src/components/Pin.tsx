@@ -297,7 +297,7 @@ function PinNextThreadIconButton() {
           <CaretRight />
         </IconButton>
       </TooltipTrigger>
-      <TooltipContent>Next Thread</TooltipContent>
+      <TooltipContent>Next</TooltipContent>
     </Tooltip>
   );
 }
@@ -330,7 +330,7 @@ function PinPrevThreadIconButton() {
           <CaretLeft />
         </IconButton>
       </TooltipTrigger>
-      <TooltipContent>Previous Thread</TooltipContent>
+      <TooltipContent>Previous</TooltipContent>
     </Tooltip>
   );
 }
@@ -354,7 +354,7 @@ function PinThreadResolveIconButton() {
           <CheckCircle />
         </IconButton>
       </TooltipTrigger>
-      <TooltipContent>Resolve Thread</TooltipContent>
+      <TooltipContent>Resolve</TooltipContent>
     </Tooltip>
   );
 }
