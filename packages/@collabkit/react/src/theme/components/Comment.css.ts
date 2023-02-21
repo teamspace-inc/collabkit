@@ -2,7 +2,6 @@ import { fallbackVar, globalStyle, style } from '@vanilla-extract/css';
 import { calc } from '@vanilla-extract/css-utils';
 import { recipe } from '@vanilla-extract/recipes';
 import { vars } from '../theme/index.css';
-import { collabkit } from './Root.css';
 
 export const paddingLeft = fallbackVar(vars.comment.paddingLeft, vars.space[4]);
 export const paddingRight = fallbackVar(vars.comment.paddingRight, vars.space[4]);
