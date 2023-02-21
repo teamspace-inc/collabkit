@@ -36,7 +36,7 @@ import * as styles from '../theme/components/Pin.css';
 import { usePopover } from '../hooks/usePopover';
 import { useUserContext } from '../hooks/useUserContext';
 import { PinIconSVG } from './PinIcon';
-import { ThreadContext } from '../hooks/useThreadContext';
+import { ThreadContext, useThreadContext } from '../hooks/useThreadContext';
 import { CommentList } from './CommentList';
 import {
   Composer,
@@ -53,6 +53,7 @@ import { IconButton } from './IconButton';
 import { CaretLeft, CaretRight, CheckCircle, X } from './icons';
 import { Tooltip, TooltipContent, TooltipTrigger } from './Tooltip';
 import { actions } from '@collabkit/client';
+import { useWorkspaceContext } from '../hooks/useWorkspaceContext';
 
 function SavedPin({
   pin,
@@ -323,6 +324,8 @@ function PinPrevThreadIconButton() {
 
 function PinThreadResolveIconButton() {
   const { events } = useApp();
+  const workspaceId = useWorkspaceContext();
+  const threadId = useThreadContext();
 
   return (
     <Tooltip>
@@ -331,7 +334,7 @@ function PinThreadResolveIconButton() {
           weight="regular"
           onClick={(e) =>
             events.onClick(e, {
-              target: { type: 'pinThreadResolveIconButton' },
+              target: { type: 'pinThreadResolveIconButton', workspaceId, threadId },
             })
           }
         >

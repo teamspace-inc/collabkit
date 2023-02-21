@@ -109,9 +109,11 @@ export function createEvents(store: Store) {
             case 'pinPrevThreadIconButton':
               actions.select(store, { target });
               break;
-            // case 'pinThreadResolveIconButton':
-            //   actions.resolveThread(store, target);
-            //   break;
+            case 'pinThreadResolveIconButton':
+              actions.resolveThread(store, target);
+              actions.closeAllPopovers(store);
+              actions.deselectAll(store);
+              break;
             case 'showSidebarButton':
               actions.showSidebar(store);
               break;

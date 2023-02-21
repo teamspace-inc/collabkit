@@ -245,6 +245,8 @@ export type PinNextThreadIconButtonTarget = {
 
 export type PinThreadResolveIconButtonTarget = {
   type: 'pinThreadResolveIconButton';
+  workspaceId: string;
+  threadId: string;
 };
 
 export type PinThreadCloseIconButtonTarget = {
