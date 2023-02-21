@@ -30,7 +30,7 @@ export function CommentableRoot(props: { className?: string; children?: React.Re
   const hoveredElementRef = useRef<HTMLElement | SVGElement | null>(null);
   const store = useStore();
   const { events } = useApp();
-  const { userId, uiState, workspaceId, allPins, selectedId, pinsVisible } = useSnapshot(store);
+  const { userId, uiState, workspaceId, pins, selectedId, pinsVisible } = useSnapshot(store);
 
   useEffect(() => {
     store.isPinningEnabled = true;
@@ -75,7 +75,7 @@ export function CommentableRoot(props: { className?: string; children?: React.Re
       const commentable = findCommentableElement(store, e);
       if (commentable && commentable.element && workspaceId) {
         const { x, y, width, height } = commentable.element.getBoundingClientRect();
-        events.onPointerDown(e, {
+        events.onClick(e, {
           target: {
             type: 'overlay',
             objectId: commentable.objectId,
@@ -85,7 +85,7 @@ export function CommentableRoot(props: { className?: string; children?: React.Re
         });
       }
     },
-    [events.onPointerDown, workspaceId]
+    [events.onClick, workspaceId]
   );
 
   if (props.children == null || !workspaceId) {
@@ -103,18 +103,20 @@ export function CommentableRoot(props: { className?: string; children?: React.Re
     </>
   );
 
-  const pins =
-    pinsVisible && allPins
-      ? allPins.map((pin) => {
-          return (
-            <SavedPin
-              key={pin.id}
-              pin={pin}
-              isSelected={selectedId?.type === 'pin' && selectedId.id === pin.id}
-            />
-          );
-        })
-      : [];
+  const pinsComponents =
+    pinsVisible &&
+    pins.open.map((pin) => {
+      return (
+        <SavedPin
+          key={pin.id}
+          pin={pin}
+          isSelected={
+            (selectedId?.type === 'pin' || selectedId?.type === 'commentPin') &&
+            selectedId.id === pin.id
+          }
+        />
+      );
+    });
 
   return (
     <div
@@ -128,7 +130,7 @@ export function CommentableRoot(props: { className?: string; children?: React.Re
       <FloatingPortal id="collabkit-floating-root">
         <FloatingTree>
           {pinCursor}
-          {pins}
+          {pinsComponents}
         </FloatingTree>
       </FloatingPortal>
     </div>

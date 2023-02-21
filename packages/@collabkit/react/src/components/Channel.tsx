@@ -45,7 +45,7 @@ import { ProfileAvatar } from './Profile';
 import { useIsExpanded } from '../hooks/useIsExpanded';
 import { useWorkspaceContext } from '../hooks/useWorkspaceContext';
 import { useCommentList } from '../hooks/useCommentList';
-import { ComposerPinButtonTarget, ComposerPinTarget, PinTarget, Target } from '@collabkit/core';
+import { CommentPinTarget, ComposerPinButtonTarget, ComposerPinTarget } from '@collabkit/core';
 import { useComposerStore } from '../hooks/useComposerStore';
 import { useTarget } from '../hooks/useTarget';
 import { usePinAttachment } from '../hooks/usePinAttachment';
@@ -83,7 +83,8 @@ function ChannelCommentList(props: ComponentPropsWithRef<'div'>) {
       (selectedId?.type === 'thread' && selectedId.threadId === threadId) ||
       (selectedId?.type === 'pin' && selectedId.threadId === threadId) ||
       (selectedId?.type === 'comment' && selectedId.threadId === threadId) ||
-      (selectedId?.type === 'channel' && selectedId.threadId === threadId)
+      (selectedId?.type === 'channel' && selectedId.threadId === threadId) ||
+      (selectedId?.type === 'commentPin' && selectedId.threadId === threadId)
     );
   });
   const commentList = useCommentList();
@@ -170,7 +171,8 @@ function ChannelThread() {
       (selectedId?.type === 'thread' && selectedId.threadId === threadId) ||
       (selectedId?.type === 'pin' && selectedId.threadId === threadId) ||
       (selectedId?.type === 'comment' && selectedId.threadId === threadId) ||
-      (selectedId?.type === 'channel' && selectedId.threadId === threadId)
+      (selectedId?.type === 'channel' && selectedId.threadId === threadId) ||
+      (selectedId?.type === 'commentPin' && selectedId.threadId === threadId)
     );
   });
 
@@ -405,11 +407,11 @@ function ChannelCommentPin(props: React.ComponentProps<'img'>) {
 
   const store = useStore();
 
-  const target: PinTarget | null = useMemo(
+  const target: CommentPinTarget | null = useMemo(
     () =>
       pin
         ? {
-            type: 'pin',
+            type: 'commentPin',
             threadId,
             eventId,
             workspaceId,
@@ -420,16 +422,12 @@ function ChannelCommentPin(props: React.ComponentProps<'img'>) {
     [pin]
   );
 
-  const targetMatch = useCallback(
-    (a: Target | null) => {
-      if (!a) {
-        return false;
-      }
-      return a.type === 'pin' && a.eventId === eventId;
-    },
-    [eventId]
+  const isSelected = useStoreKeyMatches(
+    store,
+    'selectedId',
+    (selectedId) =>
+      (selectedId?.type === 'pin' || selectedId?.type === 'commentPin') && selectedId.id === pinId
   );
-  const isSelected = useStoreKeyMatches(store, 'selectedId', targetMatch);
 
   const onClick = useCallback(
     (e: React.MouseEvent) => {

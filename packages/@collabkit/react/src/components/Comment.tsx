@@ -495,7 +495,7 @@ function CommentThreadResolveIconButton(props: {
           style={props.style}
           weight="regular"
           onPointerDown={(e) =>
-            events.onPointerDown(e, {
+            events.onClick(e, {
               target,
             })
           }

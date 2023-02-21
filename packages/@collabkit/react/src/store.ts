@@ -10,7 +10,7 @@ export function createValtioStore(config: Config, sync: SyncAdapter): Store {
   store.isReadOnly = config.readOnly ?? false;
   derive(
     {
-      allPins: (get) => {
+      pins: (get) => {
         const snapshot = get(store);
         const { workspaceId, viewingId, previewingId } = snapshot;
         if (!workspaceId) return {};
@@ -64,7 +64,9 @@ export function createValtioStore(config: Config, sync: SyncAdapter): Store {
           }
         }
 
-        return pins;
+        return {
+          open: pins,
+        };
       },
     },
     {

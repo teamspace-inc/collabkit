@@ -78,6 +78,7 @@ export function createStore(): UnconfiguredStore {
     pinsVisible: true,
     dragPinObjectId: '',
     dragPinUpdate: [],
+    visiblePinPositions: [],
   };
   return store;
 }

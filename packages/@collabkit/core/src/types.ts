@@ -218,7 +218,38 @@ export type Target =
   | CommentActionsEmojiButtonTarget
   | ChannelTarget
   | ComposerPinTarget
-  | AddCommentButtonTarget;
+  | AddCommentButtonTarget
+  | PinPrevThreadIconButtonTarget
+  | PinNextThreadIconButtonTarget
+  | PinThreadResolveIconButtonTarget
+  | PinThreadCloseIconButtonTarget
+  | CommentPinTarget;
+
+export type PinPrevThreadIconButtonTarget = {
+  type: 'pinPrevThreadIconButton';
+  id: string;
+  objectId: string;
+  workspaceId: string;
+  threadId: string;
+  eventId: string;
+};
+
+export type PinNextThreadIconButtonTarget = {
+  type: 'pinNextThreadIconButton';
+  id: string;
+  objectId: string;
+  workspaceId: string;
+  threadId: string;
+  eventId: string;
+};
+
+export type PinThreadResolveIconButtonTarget = {
+  type: 'pinThreadResolveIconButton';
+};
+
+export type PinThreadCloseIconButtonTarget = {
+  type: 'pinThreadCloseIconButton';
+};
 
 export type CommentReplyCountButtonTarget = {
   type: 'commentReplyCountButton';
@@ -259,6 +290,16 @@ export type PinTarget = {
   threadId: string;
   workspaceId: string;
   isPending?: boolean;
+  eventId: string;
+};
+
+export type CommentPinTarget = {
+  type: 'commentPin';
+  objectId: string;
+  id: string;
+  threadId: string;
+  isPending?: false;
+  workspaceId: string;
   eventId: string;
 };
 
@@ -647,12 +688,15 @@ export interface UnconfiguredStore {
   pinsVisible: boolean;
   dragPinObjectId: string;
   dragPinUpdate: Function[];
+  visiblePinPositions: Array<[string, number, number]>;
 }
 
 export interface Store extends UnconfiguredStore {
   sync: SyncAdapter;
   config: Config;
-  allPins: (Pin | PendingPin)[];
+  pins: {
+    open: (Pin | PendingPin)[];
+  };
   reactions: {
     [threadId: string]: {
       [eventId: string]: { [emoji: string]: { count: number; userIds: string[] } };

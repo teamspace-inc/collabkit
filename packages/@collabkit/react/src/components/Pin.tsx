@@ -49,6 +49,10 @@ import { Root } from './Root';
 import has from 'has';
 import { vars } from '../theme/theme/index.css';
 import { useStoreKeyMatches } from '../hooks/useSubscribeStoreKey';
+import { IconButton } from './IconButton';
+import { CaretLeft, CaretRight, CheckCircle, X } from './icons';
+import { Tooltip, TooltipContent, TooltipTrigger } from './Tooltip';
+import { actions } from '@collabkit/client';
 
 function SavedPin({
   pin,
@@ -101,6 +105,23 @@ function SavedPin({
   if (!commentables[pin.objectId]) {
     return null;
   }
+
+  useEffect(() => {
+    if (typeof x === 'number' && typeof y === 'number') {
+      const index = store.visiblePinPositions.findIndex((position) => position[0] === pin.id);
+      if (index !== -1) {
+        store.visiblePinPositions[index] = [pin.id, x, y];
+      } else {
+        store.visiblePinPositions.push([pin.id, x, y]);
+      }
+    }
+    return () => {
+      const index = store.visiblePinPositions.findIndex((position) => position[0] === pin.id);
+      if (index !== -1) {
+        store.visiblePinPositions.splice(index, 1);
+      }
+    };
+  }, [x, y, pin.id]);
 
   return (
     <TargetContext.Provider value={target}>
@@ -212,11 +233,164 @@ function PinPreview({ pin }: { pin: Pin }) {
   );
 }
 
+function useAdjacentPin(direction: 1 | -1 = 1) {
+  const { visiblePinPositions, selectedId, pins } = useSnapshot(useStore());
+  const sortedVisiblePinPositions = visiblePinPositions.slice().sort((a, b) => {
+    if (a[2] === b[2]) {
+      return a[2] - b[2];
+    } else {
+      return a[1] - b[1];
+    }
+  });
+
+  const index =
+    selectedId?.type === 'pin' || selectedId?.type === 'commentPin'
+      ? sortedVisiblePinPositions.findIndex((position) => position[0] === selectedId.id)
+      : -2;
+
+  const nextId = sortedVisiblePinPositions[index + direction]?.[0];
+
+  const next = pins.open.find((pin) => pin.id === nextId);
+
+  return next;
+}
+
+function PinNextThreadIconButton() {
+  const { events } = useApp();
+  const next = useAdjacentPin(1);
+
+  return (
+    <Tooltip>
+      <TooltipTrigger>
+        <IconButton
+          weight="regular"
+          disabled={!next}
+          onClick={(e) =>
+            next
+              ? events.onClick(e, {
+                  target: {
+                    type: 'pinNextThreadIconButton',
+                    id: next.id,
+                    objectId: next.objectId,
+                    workspaceId: next.workspaceId,
+                    threadId: next.threadId,
+                    eventId: next.eventId,
+                  },
+                })
+              : null
+          }
+        >
+          <CaretRight />
+        </IconButton>
+      </TooltipTrigger>
+      <TooltipContent>Next Thread</TooltipContent>
+    </Tooltip>
+  );
+}
+
+function PinPrevThreadIconButton() {
+  const { events } = useApp();
+  const prev = useAdjacentPin(-1);
+
+  return (
+    <Tooltip>
+      <TooltipTrigger>
+        <IconButton
+          weight="regular"
+          disabled={!prev}
+          onClick={(e) =>
+            prev
+              ? events.onClick(e, {
+                  target: {
+                    type: 'pinPrevThreadIconButton',
+                    id: prev.id,
+                    objectId: prev.objectId,
+                    workspaceId: prev.workspaceId,
+                    threadId: prev.threadId,
+                    eventId: prev.eventId,
+                  },
+                })
+              : null
+          }
+        >
+          <CaretLeft />
+        </IconButton>
+      </TooltipTrigger>
+      <TooltipContent>Previous Thread</TooltipContent>
+    </Tooltip>
+  );
+}
+
+function PinThreadResolveIconButton() {
+  const { events } = useApp();
+
+  return (
+    <Tooltip>
+      <TooltipTrigger>
+        <IconButton
+          weight="regular"
+          onClick={(e) =>
+            events.onClick(e, {
+              target: { type: 'pinThreadResolveIconButton' },
+            })
+          }
+        >
+          <CheckCircle />
+        </IconButton>
+      </TooltipTrigger>
+      <TooltipContent>Resolve Thread</TooltipContent>
+    </Tooltip>
+  );
+}
+
+function PinThreadCloseIconButton() {
+  const { events } = useApp();
+  return (
+    <Tooltip>
+      <TooltipTrigger>
+        <IconButton
+          weight="regular"
+          onClick={(e) =>
+            events.onClick(e, {
+              target: { type: 'pinThreadCloseIconButton' },
+            })
+          }
+        >
+          <X />
+        </IconButton>
+      </TooltipTrigger>
+      <TooltipContent>Close</TooltipContent>
+    </Tooltip>
+  );
+}
+
 function PinThread({ pin }: { pin: Pin }) {
+  const store = useStore();
+  useEffect(() => {
+    actions.subscribeThread(store, pin);
+  }, [store]);
+
   return (
     <Root>
       <div className={styles.pinPopover}>
         <ThreadContext.Provider value={pin.threadId}>
+          <div
+            style={{
+              paddingTop: 8,
+              fontSize: vars.text.base.fontSize,
+              paddingBottom: 8,
+              paddingLeft: 8,
+              paddingRight: 8,
+              display: 'flex',
+              borderBottom: `1px solid ${vars.color.border}`,
+            }}
+          >
+            <PinPrevThreadIconButton />
+            <PinNextThreadIconButton />
+            <PinThreadResolveIconButton />
+            <div style={{ flex: 1 }} />
+            <PinThreadCloseIconButton />
+          </div>
           <CommentList />
           <Composer autoFocus={true} />
         </ThreadContext.Provider>
@@ -252,8 +426,8 @@ const PinMarker = forwardRef<HTMLDivElement, PinMarkerProps>(function PinMarker(
     return editingId?.type === 'comment' && editingId.eventId === pin.eventId;
   });
 
-  const onPointerDown = useCallback(
-    (e: React.PointerEvent) => events.onPointerDown(e, { target }),
+  const onClick = useCallback(
+    (e: React.PointerEvent) => events.onClick(e, { target }),
     [events, target]
   );
 
@@ -272,7 +446,7 @@ const PinMarker = forwardRef<HTMLDivElement, PinMarkerProps>(function PinMarker(
         className={`collabkit ${styles.pin({ pointerEvents, isSelected })}`}
         ref={ref}
         style={props.style}
-        onPointerDown={onPointerDown}
+        onPointerDown={onClick}
         data-testid="collabkit-pin-marker"
       >
         {/* <PinMenu> */}
