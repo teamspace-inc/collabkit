@@ -54,13 +54,13 @@ export function createStore(): UnconfiguredStore {
     userId: null,
     user: null,
     workspaceId: null,
-    focusedId: null,
+    selectedId: null,
     menuId: null,
     reactingId: null,
     viewingId: null,
     previewingId: null,
     hoveringId: null,
-    selectedId: null,
+    focusedId: null,
     editingId: null,
     editingEventSnapshots: {},
     composerId: null,
@@ -78,6 +78,7 @@ export function createStore(): UnconfiguredStore {
     pinsVisible: true,
     dragPinObjectId: '',
     dragPinUpdate: [],
+    visiblePinPositions: [],
   };
   return store;
 }

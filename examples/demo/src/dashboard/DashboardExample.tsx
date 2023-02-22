@@ -35,6 +35,10 @@ import {
   useCommentableRef,
   SidebarInboxButton,
   SidebarChannel,
+  AddCommentButton,
+  Debug,
+  SidebarInbox,
+  PopoverInbox,
 } from '@collabkit/react';
 
 import { Charts } from './Charts';
@@ -247,6 +251,8 @@ export function DashboardExample() {
               <Title>Dashboard</Title>
               <Text>View core metrics on the state of your company.</Text>
             </Block>
+            {/* <Debug /> */}
+            <PopoverInbox />
             <div className="px-2"></div>
             <SidebarInboxButton />
             {/* <Datepicker
@@ -272,7 +278,7 @@ export function DashboardExample() {
             <Tab value={'overview'} text="Overview" />
             <Tab value={'detail'} text="Detail" />
             <Tab value={'flowchart'} text="Flowchart" />
-            {/* <Tab value={'charts'} text="Charts" /> */}
+            <Tab value={'charts'} text="Charts" />
           </TabList>
 
           {selectedTab === 'overview' ? (
@@ -286,6 +292,7 @@ export function DashboardExample() {
           {selectedTab === 'flowchart' ? <Flow /> : null}
         </main>
         <SidebarChannel />
+        {/* <AddCommentButton /> */}
       </div>
     </Commentable.Root>
   );

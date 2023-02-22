@@ -2,7 +2,6 @@ import { fallbackVar, globalStyle, style } from '@vanilla-extract/css';
 import { calc } from '@vanilla-extract/css-utils';
 import { recipe } from '@vanilla-extract/recipes';
 import { vars } from '../theme/index.css';
-import { collabkit } from './Root.css';
 
 export const paddingLeft = fallbackVar(vars.comment.paddingLeft, vars.space[4]);
 export const paddingRight = fallbackVar(vars.comment.paddingRight, vars.space[4]);
@@ -48,20 +47,35 @@ export const inlineModal = style({
   borderRadius: '6px',
 });
 
-export const emojiCount = style({
-  marginTop: vars.space[2],
-  border: `1px solid ${vars.color.border}`,
-  borderRadius: '6px',
-  padding: `${vars.space[0]} ${vars.space[1]}`,
-  display: 'flex',
-  gap: vars.space[1],
-  alignItems: 'center',
-  marginRight: vars.space[1],
-  cursor: 'pointer',
-  selectors: {
-    '&:hover': {
-      border: `1px solid ${vars.color.surface}`,
-      background: vars.color.surfaceOverlay,
+export const emojiCountButton = recipe({
+  base: {
+    marginTop: vars.space[2],
+    border: `1px solid ${vars.color.border}`,
+    borderRadius: '6px',
+    padding: `${vars.space[0]} ${vars.space[1]}`,
+    display: 'flex',
+    gap: vars.space[1],
+    alignItems: 'center',
+    marginRight: vars.space[1],
+    cursor: 'pointer',
+  },
+  variants: {
+    disabled: {
+      false: {
+        selectors: {
+          '&:hover': {
+            border: `1px solid ${vars.color.surface}`,
+            background: vars.color.surfaceOverlay,
+          },
+        },
+      },
+      true: {
+        border: '1px solid transparent',
+        background: vars.color.surface,
+        selectors: {
+          '&:hover': {},
+        },
+      },
     },
   },
 });
@@ -215,7 +229,7 @@ export const markdownLinksNotClickable = style({});
 
 // since we are using a globalStyle we need to override any
 // app specific styles
-globalStyle(`${collabkit} ${markdown} p`, {
+globalStyle(`${markdown} p`, {
   margin: '0',
   padding: '0',
   fontSize: `${fallbackVar(vars.comment.body.fontSize, vars.text.base.fontSize)}`,
@@ -226,14 +240,14 @@ globalStyle(`${collabkit} ${markdown} p`, {
   fontFamily: vars.fontFamily,
 });
 
-globalStyle(`${collabkit} ${markdown} a`, {
+globalStyle(`${markdown} a`, {
   textDecoration: 'none',
   fontWeight: `${fallbackVar(vars.mentions.pill.fontWeight, vars.fontWeight.bold)}`,
   color: `${fallbackVar(vars.mentions.pill.color, vars.color.textPrimary)}`,
   fontFamily: vars.fontFamily,
 });
 
-globalStyle(`${collabkit} ${markdownLinksNotClickable} p`, {
+globalStyle(`${markdownLinksNotClickable} p`, {
   margin: '0',
   padding: '0',
   fontSize: `${fallbackVar(vars.comment.body.fontSize, vars.text.base.fontSize)}`,
@@ -244,7 +258,7 @@ globalStyle(`${collabkit} ${markdownLinksNotClickable} p`, {
   fontFamily: vars.fontFamily,
 });
 
-globalStyle(`${collabkit} ${markdownLinksNotClickable} a`, {
+globalStyle(`${markdownLinksNotClickable} a`, {
   textDecoration: 'none',
   fontWeight: `${fallbackVar(vars.mentions.pill.fontWeight, vars.fontWeight.bold)}`,
   color: `${fallbackVar(vars.mentions.pill.color, vars.color.textPrimary)}`,

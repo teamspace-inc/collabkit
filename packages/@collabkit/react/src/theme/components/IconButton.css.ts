@@ -32,6 +32,11 @@ export const button = recipe({
     },
   },
   variants: {
+    disabled: {
+      true: {
+        color: fallbackVar(vars.iconButton.color, vars.color.iconSecondary),
+      },
+    },
     active: {
       true: {
         background: fallbackVar(vars.iconButton.active.background, vars.color.surfaceOverlay),

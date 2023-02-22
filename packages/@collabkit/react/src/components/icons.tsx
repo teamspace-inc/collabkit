@@ -15,3 +15,5 @@ export { default as Smiley } from 'phosphor-react/dist/icons/Smiley.esm.js';
 export { default as X } from 'phosphor-react/dist/icons/X.esm.js';
 export { default as ArrowBendDownRight } from 'phosphor-react/dist/icons/ArrowBendDownRight.esm.js';
 export { default as ArrowBendUpRight } from 'phosphor-react/dist/icons/ArrowBendUpRight.esm.js';
+export { default as CaretRight } from 'phosphor-react/dist/icons/CaretRight.esm.js';
+export { default as CaretLeft } from 'phosphor-react/dist/icons/CaretLeft.esm.js';

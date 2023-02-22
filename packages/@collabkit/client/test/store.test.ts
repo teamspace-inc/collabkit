@@ -69,5 +69,6 @@ test('createStore', () => {
     pinsVisible: true,
     dragPinObjectId: '',
     dragPinUpdate: [],
+    visiblePinPositions: [],
   });
 });

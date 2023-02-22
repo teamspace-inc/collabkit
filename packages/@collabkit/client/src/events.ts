@@ -23,8 +23,7 @@ export function createEvents(store: Store) {
         return;
       }
       editor.update(() => {
-        const selection = $getSelection();
-        selection?.insertRawText(text);
+        $getSelection()?.insertRawText(text);
       });
     },
 
@@ -68,87 +67,141 @@ export function createEvents(store: Store) {
 
     onClick: <T extends Target>(e: React.MouseEvent, props: { target: T }) => {
       const { target } = props;
-      e.preventDefault();
-      e.stopPropagation();
-      switch (target.type) {
-        case 'showSidebarButton':
-          actions.showSidebar(store);
-          break;
-        case 'hideSidebarButton':
-          actions.hideSidebar(store);
-          break;
-        case 'channel':
-          actions.select(store, { target });
-          actions.focusComposer(store, { ...target, type: 'composer', eventId: 'default' });
-          break;
-        case 'emoji':
-          actions.toggleEmoji(store, { target });
-          break;
-        case 'pin':
-          actions.select(store, { target });
-          break;
-        case 'composer':
-          actions.setComposer(store, { target });
-          actions.focusComposer(store, target);
-          break;
-        case 'pinDeleteButton':
-          actions.deletePin(store, target);
-          return;
-        case 'commentDeleteButton':
-          actions.deleteMessage(store, target);
-          break;
-        case 'commentEditButton':
-          actions.startEditing(store, target);
-          break;
-        case 'reopenThreadButton': {
-          actions.reopenThread(store, target);
-          break;
-        }
-        case 'commentReplyButton':
-        case 'commentReplyCountButton': {
-          e.preventDefault();
-          e.stopPropagation();
-          actions.select(store, { target: { ...target, type: 'thread' } });
-          actions.expandThread(store, target);
-          actions.focusComposer(store, {
-            type: 'composer',
-            workspaceId: target.workspaceId,
-            threadId: target.threadId,
-            eventId: 'default',
-          });
-          break;
-        }
-        case 'commentSaveButton': {
-          actions.select(store, { target: { ...target, type: 'thread' } });
-          actions.updateComment(store);
-          actions.stopEditing(store);
-          break;
-        }
-        case 'commentCancelButton': {
-          actions.select(store, { target: { ...target, type: 'thread' } });
-          actions.stopEditing(store, { target });
-          break;
-        }
-        case 'composerPin': {
-          actions.removeAttachment(store, { ...target, attachmentId: target.pinId });
-          actions.stopSelecting(store);
-          break;
-        }
-        // case 'addCommentButton':
-        case 'composerPinButton': {
-          switch (store.uiState) {
-            case 'selecting':
-              actions.stopSelecting(store);
+      if (e.button !== 0) {
+        return;
+      }
+      // we don't want to stop the event propogating as
+      // otherwise it never reaches the overlay, which is
+      // used to deselect pins
+      if (target.type === 'pin') {
+      } else {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+
+      switch (store.uiState) {
+        case 'selecting': {
+          switch (target.type) {
+            case 'overlay':
+              e.stopPropagation();
+              e.preventDefault();
+              actions.attachComposerPin(store, target);
               break;
-            case 'idle':
-              actions.setComposer(store, { target: { ...target, type: 'composer' } });
-              actions.startSelecting(store);
+            case 'composerPinButton':
+              actions.stopSelecting(store);
               break;
           }
           break;
         }
-        case 'composerMentionsButton': {
-          actions.startMentioning(store, target);
+        case 'idle': {
+          switch (target.type) {
+            case 'addCommentButton':
+              actions.startSelecting(store);
+              const threadId = store.nextThreadId;
+              console.log('threadId', threadId);
+              if (!threadId) return;
+              const composerId = {
+                ...target,
+                type: 'composer',
+                threadId,
+                eventId: 'default',
+              } as const;
+              actions.initComposer(store, { ...target, threadId, eventId: 'default' });
+              actions.setComposer(store, { target: composerId });
+              break;
+            case 'overlay':
+              actions.deselectAll(store);
+              break;
+            case 'inboxItem':
+              actions.openInboxItem(store, target);
+              break;
+            case 'pinThreadCloseIconButton':
+              actions.deselectAll(store);
+              actions.closeAllPopovers(store);
+              break;
+            case 'pinNextThreadIconButton':
+              actions.select(store, { target });
+              break;
+            case 'pinPrevThreadIconButton':
+              actions.select(store, { target });
+              break;
+            case 'pinThreadResolveIconButton':
+              actions.resolveThread(store, target);
+              actions.closeAllPopovers(store);
+              actions.deselectAll(store);
+              break;
+            case 'showSidebarButton':
+              actions.showSidebar(store);
+              break;
+            case 'hideSidebarButton':
+              actions.hideSidebar(store);
+              break;
+            case 'channel':
+              actions.select(store, { target });
+              actions.focusComposer(store, { ...target, type: 'composer', eventId: 'default' });
+              break;
+            case 'emoji':
+              actions.toggleEmoji(store, { target });
+              break;
+            case 'commentPin':
+              actions.select(store, { target });
+              break;
+            case 'pin':
+              actions.select(store, { target });
+              break;
+            case 'composer':
+              actions.setComposer(store, { target });
+              actions.focusComposer(store, target);
+              break;
+            case 'pinDeleteButton':
+              actions.deletePin(store, target);
+              return;
+            case 'commentDeleteButton':
+              actions.deleteMessage(store, target);
+              break;
+            case 'commentEditButton':
+              actions.startEditing(store, target);
+              break;
+            case 'reopenThreadButton':
+              actions.reopenThread(store, target);
+              break;
+            case 'commentReplyButton':
+            case 'commentReplyCountButton':
+              e.preventDefault();
+              e.stopPropagation();
+              actions.expandThread(store, target);
+              actions.focusComposer(store, {
+                type: 'composer',
+                workspaceId: target.workspaceId,
+                threadId: target.threadId,
+                eventId: 'default',
+              });
+              break;
+            case 'commentSaveButton':
+              actions.updateComment(store);
+              actions.stopEditing(store);
+              break;
+            case 'commentCancelButton':
+              actions.stopEditing(store, { target });
+              break;
+            case 'composerPin':
+              actions.removeAttachment(store, { ...target, attachmentId: target.pinId });
+              actions.stopSelecting(store);
+              break;
+            case 'composerPinButton':
+              actions.setComposer(store, { target: { ...target, type: 'composer' } });
+              actions.startSelecting(store);
+              break;
+            case 'composerMentionsButton':
+              actions.startMentioning(store, target);
+              break;
+            case 'closeThreadButton':
+              actions.closeAllPopovers(store);
+              break;
+            case 'resolveThreadButton':
+              actions.resolveThread(store, target);
+              break;
+          }
           break;
         }
       }
@@ -266,63 +319,10 @@ export function createEvents(store: Store) {
 
     onGlobalPointerDown: (e: PointerEvent) => {
       const el = e.target;
-      if (el instanceof Element && el.closest(`.collabkit`)) {
+      if (el instanceof Element && el.closest('.collabkit')) {
         return;
       }
       actions.deselectAll(store);
-    },
-
-    onPointerDown: (e: React.PointerEvent, props: { target: Target }) => {
-      const { target } = props;
-      const { type } = target;
-      if (e.button !== 0) {
-        return;
-      }
-      switch (store.uiState) {
-        case 'selecting': {
-          switch (type) {
-            case 'overlay': {
-              e.stopPropagation();
-              e.preventDefault();
-              actions.attachComposerPin(store, target);
-            }
-          }
-          break;
-        }
-        case 'idle': {
-          switch (type) {
-            case 'overlay': {
-              actions.deselectAll(store);
-              break;
-            }
-            case 'pin': {
-              actions.select(store, props);
-              break;
-            }
-            case 'showSidebarButton': {
-              actions.showSidebar(store);
-              break;
-            }
-            case 'hideSidebarButton': {
-              actions.hideSidebar(store);
-              break;
-            }
-            case 'closeThreadButton': {
-              actions.closeAllPopovers(store);
-              break;
-            }
-            case 'resolveThreadButton': {
-              actions.resolveThread(store, target);
-              break;
-            }
-            case 'reopenThreadButton': {
-              actions.reopenThread(store, target);
-              break;
-            }
-          }
-          break;
-        }
-      }
     },
 
     onSeen: (props: { target: CommentTarget }) => {

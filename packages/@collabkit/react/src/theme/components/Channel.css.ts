@@ -1,7 +1,6 @@
 import { fallbackVar, globalStyle, style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
 import { vars } from '../theme/index.css';
-import * as inboxStyles from './Inbox.css';
 import * as commentStyles from './Comment.css';
 import * as composerStyles from './Composer.css';
 import { calc } from '@vanilla-extract/css-utils';
@@ -30,7 +29,7 @@ export const rootComposerRoot = style([
   {
     padding: fallbackVar(
       vars.composer.padding,
-      `${vars.space[2]} ${vars.space[6]} ${vars.space[2]}`
+      `${vars.space[2]} ${vars.space[6]} ${vars.space[4]}`
     ),
   },
 ]);
@@ -75,19 +74,6 @@ export const composerPinButton = style({
   height: '100%',
 });
 
-export const scrollable = style({
-  // required for scrollable to work
-  height: '100%',
-
-  // this enables siblings like the channel new thread composer
-  // to be placed correctly and not be hidden by the scrollable
-  // taking up all the space.
-  maxHeight: 0,
-
-  // enables items to stick to bottom
-  display: 'flex',
-});
-
 export const threadList = style({
   padding: `${vars.space[2]} 0 0`,
 });
@@ -114,8 +100,6 @@ export const thread = recipe({
     },
   },
 });
-
-export const header = style([inboxStyles.header]);
 
 export const commentPin = style({
   paddingRight: calc.divide(vars.space[1], 2),

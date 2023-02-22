@@ -4,6 +4,6 @@ import { useStore } from '../hooks/useStore';
 
 export function Debug() {
   const store = useStore();
-  const { focusedId } = useSnapshot(store);
-  return <code>{JSON.stringify(focusedId, null, 2)}</code>;
+  const { selectedId } = useSnapshot(store);
+  return <code>{JSON.stringify(selectedId, null, 2)}</code>;
 }

@@ -9,7 +9,7 @@ export function useCloseThread() {
   const workspaceId = useWorkspaceContext();
 
   const closeThread = (e: React.PointerEvent) => {
-    events.onPointerDown(e, {
+    events.onClick(e, {
       target: {
         threadId,
         workspaceId,

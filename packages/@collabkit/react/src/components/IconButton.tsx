@@ -2,6 +2,7 @@ import { IconContext } from './icons';
 import React, { forwardRef } from 'react';
 import * as styles from '../theme/components/IconButton.css';
 import type { IconProps } from './icons';
+import { vars } from '../theme/theme/index.css';
 
 type Props = {
   children: React.ReactNode;
@@ -10,6 +11,7 @@ type Props = {
   className?: string;
   active?: boolean;
   small?: boolean;
+  disabled?: boolean;
 } & IconProps &
   React.ComponentProps<'div'>;
 
@@ -20,8 +22,8 @@ const iconContextBase = {
 } as const;
 
 export const IconButton = forwardRef<HTMLDivElement, Props>(function IconButton(props: Props, ref) {
-  const { active, color, size, weight, small, ...otherProps } = props;
-  const className = props.className ?? styles.button({ active, small });
+  const { active, color, size, weight, small, disabled, ...otherProps } = props;
+  const className = props.className ?? styles.button({ active, small, disabled });
   const iconContextValue: IconProps = { ...iconContextBase };
   if (color) {
     iconContextValue.color = props.color;
@@ -31,6 +33,9 @@ export const IconButton = forwardRef<HTMLDivElement, Props>(function IconButton(
   }
   if (weight) {
     iconContextValue.weight = props.weight;
+  }
+  if (disabled) {
+    iconContextValue.color = vars.color.iconDisabled;
   }
 
   return (

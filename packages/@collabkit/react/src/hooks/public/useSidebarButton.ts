@@ -14,7 +14,7 @@ export function useSidebarButton() {
           workspaceId,
         };
         if (e.button === 0) {
-          events.onPointerDown(e, { target });
+          events.onClick(e, { target });
         }
       } else {
         console.error('[CollabKit] Workspace ID not found');

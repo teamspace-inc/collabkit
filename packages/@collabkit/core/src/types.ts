@@ -218,7 +218,52 @@ export type Target =
   | CommentActionsEmojiButtonTarget
   | ChannelTarget
   | ComposerPinTarget
-  | AddCommentButtonTarget;
+  | AddCommentButtonTarget
+  | PinPrevThreadIconButtonTarget
+  | PinNextThreadIconButtonTarget
+  | PinThreadResolveIconButtonTarget
+  | PinThreadCloseIconButtonTarget
+  | CommentPinTarget
+  | InboxItemTarget
+  | PopoverInboxTarget;
+
+export type PopoverInboxTarget = {
+  type: 'popoverInbox';
+};
+
+export type InboxItemTarget = {
+  type: 'inboxItem';
+  threadId: string;
+  workspaceId: string;
+};
+
+export type PinPrevThreadIconButtonTarget = {
+  type: 'pinPrevThreadIconButton';
+  id: string;
+  objectId: string;
+  workspaceId: string;
+  threadId: string;
+  eventId: string;
+};
+
+export type PinNextThreadIconButtonTarget = {
+  type: 'pinNextThreadIconButton';
+  id: string;
+  objectId: string;
+  workspaceId: string;
+  threadId: string;
+  eventId: string;
+};
+
+export type PinThreadResolveIconButtonTarget = {
+  type: 'pinThreadResolveIconButton';
+  workspaceId: string;
+  threadId: string;
+};
+
+export type PinThreadCloseIconButtonTarget = {
+  type: 'pinThreadCloseIconButton';
+};
 
 export type CommentReplyCountButtonTarget = {
   type: 'commentReplyCountButton';
@@ -262,6 +307,16 @@ export type PinTarget = {
   eventId: string;
 };
 
+export type CommentPinTarget = {
+  type: 'commentPin';
+  objectId: string;
+  id: string;
+  threadId: string;
+  isPending?: false;
+  workspaceId: string;
+  eventId: string;
+};
+
 export type AttachPinTarget = {
   type: 'attachPin';
   objectId: string;
@@ -278,6 +333,7 @@ export type OverlayTarget = {
 
 export type AddCommentButtonTarget = {
   type: 'addCommentButton';
+  workspaceId: string;
 };
 
 export type ComposerMentionsButtonTarget = {
@@ -617,9 +673,9 @@ export interface UnconfiguredStore {
   user: UserProps | null;
   userId: string | null;
   workspaceId: string | null;
-  focusedId: null | Target;
-  reactingId: null | Target;
   selectedId: null | Target;
+  reactingId: null | Target;
+  focusedId: null | Target;
   hoveringId: null | Target;
   menuId: null | Target;
   viewingId: null | Target;
@@ -647,12 +703,15 @@ export interface UnconfiguredStore {
   pinsVisible: boolean;
   dragPinObjectId: string;
   dragPinUpdate: Function[];
+  visiblePinPositions: Array<[string, number, number]>;
 }
 
 export interface Store extends UnconfiguredStore {
   sync: SyncAdapter;
   config: Config;
-  allPins: (Pin | PendingPin)[];
+  pins: {
+    open: (Pin | PendingPin)[];
+  };
   reactions: {
     [threadId: string]: {
       [eventId: string]: { [emoji: string]: { count: number; userIds: string[] } };

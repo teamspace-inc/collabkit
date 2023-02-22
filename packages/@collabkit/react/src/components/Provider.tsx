@@ -22,7 +22,7 @@ export type ProviderProps = {
 
 // Enable using multiple isolated App
 // instances in the same page.
-export function CollabKitProvider<T extends object>({
+export function CollabKitProvider({
   children,
   theme,
   renderAvatar,

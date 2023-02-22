@@ -215,6 +215,7 @@ export const Menu = React.memo(function Menu(props) {
           ...otherProps,
           ref: reference,
           onClick(event: React.MouseEvent) {
+            event.preventDefault();
             event.stopPropagation();
             (event.currentTarget as HTMLButtonElement).focus();
           },

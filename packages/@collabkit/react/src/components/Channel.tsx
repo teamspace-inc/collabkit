@@ -45,7 +45,7 @@ import { ProfileAvatar } from './Profile';
 import { useIsExpanded } from '../hooks/useIsExpanded';
 import { useWorkspaceContext } from '../hooks/useWorkspaceContext';
 import { useCommentList } from '../hooks/useCommentList';
-import { ComposerPinButtonTarget, ComposerPinTarget, PinTarget, Target } from '@collabkit/core';
+import { CommentPinTarget, ComposerPinButtonTarget, ComposerPinTarget } from '@collabkit/core';
 import { useComposerStore } from '../hooks/useComposerStore';
 import { useTarget } from '../hooks/useTarget';
 import { usePinAttachment } from '../hooks/usePinAttachment';
@@ -83,7 +83,8 @@ function ChannelCommentList(props: ComponentPropsWithRef<'div'>) {
       (selectedId?.type === 'thread' && selectedId.threadId === threadId) ||
       (selectedId?.type === 'pin' && selectedId.threadId === threadId) ||
       (selectedId?.type === 'comment' && selectedId.threadId === threadId) ||
-      (selectedId?.type === 'channel' && selectedId.threadId === threadId)
+      (selectedId?.type === 'channel' && selectedId.threadId === threadId) ||
+      (selectedId?.type === 'commentPin' && selectedId.threadId === threadId)
     );
   });
   const commentList = useCommentList();
@@ -164,13 +165,15 @@ function ChannelThread() {
   const { expandedThreadIds } = useSnapshot(store);
   const timeline = workspace.timeline[threadId];
   const { isResolved } = workspace.computed[threadId];
+  const ref = useRef<HTMLDivElement>(null);
 
   const isSelected = useStoreKeyMatches(store, 'selectedId', (selectedId) => {
     return (
       (selectedId?.type === 'thread' && selectedId.threadId === threadId) ||
       (selectedId?.type === 'pin' && selectedId.threadId === threadId) ||
       (selectedId?.type === 'comment' && selectedId.threadId === threadId) ||
-      (selectedId?.type === 'channel' && selectedId.threadId === threadId)
+      (selectedId?.type === 'channel' && selectedId.threadId === threadId) ||
+      (selectedId?.type === 'commentPin' && selectedId.threadId === threadId)
     );
   });
 
@@ -234,7 +237,7 @@ function ChannelThread() {
 
   return (
     <ThreadProvider threadId={threadId} key={`channelThread-${threadId}`} placeholder="Reply">
-      <div className={styles.thread({ isSelected })} onClick={onClick}>
+      <div className={styles.thread({ isSelected })} onClick={onClick} ref={ref}>
         <ChannelCommentList />
         {isExpanded || isSelected ? (
           <div
@@ -405,11 +408,11 @@ function ChannelCommentPin(props: React.ComponentProps<'img'>) {
 
   const store = useStore();
 
-  const target: PinTarget | null = useMemo(
+  const target: CommentPinTarget | null = useMemo(
     () =>
       pin
         ? {
-            type: 'pin',
+            type: 'commentPin',
             threadId,
             eventId,
             workspaceId,
@@ -420,16 +423,12 @@ function ChannelCommentPin(props: React.ComponentProps<'img'>) {
     [pin]
   );
 
-  const targetMatch = useCallback(
-    (a: Target | null) => {
-      if (!a) {
-        return false;
-      }
-      return a.type === 'pin' && a.eventId === eventId;
-    },
-    [eventId]
+  const isSelected = useStoreKeyMatches(
+    store,
+    'selectedId',
+    (selectedId) =>
+      (selectedId?.type === 'pin' || selectedId?.type === 'commentPin') && selectedId.id === pinId
   );
-  const isSelected = useStoreKeyMatches(store, 'selectedId', targetMatch);
 
   const onClick = useCallback(
     (e: React.MouseEvent) => {
@@ -476,7 +475,6 @@ function ChannelNewThreadComposer() {
     if (!appId || !workspaceId) {
       return;
     }
-    store.nextThreadId = store.sync.nextThreadId({ appId, workspaceId });
     actions.subscribeInbox(store);
   }, [appId, workspaceId]);
 
@@ -510,11 +508,7 @@ function Channel() {
     <Root>
       <Authenticated>
         <ChannelRoot channelId="default">
-          <div id="sidebar-header-portal" />
-          <h1>Comments</h1>
-          <Scrollable autoScroll="bottom" alignToBottom={true} className={styles.scrollable}>
-            <ChannelThreadList />
-          </Scrollable>
+          <ChannelThreadList />
           <ChannelNewThreadComposer />
         </ChannelRoot>
       </Authenticated>
@@ -528,13 +522,12 @@ function SidebarChannel() {
       <Authenticated>
         <SidebarRoot>
           <ChannelRoot channelId="default">
-            <div id="sidebar-header-portal" />
             <SidebarHeader>
               <SidebarTitle>Comments</SidebarTitle>
               <div style={{ flex: 1 }} />
               <SidebarCloseButton />
             </SidebarHeader>
-            <Scrollable autoScroll="bottom" alignToBottom={true} className={styles.scrollable}>
+            <Scrollable autoScroll="bottom" alignToBottom={true}>
               <ChannelThreadList />
             </Scrollable>
             <ChannelNewThreadComposer />

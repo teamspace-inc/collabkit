@@ -8,7 +8,16 @@ import {
   useFloatingNodeId,
 } from '@floating-ui/react';
 
-import React, { forwardRef, useCallback, useContext, useEffect, useMemo } from 'react';
+import React, {
+  forwardRef,
+  useCallback,
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 
 import { useSnapshot } from 'valtio';
 import { useStore } from '../hooks/useStore';
@@ -16,16 +25,19 @@ import { TargetContext } from './Target';
 import { useApp } from '../hooks/useApp';
 import { useTarget } from '../hooks/useTarget';
 import { Menu, MenuItem } from './Menu';
-import { PopoverContent, PopoverPreview, PopoverRoot, PopoverTrigger } from './Popover';
+import {
+  PopoverContent,
+  PopoverPreview,
+  PopoverRoot,
+  PopoverTrigger,
+  usePopoverContext,
+} from './Popover';
 import { ProfileAvatar, ProfileProvider } from './Profile';
 import {
-  CommentActions,
   CommentBody,
   CommentCreatorName,
-  CommentReactionsListAddEmojiButton,
   CommentHeader,
   CommentMarkdown,
-  CommentMenu,
   CommentReactions,
   CommentReactionsList,
   CommentRoot,
@@ -36,7 +48,7 @@ import * as styles from '../theme/components/Pin.css';
 import { usePopover } from '../hooks/usePopover';
 import { useUserContext } from '../hooks/useUserContext';
 import { PinIconSVG } from './PinIcon';
-import { ThreadContext } from '../hooks/useThreadContext';
+import { ThreadContext, useThreadContext } from '../hooks/useThreadContext';
 import { CommentList } from './CommentList';
 import {
   Composer,
@@ -49,6 +61,12 @@ import { Root } from './Root';
 import has from 'has';
 import { vars } from '../theme/theme/index.css';
 import { useStoreKeyMatches } from '../hooks/useSubscribeStoreKey';
+import { IconButton } from './IconButton';
+import { CaretLeft, CaretRight, CheckCircle, X } from './icons';
+import { Tooltip, TooltipContent, TooltipTrigger } from './Tooltip';
+import { actions, COMMENT_MIN_HEIGHT } from '@collabkit/client';
+import { useWorkspaceContext } from '../hooks/useWorkspaceContext';
+import { Scrollable } from './Scrollable';
 
 function SavedPin({
   pin,
@@ -69,7 +87,10 @@ function SavedPin({
         mainAxis: -(rects.reference.height * pin.y + rects.floating.height),
       })),
     ],
-    whileElementsMounted: autoUpdate,
+    whileElementsMounted: (refEl, floatingEl, update) =>
+      autoUpdate(refEl, floatingEl, update, {
+        animationFrame: true,
+      }),
   });
 
   const { dragPinObjectId } = useSnapshot(store);
@@ -97,6 +118,23 @@ function SavedPin({
       ...purePinTarget,
     };
   }, [pin.id, pin.objectId, pin.eventId, pin.workspaceId, pin.threadId]);
+
+  useEffect(() => {
+    if (typeof x === 'number' && typeof y === 'number') {
+      const index = store.visiblePinPositions.findIndex((position) => position[0] === pin.id);
+      if (index !== -1) {
+        store.visiblePinPositions[index] = [pin.id, x, y];
+      } else {
+        store.visiblePinPositions.push([pin.id, x, y]);
+      }
+    }
+    return () => {
+      const index = store.visiblePinPositions.findIndex((position) => position[0] === pin.id);
+      if (index !== -1) {
+        store.visiblePinPositions.splice(index, 1);
+      }
+    };
+  }, [x, y, pin.id]);
 
   if (!commentables[pin.objectId]) {
     return null;
@@ -190,7 +228,7 @@ function PinPreview({ pin }: { pin: Pin }) {
   return (
     <Root>
       <ThreadContext.Provider value={pin.threadId}>
-        <div className={styles.pinPopover}>
+        <div className={styles.pinThread}>
           <CommentRoot commentId={pin.eventId} className={styles.pinPreview}>
             <div style={{ display: 'flex', flexDirection: 'column' }}>
               <CommentHeader>
@@ -200,12 +238,8 @@ function PinPreview({ pin }: { pin: Pin }) {
               <CommentBody>
                 <CommentMarkdown />
               </CommentBody>
-              <CommentActions>
-                <CommentMenu />
-              </CommentActions>
               <CommentReactions>
-                <CommentReactionsList />
-                <CommentReactionsListAddEmojiButton />
+                <CommentReactionsList disabled={true} />
               </CommentReactions>
               <CommentSeeAllRepliesButton onClick={() => {}} />
             </div>
@@ -216,35 +250,254 @@ function PinPreview({ pin }: { pin: Pin }) {
   );
 }
 
-function PinThread({ pin }: { pin: Pin }) {
+function useAdjacentPin(direction: 1 | -1 = 1) {
+  const { visiblePinPositions, selectedId, pins } = useSnapshot(useStore());
+  const sortedVisiblePinPositions = visiblePinPositions.slice().sort((a, b) => {
+    if (a[2] === b[2]) {
+      return a[2] - b[2];
+    } else {
+      return a[1] - b[1];
+    }
+  });
+
+  const index =
+    selectedId?.type === 'pin' || selectedId?.type === 'commentPin'
+      ? sortedVisiblePinPositions.findIndex((position) => position[0] === selectedId.id)
+      : -2;
+
+  const nextId = sortedVisiblePinPositions[index + direction]?.[0];
+
+  const next = pins.open.find((pin) => pin.id === nextId);
+
+  return next;
+}
+
+function PinNextThreadIconButton() {
+  const { events } = useApp();
+  const next = useAdjacentPin(1);
+
   return (
-    <Root>
-      <div className={styles.pinPopover}>
-        <ThreadContext.Provider value={pin.threadId}>
-          <CommentList />
-          <Composer autoFocus={true} />
-        </ThreadContext.Provider>
-      </div>
-    </Root>
+    <Tooltip>
+      <TooltipTrigger>
+        <IconButton
+          weight="regular"
+          data-testid="collabkit-pin-next-thread-button"
+          disabled={!next}
+          onClick={(e) =>
+            next
+              ? events.onClick(e, {
+                  target: {
+                    type: 'pinNextThreadIconButton',
+                    id: next.id,
+                    objectId: next.objectId,
+                    workspaceId: next.workspaceId,
+                    threadId: next.threadId,
+                    eventId: next.eventId,
+                  },
+                })
+              : null
+          }
+        >
+          <CaretRight />
+        </IconButton>
+      </TooltipTrigger>
+      <TooltipContent>Next</TooltipContent>
+    </Tooltip>
+  );
+}
+
+function PinPrevThreadIconButton() {
+  const { events } = useApp();
+  const prev = useAdjacentPin(-1);
+
+  return (
+    <Tooltip>
+      <TooltipTrigger>
+        <IconButton
+          weight="regular"
+          data-testid="collabkit-pin-prev-thread-button"
+          disabled={!prev}
+          onClick={(e) =>
+            prev
+              ? events.onClick(e, {
+                  target: {
+                    type: 'pinPrevThreadIconButton',
+                    id: prev.id,
+                    objectId: prev.objectId,
+                    workspaceId: prev.workspaceId,
+                    threadId: prev.threadId,
+                    eventId: prev.eventId,
+                  },
+                })
+              : null
+          }
+        >
+          <CaretLeft />
+        </IconButton>
+      </TooltipTrigger>
+      <TooltipContent>Previous</TooltipContent>
+    </Tooltip>
+  );
+}
+
+function PinThreadResolveIconButton() {
+  const { events } = useApp();
+  const workspaceId = useWorkspaceContext();
+  const threadId = useThreadContext();
+
+  return (
+    <Tooltip>
+      <TooltipTrigger>
+        <IconButton
+          weight="regular"
+          data-testid="collabkit-pin-resolve-thread-button"
+          onClick={(e) =>
+            events.onClick(e, {
+              target: { type: 'pinThreadResolveIconButton', workspaceId, threadId },
+            })
+          }
+        >
+          <CheckCircle />
+        </IconButton>
+      </TooltipTrigger>
+      <TooltipContent>Resolve</TooltipContent>
+    </Tooltip>
+  );
+}
+
+function PinThreadCloseIconButton() {
+  const { events } = useApp();
+  return (
+    <Tooltip>
+      <TooltipTrigger>
+        <IconButton
+          weight="regular"
+          data-testid="collabkit-pin-close-thread-button"
+          onClick={(e) =>
+            events.onClick(e, {
+              target: { type: 'pinThreadCloseIconButton' },
+            })
+          }
+        >
+          <X />
+        </IconButton>
+      </TooltipTrigger>
+      <TooltipContent>Close</TooltipContent>
+    </Tooltip>
+  );
+}
+
+// clamps the height of a popover to the max available
+// height as provided by the popover max size context.
+// this is useful for popovers that have a scrollable
+// but where we don't want them to take up too much
+// vertical space all the time.
+function usePopoverMaxHeight(ref: React.RefObject<HTMLDivElement>) {
+  const [height, setHeight] = useState<React.CSSProperties['height']>('unset');
+  const [opacity, setOpacity] = useState<React.CSSProperties['opacity']>(0);
+
+  useLayoutEffect(() => {
+    if (!ref.current) return;
+    const maxHeight = Math.round(window.innerHeight * 0.88);
+
+    // first run
+    const height = ref.current.getBoundingClientRect().height;
+    if (height > maxHeight) {
+      setHeight(maxHeight);
+      setOpacity(1);
+    } else {
+      setOpacity(1);
+    }
+
+    // if more content is added and make the height
+    // too large, then we need to apply the max height
+    const observer = new ResizeObserver((entries) => {
+      for (let entry of entries) {
+        if (entry.contentBoxSize) {
+          // Firefox implements `contentBoxSize` as a single content rect, rather than an array
+          const contentBoxSize = Array.isArray(entry.contentBoxSize)
+            ? entry.contentBoxSize[0]
+            : entry.contentBoxSize;
+
+          const maxHeight = Math.round(window.innerHeight * 0.88);
+          const height = contentBoxSize.blockSize;
+          if (height > maxHeight) {
+            setHeight(maxHeight);
+          }
+        }
+      }
+    });
+    observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
+  return { height, opacity };
+}
+
+function PinThread({ pin }: { pin: Pin }) {
+  const store = useStore();
+  const ref = useRef<HTMLDivElement>(null);
+  const listRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    actions.subscribeThread(store, pin);
+  }, [store]);
+
+  const { height, opacity } = usePopoverMaxHeight(ref);
+
+  return (
+    <div className={styles.pinThread} ref={ref} style={{ height, opacity }}>
+      <ThreadContext.Provider value={pin.threadId}>
+        <div
+          style={{
+            paddingTop: 6,
+            fontSize: vars.text.base.fontSize,
+            paddingBottom: 6,
+            paddingLeft: 8,
+            paddingRight: 8,
+            display: 'flex',
+            flex: 1,
+            borderBottom: `1px solid ${vars.color.border}`,
+          }}
+        >
+          <PinPrevThreadIconButton />
+          <PinNextThreadIconButton />
+          <PinThreadResolveIconButton />
+          <div style={{ flex: 1 }} />
+          <PinThreadCloseIconButton />
+        </div>
+        <Scrollable
+          autoScroll="bottom"
+          // // when there's not enough space (i.e. a pin
+          // // is at the bottom of the screen) then we
+          // // want to show a minimum height of 2 lines
+          // // of comments.
+          // maxHeight={COMMENT_MIN_HEIGHT * 2}
+          // minHeight={COMMENT_MIN_HEIGHT * 2}
+        >
+          <div ref={listRef}>
+            <CommentList />
+          </div>
+        </Scrollable>
+        <Composer autoFocus={true} />
+      </ThreadContext.Provider>
+    </div>
   );
 }
 
 function PinNewThreadComposer({ pin }: { pin: Pin }) {
   return (
-    <Root>
-      <div className={styles.pinPopover}>
-        <ThreadContext.Provider value={pin.threadId}>
-          <ComposerRoot className="" isNewThread={true}>
-            <ComposerEditor style={{ borderRadius: 12, padding: vars.space[1] }}>
-              <ComposerInput
-                autoFocus={true}
-                placeholder={<ComposerPlaceholder>Add a comment</ComposerPlaceholder>}
-              />
-            </ComposerEditor>
-          </ComposerRoot>
-        </ThreadContext.Provider>
-      </div>
-    </Root>
+    <div className={styles.pinThread}>
+      <ThreadContext.Provider value={pin.threadId}>
+        <ComposerRoot className="" isNewThread={true}>
+          <ComposerEditor style={{ borderRadius: 12, padding: vars.space[1] }}>
+            <ComposerInput
+              autoFocus={true}
+              placeholder={<ComposerPlaceholder>Add a comment</ComposerPlaceholder>}
+            />
+          </ComposerEditor>
+        </ComposerRoot>
+      </ThreadContext.Provider>
+    </div>
   );
 }
 
@@ -256,8 +509,8 @@ const PinMarker = forwardRef<HTMLDivElement, PinMarkerProps>(function PinMarker(
     return editingId?.type === 'comment' && editingId.eventId === pin.eventId;
   });
 
-  const onPointerDown = useCallback(
-    (e: React.PointerEvent) => events.onPointerDown(e, { target }),
+  const onClick = useCallback(
+    (e: React.PointerEvent) => events.onClick(e, { target }),
     [events, target]
   );
 
@@ -276,14 +529,13 @@ const PinMarker = forwardRef<HTMLDivElement, PinMarkerProps>(function PinMarker(
         className={`collabkit ${styles.pin({ pointerEvents, isSelected })}`}
         ref={ref}
         style={props.style}
-        onPointerDown={onPointerDown}
         data-testid="collabkit-pin-marker"
       >
         {/* <PinMenu> */}
         <div>
           <PopoverRoot {...popoverProps} dismissOnClickOutside={true} shouldFlipToKeepInView={true}>
             <PopoverTrigger>
-              <div className={styles.pinIcon}>
+              <div className={styles.pinIcon} onPointerDown={onClick}>
                 <PinIconSVG isSelected={isSelected} />
                 <div className={styles.pinAvatar}>
                   <ProfileAvatar />

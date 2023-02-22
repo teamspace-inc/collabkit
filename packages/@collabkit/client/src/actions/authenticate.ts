@@ -55,6 +55,7 @@ export async function authenticate(store: Store) {
 
     store.workspaceId = workspaceId;
     store.workspaces[workspaceId] = createWorkspace();
+    store.nextThreadId = store.sync.nextThreadId({ appId, workspaceId });
 
     if (store.workspaceId !== 'default') {
       if (store.config.mentionableUsers === 'allWorkspace') {
@@ -103,6 +104,10 @@ export async function authenticate(store: Store) {
     store.user = { ...config.user, id: userId };
     store.workspaceId = config.workspace.id;
     store.workspaces[config.workspace.id] = createWorkspace();
+    store.nextThreadId = store.sync.nextThreadId({
+      appId: config.appId,
+      workspaceId: config.workspace.id,
+    });
 
     if (config.workspace.name) {
       store.workspaces[config.workspace.id].name = config.workspace.name;

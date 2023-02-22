@@ -7,36 +7,15 @@ import { recipe } from '@vanilla-extract/recipes';
 
 export const facepileSize = fallbackVar(vars.inbox.item.facepile.avatar.size, vars.avatar.size);
 
-export const replyCount = style({
-  color: fallbackVar(vars.inbox.item.replyCount.color, vars.color.textSecondary),
-  fontSize: fallbackVar(vars.inbox.item.replyCount.fontSize, vars.text.small.fontSize),
-  lineHeight: fallbackVar(vars.inbox.item.replyCount.lineHeight, vars.text.small.lineHeight),
-  fontWeight: fallbackVar(vars.inbox.item.replyCount.fontWeight, vars.fontWeight.regular),
-  letterSpacing: fallbackVar(
-    vars.inbox.item.replyCount.letterSpacing,
-    vars.text.small.letterSpacing
-  ),
+export const name = style([profileName, {}]);
+
+export const commentRoot = style({
+  display: 'flex',
+  flexDirection: 'column',
   fontFamily: vars.fontFamily,
 });
 
-export const name = style([profileName, {}]);
-
-export const commentRoot = style([
-  {
-    padding: 0,
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '4px',
-    fontFamily: vars.fontFamily,
-  },
-]);
-
-export const body = style([
-  commentBody,
-  {
-    // textOverflow: 'ellipsis',
-  },
-]);
+export const body = style([commentBody, {}]);
 
 globalStyle(`${commentRoot} p`, {
   WebkitLineClamp: 3,
@@ -51,6 +30,7 @@ export const nameAndTimestampWrapper = style({
   flexDirection: 'row',
   alignItems: 'baseline',
   gap: '8px',
+  marginBottom: '4px',
   fontFamily: vars.fontFamily,
 });
 
@@ -98,7 +78,7 @@ export const root = recipe({
     flex: 1,
     cursor: 'pointer',
     boxSizing: 'border-box',
-    background: fallbackVar(vars.inbox.item.background, vars.color.background),
+    // background: fallbackVar(vars.inbox.item.background, vars.color.background),
     paddingTop: fallbackVar(vars.inbox.item.paddingTop, vars.space[4]),
     paddingBottom: fallbackVar(vars.inbox.item.paddingBottom, vars.space[4]),
     paddingLeft: fallbackVar(vars.inbox.item.paddingLeft, vars.space[4]),
@@ -109,6 +89,7 @@ export const root = recipe({
     selectors: {
       '&:hover': {
         background: fallbackVar(vars.inbox.item.hover.background, vars.color.surfaceOverlay),
+        borderRadius: '11px',
       },
       '&:last-of-type': {
         marginBottom: fallbackVar(vars.inbox.item.paddingBottom, vars.color.surface),
@@ -117,7 +98,7 @@ export const root = recipe({
   },
 
   variants: {
-    active: {
+    selected: {
       true: {
         background: fallbackVar(vars.inbox.item.active.background, vars.color.surfaceOverlay),
       },

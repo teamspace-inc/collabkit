@@ -1,4 +1,11 @@
-import React, { cloneElement, isValidElement, useCallback, useEffect, useMemo } from 'react';
+import React, {
+  cloneElement,
+  isValidElement,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 
 import {
   autoUpdate,
@@ -12,6 +19,7 @@ import {
   Placement,
   ReferenceType,
   safePolygon,
+  shift,
   size,
   useClick,
   useDismiss,
@@ -105,7 +113,7 @@ function PopoverContent(props: PopoverContentProps) {
           }}
           {...getFloatingProps({})}
         >
-          {open ? <ThemeWrapper>{props.children}</ThemeWrapper> : null}
+          {open ? props.children : null}
         </div>
       </FloatingFocusManager>
     </FloatingOverlay>
@@ -126,11 +134,12 @@ type PopoverContextValue = {
   getPreviewFloatingProps: (
     userProps?: React.HTMLProps<HTMLElement> | undefined
   ) => Record<string, unknown>;
+  update: () => void;
 };
 
 const PopoverContext = React.createContext<PopoverContextValue | null>(null);
 
-function usePopoverContext() {
+export function usePopoverContext() {
   const context = React.useContext(PopoverContext);
   if (!context) {
     throw new Error('usePopoverContext must be used within a Popover');
@@ -157,6 +166,7 @@ function PopoverRoot(props: RootProps) {
   const { placement, children, previewVisible, contentVisible, onContentChange, onPreviewChange } =
     props;
   const nodeId = useFloatingNodeId();
+  const [maxSize, setMaxSize] = useState<{ width: number; height: number } | null>(null);
 
   const dismissOnClickOutside = props.dismissOnClickOutside ?? true;
   const shouldFlipToKeepInView = props.shouldFlipToKeepInView ?? true;
@@ -169,21 +179,33 @@ function PopoverRoot(props: RootProps) {
     nodeId,
     middleware: [
       offset(4),
-      ...(shouldFlipToKeepInView ? [flip()] : []),
+      ...(shouldFlipToKeepInView
+        ? [
+            flip({
+              padding: 24,
+              fallbackAxisSideDirection: 'start',
+              crossAxis: false,
+              fallbackPlacements: ['left-start', 'left-end'],
+            }),
+          ]
+        : []),
       size({
         padding: 12,
         apply({ availableWidth, availableHeight, elements }) {
           Object.assign(elements.floating.style, {
             maxWidth: `${availableWidth}px`,
-            maxHeight: `${availableHeight}px`,
+            maxHeight: `${window.innerHeight * 0.88}px`,
             opacity: 1,
           });
         },
       }),
+      shift({
+        padding: 24,
+      }),
     ],
   });
 
-  const { reference, context } = useFloating({
+  const { reference, context, update } = useFloating({
     placement: placement ?? 'right-start',
     open: contentVisible,
     whileElementsMounted: autoUpdate,
@@ -191,16 +213,29 @@ function PopoverRoot(props: RootProps) {
     nodeId,
     middleware: [
       offset(4),
-      ...(shouldFlipToKeepInView ? [flip()] : []),
+      ...(shouldFlipToKeepInView
+        ? [
+            flip({
+              padding: 24,
+              fallbackAxisSideDirection: 'start',
+              crossAxis: false,
+              fallbackPlacements: ['left-start', 'left-end'],
+            }),
+          ]
+        : []),
       size({
         padding: 12,
         apply({ availableWidth, availableHeight, elements }) {
+          const maxHeight = Math.round(window.innerHeight * 0.88);
           Object.assign(elements.floating.style, {
             maxWidth: `${availableWidth}px`,
-            maxHeight: `${availableHeight}px`,
+            maxHeight: `${maxHeight}px`,
             opacity: 1,
           });
         },
+      }),
+      shift({
+        padding: 24,
       }),
     ],
   });
@@ -245,22 +280,12 @@ function PopoverRoot(props: RootProps) {
       open: contentVisible,
       preview: previewVisible,
       setOpen: onContentChange,
-
       ref,
       getPreviewFloatingProps,
       getFloatingProps,
+      update,
     }),
-    [
-      previewContext,
-      context,
-      getProps,
-      contentVisible,
-      previewVisible,
-      // onOpenChange,
-      ref,
-      // getPreviewFloatingProps,
-      // getFloatingProps,
-    ]
+    [previewContext, context, getProps, contentVisible, previewVisible, ref]
   );
 
   return (
@@ -269,11 +294,6 @@ function PopoverRoot(props: RootProps) {
     </FloatingNode>
   );
 }
-
-// type PopoverProps = PopoverTriggerProps & {
-//   preview: React.ReactNode;
-//   content?: React.ReactNode;
-// } & AdvancedPopoverProps;
 
 function PopoverPortal({ children }: { children?: React.ReactNode }) {
   return (

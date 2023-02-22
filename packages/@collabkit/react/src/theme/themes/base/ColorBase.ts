@@ -30,6 +30,7 @@ export const ColorBase = {
     border: colors.grey89,
     icon: colors.grey24,
     iconSecondary: colors.grey53,
+    iconDisabled: colors.grey89,
     attention: colors.red,
     attentionBlue: colors.blue,
   },

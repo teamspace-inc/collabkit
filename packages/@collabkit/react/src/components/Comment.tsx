@@ -171,10 +171,6 @@ function CommentSeeAllRepliesButton(props: React.ComponentPropsWithoutRef<'div'>
     eventId,
   } as const;
 
-  if (numComments === 1) {
-    return null;
-  }
-
   return (
     <div
       className={styles.replyCountButton}
@@ -187,7 +183,13 @@ function CommentSeeAllRepliesButton(props: React.ComponentPropsWithoutRef<'div'>
         color={vars.color.textDisabled}
       />
       <span className={styles.replyCountButtonText}>
-        {numComments - 1} {numComments != 2 ? 'replies' : 'reply'}
+        {numComments === 1 ? (
+          <>Reply</>
+        ) : (
+          <>
+            {numComments - 1} {numComments != 2 ? 'replies' : 'reply'}
+          </>
+        )}
       </span>
     </div>
   );
@@ -222,33 +224,43 @@ function CommentBody({ ...props }: React.ComponentPropsWithoutRef<'div'>) {
   );
 }
 
-function EmojiCount(props: { emojiU: string; count: number; userIds: readonly string[] }) {
+function EmojiCountButton({
+  emojiU,
+  count,
+  userIds,
+  disabled,
+}: {
+  emojiU: string;
+  count: number;
+  userIds: readonly string[];
+  disabled?: boolean;
+}) {
   const { events, store } = useApp();
   const { profiles } = useSnapshot(store);
-  const names = props.userIds.map((id) => profiles[id]?.name).filter((name) => !!name);
+  const names = userIds.map((id) => profiles[id]?.name).filter((name) => !!name);
   const workspaceId = useWorkspaceContext();
   const threadId = useThreadContext();
   const eventId = useCommentContext();
   const target = {
     type: 'emoji',
-    emoji: EMOJI_U[props.emojiU],
+    emoji: EMOJI_U[emojiU],
     workspaceId,
     threadId,
     eventId,
   } as const;
 
-  const emoji = EMOJI_U[props.emojiU];
+  const emoji = EMOJI_U[emojiU];
 
   return emoji ? (
     <Tooltip placement="bottom-start">
       <TooltipTrigger>
         <div
-          key={props.emojiU}
-          className={styles.emojiCount}
-          onClick={(e) => events.onClick(e, { target })}
+          key={emojiU}
+          className={styles.emojiCountButton({ disabled: !!disabled })}
+          onClick={(e) => (!disabled ? events.onClick(e, { target }) : null)}
         >
-          <Emoji className={styles.emojiCountIcon} emoji={EMOJI_U[props.emojiU]} />
-          <span className={styles.emojiCountNumber}>{props.count}</span>
+          <Emoji className={styles.emojiCountIcon} emoji={EMOJI_U[emojiU]} />
+          <span className={styles.emojiCountNumber}>{count}</span>
         </div>
       </TooltipTrigger>
       <TooltipContent className={styles.emojiCountTooltip}>
@@ -260,12 +272,22 @@ function EmojiCount(props: { emojiU: string; count: number; userIds: readonly st
   ) : null;
 }
 
-function CommentReactionsList(props: React.ComponentPropsWithoutRef<'div'>) {
+function CommentReactionsList(
+  props: React.ComponentPropsWithoutRef<'div'> & { disabled?: boolean }
+) {
   const reactions = useCommentReactions();
   return reactions ? (
     <div data-testid="collabkit-comment-reactions" className={styles.reactions} {...props}>
       {reactions.map(({ emojiU, count, userIds }) => {
-        return <EmojiCount key={emojiU} emojiU={emojiU} count={count} userIds={userIds} />;
+        return (
+          <EmojiCountButton
+            key={emojiU}
+            emojiU={emojiU}
+            count={count}
+            userIds={userIds}
+            disabled={props.disabled}
+          />
+        );
       })}
     </div>
   ) : null;
@@ -285,8 +307,12 @@ function CommentReactions(props: React.ComponentPropsWithoutRef<'div'>) {
   const reactions = useCommentReactions();
   return reactions.length > 0 ? (
     <div data-testid="collabkit-comment-reactions" className={styles.reactions} {...props}>
-      <CommentReactionsList />
-      <CommentReactionsListAddEmojiButton />
+      {props.children ?? (
+        <>
+          <CommentReactionsList />
+          <CommentReactionsListAddEmojiButton />
+        </>
+      )}
     </div>
   ) : null;
 }
@@ -469,7 +495,7 @@ function CommentThreadResolveIconButton(props: {
           style={props.style}
           weight="regular"
           onPointerDown={(e) =>
-            events.onPointerDown(e, {
+            events.onClick(e, {
               target,
             })
           }
