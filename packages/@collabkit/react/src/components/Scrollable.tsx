@@ -38,11 +38,15 @@ export function Scrollable(props: {
   maxHeight?: React.CSSProperties['maxHeight'];
   autoScroll?: 'none' | 'bottom';
   alignToBottom?: boolean;
+  minHeight?: React.CSSProperties['minHeight'];
 }) {
-  const { maxHeight } = props;
+  const { maxHeight, minHeight } = props;
   return (
     <ScrollAreaRoot autoScroll={props.autoScroll} alignToBottom={props.alignToBottom}>
-      <ScrollAreaViewport className={props.className} style={{ maxHeight: maxHeight ?? 'inherit' }}>
+      <ScrollAreaViewport
+        className={props.className}
+        style={{ maxHeight: maxHeight ?? 'inherit', minHeight: minHeight ?? 'unset' }}
+      >
         {props.children}
       </ScrollAreaViewport>
       <ScrollAreaScrollbar orientation="vertical">

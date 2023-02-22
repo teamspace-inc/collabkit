@@ -19,6 +19,7 @@ import {
   Placement,
   ReferenceType,
   safePolygon,
+  shift,
   size,
   useClick,
   useDismiss,
@@ -133,19 +134,12 @@ type PopoverContextValue = {
   getPreviewFloatingProps: (
     userProps?: React.HTMLProps<HTMLElement> | undefined
   ) => Record<string, unknown>;
+  update: () => void;
 };
 
 const PopoverContext = React.createContext<PopoverContextValue | null>(null);
 
-export const PopoverMaxSizeContext = React.createContext<null | { width: number; height: number }>(
-  null
-);
-
-export function usePopoverMaxSize() {
-  return React.useContext(PopoverMaxSizeContext);
-}
-
-function usePopoverContext() {
+export function usePopoverContext() {
   const context = React.useContext(PopoverContext);
   if (!context) {
     throw new Error('usePopoverContext must be used within a Popover');
@@ -185,21 +179,33 @@ function PopoverRoot(props: RootProps) {
     nodeId,
     middleware: [
       offset(4),
-      ...(shouldFlipToKeepInView ? [flip()] : []),
+      ...(shouldFlipToKeepInView
+        ? [
+            flip({
+              padding: 24,
+              fallbackAxisSideDirection: 'start',
+              crossAxis: false,
+              fallbackPlacements: ['left-start', 'left-end'],
+            }),
+          ]
+        : []),
       size({
         padding: 12,
         apply({ availableWidth, availableHeight, elements }) {
           Object.assign(elements.floating.style, {
             maxWidth: `${availableWidth}px`,
-            maxHeight: `${availableHeight}px`,
+            maxHeight: `${window.innerHeight * 0.88}px`,
             opacity: 1,
           });
         },
       }),
+      shift({
+        padding: 24,
+      }),
     ],
   });
 
-  const { reference, context } = useFloating({
+  const { reference, context, update } = useFloating({
     placement: placement ?? 'right-start',
     open: contentVisible,
     whileElementsMounted: autoUpdate,
@@ -207,17 +213,29 @@ function PopoverRoot(props: RootProps) {
     nodeId,
     middleware: [
       offset(4),
-      ...(shouldFlipToKeepInView ? [flip()] : []),
+      ...(shouldFlipToKeepInView
+        ? [
+            flip({
+              padding: 24,
+              fallbackAxisSideDirection: 'start',
+              crossAxis: false,
+              fallbackPlacements: ['left-start', 'left-end'],
+            }),
+          ]
+        : []),
       size({
         padding: 12,
         apply({ availableWidth, availableHeight, elements }) {
+          const maxHeight = Math.round(window.innerHeight * 0.88);
           Object.assign(elements.floating.style, {
             maxWidth: `${availableWidth}px`,
-            maxHeight: `${availableHeight}px`,
+            maxHeight: `${maxHeight}px`,
             opacity: 1,
           });
-          setMaxSize({ width: availableWidth, height: availableHeight });
         },
+      }),
+      shift({
+        padding: 24,
       }),
     ],
   });
@@ -265,15 +283,14 @@ function PopoverRoot(props: RootProps) {
       ref,
       getPreviewFloatingProps,
       getFloatingProps,
+      update,
     }),
     [previewContext, context, getProps, contentVisible, previewVisible, ref]
   );
 
   return (
     <FloatingNode id={nodeId}>
-      <PopoverContext.Provider value={popoverContext}>
-        <PopoverMaxSizeContext.Provider value={maxSize}>{children}</PopoverMaxSizeContext.Provider>
-      </PopoverContext.Provider>
+      <PopoverContext.Provider value={popoverContext}>{children}</PopoverContext.Provider>
     </FloatingNode>
   );
 }

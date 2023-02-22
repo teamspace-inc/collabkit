@@ -1,9 +1,11 @@
+import { actions } from '@collabkit/client';
 import { Store } from '@collabkit/core';
 import { FloatingPortal, FloatingTree } from '@floating-ui/react';
 import React, { useCallback, useEffect, useRef } from 'react';
 import { useSnapshot } from 'valtio';
 import { useApp } from '../hooks/useApp';
 import { useCommentableRef } from '../hooks/useCommentableRef';
+import { useIsAuthenticated } from '../hooks/useIsAuthenticated';
 import { useStore } from '../hooks/useStore';
 import * as styles from '../theme/components/Commentable.css';
 import { SavedPin, PinCursor } from './Pin';
@@ -31,10 +33,17 @@ export function CommentableRoot(props: { className?: string; children?: React.Re
   const store = useStore();
   const { events } = useApp();
   const { userId, uiState, workspaceId, pins, selectedId, pinsVisible } = useSnapshot(store);
+  const isAuthenticated = useIsAuthenticated();
 
   useEffect(() => {
     store.isPinningEnabled = true;
   }, []);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      actions.subscribeOpenPins(store);
+    }
+  }, [isAuthenticated]);
 
   const updateCursor = useCallback(
     (e: React.PointerEvent) => {

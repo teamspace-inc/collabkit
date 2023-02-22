@@ -30,7 +30,7 @@ import {
   PopoverPreview,
   PopoverRoot,
   PopoverTrigger,
-  usePopoverMaxSize,
+  usePopoverContext,
 } from './Popover';
 import { ProfileAvatar, ProfileProvider } from './Profile';
 import {
@@ -64,7 +64,7 @@ import { useStoreKeyMatches } from '../hooks/useSubscribeStoreKey';
 import { IconButton } from './IconButton';
 import { CaretLeft, CaretRight, CheckCircle, X } from './icons';
 import { Tooltip, TooltipContent, TooltipTrigger } from './Tooltip';
-import { actions } from '@collabkit/client';
+import { actions, COMMENT_MIN_HEIGHT } from '@collabkit/client';
 import { useWorkspaceContext } from '../hooks/useWorkspaceContext';
 import { Scrollable } from './Scrollable';
 
@@ -389,18 +389,17 @@ function PinThreadCloseIconButton() {
 // but where we don't want them to take up too much
 // vertical space all the time.
 function usePopoverMaxHeight(ref: React.RefObject<HTMLDivElement>) {
-  const maxSize = usePopoverMaxSize();
   const [height, setHeight] = useState<React.CSSProperties['height']>('unset');
   const [opacity, setOpacity] = useState<React.CSSProperties['opacity']>(0);
 
   useLayoutEffect(() => {
     if (!ref.current) return;
-    if (!maxSize) return;
+    const maxHeight = Math.round(window.innerHeight * 0.88);
 
     // first run
     const height = ref.current.getBoundingClientRect().height;
-    if (height > maxSize.height) {
-      setHeight(maxSize.height);
+    if (height > maxHeight) {
+      setHeight(maxHeight);
       setOpacity(1);
     } else {
       setOpacity(1);
@@ -416,16 +415,17 @@ function usePopoverMaxHeight(ref: React.RefObject<HTMLDivElement>) {
             ? entry.contentBoxSize[0]
             : entry.contentBoxSize;
 
+          const maxHeight = Math.round(window.innerHeight * 0.88);
           const height = contentBoxSize.blockSize;
-          if (height > maxSize.height) {
-            setHeight(maxSize.height);
+          if (height > maxHeight) {
+            setHeight(maxHeight);
           }
         }
       }
     });
     observer.observe(ref.current);
     return () => observer.disconnect();
-  }, [maxSize]);
+  }, []);
 
   return { height, opacity };
 }
@@ -433,6 +433,7 @@ function usePopoverMaxHeight(ref: React.RefObject<HTMLDivElement>) {
 function PinThread({ pin }: { pin: Pin }) {
   const store = useStore();
   const ref = useRef<HTMLDivElement>(null);
+  const listRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     actions.subscribeThread(store, pin);
   }, [store]);
@@ -460,8 +461,18 @@ function PinThread({ pin }: { pin: Pin }) {
           <div style={{ flex: 1 }} />
           <PinThreadCloseIconButton />
         </div>
-        <Scrollable autoScroll="bottom">
-          <CommentList />
+        <Scrollable
+          autoScroll="bottom"
+          // // when there's not enough space (i.e. a pin
+          // // is at the bottom of the screen) then we
+          // // want to show a minimum height of 2 lines
+          // // of comments.
+          // maxHeight={COMMENT_MIN_HEIGHT * 2}
+          // minHeight={COMMENT_MIN_HEIGHT * 2}
+        >
+          <div ref={listRef}>
+            <CommentList />
+          </div>
         </Scrollable>
         <Composer autoFocus={true} />
       </ThreadContext.Provider>

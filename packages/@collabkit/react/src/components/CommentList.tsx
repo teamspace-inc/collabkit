@@ -5,6 +5,7 @@ import { NewIndicator } from './NewIndicator';
 import { useNewIndicator } from '../hooks/useNewIndicator';
 import { MemoizedComment } from './MemoizedComment';
 import { useCommentList } from '../hooks/useCommentList';
+import { COMMENT_MIN_HEIGHT } from '@collabkit/client';
 
 export type CommentListProps = ComponentProps<'div'> & {
   renderComment?: (props: { commentId: string }) => React.ReactNode;
@@ -17,7 +18,7 @@ export function CommentList(props: CommentListProps) {
 
   const comments = commentList.map((comment) => {
     return (
-      <div key={comment.id} style={{ minHeight: 34 }}>
+      <div key={comment.id} style={{ minHeight: COMMENT_MIN_HEIGHT }}>
         {newIndicatorId === comment.id && <NewIndicator />}
         {props.renderComment ? (
           props.renderComment({ commentId: comment.id })

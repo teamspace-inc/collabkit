@@ -44,7 +44,6 @@ export const pinThread = style({
   boxShadow: vars.shadow.high,
   display: 'flex',
   flexDirection: 'column',
-  height: '100%',
 });
 
 export const pinPreview = style({

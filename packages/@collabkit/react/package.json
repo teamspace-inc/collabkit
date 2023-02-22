@@ -35,7 +35,7 @@
     "@collabkit/colors": "*",
     "@collabkit/core": "*",
     "@collabkit/editor": "*",
-    "@floating-ui/react": "^0.18.0",
+    "@floating-ui/react": "^0.19.2",
     "@ladle/react": "^2.6.0",
     "@lexical/clipboard": "0.7.5",
     "@lexical/markdown": "^0.7.5",
