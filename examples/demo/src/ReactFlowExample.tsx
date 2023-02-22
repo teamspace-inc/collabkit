@@ -283,7 +283,7 @@ function CommentsPopover() {
               <CloseIcon />
             </Popover.Close>
           </div>
-          <Inbox maxHeight="calc(100vh - 12rem)" />
+          <Inbox />
           <button className="text-sm m-4 py-1.5 rounded-lg bg-[#0080FF] text-white font-semibold">
             Add comment
           </button>

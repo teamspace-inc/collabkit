@@ -195,23 +195,11 @@ export function createEvents(store: Store) {
             case 'composerMentionsButton':
               actions.startMentioning(store, target);
               break;
-            case 'pin':
-              actions.select(store, props);
-              break;
-            case 'showSidebarButton':
-              actions.showSidebar(store);
-              break;
-            case 'hideSidebarButton':
-              actions.hideSidebar(store);
-              break;
             case 'closeThreadButton':
               actions.closeAllPopovers(store);
               break;
             case 'resolveThreadButton':
               actions.resolveThread(store, target);
-              break;
-            case 'reopenThreadButton':
-              actions.reopenThread(store, target);
               break;
           }
           break;

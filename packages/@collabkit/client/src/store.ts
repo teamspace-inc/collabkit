@@ -60,7 +60,7 @@ export function createStore(): UnconfiguredStore {
     viewingId: null,
     previewingId: null,
     hoveringId: null,
-    selectedId: null,
+    focusedId: null,
     editingId: null,
     editingEventSnapshots: {},
     composerId: null,
