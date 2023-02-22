@@ -9,7 +9,7 @@ import { AuthenticatedContext } from './AuthenticatedContext';
 import { CustomTheme } from '../theme/themes.css';
 import { ThemeProvider } from './ThemeContext';
 import { RenderFnContext } from '../hooks/useRenderFnContext';
-import type { Callbacks, ConfigProps, SecureProps, Store, UnsecureProps } from '@collabkit/core';
+import type { Callbacks, ConfigProps, SecureProps, UnsecureProps } from '@collabkit/core';
 import type { RenderFnContextValue } from '../hooks/useRenderFnContext';
 import { ref } from 'valtio';
 
@@ -63,6 +63,22 @@ export function CollabKitProvider({
   const [context, setContext] = useState<AppContextValue | null>(null);
   const [renderFnContext, setRenderFnContext] = useState<RenderFnContextValue>({});
 
+  useEffect(() => {
+    const sync = new FirebaseSync({ test: !!config._test });
+    const store = config._demoStore ?? createValtioStore(config, sync);
+    const events = createEvents(store);
+    actions.monitorConnection(store, events);
+    setContext({ store, events });
+    return () => events.onDestroy();
+  }, [config.appId, 'token' in config ? config.token : config.apiKey]);
+
+  useEffect(() => {
+    setRenderFnContext({
+      renderAvatar,
+      renderThreadContextPreview,
+    });
+  }, [renderAvatar, renderThreadContextPreview]);
+
   // save all callbacks to store
   // previously we weren't updating callbacks
   // as they changed!
@@ -80,22 +96,6 @@ export function CollabKitProvider({
   useSaveCb('onThreadResolve', onThreadResolve, context);
   useSaveCb('onThreadReopen', onThreadReopen, context);
   useSaveCb('onInboxCloseButtonClick', onInboxCloseButtonClick, context);
-
-  useEffect(() => {
-    const sync = new FirebaseSync({ test: !!config._test });
-    const store = config._demoStore ?? createValtioStore(config, sync);
-    const events = createEvents(store);
-    actions.monitorConnection(store, events);
-    setContext({ store, events });
-    return () => events.onDestroy();
-  }, [config.appId, 'token' in config ? config.token : config.apiKey]);
-
-  useEffect(() => {
-    setRenderFnContext({
-      renderAvatar: renderAvatar,
-      renderThreadContextPreview,
-    });
-  }, [renderAvatar, renderThreadContextPreview]);
 
   useEffect(() => {
     if (context) {
