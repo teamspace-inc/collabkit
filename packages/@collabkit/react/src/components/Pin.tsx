@@ -87,7 +87,10 @@ function SavedPin({
         mainAxis: -(rects.reference.height * pin.y + rects.floating.height),
       })),
     ],
-    whileElementsMounted: autoUpdate,
+    whileElementsMounted: (refEl, floatingEl, update) =>
+      autoUpdate(refEl, floatingEl, update, {
+        animationFrame: true,
+      }),
   });
 
   const { dragPinObjectId } = useSnapshot(store);
@@ -457,7 +460,7 @@ function PinThread({ pin }: { pin: Pin }) {
           <div style={{ flex: 1 }} />
           <PinThreadCloseIconButton />
         </div>
-        <Scrollable>
+        <Scrollable autoScroll="bottom">
           <CommentList />
         </Scrollable>
         <Composer autoFocus={true} />
@@ -511,14 +514,13 @@ const PinMarker = forwardRef<HTMLDivElement, PinMarkerProps>(function PinMarker(
         className={`collabkit ${styles.pin({ pointerEvents, isSelected })}`}
         ref={ref}
         style={props.style}
-        onPointerDown={onClick}
         data-testid="collabkit-pin-marker"
       >
         {/* <PinMenu> */}
         <div>
           <PopoverRoot {...popoverProps} dismissOnClickOutside={true} shouldFlipToKeepInView={true}>
             <PopoverTrigger>
-              <div className={styles.pinIcon}>
+              <div className={styles.pinIcon} onPointerDown={onClick}>
                 <PinIconSVG isSelected={isSelected} />
                 <div className={styles.pinAvatar}>
                   <ProfileAvatar />
