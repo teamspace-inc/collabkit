@@ -234,6 +234,7 @@ export type PinThreadPreviewTarget = {
   workspaceId: string;
   objectId: string;
   eventId: string;
+  id: string;
 };
 
 export type PopoverInboxTarget = {
