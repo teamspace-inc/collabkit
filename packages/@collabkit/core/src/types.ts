@@ -225,7 +225,16 @@ export type Target =
   | PinThreadCloseIconButtonTarget
   | CommentPinTarget
   | InboxItemTarget
-  | PopoverInboxTarget;
+  | PopoverInboxTarget
+  | PinThreadPreviewTarget;
+
+export type PinThreadPreviewTarget = {
+  type: 'pinThreadPreview';
+  threadId: string;
+  workspaceId: string;
+  objectId: string;
+  eventId: string;
+};
 
 export type PopoverInboxTarget = {
   type: 'popoverInbox';
@@ -666,6 +675,7 @@ export interface UnconfiguredStore {
   appId: null | string;
   sync: null | SyncAdapter;
   isPinningEnabled: boolean;
+  isFigmaStyle: boolean;
   isReadOnly: boolean;
   isConnected: boolean;
   isSidebarOpen: boolean;

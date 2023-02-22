@@ -28,6 +28,7 @@ export function select(store: Store, props: { target: Target }) {
           state: pin.state ?? 'null',
           objectId: pin.objectId,
         });
+        if (!store.isFigmaStyle) return;
         setTimeout(() => {
           store.viewingId = target;
           store.previewingId = target;

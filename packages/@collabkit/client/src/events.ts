@@ -95,13 +95,18 @@ export function createEvents(store: Store) {
         }
         case 'idle': {
           switch (target.type) {
+            case 'pinThreadPreview':
+              console.log('pinThreadPreview', target);
+              if (store.isFigmaStyle) return;
+              actions.showSidebar(store);
+              actions.select(store, { target: { ...target, type: 'thread' } });
+              break;
             case 'thread':
               actions.select(store, { target });
               break;
             case 'addCommentButton':
               actions.startSelecting(store);
               const threadId = store.nextThreadId;
-              console.log('threadId', threadId);
               if (!threadId) return;
               const composerId = {
                 ...target,
@@ -151,6 +156,8 @@ export function createEvents(store: Store) {
               break;
             case 'pin':
               actions.select(store, { target });
+              if (store.isFigmaStyle) return;
+              actions.showSidebar(store);
               break;
             case 'composer':
               actions.setComposer(store, { target });

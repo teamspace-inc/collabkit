@@ -218,11 +218,26 @@ const PinCursor = forwardRef<HTMLDivElement, { isSelected: boolean }>(function P
   );
 });
 
-function PinPreview({ pin }: { pin: Pin }) {
+function PinThreadPreview({ pin }: { pin: Pin }) {
+  const { events } = useApp();
+
   return (
     <Root>
       <ThreadContext.Provider value={pin.threadId}>
-        <div className={styles.pinThread}>
+        <div
+          className={styles.pinThread}
+          onClick={(e) =>
+            events.onClick(e, {
+              target: {
+                type: 'pinThreadPreview',
+                threadId: pin.threadId,
+                workspaceId: pin.workspaceId,
+                objectId: pin.objectId,
+                eventId: pin.eventId,
+              },
+            })
+          }
+        >
           <CommentRoot commentId={pin.eventId} className={styles.pinPreview}>
             <div style={{ display: 'flex', flexDirection: 'column' }}>
               <CommentHeader>
@@ -498,6 +513,7 @@ function PinNewThreadComposer({ pin }: { pin: Pin }) {
 const PinMarker = forwardRef<HTMLDivElement, PinMarkerProps>(function PinMarker(props, ref) {
   const { isSelected, pin, pointerEvents } = props;
   const { events, store } = useApp();
+  const { isFigmaStyle } = useSnapshot(store);
   const target = useTarget();
   const isEditing = useStoreKeyMatches(store, 'editingId', (editingId) => {
     return editingId?.type === 'comment' && editingId.eventId === pin.eventId;
@@ -536,10 +552,12 @@ const PinMarker = forwardRef<HTMLDivElement, PinMarkerProps>(function PinMarker(
                 </div>
               </div>
             </PopoverTrigger>
-            <PopoverPreview>{isNewThread ? null : <PinPreview pin={pin} />}</PopoverPreview>
-            <PopoverContent>
-              {isNewThread ? <PinNewThreadComposer pin={pin} /> : <PinThread pin={pin} />}
-            </PopoverContent>
+            <PopoverPreview>{isNewThread ? null : <PinThreadPreview pin={pin} />}</PopoverPreview>
+            {isFigmaStyle ? (
+              <PopoverContent>
+                {isNewThread ? <PinNewThreadComposer pin={pin} /> : <PinThread pin={pin} />}
+              </PopoverContent>
+            ) : null}
           </PopoverRoot>
         </div>
         {/* </PinMenu> */}
