@@ -26,7 +26,7 @@ import * as inboxItemStyles from '../theme/components/InboxItem.css';
 import { Authenticated } from './Authenticated';
 import { useStoreKeyMatches } from '../hooks/useSubscribeStoreKey';
 import { useApp } from '../hooks/useApp';
-import { PopoverContent, PopoverRoot, PopoverTrigger } from './Popover';
+import { PopoverContent, PopoverPortal, PopoverRoot, PopoverTrigger } from './Popover';
 import { usePopover } from '../hooks/usePopover';
 import { useIsSidebarOpen } from '../hooks/useIsSidebarOpen';
 import { Root } from './Root';
@@ -186,11 +186,13 @@ function PopoverInbox() {
         <PopoverTrigger>
           <button>Comments</button>
         </PopoverTrigger>
-        <PopoverContent>
-          <div style={{ background: 'white' }}>
-            <Inbox />
-          </div>
-        </PopoverContent>
+        <PopoverPortal>
+          <PopoverContent>
+            <div className={styles.popover}>
+              <Inbox />
+            </div>
+          </PopoverContent>
+        </PopoverPortal>
       </PopoverRoot>
     </Authenticated>
   );
