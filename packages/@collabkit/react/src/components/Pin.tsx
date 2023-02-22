@@ -281,6 +281,7 @@ function PinNextThreadIconButton() {
       <TooltipTrigger>
         <IconButton
           weight="regular"
+          data-testid="collabkit-pin-next-thread-button"
           disabled={!next}
           onClick={(e) =>
             next
@@ -314,6 +315,7 @@ function PinPrevThreadIconButton() {
       <TooltipTrigger>
         <IconButton
           weight="regular"
+          data-testid="collabkit-pin-prev-thread-button"
           disabled={!prev}
           onClick={(e) =>
             prev
@@ -348,6 +350,7 @@ function PinThreadResolveIconButton() {
       <TooltipTrigger>
         <IconButton
           weight="regular"
+          data-testid="collabkit-pin-resolve-thread-button"
           onClick={(e) =>
             events.onClick(e, {
               target: { type: 'pinThreadResolveIconButton', workspaceId, threadId },
@@ -369,6 +372,7 @@ function PinThreadCloseIconButton() {
       <TooltipTrigger>
         <IconButton
           weight="regular"
+          data-testid="collabkit-pin-close-thread-button"
           onClick={(e) =>
             events.onClick(e, {
               target: { type: 'pinThreadCloseIconButton' },

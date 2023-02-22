@@ -254,6 +254,7 @@ test.describe('Dashboard', () => {
     await assertOneCommentPin(page);
 
     // deletion
+    await hoverComment(page, { body: 'This is a pinned comment' }, 1);
     await clickCommentMenuButton(page);
     await clickCommentMenuDeleteButton(page);
     await page.waitForTimeout(500);
