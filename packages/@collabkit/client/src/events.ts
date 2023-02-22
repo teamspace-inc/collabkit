@@ -95,6 +95,9 @@ export function createEvents(store: Store) {
         }
         case 'idle': {
           switch (target.type) {
+            case 'thread':
+              actions.select(store, { target });
+              break;
             case 'addCommentButton':
               actions.startSelecting(store);
               const threadId = store.nextThreadId;

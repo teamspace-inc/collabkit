@@ -181,10 +181,9 @@ function ChannelThread() {
     (e: React.MouseEvent) => {
       events.onClick(e, {
         target: {
-          type: 'channel',
+          type: 'thread',
           threadId,
           workspaceId,
-          channelId,
         },
       });
     },

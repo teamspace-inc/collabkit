@@ -1,9 +1,11 @@
 import { Store, timelineUtils, WithID, Event } from '@collabkit/core';
 import { derive } from 'valtio/utils';
+import { createWorkspace } from '../store';
 
 export function initThread(store: Store, props: { workspaceId: string; threadId: string }) {
   const { workspaceId, threadId } = props;
 
+  store.workspaces[workspaceId] ||= createWorkspace();
   const workspace = store.workspaces[workspaceId];
 
   workspace.timeline[threadId] ||= {};

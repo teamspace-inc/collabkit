@@ -25,13 +25,7 @@ import { TargetContext } from './Target';
 import { useApp } from '../hooks/useApp';
 import { useTarget } from '../hooks/useTarget';
 import { Menu, MenuItem } from './Menu';
-import {
-  PopoverContent,
-  PopoverPreview,
-  PopoverRoot,
-  PopoverTrigger,
-  usePopoverContext,
-} from './Popover';
+import { PopoverContent, PopoverPreview, PopoverRoot, PopoverTrigger } from './Popover';
 import { ProfileAvatar, ProfileProvider } from './Profile';
 import {
   CommentBody,
