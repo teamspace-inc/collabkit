@@ -20,50 +20,37 @@ export function Demo() {
       apiKey={apiKey}
       appId={appId}
       workspace={{ id: workspaceId, name: workspaceName }}
-      callbacks={{
-        onPinHover: (props) => {},
-        onPinAttach: () => {
-          return JSON.stringify({
-            selectedKpi: dashboardStore.selectedKpi,
-            selectedStatus: dashboardStore.selectedStatus,
-            selectedNames: dashboardStore.selectedNames,
-            selectedTab: dashboardStore.selectedTab,
-          });
-        },
-        onPinClick: (props) => {
-          try {
-            const state = JSON.parse(props.state) as DashboardStore | null;
-            if (state) {
-              if (state.selectedKpi) dashboardStore.selectedKpi = state.selectedKpi;
-              if (state.selectedStatus) dashboardStore.selectedStatus = state.selectedStatus;
-              if (state.selectedNames) dashboardStore.selectedNames = state.selectedNames;
-              if (state.selectedTab) dashboardStore.selectedTab = state.selectedTab;
-            }
-          } catch (e) {}
-        },
-        onPinUnhover: (props) => {},
-        onPinDeselect: (props) => {},
-        // onInboxThreadClick: (data) => {
-        //   // defining this overrides the default action for clicking an inbox item
-        //   console.log('inbox thread, click', data);
-        // },
-        onTimestampClick: (data) => {
-          console.log('timestamp, click', data);
-        },
-        onThreadCreated: (data) => {
-          console.log('thread, created', data);
-        },
-        // onCommentSend: (data) => {
-        //   console.log(data);
-        // },
-        // onMentionClick: (data) => {
-        //   console.log('mention, click', data);
-        // },
-        // onInboxCloseButtonClick: (data) => {
-        //   console.log('inbox close button, click', data);
-        // },
-        // onThreadResolve: (data) => console.log('resolve', data),
-        // onThreadReopen: (data) => console.log('reopen', data),
+      onPinHover={(props) => {}}
+      onPinAttach={() => {
+        return JSON.stringify({
+          selectedKpi: dashboardStore.selectedKpi,
+          selectedStatus: dashboardStore.selectedStatus,
+          selectedNames: dashboardStore.selectedNames,
+          selectedTab: dashboardStore.selectedTab,
+        });
+      }}
+      onPinClick={(props) => {
+        try {
+          const state = JSON.parse(props.state) as DashboardStore | null;
+          if (state) {
+            if (state.selectedKpi) dashboardStore.selectedKpi = state.selectedKpi;
+            if (state.selectedStatus) dashboardStore.selectedStatus = state.selectedStatus;
+            if (state.selectedNames) dashboardStore.selectedNames = state.selectedNames;
+            if (state.selectedTab) dashboardStore.selectedTab = state.selectedTab;
+          }
+        } catch (e) {}
+      }}
+      onPinUnhover={(props) => {}}
+      onPinDeselect={(props) => {}}
+      // onInboxThreadClick: (data) => {
+      //   // defining this overrides the default action for clicking an inbox item
+      //   console.log('inbox thread, click', data);
+      // },
+      onTimestampClick={(data) => {
+        console.log('timestamp, click', data);
+      }}
+      onThreadCreated={(data) => {
+        console.log('thread, created', data);
       }}
       onAuthenticationRequired={() => {
         console.log('authRequired');

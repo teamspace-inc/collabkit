@@ -142,18 +142,17 @@ export type Callbacks = {
     info: ThreadInfo;
   }) => void;
   onInboxCloseButtonClick?: (data: { userId: string; workspaceId: string }) => void;
+  onAuthenticationRequired?: () => void;
 };
 
 export type ConfigProps = {
   mentionableUsers: MentionProps;
-  onAuthenticationRequired?: () => void;
   colorScheme?: 'light' | 'dark' | 'auto';
-  callbacks?: Callbacks;
   readOnly?: boolean;
   _demoStore?: Store;
   _isDemo?: boolean;
   _test?: boolean;
-};
+} & Callbacks;
 
 export type Config = (SecureProps | UnsecureProps) & ConfigProps;
 
@@ -706,7 +705,7 @@ export interface UnconfiguredStore {
   uiState: 'idle' | 'selecting';
   nextThreadId: null | string;
   subs: Subscriptions;
-  callbacks?: Callbacks;
+  callbacks: Callbacks;
   clientX: number;
   clientY: number;
   commentables: { [objectId: string]: CommentableObject };

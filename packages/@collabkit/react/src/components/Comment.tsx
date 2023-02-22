@@ -197,6 +197,7 @@ function CommentSeeAllRepliesButton(props: React.ComponentPropsWithoutRef<'div'>
 
 function CommentMarkdown() {
   const { body } = useCommentSnapshot();
+  // move this to a computed property
   const { callbacks } = useSnapshot(useApp().store);
   const canClickLinks = !!callbacks?.onMentionClick || !!callbacks?.onTimestampClick;
 

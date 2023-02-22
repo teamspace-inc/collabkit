@@ -29,7 +29,7 @@ export async function resolveThread(
     parentEvent: null,
     threadId,
   });
-  store.config.callbacks?.onThreadResolve?.({
+  store.callbacks?.onThreadResolve?.({
     userId,
     workspaceId,
     threadId,

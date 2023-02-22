@@ -74,8 +74,5 @@ export function createValtioStore(config: Config, sync: SyncAdapter): Store {
     }
   );
 
-  if (config.callbacks) {
-    store.callbacks = config.callbacks;
-  }
   return store as Store;
 }
