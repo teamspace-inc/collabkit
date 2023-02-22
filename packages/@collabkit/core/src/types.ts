@@ -223,7 +223,19 @@ export type Target =
   | PinNextThreadIconButtonTarget
   | PinThreadResolveIconButtonTarget
   | PinThreadCloseIconButtonTarget
-  | CommentPinTarget;
+  | CommentPinTarget
+  | InboxItemTarget
+  | PopoverInboxTarget;
+
+export type PopoverInboxTarget = {
+  type: 'popoverInbox';
+};
+
+export type InboxItemTarget = {
+  type: 'inboxItem';
+  threadId: string;
+  workspaceId: string;
+};
 
 export type PinPrevThreadIconButtonTarget = {
   type: 'pinPrevThreadIconButton';
@@ -321,6 +333,7 @@ export type OverlayTarget = {
 
 export type AddCommentButtonTarget = {
   type: 'addCommentButton';
+  workspaceId: string;
 };
 
 export type ComposerMentionsButtonTarget = {
@@ -660,9 +673,9 @@ export interface UnconfiguredStore {
   user: UserProps | null;
   userId: string | null;
   workspaceId: string | null;
-  focusedId: null | Target;
-  reactingId: null | Target;
   selectedId: null | Target;
+  reactingId: null | Target;
+  focusedId: null | Target;
   hoveringId: null | Target;
   menuId: null | Target;
   viewingId: null | Target;

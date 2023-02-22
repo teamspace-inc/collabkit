@@ -20,8 +20,6 @@ import { InboxButton } from './components/InboxButton';
 import { ThemeProvider } from './components/ThemeContext';
 import { Sidebar } from './components/Sidebar';
 import { ThemeWrapper } from './components/ThemeWrapper';
-import { SidebarInboxButton } from './components/SidebarInboxButton';
-import { SidebarInbox } from './components/SidebarInbox';
 import { useIsResolved } from './hooks/public/useIsResolved';
 import { useResolveThread } from './hooks/public/useResolveThread';
 import { useThreadUsers } from './hooks/public/useThreadUsers';
@@ -43,7 +41,6 @@ export * from './components/Inbox';
 export * from './components/InboxButton';
 export * from './components/Provider';
 export * from './components/Sidebar';
-export * from './components/SidebarInbox';
 export * from './components/SidebarInboxButton';
 export * from './components/Thread';
 export * from './components/ThreadFacepile';
@@ -58,7 +55,7 @@ export * from './components/Commentable';
 export * from './components/Markdown';
 export * from './components/Channel';
 export * from './components/Root';
-export * from './components/FloatingAddCommentButton';
+export * from './components/AddCommentButton';
 
 import { Markdown } from './components/Markdown';
 import { useThread } from './hooks/public/useThread';
@@ -73,8 +70,6 @@ export {
   Markdown,
   Commentable,
   Sidebar,
-  SidebarInbox,
-  SidebarInboxButton,
   ThemeProvider,
   ThemeWrapper,
   Thread,

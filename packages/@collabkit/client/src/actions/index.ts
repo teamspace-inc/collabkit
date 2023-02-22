@@ -24,6 +24,7 @@ import { initThread } from './initThread';
 import { insertComposerPin } from './insertComposerPin';
 import { isTyping } from './isTyping';
 import { monitorConnection } from './monitorConnection';
+import { openInboxItem } from './openInboxItem';
 import { openMenu } from './openMenu';
 import { removeAttachment } from './removeAttachment';
 import { reopenThread } from './reopenThread';
@@ -85,6 +86,7 @@ export const actions = {
   insertComposerPin,
   isTyping: debounce(isTyping, 1000, { leading: true, maxWait: 1000 }),
   monitorConnection,
+  openInboxItem,
   openMenu,
   removeAttachment,
   reopenThread,

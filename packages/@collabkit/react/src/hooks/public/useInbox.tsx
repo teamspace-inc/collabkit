@@ -2,33 +2,28 @@ import { useEffect } from 'react';
 import { actions } from '@collabkit/client';
 import { useSnapshot } from 'valtio';
 import { useStore } from '../useStore';
+import { useIsAuthenticated } from '../useIsAuthenticated';
 
 export function useInbox(props: {
   filter: 'all' | 'open';
-  threadIds?: string[];
+  threadIds?: string[] | null;
   direction?: 'asc' | 'desc';
   latestFirst?: boolean;
 }) {
   const store = useStore();
-  const { workspaceId, workspaces, userId } = useSnapshot(store);
+  const { workspaceId, workspaces } = useSnapshot(store);
 
   const workspace = workspaceId ? workspaces[workspaceId] : null;
 
   const inbox = workspace?.inbox;
 
+  const isAuthenticated = useIsAuthenticated();
+
   useEffect(() => {
-    actions.subscribeInbox(store);
-  }, [workspaceId]);
+    if (isAuthenticated) actions.subscribeInbox(store);
+  }, [isAuthenticated]);
 
-  if (!inbox) {
-    return [];
-  }
-
-  if (!userId) {
-    return [];
-  }
-
-  if (!workspaceId) {
+  if (!inbox || !isAuthenticated) {
     return [];
   }
 
@@ -36,6 +31,7 @@ export function useInbox(props: {
   // inboxResolved and inboxOpen
 
   // todo move this to the store
+
   const threadIds = props.threadIds ?? Object.keys(inbox);
   const openThreadIds = threadIds
     // filter out resolved threads

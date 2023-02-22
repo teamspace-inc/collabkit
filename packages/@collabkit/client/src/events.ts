@@ -23,8 +23,7 @@ export function createEvents(store: Store) {
         return;
       }
       editor.update(() => {
-        const selection = $getSelection();
-        selection?.insertRawText(text);
+        $getSelection()?.insertRawText(text);
       });
     },
 
@@ -96,8 +95,25 @@ export function createEvents(store: Store) {
         }
         case 'idle': {
           switch (target.type) {
+            case 'addCommentButton':
+              actions.startSelecting(store);
+              const threadId = store.nextThreadId;
+              console.log('threadId', threadId);
+              if (!threadId) return;
+              const composerId = {
+                ...target,
+                type: 'composer',
+                threadId,
+                eventId: 'default',
+              } as const;
+              actions.initComposer(store, { ...target, threadId, eventId: 'default' });
+              actions.setComposer(store, { target: composerId });
+              break;
             case 'overlay':
               actions.deselectAll(store);
+              break;
+            case 'inboxItem':
+              actions.openInboxItem(store, target);
               break;
             case 'pinThreadCloseIconButton':
               actions.deselectAll(store);
@@ -315,7 +331,7 @@ export function createEvents(store: Store) {
 
     onGlobalPointerDown: (e: PointerEvent) => {
       const el = e.target;
-      if (el instanceof Element && el.closest(`.collabkit`)) {
+      if (el instanceof Element && el.closest('.collabkit')) {
         return;
       }
       actions.deselectAll(store);

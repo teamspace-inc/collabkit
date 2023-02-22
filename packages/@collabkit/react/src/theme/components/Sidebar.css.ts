@@ -10,6 +10,7 @@ export const root = style({
   width: fallbackVar(vars.inbox.width, '320px'),
   fontFamily: vars.fontFamily,
   position: 'relative',
+  height: '100%',
 });
 
 export const title = style({

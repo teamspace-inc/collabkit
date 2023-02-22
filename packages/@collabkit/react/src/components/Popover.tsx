@@ -262,22 +262,11 @@ function PopoverRoot(props: RootProps) {
       open: contentVisible,
       preview: previewVisible,
       setOpen: onContentChange,
-
       ref,
       getPreviewFloatingProps,
       getFloatingProps,
     }),
-    [
-      previewContext,
-      context,
-      getProps,
-      contentVisible,
-      previewVisible,
-      // onOpenChange,
-      ref,
-      // getPreviewFloatingProps,
-      // getFloatingProps,
-    ]
+    [previewContext, context, getProps, contentVisible, previewVisible, ref]
   );
 
   return (
@@ -288,11 +277,6 @@ function PopoverRoot(props: RootProps) {
     </FloatingNode>
   );
 }
-
-// type PopoverProps = PopoverTriggerProps & {
-//   preview: React.ReactNode;
-//   content?: React.ReactNode;
-// } & AdvancedPopoverProps;
 
 function PopoverPortal({ children }: { children?: React.ReactNode }) {
   return (

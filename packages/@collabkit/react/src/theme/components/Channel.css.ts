@@ -1,7 +1,6 @@
 import { fallbackVar, globalStyle, style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
 import { vars } from '../theme/index.css';
-import * as inboxStyles from './Inbox.css';
 import * as commentStyles from './Comment.css';
 import * as composerStyles from './Composer.css';
 import { calc } from '@vanilla-extract/css-utils';
@@ -101,8 +100,6 @@ export const thread = recipe({
     },
   },
 });
-
-export const header = style([inboxStyles.header]);
 
 export const commentPin = style({
   paddingRight: calc.divide(vars.space[1], 2),

@@ -149,7 +149,7 @@ function ComposerMentionsButton(props: { className?: string }) {
   );
 }
 
-const ComposerInput = React.memo(function ComposerLexicalEditor(props: {
+const ComposerInput = React.memo(function ComposerInput(props: {
   placeholder: React.ReactElement;
   className?: string;
   contentEditable?: JSX.Element;

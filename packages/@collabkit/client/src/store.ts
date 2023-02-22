@@ -54,7 +54,7 @@ export function createStore(): UnconfiguredStore {
     userId: null,
     user: null,
     workspaceId: null,
-    focusedId: null,
+    selectedId: null,
     menuId: null,
     reactingId: null,
     viewingId: null,

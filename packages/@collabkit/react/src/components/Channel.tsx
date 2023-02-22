@@ -165,6 +165,7 @@ function ChannelThread() {
   const { expandedThreadIds } = useSnapshot(store);
   const timeline = workspace.timeline[threadId];
   const { isResolved } = workspace.computed[threadId];
+  const ref = useRef<HTMLDivElement>(null);
 
   const isSelected = useStoreKeyMatches(store, 'selectedId', (selectedId) => {
     return (
@@ -236,7 +237,7 @@ function ChannelThread() {
 
   return (
     <ThreadProvider threadId={threadId} key={`channelThread-${threadId}`} placeholder="Reply">
-      <div className={styles.thread({ isSelected })} onClick={onClick}>
+      <div className={styles.thread({ isSelected })} onClick={onClick} ref={ref}>
         <ChannelCommentList />
         {isExpanded || isSelected ? (
           <div
@@ -474,7 +475,6 @@ function ChannelNewThreadComposer() {
     if (!appId || !workspaceId) {
       return;
     }
-    store.nextThreadId = store.sync.nextThreadId({ appId, workspaceId });
     actions.subscribeInbox(store);
   }, [appId, workspaceId]);
 
@@ -508,10 +508,7 @@ function Channel() {
     <Root>
       <Authenticated>
         <ChannelRoot channelId="default">
-          <div id="sidebar-header-portal" />
-          <h1>Comments</h1>
-          <Scrollable autoScroll="bottom" alignToBottom={true}>
-            <ChannelThreadList />
+          <ChannelThreadList />
           <ChannelNewThreadComposer />
         </ChannelRoot>
       </Authenticated>
@@ -525,7 +522,6 @@ function SidebarChannel() {
       <Authenticated>
         <SidebarRoot>
           <ChannelRoot channelId="default">
-            <div id="sidebar-header-portal" />
             <SidebarHeader>
               <SidebarTitle>Comments</SidebarTitle>
               <div style={{ flex: 1 }} />
