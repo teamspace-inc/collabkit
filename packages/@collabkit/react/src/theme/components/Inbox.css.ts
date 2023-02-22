@@ -9,8 +9,9 @@ export const root = style({
 export const popover = style({
   background: 'white',
   borderRadius: '12px',
-  width: 240,
+  width: 280,
   border: `1px solid ${vars.color.border}`,
   boxShadow: vars.shadow.high,
+  padding: 12,
   zIndex: 999,
 });
