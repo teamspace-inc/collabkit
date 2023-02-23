@@ -166,7 +166,7 @@ function ChannelThread() {
   const channelId = useChannelContext();
   const workspaceId = useWorkspaceContext();
   const workspace = useSnapshot(useWorkspaceStore());
-  const { expandedThreadIds } = useSnapshot(store);
+  // const { expandedThreadIds } = useSnapshot(store);
   const timeline = workspace.timeline[threadId];
   const { isResolved } = workspace.computed[threadId];
   const ref = useRef<HTMLDivElement>(null);
@@ -207,7 +207,7 @@ function ChannelThread() {
   }
 
   // const active = !!(viewingId && viewingId.type === 'thread' && viewingId.threadId === threadId);
-  const isExpanded = expandedThreadIds.includes(threadId);
+  // const isExpanded = expandedThreadIds.includes(threadId);
 
   const composer = (
     <ComposerRoot className={styles.threadComposerRoot}>
@@ -232,7 +232,7 @@ function ChannelThread() {
     <ThreadProvider threadId={threadId} key={`channelThread-${threadId}`} placeholder="Reply">
       <div className={styles.thread({ isSelected })} onClick={onClick} ref={ref}>
         <ChannelCommentList />
-        {isExpanded || isSelected ? (
+        {isSelected ? (
           <div
             style={{
               paddingLeft: `${calc.multiply(vars.space[1], 9)}`,
