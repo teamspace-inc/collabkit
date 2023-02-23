@@ -12,6 +12,7 @@ import { RenderFnContext } from '../hooks/useRenderFnContext';
 import type { Callbacks, ConfigProps, SecureProps, UnsecureProps } from '@collabkit/core';
 import type { RenderFnContextValue } from '../hooks/useRenderFnContext';
 import { ref } from 'valtio';
+import { PinLayer } from './PinLayer';
 
 export type ProviderProps = {
   children: React.ReactNode;
@@ -117,7 +118,9 @@ export function CollabKitProvider({
       <RenderFnContext.Provider value={renderFnContext}>
         <ThemeProvider theme={theme}>
           <AuthenticatedContext>
-            <FloatingTree>{children}</FloatingTree>
+            <FloatingTree>
+              <PinLayer>{children}</PinLayer>
+            </FloatingTree>
             <SaveMentionableUsers mentionableUsers={config.mentionableUsers} />
           </AuthenticatedContext>
         </ThemeProvider>

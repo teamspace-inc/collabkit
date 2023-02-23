@@ -33,7 +33,6 @@ import { Composer } from './components/composer/Composer';
 import { Scrollable } from './components/Scrollable';
 import { CommentList } from './components/CommentList';
 import { Button } from './components/Button';
-import { Commentable } from './components/Commentable';
 
 export * from './components/Comment';
 export * from './components/composer/Composer';
@@ -70,7 +69,6 @@ export {
   Inbox,
   InboxButton,
   Markdown,
-  Commentable,
   Sidebar,
   ThemeProvider,
   ThemeWrapper,
