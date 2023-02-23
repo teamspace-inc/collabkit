@@ -74,19 +74,24 @@ function EmptyState() {
   );
 }
 
-function ChannelCommentList(props: ComponentPropsWithRef<'div'>) {
+function useIsChannelSelected() {
   const store = useStore();
   const threadId = useThreadContext();
-  const isExpanded = useIsExpanded();
-  const isSelected = useStoreKeyMatches(store, 'selectedId', (selectedId) => {
+  return useStoreKeyMatches(store, 'selectedId', (selectedId) => {
     return (
-      (selectedId?.type === 'thread' && selectedId.threadId === threadId) ||
-      (selectedId?.type === 'pin' && selectedId.threadId === threadId) ||
-      (selectedId?.type === 'comment' && selectedId.threadId === threadId) ||
-      (selectedId?.type === 'channel' && selectedId.threadId === threadId) ||
-      (selectedId?.type === 'commentPin' && selectedId.threadId === threadId)
+      (selectedId?.type === 'thread' ||
+        selectedId?.type === 'pin' ||
+        selectedId?.type === 'comment' ||
+        selectedId?.type === 'channel' ||
+        selectedId?.type === 'commentPin') &&
+      selectedId.threadId === threadId
     );
   });
+}
+
+function ChannelCommentList(props: ComponentPropsWithRef<'div'>) {
+  const isExpanded = useIsExpanded();
+  const isSelected = useIsChannelSelected();
   const commentList = useCommentList();
 
   return (
@@ -166,17 +171,7 @@ function ChannelThread() {
   const timeline = workspace.timeline[threadId];
   const { isResolved } = workspace.computed[threadId];
   const ref = useRef<HTMLDivElement>(null);
-
-  const isSelected = useStoreKeyMatches(store, 'selectedId', (selectedId) => {
-    return (
-      (selectedId?.type === 'thread' && selectedId.threadId === threadId) ||
-      (selectedId?.type === 'pin' && selectedId.threadId === threadId) ||
-      (selectedId?.type === 'comment' && selectedId.threadId === threadId) ||
-      (selectedId?.type === 'channel' && selectedId.threadId === threadId) ||
-      (selectedId?.type === 'commentPin' && selectedId.threadId === threadId)
-    );
-  });
-
+  const isSelected = useIsChannelSelected();
   const onClick = useCallback(
     (e: React.MouseEvent) => {
       events.onClick(e, {

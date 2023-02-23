@@ -1,6 +1,5 @@
 import React from 'react';
-import { useSidebarButton } from '../hooks/public/useSidebarButton';
-import { useUnreadThreadsCount } from '../hooks/public/useUnreadThreadsCount';
+import { useInboxButton } from '../hooks/useInboxButton';
 import { inboxButton } from '../theme/components/InboxButton.css';
 
 import CommentIcon from './Comment.svg';
@@ -8,15 +7,13 @@ import CommentNotificationIcon from './CommentNotification.svg';
 import { ThemeWrapper } from './ThemeWrapper';
 
 export function SidebarInboxButton(props: { children?: React.ReactNode; className?: string }) {
-  const { onPointerDown } = useSidebarButton();
-  const unreadThreadCount = useUnreadThreadsCount();
-  const showUnreadDot = unreadThreadCount > 0;
+  const { onClick, hasUnread } = useInboxButton();
 
   return (
     <ThemeWrapper>
       <button
         className={inboxButton}
-        onPointerDown={onPointerDown}
+        onClick={onClick}
         data-testid="collabkit-sidebar-inbox-button"
         {...props}
       >
@@ -24,8 +21,8 @@ export function SidebarInboxButton(props: { children?: React.ReactNode; classNam
           props.children
         ) : (
           <>
-            {showUnreadDot ? <img src={CommentNotificationIcon} /> : <img src={CommentIcon} />}
-            All comments
+            {hasUnread ? <img src={CommentNotificationIcon} /> : <img src={CommentIcon} />}
+            Comments
           </>
         )}
       </button>

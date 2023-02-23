@@ -7,7 +7,7 @@ export function focusComposer(store: Store, target: ComposerTarget) {
     const composer =
       store.workspaces[target.workspaceId].composers[target.threadId][target.eventId];
     const { editor } = composer;
-    if (!editor) return;
+    if (!editor) console.warn('[CollabKit] no editor to focus');
     editor?._rootElement?.focus();
-  }, 32);
+  }, 100);
 }

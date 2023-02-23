@@ -23,8 +23,6 @@ export function DetailViewsDoc() {
   
   ### When to use this pattern
 
-  
-
   ### Components Used
   
   1. Thread`}
