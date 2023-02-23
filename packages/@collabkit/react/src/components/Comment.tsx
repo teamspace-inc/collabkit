@@ -165,7 +165,7 @@ function CommentSeeAllRepliesButton(props: React.ComponentPropsWithoutRef<'div'>
   const numComments = Object.keys(computed[threadId].messageEvents).length;
 
   const target = {
-    type: 'commentReplyCountButton',
+    type: 'commentSeeAllRepliesButton',
     workspaceId,
     threadId,
     eventId,

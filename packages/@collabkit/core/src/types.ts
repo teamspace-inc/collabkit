@@ -280,7 +280,7 @@ export type PinThreadCloseIconButtonTarget = {
 };
 
 export type CommentReplyCountButtonTarget = {
-  type: 'commentReplyCountButton';
+  type: 'commentSeeAllRepliesButton';
   threadId: string;
   workspaceId: string;
   eventId: string;

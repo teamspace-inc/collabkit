@@ -175,7 +175,7 @@ export function createEvents(store: Store) {
               actions.reopenThread(store, target);
               break;
             case 'commentReplyButton':
-            case 'commentReplyCountButton':
+            case 'commentSeeAllRepliesButton':
               e.preventDefault();
               e.stopPropagation();
               actions.expandThread(store, target);
