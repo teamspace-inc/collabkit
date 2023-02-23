@@ -33,9 +33,8 @@ import { isAfter, isBefore, isEqual } from 'date-fns';
 import {
   Commentable,
   useCommentableRef,
-  SidebarInboxButton,
-  SidebarChannel,
-  PopoverChannel,
+  ToggleSidebarCommentsButton,
+  SidebarComments,
 } from '@collabkit/react';
 
 import { Charts } from './Charts';
@@ -252,7 +251,7 @@ export function DashboardExample() {
             {/* <PopoverInbox /> */}
             {/* <PopoverChannel /> */}
             <div className="px-2"></div>
-            <SidebarInboxButton />
+            <ToggleSidebarCommentsButton />
             {/* <Datepicker
               minDate={minDate}
               maxDate={maxDate}
@@ -289,7 +288,7 @@ export function DashboardExample() {
           {selectedTab === 'charts' ? <Charts /> : null}
           {selectedTab === 'flowchart' ? <Flow /> : null}
         </main>
-        <SidebarChannel />
+        <SidebarComments />
       </div>
     </Commentable.Root>
   );

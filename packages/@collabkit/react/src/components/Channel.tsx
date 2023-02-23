@@ -61,10 +61,8 @@ import { Root } from './Root';
 import CommentPinSvg from './composer/comment-pin.svg';
 import CommentPinSelectedSvg from './composer/comment-pin-hover.svg';
 import { Authenticated } from './Authenticated';
-import { SidebarCloseButton, SidebarHeader, SidebarRoot, SidebarTitle } from './Sidebar';
-import { useIsSidebarOpen } from '../hooks/useIsSidebarOpen';
+import { SidebarCloseButton, SidebarHeader, SidebarTitle } from './Sidebar';
 import { usePopover } from '../hooks/usePopover';
-import { Inbox } from './Inbox';
 import { PopoverRoot, PopoverTrigger, PopoverPortal, PopoverContent } from './Popover';
 
 function EmptyState() {
@@ -511,28 +509,6 @@ function Channel() {
   );
 }
 
-function SidebarChannel() {
-  return useIsSidebarOpen() ? (
-    <Root>
-      <Authenticated>
-        <SidebarRoot>
-          <ChannelRoot channelId="default" style={{ height: '100vh' }}>
-            <SidebarHeader>
-              <SidebarTitle>Comments</SidebarTitle>
-              <div style={{ flex: 1 }} />
-              <SidebarCloseButton />
-            </SidebarHeader>
-            <Scrollable autoScroll="bottom" alignToBottom={true}>
-              <ChannelThreadList />
-            </Scrollable>
-            <ChannelNewThreadComposer />
-          </ChannelRoot>
-        </SidebarRoot>
-      </Authenticated>
-    </Root>
-  ) : null;
-}
-
 function PopoverChannel() {
   const target = { type: 'popoverChannel' } as const;
   const popoverProps = usePopover({ target });
@@ -565,4 +541,11 @@ function PopoverChannel() {
   );
 }
 
-export { Channel, ChannelRoot, ChannelThreadList, ChannelThread, SidebarChannel, PopoverChannel };
+export {
+  Channel,
+  ChannelRoot,
+  ChannelThreadList,
+  ChannelThread,
+  ChannelNewThreadComposer,
+  PopoverChannel,
+};

@@ -41,7 +41,6 @@ export * from './components/Inbox';
 export * from './components/InboxButton';
 export * from './components/Provider';
 export * from './components/Sidebar';
-export * from './components/SidebarInboxButton';
 export * from './components/Thread';
 export * from './components/ThreadFacepile';
 export * from './components/ThemeContext';
@@ -51,11 +50,14 @@ export * from './components/Scrollable';
 export * from './components/CommentList';
 export * from './components/Popover';
 export * from './components/Button';
-export * from './components/Commentable';
 export * from './components/Markdown';
 export * from './components/Channel';
 export * from './components/Root';
 export * from './components/AddCommentButton';
+
+export * from './components/Commentable';
+export * from './components/SidebarComments';
+export * from './components/ToggleSidebarCommentsButton';
 
 import { Markdown } from './components/Markdown';
 import { useThread } from './hooks/public/useThread';
