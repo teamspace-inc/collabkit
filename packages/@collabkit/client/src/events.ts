@@ -178,6 +178,7 @@ export function createEvents(store: Store) {
             case 'commentSeeAllRepliesButton':
               e.preventDefault();
               e.stopPropagation();
+              actions.select(store, { target: { ...target, type: 'thread' } });
               actions.expandThread(store, target);
               actions.focusComposer(store, {
                 type: 'composer',
