@@ -42,7 +42,6 @@ import {
   CommentTimestamp,
 } from './Comment';
 import { ProfileAvatar } from './Profile';
-import { useIsExpanded } from '../hooks/useIsExpanded';
 import { useWorkspaceContext } from '../hooks/useWorkspaceContext';
 import { useCommentList } from '../hooks/useCommentList';
 import { CommentPinTarget, ComposerPinButtonTarget, ComposerPinTarget } from '@collabkit/core';
@@ -93,7 +92,6 @@ function useIsChannelSelected() {
 }
 
 function ChannelCommentList(props: ComponentPropsWithRef<'div'>) {
-  const isExpanded = useIsExpanded();
   const isSelected = useIsChannelSelected();
   const commentList = useCommentList();
 
@@ -101,7 +99,7 @@ function ChannelCommentList(props: ComponentPropsWithRef<'div'>) {
     <div className={styles.commentList} {...props}>
       <div style={{ flex: 1 }}></div>
       {commentList.map((comment, i) =>
-        !isExpanded && !isSelected && i > 0 ? null : (
+        !isSelected && i > 0 ? null : (
           <CommentRoot
             commentId={comment.id}
             indent={i > 0}
@@ -126,7 +124,7 @@ function ChannelCommentList(props: ComponentPropsWithRef<'div'>) {
                   <CommentMarkdown />
                 </CommentBody>
                 <CommentReactions />
-                {i == 0 && !isExpanded && !isSelected && <CommentSeeAllRepliesButton />}
+                {i == 0 && !isSelected && <CommentSeeAllRepliesButton />}
               </CommentHideIfEditing>
               <CommentShowIfEditing>
                 <ChannelCommentEditor />
