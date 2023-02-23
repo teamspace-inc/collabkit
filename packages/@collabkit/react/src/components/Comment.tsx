@@ -441,7 +441,7 @@ function CommentReactionsListAddEmojiButton() {
   return (
     <Tooltip>
       <TooltipTrigger>
-        <PopoverEmojiPicker target={target} smallIconButton={true} placement="bottom-start" />
+        <PopoverEmojiPicker target={target} smallIconButton={true} placement="bottom" />
       </TooltipTrigger>
       <TooltipContent>React</TooltipContent>
     </Tooltip>
