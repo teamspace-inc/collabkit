@@ -35,6 +35,7 @@ import {
   useCommentableRef,
   SidebarInboxButton,
   SidebarChannel,
+  PopoverChannel,
 } from '@collabkit/react';
 
 import { Charts } from './Charts';
@@ -249,6 +250,7 @@ export function DashboardExample() {
             </Block>
             {/* <Debug /> */}
             {/* <PopoverInbox /> */}
+            <PopoverChannel />
             <div className="px-2"></div>
             <SidebarInboxButton />
             {/* <Datepicker

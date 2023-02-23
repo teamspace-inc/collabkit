@@ -13,12 +13,21 @@ export const comment = style([
   },
 ]);
 
+export const popover = style({
+  background: 'white',
+  borderRadius: '12px',
+  width: 320,
+  border: `1px solid ${vars.color.border}`,
+  boxShadow: vars.shadow.high,
+  padding: 0,
+  zIndex: 999,
+});
+
 export const root = style([
   {
     boxSizing: 'border-box',
     width: fallbackVar(vars.inbox.width, '320px'),
     fontFamily: vars.fontFamily,
-    height: '100vh',
     display: 'flex',
     flexDirection: 'column',
   },

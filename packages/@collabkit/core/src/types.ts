@@ -225,7 +225,8 @@ export type Target =
   | CommentPinTarget
   | InboxItemTarget
   | PopoverInboxTarget
-  | PinThreadPreviewTarget;
+  | PinThreadPreviewTarget
+  | PopoverChannelTarget;
 
 export type PinThreadPreviewTarget = {
   type: 'pinThreadPreview';
@@ -238,6 +239,10 @@ export type PinThreadPreviewTarget = {
 
 export type PopoverInboxTarget = {
   type: 'popoverInbox';
+};
+
+export type PopoverChannelTarget = {
+  type: 'popoverChannel';
 };
 
 export type InboxItemTarget = {

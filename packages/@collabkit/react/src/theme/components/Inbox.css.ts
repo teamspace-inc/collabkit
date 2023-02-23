@@ -6,6 +6,7 @@ export const root = style({
   borderRadius: '12px',
 });
 
+// make this generic also used in channel popover
 export const popover = style({
   background: 'white',
   borderRadius: '12px',

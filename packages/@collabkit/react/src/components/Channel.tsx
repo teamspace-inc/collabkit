@@ -64,6 +64,9 @@ import CommentPinSelectedSvg from './composer/comment-pin-hover.svg';
 import { Authenticated } from './Authenticated';
 import { SidebarCloseButton, SidebarHeader, SidebarRoot, SidebarTitle } from './Sidebar';
 import { useIsSidebarOpen } from '../hooks/useIsSidebarOpen';
+import { usePopover } from '../hooks/usePopover';
+import { Inbox } from './Inbox';
+import { PopoverRoot, PopoverTrigger, PopoverPortal, PopoverContent } from './Popover';
 
 function EmptyState() {
   return (
@@ -515,7 +518,7 @@ function SidebarChannel() {
     <Root>
       <Authenticated>
         <SidebarRoot>
-          <ChannelRoot channelId="default">
+          <ChannelRoot channelId="default" style={{ height: '100vh' }}>
             <SidebarHeader>
               <SidebarTitle>Comments</SidebarTitle>
               <div style={{ flex: 1 }} />
@@ -532,4 +535,36 @@ function SidebarChannel() {
   ) : null;
 }
 
-export { Channel, ChannelRoot, ChannelThreadList, ChannelThread, SidebarChannel };
+function PopoverChannel() {
+  const target = { type: 'popoverChannel' } as const;
+  const popoverProps = usePopover({ target });
+
+  return (
+    <Authenticated>
+      <PopoverRoot {...popoverProps} placement="bottom">
+        <PopoverTrigger>
+          <button>Comments</button>
+        </PopoverTrigger>
+        <PopoverPortal>
+          <PopoverContent>
+            <div className={styles.popover}>
+              <ChannelRoot channelId="default">
+                <SidebarHeader>
+                  <SidebarTitle>Comments</SidebarTitle>
+                  <div style={{ flex: 1 }} />
+                  <SidebarCloseButton />
+                </SidebarHeader>
+                <Scrollable autoScroll="bottom" alignToBottom={true}>
+                  <ChannelThreadList />
+                </Scrollable>
+                <ChannelNewThreadComposer />
+              </ChannelRoot>
+            </div>
+          </PopoverContent>
+        </PopoverPortal>
+      </PopoverRoot>
+    </Authenticated>
+  );
+}
+
+export { Channel, ChannelRoot, ChannelThreadList, ChannelThread, SidebarChannel, PopoverChannel };
