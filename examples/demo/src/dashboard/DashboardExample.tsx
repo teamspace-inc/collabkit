@@ -250,7 +250,7 @@ export function DashboardExample() {
             </Block>
             {/* <Debug /> */}
             {/* <PopoverInbox /> */}
-            <PopoverChannel />
+            {/* <PopoverChannel /> */}
             <div className="px-2"></div>
             <SidebarInboxButton />
             {/* <Datepicker
