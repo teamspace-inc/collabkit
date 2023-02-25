@@ -32,7 +32,7 @@ export const header = style({
   display: 'flex',
   alignItems: 'center',
   paddingLeft: fallbackVar(vars.inbox.item.paddingLeft, vars.space[4]),
-  paddingRight: fallbackVar(vars.inbox.item.paddingRight, vars.space[4]),
+  paddingRight: fallbackVar(vars.inbox.item.paddingRight, vars.space[2]),
   borderBottom: fallbackVar(vars.sidebar.title.borderBottom, '1px solid'),
   borderBottomColor: fallbackVar(vars.sidebar.title.borderBottomColor, vars.color.border),
   fontFamily: vars.fontFamily,

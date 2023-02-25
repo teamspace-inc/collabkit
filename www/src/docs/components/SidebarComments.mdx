@@ -1,0 +1,71 @@
+import { DocDemoContainer } from '../Doc';
+import Usage from './usage/SidebarCommentsUsage.tsx?raw';
+import ToggleSidebarCommentsButtonUsage from './usage/ToggleSidebarCommentsButtonUsage.tsx?raw';
+import { renderCodeSnippet } from '../CodeEditor';
+import useSidebarCommentsButtonUsage from './usage/useSidebarCommentsButtonUsage.tsx?raw';
+import { ToggleSidebarCommentsButton, SidebarComments } from '@collabkit/react';
+
+# SidebarComments
+
+## Comments in a sidebar. Great for adding commenting throughout your app accessible in one easy place.
+
+<DocDemoContainer
+  style={{
+    padding: 0,
+    justifyContent: 'flex-end',
+    height: '640px',
+    display: 'flex',
+    flex: 'unset',
+    position: 'relative',
+    alignItems: 'flex-start',
+    boxShadow: '10px 10px 0px #222',
+  }}
+>
+  <>
+    <div style={{ position: 'absolute', top: 12, left: 12 }}>
+      <ToggleSidebarCommentsButton />
+    </div>
+    <SidebarComments />
+  </>
+</DocDemoContainer>
+
+### Usage
+
+Sidebar comments are a great way to add commenting to every page or view in your app with just a few lines of code. Comments live in the Sidebar and are accessible from anywhere in your app.
+
+{renderCodeSnippet(Usage)}
+
+### Showing and hiding the sidebar
+
+#### With a button
+
+<DocDemoContainer
+  style={{
+    padding: 0,
+    display: 'flex',
+    height: '100px',
+    justifyContent: 'center',
+    flex: 'unset',
+    position: 'relative',
+    alignItems: 'flex-start',
+    boxShadow: '10px 10px 0px #222',
+  }}
+>
+  <>
+    <div style={{ position: 'absolute', top: 12, left: 12 }}>
+      <ToggleSidebarCommentsButton />
+    </div>
+  </>
+</DocDemoContainer>
+
+Include this component to show and hide the sidebar. It shows a 'red' dot when there are unread comments.
+
+You can pass any props you would normally pass to a React button component.
+
+{renderCodeSnippet(ToggleSidebarCommentsButtonUsage)}
+
+#### With a hook
+
+If you need full control over how the button renders, or would like to integrate it with your product's native button component, you can use our hook.
+
+{renderCodeSnippet(useSidebarCommentsButtonUsage)}

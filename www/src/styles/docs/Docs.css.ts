@@ -1,7 +1,8 @@
 import { globalStyle, style } from '@vanilla-extract/css';
-import { MAIN_BREAKPOINT } from '../hooks/useWindowSize';
-import { HEADER_HEIGHT } from './Header.css';
-import { vars } from './Theme.css';
+import { recipe } from '@vanilla-extract/recipes';
+import { MAIN_BREAKPOINT } from '../../hooks/useWindowSize';
+import { HEADER_HEIGHT } from '../Header.css';
+import { vars } from '../Theme.css';
 
 globalStyle('code', {});
 
@@ -14,13 +15,15 @@ export const inset = style({
   padding: '0 0 0 40px',
 });
 
+const navWidth = '272px';
+
 globalStyle(`${docs} blockquote`, {
   border: `1px solid ${vars.color.mint}`,
   color: vars.color.mint,
   textIndent: 0,
   marginLeft: 0,
   background: 'transparent',
-  padding: '20px',
+  padding: 20,
   borderRadius: '8px',
   fontSize: 14,
   lineHeight: '24px',
@@ -31,6 +34,39 @@ globalStyle(`${docs} blockquote h4`, {
   lineHeight: '24px',
   color: vars.color.mint,
   margin: '0 0 4px',
+});
+
+globalStyle(`${docs} h4`, {
+  fontSize: 14,
+  lineHeight: '24px',
+  margin: '0 0 4px',
+});
+
+globalStyle(`${docs} ul`, {
+  fontSize: 'inherit',
+  lineHeight: 'inherit',
+  margin: 0,
+  padding: '0 0px 0px 40px',
+});
+
+globalStyle(`${docs} ul li`, {
+  fontSize: '16px',
+  lineHeight: '28px',
+});
+
+globalStyle(`${docs} a`, {
+  textDecoration: 'none',
+  fontFamily: 'Inter',
+  fontStyle: 'normal',
+  fontWeight: 'inherit',
+  fontSize: 'inherit',
+  lineHeight: 'inherit',
+  color: `${vars.color.mint} !important`,
+  cursor: 'pointer !important',
+});
+
+globalStyle(`${docs} a:hover`, {
+  textDecoration: 'underline',
 });
 
 globalStyle(`${docs} blockquote a`, {
@@ -45,21 +81,20 @@ globalStyle(`${docs} blockquote a:hover`, {
 });
 
 globalStyle(`${docs} code`, {
-  fontFamily: 'Monaco',
+  fontFamily: 'Monaco, monospace',
   fontSize: 14,
-  background: vars.color.bgContrastLow,
-  padding: '4px 6px',
-  borderRadius: '6px',
-  color: vars.color.cyan,
+  color: vars.color.sky,
 });
 
 globalStyle(`${docs} code.ReactNode`, {
-  fontWeight: 'bold',
+  fontWeight: 'regular',
   color: vars.color.sky,
 });
 
 globalStyle(`${docs} h1`, {
-  marginTop: 0,
+  margin: 0,
+  marginBottom: 30,
+  fontSize: 36,
   fontWeight: '700',
   color: vars.color.textContrastHigh,
 });
@@ -67,24 +102,26 @@ globalStyle(`${docs} h1`, {
 globalStyle(`${docs} p`, {
   fontStyle: 'normal',
   fontWeight: 400,
-  fontSize: '16px',
+  fontSize: 16,
   lineHeight: '28px',
-  margin: '28px auto',
+  margin: '0px',
   color: vars.color.textContrastMedium,
 });
 
 globalStyle(`${docs} h2`, {
   fontStyle: 'normal',
-  fontWeight: 400,
+  fontWeight: 300,
   fontSize: 24,
   lineHeight: '34px',
+  marginTop: 0,
   marginBottom: '16px',
   color: vars.color.textContrastHigh,
 });
 
 globalStyle(`${docs} table`, {
   width: '100%',
-  color: vars.color.textContrastMedium,
+  color: vars.color.textContrastHigh,
+  borderCollapse: 'collapse',
 });
 
 globalStyle(`${docs} table tr`, {
@@ -97,7 +134,8 @@ globalStyle(`${docs} table tbody tr:last-of-type`, {
 
 globalStyle(`${docs} table td, ${docs} table th`, {
   fontSize: 16,
-  padding: '16px 16px 16px 0px',
+  lineHeight: '28px',
+  padding: `16px 16px 16px 0px`,
   wordBreak: 'break-word',
 });
 
@@ -107,7 +145,7 @@ globalStyle(`${docs} table td code`, {
 });
 
 globalStyle(`${docs} table td`, {
-  color: vars.color.textContrastMedium,
+  color: vars.color.textContrastHigh,
 });
 
 globalStyle(`${docs} table td a`, {
@@ -122,10 +160,10 @@ globalStyle(`${docs} table th`, {
 });
 
 globalStyle(`${docs} h3`, {
-  marginTop: '12px',
-  marginBottom: '20px',
+  marginTop: '60px',
+  marginBottom: '0px',
   fontStyle: 'normal',
-  fontWeight: '700',
+  fontWeight: '600',
   fontSize: '24px',
   lineHeight: '28px',
   color: vars.color.textContrastHigh,
@@ -133,10 +171,10 @@ globalStyle(`${docs} h3`, {
 });
 
 globalStyle(`${docs} h4`, {
-  marginTop: '8px',
-  marginBottom: '12px',
+  marginTop: '30px',
+  marginBottom: '0px',
   fontStyle: 'normal',
-  fontWeight: 700,
+  fontWeight: 500,
   fontSize: '18px',
   lineHeight: '26px',
   color: vars.color.textContrastHigh,
@@ -150,7 +188,7 @@ export const docStep = style({
   counterIncrement: 'step-number',
   ':before': {
     content: `counter(step-number)`,
-    fontSize: '14px',
+    fontSize: 13,
     display: 'flex',
     justifyContent: 'center',
     height: '28px',
@@ -158,10 +196,11 @@ export const docStep = style({
     textIndent: '-1px',
     lineHeight: '28px',
     color: `hsla(0, 0%, 11%, 1)`,
-    background: vars.color.teal,
+    background: vars.color.mint,
     borderRadius: '50%',
     position: 'absolute',
     left: -44,
+    top: 1,
   },
 });
 
@@ -177,7 +216,6 @@ export const docDemoOverlay = style({
 export const docDemoContainer = style({
   flex: 1,
   display: 'flex',
-  borderRadius: '8px',
   padding: '100px 20px',
   boxSizing: 'border-box',
   width: '100%',
@@ -200,9 +238,9 @@ export const themeDemoContainer = style([
 ]);
 
 export const docScrollableContent = style({
-  padding: 20,
-  paddingTop: 72,
-  gridTemplateColumns: 'minmax(360px, 666px)',
+  padding: 56,
+  marginTop: 112,
+  gridTemplateColumns: 'minmax(240px, 1fr)',
   display: 'grid',
   width: 'auto',
   position: 'sticky',
@@ -211,10 +249,10 @@ export const docScrollableContent = style({
 
   wordWrap: 'break-word',
   flex: 1,
-  lineHeight: '28px',
   '@media': {
     [max768]: {
       width: '100%',
+      padding: 0,
     },
   },
 });
@@ -293,13 +331,13 @@ export const docLink = style({
 });
 
 export const docContent = style({
-  maxWidth: 1124,
-  inset: 0,
+  maxWidth: '1152px',
+  padding: 0,
   alignItems: 'flex-start',
   display: 'grid',
   height: '100%',
   overflow: 'hidden',
-  gridTemplateColumns: 'minmax(320px, 1fr) minmax(500px, 3fr)',
+  gridTemplateColumns: `minmax(${navWidth}, 1fr) minmax(500px, 8fr)`,
   '@media': {
     [max768]: {
       display: 'unset',
@@ -310,8 +348,10 @@ export const docContent = style({
 export const docBody = style({
   display: 'flex',
   flexDirection: 'column',
-  gap: '30px',
+  gap: '28px',
   flex: 1,
+  maxWidth: '666px',
+  width: 'calc(100vw - 40px)',
 });
 
 export const docRoot = style({
@@ -319,6 +359,7 @@ export const docRoot = style({
   background: vars.color.bgContrastFloor,
   display: 'flex',
   justifyContent: 'center',
+  WebkitFontSmoothing: 'auto',
 });
 
 export const docTitle = style({
@@ -336,4 +377,130 @@ export const docTitle = style({
       fontSize: '32px',
     },
   },
+});
+
+export const navOl = style({
+  listStyle: 'none',
+  boxSizing: 'border-box',
+  padding: '0px',
+  gap: '4px',
+  display: 'flex',
+  flexDirection: 'column',
+  '@media': {
+    [max768]: {
+      paddingRight: '12px',
+      textAlign: 'left',
+      width: '100%',
+    },
+  },
+});
+
+globalStyle(`${navOl} ol li`, {
+  textIndent: '16px',
+});
+
+export const navLi = style({
+  display: 'flex',
+  flexDirection: 'column',
+  flex: 1,
+  '@media': {
+    [max768]: {
+      alignItems: 'stretch',
+    },
+  },
+});
+
+export const navListItem = recipe({
+  base: {
+    fontSize: '16px',
+    lineHeight: '32px',
+    boxSizing: 'border-box',
+    padding: '4px 12px',
+    userSelect: 'none',
+    display: 'flex',
+    flex: 1,
+    color: vars.color.textContrastMedium,
+    textDecoration: 'none',
+    borderRadius: '4px',
+  },
+  variants: {
+    active: {
+      true: {
+        background: 'rgba(255, 255, 255, 0.08)',
+        color: 'white',
+        fontWeight: 600,
+      },
+      false: {
+        ':hover': {
+          background: 'rgba(255, 255, 255, 0.04)',
+          cursor: 'pointer',
+          color: 'white',
+        },
+      },
+    },
+  },
+});
+
+export const navBurgerToggle = recipe({
+  base: {
+    border: 'none',
+    background: 'rgba(255, 255, 255, 0.02)',
+    borderRadius: '4px',
+    width: '40px',
+    height: '40px',
+    display: 'none',
+    alignItems: 'center',
+    justifyContent: 'center',
+
+    ':hover': {
+      background: 'rgba(255, 255, 255, 0.04)',
+      cursor: 'pointer',
+    },
+    '@media': {
+      [max768]: {
+        display: 'flex',
+      },
+    },
+  },
+  variants: {
+    active: {
+      true: {
+        background: 'rgba(255, 255, 255, 0.08)',
+        ':hover': {
+          background: 'rgba(255, 255, 255, 0.08)',
+        },
+      },
+    },
+  },
+});
+
+export const navWrap = style({
+  display: 'flex',
+  flexDirection: 'column',
+  padding: '40px 12px 100px',
+  width: navWidth,
+  '@media': {
+    [max768]: {
+      width: 'calc(100vw)',
+    },
+  },
+});
+
+export const navHeader = style({
+  display: 'flex',
+  flexDirection: 'row',
+  height: '80px',
+  alignItems: 'center',
+  padding: '0px 24px',
+});
+
+export const navListTitle = style({
+  fontFamily: 'Inter',
+  fontStyle: 'normal',
+  fontWeight: 600,
+  color: '#fff',
+  fontSize: 13,
+  marginTop: '8px',
+  paddingLeft: '12px',
+  lineHeight: '32px',
 });

@@ -466,6 +466,7 @@ function ChannelNewThreadComposer() {
 
   useEffect(() => {
     if (!appId || !workspaceId) {
+      console.warn('ChannelNewThreadComposer: appId or workspaceId is missing');
       return;
     }
     actions.subscribeInbox(store);

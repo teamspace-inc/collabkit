@@ -1,0 +1,40 @@
+import { DocDemoContainer } from '../Doc';
+import { SidebarCommentsDemo } from '../demos/SidebarDemo';
+import Usage from './usage/CommentableUsage.tsx?raw';
+import { renderCodeSnippet } from '../CodeEditor';
+import { AdvancedProps } from '../advanced/AdvancedCommon';
+import { DocLink } from '../Doc';
+
+# Commentable
+
+## Enables placing comments on any React Component.
+
+This is the main component you'll use to enable comments on your React components. You'll want to place this throughout your app.
+
+### Usage
+
+Wrap components you'd like to enable comments to be placed on with a Commentable component.
+
+The following example shows how to setup{' '} <code className="ReactNode">Commentable</code> for a component in your app.
+
+{renderCodeSnippet(Usage)}
+
+Comments anchor to the closest Commentable ancestor when placed, this means you should wrap both containers and their children with a Commentable. This is because comments anchor to the relative x, y, position of the component they are placed on.
+
+For example:
+
+- for Tables, you'll need to wrap Commentable around the Table itself and each Table Cell.
+- for Forms, you'll need to wrap the Form with it and also each if the fields within.
+- for Lists, you'll need to wrap the List with it and also each of the items within.
+
+### Object IDs
+
+The `objectId` is a stable unique identifier for the component you want to enable comments on.
+
+You'll typically want to pick an id that corresponds to the database record the component renders.
+
+For example if you're building a CRM and have a table of customers, you might want to use the customer id as the objectId. For example if the customer id is 123, you might use `customer-123` as the objectId. And for a customers name you might use `customer-123-name`.
+
+### Props
+
+<AdvancedProps props={[['objectId', 'string', 'A stable unique indentifier']]} />

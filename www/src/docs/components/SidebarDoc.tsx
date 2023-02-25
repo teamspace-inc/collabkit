@@ -1,5 +1,5 @@
 import { renderCodeSnippet } from '../CodeEditor';
-import { SidebarDemo } from '../demos/SidebarDemo';
+import { SidebarCommentsDemo } from '../demos/SidebarDemo';
 import { DocDemoContainer } from '../Doc';
 
 export function SidebarInboxDoc() {
@@ -19,7 +19,7 @@ export function SidebarInboxDoc() {
     <>
       <h2>A sidebar you can use to show and hide the Inbox easily</h2>
       <DocDemoContainer>
-        <SidebarDemo />
+        <SidebarCommentsDemo />
       </DocDemoContainer>
       <div>
         <h3>Usage</h3>

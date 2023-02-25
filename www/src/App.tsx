@@ -1,6 +1,6 @@
 import { Route } from 'wouter';
 import { HomePage } from './pages/HomePage';
-import { Docs } from './docs/Docs';
+import { DocRoutes } from './docs/DocRoutes';
 import { CollabKitProvider, Config, Workspace } from '@collabkit/react';
 import { SetBreakpointContext } from './hooks/useWindowSize';
 import { UIPage } from './pages/UIPage';
@@ -200,7 +200,7 @@ export default function App() {
         <Route path="/theme-editor" component={ThemeEditorPage} />
         <Route path="/carousel" component={CarouselPage} />
         <Route path="/unsubscribe" component={UnsubscribePage} />
-        <Docs />
+        <DocRoutes />
       </SetBreakpointContext>
     </CollabKitProvider>
   );

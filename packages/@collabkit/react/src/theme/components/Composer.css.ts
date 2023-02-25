@@ -54,7 +54,23 @@ export const placeholder = style({
 });
 
 const paragraph = style({
-  margin: 0,
+  margin: `0 !important`,
+  fontSize: `${fallbackVar(vars.composer.input.fontSize, vars.text.base.fontSize)} !important`,
+  lineHeight: `${fallbackVar(
+    vars.composer.input.lineHeight,
+    vars.text.base.lineHeight
+  )} !important`,
+  position: 'relative',
+  fontFamily: vars.fontFamily,
+});
+
+const span = style({
+  margin: `0 !important`,
+  fontSize: `${fallbackVar(vars.composer.input.fontSize, vars.text.base.fontSize)} !important`,
+  lineHeight: `${fallbackVar(
+    vars.composer.input.lineHeight,
+    vars.text.base.lineHeight
+  )} !important`,
   position: 'relative',
   fontFamily: vars.fontFamily,
 });
@@ -64,6 +80,7 @@ export const lexicalTheme = {
   rtl,
   placeholder,
   paragraph,
+  span,
 };
 
 export const composerGlobalStyles = style({});

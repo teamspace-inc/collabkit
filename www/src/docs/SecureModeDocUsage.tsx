@@ -1,4 +1,4 @@
-import { docStep, inset } from '../styles/Docs.css';
+import { docStep, inset } from '../styles/docs/Docs.css';
 import { renderCodeSnippet } from './CodeEditor';
 
 export function SecureModeDoc() {

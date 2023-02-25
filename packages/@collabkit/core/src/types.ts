@@ -226,7 +226,8 @@ export type Target =
   | InboxItemTarget
   | PopoverInboxTarget
   | PinThreadPreviewTarget
-  | PopoverChannelTarget;
+  | PopoverChannelTarget
+  | ToggleSidebarButtonTarget;
 
 export type PinThreadPreviewTarget = {
   type: 'pinThreadPreview';
@@ -426,6 +427,10 @@ export type ShowSidebarButtonTarget = { type: 'showSidebarButton'; workspaceId: 
 export type HideSidebarButtonTarget = {
   type: 'hideSidebarButton';
   workspaceId: string;
+};
+
+export type ToggleSidebarButtonTarget = {
+  type: 'toggleSidebarButton';
 };
 
 export type CommentEmojiButtonTargets =

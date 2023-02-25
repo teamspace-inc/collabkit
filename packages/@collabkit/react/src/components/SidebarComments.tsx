@@ -2,16 +2,16 @@ import React from 'react';
 import { useIsSidebarOpen } from '../hooks/useIsSidebarOpen';
 import { Authenticated } from './Authenticated';
 import { ChannelNewThreadComposer, ChannelRoot, ChannelThreadList } from './Channel';
-import { Root } from './Root';
 import { Scrollable } from './Scrollable';
 import { SidebarRoot, SidebarHeader, SidebarTitle, SidebarCloseButton } from './Sidebar';
+import { ThemeWrapper } from './ThemeWrapper';
 
 function SidebarComments() {
   return useIsSidebarOpen() ? (
-    <Root>
+    <ThemeWrapper>
       <Authenticated>
         <SidebarRoot>
-          <ChannelRoot channelId="default" style={{ height: '100vh' }}>
+          <ChannelRoot channelId="default" style={{ height: '100%' }}>
             <SidebarHeader>
               <SidebarTitle>Comments</SidebarTitle>
               <div style={{ flex: 1 }} />
@@ -24,7 +24,7 @@ function SidebarComments() {
           </ChannelRoot>
         </SidebarRoot>
       </Authenticated>
-    </Root>
+    </ThemeWrapper>
   ) : null;
 }
 

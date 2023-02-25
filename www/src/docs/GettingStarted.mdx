@@ -1,0 +1,64 @@
+import { docStep, inset } from '../styles/docs/Docs.css';
+import { renderCodeSnippet } from './CodeEditor';
+import { ThreadDemo } from './demos/ThreadDemo';
+import { DocDemoContainer, DocLink } from './Doc';
+import GetStartedDocProviderSnippet from './GetStartedDocProviderSnippet?raw';
+import GetStartedDocThreadSnippet from './GetStartedDocThreadSnippet?raw';
+
+# Getting Started
+
+## A quick tutorial to get you up and running with CollabKit
+
+CollabKit is a fast, unstyled, composable React Comments SDK.
+
+In this tutorial we'll show you how to add commenting to your app.
+
+{/* This guide covers our most common design pattern, [SidebarComments](/docs/components/sidebarcomments). See our list of common commenting design patterns to understand what's right for your app here: [DesignPatterns](/docs/designpatterns). */}
+
+Once you complete this you'll have a fully functioning comment system your users can use to talk to their coworkers inside your product.
+
+Set aside 15 to 20 minutes to get this done.
+
+<h3 className={docStep}>Install @collabkit/react</h3>
+
+{renderCodeSnippet(`npm install @collabkit/react`, [], 'shell')}
+
+<h3 className={docStep}>Import default styles</h3>
+
+In a JS module:
+{renderCodeSnippet(`import '@collabkit/react/dist/style.css';`)}
+
+Or in a CSS file:
+{renderCodeSnippet(`@import '@collabkit/react/dist/style.css';`, [], 'css')}
+
+<h3 className={docStep}>Add our Provider</h3>
+
+Add your APP ID and API Key to the CollabKitProvider. You can find these in the CollabKit dashboard. You should also pass in a user and workspace object.
+
+{renderCodeSnippet(GetStartedDocProviderSnippet)}
+
+<h3 className={docStep}>Add SidebarComments to you app</h3>
+
+{renderCodeSnippet(GetStartedDocThreadSnippet)}
+
+<h3 className={docStep}>Make your components Commentable</h3>
+
+Wrap your components with the `Commentable` component and pass in a unique objectId for the component. This will allow users to comment on the component. You can also pass in a title and description for the component.
+
+{renderCodeSnippet(`import { Commentable } from '@collabkit/react';`)}
+
+<h3 className={docStep}>Try it out!</h3>
+
+Once it's working and shipped you can ask your team to try it out with you.
+
+<h3 className={docStep}>Customise themes</h3>
+
+You can customise the theme of CollabKit by passing in a theme object to the CollabKitProvider. See the [Theme](/docs/theme) page for more details.
+
+<h3 className={docStep}>Generate a production APP ID and API Key</h3>
+
+When you're ready to ship your app you'll need to generate a production App Id and Api Key. You can do this in the CollabKit dashboard.
+
+<h3 className={docStep}>Turn on secure mode</h3>
+
+When you're ready to ship your app you'll need to turn on secure mode. You can do this in the CollabKit dashboard.

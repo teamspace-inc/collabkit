@@ -1,4 +1,4 @@
-import React, { useRef, useState, useLayoutEffect, useEffect } from 'react';
+import React, { useRef, useState, useLayoutEffect, useEffect, useId } from 'react';
 import { loader } from '@monaco-editor/react';
 import type { Monaco } from '@monaco-editor/react';
 import { CollabKitMonacoTheme } from './CollabKitMonacoTheme';
@@ -7,20 +7,37 @@ import { nanoid } from 'nanoid';
 import reactTypes from './react.types.d.ts?raw';
 import collabKitTypes from './types.d.ts?raw';
 import { useBreakpoint } from '../hooks/useWindowSize';
-import { codeEditor, copyButton } from '../styles/CodeEditor.css';
+import { codeEditor, copyButton } from '../styles/docs/CodeEditor.css';
 import Copy from 'phosphor-react/dist/icons/Copy.esm.js';
+import Check from 'phosphor-react/dist/icons/Check.esm.js';
 import { vars } from '../styles/Theme.css';
+import { editor } from 'monaco-editor';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@collabkit/react';
 
 function CopyButton({ codeString }: { codeString: string }) {
+  const [didCopy, setDidCopy] = useState(false);
   return (
-    <div
-      className={copyButton}
-      onClick={() => {
-        navigator.clipboard.writeText(codeString);
-      }}
-    >
-      <Copy color={vars.color.textContrastLow} />
-    </div>
+    <Tooltip>
+      <TooltipTrigger>
+        <div
+          className={copyButton}
+          onClick={() => {
+            navigator.clipboard.writeText(codeString);
+            setDidCopy(true);
+            setTimeout(() => {
+              setDidCopy(false);
+            }, 1000);
+          }}
+        >
+          {didCopy ? (
+            <Check color={vars.color.textContrastLow} />
+          ) : (
+            <Copy color={vars.color.textContrastLow} />
+          )}
+        </div>
+      </TooltipTrigger>
+      <TooltipContent>Copy to clipboard</TooltipContent>
+    </Tooltip>
   );
 }
 
@@ -55,6 +72,17 @@ export function renderCodeSnippet(
   return <CodeSnippet code={code} language={language} hideRanges={hideRanges} />;
 }
 
+// todo load this earlier to avoid the flash
+const MONACO = (async () => {
+  const id = nanoid();
+  const monaco = await loader.init();
+  const model =
+    monaco.editor.getModel(monaco.Uri.parse(`file:///index${id}.tsx`)) ??
+    monaco.editor.createModel('', 'typscript', monaco.Uri.parse(`file:///index${id}.tsx`));
+  monaco.editor.defineTheme('collabkit', CollabKitMonacoTheme);
+  return model;
+})();
+
 export function CodeEditor(props: {
   code: string;
   readOnly?: boolean;
@@ -71,34 +99,36 @@ export function CodeEditor(props: {
   onChange?: (value: string) => void;
 }) {
   const numLines = props.numLines ?? 40;
-  const fontSize = props.fontSize ?? 14;
-  const lineHeight = props.lineHeight ?? 24;
+  const fontSize = props.fontSize ?? 13;
+  const lineHeight = props.lineHeight ?? 20;
   const language = props.language ?? 'typescript';
   const editorRef = useRef<HTMLDivElement>(null);
   const monacoRef = useRef<any>(null);
   const editorInstanceRef = useRef<any>(null);
   const [codeString, setCodeString] = useState(() => props.code ?? ``);
   const [didMount, setDidMount] = useState(false);
+  const modelRef = useRef<editor.ITextModel | null>(null);
+  const [didCalcSize, setDidCalcSize] = useState(false);
 
   const [height, setHeight] = useState(() => lineHeight * numLines);
-  const id = useState(() => nanoid());
+  const id = useId();
 
   useLayoutEffect(() => {
     if (monacoRef.current === null) {
       loader.init().then((monaco: Monaco) => {
         monacoRef.current = monaco;
 
-        const model = monaco.editor.createModel(
-          props.code ?? '',
-          language,
-          monaco.Uri.parse(`file:///index${id}.tsx`)
-        );
-
+        const model =
+          monaco.editor.getModel(monaco.Uri.parse(`file:///index${id}.tsx`)) ??
+          monaco.editor.createModel('', language, monaco.Uri.parse(`file:///index${id}.tsx`));
         monaco.editor.defineTheme('collabkit', CollabKitMonacoTheme);
+
+        modelRef.current = model;
+
         editorInstanceRef.current = monaco.editor.create(editorRef.current!, {
           model,
           fontSize,
-          fontFamily: 'Monaco, Menlo, source-code-pro, monospace',
+          fontFamily: 'Monaco, monospace',
           theme: 'collabkit',
           lineHeight,
           scrollBeyondLastLine: false,
@@ -166,35 +196,47 @@ export function CodeEditor(props: {
             'file:///node_modules/@collabkit/react/index.d.ts'
           );
         }
+        setDidMount(true);
       });
     }
-
-    // hack replace this...
-    setTimeout(() => setDidMount(true), 0);
-    setTimeout(() => setDidMount(false), 100);
-    setTimeout(() => setDidMount(true), 1000);
-  }, [props.code, id]);
+  }, [id]);
 
   useEffect(() => {
-    if (!props.fixedSize) {
-      const numLines = editorRef.current?.getElementsByClassName('view-line').length;
-      if (numLines && numLines > 0) {
-        setHeight(numLines * lineHeight);
-      }
+    if (modelRef.current && didMount) {
+      modelRef.current.setValue(props.code);
+      window.requestAnimationFrame(() => {
+        if (!props.fixedSize) {
+          const numLines = editorRef.current?.getElementsByClassName('view-line').length;
+          if (numLines && numLines > 0) {
+            setHeight(numLines * lineHeight);
+            setDidCalcSize(true);
+          }
+        }
+      });
     }
-  }, [props.fixedSize, codeString.length, id, didMount]);
+  }, [props.code, didMount]);
+
   const breakpoint = useBreakpoint();
 
   return (
     <div
-      className={props.className ?? codeEditor}
+      className={codeEditor({ didMount: didCalcSize })}
       style={{
         ...(props.fixedSize ? {} : { height: height + 32 }),
         ['--vscode-editor-background' as any]: 'blue',
       }}
     >
       {props.copyButton && !['small', 'medium'].includes(breakpoint) ? (
-        <CopyButton codeString={codeString} />
+        <div
+          style={{
+            position: 'absolute',
+            top: 13,
+            right: 16,
+            zIndex: 1,
+          }}
+        >
+          <CopyButton codeString={codeString} />
+        </div>
       ) : null}
       <div ref={editorRef} style={{ ...(props.fixedSize ? {} : { height }) }} />
     </div>

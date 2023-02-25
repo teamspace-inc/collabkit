@@ -1,20 +1,7 @@
 import { ThemeProvider } from '@collabkit/react';
 import { PropsWithChildren, useEffect } from 'react';
 import { Link, LinkProps, LocationHook } from 'wouter';
-import {
-  docBody,
-  docContent,
-  docDemoContainer,
-  docFooter,
-  docFooterLink,
-  docLink,
-  docNav,
-  docRoot,
-  docs,
-  docScrollableContent,
-  docScrollableContentWrap,
-  docTitle,
-} from '../styles/Docs.css';
+import * as styles from '../styles/docs/Docs.css';
 import { dark, vars } from '../styles/Theme.css';
 import { Nav } from './DocNav';
 import ArrowLeft from 'phosphor-react/dist/icons/ArrowLeft.esm.js';
@@ -23,6 +10,7 @@ import { IconContext } from 'phosphor-react/dist/lib/index.esm.js';
 import { store, Header } from '../home/Header';
 import { useIsSmallScreen } from '../hooks/useIsSmallScreen';
 import { SmallHeader } from '../home/small/SmallHeader';
+import { proxy, useSnapshot } from 'valtio';
 
 function pathToHref(path?: string[]) {
   return `/docs/${path
@@ -31,18 +19,50 @@ function pathToHref(path?: string[]) {
     .toLowerCase()}`;
 }
 
+import React, { useCallback, useRef } from 'react';
+import { H3 } from './H3';
+
+export function DocWithSubNav(props: {
+  key: string;
+  next?: string[];
+  prev?: string[];
+  component?: React.FunctionComponent;
+}) {
+  const store = useRef(
+    proxy<{
+      anchors: { [id: string]: string };
+    }>({
+      anchors: {},
+    })
+  );
+
+  const { key, next, prev, component } = props;
+  const handleAnchor = useCallback(
+    (id: string, link: string) => {
+      console.log('anchors', id, link);
+      store.current.anchors = { ...store.current.anchors, [id]: link };
+    },
+    [store]
+  );
+
+  const docContent = component?.({
+    components: { h3: (props: any) => <H3 {...props} onAnchor={handleAnchor} /> },
+  });
+
+  return (
+    <Doc key={key} next={next} prev={prev} store={store.current}>
+      {docContent}
+    </Doc>
+  );
+}
+
 export function DocFooterLink(props: {
   path?: string[];
   style?: React.CSSProperties;
   direction: 'next' | 'prev';
 }) {
   return props.path ? (
-    <div
-      className={docFooterLink}
-      style={{
-        ...props.style,
-      }}
-    >
+    <div className={styles.docFooterLink} style={props.style}>
       <IconContext.Provider value={{ size: 20, weight: 'bold' }}>
         <DocLink href={pathToHref(props.path)}>
           <span
@@ -69,7 +89,7 @@ export function DocFooterLink(props: {
 
 export function DocFooter(props: { next?: string[]; prev?: string[] }) {
   return (
-    <div className={docFooter}>
+    <div className={styles.docFooter}>
       <DocFooterLink path={props.prev} style={{ alignItems: 'flex-start' }} direction="prev" />
       <DocFooterLink path={props.next} style={{ alignItems: 'flex-end' }} direction="next" />
     </div>
@@ -77,32 +97,32 @@ export function DocFooter(props: { next?: string[]; prev?: string[] }) {
 }
 
 export const DocLink = (props: PropsWithChildren<LinkProps<LocationHook>>) => (
-  <Link {...props} className={docLink} />
+  <Link {...props} className={styles.docLink} />
 );
 
 // mint feels too strong here...
 /* background: vars.color.mint, borderColor: vars.color.mint */
 export const DocHeroDemoContainer = (props: React.ComponentPropsWithoutRef<'div'>) => (
   <ThemeProvider theme="dark">
-    <div {...props} className={docDemoContainer} style={{ ...props.style }} />
+    <div {...props} className={styles.docDemoContainer} style={{ ...props.style }} />
   </ThemeProvider>
 );
 
 export const DocDemoContainer = (props: React.ComponentPropsWithoutRef<'div'>) => (
   <ThemeProvider theme="dark">
-    <div {...props} className={docDemoContainer} />
+    <div {...props} className={styles.docDemoContainer} />
   </ThemeProvider>
 );
 
 export const DocTitle = (props: React.ComponentPropsWithoutRef<'h1'>) => (
-  <h1 {...props} className={docTitle} />
+  <h1 {...props} className={styles.docTitle} />
 );
 
 export function Doc(props: {
-  title: string;
   children: React.ReactNode;
-  next: string[] | undefined;
-  prev: string[] | undefined;
+  next?: string[];
+  prev?: string[];
+  store: { anchors?: { [id: string]: string } };
 }) {
   useEffect(() => {
     store.backgroundColor = vars.color.bgContrastFloor;
@@ -110,29 +130,28 @@ export function Doc(props: {
     window.scrollTo(0, 0);
   }, []);
 
+  const { anchors } = useSnapshot(props.store);
+
   const isSmallScreen = useIsSmallScreen();
 
   return (
-    <div
-      className={`${docs} ${dark}`}
-      style={{ background: vars.color.bgContrastFloor, height: '100vh' }}
-    >
-      <div className={docRoot}>
-        <div className={docContent}>
-          {isSmallScreen ? null : <Nav className={docNav} />}
-          <div className={docScrollableContentWrap}>
+    <div className={`${dark}`} style={{ background: vars.color.bgContrastFloor, height: '100vh' }}>
+      <div className={`${styles.docRoot}`}>
+        <div className={styles.docContent}>
+          {isSmallScreen ? null : <Nav className={styles.docNav} />}
+          <div className={styles.docScrollableContentWrap}>
             {isSmallScreen ? (
               <SmallHeader>
-                <Nav className={docNav} />
+                <Nav className={styles.docNav} />
               </SmallHeader>
             ) : (
               <Header />
             )}
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <div style={{ display: 'flex', justifyContent: 'center' }} className={styles.docs}>
               <div>
-                <div className={docScrollableContent}>
-                  <h1 className={docTitle}>{props.title}</h1>
-                  <div className={docBody}>{props.children}</div>
+                {JSON.stringify(anchors)}
+                <div className={styles.docScrollableContent}>
+                  <div className={styles.docBody}>{props.children}</div>
                   <DocFooter next={props.next} prev={props.prev} />
                 </div>
               </div>

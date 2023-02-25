@@ -105,6 +105,7 @@ export const emojiCountTooltip = style({
   letterSpacing: vars.text.small.letterSpacing,
   background: vars.color.surface,
   borderRadius: '6px',
+  color: vars.color.textPrimary,
   boxShadow: vars.shadow.standard,
   border: `1px solid ${vars.color.border}`,
 });
@@ -241,27 +242,30 @@ globalStyle(`${markdown} p`, {
 });
 
 globalStyle(`${markdown} a`, {
-  textDecoration: 'none',
-  fontWeight: `${fallbackVar(vars.mentions.pill.fontWeight, vars.fontWeight.bold)}`,
-  color: `${fallbackVar(vars.mentions.pill.color, vars.color.textPrimary)}`,
-  fontFamily: vars.fontFamily,
+  textDecoration: 'none !important',
+  fontWeight: `${fallbackVar(vars.mentions.pill.fontWeight, vars.fontWeight.bold)} !important`,
+  color: `${fallbackVar(vars.mentions.pill.color, vars.color.textPrimary)}!important`,
+  fontFamily: `${vars.fontFamily} !important`,
 });
 
 globalStyle(`${markdownLinksNotClickable} p`, {
-  margin: '0',
-  padding: '0',
-  fontSize: `${fallbackVar(vars.comment.body.fontSize, vars.text.base.fontSize)}`,
-  fontWeight: `${fallbackVar(vars.comment.body.fontWeight, vars.fontWeight.regular)}`,
-  color: fallbackVar(vars.comment.body.color, vars.color.textPrimary),
-  lineHeight: `${fallbackVar(vars.comment.body.lineHeight, vars.text.base.lineHeight)}`,
-  letterSpacing: `${fallbackVar(vars.comment.body.letterSpacing, vars.text.base.letterSpacing)}`,
-  fontFamily: vars.fontFamily,
+  margin: '0 !important',
+  padding: '0 !important',
+  fontSize: `${fallbackVar(vars.comment.body.fontSize, vars.text.base.fontSize)} !important`,
+  fontWeight: `${fallbackVar(vars.comment.body.fontWeight, vars.fontWeight.regular)} !important`,
+  color: `${fallbackVar(vars.comment.body.color, vars.color.textPrimary)}!important`,
+  lineHeight: `${fallbackVar(vars.comment.body.lineHeight, vars.text.base.lineHeight)} !important`,
+  letterSpacing: `${fallbackVar(
+    vars.comment.body.letterSpacing,
+    vars.text.base.letterSpacing
+  )} !important`,
+  fontFamily: `${vars.fontFamily} !important`,
 });
 
 globalStyle(`${markdownLinksNotClickable} a`, {
-  textDecoration: 'none',
-  fontWeight: `${fallbackVar(vars.mentions.pill.fontWeight, vars.fontWeight.bold)}`,
-  color: `${fallbackVar(vars.mentions.pill.color, vars.color.textPrimary)}`,
-  cursor: 'default',
-  fontFamily: vars.fontFamily,
+  textDecoration: 'none !important',
+  fontWeight: `${fallbackVar(vars.mentions.pill.fontWeight, vars.fontWeight.bold)} !important`,
+  color: `${fallbackVar(vars.mentions.pill.color, vars.color.textPrimary)}!important`,
+  cursor: 'default !important',
+  fontFamily: `${vars.fontFamily} !important`,
 });

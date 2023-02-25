@@ -27,15 +27,15 @@ export function Hero() {
 
   const title = (
     <>
-      Commenting
+      Collaboration
       <br />
       made easy
     </>
   );
   const description = (
     <>
-      Add contextual collaboration to your product
-      <br /> with our customisable React SDK.
+      Add commenting to your product with our
+      <br /> fast, unstyled, and composable Comments SDK.
     </>
   );
 

@@ -1,4 +1,4 @@
-import { ShowSidebarButtonTarget } from '@collabkit/core';
+import { ToggleSidebarButtonTarget } from '@collabkit/core';
 import { useSnapshot } from 'valtio';
 import { useApp } from '../useApp';
 import { useIsAuthenticated } from '../useIsAuthenticated';
@@ -12,9 +12,8 @@ export function useSidebarButton() {
     ? {
         onClick: (e: React.MouseEvent) => {
           if (workspaceId) {
-            const target: ShowSidebarButtonTarget = {
-              type: 'showSidebarButton',
-              workspaceId,
+            const target: ToggleSidebarButtonTarget = {
+              type: 'toggleSidebarButton',
             };
             if (e.button === 0) {
               events.onClick(e, { target });

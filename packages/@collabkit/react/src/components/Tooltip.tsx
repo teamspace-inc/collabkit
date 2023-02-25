@@ -15,6 +15,7 @@ import {
 } from '@floating-ui/react';
 import type { Placement } from '@floating-ui/react';
 import { root } from '../theme/components/Tooltip.css';
+import { ThemeWrapper } from './ThemeWrapper';
 
 interface TooltipOptions {
   initialOpen?: boolean;
@@ -137,18 +138,20 @@ const TooltipContent = React.forwardRef<HTMLDivElement, React.HTMLProps<HTMLDivE
     return (
       <FloatingPortal id="collabkit-floating-root">
         {context.open && (
-          <div
-            ref={ref}
-            style={{
-              position: context.strategy,
-              top: context.y ?? 0,
-              left: context.x ?? 0,
-              visibility: context.x == null ? 'hidden' : 'visible',
-              ...props.style,
-            }}
-            className={root({ placement: context.placement })}
-            {...context.getFloatingProps(props)}
-          />
+          <ThemeWrapper>
+            <div
+              ref={ref}
+              style={{
+                position: context.strategy,
+                top: context.y ?? 0,
+                left: context.x ?? 0,
+                visibility: context.x == null ? 'hidden' : 'visible',
+                ...props.style,
+              }}
+              className={root({ placement: context.placement })}
+              {...context.getFloatingProps(props)}
+            />
+          </ThemeWrapper>
         )}
       </FloatingPortal>
     );

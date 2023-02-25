@@ -137,6 +137,9 @@ export function createEvents(store: Store) {
               actions.closeAllPopovers(store);
               actions.deselectAll(store);
               break;
+            case 'toggleSidebarButton':
+              actions.toggleSidebar(store);
+              break;
             case 'showSidebarButton':
               actions.showSidebar(store);
               break;

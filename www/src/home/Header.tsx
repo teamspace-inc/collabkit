@@ -93,7 +93,7 @@ function HeaderRightLinks() {
       <ScrollToLink className={a} href="/#Contact" selector="#Contact">
         Contact
       </ScrollToLink>
-      <Link className={a} onClick={() => setLocation('/docs/introduction')}>
+      <Link className={a} onClick={() => setLocation('/docs/gettingstarted')}>
         Docs
       </Link>
       <CTA />

@@ -1,14 +1,12 @@
-import { Inbox, SidebarInboxButton, Sidebar } from '@collabkit/react';
+import { ToggleSidebarCommentsButton, SidebarComments } from '@collabkit/react';
 
-export function SidebarDemo() {
+export function SidebarCommentsDemo() {
   return (
     <>
       <div style={{ position: 'absolute', top: 12, left: 12 }}>
-        <SidebarInboxButton />
+        <ToggleSidebarCommentsButton />
       </div>
-      <Sidebar>
-        <Inbox />
-      </Sidebar>
+      <SidebarComments />
     </>
   );
 }

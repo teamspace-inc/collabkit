@@ -1,5 +1,5 @@
 import { Thread, ThemeProvider } from '@collabkit/react';
-import { docDemoOverlay } from '../styles/Docs.css';
+import { docDemoOverlay } from '../styles/docs/Docs.css';
 import { DocDemoContainer, DocLink } from './Doc';
 
 const threadSize = { width: 280, height: 320 };

@@ -34,6 +34,8 @@ import { Scrollable } from './components/Scrollable';
 import { CommentList } from './components/CommentList';
 import { Button } from './components/Button';
 
+export * from './hooks/useSidebarCommentsButton';
+
 export * from './components/Comment';
 export * from './components/composer/Composer';
 export * from './components/Inbox';
@@ -53,6 +55,7 @@ export * from './components/Markdown';
 export * from './components/Channel';
 export * from './components/Root';
 export * from './components/AddCommentButton';
+export * from './components/Tooltip';
 
 export * from './components/Commentable';
 export * from './components/SidebarComments';

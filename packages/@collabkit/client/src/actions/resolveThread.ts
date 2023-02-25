@@ -1,6 +1,6 @@
 import type { Store } from '@collabkit/core';
+import { closePopoverContent } from './closePopoverContent';
 import { createEvent } from './createEvent';
-import { actions } from './index';
 
 export async function resolveThread(
   store: Store,
@@ -16,7 +16,7 @@ export async function resolveThread(
     console.warn('CollabKit: cannot resolve thread in read-only mode');
     return;
   }
-  actions.closePopoverContent(store, { target: { type: 'thread', workspaceId, threadId } });
+  closePopoverContent(store, { target: { type: 'thread', workspaceId, threadId } });
   delete store.workspaces[workspaceId].openThreads[threadId];
   const event = await createEvent(store, {
     event: {

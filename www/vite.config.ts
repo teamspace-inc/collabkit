@@ -1,33 +1,41 @@
 import { resolve } from 'path';
-import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin';
+import mdx from '@mdx-js/rollup';
+import { remarkCodeHike } from '@code-hike/mdx';
 
-export default defineConfig(() => {
-  return {
-    plugins: [react(), vanillaExtractPlugin() as any],
-    resolve: {
-      alias: {
-        '@collabkit/react': resolve(__dirname, '../packages/@collabkit/react/src/index.ts'),
-        'rehype-react': resolve(
-          __dirname,
-          '../packages/@collabkit/react/src/vendor/rehype-react.bundle.js'
-        ),
-        'remark-rehype': resolve(
-          __dirname,
-          '../packages/@collabkit/react/src/vendor/remark-rehype.bundle.js'
-        ),
-      },
+import { createRequire } from 'node:module';
+const require = createRequire(import.meta.url);
+const theme = require('shiki/themes/dark-plus.json');
+// import { CollabKitMonacoTheme } from './src/docs/CollabKitMonacoTheme';
+
+export default {
+  plugins: [
+    react(),
+    vanillaExtractPlugin(),
+    mdx({ remarkPlugins: [[remarkCodeHike, { theme, lineNumbers: true, showCopyButton: true }]] }),
+  ],
+  resolve: {
+    alias: {
+      '@collabkit/react': resolve(__dirname, '../packages/@collabkit/react/src/index.ts'),
+      'rehype-react': resolve(
+        __dirname,
+        '../packages/@collabkit/react/src/vendor/rehype-react.bundle.js'
+      ),
+      'remark-rehype': resolve(
+        __dirname,
+        '../packages/@collabkit/react/src/vendor/remark-rehype.bundle.js'
+      ),
     },
-    optimizeDeps: {
-      include: ['react/jsx-runtime'],
-    },
-    build: {
-      sourcemap: false,
-    },
-    server: {
-      port: 8000,
-    },
-    envDir: resolve(__dirname, '../env'),
-  };
-});
+  },
+  optimizeDeps: {
+    include: ['react/jsx-runtime'],
+  },
+  build: {
+    sourcemap: false,
+  },
+  server: {
+    port: 8000,
+  },
+  envDir: resolve(__dirname, '../env'),
+};

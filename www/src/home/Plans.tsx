@@ -25,7 +25,7 @@ function FeatureList(props: { children: React.ReactNode }) {
 export const PLANS = (
   <>
     <div className={card}>
-      <h4>Trial</h4>
+      <h4>Starter</h4>
       <V12 />
       <h2>
         Free
@@ -37,14 +37,13 @@ export const PLANS = (
 
       <FeatureList>
         <h5>
-          100 <br />
-          <small>monthly active users</small>
+          10 <br />
+          <small>workspaces</small>
         </h5>
         <h5>All the essentials</h5>
-
         <h5>Customize UI</h5>
       </FeatureList>
-      <small>$0.50 per additonal user.</small>
+      <small>$5 per additonal workspace.</small>
       <V12 />
       <GetStartedButton
         type="secondary"
@@ -58,21 +57,20 @@ export const PLANS = (
       <h4 style={{ color: vars.color.teal }}>Startup</h4>
       <V12 />
       <h2>
-        $250 <br />
+        $100 <br />
       </h2>
       <V12 />
       <small>Per month</small>
       <V12 />
       <FeatureList>
         <h5>
-          500 <br />
-          <small>monthly active users</small>
+          30 <br />
+          <small>workspaces</small>
         </h5>
         <h5>All the essentials</h5>
-
         <h5>Customize UI</h5>
       </FeatureList>
-      <small>$0.50 per additonal user.</small>
+      <small>$5 per additonal workspace.</small>
       <V12 />
       <RequestDemoButton
         style={{
@@ -87,22 +85,22 @@ export const PLANS = (
       <h4 style={{ color: vars.color.indigo }}>Pro</h4>
       <V12 />
       <h2>
-        $500 <br />
+        $450 <br />
       </h2>
       <V12 />
       <small>Per month</small>
       <V12 />
       <FeatureList>
         <h5>
-          1,000 <br />
-          <small>monthly active users</small>
+          100 <br />
+          <small>workspaces</small>
         </h5>
         <h5>All the essentials</h5>
 
         <h5>Customize UI</h5>
         <h5>Slack Support</h5>
       </FeatureList>
-      <small>$0.50 per additonal user.</small>
+      <small>$5 per additional workspace.</small>
       <V12 />
       <RequestDemoButton
         style={{
@@ -114,7 +112,7 @@ export const PLANS = (
       />
     </div>
     <div className={card}>
-      <h4 style={{ color: vars.color.violet }}>Scale</h4>
+      <h4 style={{ color: vars.color.violet }}>Enterprise</h4>
       <V12 />
       <h2>Custom</h2>
       <br />
@@ -122,13 +120,14 @@ export const PLANS = (
       <FeatureList>
         <h5>
           Unlimited <br />
-          <small>monthly active users</small>
+          <small>workspaces</small>
         </h5>
         <h5>All the essentials</h5>
-
         <h5>Customize UI</h5>
         <h5>Slack Support</h5>
-        <h5>API</h5>
+        <h5>Custom Components</h5>
+        <h5>SOC 2</h5>
+        <h5>SLA</h5>
       </FeatureList>
       <br />
       <br />

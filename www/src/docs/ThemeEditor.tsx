@@ -1,6 +1,6 @@
 import { CodeEditor } from './CodeEditor';
 import { useEffect, useState } from 'react';
-import { docs, themeDemoContainer } from '../styles/Docs.css';
+import { docs, themeDemoContainer } from '../styles/docs/Docs.css';
 import ExampleThemeRaw from './ExampleTheme.json?raw';
 import { ThemeWrapper, ThemeProvider, CustomTheme } from '@collabkit/react';
 
@@ -21,14 +21,14 @@ import {
   root,
 } from '../styles/ThemeEditor.css';
 
-import { SidebarDemo } from './demos/SidebarDemo';
+import { SidebarCommentsDemo } from './demos/SidebarDemo';
 import { Link } from 'wouter';
 
 const components = [
   { name: 'Thread', component: ThreadDemo },
   { name: 'Inbox', component: InboxDemo },
   { name: 'InboxButton', component: InboxButtonDemo },
-  { name: 'Sidebar', component: SidebarDemo },
+  { name: 'Sidebar', component: SidebarCommentsDemo },
 ];
 
 export function ThemeEditor() {
