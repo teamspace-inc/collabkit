@@ -1,0 +1,38 @@
+import { CollabKitProvider, Thread, ThemeProvider } from '@collabkit/react';
+import { docDemoOverlay } from '../styles/docs/Docs.css';
+import { DocDemoContainer, DocLink } from './Doc';
+import { ThemeName } from './ThemeName';
+
+# Customisation
+
+## Completely match your apps look and feel
+
+### What is a theme?
+
+A theme is a set of styles that define the look and feel of CollabKit. It includes colors, fonts, and spacing. It can be used to match the look and feel of your app. Almost every single aspect of CollabKit can be customised.
+
+### Built-in themes
+
+CollabKit comes with two builtin themes. Light and Dark. Use these by passing light or dark to the `<CollabKitProvider />`.
+
+<DocDemoContainer style={{ position: 'relative' }}>
+  <ThemeProvider theme="light">
+    <ThemeName>Light Theme</ThemeName>
+    <div style={{ width: 280, height: 320 }}>
+      <Thread threadId={'thread1'} autoFocus={false} />
+    </div>
+  </ThemeProvider>
+</DocDemoContainer>
+
+<DocDemoContainer style={{ position: 'relative' }}>
+  <ThemeName>Dark Theme</ThemeName>
+  <div style={{ width: 280, height: 320 }}>
+    <ThemeProvider theme="dark">
+      <Thread threadId={'thread1'} autoFocus={false} />
+    </ThemeProvider>
+  </div>
+</DocDemoContainer>
+
+### Writing your own custom theme
+
+Use our <DocLink href="/theme-editor">Theme Editor</DocLink> to to match your apps look and feel entirely.

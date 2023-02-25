@@ -6,6 +6,7 @@ import SidebarComments from './components/SidebarComments.mdx';
 import CollabKitProvider from './components/CollabKitProvider.mdx';
 import Thread from './components/Thread.mdx';
 import Commentable from './components/Commentable.mdx';
+import Customisation from './Customisation.mdx';
 
 import { RootDocNode } from './DocRoutes';
 
@@ -22,17 +23,18 @@ export const DOCS: RootDocNode = {
   //     'Table Views': { component: TableViewsDoc },
   //   },
   // },
-  Foundational: {
-    title: 'Foundational',
+  Core: {
+    title: 'Core',
     children: {
       CollabKitProvider: { component: CollabKitProvider },
       Workspaces: { component: Workspaces },
       Security: { component: SecureMode },
       Notifications: { component: Notifications },
+      Customisation: { component: Customisation },
     },
   },
-  KeyComponents: {
-    title: 'Key Components',
+  Components: {
+    title: 'Components',
     children: {
       SidebarComments: { component: SidebarComments },
       Commentable: { component: Commentable },
@@ -61,8 +63,8 @@ export const DOCS: RootDocNode = {
   //     CreateComment: { component: CommentAPI },
   //   },
   // },
-  Components: {
-    title: 'Components',
+  Other: {
+    title: 'Other',
     children: {
       Thread: { component: Thread },
       // Inbox: { component: InboxDoc },
