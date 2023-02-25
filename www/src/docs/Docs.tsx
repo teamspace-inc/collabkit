@@ -6,7 +6,7 @@ import SidebarComments from './components/SidebarComments.mdx';
 import CollabKitProvider from './components/CollabKitProvider.mdx';
 import Thread from './components/Thread.mdx';
 import Commentable from './components/Commentable.mdx';
-import Customisation from './Customisation.mdx';
+import Themes from './Themes.mdx';
 
 import { RootDocNode } from './DocRoutes';
 
@@ -30,7 +30,7 @@ export const DOCS: RootDocNode = {
       Workspaces: { component: Workspaces },
       Security: { component: SecureMode },
       Notifications: { component: Notifications },
-      Customisation: { component: Customisation },
+      Themes: { component: Themes },
     },
   },
   Components: {
@@ -53,10 +53,6 @@ export const DOCS: RootDocNode = {
   //     // useUnreadThreadsCount: { component: UseUnreadThreadsCountDoc },
   //   },
   // },
-
-  // Workspaces: { component: WorkspacesDoc },
-  // Notifications: { component: NotificationsDoc },
-  // Customisation: { component: CustomisationDoc },
   // 'Api Reference': {
   //   title: 'HTTP API',
   //   children: {
@@ -75,4 +71,10 @@ export const DOCS: RootDocNode = {
       // Facepile: { component: FacepileDoc },
     },
   },
+  // 'Api Reference': {
+  //   title: 'HTTP API',
+  //   children: {
+  //     CreateComment: { component: CommentAPI },
+  //   },
+  // },
 };
