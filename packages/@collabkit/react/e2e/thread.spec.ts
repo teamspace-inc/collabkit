@@ -326,6 +326,21 @@ test.describe('Sidebar Comments', () => {
     await assertPinCount(page, 2);
     await assertCommentPinCount(page, 2);
   });
+
+  test('can pin chart with a comment and reply twice', async ({ context }) => {
+    const { page } = await createAppAndVisitDashboardAsUser(context, alice);
+    await openSidebarComments(page);
+    await pinComment(page, page.locator('svg.recharts-surface'), 'This is a pinned comment');
+    await assertPinCount(page, 1);
+    await assertCommentPinCount(page, 1);
+    await reply(page, 'This is a pinned comment', 'This is a reply');
+    await page.keyboard.type('This is a second reply');
+    await page.keyboard.press('Enter');
+    await page.waitForTimeout(500);
+    await page.mouse.move(0, 0);
+    await page.mouse.click(0, 0);
+    await hasComment(page, { body: 'This is a second reply' });
+  });
 });
 
 test.describe('Thread', () => {

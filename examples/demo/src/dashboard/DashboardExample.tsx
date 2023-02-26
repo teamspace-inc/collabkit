@@ -249,7 +249,7 @@ export function DashboardExample() {
             <Title>Dashboard</Title>
             <Text>View core metrics on the state of your company.</Text>
           </Block>
-          {/* <Debug /> */}
+          <Debug />
           {/* <PopoverInbox /> */}
           {/* <PopoverChannel /> */}
           <div className="px-2"></div>
