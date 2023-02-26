@@ -148,7 +148,10 @@ function CommentActionsReplyButton() {
   return (
     <Tooltip>
       <TooltipTrigger>
-        <IconButton onClick={(e) => events.onClick(e, { target })}>
+        <IconButton
+          onClick={(e) => events.onClick(e, { target })}
+          data-testid="collabkit-comment-actions-reply-button"
+        >
           <ArrowBendDownRight weight="regular" />
         </IconButton>
       </TooltipTrigger>

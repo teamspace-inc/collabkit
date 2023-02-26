@@ -209,6 +209,20 @@ async function deleteComment(page: Page, text: string) {
   await page.waitForTimeout(500);
 }
 
+async function reply(page: Page, source: string, reply: string) {
+  await hoverComment(page, { body: source });
+  await page.getByTestId('collabkit-comment-actions-reply-button').click();
+  const composer = await page.locator(
+    '[data-testid="collabkit-channel-composer-root"] [contenteditable=true]'
+  );
+  await composer.type(reply);
+  await page.keyboard.press('Enter');
+  await page.waitForTimeout(500);
+  await page.mouse.move(0, 0);
+  await page.mouse.click(0, 0);
+  await hasComment(page, { body: reply });
+}
+
 async function comment(page: Page, text: string) {
   const composer = await getComposer(page);
   await composer.click({ force: true });
@@ -288,6 +302,15 @@ test.describe('Sidebar Comments', () => {
     await pinComment(page, page.getByTestId('dashboard-kpi-profit'), 'Profit comment');
     await assertPinCount(page, 2);
     await assertCommentPinCount(page, 2);
+  });
+
+  test('can pin chart with a comment and reply', async ({ context }) => {
+    const { page } = await createAppAndVisitDashboardAsUser(context, alice);
+    await openSidebarComments(page);
+    await pinComment(page, page.locator('svg.recharts-surface'), 'This is a pinned comment');
+    await assertPinCount(page, 1);
+    await assertCommentPinCount(page, 1);
+    await reply(page, 'This is a pinned comment', 'This is a reply');
   });
 });
 

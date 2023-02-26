@@ -89,12 +89,11 @@ function ComposerRoot(props: {
     <ProfileContext.Provider value={userId}>
       <TargetContext.Provider value={target}>
         <div
-          data-testid={props['data-testid'] ?? 'collabkit-composer-root'}
-          className={props.className ?? styles.root}
+          data-testid="collabkit-composer-root"
+          className={styles.root}
+          {...props}
           onClick={onClick}
-        >
-          {props.children}
-        </div>
+        />
       </TargetContext.Provider>
     </ProfileContext.Provider>
   );
