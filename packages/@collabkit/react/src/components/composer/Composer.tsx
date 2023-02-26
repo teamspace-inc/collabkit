@@ -109,7 +109,6 @@ function ComposerContentEditable(props: { autoFocus?: boolean; className?: strin
 
   return (
     <div
-      data-testid="collabkit-composer-contenteditable"
       style={{ display: 'contents' }}
       onFocus={(e) => events.onFocus(e, { target })}
       onBlur={(e) => events.onBlur(e, { target })}

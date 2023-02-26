@@ -55,20 +55,22 @@ function KpiCardGrid() {
     <ColGrid numColsMd={2} numColsLg={3} marginTop="mt-6" gapX="gap-x-6" gapY="gap-y-6">
       {kpiData.map((item) => (
         <Commentable key={item.title} objectId={`dashboard-kpi-${item.title}`}>
-          <Card key={item.title}>
-            <Flex alignItems="items-start">
-              <Block truncate={true}>
-                <Text>{item.title}</Text>
-                <Metric truncate={true}>{item.metric}</Metric>
-              </Block>
-              <BadgeDelta deltaType={item.deltaType} text={item.delta} />
-            </Flex>
-            <Flex marginTop="mt-4" spaceX="space-x-2">
-              <Text truncate={true}>{`${item.progress}% (${item.metric})`}</Text>
-              <Text>{item.target}</Text>
-            </Flex>
-            <ProgressBar percentageValue={item.progress} marginTop="mt-2" />
-          </Card>
+          <div data-testid={`dashboard-kpi-${item.title.toLowerCase()}`}>
+            <Card key={item.title}>
+              <Flex alignItems="items-start">
+                <Block truncate={true}>
+                  <Text>{item.title}</Text>
+                  <Metric truncate={true}>{item.metric}</Metric>
+                </Block>
+                <BadgeDelta deltaType={item.deltaType} text={item.delta} />
+              </Flex>
+              <Flex marginTop="mt-4" spaceX="space-x-2">
+                <Text truncate={true}>{`${item.progress}% (${item.metric})`}</Text>
+                <Text>{item.target}</Text>
+              </Flex>
+              <ProgressBar percentageValue={item.progress} marginTop="mt-2" />
+            </Card>
+          </div>
         </Commentable>
       ))}
     </ColGrid>
