@@ -24,7 +24,17 @@ describe('focus & blur', async () => {
   });
 
   test('blur', () => {
-    blur(store as Store);
+    blur(store as Store, { target });
     expect(store.focusedId).toBe(null);
+  });
+
+  test('focus', () => {
+    focus(store as Store, { target });
+    expect(store.focusedId).toBe(target);
+  });
+
+  test('blur different target', () => {
+    blur(store as Store, { target: { ...target, type: 'thread' } });
+    expect(store.focusedId).toBe(target);
   });
 });
