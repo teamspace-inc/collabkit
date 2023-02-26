@@ -193,20 +193,28 @@ async function saveEditedComment(page: Page, nth: number = 0) {
   await page.getByTestId('collabkit-comment-save-button').nth(nth).click();
 }
 
-async function assertOnePin(page: Page) {
-  expect(await page.getByTestId('collabkit-pin-marker').count()).toBe(1);
+async function assertPinCount(page: Page, count: number) {
+  expect(await page.getByTestId('collabkit-pin-marker').count()).toBe(count);
 }
 
-async function assertNoPinMarker(page: Page) {
-  expect(await page.getByTestId('collabkit-pin-marker').count()).toBe(0);
+async function assertCommentPinCount(page: Page, count: number) {
+  expect(await page.getByTestId('collabkit-comment-pin').count()).toBe(count);
+}
+
+async function assertOnePin(page: Page) {
+  await assertPinCount(page, 1);
+}
+
+async function assertNoPins(page: Page) {
+  await assertPinCount(page, 0);
 }
 
 async function assertNoCommentPin(page: Page) {
-  expect(await page.getByTestId('collabkit-comment-pin').count()).toBe(0);
+  await assertCommentPinCount(page, 0);
 }
 
 async function assertOneCommentPin(page: Page) {
-  expect(await page.getByTestId('collabkit-comment-pin').count()).toBe(1);
+  await assertCommentPinCount(page, 1);
 }
 
 async function placePin(page: Page, locator: Locator) {
@@ -259,6 +267,13 @@ async function openSidebarComments(page: Page) {
   await page.getByTestId('collabkit-sidebar-comments-toggle-button').click();
 }
 
+async function pinComment(page: Page, locator: Locator, text: string) {
+  await startPinning(page);
+  await placePin(page, locator);
+  await page.waitForTimeout(500);
+  await comment(page, text);
+}
+
 test.describe('Sidebar Comments', () => {
   test('renders page title', async ({ context }) => {
     const { page } = await createAppAndVisitDashboardAsUser(context, alice);
@@ -268,19 +283,20 @@ test.describe('Sidebar Comments', () => {
   test('can pin chart', async ({ context }) => {
     const { page } = await createAppAndVisitDashboardAsUser(context, alice);
     await openSidebarComments(page);
-    await startPinning(page);
-    await placePin(page, page.locator('svg.recharts-surface'));
-    await page.waitForTimeout(500);
-    await comment(page, 'This is a pinned comment');
+    await pinComment(page, page.locator('svg.recharts-surface'), 'This is a pinned comment');
     await assertOnePin(page);
     await assertOneCommentPin(page);
     await deleteComment(page, 'This is a pinned comment');
     await assertNoCommentPin(page);
-    await assertNoPinMarker(page);
+    await assertNoPins(page);
   });
 
   test('can pin chart with multiple comments', async ({ context }) => {
-    await createAppAndVisitDashboardAsUser(context, alice);
+    const { page } = await createAppAndVisitDashboardAsUser(context, alice);
+    await openSidebarComments(page);
+    await pinComment(page, page.locator('svg.recharts-surface'), 'This is a pinned comment');
+    await assertOnePin(page);
+    await assertOneCommentPin(page);
   });
 });
 
