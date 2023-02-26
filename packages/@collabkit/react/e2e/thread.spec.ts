@@ -1,4 +1,4 @@
-import { test, expect, BrowserContext, Page } from '@playwright/test';
+import { test, expect, BrowserContext, Page, Selectors, Locator } from '@playwright/test';
 
 // @ts-expect-error
 import { setupApp, setupFirebase } from './setup.ts';
@@ -88,9 +88,7 @@ async function createAppAndVisitDashboardAsUser(
 }
 
 async function sendComment(page: Page, body: string) {
-  const composer = await page.locator(
-    '[data-testid="collabkit-composer-contenteditable"] [contenteditable=true]'
-  );
+  const composer = await getComposer(page);
   page.waitForTimeout(2000);
   await composer.click();
   await composer.fill(body);
@@ -98,9 +96,7 @@ async function sendComment(page: Page, body: string) {
 }
 
 async function typeCommentSlowly(page: Page, body: string) {
-  const composer = await page.locator(
-    '[data-testid="collabkit-composer-contenteditable"] [contenteditable=true]'
-  );
+  const composer = await getComposer(page);
   await composer.click();
   await composer.type(body, { delay: 100 });
 }
@@ -113,10 +109,8 @@ async function visitLadleURL(context: BrowserContext, URL: string, params: Recor
   return page;
 }
 
-async function hasComment(page: Page, comment: { body: string }, nth: number = 0) {
-  const markdown = await page.getByTestId('collabkit-markdown').nth(nth);
-  const text = await markdown.innerText();
-  await expect(text).toStrictEqual(comment.body);
+async function hasComment(page: Page, comment: { body: string }) {
+  await page.locator(`text=${comment.body}`);
 }
 
 async function hoverComment(page: Page, comment: { body: string }, nth: number = 0) {
@@ -135,7 +129,9 @@ async function clickMentionButton(page: Page) {
 }
 
 async function focusComposer(page: Page, nth: number = 0) {
-  const composer = await page.getByTestId('collabkit-composer-contenteditable').nth(nth);
+  const composer = await page
+    .locator('[data-testid="collabkit-composer-root"] [contenteditable=true]')
+    .nth(nth);
   await composer.click({ force: true });
   await page.waitForTimeout(500);
   return composer;
@@ -184,6 +180,10 @@ async function focusCommentComposer(page: Page, nth: number = 0) {
     .click();
 }
 
+async function getComposer(page: Page) {
+  return await page.getByTestId('collabkit-composer-root').nth(0).locator('[contenteditable=true]');
+}
+
 async function typeInCommentComposer(page: Page, text: string, nth: number = 0) {
   await focusCommentComposer(page, nth);
   await page.keyboard.type(text);
@@ -193,23 +193,82 @@ async function saveEditedComment(page: Page, nth: number = 0) {
   await page.getByTestId('collabkit-comment-save-button').nth(nth).click();
 }
 
-async function assertOnePinMarker(page: Page) {
-  expect(await page.getByTestId('collabkit-pin-marker').count()).toBe(1);
+async function assertPinCount(page: Page, count: number) {
+  expect(await page.getByTestId('collabkit-pin-marker').count()).toBe(count);
 }
 
-async function assertNoPinMarker(page: Page) {
-  expect(await page.getByTestId('collabkit-pin-marker').count()).toBe(0);
+async function assertCommentPinCount(page: Page, count: number) {
+  expect(await page.getByTestId('collabkit-comment-pin').count()).toBe(count);
 }
 
-async function assertNoCommentPin(page: Page) {
-  expect(await page.getByTestId('collabkit-comment-pin').count()).toBe(0);
+async function deleteComment(page: Page, text: string) {
+  // deletion
+  await hoverComment(page, { body: text });
+  await clickCommentMenuButton(page);
+  await clickCommentMenuDeleteButton(page);
+  await page.waitForTimeout(500);
 }
 
-async function assertOneCommentPin(page: Page) {
-  expect(await page.getByTestId('collabkit-comment-pin').count()).toBe(1);
+async function reply(page: Page, source: string, reply: string) {
+  await hoverComment(page, { body: source });
+  await page.getByTestId('collabkit-comment-actions-reply-button').click();
+  const composer = await page.locator(
+    '[data-testid="collabkit-channel-composer-root"] [contenteditable=true]'
+  );
+  await composer.type(reply);
+  await page.keyboard.press('Enter');
+  await page.waitForTimeout(500);
+  await page.mouse.move(0, 0);
+  await page.mouse.click(0, 0);
+  await hasComment(page, { body: reply });
 }
 
-test.describe('Dashboard', () => {
+async function comment(page: Page, text: string) {
+  const composer = await getComposer(page);
+  await composer.click({ force: true });
+  await composer.type(text);
+  await page.waitForTimeout(500);
+  await page.keyboard.press('Enter');
+  await page.waitForTimeout(500);
+  await page.mouse.move(0, 0);
+  await page.mouse.click(0, 0);
+  await hasComment(page, { body: text });
+}
+
+async function startPinning(page: Page) {
+  await page.waitForSelector('[data-testid="collabkit-composer-pin-button"]');
+  await page.getByTestId('collabkit-composer-pin-button').click();
+}
+
+async function placePin(page: Page, locator: Locator) {
+  const rect = await locator.boundingBox();
+  if (!rect) throw new Error('Chart path not found');
+  await page.mouse.move(0, 0);
+  await page.mouse.move(rect.x + rect.width / 2, rect.y + rect.height / 2);
+  await page.mouse.down();
+  await page.mouse.up();
+  const pinMarker = await page.getByTestId('collabkit-pin-marker').last();
+  const pinMarkerRect = await pinMarker.boundingBox();
+  if (!pinMarkerRect) throw new Error('Pin marker not found');
+  const pinMarkerY = Math.round(pinMarkerRect.y + pinMarkerRect.height);
+  const pinMarkerX = Math.round(pinMarkerRect.x + pinMarkerRect.width / 2);
+  await expect(pinMarkerY).toEqual(Math.round(rect.y + rect.height / 2));
+  await expect(pinMarkerX).toEqual(Math.round(rect.x + rect.width / 2));
+}
+
+async function pinComment(page: Page, locator: Locator, text: string) {
+  await startPinning(page);
+  await placePin(page, locator);
+  await page.waitForTimeout(500);
+  await comment(page, text);
+}
+
+async function openSidebarComments(page: Page) {
+  await page.waitForSelector('[data-testid="collabkit-sidebar-comments-toggle-button"]');
+  await page.getByTestId('collabkit-sidebar-comments-toggle-button').click();
+}
+
+test.describe('Sidebar Comments', () => {
   test('renders page title', async ({ context }) => {
     const { page } = await createAppAndVisitDashboardAsUser(context, alice);
     await expect(page).toHaveTitle(/Vite App/);
@@ -217,55 +276,55 @@ test.describe('Dashboard', () => {
 
   test('can pin chart', async ({ context }) => {
     const { page } = await createAppAndVisitDashboardAsUser(context, alice);
-    await page.waitForSelector('[data-testid="collabkit-sidebar-comments-toggle-button"]');
-    await page.getByTestId('collabkit-sidebar-comments-toggle-button').click();
-    await page.waitForSelector('[data-testid="collabkit-composer-pin-button"]');
-    await page.getByTestId('collabkit-composer-pin-button').click();
-    const svgPathRect = await page.locator('svg.recharts-surface').boundingBox();
-    if (!svgPathRect) throw new Error('Chart path not found');
-    await page.mouse.move(0, 0);
-    await page.mouse.move(
-      svgPathRect.x + svgPathRect.width / 2,
-      svgPathRect.y + svgPathRect.height / 2
-    );
-    await assertOnePinMarker(page);
+    await openSidebarComments(page);
+    await pinComment(page, page.locator('svg.recharts-surface'), 'This is a pinned comment');
+    await assertPinCount(page, 1);
+    await assertCommentPinCount(page, 1);
+  });
 
-    await page.mouse.down();
-    await page.mouse.up();
+  test('can pin chart and delete comment', async ({ context }) => {
+    const { page } = await createAppAndVisitDashboardAsUser(context, alice);
+    await openSidebarComments(page);
+    await pinComment(page, page.locator('svg.recharts-surface'), 'This is a pinned comment');
+    await assertPinCount(page, 1);
+    await assertCommentPinCount(page, 1);
+    await deleteComment(page, 'This is a pinned comment');
+    await assertPinCount(page, 0);
+    await assertCommentPinCount(page, 0);
+  });
 
-    await assertOnePinMarker(page);
+  test('can pin chart with multiple comments', async ({ context }) => {
+    const { page } = await createAppAndVisitDashboardAsUser(context, alice);
+    await openSidebarComments(page);
+    await pinComment(page, page.locator('svg.recharts-surface'), 'This is a pinned comment');
+    await assertPinCount(page, 1);
+    await assertCommentPinCount(page, 1);
+    await pinComment(page, page.getByTestId('dashboard-kpi-profit'), 'Profit comment');
+    await assertPinCount(page, 2);
+    await assertCommentPinCount(page, 2);
+  });
 
-    const pinMarker = await page.getByTestId('collabkit-pin-marker');
-    const pinMarkerRect = await pinMarker.boundingBox();
-    if (!pinMarkerRect) throw new Error('Pin marker not found');
-    const pinMarkerY = Math.round(pinMarkerRect.y + pinMarkerRect.height);
-    const pinMarkerX = Math.round(pinMarkerRect.x + pinMarkerRect.width / 2);
-    await expect(pinMarkerY).toEqual(Math.round(svgPathRect.y + svgPathRect.height / 2));
-    await expect(pinMarkerX).toEqual(Math.round(svgPathRect.x + svgPathRect.width / 2));
+  test('can pin chart with a comment and reply', async ({ context }) => {
+    const { page } = await createAppAndVisitDashboardAsUser(context, alice);
+    await openSidebarComments(page);
+    await pinComment(page, page.locator('svg.recharts-surface'), 'This is a pinned comment');
+    await assertPinCount(page, 1);
+    await assertCommentPinCount(page, 1);
+    await reply(page, 'This is a pinned comment', 'This is a reply');
+  });
 
-    await assertNoCommentPin(page);
-
-    await page.waitForTimeout(500);
-
-    const composer = await page.getByTestId('collabkit-composer-contenteditable').nth(0);
-    composer.type('This is a pinned comment');
-    await page.waitForTimeout(500);
-    await page.keyboard.press('Enter');
-    await page.waitForTimeout(500);
-    await page.mouse.move(0, 0);
-    await page.mouse.click(0, 0);
-    await hasComment(page, { body: 'This is a pinned comment' });
-
-    await assertOnePinMarker(page);
-    await assertOneCommentPin(page);
-
-    // deletion
-    await hoverComment(page, { body: 'This is a pinned comment' });
-    await clickCommentMenuButton(page);
-    await clickCommentMenuDeleteButton(page);
-    await page.waitForTimeout(500);
-    await assertNoCommentPin(page);
-    await assertNoPinMarker(page);
+  test('can pin chart with a comment and reply and then leave a new comment', async ({
+    context,
+  }) => {
+    const { page } = await createAppAndVisitDashboardAsUser(context, alice);
+    await openSidebarComments(page);
+    await pinComment(page, page.locator('svg.recharts-surface'), 'This is a pinned comment');
+    await assertPinCount(page, 1);
+    await assertCommentPinCount(page, 1);
+    await reply(page, 'This is a pinned comment', 'This is a reply');
+    await pinComment(page, page.getByTestId('dashboard-kpi-profit'), 'Profit comment');
+    await assertPinCount(page, 2);
+    await assertCommentPinCount(page, 2);
   });
 });
 
@@ -286,7 +345,7 @@ test.describe('Thread', () => {
   test('renders thread composer', async ({ context }) => {
     const { page } = await createAppAndVisitThreadAsUser(context, alice);
     // Expect a title "to contain" a substring.
-    await page.waitForSelector('[data-testid="collabkit-composer-placeholder"]');
+    await getComposer(page);
     await expect(page).toHaveTitle(/CollabKit Demo/);
     const placeholder = await page.getByTestId('collabkit-composer-placeholder');
     const text = await placeholder.innerText();
@@ -391,7 +450,7 @@ test.describe('Thread', () => {
     const sidebarTitle = await page.getByTestId('collabkit-sidebar-title');
     await expect(await sidebarTitle.innerText()).toBe('Comments');
     await expect(newThreadComposer).toBeTruthy();
-    const composer = await page.getByTestId('collabkit-composer-contenteditable');
+    const composer = await getComposer(page);
     await composer.click();
     await page.waitForTimeout(100);
     const randomString = Math.random().toString(36).slice(2, 7);

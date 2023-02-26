@@ -12,6 +12,7 @@ type Props = {
   active?: boolean;
   small?: boolean;
   disabled?: boolean;
+  ['data-testid']?: string | undefined;
 } & IconProps &
   React.ComponentProps<'div'>;
 

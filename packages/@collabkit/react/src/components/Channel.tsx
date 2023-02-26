@@ -210,7 +210,10 @@ function ChannelThread() {
   // const isExpanded = expandedThreadIds.includes(threadId);
 
   const composer = (
-    <ComposerRoot className={styles.threadComposerRoot}>
+    <ComposerRoot
+      className={styles.threadComposerRoot}
+      data-testId="collabkit-channel-composer-root"
+    >
       <ProfileAvatar />
       <ComposerEditor className={styles.composerEditor}>
         <ChannelComposerPinButton />
