@@ -1,5 +1,5 @@
 import GettingStarted from './GettingStarted.mdx';
-import SecureMode from './SecureMode.mdx';
+import Security from './Security.mdx';
 import Workspaces from './Workspaces.mdx';
 import Notifications from './Notifications.mdx';
 import SidebarComments from './components/SidebarComments.mdx';
@@ -28,7 +28,7 @@ export const DOCS: RootDocNode = {
     children: {
       CollabKitProvider: { component: CollabKitProvider },
       Workspaces: { component: Workspaces },
-      Security: { component: SecureMode },
+      Security: { component: Security },
       Notifications: { component: Notifications },
       Themes: { component: Themes },
     },
