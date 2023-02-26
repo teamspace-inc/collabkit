@@ -225,7 +225,7 @@ export function createEvents(store: Store) {
     },
 
     onBlur: (e: React.FocusEvent | FocusEvent | null, props: { target: Target }) => {
-      actions.blur(store);
+      actions.blur(store, props);
     },
 
     onMenuOpen: (props: { target: MenuTarget }) => {

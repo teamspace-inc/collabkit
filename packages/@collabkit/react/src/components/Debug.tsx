@@ -4,6 +4,12 @@ import { useStore } from '../hooks/useStore';
 
 export function Debug() {
   const store = useStore();
-  const { selectedId } = useSnapshot(store);
-  return <code>{JSON.stringify(selectedId, null, 2)}</code>;
+  const { selectedId, composerId, focusedId } = useSnapshot(store);
+  return (
+    <code>
+      {JSON.stringify(selectedId?.type, null, 2)}
+      {JSON.stringify(composerId?.type, null, 2)}
+      {JSON.stringify(focusedId?.type, null, 2)}
+    </code>
+  );
 }
