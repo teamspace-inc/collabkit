@@ -1,6 +1,6 @@
 import { AdvancedProps } from '../advanced/AdvancedCommon';
 import { renderCodeSnippet } from '../CodeEditor';
-import { SidebarDemo } from '../demos/SidebarDemo';
+import { SidebarCommentsDemo } from '../demos/SidebarDemo';
 import { DocDemoContainer } from '../Doc';
 
 export function SidebarInboxButtonDoc() {
@@ -16,10 +16,9 @@ export function SidebarInboxButtonDoc() {
           flex: 'unset',
           position: 'relative',
           alignItems: 'flex-start',
-          clipPath: 'inset(0px round 6px 6px 6px 6px)',
         }}
       >
-        <SidebarDemo />
+        <SidebarCommentsDemo />
       </DocDemoContainer>
       <div>
         <h3>Usage</h3>

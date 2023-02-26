@@ -1,23 +1,22 @@
 import React from 'react';
-import { useUnreadThreadsCount } from '../hooks/public/useUnreadThreadsCount';
-import { inboxButton } from '../theme/components/InboxButton.css';
+import { toggleSidebarCommentsButton } from '../theme/components/ToggleSidebarCommentsButton.css';
 
 import CommentIcon from './Comment.svg';
 import CommentNotificationIcon from './CommentNotification.svg';
 import { ThemeWrapper } from './ThemeWrapper';
+import { useSidebarCommentsButton } from '../hooks/useSidebarCommentsButton';
 
 export function InboxButton(props: { onClick: () => void; children?: React.ReactNode }) {
-  const unreadThreadCount = useUnreadThreadsCount();
-  const showUnreadDot = unreadThreadCount > 0;
+  const { onClick, hasUnread } = useSidebarCommentsButton();
 
   return (
     <ThemeWrapper>
-      <button className={inboxButton} onClick={props.onClick}>
+      <button className={toggleSidebarCommentsButton} onClick={onClick}>
         {props.children ? (
           props.children
         ) : (
           <>
-            {showUnreadDot ? <img src={CommentNotificationIcon} /> : <img src={CommentIcon} />}
+            {hasUnread ? <img src={CommentNotificationIcon} /> : <img src={CommentIcon} />}
             All comments
           </>
         )}

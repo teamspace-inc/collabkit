@@ -2,21 +2,23 @@ import { useSnapshot } from 'valtio';
 import { useEffect, useState } from 'react';
 import { useStore } from '../useStore';
 import { actions } from '@collabkit/client';
+import { useIsAuthenticated } from '../useIsAuthenticated';
 
 export function useUnreadThreadsCount(props?: { threadIds?: string[] }): number {
   const store = useStore();
-  const { workspaceId, workspaces, userId } = useSnapshot(store);
+  const isAuthenticated = useIsAuthenticated();
+  const { workspaceId, workspaces } = useSnapshot(store);
   const workspace = workspaceId ? workspaces[workspaceId] : null;
   const [unreadThreadsCount, setUnreadThreadsCount] = useState<number>(0);
 
   useEffect(() => {
+    if (!isAuthenticated) {
+      return;
+    }
     if (!workspaceId) {
       return;
     }
     if (!workspace) {
-      return;
-    }
-    if (!userId) {
       return;
     }
     let unreadCount = 0;
@@ -36,13 +38,13 @@ export function useUnreadThreadsCount(props?: { threadIds?: string[] }): number 
     }
     setUnreadThreadsCount(unreadCount);
   }, [
+    isAuthenticated,
     workspace,
     workspace?.timeline,
     // new events
     (workspace ? Object.keys(workspace?.timeline) : null,
     // seenUntilId changed
     workspace?.seen ? Object.values(workspace?.seen) : null),
-    userId,
     props?.threadIds,
   ]);
 

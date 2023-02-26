@@ -1,0 +1,64 @@
+import { docStep, inset } from '../styles/docs/Docs.css';
+import { renderCodeSnippet } from './CodeEditor';
+import SecureModeDocNodeSnippet from './SecureModeDocNodeSnippet?raw';
+import SecureModeDocResponseSnippet from './SecureModeDocResponseSnippet?raw';
+import SecureModeDocJsonSnippet from './SecureModeDocJsonSnippet?raw';
+import SecureModeDocReactSnippet from './SecureModeDocReactSnippet?raw';
+
+# Security
+
+By default CollabKit lets you use your API Key in the browser. This is great for development and testing, but not for production.
+
+When you're ready to to production, you'll want to use CollabKit in "Secure Mode". This will ensure that your API Key is not exposed to the public.
+
+With Secure Mode you'll need to sign a per-user token with your API Key and also pre-create a user and workspace via our API.
+
+Follow these steps to enable Secure Mode for your app:
+
+<h3 className={docStep}> Create a production app with Secure Mode</h3>
+
+1. Go to your [CollabKit Dashboard](https://app.collabkit.io/dashboard)
+
+2. Click 'Create App' and fill out the form.
+
+3. Click on the '...' more menu for the app you just created.
+
+4. Choose "Enable Secure Mode" in the dropdown menu.
+
+<h3 className={docStep}>Create users and workspaces via our API</h3>
+
+For secure mode you need to create a user and workspace via our API. You can do this by making a POST request to the following endpoint:
+
+`https://api.collabkit.io/v1/users`
+
+`https://api.collabkit.io/v1/workspaces`
+
+You'll need to pass your API Key in the `Authorization` header.
+
+Once you create a user you can move on to the next step to sign a per-user token for that user.
+
+<h3 className={docStep}> Create a per-user token</h3>
+
+User token's are used to authenticate a user's requests. You'll need to sign a user token using your API Key.
+
+For Node.js, install `@collabkit/node` and call `createUserToken`.
+
+{renderCodeSnippet(SecureModeDocNodeSnippet)}
+
+For Python, install [PyJWT](https://pyjwt.readthedocs.io/en/stable/index.html) and use the following python code:
+
+{renderCodeSnippet(
+'import jwt \ntoken = jwt.encode({ "userId": "<your user ID here>", "workspaceId": "<your workspaceId here>" }, "<your apiKey here>", algorithm="HS256")'
+)}
+
+For everything else (HTTP request), create a user token by createing a JWT token with the following payload signed by your API Key as the secret using the HS256 algorithm:
+
+{renderCodeSnippet(SecureModeDocJsonSnippet)}
+
+<h3 className={docStep}>Pass the per-user token to the client</h3>
+
+{renderCodeSnippet(SecureModeDocReactSnippet)}
+
+<h3 className={docStep}>Your app is now in secure mode</h3>
+
+You can move your development or test app to secure mode by following the same steps above.

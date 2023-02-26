@@ -42,7 +42,6 @@ import {
   CommentTimestamp,
 } from './Comment';
 import { ProfileAvatar } from './Profile';
-import { useIsExpanded } from '../hooks/useIsExpanded';
 import { useWorkspaceContext } from '../hooks/useWorkspaceContext';
 import { useCommentList } from '../hooks/useCommentList';
 import { CommentPinTarget, ComposerPinButtonTarget, ComposerPinTarget } from '@collabkit/core';
@@ -62,8 +61,9 @@ import { Root } from './Root';
 import CommentPinSvg from './composer/comment-pin.svg';
 import CommentPinSelectedSvg from './composer/comment-pin-hover.svg';
 import { Authenticated } from './Authenticated';
-import { SidebarCloseButton, SidebarHeader, SidebarRoot, SidebarTitle } from './Sidebar';
-import { useIsSidebarOpen } from '../hooks/useIsSidebarOpen';
+import { SidebarCloseButton, SidebarHeader, SidebarTitle } from './Sidebar';
+import { usePopover } from '../hooks/usePopover';
+import { PopoverRoot, PopoverTrigger, PopoverPortal, PopoverContent } from './Popover';
 
 function EmptyState() {
   return (
@@ -74,26 +74,30 @@ function EmptyState() {
   );
 }
 
-function ChannelCommentList(props: ComponentPropsWithRef<'div'>) {
+function useIsChannelSelected() {
   const store = useStore();
   const threadId = useThreadContext();
-  const isExpanded = useIsExpanded();
-  const isSelected = useStoreKeyMatches(store, 'selectedId', (selectedId) => {
+  return useStoreKeyMatches(store, 'selectedId', (selectedId) => {
     return (
-      (selectedId?.type === 'thread' && selectedId.threadId === threadId) ||
-      (selectedId?.type === 'pin' && selectedId.threadId === threadId) ||
-      (selectedId?.type === 'comment' && selectedId.threadId === threadId) ||
-      (selectedId?.type === 'channel' && selectedId.threadId === threadId) ||
-      (selectedId?.type === 'commentPin' && selectedId.threadId === threadId)
+      (selectedId?.type === 'thread' ||
+        selectedId?.type === 'pin' ||
+        selectedId?.type === 'comment' ||
+        selectedId?.type === 'channel' ||
+        selectedId?.type === 'commentPin') &&
+      selectedId.threadId === threadId
     );
   });
+}
+
+function ChannelCommentList(props: ComponentPropsWithRef<'div'>) {
+  const isSelected = useIsChannelSelected();
   const commentList = useCommentList();
 
   return (
     <div className={styles.commentList} {...props}>
       <div style={{ flex: 1 }}></div>
       {commentList.map((comment, i) =>
-        !isExpanded && !isSelected && i > 0 ? null : (
+        !isSelected && i > 0 ? null : (
           <CommentRoot
             commentId={comment.id}
             indent={i > 0}
@@ -118,7 +122,7 @@ function ChannelCommentList(props: ComponentPropsWithRef<'div'>) {
                   <CommentMarkdown />
                 </CommentBody>
                 <CommentReactions />
-                {i == 0 && !isExpanded && !isSelected && <CommentSeeAllRepliesButton />}
+                {i == 0 && !isSelected && <CommentSeeAllRepliesButton />}
               </CommentHideIfEditing>
               <CommentShowIfEditing>
                 <ChannelCommentEditor />
@@ -162,29 +166,18 @@ function ChannelThread() {
   const channelId = useChannelContext();
   const workspaceId = useWorkspaceContext();
   const workspace = useSnapshot(useWorkspaceStore());
-  const { expandedThreadIds } = useSnapshot(store);
+  // const { expandedThreadIds } = useSnapshot(store);
   const timeline = workspace.timeline[threadId];
   const { isResolved } = workspace.computed[threadId];
   const ref = useRef<HTMLDivElement>(null);
-
-  const isSelected = useStoreKeyMatches(store, 'selectedId', (selectedId) => {
-    return (
-      (selectedId?.type === 'thread' && selectedId.threadId === threadId) ||
-      (selectedId?.type === 'pin' && selectedId.threadId === threadId) ||
-      (selectedId?.type === 'comment' && selectedId.threadId === threadId) ||
-      (selectedId?.type === 'channel' && selectedId.threadId === threadId) ||
-      (selectedId?.type === 'commentPin' && selectedId.threadId === threadId)
-    );
-  });
-
+  const isSelected = useIsChannelSelected();
   const onClick = useCallback(
     (e: React.MouseEvent) => {
       events.onClick(e, {
         target: {
-          type: 'channel',
+          type: 'thread',
           threadId,
           workspaceId,
-          channelId,
         },
       });
     },
@@ -214,7 +207,7 @@ function ChannelThread() {
   }
 
   // const active = !!(viewingId && viewingId.type === 'thread' && viewingId.threadId === threadId);
-  const isExpanded = expandedThreadIds.includes(threadId);
+  // const isExpanded = expandedThreadIds.includes(threadId);
 
   const composer = (
     <ComposerRoot className={styles.threadComposerRoot}>
@@ -239,7 +232,7 @@ function ChannelThread() {
     <ThreadProvider threadId={threadId} key={`channelThread-${threadId}`} placeholder="Reply">
       <div className={styles.thread({ isSelected })} onClick={onClick} ref={ref}>
         <ChannelCommentList />
-        {isExpanded || isSelected ? (
+        {isSelected ? (
           <div
             style={{
               paddingLeft: `${calc.multiply(vars.space[1], 9)}`,
@@ -473,6 +466,7 @@ function ChannelNewThreadComposer() {
 
   useEffect(() => {
     if (!appId || !workspaceId) {
+      console.warn('ChannelNewThreadComposer: appId or workspaceId is missing');
       return;
     }
     actions.subscribeInbox(store);
@@ -516,26 +510,43 @@ function Channel() {
   );
 }
 
-function SidebarChannel() {
-  return useIsSidebarOpen() ? (
-    <Root>
-      <Authenticated>
-        <SidebarRoot>
-          <ChannelRoot channelId="default">
-            <SidebarHeader>
-              <SidebarTitle>Comments</SidebarTitle>
-              <div style={{ flex: 1 }} />
-              <SidebarCloseButton />
-            </SidebarHeader>
-            <Scrollable autoScroll="bottom" alignToBottom={true}>
-              <ChannelThreadList />
-            </Scrollable>
-            <ChannelNewThreadComposer />
-          </ChannelRoot>
-        </SidebarRoot>
-      </Authenticated>
-    </Root>
-  ) : null;
+function PopoverChannel() {
+  const target = { type: 'popoverChannel' } as const;
+  const popoverProps = usePopover({ target });
+
+  return (
+    <Authenticated>
+      <PopoverRoot {...popoverProps} placement="bottom">
+        <PopoverTrigger>
+          <button>Comments</button>
+        </PopoverTrigger>
+        <PopoverPortal>
+          <PopoverContent>
+            <div className={styles.popover}>
+              <ChannelRoot channelId="default">
+                <SidebarHeader>
+                  <SidebarTitle>Comments</SidebarTitle>
+                  <div style={{ flex: 1 }} />
+                  <SidebarCloseButton />
+                </SidebarHeader>
+                <Scrollable autoScroll="bottom" alignToBottom={true}>
+                  <ChannelThreadList />
+                </Scrollable>
+                <ChannelNewThreadComposer />
+              </ChannelRoot>
+            </div>
+          </PopoverContent>
+        </PopoverPortal>
+      </PopoverRoot>
+    </Authenticated>
+  );
 }
 
-export { Channel, ChannelRoot, ChannelThreadList, ChannelThread, SidebarChannel };
+export {
+  Channel,
+  ChannelRoot,
+  ChannelThreadList,
+  ChannelThread,
+  ChannelNewThreadComposer,
+  PopoverChannel,
+};

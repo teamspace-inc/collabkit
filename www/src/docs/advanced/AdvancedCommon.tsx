@@ -1,5 +1,5 @@
 import { ThemeProvider, ThemeWrapper } from '@collabkit/react';
-import { advancedAnatomyPartNumber } from '../../styles/Docs.css';
+import { advancedAnatomyPartNumber } from '../../styles/docs/Docs.css';
 import { vars } from '../../styles/Theme.css';
 import { renderCodeSnippet } from '../CodeEditor';
 import { DocDemoContainer, DocLink } from '../Doc';

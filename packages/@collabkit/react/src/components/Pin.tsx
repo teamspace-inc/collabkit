@@ -25,13 +25,7 @@ import { TargetContext } from './Target';
 import { useApp } from '../hooks/useApp';
 import { useTarget } from '../hooks/useTarget';
 import { Menu, MenuItem } from './Menu';
-import {
-  PopoverContent,
-  PopoverPreview,
-  PopoverRoot,
-  PopoverTrigger,
-  usePopoverContext,
-} from './Popover';
+import { PopoverContent, PopoverPreview, PopoverRoot, PopoverTrigger } from './Popover';
 import { ProfileAvatar, ProfileProvider } from './Profile';
 import {
   CommentBody,
@@ -224,11 +218,27 @@ const PinCursor = forwardRef<HTMLDivElement, { isSelected: boolean }>(function P
   );
 });
 
-function PinPreview({ pin }: { pin: Pin }) {
+function PinThreadPreview({ pin }: { pin: Pin }) {
+  const { events } = useApp();
+
   return (
     <Root>
       <ThreadContext.Provider value={pin.threadId}>
-        <div className={styles.pinThread}>
+        <div
+          className={styles.pinThread}
+          onClick={(e) =>
+            events.onClick(e, {
+              target: {
+                type: 'pinThreadPreview',
+                threadId: pin.threadId,
+                workspaceId: pin.workspaceId,
+                objectId: pin.objectId,
+                eventId: pin.eventId,
+                id: pin.id,
+              },
+            })
+          }
+        >
           <CommentRoot commentId={pin.eventId} className={styles.pinPreview}>
             <div style={{ display: 'flex', flexDirection: 'column' }}>
               <CommentHeader>
@@ -504,6 +514,7 @@ function PinNewThreadComposer({ pin }: { pin: Pin }) {
 const PinMarker = forwardRef<HTMLDivElement, PinMarkerProps>(function PinMarker(props, ref) {
   const { isSelected, pin, pointerEvents } = props;
   const { events, store } = useApp();
+  const { isFigmaStyle } = useSnapshot(store);
   const target = useTarget();
   const isEditing = useStoreKeyMatches(store, 'editingId', (editingId) => {
     return editingId?.type === 'comment' && editingId.eventId === pin.eventId;
@@ -522,6 +533,14 @@ const PinMarker = forwardRef<HTMLDivElement, PinMarkerProps>(function PinMarker(
 
   // todo all check if the thread is empty here
   const isNewThread = !isEditing && has(pin, 'pending') && pin.pending;
+
+  const pinThreadPreview = isNewThread ? null : <PinThreadPreview pin={pin} />;
+
+  const pinThreadContent = isNewThread ? (
+    <PinNewThreadComposer pin={pin} />
+  ) : (
+    <PinThread pin={pin} />
+  );
 
   return pin ? (
     <ProfileProvider profileId={pin.createdById}>
@@ -542,10 +561,8 @@ const PinMarker = forwardRef<HTMLDivElement, PinMarkerProps>(function PinMarker(
                 </div>
               </div>
             </PopoverTrigger>
-            <PopoverPreview>{isNewThread ? null : <PinPreview pin={pin} />}</PopoverPreview>
-            <PopoverContent>
-              {isNewThread ? <PinNewThreadComposer pin={pin} /> : <PinThread pin={pin} />}
-            </PopoverContent>
+            <PopoverPreview>{pinThreadPreview}</PopoverPreview>
+            <PopoverContent>{isFigmaStyle ? pinThreadContent : pinThreadPreview}</PopoverContent>
           </PopoverRoot>
         </div>
         {/* </PinMenu> */}

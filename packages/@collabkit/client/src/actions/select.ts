@@ -5,6 +5,10 @@ export function select(store: Store, props: { target: Target }) {
   const { target } = props;
   if (!userId) throw new Error('[CollabKit] select: userId is required');
   switch (target.type) {
+    case 'thread':
+      store.selectedId = target;
+      break;
+
     case 'pinNextThreadIconButton':
     case 'pinPrevThreadIconButton':
       const pinTarget = { ...target, type: 'pin' } as const;
@@ -24,6 +28,7 @@ export function select(store: Store, props: { target: Target }) {
           state: pin.state ?? 'null',
           objectId: pin.objectId,
         });
+        if (!store.isFigmaStyle) return;
         setTimeout(() => {
           store.viewingId = target;
           store.previewingId = target;

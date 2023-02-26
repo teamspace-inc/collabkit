@@ -23,7 +23,7 @@ export async function reopenThread(store: Store, props: { workspaceId: string; t
     parentEvent: null,
     threadId,
   });
-  store.config.callbacks?.onThreadReopen?.({
+  store.callbacks?.onThreadReopen?.({
     userId,
     workspaceId,
     threadId,

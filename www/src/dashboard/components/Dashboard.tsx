@@ -16,7 +16,7 @@ import { dashboardActions } from '../dashboardActions';
 //   </Link>
 // ) : null;
 
-import { docs } from '../../styles/Docs.css';
+import { docs } from '../../styles/docs/Docs.css';
 import { dark } from '../../styles/Theme.css';
 import { bg } from '../../styles/Website.css';
 import { Org } from './Org';

@@ -95,10 +95,17 @@ export function createEvents(store: Store) {
         }
         case 'idle': {
           switch (target.type) {
+            case 'pinThreadPreview':
+              if (store.isFigmaStyle) return;
+              actions.showSidebar(store);
+              actions.select(store, { target: { ...target, type: 'pin' } });
+              break;
+            case 'thread':
+              actions.select(store, { target });
+              break;
             case 'addCommentButton':
               actions.startSelecting(store);
               const threadId = store.nextThreadId;
-              console.log('threadId', threadId);
               if (!threadId) return;
               const composerId = {
                 ...target,
@@ -130,6 +137,9 @@ export function createEvents(store: Store) {
               actions.closeAllPopovers(store);
               actions.deselectAll(store);
               break;
+            case 'toggleSidebarButton':
+              actions.toggleSidebar(store);
+              break;
             case 'showSidebarButton':
               actions.showSidebar(store);
               break;
@@ -148,6 +158,8 @@ export function createEvents(store: Store) {
               break;
             case 'pin':
               actions.select(store, { target });
+              if (store.isFigmaStyle) return;
+              actions.showSidebar(store);
               break;
             case 'composer':
               actions.setComposer(store, { target });
@@ -166,9 +178,10 @@ export function createEvents(store: Store) {
               actions.reopenThread(store, target);
               break;
             case 'commentReplyButton':
-            case 'commentReplyCountButton':
+            case 'commentSeeAllRepliesButton':
               e.preventDefault();
               e.stopPropagation();
+              actions.select(store, { target: { ...target, type: 'thread' } });
               actions.expandThread(store, target);
               actions.focusComposer(store, {
                 type: 'composer',

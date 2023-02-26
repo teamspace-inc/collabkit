@@ -1,0 +1,99 @@
+import { AdvancedProps } from '../advanced/AdvancedCommon';
+import { renderCodeSnippet } from '../CodeEditor';
+import { ThreadDemo } from '../demos/ThreadDemo';
+import { DocHeroDemoContainer, DocLink } from '../Doc';
+import ThreadUsage1 from './usage/ThreadUsage1.tsx?raw';
+import ThreadUsage2 from './usage/ThreadUsage2.tsx?raw';
+
+# Thread
+
+## An embeddable, flexible comment thread.
+
+<DocHeroDemoContainer>
+  <ThreadDemo />
+</DocHeroDemoContainer>
+
+### What is it for?
+
+Threads let users comment and can be embedded on a page, modal, popover or any other container.
+
+Because of their flexible nature, they're useful if you want full control about where comments show up in your product.
+
+### Usage
+
+To render a comment thread in your app you need to import the `Thread` component and pass it a `threadId` prop.
+
+{renderCodeSnippet(ThreadUsage1)}
+
+### Sizing
+
+The `Thread` component will automatically size itself to fit the available space. To control the size of the thread, set the `width` and `height` of its parent element.
+
+{renderCodeSnippet(ThreadUsage2)}
+
+### Props
+
+<AdvancedProps
+  props={[['threadId', 'string', 'A unique ID that represents this thread.']]}
+  optionalProps={[
+    [
+      'name',
+      'string | undefined',
+      'A name for the thread. Used in email notifications to refer to the thread.',
+    ],
+    [
+      'url',
+      'string | undefined',
+      <>
+        The URL of the page the Thread lives on. Used to help the user get back to the Thread from
+        email notifications and the <DocLink to="/docs/components/inbox">Inbox</DocLink>.
+      </>,
+    ],
+    [
+      'showHeader',
+      'boolean | undefined',
+      <>
+        Defaults to <code>false</code>. <br />
+        Set this to <code>true</code> to show the header.
+      </>,
+    ],
+    [
+      'autoFocus',
+      'boolean | undefined',
+      <>
+        Defaults to <code>true</code>. <br />
+        Set this to <code>false</code> to prevent focusing the composer on mount.
+      </>,
+    ],
+    [
+      'placeholder',
+      'string | undefined',
+      <>
+        Defaults to <code>"Write a comment"</code>. <br />
+        Set this to create a custom placeholder for the composer.
+      </>,
+    ],
+    [
+      'hideComposer',
+      'boolean | undefined',
+      <>
+        Defaults to <code>false</code>. <br />
+        Set this to <code>true</code> to hide the composer.
+      </>,
+    ],
+    [
+      'defaultSubscribers',
+      'string[] | undefined',
+      <>
+        Defaults to <code>[]</code>. <br />
+        An array of user IDs that will receive notifications for all messages in this thread, in addition
+        to users who have commented or been mentioned in the thread. (For example: the contributors of
+        a document, an owner of a task etc.)
+      </>,
+    ],
+  ]}
+/>
+
+### Styling
+
+Customise the following variables in your theme to style the `Thread` component.

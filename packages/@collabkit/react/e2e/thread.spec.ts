@@ -120,7 +120,7 @@ async function hasComment(page: Page, comment: { body: string }, nth: number = 0
 }
 
 async function hoverComment(page: Page, comment: { body: string }, nth: number = 0) {
-  await page.getByText(comment.body).nth(nth).hover();
+  await page.getByText(comment.body).nth(nth).hover({ force: true, timeout: 2000 });
 }
 
 async function doesNotHaveComment(page: Page, comment: { body: string }) {
@@ -136,7 +136,7 @@ async function clickMentionButton(page: Page) {
 
 async function focusComposer(page: Page, nth: number = 0) {
   const composer = await page.getByTestId('collabkit-composer-contenteditable').nth(nth);
-  await composer.click();
+  await composer.click({ force: true });
   await page.waitForTimeout(500);
   return composer;
 }
@@ -217,8 +217,8 @@ test.describe('Dashboard', () => {
 
   test('can pin chart', async ({ context }) => {
     const { page } = await createAppAndVisitDashboardAsUser(context, alice);
-    await page.waitForSelector('[data-testid="collabkit-sidebar-inbox-button"]');
-    await page.getByTestId('collabkit-sidebar-inbox-button').click();
+    await page.waitForSelector('[data-testid="collabkit-sidebar-comments-toggle-button"]');
+    await page.getByTestId('collabkit-sidebar-comments-toggle-button').click();
     await page.waitForSelector('[data-testid="collabkit-composer-pin-button"]');
     await page.getByTestId('collabkit-composer-pin-button').click();
     const svgPathRect = await page.locator('svg.recharts-surface').boundingBox();
@@ -245,16 +245,22 @@ test.describe('Dashboard', () => {
 
     await assertNoCommentPin(page);
 
-    await typeInComposer(page, 'This is a pinned comment', 1);
+    await page.waitForTimeout(500);
+
+    const composer = await page.getByTestId('collabkit-composer-contenteditable').nth(0);
+    composer.type('This is a pinned comment');
+    await page.waitForTimeout(500);
     await page.keyboard.press('Enter');
     await page.waitForTimeout(500);
+    await page.mouse.move(0, 0);
+    await page.mouse.click(0, 0);
     await hasComment(page, { body: 'This is a pinned comment' });
 
     await assertOnePinMarker(page);
     await assertOneCommentPin(page);
 
     // deletion
-    await hoverComment(page, { body: 'This is a pinned comment' }, 1);
+    await hoverComment(page, { body: 'This is a pinned comment' });
     await clickCommentMenuButton(page);
     await clickCommentMenuDeleteButton(page);
     await page.waitForTimeout(500);
@@ -375,12 +381,12 @@ test.describe('Thread', () => {
   //   await hasMentionInComposer(page, 'Bob');
   // });
 
-  test('sidebar threads are rendering and working', async ({ context }) => {
-    const page = await visitLadleURL(context, '/', { story: 'channels--channels' });
+  test('sidebar comments are rendering and working', async ({ context }) => {
+    const page = await visitLadleURL(context, '/', { story: 'sidebar-comments--sidebar-comments' });
     const maxTimeToLoad = 5000;
     // To make sure that the page loads in constant maximum amount of time, we want the test to break if time taken is more than this
     await page.waitForTimeout(maxTimeToLoad);
-    await page.click('[data-testid="collabkit-sidebar-inbox-button"]');
+    await page.click('[data-testid="collabkit-sidebar-comments-toggle-button"]');
     const newThreadComposer = await page.getByTestId('new-thread-composer-div');
     const sidebarTitle = await page.getByTestId('collabkit-sidebar-title');
     await expect(await sidebarTitle.innerText()).toBe('Comments');

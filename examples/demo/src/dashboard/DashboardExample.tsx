@@ -33,12 +33,8 @@ import { isAfter, isBefore, isEqual } from 'date-fns';
 import {
   Commentable,
   useCommentableRef,
-  SidebarInboxButton,
-  SidebarChannel,
-  AddCommentButton,
-  Debug,
-  SidebarInbox,
-  PopoverInbox,
+  ToggleSidebarCommentsButton,
+  SidebarComments,
 } from '@collabkit/react';
 
 import { Charts } from './Charts';
@@ -58,7 +54,7 @@ function KpiCardGrid() {
   return (
     <ColGrid numColsMd={2} numColsLg={3} marginTop="mt-6" gapX="gap-x-6" gapY="gap-y-6">
       {kpiData.map((item) => (
-        <Commentable.Container key={item.title} objectId={`dashboard-kpi-${item.title}`}>
+        <Commentable key={item.title} objectId={`dashboard-kpi-${item.title}`}>
           <Card key={item.title}>
             <Flex alignItems="items-start">
               <Block truncate={true}>
@@ -73,7 +69,7 @@ function KpiCardGrid() {
             </Flex>
             <ProgressBar percentageValue={item.progress} marginTop="mt-2" />
           </Card>
-        </Commentable.Container>
+        </Commentable>
       ))}
     </ColGrid>
   );
@@ -122,7 +118,7 @@ function ChartView({ chartData }: { chartData: any }) {
           </Toggle>
         </div>
       </div>
-      <Commentable.Container objectId={`dashboard-performance-chart-${selectedKpi}`}>
+      <Commentable objectId={`dashboard-performance-chart-${selectedKpi}`}>
         <AreaChart
           data={chartData}
           dataKey="date"
@@ -134,7 +130,7 @@ function ChartView({ chartData }: { chartData: any }) {
           height="h-96"
           marginTop="mt-8"
         />
-      </Commentable.Container>
+      </Commentable>
     </Card>
   );
 }
@@ -243,19 +239,19 @@ export function DashboardExample() {
   });
 
   return (
-    <Commentable.Root>
-      <div className="flex h-screen w-screen">
-        <main className="bg-slate-50 p-8 sm:p-10 flex-1 h-screen overflow-scroll">
-          <Flex>
-            <Block truncate>
-              <Title>Dashboard</Title>
-              <Text>View core metrics on the state of your company.</Text>
-            </Block>
-            {/* <Debug /> */}
-            <PopoverInbox />
-            <div className="px-2"></div>
-            <SidebarInboxButton />
-            {/* <Datepicker
+    <div className="flex h-screen w-screen">
+      <main className="bg-slate-50 p-8 sm:p-10 flex-1 h-screen overflow-scroll">
+        <Flex>
+          <Block truncate>
+            <Title>Dashboard</Title>
+            <Text>View core metrics on the state of your company.</Text>
+          </Block>
+          {/* <Debug /> */}
+          {/* <PopoverInbox /> */}
+          {/* <PopoverChannel /> */}
+          <div className="px-2"></div>
+          <ToggleSidebarCommentsButton />
+          {/* <Datepicker
               minDate={minDate}
               maxDate={maxDate}
               defaultStartDate={minDate}
@@ -267,34 +263,30 @@ export function DashboardExample() {
               }}
               maxWidth="max-w-xs"
             /> */}
-          </Flex>
-          <TabList
-            defaultValue={'overview'}
-            onValueChange={(tab: DashboardStore['selectedTab']) =>
-              (dashboardStore.selectedTab = tab)
-            }
-            marginTop="mt-6"
-          >
-            <Tab value={'overview'} text="Overview" />
-            <Tab value={'detail'} text="Detail" />
-            <Tab value={'flowchart'} text="Flowchart" />
-            <Tab value={'charts'} text="Charts" />
-          </TabList>
+        </Flex>
+        <TabList
+          defaultValue={'overview'}
+          onValueChange={(tab: DashboardStore['selectedTab']) => (dashboardStore.selectedTab = tab)}
+          marginTop="mt-6"
+        >
+          <Tab value={'overview'} text="Overview" />
+          <Tab value={'detail'} text="Detail" />
+          <Tab value={'flowchart'} text="Flowchart" />
+          <Tab value={'charts'} text="Charts" />
+        </TabList>
 
-          {selectedTab === 'overview' ? (
-            <>
-              <KpiCardGrid />
-              <ChartView chartData={chartData} />
-            </>
-          ) : null}
-          {selectedTab === 'detail' ? <TableView /> : null}
-          {selectedTab === 'charts' ? <Charts /> : null}
-          {selectedTab === 'flowchart' ? <Flow /> : null}
-        </main>
-        <SidebarChannel />
-        {/* <AddCommentButton /> */}
-      </div>
-    </Commentable.Root>
+        {selectedTab === 'overview' ? (
+          <>
+            <KpiCardGrid />
+            <ChartView chartData={chartData} />
+          </>
+        ) : null}
+        {selectedTab === 'detail' ? <TableView /> : null}
+        {selectedTab === 'charts' ? <Charts /> : null}
+        {selectedTab === 'flowchart' ? <Flow /> : null}
+      </main>
+      <SidebarComments />
+    </div>
   );
 }
 

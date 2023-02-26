@@ -60,6 +60,7 @@ import { unhover } from './unhover';
 import { updateComment } from './updateComment';
 import { updateComposer } from './updateComposer';
 import { viewContent } from './viewContent';
+import { toggleSidebar } from './toggleSidebar';
 
 export const actions = {
   attachComposerPin,
@@ -118,6 +119,7 @@ export const actions = {
   subscribeWorkspaceProfiles,
   toggleEmoji,
   toggleEmojiPicker,
+  toggleSidebar,
   unhover,
   updateComment,
   updateComposer,

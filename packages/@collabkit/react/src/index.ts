@@ -33,7 +33,8 @@ import { Composer } from './components/composer/Composer';
 import { Scrollable } from './components/Scrollable';
 import { CommentList } from './components/CommentList';
 import { Button } from './components/Button';
-import { Commentable } from './components/Commentable';
+
+export * from './hooks/useSidebarCommentsButton';
 
 export * from './components/Comment';
 export * from './components/composer/Composer';
@@ -41,7 +42,6 @@ export * from './components/Inbox';
 export * from './components/InboxButton';
 export * from './components/Provider';
 export * from './components/Sidebar';
-export * from './components/SidebarInboxButton';
 export * from './components/Thread';
 export * from './components/ThreadFacepile';
 export * from './components/ThemeContext';
@@ -51,11 +51,15 @@ export * from './components/Scrollable';
 export * from './components/CommentList';
 export * from './components/Popover';
 export * from './components/Button';
-export * from './components/Commentable';
 export * from './components/Markdown';
 export * from './components/Channel';
 export * from './components/Root';
 export * from './components/AddCommentButton';
+export * from './components/Tooltip';
+
+export * from './components/Commentable';
+export * from './components/SidebarComments';
+export * from './components/ToggleSidebarCommentsButton';
 
 import { Markdown } from './components/Markdown';
 import { useThread } from './hooks/public/useThread';
@@ -68,7 +72,6 @@ export {
   Inbox,
   InboxButton,
   Markdown,
-  Commentable,
   Sidebar,
   ThemeProvider,
   ThemeWrapper,

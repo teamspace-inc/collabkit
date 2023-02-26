@@ -5,6 +5,7 @@ import * as styles from '../theme/components/Sidebar.css';
 import { ThemeWrapper } from './ThemeWrapper';
 import { useSidebarCloseButtonProps } from '../hooks/useSidebarCloseButtonProps';
 import { useIsSidebarOpen } from '../hooks/useIsSidebarOpen';
+import { Tooltip, TooltipContent, TooltipTrigger } from './Tooltip';
 
 function SidebarCloseButton(props: {
   style?: React.CSSProperties;
@@ -13,9 +14,14 @@ function SidebarCloseButton(props: {
 }) {
   const { onClick } = useSidebarCloseButtonProps();
   return (
-    <IconButton data-testid="sidebar-close-button" onClick={onClick} style={props.style}>
-      {props.children ?? <X size={16} />}
-    </IconButton>
+    <Tooltip>
+      <TooltipTrigger>
+        <IconButton data-testid="sidebar-close-button" onClick={onClick} style={props.style}>
+          {props.children ?? <X size={16} />}
+        </IconButton>
+      </TooltipTrigger>
+      <TooltipContent>Close</TooltipContent>
+    </Tooltip>
   );
 }
 

@@ -15,17 +15,17 @@ export const CollabKitMonacoTheme: editor.IStandaloneThemeData = {
     },
     {
       foreground: 'FFEC6B',
-      fontStyle: 'bold',
+      fontStyle: 'regular',
       token: 'comment.block.preprocessor',
     },
     {
       foreground: '999999',
-      fontStyle: 'bold italic',
+      fontStyle: 'regular italic',
       token: 'comment.documentation',
     },
     {
       foreground: '999999',
-      fontStyle: 'bold italic',
+      fontStyle: 'regular italic',
       token: 'comment.block.documentation',
     },
     {
@@ -34,33 +34,33 @@ export const CollabKitMonacoTheme: editor.IStandaloneThemeData = {
       token: 'invalid.illegal',
     },
     {
-      fontStyle: 'bold',
+      fontStyle: 'regular',
       token: 'keyword',
     },
     {
-      fontStyle: 'bold',
+      fontStyle: 'regular',
       token: 'storage',
     },
     {
-      fontStyle: 'bold',
+      fontStyle: 'regular',
       token: 'keyword.operator',
     },
     {
-      fontStyle: 'bold',
+      fontStyle: 'regular',
       token: 'constant.language',
     },
     {
-      fontStyle: 'bold',
+      fontStyle: 'regular',
       token: 'support.constant',
     },
     {
       foreground: '445588',
-      fontStyle: 'bold',
+      fontStyle: 'regular',
       token: 'storage.type',
     },
     {
       foreground: '445588',
-      fontStyle: 'bold',
+      fontStyle: 'regular',
       token: 'support.type',
     },
     {
@@ -77,22 +77,22 @@ export const CollabKitMonacoTheme: editor.IStandaloneThemeData = {
     },
     {
       foreground: '445588',
-      fontStyle: 'bold',
+      fontStyle: 'regular',
       token: 'entity.name.type',
     },
     {
       foreground: '445588',
-      fontStyle: 'bold',
+      fontStyle: 'regular',
       token: 'entity.other.inherited-class',
     },
     {
       foreground: '445588',
-      fontStyle: 'bold',
+      fontStyle: 'regular',
       token: 'support.class',
     },
     {
       foreground: 'FFEC6B',
-      fontStyle: 'bold',
+      fontStyle: 'regular',
       token: 'variable.other.constant',
     },
     {
@@ -156,7 +156,7 @@ export const CollabKitMonacoTheme: editor.IStandaloneThemeData = {
       token: 'constant.other.symbol',
     },
     {
-      fontStyle: 'bold',
+      fontStyle: 'regular',
       token: 'punctuation',
     },
     {
@@ -194,8 +194,8 @@ export const CollabKitMonacoTheme: editor.IStandaloneThemeData = {
       token: 'markup.prompt',
     },
     {
-      fontStyle: 'bold',
-      token: 'markup.bold',
+      fontStyle: 'regular',
+      token: 'markup.regular',
     },
     {
       foreground: 'aaaaaa',

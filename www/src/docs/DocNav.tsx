@@ -6,15 +6,15 @@ import {
   ScrollAreaThumb,
   ScrollAreaViewport,
 } from '../UIKit';
-import { getDocHref, RootDocNode, useDocs } from './Docs';
-import { navLi, navListItem, navListTitle, navOl, navWrap } from '../styles/docs/DocNav.css';
+import { getDocHref, RootDocNode, useDocRoutes } from './DocRoutes';
+import * as styles from '../styles/docs/Docs.css';
 
 function NavListItem(props: { path: string[]; id: string }) {
   const [location] = useLocation();
   const href = getDocHref(props.path, props.id);
   return (
     <Link href={href}>
-      <div className={navListItem({ active: href === location })}>{props.id}</div>
+      <div className={styles.navListItem({ active: href === location })}>{props.id}</div>
     </Link>
   );
 }
@@ -25,12 +25,12 @@ function NavList(props: { node: RootDocNode; path: string[] }) {
   }
 
   return (
-    <ol className={navOl}>
+    <ol className={styles.navOl}>
       {Object.entries(props.node).map(([key, value], index) => (
-        <li className={navLi} key={`${key}-${index}`}>
+        <li className={styles.navLi} key={`${key}-${index}`}>
           {'isEmpty' in value ? <br /> : null}
           {'component' in value ? <NavListItem path={props.path} id={key} /> : null}
-          {'title' in value ? <div className={navListTitle}>{value.title}</div> : null}
+          {'title' in value ? <div className={styles.navListTitle}>{value.title}</div> : null}
           {'children' in value ? (
             <NavList node={value.children} path={[...props.path, key]} />
           ) : null}
@@ -41,7 +41,7 @@ function NavList(props: { node: RootDocNode; path: string[] }) {
 }
 
 export function Nav(props: { className?: string }) {
-  const docs = useDocs();
+  const docRoutes = useDocRoutes();
 
   return (
     <>
@@ -49,8 +49,8 @@ export function Nav(props: { className?: string }) {
         <div className={props.className}>
           <ScrollAreaRoot style={{ width: '100%' }}>
             <ScrollAreaViewport>
-              <div className={navWrap}>
-                <NavList node={docs} path={[]} />
+              <div className={styles.navWrap}>
+                <NavList node={docRoutes} path={[]} />
               </div>
             </ScrollAreaViewport>
             <ScrollAreaScrollbar orientation="vertical">

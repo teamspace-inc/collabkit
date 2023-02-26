@@ -142,18 +142,17 @@ export type Callbacks = {
     info: ThreadInfo;
   }) => void;
   onInboxCloseButtonClick?: (data: { userId: string; workspaceId: string }) => void;
+  onAuthenticationRequired?: () => void;
 };
 
 export type ConfigProps = {
   mentionableUsers: MentionProps;
-  onAuthenticationRequired?: () => void;
   colorScheme?: 'light' | 'dark' | 'auto';
-  callbacks?: Callbacks;
   readOnly?: boolean;
   _demoStore?: Store;
   _isDemo?: boolean;
   _test?: boolean;
-};
+} & Callbacks;
 
 export type Config = (SecureProps | UnsecureProps) & ConfigProps;
 
@@ -225,10 +224,26 @@ export type Target =
   | PinThreadCloseIconButtonTarget
   | CommentPinTarget
   | InboxItemTarget
-  | PopoverInboxTarget;
+  | PopoverInboxTarget
+  | PinThreadPreviewTarget
+  | PopoverChannelTarget
+  | ToggleSidebarButtonTarget;
+
+export type PinThreadPreviewTarget = {
+  type: 'pinThreadPreview';
+  threadId: string;
+  workspaceId: string;
+  objectId: string;
+  eventId: string;
+  id: string;
+};
 
 export type PopoverInboxTarget = {
   type: 'popoverInbox';
+};
+
+export type PopoverChannelTarget = {
+  type: 'popoverChannel';
 };
 
 export type InboxItemTarget = {
@@ -266,7 +281,7 @@ export type PinThreadCloseIconButtonTarget = {
 };
 
 export type CommentReplyCountButtonTarget = {
-  type: 'commentReplyCountButton';
+  type: 'commentSeeAllRepliesButton';
   threadId: string;
   workspaceId: string;
   eventId: string;
@@ -412,6 +427,10 @@ export type ShowSidebarButtonTarget = { type: 'showSidebarButton'; workspaceId: 
 export type HideSidebarButtonTarget = {
   type: 'hideSidebarButton';
   workspaceId: string;
+};
+
+export type ToggleSidebarButtonTarget = {
+  type: 'toggleSidebarButton';
 };
 
 export type CommentEmojiButtonTargets =
@@ -666,6 +685,7 @@ export interface UnconfiguredStore {
   appId: null | string;
   sync: null | SyncAdapter;
   isPinningEnabled: boolean;
+  isFigmaStyle: boolean;
   isReadOnly: boolean;
   isConnected: boolean;
   isSidebarOpen: boolean;
@@ -695,7 +715,7 @@ export interface UnconfiguredStore {
   uiState: 'idle' | 'selecting';
   nextThreadId: null | string;
   subs: Subscriptions;
-  callbacks?: Callbacks;
+  callbacks: Callbacks;
   clientX: number;
   clientY: number;
   commentables: { [objectId: string]: CommentableObject };

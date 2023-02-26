@@ -1,23 +1,8 @@
 import { Thread, ThemeProvider } from '@collabkit/react';
-import { docDemoOverlay } from '../styles/Docs.css';
 import { DocDemoContainer, DocLink } from './Doc';
+import { ThemeName } from './ThemeName';
 
 const threadSize = { width: 280, height: 320 };
-
-function ThemeName(props: { children: React.ReactNode }) {
-  return (
-    <div
-      className={docDemoOverlay}
-      style={{
-        position: 'absolute',
-        left: 0,
-        top: 0,
-      }}
-    >
-      {props.children}
-    </div>
-  );
-}
 
 export function CustomisationDoc() {
   return (

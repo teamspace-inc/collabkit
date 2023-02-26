@@ -2,7 +2,7 @@ import { useHeaderStyle } from '../hooks/useHeaderStyle';
 
 import { dark } from '../styles/Theme.css';
 import { codeWrap, h3, section } from '../styles/home/Code.css';
-import { docs } from '../styles/Docs.css';
+import { docs } from '../styles/docs/Docs.css';
 import { Link } from 'wouter';
 import { button } from '../styles/Website.css';
 

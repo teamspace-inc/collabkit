@@ -111,6 +111,7 @@ function CommentRoot({ commentId: eventId, indent = false, ...props }: CommentRo
               <div
                 data-testid="collabkit-comment-root"
                 className={`${props.className ?? styles.root({ indent })}`}
+                onMouseOver={(e) => events.onMouseEnter(e, { target })}
                 onMouseEnter={(e) => events.onMouseEnter(e, { target })}
                 onMouseLeave={(e) => events.onMouseLeave(e, { target })}
                 onClick={onClick}
@@ -165,7 +166,7 @@ function CommentSeeAllRepliesButton(props: React.ComponentPropsWithoutRef<'div'>
   const numComments = Object.keys(computed[threadId].messageEvents).length;
 
   const target = {
-    type: 'commentReplyCountButton',
+    type: 'commentSeeAllRepliesButton',
     workspaceId,
     threadId,
     eventId,
@@ -197,6 +198,7 @@ function CommentSeeAllRepliesButton(props: React.ComponentPropsWithoutRef<'div'>
 
 function CommentMarkdown() {
   const { body } = useCommentSnapshot();
+  // move this to a computed property
   const { callbacks } = useSnapshot(useApp().store);
   const canClickLinks = !!callbacks?.onMentionClick || !!callbacks?.onTimestampClick;
 
@@ -440,7 +442,7 @@ function CommentReactionsListAddEmojiButton() {
   return (
     <Tooltip>
       <TooltipTrigger>
-        <PopoverEmojiPicker target={target} smallIconButton={true} placement="bottom-start" />
+        <PopoverEmojiPicker target={target} smallIconButton={true} placement="bottom" />
       </TooltipTrigger>
       <TooltipContent>React</TooltipContent>
     </Tooltip>

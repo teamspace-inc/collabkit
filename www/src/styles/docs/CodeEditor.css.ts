@@ -1,23 +1,35 @@
 import { globalStyle, style } from '@vanilla-extract/css';
-import { docs } from './Docs.css';
-import { vars } from './Theme.css';
+import { recipe } from '@vanilla-extract/recipes';
+import { docs } from '../docs/Docs.css';
+import { vars } from '../Theme.css';
 
-export const codeEditor = style({
-  position: 'relative',
-  padding: '16px 20px 16px 0px',
-  borderRadius: 8,
-  flex: 1,
-  background: vars.color.bgContrastLowest,
+export const codeEditor = recipe({
+  base: {
+    position: 'relative',
+    padding: '16px 20px 16px 0px',
+    borderRadius: 8,
+    flex: 1,
+    background: vars.color.bgContrastLowest,
+    opacity: 0,
+    WebkitFontSmoothing: 'antialiased',
+  },
+  variants: {
+    didMount: {
+      true: {
+        opacity: 1,
+      },
+      false: {
+        opacity: 0,
+      },
+    },
+  },
 });
 
 export const copyButton = style({
-  position: 'absolute',
   zIndex: 1,
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  top: 13,
-  right: 16,
   width: 28,
   height: 28,
   borderRadius: '50%',
@@ -25,6 +37,9 @@ export const copyButton = style({
   cursor: 'pointer',
   ':hover': {
     background: vars.color.bgContrastLow,
+  },
+  ':active': {
+    background: vars.color.bgContrastLowest,
   },
 });
 
@@ -42,7 +57,7 @@ globalStyle(
 );
 
 globalStyle(`${docs} .mtk42`, {
-  fontWeight: '700',
+  fontWeight: '600',
   color: vars.color.sky,
 });
 

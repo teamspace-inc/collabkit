@@ -1,7 +1,5 @@
 import ycLogoSvg from '../assets/yc-logo.svg';
-// import ycLogoSvg from '../assets/yc-logo.svg';
 
-import DiscordLogo from 'phosphor-react/dist/icons/DiscordLogo.esm.js';
 import TwitterLogo from 'phosphor-react/dist/icons/TwitterLogo.esm.js';
 import { useIsSmallScreen } from '../hooks/useIsSmallScreen';
 
@@ -23,7 +21,7 @@ export function Contact() {
     >
       <h1>Contact Us</h1>
       <h3 style={{ color: vars.color.textContrastLow }}>
-        Any questions? Let us know over email or Discord
+        Any questions? Let us know over email or Twitter
       </h3>
 
       <div
@@ -45,10 +43,6 @@ export function Contact() {
         <a className={styles.footerLinkButton} href="https://twitter.com/collabkitdev">
           <TwitterLogo color="white" weight={'fill'} size={25} />
           Twitter
-        </a>
-        <a className={styles.footerLinkButton} href="https://discord.gg/UCA4CbZad4">
-          <DiscordLogo color="white" weight={'fill'} size={25} />
-          Discord
         </a>
       </div>
       <div

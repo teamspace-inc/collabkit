@@ -1,0 +1,23 @@
+import { renderCodeSnippet } from './CodeEditor';
+import { DocLink } from './Doc';
+import Usage from './WorkspacesUsage.tsx?raw';
+
+# Workspaces
+
+## A group of users that use your product together.
+
+Workspaces are groups of your users that will use your product together. These are also referred to as companies, organisations or teams in other products. They are analagous to Slack Workspaces.
+
+For example, if you're building an app for financial teams to collaborate on company accounts you might want to create a Workspace for the company, say 'ACME Inc.' or the team 'ACME Finance Team'.
+
+By default, users in a Workspace will have visiblity into all other comment threads created in a Workspace.
+
+### Usage
+
+For app's with Secure Mode disabled, you can set a users workspace by passing their workspace details to `CollabKitProvider`.
+
+{renderCodeSnippet(Usage)}
+
+### Usage (with Secure Mode)
+
+If you have [Secure Mode](/docs/security) enabled you will need to generate a per-user token for each user in your app and pass this to `CollabKitProvider` instead of the workspace details.
