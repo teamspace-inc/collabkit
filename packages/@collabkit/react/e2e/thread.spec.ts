@@ -312,6 +312,20 @@ test.describe('Sidebar Comments', () => {
     await assertCommentPinCount(page, 1);
     await reply(page, 'This is a pinned comment', 'This is a reply');
   });
+
+  test('can pin chart with a comment and reply and then leave a new comment', async ({
+    context,
+  }) => {
+    const { page } = await createAppAndVisitDashboardAsUser(context, alice);
+    await openSidebarComments(page);
+    await pinComment(page, page.locator('svg.recharts-surface'), 'This is a pinned comment');
+    await assertPinCount(page, 1);
+    await assertCommentPinCount(page, 1);
+    await reply(page, 'This is a pinned comment', 'This is a reply');
+    await pinComment(page, page.getByTestId('dashboard-kpi-profit'), 'Profit comment');
+    await assertPinCount(page, 2);
+    await assertCommentPinCount(page, 2);
+  });
 });
 
 test.describe('Thread', () => {
