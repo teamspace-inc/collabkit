@@ -70,12 +70,13 @@ function ComposerRoot(props: {
   const userId = useUserContext();
 
   const { onClick } = useOnMarkdownLinkClick({ threadId, workspaceId, userId, eventId });
+  const { isNewThread, initialBody, ...otherProps } = props;
 
   const target: ComposerTarget = {
     workspaceId,
     threadId,
     type: 'composer',
-    isNewThread: props.isNewThread ?? false,
+    isNewThread: isNewThread ?? false,
     eventId,
   };
 
@@ -91,7 +92,7 @@ function ComposerRoot(props: {
         <div
           data-testid="collabkit-composer-root"
           className={styles.root}
-          {...props}
+          {...otherProps}
           onClick={onClick}
         />
       </TargetContext.Provider>
@@ -104,13 +105,13 @@ function ComposerContentEditable(props: { autoFocus?: boolean; className?: strin
   const target = useTarget();
   useEffect(() => {
     return () => events.onBlur(null, { target });
-  }, [events.onBlur, target]);
+  }, [events.onBlur]);
 
   return (
     <div
       style={{ display: 'contents' }}
-      onFocus={(e) => events.onFocus(e, { target })}
       onBlur={(e) => events.onBlur(e, { target })}
+      onFocus={(e) => events.onFocus(e, { target })}
     >
       <LexicalContentEditable
         className={props.className ?? styles.contentEditable()}

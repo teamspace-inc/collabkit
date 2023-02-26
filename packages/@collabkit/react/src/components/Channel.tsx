@@ -212,7 +212,7 @@ function ChannelThread() {
   const composer = (
     <ComposerRoot
       className={styles.threadComposerRoot}
-      data-testId="collabkit-channel-composer-root"
+      data-testid="collabkit-channel-composer-root"
     >
       <ProfileAvatar />
       <ComposerEditor className={styles.composerEditor}>
