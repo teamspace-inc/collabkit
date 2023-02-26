@@ -111,6 +111,7 @@ function CommentRoot({ commentId: eventId, indent = false, ...props }: CommentRo
               <div
                 data-testid="collabkit-comment-root"
                 className={`${props.className ?? styles.root({ indent })}`}
+                onMouseOver={(e) => events.onMouseEnter(e, { target })}
                 onMouseEnter={(e) => events.onMouseEnter(e, { target })}
                 onMouseLeave={(e) => events.onMouseLeave(e, { target })}
                 onClick={onClick}
