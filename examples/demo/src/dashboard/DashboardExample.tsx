@@ -35,6 +35,7 @@ import {
   useCommentableRef,
   ToggleSidebarCommentsButton,
   SidebarComments,
+  Debug,
 } from '@collabkit/react';
 
 import { Charts } from './Charts';
@@ -253,6 +254,7 @@ export function DashboardExample() {
           {/* <PopoverChannel /> */}
           <div className="px-2"></div>
           <ToggleSidebarCommentsButton />
+          {/* <Debug /> */}
           {/* <Datepicker
               minDate={minDate}
               maxDate={maxDate}

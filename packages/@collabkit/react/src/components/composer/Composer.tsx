@@ -104,7 +104,7 @@ function ComposerContentEditable(props: { autoFocus?: boolean; className?: strin
   const target = useTarget();
   useEffect(() => {
     return () => events.onBlur(null, { target });
-  }, [events.onBlur]);
+  }, [events.onBlur, target]);
 
   return (
     <div
