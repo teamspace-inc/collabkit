@@ -976,6 +976,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
     onThreadInfo: (props: Sync.ThreadInfoChangeEvent) => void;
     onThreadProfile: (props: Sync.ThreadProfileEvent) => void;
     onThreadProfiles: (props: Sync.ThreadProfilesEvent) => void;
+    onThreadResolveChange: (props: Sync.ThreadResolveChangeEvent) => void;
   }) {
     DEBUG && console.log('[network] subscribeThread', { threadId: props.threadId });
     subscribeTimeline(props);

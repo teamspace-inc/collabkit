@@ -139,6 +139,7 @@ export interface SyncAdapter {
     workspaceId: string;
     threadId: string;
     subs: Subscriptions;
+    onThreadResolveChange: (event: ThreadResolveChangeEvent) => void;
     onTimelineEventAdded: (event: TimelineChangeEvent) => void;
     onThreadTypingChange: (event: TypingEvent) => void;
     onThreadInfo: (props: ThreadInfoChangeEvent) => void;
@@ -195,6 +196,12 @@ export type TimelineChangeEvent = {
   workspaceId: string;
   eventId: string;
   event: WithID<Event>;
+};
+
+export type ThreadResolveChangeEvent = {
+  threadId: string;
+  workspaceId: string;
+  isResolved: boolean;
 };
 
 export type TypingEvent = {

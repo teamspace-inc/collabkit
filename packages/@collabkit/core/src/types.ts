@@ -637,6 +637,7 @@ export interface Workspace {
   threadProfiles: { [threadId: string]: { [userId: string]: boolean } };
   openPins: { [objectId: string]: { [pinId: string]: Pin } };
   eventPins: { [eventId: string]: Pin };
+  isResolved: { [threadId: string]: boolean };
   computed: {
     [threadId: string]: {
       isResolved: boolean;
