@@ -106,10 +106,9 @@ function SavedPin({
 
   const target: PinTarget = useMemo(() => {
     const { x, y, createdById, ...pinTarget } = pin;
-    const purePinTarget = structuredClone(pinTarget);
     return {
       type: 'pin',
-      ...purePinTarget,
+      ...pinTarget,
     };
   }, [pin.id, pin.objectId, pin.eventId, pin.workspaceId, pin.threadId]);
 
