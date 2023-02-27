@@ -64,83 +64,64 @@ export type UnsecureProps = {
   workspace?: WorkspaceProps | null;
 };
 
+type ThreadCallbackProps = {
+  userId: string;
+  workspaceId: string;
+  threadId: string;
+};
+
+type PendingPinCallbackProps = ThreadCallbackProps & {
+  objectId: string;
+};
+
+type PinCallbackProps = PendingPinCallbackProps & {
+  objectId: string;
+  state: string;
+};
+
 export type Callbacks = {
-  onPinClick?: (data: {
-    userId: string;
-    workspaceId: string;
-    objectId: string;
-    state: string;
-  }) => void;
-  onPinHover?: (data: {
-    userId: string;
-    workspaceId: string;
-    threadId: string;
-    objectId: string;
-    state: string;
-  }) => void;
-  onPinUnhover?: (data: {
-    userId: string;
-    workspaceId: string;
-    threadId: string;
-    objectId: string;
-  }) => void;
-  onPinDeselect?: (data: {
-    userId: string;
-    workspaceId: string;
-    threadId: string;
-    objectId: string;
-  }) => void;
-  onPinAttach?: (data: {
-    userId: string;
-    threadId: string;
-    workspaceId: string;
-    objectId: string;
-  }) => string;
-  onThreadCreated?: (data: {
-    userId: string;
-    workspaceId: string;
-    threadId: string;
-    info: ThreadInfo;
-    event: WithID<Event>;
-  }) => void;
-  onCommentSend?: (data: {
-    userId: string;
-    workspaceId: string;
-    threadId: string;
-    event: WithID<Event>;
-  }) => void;
-  onTimestampClick?: (data: {
-    userId: string;
-    workspaceId: string;
-    threadId: string;
-    event: WithID<Event> | null;
-    timestamp: string;
-  }) => void;
-  onMentionClick?: (data: {
-    userId: string;
-    workspaceId: string;
-    threadId: string;
-    event: WithID<Event> | null;
-    mention: MentionWithColor;
-  }) => void;
-  onInboxThreadClick?: (data: {
-    userId: string;
-    workspaceId: string;
-    threadId: string;
-    info: ThreadInfo;
-  }) => void;
-  onThreadResolve?: (data: {
-    userId: string;
-    workspaceId: string;
-    threadId: string;
-    info: ThreadInfo;
-  }) => void;
-  onThreadReopen?: (data: {
-    userId: string;
-    workspaceId: string;
-    threadId: string;
-    info: ThreadInfo;
-  }) => void;
+  onPinClick?: (data: PinCallbackProps) => void;
+  onPinHover?: (data: PinCallbackProps) => void;
+  onPinUnhover?: (data: PinCallbackProps) => void;
+  onPinDeselect?: (data: PinCallbackProps) => void;
+  onPinAttach?: (data: PendingPinCallbackProps) => string;
+  onThreadCreated?: (
+    data: ThreadCallbackProps & {
+      event: WithID<Event>;
+    }
+  ) => void;
+  onCommentSend?: (
+    data: ThreadCallbackProps & {
+      event: WithID<Event>;
+    }
+  ) => void;
+  onTimestampClick?: (
+    data: ThreadCallbackProps & {
+      event: WithID<Event> | null;
+      timestamp: string;
+    }
+  ) => void;
+  onMentionClick?: (
+    data: ThreadCallbackProps & {
+      event: WithID<Event> | null;
+      mention: MentionWithColor;
+    }
+  ) => void;
+  onInboxThreadClick?: (
+    data: ThreadCallbackProps & {
+      info: ThreadInfo;
+    }
+  ) => void;
+  onThreadResolve?: (
+    data: ThreadCallbackProps & {
+      info: ThreadInfo;
+    }
+  ) => void;
+  onThreadReopen?: (
+    data: ThreadCallbackProps & {
+      info: ThreadInfo;
+    }
+  ) => void;
   onInboxCloseButtonClick?: (data: { userId: string; workspaceId: string }) => void;
   onAuthenticationRequired?: () => void;
 };
