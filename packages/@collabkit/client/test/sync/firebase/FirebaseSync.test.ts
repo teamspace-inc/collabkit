@@ -108,6 +108,7 @@ describe('FirebaseSync', async () => {
         workspaceId,
         threadId,
         subs,
+        onThreadResolveChange: (event) => {},
         onTimelineEventAdded: (event) => {
           resolve(event);
         },
@@ -171,6 +172,7 @@ describe('FirebaseSync', async () => {
         onTimelineEventAdded: (event) => {
           resolve(event);
         },
+        onThreadResolveChange: (event) => {},
         onThreadTypingChange: (event) => {},
         onThreadInfo: (event) => {},
         onThreadProfile: (event) => {},
@@ -185,7 +187,7 @@ describe('FirebaseSync', async () => {
       x: 10,
       y: 20,
       objectId: 'task-4',
-      state: JSON.stringify({ something: 'foo' }),
+      meta: JSON.stringify({ something: 'foo' }),
     };
     const attachmentId = nanoid();
     const savedAttachment = attachment;
@@ -343,7 +345,7 @@ describe('FirebaseSync', async () => {
       });
     });
 
-    await sync.saveThreadInfo({ appId, workspaceId, threadId, isOpen: true, info: value });
+    await sync.saveThreadInfo({ appId, workspaceId, threadId, info: value });
 
     const updatedThreadInfo = await threadInfo;
 

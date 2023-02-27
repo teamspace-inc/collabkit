@@ -75,7 +75,7 @@ describe('pin', () => {
       y,
       pending: true,
       type: 'pin',
-      state: null,
+      meta: null,
     });
   });
 });

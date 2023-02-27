@@ -409,7 +409,7 @@
               },
               "attachments": {
                 "$attachmentId": {
-                  ".validate": "newData.hasChildren(['x', 'y', 'objectId', 'state', 'type'])",
+                  ".validate": "newData.hasChildren(['x', 'y', 'objectId', 'meta', 'type'])",
                   "type": {
                     ".validate": "newData.isString() && newData.val() === 'pin'"
                   },
@@ -420,9 +420,6 @@
                     ".validate": "newData.isNumber()"
                   },
                   "objectId": {
-                    ".validate": "newData.isString()"
-                  },
-                  "state": {
                     ".validate": "newData.isString()"
                   },
                   "meta": {
