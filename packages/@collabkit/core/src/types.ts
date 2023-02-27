@@ -79,7 +79,7 @@ type PinCallbackProps = PendingPinCallbackProps & {
 
   // lets rename this to 'meta'
   state: string;
-  url: string;
+  // url: string;
 };
 
 // <CollabKitView
