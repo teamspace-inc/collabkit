@@ -38,7 +38,11 @@ export function AdvancedProps(props: {
                 {'  '}
                 <code style={{ color: vars.color.textContrastMedium }}>{row[1]}</code>
               </td>
-              <td style={{ verticalAlign: 'top', fontSize: 14 }}>{row[2]}</td>
+              <td
+                style={{ verticalAlign: 'top', fontSize: 14, color: vars.color.textContrastMedium }}
+              >
+                {row[2]}
+              </td>
             </tr>
           ))}
         </tbody>
