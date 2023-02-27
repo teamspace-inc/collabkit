@@ -13,7 +13,7 @@ export function unhover(store: Store, props: { target: Target }) {
               store.workspaces[props.target.workspaceId].eventPins[props.target.eventId].objectId,
             workspaceId: props.target.workspaceId,
             threadId: props.target.threadId,
-            state: pin.state ?? 'null',
+            meta: pin.meta,
           });
         }
       }

@@ -17,7 +17,7 @@ export function hover(store: Store, props: { target: Target }) {
           objectId: pin.objectId,
           workspaceId: target.workspaceId,
           threadId: target.threadId,
-          state: pin.state ?? 'null',
+          meta: pin.meta,
         });
       }
     }

@@ -271,6 +271,9 @@
                 },
                 "state": {
                   ".validate": "newData.isString()"
+                },
+                "meta": {
+                  ".validate": "newData.isString()"
                 }
               }
             }
@@ -420,6 +423,9 @@
                     ".validate": "newData.isString()"
                   },
                   "state": {
+                    ".validate": "newData.isString()"
+                  },
+                  "meta": {
                     ".validate": "newData.isString()"
                   }
                 }

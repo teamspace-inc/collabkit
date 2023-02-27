@@ -108,15 +108,29 @@ const UpdateBuilder = {
       // be undone (should we add undo functionality).
       case 'pin': {
         const pinId = attachmentId;
-        const { objectId, x, y, state } = attachment;
-        const jsonState = JSON.stringify(state);
+        const { objectId, x, y, meta } = attachment;
+        let isValidMeta = false;
+        if (meta === null) {
+          isValidMeta = true;
+        } else {
+          try {
+            JSON.parse(meta);
+            isValidMeta = true;
+          } catch (e) {
+            isValidMeta = false;
+          }
+        }
+        if (!isValidMeta) {
+          throw new Error('Invalid meta data for pin');
+        }
+
         const firebasePin: FirebasePin | null = {
           x,
           y,
           eventId,
           threadId,
           createdById: userId,
-          state: jsonState,
+          meta,
         };
         updates[ref.path`/views/openPins/${appId}/${workspaceId}/${objectId}/${pinId}`] =
           firebasePin;

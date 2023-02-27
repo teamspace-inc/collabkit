@@ -25,7 +25,7 @@ export function select(store: Store, props: { target: Target }) {
         store.callbacks?.onPinClick?.({
           userId,
           workspaceId,
-          state: pin.state ?? 'null',
+          meta: pin.meta,
           objectId: pin.objectId,
           threadId: pin.threadId,
         });

@@ -7,9 +7,7 @@ export function deselectAll(store: Store) {
       objectId: store.selectedId.objectId,
       workspaceId: store.selectedId.workspaceId,
       threadId: store.selectedId.threadId,
-      state:
-        store.workspaces[store.selectedId.workspaceId].eventPins[store.selectedId.eventId].state ??
-        'null',
+      meta: store.workspaces[store.selectedId.workspaceId].eventPins[store.selectedId.eventId].meta,
     });
   }
 

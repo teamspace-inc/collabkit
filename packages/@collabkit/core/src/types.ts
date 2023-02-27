@@ -78,7 +78,7 @@ type PinCallbackProps = PendingPinCallbackProps & {
   objectId: string;
 
   // lets rename this to 'meta'
-  state: string;
+  meta: string | null;
   // url: string;
 };
 
@@ -553,7 +553,7 @@ export type Attachment = {
   x: number;
   y: number;
   objectId: string;
-  state: string | null;
+  meta: string | null;
   pending?: boolean;
 };
 
@@ -563,7 +563,7 @@ export type FirebasePin = {
   threadId: string;
   eventId: string;
   createdById: string;
-  state: string;
+  meta: string | null;
 };
 
 export type Pin = {
@@ -575,7 +575,7 @@ export type Pin = {
   threadId: string;
   eventId: string;
   createdById: string;
-  state: string | null;
+  meta: string | null;
 };
 
 export type PendingPin = Pin & {
