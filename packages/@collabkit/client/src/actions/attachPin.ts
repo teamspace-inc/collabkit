@@ -5,7 +5,7 @@ export function attachPin(store: Store, target: CommentableTarget) {
   const { appId } = store.config;
   const { userId } = store;
   if (!userId) throw new Error('CollabKit: no userId set');
-  const { objectId, x, y, dataPoint } = target;
+  const { objectId, x, y, dataPoint, xOffset } = target;
   const { composerId } = store;
   if (!composerId) throw new Error('CollabKit: no composerId set');
   const { type, ...composerProps } = composerId;
@@ -17,6 +17,7 @@ export function attachPin(store: Store, target: CommentableTarget) {
     x,
     y,
     dataPoint: dataPoint ?? null,
+    xOffset: xOffset ?? 0,
     objectId,
     state: store.callbacks?.onPinAttach?.({ objectId, userId, threadId, workspaceId }) ?? null,
     pending: true,

@@ -274,6 +274,7 @@ export type CommentableTarget = {
     x: number;
     y: number;
   };
+  xOffset?: number;
 };
 
 export type ComposerMentionsButtonTarget = {
@@ -471,6 +472,7 @@ export type PinAttachment = {
     x: number;
     y: number;
   } | null;
+  xOffset: number;
   objectId: string;
   state: string | null;
   pending?: boolean;
@@ -479,10 +481,15 @@ export type PinAttachment = {
 export type FirebasePin = {
   x: number;
   y: number;
+  xOffset: number;
   threadId: string;
   eventId: string;
   createdById: string;
   state: string;
+  dataPoint?: {
+    x: number;
+    y: number;
+  } | null;
 };
 
 export type Pin = {
@@ -490,11 +497,16 @@ export type Pin = {
   objectId: string;
   x: number;
   y: number;
+  xOffset: number;
   workspaceId: string;
   threadId: string;
   eventId: string;
   createdById: string;
   state: string | null;
+  dataPoint?: {
+    x: number;
+    y: number;
+  };
 };
 
 export type PendingPin = Pin & {
@@ -591,6 +603,8 @@ export type CommentableObject = {
     x: number;
     y: number;
   };
+
+  xOffset?: number;
 };
 
 // get all pins for the workspace that have an open thread attached to them (we don't want resolved ones)
@@ -635,6 +649,9 @@ export interface UnconfiguredStore {
   pinsVisible: boolean;
   dragPinObjectId: string;
   dragPinUpdate: Function[];
+  xOffset: number;
+  xStepWidth: number;
+  xScale: Function;
 }
 
 export interface Store extends UnconfiguredStore {

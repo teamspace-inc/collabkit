@@ -72,7 +72,10 @@ export function CommentableRoot(props: { className?: string; children?: React.Re
     (e: React.PointerEvent) => {
       const commentable = findCommentableElement(store, e);
       if (commentable && commentable.element && workspaceId) {
-        const { x, y, width, height } = commentable.element.getBoundingClientRect();
+        let { x, y, width, height } = commentable.element.getBoundingClientRect();
+        if (!commentable.xOffset) {
+          commentable.xOffset = 0;
+        }
         events.onPointerDown(e, {
           target: {
             type: 'commentable',
@@ -80,6 +83,7 @@ export function CommentableRoot(props: { className?: string; children?: React.Re
             x: (e.clientX - x) / width,
             y: (e.clientY - y) / height,
             dataPoint: commentable.dataPoint,
+            xOffset: ((e.clientX - x - commentable.xOffset) / store.xStepWidth)
           },
         });
       }
@@ -105,14 +109,14 @@ export function CommentableRoot(props: { className?: string; children?: React.Re
   const pins =
     pinsVisible && allPins
       ? allPins.map((pin) => {
-          return (
-            <SavedPin
-              key={pin.id}
-              pin={pin}
-              isSelected={selectedId?.type === 'pin' && selectedId.id === pin.id}
-            />
-          );
-        })
+        return (
+          <SavedPin
+            key={pin.id}
+            pin={pin}
+            isSelected={selectedId?.type === 'pin' && selectedId.id === pin.id}
+          />
+        );
+      })
       : [];
 
   return (
@@ -155,10 +159,19 @@ function CommentableChart(props: any) {
   const objectId = useObjectIdContext();
   let xValue: number | null = null;
   let yValue: number | null = null;
+
+  const xStepEnd = props.xAxisMap[0].scale(props.tooltipTicks[props.tooltipTicks.length - 1]?.value);
+  const xStepStart = props.xAxisMap[0].scale(props.tooltipTicks[0]?.value);
+  const xStepWidth = (xStepEnd - xStepStart) / props.tooltipTicks.length;
+  store.xStepWidth = xStepWidth;
+
+  store.xScale = props.xAxisMap[0].scale;
+
   if (props.activeTooltipIndex != null && props.activeTooltipIndex != -1) {
     xValue = props.tooltipTicks[props.activeTooltipIndex]?.value;
     yValue = yAxis.scale.invert(props.activeCoordinate.y);
     if (xValue != null && yValue != null) {
+      store.commentables[objectId].xOffset = props.activeCoordinate.x;
       store.commentables[objectId].dataPoint = { x: xValue, y: yValue };
     }
   }

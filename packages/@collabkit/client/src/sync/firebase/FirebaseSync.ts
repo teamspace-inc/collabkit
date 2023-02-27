@@ -94,11 +94,13 @@ const UpdateBuilder = {
         switch (attachment.type) {
           case 'pin': {
             const pinId = attachmentId;
-            const { objectId, x, y, state } = attachment;
+            const { objectId, x, y, state, xOffset, dataPoint } = attachment;
             const jsonState = JSON.stringify(state);
             const firebasePin: FirebasePin | null = {
               x,
               y,
+              xOffset,
+              dataPoint,
               eventId,
               threadId,
               createdById: userId,
