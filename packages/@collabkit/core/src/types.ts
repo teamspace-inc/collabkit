@@ -76,8 +76,18 @@ type PendingPinCallbackProps = ThreadCallbackProps & {
 
 type PinCallbackProps = PendingPinCallbackProps & {
   objectId: string;
-  state: string;
+
+  // lets rename this to 'meta'
+  meta: string | null;
+  // url: string;
 };
+
+// <CollabKitView
+//   name="Accounts"
+//   permissions={(userId) => {
+//     read / write;
+//   }}
+// ></CollabKitView>;
 
 export type Callbacks = {
   onPinClick?: (data: PinCallbackProps) => void;
@@ -543,7 +553,7 @@ export type Attachment = {
   x: number;
   y: number;
   objectId: string;
-  state: string | null;
+  meta: string | null;
   pending?: boolean;
 };
 
@@ -553,7 +563,7 @@ export type FirebasePin = {
   threadId: string;
   eventId: string;
   createdById: string;
-  state: string;
+  meta: string | null;
 };
 
 export type Pin = {
@@ -565,7 +575,7 @@ export type Pin = {
   threadId: string;
   eventId: string;
   createdById: string;
-  state: string | null;
+  meta: string | null;
 };
 
 export type PendingPin = Pin & {
@@ -627,7 +637,6 @@ export interface Composer {
 export interface Workspace {
   profiles: { [userId: string]: boolean };
   name: string;
-  openThreads: { [threadId: string]: { meta: ThreadMeta } };
   pendingThreadInfo: { [threadId: string]: ThreadInfo };
   inbox: { [threadId: string]: WithID<Event> };
   timeline: { [threadId: string]: Timeline };
@@ -637,6 +646,8 @@ export interface Workspace {
   threadProfiles: { [threadId: string]: { [userId: string]: boolean } };
   openPins: { [objectId: string]: { [pinId: string]: Pin } };
   eventPins: { [eventId: string]: Pin };
+  isResolved: { [threadId: string]: boolean };
+  isOpen: { [threadId: string]: boolean };
   computed: {
     [threadId: string]: {
       isResolved: boolean;

@@ -4,7 +4,6 @@ import { expect, test } from 'vitest';
 test('createWorkspace', () => {
   expect(createWorkspace()).toStrictEqual({
     inbox: {},
-    openThreads: {},
     profiles: {},
     name: '',
     timeline: {},
@@ -16,6 +15,8 @@ test('createWorkspace', () => {
     openPins: {},
     eventPins: {},
     computed: {},
+    isResolved: {},
+    isOpen: {},
   });
 });
 

@@ -31,12 +31,13 @@ export function Demo() {
       }}
       onPinClick={(props) => {
         try {
-          const state = JSON.parse(props.state) as DashboardStore | null;
-          if (state) {
-            if (state.selectedKpi) dashboardStore.selectedKpi = state.selectedKpi;
-            if (state.selectedStatus) dashboardStore.selectedStatus = state.selectedStatus;
-            if (state.selectedNames) dashboardStore.selectedNames = state.selectedNames;
-            if (state.selectedTab) dashboardStore.selectedTab = state.selectedTab;
+          if (!props.meta) return;
+          const meta = JSON.parse(props.meta) as DashboardStore | null;
+          if (meta) {
+            if (meta.selectedKpi) dashboardStore.selectedKpi = meta.selectedKpi;
+            if (meta.selectedStatus) dashboardStore.selectedStatus = meta.selectedStatus;
+            if (meta.selectedNames) dashboardStore.selectedNames = meta.selectedNames;
+            if (meta.selectedTab) dashboardStore.selectedTab = meta.selectedTab;
           }
         } catch (e) {}
       }}

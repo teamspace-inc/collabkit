@@ -21,7 +21,6 @@ import {
   OptionalWorkspaceProps,
   Subscriptions,
   ThreadInfo,
-  ThreadMeta,
   Sync,
   FirebasePin,
   Timeline,
@@ -109,15 +108,29 @@ const UpdateBuilder = {
       // be undone (should we add undo functionality).
       case 'pin': {
         const pinId = attachmentId;
-        const { objectId, x, y, state } = attachment;
-        const jsonState = JSON.stringify(state);
+        const { objectId, x, y, meta } = attachment;
+        let isValidMeta = false;
+        if (meta === null) {
+          isValidMeta = true;
+        } else {
+          try {
+            JSON.parse(meta);
+            isValidMeta = true;
+          } catch (e) {
+            isValidMeta = false;
+          }
+        }
+        if (!isValidMeta) {
+          throw new Error('Invalid meta data for pin');
+        }
+
         const firebasePin: FirebasePin | null = {
           x,
           y,
           eventId,
           threadId,
           createdById: userId,
-          state: jsonState,
+          meta,
         };
         updates[ref.path`/views/openPins/${appId}/${workspaceId}/${objectId}/${pinId}`] =
           firebasePin;
@@ -461,24 +474,18 @@ export class FirebaseSync implements Sync.SyncAdapter {
     appId: string;
     workspaceId: string;
     threadId: string;
-    isOpen: boolean;
     info?: ThreadInfo;
   }): Promise<void> {
     DEBUG && console.log('[network] saveThreadInfo', data);
     const { appId, workspaceId, threadId, info } = data;
     // bug here can't save undefined info to firebase
+    // transform to turn any undefined into null
     const values = {
       [ref.path`/threadInfo/${appId}/${workspaceId}/${threadId}`]: info
         ? {
             ...info,
             defaultSubscribers: idArrayToObject(info.defaultSubscribers),
           }
-        : null,
-
-      // there's a pitfall here, if meta is null the thread will not be marked as open...
-      // we should keep info separate or just say it has no info here
-      [ref.path`/views/openThreads/${data.appId}/${data.workspaceId}/${data.threadId}`]: data.isOpen
-        ? { meta: data.info?.meta ?? null }
         : null,
     };
     return update(ref`/`, values);
@@ -840,66 +847,6 @@ export class FirebaseSync implements Sync.SyncAdapter {
     subs[`${appId}-${workspaceId}-seen-moved`] ||= onChildMoved(seenQuery, childCallback, onError);
   }
 
-  subscribeOpenThreads({
-    appId,
-    workspaceId,
-    subs,
-    onThreadChange,
-  }: {
-    appId: string;
-    workspaceId: string;
-    subs: Subscriptions;
-    onThreadChange: Sync.OpenThreadEventHandler;
-  }): void {
-    DEBUG && console.log('[network] subscribeOpenThreads', { appId, workspaceId });
-    const onError = (e: Error) => {
-      console.error(e);
-    };
-
-    const onChange = (child: DataSnapshot) => {
-      const threadId = child.key;
-      const info = child.val() as { meta: ThreadMeta } | null;
-
-      if (threadId) {
-        onThreadChange({ threadId, info });
-      }
-    };
-
-    const onRemoved = (child: DataSnapshot) => {
-      const threadId = child.key;
-
-      if (threadId) {
-        onThreadChange({ threadId, info: null, wasRemoved: true });
-      }
-    };
-
-    const viewRef = ref`/views/openThreads/${appId}/${workspaceId}`;
-    subs[`${viewRef.toString()}#added`] ||= onChildAdded(viewRef, onChange, onError);
-    subs[`${viewRef.toString()}#changed`] ||= onChildChanged(viewRef, onChange, onError);
-    subs[`${viewRef.toString()}#removed`] ||= onChildRemoved(viewRef, onRemoved, onError);
-  }
-
-  async getOpenThreads({ appId, workspaceId }: { appId: string; workspaceId: string }) {
-    const snapshot = await get(ref`/views/openThreads/${appId}/${workspaceId}`);
-
-    if (!snapshot.exists()) {
-      return [];
-    }
-
-    const object = snapshot.val();
-    if (typeof object !== 'object') {
-      return [];
-    }
-
-    const openThreads: { threadId: string; info: ThreadInfo }[] = [];
-    for (const threadId in object) {
-      const info = object[threadId];
-      openThreads.push({ threadId, info });
-    }
-
-    return openThreads;
-  }
-
   subscribeThreadInfo(props: {
     appId: string;
     workspaceId: string;
@@ -976,11 +923,20 @@ export class FirebaseSync implements Sync.SyncAdapter {
     onThreadInfo: (props: Sync.ThreadInfoChangeEvent) => void;
     onThreadProfile: (props: Sync.ThreadProfileEvent) => void;
     onThreadProfiles: (props: Sync.ThreadProfilesEvent) => void;
+    onThreadResolveChange: (props: Sync.ThreadResolveChangeEvent) => void;
   }) {
     DEBUG && console.log('[network] subscribeThread', { threadId: props.threadId });
     subscribeTimeline(props);
     subscribeThreadIsTyping(props);
     this.subscribeThreadInfo(props);
+  }
+
+  async getThreadInfo(props: { appId: string; workspaceId: string; threadId: string }) {
+    DEBUG && console.log('[network] getThreadInfo', { threadId: props.threadId });
+    const snapshot = await get(
+      ref`/threadInfo/${props.appId}/${props.workspaceId}/${props.threadId}`
+    );
+    return snapshot.val();
   }
 
   async getUser(props: { appId: string; workspaceId: string; userId: string }) {

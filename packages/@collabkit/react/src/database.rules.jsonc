@@ -271,6 +271,9 @@
                 },
                 "state": {
                   ".validate": "newData.isString()"
+                },
+                "meta": {
+                  ".validate": "newData.isString()"
                 }
               }
             }
@@ -319,6 +322,7 @@
               "body": {
                 ".validate": "newData.isString()"
               },
+              // todo deprecate this
               "state": {
                 ".validate": "newData.isString()"
               }
@@ -405,7 +409,7 @@
               },
               "attachments": {
                 "$attachmentId": {
-                  ".validate": "newData.hasChildren(['x', 'y', 'objectId', 'state', 'type'])",
+                  ".validate": "newData.hasChildren(['x', 'y', 'objectId', 'meta', 'type'])",
                   "type": {
                     ".validate": "newData.isString() && newData.val() === 'pin'"
                   },
@@ -418,7 +422,7 @@
                   "objectId": {
                     ".validate": "newData.isString()"
                   },
-                  "state": {
+                  "meta": {
                     ".validate": "newData.isString()"
                   }
                 }

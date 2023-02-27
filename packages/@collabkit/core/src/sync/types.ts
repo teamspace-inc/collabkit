@@ -17,14 +17,6 @@ export interface SyncAdapter {
 
   getUser(params: { userId: string; appId: string }): Promise<UserProps | null>;
 
-  getOpenThreads({
-    appId,
-    workspaceId,
-  }: {
-    appId: string;
-    workspaceId: string;
-  }): Promise<{ threadId: string; info: ThreadInfo }[]>;
-
   getIsTyping(props: {
     appId: string;
     userId: string;
@@ -36,9 +28,14 @@ export interface SyncAdapter {
     appId: string;
     workspaceId: string;
     threadId: string;
-    isOpen: boolean;
     info?: ThreadInfo;
   }): Promise<void>;
+
+  getThreadInfo(params: {
+    appId: string;
+    workspaceId: string;
+    threadId: string;
+  }): Promise<ThreadInfo | null>;
 
   saveWorkspace(params: {
     appId: string;
@@ -119,13 +116,6 @@ export interface SyncAdapter {
     onSeenChange: SeenEventHandler;
   }): void;
 
-  subscribeOpenThreads(params: {
-    appId: string;
-    workspaceId: string;
-    subs: Subscriptions;
-    onThreadChange: OpenThreadEventHandler;
-  }): void;
-
   subscribeInbox(props: {
     appId: string;
     workspaceId: string;
@@ -139,6 +129,7 @@ export interface SyncAdapter {
     workspaceId: string;
     threadId: string;
     subs: Subscriptions;
+    onThreadResolveChange: (event: ThreadResolveChangeEvent) => void;
     onTimelineEventAdded: (event: TimelineChangeEvent) => void;
     onThreadTypingChange: (event: TypingEvent) => void;
     onThreadInfo: (props: ThreadInfoChangeEvent) => void;
@@ -195,6 +186,12 @@ export type TimelineChangeEvent = {
   workspaceId: string;
   eventId: string;
   event: WithID<Event>;
+};
+
+export type ThreadResolveChangeEvent = {
+  threadId: string;
+  workspaceId: string;
+  isResolved: boolean;
 };
 
 export type TypingEvent = {

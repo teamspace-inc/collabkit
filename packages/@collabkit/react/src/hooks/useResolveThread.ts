@@ -16,7 +16,7 @@ export function useResolveThread() {
   const timeline = workspace.timeline[threadId];
   const firstCommentId = timeline ? Object.keys(timeline)[0] : null;
   const canResolve = firstCommentId ? timeline[firstCommentId].createdById === userId : false;
-  const { isResolved } = workspace.computed[threadId];
+  const isResolved = workspace.isResolved[threadId];
 
   const resolve = () => {
     actions.resolveThread(store, { workspaceId, threadId });

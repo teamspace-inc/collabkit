@@ -51,20 +51,24 @@ export async function subscribeThread(
     workspaceId,
     threadId,
     subs: store.subs,
-    onTimelineEventAdded: (event: Sync.TimelineChangeEvent) => {
+    onTimelineEventAdded: (event) => {
       onTimelineChangeEvent(event);
     },
-    onThreadTypingChange: ({ workspaceId, threadId, userId, isTyping }: Sync.TypingEvent) => {
+    onThreadTypingChange: ({ workspaceId, threadId, userId, isTyping }) => {
       store.workspaces[workspaceId].composers[threadId]['default'].isTyping[userId] = isTyping;
     },
-    onThreadInfo: (event: Sync.ThreadInfoChangeEvent) => {
+    onThreadInfo: (event) => {
       if (event.info) {
         store.workspaces[event.workspaceId].threadInfo[event.threadId] = event.info;
       } else {
         delete store.workspaces[event.workspaceId].threadInfo[event.threadId];
       }
     },
-    onThreadProfile: (event: Sync.ThreadProfileEvent) => {
+    onThreadResolveChange: (event) => {
+      store.workspaces[event.workspaceId].isResolved[event.threadId] = event.isResolved;
+      store.workspaces[event.workspaceId].isOpen[event.threadId] = !event.isResolved;
+    },
+    onThreadProfile: (event) => {
       store.workspaces[event.workspaceId].threadProfiles[event.threadId][event.userId] = true;
       if (store.config.mentionableUsers === 'allWorkspace') return;
       subscribeProfile(store, {
@@ -72,7 +76,7 @@ export async function subscribeThread(
         onSubscribe: () => {},
       });
     },
-    onTimelineGetComplete: (events: Sync.TimelineChangeEvent[]) => {
+    onTimelineGetComplete: (events) => {
       if (!events.length) {
         return;
       }
@@ -93,7 +97,7 @@ export async function subscribeThread(
           actions.subscribeProfile(store, { profileId: userId, onSubscribe: () => {} })
         );
     },
-    onThreadProfiles: (event: Sync.ThreadProfilesEvent) => {
+    onThreadProfiles: (event) => {
       store.workspaces[event.workspaceId].threadProfiles[event.threadId] = event.profiles;
       if (store.config.mentionableUsers === 'allWorkspace') return;
       for (const profileId of Object.keys(event.profiles)) {

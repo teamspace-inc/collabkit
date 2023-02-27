@@ -4,6 +4,13 @@ import { InboxChangeEventHandler, ThreadInfoChangeEvent } from 'packages/@collab
 
 export class LocalOnlySync implements SyncAdapter {
   constructor(public workspaceData: any) {}
+  getThreadInfo(params: {
+    appId: string;
+    workspaceId: string;
+    threadId: string;
+  }): Promise<ThreadInfo | null> {
+    throw new Error('Method not implemented.');
+  }
   nextEventId(params: { appId: string; workspaceId: string; threadId: string }): string {
     return nanoid();
   }

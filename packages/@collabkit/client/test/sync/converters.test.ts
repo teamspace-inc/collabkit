@@ -122,7 +122,7 @@ test('eventToFirebaseEvent', () => {
           x: 10,
           y: 20,
           objectId: 'object-1',
-          state: JSON.stringify({ foo: 'bar' }),
+          meta: JSON.stringify({ foo: 'bar' }),
         },
       },
     })
@@ -143,7 +143,7 @@ test('eventToFirebaseEvent', () => {
         x: 10,
         y: 20,
         objectId: 'object-1',
-        state: JSON.stringify({ foo: 'bar' }),
+        meta: JSON.stringify({ foo: 'bar' }),
       },
     },
   });

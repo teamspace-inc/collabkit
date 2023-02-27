@@ -32,7 +32,7 @@ export function eventToFirebaseEvent(event: Event) {
             x: attachment.x,
             y: attachment.y,
             objectId: attachment.objectId,
-            state: attachment.state,
+            meta: attachment.meta,
           };
       }
     }

@@ -4,6 +4,5 @@ import { useWorkspaceStore } from '../useWorkspaceStore';
 
 export function useIsResolved() {
   const threadId = useThreadContext();
-  const { isResolved } = useSnapshot(useWorkspaceStore()).computed[threadId];
-  return isResolved ?? false;
+  return useSnapshot(useWorkspaceStore()).isResolved[threadId] ?? false;
 }

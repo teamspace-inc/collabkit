@@ -48,7 +48,6 @@ import { stopSelecting } from './stopSelecting';
 import { stopTyping } from './stopTyping';
 import { subscribeInbox } from './subscribeInbox';
 import { subscribeOpenPins } from './subscribeOpenPins';
-import { subscribeOpenThreads } from './subscribeOpenThreads';
 import { subscribeProfile } from './subscribeProfile';
 import { subscribeSeen } from './subscribeSeen';
 import { subscribeThread } from './subscribeThread';
@@ -111,7 +110,6 @@ export const actions = {
   stopTyping,
   subscribeInbox,
   subscribeOpenPins,
-  subscribeOpenThreads,
   subscribeProfile,
   subscribeSeen,
   subscribeThread,

@@ -25,7 +25,7 @@ export function attachComposerPin(
     x,
     y,
     objectId,
-    state: store.callbacks?.onPinAttach?.({ objectId, userId, threadId, workspaceId }) ?? null,
+    meta: store.callbacks?.onPinAttach?.({ objectId, userId, threadId, workspaceId }) ?? null,
     pending: true,
   };
   composer.attachments[id] = pinAttachment;

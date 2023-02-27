@@ -2,6 +2,7 @@ import {
   DataSnapshot,
   get,
   onChildAdded,
+  onValue,
   orderByKey,
   query,
   QueryConstraint,
@@ -57,6 +58,7 @@ export async function subscribeTimeline({
   onTimelineGetComplete?: (events: Sync.TimelineChangeEvent[]) => void;
   onThreadProfile: (props: Sync.ThreadProfileEvent) => void;
   onThreadProfiles: (props: Sync.ThreadProfilesEvent) => void;
+  onThreadResolveChange: (props: Sync.ThreadResolveChangeEvent) => void;
 }) {
   const { appId, workspaceId, threadId } = props;
   const timelineQuery = query(
@@ -69,8 +71,13 @@ export async function subscribeTimeline({
     orderByKey()
   );
 
+  const isOpenQuery = ref`/views/isOpen/${appId}/${workspaceId}/${threadId}`;
   const threadProfilesQuery = ref`/views/threadProfiles/${appId}/${workspaceId}/${threadId}`;
-  const snapshots = await Promise.allSettled([get(timelineQuery), get(threadProfilesQuery)]);
+  const snapshots = await Promise.allSettled([
+    get(timelineQuery),
+    get(threadProfilesQuery),
+    get(isOpenQuery),
+  ]);
 
   let lastEventId: string | null = null;
 
@@ -85,6 +92,8 @@ export async function subscribeTimeline({
   } else {
     console.error('get threadProfiles', snapshots[1].reason);
   }
+
+  const isOpen = snapshots[2].status === 'fulfilled' ? snapshots[2].value.val() : false;
 
   const events: Sync.TimelineChangeEvent[] = [];
   if (snapshots[0].status === 'fulfilled') {
@@ -109,6 +118,7 @@ export async function subscribeTimeline({
   );
 
   props.onTimelineGetComplete?.(events);
+  props.onThreadResolveChange?.({ threadId, workspaceId, isResolved: !isOpen });
 
   if (!subs[threadProfilesQuery.toString()]) {
     subs[threadProfilesQuery.toString()] = onChildAdded(threadProfilesQuery, (snapshot) => {
@@ -119,6 +129,16 @@ export async function subscribeTimeline({
           userId: FirebaseId.decode(snapshot.key),
         });
       }
+    });
+  }
+
+  if (!subs[isOpenQuery.toString()]) {
+    subs[threadProfilesQuery.toString()] = onValue(isOpenQuery, (snapshot) => {
+      props.onThreadResolveChange?.({
+        threadId,
+        workspaceId,
+        isResolved: !snapshot.exists(),
+      });
     });
   }
 

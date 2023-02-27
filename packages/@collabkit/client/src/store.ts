@@ -24,7 +24,6 @@ export function createComposer(): Composer {
 export function createWorkspace(): Workspace {
   return {
     inbox: {},
-    openThreads: {},
     profiles: {},
     name: '',
     timeline: {},
@@ -36,6 +35,8 @@ export function createWorkspace(): Workspace {
     openPins: {},
     eventPins: {},
     computed: {},
+    isResolved: {},
+    isOpen: {},
   };
 }
 

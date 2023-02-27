@@ -1292,7 +1292,6 @@ interface Pin {
 interface Workspace {
   profiles: { [userId: string]: boolean };
   name: string;
-  openThreads: { [threadId: string]: { meta: ThreadMeta } };
   inbox: { [threadId: string]: WithID<WithName<Event>> };
   timeline: { [threadId: string]: Timeline };
   composers: { [threadId: string]: Composer };

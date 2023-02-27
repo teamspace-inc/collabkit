@@ -367,7 +367,7 @@ function CommentMenu(props: { className?: string }) {
   const { createdById } = useCommentSnapshot();
   const treeId = useTreeContext();
 
-  const { isResolved } = useSnapshot(useWorkspaceStore().computed)[threadId];
+  const isResolved = useSnapshot(useWorkspaceStore().isResolved)[threadId];
 
   const onItemClick = useCallback(
     (e: React.MouseEvent, type: CommentMenuItemType) => {
