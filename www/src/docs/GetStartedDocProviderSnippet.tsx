@@ -1,10 +1,10 @@
 import { CollabKitProvider } from '@collabkit/react';
 
-export default function App() {
+export function App() {
   return (
     <CollabKitProvider
-      appId={'your APP ID here'}
-      apiKey={'your API Key here'}
+      appId={'your app ID here'}
+      apiKey={'your API key here'}
       user={{
         id: 'jane',
         name: 'Jane Doe',
