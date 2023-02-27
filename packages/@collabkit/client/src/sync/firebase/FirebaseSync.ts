@@ -75,7 +75,7 @@ export function initFirebase(options = { test: false }) {
   );
 }
 
-const DEBUG = true;
+const DEBUG = false;
 
 type FirebaseUpdates = {
   [path: string]: string | number | boolean | null | FirebaseUpdates | FirebaseUpdates[] | object;
