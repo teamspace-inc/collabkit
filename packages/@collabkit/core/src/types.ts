@@ -76,8 +76,18 @@ type PendingPinCallbackProps = ThreadCallbackProps & {
 
 type PinCallbackProps = PendingPinCallbackProps & {
   objectId: string;
+
+  // lets rename this to 'meta'
   state: string;
+  url: string;
 };
+
+// <CollabKitView
+//   name="Accounts"
+//   permissions={(userId) => {
+//     read / write;
+//   }}
+// ></CollabKitView>;
 
 export type Callbacks = {
   onPinClick?: (data: PinCallbackProps) => void;
@@ -627,7 +637,6 @@ export interface Composer {
 export interface Workspace {
   profiles: { [userId: string]: boolean };
   name: string;
-  openThreads: { [threadId: string]: { meta: ThreadMeta } };
   pendingThreadInfo: { [threadId: string]: ThreadInfo };
   inbox: { [threadId: string]: WithID<Event> };
   timeline: { [threadId: string]: Timeline };

@@ -39,7 +39,6 @@ export async function sendMessage(
     await actions.saveThreadInfo(store, {
       workspaceId,
       threadId,
-      isOpen: true,
       info: pendingThreadInfo,
     });
   }

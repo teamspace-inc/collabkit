@@ -24,7 +24,6 @@ export function createComposer(): Composer {
 export function createWorkspace(): Workspace {
   return {
     inbox: {},
-    openThreads: {},
     profiles: {},
     name: '',
     timeline: {},

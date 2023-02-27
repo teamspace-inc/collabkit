@@ -461,24 +461,18 @@ export class FirebaseSync implements Sync.SyncAdapter {
     appId: string;
     workspaceId: string;
     threadId: string;
-    isOpen: boolean;
     info?: ThreadInfo;
   }): Promise<void> {
     DEBUG && console.log('[network] saveThreadInfo', data);
     const { appId, workspaceId, threadId, info } = data;
     // bug here can't save undefined info to firebase
+    // transform to turn any undefined into null
     const values = {
       [ref.path`/threadInfo/${appId}/${workspaceId}/${threadId}`]: info
         ? {
             ...info,
             defaultSubscribers: idArrayToObject(info.defaultSubscribers),
           }
-        : null,
-
-      // there's a pitfall here, if meta is null the thread will not be marked as open...
-      // we should keep info separate or just say it has no info here
-      [ref.path`/views/openThreads/${data.appId}/${data.workspaceId}/${data.threadId}`]: data.isOpen
-        ? { meta: data.info?.meta ?? null }
         : null,
     };
     return update(ref`/`, values);
@@ -879,27 +873,6 @@ export class FirebaseSync implements Sync.SyncAdapter {
     subs[`${viewRef.toString()}#removed`] ||= onChildRemoved(viewRef, onRemoved, onError);
   }
 
-  async getOpenThreads({ appId, workspaceId }: { appId: string; workspaceId: string }) {
-    const snapshot = await get(ref`/views/openThreads/${appId}/${workspaceId}`);
-
-    if (!snapshot.exists()) {
-      return [];
-    }
-
-    const object = snapshot.val();
-    if (typeof object !== 'object') {
-      return [];
-    }
-
-    const openThreads: { threadId: string; info: ThreadInfo }[] = [];
-    for (const threadId in object) {
-      const info = object[threadId];
-      openThreads.push({ threadId, info });
-    }
-
-    return openThreads;
-  }
-
   subscribeThreadInfo(props: {
     appId: string;
     workspaceId: string;
@@ -982,6 +955,14 @@ export class FirebaseSync implements Sync.SyncAdapter {
     subscribeTimeline(props);
     subscribeThreadIsTyping(props);
     this.subscribeThreadInfo(props);
+  }
+
+  async getThreadInfo(props: { appId: string; workspaceId: string; threadId: string }) {
+    DEBUG && console.log('[network] getThreadInfo', { threadId: props.threadId });
+    const snapshot = await get(
+      ref`/threadInfo/${props.appId}/${props.workspaceId}/${props.threadId}`
+    );
+    return snapshot.val();
   }
 
   async getUser(props: { appId: string; workspaceId: string; userId: string }) {

@@ -17,14 +17,6 @@ export interface SyncAdapter {
 
   getUser(params: { userId: string; appId: string }): Promise<UserProps | null>;
 
-  getOpenThreads({
-    appId,
-    workspaceId,
-  }: {
-    appId: string;
-    workspaceId: string;
-  }): Promise<{ threadId: string; info: ThreadInfo }[]>;
-
   getIsTyping(props: {
     appId: string;
     userId: string;
@@ -36,9 +28,14 @@ export interface SyncAdapter {
     appId: string;
     workspaceId: string;
     threadId: string;
-    isOpen: boolean;
     info?: ThreadInfo;
   }): Promise<void>;
+
+  getThreadInfo(params: {
+    appId: string;
+    workspaceId: string;
+    threadId: string;
+  }): Promise<ThreadInfo | null>;
 
   saveWorkspace(params: {
     appId: string;

@@ -7,7 +7,7 @@ import {
   setupWorkspaceProfile,
 } from '../../../test-utils/src';
 
-import { createComposer, createStore, createWorkspace } from '../../src/store';
+import { createStore, createWorkspace } from '../../src/store';
 import { init } from '../../src/actions/init';
 import { FirebaseSync } from '../../src/sync/firebase/FirebaseSync';
 import { Store } from '@collabkit/core';
@@ -57,41 +57,39 @@ test('saveThreadInfo', async () => {
         viewId: '123',
       },
     },
-    isOpen: true,
   });
 
-  expect(store.workspaces[workspaceId].openThreads[threadId]).toStrictEqual({
+  expect(store.workspaces[workspaceId].threadInfo[threadId]).toStrictEqual({
+    url: 'https://www.google.com',
     meta: {
       viewId: '123',
     },
   });
 
-  let openThreads = await sync.getOpenThreads({
+  let threadInfo = await sync.getThreadInfo({
     appId,
     workspaceId,
+    threadId,
   });
 
-  let thread = openThreads.find((thread) => thread.threadId === threadId);
-  expect(thread).toBeDefined();
-  expect(thread?.info.meta?.viewId).toStrictEqual('123');
+  expect(threadInfo).toBeDefined();
+  expect(threadInfo?.meta?.viewId).toStrictEqual('123');
 
   await saveThreadInfo(store as Store, {
     workspaceId,
     threadId,
     info: {
       url: 'https://www.google.com',
-      meta: {
-        viewId: '123',
-      },
+      meta: null,
     },
-    isOpen: false,
   });
 
-  expect(store.workspaces[workspaceId].openThreads[threadId]).toBeUndefined();
+  threadInfo = await sync.getThreadInfo({
+    appId,
+    workspaceId,
+    threadId,
+  });
 
-  thread = openThreads.find((thread) => thread.threadId === threadId);
-  // todo this is a bug, if we mark isOpen to false
-  // we should update /openThreads accordingly
-  // expect(thread).toBeUndefined();
-  // expect(thread?.info.meta?.viewId).toStrictEqual('123');
+  expect(threadInfo).toBeDefined();
+  expect(threadInfo?.meta).toBeUndefined();
 });

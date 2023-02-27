@@ -65,6 +65,7 @@ describe('resolve + reopen', async () => {
         createdAt: +new Date(),
         createdById: userId,
       },
+      timeline: {},
       parentEvent: null,
       newEventId: sync.nextEventId({ appId, workspaceId, threadId }),
     });
