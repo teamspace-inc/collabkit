@@ -41,6 +41,6 @@ export async function resolveThread(
   } catch (e) {
     console.error('failed to resolve thread', e);
     store.workspaces[workspaceId].isOpen[threadId] = true;
-    store.workspaces[workspaceId].isResolved[threadId] = true;
+    store.workspaces[workspaceId].isResolved[threadId] = false;
   }
 }
