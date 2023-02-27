@@ -21,7 +21,6 @@ import {
   OptionalWorkspaceProps,
   Subscriptions,
   ThreadInfo,
-  ThreadMeta,
   Sync,
   FirebasePin,
   Timeline,
