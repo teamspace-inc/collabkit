@@ -116,13 +116,6 @@ export interface SyncAdapter {
     onSeenChange: SeenEventHandler;
   }): void;
 
-  subscribeOpenThreads(params: {
-    appId: string;
-    workspaceId: string;
-    subs: Subscriptions;
-    onThreadChange: OpenThreadEventHandler;
-  }): void;
-
   subscribeInbox(props: {
     appId: string;
     workspaceId: string;
