@@ -9,15 +9,15 @@ import SecureModeDocReactSnippet from './SecureModeDocReactSnippet?raw';
 
 ## Understand how CollabKit handles security.
 
-### Easy to integrate by default
+### Easy to try
 
-By default CollabKit lets you use your API Key in the browser. This is great for development and testing, but not for production.
+By default CollabKit lets you use your API Key in the browser. This is great for trying it out, and early development, but not for production because it exposes your API Key to your users.
 
-### Secure Mode for production
+### Secure for production
 
-When you're ready to to production, you'll want to use CollabKit in "Secure Mode". This will ensure that your API Key is not exposed to the public.
+When you're ready to go to production, you'll want to use CollabKit in "Secure Mode". This will ensure that your API Key is not exposed to the public. Instead you'll sign a per-user token with your API Key and send that to the client to authenticate users.
 
-With Secure Mode you'll need to sign a per-user token with your API Key and also pre-create a user and workspace via our API.
+In addition you'll need to create users and workspaces via our API before you sign a key for a given user and workspace.
 
 Follow these steps to enable Secure Mode for your app:
 
