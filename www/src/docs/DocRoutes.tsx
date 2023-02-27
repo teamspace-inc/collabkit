@@ -7,7 +7,7 @@ import '@code-hike/mdx/dist/index.css';
 // import { DetailViewsDoc } from './patterns/DetailViewsDoc';
 // import { ListViewsDoc } from './patterns/ListViewsDoc';
 // import { TableViewsDoc } from './patterns/TableViewsDoc';
-import DesignPatterns from './DesignPatterns.mdx';
+// import DesignPatterns from './DesignPatterns.mdx';
 // import { AvatarDoc } from './components/AvatarDoc';
 // import { FacepileDoc } from './components/FacepileDoc';
 // import { InboxDoc } from './components/inbox/InboxDoc';

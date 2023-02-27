@@ -23,46 +23,52 @@ export function AdvancedProps(props: {
   optionalProps?: AdvancedPropRow[];
 }) {
   return (
-    <table>
-      <thead>
-        <tr></tr>
-      </thead>
-      <tbody>
-        {props.props.map((row, i) => (
-          <tr key={`row-${i}`}>
-            <td style={{ verticalAlign: 'top', maxWidth: 200 }}>
-              <code>{row[0]}</code>
-            </td>
-            <td style={{ verticalAlign: 'top', maxWidth: 200 }}>
-              <code style={{ color: vars.color.textContrastMedium }}>{row[1]}</code>
-            </td>
-            <td style={{ verticalAlign: 'top', maxWidth: 320, fontSize: 14 }}>{row[2]}</td>
+    <>
+      <table>
+        <thead>
+          <tr>
+            <th>Required</th>
           </tr>
-        ))}
-      </tbody>
-      {props.optionalProps ? (
-        <>
-          <thead>
-            <tr>
-              <th>Optional</th>
+        </thead>
+        <tbody>
+          {props.props.map((row, i) => (
+            <tr key={`row-${i}`}>
+              <td style={{ verticalAlign: 'top', maxWidth: 200 }}>
+                <code>{row[0]}</code>
+              </td>
+              <td style={{ verticalAlign: 'top', maxWidth: 200 }}>
+                <code style={{ color: vars.color.textContrastMedium }}>{row[1]}</code>
+              </td>
+              <td style={{ verticalAlign: 'top', maxWidth: 320, fontSize: 14 }}>{row[2]}</td>
             </tr>
-          </thead>
-          <tbody>
-            {props.optionalProps.map((row, i) => (
-              <tr key={`row-${i}`}>
-                <td style={{ verticalAlign: 'top', whiteSpace: 'nowrap' }}>
-                  <code>{row[0]}</code>
-                </td>
-                <td style={{ verticalAlign: 'top', maxWidth: 225 }}>
-                  <code style={{ color: vars.color.textContrastMedium }}>{row[1]}</code>
-                </td>
-                <td style={{ verticalAlign: 'top', maxWidth: 320, fontSize: 14 }}>{row[2]}</td>
+          ))}
+        </tbody>
+      </table>
+      <table>
+        {props.optionalProps ? (
+          <>
+            <thead>
+              <tr>
+                <th>Optional</th>
               </tr>
-            ))}
-          </tbody>
-        </>
-      ) : null}
-    </table>
+            </thead>
+            <tbody>
+              {props.optionalProps.map((row, i) => (
+                <tr key={`row-${i}`}>
+                  <td style={{ verticalAlign: 'top', whiteSpace: 'nowrap' }}>
+                    <code>{row[0]}</code>
+                  </td>
+                  <td style={{ verticalAlign: 'top', maxWidth: 225 }}>
+                    <code style={{ color: vars.color.textContrastMedium }}>{row[1]}</code>
+                  </td>
+                  <td style={{ verticalAlign: 'top', maxWidth: 320, fontSize: 14 }}>{row[2]}</td>
+                </tr>
+              ))}
+            </tbody>
+          </>
+        ) : null}
+      </table>
+    </>
   );
 }
 
