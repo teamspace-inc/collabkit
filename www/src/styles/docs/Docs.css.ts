@@ -151,8 +151,7 @@ globalStyle(`${docs} table td, ${docs} table th`, {
 });
 
 globalStyle(`${docs} table td code`, {
-  fontSize: 14,
-  padding: '2px 4px',
+  fontSize: 13,
 });
 
 globalStyle(`${docs} table td`, {

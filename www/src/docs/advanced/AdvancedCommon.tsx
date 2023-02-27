@@ -33,13 +33,12 @@ export function AdvancedProps(props: {
         <tbody>
           {props.props.map((row, i) => (
             <tr key={`row-${i}`}>
-              <td style={{ verticalAlign: 'top', maxWidth: 200 }}>
+              <td style={{ verticalAlign: 'top', width: 333 }}>
                 <code>{row[0]}</code>
-              </td>
-              <td style={{ verticalAlign: 'top', maxWidth: 200 }}>
+                {'  '}
                 <code style={{ color: vars.color.textContrastMedium }}>{row[1]}</code>
               </td>
-              <td style={{ verticalAlign: 'top', maxWidth: 320, fontSize: 14 }}>{row[2]}</td>
+              <td style={{ verticalAlign: 'top', fontSize: 14 }}>{row[2]}</td>
             </tr>
           ))}
         </tbody>
@@ -55,13 +54,22 @@ export function AdvancedProps(props: {
             <tbody>
               {props.optionalProps.map((row, i) => (
                 <tr key={`row-${i}`}>
-                  <td style={{ verticalAlign: 'top', whiteSpace: 'nowrap' }}>
+                  <td style={{ verticalAlign: 'top', whiteSpace: 'nowrap', width: 333 }}>
                     <code>{row[0]}</code>
+                    {'  '}
+                    <code style={{ color: vars.color.textContrastMedium, fontSize: 12 }}>
+                      {row[1]}
+                    </code>
                   </td>
-                  <td style={{ verticalAlign: 'top', maxWidth: 225 }}>
-                    <code style={{ color: vars.color.textContrastMedium }}>{row[1]}</code>
+                  <td
+                    style={{
+                      verticalAlign: 'top',
+                      fontSize: 13,
+                      color: vars.color.textContrastMedium,
+                    }}
+                  >
+                    {row[2]}
                   </td>
-                  <td style={{ verticalAlign: 'top', maxWidth: 320, fontSize: 14 }}>{row[2]}</td>
                 </tr>
               ))}
             </tbody>
