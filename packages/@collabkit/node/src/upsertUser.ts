@@ -21,7 +21,7 @@ export async function upsertUser(props: {
       'Content-Type': 'application/json',
     },
   });
-  const res = await response.json();
+  const res = await response.text();
   if (response.ok) {
     return res;
   } else {

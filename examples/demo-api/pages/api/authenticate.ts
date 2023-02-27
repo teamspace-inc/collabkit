@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { OAuth2Client } from 'google-auth-library';
-import { createUserToken, getUserToken } from '@collabkit/node';
+import { createUserToken, getUserToken, upsertUser, upsertWorkspace } from '@collabkit/node';
 
 type Data = { token: string } | { error: string };
 
@@ -40,26 +40,27 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     }
     const { id, ...user } = await verify(credential);
 
-    // This creates the user and workspace if they don't exist
-    // TODO: Switch to using api.collabkit.dev/v1 once it's ready
-    const result = await getUserToken({
+    upsertWorkspace({
       appId: appId,
       apiKey: apiKey,
-      workspaceId: 'demo',
-      userId: id,
-      user,
       workspace: {
-        name: 'Demo Workspace',
+        name: "collabkit"
       },
+      workspaceId: 'collabkit'
     });
-    if (result?.status !== 201) {
-      res.status(400).json({ error: 'Failed update user and workspace' });
-    }
+    
+    upsertUser({
+      appId: appId,
+      apiKey: apiKey,
+      user: user,
+      userId: id,
+      workspaceId: 'collabkit'
+    });
 
     const token = createUserToken({
       apiKey,
       userId: id,
-      workspaceId: 'demo',
+      workspaceId: 'collabkit',
     });
     res.status(201).json({ token });
   } catch (e) {
