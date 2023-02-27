@@ -1,6 +1,6 @@
 import { SidebarComments, ToggleSidebarCommentsButton } from '@collabkit/react';
 
-export default function Layout() {
+export function Layout() {
   return (
     <>
       <nav>
