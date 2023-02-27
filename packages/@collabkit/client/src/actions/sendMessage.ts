@@ -64,7 +64,6 @@ export async function sendMessage(
       threadId,
       userId,
       event,
-      info: workspace.threadInfo?.[threadId] || {},
     });
   }
 }

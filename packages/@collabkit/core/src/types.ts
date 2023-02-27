@@ -70,7 +70,11 @@ type ThreadCallbackProps = {
   threadId: string;
 };
 
-type PinCallbackProps = ThreadCallbackProps & {
+type PendingPinCallbackProps = ThreadCallbackProps & {
+  objectId: string;
+};
+
+type PinCallbackProps = PendingPinCallbackProps & {
   objectId: string;
   state: string;
 };
@@ -80,7 +84,7 @@ export type Callbacks = {
   onPinHover?: (data: PinCallbackProps) => void;
   onPinUnhover?: (data: PinCallbackProps) => void;
   onPinDeselect?: (data: PinCallbackProps) => void;
-  onPinAttach?: (data: PinCallbackProps) => string;
+  onPinAttach?: (data: PendingPinCallbackProps) => string;
   onThreadCreated?: (
     data: ThreadCallbackProps & {
       event: WithID<Event>;

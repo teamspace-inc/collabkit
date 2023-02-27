@@ -5,13 +5,15 @@ export function unhover(store: Store, props: { target: Target }) {
     store.hoveringId = null;
     switch (props.target.type) {
       case 'comment': {
-        if (store.workspaces[props.target.workspaceId].eventPins[props.target.eventId]) {
+        const pin = store.workspaces[props.target.workspaceId].eventPins[props.target.eventId];
+        if (pin) {
           store.callbacks?.onPinUnhover?.({
             userId: store.userId!,
             objectId:
               store.workspaces[props.target.workspaceId].eventPins[props.target.eventId].objectId,
             workspaceId: props.target.workspaceId,
             threadId: props.target.threadId,
+            state: pin.state ?? 'null',
           });
         }
       }

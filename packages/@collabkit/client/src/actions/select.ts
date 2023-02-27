@@ -27,6 +27,7 @@ export function select(store: Store, props: { target: Target }) {
           workspaceId,
           state: pin.state ?? 'null',
           objectId: pin.objectId,
+          threadId: pin.threadId,
         });
         if (!store.isFigmaStyle) return;
         setTimeout(() => {
