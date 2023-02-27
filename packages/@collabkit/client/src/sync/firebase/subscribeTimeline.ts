@@ -71,12 +71,12 @@ export async function subscribeTimeline({
     orderByKey()
   );
 
-  const isResolvedQuery = ref`/views/isResolved/${appId}/${workspaceId}/${threadId}`;
+  const isOpenQuery = ref`/views/isOpen/${appId}/${workspaceId}/${threadId}`;
   const threadProfilesQuery = ref`/views/threadProfiles/${appId}/${workspaceId}/${threadId}`;
   const snapshots = await Promise.allSettled([
     get(timelineQuery),
     get(threadProfilesQuery),
-    get(isResolvedQuery),
+    get(isOpenQuery),
   ]);
 
   let lastEventId: string | null = null;
@@ -93,7 +93,7 @@ export async function subscribeTimeline({
     console.error('get threadProfiles', snapshots[1].reason);
   }
 
-  const isResolved = snapshots[2].status === 'fulfilled' ? snapshots[2].value.val() : false;
+  const isOpen = snapshots[2].status === 'fulfilled' ? snapshots[2].value.val() : false;
 
   const events: Sync.TimelineChangeEvent[] = [];
   if (snapshots[0].status === 'fulfilled') {
@@ -118,7 +118,7 @@ export async function subscribeTimeline({
   );
 
   props.onTimelineGetComplete?.(events);
-  props.onThreadResolveChange?.({ threadId, workspaceId, isResolved });
+  props.onThreadResolveChange?.({ threadId, workspaceId, isResolved: !isOpen });
 
   if (!subs[threadProfilesQuery.toString()]) {
     subs[threadProfilesQuery.toString()] = onChildAdded(threadProfilesQuery, (snapshot) => {
@@ -132,12 +132,12 @@ export async function subscribeTimeline({
     });
   }
 
-  if (!subs[isResolvedQuery.toString()]) {
-    subs[threadProfilesQuery.toString()] = onValue(isResolvedQuery, (snapshot) => {
+  if (!subs[isOpenQuery.toString()]) {
+    subs[threadProfilesQuery.toString()] = onValue(isOpenQuery, (snapshot) => {
       props.onThreadResolveChange?.({
         threadId,
         workspaceId,
-        isResolved: snapshot.exists(),
+        isResolved: !snapshot.exists(),
       });
     });
   }

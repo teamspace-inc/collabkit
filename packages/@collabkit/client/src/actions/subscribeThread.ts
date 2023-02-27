@@ -66,6 +66,7 @@ export async function subscribeThread(
     },
     onThreadResolveChange: (event) => {
       store.workspaces[event.workspaceId].isResolved[event.threadId] = event.isResolved;
+      store.workspaces[event.workspaceId].isOpen[event.threadId] = !event.isResolved;
     },
     onThreadProfile: (event) => {
       store.workspaces[event.workspaceId].threadProfiles[event.threadId][event.userId] = true;

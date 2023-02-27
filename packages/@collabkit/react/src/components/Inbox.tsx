@@ -63,7 +63,7 @@ function InboxItem() {
 
   const timeline = workspace?.timeline[threadId];
   const firstCommentId = Object.keys(timeline ?? {})[0];
-  const isResolved = workspace?.computed[threadId]?.isResolved;
+  const isResolved = workspace?.isResolved[threadId];
 
   // wait till we know if the thread is resolved
   // is calculated when the firstComment is present

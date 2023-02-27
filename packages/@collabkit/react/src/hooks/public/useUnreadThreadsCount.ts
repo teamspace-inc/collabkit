@@ -27,8 +27,7 @@ export function useUnreadThreadsCount(props?: { threadIds?: string[] }): number 
       if (props?.threadIds && !props.threadIds.includes(threadId)) {
         continue;
       }
-      const { isResolved } = workspace.computed[threadId];
-      if (isResolved) {
+      if (workspace.isResolved[threadId]) {
         continue;
       }
       const threadUnreadCount = workspace.computed[threadId].unreadCount;

@@ -638,6 +638,7 @@ export interface Workspace {
   openPins: { [objectId: string]: { [pinId: string]: Pin } };
   eventPins: { [eventId: string]: Pin };
   isResolved: { [threadId: string]: boolean };
+  isOpen: { [threadId: string]: boolean };
   computed: {
     [threadId: string]: {
       isResolved: boolean;

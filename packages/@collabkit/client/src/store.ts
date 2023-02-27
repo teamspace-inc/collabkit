@@ -37,6 +37,7 @@ export function createWorkspace(): Workspace {
     eventPins: {},
     computed: {},
     isResolved: {},
+    isOpen: {},
   };
 }
 
