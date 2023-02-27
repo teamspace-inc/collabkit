@@ -16,6 +16,8 @@ test('createWorkspace', () => {
     openPins: {},
     eventPins: {},
     computed: {},
+    isResolved: {},
+    isOpen: {},
   });
 });
 
