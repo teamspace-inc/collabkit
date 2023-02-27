@@ -132,6 +132,17 @@ globalStyle(`${docs} table tbody tr:last-of-type`, {
   borderBottom: `none`,
 });
 
+globalStyle(`${docs} table thead th`, {
+  fontSize: 13,
+  textTransform: 'uppercase',
+  fontWeight: '500',
+  color: vars.color.textContrastMedium,
+});
+
+globalStyle(`${docs} table`, {
+  marginBottom: 30,
+});
+
 globalStyle(`${docs} table td, ${docs} table th`, {
   fontSize: 16,
   lineHeight: '28px',
@@ -140,8 +151,7 @@ globalStyle(`${docs} table td, ${docs} table th`, {
 });
 
 globalStyle(`${docs} table td code`, {
-  fontSize: 14,
-  padding: '2px 4px',
+  fontSize: 13,
 });
 
 globalStyle(`${docs} table td`, {
