@@ -40,7 +40,7 @@ export function getPathHref(path: string[]) {
 function generateDocRoutes(docs: RootDocNode, path: string[] = []): JSX.Element[] {
   const routes = [
     <Route key="docs" path="/docs">
-      <Redirect to="/docs/introduction" />
+      <Redirect to="/docs/gettingstarted" />
     </Route>,
   ];
   for (const key in docs) {
