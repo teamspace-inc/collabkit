@@ -15,7 +15,7 @@ export const root = style({
   borderRadius: fallbackVar(vars.thread.borderRadius, vars.space[0]),
   boxShadow: fallbackVar(vars.thread.boxShadow, 'none'),
   textAlign: 'left',
-  minWidth: '240px',
+  minWidth: '200px',
   fontFamily: vars.fontFamily,
 });
 

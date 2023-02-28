@@ -7,7 +7,6 @@ import { ChatCentered } from './icons';
 import { emptyState } from '../theme/components/Thread.css';
 import { useInbox } from '../hooks/public/useInbox';
 import * as commentStyles from '../theme/components/Comment.css';
-import { ThreadProvider } from './Thread';
 import {
   ComposerButtons,
   ComposerContentEditable,
@@ -232,7 +231,7 @@ function ChannelThread() {
   );
 
   return (
-    <ThreadProvider threadId={threadId} key={`channelThread-${threadId}`} placeholder="Reply">
+    <ThreadContext.Provider value={threadId} key={`channelThread-${threadId}`}>
       <div className={styles.thread({ isSelected })} onClick={onClick} ref={ref}>
         <ChannelCommentList />
         {isSelected ? (
@@ -246,7 +245,7 @@ function ChannelThread() {
           </div>
         ) : null}
       </div>
-    </ThreadProvider>
+    </ThreadContext.Provider>
   );
 }
 
@@ -270,9 +269,9 @@ function ChannelThreadList(props: ComponentPropsWithRef<'div'>) {
   const threadIds = useInbox({ filter: 'open', direction: 'asc' });
   const threads = threadIds.map((threadId) => {
     return (
-      <ThreadProvider threadId={threadId} key={`inboxThread-${threadId}`}>
+      <ThreadContext.Provider value={threadId} key={`inboxThread-${threadId}`}>
         <ChannelThread />
-      </ThreadProvider>
+      </ThreadContext.Provider>
     );
   });
 
