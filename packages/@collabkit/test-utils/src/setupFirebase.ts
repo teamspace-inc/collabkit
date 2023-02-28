@@ -28,8 +28,8 @@ export function setupFirebase() {
     databaseURL: TEST_DB.databaseURL,
     // @ts-ignore
     credential: admin.credential.cert(
-      process.env.VITE_FIREBASE_TEST_SERVICE_ACCOUNT
-        ? JSON.parse(process.env.VITE_FIREBASE_TEST_SERVICE_ACCOUNT)
+      process.env.FIREBASE_TEST_SERVICE_ACCOUNT
+        ? JSON.parse(process.env.FIREBASE_TEST_SERVICE_ACCOUNT)
         : path.resolve(os.homedir(), 'collabkit-test-service-account.json')
     ),
   });
