@@ -110,7 +110,7 @@ export function CodeEditor(props: {
   const modelRef = useRef<editor.ITextModel | null>(null);
   const [didCalcSize, setDidCalcSize] = useState(false);
 
-  const [height, setHeight] = useState(() => lineHeight * numLines);
+  const [height, setHeight] = useState<React.CSSProperties['height']>(() => lineHeight * numLines);
   const id = useId();
 
   useLayoutEffect(() => {
@@ -204,8 +204,15 @@ export function CodeEditor(props: {
   useEffect(() => {
     if (modelRef.current && didMount) {
       modelRef.current.setValue(props.code);
+    }
+  }, [props.code, didMount]);
+
+  useEffect(() => {
+    if (modelRef.current && didMount) {
       window.requestAnimationFrame(() => {
-        if (!props.fixedSize) {
+        if (props.fixedSize) {
+          setDidCalcSize(true);
+        } else {
           const numLines = editorRef.current?.getElementsByClassName('view-line').length;
           if (numLines && numLines > 0) {
             setHeight(numLines * lineHeight);
@@ -214,7 +221,7 @@ export function CodeEditor(props: {
         }
       });
     }
-  }, [props.code, didMount]);
+  }, [didMount, props.fixedSize]);
 
   const breakpoint = useBreakpoint();
 
@@ -222,7 +229,9 @@ export function CodeEditor(props: {
     <div
       className={codeEditor({ didMount: didCalcSize })}
       style={{
-        ...(props.fixedSize ? {} : { height: height + 32 }),
+        ...(props.fixedSize
+          ? { height: '100%' }
+          : { height: typeof height === 'number' ? height + 32 : height }),
         ['--vscode-editor-background' as any]: 'blue',
       }}
     >
@@ -238,7 +247,7 @@ export function CodeEditor(props: {
           <CopyButton codeString={codeString} />
         </div>
       ) : null}
-      <div ref={editorRef} style={{ ...(props.fixedSize ? {} : { height }) }} />
+      <div ref={editorRef} style={{ ...(props.fixedSize ? { height: '100%' } : { height }) }} />
     </div>
   );
 }
