@@ -2,14 +2,10 @@ import type { Color } from '@collabkit/colors';
 import type { LexicalEditor } from 'lexical';
 import type { SyncAdapter } from './sync';
 import type { INTERNAL_Snapshot } from 'valtio';
-
 export * as Sync from './sync';
+
 export interface ThreadMeta {
   [x: string]: unknown;
-}
-
-export interface ObjectMeta {
-  [x: string]: any;
 }
 
 export type ObjectProps = {
@@ -141,46 +137,15 @@ export type ConfigProps = {
 
 export type Config = (SecureProps | UnsecureProps) & ConfigProps;
 
-export enum Edge {
-  Top = 'top_edge',
-  Right = 'right_edge',
-  Bottom = 'bottom_edge',
-  Left = 'left_edge',
-}
-
-export enum Corner {
-  TopLeft = 'top_left_corner',
-  TopRight = 'top_right_corner',
-  BottomRight = 'bottom_right_corner',
-  BottomLeft = 'bottom_left_corner',
-}
-
-export type Intersection =
-  | Corner.TopLeft
-  | Corner.TopRight
-  | Corner.BottomRight
-  | Corner.BottomLeft
-  | Edge.Top
-  | Edge.Right
-  | Edge.Bottom
-  | Edge.Left
-  | 'none'
-  | 'pending';
-
 export type Target =
   | ComposerTarget
   | ThreadTarget
   | CommentButtonTarget
   | CommentTarget
-  | CommentReactionTarget
   | ThreadResolveButtonTarget
   | ThreadCloseButtonTarget
   | ReopenThreadButtonTarget
-  | FloatingCommentButtonTarget
-  | CommentableContainer
-  | Commentable
   | MenuTarget
-  | CommentMenuTarget
   | CommentEditButtonTarget
   | CommentDeleteButtonTarget
   | ShowSidebarButtonTarget
@@ -188,12 +153,10 @@ export type Target =
   | ComposerPinButtonTarget
   | ComposerMentionsButtonTarget
   | ChannelActonButtonTarget
-  | AttachPinTarget
   | PinTarget
   | PinDeleteButton
   | CommentSaveButtonTarget
   | CommentCancelButtonTarget
-  | PinCursorTarget
   | OverlayTarget
   | CommentReplyCountButtonTarget
   | CommentReplyButtonTarget
@@ -293,10 +256,6 @@ export type Emoji = {
   a: string;
 };
 
-export type PinCursorTarget = {
-  type: 'pinCursor';
-};
-
 export type PinTarget = {
   type: 'pin';
   objectId: string;
@@ -315,13 +274,6 @@ export type CommentPinTarget = {
   isPending?: false;
   workspaceId: string;
   eventId: string;
-};
-
-export type AttachPinTarget = {
-  type: 'attachPin';
-  objectId: string;
-  x: number;
-  y: number;
 };
 
 export type OverlayTarget = {
@@ -375,19 +327,6 @@ export type PinDeleteButton = {
   objectId: string;
 };
 
-export type CommentMenuTarget = MenuTarget & CommentTarget;
-
-export type Commentable = {
-  type: 'commentable';
-  workspaceId: string;
-};
-
-export type CommentType = 'default' | 'inline-start' | 'inline' | 'inline-end';
-
-export type CommentableContainer = { type: 'commentableContainer'; workspaceId: string };
-
-export type FloatingCommentButtonTarget = { type: 'floatingCommentButton' };
-
 export type ComposerTarget = {
   type: 'composer';
   threadId: string;
@@ -436,14 +375,6 @@ export type CommentActionsEmojiButtonTarget = {
   threadId: string;
   eventId: string;
   treeId: string;
-};
-
-export type CommentReactionTarget = {
-  type: 'commentReaction';
-  emoji: string;
-  eventId: string;
-  threadId: string;
-  workspaceId: string;
 };
 
 export type CommentEditButtonTarget = {
@@ -581,10 +512,6 @@ export type WithShowHeader<T> = T & {
 };
 
 export type EventReactions = { [emojiU: string]: { count: number; userIds: string[] } };
-
-export type WithName<T> = T & {
-  name: string;
-};
 
 export type WithID<T> = T & {
   id: string;
