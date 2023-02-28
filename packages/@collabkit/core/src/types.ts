@@ -670,7 +670,6 @@ type CommentableObject = {
 export interface UnconfiguredStore {
   appId: null | string;
   sync: null | SyncAdapter;
-  isPinningEnabled: boolean;
   isFigmaStyle: boolean;
   isConnected: boolean;
   isSidebarOpen: boolean;
