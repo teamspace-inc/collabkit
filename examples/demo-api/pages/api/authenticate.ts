@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { OAuth2Client } from 'google-auth-library';
-import { createUserToken, getUserToken, upsertUser, upsertWorkspace } from '@collabkit/node';
+import { createUserToken, upsertUser, upsertWorkspace } from '@collabkit/node';
 
 type Data = { token: string } | { error: string };
 
@@ -44,17 +44,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       appId: appId,
       apiKey: apiKey,
       workspace: {
-        name: "collabkit"
+        name: 'collabkit',
       },
-      workspaceId: 'collabkit'
+      workspaceId: 'collabkit',
     });
-    
+
     upsertUser({
       appId: appId,
       apiKey: apiKey,
       user: user,
       userId: id,
-      workspaceId: 'collabkit'
+      workspaceId: 'collabkit',
     });
 
     const token = createUserToken({
