@@ -49,7 +49,6 @@ export async function authenticate(store: Store) {
     const user = await store.sync.getUser({ appId, userId });
 
     store.userId = userId;
-    store.appId = appId;
 
     store.user = user ?? { id: userId, userId };
 
@@ -98,7 +97,6 @@ export async function authenticate(store: Store) {
       throw new Error('invalid claims: ' + JSON.stringify(result.claims));
     }
 
-    store.appId = config.appId;
     store.userId = userId;
     store.user = { ...config.user, id: userId };
     store.workspaceId = config.workspace.id;

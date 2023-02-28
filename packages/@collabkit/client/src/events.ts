@@ -11,6 +11,7 @@ import type {
   ThreadTarget,
 } from '@collabkit/core';
 import { actions } from './actions';
+import { getConfig } from './actions/getConfig';
 
 export type Events = ReturnType<typeof createEvents>;
 
@@ -276,9 +277,10 @@ export function createEvents(store: Store) {
           if (store.focusedId.eventId === 'default') {
             actions.sendMessage(store, { ...store.focusedId });
             if (store.focusedId.isNewThread) {
+              const { appId } = getConfig(store);
               store.nextThreadId = store.sync.nextThreadId({
                 workspaceId: store.workspaceId!,
-                appId: store.appId!,
+                appId,
               });
               store.focusedId.threadId = store.nextThreadId;
             }

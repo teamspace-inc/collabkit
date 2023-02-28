@@ -43,7 +43,6 @@ export function createWorkspace(): Workspace {
 export function createStore(): UnconfiguredStore {
   const store: UnconfiguredStore = {
     isFigmaStyle: false,
-    appId: null,
     sync: null as unknown as SyncAdapter,
     isConnected: false,
     isSidebarOpen: false,
