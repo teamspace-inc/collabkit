@@ -205,7 +205,7 @@ export function CodeEditor(props: {
     if (modelRef.current && didMount) {
       modelRef.current.setValue(props.code);
     }
-  }, [props.code, didMount]);
+  }, [didMount]);
 
   useEffect(() => {
     if (modelRef.current && didMount) {
