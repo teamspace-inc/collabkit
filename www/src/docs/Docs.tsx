@@ -3,7 +3,7 @@ import Security from './Security.mdx';
 import Workspaces from './Workspaces.mdx';
 import Notifications from './Notifications.mdx';
 import SidebarComments from './components/SidebarComments.mdx';
-import CollabKitProvider from './components/CollabKitProvider.mdx';
+import Provider from './components/Provider.mdx';
 import Thread from './components/Thread.mdx';
 import Commentable from './components/Commentable.mdx';
 import Themes from './Themes.mdx';
@@ -26,7 +26,7 @@ export const DOCS: RootDocNode = {
   Core: {
     title: 'Core',
     children: {
-      CollabKitProvider: { component: CollabKitProvider },
+      CollabKitProvider: { component: Provider },
       Workspaces: { component: Workspaces },
       Security: { component: Security },
       Notifications: { component: Notifications },
