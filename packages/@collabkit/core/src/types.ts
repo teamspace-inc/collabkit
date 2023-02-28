@@ -137,7 +137,6 @@ export type ConfigProps = {
   colorScheme?: 'light' | 'dark' | 'auto';
   readOnly?: boolean;
   _demoStore?: Store;
-  _isDemo?: boolean;
   _test?: boolean;
 } & Callbacks;
 

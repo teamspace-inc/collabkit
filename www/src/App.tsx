@@ -138,7 +138,6 @@ for (const threadId in defaultWorkspace.timeline) {
 }
 
 const config: Config = {
-  _isDemo: true,
   apiKey: 'DUMMY_API_KEY_FOR_DEMO',
   appId: 'DUMMY_APP_ID_FOR_DEMO',
   workspace: { id: 'acme', name: 'ACME' },
@@ -185,7 +184,6 @@ export default function App() {
       apiKey={apiKey}
       appId={appId}
       _demoStore={store}
-      _isDemo={true}
       workspace={workspace}
       user={{ id: 'anon', name: 'Anonymous' }}
       mentionableUsers={[]}

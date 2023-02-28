@@ -1122,7 +1122,6 @@ type ConfigProps = {
   callbacks?: Callbacks;
   readOnly?: boolean;
   _demoStore?: Store;
-  _isDemo?: boolean;
   _test?: boolean;
 };
 
