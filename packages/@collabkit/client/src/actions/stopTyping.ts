@@ -19,11 +19,6 @@ export async function stopTyping(
     return;
   }
 
-  if (store.isReadOnly) {
-    console.warn('CollabKit: cannot stop typing in read-only mode');
-    return;
-  }
-
   const timeoutID = store.workspaces[workspaceId].composers[threadId][eventId].isTypingTimeoutID;
 
   if (timeoutID) {

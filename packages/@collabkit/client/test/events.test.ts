@@ -7,12 +7,10 @@ test('createEvents', () => {
   expect(true).toBe(true);
   // expect(createEvents(store)).toStrictEqual({
   //   sync: null,
-  //   isReadOnly: false,
   //   isConnected: false,
   //   isSidebarOpen: false,
   //   appState: 'blank',
   //   uiState: 'idle',
-  //   isDemo: false,
   //   config: null,
   //   userId: null,
   //   user: null,

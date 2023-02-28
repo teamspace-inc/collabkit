@@ -1120,9 +1120,7 @@ type ConfigProps = {
   onAuthenticationRequired?: () => void;
   colorScheme?: 'light' | 'dark' | 'auto';
   callbacks?: Callbacks;
-  readOnly?: boolean;
   _demoStore?: Store;
-  _isDemo?: boolean;
   _test?: boolean;
 };
 
@@ -1302,11 +1300,9 @@ interface Workspace {
 
 interface UnconfiguredStore {
   sync: null | SyncAdapter;
-  isReadOnly: boolean;
   isConnected: boolean;
   isSignedIn: boolean;
   isInboxOpen: boolean;
-  isDemo: boolean;
   userId: string | null;
   user: UserProps | null;
   workspaceId: string | null;

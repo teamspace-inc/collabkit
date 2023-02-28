@@ -25,11 +25,6 @@ export async function seen(store: Store, props: { target: CommentTarget }) {
   if (isNewer) {
     store.workspaces[workspaceId].seen[threadId] = eventId;
 
-    if (store.isReadOnly) {
-      console.warn('CollabKit: cannot set seen in read-only mode');
-      return;
-    }
-
     try {
       store.sync.markSeen({ appId, userId, workspaceId, threadId, eventId });
     } catch (e) {

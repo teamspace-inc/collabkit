@@ -12,10 +12,6 @@ export async function resolveThread(
     console.warn('CollabKit: cannot resolve thread, anonymous user');
     return;
   }
-  if (store.isReadOnly) {
-    console.warn('CollabKit: cannot resolve thread in read-only mode');
-    return;
-  }
   closePopoverContent(store, { target: { type: 'thread', workspaceId, threadId } });
   store.workspaces[workspaceId].isOpen[threadId] = false;
   store.workspaces[workspaceId].isResolved[threadId] = true;

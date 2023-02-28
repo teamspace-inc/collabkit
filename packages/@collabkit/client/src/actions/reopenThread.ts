@@ -8,10 +8,6 @@ export async function reopenThread(store: Store, props: { workspaceId: string; t
     console.warn('CollabKit: cannot reopen thread, anonymous user');
     return;
   }
-  if (store.isReadOnly) {
-    console.warn('CollabKit: cannot reopen thread in read-only mode');
-    return;
-  }
   try {
     store.workspaces[workspaceId].isOpen[threadId] = true;
     store.workspaces[workspaceId].isResolved[threadId] = false;

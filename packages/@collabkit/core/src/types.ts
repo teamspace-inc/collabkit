@@ -70,24 +70,20 @@ type ThreadCallbackProps = {
   threadId: string;
 };
 
-type PendingPinCallbackProps = ThreadCallbackProps & {
+type PendingPinCallbackProps = {
   objectId: string;
+  userId: string;
+  workspaceId: string;
+  threadId: string;
 };
 
-type PinCallbackProps = PendingPinCallbackProps & {
+type PinCallbackProps = {
   objectId: string;
-
-  // lets rename this to 'meta'
+  userId: string;
+  workspaceId: string;
+  threadId: string;
   meta: string | null;
-  // url: string;
 };
-
-// <CollabKitView
-//   name="Accounts"
-//   permissions={(userId) => {
-//     read / write;
-//   }}
-// ></CollabKitView>;
 
 export type Callbacks = {
   onPinClick?: (data: PinCallbackProps) => void;
@@ -139,9 +135,7 @@ export type Callbacks = {
 export type ConfigProps = {
   mentionableUsers: MentionProps;
   colorScheme?: 'light' | 'dark' | 'auto';
-  readOnly?: boolean;
   _demoStore?: Store;
-  _isDemo?: boolean;
   _test?: boolean;
 } & Callbacks;
 
@@ -678,10 +672,8 @@ export interface UnconfiguredStore {
   sync: null | SyncAdapter;
   isPinningEnabled: boolean;
   isFigmaStyle: boolean;
-  isReadOnly: boolean;
   isConnected: boolean;
   isSidebarOpen: boolean;
-  isDemo: boolean;
   user: UserProps | null;
   userId: string | null;
   workspaceId: string | null;
