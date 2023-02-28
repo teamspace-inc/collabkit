@@ -18,10 +18,6 @@ export async function sendMessage(
     }
     return;
   }
-  if (store.isReadOnly) {
-    console.warn('[CollabKit]: cannot send message in read-only mode');
-    return;
-  }
   const workspace = store.workspaces[workspaceId];
   const composer = workspace.composers[threadId][eventId];
   const { editor } = composer;

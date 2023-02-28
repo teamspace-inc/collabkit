@@ -135,7 +135,6 @@ export type Callbacks = {
 export type ConfigProps = {
   mentionableUsers: MentionProps;
   colorScheme?: 'light' | 'dark' | 'auto';
-  readOnly?: boolean;
   _demoStore?: Store;
   _test?: boolean;
 } & Callbacks;
@@ -673,10 +672,8 @@ export interface UnconfiguredStore {
   sync: null | SyncAdapter;
   isPinningEnabled: boolean;
   isFigmaStyle: boolean;
-  isReadOnly: boolean;
   isConnected: boolean;
   isSidebarOpen: boolean;
-  isDemo: boolean;
   user: UserProps | null;
   userId: string | null;
   workspaceId: string | null;

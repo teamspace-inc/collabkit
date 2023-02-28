@@ -7,7 +7,6 @@ export function createValtioStore(config: Config, sync: SyncAdapter): Store {
   const store = proxy(createStore());
   store.config = config;
   store.sync = ref(sync);
-  store.isReadOnly = config.readOnly ?? false;
   derive(
     {
       pins: (get) => {

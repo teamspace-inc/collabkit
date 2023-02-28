@@ -8,10 +8,6 @@ export async function toggleEmoji(store: Store, props: { target: EmojiTarget }) 
     console.warn('[CollabKit] Cannot toggle emoji without userId');
     return;
   }
-  if (store.isReadOnly) {
-    console.warn('[CollabKit] Cannot toggle comment reaction in read-only mode');
-    return;
-  }
   const { emoji } = props.target;
   const { workspaceId, threadId, eventId } = props.target;
   const parentEvent = store.workspaces[workspaceId].timeline[threadId][eventId];
