@@ -1,3 +1,4 @@
+import React from 'react';
 // import { Comment, ThreadProvider } from '@collabkit/react';
 
 // export default () => (

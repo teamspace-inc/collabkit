@@ -1,3 +1,5 @@
+import React from 'react';
+
 // import { renderCodeSnippet } from '../../CodeEditor';
 // import { DocLink } from '../../Doc';
 // import Anatomy from './CommentAnatomy.tsx?raw';
