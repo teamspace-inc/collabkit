@@ -1,5 +1,4 @@
 import * as functions from 'firebase-functions';
-import admin from 'firebase-admin';
 import * as cors from 'cors';
 import { generateCustomTokenImpl } from './generateCustomToken';
 import { userImpl } from './user';
@@ -50,8 +49,11 @@ export const routesImpl = (request: functions.https.Request, response: functions
   }
 };
 
-export const routes = functions.https.onRequest(async (request, response) => {
-  corsHandler(request, response, async () => {
-    routesImpl(request, response);
+export const routes = functions
+  .region('europe-west2', 'us-central1', 'asia-east2')
+  .runWith({ minInstances: 1 })
+  .https.onRequest(async (request, response) => {
+    corsHandler(request, response, async () => {
+      routesImpl(request, response);
+    });
   });
-});
