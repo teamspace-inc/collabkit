@@ -1,6 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { OAuth2Client } from 'google-auth-library';
 import { createUserToken, upsertUser, upsertWorkspace } from '@collabkit/node';
+import Cors from 'cors';
+
+const cors = Cors({
+  methods: ['POST'],
+});
 
 type Data = { token: string } | { error: string };
 
@@ -25,6 +30,7 @@ async function verify(token: string) {
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
+  await runMiddleware(req, res, cors);
   try {
     const appId = process.env.DEMO_COLLABKIT_APP_ID;
     const apiKey = process.env.DEMO_COLLABKIT_API_KEY;
@@ -67,4 +73,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     console.error(e);
     res.status(500).json({ error: 'Authentication failed' });
   }
+}
+
+function runMiddleware(req: NextApiRequest, res: NextApiResponse, fn: Function) {
+  return new Promise((resolve, reject) => {
+    fn(req, res, (result: any) => {
+      if (result instanceof Error) {
+        return reject(result);
+      }
+
+      return resolve(result);
+    });
+  });
 }

@@ -20,7 +20,7 @@ export function SignIn() {
           onSuccess={async (credentialResponse) => {
             const { credential } = credentialResponse;
             if (credential) {
-              const response = await fetch('/api/authenticate', {
+              const response = await fetch(`${import.meta.env.VITE_API_HOST}/api/authenticate`, {
                 method: 'POST',
                 body: JSON.stringify({ credential }),
                 headers: {
