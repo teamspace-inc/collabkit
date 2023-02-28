@@ -38,7 +38,6 @@ test('createStore', () => {
     sync: null,
     isConnected: false,
     isSidebarOpen: false,
-    appState: 'blank',
     uiState: 'idle',
     config: null,
     userId: null,

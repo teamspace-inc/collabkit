@@ -693,7 +693,6 @@ export interface UnconfiguredStore {
     [workspaceId: string]: Workspace;
   };
   mentionableUsers: { [userId: string]: MentionWithColor };
-  appState: 'blank' | 'config' | 'ready';
   uiState: 'idle' | 'selecting';
   nextThreadId: null | string;
   subs: Subscriptions;

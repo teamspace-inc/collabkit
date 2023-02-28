@@ -1319,7 +1319,6 @@ interface UnconfiguredStore {
     [workspaceId: string]: Workspace;
   };
   mentionableUsers: { [userId: string]: MentionWithColor };
-  appState: 'blank' | 'config' | 'ready';
   uiState: 'idle' | 'selecting' | 'continuous';
   subs: Subscriptions;
   callbacks?: Callbacks;

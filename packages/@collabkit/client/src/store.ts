@@ -46,7 +46,6 @@ export function createStore(): UnconfiguredStore {
     sync: null as unknown as SyncAdapter,
     isConnected: false,
     isSidebarOpen: false,
-    appState: 'blank',
     uiState: 'idle',
     config: null,
     userId: null,
