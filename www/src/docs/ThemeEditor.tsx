@@ -52,7 +52,7 @@ export function ThemeEditor() {
   return (
     <div className={`${docs} ${dark} ${bg} ${root}`}>
       <div className={header}>
-        <Link href="/docs/customisation">
+        <Link href="/docs/core/themes">
           <LogoImg theme="dark" />
         </Link>
         <div className={componentList}>
