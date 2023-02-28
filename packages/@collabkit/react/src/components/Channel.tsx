@@ -7,7 +7,6 @@ import { ChatCentered } from './icons';
 import { emptyState } from '../theme/components/Thread.css';
 import { useInbox } from '../hooks/public/useInbox';
 import * as commentStyles from '../theme/components/Comment.css';
-import { ThreadProvider } from './Thread';
 import {
   ComposerButtons,
   ComposerContentEditable,
