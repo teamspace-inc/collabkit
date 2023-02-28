@@ -1,5 +1,6 @@
 import { DocDemoContainer } from '../Doc';
 import Usage from './usage/SidebarCommentsUsage.tsx?raw';
+import Positioning from './usage/SidebarCommentsPositioning.tsx?raw';
 import ToggleSidebarCommentsButtonUsage from './usage/ToggleSidebarCommentsButtonUsage.tsx?raw';
 import { renderCodeSnippet } from '../CodeEditor';
 import useSidebarCommentsButtonUsage from './usage/useSidebarCommentsButtonUsage.tsx?raw';
@@ -33,6 +34,14 @@ import { ToggleSidebarCommentsButton, SidebarComments } from '@collabkit/react';
 Sidebar comments are a great way to add commenting to every page or view in your app with just a few lines of code. Comments live in the Sidebar and are accessible from anywhere in your app.
 
 {renderCodeSnippet(Usage)}
+
+### Positioning
+
+The sidebar is designed to be positioned on the right of the screen, and any content should be pushed to the left when the sidebar is open. This makes it easy to leave comments on any part of your app.
+
+To adjust the position of the sidebar, or it's height you can use the `style` or `className` prop.
+
+{renderCodeSnippet(Positioning, [[0, 2]])}
 
 ### Showing and hiding the sidebar
 

@@ -4,6 +4,7 @@ import { ThreadDemo } from '../demos/ThreadDemo';
 import { DocHeroDemoContainer, DocLink } from '../Doc';
 import ThreadUsage1 from './usage/ThreadUsage1.tsx?raw';
 import ThreadUsage2 from './usage/ThreadUsage2.tsx?raw';
+import ThreadPositioning from './usage/ThreadPositioning.tsx?raw';
 
 # Thread
 
@@ -25,11 +26,11 @@ To render a comment thread in your app you need to import the `Thread` component
 
 {renderCodeSnippet(ThreadUsage1)}
 
-### Sizing
+### Size and Position
 
-The `Thread` component will automatically size itself to fit the available space. To control the size of the thread, set the `width` and `height` of its parent element.
+To control the size or position of a `Thread` pass a `className` or `style` prop.
 
-{renderCodeSnippet(ThreadUsage2)}
+{renderCodeSnippet(ThreadPositioning)}
 
 ### Props
 
@@ -53,45 +54,47 @@ The `Thread` component will automatically size itself to fit the available space
       'showHeader',
       'boolean | undefined',
       <>
-        Defaults to <code>false</code>. <br />
-        Set this to <code>true</code> to show the header.
+        Set this to <code>true</code> to show the header. <br/><br/>
+        Defaults to <code>false</code>.
       </>,
     ],
     [
       'autoFocus',
       'boolean | undefined',
       <>
-        Defaults to <code>true</code>. <br />
-        Set this to <code>false</code> to prevent focusing the composer on mount.
+        Set this to <code>false</code> to prevent focusing the composer on mount. <br />
+        <br />
+        Defaults to <code>true</code>. 
       </>,
     ],
     [
       'placeholder',
       'string | undefined',
       <>
-        Defaults to <code>"Write a comment"</code>. <br />
-        Set this to create a custom placeholder for the composer.
+        Set this to create a custom placeholder for the composer. <br /><br/>
+        Defaults to <code>"Write a comment"</code>.
       </>,
     ],
     [
       'hideComposer',
       'boolean | undefined',
       <>
-        Defaults to <code>false</code>. <br />
-        Set this to <code>true</code> to hide the composer.
+        Set this to <code>true</code> to hide the composer. <br /><br/>
+        Defaults to <code>false</code>. 
       </>,
     ],
     [
       'defaultSubscribers',
       'string[] | undefined',
       <>
-        Defaults to <code>[]</code>. <br />
         An array of user IDs that will receive notifications for all messages in this thread, in addition
         to users who have commented or been mentioned in the thread. (For example: the contributors of
-        a document, an owner of a task etc.)
+        a document, an owner of a task etc.) <br /><br/>
+        Defaults to <code>[]</code>.
       </>,
     ],
-  ]}
+
+]}
 />
 
 ### Styling
