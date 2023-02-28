@@ -8,6 +8,7 @@ import { createOrgImpl } from './createOrg';
 import { commentImpl } from './comment';
 import { sendNotificationImpl } from './sendNotification';
 import { triggerWebhookImpl } from './triggerWebhook';
+import { generateToken } from './generateToken';
 
 const corsHandler = cors.default({ origin: true });
 
@@ -19,6 +20,9 @@ export const routesImpl = (request: functions.https.Request, response: functions
     switch (fn) {
       case 'generateCustomToken':
         generateCustomTokenImpl(request, response);
+        break;
+      case 'generateToken':
+        generateToken(request, response);
         break;
       case 'user':
         userImpl(request, response);

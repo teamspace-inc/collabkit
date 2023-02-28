@@ -5,7 +5,7 @@ export async function generateToken(props: { appId: string; apiKey: string; apiH
   const { appId, apiKey, apiHost } = props;
   try {
     const response = await fetch(
-      `${apiHost ?? API_HOST}/generateToken?apiKey=${apiKey}&appId=${appId}&mode=UNSECURED`
+      `${apiHost ?? API_HOST}/v1/generateToken?apiKey=${apiKey}&appId=${appId}&mode=UNSECURED`
     );
 
     if (response.ok) {

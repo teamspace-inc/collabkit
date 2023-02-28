@@ -1,12 +1,12 @@
 import fetch from 'node-fetch';
 
-const API_HOST = 'https://test-api.collabkit.dev';
+const API_HOST = 'https://api.collabkit.dev';
 
 export async function upsertWorkspace(props: {
   appId: string;
   apiKey: string;
   workspaceId: string;
-  workspace: { name?: string; };
+  workspace: { name?: string };
 }) {
   const response = await fetch(`${API_HOST}/v1/workspace/${props.workspaceId}`, {
     method: 'PUT',
@@ -14,7 +14,7 @@ export async function upsertWorkspace(props: {
       apiKey: props.apiKey,
       appId: props.appId,
       workspaceId: props.workspaceId,
-      workspace: props.workspace
+      workspace: props.workspace,
     }),
     headers: {
       'Content-Type': 'application/json',
