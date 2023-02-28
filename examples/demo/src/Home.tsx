@@ -13,13 +13,12 @@ export function Home() {
   useDocumentTitle(`CollabKit Demo${unread}`);
 
   return (
-    <div style={{ position: 'fixed', inset: 0 }}>
-      <Thread
-        autoFocus={true}
-        info={{ name: 'Demo thread' }}
-        showHeader={true}
-        threadId={threadId}
-      />
-    </div>
+    <Thread
+      style={{ position: 'fixed', inset: 0 }}
+      autoFocus={true}
+      info={{ name: 'Demo thread' }}
+      showHeader={true}
+      threadId={threadId}
+    />
   );
 }
