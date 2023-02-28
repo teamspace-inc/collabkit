@@ -37,6 +37,7 @@ export const emptyState = style({
   alignItems: 'center',
   flexDirection: 'column',
   gap: vars.space[2],
+  height: '100%',
   fontWeight: vars.fontWeight.regular,
   fontSize: vars.text.small.fontSize,
   lineHeight: vars.text.small.lineHeight,

@@ -11,7 +11,7 @@ function SidebarComments(props: React.ComponentPropsWithoutRef<'div'>) {
       <ThemeWrapper>
         <Authenticated>
           <SidebarRoot>
-            <ChannelRoot channelId="default" style={{ height: '100%' }}>
+            <ChannelRoot channelId="default">
               <SidebarHeader>
                 <SidebarTitle>Comments</SidebarTitle>
                 <div style={{ flex: 1 }} />
