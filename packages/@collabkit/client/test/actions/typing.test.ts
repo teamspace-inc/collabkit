@@ -32,7 +32,6 @@ describe('typing', async () => {
     await setupWorkspaceProfile({ appId, workspaceId, userId });
     await createTokenAndSignIn({ apiKey, appId });
     store.userId = userId;
-    store.appId = appId;
     store.workspaces[workspaceId] = createWorkspace();
     await init(
       store,
