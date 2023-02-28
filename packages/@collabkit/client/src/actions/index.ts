@@ -51,7 +51,6 @@ import { subscribeOpenPins } from './subscribeOpenPins';
 import { subscribeProfile } from './subscribeProfile';
 import { subscribeSeen } from './subscribeSeen';
 import { subscribeThread } from './subscribeThread';
-import { subscribeWorkspace } from './subscribeWorkspace';
 import { subscribeWorkspaceProfiles } from './subscribeWorkspaceProfiles';
 import { toggleEmoji } from './toggleEmoji';
 import { toggleEmojiPicker } from './toggleEmojiPicker';
@@ -113,7 +112,6 @@ export const actions = {
   subscribeProfile,
   subscribeSeen,
   subscribeThread,
-  subscribeWorkspace,
   subscribeWorkspaceProfiles,
   toggleEmoji,
   toggleEmojiPicker,
