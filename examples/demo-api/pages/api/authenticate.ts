@@ -46,7 +46,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     }
     const { id, ...user } = await verify(credential);
 
-    upsertWorkspace({
+    await upsertWorkspace({
       appId: appId,
       apiKey: apiKey,
       workspace: {
@@ -55,7 +55,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       workspaceId: 'collabkit',
     });
 
-    upsertUser({
+    await upsertUser({
       appId: appId,
       apiKey: apiKey,
       user: user,
