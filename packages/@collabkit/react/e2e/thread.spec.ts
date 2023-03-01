@@ -1,9 +1,12 @@
-import { test, expect, BrowserContext, Page, Selectors, Locator } from '@playwright/test';
-
+import { test, expect, BrowserContext, Page, Locator } from '@playwright/test';
+// @ts-expect-error
+import { createUserToken } from '../../node/src/createUserToken.ts';
 // @ts-expect-error
 import { setupApp, setupFirebase } from './setup.ts';
-
+import fetch from 'node-fetch';
 import { nanoid } from 'nanoid';
+
+const WORKSPACE_ID = 'testWorkspace';
 
 const HOST = process.env.PREVIEW_URL_DEMO ? process.env.PREVIEW_URL_DEMO : 'http://localhost:3000';
 
@@ -12,13 +15,57 @@ const LADLE_HOST = process.env.PREVIEW_URL_LADLE
   : 'http://localhost:61000';
 setupFirebase();
 
+async function createUserAndWorkspace(props: {
+  appId: string;
+  apiKey: string;
+  userId: string;
+  userName: string;
+  userEmail: string;
+  workspaceId: string;
+}) {
+  // This creates the user and workspace if they don't exist
+  // TODO: Use functions from @collabkit/node once they're ready
+  const response = await fetch(`https://test-api.collabkit.dev/v1/user/${props.userId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      appId: props.appId,
+      apiKey: props.apiKey,
+      user: {
+        name: props.userName,
+        email: props.userEmail,
+      },
+      workspaceId: props.workspaceId,
+    }),
+  });
+  if (!response.ok) {
+    throw new Error(`Failed to create user and workspace: ${await response.text()}`);
+  }
+}
+
 async function visitDashboardAsUser(
   context: BrowserContext,
-  props: { appId: string; apiKey: string; userId: string; userName: string; userEmail: string }
+  props: {
+    appId: string;
+    apiKey: string;
+    userId: string;
+    userName: string;
+    userEmail: string;
+    workspaceId: string;
+  }
 ) {
   const page = await context.newPage();
+  await createUserAndWorkspace(props);
+  const token = createUserToken({
+    apiKey: props.apiKey,
+    userId: props.userId,
+    workspaceId: props.workspaceId,
+  });
   const params = new URLSearchParams({
     test: 'true',
+    token,
     ...props,
   });
   const url = HOST + '/dashboard?' + params.toString();
@@ -28,11 +75,25 @@ async function visitDashboardAsUser(
 
 async function visitThreadAsUser(
   context: BrowserContext,
-  props: { appId: string; apiKey: string; userId: string; userName: string; userEmail: string }
+  props: {
+    appId: string;
+    apiKey: string;
+    userId: string;
+    userName: string;
+    userEmail: string;
+    workspaceId: string;
+  }
 ) {
   const page = await context.newPage();
+  await createUserAndWorkspace(props);
+  const token = createUserToken({
+    apiKey: props.apiKey,
+    userId: props.userId,
+    workspaceId: props.workspaceId,
+  });
   const params = new URLSearchParams({
     test: 'true',
+    token,
     ...props,
   });
   const url = HOST + '/thread?' + params.toString();
@@ -66,12 +127,14 @@ const users = [alice, bob];
 
 async function createAppAndVisitThreadAsUser(context: BrowserContext, user: typeof users[number]) {
   const { apiKey, appId } = await createApp();
+  const workspaceId = WORKSPACE_ID;
   const page = await visitThreadAsUser(context, {
     ...user,
+    workspaceId,
     appId,
     apiKey,
   });
-  return { page, appId, apiKey };
+  return { page, appId, apiKey, workspaceId };
 }
 
 async function createAppAndVisitDashboardAsUser(
@@ -79,12 +142,14 @@ async function createAppAndVisitDashboardAsUser(
   user: typeof users[number]
 ) {
   const { apiKey, appId } = await createApp();
+  const workspaceId = WORKSPACE_ID;
   const page = await visitDashboardAsUser(context, {
     ...user,
+    workspaceId,
     appId,
     apiKey,
   });
-  return { page, appId, apiKey };
+  return { page, appId, apiKey, workspaceId };
 }
 
 async function sendComment(page: Page, body: string) {
@@ -387,8 +452,11 @@ test.describe('Thread', () => {
   // });
 
   test('can comment and edit a comment', async ({ context }) => {
-    const { page, appId, apiKey } = await createAppAndVisitThreadAsUser(context, alice);
-    const page2 = await visitThreadAsUser(context, { ...bob, appId, apiKey });
+    const { page, appId, apiKey, workspaceId } = await createAppAndVisitThreadAsUser(
+      context,
+      alice
+    );
+    const page2 = await visitThreadAsUser(context, { ...bob, appId, apiKey, workspaceId });
     await sendComment(page, 'Hello World');
     await hasComment(page, { body: 'Hello World' });
     await hoverComment(page, { body: 'Hello World' });
@@ -403,8 +471,11 @@ test.describe('Thread', () => {
   });
 
   test('can comment and delete a comment', async ({ context }) => {
-    const { page, appId, apiKey } = await createAppAndVisitThreadAsUser(context, alice);
-    const page2 = await visitThreadAsUser(context, { ...bob, appId, apiKey });
+    const { page, appId, apiKey, workspaceId } = await createAppAndVisitThreadAsUser(
+      context,
+      alice
+    );
+    const page2 = await visitThreadAsUser(context, { ...bob, workspaceId, appId, apiKey });
     await sendComment(page, 'Hello World');
     await hasComment(page, { body: 'Hello World' });
     await hoverComment(page, { body: 'Hello World' });

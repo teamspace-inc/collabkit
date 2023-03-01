@@ -9,6 +9,8 @@ import Commentable from './components/Commentable.mdx';
 import Themes from './Themes.mdx';
 
 import { RootDocNode } from './DocRoutes';
+import { UpsertUserDoc } from './components/nodeClient/upsertUserDoc';
+import { UpsertWorkspaceDoc } from './components/nodeClient/upsertWorkspaceDoc';
 
 export const DOCS: RootDocNode = {
   // Dashboard: { component: DashboardPage },
@@ -77,4 +79,12 @@ export const DOCS: RootDocNode = {
   //     CreateComment: { component: CommentAPI },
   //   },
   // },
+  'Node client': {
+    title: 'Node client',
+    children: {
+      upsertUser: { component: UpsertUserDoc },
+      upsertWorkspace: { component: UpsertWorkspaceDoc },
+      // createUserToken: {component: createUserToken}
+    },
+  },
 };

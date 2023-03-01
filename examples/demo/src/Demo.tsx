@@ -1,25 +1,24 @@
 import { CollabKitProvider } from '@collabkit/react';
-import { useSnapshot } from 'valtio';
 import { Route, Switch } from 'wouter';
 import ReactFlowExample from './ReactFlowExample';
 import { useTestParams } from './hooks/useTestParams';
-import { useAppParams } from './hooks/useAppParams';
 import { DashboardExample } from './dashboard/DashboardExample';
-import { store } from './store';
 import { DashboardStore, dashboardStore } from './dashboardStore';
 import { Home } from './Home';
 import { Logout } from './Logout';
 
-export function Demo() {
-  const { user } = useSnapshot(store);
-  const { apiKey, appId, workspaceId, workspaceName } = useAppParams();
+type Props = {
+  appId: string;
+  token: string;
+};
+
+export function Demo(props: Props) {
   const test = useTestParams();
   return (
     <CollabKitProvider
       _test={test}
-      apiKey={apiKey}
-      appId={appId}
-      workspace={{ id: workspaceId, name: workspaceName }}
+      appId={props.appId}
+      token={props.token}
       onPinHover={(props) => {}}
       onPinAttach={() => {
         return JSON.stringify({
@@ -56,10 +55,6 @@ export function Demo() {
       onAuthenticationRequired={() => {
         console.log('authRequired');
       }}
-      // warning: this is a hack
-      // this is the strangest thing, if we pass a snapshot into our product
-      // it breaks our app, but if we stringify and then parse it, it works
-      user={JSON.parse(JSON.stringify(user))}
       // theme="dark"
       // renderAvatar={CustomAvatar}
       // renderThreadContextPreview={() => {

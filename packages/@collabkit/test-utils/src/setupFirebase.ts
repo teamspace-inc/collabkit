@@ -1,5 +1,7 @@
 import { getApps, initializeApp } from 'firebase/app';
 import { loadEnv } from 'vite';
+import path from 'path';
+import os from 'os';
 
 export const TEST_DB = {
   apiKey: 'AIzaSyBj5LhfGbP_UrXYOTzJK5e70iZuI-itsxc',
@@ -25,7 +27,11 @@ export function setupFirebase() {
   admin.initializeApp({
     databaseURL: TEST_DB.databaseURL,
     // @ts-ignore
-    credential: admin.credential.cert(JSON.parse(process.env.VITE_FIREBASE_TEST_SERVICE_ACCOUNT)),
+    credential: admin.credential.cert(
+      process.env.FIREBASE_TEST_SERVICE_ACCOUNT
+        ? JSON.parse(process.env.FIREBASE_TEST_SERVICE_ACCOUNT)
+        : path.resolve(os.homedir(), 'collabkit-test-service-account.json')
+    ),
   });
   const app = initializeApp(TEST_DB, 'CollabKit');
   initializeAuth(app);

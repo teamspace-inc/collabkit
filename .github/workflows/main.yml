@@ -50,7 +50,7 @@ jobs:
       - run: yarn install --frozen-lockfile --prefer-offline
       - run: yarn test
         env:
-          VITE_FIREBASE_TEST_SERVICE_ACCOUNT: ${{ secrets.VITE_FIREBASE_TEST_SERVICE_ACCOUNT }}
+          FIREBASE_TEST_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_TEST_SERVICE_ACCOUNT }}
 
   vercel-demo:
     runs-on: ubuntu-latest-16-cores
@@ -96,7 +96,7 @@ jobs:
         run: PREVIEW_URL_DEMO=${{needs.vercel-demo.outputs.url}} PREVIEW_URL_LADLE=${{needs.vercel-ladle.outputs.url}} yarn playwright test ./e2e
         working-directory: packages/@collabkit/react
         env:
-          VITE_FIREBASE_TEST_SERVICE_ACCOUNT: ${{ secrets.VITE_FIREBASE_TEST_SERVICE_ACCOUNT }}
+          FIREBASE_TEST_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_TEST_SERVICE_ACCOUNT }}
       - uses: actions/upload-artifact@v2
         if: always()
         with:

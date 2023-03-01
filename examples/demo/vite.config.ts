@@ -32,8 +32,22 @@ export default defineConfig({
       },
     },
   },
+  define: {
+    'import.meta.env.VITE_API_HOST': getApiHostLiteral(),
+  },
   server: {
     port: 3000,
   },
   envDir: resolve(__dirname, '../../env'),
 });
+
+function getApiHostLiteral() {
+  if (process.env.VITE_API_HOST) {
+    return JSON.stringify(process.env.VITE_API_HOST);
+  } else if (process.env.VERCEL_GIT_COMMIT_REF) {
+    const branch = process.env.VERCEL_GIT_COMMIT_REF.replace(/[^0-9A-z]/g, '-');
+    return JSON.stringify(`https://demo-api-git-${branch}.collabkit.dev`);
+  } else {
+    return JSON.stringify('http://localhost:3030');
+  }
+}

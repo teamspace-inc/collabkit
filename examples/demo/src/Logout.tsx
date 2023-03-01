@@ -3,7 +3,7 @@ import { store } from './store';
 
 export function Logout() {
   useEffect(() => {
-    store.user = null;
+    store.token = null;
   }, []);
 
   return <div>Logged out</div>;

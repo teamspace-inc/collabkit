@@ -1,9 +1,5 @@
-import { User } from './types';
-import { proxy, subscribe } from 'valtio';
+import { proxy } from 'valtio';
 
-export const store = proxy<{ user: User | null }>(
-  JSON.parse(localStorage.getItem('store') ?? '{ "user": null }') || { user: null }
-);
-subscribe(store, () => {
-  localStorage.setItem('store', JSON.stringify(store));
+export const store = proxy<{ token: string | null }>({
+  token: null,
 });
