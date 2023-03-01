@@ -4,9 +4,9 @@ import { useStore } from './useStore';
 export function useIsAuthenticated() {
   const store = useStore();
 
-  const { appId, userId, workspaceId } = useSnapshot(store);
+  const { config, userId, workspaceId } = useSnapshot(store);
 
-  if (!appId) {
+  if (!config.appId) {
     return false;
   }
 

@@ -15,7 +15,6 @@ export function createDemoStore(config: Config, defaultWorkspace: Partial<Worksp
   store.workspaceId = 'acme';
   store.userId = 'anon';
   store.profiles = profiles as any;
-  store.appId = 'demo';
 
   Object.keys(workspaceStore.timeline).forEach((threadId) => {
     actions.initThread(store, { workspaceId: 'acme', threadId });

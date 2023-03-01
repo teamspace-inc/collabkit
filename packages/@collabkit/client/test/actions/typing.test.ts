@@ -32,7 +32,7 @@ describe('typing', async () => {
     await setupWorkspaceProfile({ appId, workspaceId, userId });
     await createTokenAndSignIn({ apiKey, appId });
     store.userId = userId;
-    store.appId = appId;
+    store.workspaceId = workspaceId;
     store.workspaces[workspaceId] = createWorkspace();
     await init(
       store,
@@ -66,6 +66,7 @@ describe('typing', async () => {
       },
       parentEvent: null,
       newEventId: sync.nextEventId({ appId, workspaceId, threadId }),
+      timeline: {},
     });
 
     typing = new Promise((resolve) =>

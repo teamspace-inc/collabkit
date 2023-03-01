@@ -47,7 +47,6 @@ describe('resolve + reopen', async () => {
       sync
     );
 
-    store.appId = appId;
     store.userId = userId;
     store.workspaceId = workspaceId;
     store.workspaces[workspaceId] = createWorkspace();

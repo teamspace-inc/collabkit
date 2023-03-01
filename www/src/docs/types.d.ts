@@ -1231,10 +1231,6 @@ type Event = {
   } | null;
 };
 
-type WithName<T> = T & {
-  name: string;
-};
-
 type WithID<T> = T & {
   id: string;
 };
@@ -1290,7 +1286,7 @@ interface Pin {
 interface Workspace {
   profiles: { [userId: string]: boolean };
   name: string;
-  inbox: { [threadId: string]: WithID<WithName<Event>> };
+  inbox: { [threadId: string]: WithID<Event> };
   timeline: { [threadId: string]: Timeline };
   composers: { [threadId: string]: Composer };
   seen: { [threadId: string]: string }; // lastSeenEventId
@@ -1319,7 +1315,6 @@ interface UnconfiguredStore {
     [workspaceId: string]: Workspace;
   };
   mentionableUsers: { [userId: string]: MentionWithColor };
-  appState: 'blank' | 'config' | 'ready';
   uiState: 'idle' | 'selecting' | 'continuous';
   subs: Subscriptions;
   callbacks?: Callbacks;

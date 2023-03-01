@@ -19,10 +19,6 @@ function PinLayer(props: { className?: string; children?: React.ReactNode }) {
   const isAuthenticated = useIsAuthenticated();
 
   useEffect(() => {
-    store.isPinningEnabled = true;
-  }, []);
-
-  useEffect(() => {
     if (isAuthenticated) {
       actions.subscribeOpenPins(store);
     }

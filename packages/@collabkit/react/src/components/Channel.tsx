@@ -485,15 +485,15 @@ function ChannelCommentPin(props: React.ComponentProps<'img'>) {
 
 function ChannelNewThreadComposer() {
   const store = useStore();
-  const { appId, workspaceId, nextThreadId } = useSnapshot(store);
+  const { workspaceId, nextThreadId } = useSnapshot(store);
 
   useEffect(() => {
-    if (!appId || !workspaceId) {
+    if (!workspaceId) {
       console.warn('ChannelNewThreadComposer: appId or workspaceId is missing');
       return;
     }
     actions.subscribeInbox(store);
-  }, [appId, workspaceId]);
+  }, [workspaceId]);
 
   return nextThreadId ? (
     <ThreadContext.Provider value={nextThreadId}>

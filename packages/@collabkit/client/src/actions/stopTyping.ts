@@ -1,10 +1,12 @@
 import type { Store } from '@collabkit/core';
+import { getConfig } from './getConfig';
 
 export async function stopTyping(
   store: Store,
   props: { target: { workspaceId: string; threadId: string; eventId: string } }
 ) {
-  const { userId, appId } = store;
+  const { userId } = store;
+  const { appId } = getConfig(store);
 
   if (!userId) {
     throw new Error('CollabKit: cannot stop typing without a user');

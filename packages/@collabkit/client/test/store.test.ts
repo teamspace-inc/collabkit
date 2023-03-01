@@ -33,13 +33,10 @@ test('createComposer', () => {
 
 test('createStore', () => {
   expect(createStore()).toStrictEqual({
-    isPinningEnabled: false,
     isFigmaStyle: false,
-    appId: null,
     sync: null,
     isConnected: false,
     isSidebarOpen: false,
-    appState: 'blank',
     uiState: 'idle',
     config: null,
     userId: null,
