@@ -93,6 +93,7 @@ async function visitThreadAsUser(
   });
   const params = new URLSearchParams({
     test: 'true',
+    appId: props.appId,
     token,
   });
   const url = HOST + '/thread?' + params.toString();
