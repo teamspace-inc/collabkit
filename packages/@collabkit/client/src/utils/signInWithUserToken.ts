@@ -30,7 +30,7 @@ export async function signInWithUserToken(apiHost: string, appId: string, userTo
   if (response.ok && isValidResponse(res)) {
     return res.data.token;
   } else {
-    console.error('Failed to generateCustomToken', response.status, await response.text());
-    return "";
+    console.error('Failed to generateCustomToken', response.status, res);
+    throw new Error('Token authentication failed');
   }
 }
