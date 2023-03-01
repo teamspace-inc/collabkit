@@ -35,7 +35,6 @@ function useUserToken() {
   const shouldFetchToken = !token && !!credential;
 
   useEffect(() => {
-    console.log({ token, credential });
     if (shouldFetchToken) {
       const authenticate = async () => {
         try {
