@@ -3,8 +3,9 @@ import { renderCodeSnippet } from './CodeEditor';
 import { ThreadDemo } from './demos/ThreadDemo';
 import { DocDemoContainer, DocLink } from './Doc';
 import GetStartedDocProviderSnippet from './GetStartedDocProviderSnippet?raw';
-import GetStartedDocSidebarCommentsSnippet from './GetStartedDocSidebarCommentsSnippet?raw';
+import GetStartedSidebarComments from './GetStartedSidebarComments?raw';
 import GetStartedDocCommentableSnippet from './GetStartedDocCommentableSnippet?raw';
+import GetStartedPinCallbacks from './GetStartedPinCallbacks?raw';
 
 # Getting Started
 
@@ -42,13 +43,27 @@ Add your app ID and API key to the `CollabKitProvider`. You can find these in th
 
 <h3 className={docStep}>Add the commenting UI to you app</h3>
 
-{renderCodeSnippet(GetStartedDocSidebarCommentsSnippet)}
+{renderCodeSnippet(GetStartedSidebarComments)}
 
 <h3 className={docStep}>Make your components commentable</h3>
 
 Wrap your components with the `Commentable` component and pass in a unique `objectId` for the component. This will allow users to comment on the component. You can also pass in a title and description for the component.
 
 {renderCodeSnippet(GetStartedDocCommentableSnippet)}
+
+<h3 className={docStep}>Handle navigating to comment pins</h3>
+
+So your users can get back to the comments they're interested in you'll need to handle navigating to pins.
+
+You can do this by passing in a `onPinAttach` prop to the `CollabKitProvider` component. This will be called when a user attaches a pin. This callback should return a `string` that represents the state of your apps UI at the time the pin was attached.
+
+This state will be passed to the `onPinClick` callback when a user clicks on the pin.
+
+Here's an example of how you might handle this:
+
+{renderCodeSnippet(GetStartedPinCallbacks)}
+
+We recommend using JSON to represent the state of your app.
 
 <h3 className={docStep}>Try it out!</h3>
 

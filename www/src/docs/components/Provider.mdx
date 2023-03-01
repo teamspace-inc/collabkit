@@ -48,5 +48,54 @@ Because it handles data sync we recommend placing it in your apps root component
         (each user in the same workspace)
       </>,
     ],
+    [
+      `onPinAttach`,
+      <>
+        {`(props: {`}
+        <br />
+        {`objectId: string;`}
+        <br />
+        {`userId: string;`}
+        <br />
+        {`workspaceId: string;`}
+        <br />
+        {`threadId: string;}) => string`}
+      </>,
+      <>
+        Called when a user attaches a new pin to a part of your app's UI. <br />
+        <br />
+        The callback should return a string which represents the state of your app's UI at that
+        point in time. <br />
+        <br />
+        This string will be passed to your app when a user clicks on a pin so you can navigate and
+        restore the UI to the state it was in when the pin was created.
+      </>,
+    ],
+    [
+      `onPinClick`,
+      <>
+        {`(props: {`}
+        <br />
+        {`objectId: string;`}
+        <br />
+        {`userId: string;`}
+        <br />
+        {`workspaceId: string;`}
+        <br />
+        {`meta: string | null;`}
+        <br />
+        {`threadId: string;}) => void`}
+      </>,
+      <>
+        Called when a user clicks on a pin.
+        <br />
+        <br />
+        <code>meta</code> is the string returned by your apps <code>onPinAttach</code> callback.
+        <br />
+        <br />
+        You can use this to navigate to the state of your app that was saved when the pin was
+        attached.
+      </>,
+    ],
   ]}
 />

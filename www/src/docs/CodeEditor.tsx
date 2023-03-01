@@ -155,11 +155,6 @@ export function CodeEditor(props: {
           contextmenu: false,
         });
 
-        props.hideRanges &&
-          editorInstanceRef.current.setHiddenAreas(
-            props.hideRanges.map(([start, end]) => new monaco.Range(start, 1, end, 1))
-          );
-
         if (props.readOnly) {
           const messageContribution = editorInstanceRef.current.getContribution(
             'editor.contrib.messageController'
@@ -206,6 +201,13 @@ export function CodeEditor(props: {
       modelRef.current.setValue(props.code);
     }
   }, [didMount]);
+
+  useEffect(() => {
+    props.hideRanges &&
+      editorInstanceRef.current?.setHiddenAreas(
+        props.hideRanges.map(([start, end]) => new monacoRef.current.Range(start, 1, end, 1))
+      );
+  }, [props.hideRanges, didMount]);
 
   useEffect(() => {
     if (modelRef.current && didMount) {
