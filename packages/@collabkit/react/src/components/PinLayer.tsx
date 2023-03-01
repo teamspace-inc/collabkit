@@ -113,6 +113,7 @@ function PinLayer(props: { className?: string; children?: React.ReactNode }) {
       onPointerOut={updateCursor}
       onPointerDown={onPointerDown}
       className={props.className}
+      style={{ display: 'contents' }}
     >
       {props.children}
       <FloatingPortal id="collabkit-floating-root">
