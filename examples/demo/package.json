@@ -17,6 +17,7 @@
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-router-dom": "^6.3.0",
+    "react-use": "^17.4.0",
     "reactflow": "^11.3.3",
     "wouter": "^2.8.0-alpha.2"
   },
