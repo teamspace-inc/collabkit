@@ -24,7 +24,7 @@ export async function upsertWorkspace(props: {
   if (response.ok) {
     return res;
   } else {
-    console.error('Failed to upsert workspace', response.status, await response.text());
+    console.error('Failed to upsert workspace', response.status, res);
     return '';
   }
 }

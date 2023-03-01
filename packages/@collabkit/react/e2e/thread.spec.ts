@@ -93,10 +93,11 @@ async function visitThreadAsUser(
   });
   const params = new URLSearchParams({
     test: 'true',
+    appId: props.appId,
     token,
-    ...props,
   });
   const url = HOST + '/thread?' + params.toString();
+  console.log('Visiting', url);
   await page.goto(url, { waitUntil: 'networkidle' });
   return page;
 }

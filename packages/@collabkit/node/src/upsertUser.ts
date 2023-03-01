@@ -25,7 +25,7 @@ export async function upsertUser(props: {
   if (response.ok) {
     return res;
   } else {
-    console.error('Failed to upsert user', response.status, await response.text());
+    console.error('Failed to upsert user', response.status, res);
     return '';
   }
 }
