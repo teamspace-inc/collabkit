@@ -29,6 +29,7 @@ export const root = style([
     width: fallbackVar(vars.inbox.width, '320px'),
     fontFamily: vars.fontFamily,
     display: 'flex',
+    height: '100%',
     flexDirection: 'column',
   },
 ]);

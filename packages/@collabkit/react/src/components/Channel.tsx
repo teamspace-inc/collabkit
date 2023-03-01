@@ -88,6 +88,27 @@ function useIsChannelSelected() {
   });
 }
 
+function ChannelScrollableThreadList(props: ComponentPropsWithRef<'div'>) {
+  const threadIds = useInbox({ filter: 'open', direction: 'asc' });
+  const threads = threadIds.map((threadId) => {
+    return (
+      <ThreadContext.Provider value={threadId} key={`inboxThread-${threadId}`}>
+        <ChannelThread />
+      </ThreadContext.Provider>
+    );
+  });
+
+  return threadIds.length === 0 ? (
+    <EmptyState />
+  ) : (
+    <Scrollable alignToBottom={true} autoScroll="bottom">
+      <div className={styles.threadList} {...props}>
+        {threads}
+      </div>
+    </Scrollable>
+  );
+}
+
 function ChannelCommentList(props: ComponentPropsWithRef<'div'>) {
   const isSelected = useIsChannelSelected();
   const commentList = useCommentList();
@@ -550,5 +571,6 @@ export {
   ChannelThreadList,
   ChannelThread,
   ChannelNewThreadComposer,
+  ChannelScrollableThreadList,
   PopoverChannel,
 };
