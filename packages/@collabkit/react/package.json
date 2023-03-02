@@ -1,6 +1,6 @@
 {
   "name": "@collabkit/react",
-  "version": "0.10.2",
+  "version": "0.10.4",
   "type": "module",
   "files": [
     "dist/collabkit-react.d.ts",
