@@ -765,5 +765,5 @@ export function MentionsPlugin(props: {
       />
     ) : null;
 
-  return <FloatingPortal>{typeahead}</FloatingPortal>;
+  return <FloatingPortal id="collabkit-floating-root">{typeahead}</FloatingPortal>;
 }

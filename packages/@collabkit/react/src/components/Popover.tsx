@@ -113,7 +113,7 @@ function PopoverContent(props: PopoverContentProps) {
           }}
           {...getFloatingProps({})}
         >
-          {open ? props.children : null}
+          {open ? <ThemeWrapper>{props.children}</ThemeWrapper> : null}
         </div>
       </FloatingFocusManager>
     </FloatingOverlay>
@@ -296,11 +296,7 @@ function PopoverRoot(props: RootProps) {
 }
 
 function PopoverPortal({ children }: { children?: React.ReactNode }) {
-  return (
-    <FloatingPortal id="collabkit-floating-root">
-      {children ? <ThemeWrapper>{children}</ThemeWrapper> : null}
-    </FloatingPortal>
-  );
+  return <FloatingPortal id="collabkit-floating-root">{children}</FloatingPortal>;
 }
 
 export { PopoverRoot, PopoverTrigger, PopoverPortal, PopoverPreview, PopoverContent };
