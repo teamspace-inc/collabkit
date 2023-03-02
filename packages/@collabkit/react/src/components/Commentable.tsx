@@ -4,7 +4,7 @@ import { useCommentableRef } from '../hooks/useCommentableRef';
 
 export function findCommentableElement(
   store: Store,
-  e: React.PointerEvent
+  e: PointerEvent
 ): { objectId: string; element: HTMLElement | SVGElement | null } | null {
   const element = document.elementFromPoint(e.clientX, e.clientY);
   if (element == null) {

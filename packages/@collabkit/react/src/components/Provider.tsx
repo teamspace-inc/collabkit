@@ -119,7 +119,8 @@ export function CollabKitProvider({
         <ThemeProvider theme={theme}>
           <AuthenticatedContext>
             <FloatingTree>
-              <PinLayer>{children}</PinLayer>
+              {children}
+              <PinLayer />
             </FloatingTree>
             <SaveMentionableUsers mentionableUsers={config.mentionableUsers} />
           </AuthenticatedContext>
