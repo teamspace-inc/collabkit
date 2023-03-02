@@ -166,8 +166,6 @@ function PopoverRoot(props: RootProps) {
   const { placement, children, previewVisible, contentVisible, onContentChange, onPreviewChange } =
     props;
   const nodeId = useFloatingNodeId();
-  const [maxSize, setMaxSize] = useState<{ width: number; height: number } | null>(null);
-
   const dismissOnClickOutside = props.dismissOnClickOutside ?? true;
   const shouldFlipToKeepInView = props.shouldFlipToKeepInView ?? true;
 
