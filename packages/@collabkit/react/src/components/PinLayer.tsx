@@ -25,7 +25,7 @@ function PinLayer(props: { className?: string; children?: React.ReactNode }) {
   }, [isAuthenticated]);
 
   const updateCursor = useCallback(
-    (e: React.PointerEvent) => {
+    (e: PointerEvent) => {
       if (hoveredElementRef.current) {
         hoveredElementRef.current.classList.remove(styles.activeContainer);
         hoveredElementRef.current = null;
@@ -59,7 +59,7 @@ function PinLayer(props: { className?: string; children?: React.ReactNode }) {
   );
 
   const onPointerDown = useCallback(
-    (e: React.PointerEvent) => {
+    (e: PointerEvent) => {
       const commentable = findCommentableElement(store, e);
       if (commentable && commentable.element && workspaceId) {
         const { x, y, width, height } = commentable.element.getBoundingClientRect();
@@ -76,7 +76,20 @@ function PinLayer(props: { className?: string; children?: React.ReactNode }) {
     [events.onClick, workspaceId]
   );
 
-  if (props.children == null || !workspaceId) {
+  useEffect(() => {
+    document.addEventListener('pointerover', updateCursor);
+    document.addEventListener('pointermove', updateCursor);
+    document.addEventListener('pointerout', updateCursor);
+    document.addEventListener('pointerdown', onPointerDown);
+    return () => {
+      document.removeEventListener('pointerover', updateCursor);
+      document.removeEventListener('pointermove', updateCursor);
+      document.removeEventListener('pointerout', updateCursor);
+      document.removeEventListener('pointerdown', onPointerDown);
+    };
+  }, [updateCursor, onPointerDown]);
+
+  if (!workspaceId) {
     return null;
   }
 
@@ -107,22 +120,12 @@ function PinLayer(props: { className?: string; children?: React.ReactNode }) {
     });
 
   return (
-    <div
-      onPointerOver={updateCursor}
-      onPointerMove={updateCursor}
-      onPointerOut={updateCursor}
-      onPointerDown={onPointerDown}
-      className={props.className}
-      style={{ display: 'contents' }}
-    >
-      {props.children}
-      <FloatingPortal id="collabkit-floating-root">
-        <FloatingTree>
-          {pinCursor}
-          {pinsComponents}
-        </FloatingTree>
-      </FloatingPortal>
-    </div>
+    <FloatingPortal id="collabkit-floating-root">
+      <FloatingTree>
+        {pinCursor}
+        {pinsComponents}
+      </FloatingTree>
+    </FloatingPortal>
   );
 }
 

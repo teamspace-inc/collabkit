@@ -66,7 +66,7 @@ export function createEvents(store: Store) {
       actions.focus(store, props);
     },
 
-    onClick: <T extends Target>(e: React.MouseEvent, props: { target: T }) => {
+    onClick: <T extends Target>(e: React.MouseEvent | PointerEvent, props: { target: T }) => {
       const { target } = props;
       if (e.button !== 0) {
         return;
