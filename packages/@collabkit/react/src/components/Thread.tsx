@@ -24,10 +24,29 @@ function ThreadEmptyState() {
   return emptyState;
 }
 
-function ThreadRoot(props: ThreadProps & React.ComponentPropsWithoutRef<'div'>) {
-  const { userId } = useThread(props);
+function ThreadRoot({
+  threadId,
+  info,
+  defaultSubscribers,
+  showHeader,
+  autoFocus,
+  hideComposer,
+  hideResolveButton,
+  placeholder,
+  ...props
+}: ThreadProps & React.ComponentPropsWithoutRef<'div'>) {
+  const { userId } = useThread({
+    threadId,
+    info,
+    defaultSubscribers,
+    showHeader,
+    autoFocus,
+    hideComposer,
+    hideResolveButton,
+    placeholder,
+  });
   return (
-    <ThreadContext.Provider value={props.threadId}>
+    <ThreadContext.Provider value={threadId}>
       <ProfileContext.Provider value={userId}>
         <div data-testid="collabkit-thread-root" className={styles.root} {...props} />
       </ProfileContext.Provider>
@@ -42,17 +61,15 @@ function ThreadHeader(props: React.ComponentPropsWithoutRef<'div'>) {
 function Thread(props: ThreadProps & React.ComponentPropsWithoutRef<'div'>) {
   return useIsAuthenticated() ? (
     <ThemeWrapper>
-      <div {...props}>
-        <ThreadRoot threadId={props.threadId}>
-          {props.showHeader && <ThreadHeader>Comments</ThreadHeader>}
-          <Scrollable autoScroll="bottom">
-            <CommentList />
-          </Scrollable>
-          {props.hideComposer ? null : (
-            <Composer autoFocus={props.autoFocus} placeholder={props.placeholder} />
-          )}
-        </ThreadRoot>
-      </div>
+      <ThreadRoot {...props}>
+        {props.showHeader && <ThreadHeader>Comments</ThreadHeader>}
+        <Scrollable autoScroll="bottom">
+          <CommentList />
+        </Scrollable>
+        {props.hideComposer ? null : (
+          <Composer autoFocus={props.autoFocus} placeholder={props.placeholder} />
+        )}
+      </ThreadRoot>
     </ThemeWrapper>
   ) : null;
 }
