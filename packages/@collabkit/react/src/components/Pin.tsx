@@ -204,7 +204,7 @@ const PinCursor = forwardRef<HTMLDivElement, { isSelected: boolean }>(function P
   return (
     <ProfileProvider profileId={userId}>
       <div
-        className={`collabkit ${styles.pin({ pointerEvents: 'none' })}`}
+        className={styles.pin({ pointerEvents: 'none' })}
         data-testid="collabkit-pin-marker"
         ref={ref}
       >
@@ -544,7 +544,7 @@ const PinMarker = forwardRef<HTMLDivElement, PinMarkerProps>(function PinMarker(
   return pin ? (
     <ProfileProvider profileId={pin.createdById}>
       <div
-        className={`collabkit ${styles.pin({ pointerEvents, isSelected })}`}
+        className={styles.pin({ pointerEvents, isSelected })}
         ref={ref}
         style={props.style}
         data-testid="collabkit-pin-marker"
