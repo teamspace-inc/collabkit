@@ -4,6 +4,7 @@ import SecureModeDocNodeSnippet from './SecureModeDocNodeSnippet?raw';
 import SecureModeDocResponseSnippet from './SecureModeDocResponseSnippet?raw';
 import SecureModeDocJsonSnippet from './SecureModeDocJsonSnippet?raw';
 import SecureModeDocReactSnippet from './SecureModeDocReactSnippet?raw';
+import SecureModeDocPythonSnippet from './SecureModeDocPythonSnippet.py?raw';
 
 # Security
 
@@ -98,9 +99,7 @@ For Node.js, call `createUserToken` from `@collabkit/node`:
 
 For Python, install [PyJWT](https://pyjwt.readthedocs.io/en/stable/index.html) and use the following python code:
 
-{renderCodeSnippet(
-'import jwt \ntoken = jwt.encode({ "userId": "<your user ID here>", "workspaceId": "<your workspaceId here>" }, "<your apiKey here>", algorithm="HS256")'
-)}
+{renderCodeSnippet(SecureModeDocPythonSnippet)}
 
 For everything else, create a JWT token with the following payload signed by your API key as the secret using the HS256 algorithm:
 
