@@ -428,7 +428,7 @@ export function MentionsTypeahead({
   return (
     <FloatingPortal id="collabkit-floating-root">
       <FloatingFocusManager context={context}>
-        <ThemeWrapper>
+        <ThemeWrapper key="key-needed-to-suppress-react-warning">
           <div
             className={styles.typeahead}
             aria-label="Suggested mentions"
