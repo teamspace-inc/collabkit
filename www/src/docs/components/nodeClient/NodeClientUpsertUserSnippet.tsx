@@ -1,6 +1,6 @@
 import { upsertUser } from '@collabkit/node';
 
-const status = upsertUser({
+await upsertUser({
   apiKey: '<your API Key here>',
   userId: '<your user ID here>',
   workspaceId: '<your workspace ID here>',
@@ -9,5 +9,5 @@ const status = upsertUser({
     name: '<Name of the user>',
     email: '<Email of the user>',
     avatar: '<Avatar URL of the user>',
-  }
+  },
 });

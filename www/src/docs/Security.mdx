@@ -4,6 +4,7 @@ import SecureModeDocNodeSnippet from './SecureModeDocNodeSnippet?raw';
 import SecureModeDocResponseSnippet from './SecureModeDocResponseSnippet?raw';
 import SecureModeDocJsonSnippet from './SecureModeDocJsonSnippet?raw';
 import SecureModeDocReactSnippet from './SecureModeDocReactSnippet?raw';
+import SecureModeDocPythonSnippet from './SecureModeDocPythonSnippet.py?raw';
 
 # Security
 
@@ -23,7 +24,7 @@ Follow these steps to enable Secure Mode for your app:
 
 <h3 className={docStep}> Create a production app with Secure Mode</h3>
 
-1. Go to your [CollabKit Dashboard](https://app.collabkit.io/dashboard)
+1. Go to your [CollabKit Dashboard](https://app.collabkit.dev/dashboard)
 
 2. Click 'Create App' and fill out the form.
 
@@ -33,31 +34,74 @@ Follow these steps to enable Secure Mode for your app:
 
 <h3 className={docStep}>Create users and workspaces via our API</h3>
 
-For secure mode you need to create a user and workspace via our API. You can do this by making a POST request to the following endpoint:
+For secure mode you need to create a workspace and a user via our API.
 
-`https://api.collabkit.io/v1/users`
+#### Node.js: use `@collabkit/node` to create/update a workspace and user
 
-`https://api.collabkit.io/v1/workspaces`
+```ts
+import { upsertUser, upsertWorkspace } from '@collabkit/node';
 
-You'll need to pass your API Key in the `Authorization` header.
+await upsertWorkspace({
+  apiKey: '<your API Key here>',
+  appId: '<your app ID here>',
+  workspaceId: '<your workspace ID here>',
+  workspace: {
+    name: '<Name of the workspace>',
+  },
+});
+await upsertUser({
+  apiKey: '<your API Key here>',
+  userId: '<your user ID here>',
+  workspaceId: '<your workspace ID here>',
+  appId: '<your app ID here>',
+  user: {
+    name: '<Name of the user>',
+    email: '<Email of the user>',
+    avatar: '<Avatar URL of the user>',
+  },
+});
+```
 
-Once you create a user you can move on to the next step to sign a per-user token for that user.
+#### Other: use the HTTP API to create/update a workspace and user
+
+```
+PUT https://api.collabkit.dev/v1/workspace/:workspaceId
+{
+  "apiKey": "<your API Key here>",
+  "appId": "<your app ID here>",
+  "workspace": {
+    "name": "<Name of the user>",
+  }
+}
+
+PUT https://api.collabkit.dev/v1/user/:userId
+{
+  "apiKey": "<your API Key here>",
+  "appId": "<your app ID here>",
+  "workspaceId": "<your workspace ID here>",
+  "user": {
+    "name": "<Name of the user>",
+    "email": "<Email of the user>",
+    "avatar": "<Avatar URL of the user>"
+  }
+}
+```
+
+Once you've created a user you can move on to the next step to sign a per-user token for that user.
 
 <h3 className={docStep}> Create a per-user token</h3>
 
-User token's are used to authenticate a user's requests. You'll need to sign a user token using your API Key.
+User tokens are used to authenticate a user's requests. You'll need to sign a user token using your API Key.
 
-For Node.js, install `@collabkit/node` and call `createUserToken`.
+For Node.js, call `createUserToken` from `@collabkit/node`:
 
 {renderCodeSnippet(SecureModeDocNodeSnippet)}
 
 For Python, install [PyJWT](https://pyjwt.readthedocs.io/en/stable/index.html) and use the following python code:
 
-{renderCodeSnippet(
-'import jwt \ntoken = jwt.encode({ "userId": "<your user ID here>", "workspaceId": "<your workspaceId here>" }, "<your apiKey here>", algorithm="HS256")'
-)}
+{renderCodeSnippet(SecureModeDocPythonSnippet)}
 
-For everything else (HTTP request), create a user token by createing a JWT token with the following payload signed by your API Key as the secret using the HS256 algorithm:
+For everything else, create a JWT token with the following payload signed by your API key as the secret using the HS256 algorithm:
 
 {renderCodeSnippet(SecureModeDocJsonSnippet)}
 
