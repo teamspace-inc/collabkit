@@ -26,11 +26,11 @@ import {
   useFloatingNodeId,
   useFloatingParentNodeId,
   FloatingNode,
-  FloatingFocusManager,
   FloatingContext,
   ElementProps,
   ReferenceType,
 } from '@floating-ui/react';
+import { FloatingFocusManager } from './FloatingFocusManager';
 import { ThemeWrapper } from './ThemeWrapper';
 import { useApp } from '../hooks/useApp';
 import { useSnapshot } from 'valtio';

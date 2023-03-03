@@ -11,7 +11,6 @@ import {
   autoUpdate,
   flip,
   FloatingContext,
-  FloatingFocusManager,
   FloatingNode,
   FloatingOverlay,
   FloatingPortal,
@@ -29,6 +28,7 @@ import {
   useInteractions,
   VirtualElement,
 } from '@floating-ui/react';
+import { FloatingFocusManager } from './FloatingFocusManager';
 
 import { mergeRefs } from 'react-merge-refs';
 import { ThemeWrapper } from './ThemeWrapper';

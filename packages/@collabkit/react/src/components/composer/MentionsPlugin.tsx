@@ -34,13 +34,13 @@ import { MentionWithColor } from '@collabkit/core';
 import {
   autoUpdate,
   flip,
-  FloatingFocusManager,
   FloatingPortal,
   offset,
   size,
   useFloating,
   useFloatingNodeId,
 } from '@floating-ui/react';
+import { FloatingFocusManager } from '../FloatingFocusManager';
 import { ThemeWrapper } from '../ThemeWrapper';
 import { ProfileAvatar } from '../Profile';
 import { Scrollable } from '../Scrollable';
