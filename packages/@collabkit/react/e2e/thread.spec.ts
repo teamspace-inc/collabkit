@@ -38,6 +38,9 @@ async function createUserAndWorkspace(props: {
         email: props.userEmail,
       },
       workspaceId: props.workspaceId,
+      workspace: {
+        name: 'Test Workspace',
+      },
     }),
   });
   if (!response.ok) {
