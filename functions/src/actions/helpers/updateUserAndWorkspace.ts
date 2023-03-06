@@ -64,8 +64,6 @@ export async function updateUserAndWorkspace(props: {
   if (workspaceId !== 'default' && isValidWorkspace(workspace)) {
     workspaceUpdates[ref.path`/workspaces/${appId}/${workspaceId}/`] =
       deleteUndefinedProps(workspace);
-    workspaceUpdates[ref.path`/views/workspaceProfiles/${appId}/${workspaceId}/${userId}`] =
-      deleteUndefinedProps(user);
     await ref`/`.update(workspaceUpdates);
   }
 
@@ -73,6 +71,8 @@ export async function updateUserAndWorkspace(props: {
     updates[ref.path`/profiles/${appId}/${userId}/`] = deleteUndefinedProps(user);
     if (workspaceId !== 'default') {
       updates[ref.path`/workspaces/${appId}/${workspaceId}/profiles/${userId}/`] = true;
+      updates[ref.path`/views/workspaceProfiles/${appId}/${workspaceId}/${userId}`] =
+        deleteUndefinedProps(user);
     }
   } else if (user != null) {
     functions.logger.warn('Invalid profile. Skipping user profile update.', { user });

@@ -9,7 +9,7 @@ export async function userImpl(request: functions.https.Request, response: funct
     return;
   }
 
-  const { appId, workspaceId, apiKey, user } = request.body;
+  const { appId, workspaceId, apiKey, user, workspace } = request.body;
 
   if (!appId) {
     console.debug('"appId" not provided', appId);
@@ -58,7 +58,7 @@ export async function userImpl(request: functions.https.Request, response: funct
     return;
   }
 
-  await updateUserAndWorkspace({ appId, userId, workspaceId, user });
+  await updateUserAndWorkspace({ appId, userId, workspaceId, user, workspace });
 
   response.status(200).send('Created/Updated User Successfully.');
 }
