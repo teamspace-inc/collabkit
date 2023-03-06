@@ -33,7 +33,7 @@ test('createComposer', () => {
 
 test('createStore', () => {
   expect(createStore()).toStrictEqual({
-    isFigmaStyle: false,
+    isFigmaStyle: true,
     sync: null,
     isConnected: false,
     isSidebarOpen: false,
