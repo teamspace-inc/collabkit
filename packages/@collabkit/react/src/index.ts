@@ -56,6 +56,7 @@ export * from './components/Channel';
 export * from './components/Root';
 export * from './components/AddCommentButton';
 export * from './components/Tooltip';
+export * from './components/Catch';
 
 export * from './components/Commentable';
 export * from './components/SidebarComments';
