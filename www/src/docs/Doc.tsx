@@ -20,7 +20,8 @@ function pathToHref(path?: string[]) {
 }
 
 import React, { useCallback, useRef } from 'react';
-import { H3 } from './H3';
+import { H3 } from './mdx/H3';
+import { Code } from './mdx/Code';
 
 export function DocWithSubNav(props: {
   key: string;
@@ -46,7 +47,12 @@ export function DocWithSubNav(props: {
   );
 
   const docContent = component?.({
-    components: { h3: (props: any) => <H3 {...props} onAnchor={handleAnchor} /> },
+    components: {
+      h3: (props: any) => <H3 {...props} onAnchor={handleAnchor} />,
+      code: (props: any) => {
+        return <Code {...props} />;
+      },
+    },
   });
 
   return (

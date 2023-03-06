@@ -1,7 +1,6 @@
 import React from 'react';
 import { ThreadContext } from '../hooks/useThreadContext';
 import { Composer } from './composer/Composer';
-import { ThemeWrapper } from './ThemeWrapper';
 import * as styles from '../theme/components/Thread.css';
 import { ChatCentered } from './icons';
 import { CommentList } from './CommentList';
@@ -60,17 +59,15 @@ function ThreadHeader(props: React.ComponentPropsWithoutRef<'div'>) {
 
 function Thread(props: ThreadProps & React.ComponentPropsWithoutRef<'div'>) {
   return useIsAuthenticated() ? (
-    <ThemeWrapper>
-      <ThreadRoot {...props}>
-        {props.showHeader && <ThreadHeader>Comments</ThreadHeader>}
-        <Scrollable autoScroll="bottom">
-          <CommentList />
-        </Scrollable>
-        {props.hideComposer ? null : (
-          <Composer autoFocus={props.autoFocus} placeholder={props.placeholder} />
-        )}
-      </ThreadRoot>
-    </ThemeWrapper>
+    <ThreadRoot {...props}>
+      {props.showHeader && <ThreadHeader>Comments</ThreadHeader>}
+      <Scrollable autoScroll="bottom">
+        <CommentList />
+      </Scrollable>
+      {props.hideComposer ? null : (
+        <Composer autoFocus={props.autoFocus} placeholder={props.placeholder} />
+      )}
+    </ThreadRoot>
   ) : null;
 }
 

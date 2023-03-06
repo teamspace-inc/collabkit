@@ -67,7 +67,14 @@ import { useThread } from './hooks/public/useThread';
 import { Debug } from './components/Debug';
 import { Channel } from './components/Channel';
 
+import { ThreadBase } from './theme/themes/base/ThreadBase';
+
+const ThemeBase = {
+  ThreadBase,
+};
+
 export {
+  ThemeBase,
   CollabKitProvider as Provider,
   CollabKitProvider,
   Inbox,

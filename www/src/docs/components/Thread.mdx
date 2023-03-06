@@ -1,10 +1,12 @@
-import { AdvancedProps } from '../advanced/AdvancedCommon';
+import { AdvancedProps, StyleTable } from '../advanced/AdvancedCommon';
 import { renderCodeSnippet } from '../CodeEditor';
 import { ThreadDemo } from '../demos/ThreadDemo';
 import { DocHeroDemoContainer, DocLink } from '../Doc';
 import ThreadUsage1 from './usage/ThreadUsage1.tsx?raw';
 import ThreadUsage2 from './usage/ThreadUsage2.tsx?raw';
 import ThreadPositioning from './usage/ThreadPositioning.tsx?raw';
+
+import { ThemeBase } from '@collabkit/react';
 
 # Thread
 
@@ -100,3 +102,47 @@ To control the size or position of a `Thread` pass a `className` or `style` prop
 ### Styling
 
 Customise the following variables in your theme to style the `Thread` component.
+
+<StyleTable
+  styles={[
+    ['thread.background', '--thread-background', 'color.background'],
+    ['thread.borderRadius', '--thread-border-radius', '4px'],
+    ['thread.border', '--thread-border', 'none'],
+    ['thread.boxShadow', '--thread-box-shadow', 'none'],
+  ]}
+/>
+
+### Composability
+
+The `Thread` component is composed of the following components:
+
+- `ThreadRoot`
+- `ThreadHeader`
+- `Scrollable`
+- `CommentList`
+- `Composer`
+
+You can use these components to build your own custom `Thread` component. `CommentList` and `Composer` are also composable, so you can split them apart to
+
+```tsx
+import { ThreadRoot, Scrollable, CommentList, Composer } from '@collakbit/react';
+
+function CustomThread(props: { threadId: string }) {
+  return (
+    <ThreadRoot threadId={threadId}>
+      <Scrollable autoScroll="bottom">
+        <CommentList />
+      </Scrollable>
+      <Composer autoFocus={true} />
+    </ThreadRoot>
+  );
+}
+```
+
+To style indivdual components, adjust your theme or CSS variables. Or provide a `className` prop to a leaf component.
+
+For example, if you want to customise the `ThreadRoot` component you can do so by passing in a `className` prop:
+
+```tsx
+<ThreadRoot threadId={threadId} className="your-thread-classname-here">
+```
