@@ -1,5 +1,7 @@
 import readline from 'readline';
 import admin from 'firebase-admin';
+import path from 'path';
+import os from 'os';
 
 function ask(query: string) {
   const rl = readline.createInterface({
@@ -38,7 +40,9 @@ async function run() {
   }
 
   admin.initializeApp({
-    credential: admin.credential.cert('/Users/nc/collabkit-dev-service-account.json'),
+    credential: admin.credential.cert(
+      `/Users/${path.join(os.homedir())}/collabkit-dev-service-account.json`
+    ),
     databaseURL: 'https://collabkit-dev-default-rtdb.europe-west1.firebasedatabase.app',
   });
 
