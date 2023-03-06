@@ -10,7 +10,7 @@ export async function setupApp({ appId, apiKey }: { appId: string; apiKey: strin
         name: 'Test App',
         admins: {},
         keys: { [apiKey]: true },
-        mode: 'UNSECURED',
+        mode: 'SECURED',
         isEmailDisabled: true,
         defaultNotificationPreference: 'off',
         emailBatchDelayMs: 0,
