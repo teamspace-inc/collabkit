@@ -1,7 +1,7 @@
 import { ComposerTarget, Store } from '@collabkit/core';
 import { LexicalEditor, $getRoot } from 'lexical';
 import { actions } from '.';
-import { ref } from 'valtio';
+import { markRaw } from '../store';
 
 export function updateComposer(
   store: Store,
@@ -9,7 +9,7 @@ export function updateComposer(
 ) {
   const { target, editor } = props;
   const composer = actions.initComposer(store, target);
-  composer.editor = ref(editor);
+  composer.editor = markRaw(editor);
   let isEmpty = true;
   composer.editor.getEditorState().read(() => {
     isEmpty = $getRoot().getTextContentSize() === 0;
