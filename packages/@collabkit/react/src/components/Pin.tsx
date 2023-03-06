@@ -238,6 +238,8 @@ function PinThreadPreview({ pin }: { pin: Pin }) {
 }
 
 function useAdjacentPin(direction: 1 | -1 = 1) {
+  // todo make this group pins by 'url'
+  // so pins on another page are not considered
   const { visiblePinPositions, selectedId, pins } = useSnapshot(useStore());
   const sortedVisiblePinPositions = visiblePinPositions.slice().sort((a, b) => {
     if (a[2] === b[2]) {
