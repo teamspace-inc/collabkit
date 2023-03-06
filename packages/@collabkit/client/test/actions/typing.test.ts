@@ -28,7 +28,7 @@ describe('typing', async () => {
   let typing;
 
   beforeAll(async () => {
-    await setupApp({ apiKey, appId });
+    await setupApp({ apiKey, appId, mode: 'UNSECURED' });
     await setupWorkspaceProfile({ appId, workspaceId, userId });
     await createTokenAndSignIn({ apiKey, appId });
     store.userId = userId;

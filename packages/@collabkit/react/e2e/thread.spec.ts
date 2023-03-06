@@ -105,7 +105,7 @@ async function visitThreadAsUser(
 async function createApp() {
   const appId = nanoid();
   const apiKey = nanoid();
-  await setupApp({ appId, apiKey });
+  await setupApp({ appId, apiKey, mode: 'SECURED' });
   return {
     appId,
     apiKey,
@@ -180,7 +180,7 @@ async function hasComment(page: Page, comment: { body: string }) {
 }
 
 async function hoverComment(page: Page, comment: { body: string }, nth: number = 0) {
-  await page.getByText(comment.body).nth(nth).hover({ force: true, timeout: 2000 });
+  await page.getByText(comment.body).nth(nth).hover({ force: true, timeout: 5000 });
 }
 
 async function doesNotHaveComment(page: Page, comment: { body: string }) {
@@ -247,7 +247,7 @@ async function focusCommentComposer(page: Page, nth: number = 0) {
 }
 
 async function getComposer(page: Page) {
-  return await page.getByTestId('collabkit-composer-root').nth(0).locator('[contenteditable=true]');
+  return await page.getByRole('textbox').nth(0);
 }
 
 async function typeInCommentComposer(page: Page, text: string, nth: number = 0) {

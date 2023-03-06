@@ -60,10 +60,8 @@ export async function authenticate(store: Store) {
     store.workspaces[workspaceId] = createWorkspace();
     store.nextThreadId = store.sync.nextThreadId({ appId, workspaceId });
 
-    if (store.workspaceId !== 'default') {
-      if (store.config.mentionableUsers === 'allWorkspace') {
-        actions.subscribeWorkspaceProfiles(store);
-      }
+    if (store.workspaceId !== 'default' && store.config.mentionableUsers === 'allWorkspace') {
+      actions.subscribeWorkspaceProfiles(store);
     }
 
     actions.subscribeSeen(store);

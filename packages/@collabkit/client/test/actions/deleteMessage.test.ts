@@ -25,7 +25,7 @@ test('deleteMessage', async () => {
   const appId = nanoid();
   const userId = nanoid();
   const workspaceId = nanoid();
-  await setupApp({ apiKey, appId });
+  await setupApp({ apiKey, appId, mode: 'UNSECURED' });
   await createTokenAndSignIn({ apiKey, appId });
   await setupProfile({ appId, userId });
 

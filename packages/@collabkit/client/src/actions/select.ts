@@ -1,4 +1,22 @@
-import { Store, Target } from '@collabkit/core';
+import { Pin, Store, Target } from '@collabkit/core';
+
+function navigateToPin(store: Store, pin: Pin) {
+  const { id, eventId, objectId, threadId, workspaceId } = pin;
+  const target = { id, eventId, objectId, threadId, workspaceId, type: 'pin' } as const;
+  store.callbacks?.onPinClick?.({
+    userId: store.userId!,
+    workspaceId: pin.workspaceId,
+    meta: pin.meta,
+    objectId: pin.objectId,
+    threadId: pin.threadId,
+  });
+  if (!store.isFigmaStyle) return;
+  setTimeout(() => {
+    store.viewingId = target;
+    store.previewingId = target;
+    store.selectedId = target;
+  }, 32);
+}
 
 export function select(store: Store, props: { target: Target }) {
   const { userId } = store;
@@ -11,29 +29,16 @@ export function select(store: Store, props: { target: Target }) {
 
     case 'pinNextThreadIconButton':
     case 'pinPrevThreadIconButton':
-      const pinTarget = { ...target, type: 'pin' } as const;
-      store.selectedId = pinTarget;
-      store.viewingId = pinTarget;
-      store.previewingId = pinTarget;
+      const adjacentPin = store.pins.open.find((pin) => pin.id === target.id);
+      if (adjacentPin) {
+        navigateToPin(store, adjacentPin);
+      }
       break;
     case 'pin':
     case 'commentPin':
-      const { id, workspaceId } = target;
-      const pin = store.pins.open.find((pin) => pin.id === id);
-      store.selectedId = target;
+      const pin = store.pins.open.find((pin) => pin.id === target.id);
       if (pin) {
-        store.callbacks?.onPinClick?.({
-          userId,
-          workspaceId,
-          meta: pin.meta,
-          objectId: pin.objectId,
-          threadId: pin.threadId,
-        });
-        if (!store.isFigmaStyle) return;
-        setTimeout(() => {
-          store.viewingId = target;
-          store.previewingId = target;
-        }, 32);
+        navigateToPin(store, pin);
       }
       break;
   }

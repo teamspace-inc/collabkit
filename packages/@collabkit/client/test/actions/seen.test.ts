@@ -22,7 +22,7 @@ test('seen', async () => {
   const appId = nanoid();
   const userId = nanoid();
   const workspaceId = nanoid();
-  await setupApp({ apiKey, appId });
+  await setupApp({ apiKey, appId, mode: 'UNSECURED' });
   await createTokenAndSignIn({ apiKey, appId });
   await setupWorkspaceProfile({ appId, workspaceId, userId });
   const store = createStore();
@@ -64,6 +64,7 @@ test('seen', async () => {
       createdAt: sync.serverTimestamp(),
       createdById: userId,
     },
+    timeline: {},
     parentEvent: null,
     newEventId: firstEventId,
   });
@@ -80,6 +81,7 @@ test('seen', async () => {
       createdAt: sync.serverTimestamp(),
       createdById: userId,
     },
+    timeline: {},
     parentEvent: null,
     newEventId: secondEventId,
   });

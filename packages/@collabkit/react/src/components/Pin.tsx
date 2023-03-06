@@ -40,7 +40,6 @@ import {
 } from './Comment';
 import * as styles from '../theme/components/Pin.css';
 import { usePopover } from '../hooks/usePopover';
-import { useUserContext } from '../hooks/useUserContext';
 import { PinIconSVG } from './PinIcon';
 import { ThreadContext, useThreadContext } from '../hooks/useThreadContext';
 import { CommentList } from './CommentList';
@@ -196,27 +195,6 @@ type PinMarkerProps = {
   pin: WithID<Pin | PendingPin>;
 };
 
-const PinCursor = forwardRef<HTMLDivElement, { isSelected: boolean }>(function PinCursor(
-  props,
-  ref
-) {
-  const userId = useUserContext();
-  return (
-    <ProfileProvider profileId={userId}>
-      <div
-        className={`collabkit ${styles.pin({ pointerEvents: 'none' })}`}
-        data-testid="collabkit-pin-marker"
-        ref={ref}
-      >
-        <PinIconSVG isSelected={props.isSelected} />
-        <div className={styles.pinAvatar}>
-          <ProfileAvatar />
-        </div>
-      </div>
-    </ProfileProvider>
-  );
-});
-
 function PinThreadPreview({ pin }: { pin: Pin }) {
   const { events } = useApp();
 
@@ -260,6 +238,8 @@ function PinThreadPreview({ pin }: { pin: Pin }) {
 }
 
 function useAdjacentPin(direction: 1 | -1 = 1) {
+  // todo make this group pins by 'url'
+  // so pins on another page are not considered
   const { visiblePinPositions, selectedId, pins } = useSnapshot(useStore());
   const sortedVisiblePinPositions = visiblePinPositions.slice().sort((a, b) => {
     if (a[2] === b[2]) {
@@ -549,29 +529,25 @@ const PinMarker = forwardRef<HTMLDivElement, PinMarkerProps>(function PinMarker(
         style={props.style}
         data-testid="collabkit-pin-marker"
       >
-        <PinMenu>
-          <div>
-            <PopoverRoot
-              {...popoverProps}
-              dismissOnClickOutside={true}
-              shouldFlipToKeepInView={true}
-            >
-              <PopoverTrigger>
-                <div className={styles.pinIcon} onPointerDown={onClick}>
-                  <PinIconSVG isSelected={isSelected} />
-                  <div className={styles.pinAvatar}>
-                    <ProfileAvatar />
-                  </div>
+        {/* <PinMenu> */}
+        <div>
+          <PopoverRoot {...popoverProps} dismissOnClickOutside={true} shouldFlipToKeepInView={true}>
+            <PopoverTrigger>
+              <div className={styles.pinIcon} onPointerDown={onClick}>
+                <PinIconSVG isSelected={isSelected} />
+                <div className={styles.pinAvatar}>
+                  <ProfileAvatar />
                 </div>
-              </PopoverTrigger>
-              <PopoverPreview>{pinThreadPreview}</PopoverPreview>
-              <PopoverContent>{isFigmaStyle ? pinThreadContent : pinThreadPreview}</PopoverContent>
-            </PopoverRoot>
-          </div>
-        </PinMenu>
+              </div>
+            </PopoverTrigger>
+            <PopoverPreview>{pinThreadPreview}</PopoverPreview>
+            <PopoverContent>{isFigmaStyle ? pinThreadContent : pinThreadPreview}</PopoverContent>
+          </PopoverRoot>
+        </div>
+        {/* </PinMenu> */}
       </div>
     </ProfileProvider>
   ) : null;
 });
 
-export { SavedPin, PinMarker, PinCursor };
+export { SavedPin, PinMarker };

@@ -21,7 +21,7 @@ test('saveThreadInfo', async () => {
   const appId = nanoid();
   const userId = nanoid();
   const workspaceId = nanoid();
-  await setupApp({ apiKey, appId });
+  await setupApp({ apiKey, appId, mode: 'UNSECURED' });
   await createTokenAndSignIn({ apiKey, appId });
   await setupWorkspaceProfile({ appId, workspaceId, userId });
   const store = createStore();

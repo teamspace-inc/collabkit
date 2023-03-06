@@ -11,6 +11,7 @@ import { InboxButtonDemo } from './demos/InboxButtonDemo';
 import { dark } from '../styles/Theme.css';
 import { bg } from '../styles/Website.css';
 import { LogoImg } from '../Logo';
+import { Catch } from '@collabkit/react';
 
 import {
   codeEditor,
@@ -30,6 +31,23 @@ const components = [
   { name: 'InboxButton', component: InboxButtonDemo },
   { name: 'Sidebar', component: SidebarCommentsDemo },
 ];
+
+type Props = {
+  children: React.ReactNode;
+};
+
+const EditorErrorBoundary = Catch(function MyErrorBoundary(props: Props, error?: Error) {
+  if (error) {
+    return (
+      <div className="error-screen">
+        <h2>An error has occured</h2>
+        <h4>{error.message}</h4>
+      </div>
+    );
+  } else {
+    return <>{props.children}</>;
+  }
+});
 
 export function ThemeEditor() {
   const [code, setCode] = useState(() => ExampleThemeRaw);
@@ -76,11 +94,13 @@ export function ThemeEditor() {
           onChange={setCode}
           fixedSize={true}
         />
-        <ThemeProvider theme={theme ?? {}}>
-          <ThemeWrapper>
-            {activeComponent?.component({ className: themeDemoContainer })}
-          </ThemeWrapper>
-        </ThemeProvider>
+        <EditorErrorBoundary>
+          <ThemeProvider theme={theme ?? {}}>
+            <ThemeWrapper>
+              {activeComponent?.component({ className: themeDemoContainer })}
+            </ThemeWrapper>
+          </ThemeProvider>
+        </EditorErrorBoundary>
       </div>
     </div>
   );

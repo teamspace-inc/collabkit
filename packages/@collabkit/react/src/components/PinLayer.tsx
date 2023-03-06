@@ -6,7 +6,8 @@ import { useApp } from '../hooks/useApp';
 import { useIsAuthenticated } from '../hooks/useIsAuthenticated';
 import { useStore } from '../hooks/useStore';
 import * as styles from '../theme/components/Commentable.css';
-import { SavedPin, PinCursor } from './Pin';
+import { SavedPin } from './Pin';
+import { PinCursor } from './PinCursor';
 import { findCommentableElement } from './Commentable';
 
 function PinLayer(props: { className?: string; children?: React.ReactNode }) {

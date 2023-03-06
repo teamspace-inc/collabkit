@@ -101,7 +101,7 @@ function ChannelScrollableThreadList(props: ComponentPropsWithRef<'div'>) {
   return threadIds.length === 0 ? (
     <EmptyState />
   ) : (
-    <Scrollable alignToBottom={true} autoScroll="bottom">
+    <Scrollable alignToBottom={false} autoScroll="bottom">
       <div className={styles.threadList} {...props}>
         {threads}
       </div>
@@ -112,45 +112,46 @@ function ChannelScrollableThreadList(props: ComponentPropsWithRef<'div'>) {
 function ChannelCommentList(props: ComponentPropsWithRef<'div'>) {
   const isSelected = useIsChannelSelected();
   const commentList = useCommentList();
+  const comments = commentList.map((comment, i) =>
+    !isSelected && i > 0 ? null : (
+      <CommentRoot
+        commentId={comment.id}
+        indent={i > 0}
+        key={`comment-${comment.id}-${i}`}
+        className={`${commentStyles.root({ indent: i > 0 })}`}
+      >
+        <ProfileAvatar />
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <CommentHideIfEditing>
+            <CommentHeader>
+              <CommentCreatorName />
+              <CommentTimestamp />
+            </CommentHeader>
+            <CommentActions>
+              <CommentActionsEmojiButton />
+              {i == 0 && <CommentActionsReplyButton />}
+              {i == 0 && <CommentThreadResolveIconButton />}
+              <CommentMenu />
+            </CommentActions>
+            <CommentBody>
+              <ChannelCommentPin />
+              <CommentMarkdown />
+            </CommentBody>
+            <CommentReactions />
+            {i == 0 && !isSelected && <CommentSeeAllRepliesButton />}
+          </CommentHideIfEditing>
+          <CommentShowIfEditing>
+            <ChannelCommentEditor />
+          </CommentShowIfEditing>
+        </div>
+      </CommentRoot>
+    )
+  );
 
   return (
     <div className={styles.commentList} {...props}>
       <div style={{ flex: 1 }}></div>
-      {commentList.map((comment, i) =>
-        !isSelected && i > 0 ? null : (
-          <CommentRoot
-            commentId={comment.id}
-            indent={i > 0}
-            key={`comment-${comment.id}-${i}`}
-            className={`${commentStyles.root({ indent: i > 0 })}`}
-          >
-            <ProfileAvatar />
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <CommentHideIfEditing>
-                <CommentHeader>
-                  <CommentCreatorName />
-                  <CommentTimestamp />
-                </CommentHeader>
-                <CommentActions>
-                  <CommentActionsEmojiButton />
-                  {i == 0 && <CommentActionsReplyButton />}
-                  {i == 0 && <CommentThreadResolveIconButton />}
-                  <CommentMenu />
-                </CommentActions>
-                <CommentBody>
-                  <ChannelCommentPin />
-                  <CommentMarkdown />
-                </CommentBody>
-                <CommentReactions />
-                {i == 0 && !isSelected && <CommentSeeAllRepliesButton />}
-              </CommentHideIfEditing>
-              <CommentShowIfEditing>
-                <ChannelCommentEditor />
-              </CommentShowIfEditing>
-            </div>
-          </CommentRoot>
-        )
-      )}
+      {comments}
     </div>
   );
 }

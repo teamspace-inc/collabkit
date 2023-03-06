@@ -28,7 +28,7 @@ describe('resolve + reopen', async () => {
   const threadId = nanoid();
 
   beforeAll(async () => {
-    await setupApp({ apiKey, appId });
+    await setupApp({ apiKey, appId, mode: 'UNSECURED' });
     await createTokenAndSignIn({ apiKey, appId });
     await setupWorkspaceProfile({ appId, workspaceId, userId });
     await init(

@@ -1,4 +1,5 @@
 import type { Store } from '@collabkit/core';
+import { removeAttachment } from './removeAttachment';
 
 export async function deletePin(
   store: Store,
@@ -10,11 +11,9 @@ export async function deletePin(
     objectId: string;
   }
 ) {
-  console.warn('deletePin is not implemented', props);
+  // console.warn('deletePin is not implemented', props);
   // const { workspaceId } = props;
-
   // const composer = store.workspaces[workspaceId].composers[props.threadId][props.eventId];
-
   // for (const id in composer.attachments) {
   //   const attachment = composer.attachments[id];
   //   if (attachment.type === 'pin') {
