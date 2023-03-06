@@ -105,7 +105,7 @@ async function visitThreadAsUser(
 async function createApp() {
   const appId = nanoid();
   const apiKey = nanoid();
-  await setupApp({ appId, apiKey });
+  await setupApp({ appId, apiKey, mode: 'SECURED' });
   return {
     appId,
     apiKey,

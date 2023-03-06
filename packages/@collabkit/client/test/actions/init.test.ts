@@ -16,7 +16,7 @@ describe('init', async () => {
   beforeAll(() => async () => {
     appId = nanoid();
     apiKey = nanoid();
-    await setupApp({ appId, apiKey });
+    await setupApp({ appId, apiKey, mode: 'UNSECURED' });
     await createTokenAndSignIn({ apiKey, appId });
     sync = new FirebaseSync({ test: true });
   });

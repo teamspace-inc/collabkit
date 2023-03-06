@@ -29,7 +29,7 @@ describe('FirebaseSync', async () => {
   beforeAll(async () => {
     appId = nanoid();
     apiKey = nanoid();
-    await setupApp({ appId, apiKey });
+    await setupApp({ appId, apiKey, mode: 'UNSECURED' });
     userId = nanoid();
     workspaceId = nanoid();
     await setupWorkspaceProfile({ appId, workspaceId, userId });

@@ -1,6 +1,14 @@
 import admin from 'firebase-admin';
 
-export async function setupApp({ appId, apiKey }: { appId: string; apiKey: string }) {
+export async function setupApp({
+  appId,
+  apiKey,
+  mode,
+}: {
+  appId: string;
+  apiKey: string;
+  mode: 'SECURED' | 'UNSECURED';
+}) {
   try {
     await admin
       .database()
@@ -10,7 +18,7 @@ export async function setupApp({ appId, apiKey }: { appId: string; apiKey: strin
         name: 'Test App',
         admins: {},
         keys: { [apiKey]: true },
-        mode: 'SECURED',
+        mode,
         isEmailDisabled: true,
         defaultNotificationPreference: 'off',
         emailBatchDelayMs: 0,
