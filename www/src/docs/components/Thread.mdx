@@ -28,12 +28,6 @@ To render a comment thread in your app you need to import the `Thread` component
 
 {renderCodeSnippet(ThreadUsage1)}
 
-### Size and Position
-
-To control the size or position of a `Thread` pass a `className` or `style` prop.
-
-{renderCodeSnippet(ThreadPositioning)}
-
 ### Props
 
 <AdvancedProps
@@ -99,7 +93,15 @@ To control the size or position of a `Thread` pass a `className` or `style` prop
 ]}
 />
 
+### Size and Position
+
+To control the size or position of a `Thread` pass a `className` or `style` prop.
+
+{renderCodeSnippet(ThreadPositioning)}
+
 ### Styling
+
+Use our <DocLink href="/theme-editor">Theme Editor</DocLink> to customise all variables in one place.
 
 Customise the following variables in your theme to style the `Thread` component.
 
@@ -127,7 +129,7 @@ You can use these components to build your own custom `Thread` component. `Comme
 ```tsx
 import { ThreadRoot, Scrollable, CommentList, Composer } from '@collakbit/react';
 
-function CustomThread(props: { threadId: string }) {
+export function CustomThread(props: { threadId: string }) {
   return (
     <ThreadRoot threadId={threadId}>
       <Scrollable autoScroll="bottom">

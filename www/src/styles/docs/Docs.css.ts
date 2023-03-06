@@ -83,7 +83,7 @@ globalStyle(`${docs} blockquote a:hover`, {
 globalStyle(`${docs} code`, {
   fontFamily: 'Monaco, monospace',
   fontSize: 14,
-  color: vars.color.sky,
+  color: vars.color.mint,
 });
 
 globalStyle(`${docs} code.ReactNode`, {

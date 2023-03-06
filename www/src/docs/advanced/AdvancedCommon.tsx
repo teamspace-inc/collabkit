@@ -64,7 +64,7 @@ export function AdvancedProps(props: {
         <tbody>
           {props.props.map((row, i) => (
             <tr key={`row-${i}`}>
-              <td style={{ verticalAlign: 'top', width: 333 }}>
+              <td style={{ verticalAlign: 'top', width: 278 }}>
                 <code>{row[0]}</code>
                 {'  '}
                 <code style={{ color: vars.color.textContrastMedium, fontSize: 12 }}>{row[1]}</code>

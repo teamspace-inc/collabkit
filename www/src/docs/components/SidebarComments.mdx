@@ -5,6 +5,7 @@ import ToggleSidebarCommentsButtonUsage from './usage/ToggleSidebarCommentsButto
 import { renderCodeSnippet } from '../CodeEditor';
 import useSidebarCommentsButtonUsage from './usage/useSidebarCommentsButtonUsage.tsx?raw';
 import { ToggleSidebarCommentsButton, SidebarComments } from '@collabkit/react';
+import { AdvancedProps, StyleTable } from '../advanced/AdvancedCommon';
 
 # SidebarComments
 
@@ -77,3 +78,29 @@ You can pass any props you would normally pass to a React button component.
 If you need full control over how the button renders, or would like to integrate it with your product's native button component, you can use our hook.
 
 {renderCodeSnippet(useSidebarCommentsButtonUsage)}
+
+### Styling
+
+Customise the following variables in your theme to style the `SidebarComments` component.
+
+<StyleTable
+  styles={[
+    ['sidebar.background', '--sidebar-background', 'color.background'],
+    ['sidebar.boxShadow', '--sidebar-box-shadow', 'none'],
+    ['sidebar.borderLeft', '--sidebar-border-left', '1px solid ${vars.color.border}'],
+  ]}
+/>
+
+#### Sidebar
+
+<StyleTable styles={[['sidebar.title.fontSize', '--sidebar-title-font-size', 'none']]} />
+
+#### SidebarTitle
+
+<StyleTable
+  styles={[
+    ['sidebar.background', '--sidebar-background', 'color.background'],
+    ['sidebar.boxShadow', '--sidebar-box-shadow', 'none'],
+    ['sidebar.borderLeft', '--sidebar-border-left', '1px solid ${vars.color.border}'],
+  ]}
+/>

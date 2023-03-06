@@ -5,6 +5,7 @@ export const SidebarBase = {
     boxShadow: 'initial',
     background: 'initial',
     borderLeft: 'initial',
+    width: 'initial',
     title: {
       fontSize: 'initial',
       lineHeight: 'initial',

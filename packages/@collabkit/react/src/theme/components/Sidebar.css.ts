@@ -7,7 +7,7 @@ export const root = style({
   background: fallbackVar(vars.sidebar.background, vars.color.background),
   borderLeft: fallbackVar(vars.sidebar.borderLeft, `1px solid ${vars.color.border}`),
   boxShadow: fallbackVar(vars.sidebar.boxShadow, 'unset'),
-  width: fallbackVar(vars.inbox.width, '320px'),
+  width: fallbackVar(vars.sidebar.width, '320px'),
   fontFamily: vars.fontFamily,
   position: 'relative',
   height: '100%',

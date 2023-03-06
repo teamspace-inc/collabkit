@@ -11,6 +11,7 @@ import { Scrollable } from './Scrollable';
 import { useThread } from '../hooks/public/useThread';
 import { ProfileContext } from '../hooks/useProfile';
 import { useIsAuthenticated } from '../hooks/useIsAuthenticated';
+import { ThemeWrapper } from './ThemeWrapper';
 
 const emptyState = (
   <div data-testid="collabkit-thread-empty-state" className={styles.emptyState}>
@@ -45,11 +46,13 @@ function ThreadRoot({
     placeholder,
   });
   return (
-    <ThreadContext.Provider value={threadId}>
-      <ProfileContext.Provider value={userId}>
-        <div data-testid="collabkit-thread-root" className={styles.root} {...props} />
-      </ProfileContext.Provider>
-    </ThreadContext.Provider>
+    <ThemeWrapper>
+      <ThreadContext.Provider value={threadId}>
+        <ProfileContext.Provider value={userId}>
+          <div data-testid="collabkit-thread-root" className={styles.root} {...props} />
+        </ProfileContext.Provider>
+      </ThreadContext.Provider>
+    </ThemeWrapper>
   );
 }
 
