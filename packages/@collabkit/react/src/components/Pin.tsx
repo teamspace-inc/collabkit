@@ -527,26 +527,22 @@ const PinMarker = forwardRef<HTMLDivElement, PinMarkerProps>(function PinMarker(
         style={props.style}
         data-testid="collabkit-pin-marker"
       >
-        <PinMenu>
-          <div>
-            <PopoverRoot
-              {...popoverProps}
-              dismissOnClickOutside={true}
-              shouldFlipToKeepInView={true}
-            >
-              <PopoverTrigger>
-                <div className={styles.pinIcon} onPointerDown={onClick}>
-                  <PinIconSVG isSelected={isSelected} />
-                  <div className={styles.pinAvatar}>
-                    <ProfileAvatar />
-                  </div>
+        {/* <PinMenu> */}
+        <div>
+          <PopoverRoot {...popoverProps} dismissOnClickOutside={true} shouldFlipToKeepInView={true}>
+            <PopoverTrigger>
+              <div className={styles.pinIcon} onPointerDown={onClick}>
+                <PinIconSVG isSelected={isSelected} />
+                <div className={styles.pinAvatar}>
+                  <ProfileAvatar />
                 </div>
-              </PopoverTrigger>
-              <PopoverPreview>{pinThreadPreview}</PopoverPreview>
-              <PopoverContent>{isFigmaStyle ? pinThreadContent : pinThreadPreview}</PopoverContent>
-            </PopoverRoot>
-          </div>
-        </PinMenu>
+              </div>
+            </PopoverTrigger>
+            <PopoverPreview>{pinThreadPreview}</PopoverPreview>
+            <PopoverContent>{isFigmaStyle ? pinThreadContent : pinThreadPreview}</PopoverContent>
+          </PopoverRoot>
+        </div>
+        {/* </PinMenu> */}
       </div>
     </ProfileProvider>
   ) : null;

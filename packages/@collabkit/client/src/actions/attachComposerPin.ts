@@ -39,6 +39,6 @@ export function attachComposerPin(
     viewContent(store, {
       target: { type: 'pin', objectId, id, threadId, workspaceId, eventId } as const,
     });
-  }, 32);
+  }, 100);
   return id;
 }
