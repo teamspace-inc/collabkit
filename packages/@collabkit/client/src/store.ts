@@ -42,7 +42,7 @@ export function createWorkspace(): Workspace {
 
 export function createStore(): UnconfiguredStore {
   const store: UnconfiguredStore = {
-    isFigmaStyle: false,
+    isFigmaStyle: true,
     sync: null as unknown as SyncAdapter,
     isConnected: false,
     isSidebarOpen: false,

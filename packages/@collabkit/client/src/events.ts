@@ -29,6 +29,7 @@ export function createEvents(store: Store) {
     },
 
     onComposerChange: (target: Target, editor: LexicalEditor) => {
+      console.log('onComposerChange', { target, editor });
       if (target.type !== 'composer') {
         return;
       }

@@ -38,7 +38,7 @@ async function run() {
   }
 
   admin.initializeApp({
-    credential: admin.credential.cert('/Users/namitchadha/collabkit-dev-service-account.json'),
+    credential: admin.credential.cert('/Users/nc/collabkit-dev-service-account.json'),
     databaseURL: 'https://collabkit-dev-default-rtdb.europe-west1.firebasedatabase.app',
   });
 
@@ -69,8 +69,13 @@ async function run() {
       admin.database().ref(`threadInfo/${appId}`).remove(),
       admin.database().ref(`timeline/${appId}`).remove(),
       admin.database().ref(`views/inbox/${appId}`).remove(),
-      admin.database().ref(`views/openThreads/${appId}`).remove(),
       admin.database().ref(`views/seenBy/${appId}`).remove(),
+      admin.database().ref(`views/openThreads/${appId}`).remove(),
+      admin.database().ref(`views/threadPins/${appId}`).remove(),
+      admin.database().ref(`views/threadProfiles/${appId}`).remove(),
+      admin.database().ref(`views/openPins/${appId}`).remove(),
+      admin.database().ref(`views/isOpen/${appId}`).remove(),
+      admin.database().ref(`views/isResolved/${appId}`).remove(),
       admin.database().ref(`workspaces/${appId}`).remove(),
     ]);
   } catch (e) {

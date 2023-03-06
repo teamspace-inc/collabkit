@@ -101,7 +101,7 @@ function ChannelScrollableThreadList(props: ComponentPropsWithRef<'div'>) {
   return threadIds.length === 0 ? (
     <EmptyState />
   ) : (
-    <Scrollable alignToBottom={true} autoScroll="bottom">
+    <Scrollable alignToBottom={false} autoScroll="bottom">
       <div className={styles.threadList} {...props}>
         {threads}
       </div>

@@ -761,7 +761,6 @@ export class FirebaseSync implements Sync.SyncAdapter {
             };
             break;
           case 'reopen':
-            console.warn('[CollabKit] reopen not implemented');
             const deletedIds = timelineUtils.deletedIds(timeline);
             updates = {
               ...updates,
@@ -883,7 +882,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
     const inboxQuery = query(
       ref`/views/inbox/${props.appId}/${props.workspaceId}`,
       orderByChild('createdAt'),
-      limitToLast(20)
+      limitToLast(100)
     );
 
     function childCallback(snapshot: DataSnapshot) {

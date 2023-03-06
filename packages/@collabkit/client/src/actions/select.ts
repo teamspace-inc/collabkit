@@ -1,4 +1,5 @@
 import { Store, Target } from '@collabkit/core';
+import { reopenThread } from './reopenThread';
 
 export function select(store: Store, props: { target: Target }) {
   const { userId } = store;

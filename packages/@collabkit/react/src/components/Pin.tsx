@@ -40,7 +40,6 @@ import {
 } from './Comment';
 import * as styles from '../theme/components/Pin.css';
 import { usePopover } from '../hooks/usePopover';
-import { useUserContext } from '../hooks/useUserContext';
 import { PinIconSVG } from './PinIcon';
 import { ThreadContext, useThreadContext } from '../hooks/useThreadContext';
 import { CommentList } from './CommentList';
@@ -195,27 +194,6 @@ type PinMarkerProps = {
   isSelected: boolean;
   pin: WithID<Pin | PendingPin>;
 };
-
-const PinCursor = forwardRef<HTMLDivElement, { isSelected: boolean }>(function PinCursor(
-  props,
-  ref
-) {
-  const userId = useUserContext();
-  return (
-    <ProfileProvider profileId={userId}>
-      <div
-        className={`collabkit ${styles.pin({ pointerEvents: 'none' })}`}
-        data-testid="collabkit-pin-marker"
-        ref={ref}
-      >
-        <PinIconSVG isSelected={props.isSelected} />
-        <div className={styles.pinAvatar}>
-          <ProfileAvatar />
-        </div>
-      </div>
-    </ProfileProvider>
-  );
-});
 
 function PinThreadPreview({ pin }: { pin: Pin }) {
   const { events } = useApp();
@@ -574,4 +552,4 @@ const PinMarker = forwardRef<HTMLDivElement, PinMarkerProps>(function PinMarker(
   ) : null;
 });
 
-export { SavedPin, PinMarker, PinCursor };
+export { SavedPin, PinMarker };
