@@ -247,7 +247,7 @@ async function focusCommentComposer(page: Page, nth: number = 0) {
 }
 
 async function getComposer(page: Page) {
-  return await page.getByRole('textbox');
+  return await page.getByRole('textbox').nth(0);
 }
 
 async function typeInCommentComposer(page: Page, text: string, nth: number = 0) {
