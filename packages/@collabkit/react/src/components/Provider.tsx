@@ -5,7 +5,6 @@ import { createValtioStore } from '../store';
 import { FirebaseSync } from '@collabkit/client';
 import { SaveMentionableUsers } from './SaveMentionableUsers';
 import { FloatingTree } from '@floating-ui/react';
-import { AuthenticatedContext } from './AuthenticatedContext';
 import { CustomTheme } from '../theme/themes.css';
 import { ThemeProvider } from './ThemeContext';
 import { RenderFnContext } from '../hooks/useRenderFnContext';
@@ -117,13 +116,11 @@ export function CollabKitProvider({
     <AppContext.Provider value={context}>
       <RenderFnContext.Provider value={renderFnContext}>
         <ThemeProvider theme={theme}>
-          <AuthenticatedContext>
-            <FloatingTree>
-              {children}
-              <PinLayer />
-            </FloatingTree>
-            <SaveMentionableUsers mentionableUsers={config.mentionableUsers} />
-          </AuthenticatedContext>
+          <FloatingTree>
+            {children}
+            <PinLayer />
+          </FloatingTree>
+          <SaveMentionableUsers mentionableUsers={config.mentionableUsers} />
         </ThemeProvider>
       </RenderFnContext.Provider>
     </AppContext.Provider>

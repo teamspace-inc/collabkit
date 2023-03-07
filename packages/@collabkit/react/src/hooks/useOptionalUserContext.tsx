@@ -1,6 +1,6 @@
-import React from 'react';
-import { UserContext } from './useUserContext';
+import { useSnapshot } from 'valtio';
+import { useStore } from './useStore';
 
 export function useOptionalUserContext() {
-  return React.useContext(UserContext);
+  return useSnapshot(useStore()).userId;
 }

@@ -183,7 +183,6 @@ function ChannelCommentEditor(props: React.ComponentProps<'div'>) {
 function ChannelThread() {
   const { events } = useApp();
   const threadId = useThreadContext();
-  const store = useStore();
   const channelId = useChannelContext();
   const workspaceId = useWorkspaceContext();
   const workspace = useSnapshot(useWorkspaceStore());
