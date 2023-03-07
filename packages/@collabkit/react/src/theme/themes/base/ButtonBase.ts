@@ -26,6 +26,8 @@ export const ButtonBase = {
     fontWeight: 'initial',
     letterSpacing: 'initial',
     borderRadius: 'initial',
+    padding: 'initial',
+
     primary: {
       color: 'initial',
       background: 'initial',

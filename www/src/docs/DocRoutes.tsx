@@ -28,6 +28,7 @@ import { DashboardPage } from '../pages/DashboardPage';
 import { dashboardStore } from '../dashboard/dashboardActions';
 import { DOCS } from './Docs';
 import { DocWithSubNav } from './Doc';
+import { ThemeContextValue, Themes } from '@collabkit/react';
 
 export function getDocHref(path: string[], key: string) {
   return getPathHref(path.concat([key]));
@@ -136,12 +137,14 @@ export function useDocRoutes() {
   return dashboardPlusDocs;
 }
 
+const ThemeContext = React.createContext<ThemeContextValue>(Themes.DarkTheme);
+
 export function DocRoutes() {
   const docs = useDocRoutes();
 
   return (
-    <>
+    <ThemeContext.Provider value={Themes.DarkTheme}>
       <Switch>{generateDocRoutes(docs)}</Switch>
-    </>
+    </ThemeContext.Provider>
   );
 }

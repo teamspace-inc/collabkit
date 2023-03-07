@@ -1,6 +1,6 @@
 import { CollabKitProvider, Thread, ThemeProvider } from '@collabkit/react';
 import { docDemoOverlay } from '../styles/docs/Docs.css';
-import { DocDemoContainer, DocLink } from './Doc';
+import { Demo, DocLink } from './Doc';
 import { ThemeName } from './ThemeName';
 
 # Themes
@@ -15,23 +15,27 @@ A theme is a set of styles that define the look and feel of CollabKit. It includ
 
 CollabKit comes with two builtin themes. Light and Dark. Use these by passing light or dark to the `<CollabKitProvider />`.
 
-<DocDemoContainer style={{ position: 'relative' }}>
+<Demo hideThemeEditorButton={true}>
   <ThemeProvider theme="light">
     <ThemeName>Light Theme</ThemeName>
-    <div style={{ width: 280, height: 320 }}>
-      <Thread threadId={'thread1'} autoFocus={false} />
-    </div>
+    <Thread
+      style={{ width: 320, height: 320, borderRadius: 6 }}
+      threadId={'thread1'}
+      autoFocus={false}
+    />
   </ThemeProvider>
-</DocDemoContainer>
+</Demo>
 
-<DocDemoContainer style={{ position: 'relative' }}>
+<Demo hideThemeEditorButton={true}>
   <ThemeName>Dark Theme</ThemeName>
-  <div style={{ width: 280, height: 320 }}>
-    <ThemeProvider theme="dark">
-      <Thread threadId={'thread1'} autoFocus={false} />
-    </ThemeProvider>
-  </div>
-</DocDemoContainer>
+  <ThemeProvider theme="dark">
+    <Thread
+      style={{ width: 320, height: 320, borderRadius: 6 }}
+      threadId={'thread1'}
+      autoFocus={false}
+    />
+  </ThemeProvider>
+</Demo>
 
 ### Writing your own custom theme
 

@@ -26,6 +26,7 @@ export const ButtonTheme = {
     letterSpacing: 'button-letter-spacing',
     lineHeight: 'button-line-height',
     borderRadius: 'button-border-radius',
+    padding: 'button-padding',
     primary: {
       fontSize: 'button-primary-font-size',
       fontWeight: 'button-primary-font-weight',

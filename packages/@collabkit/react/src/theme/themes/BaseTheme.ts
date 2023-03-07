@@ -37,3 +37,5 @@ export const BaseTheme = {
   ...SidebarBase,
   ...ThreadBase,
 };
+
+export const LightTheme = BaseTheme;

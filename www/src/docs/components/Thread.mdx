@@ -1,20 +1,26 @@
 import { AdvancedProps, StyleTable } from '../advanced/AdvancedCommon';
 import { renderCodeSnippet } from '../CodeEditor';
-import { ThreadDemo } from '../demos/ThreadDemo';
-import { DocHeroDemoContainer, DocLink } from '../Doc';
+import { Demo, DocLink } from '../Doc';
 import ThreadUsage1 from './usage/ThreadUsage1.tsx?raw';
 import ThreadUsage2 from './usage/ThreadUsage2.tsx?raw';
 import ThreadPositioning from './usage/ThreadPositioning.tsx?raw';
-
-import { ThemeBase } from '@collabkit/react';
+import { Thread } from '@collabkit/react';
 
 # Thread
 
 ## An embeddable, flexible comment thread.
 
-<DocHeroDemoContainer>
-  <ThreadDemo />
-</DocHeroDemoContainer>
+<Demo>
+  <Thread
+    style={{
+      height: 320,
+      width: 320,
+      borderRadius: 8,
+    }}
+    threadId={'thread3'}
+    autoFocus={false}
+  />
+</Demo>
 
 ### What is it for?
 

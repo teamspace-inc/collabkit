@@ -223,13 +223,32 @@ export const docDemoOverlay = style({
   color: 'rgba(255,255,255,0.75)',
 });
 
+export const themeEditorButton = style({
+  fontFamily: 'Inter',
+  fontStyle: 'normal',
+  fontWeight: 600,
+  fontSize: '12px',
+  lineHeight: '15px',
+  background: 'none',
+  border: `1px solid ${vars.color.bgContrastMedium}`,
+  padding: '8px 16px',
+  borderRadius: 20,
+  position: 'absolute',
+  bottom: 12,
+  left: 12,
+  cursor: 'pointer',
+});
+
 export const docDemoContainer = style({
   flex: 1,
   display: 'flex',
   padding: '100px 20px',
   boxSizing: 'border-box',
+  position: 'relative',
   width: '100%',
   margin: '0',
+  background: vars.color.mint,
+  borderRadius: 6,
   justifyContent: 'center',
   alignItems: 'center',
   border: '1px solid ' + vars.color.bgContrastMedium,
@@ -341,7 +360,7 @@ export const docLink = style({
 });
 
 export const docContent = style({
-  maxWidth: '1152px',
+  maxWidth: 1152,
   padding: 0,
   alignItems: 'flex-start',
   display: 'grid',
@@ -358,6 +377,7 @@ export const docContent = style({
 export const docBody = style({
   display: 'flex',
   flexDirection: 'column',
+  alignSelf: 'center',
   gap: '28px',
   flex: 1,
   maxWidth: '666px',

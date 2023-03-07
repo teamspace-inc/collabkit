@@ -51,6 +51,7 @@ export function CodeSnippet(props: {
   return (
     <CodeEditor
       readOnly={true}
+      isSnippet={true}
       copyButton={true}
       hideRanges={props.hideRanges}
       code={props.code.trim()}
@@ -83,7 +84,21 @@ const MONACO = (async () => {
   return model;
 })();
 
-export function CodeEditor(props: {
+export function CodeEditor({
+  code,
+  numLines = 40,
+  fontSize = 13,
+  lineHeight = 20,
+  language = 'typescript',
+  readOnly = false,
+  scrollbar = true,
+  copyButton = false,
+  fixedSize = false,
+  isSnippet = false,
+  onChange,
+  hideRanges,
+}: {
+  isSnippet?: boolean;
   code: string;
   readOnly?: boolean;
   scrollbar: boolean;
@@ -97,15 +112,11 @@ export function CodeEditor(props: {
   fontSize?: number;
   hideRanges?: [start: number, end: number][];
   onChange?: (value: string) => void;
-}) {
-  const numLines = props.numLines ?? 40;
-  const fontSize = props.fontSize ?? 13;
-  const lineHeight = props.lineHeight ?? 20;
-  const language = props.language ?? 'typescript';
+} & React.ComponentPropsWithoutRef<'div'>) {
   const editorRef = useRef<HTMLDivElement>(null);
   const monacoRef = useRef<any>(null);
   const editorInstanceRef = useRef<any>(null);
-  const [codeString, setCodeString] = useState(() => props.code ?? ``);
+  const [codeString, setCodeString] = useState(() => code ?? ``);
   const [didMount, setDidMount] = useState(false);
   const modelRef = useRef<editor.ITextModel | null>(null);
   const [didCalcSize, setDidCalcSize] = useState(false);
@@ -133,17 +144,17 @@ export function CodeEditor(props: {
           lineHeight,
           scrollBeyondLastLine: false,
           scrollbar: {
-            verticalScrollbarSize: props.scrollbar === false ? 0 : 6,
-            alwaysConsumeMouseWheel: props.scrollbar,
-            handleMouseWheel: props.scrollbar,
+            verticalScrollbarSize: scrollbar === false ? 0 : 6,
+            alwaysConsumeMouseWheel: scrollbar,
+            handleMouseWheel: scrollbar,
           },
           minimap: {
             enabled: false,
           },
           useShadowDOM: true,
           wordWrap: 'on',
-          readOnly: props.readOnly ?? false,
-          domReadOnly: props.readOnly ?? false,
+          readOnly: readOnly,
+          domReadOnly: readOnly,
           automaticLayout: true, // !props.fixedSize,
           renderLineHighlight: 'none',
           renderLineHighlightOnlyWhenFocus: true,
@@ -155,7 +166,7 @@ export function CodeEditor(props: {
           contextmenu: false,
         });
 
-        if (props.readOnly) {
+        if (readOnly) {
           const messageContribution = editorInstanceRef.current.getContribution(
             'editor.contrib.messageController'
           );
@@ -178,7 +189,7 @@ export function CodeEditor(props: {
         editorInstanceRef.current.onDidChangeModelContent(() => {
           const value = editorInstanceRef.current.getValue();
           setCodeString(value);
-          props.onChange?.(value);
+          onChange?.(value);
         });
 
         if (language === 'typescript') {
@@ -198,21 +209,21 @@ export function CodeEditor(props: {
 
   useEffect(() => {
     if (modelRef.current && didMount) {
-      modelRef.current.setValue(props.code);
+      modelRef.current.setValue(code);
     }
   }, [didMount]);
 
   useEffect(() => {
-    props.hideRanges &&
+    hideRanges &&
       editorInstanceRef.current?.setHiddenAreas(
-        props.hideRanges.map(([start, end]) => new monacoRef.current.Range(start, 1, end, 1))
+        hideRanges.map(([start, end]) => new monacoRef.current.Range(start, 1, end, 1))
       );
-  }, [props.hideRanges, didMount]);
+  }, [hideRanges, didMount]);
 
   useEffect(() => {
     if (modelRef.current && didMount) {
       window.requestAnimationFrame(() => {
-        if (props.fixedSize) {
+        if (fixedSize) {
           setDidCalcSize(true);
         } else {
           const numLines = editorRef.current?.getElementsByClassName('view-line').length;
@@ -223,21 +234,21 @@ export function CodeEditor(props: {
         }
       });
     }
-  }, [didMount, props.fixedSize]);
+  }, [didMount, fixedSize]);
 
   const breakpoint = useBreakpoint();
 
   return (
     <div
-      className={codeEditor({ didMount: didCalcSize })}
+      className={codeEditor({ didMount: didCalcSize, isSnippet })}
       style={{
-        ...(props.fixedSize
+        ...(fixedSize
           ? { height: '100%' }
           : { height: typeof height === 'number' ? height + 32 : height }),
         ['--vscode-editor-background' as any]: 'blue',
       }}
     >
-      {props.copyButton && !['small', 'medium'].includes(breakpoint) ? (
+      {copyButton && !['small', 'medium'].includes(breakpoint) ? (
         <div
           style={{
             position: 'absolute',
@@ -249,7 +260,7 @@ export function CodeEditor(props: {
           <CopyButton codeString={codeString} />
         </div>
       ) : null}
-      <div ref={editorRef} style={{ ...(props.fixedSize ? { height: '100%' } : { height }) }} />
+      <div ref={editorRef} style={{ ...(fixedSize ? { height: '100%' } : { height }) }} />
     </div>
   );
 }

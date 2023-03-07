@@ -1,36 +1,16 @@
 import { CodeEditor } from './CodeEditor';
 import { useEffect, useState } from 'react';
-import { docs, themeDemoContainer } from '../styles/docs/Docs.css';
 import ExampleThemeRaw from './ExampleTheme.json?raw';
-import { ThemeWrapper, ThemeProvider, CustomTheme } from '@collabkit/react';
-
-import { ThreadDemo } from './demos/ThreadDemo';
-import { InboxDemo } from './demos/InboxDemo';
-import { InboxButtonDemo } from './demos/InboxButtonDemo';
-
-import { dark } from '../styles/Theme.css';
-import { bg } from '../styles/Website.css';
-import { LogoImg } from '../Logo';
+import { ThemeWrapper, ThemeProvider, Themes } from '@collabkit/react';
 import { Catch } from '@collabkit/react';
+import { proxy, useSnapshot } from 'valtio';
 
-import {
-  codeEditor,
-  componentList,
-  componentListItem,
-  editorAndPreview,
-  header,
-  root,
-} from '../styles/ThemeEditor.css';
+import { codeEditor } from '../styles/ThemeEditor.css';
+import { docs } from '../styles/docs/Docs.css';
 
-import { SidebarCommentsDemo } from './demos/SidebarDemo';
-import { Link } from 'wouter';
-
-const components = [
-  { name: 'Thread', component: ThreadDemo },
-  { name: 'Inbox', component: InboxDemo },
-  { name: 'InboxButton', component: InboxButtonDemo },
-  { name: 'Sidebar', component: SidebarCommentsDemo },
-];
+const themeStore = proxy({
+  theme: Themes.DarkTheme,
+});
 
 type Props = {
   children: React.ReactNode;
@@ -49,59 +29,40 @@ const EditorErrorBoundary = Catch(function MyErrorBoundary(props: Props, error?:
   }
 });
 
-export function ThemeEditor() {
-  const [code, setCode] = useState(() => ExampleThemeRaw);
-  const [theme, setTheme] = useState<CustomTheme | null>({} as CustomTheme);
-  const [component, setComponent] = useState<keyof typeof components>(
-    'Thread' as keyof typeof components
-  );
+export function ApplyTheme({ children }: { children: React.ReactNode }) {
+  const { theme } = useSnapshot(themeStore);
 
+  return (
+    <EditorErrorBoundary>
+      <ThemeProvider theme={theme}>
+        <ThemeWrapper>{children}</ThemeWrapper>
+      </ThemeProvider>
+    </EditorErrorBoundary>
+  );
+}
+
+export function ThemeEditor(props: React.ComponentPropsWithoutRef<'div'>) {
+  const [code, setCode] = useState(() => ExampleThemeRaw);
   useEffect(() => {
     try {
       const newTheme = JSON.parse(code);
-      setTheme(newTheme);
+      themeStore.theme = newTheme;
     } catch (e) {
       console.error(e);
     }
   }, [code]);
 
-  const activeComponent = components.find((c) => c.name === component);
-
   return (
-    <div className={`${docs} ${dark} ${bg} ${root}`}>
-      <div className={header}>
-        <Link href="/docs/core/themes">
-          <LogoImg theme="dark" />
-        </Link>
-        <div className={componentList}>
-          Theme Editor
-          {components.map((c) => (
-            <div
-              onClick={() => setComponent(c.name as keyof typeof components)}
-              className={componentListItem({ active: component === c.name })}
-            >
-              {c.name}
-            </div>
-          ))}
-        </div>
-      </div>
-      <div className={editorAndPreview}>
-        <CodeEditor
-          className={codeEditor}
-          language="json"
-          code={code}
-          scrollbar={true}
-          onChange={setCode}
-          fixedSize={true}
-        />
-        <EditorErrorBoundary>
-          <ThemeProvider theme={theme ?? {}}>
-            <ThemeWrapper>
-              {activeComponent?.component({ className: themeDemoContainer })}
-            </ThemeWrapper>
-          </ThemeProvider>
-        </EditorErrorBoundary>
-      </div>
+    <div {...props} className={docs}>
+      <CodeEditor
+        fontSize={12}
+        className={codeEditor}
+        language="json"
+        code={code}
+        scrollbar={true}
+        onChange={(code) => (typeof code === 'string' ? setCode(code) : null)}
+        fixedSize={true}
+      />
     </div>
   );
 }
