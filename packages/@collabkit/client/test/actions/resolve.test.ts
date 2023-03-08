@@ -7,10 +7,10 @@ import {
   setupWorkspaceProfile,
 } from '../../../test-utils/src';
 
-import { createStore, createWorkspace } from '../../src/store';
-import { init } from '../../src/actions/init';
+import { createCollabKitStore, createWorkspace } from '../../src/store';
 import { FirebaseSync } from '../../src/sync/firebase/FirebaseSync';
-import { Store, timelineUtils } from '@collabkit/core';
+import type { Store } from '@collabkit/core';
+import { timelineUtils } from '@collabkit/core';
 import { getTimeline } from '../../src/sync/firebase/getTimeline';
 import { resolveThread } from '../../src/actions/resolveThread';
 import { initComposer } from '../../src/actions/initComposer';
@@ -23,7 +23,7 @@ describe('resolve + reopen', async () => {
   const appId = nanoid();
   const userId = nanoid();
   const workspaceId = nanoid();
-  const store = createStore();
+  let store: Store;
   const sync = new FirebaseSync({ test: true });
   const threadId = nanoid();
 
@@ -31,22 +31,19 @@ describe('resolve + reopen', async () => {
     await setupApp({ apiKey, appId, mode: 'UNSECURED' });
     await createTokenAndSignIn({ apiKey, appId });
     await setupWorkspaceProfile({ appId, workspaceId, userId });
-    await init(
-      store,
-      {
-        apiKey,
-        appId,
-        mentionableUsers: [],
-        user: {
-          id: userId,
-        },
-        workspace: {
-          id: workspaceId,
-        },
-      },
-      sync
-    );
 
+    store = createCollabKitStore({
+      apiKey,
+      appId,
+      mentionableUsers: [],
+      user: {
+        id: userId,
+      },
+      workspace: {
+        id: workspaceId,
+      },
+      _test: true,
+    });
     store.userId = userId;
     store.workspaceId = workspaceId;
     store.workspaces[workspaceId] = createWorkspace();

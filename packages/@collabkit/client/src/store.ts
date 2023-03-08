@@ -98,7 +98,8 @@ export function createCollabKitStore(config: Config) {
 
 export function createValtioStore(config: Config, sync: SyncAdapter): Store {
   const store = proxy(createStore());
-  init(store, config, sync);
+  store.config = config;
+  store.sync = markRaw(sync);
   derive(
     {
       pins: (get) => {

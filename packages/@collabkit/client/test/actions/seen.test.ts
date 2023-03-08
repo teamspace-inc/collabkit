@@ -7,10 +7,8 @@ import {
   setupWorkspaceProfile,
 } from '../../../test-utils/src';
 
-import { createStore, createWorkspace } from '../../src/store';
-import { init } from '../../src/actions/init';
-import { FirebaseSync } from '../../src/sync/firebase/FirebaseSync';
-import { CommentTarget, Store } from '@collabkit/core';
+import { createCollabKitStore, createWorkspace } from '../../src/store';
+import type { CommentTarget, Store } from '@collabkit/core';
 import { seen } from '../../src/actions/seen';
 import { initComposer } from '../../src/actions/initComposer';
 import { getThreadSeenBy } from '../../src/sync/firebase/getThreadSeenBy';
@@ -25,27 +23,22 @@ test('seen', async () => {
   await setupApp({ apiKey, appId, mode: 'UNSECURED' });
   await createTokenAndSignIn({ apiKey, appId });
   await setupWorkspaceProfile({ appId, workspaceId, userId });
-  const store = createStore();
+  const store = createCollabKitStore({
+    apiKey,
+    appId,
+    mentionableUsers: [],
+    user: {
+      id: userId,
+    },
+    workspace: {
+      id: workspaceId,
+    },
+    _test: true,
+  });
   store.userId = userId;
   store.workspaceId = workspaceId;
   store.workspaces[workspaceId] = createWorkspace();
-  const sync = new FirebaseSync({ test: true });
-
-  await init(
-    store,
-    {
-      apiKey,
-      appId,
-      mentionableUsers: [],
-      user: {
-        id: userId,
-      },
-      workspace: {
-        id: workspaceId,
-      },
-    },
-    sync
-  );
+  const sync = store.sync;
 
   const threadId = nanoid();
 

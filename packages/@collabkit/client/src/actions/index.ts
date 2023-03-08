@@ -18,7 +18,6 @@ import { focus } from './focus';
 import { focusComposer } from './focusComposer';
 import { hideSidebar } from './hideSidebar';
 import { hover } from './hover';
-import { init } from './init';
 import { initComposer } from './initComposer';
 import { initThread } from './initThread';
 import { insertComposerPin } from './insertComposerPin';
@@ -81,7 +80,6 @@ export const actions = {
   focusComposer,
   hideSidebar,
   hover,
-  init,
   initComposer,
   initThread,
   insertComposerPin,

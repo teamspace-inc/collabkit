@@ -7,15 +7,12 @@ import {
   setupWorkspaceProfile,
   createTokenAndSignIn,
 } from '../../../test-utils/src';
-import { createStore, createWorkspace } from '../../src/store';
-import { init } from '../../src/actions/init';
-import { FirebaseSync } from '../../src/sync/firebase/FirebaseSync';
-import { Store } from '@collabkit/core';
+import { createCollabKitStore, createWorkspace } from '../../src/store';
+import type { Store } from '@collabkit/core';
 import { deleteMessage } from '../../src/actions/deleteMessage';
 import { getTimeline } from '../../src/sync/firebase/getTimeline';
 import { initComposer } from '../../src/actions/initComposer';
 import { initThread } from '../../src/actions/initThread';
-import { proxy } from 'valtio/vanilla';
 import { createEvent } from '../../src/actions/createEvent';
 
 setupFirebase();
@@ -30,27 +27,21 @@ test('deleteMessage', async () => {
   await setupProfile({ appId, userId });
 
   await setupWorkspaceProfile({ appId, workspaceId, userId });
-  const store = proxy(createStore());
+  const store = createCollabKitStore({
+    apiKey,
+    appId,
+    mentionableUsers: [],
+    user: {
+      id: userId,
+    },
+    workspace: {
+      id: workspaceId,
+    },
+    _test: true,
+  });
   store.userId = userId;
   store.workspaceId = workspaceId;
   store.workspaces[workspaceId] = createWorkspace();
-  const sync = new FirebaseSync({ test: true });
-
-  await init(
-    store,
-    {
-      apiKey,
-      appId,
-      mentionableUsers: [],
-      user: {
-        id: userId,
-      },
-      workspace: {
-        id: workspaceId,
-      },
-    },
-    sync
-  );
 
   const threadId = nanoid();
   initThread(store as Store, { workspaceId, threadId });
@@ -62,7 +53,7 @@ test('deleteMessage', async () => {
     event: {
       type: 'message',
       body: 'Hello world',
-      createdAt: sync.serverTimestamp(),
+      createdAt: store.sync.serverTimestamp(),
       createdById: userId,
     },
     parentEvent: null,
