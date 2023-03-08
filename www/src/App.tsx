@@ -12,15 +12,15 @@ import { store as wwwStore } from './home/Header';
 import * as Theme from './styles/Theme.css';
 import { nanoid } from 'nanoid';
 
-const apiKey = import.meta.env.VITE_COLLABKIT_API_KEY;
-const appId = import.meta.env.VITE_COLLABKIT_APP_ID;
+const apiKey = import.meta.env.VITE_COLLABKIT_UNSECURE_API_KEY;
+const appId = import.meta.env.VITE_COLLABKIT_UNSECURE_APP_ID;
 const workspace = {
   id: nanoid(),
   name: 'Acme',
 };
 const userId = nanoid();
 
-import { createDemoStore, mentionableUsers } from './home/demoStore';
+import { mentionableUsers } from './home/demoStore';
 import { CarouselPage } from './pages/CarouselPage';
 import { useLayoutEffect } from 'react';
 import { GetStartedPage } from './pages/GetStartedPage';
