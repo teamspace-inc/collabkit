@@ -21,10 +21,3 @@ const user = { id: 'vueuser', name: 'Vue User', email: 'vue@example.com' };
     Hello world
   </CollabKitProvider>
 </template>
-
-<style scoped>
-main {
-  position: fixed;
-  inset: 0;
-}
-</style>
