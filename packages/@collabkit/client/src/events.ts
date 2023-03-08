@@ -97,8 +97,7 @@ export function createEvents(store: Store) {
         case 'idle': {
           switch (target.type) {
             case 'pinThreadPreview':
-              if (store.isFigmaStyle) {
-              } else {
+              if (!store.isFigmaStyle) {
                 actions.showSidebar(store);
               }
               actions.select(store, { target: { ...target, type: 'pin' } });
