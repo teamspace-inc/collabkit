@@ -39,7 +39,6 @@ export function usePopover(props: {
     }
   });
   const hidePreview = useCallbackRef(() => {
-    console.log('hidePreview');
     if (target) {
       events.onPopoverPreviewChange({ target, open: false });
     }

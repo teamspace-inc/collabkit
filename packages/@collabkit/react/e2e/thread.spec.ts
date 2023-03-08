@@ -97,7 +97,6 @@ async function visitThreadAsUser(
     token,
   });
   const url = HOST + '/thread?' + params.toString();
-  console.log('Visiting', url);
   await page.goto(url, { waitUntil: 'networkidle' });
   return page;
 }

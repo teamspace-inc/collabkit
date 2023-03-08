@@ -1,7 +1,6 @@
 import React, { ReactNode, useEffect, useState } from 'react';
 import { actions, createCollabKitStore, createEvents } from '@collabkit/client';
 import { StoreProvider } from '../hooks/useAppContext';
-import { FirebaseSync } from '@collabkit/client';
 import { FloatingTree } from '@floating-ui/react';
 import { CustomTheme } from '../theme/themes.css';
 import { ThemeProvider } from './ThemeContext';
@@ -20,7 +19,6 @@ export type ProviderProps = {
 // Enable using multiple isolated App
 // instances in the same page.
 export function CollabKitProvider({ children, theme, renderAvatar, ...config }: ProviderProps) {
-  console.log('CollabKitProvider', config);
   const store = useCollabKitStore(config);
 
   useEffect(() => {
