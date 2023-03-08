@@ -8,8 +8,6 @@ import type {
 } from '@collabkit/core';
 import { derive } from 'valtio/utils';
 import { proxy, ref as valtioRef } from 'valtio/vanilla';
-import { actions } from './actions';
-import { init } from './actions/init';
 import { FirebaseSync } from './sync/firebase/FirebaseSync';
 
 export function markRaw<T extends object>(
