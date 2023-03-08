@@ -67,7 +67,16 @@ import { useThread } from './hooks/public/useThread';
 import { Debug } from './components/Debug';
 import { Channel } from './components/Channel';
 
+import { LightTheme } from './theme/themes/BaseTheme';
+import { DarkTheme } from './theme/themes/DarkTheme';
+
+const Themes = {
+  LightTheme,
+  DarkTheme,
+};
+
 export {
+  Themes,
   CollabKitProvider as Provider,
   CollabKitProvider,
   Inbox,

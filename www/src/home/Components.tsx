@@ -1,7 +1,7 @@
 import React from 'react';
 import { dark, vars } from '../styles/Theme.css';
 import * as styles from '../styles/home/Demos.css';
-import { Inbox, Thread } from '@collabkit/react';
+import { SidebarComments, Thread } from '@collabkit/react';
 import {
   component,
   card,
@@ -21,27 +21,31 @@ type ComponentProps = {
 
 export const COMPONENTS: ComponentProps[] = [
   {
-    title: 'Thread',
-    description: 'A comment thread that can be rendered anywhere in your app.',
-    component: (
-      <div style={{ width: 256, height: 320 }}>
-        <Thread threadId="thread3" autoFocus={false} />
-      </div>
-    ),
-  },
-  {
-    title: 'Inbox',
-    description: 'A list of all the threads you are participating in.',
+    title: 'SidebarComments',
+    description: 'Comments sidebar that accessible from anywhere in your app.',
     component: (
       <div
         style={{
-          marginTop: '60px',
+          marginTop: '40px',
           overflow: 'hidden',
           borderTopLeftRadius: 12,
           borderTopRightRadius: 12,
         }}
       >
-        <Inbox />
+        <SidebarComments defaultOpen={true} style={{ width: 320, height: 376 }} />
+      </div>
+    ),
+  },
+  {
+    title: 'Thread',
+    description: 'A comment thread that can be rendered anywhere in your app.',
+    component: (
+      <div style={{ width: 256, height: 320 }}>
+        <Thread
+          style={{ width: 256, height: 320, borderRadius: 6 }}
+          threadId="thread3"
+          autoFocus={false}
+        />
       </div>
     ),
   },

@@ -13,7 +13,7 @@ export const button = recipe({
     lineHeight: fallbackVar(vars.button.lineHeight, vars.text.base.lineHeight),
     border: 'none',
     background: 'none',
-    padding: '8px 12px',
+    padding: fallbackVar(vars.button.padding, '8px 12px'),
     cursor: 'pointer',
     outline: 'none',
     borderRadius: fallbackVar(vars.button.borderRadius, '4px'),

@@ -1,5 +1,5 @@
 import { ThemeProvider } from '@collabkit/react';
-import { PropsWithChildren, useEffect } from 'react';
+import { PropsWithChildren, useEffect, useState } from 'react';
 import { Link, LinkProps, LocationHook } from 'wouter';
 import * as styles from '../styles/docs/Docs.css';
 import { dark, vars } from '../styles/Theme.css';
@@ -11,6 +11,7 @@ import { store, Header } from '../home/Header';
 import { useIsSmallScreen } from '../hooks/useIsSmallScreen';
 import { SmallHeader } from '../home/small/SmallHeader';
 import { proxy, useSnapshot } from 'valtio';
+import { FloatingPortal } from '@floating-ui/react';
 
 function pathToHref(path?: string[]) {
   return `/docs/${path
@@ -20,10 +21,20 @@ function pathToHref(path?: string[]) {
 }
 
 import React, { useCallback, useRef } from 'react';
-import { H3 } from './H3';
+import { H3 } from './mdx/H3';
+import { Code } from './mdx/Code';
+import { ApplyTheme, ThemeEditor } from './ThemeEditor';
+import {
+  themeEditorModal,
+  themeEditorModalCloseButton,
+  themeEditorModalContent,
+  themeEditorModalHeader,
+  themeEditorModalHeaderLeft,
+  themeEditorModalPreview,
+} from '../styles/ThemeEditor.css';
+import X from 'phosphor-react/dist/icons/X.esm.js';
 
 export function DocWithSubNav(props: {
-  key: string;
   next?: string[];
   prev?: string[];
   component?: React.FunctionComponent;
@@ -36,7 +47,7 @@ export function DocWithSubNav(props: {
     })
   );
 
-  const { key, next, prev, component } = props;
+  const { next, prev, component } = props;
   const handleAnchor = useCallback(
     (id: string, link: string) => {
       console.log('anchors', id, link);
@@ -46,11 +57,16 @@ export function DocWithSubNav(props: {
   );
 
   const docContent = component?.({
-    components: { h3: (props: any) => <H3 {...props} onAnchor={handleAnchor} /> },
+    components: {
+      h3: (props: any) => <H3 {...props} onAnchor={handleAnchor} />,
+      code: (props: any) => {
+        return <Code {...props} />;
+      },
+    },
   });
 
   return (
-    <Doc key={key} next={next} prev={prev} store={store.current}>
+    <Doc next={next} prev={prev} store={store.current}>
       {docContent}
     </Doc>
   );
@@ -108,6 +124,60 @@ export const DocHeroDemoContainer = (props: React.ComponentPropsWithoutRef<'div'
   </ThemeProvider>
 );
 
+export function Demo({
+  children,
+  hideThemeEditorButton = false,
+  ...props
+}: {
+  children: React.ReactNode;
+  hideThemeEditorButton?: boolean;
+} & React.ComponentPropsWithoutRef<'div'>) {
+  const [isEditing, setIsEditing] = useState(false);
+
+  useEffect(() => {
+    if (isEditing) {
+      document.body.setAttribute('style', 'height: 100vh; overflow: hidden;');
+      return () => {
+        document.body.setAttribute('style', 'overflow: auto;');
+      };
+    }
+  }, [isEditing]);
+
+  if (isEditing) {
+    return (
+      <FloatingPortal>
+        <div className={themeEditorModal} onClick={() => setIsEditing(false)}>
+          <div onClick={(e) => e.stopPropagation()} className={themeEditorModalContent}>
+            <div className={themeEditorModalHeaderLeft}>
+              <p style={{ paddingLeft: 16, color: 'rgba(0,0,0,0.66)' }}>Theme Editor</p>
+            </div>
+            <div className={themeEditorModalHeader}>
+              <button className={themeEditorModalCloseButton} onClick={() => setIsEditing(false)}>
+                <X />
+              </button>
+            </div>
+            <div className={themeEditorModalPreview}>
+              <ApplyTheme>{children}</ApplyTheme>
+            </div>
+            <ThemeEditor style={{ height: '100%' }} />
+          </div>
+        </div>
+      </FloatingPortal>
+    );
+  }
+
+  return (
+    <DocDemoContainer {...props}>
+      {children}
+      {hideThemeEditorButton ? null : (
+        <button onClick={() => setIsEditing(true)} className={styles.themeEditorButton}>
+          Theme Editor
+        </button>
+      )}
+    </DocDemoContainer>
+  );
+}
+
 export const DocDemoContainer = (props: React.ComponentPropsWithoutRef<'div'>) => (
   <ThemeProvider theme="dark">
     <div {...props} className={styles.docDemoContainer} />
@@ -136,6 +206,7 @@ export function Doc(props: {
 
   return (
     <div className={`${dark}`} style={{ background: vars.color.bgContrastFloor, height: '100vh' }}>
+      <ThemeEditor />
       <div className={`${styles.docRoot}`}>
         <div className={styles.docContent}>
           {isSmallScreen ? null : <Nav className={styles.docNav} />}
@@ -147,7 +218,7 @@ export function Doc(props: {
             ) : (
               <Header />
             )}
-            <div style={{ display: 'flex', justifyContent: 'center' }} className={styles.docs}>
+            <div className={styles.docs} style={{ display: 'flex', justifyContent: 'center' }}>
               <div>
                 {JSON.stringify(anchors)}
                 <div className={styles.docScrollableContent}>

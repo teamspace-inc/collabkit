@@ -1,7 +1,6 @@
 import React from 'react';
 import { ThreadContext } from '../hooks/useThreadContext';
 import { Composer } from './composer/Composer';
-import { ThemeWrapper } from './ThemeWrapper';
 import * as styles from '../theme/components/Thread.css';
 import { ChatCentered } from './icons';
 import { CommentList } from './CommentList';
@@ -12,6 +11,7 @@ import { Scrollable } from './Scrollable';
 import { useThread } from '../hooks/public/useThread';
 import { ProfileContext } from '../hooks/useProfile';
 import { useIsAuthenticated } from '../hooks/useIsAuthenticated';
+import { ThemeWrapper } from './ThemeWrapper';
 
 const emptyState = (
   <div data-testid="collabkit-thread-empty-state" className={styles.emptyState}>
@@ -46,11 +46,13 @@ function ThreadRoot({
     placeholder,
   });
   return (
-    <ThreadContext.Provider value={threadId}>
-      <ProfileContext.Provider value={userId}>
-        <div data-testid="collabkit-thread-root" className={styles.root} {...props} />
-      </ProfileContext.Provider>
-    </ThreadContext.Provider>
+    <ThemeWrapper>
+      <ThreadContext.Provider value={threadId}>
+        <ProfileContext.Provider value={userId}>
+          <div data-testid="collabkit-thread-root" className={styles.root} {...props} />
+        </ProfileContext.Provider>
+      </ThreadContext.Provider>
+    </ThemeWrapper>
   );
 }
 
@@ -60,17 +62,15 @@ function ThreadHeader(props: React.ComponentPropsWithoutRef<'div'>) {
 
 function Thread(props: ThreadProps & React.ComponentPropsWithoutRef<'div'>) {
   return useIsAuthenticated() ? (
-    <ThemeWrapper>
-      <ThreadRoot {...props}>
-        {props.showHeader && <ThreadHeader>Comments</ThreadHeader>}
-        <Scrollable autoScroll="bottom">
-          <CommentList />
-        </Scrollable>
-        {props.hideComposer ? null : (
-          <Composer autoFocus={props.autoFocus} placeholder={props.placeholder} />
-        )}
-      </ThreadRoot>
-    </ThemeWrapper>
+    <ThreadRoot {...props}>
+      {props.showHeader && <ThreadHeader>Comments</ThreadHeader>}
+      <Scrollable autoScroll="bottom">
+        <CommentList />
+      </Scrollable>
+      {props.hideComposer ? null : (
+        <Composer autoFocus={props.autoFocus} placeholder={props.placeholder} />
+      )}
+    </ThreadRoot>
   ) : null;
 }
 

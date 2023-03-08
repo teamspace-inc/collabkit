@@ -1,13 +1,7 @@
 import { style } from '@vanilla-extract/css';
-import { recipe } from '@vanilla-extract/recipes';
 import { vars } from './Theme.css';
 
-export const editorAndPreview = style({
-  display: 'grid',
-  gridTemplateColumns: '1fr 1fr',
-  width: '100vw',
-  height: '100%',
-});
+export const themeEditor = style({});
 
 export const codeEditor = style({
   position: 'relative',
@@ -17,43 +11,56 @@ export const codeEditor = style({
   boxSizing: 'border-box',
 });
 
-export const root = style({
-  display: 'grid',
-  gridTemplateRows: '100px calc(100vh - 100px)',
+export const themeEditorModal = style({
   position: 'fixed',
-  height: '100%',
   inset: 0,
+  background: 'rgba(0,0,0,0.666)',
+  zIndex: 9998,
+  justifyContent: 'center',
+  alignItems: 'center',
+});
+
+export const themeEditorModalHeader = style({
   background: vars.color.bgContrastFloor,
 });
 
-export const header = style({
-  padding: '40px 28px',
-  display: 'grid',
-  gridTemplateColumns: '300px 1fr 300px',
-  width: '100vw',
+export const themeEditorModalHeaderLeft = style({
+  background: vars.color.mint,
 });
 
-export const componentList = style({
+export const themeEditorModalCloseButton = style({
+  position: 'absolute',
+  right: 8,
+  top: 8,
+  border: 'none',
+  borderRadius: 4,
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  flex: 1,
-  gap: '20px',
-  color: vars.color.textContrastMedium,
-  fontSize: '16px',
 });
 
-export const componentListItem = recipe({
-  base: {
-    cursor: 'pointer',
-  },
-  variants: {
-    active: {
-      true: {
-        cursor: 'default',
-        fontWeight: '700',
-        color: vars.color.textContrastHigh,
-      },
-    },
-  },
+export const themeEditorModalContent = style({
+  display: 'grid',
+  background: vars.color.mint,
+  gridTemplateRows: '40px 1fr',
+  gridTemplateColumns: '1fr 1fr',
+  maxWidth: 1200,
+  width: '100vw',
+  height: '100vh',
+  maxHeight: '800px',
+  margin: 'auto',
+  position: 'absolute',
+  inset: 0,
+  borderRadius: 6,
+  alignSelf: 'center',
+  zIndex: 9999,
+  clipPath: 'inset(0% 0% 0% 0% round 6px)',
+});
+
+export const themeEditorModalPreview = style({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  height: '100%',
+  padding: '20px',
 });

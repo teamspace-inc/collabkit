@@ -6,14 +6,19 @@ import { vars } from '../Theme.css';
 export const codeEditor = recipe({
   base: {
     position: 'relative',
-    padding: '16px 20px 16px 0px',
-    borderRadius: 8,
     flex: 1,
     background: vars.color.bgContrastLowest,
     opacity: 0,
     WebkitFontSmoothing: 'antialiased',
   },
   variants: {
+    isSnippet: {
+      true: {
+        padding: '16px 20px 16px 0px',
+        borderRadius: 8,
+      },
+      false: {},
+    },
     didMount: {
       true: {
         opacity: 1,
@@ -72,7 +77,7 @@ globalStyle(`${docs} .mtk1`, { color: vars.color.cyan });
 globalStyle(`${docs} .mtk16`, { color: 'white' });
 globalStyle(`${docs} .mtk5`, { color: vars.color.orange });
 
-globalStyle(`${docs} .mtk39`, { color: vars.color.yellow });
+globalStyle(`${docs} .mtk39`, { color: vars.color.mint });
 
 globalStyle(`${docs} .monaco-editor .monaco-hover`, {
   background: vars.color.bgContrastLow,

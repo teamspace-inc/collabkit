@@ -16,6 +16,37 @@ export function AdvancedDisclaimer(props: { componentName: string }) {
 
 const Spacer24 = <div style={{ height: 24 }} />;
 
+export type StyleRow = [React.ReactNode, React.ReactNode, React.ReactNode];
+
+export function StyleTable(props: { styles: StyleRow[] }) {
+  return (
+    <>
+      <table>
+        <thead>
+          <tr>{/* <th>Required</th> */}</tr>
+        </thead>
+        <tbody>
+          {props.styles.map((row, i) => (
+            <tr key={`row-${i}`}>
+              <td style={{ verticalAlign: 'top', width: 222 }}>
+                <code>{row[0]}</code>
+              </td>
+              <td>
+                <code style={{ color: vars.color.textContrastMedium, fontSize: 12 }}>{row[1]}</code>
+              </td>
+              <td
+                style={{ verticalAlign: 'top', fontSize: 14, color: vars.color.textContrastMedium }}
+              >
+                {row[2]}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </>
+  );
+}
+
 export type AdvancedPropRow = [React.ReactNode, React.ReactNode, React.ReactNode];
 
 export function AdvancedProps(props: {
@@ -33,7 +64,7 @@ export function AdvancedProps(props: {
         <tbody>
           {props.props.map((row, i) => (
             <tr key={`row-${i}`}>
-              <td style={{ verticalAlign: 'top', width: 333 }}>
+              <td style={{ verticalAlign: 'top', width: 278 }}>
                 <code>{row[0]}</code>
                 {'  '}
                 <code style={{ color: vars.color.textContrastMedium, fontSize: 12 }}>{row[1]}</code>

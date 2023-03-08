@@ -8,6 +8,8 @@ export function ThemeName(props: { children: React.ReactNode }) {
         position: 'absolute',
         left: 0,
         top: 0,
+        fontWeight: '500',
+        color: 'rgba(0,0,0,0.33)',
       }}
     >
       {props.children}

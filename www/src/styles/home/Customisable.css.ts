@@ -7,7 +7,7 @@ export const modal = style({
   borderRadius: '24px',
   width: '100%',
   maxWidth: '1124px',
-  padding: '108px 0 0',
+  padding: '48px 0 0',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',

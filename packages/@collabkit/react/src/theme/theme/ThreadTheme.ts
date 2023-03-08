@@ -11,12 +11,5 @@ export const ThreadTheme = {
       lineHeight: 'thread-header-line-height',
       letterSpacing: 'thread-header-letter-spacing',
     },
-    typingIndicator: {
-      color: 'thread-typing-indicator-color',
-      fontSize: 'thread-typing-indicator-font-size',
-      lineHeight: 'thread-typing-indicator-line-height',
-      fontWeight: 'thread-typing-indicator-font-weight',
-      letterSpacing: 'thread-typing-indicator-letter-spacing',
-    },
   },
 };

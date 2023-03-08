@@ -3,6 +3,7 @@ export const SidebarTheme = {
     boxShadow: 'sidebar-box-shadow',
     background: 'sidebar-background',
     borderLeft: 'sidebar-border-left',
+    width: 'sidebar-width',
 
     title: {
       fontSize: 'sidebar-title-font-size',

@@ -1,33 +1,35 @@
-import { DocDemoContainer } from '../Doc';
+import { Demo } from '../Doc';
 import Usage from './usage/SidebarCommentsUsage.tsx?raw';
 import Positioning from './usage/SidebarCommentsPositioning.tsx?raw';
 import ToggleSidebarCommentsButtonUsage from './usage/ToggleSidebarCommentsButtonUsage.tsx?raw';
 import { renderCodeSnippet } from '../CodeEditor';
 import useSidebarCommentsButtonUsage from './usage/useSidebarCommentsButtonUsage.tsx?raw';
 import { ToggleSidebarCommentsButton, SidebarComments } from '@collabkit/react';
+import { AdvancedProps, StyleTable } from '../advanced/AdvancedCommon';
 
 # SidebarComments
 
 ## Comments in a sidebar. Great for adding commenting throughout your app accessible in one easy place.
 
-<DocDemoContainer
+<Demo
   style={{
     padding: 0,
     justifyContent: 'flex-end',
-    height: '472px',
+    height: '66vh',
+    maxHeight: '640px',
     display: 'flex',
     flex: 'unset',
     position: 'relative',
     alignItems: 'flex-start',
-  }}
->
+}}>
+
   <>
     <div style={{ position: 'absolute', top: 12, left: 12 }}>
       <ToggleSidebarCommentsButton />
     </div>
     <SidebarComments style={{ height: '100%' }} />
   </>
-</DocDemoContainer>
+</Demo>
 
 ### Usage
 
@@ -45,9 +47,12 @@ To adjust the position of the sidebar, or it's height you can use the `style` or
 
 ### Showing and hiding the sidebar
 
+You can show and hide the sidebar in two ways. Either by including the `ToggleSidebarCommentsButton` component, or by using the `useSidebarCommentsButton` hook. Use the hook if you have a custom button component, or need full control over how the button renders.
+
 #### With a button
 
-<DocDemoContainer
+<Demo
+  hideThemeEditorButton={true}
   style={{
     padding: 0,
     display: 'flex',
@@ -59,12 +64,10 @@ To adjust the position of the sidebar, or it's height you can use the `style` or
     alignItems: 'center',
   }}
 >
-  <>
-    <div style={{ position: 'absolute', top: 12, left: 12 }}>
-      <ToggleSidebarCommentsButton />
-    </div>
-  </>
-</DocDemoContainer>
+  <div style={{ position: 'absolute', top: 12, left: 12 }}>
+    <ToggleSidebarCommentsButton />
+  </div>
+</Demo>
 
 Include this component to show and hide the sidebar. It shows a 'red' dot when there are unread comments.
 
@@ -77,3 +80,25 @@ You can pass any props you would normally pass to a React button component.
 If you need full control over how the button renders, or would like to integrate it with your product's native button component, you can use our hook.
 
 {renderCodeSnippet(useSidebarCommentsButtonUsage)}
+
+### Styling
+
+Customise the following variables in your theme to style the `SidebarComments` component.
+
+#### Sidebar
+
+<StyleTable
+  styles={[
+    ['sidebar.background', '--collabkit-sidebar-background', 'color.background'],
+    ['sidebar.boxShadow', '--collabkit-sidebar-box-shadow', 'none'],
+    [
+      'sidebar.borderLeft',
+      '--collabkit-sidebar-border-left',
+      '1px solid var(--collabkit-color-border)',
+    ],
+  ]}
+/>
+
+#### SidebarTitle
+
+<StyleTable styles={[['sidebar.title.fontSize', '--collabkit-sidebar-title-font-size', 'none']]} />
