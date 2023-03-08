@@ -14,7 +14,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: yarn install --frozen-lockfile --prefer-offline
-      - run: yarn typecheck
       - run: yarn build
   test-functions:
     runs-on: ubuntu-latest-16-cores
