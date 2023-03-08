@@ -29,37 +29,6 @@ export type DeepPartial<T> = T extends object
 
 export { SyncAdapter };
 
-export type SecureProps = {
-  appId: string;
-  token: string;
-};
-
-export type UserProps = {
-  id: string;
-  userId?: string;
-} & OptionalUserProps;
-
-export type OptionalUserProps = {
-  name?: string | null;
-  email?: string | null;
-  avatar?: string | null;
-};
-
-export type WorkspaceProps = {
-  id: string;
-} & OptionalWorkspaceProps;
-
-export type OptionalWorkspaceProps = {
-  name?: string | null;
-};
-
-export type UnsecureProps = {
-  apiKey: string;
-  appId: string;
-  user?: UserProps | null;
-  workspace?: WorkspaceProps | null;
-};
-
 type ThreadCallbackProps = {
   userId: string;
   workspaceId: string;
@@ -128,14 +97,41 @@ export type Callbacks = {
   onAuthenticationRequired?: () => void;
 };
 
-export type ConfigProps = {
-  mentionableUsers: MentionProps;
-  colorScheme?: 'light' | 'dark' | 'auto';
-  _demoStore?: Store;
+export type UserProps = {
+  id: string;
+  userId?: string;
+} & OptionalUserProps;
+
+export type OptionalUserProps = {
+  name?: string | null;
+  email?: string | null;
+  avatar?: string | null;
+};
+
+export type WorkspaceProps = {
+  id: string;
+} & OptionalWorkspaceProps;
+
+export type OptionalWorkspaceProps = {
+  name?: string | null;
+};
+
+export type UnsecureConfig = {
+  apiKey: string;
+  appId: string;
+  user?: UserProps | null;
+  workspace?: WorkspaceProps | null;
+};
+
+export type SecureConfig = {
+  appId: string;
+  token: string;
+};
+
+export type Config = (SecureConfig | UnsecureConfig) & {
+  mentionableUsers: MentionableUsers;
   _test?: boolean;
 } & Callbacks;
-
-export type Config = (SecureProps | UnsecureProps) & ConfigProps;
 
 export type Target =
   | ComposerTarget
@@ -517,7 +513,7 @@ export type WithID<T> = T & {
   id: string;
 };
 
-export type MentionProps = readonly Mention[] | 'allWorkspace';
+export type MentionableUsers = readonly Mention[] | 'allWorkspace';
 
 export interface Mention extends BasicProfile {
   id: string;

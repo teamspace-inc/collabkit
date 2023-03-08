@@ -1,5 +1,5 @@
-import type { Spread } from 'lexical';
-import {
+import type {
+  Spread,
   DOMConversionMap,
   DOMConversionOutput,
   DOMExportOutput,
@@ -7,8 +7,8 @@ import {
   LexicalNode,
   NodeKey,
   SerializedTextNode,
-  TextNode,
 } from 'lexical';
+import { TextNode } from 'lexical';
 
 export type SerializedTimestampNode = Spread<
   {

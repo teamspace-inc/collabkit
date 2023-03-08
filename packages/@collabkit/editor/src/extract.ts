@@ -1,4 +1,5 @@
-import { LexicalEditor, $getRoot } from 'lexical';
+import type { LexicalEditor} from 'lexical';
+import { $getRoot } from 'lexical';
 import { $isMentionNode, TRANSFORMERS } from '.';
 import { $convertToMarkdownString } from '@lexical/markdown';
 

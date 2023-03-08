@@ -1,4 +1,5 @@
-import { Store, timelineUtils, WithID, Event } from '@collabkit/core';
+import type { Store, WithID, Event } from '@collabkit/core';
+import { timelineUtils } from '@collabkit/core';
 import { derive } from 'valtio/utils';
 import { createWorkspace } from '../store';
 

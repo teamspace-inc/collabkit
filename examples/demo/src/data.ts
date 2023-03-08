@@ -1,4 +1,4 @@
-import { MentionProps } from '@collabkit/react';
+import { MentionableUsers } from '@collabkit/react';
 
 export const workspaceId = 'acme';
 
@@ -28,4 +28,4 @@ const FRANK = {
 };
 export const users = { ALICE, JANET, JUAN, FRANK };
 
-export const mentionableUsers: MentionProps = [ALICE, JANET, JUAN, FRANK];
+export const mentionableUsers: MentionableUsers = [ALICE, JANET, JUAN, FRANK];

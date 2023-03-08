@@ -6,10 +6,8 @@ import {
   setupFirebase,
   setupWorkspaceProfile,
 } from '../../../test-utils/src';
-import { createStore, createWorkspace } from '../../src/store';
-import { init } from '../../src/actions/init';
-import { FirebaseSync } from '../../src/sync/firebase/FirebaseSync';
-import { Store } from '@collabkit/core';
+import { createCollabKitStore, createWorkspace } from '../../src/store';
+import type { Store } from '@collabkit/core';
 
 import { attachComposerPin } from '../../src/actions/attachComposerPin';
 import { initComposer } from '../../src/actions/initComposer';
@@ -22,32 +20,29 @@ describe('pin', () => {
   const userId = nanoid();
   const workspaceId = nanoid();
   const threadId = nanoid();
-  const store = createStore();
+  let store: Store;
   let pinId;
   let composer;
+
   beforeAll(async () => {
     await setupApp({ apiKey, appId, mode: 'UNSECURED' });
     await createTokenAndSignIn({ apiKey, appId });
     await setupWorkspaceProfile({ appId, workspaceId, userId });
+    store = createCollabKitStore({
+      apiKey,
+      appId,
+      mentionableUsers: [],
+      user: {
+        id: userId,
+      },
+      workspace: {
+        id: workspaceId,
+      },
+      _test: true,
+    });
     store.userId = userId;
     store.workspaceId = workspaceId;
     store.workspaces[workspaceId] = createWorkspace();
-    const sync = new FirebaseSync({ test: true });
-    await init(
-      store,
-      {
-        apiKey,
-        appId,
-        mentionableUsers: [],
-        user: {
-          id: userId,
-        },
-        workspace: {
-          id: workspaceId,
-        },
-      },
-      sync
-    );
   });
 
   test('attachPin', async () => {

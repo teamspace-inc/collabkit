@@ -1,4 +1,4 @@
-import { Store, UnconfiguredStore } from '@collabkit/core';
+import type { Store, UnconfiguredStore } from '@collabkit/core';
 import { createComposer } from '../store';
 
 export function initComposer(

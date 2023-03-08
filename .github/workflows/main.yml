@@ -63,7 +63,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           max_timeout: 180
           check_interval: 5
-          regex: 'collabkit-demo'
+          regex: 'collabkit-demo$'
 
   vercel-ladle:
     runs-on: ubuntu-latest-16-cores

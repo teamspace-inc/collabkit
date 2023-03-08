@@ -1,7 +1,7 @@
 import type {
   Config,
   Mention,
-  MentionProps,
+  MentionableUsers,
   Store,
   Subscriptions,
   Workspace,
@@ -14,7 +14,6 @@ import { CollabKitProvider } from './components/Provider';
 import { Thread } from './components/Thread';
 import { useUnreadCommentsCount } from './hooks/public/useUnreadCommentsCount';
 import { useUnreadThreadsCount } from './hooks/public/useUnreadThreadsCount';
-import { createValtioStore } from './store';
 import { Inbox } from './components/Inbox';
 import { InboxButton } from './components/InboxButton';
 import { ThemeProvider } from './components/ThemeContext';
@@ -105,8 +104,6 @@ export {
   useThreadUsers,
   useThread,
   useComposer,
-  // internal
-  createValtioStore as internal_createStore,
 };
 
 export type {
@@ -115,7 +112,7 @@ export type {
   Config,
   CustomTheme,
   Mention,
-  MentionProps,
+  MentionableUsers,
   Store,
   Subscriptions,
   ThreadProps,

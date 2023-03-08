@@ -18,7 +18,6 @@ import { focus } from './focus';
 import { focusComposer } from './focusComposer';
 import { hideSidebar } from './hideSidebar';
 import { hover } from './hover';
-import { init } from './init';
 import { initComposer } from './initComposer';
 import { initThread } from './initThread';
 import { insertComposerPin } from './insertComposerPin';
@@ -59,6 +58,8 @@ import { updateComment } from './updateComment';
 import { updateComposer } from './updateComposer';
 import { viewContent } from './viewContent';
 import { toggleSidebar } from './toggleSidebar';
+import { install } from './install';
+import { setConfig } from './setConfig';
 
 export const actions = {
   attachComposerPin,
@@ -79,10 +80,10 @@ export const actions = {
   focusComposer,
   hideSidebar,
   hover,
-  init,
   initComposer,
   initThread,
   insertComposerPin,
+  install,
   isTyping: debounce(isTyping, 1000, { leading: true, maxWait: 1000 }),
   monitorConnection,
   openInboxItem,
@@ -98,6 +99,7 @@ export const actions = {
   sendMessage,
   setAvatarError,
   setComposer,
+  setConfig,
   setPinVisibility,
   showPreview,
   showSidebar,

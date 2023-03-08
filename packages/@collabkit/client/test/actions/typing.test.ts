@@ -7,10 +7,8 @@ import {
   setupFirebase,
   setupWorkspaceProfile,
 } from '../../../test-utils/src';
-import { createStore, createWorkspace } from '../../src/store';
-import { init } from '../../src/actions/init';
-import { FirebaseSync } from '../../src/sync/firebase/FirebaseSync';
-import { Store } from '@collabkit/core';
+import { createCollabKitStore, createWorkspace } from '../../src/store';
+import type { Store } from '@collabkit/core';
 import { subscribeThreadIsTyping } from '../../src/sync/firebase/subscribeThreadIsTyping';
 import { initComposer } from '../../src/actions/initComposer';
 import { stopTyping } from '../../src/actions/stopTyping';
@@ -22,8 +20,7 @@ describe('typing', async () => {
   const appId = nanoid();
   const userId = nanoid();
   const workspaceId = nanoid();
-  const store = createStore();
-  const sync = new FirebaseSync({ test: true });
+  let store: Store;
   const threadId = nanoid();
   let typing;
 
@@ -31,29 +28,26 @@ describe('typing', async () => {
     await setupApp({ apiKey, appId, mode: 'UNSECURED' });
     await setupWorkspaceProfile({ appId, workspaceId, userId });
     await createTokenAndSignIn({ apiKey, appId });
+    store = createCollabKitStore({
+      apiKey,
+      appId,
+      mentionableUsers: [],
+      user: {
+        id: userId,
+      },
+      workspace: {
+        id: workspaceId,
+      },
+      _test: true,
+    });
     store.userId = userId;
     store.workspaceId = workspaceId;
     store.workspaces[workspaceId] = createWorkspace();
-    await init(
-      store,
-      {
-        apiKey,
-        appId,
-        mentionableUsers: [],
-        user: {
-          id: userId,
-        },
-        workspace: {
-          id: workspaceId,
-        },
-      },
-      sync
-    );
     initComposer(store, { workspaceId, threadId, eventId: 'default' });
   });
 
   test('typing', async () => {
-    await sync.sendMessage({
+    await store.sync.sendMessage({
       appId,
       workspaceId,
       threadId,
@@ -65,7 +59,7 @@ describe('typing', async () => {
         createdById: userId,
       },
       parentEvent: null,
-      newEventId: sync.nextEventId({ appId, workspaceId, threadId }),
+      newEventId: store.sync.nextEventId({ appId, workspaceId, threadId }),
       timeline: {},
     });
 
@@ -107,7 +101,7 @@ describe('typing', async () => {
 
     await stopTyping(store as Store, { target });
 
-    typing = await sync.getIsTyping({
+    typing = await store.sync.getIsTyping({
       appId,
       workspaceId,
       threadId,

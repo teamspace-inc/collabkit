@@ -1,5 +1,6 @@
-import { ComposerTarget, Store } from '@collabkit/core';
-import { LexicalEditor, $getRoot } from 'lexical';
+import type { ComposerTarget, Store } from '@collabkit/core';
+import type { LexicalEditor} from 'lexical';
+import { $getRoot } from 'lexical';
 import { actions } from '.';
 import { markRaw } from '../store';
 

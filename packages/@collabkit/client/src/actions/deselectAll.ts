@@ -1,4 +1,4 @@
-import { Store } from '@collabkit/core';
+import type { Store } from '@collabkit/core';
 
 export function deselectAll(store: Store) {
   if (store.selectedId?.type === 'pin') {

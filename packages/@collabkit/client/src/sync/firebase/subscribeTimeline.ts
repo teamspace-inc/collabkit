@@ -1,14 +1,16 @@
-import {
+import type {
   DataSnapshot,
+  QueryConstraint} from 'firebase/database';
+import {
   get,
   onChildAdded,
   onValue,
   orderByKey,
   query,
-  QueryConstraint,
   startAfter,
 } from 'firebase/database';
-import { Sync, Subscriptions, FirebaseId } from '@collabkit/core';
+import type { Sync, Subscriptions} from '@collabkit/core';
+import { FirebaseId } from '@collabkit/core';
 import { ref } from './refs';
 import { snapshotToEvent } from './converters';
 

@@ -1120,7 +1120,7 @@ type ConfigProps = {
   onAuthenticationRequired?: () => void;
   colorScheme?: 'light' | 'dark' | 'auto';
   callbacks?: Callbacks;
-  _demoStore?: Store;
+  store?: Store;
   _test?: boolean;
 };
 

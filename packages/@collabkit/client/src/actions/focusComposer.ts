@@ -1,4 +1,4 @@
-import { ComposerTarget, Store } from '@collabkit/core';
+import type { ComposerTarget, Store } from '@collabkit/core';
 
 export function focusComposer(store: Store, target: ComposerTarget) {
   // editor.focus() doesn't work for some reason

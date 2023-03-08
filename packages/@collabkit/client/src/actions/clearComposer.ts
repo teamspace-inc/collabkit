@@ -1,4 +1,4 @@
-import { Store } from '@collabkit/core';
+import type { Store } from '@collabkit/core';
 import { $getRoot } from 'lexical';
 
 export function clearComposer(

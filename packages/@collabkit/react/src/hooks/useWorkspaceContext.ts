@@ -1,15 +1,14 @@
-import React from 'react';
-
-export const WorkspaceContext = React.createContext<string | null>(null);
+import { useSnapshot } from 'valtio';
+import { useStore } from './useStore';
 
 export function useOptionalWorkspaceContext() {
-  return React.useContext(WorkspaceContext);
+  return useSnapshot(useStore()).workspaceId;
 }
 
 export function useWorkspaceContext() {
-  const context = React.useContext(WorkspaceContext);
-  if (!context) {
-    throw new Error('useWorkspaceContext must be used within an WorkspaceContextProvider');
+  const workspaceId = useOptionalWorkspaceContext();
+  if (!workspaceId) {
+    throw new Error('useWorkspaceContext requires authentication');
   }
-  return context;
+  return workspaceId;
 }

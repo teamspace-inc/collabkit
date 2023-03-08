@@ -1,15 +1,9 @@
-import React from 'react';
-
-export const UserContext = React.createContext<string | null>(null);
+import { useOptionalUserContext } from './useOptionalUserContext';
 
 export function useUserContext() {
-  const context = useOptionalUserContext();
-  if (!context) {
+  const userId = useOptionalUserContext();
+  if (!userId) {
     throw new Error('UserContext not found');
   }
-  return context;
-}
-
-export function useOptionalUserContext() {
-  return React.useContext(UserContext);
+  return userId;
 }

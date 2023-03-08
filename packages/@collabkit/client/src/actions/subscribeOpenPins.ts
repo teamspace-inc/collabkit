@@ -1,4 +1,5 @@
-import { FirebaseId, FirebasePin, Pin, Store } from '@collabkit/core';
+import type { FirebasePin, Pin, Store } from '@collabkit/core';
+import { FirebaseId } from '@collabkit/core';
 import { getConfig } from './getConfig';
 import has from 'has';
 import { subscribeThread } from './subscribeThread';

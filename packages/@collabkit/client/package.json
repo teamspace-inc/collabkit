@@ -19,6 +19,10 @@
   },
   "devDependencies": {
     "@types/react": "^18.0.17",
+    "@typescript-eslint/eslint-plugin": "^5.54.1",
+    "@typescript-eslint/parser": "^5.54.1",
+    "eslint": "^8.35.0",
+    "eslint-plugin-react": "^7.32.2",
     "firebase-admin": "^11.5.0",
     "has": "^1.0.3",
     "nanoid": "^4.0.0",
