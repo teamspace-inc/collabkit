@@ -11,17 +11,15 @@ const user = { id: 'vueuser', name: 'Vue User', email: 'vue@example.com' };
 </script>
 
 <template>
-  <main>
-    <CollabKitProvider
-      :apiKey="apiKey"
-      :appId="appId"
-      :workspace="workspace"
-      :user="user"
-      :mentionableUsers="[]"
-    >
-      Hello world
-    </CollabKitProvider>
-  </main>
+  <CollabKitProvider
+    :apiKey="apiKey"
+    :appId="appId"
+    :workspace="workspace"
+    :user="user"
+    :mentionableUsers="[]"
+  >
+    Hello world
+  </CollabKitProvider>
 </template>
 
 <style scoped>
