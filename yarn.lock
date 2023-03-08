@@ -9830,11 +9830,6 @@ proxy-addr@~2.0.7:
     forwarded "0.2.0"
     ipaddr.js "1.9.1"
 
-proxy-compare@2.4.1:
-  version "2.4.1"
-  resolved "https://registry.yarnpkg.com/proxy-compare/-/proxy-compare-2.4.1.tgz#663b45f1212f1a423c8973374fa47542084df02f"
-  integrity sha512-xkL1upOHOOW6zSSNUDZ09hqGDO9lq//Sg92KF8YK+YsD/Et1dP8fZql/h6vgbFa/ScIAlttE4WjTD7QPEg1Ssg==
-
 proxy-compare@2.5.0:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/proxy-compare/-/proxy-compare-2.5.0.tgz#0387c5e4d283ba9b1c0353bb20def4449b06bbd2"
@@ -11508,14 +11503,6 @@ v8-to-istanbul@^9.0.1:
     "@jridgewell/trace-mapping" "^0.3.12"
     "@types/istanbul-lib-coverage" "^2.0.1"
     convert-source-map "^1.6.0"
-
-valtio@^1.10.1:
-  version "1.10.1"
-  resolved "https://registry.yarnpkg.com/valtio/-/valtio-1.10.1.tgz#0339bb17422aa4d64f522ffec747cd07c0ac4aed"
-  integrity sha512-VhK/adrsgQsInQ8SvcUV0NYu2XyPItAAWhAX1uhmN0tS0wIroqjUNhb0OG8iEqu6khUdfMsR7s+Q91hZT6pjcg==
-  dependencies:
-    proxy-compare "2.4.1"
-    use-sync-external-store "1.2.0"
 
 valtio@^1.10.3:
   version "1.10.3"

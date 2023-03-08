@@ -10,15 +10,15 @@ import { subHours } from 'date-fns/fp';
 import { useSnapshot } from 'valtio';
 import { store as wwwStore } from './home/Header';
 import * as Theme from './styles/Theme.css';
+import { nanoid } from 'nanoid';
 
-// todo generate a new workspace
-// for each docs user
 const apiKey = import.meta.env.VITE_COLLABKIT_API_KEY;
 const appId = import.meta.env.VITE_COLLABKIT_APP_ID;
 const workspace = {
-  id: import.meta.env.VITE_COLLABKIT_WORKSPACE_ID,
-  name: import.meta.env.VITE_COLLABKIT_WORKSPACE_NAME,
+  id: nanoid(),
+  name: 'Acme',
 };
+const userId = nanoid();
 
 import { createDemoStore, mentionableUsers } from './home/demoStore';
 import { CarouselPage } from './pages/CarouselPage';
@@ -149,7 +149,7 @@ const config: Config = {
   mentionableUsers: mentionableUsers,
 };
 
-const store = createDemoStore(config, defaultWorkspace);
+// const store = createDemoStore(config, defaultWorkspace);
 
 export default function App() {
   // useEffect(() => {
@@ -183,9 +183,8 @@ export default function App() {
     <CollabKitProvider
       apiKey={apiKey}
       appId={appId}
-      _demoStore={store}
       workspace={workspace}
-      user={{ id: 'anon', name: 'Anonymous' }}
+      user={{ id: userId, name: 'Anonymous' }}
       mentionableUsers={[]}
     >
       <SetBreakpointContext>

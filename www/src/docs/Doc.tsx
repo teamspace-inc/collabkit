@@ -150,7 +150,7 @@ export function Demo({
         <div className={themeEditorModal} onClick={() => setIsEditing(false)}>
           <div onClick={(e) => e.stopPropagation()} className={themeEditorModalContent}>
             <div className={themeEditorModalHeaderLeft}>
-              <h3 style={{ paddingLeft: 16, color: 'rgba(0,0,0,0.66)' }}>Theme Editor</h3>
+              <p style={{ paddingLeft: 16, color: 'rgba(0,0,0,0.66)' }}>Theme Editor</p>
             </div>
             <div className={themeEditorModalHeader}>
               <button className={themeEditorModalCloseButton} onClick={() => setIsEditing(false)}>

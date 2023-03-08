@@ -166,7 +166,7 @@ globalStyle('body', {
   color: vars.color.textContrastHigh,
 });
 
-globalStyle(`${website} p`, {
+globalStyle(`${website} > p`, {
   fontFamily: 'Inter',
   fontStyle: 'normal',
   fontWeight: 400,

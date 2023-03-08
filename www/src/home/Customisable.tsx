@@ -35,8 +35,8 @@ export function Customisable() {
           <ToggleButtonGroup
             title="Component"
             options={[
-              { node: <div style={padding}>Thread</div>, value: 0 },
-              { node: <div style={padding}>Inbox</div>, value: 1 },
+              { node: <div style={padding}>SidebarComments</div>, value: 0 },
+              { node: <div style={padding}>Thread</div>, value: 1 },
             ]}
             value={component}
             onChange={setComponent}
