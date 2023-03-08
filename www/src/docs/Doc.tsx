@@ -35,7 +35,6 @@ import {
 import X from 'phosphor-react/dist/icons/X.esm.js';
 
 export function DocWithSubNav(props: {
-  key: string;
   next?: string[];
   prev?: string[];
   component?: React.FunctionComponent;
@@ -48,7 +47,7 @@ export function DocWithSubNav(props: {
     })
   );
 
-  const { key, next, prev, component } = props;
+  const { next, prev, component } = props;
   const handleAnchor = useCallback(
     (id: string, link: string) => {
       console.log('anchors', id, link);
@@ -67,7 +66,7 @@ export function DocWithSubNav(props: {
   });
 
   return (
-    <Doc key={key} next={next} prev={prev} store={store.current}>
+    <Doc next={next} prev={prev} store={store.current}>
       {docContent}
     </Doc>
   );

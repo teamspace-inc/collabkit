@@ -7,13 +7,14 @@ import { SidebarRoot, SidebarHeader, SidebarTitle, SidebarCloseButton } from './
 import { ThemeWrapper } from './ThemeWrapper';
 
 function SidebarComments(props: React.ComponentPropsWithoutRef<'div'> & { defaultOpen?: boolean }) {
+  const { defaultOpen, ...otherProps } = props;
   const store = useStore();
   useEffect(() => {
     store.isSidebarOpen = props.defaultOpen ?? false;
   }, [store, props.defaultOpen]);
 
   return useIsSidebarOpen() ? (
-    <div {...props}>
+    <div {...otherProps}>
       <ThemeWrapper>
         <Authenticated>
           <SidebarRoot>
