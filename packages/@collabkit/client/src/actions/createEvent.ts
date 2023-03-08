@@ -1,5 +1,6 @@
-import { Event, Store } from '@collabkit/core';
-import { snapshot, getVersion, INTERNAL_Snapshot } from 'valtio';
+import type { Event, Store } from '@collabkit/core';
+import type { INTERNAL_Snapshot } from 'valtio';
+import { snapshot, getVersion } from 'valtio';
 const isValtioProxy = (obj: object) => typeof getVersion(obj) === 'number';
 export async function createEvent(
   store: Store,

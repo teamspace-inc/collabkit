@@ -1,4 +1,4 @@
-import { Pin, Store, Target } from '@collabkit/core';
+import type { Pin, Store, Target } from '@collabkit/core';
 
 function navigateToPin(store: Store, pin: Pin) {
   const { id, eventId, objectId, threadId, workspaceId } = pin;

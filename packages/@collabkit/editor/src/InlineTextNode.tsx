@@ -1,9 +1,10 @@
-import {
+import type {
   DOMConversionMap,
   DOMConversionOutput,
   LexicalNode,
   SerializedTextNode,
-  Spread,
+  Spread} from 'lexical';
+import {
   TextNode,
 } from 'lexical';
 

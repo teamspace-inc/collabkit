@@ -1,8 +1,9 @@
+import type {
+  Transformer,
+  TextMatchTransformer} from '@lexical/markdown';
 import {
   ELEMENT_TRANSFORMERS,
-  TEXT_FORMAT_TRANSFORMERS,
-  Transformer,
-  TextMatchTransformer,
+  TEXT_FORMAT_TRANSFORMERS
 } from '@lexical/markdown';
 import { $createMentionNode, MentionNode } from './MentionNode';
 import { $createPinNode } from './PinNode';

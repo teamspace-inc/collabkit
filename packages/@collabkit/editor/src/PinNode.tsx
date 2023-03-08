@@ -1,5 +1,7 @@
-import { DOMConversionOutput, LexicalNode, NodeKey, DecoratorNode } from 'lexical';
-import React, { ReactNode } from 'react';
+import type { DOMConversionOutput, LexicalNode, NodeKey } from 'lexical';
+import { DecoratorNode } from 'lexical';
+import type { ReactNode } from 'react';
+import React from 'react';
 
 export type SerializedPinNode = {
   pinId: string;
@@ -60,6 +62,7 @@ export class PinNode extends DecoratorNode<ReactNode> {
   }
 
   decorate(): ReactNode {
+    // @ts-ignore
     return <ComposerPin id={this.__id} />;
   }
 }
@@ -74,6 +77,7 @@ export function $isPinNode(node: LexicalNode | undefined): boolean {
 
 export function ComposerPin(props: { id: string }) {
   return (
+    // @ts-ignore
     <svg
       data-pin-id={props.id}
       className="collabkit-composer-pin"

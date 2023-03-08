@@ -1,4 +1,4 @@
-import { FunctionResponse, GenerateToken } from './types';
+import type { FunctionResponse, GenerateToken } from './types';
 
 export async function generateToken(props: { appId: string; apiKey: string; apiHost: string }) {
   const { appId, apiKey, apiHost } = props;

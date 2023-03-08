@@ -1,4 +1,4 @@
-import { Store } from '@collabkit/core';
+import type { Store } from '@collabkit/core';
 
 // normalises config across secure and unsecure modes for
 // safe access from actions

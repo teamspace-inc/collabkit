@@ -1,9 +1,11 @@
 import { onValue } from 'firebase/database';
 import { ref } from '../sync/firebase/refs';
 import type { Store } from '@collabkit/core';
-import type { createEvents } from '../events';
 
-export function monitorConnection(store: Store, events: ReturnType<typeof createEvents>) {
+export function monitorConnection(
+  store: Store,
+  events: { onConnectionStateChange: (isConnected: boolean) => void }
+) {
   if (store.subs['connectionState']) {
     return;
   }

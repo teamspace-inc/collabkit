@@ -1,4 +1,5 @@
-import { DataSnapshot, get, query } from 'firebase/database';
+import type { DataSnapshot} from 'firebase/database';
+import { get, query } from 'firebase/database';
 import { onChildAdded, onChildChanged } from 'firebase/database';
 import { ref } from '../sync/firebase/refs';
 import type { Profile, Store } from '@collabkit/core';

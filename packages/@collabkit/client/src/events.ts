@@ -4,6 +4,7 @@ import type { LexicalEditor } from 'lexical';
 import type {
   CommentEmojiButtonTargets,
   CommentTarget,
+  ComposerTarget,
   EmojiTarget,
   MenuTarget,
   Store,
@@ -109,7 +110,7 @@ export function createEvents(store: Store) {
               actions.startSelecting(store);
               const threadId = store.nextThreadId;
               if (!threadId) return;
-              const composerId = {
+              const composerId: ComposerTarget = {
                 ...target,
                 type: 'composer',
                 threadId,

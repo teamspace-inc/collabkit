@@ -1,4 +1,4 @@
-import { Store } from '@collabkit/core';
+import type { Store } from '@collabkit/core';
 
 export function collapseThread(store: Store, props: { threadId: string }) {
   const index = store.expandedThreadIds.findIndex((id) => id === props.threadId);

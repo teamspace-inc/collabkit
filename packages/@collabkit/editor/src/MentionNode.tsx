@@ -1,13 +1,13 @@
-import type { Spread } from 'lexical';
-import {
+import type { Spread ,
   DOMConversionMap,
   DOMConversionOutput,
   EditorConfig,
   NodeKey,
   SerializedTextNode,
+  LexicalNode} from 'lexical';
+import {
   TextNode,
-  $applyNodeReplacement,
-  LexicalNode,
+  $applyNodeReplacement
 } from 'lexical';
 
 export type SerializedMentionNode = Spread<

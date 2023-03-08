@@ -1,4 +1,4 @@
-import { Store } from '@collabkit/core';
+import type { Store } from '@collabkit/core';
 import { select } from './select';
 
 export function openInboxItem(store: Store, props: { threadId: string; workspaceId: string }) {

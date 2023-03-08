@@ -1,5 +1,6 @@
+import type {
+  DataSnapshot} from 'firebase/database';
 import {
-  DataSnapshot,
   get,
   limitToLast,
   onChildAdded,
@@ -16,7 +17,7 @@ import {
   update,
 } from 'firebase/database';
 
-import {
+import type {
   Event,
   OptionalWorkspaceProps,
   Subscriptions,
@@ -24,8 +25,9 @@ import {
   Sync,
   FirebasePin,
   Timeline,
-  timelineUtils,
-  Attachment,
+  Attachment} from '@collabkit/core';
+import {
+  timelineUtils
 } from '@collabkit/core';
 
 import { FirebaseId } from '@collabkit/core';
