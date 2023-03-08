@@ -91,7 +91,11 @@ Customise the following variables in your theme to style the `SidebarComments` c
   styles={[
     ['sidebar.background', '--collabkit-sidebar-background', 'color.background'],
     ['sidebar.boxShadow', '--collabkit-sidebar-box-shadow', 'none'],
-    ['sidebar.borderLeft', '--collabkit-sidebar-border-left', '1px solid --collabkit-color-border'],
+    [
+      'sidebar.borderLeft',
+      '--collabkit-sidebar-border-left',
+      '1px solid var(--collabkit-color-border)',
+    ],
   ]}
 />
 
