@@ -6,7 +6,7 @@ import { useStore } from '../hooks/useStore';
 import * as styles from '../theme/components/Profile.css';
 import { vars } from '../theme/theme/index.css';
 import { ProfileContext, useProfileContext } from '../hooks/useProfile';
-import { useRenderFnContext } from '../hooks/useRenderFnContext';
+import { useCustomAvatar } from '../hooks/useRenderAvatarContext';
 
 function ProfileProvider(props: { children: React.ReactNode; profileId: string }) {
   return (
@@ -76,7 +76,7 @@ function ProfileAvatar({
   ...props
 }: { size?: string } & React.ComponentPropsWithoutRef<'div'>) {
   const store = useStore();
-  const { renderAvatar } = useRenderFnContext();
+  const renderAvatar = useCustomAvatar();
   const { profiles, avatarErrors } = useSnapshot(store);
   const profileId = useProfileContext();
   const profile = profiles[profileId];

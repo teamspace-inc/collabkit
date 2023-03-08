@@ -1,10 +1,11 @@
 import { createWorkspace, actions } from '@collabkit/client';
-import { internal_createStore as createStore, Config, Workspace } from '@collabkit/react';
+import { Config, Workspace } from '@collabkit/react';
+import { createValtioStore } from '@collabkit/client';
 import { LocalOnlySync } from './LocalOnlySync';
 
 export function createDemoStore(config: Config, defaultWorkspace: Partial<Workspace>) {
   const sync = new LocalOnlySync({});
-  const store = createStore(config, sync);
+  const store = createValtioStore(config, sync);
 
   const workspaceStore = createWorkspace();
 

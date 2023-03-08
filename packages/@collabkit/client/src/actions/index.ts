@@ -59,6 +59,8 @@ import { updateComment } from './updateComment';
 import { updateComposer } from './updateComposer';
 import { viewContent } from './viewContent';
 import { toggleSidebar } from './toggleSidebar';
+import { install } from './install';
+import { setConfig } from './setConfig';
 
 export const actions = {
   attachComposerPin,
@@ -83,6 +85,7 @@ export const actions = {
   initComposer,
   initThread,
   insertComposerPin,
+  install,
   isTyping: debounce(isTyping, 1000, { leading: true, maxWait: 1000 }),
   monitorConnection,
   openInboxItem,
@@ -98,6 +101,7 @@ export const actions = {
   sendMessage,
   setAvatarError,
   setComposer,
+  setConfig,
   setPinVisibility,
   showPreview,
   showSidebar,

@@ -1,7 +1,7 @@
-import type { MentionProps, Store } from '@collabkit/core';
+import type { MentionableUsers, Store } from '@collabkit/core';
 import { getRandomColor } from '@collabkit/colors';
 
-export async function saveMentionableUsers(store: Store, mentionableUsers: MentionProps) {
+export async function saveMentionableUsers(store: Store, mentionableUsers: MentionableUsers) {
   const { workspaceId } = store;
   if (!workspaceId) {
     return;
@@ -9,7 +9,7 @@ export async function saveMentionableUsers(store: Store, mentionableUsers: Menti
 
   const { appId } = store.config;
 
-  if (typeof mentionableUsers === 'object') {
+  if (Array.isArray(mentionableUsers)) {
     mentionableUsers.forEach((mentionableUser) => {
       const existingProfile = store.profiles[mentionableUser.id];
       if (existingProfile) {
@@ -23,13 +23,13 @@ export async function saveMentionableUsers(store: Store, mentionableUsers: Menti
             ...mentionableUser,
             color: getRandomColor(),
           };
+          store.sync.saveProfile({
+            appId,
+            userId: mentionableUser.id,
+            workspaceId,
+            profile: store.mentionableUsers[mentionableUser.id],
+          });
         }
-        store.sync.saveProfile({
-          appId,
-          userId: mentionableUser.id,
-          workspaceId,
-          profile: store.mentionableUsers[mentionableUser.id],
-        });
       }
     });
   }
