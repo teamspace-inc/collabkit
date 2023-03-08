@@ -1,3 +1,4 @@
+import { actions } from '@collabkit/client';
 import React, { useEffect } from 'react';
 import { useStore } from '../hooks';
 import { useIsSidebarOpen } from '../hooks/useIsSidebarOpen';
@@ -10,7 +11,9 @@ function SidebarComments(props: React.ComponentPropsWithoutRef<'div'> & { defaul
   const { defaultOpen, ...otherProps } = props;
   const store = useStore();
   useEffect(() => {
-    store.isSidebarOpen = props.defaultOpen ?? false;
+    if (props.defaultOpen) {
+      actions.showSidebar(store);
+    }
   }, [store, props.defaultOpen]);
 
   return useIsSidebarOpen() ? (
