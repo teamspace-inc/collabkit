@@ -57,19 +57,17 @@ export function Provider(props: ProviderProps) {
   return <CollabKitProvider {...props} />;
 }
 
-function useCollabKitStore(config: Config & { store?: Store }) {
+function useCollabKitStore(config: Config) {
   const [store, setStore] = useState<Store | null>(null);
 
   useEffect(() => {
-    if (!config.store) {
-      const store = config.store ?? createCollabKitStore(config);
-      actions.install(store);
-      setStore(store);
-      return () => {
-        actions.destroy(store);
-      };
-    }
+    const store = createCollabKitStore(config);
+    actions.install(store);
+    setStore(store);
+    return () => {
+      actions.destroy(store);
+    };
   }, [config.appId, 'token' in config ? config.token : config.apiKey]);
 
-  return config.store ?? store;
+  return store;
 }
