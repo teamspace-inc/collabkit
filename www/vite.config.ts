@@ -2,7 +2,6 @@ import { resolve } from 'path';
 import react from '@vitejs/plugin-react';
 import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin';
 import mdx from '@mdx-js/rollup';
-import svgr from 'vite-plugin-svgr';
 // import { remarkCodeHike } from '@code-hike/mdx';
 
 // import { createRequire } from 'node:module';
@@ -12,14 +11,7 @@ import svgr from 'vite-plugin-svgr';
 const remarkPlugins = []; // [remarkCodeHike, { theme, lineNumbers: true, showCopyButton: true }];
 
 export default {
-  plugins: [
-    react(),
-    vanillaExtractPlugin(),
-    mdx({ remarkPlugins }),
-    svgr({
-      include: '../../**/*.svg',
-    }),
-  ],
+  plugins: [react(), vanillaExtractPlugin(), mdx({ remarkPlugins })],
   resolve: {
     alias: {
       '@collabkit/react': resolve(__dirname, '../packages/@collabkit/react/src/index.ts'),

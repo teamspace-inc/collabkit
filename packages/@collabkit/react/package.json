@@ -79,7 +79,6 @@
     "unified": "^10.1.2",
     "valtio": "^1.10.3",
     "vite": "^4.1.1",
-    "vite-plugin-svgr": "^2.4.0",
     "vitest": "^0.28.1"
   },
   "prettier": {
