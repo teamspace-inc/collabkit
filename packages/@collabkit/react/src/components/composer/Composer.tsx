@@ -177,7 +177,7 @@ const ComposerInput = React.memo(function ComposerInput(props: {
   );
 
   return (
-    <span style={{ position: 'relative' }}>
+    <div style={{ position: 'relative' }}>
       <LexicalComposer initialConfig={initialConfig}>
         <EditorPlugin onMount={handleChange} />
         <KeyPlugin onKeyDown={(event) => events.onKeyDown(event)} />
@@ -199,7 +199,7 @@ const ComposerInput = React.memo(function ComposerInput(props: {
         />
         <TimestampPlugin />
       </LexicalComposer>
-    </span>
+    </div>
   );
 });
 
