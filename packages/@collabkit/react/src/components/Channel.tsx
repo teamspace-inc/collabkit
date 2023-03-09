@@ -57,12 +57,11 @@ import DeletePinButtonSvg from './delete-pin-button.svg';
 import DeletePinButtonHoverSvg from './delete-pin-button-hover.svg';
 import { Root } from './Root';
 
-import CommentPinSvg from './composer/comment-pin.svg';
-import CommentPinSelectedSvg from './composer/comment-pin-hover.svg';
 import { Authenticated } from './Authenticated';
 import { SidebarCloseButton, SidebarHeader, SidebarTitle } from './Sidebar';
 import { usePopover } from '../hooks/usePopover';
 import { PopoverRoot, PopoverTrigger, PopoverPortal, PopoverContent } from './Popover';
+import { CommentPinSVG } from './composer/CommentPinSvg';
 
 function EmptyState() {
   return (
@@ -447,7 +446,7 @@ function ChannelCommentPin(props: React.ComponentProps<'img'>) {
   );
 
   const onClick = useCallback(
-    (e: React.MouseEvent) => {
+    (e: React.MouseEvent<HTMLElement>) => {
       target &&
         events.onClick(e, {
           target,
@@ -469,13 +468,9 @@ function ChannelCommentPin(props: React.ComponentProps<'img'>) {
     >
       <Tooltip>
         <TooltipTrigger>
-          <img
-            className={styles.commentPin}
-            onClick={onClick}
-            // todo preload or inline these images to avoid loading jank
-            src={isSelected ? CommentPinSelectedSvg : CommentPinSvg}
-            {...props}
-          />
+          <span onClick={onClick} {...props} className={styles.commentPin}>
+            <CommentPinSVG fill={isSelected ? vars.color.pinActive : vars.color.pin} />
+          </span>
         </TooltipTrigger>
         <TooltipContent>View annotation</TooltipContent>
       </Tooltip>

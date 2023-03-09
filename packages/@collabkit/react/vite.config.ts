@@ -8,7 +8,14 @@ import svgr from 'vite-plugin-svgr';
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
-  const plugins = [react(), vanillaExtractPlugin(), visualizer(), svgr()];
+  const plugins = [
+    react(),
+    vanillaExtractPlugin(),
+    visualizer(),
+    svgr({
+      include: '**/*.svg',
+    }),
+  ];
 
   if (mode === 'production') {
     plugins.push(

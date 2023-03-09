@@ -19,6 +19,7 @@ export function Demo(props: Props) {
       _test={test}
       appId={props.appId}
       token={props.token}
+      theme="dark"
       onPinHover={(props) => {}}
       onPinAttach={() => {
         return JSON.stringify({

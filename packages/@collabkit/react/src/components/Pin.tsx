@@ -60,6 +60,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from './Tooltip';
 import { actions, COMMENT_MIN_HEIGHT } from '@collabkit/client';
 import { useWorkspaceContext } from '../hooks/useWorkspaceContext';
 import { Scrollable } from './Scrollable';
+import { ThemeWrapper } from './ThemeWrapper';
 
 function SavedPin({
   pin,
@@ -200,39 +201,41 @@ function PinThreadPreview({ pin }: { pin: Pin }) {
 
   return (
     <Root>
-      <ThreadContext.Provider value={pin.threadId}>
-        <div
-          className={styles.pinThread}
-          onClick={(e) =>
-            events.onClick(e, {
-              target: {
-                type: 'pinThreadPreview',
-                threadId: pin.threadId,
-                workspaceId: pin.workspaceId,
-                objectId: pin.objectId,
-                eventId: pin.eventId,
-                id: pin.id,
-              },
-            })
-          }
-        >
-          <CommentRoot commentId={pin.eventId} className={styles.pinPreview}>
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <CommentHeader>
-                <CommentCreatorName />
-                <CommentTimestamp />
-              </CommentHeader>
-              <CommentBody>
-                <CommentMarkdown />
-              </CommentBody>
-              <CommentReactions>
-                <CommentReactionsList disabled={true} />
-              </CommentReactions>
-              <CommentSeeAllRepliesButton onClick={() => {}} />
-            </div>
-          </CommentRoot>
-        </div>
-      </ThreadContext.Provider>
+      <ThemeWrapper>
+        <ThreadContext.Provider value={pin.threadId}>
+          <div
+            className={styles.pinThread}
+            onClick={(e) =>
+              events.onClick(e, {
+                target: {
+                  type: 'pinThreadPreview',
+                  threadId: pin.threadId,
+                  workspaceId: pin.workspaceId,
+                  objectId: pin.objectId,
+                  eventId: pin.eventId,
+                  id: pin.id,
+                },
+              })
+            }
+          >
+            <CommentRoot commentId={pin.eventId} className={styles.pinPreview}>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <CommentHeader>
+                  <CommentCreatorName />
+                  <CommentTimestamp />
+                </CommentHeader>
+                <CommentBody>
+                  <CommentMarkdown />
+                </CommentBody>
+                <CommentReactions>
+                  <CommentReactionsList disabled={true} />
+                </CommentReactions>
+                <CommentSeeAllRepliesButton onClick={() => {}} />
+              </div>
+            </CommentRoot>
+          </div>
+        </ThreadContext.Provider>
+      </ThemeWrapper>
     </Root>
   );
 }
