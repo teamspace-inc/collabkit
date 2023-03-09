@@ -3,8 +3,8 @@ import { Button } from './Button';
 import { root } from '../theme/components/ButtonGroup.css';
 
 export function ButtonGroup(props: {
-  onCancel: (e: React.PointerEvent) => void;
-  onConfirm: (e: React.PointerEvent) => void;
+  onCancel: (e: React.MouseEvent) => void;
+  onConfirm: (e: React.MouseEvent) => void;
   confirmButtonEnabled: boolean;
   confirmButtonText: string;
 }) {
@@ -12,17 +12,19 @@ export function ButtonGroup(props: {
     <div className={root}>
       <Button
         type="secondary"
-        text="Cancel"
-        onPointerDown={props.onCancel}
+        onClick={props.onCancel}
         data-testid="collabkit-button-group-cancel-button"
-      />
+      >
+        Cancel
+      </Button>
       <Button
         type="primary"
-        text={props.confirmButtonText}
         disabled={!props.confirmButtonEnabled}
-        onPointerDown={props.onConfirm}
+        onClick={props.onConfirm}
         data-testid="collabkit-button-group-confirm-button"
-      />
+      >
+        {props.confirmButtonText}
+      </Button>
     </div>
   );
 }
