@@ -61,8 +61,8 @@ import App from './App.vue';
 
 const app = createApp(App);
 const collabkit = createCollabKit({
-  appId: import.meta.env.VITE_COLLABKIT_APP_ID,
-  apiKey: import.meta.env.VITE_COLLABKIT_API_KEY,
+  appId: 'your app id',
+  apiKey: 'your api key',
   workspace: {
     id: 'acme',
     name: 'ACME Corporation',
