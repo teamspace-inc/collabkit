@@ -1,6 +1,6 @@
 {
   "name": "@collabkit/vue",
-  "version": "1.0.0-beta.3",
+  "version": "1.0.0",
   "type": "module",
   "files": [
     "dist"
