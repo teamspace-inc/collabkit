@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, provide, watchEffect } from 'vue';
-import { actions, createCollabKitStore, createEvents } from '@collabkit/client';
+import { actions, createCollabKitStore } from '@collabkit/client';
 import type {
   Config,
   MentionableUsers,
@@ -52,7 +52,7 @@ onMounted(() => {
   actions.install(store);
 });
 onBeforeUnmount(() => {
-  createEvents(store).onDestroy();
+  actions.destroy(store);
 });
 
 watchEffect(() => {
