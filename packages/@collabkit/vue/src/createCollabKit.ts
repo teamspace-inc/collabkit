@@ -1,6 +1,6 @@
 import type { App } from 'vue';
 import type { Config } from '@collabkit/core';
-import { actions, createCollabKitStore } from '@collabkit/client';
+import { actions, createCollabKitStore } from '@collabkit/react';
 import { storeKey } from './constants';
 
 export function createCollabKit(config: Config) {
