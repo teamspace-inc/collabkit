@@ -1,8 +1,12 @@
 import admin from 'firebase-admin';
+import os from 'os';
+import path from 'path';
 
 async function run() {
   admin.initializeApp({
-    credential: admin.credential.cert('/Users/namitchadha/collabkit-dev-service-account.json'),
+    credential: admin.credential.cert(
+      path.join(os.homedir(), 'collabkit-dev-service-account.json')
+    ),
     databaseURL: 'https://collabkit-dev-default-rtdb.europe-west1.firebasedatabase.app',
   });
 

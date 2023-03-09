@@ -41,7 +41,7 @@ async function run() {
 
   admin.initializeApp({
     credential: admin.credential.cert(
-      `/Users/${path.join(os.homedir())}/collabkit-dev-service-account.json`
+      path.join(os.homedir(), 'collabkit-dev-service-account.json')
     ),
     databaseURL: 'https://collabkit-dev-default-rtdb.europe-west1.firebasedatabase.app',
   });
