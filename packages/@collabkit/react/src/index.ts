@@ -61,6 +61,8 @@ export * from './components/Commentable';
 export * from './components/SidebarComments';
 export * from './components/ToggleSidebarCommentsButton';
 
+export * from './hooks/public/useAddCommentButton';
+
 // Used for Vue interop
 export { actions, createCollabKitStore } from '../../client/src';
 
