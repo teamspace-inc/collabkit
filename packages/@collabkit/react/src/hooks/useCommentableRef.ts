@@ -16,8 +16,10 @@ export function useCommentableRef(objectId: string) {
       }
 
       if (element) {
+        store.isCommentablePresent = true;
         store.commentables[objectId] = { objectId, element: markRaw(element) };
       } else {
+        store.isCommentablePresent = false;
         delete store.commentables[objectId];
       }
     },

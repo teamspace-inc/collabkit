@@ -51,10 +51,11 @@ export function createWorkspace(): Workspace {
 
 export function createStore(): UnconfiguredStore {
   const store: UnconfiguredStore = {
-    isFigmaStyle: true,
     sync: null as unknown as SyncAdapter,
     isConnected: false,
     isSidebarOpen: false,
+    isFigmaStyle: true,
+    isCommentablePresent: false,
     uiState: 'idle',
     config: null,
     userId: null,

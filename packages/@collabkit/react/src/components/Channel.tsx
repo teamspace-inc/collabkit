@@ -359,6 +359,8 @@ function ChannelComposerPinButton(props: { className?: string }) {
     );
   });
 
+  const { isCommentablePresent } = useSnapshot(store);
+
   const state = ((pin ? 'pin' : 'empty') +
     '-' +
     (isActive && uiState === 'selecting'
@@ -393,7 +395,7 @@ function ChannelComposerPinButton(props: { className?: string }) {
 
   const tooltip = COMPOSER_PIN_TOOLTIPS[state];
 
-  return (
+  return isCommentablePresent ? (
     <div
       ref={ref}
       onMouseEnter={(e) => events.onMouseEnter(e, { target })}
@@ -408,6 +410,8 @@ function ChannelComposerPinButton(props: { className?: string }) {
         {tooltip && <TooltipContent>{tooltip}</TooltipContent>}
       </Tooltip>
     </div>
+  ) : (
+    <div />
   );
 }
 

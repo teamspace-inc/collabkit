@@ -595,6 +595,7 @@ export interface UnconfiguredStore {
   isFigmaStyle: boolean;
   isConnected: boolean;
   isSidebarOpen: boolean;
+  isCommentablePresent: boolean;
   user: UserProps | null;
   userId: string | null;
   workspaceId: string | null;
