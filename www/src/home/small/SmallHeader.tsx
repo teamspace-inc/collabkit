@@ -63,7 +63,7 @@ export function SmallHeader(props: { children?: React.ReactNode }) {
                 >
                   Contact
                 </Link>
-                <Link className={smallLink} onClick={() => setLocation('/docs/introduction')}>
+                <Link className={smallLink} onClick={() => setLocation('/docs')}>
                   Docs
                 </Link>
                 <Link className={smallLink} onClick={() => setLocation('/getstarted')}>
