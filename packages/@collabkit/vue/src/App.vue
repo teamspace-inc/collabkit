@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { CollabKitProvider } from './';
+import { CollabKitVueProvider } from './';
 
 const apiKey = import.meta.env.VITE_COLLABKIT_UNSECURE_API_KEY;
 const appId = import.meta.env.VITE_COLLABKIT_UNSECURE_APP_ID;
@@ -11,7 +11,7 @@ const user = { id: 'vueuser', name: 'Vue User', email: 'vue@example.com' };
 </script>
 
 <template>
-  <CollabKitProvider
+  <CollabKitVueProvider
     :apiKey="apiKey"
     :appId="appId"
     :workspace="workspace"
@@ -19,5 +19,5 @@ const user = { id: 'vueuser', name: 'Vue User', email: 'vue@example.com' };
     :mentionableUsers="[]"
   >
     Hello world
-  </CollabKitProvider>
+  </CollabKitVueProvider>
 </template>
