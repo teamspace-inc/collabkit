@@ -14,5 +14,9 @@ export const ColorTheme = {
     iconDisabled: 'color-icon-disabled',
     attention: 'color-attention',
     attentionBlue: 'color-attention-blue',
+    pin: 'color-pin',
+    pinHover: 'color-pin-hover',
+    pinActive: 'color-pin-active',
+    pinDisconnected: 'color-pin-disconnected',
   },
 };

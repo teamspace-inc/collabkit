@@ -13,6 +13,7 @@ const colors = {
   white: 'hsl(0, 0%, 100%)', // White
   opacity7: 'hsla(0, 0%, 100%, 0.08)', // White Opacity 7
   red: 'hsl(2, 73%, 62%)', // Red
+  blue: 'hsl(211, 95%, 59%)', // Blue
 };
 
 export const DarkTheme = merge(BaseTheme, {
@@ -25,8 +26,12 @@ export const DarkTheme = merge(BaseTheme, {
     textSecondary: colors.grey60,
     textDisabled: colors.grey24,
     border: colors.opacity7,
-    icon: colors.grey73,
+    icon: colors.grey60,
     iconSecondary: colors.grey60,
+    pin: colors.grey89,
+    pinHover: colors.grey73,
+    pinActive: colors.blue,
+    pinDisconnected: colors.red,
   },
   composer: {},
   mentions: {

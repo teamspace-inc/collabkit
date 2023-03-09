@@ -33,5 +33,9 @@ export const ColorBase = {
     iconDisabled: colors.grey89,
     attention: colors.red,
     attentionBlue: colors.blue,
+    pin: colors.grey7,
+    pinHover: colors.grey24,
+    pinActive: colors.blue,
+    pinDisconnected: colors.grey73,
   },
 };
