@@ -5,7 +5,7 @@ import { ChannelNewThreadComposer, ChannelRoot, ChannelScrollableThreadList } fr
 import { SidebarRoot, SidebarHeader, SidebarTitle, SidebarCloseButton } from './Sidebar';
 import { useSidebarDefaultOpen } from '../hooks/useSidebarDefaultOpen';
 
-function SidebarComments(props: React.ComponentPropsWithoutRef<'div'> & { defaultOpen?: any }) {
+function SidebarComments(props: React.ComponentPropsWithoutRef<'div'> & { defaultOpen?: boolean }) {
   const { defaultOpen, ...otherProps } = props;
   useSidebarDefaultOpen(props);
   return useIsSidebarOpen() ? (
