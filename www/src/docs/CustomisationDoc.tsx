@@ -1,5 +1,5 @@
 import { Thread, ThemeProvider } from '@collabkit/react';
-import { DocDemoContainer, DocLink } from './Doc';
+import { Demo, DocLink } from './Doc';
 import { ThemeName } from './ThemeName';
 
 const threadSize = { width: 280, height: 320 };
@@ -16,22 +16,22 @@ export function CustomisationDoc() {
           <code className="ReactNode">{'<CollabKitProvider />'}</code>.
         </p>
       </div>
-      <DocDemoContainer style={{ position: 'relative' }}>
+      <Demo style={{ position: 'relative' }}>
         <ThemeProvider theme="light">
           <ThemeName>Light Theme</ThemeName>
           <div style={threadSize}>
             <Thread threadId={'thread1'} autoFocus={false} />
           </div>
         </ThemeProvider>
-      </DocDemoContainer>
-      <DocDemoContainer style={{ position: 'relative' }}>
+      </Demo>
+      <Demo style={{ position: 'relative' }}>
         <ThemeName>Dark Theme</ThemeName>
         <div style={threadSize}>
           <ThemeProvider theme="dark">
             <Thread threadId={'thread1'} autoFocus={false} />
           </ThemeProvider>
         </div>
-      </DocDemoContainer>
+      </Demo>
       <div>
         <h3>Custom themes</h3>
         <p>

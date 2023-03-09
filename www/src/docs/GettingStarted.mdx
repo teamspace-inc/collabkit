@@ -1,6 +1,7 @@
 import { docStep, inset } from '../styles/docs/Docs.css';
 import { renderCodeSnippet } from './CodeEditor';
-import { DocDemoContainer, DocLink } from './Doc';
+import { Demo, DocLink } from './Doc';
+import { H3 } from './mdx/H3';
 import GetStartedDocProviderSnippet from './GetStartedDocProviderSnippet?raw';
 import GetStartedSidebarComments from './GetStartedSidebarComments?raw';
 import GetStartedDocCommentableSnippet from './GetStartedDocCommentableSnippet?raw';
@@ -22,11 +23,11 @@ Once you complete this tutorial you'll have a fully functioning comment system y
 
 Set aside 15 to 20 minutes to get this done.
 
-<h3 className={docStep}>Install @collabkit/react</h3>
+<H3 className={docStep}>Install @collabkit/react</H3>
 
 {renderCodeSnippet(`npm install @collabkit/react`, [], 'shell')}
 
-<h3 className={docStep}>Import default styles</h3>
+<H3 className={docStep}>Import default styles</H3>
 
 In a JS module:
 {renderCodeSnippet(`import '@collabkit/react/dist/style.css';`)}
@@ -34,23 +35,23 @@ In a JS module:
 Or in a CSS file:
 {renderCodeSnippet(`@import '@collabkit/react/dist/style.css';`, [], 'css')}
 
-<h3 className={docStep}>Add our provider</h3>
+<H3 className={docStep}>Add our provider</H3>
 
 Add your app ID and API key to the `CollabKitProvider`. You can find these in the CollabKit dashboard. You should also pass in a user and a workspace object.
 
 {renderCodeSnippet(GetStartedDocProviderSnippet)}
 
-<h3 className={docStep}>Add the commenting UI to you app</h3>
+<H3 className={docStep}>Add the commenting UI to you app</H3>
 
 {renderCodeSnippet(GetStartedSidebarComments)}
 
-<h3 className={docStep}>Make your components commentable</h3>
+<H3 className={docStep}>Make your components commentable</H3>
 
 Wrap your components with the `Commentable` component and pass in a unique `objectId` for the component. This will allow users to comment on the component. You can also pass in a title and description for the component.
 
 {renderCodeSnippet(GetStartedDocCommentableSnippet)}
 
-<h3 className={docStep}>Handle navigating to comment pins</h3>
+<H3 className={docStep}>Handle navigating to comment pins</H3>
 
 So your users can get back to the comments they're interested in you'll need to handle navigating to pins.
 
@@ -64,18 +65,18 @@ Here's an example of how you might handle this:
 
 We recommend using JSON to represent the state of your app.
 
-<h3 className={docStep}>Try it out!</h3>
+<H3 className={docStep}>Try it out!</H3>
 
 Once it's working and shipped you can ask your team to try it out with you.
 
-<h3 className={docStep}>Customise themes</h3>
+<H3 className={docStep}>Customise themes</H3>
 
 You can customise the theme of CollabKit by passing in a theme object to the CollabKitProvider. See the [Themes](/docs/core/themes) page for more details.
 
-<h3 className={docStep}>Generate a production app ID and API key</h3>
+<H3 className={docStep}>Generate a production app ID and API key</H3>
 
 When you're ready to ship your app you'll need to generate a production App ID and API key. You can do this in the CollabKit dashboard.
 
-<h3 className={docStep}>Turn on secure mode</h3>
+<H3 className={docStep}>Turn on secure mode</H3>
 
 When you're ready to ship your app you'll need to turn on secure mode. You can do this in the CollabKit dashboard.

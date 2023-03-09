@@ -61,7 +61,7 @@ globalStyle(`${docs} a`, {
   fontWeight: 'inherit',
   fontSize: 'inherit',
   lineHeight: 'inherit',
-  color: `${vars.color.mint} !important`,
+  color: `${vars.color.mint}`,
   cursor: 'pointer !important',
 });
 
@@ -130,6 +130,13 @@ globalStyle(`${docs} table tr`, {
 
 globalStyle(`${docs} table tbody tr:last-of-type`, {
   borderBottom: `none`,
+});
+
+globalStyle(`${docs} h5`, {
+  fontSize: 13,
+  textTransform: 'uppercase',
+  fontWeight: '500',
+  color: vars.color.textContrastMedium,
 });
 
 globalStyle(`${docs} table thead th`, {
@@ -201,15 +208,15 @@ export const docStep = style({
     fontSize: 13,
     display: 'flex',
     justifyContent: 'center',
-    height: '28px',
-    width: '28px',
+    height: '22px',
+    width: '22px',
     textIndent: '-1px',
-    lineHeight: '28px',
+    lineHeight: '22px',
     color: `hsla(0, 0%, 11%, 1)`,
     background: vars.color.mint,
     borderRadius: '50%',
     position: 'absolute',
-    left: -44,
+    left: -32,
     top: 1,
   },
 });
@@ -221,6 +228,36 @@ export const docDemoOverlay = style({
   padding: 20,
   fontWeight: '700',
   color: 'rgba(255,255,255,0.75)',
+});
+
+export const anchors = style({
+  marginTop: 52,
+});
+
+export const anchorList = style({
+  display: 'flex',
+  flexDirection: 'column',
+  marginRight: 16,
+});
+
+export const anchorListItem = style({
+  padding: '8px 12px',
+  lineHeight: '22px !important',
+  fontSize: '13px !important',
+  marginLeft: -12,
+  color: `${vars.color.textContrastMedium} !important`,
+  ':hover': {
+    background: vars.color.bgContrastLow,
+    textDecoration: 'none !important',
+    borderRadius: 6,
+  },
+});
+
+export const anchorHeaderOffset = style({
+  display: 'block',
+  position: 'relative',
+  top: -112,
+  visibility: 'hidden',
 });
 
 export const themeEditorButton = style({
@@ -266,16 +303,18 @@ export const themeDemoContainer = style([
   },
 ]);
 
+export const copyLink = style({
+  color: vars.color.textContrastMedium,
+});
+
 export const docScrollableContent = style({
-  padding: 56,
-  marginTop: 112,
+  padding: '64px 64px 112px',
   gridTemplateColumns: 'minmax(240px, 1fr)',
   display: 'grid',
   width: 'auto',
   position: 'sticky',
   top: 0,
   boxSizing: 'border-box',
-
   wordWrap: 'break-word',
   flex: 1,
   '@media': {
@@ -287,10 +326,10 @@ export const docScrollableContent = style({
 });
 
 export const docScrollableContentWrap = style({
-  borderLeft: '1px solid #333',
   borderColor: vars.color.bgContrastLow,
   minHeight: '100vh',
-
+  display: 'grid',
+  gridTemplateColumns: '1fr',
   '@media': {
     [max768]: {
       borderLeft: 'none',
@@ -300,13 +339,14 @@ export const docScrollableContentWrap = style({
 
 export const docNav = style({
   position: 'fixed',
-  paddingTop: HEADER_HEIGHT,
-  top: 0,
+  paddingTop: 0,
+  top: HEADER_HEIGHT,
   background: vars.color.bgContrastFloor,
   color: 'white',
   display: 'flex',
   height: '100vh',
   alignItems: 'flex-end',
+  borderRight: '1px solid ' + vars.color.bgContrastLow,
 
   '@media': {
     [max768]: {
@@ -361,12 +401,13 @@ export const docLink = style({
 
 export const docContent = style({
   maxWidth: 1152,
+  position: 'relative',
   padding: 0,
   alignItems: 'flex-start',
   display: 'grid',
   height: '100%',
   overflow: 'hidden',
-  gridTemplateColumns: `minmax(${navWidth}, 1fr) minmax(500px, 8fr)`,
+  gridTemplateColumns: `minmax(${navWidth}, 1fr) minmax(500px, 10fr) 180px`,
   '@media': {
     [max768]: {
       display: 'unset',
@@ -375,21 +416,16 @@ export const docContent = style({
 });
 
 export const docBody = style({
-  display: 'flex',
-  flexDirection: 'column',
-  alignSelf: 'center',
+  display: 'grid',
   gap: '28px',
   flex: 1,
-  maxWidth: '666px',
-  width: 'calc(100vw - 40px)',
+  width: '100%',
 });
 
 export const docRoot = style({
-  color: vars.color.textContrastMedium,
   background: vars.color.bgContrastFloor,
   display: 'flex',
   justifyContent: 'center',
-  WebkitFontSmoothing: 'auto',
 });
 
 export const docTitle = style({
@@ -454,6 +490,11 @@ export const navListItem = recipe({
     borderRadius: '4px',
   },
   variants: {
+    small: {
+      true: {
+        fontSize: '13px',
+      },
+    },
     active: {
       true: {
         background: 'rgba(255, 255, 255, 0.08)',

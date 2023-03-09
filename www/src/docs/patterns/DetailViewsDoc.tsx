@@ -1,4 +1,4 @@
-import { DocDemoContainer } from '../Doc';
+import { Demo } from '../Doc';
 import { Markdown } from '@collabkit/react';
 export function DetailViewsDoc() {
   return (
@@ -7,7 +7,7 @@ export function DetailViewsDoc() {
         Add a comment thread to views in your product about a single object. Ex. For a CRM it would
         be a customer, for a task management app it would be a task.
       </h2>
-      <DocDemoContainer></DocDemoContainer>
+      <Demo></Demo>
       <Markdown
         body={`
           

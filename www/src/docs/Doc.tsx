@@ -1,4 +1,4 @@
-import { ThemeProvider } from '@collabkit/react';
+import { Scrollable, ThemeProvider } from '@collabkit/react';
 import { PropsWithChildren, useEffect, useState } from 'react';
 import { Link, LinkProps, LocationHook } from 'wouter';
 import * as styles from '../styles/docs/Docs.css';
@@ -20,8 +20,8 @@ function pathToHref(path?: string[]) {
     .toLowerCase()}`;
 }
 
-import React, { useCallback, useRef } from 'react';
-import { H3 } from './mdx/H3';
+import React from 'react';
+import { anchorStore, H3 } from './mdx/H3';
 import { Code } from './mdx/Code';
 import { ApplyTheme, ThemeEditor } from './ThemeEditor';
 import {
@@ -34,31 +34,34 @@ import {
 } from '../styles/ThemeEditor.css';
 import X from 'phosphor-react/dist/icons/X.esm.js';
 
-export function DocWithSubNav(props: {
+function AnchorList() {
+  const snap = useSnapshot(anchorStore);
+  return (
+    <div className={styles.anchors}>
+      <div style={{ position: 'fixed' }}>
+        <div className={styles.anchorList}>
+          <h5>On this page</h5>
+          {Object.keys(snap.anchors).map((key) => (
+            <a href={'#' + key} className={styles.anchorListItem} key={key}>
+              {snap.anchors[key].text}
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function DocWithAnchorList(props: {
   next?: string[];
   prev?: string[];
   component?: React.FunctionComponent;
 }) {
-  const store = useRef(
-    proxy<{
-      anchors: { [id: string]: string };
-    }>({
-      anchors: {},
-    })
-  );
-
   const { next, prev, component } = props;
-  const handleAnchor = useCallback(
-    (id: string, link: string) => {
-      console.log('anchors', id, link);
-      store.current.anchors = { ...store.current.anchors, [id]: link };
-    },
-    [store]
-  );
 
   const docContent = component?.({
     components: {
-      h3: (props: any) => <H3 {...props} onAnchor={handleAnchor} />,
+      h3: (props: any) => <H3 {...props} />,
       code: (props: any) => {
         return <Code {...props} />;
       },
@@ -66,7 +69,7 @@ export function DocWithSubNav(props: {
   });
 
   return (
-    <Doc next={next} prev={prev} store={store.current}>
+    <Doc next={next} prev={prev}>
       {docContent}
     </Doc>
   );
@@ -103,25 +106,8 @@ export function DocFooterLink(props: {
   ) : null;
 }
 
-export function DocFooter(props: { next?: string[]; prev?: string[] }) {
-  return (
-    <div className={styles.docFooter}>
-      <DocFooterLink path={props.prev} style={{ alignItems: 'flex-start' }} direction="prev" />
-      <DocFooterLink path={props.next} style={{ alignItems: 'flex-end' }} direction="next" />
-    </div>
-  );
-}
-
 export const DocLink = (props: PropsWithChildren<LinkProps<LocationHook>>) => (
   <Link {...props} className={styles.docLink} />
-);
-
-// mint feels too strong here...
-/* background: vars.color.mint, borderColor: vars.color.mint */
-export const DocHeroDemoContainer = (props: React.ComponentPropsWithoutRef<'div'>) => (
-  <ThemeProvider theme="dark">
-    <div {...props} className={styles.docDemoContainer} style={{ ...props.style }} />
-  </ThemeProvider>
 );
 
 export function Demo({
@@ -167,67 +153,64 @@ export function Demo({
   }
 
   return (
-    <DocDemoContainer {...props}>
-      {children}
-      {hideThemeEditorButton ? null : (
-        <button onClick={() => setIsEditing(true)} className={styles.themeEditorButton}>
-          Theme Editor
-        </button>
-      )}
-    </DocDemoContainer>
+    <ThemeProvider theme="dark">
+      <div {...props} className={styles.docDemoContainer}>
+        {children}
+        {hideThemeEditorButton ? null : (
+          <button onClick={() => setIsEditing(true)} className={styles.themeEditorButton}>
+            Theme Editor
+          </button>
+        )}
+      </div>
+    </ThemeProvider>
   );
 }
 
-export const DocDemoContainer = (props: React.ComponentPropsWithoutRef<'div'>) => (
-  <ThemeProvider theme="dark">
-    <div {...props} className={styles.docDemoContainer} />
-  </ThemeProvider>
-);
-
-export const DocTitle = (props: React.ComponentPropsWithoutRef<'h1'>) => (
-  <h1 {...props} className={styles.docTitle} />
-);
-
-export function Doc(props: {
-  children: React.ReactNode;
-  next?: string[];
-  prev?: string[];
-  store: { anchors?: { [id: string]: string } };
-}) {
+export function Doc(props: { children: React.ReactNode; next?: string[]; prev?: string[] }) {
   useEffect(() => {
     store.backgroundColor = vars.color.bgContrastFloor;
     store.theme = 'dark';
     window.scrollTo(0, 0);
+    anchorStore.anchors = {};
   }, []);
-
-  const { anchors } = useSnapshot(props.store);
 
   const isSmallScreen = useIsSmallScreen();
 
   return (
-    <div className={`${dark}`} style={{ background: vars.color.bgContrastFloor, height: '100vh' }}>
-      <ThemeEditor />
-      <div className={`${styles.docRoot}`}>
+    <div className={`${dark}`}>
+      {/* <ThemeEditor /> */}
+      {isSmallScreen ? (
+        <SmallHeader>
+          <Nav className={styles.docNav} />
+        </SmallHeader>
+      ) : (
+        <Header />
+      )}
+      <div className={`${styles.docs} ${styles.docRoot}`}>
         <div className={styles.docContent}>
           {isSmallScreen ? null : <Nav className={styles.docNav} />}
           <div className={styles.docScrollableContentWrap}>
-            {isSmallScreen ? (
-              <SmallHeader>
-                <Nav className={styles.docNav} />
-              </SmallHeader>
-            ) : (
-              <Header />
-            )}
             <div className={styles.docs} style={{ display: 'flex', justifyContent: 'center' }}>
               <div>
-                {JSON.stringify(anchors)}
                 <div className={styles.docScrollableContent}>
                   <div className={styles.docBody}>{props.children}</div>
-                  <DocFooter next={props.next} prev={props.prev} />
+                  <div className={styles.docFooter}>
+                    <DocFooterLink
+                      path={props.prev}
+                      style={{ alignItems: 'flex-start' }}
+                      direction="prev"
+                    />
+                    <DocFooterLink
+                      path={props.next}
+                      style={{ alignItems: 'flex-end' }}
+                      direction="next"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+          <AnchorList />
         </div>
       </div>
     </div>

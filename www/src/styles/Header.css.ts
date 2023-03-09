@@ -4,7 +4,7 @@ import { vars } from './Theme.css';
 export const HEADER_HEIGHT = 80;
 
 export const root = style({
-  position: 'fixed',
+  position: 'sticky',
   top: 0,
   left: 0,
   right: 0,

@@ -1,4 +1,4 @@
-import { DocDemoContainer } from '../Doc';
+import { Demo } from '../Doc';
 import { Markdown } from '@collabkit/react';
 
 export function ListViewsDoc() {
@@ -8,7 +8,7 @@ export function ListViewsDoc() {
         For lists of things in your product. Ex. a list of customers, sales, tasks, different
         entities in your product.
       </h2>
-      <DocDemoContainer />
+      <Demo />
       <Markdown
         body={`
 ### Examples

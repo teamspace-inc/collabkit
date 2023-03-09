@@ -1,10 +1,10 @@
-import { DocDemoContainer } from '../Doc';
+import { Demo } from '../Doc';
 import { Markdown } from '@collabkit/react';
 export function TableViewsDoc() {
   return (
     <>
       <h2>For tables, data grids and spreadsheet-like interfaces.</h2>
-      <DocDemoContainer />
+      <Demo />
       <Markdown
         body={`
 ### Examples

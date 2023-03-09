@@ -27,7 +27,7 @@ import { DashboardPage } from '../pages/DashboardPage';
 // import { CommentAPI } from './hooks/commentAPI';
 import { dashboardStore } from '../dashboard/dashboardActions';
 import { DOCS } from './Docs';
-import { DocWithSubNav } from './Doc';
+import { DocWithAnchorList } from './Doc';
 import { ThemeContextValue, Themes } from '@collabkit/react';
 
 export function getDocHref(path: string[], key: string) {
@@ -59,7 +59,7 @@ function generateDocRoutes(docs: RootDocNode, path: string[] = []): JSX.Element[
       routes.push(
         <Route key={pathString} path={pathString}>
           {'component' in value ? (
-            <DocWithSubNav key={key} next={next} prev={prev} component={value.component} />
+            <DocWithAnchorList key={key} next={next} prev={prev} component={value.component} />
           ) : null}
           {childPath ? <Redirect to={childPath} /> : null}
         </Route>
