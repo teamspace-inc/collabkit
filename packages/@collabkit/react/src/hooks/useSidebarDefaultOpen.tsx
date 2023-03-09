@@ -6,7 +6,7 @@ export function useSidebarDefaultOpen(props: { defaultOpen?: any }) {
   const { defaultOpen } = props;
   const store = useStore();
   useEffect(() => {
-    if (typeof defaultOpen !== 'undefined') {
+    if (defaultOpen) {
       actions.showSidebar(store);
     }
   }, [store, defaultOpen]);
