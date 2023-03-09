@@ -1,0 +1,56 @@
+import { AdvancedProps } from '../../advanced/AdvancedCommon';
+import { renderCodeSnippet } from '../../CodeEditor';
+import { CollabKitVueProviderUsage, CollabKitContextProviderUsage } from './code';
+
+# CollabKitVueProvider
+
+## Use CollabKit in a Vue.js application
+
+`CollabKitVueProvider` is a Vue.js component that can be used instead of [CollabKitProvider](../core/collabkitprovider)
+to configure CollabKit in a Vue.js application that uses [Veaury](https://github.com/devilwjp/veaury) to render our React components.
+
+### Usage
+
+Set up `CollabKitVueProvider` as the root component of your Vue.js app.
+{renderCodeSnippet(CollabKitVueProviderUsage)}
+
+Use Veaury and `CollabKitContextProvider` to render CollabKit React components elsewhere in the app.
+{renderCodeSnippet(CollabKitContextProviderUsage)}
+
+### Props
+
+<AdvancedProps
+  props={[
+    ['appId', 'string', 'Your CollabKit app ID'],
+    [
+      'apiKey',
+      'string',
+      <>
+        <i>(unsecure mode)</i> Your CollabKit API Key
+      </>,
+    ],
+    ['token', 'string', 'The user token of the currently signed in user'],
+    [
+      'user',
+      'User',
+      <>
+        <i>(unsecure mode)</i> Currently signed in user
+      </>,
+    ],
+    [
+      'workspace',
+      'Workspace',
+      <>
+        <i>(unsecure mode)</i> The workspace that the user is currently in
+      </>,
+    ],
+    [
+      'mentionableUsers',
+      `Mention[] | 'allWorkspace'`,
+      <>
+        Array of users that can be mentioned in comments or <code>'allWorkspace'</code>
+        (each user in the same workspace)
+      </>,
+    ],
+  ]}
+/>
