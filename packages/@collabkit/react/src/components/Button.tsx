@@ -1,17 +1,14 @@
 import React from 'react';
 import * as styles from '../theme/components/Button.css';
 
-export function Button(props: {
-  type: 'primary' | 'secondary';
-  text?: React.ReactNode;
-  disabled?: boolean;
-  onPointerDown: (e: React.PointerEvent) => void;
-  className?: string;
-  ['data-testid']?: string;
-}) {
+export function Button(
+  props: {
+    type: 'primary' | 'secondary';
+    disabled?: boolean;
+  } & React.ComponentPropsWithoutRef<'div'>
+) {
   return (
     <div
-      data-testid={props['data-testid'] ?? 'collabkit-button'}
       className={
         props.className ??
         styles.button({
@@ -20,9 +17,9 @@ export function Button(props: {
         })
       }
       role="button"
-      onPointerDown={props.onPointerDown}
+      onClick={props.onClick}
     >
-      {props.text}
+      {props.children}
     </div>
   );
 }
