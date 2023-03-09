@@ -37,13 +37,6 @@ export function createEvents(store: Store) {
       actions.updateComposer(store, { target, editor });
     },
 
-    onDestroy: () => {
-      for (const unsubscribe of Object.values(store.subs)) {
-        unsubscribe();
-      }
-      store.subs = {};
-    },
-
     onConnectionStateChange: async (isConnected: boolean) => {
       store.isConnected = isConnected;
       try {

@@ -53,8 +53,7 @@ function useCollabKitStore(config: Config & { store?: Store }) {
       actions.install(store);
       setStore(store);
       return () => {
-        const events = createEvents(store);
-        events.onDestroy();
+        actions.destroy(store);
       };
     }
   }, [config.appId, 'token' in config ? config.token : config.apiKey]);

@@ -59,6 +59,7 @@ import { updateComposer } from './updateComposer';
 import { viewContent } from './viewContent';
 import { toggleSidebar } from './toggleSidebar';
 import { install } from './install';
+import { destroy } from './destroy';
 import { setConfig } from './setConfig';
 
 export const actions = {
@@ -74,6 +75,7 @@ export const actions = {
   deleteMessage,
   deletePin,
   deselectAll,
+  destroy,
   dragPin,
   expandThread,
   focus,
