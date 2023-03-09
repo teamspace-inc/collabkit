@@ -2,7 +2,7 @@ import { ThemeProvider, ThemeWrapper } from '@collabkit/react';
 import { advancedAnatomyPartNumber } from '../../styles/docs/Docs.css';
 import { vars } from '../../styles/Theme.css';
 import { renderCodeSnippet } from '../CodeEditor';
-import { DocDemoContainer, DocLink } from '../Doc';
+import { Demo, DocLink } from '../Doc';
 
 export function AdvancedDisclaimer(props: { componentName: string }) {
   return (
@@ -146,7 +146,7 @@ export function AdvancedPart(props: {
 
 export function AdvancedDemo(props: { children: React.ReactNode }) {
   return (
-    <DocDemoContainer
+    <Demo
       style={{
         padding: '20px 40px',
         borderColor: vars.color.bgContrastMedium,
@@ -158,17 +158,17 @@ export function AdvancedDemo(props: { children: React.ReactNode }) {
       <ThemeProvider theme="dark">
         <ThemeWrapper>{props.children}</ThemeWrapper>
       </ThemeProvider>
-    </DocDemoContainer>
+    </Demo>
   );
 }
 
 export function AdvancedHeroDemo(props: { children: React.ReactNode }) {
   return (
-    <DocDemoContainer style={{ padding: '16px' }}>
+    <Demo style={{ padding: '16px' }}>
       <ThemeProvider theme="dark">
         <ThemeWrapper>{props.children}</ThemeWrapper>
       </ThemeProvider>
-    </DocDemoContainer>
+    </Demo>
   );
 }
 

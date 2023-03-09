@@ -23,7 +23,7 @@ export function SidebarCommentsBarOnlyDemo() {
         background: 'red',
       }}
     >
-      <SidebarComments defaultOpen={true} />
+      <SidebarComments defaultOpen />
     </div>
   );
 }

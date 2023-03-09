@@ -32,7 +32,7 @@ export const COMPONENTS: ComponentProps[] = [
           borderTopRightRadius: 12,
         }}
       >
-        <SidebarComments defaultOpen={true} style={{ width: 320, height: 376 }} />
+        <SidebarComments defaultOpen style={{ width: 320, height: 376 }} />
       </div>
     ),
   },
