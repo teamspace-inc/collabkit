@@ -1,5 +1,4 @@
-import type {
-  DataSnapshot} from 'firebase/database';
+import type { DataSnapshot } from 'firebase/database';
 import {
   get,
   limitToLast,
@@ -25,10 +24,9 @@ import type {
   Sync,
   FirebasePin,
   Timeline,
-  Attachment} from '@collabkit/core';
-import {
-  timelineUtils
+  Attachment,
 } from '@collabkit/core';
+import { timelineUtils } from '@collabkit/core';
 
 import { FirebaseId } from '@collabkit/core';
 
@@ -77,7 +75,7 @@ export function initFirebase(options = { test: false }) {
   );
 }
 
-const DEBUG = false;
+const DEBUG = true;
 
 type FirebaseUpdates = {
   [path: string]: string | number | boolean | null | FirebaseUpdates | FirebaseUpdates[] | object;
