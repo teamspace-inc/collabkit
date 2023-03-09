@@ -1,4 +1,4 @@
-import { actions } from './index';
+import * as actions from './';
 import { getConfig } from './getConfig';
 import type { Sync, ThreadInfo, Store, WithID, Event } from '@collabkit/core';
 import { subscribeProfile } from './subscribeProfile';

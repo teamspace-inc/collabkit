@@ -1,5 +1,3 @@
-import debounce from 'lodash.debounce';
-
 import { attachComposerPin } from './attachComposerPin';
 import { authenticate } from './authenticate';
 import { blur } from './blur';
@@ -62,7 +60,7 @@ import { install } from './install';
 import { destroy } from './destroy';
 import { setConfig } from './setConfig';
 
-export const actions = {
+export {
   attachComposerPin,
   authenticate,
   blur,
@@ -86,7 +84,7 @@ export const actions = {
   initThread,
   insertComposerPin,
   install,
-  isTyping: debounce(isTyping, 1000, { leading: true, maxWait: 1000 }),
+  isTyping,
   monitorConnection,
   openInboxItem,
   openMenu,

@@ -1,5 +1,5 @@
 import { useThreadContext } from '../useThreadContext';
-import { actions } from '../../../../client/src/actions';
+import { actions } from '@collabkit/client';
 import { useCallback } from 'react';
 import { useWorkspaceContext } from '../useWorkspaceContext';
 import { useStore } from '../useStore';

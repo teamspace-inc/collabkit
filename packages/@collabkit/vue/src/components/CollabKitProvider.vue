@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, provide, watchEffect } from 'vue';
-import { actions, createCollabKitStore } from '@collabkit/client';
+import { actions, createCollabKitStore } from '@collabkit/react';
 import type {
   Config,
   MentionableUsers,

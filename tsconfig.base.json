@@ -21,7 +21,8 @@
     "paths": {
       "@collabkit/colors": ["./packages/@collabkit/colors/src"],
       "@collabkit/editor": ["./packages/@collabkit/editor/src"],
-      "@collabkit/core": ["./packages/@collabkit/core/src"]
+      "@collabkit/core": ["./packages/@collabkit/core/src"],
+      "@collabkit/client": ["./packages/@collabkit/client/src"]
     },
     "rootDir": "."
   },

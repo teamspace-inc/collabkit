@@ -25,6 +25,7 @@
     "build-types": "vue-tsc && rollup --config rollup.config.js"
   },
   "peerDependencies": {
+    "@collabkit/react": "*",
     "vue": "^3.2.0"
   },
   "devDependencies": {
