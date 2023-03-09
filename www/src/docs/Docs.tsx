@@ -4,6 +4,8 @@ import Workspaces from './Workspaces.mdx';
 import Notifications from './Notifications.mdx';
 import SidebarComments from './components/SidebarComments.mdx';
 import Provider from './components/Provider.mdx';
+import CollabKitVueProvider from './components/vue/CollabKitVueProvider.mdx';
+import VueCreateCollabKit from './components/vue/createCollabKit.mdx';
 import Thread from './components/Thread.mdx';
 import Commentable from './components/Commentable.mdx';
 import Themes from './Themes.mdx';
@@ -85,6 +87,13 @@ export const DOCS: RootDocNode = {
       upsertUser: { component: UpsertUserDoc },
       upsertWorkspace: { component: UpsertWorkspaceDoc },
       // createUserToken: {component: createUserToken}
+    },
+  },
+  'Vue interop': {
+    title: 'Vue interop',
+    children: {
+      CollabKitVueProvider: { component: CollabKitVueProvider },
+      createCollabKit: { component: VueCreateCollabKit },
     },
   },
 };
