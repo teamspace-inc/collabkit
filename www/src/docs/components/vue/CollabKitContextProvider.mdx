@@ -1,0 +1,31 @@
+import { AdvancedProps } from '../../advanced/AdvancedCommon';
+import { renderCodeSnippet } from '../../CodeEditor';
+
+# CollabKitContextProvider
+
+### Usage
+
+See [CollabKitVueProvider](collabkitvueprovider).
+
+### Props
+
+<AdvancedProps
+  props={[
+    [
+      'store',
+      'Store',
+      '(required) A store instance',
+    ],
+    [
+      'theme',
+      "'light' | 'dark' | CustomTheme",
+      'The theme to use',
+    ],
+    [
+      'renderAvatar',
+      "(user: User) => React.ReactNode",
+      'A render prop for rendering a custom avatar',
+    ],
+
+]}
+/>

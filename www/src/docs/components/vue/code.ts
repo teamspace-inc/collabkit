@@ -12,7 +12,6 @@ const COLLABKIT_API_KEY = import.meta.env.VITE_COLLABKIT_API_KEY;
   <CollabKitVueProvider
     :appId="COLLABKIT_APP_ID"
     :apiKey="COLLABKIT_API_KEY"
-    theme="dark"
     :workspace="{
       id: 'acme',
       name: 'ACME Corporation',

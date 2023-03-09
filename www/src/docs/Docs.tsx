@@ -5,6 +5,7 @@ import Notifications from './Notifications.mdx';
 import SidebarComments from './components/SidebarComments.mdx';
 import Provider from './components/Provider.mdx';
 import CollabKitVueProvider from './components/vue/CollabKitVueProvider.mdx';
+import CollabKitContextProvider from './components/vue/CollabKitContextProvider.mdx';
 import VueCreateCollabKit from './components/vue/createCollabKit.mdx';
 import Thread from './components/Thread.mdx';
 import Commentable from './components/Commentable.mdx';
@@ -89,10 +90,11 @@ export const DOCS: RootDocNode = {
       // createUserToken: {component: createUserToken}
     },
   },
-  'Vue interop': {
+  Vue: {
     title: 'Vue interop',
     children: {
       CollabKitVueProvider: { component: CollabKitVueProvider },
+      CollabKitContextProvider: { component: CollabKitContextProvider },
       createCollabKit: { component: VueCreateCollabKit },
     },
   },
