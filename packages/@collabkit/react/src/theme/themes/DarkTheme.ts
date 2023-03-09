@@ -26,7 +26,7 @@ export const DarkTheme = merge(BaseTheme, {
     textSecondary: colors.grey60,
     textDisabled: colors.grey24,
     border: colors.opacity7,
-    icon: colors.grey73,
+    icon: colors.grey60,
     iconSecondary: colors.grey60,
     pin: colors.grey89,
     pinHover: colors.grey73,

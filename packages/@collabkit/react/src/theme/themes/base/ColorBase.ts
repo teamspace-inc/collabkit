@@ -35,7 +35,7 @@ export const ColorBase = {
     attentionBlue: colors.blue,
     pin: colors.grey7,
     pinHover: colors.grey24,
-    pinActive: colors.grey30,
+    pinActive: colors.blue,
     pinDisconnected: colors.grey73,
   },
 };
