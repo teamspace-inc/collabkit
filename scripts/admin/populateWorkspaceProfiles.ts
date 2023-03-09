@@ -16,7 +16,7 @@ export function deleteUndefinedProps(o: any) {
 async function run() {
   admin.initializeApp({
     credential: admin.credential.cert(
-      path.join(os.homedir(), '/Users/nc/collabkit-dev-firebase.json')
+      path.join(os.homedir(), 'collabkit-dev-service-account.json')
     ),
     databaseURL: 'https://collabkit-dev-default-rtdb.europe-west1.firebasedatabase.app',
   });
