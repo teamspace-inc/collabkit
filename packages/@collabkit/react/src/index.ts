@@ -10,7 +10,7 @@ import type {
 import type { AvatarProps, CommentProps, ThreadProps } from './types';
 import type { CustomTheme } from './theme/themes.css';
 
-import { CollabKitProvider } from './components/Provider';
+import { CollabKitContextProvider, CollabKitProvider, Provider } from './components/Provider';
 import { Thread } from './components/Thread';
 import { useUnreadCommentsCount } from './hooks/public/useUnreadCommentsCount';
 import { useUnreadThreadsCount } from './hooks/public/useUnreadThreadsCount';
@@ -76,7 +76,7 @@ const Themes = {
 
 export {
   Themes,
-  CollabKitProvider as Provider,
+  Provider,
   CollabKitProvider,
   Inbox,
   InboxButton,
@@ -91,6 +91,7 @@ export {
   useUnreadThreadsCount,
   // advanced
   Button,
+  CollabKitContextProvider,
   Comment,
   CommentList,
   Composer,
