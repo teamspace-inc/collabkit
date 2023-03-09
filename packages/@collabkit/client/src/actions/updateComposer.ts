@@ -1,7 +1,7 @@
 import type { ComposerTarget, Store } from '@collabkit/core';
-import type { LexicalEditor} from 'lexical';
+import type { LexicalEditor } from 'lexical';
 import { $getRoot } from 'lexical';
-import { actions } from '.';
+import * as actions from './';
 import { markRaw } from '../store';
 
 export function updateComposer(

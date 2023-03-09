@@ -11,7 +11,7 @@ import type {
   Target,
   ThreadTarget,
 } from '@collabkit/core';
-import { actions } from './actions';
+import * as actions from './actions';
 import { getConfig } from './actions/getConfig';
 
 export type Events = ReturnType<typeof createEvents>;

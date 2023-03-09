@@ -1,4 +1,4 @@
-export { actions } from './actions';
+export * as actions from './actions';
 export { createEvents } from './events';
 export type { Events } from './events';
 export {

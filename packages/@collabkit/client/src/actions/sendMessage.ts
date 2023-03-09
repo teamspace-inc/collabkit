@@ -1,5 +1,5 @@
 import type { Store } from '@collabkit/core';
-import { actions } from '.';
+import * as actions from '.';
 import { extract } from '@collabkit/editor';
 import { clearComposer } from './clearComposer';
 import { clearAttachments } from './clearAttachments';

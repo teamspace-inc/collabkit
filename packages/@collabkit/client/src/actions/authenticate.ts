@@ -4,7 +4,7 @@ import { signInWithCustomToken, initializeAuth, inMemoryPersistence } from 'fire
 import { getApp } from 'firebase/app';
 import { createWorkspace } from '../store';
 import { generateToken } from './generateToken';
-import { actions } from './';
+import * as actions from './';
 import { signInWithUserToken } from '../utils/signInWithUserToken';
 import { API_HOST, TEST_API_HOST } from '../constants';
 

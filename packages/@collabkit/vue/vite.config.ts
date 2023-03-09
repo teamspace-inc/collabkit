@@ -25,7 +25,7 @@ export default defineConfig(({ mode }) => {
       rollupOptions: {
         // make sure to externalize deps that shouldn't be bundled
         // into your library
-        external: ['vue'],
+        external: ['@collabkit/react', 'vue'],
       },
     },
     envDir: resolve(__dirname, '../../../env'),

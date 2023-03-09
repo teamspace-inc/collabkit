@@ -1,5 +1,5 @@
 import type { Event, Store, WithID } from '@collabkit/core';
-import { actions } from './index';
+import * as actions from './';
 import { createWorkspace } from '../store';
 
 export async function subscribeInbox(store: Store) {
