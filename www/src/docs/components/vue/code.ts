@@ -45,14 +45,12 @@ const store = useCollabKitStore();
 </script>
 
 <template>
-  <main>
-    <CollabKitContextProvider :store="store" theme="light">
-      <!-- <template #renderAvatar="{ profile }">
-        custom avatar component
-      </template> -->
-      <Thread threadId="vue-react-thread" />
-    </CollabKitContextProvider>
-  </main>
+  <CollabKitContextProvider :store="store" theme="light">
+    <!-- <template #renderAvatar="{ profile }">
+      custom avatar component
+    </template> -->
+    <Thread threadId="vue-react-thread" />
+  </CollabKitContextProvider>
 </template>
 `;
 
