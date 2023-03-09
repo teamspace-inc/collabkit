@@ -210,7 +210,7 @@ export function Doc(props: { children: React.ReactNode; next?: string[]; prev?: 
               </div>
             </div>
           </div>
-          <AnchorList />
+          {isSmallScreen ? null : <AnchorList />}
         </div>
       </div>
     </div>

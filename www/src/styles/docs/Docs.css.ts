@@ -308,7 +308,7 @@ export const copyLink = style({
 });
 
 export const docScrollableContent = style({
-  padding: '64px 64px 112px',
+  padding: '64px 64px 112px 64px',
   gridTemplateColumns: 'minmax(240px, 1fr)',
   display: 'grid',
   width: 'auto',
@@ -320,7 +320,7 @@ export const docScrollableContent = style({
   '@media': {
     [max768]: {
       width: '100%',
-      padding: 0,
+      padding: '56px 28px',
     },
   },
 });
@@ -407,7 +407,7 @@ export const docContent = style({
   display: 'grid',
   height: '100%',
   overflow: 'hidden',
-  gridTemplateColumns: `minmax(${navWidth}, 1fr) minmax(500px, 10fr) 180px`,
+  gridTemplateColumns: `minmax(${navWidth}, 1fr) minmax(666px, 10fr) 180px`,
   '@media': {
     [max768]: {
       display: 'unset',
@@ -420,6 +420,7 @@ export const docBody = style({
   gap: '28px',
   flex: 1,
   width: '100%',
+  maxWidth: 666,
 });
 
 export const docRoot = style({
