@@ -4,8 +4,8 @@ import { RouterView } from 'vue-router';
 import { CollabKitVueProvider } from '@collabkit/vue';
 import '@collabkit/react/dist/style.css';
 
-const COLLABKIT_APP_ID = import.meta.env.VITE_COLLABKIT_APP_ID;
-const COLLABKIT_API_KEY = import.meta.env.VITE_COLLABKIT_API_KEY;
+const COLLABKIT_APP_ID = 'your app id';
+const COLLABKIT_API_KEY = 'your api key';
 </script>
 
 <template>
