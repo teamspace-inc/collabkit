@@ -88,7 +88,7 @@ export async function deleteUser(request: functions.https.Request, response: fun
     return;
   }
 
-  const userRef = ref`/apps/${appId}/users/${userId}/`;
+  const userRef = ref`/profiles/${appId}/${userId}/`;
   const userSnapshot = await userRef.once('value');
   if (!userSnapshot.exists()) {
     response.status(404).send({ status: 404, error: 'user not found' });
