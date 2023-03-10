@@ -2,10 +2,13 @@ import { useEffect, useState } from 'react';
 
 export function useLocationHash() {
   const [hash, setHash] = useState(() => window.location.hash);
+
   useEffect(() => {
-    addEventListener('hashchange', (event) => {
-      setHash(window.location.hash);
-    });
+    const onChange = () => setHash(window.location.hash);
+    addEventListener('hashchange', onChange);
+    return () => {
+      removeEventListener('hashchange', onChange);
+    };
   }, []);
   return hash;
 }
