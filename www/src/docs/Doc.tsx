@@ -1,7 +1,7 @@
-import { PropsWithChildren, useEffect, useState } from 'react';
+import { PropsWithChildren, useEffect } from 'react';
 import { Link, LinkProps, LocationHook } from 'wouter';
 import * as styles from '../styles/docs/Docs.css';
-import { dark, light, vars } from '../styles/Theme.css';
+import { dark, vars } from '../styles/Theme.css';
 import { Nav } from './DocNav';
 import ArrowLeft from 'phosphor-react/dist/icons/ArrowLeft.esm.js';
 import ArrowRight from 'phosphor-react/dist/icons/ArrowRight.esm.js';
@@ -21,16 +21,7 @@ function pathToHref(path?: string[]) {
 import React from 'react';
 import { anchorStore, H3 } from './mdx/H3';
 import { Code } from './mdx/Code';
-
-function useLocationHash() {
-  const [hash, setHash] = useState(() => window.location.hash);
-  useEffect(() => {
-    addEventListener('hashchange', (event) => {
-      setHash(window.location.hash);
-    });
-  }, []);
-  return hash;
-}
+import { useLocationHash } from './useLocationHash';
 
 function AnchorList() {
   const hash = useLocationHash();
