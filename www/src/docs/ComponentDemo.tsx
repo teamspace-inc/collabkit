@@ -4,17 +4,12 @@ import * as styles from '../styles/docs/Docs.css';
 import React from 'react';
 import { ApplyTheme, ThemeEditor } from './ThemeEditor';
 import {
-  themeEditorComponentTitle,
   themeEditorDialogOverlay,
   themeEditorModal,
-  themeEditorModalCloseButton,
   themeEditorModalContent,
-  themeEditorModalHeader,
-  themeEditorModalHeaderLeft,
   themeEditorModalPreview,
 } from '../styles/ThemeEditor.css';
-import X from 'phosphor-react/dist/icons/X.esm.js';
-import { DialogHeading, Dialog, DialogContent, DialogDescription, DialogClose } from './Dialog';
+import { Dialog, DialogContent } from './Dialog';
 
 export function ComponentDemo({
   children,
@@ -36,15 +31,6 @@ export function ComponentDemo({
       };
     }
   }, [isEditing]);
-
-  //   <div className={themeEditorModalHeaderLeft}>
-  //   <span className={themeEditorComponentTitle}>{title}</span>
-  // </div>
-  // <div className={themeEditorModalHeader}>
-  //   <button className={themeEditorModalCloseButton} onClick={() => setIsEditing(false)}>
-  //     <X />
-  //   </button>
-  // </div>
 
   return (
     <ThemeProvider theme="dark">
