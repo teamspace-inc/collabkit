@@ -26,7 +26,6 @@ export const popover = style({
 export const root = style([
   {
     boxSizing: 'border-box',
-    width: fallbackVar(vars.inbox.width, '320px'),
     fontFamily: vars.fontFamily,
     display: 'flex',
     height: '100%',
