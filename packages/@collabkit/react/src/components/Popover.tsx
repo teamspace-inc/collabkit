@@ -14,7 +14,6 @@ import {
   FloatingNode,
   FloatingOverlay,
   FloatingPortal,
-  FloatingTree,
   offset,
   Placement,
   ReferenceType,
