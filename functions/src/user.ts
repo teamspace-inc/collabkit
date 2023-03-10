@@ -58,7 +58,7 @@ export async function putUser(request: functions.https.Request, response: functi
 }
 
 export async function deleteUser(request: functions.https.Request, response: functions.Response) {
-  const { appId, workspaceId, apiKey } = request.body;
+  const { appId, apiKey } = request.body;
 
   if (!appId) {
     console.debug('"appId" not provided', appId);
@@ -69,12 +69,6 @@ export async function deleteUser(request: functions.https.Request, response: fun
   if (!apiKey || typeof apiKey !== 'string') {
     console.debug('"apiKey" not provided', apiKey);
     response.status(400).send({ status: 400, error: '"apiKey" not provided' });
-    return;
-  }
-
-  if (!workspaceId || typeof workspaceId !== 'string') {
-    console.debug('"workspaceId" not provided', workspaceId);
-    response.status(400).send({ status: 400, error: '"workspaceId" not provided' });
     return;
   }
 
