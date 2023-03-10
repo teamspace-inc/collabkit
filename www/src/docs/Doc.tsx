@@ -43,7 +43,7 @@ function AnchorList() {
           {Object.keys(snap.anchors)
             // for some reason # gets added to the list
             // sometimes, we want to ignore it.
-            .filter((key) => key !== '#')
+            .filter((key) => key.length > 1)
             .map((key) => (
               <a
                 href={'#' + key}
