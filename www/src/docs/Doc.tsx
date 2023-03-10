@@ -1,6 +1,5 @@
-import { ThemeProvider } from '@collabkit/react';
 import { PropsWithChildren, useEffect, useState } from 'react';
-import { Link, LinkProps, LocationHook, useLocation } from 'wouter';
+import { Link, LinkProps, LocationHook } from 'wouter';
 import * as styles from '../styles/docs/Docs.css';
 import { dark, vars } from '../styles/Theme.css';
 import { Nav } from './DocNav';
@@ -11,7 +10,6 @@ import { store, Header } from '../home/Header';
 import { useIsSmallScreen } from '../hooks/useIsSmallScreen';
 import { SmallHeader } from '../home/small/SmallHeader';
 import { useSnapshot } from 'valtio';
-import { FloatingPortal } from '@floating-ui/react';
 
 function pathToHref(path?: string[]) {
   return `/docs/${path
@@ -23,16 +21,6 @@ function pathToHref(path?: string[]) {
 import React from 'react';
 import { anchorStore, H3 } from './mdx/H3';
 import { Code } from './mdx/Code';
-import { ApplyTheme, ThemeEditor } from './ThemeEditor';
-import {
-  themeEditorModal,
-  themeEditorModalCloseButton,
-  themeEditorModalContent,
-  themeEditorModalHeader,
-  themeEditorModalHeaderLeft,
-  themeEditorModalPreview,
-} from '../styles/ThemeEditor.css';
-import X from 'phosphor-react/dist/icons/X.esm.js';
 
 function useLocationHash() {
   const [hash, setHash] = useState(() => window.location.hash);
@@ -49,18 +37,22 @@ function AnchorList() {
   const snap = useSnapshot(anchorStore);
   return (
     <div className={styles.anchors}>
-      <div style={{ position: 'fixed' }}>
+      <div style={{ position: 'fixed', zIndex: 1 }}>
         <div className={styles.anchorList}>
           <h5 className={styles.anchorListTitle}>On this page</h5>
-          {Object.keys(snap.anchors).map((key) => (
-            <a
-              href={'#' + key}
-              className={styles.anchorListItem({ active: hash === '#' + key })}
-              key={key}
-            >
-              {snap.anchors[key].text}
-            </a>
-          ))}
+          {Object.keys(snap.anchors)
+            // for some reason # gets added to the list
+            // sometimes, we want to ignore it.
+            .filter((key) => key !== '#')
+            .map((key) => (
+              <a
+                href={'#' + key}
+                className={styles.anchorListItem({ active: hash === '#' + key })}
+                key={key}
+              >
+                {snap.anchors[key].text}
+              </a>
+            ))}
         </div>
       </div>
     </div>
@@ -125,62 +117,6 @@ export const DocLink = (props: PropsWithChildren<LinkProps<LocationHook>>) => (
   <Link {...props} className={styles.docLink} />
 );
 
-export function Demo({
-  children,
-  hideThemeEditorButton = false,
-  ...props
-}: {
-  children: React.ReactNode;
-  hideThemeEditorButton?: boolean;
-} & React.ComponentPropsWithoutRef<'div'>) {
-  const [isEditing, setIsEditing] = useState(false);
-
-  useEffect(() => {
-    if (isEditing) {
-      document.body.setAttribute('style', 'height: 100vh; overflow: hidden;');
-      return () => {
-        document.body.setAttribute('style', 'overflow: auto;');
-      };
-    }
-  }, [isEditing]);
-
-  if (isEditing) {
-    return (
-      <FloatingPortal>
-        <div className={themeEditorModal} onClick={() => setIsEditing(false)}>
-          <div onClick={(e) => e.stopPropagation()} className={themeEditorModalContent}>
-            <div className={themeEditorModalHeaderLeft}>
-              <p style={{ paddingLeft: 16, color: 'rgba(0,0,0,0.66)' }}>Theme Editor</p>
-            </div>
-            <div className={themeEditorModalHeader}>
-              <button className={themeEditorModalCloseButton} onClick={() => setIsEditing(false)}>
-                <X />
-              </button>
-            </div>
-            <div className={themeEditorModalPreview}>
-              <ApplyTheme>{children}</ApplyTheme>
-            </div>
-            <ThemeEditor style={{ height: '100%' }} />
-          </div>
-        </div>
-      </FloatingPortal>
-    );
-  }
-
-  return (
-    <ThemeProvider theme="dark">
-      <div {...props} className={styles.docDemoContainer}>
-        {children}
-        {hideThemeEditorButton ? null : (
-          <button onClick={() => setIsEditing(true)} className={styles.themeEditorButton}>
-            Theme Editor
-          </button>
-        )}
-      </div>
-    </ThemeProvider>
-  );
-}
-
 export function Doc(props: { children: React.ReactNode; next?: string[]; prev?: string[] }) {
   useEffect(() => {
     store.backgroundColor = vars.color.bgContrastFloor;
@@ -193,7 +129,6 @@ export function Doc(props: { children: React.ReactNode; next?: string[]; prev?: 
 
   return (
     <div className={`${dark}`}>
-      {/* <ThemeEditor /> */}
       {isSmallScreen ? (
         <SmallHeader>
           <Nav className={styles.docNav} />

@@ -272,7 +272,8 @@ export const anchorListItem = recipe({
 export const anchorHeaderOffset = style({
   display: 'block',
   position: 'relative',
-  top: -112,
+  // align with the top of the doc nav
+  top: -152,
   visibility: 'hidden',
 });
 
@@ -285,6 +286,7 @@ export const themeEditorButton = style({
   background: 'none',
   border: `1px solid ${vars.color.bgContrastMedium}`,
   padding: '8px 16px',
+  color: vars.color.textContrastMedium,
   borderRadius: 20,
   position: 'absolute',
   bottom: 12,
@@ -292,7 +294,7 @@ export const themeEditorButton = style({
   cursor: 'pointer',
 });
 
-export const docDemoContainer = style({
+export const componentDemo = style({
   flex: 1,
   display: 'flex',
   padding: '100px 20px',
@@ -300,24 +302,24 @@ export const docDemoContainer = style({
   position: 'relative',
   width: '100%',
   margin: '0',
-  background: vars.color.mint,
+  background: vars.color.bgContrastFloor,
   borderRadius: 6,
   justifyContent: 'center',
   alignItems: 'center',
   border: '1px solid ' + vars.color.bgContrastMedium,
 });
 
-export const themeDemoContainer = style([
-  docDemoContainer,
-  {
-    borderRadius: '0px',
-    clipPath: 'unset !important',
-    background: 'transparent !important',
-    height: '100% !important',
-    flex: 1,
-    border: 'none',
-  },
-]);
+// export const themeDemoContainer = style([
+//   componentDemo,
+//   {
+//     borderRadius: '0px',
+//     clipPath: 'unset !important',
+//     background: 'transparent !important',
+//     height: '100% !important',
+//     flex: 1,
+//     border: 'none',
+//   },
+// ]);
 
 export const copyLink = style({
   color: vars.color.textContrastMedium,

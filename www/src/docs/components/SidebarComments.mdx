@@ -1,4 +1,4 @@
-import { Demo } from '../Doc';
+import { ComponentDemo } from '../ComponentDemo';
 import Usage from './usage/SidebarCommentsUsage.tsx?raw';
 import Positioning from './usage/SidebarCommentsPositioning.tsx?raw';
 import ToggleSidebarCommentsButtonUsage from './usage/ToggleSidebarCommentsButtonUsage.tsx?raw';
@@ -11,7 +11,7 @@ import { AdvancedProps, StyleTable } from '../advanced/AdvancedCommon';
 
 ## Comments in a sidebar. Great for adding commenting throughout your app accessible in one easy place.
 
-<Demo
+<ComponentDemo
   style={{
     padding: 0,
     justifyContent: 'flex-end',
@@ -21,15 +21,13 @@ import { AdvancedProps, StyleTable } from '../advanced/AdvancedCommon';
     flex: 'unset',
     position: 'relative',
     alignItems: 'flex-start',
-}}>
-
-  <>
-    <div style={{ position: 'absolute', top: 12, left: 12 }}>
-      <ToggleSidebarCommentsButton />
-    </div>
-    <SidebarComments style={{ height: '100%' }} />
-  </>
-</Demo>
+  }}
+>
+  <SidebarComments
+    defaultOpen
+    style={{ height: '100%', position: 'absolute', top: 0, right: 0, bottom: 0 }}
+  />
+</ComponentDemo>
 
 ### Usage
 
@@ -51,7 +49,7 @@ You can show and hide the sidebar in two ways. Either by including the `ToggleSi
 
 #### With a button
 
-<Demo
+<ComponentDemo
   hideThemeEditorButton={true}
   style={{
     padding: 0,
@@ -67,7 +65,7 @@ You can show and hide the sidebar in two ways. Either by including the `ToggleSi
   <div style={{ position: 'absolute', top: 12, left: 12 }}>
     <ToggleSidebarCommentsButton />
   </div>
-</Demo>
+</ComponentDemo>
 
 Include this component to show and hide the sidebar. It shows a 'red' dot when there are unread comments.
 

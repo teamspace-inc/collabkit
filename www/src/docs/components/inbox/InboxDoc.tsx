@@ -1,16 +1,16 @@
 import { AdvancedProps } from '../../advanced/AdvancedCommon';
 import { renderCodeSnippet } from '../../CodeEditor';
 import { InboxDemo } from '../../demos/InboxDemo';
-import { Demo } from '../../Doc';
+import { ComponentDemo } from '../../ComponentDemo';
 import Usage from './InboxUsage.tsx?raw';
 
 export function InboxDoc() {
   return (
     <>
       <h2>See all comment threads in one place.</h2>
-      <Demo style={{ padding: '20px 0px' }}>
+      <ComponentDemo style={{ padding: '20px 0px' }}>
         <InboxDemo />
-      </Demo>
+      </ComponentDemo>
       <div>
         <h3>Usage</h3>
         <p>

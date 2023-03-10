@@ -14,6 +14,7 @@ import {
   FloatingNode,
   FloatingOverlay,
   FloatingPortal,
+  FloatingTree,
   offset,
   Placement,
   ReferenceType,
@@ -24,6 +25,7 @@ import {
   useDismiss,
   useFloating,
   useFloatingNodeId,
+  useFloatingParentNodeId,
   useHover,
   useInteractions,
   VirtualElement,
@@ -110,6 +112,7 @@ function PopoverContent(props: PopoverContentProps) {
             left: context.x ?? 0,
             outline: 'none',
             opacity: 0,
+            zIndex: 999,
           }}
           {...getFloatingProps({})}
         >
@@ -163,6 +166,8 @@ export type AdvancedPopoverProps = {
 };
 
 function PopoverRoot(props: RootProps) {
+  const parentId = useFloatingParentNodeId();
+
   const { placement, children, previewVisible, contentVisible, onContentChange, onPreviewChange } =
     props;
   const nodeId = useFloatingNodeId();
@@ -189,7 +194,7 @@ function PopoverRoot(props: RootProps) {
         : []),
       size({
         padding: 12,
-        apply({ availableWidth, availableHeight, elements }) {
+        apply({ availableWidth, elements }) {
           Object.assign(elements.floating.style, {
             maxWidth: `${availableWidth}px`,
             maxHeight: `${window.innerHeight * 0.88}px`,
@@ -223,7 +228,7 @@ function PopoverRoot(props: RootProps) {
         : []),
       size({
         padding: 12,
-        apply({ availableWidth, availableHeight, elements }) {
+        apply({ availableWidth, elements }) {
           const maxHeight = Math.round(window.innerHeight * 0.88);
           Object.assign(elements.floating.style, {
             maxWidth: `${availableWidth}px`,
@@ -286,11 +291,21 @@ function PopoverRoot(props: RootProps) {
     [previewContext, context, getProps, contentVisible, previewVisible, ref]
   );
 
-  return (
-    <FloatingNode id={nodeId}>
-      <PopoverContext.Provider value={popoverContext}>{children}</PopoverContext.Provider>
-    </FloatingNode>
-  );
+  if (parentId === null) {
+    return (
+      <FloatingTree>
+        <FloatingNode id={nodeId}>
+          <PopoverContext.Provider value={popoverContext}>{children}</PopoverContext.Provider>
+        </FloatingNode>
+      </FloatingTree>
+    );
+  } else {
+    return (
+      <FloatingNode id={nodeId}>
+        <PopoverContext.Provider value={popoverContext}>{children}</PopoverContext.Provider>
+      </FloatingNode>
+    );
+  }
 }
 
 function PopoverPortal({ children }: { children?: React.ReactNode }) {
