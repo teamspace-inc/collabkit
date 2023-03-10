@@ -11,6 +11,11 @@ export const codeEditor = style({
   boxSizing: 'border-box',
 });
 
+export const disableScrolling = style({
+  height: '100vh',
+  overflow: 'hidden',
+});
+
 export const themeEditorModal = style({
   background: 'red',
 });

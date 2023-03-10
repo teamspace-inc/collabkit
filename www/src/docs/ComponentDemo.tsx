@@ -4,6 +4,7 @@ import * as styles from '../styles/docs/Docs.css';
 import React from 'react';
 import { ApplyTheme, ThemeEditor } from './ThemeEditor';
 import {
+  disableScrolling,
   themeEditorDialogOverlay,
   themeEditorModal,
   themeEditorModalContent,
@@ -25,9 +26,9 @@ export function ComponentDemo({
 
   useEffect(() => {
     if (isEditing) {
-      document.body.setAttribute('style', 'height: 100vh; overflow: hidden;');
+      document.body.classList.add(disableScrolling);
       return () => {
-        document.body.setAttribute('style', 'overflow: auto;');
+        document.body.classList.remove(disableScrolling);
       };
     }
   }, [isEditing]);
