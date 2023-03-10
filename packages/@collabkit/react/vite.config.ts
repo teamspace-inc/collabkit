@@ -15,6 +15,7 @@ export default defineConfig(({ mode }) => {
       // Rename the DOM property added by Lexical to avoid conflicts with other Lexical editors
       // on the same page.
       __lexicalEditor: '__collabKitEditor',
+      preventAssignment: false,
     }),
   ];
 
