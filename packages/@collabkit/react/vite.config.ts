@@ -7,7 +7,16 @@ import { visualizer } from 'rollup-plugin-visualizer';
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
-  const plugins = [react(), vanillaExtractPlugin(), visualizer()];
+  const plugins = [
+    react(),
+    vanillaExtractPlugin(),
+    visualizer(),
+    replace({
+      // Rename the DOM property added by Lexical to avoid conflicts with other Lexical editors
+      // on the same page.
+      __lexicalEditor: '__collabKitEditor',
+    }),
+  ];
 
   if (mode === 'production') {
     plugins.push(
