@@ -43,7 +43,7 @@ it('createUser: apiKey not provided', async () => {
   await putUser(http.req, http.res);
   const send = http.res.send as sinon.SinonSpy;
   const { args } = send.getCalls()[0];
-  expect(args[0]).toEqual({ status: 400, error: '"apiKey" not provided' });
+  expect(args[0]).toEqual({ status: 403, error: '"apiKey" not provided' });
 });
 
 it('createUser: workspaceId not provided', async () => {
