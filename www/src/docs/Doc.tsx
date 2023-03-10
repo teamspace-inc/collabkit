@@ -1,7 +1,7 @@
 import { PropsWithChildren, useEffect, useState } from 'react';
 import { Link, LinkProps, LocationHook } from 'wouter';
 import * as styles from '../styles/docs/Docs.css';
-import { dark, vars } from '../styles/Theme.css';
+import { dark, light, vars } from '../styles/Theme.css';
 import { Nav } from './DocNav';
 import ArrowLeft from 'phosphor-react/dist/icons/ArrowLeft.esm.js';
 import ArrowRight from 'phosphor-react/dist/icons/ArrowRight.esm.js';
@@ -93,7 +93,7 @@ export function DocFooterLink(props: {
         <DocLink href={pathToHref(props.path)}>
           <span
             style={{
-              color: vars.color.mint,
+              color: vars.color.primary,
               fontWeight: '600',
               fontSize: 16,
               lineHeight: '28px',
