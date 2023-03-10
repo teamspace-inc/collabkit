@@ -25,6 +25,7 @@ import type {
   FirebasePin,
   Timeline,
   Attachment,
+  Profile,
 } from '@collabkit/core';
 import { timelineUtils } from '@collabkit/core';
 
@@ -546,7 +547,7 @@ export class FirebaseSync implements Sync.SyncAdapter {
     }
   }
 
-  async getProfile(params: { appId: string; userId: string }) {
+  async getProfile(params: { appId: string; userId: string }): Promise<Profile | null> {
     DEBUG && console.log('[network] getProfile', params);
     const snapshot = await get(ref`/profiles/${params.appId}/${params.userId}`);
     return snapshotToProfile(snapshot);

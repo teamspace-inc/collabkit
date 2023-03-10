@@ -7,6 +7,7 @@ import type {
   ThreadInfo,
   ThreadMeta,
   WithID,
+  Profile,
 } from '../types';
 import type { INTERNAL_Snapshot } from 'valtio';
 
@@ -43,14 +44,7 @@ export interface SyncAdapter {
     workspace?: OptionalWorkspaceProps | null;
   }): Promise<void>;
 
-  getProfile(params: {
-    appId: string;
-    userId: string;
-  }): Promise<
-    | undefined
-    | null
-    | { id: string; name?: string; email?: string; color?: string; avatar?: string }
-  >;
+  getProfile(params: { appId: string; userId: string }): Promise<Profile | null>;
 
   nextPinId(params: { appId: string; workspaceId: string; objectId: string }): string;
 
