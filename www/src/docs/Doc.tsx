@@ -51,7 +51,7 @@ function AnchorList() {
     <div className={styles.anchors}>
       <div style={{ position: 'fixed' }}>
         <div className={styles.anchorList}>
-          <h5>On this page</h5>
+          <h5 className={styles.anchorListTitle}>On this page</h5>
           {Object.keys(snap.anchors).map((key) => (
             <a
               href={'#' + key}

@@ -239,6 +239,11 @@ export const anchorList = style({
   flexDirection: 'column',
   marginRight: 16,
   flex: 1,
+  borderLeft: `1px solid ${vars.color.bgContrastMedium}`,
+});
+
+export const anchorListTitle = style({
+  paddingLeft: 12,
 });
 
 export const anchorListItem = recipe({
@@ -248,7 +253,6 @@ export const anchorListItem = recipe({
     width: '180px',
     display: 'flex',
     fontSize: '13px !important',
-    marginLeft: -12,
     borderLeft: `2px solid transparent`,
     color: `${vars.color.textContrastMedium} !important`,
     ':hover': {
