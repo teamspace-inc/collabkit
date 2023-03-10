@@ -21,7 +21,7 @@ export async function scheduleNotificationTask(props: {
 
   const response = await createTask({
     projectId,
-    url: API_HOST + '/sendNotification',
+    url: API_HOST + '/v1/sendNotification',
     queue: 'notifs',
     payload: {
       appId,

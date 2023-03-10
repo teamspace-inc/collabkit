@@ -29,7 +29,7 @@ export async function queueWebhookTask(
 
   const response = await createTaskFn({
     projectId,
-    url: API_HOST + '/triggerWebhook',
+    url: API_HOST + '/v1/triggerWebhook',
     queue: 'webhooks',
     payload: {
       url,
