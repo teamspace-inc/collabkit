@@ -515,23 +515,24 @@ export type WithID<T> = T & {
 
 export type MentionableUsers = readonly Mention[] | 'allWorkspace';
 
-export interface Mention extends BasicProfile {
+export interface Mention {
+  avatar?: string | null;
+  email?: string | null;
   id: string;
+  name?: string | null;
 }
 
 export interface MentionWithColor extends Mention {
   color: Color;
 }
 
-export type BasicProfile = {
-  name?: string | null;
+export interface Profile {
   avatar?: string | null;
-  email?: string | null;
-};
-
-export interface Profile extends BasicProfile {
   color: Color;
+  email?: string | null;
   id: string;
+  isDeleted?: boolean;
+  name?: string | null;
 }
 
 export interface Timeline {

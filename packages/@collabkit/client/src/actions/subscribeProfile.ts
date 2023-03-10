@@ -28,7 +28,9 @@ export async function subscribeProfile(
       const profile = snapshotToProfile(profileSnapshot);
       if (profile) {
         store.profiles[id] = ensureColor(profile);
-        store.mentionableUsers[id] = profile;
+        if (!profile.isDeleted) {
+          store.mentionableUsers[id] = profile;
+        }
         props.onSubscribe(profile);
       } else {
         console.warn(`[CollabKit] Profile '${id}' not found'`);

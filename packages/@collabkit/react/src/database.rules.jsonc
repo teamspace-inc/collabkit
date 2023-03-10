@@ -147,6 +147,9 @@
           },
           "color": {
             ".validate": "newData.isString()"
+          },
+          "isDeleted": {
+            ".validate": "newData.isBoolean()"
           }
         }
       }
@@ -194,6 +197,9 @@
               },
               "color": {
                 ".validate": "newData.isString()"
+              },
+              "isDeleted": {
+                ".validate": "newData.isBoolean()"
               }
             }
           }
