@@ -291,13 +291,11 @@ function PopoverRoot(props: RootProps) {
     [previewContext, context, getProps, contentVisible, previewVisible, ref]
   );
 
-  const node = (
+  return (
     <FloatingNode id={nodeId}>
       <PopoverContext.Provider value={popoverContext}>{children}</PopoverContext.Provider>
     </FloatingNode>
   );
-
-  return parentId === null ? <FloatingTree>{node}</FloatingTree> : node;
 }
 
 function PopoverPortal({ children }: { children?: React.ReactNode }) {
