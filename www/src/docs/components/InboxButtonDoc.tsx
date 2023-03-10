@@ -1,13 +1,13 @@
 import { InboxButton } from '@collabkit/react';
 import { AdvancedProps } from '../advanced/AdvancedCommon';
 import { renderCodeSnippet } from '../CodeEditor';
-import { Demo } from '../Doc';
+import { ComponentDemo } from '../ComponentDemo';
 
 export function InboxButtonDoc() {
   return (
     <>
       <h2>A button with an unread indicator.</h2>
-      <Demo
+      <ComponentDemo
         style={{
           padding: 0,
           height: '500px',
@@ -23,7 +23,7 @@ export function InboxButtonDoc() {
             }}
           />
         </div>
-      </Demo>
+      </ComponentDemo>
       <div>
         <h3>Usage</h3>
         <p>

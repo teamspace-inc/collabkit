@@ -1,13 +1,13 @@
 import { AdvancedProps } from '../advanced/AdvancedCommon';
 import { renderCodeSnippet } from '../CodeEditor';
 import { SidebarCommentsDemo } from '../demos/SidebarDemo';
-import { Demo } from '../Doc';
+import { ComponentDemo } from '../ComponentDemo';
 
 export function SidebarInboxButtonDoc() {
   return (
     <>
       <h2>A button that opens the SidebarInbox.</h2>
-      <Demo
+      <ComponentDemo
         style={{
           padding: 0,
           justifyContent: 'flex-end',
@@ -19,7 +19,7 @@ export function SidebarInboxButtonDoc() {
         }}
       >
         <SidebarCommentsDemo />
-      </Demo>
+      </ComponentDemo>
       <div>
         <h3>Usage</h3>
         <p>

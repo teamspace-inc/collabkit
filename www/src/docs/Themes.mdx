@@ -1,6 +1,7 @@
 import { CollabKitProvider, Thread, ThemeProvider } from '@collabkit/react';
 import { docDemoOverlay } from '../styles/docs/Docs.css';
-import { Demo, DocLink } from './Doc';
+import { DocLink } from './Doc';
+import { ComponentDemo } from './ComponentDemo';
 import { ThemeName } from './ThemeName';
 
 # Themes
@@ -15,7 +16,7 @@ A theme is a set of styles that define the look and feel of CollabKit. It includ
 
 CollabKit comes with two builtin themes. Light and Dark. Use these by passing light or dark to the `<CollabKitProvider />`.
 
-<Demo hideThemeEditorButton={true}>
+<ComponentDemo hideThemeEditorButton={true}>
   <ThemeProvider theme="light">
     <ThemeName>Light Theme</ThemeName>
     <Thread
@@ -24,9 +25,9 @@ CollabKit comes with two builtin themes. Light and Dark. Use these by passing li
       autoFocus={false}
     />
   </ThemeProvider>
-</Demo>
+</ComponentDemo>
 
-<Demo hideThemeEditorButton={true}>
+<ComponentDemo hideThemeEditorButton={true}>
   <ThemeName>Dark Theme</ThemeName>
   <ThemeProvider theme="dark">
     <Thread
@@ -35,7 +36,7 @@ CollabKit comes with two builtin themes. Light and Dark. Use these by passing li
       autoFocus={false}
     />
   </ThemeProvider>
-</Demo>
+</ComponentDemo>
 
 ### Writing your own custom theme
 

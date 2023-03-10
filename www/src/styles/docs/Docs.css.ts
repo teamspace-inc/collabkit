@@ -2,11 +2,14 @@ import { globalStyle, style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
 import { MAIN_BREAKPOINT } from '../../hooks/useWindowSize';
 import { HEADER_HEIGHT } from '../Header.css';
-import { vars } from '../Theme.css';
+import { light, vars } from '../Theme.css';
 
 globalStyle('code', {});
 
-export const docs = style({});
+export const docs = style({
+  WebkitFontSmoothing: 'antialiased',
+  MozOsxFontSmoothing: 'grayscale',
+});
 
 // todo move to root styles
 export const max768 = `screen and (max-width: ${MAIN_BREAKPOINT}px)`;
@@ -18,8 +21,8 @@ export const inset = style({
 const navWidth = '272px';
 
 globalStyle(`${docs} blockquote`, {
-  border: `1px solid ${vars.color.mint}`,
-  color: vars.color.mint,
+  border: `1px solid ${vars.color.primary}`,
+  color: vars.color.primary,
   textIndent: 0,
   marginLeft: 0,
   background: 'transparent',
@@ -32,7 +35,7 @@ globalStyle(`${docs} blockquote`, {
 globalStyle(`${docs} blockquote h4`, {
   fontSize: 14,
   lineHeight: '24px',
-  color: vars.color.mint,
+  color: vars.color.primary,
   margin: '0 0 4px',
 });
 
@@ -61,8 +64,12 @@ globalStyle(`${docs} a`, {
   fontWeight: 'inherit',
   fontSize: 'inherit',
   lineHeight: 'inherit',
-  color: `${vars.color.mint}`,
+  color: `${vars.color.primary}`,
   cursor: 'pointer !important',
+});
+
+globalStyle(`${light} ${docs} a`, {
+  color: `${vars.color.purple} !important`,
 });
 
 globalStyle(`${docs} a:hover`, {
@@ -72,7 +79,7 @@ globalStyle(`${docs} a:hover`, {
 globalStyle(`${docs} blockquote a`, {
   fontSize: 14,
   lineHeight: '24px',
-  color: vars.color.mint,
+  color: vars.color.primary,
   textDecoration: 'none',
 });
 
@@ -83,12 +90,24 @@ globalStyle(`${docs} blockquote a:hover`, {
 globalStyle(`${docs} code`, {
   fontFamily: 'Monaco, monospace',
   fontSize: 14,
-  color: vars.color.mint,
+  color: vars.color.primary,
+});
+
+globalStyle(`${light} ${docs} code`, {
+  fontFamily: 'Monaco, monospace',
+  fontSize: 14,
+  fontWeight: 'bold',
+  color: vars.color.purple,
 });
 
 globalStyle(`${docs} code.ReactNode`, {
   fontWeight: 'regular',
   color: vars.color.sky,
+});
+
+globalStyle(`${light} ${docs} code.ReactNode`, {
+  fontWeight: 'regular',
+  color: vars.color.purple,
 });
 
 globalStyle(`${docs} h1`, {
@@ -110,7 +129,7 @@ globalStyle(`${docs} p`, {
 
 globalStyle(`${docs} h2`, {
   fontStyle: 'normal',
-  fontWeight: 300,
+  fontWeight: 400,
   fontSize: 24,
   lineHeight: '34px',
   marginTop: 0,
@@ -213,7 +232,7 @@ export const docStep = style({
     textIndent: '-1px',
     lineHeight: '22px',
     color: `hsla(0, 0%, 11%, 1)`,
-    background: vars.color.mint,
+    background: vars.color.primary,
     borderRadius: '50%',
     position: 'absolute',
     left: -32,
@@ -238,25 +257,42 @@ export const anchorList = style({
   display: 'flex',
   flexDirection: 'column',
   marginRight: 16,
+  flex: 1,
+  borderLeft: `1px solid ${vars.color.bgContrastMedium}`,
 });
 
-export const anchorListItem = style({
-  padding: '8px 12px',
-  lineHeight: '22px !important',
-  fontSize: '13px !important',
-  marginLeft: -12,
-  color: `${vars.color.textContrastMedium} !important`,
-  ':hover': {
-    background: vars.color.bgContrastLow,
-    textDecoration: 'none !important',
-    borderRadius: 6,
+export const anchorListTitle = style({
+  paddingLeft: 12,
+});
+
+export const anchorListItem = recipe({
+  base: {
+    padding: '8px 12px',
+    lineHeight: '22px !important',
+    width: '180px',
+    display: 'flex',
+    fontSize: '13px !important',
+    borderLeft: `2px solid transparent`,
+    color: `${vars.color.textContrastMedium} !important`,
+    ':hover': {
+      background: vars.color.bgContrastLow,
+      textDecoration: 'none !important',
+    },
+  },
+  variants: {
+    active: {
+      true: {
+        borderLeft: `2px solid ${vars.color.primary}`,
+      },
+    },
   },
 });
 
 export const anchorHeaderOffset = style({
   display: 'block',
   position: 'relative',
-  top: -112,
+  // align with the top of the doc nav
+  top: -152,
   visibility: 'hidden',
 });
 
@@ -269,6 +305,7 @@ export const themeEditorButton = style({
   background: 'none',
   border: `1px solid ${vars.color.bgContrastMedium}`,
   padding: '8px 16px',
+  color: vars.color.textContrastMedium,
   borderRadius: 20,
   position: 'absolute',
   bottom: 12,
@@ -276,7 +313,7 @@ export const themeEditorButton = style({
   cursor: 'pointer',
 });
 
-export const docDemoContainer = style({
+export const componentDemo = style({
   flex: 1,
   display: 'flex',
   padding: '100px 20px',
@@ -284,24 +321,24 @@ export const docDemoContainer = style({
   position: 'relative',
   width: '100%',
   margin: '0',
-  background: vars.color.mint,
+  background: vars.color.bgContrastFloor,
   borderRadius: 6,
   justifyContent: 'center',
   alignItems: 'center',
   border: '1px solid ' + vars.color.bgContrastMedium,
 });
 
-export const themeDemoContainer = style([
-  docDemoContainer,
-  {
-    borderRadius: '0px',
-    clipPath: 'unset !important',
-    background: 'transparent !important',
-    height: '100% !important',
-    flex: 1,
-    border: 'none',
-  },
-]);
+// export const themeDemoContainer = style([
+//   componentDemo,
+//   {
+//     borderRadius: '0px',
+//     clipPath: 'unset !important',
+//     background: 'transparent !important',
+//     height: '100% !important',
+//     flex: 1,
+//     border: 'none',
+//   },
+// ]);
 
 export const copyLink = style({
   color: vars.color.textContrastMedium,
@@ -389,7 +426,6 @@ export const docLink = style({
   fontWeight: 600,
   fontSize: 16,
   lineHeight: '34px',
-  color: `${vars.color.mint} !important`,
   cursor: 'pointer !important',
 
   selectors: {
@@ -498,15 +534,15 @@ export const navListItem = recipe({
     },
     active: {
       true: {
-        background: 'rgba(255, 255, 255, 0.08)',
-        color: 'white',
+        background: vars.color.bgContrastLow,
+        color: vars.color.textContrastHigh,
         fontWeight: 600,
       },
       false: {
         ':hover': {
-          background: 'rgba(255, 255, 255, 0.04)',
+          background: vars.color.bgContrastLow,
           cursor: 'pointer',
-          color: 'white',
+          color: vars.color.textContrastHigh,
         },
       },
     },
@@ -570,7 +606,7 @@ export const navListTitle = style({
   fontFamily: 'Inter',
   fontStyle: 'normal',
   fontWeight: 600,
-  color: '#fff',
+  color: vars.color.textContrastHigh,
   fontSize: 13,
   marginTop: '8px',
   paddingLeft: '12px',

@@ -8,7 +8,7 @@ export const root = style({
   top: 0,
   left: 0,
   right: 0,
-  zIndex: 999,
+  zIndex: 2,
   display: 'flex',
   justifyContent: 'center',
   background: vars.header.backgroundColor,
