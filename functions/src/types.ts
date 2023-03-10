@@ -57,6 +57,7 @@ export type Profile = {
   avatar?: string;
   email?: string;
   color?: string;
+  isDeleted?: boolean;
 };
 
 export type Workspace = {

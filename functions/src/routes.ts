@@ -1,7 +1,7 @@
 import * as functions from 'firebase-functions';
 import * as cors from 'cors';
 import { generateCustomTokenImpl } from './generateCustomToken';
-import { userImpl } from './user';
+import { deleteUser, putUser } from './user';
 import { workspaceImpl } from './workspace';
 import { createOrgImpl } from './createOrg';
 import { commentImpl } from './comment';
@@ -24,7 +24,14 @@ export const routesImpl = (request: functions.https.Request, response: functions
         generateToken(request, response);
         break;
       case 'user':
-        userImpl(request, response);
+        if (request.method === 'PUT') {
+          putUser(request, response);
+        } else if (request.method === 'DELETE') {
+          deleteUser(request, response);
+        } else {
+          response.status(405).send({ status: 405, error: 'Method not allowed' });
+          return;
+        }
         break;
       case 'workspace':
         workspaceImpl(request, response);

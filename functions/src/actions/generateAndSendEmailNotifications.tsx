@@ -57,6 +57,11 @@ async function sendMailForProfile(props: {
     return null;
   }
 
+  if (profiles[profileId].isDeleted) {
+    console.debug('profile is deleted skipping', profileId);
+    return null;
+  }
+
   if (!profiles[profileId].email) {
     console.debug('no profile email found skipping', profileId);
     return null;

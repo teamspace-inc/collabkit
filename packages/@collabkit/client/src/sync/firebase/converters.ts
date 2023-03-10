@@ -1,4 +1,11 @@
-import type { Attachments, Event, FirebaseEvent, UserProps, WithID } from '@collabkit/core';
+import type {
+  Attachments,
+  Event,
+  FirebaseEvent,
+  Profile,
+  UserProps,
+  WithID,
+} from '@collabkit/core';
 import { FirebaseId } from '@collabkit/core';
 import type { DataSnapshot } from 'firebase/database';
 import type { Color } from '@collabkit/colors';
@@ -75,9 +82,7 @@ export function snapshotToUser(snapshot: DataSnapshot): UserProps | null {
 }
 
 // todo validate profile data here
-export function snapshotToProfile(
-  snapshot: DataSnapshot
-): { id: string; name?: string; email?: string; color: Color; avatar?: string } | null {
+export function snapshotToProfile(snapshot: DataSnapshot): Profile | null {
   const profile = snapshot.val();
   if (!profile || !snapshot.key) {
     console.warn('[snapshotToProfile]: could not convert snapshot', profile);

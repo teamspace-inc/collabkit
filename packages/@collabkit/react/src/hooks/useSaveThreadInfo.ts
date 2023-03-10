@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { useApp } from '../hooks/useApp';
 import { ThreadInfo } from '@collabkit/core';
 import { useStore } from './useStore';
 

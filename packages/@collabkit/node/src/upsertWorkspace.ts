@@ -7,7 +7,7 @@ export async function upsertWorkspace(props: {
   apiKey: string;
   workspaceId: string;
   workspace: { name?: string };
-}) {
+}): Promise<void> {
   const response = await fetch(`${API_HOST}/v1/workspace/${props.workspaceId}`, {
     method: 'PUT',
     body: JSON.stringify({
@@ -20,11 +20,8 @@ export async function upsertWorkspace(props: {
       'Content-Type': 'application/json',
     },
   });
-  const res = await response.text();
-  if (response.ok) {
-    return res;
-  } else {
-    console.error('Failed to upsert workspace', response.status, res);
-    return '';
+  if (!response.ok) {
+    const text = await response.text();
+    throw new Error(`Failed to add/update workspace, status=${response.status}, ${text}`);
   }
 }

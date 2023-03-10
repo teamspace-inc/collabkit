@@ -1,24 +1,10 @@
-import type { DataSnapshot} from 'firebase/database';
+import type { DataSnapshot } from 'firebase/database';
 import { get, query } from 'firebase/database';
 import { onChildAdded, onChildChanged } from 'firebase/database';
 import { ref } from '../sync/firebase/refs';
 import type { Profile, Store } from '@collabkit/core';
-import { FirebaseId } from '@collabkit/core';
 import { getConfig } from './getConfig';
 import { snapshotToProfile } from '../sync/firebase/converters';
-
-function processSnapshot(snapshot: DataSnapshot) {
-  if (!snapshot.key) {
-    return null;
-  }
-  const id = FirebaseId.decode(snapshot.key);
-  const profile = snapshotToProfile(snapshot);
-  if (!profile) {
-    return null;
-  }
-  profile.id = id;
-  return profile;
-}
 
 export async function subscribeWorkspaceProfiles(store: Store) {
   const { appId, workspaceId } = getConfig(store);
@@ -28,20 +14,26 @@ export async function subscribeWorkspaceProfiles(store: Store) {
   };
 
   const onChange = (snapshot: DataSnapshot) => {
-    const profile = processSnapshot(snapshot);
+    const profile = snapshotToProfile(snapshot);
     if (!profile) return;
     store.profiles[profile.id] = profile;
     if (store.config.mentionableUsers === 'allWorkspace') {
-      store.mentionableUsers[profile.id] = profile;
+      if (profile.isDeleted) {
+        delete store.mentionableUsers[profile.id];
+      } else {
+        store.mentionableUsers[profile.id] = profile;
+      }
     }
   };
 
   const onAdded = (snapshot: DataSnapshot) => {
-    const profile = processSnapshot(snapshot);
+    const profile = snapshotToProfile(snapshot);
     if (!profile) return;
     store.profiles[profile.id] ||= profile;
     if (store.config.mentionableUsers === 'allWorkspace') {
-      store.mentionableUsers[profile.id] ||= profile;
+      if (!profile.isDeleted) {
+        store.mentionableUsers[profile.id] ||= profile;
+      }
     }
   };
 
@@ -67,14 +59,19 @@ export async function subscribeWorkspaceProfiles(store: Store) {
     if (count > 100) {
       warnLargeWorkspace();
     }
-    const profile = processSnapshot(childSnapshot);
+    const profile = snapshotToProfile(childSnapshot);
     if (!profile) return;
     profiles[profile.id] = profile;
   });
 
   store.profiles = profiles;
   if (store.config.mentionableUsers === 'allWorkspace') {
-    store.mentionableUsers = profiles;
+    for (const id in profiles) {
+      const profile = profiles[id];
+      if (!profile.isDeleted) {
+        store.mentionableUsers[id] = profile;
+      }
+    }
   }
 
   const addedKey = `${profilesRef.toString()}#added`;
