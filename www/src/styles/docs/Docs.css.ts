@@ -238,18 +238,30 @@ export const anchorList = style({
   display: 'flex',
   flexDirection: 'column',
   marginRight: 16,
+  flex: 1,
 });
 
-export const anchorListItem = style({
-  padding: '8px 12px',
-  lineHeight: '22px !important',
-  fontSize: '13px !important',
-  marginLeft: -12,
-  color: `${vars.color.textContrastMedium} !important`,
-  ':hover': {
-    background: vars.color.bgContrastLow,
-    textDecoration: 'none !important',
-    borderRadius: 6,
+export const anchorListItem = recipe({
+  base: {
+    padding: '8px 12px',
+    lineHeight: '22px !important',
+    width: '180px',
+    display: 'flex',
+    fontSize: '13px !important',
+    marginLeft: -12,
+    borderLeft: `2px solid transparent`,
+    color: `${vars.color.textContrastMedium} !important`,
+    ':hover': {
+      background: vars.color.bgContrastLow,
+      textDecoration: 'none !important',
+    },
+  },
+  variants: {
+    active: {
+      true: {
+        borderLeft: `2px solid ${vars.color.mint}`,
+      },
+    },
   },
 });
 

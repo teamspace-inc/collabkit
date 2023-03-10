@@ -1,6 +1,6 @@
-import { Scrollable, ThemeProvider } from '@collabkit/react';
+import { ThemeProvider } from '@collabkit/react';
 import { PropsWithChildren, useEffect, useState } from 'react';
-import { Link, LinkProps, LocationHook } from 'wouter';
+import { Link, LinkProps, LocationHook, useLocation } from 'wouter';
 import * as styles from '../styles/docs/Docs.css';
 import { dark, vars } from '../styles/Theme.css';
 import { Nav } from './DocNav';
@@ -10,7 +10,7 @@ import { IconContext } from 'phosphor-react/dist/lib/index.esm.js';
 import { store, Header } from '../home/Header';
 import { useIsSmallScreen } from '../hooks/useIsSmallScreen';
 import { SmallHeader } from '../home/small/SmallHeader';
-import { proxy, useSnapshot } from 'valtio';
+import { useSnapshot } from 'valtio';
 import { FloatingPortal } from '@floating-ui/react';
 
 function pathToHref(path?: string[]) {
@@ -34,7 +34,18 @@ import {
 } from '../styles/ThemeEditor.css';
 import X from 'phosphor-react/dist/icons/X.esm.js';
 
+function useLocationHash() {
+  const [hash, setHash] = useState(() => window.location.hash);
+  useEffect(() => {
+    addEventListener('hashchange', (event) => {
+      setHash(window.location.hash);
+    });
+  }, []);
+  return hash;
+}
+
 function AnchorList() {
+  const hash = useLocationHash();
   const snap = useSnapshot(anchorStore);
   return (
     <div className={styles.anchors}>
@@ -42,7 +53,11 @@ function AnchorList() {
         <div className={styles.anchorList}>
           <h5>On this page</h5>
           {Object.keys(snap.anchors).map((key) => (
-            <a href={'#' + key} className={styles.anchorListItem} key={key}>
+            <a
+              href={'#' + key}
+              className={styles.anchorListItem({ active: hash === '#' + key })}
+              key={key}
+            >
               {snap.anchors[key].text}
             </a>
           ))}
