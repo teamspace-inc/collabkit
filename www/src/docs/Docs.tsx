@@ -14,6 +14,7 @@ import Themes from './Themes.mdx';
 import { RootDocNode } from './DocRoutes';
 import { UpsertUserDoc } from './components/nodeClient/upsertUserDoc';
 import { UpsertWorkspaceDoc } from './components/nodeClient/upsertWorkspaceDoc';
+import { DeleteUserDoc } from './components/nodeClient/deleteUserDoc';
 
 export const DOCS: RootDocNode = {
   // Dashboard: { component: DashboardPage },
@@ -85,6 +86,7 @@ export const DOCS: RootDocNode = {
   'Node client': {
     title: 'Node client',
     children: {
+      deleteUser: { component: DeleteUserDoc },
       upsertUser: { component: UpsertUserDoc },
       upsertWorkspace: { component: UpsertWorkspaceDoc },
       // createUserToken: {component: createUserToken}

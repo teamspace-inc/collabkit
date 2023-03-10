@@ -6,7 +6,6 @@ export async function deleteUser(props: {
   appId: string;
   apiKey: string;
   userId: string;
-  workspaceId: string;
 }): Promise<void> {
   const response = await fetch(`${API_HOST}/v1/user/${props.userId}`, {
     method: 'PUT',
