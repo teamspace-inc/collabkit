@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   COMMAND_PRIORITY_HIGH,
   COMMAND_PRIORITY_LOW,
@@ -46,6 +46,8 @@ import { ProfileAvatar } from '../Profile';
 import { Scrollable } from '../Scrollable';
 import { useStore } from '../../hooks/useStore';
 import { ProfileContext } from '../../hooks/useProfile';
+import { actions } from '@collabkit/client';
+import { TargetContext } from '../Target';
 
 type MentionMatch = {
   leadOffset: number;
@@ -287,6 +289,9 @@ export function MentionsTypeahead({
     setWidth(rootElement.getBoundingClientRect().width);
   }, [editor]);
 
+  const store = useStore();
+  const target = useContext(TargetContext);
+
   const applyCurrentSelected = useCallback(() => {
     if (results === null || selectedIndex === null) {
       return;
@@ -296,6 +301,10 @@ export function MentionsTypeahead({
     close();
 
     createMentionNodeFromSearchResult(editor, selectedEntry, match);
+
+    if (target?.type === 'composer') {
+      actions.focus(store, { target });
+    }
   }, [close, match, editor, results, selectedIndex]);
 
   const updateSelectedIndex = useCallback(
