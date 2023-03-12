@@ -84,7 +84,7 @@ export const DOCS: RootDocNode = {
   //   },
   // },
   'Node client': {
-    title: 'Node client',
+    title: 'Node',
     children: {
       deleteUser: { component: DeleteUserDoc },
       upsertUser: { component: UpsertUserDoc },
@@ -93,7 +93,7 @@ export const DOCS: RootDocNode = {
     },
   },
   Vue: {
-    title: 'Vue interop',
+    title: 'Vue',
     children: {
       CollabKitVueProvider: { component: CollabKitVueProvider },
       CollabKitContextProvider: { component: CollabKitContextProvider },
