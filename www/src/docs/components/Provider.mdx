@@ -7,11 +7,11 @@ import { DocLink } from '../Doc';
 
 ## Setup commenting with our Provider.
 
-`CollabKitProvider` is the React context provider that handles authentication and data sync with CollabKit's servers. All CollabKit components fetch data from it.
+`<CollabKitProvider />` is the React context provider that handles authentication and data sync with CollabKit's servers. All CollabKit components fetch data from it.
 
 ### Usage
 
-The following example shows how to setup{' '} <code className="ReactNode">CollabKitProvider</code> for your app. Copy the code below into your root <code className="ReactNode">App</code> component.
+The following example shows how to setup{' '} `<CollabKitProvider />` for your app. Copy the code below into your root `<App/>` component.
 
 Because it handles data sync we recommend placing it in your apps root component (or as close as possible to it) so it does not unmount while a user is using your app.
 
