@@ -83,7 +83,7 @@ export const DOCS: RootDocNode = {
   //   },
   // },
   'Node client': {
-    title: 'Node client',
+    title: 'Node',
     children: {
       upsertUser: { component: UpsertUserDoc },
       upsertWorkspace: { component: UpsertWorkspaceDoc },
@@ -91,7 +91,7 @@ export const DOCS: RootDocNode = {
     },
   },
   Vue: {
-    title: 'Vue interop',
+    title: 'Vue',
     children: {
       CollabKitVueProvider: { component: CollabKitVueProvider },
       CollabKitContextProvider: { component: CollabKitContextProvider },
