@@ -35,6 +35,8 @@
     }
   },
 
+  "fontFamily": "Inter, sans-serif",
+
   "fontWeight": {
     "regular": "400",
     "medium": "500",
