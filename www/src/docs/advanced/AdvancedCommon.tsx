@@ -90,7 +90,7 @@ export function AdvancedProps(props: {
             <tbody>
               {props.optionalProps.map((row, i) => (
                 <tr key={`row-${i}`}>
-                  <td style={{ verticalAlign: 'top', whiteSpace: 'nowrap', width: 333 }}>
+                  <td style={{ verticalAlign: 'top', width: 278 }}>
                     <code>{row[0]}</code>
                     {'  '}
                     <code style={{ color: vars.color.textContrastMedium, fontSize: 12 }}>
