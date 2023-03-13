@@ -572,6 +572,17 @@ export const navLi = style({
   },
 });
 
+globalStyle(`${docs} ${docBody} > ul`, {
+  fontSize: 'inherit',
+  lineHeight: 'inherit',
+});
+
+globalStyle(`${docs} ${docBody} > ul > li`, {
+  fontSize: '16px',
+  color: vars.color.textContrastMedium,
+  lineHeight: '28px',
+});
+
 globalStyle(`${docs} ${docBody} > ol`, {
   fontSize: 'inherit',
   lineHeight: 'inherit',
