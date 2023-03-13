@@ -220,6 +220,58 @@ globalStyle(`body`, {
   counterReset: 'step-number',
 });
 
+export const component = style({
+  display: 'flex',
+  alignItems: 'flex-start',
+  flexDirection: 'column',
+  boxSizing: 'border-box',
+});
+
+export const card = style({
+  fontFamily: 'Inter, sans-serif !important',
+  background: vars.color.bgContrastFloor,
+  border: '1px solid ' + vars.color.bgContrastMedium,
+  width: '100%',
+  height: 420,
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  borderRadius: '16px',
+  overflow: 'hidden',
+  position: 'relative',
+
+  '@media': {
+    'screen and (max-width: 720px)': {
+      flexGrow: 1,
+      width: 'calc(100vw - 40px)',
+      height: 400,
+      background: '#4A3A63',
+      borderRadius: '24px',
+      display: 'grid',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+  },
+});
+
+export const componentTitle = style({
+  marginTop: `${28}px !important`,
+  marginBottom: `${14}px !important`,
+});
+
+export const componentDescription = style({
+  // lineHeight: '28px !important',
+  // color: vars.color.textContrastMedium,
+  // fontSize: '16px !important',
+
+  '@media': {
+    'screen and (max-width: 720px)': {
+      fontSize: '16px !important',
+    },
+  },
+});
+
 export const docStep = style({
   counterIncrement: 'step-number',
   ':before': {
@@ -270,9 +322,16 @@ export const anchorListItem = recipe({
     padding: '8px 12px',
     lineHeight: '22px !important',
     width: '180px',
-    display: 'flex',
+    display: 'block',
     fontSize: '13px !important',
     borderLeft: `2px solid transparent`,
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    maxWidth: '100%',
+    wordWrap: 'break-word',
+    textDecoration: 'none !important',
+
     color: `${vars.color.textContrastMedium} !important`,
     ':hover': {
       background: vars.color.bgContrastLow,
@@ -511,6 +570,17 @@ export const navLi = style({
       alignItems: 'stretch',
     },
   },
+});
+
+globalStyle(`${docs} ${docBody} > ol`, {
+  fontSize: 'inherit',
+  lineHeight: 'inherit',
+});
+
+globalStyle(`${docs} ${docBody} > ol > li`, {
+  fontSize: '16px',
+  color: vars.color.textContrastMedium,
+  lineHeight: '28px',
 });
 
 export const navListItem = recipe({

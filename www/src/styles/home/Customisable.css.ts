@@ -7,11 +7,20 @@ export const modal = style({
   borderRadius: '24px',
   width: '100%',
   maxWidth: '1124px',
-  padding: '48px 0 0',
+  padding: '0px 0 0',
+});
+
+export const modalInner = style({
+  paddingBottom: 100,
+  paddingTop: 48,
+  height: 400,
+  width: '100%',
+  overflow: 'hidden',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
+  position: 'relative',
 });
 
 export const controls = style({

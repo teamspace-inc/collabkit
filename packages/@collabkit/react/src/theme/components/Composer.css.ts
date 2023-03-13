@@ -63,6 +63,7 @@ const paragraph = style({
     vars.composer.input.lineHeight,
     vars.text.base.lineHeight
   )} !important`,
+  color: `${fallbackVar(vars.composer.input.color, vars.color.textPrimary)} !important`,
   position: 'relative',
   fontFamily: vars.fontFamily,
 });
@@ -75,6 +76,7 @@ const span = style({
     vars.text.base.lineHeight
   )} !important`,
   position: 'relative',
+  color: `${fallbackVar(vars.composer.input.color, vars.color.textPrimary)} !important`,
   fontFamily: vars.fontFamily,
 });
 

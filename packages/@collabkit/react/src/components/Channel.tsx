@@ -62,6 +62,7 @@ import { SidebarCloseButton, SidebarHeader, SidebarTitle } from './Sidebar';
 import { usePopover } from '../hooks/usePopover';
 import { PopoverRoot, PopoverTrigger, PopoverPortal, PopoverContent } from './Popover';
 import { CommentPinSVG } from './composer/CommentPinSvg';
+import { ThemeWrapper } from './ThemeWrapper';
 
 function EmptyState() {
   return (
@@ -515,16 +516,18 @@ function ChannelNewThreadComposer() {
 // we may want to introduce channel ids in the future
 // so we can have full Slack style channels which are a
 // collection of threads
-function Channel() {
+function Channel(props: React.ComponentPropsWithoutRef<'div'>) {
   return (
-    <Root>
+    <ThemeWrapper>
       <Authenticated>
-        <ChannelRoot channelId="default">
-          <ChannelThreadList />
-          <ChannelNewThreadComposer />
-        </ChannelRoot>
+        <div className={styles.wrapper} {...props}>
+          <ChannelRoot channelId="default">
+            <ChannelScrollableThreadList />
+            <ChannelNewThreadComposer />
+          </ChannelRoot>
+        </div>
       </Authenticated>
-    </Root>
+    </ThemeWrapper>
   );
 }
 

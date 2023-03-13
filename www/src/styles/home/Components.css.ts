@@ -18,6 +18,7 @@ export const card = style({
   justifyContent: 'center',
   borderRadius: '24px',
   overflow: 'hidden',
+  position: 'relative',
 
   '@media': {
     'screen and (max-width: 720px)': {
