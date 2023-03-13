@@ -5,6 +5,10 @@ import * as commentStyles from './Comment.css';
 import * as composerStyles from './Composer.css';
 import { calc } from '@vanilla-extract/css-utils';
 
+export const wrapper = style({
+  width: 320,
+});
+
 export const comment = style([
   commentStyles.root(),
   {

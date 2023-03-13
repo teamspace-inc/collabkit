@@ -1,26 +1,29 @@
 import React from 'react';
 import { dark, vars } from '../styles/Theme.css';
 import * as styles from '../styles/home/Demos.css';
-import { SidebarComments, Thread } from '@collabkit/react';
 import {
-  component,
-  card,
-  componentDescription,
-  componentTitle,
-} from '../styles/home/Components.css';
+  PinCommentButton,
+  Commentable,
+  SidebarComments,
+  Thread,
+  ToggleSidebarCommentsButton,
+  Channel,
+} from '@collabkit/react';
+import { card, componentTitle } from '../styles/home/Components.css';
 import { Carousel } from '../Carousel';
 import { Link } from 'wouter';
 import { button, purpleBg } from '../styles/Website.css';
 import { useWindowSize } from '../hooks/useWindowSize';
+import { Component } from './Component';
 
-type ComponentProps = {
+export type ComponentProps = {
   title: string;
   description: string;
   component: React.ReactNode;
 };
 
-export const COMPONENTS: ComponentProps[] = [
-  {
+export const KEYED_COMPONENTS: { [key: string]: ComponentProps } = {
+  SidebarComments: {
     title: 'SidebarComments',
     description: 'Comments sidebar that accessible from anywhere in your app.',
     component: (
@@ -32,11 +35,28 @@ export const COMPONENTS: ComponentProps[] = [
           borderTopRightRadius: 12,
         }}
       >
-        <SidebarComments defaultOpen style={{ width: 320, height: 376 }} />
+        <SidebarComments
+          defaultOpen
+          style={{ width: 320, position: 'absolute', right: 0, top: 0, bottom: 0, height: '100%' }}
+        />
       </div>
     ),
   },
-  {
+  ToggleSidebarCommentsButton: {
+    title: 'ToggleSidebarCommentsButton',
+    description: 'A comment thread that can be rendered anywhere in your app.',
+    component: <ToggleSidebarCommentsButton style={{}} />,
+  },
+  Commentable: {
+    title: 'Commentable',
+    description: 'A comment thread that can be rendered anywhere in your app.',
+    component: (
+      <Commentable objectId="foo">
+        <div style={{ width: '320', height: 320, backgroundColor: vars.color.aubergine }}></div>
+      </Commentable>
+    ),
+  },
+  Thread: {
     title: 'Thread',
     description: 'A comment thread that can be rendered anywhere in your app.',
     component: (
@@ -49,19 +69,23 @@ export const COMPONENTS: ComponentProps[] = [
       </div>
     ),
   },
-];
-
-function Component(props: ComponentProps) {
-  return (
-    <div className={component}>
-      <div className={card}>{props.component}</div>
-      <div style={{ textAlign: 'left', marginTop: '16px' }}>
-        <h4 className={componentTitle}>{props.title}</h4>
-        <p className={componentDescription}>{props.description}</p>
+  AddCommentsButton: {
+    title: 'PinCommentsButton',
+    description: 'A comment thread that can be rendered anywhere in your app.',
+    component: <PinCommentButton />,
+  },
+  Channel: {
+    title: 'Channel',
+    description: 'A comment thread that can be rendered anywhere in your app.',
+    component: (
+      <div style={{ position: 'absolute', inset: 0 }}>
+        <Channel style={{ width: '100%', height: '100%' }} />
       </div>
-    </div>
-  );
-}
+    ),
+  },
+};
+
+export const COMPONENTS: ComponentProps[] = Object.values(KEYED_COMPONENTS);
 
 export function Components() {
   const size = useWindowSize();

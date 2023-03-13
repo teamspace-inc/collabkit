@@ -6,8 +6,6 @@ import {
   Block,
   Card,
   ColGrid,
-  Datepicker,
-  DeltaType,
   Dropdown,
   DropdownItem,
   Flex,
@@ -35,8 +33,7 @@ import {
   useCommentableRef,
   ToggleSidebarCommentsButton,
   SidebarComments,
-  Debug,
-  AddCommentButton,
+  PinCommentButton,
 } from '@collabkit/react';
 
 import { Charts } from './Charts';
@@ -254,7 +251,7 @@ export function DashboardExample() {
           {/* <PopoverInbox /> */}
           {/* <PopoverChannel /> */}
           <div className="px-2"></div>
-          <AddCommentButton />
+          <PinCommentButton />
           <ToggleSidebarCommentsButton />
           {/* <Datepicker
               minDate={minDate}

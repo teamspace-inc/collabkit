@@ -96,4 +96,14 @@ Because it handles data sync we recommend placing it in your apps root component
       </>,
     ],
   ]}
+  optionalProps={[
+    [
+      'renderAvatar',
+      `(props: {
+      profile: Profile;
+      size?: string;
+    }) => ReactNode`,
+      'Render a custom avatar component',
+    ],
+  ]}
 />

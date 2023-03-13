@@ -3,7 +3,7 @@ import { dark, vars } from '../styles/Theme.css';
 import { useHeaderStyle } from '../hooks/useHeaderStyle';
 import * as styles from '../styles/home/Demos.css';
 import { ThemeProvider } from '@collabkit/react';
-import { controls, modal } from '../styles/home/Customisable.css';
+import { controls, modal, modalInner } from '../styles/home/Customisable.css';
 import { ToggleButtonGroup } from './ToggleButtonGroup';
 import { COMPONENTS } from './Components';
 import { purpleBg } from '../styles/Website.css';
@@ -26,7 +26,7 @@ export function Customisable() {
         Use a default theme or seamlesly integrate into your UI
       </h3>
       <div className={modal}>
-        <div style={{ paddingBottom: 100, height: 400, overflow: 'hidden' }}>
+        <div className={modalInner}>
           <ThemeProvider theme={theme === 0 ? 'light' : 'dark'}>
             {COMPONENTS[component].component}
           </ThemeProvider>
@@ -36,7 +36,7 @@ export function Customisable() {
             title="Component"
             options={[
               { node: <div style={padding}>SidebarComments</div>, value: 0 },
-              { node: <div style={padding}>Thread</div>, value: 1 },
+              { node: <div style={padding}>ToggleSidebarCommentsButton</div>, value: 1 },
             ]}
             value={component}
             onChange={setComponent}

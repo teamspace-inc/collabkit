@@ -1,0 +1,52 @@
+import { ComponentDemo } from '../ComponentDemo';
+import Usage from './usage/SidebarCommentsUsage.tsx?raw';
+import Positioning from './usage/SidebarCommentsPositioning.tsx?raw';
+import ToggleSidebarCommentsButtonUsage from './usage/ToggleSidebarCommentsButtonUsage.tsx?raw';
+import { renderCodeSnippet } from '../CodeEditor';
+import useSidebarCommentsButtonUsage from './usage/useSidebarCommentsButtonUsage.tsx?raw';
+import { ToggleSidebarCommentsButton, SidebarComments } from '@collabkit/react';
+import { AdvancedProps, StyleTable } from '../advanced/AdvancedCommon';
+
+import { ComponentCard } from '../ComponentCard';
+import { COMPONENTS, KEYED_COMPONENTS } from '../../home/Components';
+
+# Overview
+
+## An overview of all the components CollabKit provides and when to use them.
+
+### SidebarComments
+
+<ComponentCard {...KEYED_COMPONENTS.SidebarComments} />
+Use the `<SidebarComments />` component to render a sidebar with comments. The sidebar can be positioned
+on the left or right side of the screen.{' '}
+
+Recommended if you want to enable commenting throughout your app. By default the sidebar shows comments for the current page. You can also use the `pageId` prop to show comments for a different page.
+
+<br />
+
+### ToggleSidebarCommentsButton
+
+<ComponentCard {...KEYED_COMPONENTS.ToggleSidebarCommentsButton} />
+Use the `<ToggleSidebarCommentsButton />` component to render a button that toggles the sidebar. The
+button can be positioned on the left or right side of the screen. If you want to use your own button
+or a custom interaction to toggle the sidebar, you can use the `useSidebarCommentsButton` hook.
+
+### Commentable
+
+<ComponentCard {...KEYED_COMPONENTS.Commentable} />
+
+Use the `<Commentable />` component to make any element commentable. The component tracks the layout and position of wrapped elements and enables users to add comments to them.
+
+### PinCommentButton
+
+<ComponentCard {...KEYED_COMPONENTS.AddCommentsButton} />
+
+Use the `<PinCommentButton />` component to render a button that lets the user pin a comment to a specific element on the page.
+
+If you want to use your own button or a custom interaction to pin a comment, you can use the `usePinCommentButton` hook. You can pin comments
+
+### Thread
+
+<ComponentCard {...KEYED_COMPONENTS.Thread} />
+
+Use the `<Thread />` component to render an individual comment thread. You can embed this component anywhere in your app. Great for detail views or creating your own custom commenting experience.

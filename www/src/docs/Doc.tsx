@@ -112,7 +112,9 @@ export function Doc(props: { children: React.ReactNode; next?: string[]; prev?: 
   useEffect(() => {
     store.backgroundColor = vars.color.bgContrastFloor;
     store.theme = 'dark';
-    window.scrollTo(0, 0);
+    if (!window.location.hash) {
+      window.scrollTo(0, 0);
+    }
     anchorStore.anchors = {};
   }, []);
 

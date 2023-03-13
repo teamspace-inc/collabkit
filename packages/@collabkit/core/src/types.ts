@@ -161,7 +161,7 @@ export type Target =
   | CommentActionsEmojiButtonTarget
   | ChannelTarget
   | ComposerPinTarget
-  | AddCommentButtonTarget
+  | PinCommentButtonTarget
   | PinPrevThreadIconButtonTarget
   | PinNextThreadIconButtonTarget
   | PinThreadResolveIconButtonTarget
@@ -279,8 +279,8 @@ export type OverlayTarget = {
   y: number;
 };
 
-export type AddCommentButtonTarget = {
-  type: 'addCommentButton';
+export type PinCommentButtonTarget = {
+  type: 'pinCommentButton';
   workspaceId: string;
 };
 

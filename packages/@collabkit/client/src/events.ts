@@ -99,7 +99,7 @@ export function createEvents(store: Store) {
             case 'thread':
               actions.select(store, { target });
               break;
-            case 'addCommentButton':
+            case 'pinCommentButton':
               actions.startSelecting(store);
               const threadId = store.nextThreadId;
               if (!threadId) return;

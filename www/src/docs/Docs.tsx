@@ -15,6 +15,7 @@ import { RootDocNode } from './DocRoutes';
 import { UpsertUserDoc } from './components/nodeClient/upsertUserDoc';
 import { UpsertWorkspaceDoc } from './components/nodeClient/upsertWorkspaceDoc';
 import { DeleteUserDoc } from './components/nodeClient/deleteUserDoc';
+import AllComponents from './components/AllComponents.mdx';
 
 export const DOCS: RootDocNode = {
   // Dashboard: { component: DashboardPage },
@@ -42,6 +43,7 @@ export const DOCS: RootDocNode = {
   Components: {
     title: 'Components',
     children: {
+      Overview: { component: AllComponents },
       SidebarComments: { component: SidebarComments },
       Commentable: { component: Commentable },
       // Inbox: { component: InboxDoc },
