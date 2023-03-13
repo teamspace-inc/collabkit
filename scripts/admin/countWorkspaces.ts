@@ -13,7 +13,7 @@ async function run() {
   const apps = await (await admin.database().ref('apps').get()).val();
 
   for (const appId in apps) {
-    const workspaces = await (await admin.database().ref(`workspaces/${appId}/`).get()).val();
+    const workspaces = (await admin.database().ref(`workspaces/${appId}/`).get()).val();
     const numWorkspaces = Object.keys(workspaces).length;
     console.log(apps[appId].name, numWorkspaces, `$${numWorkspaces * 5}`);
   }
