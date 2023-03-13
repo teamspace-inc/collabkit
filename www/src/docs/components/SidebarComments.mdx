@@ -45,7 +45,7 @@ To adjust the position of the sidebar, or it's height you can use the `style` or
 
 ### Showing and hiding the sidebar
 
-You can show and hide the sidebar in two ways. Either by including the `ToggleSidebarCommentsButton` component, or by using the `useSidebarCommentsButton` hook. Use the hook if you have a custom button component, or need full control over how the button renders.
+You can show and hide the sidebar in two ways. Either by including the `<ToggleSidebarCommentsButton />` component, or by using the `useSidebarCommentsButton` hook. Use the hook if you have a custom button component, or need full control over how the button renders.
 
 #### With a button
 
@@ -81,9 +81,13 @@ If you need full control over how the button renders, or would like to integrate
 
 ### Styling
 
-Customise the following variables in your theme to style the `SidebarComments` component.
+You can customise the position, width, and height of `<SidebarComments />` using the `style` or `className` prop.
+
+To customise it's contents pass the `theme` prop to the `<CollabKitProvider />` component.
 
 #### Sidebar
+
+Here are the variables you can control in the `theme` prop that relate directly to `Sidebar`.
 
 <StyleTable
   styles={[

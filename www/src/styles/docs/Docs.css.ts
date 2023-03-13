@@ -515,8 +515,8 @@ export const navLi = style({
 
 export const navListItem = recipe({
   base: {
-    fontSize: '16px',
-    lineHeight: '32px',
+    fontSize: '14px',
+    lineHeight: '28px',
     boxSizing: 'border-box',
     padding: '4px 12px',
     userSelect: 'none',
@@ -610,5 +610,5 @@ export const navListTitle = style({
   fontSize: 13,
   marginTop: '8px',
   paddingLeft: '12px',
-  lineHeight: '32px',
+  lineHeight: '28px',
 });

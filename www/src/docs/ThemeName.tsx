@@ -1,4 +1,5 @@
 import { docDemoOverlay } from '../styles/docs/Docs.css';
+import { vars } from '../styles/Theme.css';
 
 export function ThemeName(props: { children: React.ReactNode }) {
   return (
@@ -9,7 +10,7 @@ export function ThemeName(props: { children: React.ReactNode }) {
         left: 0,
         top: 0,
         fontWeight: '500',
-        color: 'rgba(0,0,0,0.33)',
+        color: vars.color.textContrastLow,
       }}
     >
       {props.children}
