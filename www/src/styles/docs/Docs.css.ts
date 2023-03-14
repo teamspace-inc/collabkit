@@ -111,8 +111,8 @@ globalStyle(`${light} ${docs} code.ReactNode`, {
 });
 
 globalStyle(`${docs} h1`, {
-  margin: 0,
-  marginBottom: 30,
+  marginTop: 6,
+  marginBottom: 28,
   fontSize: 36,
   fontWeight: '700',
   color: vars.color.textContrastHigh,
@@ -124,6 +124,7 @@ globalStyle(`${docs} p`, {
   fontSize: 16,
   lineHeight: '28px',
   margin: '0px',
+  marginBottom: '28px',
   color: vars.color.textContrastMedium,
 });
 
@@ -132,9 +133,13 @@ globalStyle(`${docs} h2`, {
   fontWeight: 400,
   fontSize: 24,
   lineHeight: '34px',
-  marginTop: 0,
-  marginBottom: '16px',
+  marginTop: 32,
+  marginBottom: '28px',
   color: vars.color.textContrastHigh,
+});
+
+globalStyle(`${docs} h2 + h3`, {
+  marginTop: 28,
 });
 
 globalStyle(`${docs} table`, {
@@ -197,7 +202,7 @@ globalStyle(`${docs} table th`, {
 
 globalStyle(`${docs} h3`, {
   marginTop: '60px',
-  marginBottom: '0px',
+  marginBottom: '28px',
   fontStyle: 'normal',
   fontWeight: '600',
   fontSize: '24px',
@@ -240,6 +245,7 @@ export const card = style({
   borderRadius: '16px',
   overflow: 'hidden',
   position: 'relative',
+  marginBottom: 28,
 
   '@media': {
     'screen and (max-width: 720px)': {
@@ -512,7 +518,7 @@ export const docContent = style({
 
 export const docBody = style({
   display: 'grid',
-  gap: '28px',
+  // gap: '28px',
   flex: 1,
   width: '100%',
   maxWidth: 666,
@@ -689,7 +695,7 @@ export const navListTitle = style({
   fontWeight: 600,
   color: vars.color.textContrastHigh,
   fontSize: 13,
-  marginTop: '8px',
+  marginTop: '14px',
   paddingLeft: '12px',
   lineHeight: '28px',
 });
