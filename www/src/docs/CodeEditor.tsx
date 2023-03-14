@@ -73,17 +73,6 @@ export function renderCodeSnippet(
   return <CodeSnippet code={code} language={language} hideRanges={hideRanges} />;
 }
 
-// todo load this earlier to avoid the flash
-const MONACO = (async () => {
-  const id = nanoid();
-  const monaco = await loader.init();
-  const model =
-    monaco.editor.getModel(monaco.Uri.parse(`file:///index${id}.tsx`)) ??
-    monaco.editor.createModel('', 'typscript', monaco.Uri.parse(`file:///index${id}.tsx`));
-  monaco.editor.defineTheme('collabkit', CollabKitMonacoTheme);
-  return model;
-})();
-
 export function CodeEditor({
   code,
   numLines = 40,

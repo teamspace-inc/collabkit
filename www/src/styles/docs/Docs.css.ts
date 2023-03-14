@@ -138,10 +138,6 @@ globalStyle(`${docs} h2`, {
   color: vars.color.textContrastHigh,
 });
 
-globalStyle(`${docs} h2 + h3`, {
-  marginTop: 28,
-});
-
 globalStyle(`${docs} table`, {
   width: '100%',
   color: vars.color.textContrastHigh,
@@ -391,6 +387,7 @@ export const componentDemo = style({
   justifyContent: 'center',
   alignItems: 'center',
   border: '1px solid ' + vars.color.bgContrastMedium,
+  marginBottom: 28,
 });
 
 // export const themeDemoContainer = style([
@@ -698,4 +695,16 @@ export const navListTitle = style({
   marginTop: '14px',
   paddingLeft: '12px',
   lineHeight: '28px',
+});
+
+globalStyle(`${docs} h2 + h3`, {
+  marginTop: 28,
+});
+
+globalStyle(`${docs} p + h3`, {
+  marginTop: 28,
+});
+
+globalStyle(`${docs} ${componentDemo} + h3`, {
+  marginTop: 28,
 });
