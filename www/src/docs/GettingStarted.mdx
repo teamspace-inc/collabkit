@@ -22,19 +22,19 @@ Set aside 15 to 20 minutes to get this done.
 
 ### Install @collabkit/react
 
-{renderCodeSnippet(`npm install @collabkit/react`, [], 'shell')}
+{renderCodeSnippet(`npm install @collabkit/react`, { language: 'shell'})}
 
 ### Import default styles
 
 In a JS module:
-{renderCodeSnippet(`import '@collabkit/react/dist/style.css';`)}
+{renderCodeSnippet(`import '@collabkit/react/dist/style.css';`, { language: 'js'})}
 
 Or in a CSS file:
-{renderCodeSnippet(`@import '@collabkit/react/dist/style.css';`, [], 'css')}
+{renderCodeSnippet(`@import '@collabkit/react/dist/style.css';`, {language: 'css'})}
 
 ### Add our provider
 
-Add your app ID and API key to the `CollabKitProvider`. You can find these in the CollabKit dashboard. You should also pass in a user and a workspace object.
+Add your app ID and API key to the `<CollabKitProvider />`. You can find these in the CollabKit dashboard. You should also pass in a user and a workspace object.
 
 ```tsx
 import { CollabKitProvider } from '@collabkit/react';
@@ -86,7 +86,7 @@ export function Layout() {
 
 ### Make your components commentable
 
-Wrap your components with the `Commentable` component and pass in a unique `objectId` for the component. This will allow users to comment on the component. You can also pass in a title and description for the component.
+Wrap your components with the `<Commentable />` component and pass in a unique `objectId` for the component. This will allow users to comment on the component. You can also pass in a title and description for the component.
 
 ```tsx
 import { Commentable } from '@collabkit/react';
@@ -106,46 +106,13 @@ export function Listing() {
 
 So your users can get back to the comments they're interested in you'll need to handle navigating to pins.
 
-You can do this by passing in a `onPinAttach` prop to the `CollabKitProvider` component. This will be called when a user attaches a pin. This callback should return a `string` that represents the state of your apps UI at the time the pin was attached.
+You can do this by passing in a `onPinAttach` prop to the `<CollabKitProvider />` component. This will be called when a user attaches a pin. This callback should return a `string` that represents the state of your apps UI at the time the pin was attached.
 
 This state will be passed to the `onPinClick` callback when a user clicks on the pin.
 
 Here's an example of how you might handle this:
 
-```tsx
-import { CollabKitProvider } from '@collabkit/react';
-
-export function App() {
-  return (
-    <CollabKitProvider
-      appId={'your app ID here'}
-      apiKey={'your API key here'}
-      user={{
-        id: 'jane',
-        name: 'Jane Doe',
-        email: 'jane@example.com',
-      }}
-      workspace={{
-        id: 'acme',
-        name: 'ACME Corporation',
-      }}
-      mentionableUsers={[]}
-      onPinAttach={() => {
-        return JSON.stringify({
-          /* your apps state here, e.g. url, tab selected, etc. */
-        });
-      }}
-      onPinClick={(pin) => {
-        const appState = pin.meta ? JSON.parse(pin.meta) : null;
-        /* apply appState here */
-        /* e.g. navigate to a specific url, select a tab, etc. */
-      }}
-    >
-      {/* your app code here */}
-    </CollabKitProvider>
-  );
-}
-```
+{renderCodeSnippet(GetStartedPinCallbacks, { highlightLines: "[[18, 27]]"})}
 
 We recommend using JSON to represent the state of your app.
 

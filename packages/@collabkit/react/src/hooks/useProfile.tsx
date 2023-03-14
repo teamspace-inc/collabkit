@@ -1,6 +1,5 @@
 import React from 'react';
-
-export const ProfileContext = React.createContext<string | null>(null);
+import { ProfileContext } from './ProfileContext';
 
 export function useProfileContext() {
   const context = React.useContext(ProfileContext);

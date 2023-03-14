@@ -56,6 +56,9 @@ export * from './components/Root';
 export * from './components/PinCommentButton';
 export * from './components/Tooltip';
 export * from './components/Catch';
+export * from './components/Pin';
+
+export * from './hooks/ProfileContext';
 
 export * from './components/Commentable';
 export * from './components/SidebarComments';

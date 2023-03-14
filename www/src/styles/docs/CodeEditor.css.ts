@@ -14,7 +14,8 @@ export const codeEditor = recipe({
   variants: {
     isSnippet: {
       true: {
-        padding: '16px 20px 16px 0px',
+        padding: '14px 0px',
+        marginBottom: 28,
         borderRadius: 8,
       },
       false: {},
@@ -35,9 +36,14 @@ export const copyButton = style({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  width: 28,
+  padding: '4px 8px',
+  gap: 4,
+  fontSize: 12,
+  color: vars.color.textContrastMedium,
+  fontFamily: 'Inter, sans-serif',
+  // width: 28,
   height: 28,
-  borderRadius: '50%',
+  borderRadius: '6px',
   background: 'transparent',
   cursor: 'pointer',
   ':hover': {
@@ -62,7 +68,7 @@ globalStyle(
 );
 
 globalStyle(`${dark} ${docs} .mtk42`, {
-  fontWeight: '600',
+  fontWeight: '500',
   color: vars.color.sky,
 });
 
@@ -114,7 +120,7 @@ globalStyle(
 );
 
 globalStyle(`${light} ${docs} .mtk42`, {
-  fontWeight: '600',
+  fontWeight: '500',
   color: vars.color.purple,
 });
 

@@ -27,7 +27,7 @@ import { useCommentSnapshot } from '../hooks/useCommentSnapshot';
 import { useMarkAsSeen } from '../hooks/useMarkAsSeen';
 import { useOnMarkdownLinkClick } from '../hooks/useOnMarkdownLinkClick';
 import { useStore } from '../hooks/useStore';
-import { ProfileContext } from '../hooks/useProfile';
+import { ProfileContext } from '../hooks/ProfileContext';
 import { useStoreKeyMatches } from '../hooks/useSubscribeStoreKey';
 import { CommentProps } from '../types';
 import { useUnreadCommentsCount } from '../hooks/public/useUnreadCommentsCount';

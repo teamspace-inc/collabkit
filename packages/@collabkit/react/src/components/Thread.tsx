@@ -9,7 +9,7 @@ import { ThreadUnreadDot } from './ThreadUnreadDot';
 import { ThreadProps } from '../types';
 import { Scrollable } from './Scrollable';
 import { useThread } from '../hooks/public/useThread';
-import { ProfileContext } from '../hooks/useProfile';
+import { ProfileContext } from '../hooks/ProfileContext';
 import { useIsAuthenticated } from '../hooks/useIsAuthenticated';
 import { ThemeWrapper } from './ThemeWrapper';
 

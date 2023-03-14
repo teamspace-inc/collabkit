@@ -31,7 +31,7 @@ Because of their flexible nature, they're useful if you want full control about 
 
 ### Usage
 
-To render a comment thread in your app you need to import the `Thread` component and pass it a `threadId` prop.
+To render a comment thread in your app you need to import the `<Thread />` component and pass it a `threadId` prop.
 
 {renderCodeSnippet(ThreadUsage1)}
 
@@ -102,7 +102,7 @@ To render a comment thread in your app you need to import the `Thread` component
 
 ### Size and Position
 
-To control the size or position of a `Thread` pass a `className` or `style` prop.
+To control the size or position of a `<Thread />` pass a `className` or `style` prop.
 
 {renderCodeSnippet(ThreadPositioning)}
 
@@ -110,7 +110,7 @@ To control the size or position of a `Thread` pass a `className` or `style` prop
 
 Use our <DocLink href="/theme-editor">Theme Editor</DocLink> to customise all variables in one place.
 
-Customise the following variables in your theme to style the `Thread` component.
+Customise the following variables in your theme to style the `<Thread />` component.
 
 <StyleTable
   styles={[
@@ -123,15 +123,7 @@ Customise the following variables in your theme to style the `Thread` component.
 
 ### Composability
 
-The `Thread` component is composed of the following components:
-
-- `ThreadRoot`
-- `ThreadHeader`
-- `Scrollable`
-- `CommentList`
-- `Composer`
-
-You can use these components to build your own custom `Thread` component. `CommentList` and `Composer` are also composable, so you can split them apart to
+The `<Thread />` is implemented internally using a set of composable components like this:
 
 ```tsx
 import { ThreadRoot, Scrollable, CommentList, Composer } from '@collakbit/react';
@@ -148,10 +140,6 @@ export function CustomThread(props: { threadId: string }) {
 }
 ```
 
-To style indivdual components, adjust your theme or CSS variables. Or provide a `className` prop to a leaf component.
+You can use these components to build your own custom `<Thread />` component. `<CommentList />` and `<Composer />` are also composable, so you can decompose them to customise further.
 
-For example, if you want to customise the `ThreadRoot` component you can do so by passing in a `className` prop:
-
-```tsx
-<ThreadRoot threadId={threadId} className="your-thread-classname-here">
-```
+To learn more about how to use these components, check out the <DocLink to="/docs/core/composability">Composability</DocLink> docs.

@@ -2,9 +2,14 @@ import React from 'react';
 import { renderCodeSnippet } from '../CodeEditor';
 
 export const Code = ({ children }: React.ComponentPropsWithoutRef<'code'>) => {
-  if (typeof children !== 'string') {
-    return <code>{children}</code>;
+  const isString = typeof children === 'string';
+  const isMultiLine = isString && children.includes('\n');
+  const isReactNode = isString && children?.startsWith('<');
+  if (isReactNode) {
+    return <code className="ReactNode">{children}</code>;
+  } else if (isMultiLine) {
+    return renderCodeSnippet(children);
   } else {
-    return children.includes('\n') ? renderCodeSnippet(children) : <code>{children}</code>;
+    return <code>{children}</code>;
   }
 };

@@ -51,7 +51,7 @@ export function ProfileDoc() {
         <p>
           Lets look at the parts that make up a <code>{'<Profile />'}</code>.
         </p>
-        {renderCodeSnippet(Anatomy, [[1, 2]])}
+        {renderCodeSnippet(Anatomy)}
         <p>
           You can render just the individual parts too, if you want to just render a users name or
           avatar. These components must be rendererd within a <code>{'ProfileProvider'}</code>.
