@@ -16,6 +16,7 @@ import { UpsertUserDoc } from './components/nodeClient/upsertUserDoc';
 import { UpsertWorkspaceDoc } from './components/nodeClient/upsertWorkspaceDoc';
 import { DeleteUserDoc } from './components/nodeClient/deleteUserDoc';
 import AllComponents from './components/AllComponents.mdx';
+import Navigation from './Navigation.mdx';
 
 export const DOCS: RootDocNode = {
   // Dashboard: { component: DashboardPage },
@@ -35,6 +36,7 @@ export const DOCS: RootDocNode = {
     children: {
       CollabKitProvider: { component: Provider },
       Workspaces: { component: Workspaces },
+      Navigation: { component: Navigation },
       Security: { component: Security },
       Notifications: { component: Notifications },
       Themes: { component: Themes },
