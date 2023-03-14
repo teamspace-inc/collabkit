@@ -42,7 +42,8 @@ globalStyle(`${docs} blockquote h4`, {
 globalStyle(`${docs} h4`, {
   fontSize: 14,
   lineHeight: '24px',
-  margin: '0 0 4px',
+  margin: '0 0 32px',
+  display: 'block',
 });
 
 globalStyle(`${docs} ul`, {
