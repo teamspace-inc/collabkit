@@ -12,7 +12,7 @@ export function LogoImg(
       style={{
         position: 'relative',
         cursor: 'pointer',
-        top: window.innerWidth > 640 ? '0.15rem' : 0,
+        top: typeof window !== 'undefined' && window.innerWidth > 640 ? '0.15rem' : 0,
         ...props.style,
       }}
       {...props}

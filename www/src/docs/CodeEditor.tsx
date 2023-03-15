@@ -1,8 +1,8 @@
-import React, { useRef, useState, useLayoutEffect, useEffect, useId } from 'react';
+import React, { useRef, useState, useEffect, useId } from 'react';
+import { useLayoutEffect } from '../hooks/useLayoutEffect';
 import { loader } from '@monaco-editor/react';
 import type { Monaco } from '@monaco-editor/react';
 import { CollabKitMonacoTheme } from './CollabKitMonacoTheme';
-import { nanoid } from 'nanoid';
 
 import reactTypes from './react.types.d.ts?raw';
 import collabKitTypes from './types.d.ts?raw';
@@ -72,17 +72,6 @@ export function renderCodeSnippet(
 ) {
   return <CodeSnippet code={code} language={language} hideRanges={hideRanges} />;
 }
-
-// todo load this earlier to avoid the flash
-const MONACO = (async () => {
-  const id = nanoid();
-  const monaco = await loader.init();
-  const model =
-    monaco.editor.getModel(monaco.Uri.parse(`file:///index${id}.tsx`)) ??
-    monaco.editor.createModel('', 'typscript', monaco.Uri.parse(`file:///index${id}.tsx`));
-  monaco.editor.defineTheme('collabkit', CollabKitMonacoTheme);
-  return model;
-})();
 
 export function CodeEditor({
   code,
