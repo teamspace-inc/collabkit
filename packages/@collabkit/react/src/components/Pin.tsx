@@ -493,16 +493,21 @@ function PinNewThreadComposer({ pin }: { pin: Pin }) {
   );
 }
 
-function PinIcon(props: { onPointerDown: (e: React.PointerEvent) => void; isSelected: boolean }) {
+type PinIconProps = { onPointerDown: (e: React.PointerEvent) => void; isSelected: boolean };
+
+const PinIcon = forwardRef<HTMLDivElement, PinIconProps>(function PinIcon(
+  props: PinIconProps,
+  ref
+) {
   return (
-    <div className={styles.pinIcon} onPointerDown={props.onPointerDown}>
+    <div className={styles.pinIcon} onPointerDown={props.onPointerDown} ref={ref}>
       <PinIconSVG isSelected={props.isSelected} />
       <div className={styles.pinAvatar}>
         <ProfileAvatar />
       </div>
     </div>
   );
-}
+});
 
 const PinMarker = forwardRef<HTMLDivElement, PinMarkerProps>(function PinMarker(props, ref) {
   const { isSelected, pin, pointerEvents } = props;
