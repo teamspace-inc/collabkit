@@ -2,10 +2,6 @@ import { docStep, inset } from '../styles/docs/Docs.css';
 import { renderCodeSnippet } from './CodeEditor';
 import { DocLink } from './Doc';
 import { H3 } from './mdx/H3';
-import GetStartedDocProviderSnippet from './GetStartedDocProviderSnippet?raw';
-import GetStartedSidebarComments from './GetStartedSidebarComments?raw';
-import GetStartedDocCommentableSnippet from './GetStartedDocCommentableSnippet?raw';
-import GetStartedPinCallbacks from './GetStartedPinCallbacks?raw';
 
 # Getting Started
 
@@ -39,17 +35,71 @@ Or in a CSS file:
 
 Add your app ID and API key to the `CollabKitProvider`. You can find these in the CollabKit dashboard. You should also pass in a user and a workspace object.
 
-{renderCodeSnippet(GetStartedDocProviderSnippet)}
+```tsx
+import { CollabKitProvider } from '@collabkit/react';
+
+export function App() {
+  return (
+    <CollabKitProvider
+      appId={'your app ID here'}
+      apiKey={'your API key here'}
+      user={{
+        id: 'jane',
+        name: 'Jane Doe',
+        email: 'jane@example.com',
+      }}
+      workspace={{
+        id: 'acme',
+        name: 'ACME Corporation',
+      }}
+      mentionableUsers={[]}
+    >
+      {/* your app code here */}
+    </CollabKitProvider>
+  );
+}
+```
 
 <H3 className={docStep}>Add the commenting UI to you app</H3>
 
-{renderCodeSnippet(GetStartedSidebarComments)}
+```tsx
+import { SidebarComments, ToggleSidebarCommentsButton } from '@collabkit/react';
+
+export function Layout() {
+  return (
+    <>
+      <nav>
+        {/* This button toggles the sidebar.
+            Put it in a toolbar or header of the page. */}
+        <ToggleSidebarCommentsButton />
+      </nav>
+
+      {/* Rest of your page */}
+
+      {/* Renders the sidebar, when it's visible. */}
+      <SidebarComments />
+    </>
+  );
+}
+```
 
 <H3 className={docStep}>Make your components commentable</H3>
 
 Wrap your components with the `Commentable` component and pass in a unique `objectId` for the component. This will allow users to comment on the component. You can also pass in a title and description for the component.
 
-{renderCodeSnippet(GetStartedDocCommentableSnippet)}
+```tsx
+import { Commentable } from '@collabkit/react';
+
+export function Listing() {
+  return (
+    <Commentable objectId="listing-209624">
+      <img src="https://source.unsplash.com/random/800x600" />
+      <h1>Chalet in Chamonix-Mont-Blanc</h1>
+      <p>Luxyry stay near the ski slopes</p>
+    </Commentable>
+  );
+}
+```
 
 <H3 className={docStep}>Handle navigating to comment pins</H3>
 
@@ -61,7 +111,40 @@ This state will be passed to the `onPinClick` callback when a user clicks on the
 
 Here's an example of how you might handle this:
 
-{renderCodeSnippet(GetStartedPinCallbacks)}
+```tsx
+import { CollabKitProvider } from '@collabkit/react';
+
+export function App() {
+  return (
+    <CollabKitProvider
+      appId={'your app ID here'}
+      apiKey={'your API key here'}
+      user={{
+        id: 'jane',
+        name: 'Jane Doe',
+        email: 'jane@example.com',
+      }}
+      workspace={{
+        id: 'acme',
+        name: 'ACME Corporation',
+      }}
+      mentionableUsers={[]}
+      onPinAttach={() => {
+        return JSON.stringify({
+          /* your apps state here, e.g. url, tab selected, etc. */
+        });
+      }}
+      onPinClick={(pin) => {
+        const appState = pin.meta ? JSON.parse(pin.meta) : null;
+        /* apply appState here */
+        /* e.g. navigate to a specific url, select a tab, etc. */
+      }}
+    >
+      {/* your app code here */}
+    </CollabKitProvider>
+  );
+}
+```
 
 We recommend using JSON to represent the state of your app.
 

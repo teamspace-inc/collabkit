@@ -1,9 +1,7 @@
 import { docStep, inset } from '../styles/docs/Docs.css';
 import { renderCodeSnippet } from './CodeEditor';
-import SecureModeDocNodeSnippet from './SecureModeDocNodeSnippet?raw';
 import SecureModeDocResponseSnippet from './SecureModeDocResponseSnippet?raw';
 import SecureModeDocJsonSnippet from './SecureModeDocJsonSnippet?raw';
-import SecureModeDocReactSnippet from './SecureModeDocReactSnippet?raw';
 import SecureModeDocPythonSnippet from './SecureModeDocPythonSnippet.py?raw';
 
 # Security
@@ -95,7 +93,15 @@ User tokens are used to authenticate a user's requests. You'll need to sign a us
 
 For Node.js, call `createUserToken` from `@collabkit/node`:
 
-{renderCodeSnippet(SecureModeDocNodeSnippet)}
+```ts
+import { createUserToken } from '@collabkit/node';
+
+const token = createUserToken({
+  apiKey: '<your API Key here>',
+  userId: '<your user ID here>',
+  workspaceId: '<your workspace ID here>',
+});
+```
 
 For Python, install [PyJWT](https://pyjwt.readthedocs.io/en/stable/index.html) and use the following python code:
 
@@ -107,7 +113,21 @@ For everything else, create a JWT token with the following payload signed by you
 
 <h3 className={docStep}>Pass the per-user token to the client</h3>
 
-{renderCodeSnippet(SecureModeDocReactSnippet)}
+```tsx
+import { CollabKitProvider } from '@collabkit/react';
+
+export default function App() {
+  return (
+    <CollabKitProvider
+      appId={'your APP ID here'}
+      token={'per user token generated on the server here'}
+      mentionableUsers={'allWorkspace'}
+    >
+      {/* your app */}
+    </CollabKitProvider>
+  );
+}
+```
 
 <h3 className={docStep}>Your app is now in secure mode</h3>
 

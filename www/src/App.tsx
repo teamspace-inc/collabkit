@@ -3,16 +3,12 @@ import { HomePage } from './pages/HomePage';
 import { DocRoutes } from './docs/DocRoutes';
 import { CollabKitContextProvider, createCollabKitStore } from '@collabkit/react';
 import { SetBreakpointContext } from './hooks/useWindowSize';
-import { UIPage } from './pages/UIPage';
-import { ThemeEditorPage } from './pages/ThemeEditorPage';
 import { UnsubscribePage } from './pages/UnsubscribePage';
 import { useSnapshot } from 'valtio';
 import { store as wwwStore } from './home/Header';
 import * as Theme from './styles/Theme.css';
 import { nanoid } from 'nanoid';
-import { CarouselPage } from './pages/CarouselPage';
 import { useLayoutEffect } from './hooks/useLayoutEffect';
-import { GetStartedPage } from './pages/GetStartedPage';
 import { PinLayer } from '../../packages/@collabkit/react/src/components/PinLayer';
 
 const apiKey = import.meta.env.VITE_COLLABKIT_UNSECURE_API_KEY;
@@ -32,17 +28,6 @@ const store = createCollabKitStore({
 });
 
 export default function App() {
-  // useEffect(() => {
-  //   // @ts-expect-error
-  //   window.Intercom('boot', {
-  //     api_base: 'https://api-iam.intercom.io',
-  //     app_id: 'cwr7lgni',
-  //   });
-
-  //   // @ts-expect-error
-  //   window.Intercom('update');
-  // }, []);
-
   useLayoutEffect(() => {
     // if a user resizes the window to small
     // and then opens the burger menu
