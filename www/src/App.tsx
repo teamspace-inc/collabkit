@@ -1,7 +1,7 @@
 import { Route, Switch } from 'wouter';
 import { HomePage } from './pages/HomePage';
 import { DocRoutes } from './docs/DocRoutes';
-import { CollabKitContextProvider, createCollabKitStore } from '@collabkit/react';
+import { CollabKitProvider } from '@collabkit/react';
 import { SetBreakpointContext } from './hooks/useWindowSize';
 import { UnsubscribePage } from './pages/UnsubscribePage';
 import { useSnapshot } from 'valtio';
@@ -19,13 +19,13 @@ const workspace = {
 };
 const userId = nanoid();
 
-const store = createCollabKitStore({
+const config = {
   apiKey,
   appId,
   workspace,
   user: { id: userId, name: 'Anonymous' },
   mentionableUsers: [],
-});
+};
 
 export default function App() {
   useLayoutEffect(() => {
@@ -45,7 +45,7 @@ export default function App() {
   }, [backgroundColor, theme]);
 
   return (
-    <CollabKitContextProvider store={store}>
+    <CollabKitProvider {...config}>
       <SetBreakpointContext>
         <Switch>
           <Route path="/" component={HomePage} />
@@ -55,6 +55,6 @@ export default function App() {
         </Switch>
       </SetBreakpointContext>
       <PinLayer />
-    </CollabKitContextProvider>
+    </CollabKitProvider>
   );
 }
