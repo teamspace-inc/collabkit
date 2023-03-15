@@ -103,9 +103,9 @@ export function CodeEditor({
   onChange?: (value: string) => void;
 } & React.ComponentPropsWithoutRef<'div'>) {
   const editorRef = useRef<HTMLDivElement>(null);
-  const monacoRef = useRef<any>(null);
   const editorInstanceRef = useRef<any>(null);
   const [codeString, setCodeString] = useState(() => code ?? ``);
+  const [monaco, setMonaco] = useState<Monaco | null>(null);
   const [didMount, setDidMount] = useState(false);
   const modelRef = useRef<editor.ITextModel | null>(null);
   const [didCalcSize, setDidCalcSize] = useState(false);
@@ -113,88 +113,91 @@ export function CodeEditor({
   const [height, setHeight] = useState<React.CSSProperties['height']>(() => lineHeight * numLines);
   const id = useId();
 
-  useLayoutEffect(() => {
-    if (monacoRef.current === null) {
+  useEffect(() => {
+    if (monaco === null) {
       loader.init().then((monaco: Monaco) => {
-        monacoRef.current = monaco;
-
-        const model =
-          monaco.editor.getModel(monaco.Uri.parse(`file:///index${id}.tsx`)) ??
-          monaco.editor.createModel('', language, monaco.Uri.parse(`file:///index${id}.tsx`));
-        monaco.editor.defineTheme('collabkit', CollabKitMonacoTheme);
-
-        modelRef.current = model;
-
-        editorInstanceRef.current = monaco.editor.create(editorRef.current!, {
-          model,
-          fontSize,
-          fontFamily: 'Monaco, monospace',
-          theme: 'collabkit',
-          lineHeight,
-          scrollBeyondLastLine: false,
-          scrollbar: {
-            verticalScrollbarSize: scrollbar === false ? 0 : 6,
-            alwaysConsumeMouseWheel: scrollbar,
-            handleMouseWheel: scrollbar,
-          },
-          minimap: {
-            enabled: false,
-          },
-          useShadowDOM: true,
-          wordWrap: 'on',
-          readOnly: readOnly,
-          domReadOnly: readOnly,
-          automaticLayout: true, // !props.fixedSize,
-          renderLineHighlight: 'none',
-          renderLineHighlightOnlyWhenFocus: true,
-          suggest: {},
-          lineNumbers: 'off',
-          renderFinalNewline: false,
-          codeLens: false,
-          definitionLinkOpensInPeek: false,
-          contextmenu: false,
-        });
-
-        if (readOnly) {
-          const messageContribution = editorInstanceRef.current.getContribution(
-            'editor.contrib.messageController'
-          );
-          editorInstanceRef.current.onDidAttemptReadOnlyEdit(() => {
-            messageContribution.dispose();
-          });
-        }
-
-        if (language === 'typescript') {
-          monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
-            jsx: monaco.languages.typescript.JsxEmit.React,
-          });
-
-          monaco.languages.typescript.typescriptDefaults.setDiagnosticsOptions({
-            noSemanticValidation: false,
-            noSyntaxValidation: false,
-          });
-        }
-
-        editorInstanceRef.current.onDidChangeModelContent(() => {
-          const value = editorInstanceRef.current.getValue();
-          setCodeString(value);
-          onChange?.(value);
-        });
-
-        if (language === 'typescript') {
-          monaco.languages.typescript.typescriptDefaults.addExtraLib(
-            reactTypes,
-            'file:///node_modules/react/index.d.ts'
-          );
-          monaco.languages.typescript.typescriptDefaults.addExtraLib(
-            collabKitTypes,
-            'file:///node_modules/@collabkit/react/index.d.ts'
-          );
-        }
-        setDidMount(true);
+        setMonaco(monaco);
       });
     }
-  }, [id]);
+  }, []);
+
+  useEffect(() => {
+    if (monaco) {
+      const model =
+        monaco.editor.getModel(monaco.Uri.parse(`file:///index${id}.tsx`)) ??
+        monaco.editor.createModel('', language, monaco.Uri.parse(`file:///index${id}.tsx`));
+      monaco.editor.defineTheme('collabkit', CollabKitMonacoTheme);
+
+      modelRef.current = model;
+      editorInstanceRef.current = monaco.editor.create(editorRef.current!, {
+        model,
+        fontSize,
+        fontFamily: 'Monaco, monospace',
+        theme: 'collabkit',
+        lineHeight,
+        scrollBeyondLastLine: false,
+        scrollbar: {
+          verticalScrollbarSize: scrollbar === false ? 0 : 6,
+          alwaysConsumeMouseWheel: scrollbar,
+          handleMouseWheel: scrollbar,
+        },
+        minimap: {
+          enabled: false,
+        },
+        useShadowDOM: true,
+        wordWrap: 'on',
+        readOnly: readOnly,
+        domReadOnly: readOnly,
+        automaticLayout: true, // !props.fixedSize,
+        renderLineHighlight: 'none',
+        renderLineHighlightOnlyWhenFocus: true,
+        suggest: {},
+        lineNumbers: 'off',
+        renderFinalNewline: false,
+        codeLens: false,
+        definitionLinkOpensInPeek: false,
+        contextmenu: false,
+      });
+
+      if (readOnly) {
+        const messageContribution = editorInstanceRef.current.getContribution(
+          'editor.contrib.messageController'
+        );
+        editorInstanceRef.current.onDidAttemptReadOnlyEdit(() => {
+          messageContribution.dispose();
+        });
+      }
+
+      if (language === 'typescript') {
+        monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
+          jsx: monaco.languages.typescript.JsxEmit.React,
+        });
+
+        monaco.languages.typescript.typescriptDefaults.setDiagnosticsOptions({
+          noSemanticValidation: false,
+          noSyntaxValidation: false,
+        });
+      }
+
+      editorInstanceRef.current.onDidChangeModelContent(() => {
+        const value = editorInstanceRef.current.getValue();
+        setCodeString(value);
+        onChange?.(value);
+      });
+
+      if (language === 'typescript') {
+        monaco.languages.typescript.typescriptDefaults.addExtraLib(
+          reactTypes,
+          'file:///node_modules/react/index.d.ts'
+        );
+        monaco.languages.typescript.typescriptDefaults.addExtraLib(
+          collabKitTypes,
+          'file:///node_modules/@collabkit/react/index.d.ts'
+        );
+      }
+      setDidMount(true);
+    }
+  }, [monaco, id]);
 
   useEffect(() => {
     if (modelRef.current && didMount) {
@@ -203,11 +206,12 @@ export function CodeEditor({
   }, [didMount]);
 
   useEffect(() => {
+    if (!monaco) return;
     hideRanges &&
       editorInstanceRef.current?.setHiddenAreas(
-        hideRanges.map(([start, end]) => new monacoRef.current.Range(start, 1, end, 1))
+        hideRanges.map(([start, end]) => new monaco.Range(start, 1, end, 1))
       );
-  }, [hideRanges, didMount]);
+  }, [monaco, hideRanges, didMount]);
 
   useEffect(() => {
     if (modelRef.current && didMount) {
