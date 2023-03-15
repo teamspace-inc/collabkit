@@ -1,7 +1,6 @@
 import React from 'react';
-import { useSnapshot } from 'valtio';
 import has from 'has';
-import { Redirect, Route, Switch } from 'wouter';
+import { Redirect, Route } from 'wouter';
 import '@code-hike/mdx/dist/index.css';
 
 // import { DetailViewsDoc } from './patterns/DetailViewsDoc';
@@ -20,30 +19,24 @@ import '@code-hike/mdx/dist/index.css';
 // import { WorkspacesDoc } from './WorkspacesDoc';
 // import { NotificationsDoc } from './NotificationsDoc';
 
-import { DashboardPage } from '../pages/DashboardPage';
 // import { ProfileDoc } from './advanced/profile/ProfileDoc';
 // import { AdvancedThreadProviderDoc } from './advanced/AdvancedThreadProviderDoc';
 // import { CommentDoc } from './advanced/comment/CommentDoc';
 // import { CommentAPI } from './hooks/commentAPI';
-import { dashboardStore } from '../dashboard/dashboardActions';
 import { DOCS } from './Docs';
 import { DocWithAnchorList } from './Doc';
-import { ThemeContextValue, Themes } from '@collabkit/react';
+import slugify from 'slugify';
 
 export function getDocHref(path: string[], key: string) {
   return getPathHref(path.concat([key]));
 }
 
 export function getPathHref(path: string[]) {
-  return `/docs/${path.join('/').replace(' ', '').toLowerCase()}`;
+  return `/docs/${path.map((title) => slugify(title, { lower: true })).join('/')}`;
 }
 
 function generateDocRoutes(docs: RootDocNode, path: string[] = []): JSX.Element[] {
-  const routes = [
-    <Route key="docs" path="/docs">
-      <Redirect to="/docs/gettingstarted" />
-    </Route>,
-  ];
+  const routes = [];
   for (const key in docs) {
     const { prev, next } = getRelatedNodes(DOCS, path.concat(key));
 
@@ -125,26 +118,6 @@ function getRelatedNodes(
   return value;
 }
 
-// if logged in adds a dashboard route
-export function useDocRoutes() {
-  const docs = DOCS;
-  const { user, org } = useSnapshot(dashboardStore);
-  const orgName = org?.name;
-  const dashboardPlusDocs =
-    user && orgName
-      ? { [orgName]: { component: DashboardPage }, '': { isEmpty: true }, ...docs }
-      : docs;
-  return dashboardPlusDocs;
-}
-
-const ThemeContext = React.createContext<ThemeContextValue>(Themes.DarkTheme);
-
 export function DocRoutes() {
-  const docs = useDocRoutes();
-
-  return (
-    <ThemeContext.Provider value={Themes.DarkTheme}>
-      <Switch>{generateDocRoutes(docs)}</Switch>
-    </ThemeContext.Provider>
-  );
+  return <>{generateDocRoutes(DOCS)}</>;
 }

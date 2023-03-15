@@ -1,8 +1,8 @@
-import React, { useRef, useState, useLayoutEffect, useEffect, useId } from 'react';
+import React, { useRef, useState, useEffect, useId } from 'react';
+import { useLayoutEffect } from '../hooks/useLayoutEffect';
 import { loader } from '@monaco-editor/react';
 import type { Monaco } from '@monaco-editor/react';
 import { CollabKitMonacoTheme } from './CollabKitMonacoTheme';
-import { nanoid } from 'nanoid';
 
 import reactTypes from './react.types.d.ts?raw';
 import collabKitTypes from './types.d.ts?raw';

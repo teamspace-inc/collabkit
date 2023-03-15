@@ -12,6 +12,7 @@ import {
   useId,
   FloatingTree,
 } from '@floating-ui/react';
+import { useLayoutEffect } from '../hooks/useLayoutEffect';
 
 interface DialogOptions {
   initialOpen?: boolean;
@@ -167,7 +168,7 @@ export const DialogHeading = React.forwardRef<
 
   // Only sets `aria-labelledby` on the Dialog root element
   // if this component is mounted inside it.
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     setLabelId(id);
     return () => setLabelId(undefined);
   }, [id, setLabelId]);
