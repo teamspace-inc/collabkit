@@ -111,7 +111,6 @@ export function CodeEditor({
   onChange?: (value: string) => void;
 } & React.ComponentPropsWithoutRef<'div'>) {
   const editorRef = useRef<HTMLDivElement>(null);
-  const monacoRef = useRef<Monaco | null>(null);
   const editorInstanceRef = useRef<editor.IStandaloneCodeEditor | null>(null);
   const [codeString, setCodeString] = useState(() => code ?? ``);
   const [monaco, setMonaco] = useState<Monaco | null>(null);
@@ -126,89 +125,10 @@ export function CodeEditor({
   useEffect(() => {
     if (monaco === null) {
       loader.init().then((monaco: Monaco) => {
-        monacoRef.current = monaco;
-
-        const model =
-          monaco.editor.getModel(monaco.Uri.parse(`file:///index${id}.tsx`)) ??
-          monaco.editor.createModel('', language, monaco.Uri.parse(`file:///index${id}.tsx`));
-        monaco.editor.defineTheme('collabkit', CollabKitMonacoTheme);
-
-        modelRef.current = model;
-
-        editorInstanceRef.current = monaco.editor.create(editorRef.current!, {
-          model,
-          fontSize,
-          fontFamily:
-            'ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace',
-          theme: 'collabkit',
-          lineHeight,
-          scrollBeyondLastLine: false,
-          scrollbar: {
-            verticalScrollbarSize: scrollbar === false ? 0 : 6,
-            alwaysConsumeMouseWheel: scrollbar,
-            handleMouseWheel: scrollbar,
-          },
-          minimap: {
-            enabled: false,
-          },
-          useShadowDOM: true,
-          folding: true,
-          wordWrap: 'on',
-          readOnly: readOnly,
-          domReadOnly: readOnly,
-          automaticLayout: true, // !props.fixedSize,
-          renderLineHighlight: 'none',
-          renderLineHighlightOnlyWhenFocus: true,
-          suggest: {},
-          lineNumbers: 'off',
-          renderFinalNewline: false,
-          codeLens: false,
-          definitionLinkOpensInPeek: false,
-          contextmenu: false,
-        });
-
-        if (readOnly) {
-          const messageContribution = editorInstanceRef.current.getContribution(
-            'editor.contrib.messageController'
-          );
-          editorInstanceRef.current.onDidAttemptReadOnlyEdit(() => {
-            messageContribution?.dispose();
-          });
-        }
-
-        if (language === 'typescript') {
-          monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
-            jsx: monaco.languages.typescript.JsxEmit.React,
-          });
-
-          monaco.languages.typescript.typescriptDefaults.setDiagnosticsOptions({
-            noSemanticValidation: false,
-            noSyntaxValidation: false,
-          });
-        }
-
-        editorInstanceRef.current.onDidChangeModelContent(() => {
-          const value = editorInstanceRef.current?.getValue();
-          if (value) {
-            setCodeString(value);
-            onChange?.(value);
-          }
-        });
-
-        if (language === 'typescript') {
-          monaco.languages.typescript.typescriptDefaults.addExtraLib(
-            reactTypes,
-            'file:///node_modules/react/index.d.ts'
-          );
-          monaco.languages.typescript.typescriptDefaults.addExtraLib(
-            collabKitTypes,
-            'file:///node_modules/@collabkit/react/index.d.ts'
-          );
-        }
-        setDidMount(true);
+        setMonaco(monaco);
       });
     }
-  }, []);
+  }, [monaco]);
 
   useEffect(() => {
     if (monaco) {
@@ -218,10 +138,12 @@ export function CodeEditor({
       monaco.editor.defineTheme('collabkit', CollabKitMonacoTheme);
 
       modelRef.current = model;
+
       editorInstanceRef.current = monaco.editor.create(editorRef.current!, {
         model,
         fontSize,
-        fontFamily: 'Monaco, monospace',
+        fontFamily:
+          'ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace',
         theme: 'collabkit',
         lineHeight,
         scrollBeyondLastLine: false,
@@ -234,6 +156,7 @@ export function CodeEditor({
           enabled: false,
         },
         useShadowDOM: true,
+        folding: true,
         wordWrap: 'on',
         readOnly: readOnly,
         domReadOnly: readOnly,
@@ -298,7 +221,6 @@ export function CodeEditor({
 
   useEffect(() => {
     const editor = editorInstanceRef.current;
-    const monaco = monacoRef.current;
     if (codeMetaContext.highlightLines && didMount && editor && monaco) {
       const decorations = JSON.parse(codeMetaContext.highlightLines).map(
         (line: [number, number]) => ({
@@ -312,7 +234,7 @@ export function CodeEditor({
       );
       editor.deltaDecorations([], decorations);
     }
-  }, [codeMetaContext.highlightLines, didMount]);
+  }, [monaco, codeMetaContext.highlightLines, didMount]);
 
   useEffect(() => {
     if (modelRef.current && didMount) {
