@@ -275,7 +275,29 @@ export const componentDescription = style({
   },
 });
 
-export const docStep = style({
+export const steps = style({});
+
+globalStyle(`${steps} h3`, {
+  counterIncrement: 'step-number',
+});
+globalStyle(`${steps} h3:before`, {
+  content: `counter(step-number)`,
+  fontSize: 13,
+  display: 'flex',
+  justifyContent: 'center',
+  height: '22px',
+  width: '22px',
+  textIndent: '-1px',
+  lineHeight: '22px',
+  color: `hsla(0, 0%, 11%, 1)`,
+  background: vars.color.primary,
+  borderRadius: '50%',
+  position: 'absolute',
+  left: -32,
+  top: 1,
+});
+
+export const advancedAnatomyPartNumber = style({
   counterIncrement: 'step-number',
   ':before': {
     content: `counter(step-number)`,
@@ -294,8 +316,6 @@ export const docStep = style({
     top: 1,
   },
 });
-
-export const advancedAnatomyPartNumber = style([docStep, {}]);
 
 export const docDemoOverlay = style({
   fontSize: 14,
