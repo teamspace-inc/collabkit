@@ -2,12 +2,36 @@ import Usage from './usage/CommentableUsage.tsx?raw';
 import { renderCodeSnippet } from '../CodeEditor';
 import { AdvancedProps } from '../advanced/AdvancedCommon';
 import { DocLink } from '../Doc';
+import { ComponentDemo } from '../ComponentDemo';
+import { PinIcon, ProfileContext } from '@collabkit/react';
+import { userId } from '../../constants';
+import { vars } from '../../styles/Theme.css';
 
 # Commentable
 
 ## Enables placing comments on any React Component.
 
 Use the Commentable component to enable your users to comment on a specific React components.
+
+<ComponentDemo>
+  <ProfileContext.Provider value={{ userId }}>
+    <div
+      style={{
+        borderRadius: '6px',
+        width: 320,
+        height: 200,
+        background: vars.color.bgContrastLow,
+        alignItems: 'center',
+        justifyContent: 'center',
+        display: 'flex',
+        position: 'relative',
+      }}
+    >
+      <code style={{ position: 'absolute', top: 12, left: 12 }}>Your Component</code>
+      <PinIcon />
+    </div>
+  </ProfileContext.Provider>
+</ComponentDemo>
 
 ### Usage
 
@@ -35,4 +59,4 @@ For example if you're building a CRM and have a table of customers, you might wa
 
 ### Props
 
-<AdvancedProps props={[['objectId', 'string', 'A stable unique indentifier']]} />
+<AdvancedProps props={[['objectId', 'string', 'A stable unique identifier']]} />

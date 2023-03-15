@@ -1,0 +1,13 @@
+import { renderCodeSnippet } from './CodeEditor';
+
+# Objects
+
+## Objects are things in your app that users can comment on.
+
+### Object IDs
+
+The `objectId` is a stable unique identifier for the component you want to enable comments on.
+
+You'll typically want to pick an id that corresponds to the database record the component renders.
+
+For example if you're building a CRM and have a table of customers, you might want to use the customer id as the objectId. For example if the customer id is 123, you might use `customer-123` as the objectId. And for a customers name you might use `customer-123-name`.

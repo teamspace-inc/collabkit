@@ -17,6 +17,8 @@ import UpsertWorkspaceDoc from './node/upsertWorkspace.mdx';
 import DeleteUserDoc from './node/deleteUser.mdx';
 import AllComponents from './components/AllComponents.mdx';
 import Navigation from './Navigation.mdx';
+import Composability from './Composability.mdx';
+import Objects from './Objects.mdx';
 
 export const DOCS: RootDocNode = {
   'Getting Started': { component: GettingStarted },
@@ -26,6 +28,8 @@ export const DOCS: RootDocNode = {
       CollabKitProvider: { component: Provider },
       Workspaces: { component: Workspaces },
       Navigation: { component: Navigation },
+      Objects: { component: Objects },
+      Composability: { component: Composability },
       Security: { component: Security },
       Notifications: { component: Notifications },
       Themes: { component: Themes },

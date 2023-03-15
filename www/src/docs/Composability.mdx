@@ -1,0 +1,83 @@
+import { renderCodeSnippet } from './CodeEditor';
+import ComposabilityThreadExample from './ComposabilityThreadExample?raw';
+
+# Composability
+
+## Combine our React components with your own to create entirely custom experiences in minutes.
+
+### Why composability?
+
+Composability is the ability to combine different components to create a new component. This is a powerful concept that allows you to create new components from existing ones.
+
+CollabKit is built with composability in mind. This means that you can use our building blocks to create your own components. This is useful if you want to create a custom UI for your app.
+
+This can be used for small things like adding your components within a CollabKit component or for larger things like creating entirely new collaboration experiences.
+
+### Understanding our building blocks
+
+To understand how to compose any component, you can look it's Component documentation. Each component has a Composability section that explains which components it's made up of.
+
+### Example
+
+Let's look at how we can use composability to customise a `<Thread />`.
+
+Normally you'd use the `<Thread />` component like this:
+
+```tsx
+import { Thread } from '@collabkit/react';
+
+<Thread />;
+```
+
+But what if you want to add your own components to the `<Thread />`? You can do this by using the composable components that we provide.
+
+```tsx
+import { ThreadRoot, Scrollable, CommentList, Authenticated } from '@collabkit/react';
+
+<Authenticated>
+  <ThreadRoot>
+    <Scrollable autoScroll="bottom">
+      <CommentList />
+    </Scrollable>
+  </ThreadRoot>
+</Authenticated>;
+```
+
+This is a fully functional `<Thread />`. It has all the same functionality, but you can add your own components to it.
+
+If you want to add a custom header you could do this by:
+
+```tsx highlightLines="[[5, 5]]"
+import { ThreadRoot, Scrollable, CommentList, Authenticated } from '@collabkit/react';
+
+<Authenticated>
+  <ThreadRoot>
+    <h1>My custom header</h1>
+    <Scrollable autoScroll="bottom">
+      <CommentList />
+    </Scrollable>
+  </ThreadRoot>
+</Authenticated>;
+```
+
+To understand how to decompose any component, you can look it's Component documentation.
+
+### Styling
+
+Sub-components can be styled using the `className` or `style` prop. By default they inherit all styles in the `theme` object.
+
+If you pass a `className` prop to a sub-component, it will unstyle it and you can style it yourself:
+
+```tsx highlightLines="[[3, 3]]"
+import { ThreadRoot } from '@collabkit/react';
+
+<ThreadRoot className="" />;
+```
+
+If you pass a `style` prop to a sub-component, it will override the styles in the `theme` object:
+
+```tsx highlightLines="[[3, 3]]"
+import { ThreadRoot } from '@collabkit/react';
+
+<ThreadRoot style={{ backgroundColor: 'red' }} />;
+```

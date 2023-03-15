@@ -42,7 +42,7 @@ import { useWorkspaceContext } from '../../hooks/useWorkspaceContext';
 import { useUserContext } from '../../hooks/useUserContext';
 import { useStore } from '../../hooks/useStore';
 import { useComposerStore } from '../../hooks/useComposerStore';
-import { ProfileContext } from '../../hooks/useProfile';
+import { ProfileContext } from '../../hooks/ProfileContext';
 import { useIsFocused } from '../../hooks/useIsFocused';
 import { ButtonGroup } from './ButtonGroup';
 

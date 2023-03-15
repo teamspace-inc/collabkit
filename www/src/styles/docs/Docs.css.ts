@@ -3,6 +3,7 @@ import { recipe } from '@vanilla-extract/recipes';
 import { MAIN_BREAKPOINT } from '../../hooks/useWindowSize';
 import { HEADER_HEIGHT } from '../Header.css';
 import { light, vars } from '../Theme.css';
+import { codeEditor } from './CodeEditor.css';
 
 globalStyle('code', {});
 
@@ -88,26 +89,33 @@ globalStyle(`${docs} blockquote a:hover`, {
   textDecoration: 'underline',
 });
 
+globalStyle(`${docs} .highlight, ${docs} .lineHighlight`, {
+  background: vars.color.purple,
+});
+
+globalStyle(`${docs} .lineHighlight`, {
+  background: vars.color.textContrastHigh,
+  opacity: 0.05,
+});
+
 globalStyle(`${docs} code`, {
-  fontFamily: 'Monaco, monospace',
-  fontSize: 14,
+  fontFamily:
+    'ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace',
+  fontSize: '13px',
   color: vars.color.primary,
 });
 
 globalStyle(`${light} ${docs} code`, {
-  fontFamily: 'Monaco, monospace',
-  fontSize: 14,
   fontWeight: 'bold',
   color: vars.color.purple,
 });
 
 globalStyle(`${docs} code.ReactNode`, {
-  fontWeight: 'regular',
+  fontWeight: '500',
   color: vars.color.sky,
 });
 
 globalStyle(`${light} ${docs} code.ReactNode`, {
-  fontWeight: 'regular',
   color: vars.color.purple,
 });
 
@@ -210,7 +218,7 @@ globalStyle(`${docs} h3`, {
 
 globalStyle(`${docs} h4`, {
   marginTop: '30px',
-  marginBottom: '0px',
+  marginBottom: '28px',
   fontStyle: 'normal',
   fontWeight: 500,
   fontSize: '18px',
@@ -304,8 +312,8 @@ export const advancedAnatomyPartNumber = style({
     fontSize: 13,
     display: 'flex',
     justifyContent: 'center',
-    height: '22px',
-    width: '22px',
+    height: '24px',
+    width: '24px',
     textIndent: '-1px',
     lineHeight: '22px',
     color: `hsla(0, 0%, 11%, 1)`,
@@ -599,6 +607,7 @@ export const navLi = style({
 globalStyle(`${docs} ${docBody} > ul`, {
   fontSize: 'inherit',
   lineHeight: 'inherit',
+  marginBottom: '28px',
 });
 
 globalStyle(`${docs} ${docBody} > ul > li`, {

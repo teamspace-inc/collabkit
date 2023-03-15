@@ -13,6 +13,7 @@ import Check from 'phosphor-react/dist/icons/Check.esm.js';
 import { vars } from '../styles/Theme.css';
 import { editor } from 'monaco-editor';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@collabkit/react';
+import { CodeMetaContext } from './mdx/Pre';
 
 function CopyButton({ codeString }: { codeString: string }) {
   const [didCopy, setDidCopy] = useState(false);
@@ -30,9 +31,15 @@ function CopyButton({ codeString }: { codeString: string }) {
           }}
         >
           {didCopy ? (
-            <Check color={vars.color.textContrastLow} />
+            <>
+              <Check color={vars.color.textContrastLow} />
+              Copied
+            </>
           ) : (
-            <Copy color={vars.color.textContrastLow} />
+            <>
+              <Copy color={vars.color.textContrastLow} />
+              Copy
+            </>
           )}
         </div>
       </TooltipTrigger>
@@ -41,11 +48,7 @@ function CopyButton({ codeString }: { codeString: string }) {
   );
 }
 
-export function CodeSnippet(props: {
-  code: string;
-  language?: 'typescript' | 'shell' | 'css';
-  hideRanges?: [start: number, end: number][];
-}) {
+export function CodeSnippet(props: { code: string; language?: 'typescript' | 'shell' | 'css' }) {
   const breakpoint = useBreakpoint();
 
   return (
@@ -53,9 +56,10 @@ export function CodeSnippet(props: {
       readOnly={true}
       isSnippet={true}
       copyButton={true}
-      hideRanges={props.hideRanges}
       code={props.code.trim()}
       language={props.language ?? 'typescript'}
+      lineHeight={28}
+      fontSize={13}
       style={{
         borderRadius: '6px',
         width: ['small', 'medium'].includes(breakpoint) ? 'auto' : 'calc(100% - 80px)',
@@ -67,10 +71,16 @@ export function CodeSnippet(props: {
 
 export function renderCodeSnippet(
   code: string,
-  hideRanges?: [start: number, end: number][],
-  language: 'typescript' | 'shell' | 'css' = 'typescript'
+  props?: {
+    language: 'typescript' | 'shell' | 'css';
+    highlightLines?: string;
+  }
 ) {
-  return <CodeSnippet code={code} language={language} hideRanges={hideRanges} />;
+  return (
+    <CodeMetaContext.Provider value={{ ...props }}>
+      <CodeSnippet code={code} language={props?.language ?? 'typescript'} />
+    </CodeMetaContext.Provider>
+  );
 }
 
 export function CodeEditor({
@@ -85,7 +95,6 @@ export function CodeEditor({
   fixedSize = false,
   isSnippet = false,
   onChange,
-  hideRanges,
 }: {
   isSnippet?: boolean;
   code: string;
@@ -99,16 +108,17 @@ export function CodeEditor({
   numLines?: number;
   className?: string;
   fontSize?: number;
-  hideRanges?: [start: number, end: number][];
   onChange?: (value: string) => void;
 } & React.ComponentPropsWithoutRef<'div'>) {
   const editorRef = useRef<HTMLDivElement>(null);
-  const editorInstanceRef = useRef<any>(null);
+  const monacoRef = useRef<Monaco | null>(null);
+  const editorInstanceRef = useRef<editor.IStandaloneCodeEditor | null>(null);
   const [codeString, setCodeString] = useState(() => code ?? ``);
   const [monaco, setMonaco] = useState<Monaco | null>(null);
   const [didMount, setDidMount] = useState(false);
   const modelRef = useRef<editor.ITextModel | null>(null);
   const [didCalcSize, setDidCalcSize] = useState(false);
+  const codeMetaContext = React.useContext(CodeMetaContext);
 
   const [height, setHeight] = useState<React.CSSProperties['height']>(() => lineHeight * numLines);
   const id = useId();
@@ -116,7 +126,86 @@ export function CodeEditor({
   useEffect(() => {
     if (monaco === null) {
       loader.init().then((monaco: Monaco) => {
-        setMonaco(monaco);
+        monacoRef.current = monaco;
+
+        const model =
+          monaco.editor.getModel(monaco.Uri.parse(`file:///index${id}.tsx`)) ??
+          monaco.editor.createModel('', language, monaco.Uri.parse(`file:///index${id}.tsx`));
+        monaco.editor.defineTheme('collabkit', CollabKitMonacoTheme);
+
+        modelRef.current = model;
+
+        editorInstanceRef.current = monaco.editor.create(editorRef.current!, {
+          model,
+          fontSize,
+          fontFamily:
+            'ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace',
+          theme: 'collabkit',
+          lineHeight,
+          scrollBeyondLastLine: false,
+          scrollbar: {
+            verticalScrollbarSize: scrollbar === false ? 0 : 6,
+            alwaysConsumeMouseWheel: scrollbar,
+            handleMouseWheel: scrollbar,
+          },
+          minimap: {
+            enabled: false,
+          },
+          useShadowDOM: true,
+          folding: true,
+          wordWrap: 'on',
+          readOnly: readOnly,
+          domReadOnly: readOnly,
+          automaticLayout: true, // !props.fixedSize,
+          renderLineHighlight: 'none',
+          renderLineHighlightOnlyWhenFocus: true,
+          suggest: {},
+          lineNumbers: 'off',
+          renderFinalNewline: false,
+          codeLens: false,
+          definitionLinkOpensInPeek: false,
+          contextmenu: false,
+        });
+
+        if (readOnly) {
+          const messageContribution = editorInstanceRef.current.getContribution(
+            'editor.contrib.messageController'
+          );
+          editorInstanceRef.current.onDidAttemptReadOnlyEdit(() => {
+            messageContribution?.dispose();
+          });
+        }
+
+        if (language === 'typescript') {
+          monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
+            jsx: monaco.languages.typescript.JsxEmit.React,
+          });
+
+          monaco.languages.typescript.typescriptDefaults.setDiagnosticsOptions({
+            noSemanticValidation: false,
+            noSyntaxValidation: false,
+          });
+        }
+
+        editorInstanceRef.current.onDidChangeModelContent(() => {
+          const value = editorInstanceRef.current?.getValue();
+          if (value) {
+            setCodeString(value);
+            onChange?.(value);
+          }
+        });
+
+        if (language === 'typescript') {
+          monaco.languages.typescript.typescriptDefaults.addExtraLib(
+            reactTypes,
+            'file:///node_modules/react/index.d.ts'
+          );
+          monaco.languages.typescript.typescriptDefaults.addExtraLib(
+            collabKitTypes,
+            'file:///node_modules/@collabkit/react/index.d.ts'
+          );
+        }
+        setDidMount(true);
       });
     }
   }, []);
@@ -164,7 +253,7 @@ export function CodeEditor({
           'editor.contrib.messageController'
         );
         editorInstanceRef.current.onDidAttemptReadOnlyEdit(() => {
-          messageContribution.dispose();
+          messageContribution?.dispose();
         });
       }
 
@@ -180,9 +269,11 @@ export function CodeEditor({
       }
 
       editorInstanceRef.current.onDidChangeModelContent(() => {
-        const value = editorInstanceRef.current.getValue();
-        setCodeString(value);
-        onChange?.(value);
+        const value = editorInstanceRef.current?.getValue();
+        if (value) {
+          setCodeString(value);
+          onChange?.(value);
+        }
       });
 
       if (language === 'typescript') {
@@ -206,12 +297,22 @@ export function CodeEditor({
   }, [didMount]);
 
   useEffect(() => {
-    if (!monaco) return;
-    hideRanges &&
-      editorInstanceRef.current?.setHiddenAreas(
-        hideRanges.map(([start, end]) => new monaco.Range(start, 1, end, 1))
+    const editor = editorInstanceRef.current;
+    const monaco = monacoRef.current;
+    if (codeMetaContext.highlightLines && didMount && editor && monaco) {
+      const decorations = JSON.parse(codeMetaContext.highlightLines).map(
+        (line: [number, number]) => ({
+          range: new monaco.Range(line[0], 1, line[1], 1),
+          options: {
+            isWholeLine: true,
+            marginClassName: 'highlight',
+            className: 'lineHighlight',
+          },
+        })
       );
-  }, [monaco, hideRanges, didMount]);
+      editor.deltaDecorations([], decorations);
+    }
+  }, [codeMetaContext.highlightLines, didMount]);
 
   useEffect(() => {
     if (modelRef.current && didMount) {
@@ -233,7 +334,7 @@ export function CodeEditor({
 
   return (
     <div
-      className={codeEditor({ didMount: didCalcSize, isSnippet })}
+      className={`${codeEditor({ didMount: didCalcSize, isSnippet })} CodeEditor`}
       style={{
         ...(fixedSize
           ? { height: '100%' }
@@ -245,7 +346,7 @@ export function CodeEditor({
         <div
           style={{
             position: 'absolute',
-            top: 13,
+            bottom: 16,
             right: 16,
             zIndex: 1,
           }}

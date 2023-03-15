@@ -133,7 +133,7 @@ export function AdvancedPart(props: {
           {Spacer24}
         </>
       ) : null}
-      {renderCodeSnippet(props.code, [[1, 2]])}
+      {renderCodeSnippet(props.code)}
       {props.props ? (
         <>
           <br />

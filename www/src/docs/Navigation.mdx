@@ -8,15 +8,14 @@ This includes navigating to the correct page and applying any filters that were 
 
 ### How to navigate?
 
-You can do this by passing in a `onPinAttach` prop to the `CollabKitProvider` component. This will be called when a user attaches a new pin. This callback should return a `string` that represents the state of your apps UI at the time the pin was attached. We recommend using JSON to represent the state of your app.
+You can do this by passing in a `onPinAttach` prop to the `<CollabKitProvider />` component. This will be called when a user attaches a new pin. This callback should return a `string` that represents the state of your apps UI at the time the pin was attached. We recommend using JSON to represent the state of your app.
 
 This state will be passed to the `onPinClick` callback when a user clicks on the pin. When you receive this state you can use it to navigate to the correct part of your app.
 
 Here's an example of how you might handle this:
 
-```tsx
+```tsx highlightLines="[[18, 27]]"
 import { CollabKitProvider } from '@collabkit/react';
-
 export function App() {
   return (
     <CollabKitProvider

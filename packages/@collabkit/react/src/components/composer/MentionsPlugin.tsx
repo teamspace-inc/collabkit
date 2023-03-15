@@ -45,7 +45,7 @@ import { ThemeWrapper } from '../ThemeWrapper';
 import { ProfileAvatar } from '../Profile';
 import { Scrollable } from '../Scrollable';
 import { useStore } from '../../hooks/useStore';
-import { ProfileContext } from '../../hooks/useProfile';
+import { ProfileContext } from '../../hooks/ProfileContext';
 import { actions } from '@collabkit/client';
 import { TargetContext } from '../Target';
 

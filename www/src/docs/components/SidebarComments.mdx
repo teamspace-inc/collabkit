@@ -41,13 +41,27 @@ The sidebar is designed to be positioned on the right of the screen, and any con
 
 To adjust the position of the sidebar, or it's height you can use the `style` or `className` prop.
 
-{renderCodeSnippet(Positioning, [[0, 2]])}
+```tsx highlightLines="[[3, 3]]"
+import { SidebarComments } from '@collabkit/react';
+
+<SidebarComments style={{ marginTop: '20px' }} />;
+```
 
 ### Showing and hiding the sidebar
 
 You can show and hide the sidebar in two ways. Either by including the `<ToggleSidebarCommentsButton />` component, or by using the `useSidebarCommentsButton` hook. Use the hook if you have a custom button component, or need full control over how the button renders.
 
+#### With a hook
+
+Use this hook to trigger opening and closing `<SidebarComments />` from a custom button component. It returns a `onClick` function that you can pass to your button.
+
+You can also use the `hasUnread` and `unreadCount` properties to show a 'red' dot and/or a numbered badge on your button.
+
+{renderCodeSnippet(useSidebarCommentsButtonUsage)}
+
 #### With a button
+
+Include this component to show and hide the sidebar. It shows a 'red' dot when there are unread comments.
 
 <ComponentDemo
   hideThemeEditorButton={true}
@@ -67,17 +81,9 @@ You can show and hide the sidebar in two ways. Either by including the `<ToggleS
   </div>
 </ComponentDemo>
 
-Include this component to show and hide the sidebar. It shows a 'red' dot when there are unread comments.
-
 You can pass any props you would normally pass to a React button component.
 
 {renderCodeSnippet(ToggleSidebarCommentsButtonUsage)}
-
-#### With a hook
-
-If you need full control over how the button renders, or would like to integrate it with your product's native button component, you can use our hook.
-
-{renderCodeSnippet(useSidebarCommentsButtonUsage)}
 
 ### Styling
 
@@ -87,7 +93,7 @@ To customise it's contents pass the `theme` prop to the `<CollabKitProvider />` 
 
 #### Sidebar
 
-Here are the variables you can control in the `theme` prop that relate directly to `Sidebar`.
+Here are the variables you can control in the `theme` prop that relate directly to `<Sidebar />`.
 
 <StyleTable
   styles={[

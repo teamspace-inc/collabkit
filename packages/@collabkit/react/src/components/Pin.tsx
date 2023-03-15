@@ -493,6 +493,17 @@ function PinNewThreadComposer({ pin }: { pin: Pin }) {
   );
 }
 
+function PinIcon(props: { onPointerDown: (e: React.PointerEvent) => void; isSelected: boolean }) {
+  return (
+    <div className={styles.pinIcon} onPointerDown={props.onPointerDown}>
+      <PinIconSVG isSelected={props.isSelected} />
+      <div className={styles.pinAvatar}>
+        <ProfileAvatar />
+      </div>
+    </div>
+  );
+}
+
 const PinMarker = forwardRef<HTMLDivElement, PinMarkerProps>(function PinMarker(props, ref) {
   const { isSelected, pin, pointerEvents } = props;
   const { events, store } = useApp();
@@ -536,12 +547,7 @@ const PinMarker = forwardRef<HTMLDivElement, PinMarkerProps>(function PinMarker(
         <div>
           <PopoverRoot {...popoverProps} dismissOnClickOutside={true} shouldFlipToKeepInView={true}>
             <PopoverTrigger>
-              <div className={styles.pinIcon} onPointerDown={onClick}>
-                <PinIconSVG isSelected={isSelected} />
-                <div className={styles.pinAvatar}>
-                  <ProfileAvatar />
-                </div>
-              </div>
+              <PinIcon onPointerDown={onClick} isSelected={isSelected} />
             </PopoverTrigger>
             <PopoverPreview>{pinThreadPreview}</PopoverPreview>
             <PopoverContent>{isFigmaStyle ? pinThreadContent : pinThreadPreview}</PopoverContent>
@@ -553,4 +559,4 @@ const PinMarker = forwardRef<HTMLDivElement, PinMarkerProps>(function PinMarker(
   ) : null;
 });
 
-export { SavedPin, PinMarker };
+export { SavedPin, PinMarker, PinIcon };

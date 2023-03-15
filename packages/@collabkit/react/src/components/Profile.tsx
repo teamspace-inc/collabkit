@@ -5,7 +5,8 @@ import { useSnapshot } from 'valtio';
 import { useStore } from '../hooks/useStore';
 import * as styles from '../theme/components/Profile.css';
 import { vars } from '../theme/theme/index.css';
-import { ProfileContext, useProfileContext } from '../hooks/useProfile';
+import { useProfileContext } from '../hooks/useProfile';
+import { ProfileContext } from '../hooks/ProfileContext';
 import { useCustomAvatar } from '../hooks/useRenderAvatarContext';
 
 function ProfileProvider(props: { children: React.ReactNode; profileId: string }) {

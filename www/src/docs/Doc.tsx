@@ -22,6 +22,7 @@ import React from 'react';
 import { anchorStore, H3 } from './mdx/H3';
 import { Code } from './mdx/Code';
 import { useLocationHash } from './useLocationHash';
+import { Pre } from './mdx/Pre';
 
 function AnchorList() {
   const hash = useLocationHash();
@@ -60,6 +61,7 @@ export function DocWithAnchorList(props: {
   const docContent = component?.({
     components: {
       h3: (props: any) => <H3 {...props} />,
+      pre: (props: any) => <Pre {...props} />,
       code: (props: any) => {
         return <Code {...props} />;
       },
