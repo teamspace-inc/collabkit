@@ -10,6 +10,7 @@ import * as Theme from './styles/Theme.css';
 import { nanoid } from 'nanoid';
 import { useLayoutEffect } from './hooks/useLayoutEffect';
 import { PinLayer } from '../../packages/@collabkit/react/src/components/PinLayer';
+import { GetStartedPage } from './pages/GetStartedPage';
 
 const apiKey = import.meta.env.VITE_COLLABKIT_UNSECURE_API_KEY;
 const appId = import.meta.env.VITE_COLLABKIT_UNSECURE_APP_ID;
@@ -49,6 +50,7 @@ export default function App() {
       <SetBreakpointContext>
         <Switch>
           <Route path="/" component={HomePage} />
+          <Route path="/getstarted" component={GetStartedPage} />
           <Route path="/unsubscribe" component={UnsubscribePage} />
           <DocRoutes />
           <Route>404, page not found</Route>
