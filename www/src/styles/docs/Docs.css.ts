@@ -440,14 +440,15 @@ export const docNav = style({
   background: vars.color.bgContrastFloor,
   color: 'white',
   display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'flex-end',
   height: '100vh',
-  alignItems: 'flex-end',
   borderRight: '1px solid ' + vars.color.bgContrastLow,
 
   '@media': {
     [max768]: {
       background: vars.color.bgContrastFloor,
-      alignItems: 'flex-start',
+      justifyContent: 'flex-end',
       paddingTop: 60,
     },
   },
