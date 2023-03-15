@@ -119,5 +119,12 @@ function getRelatedNodes(
 }
 
 export function DocRoutes() {
-  return <>{generateDocRoutes(DOCS)}</>;
+  return (
+    <>
+      <Route path="/docs">
+        <Redirect to="/docs/getting-started" />
+      </Route>
+      {generateDocRoutes(DOCS)}
+    </>
+  );
 }
