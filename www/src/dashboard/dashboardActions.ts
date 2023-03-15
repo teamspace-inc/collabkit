@@ -21,7 +21,7 @@ import { auth } from './database';
 import { proxy, subscribe } from 'valtio';
 import { Store } from './dashboardTypes';
 
-const formsJSON = localStorage.getItem('forms');
+const formsJSON = typeof window !== 'undefined' ? window.localStorage.getItem('forms') : null;
 const forms = formsJSON ? JSON.parse(formsJSON) : {};
 
 export const dashboardStore = proxy<Store>({
@@ -33,10 +33,11 @@ export const dashboardStore = proxy<Store>({
   authState: 'blank',
 });
 
-subscribe(dashboardStore, () => {
-  localStorage.setItem('forms', JSON.stringify(dashboardStore.forms));
-});
-
+if (typeof window !== 'undefined' && typeof window.localStorage !== 'undefined') {
+  subscribe(dashboardStore, () => {
+    localStorage.setItem('forms', JSON.stringify(dashboardStore.forms));
+  });
+}
 export const dashboardEvents = {
   onAppChanged: (snapshot: DataSnapshot) => {
     console.log('onAppChanged');

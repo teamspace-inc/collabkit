@@ -18,6 +18,9 @@ const [CarouselProvider, useCarouselContext] = createContext<{
 }>('Carousel');
 
 export function Carousel(props: { slides: React.ReactNode[]; style: React.CSSProperties }) {
+  if (typeof window === 'undefined') {
+    return null;
+  }
   return (
     <RadixCarousel>
       <CarouselSlideList
