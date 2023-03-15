@@ -25,13 +25,14 @@ import '@code-hike/mdx/dist/index.css';
 // import { CommentAPI } from './hooks/commentAPI';
 import { DOCS } from './Docs';
 import { DocWithAnchorList } from './Doc';
+import slugify from 'slugify';
 
 export function getDocHref(path: string[], key: string) {
   return getPathHref(path.concat([key]));
 }
 
 export function getPathHref(path: string[]) {
-  return `/docs/${path.join('/').replace(' ', '').toLowerCase()}`;
+  return `/docs/${path.map((title) => slugify(title, { lower: true })).join('/')}`;
 }
 
 function generateDocRoutes(docs: RootDocNode, path: string[] = []): JSX.Element[] {

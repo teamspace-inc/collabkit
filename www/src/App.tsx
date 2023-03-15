@@ -64,7 +64,6 @@ export default function App() {
       <SetBreakpointContext>
         <Switch>
           <Route path="/" component={HomePage} />
-          <Route path="/getstarted" component={GetStartedPage} />
           <Route path="/unsubscribe" component={UnsubscribePage} />
           <DocRoutes />
           <Route>404, page not found</Route>
