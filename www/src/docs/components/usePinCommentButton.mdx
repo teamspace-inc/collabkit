@@ -1,0 +1,19 @@
+# usePinCommentButton
+
+## Hook for adding a custom button for pinning comments
+
+Use the `usePinCommentButton` hook to add an event handler to any button in your app to start placing a pin.
+
+```tsx
+import { usePinCommentButton } from '@collabkit/react';
+
+export const PinCommentButton = () => {
+  const { onClick } = usePinCommentButton();
+
+  return (
+    <button type="button" onClick={onClick}>
+      Add Comment
+    </button>
+  );
+};
+```

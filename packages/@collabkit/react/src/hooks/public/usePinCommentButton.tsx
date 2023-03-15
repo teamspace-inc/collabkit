@@ -13,7 +13,7 @@ export function usePinCommentButton() {
       const target: PinCommentButtonTarget = {
         type: 'pinCommentButton',
         workspaceId,
-      } as const;
+      };
       events.onClick(e, { target });
     },
   };

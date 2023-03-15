@@ -1,14 +1,6 @@
-import { ComponentDemo } from '../ComponentDemo';
-import Usage from './usage/SidebarCommentsUsage.tsx?raw';
-import Positioning from './usage/SidebarCommentsPositioning.tsx?raw';
-import ToggleSidebarCommentsButtonUsage from './usage/ToggleSidebarCommentsButtonUsage.tsx?raw';
-import { renderCodeSnippet } from '../CodeEditor';
-import useSidebarCommentsButtonUsage from './usage/useSidebarCommentsButtonUsage.tsx?raw';
 import { ToggleSidebarCommentsButton, SidebarComments } from '@collabkit/react';
-import { AdvancedProps, StyleTable } from '../advanced/AdvancedCommon';
-
 import { ComponentCard } from '../ComponentCard';
-import { COMPONENTS, KEYED_COMPONENTS } from '../../home/Components';
+import { KEYED_COMPONENTS } from '../../home/Components';
 
 # Overview
 
@@ -43,7 +35,7 @@ Use the `<Commentable />` component to make any element commentable. The compone
 
 Use the `<PinCommentButton />` component to render a button that lets the user pin a comment to a specific element on the page.
 
-If you want to use your own button or a custom interaction to pin a comment, you can use the `usePinCommentButton` hook. You can pin comments
+If you want to use your own button or a custom interaction to pin a comment, you can use the [`usePinCommentButton`](./docs) hook.
 
 ### Thread
 

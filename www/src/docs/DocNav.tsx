@@ -10,12 +10,14 @@ import { getDocHref, RootDocNode } from './DocRoutes';
 import * as styles from '../styles/docs/Docs.css';
 import { DOCS } from './Docs';
 
-function NavListItem(props: { path: string[]; id: string }) {
+function NavListItem(props: { title?: string; path: string[]; id: string }) {
   const [location] = useLocation();
   const href = getDocHref(props.path, props.id);
   return (
     <Link href={href}>
-      <div className={styles.navListItem({ active: href === location })}>{props.id}</div>
+      <div className={styles.navListItem({ active: href === location })}>
+        {props.title || props.id}
+      </div>
     </Link>
   );
 }
@@ -30,8 +32,11 @@ function NavList(props: { node: RootDocNode; path: string[] }) {
       {Object.entries(props.node).map(([key, value], index) => (
         <li className={styles.navLi} key={`${key}-${index}`}>
           {'isEmpty' in value ? <br /> : null}
-          {'component' in value ? <NavListItem path={props.path} id={key} /> : null}
-          {'title' in value ? <div className={styles.navListTitle}>{value.title}</div> : null}
+          {'component' in value ? (
+            <NavListItem title={value.title} path={props.path} id={key} />
+          ) : (
+            'title' in value && <div className={styles.navListTitle}>{value.title}</div>
+          )}
           {'children' in value ? (
             <NavList node={value.children} path={[...props.path, key]} />
           ) : null}

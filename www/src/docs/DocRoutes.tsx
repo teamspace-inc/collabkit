@@ -71,6 +71,7 @@ export type RootDocNode = {
 
 export type DocNode =
   | {
+      title?: string;
       component: React.FunctionComponent<any>;
     }
   | {
