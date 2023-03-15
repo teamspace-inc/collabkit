@@ -253,7 +253,7 @@ export function CodeEditor({
           'editor.contrib.messageController'
         );
         editorInstanceRef.current.onDidAttemptReadOnlyEdit(() => {
-          messageContribution.dispose();
+          messageContribution?.dispose();
         });
       }
 
