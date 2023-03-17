@@ -57,7 +57,7 @@ import { useStoreKeyMatches } from '../hooks/useSubscribeStoreKey';
 import { IconButton } from './IconButton';
 import { CaretLeft, CaretRight, CheckCircle, X } from './icons';
 import { Tooltip, TooltipContent, TooltipTrigger } from './Tooltip';
-import { actions, COMMENT_MIN_HEIGHT } from '@collabkit/client';
+import { actions } from '@collabkit/client';
 import { useWorkspaceContext } from '../hooks/useWorkspaceContext';
 import { Scrollable } from './Scrollable';
 import { ThemeWrapper } from './ThemeWrapper';
