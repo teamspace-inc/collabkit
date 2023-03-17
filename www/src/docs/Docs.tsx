@@ -20,7 +20,7 @@ import AllComponents from './components/AllComponents.mdx';
 import Navigation from './Navigation.mdx';
 import Composability from './Composability.mdx';
 import Objects from './Objects.mdx';
-import CommentDoc from './restAPI/comment.mdx';
+import CommentDoc from './rest/comment.mdx';
 
 export const DOCS: RootDocNode = {
   'Getting Started': { component: GettingStarted },
@@ -60,7 +60,7 @@ export const DOCS: RootDocNode = {
       createCollabKit: { component: VueCreateCollabKit },
     },
   },
-  RestAPI: {
+  Rest: {
     title: 'Rest API',
     children: {
       comment: { component: CommentDoc },
