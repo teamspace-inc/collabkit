@@ -594,6 +594,8 @@ export interface Workspace {
 }
 
 export type CommentableObject = {
+  xStepWidth: number;
+  xScale: Function;
   objectId: string;
 
   // null indicates a disconnected pin
@@ -650,8 +652,7 @@ export interface UnconfiguredStore {
   dragPinObjectId: string;
   dragPinUpdate: Function[];
   xOffset: number;
-  xStepWidth: number;
-  xScale: Function;
+
 }
 
 export interface Store extends UnconfiguredStore {

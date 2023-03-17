@@ -163,9 +163,8 @@ function CommentableChart(props: any) {
   const xStepEnd = props.xAxisMap[0].scale(props.tooltipTicks[props.tooltipTicks.length - 1]?.value);
   const xStepStart = props.xAxisMap[0].scale(props.tooltipTicks[0]?.value);
   const xStepWidth = (xStepEnd - xStepStart) / props.tooltipTicks.length;
-  store.xStepWidth = xStepWidth;
-
-  store.xScale = props.xAxisMap[0].scale;
+  store.commentables[objectId].xStepWidth = xStepWidth;
+  store.commentables[objectId].xScale = props.xAxisMap[0].scale;
 
   if (props.activeTooltipIndex != null && props.activeTooltipIndex != -1) {
     xValue = props.tooltipTicks[props.activeTooltipIndex]?.value;
