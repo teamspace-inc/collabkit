@@ -37,17 +37,16 @@ Use the Commentable component to enable your users to comment on a specific Reac
 
 Wrap components you'd like to enable comments to be placed on with a Commentable component.
 
-The following example shows how to setup{' '} `<Commentable />` for a component in your app.
+The following example shows how to setup `<Commentable />` for a component in your app.
 
 {renderCodeSnippet(Usage)}
 
-Comments anchor to the closest Commentable ancestor when placed, this means you should wrap both containers and their children with a Commentable. This is because comments anchor to the relative x, y, position of the component they are placed on.
+Comments anchor to the closest Commentable ancestor when placed, this means that for components with dynamic contents (e.g. a filterable list) you'll need to wrap each item to make sure the comments remain in the right place even if the list is filtered or ordered differently.
 
 For example:
 
-- for Tables, you'll need to wrap Commentable around the Table itself and each Table Cell.
-- for Forms, you'll need to wrap the Form with it and also each if the fields within.
-- for Lists, you'll need to wrap the List with it and also each of the items within.
+- for lists, wrap each list item with a `<Commentable/>`
+- for tables, wrap each table cell with a `<Commentable/>` (or [`useCommentableRef`](#usecommentableref))
 
 ### Object IDs
 
@@ -60,3 +59,44 @@ For example if you're building a CRM and have a table of customers, you might wa
 ### Props
 
 <AdvancedProps props={[['objectId', 'string', 'A stable unique identifier']]} />
+
+### useCommentableRef
+
+In some cases you may want to enable commenting on an existing element without adding a wrapper around it.
+
+This is why we provide the `useCommentableRef` hook as a lower level alternative to `<Commentable/>`.
+
+For example, to enable commenting for a data table, using a `<Commentable/>` within each cell would result in an empty space around the cell content, if the cell has padding inside it. `useCommentableRef` allows you to add a ref to an existing element to enable commenting on it.
+
+```ts
+// ❌ Don't
+// +--------+ <-- Table cell
+// |+------+| <-- Commentable
+// ||      ||
+// || 123  || <-- Cell contents
+// ||      ||
+// |+------+|
+// +--------+
+export const TableCell = ({ children, objectId }: { children: ReactNode; objectId: string }) => {
+  return (
+    <td style={{ padding: '1em' }}>
+      <Commentable objectId={objectId}>{children}</Commentable>
+    </td>
+  );
+};
+
+// ✅ Do
+// +------+ <-- Table cell with ref from useCommentableRef
+// |      |
+// | 123  | <-- Cell contents
+// |      |
+// +------+
+export const TableCell = ({ children, objectId }: { children: ReactNode; objectId: string }) => {
+  const ref = useCommentableRef(objectId);
+  return (
+    <td style={{ padding: '1em' }} ref={ref}>
+      {children}
+    </td>
+  );
+};
+```
