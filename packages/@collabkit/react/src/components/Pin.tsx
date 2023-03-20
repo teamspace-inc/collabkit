@@ -43,6 +43,7 @@ function SavedPin({ pin, isSelected }: { isSelected: boolean; pin: WithID<Pin> }
     middleware: [
       offset(({ rects }) => ({
         crossAxis: pin.dataPoint ? store.commentables[pin.objectId].xScale(pin.dataPoint?.x) + (pin.xOffset * store.commentables[pin.objectId].xStepWidth) : rects.reference.width * pin.x,
+        // pin.offset + 0.5 bar, composed
         mainAxis: -(rects.reference.height * pin.y + rects.floating.height),
       })),
     ],

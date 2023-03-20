@@ -596,6 +596,9 @@ export interface Workspace {
 export type CommentableObject = {
   xStepWidth: number;
   xScale: Function;
+  xOffset?: number;
+  type?: 'Discrete' | 'Bar';
+
   objectId: string;
 
   // null indicates a disconnected pin
@@ -606,7 +609,6 @@ export type CommentableObject = {
     y: number;
   };
 
-  xOffset?: number;
 };
 
 // get all pins for the workspace that have an open thread attached to them (we don't want resolved ones)

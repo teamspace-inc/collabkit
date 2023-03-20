@@ -76,6 +76,11 @@ export function CommentableRoot(props: { className?: string; children?: React.Re
         if (!commentable.xOffset) {
           commentable.xOffset = 0;
         }
+        let xOffset = ((e.clientX - x - commentable.xOffset) / store.commentables[commentable.objectId].xStepWidth);
+        if (commentable.type == 'Bar') {
+          xOffset += 0.5;
+        }
+        console.log(commentable.type);
         events.onPointerDown(e, {
           target: {
             type: 'commentable',
@@ -83,7 +88,7 @@ export function CommentableRoot(props: { className?: string; children?: React.Re
             x: (e.clientX - x) / width,
             y: (e.clientY - y) / height,
             dataPoint: commentable.dataPoint,
-            xOffset: ((e.clientX - x - commentable.xOffset) / store.xStepWidth)
+            xOffset: xOffset
           },
         });
       }
@@ -160,12 +165,11 @@ function CommentableChart(props: any) {
   let xValue: number | null = null;
   let yValue: number | null = null;
 
-  const xStepEnd = props.xAxisMap[0].scale(props.tooltipTicks[props.tooltipTicks.length - 1]?.value);
-  const xStepStart = props.xAxisMap[0].scale(props.tooltipTicks[0]?.value);
-  const xStepWidth = (xStepEnd - xStepStart) / props.tooltipTicks.length;
+  const xStepWidth = props.xAxisMap[0].width / props.tooltipTicks.length;
   store.commentables[objectId].xStepWidth = xStepWidth;
   store.commentables[objectId].xScale = props.xAxisMap[0].scale;
-
+  store.commentables[objectId].type = props.tooltipAxis.realScaleType != "band" ? 'Discrete' : 'Bar';
+  
   if (props.activeTooltipIndex != null && props.activeTooltipIndex != -1) {
     xValue = props.tooltipTicks[props.activeTooltipIndex]?.value;
     yValue = yAxis.scale.invert(props.activeCoordinate.y);
@@ -174,6 +178,7 @@ function CommentableChart(props: any) {
       store.commentables[objectId].dataPoint = { x: xValue, y: yValue };
     }
   }
+
   return null;
 }
 
