@@ -31,7 +31,6 @@ function ThreadRoot({
   showHeader,
   autoFocus,
   hideComposer,
-  hideResolveButton,
   placeholder,
   ...props
 }: ThreadProps & React.ComponentPropsWithoutRef<'div'>) {
@@ -42,7 +41,6 @@ function ThreadRoot({
     showHeader,
     autoFocus,
     hideComposer,
-    hideResolveButton,
     placeholder,
   });
   return (

@@ -1,43 +1,47 @@
 import React from 'react';
 import {
   CommentList,
-  Composer,
-  Profile,
+  ComposerContentEditable,
+  ComposerEditor,
+  ComposerInput,
+  ComposerPlaceholder,
+  ComposerRoot,
+  ComposerTypingIndicator,
+  ProfileAvatar,
   Scrollable,
-  ThemeWrapper,
-  Thread as CollabKitThread,
+  ThreadHeader,
   ThreadProps,
-  useThread,
+  ThreadRoot,
+  useIsAuthenticated,
 } from '@collabkit/react';
 
 export function Thread(props: ThreadProps & { maxHeight?: number }) {
-  const { userId } = useThread(props);
+  const isAuthenticated = useIsAuthenticated();
 
-  if (!userId) {
+  if (!isAuthenticated) {
     return null;
   }
 
   return (
-    <CollabKitThread.Provider {...props}>
-      <Profile.Provider profileId={userId}>
-        <ThemeWrapper>
-          <CollabKitThread.Root className={props.className} style={props.style}>
-            {props.showHeader && <CollabKitThread.Header>Comments</CollabKitThread.Header>}
-            <Scrollable autoScroll="bottom" maxHeight={props.maxHeight}>
-              <CommentList hideResolveButton={props.hideResolveButton} />
-            </Scrollable>
-            {props.hideComposer ? null : (
-              <Composer.Root autoFocus={true}>
-                <Profile.Avatar />
-                <Composer.Editor
-                  placeholder={<Composer.Placeholder>Write a comment</Composer.Placeholder>}
-                />
-                <Composer.TypingIndicator />
-              </Composer.Root>
-            )}
-          </CollabKitThread.Root>
-        </ThemeWrapper>
-      </Profile.Provider>
-    </CollabKitThread.Provider>
+    <ThreadRoot {...props}>
+      {props.showHeader && <ThreadHeader>Comments</ThreadHeader>}
+      <Scrollable autoScroll="bottom" maxHeight={props.maxHeight}>
+        <CommentList />
+      </Scrollable>
+      {props.hideComposer ? null : (
+        <ComposerRoot>
+          <ProfileAvatar />
+          <ComposerEditor>
+            <ComposerInput
+              autoFocus={props.autoFocus}
+              placeholder={<ComposerPlaceholder>{props.placeholder}</ComposerPlaceholder>}
+              contentEditable={<ComposerContentEditable />}
+            />
+          </ComposerEditor>
+
+          <ComposerTypingIndicator />
+        </ComposerRoot>
+      )}
+    </ThreadRoot>
   );
 }

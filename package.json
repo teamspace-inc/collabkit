@@ -17,7 +17,7 @@
   },
   "scripts": {
     "dev": "pnpm --recursive --parallel run dev",
-    "build": "pnpm --filter '@collabkit/react' run build && pnpm --parallel --filter '!@collabkit/react' --filter '!@collabkit/pro-theme-latitude' --filter '!functions' run build",
+    "build": "pnpm --filter '@collabkit/react' run build && pnpm --parallel --filter '!@collabkit/react' --filter '!functions' run build",
     "server": "yarn workspace server dev",
     "typecheck": "tsc -b examples/demo www",
     "snapshots": "yarn workspace @collabkit/react start-server-and-test dev http://localhost:61000 'playwright test'"
