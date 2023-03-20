@@ -70,10 +70,10 @@ For example, to enable commenting for a data table, using a `<Commentable/>` wit
 
 ```ts
 // ❌ Don't
-// +--------+ <-- <td>
+// +--------+ <-- Table cell
 // |+------+| <-- Commentable
 // ||      ||
-// || 123  || <-- Contents
+// || 123  || <-- Cell contents
 // ||      ||
 // |+------+|
 // +--------+
@@ -86,9 +86,9 @@ export const TableCell = ({ children, objectId }: { children: ReactNode; objectI
 };
 
 // ✅ Do
-// +------+ <--- Table cell with ref from useCommentableRef
+// +------+ <-- Table cell with ref from useCommentableRef
 // |      |
-// | 123  | <-- Contents
+// | 123  | <-- Cell contents
 // |      |
 // +------+
 export const TableCell = ({ children, objectId }: { children: ReactNode; objectId: string }) => {
