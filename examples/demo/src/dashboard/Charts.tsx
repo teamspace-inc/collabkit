@@ -406,7 +406,6 @@ export function Charts() {
             <Scatter name="B school" data={data02} fill="#82ca9d" />
             <Customized component={<Commentable.Chart />} />
           </ScatterChart>
-
         </ResponsiveContainer>
       </Commentable.Container>
     </>

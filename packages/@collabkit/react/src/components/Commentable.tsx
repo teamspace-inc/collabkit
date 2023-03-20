@@ -80,7 +80,6 @@ export function CommentableRoot(props: { className?: string; children?: React.Re
         if (commentable.type == 'Bar') {
           xOffset += 0.5;
         }
-        console.log(commentable.type);
         events.onPointerDown(e, {
           target: {
             type: 'commentable',
