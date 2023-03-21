@@ -160,6 +160,7 @@ export type Target =
   | CommentReactionsListAddEmojiButtonTarget
   | CommentActionsEmojiButtonTarget
   | ChannelTarget
+  | ChannelToggleShowResolvedTarget
   | ComposerPinTarget
   | PinCommentButtonTarget
   | PinPrevThreadIconButtonTarget
@@ -336,6 +337,11 @@ export type ChannelComposerTarget = {
   threadId: string;
   workspaceId: string;
   eventId: string | 'default';
+};
+
+export type ChannelToggleShowResolvedTarget = {
+  type: 'channelToggleShowResolved';
+  channelId: string;
 };
 
 export type ThreadTarget = { type: 'thread'; threadId: string; workspaceId: string };
@@ -609,7 +615,6 @@ export interface UnconfiguredStore {
   editingId: null | CommentTarget;
   editingEventSnapshots: { [eventId: string]: INTERNAL_Snapshot<Event> | null };
   composerId: null | ComposerTarget;
-
   config: null | Config;
   avatarErrors: { [avatar: string]: boolean };
   profiles: { [profileId: string]: Profile | undefined };
@@ -625,6 +630,7 @@ export interface UnconfiguredStore {
   clientY: number;
   commentables: { [objectId: string]: CommentableObject };
   expandedThreadIds: string[];
+  resolvedVisible: { [channelId: string]: boolean };
   pinsVisible: boolean;
   dragPinObjectId: string;
   dragPinUpdate: Function[];

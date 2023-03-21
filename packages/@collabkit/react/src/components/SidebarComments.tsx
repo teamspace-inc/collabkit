@@ -1,7 +1,12 @@
 import React from 'react';
 import { useIsSidebarOpen } from '../hooks/useIsSidebarOpen';
 import { Authenticated } from './Authenticated';
-import { ChannelNewThreadComposer, ChannelRoot, ChannelScrollableThreadList } from './Channel';
+import {
+  ChannelFilters,
+  ChannelNewThreadComposer,
+  ChannelRoot,
+  ChannelScrollableThreadList,
+} from './Channel';
 import { SidebarRoot, SidebarHeader, SidebarTitle, SidebarCloseButton } from './Sidebar';
 import { useSidebarDefaultOpen } from '../hooks/useSidebarDefaultOpen';
 import { ThemeWrapper } from './ThemeWrapper';
@@ -21,6 +26,7 @@ function SidebarComments(props: React.ComponentPropsWithoutRef<'div'> & { defaul
                 <div style={{ flex: 1 }} />
                 <SidebarCloseButton />
               </SidebarHeader>
+              <ChannelFilters />
               <ChannelScrollableThreadList />
               <ChannelNewThreadComposer />
             </ChannelRoot>

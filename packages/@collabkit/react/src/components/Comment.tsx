@@ -381,32 +381,39 @@ function CommentMenu(props: { className?: string }) {
     [eventId, threadId, workspaceId]
   );
 
-  if (createdById !== userId) {
-    return null;
-  }
+  const isOwn = createdById === userId;
 
   const items: React.ReactNode[] = useMemo(
-    () => [
-      <MenuItem
-        label="Edit"
-        targetType="commentEditButton"
-        data-testid="collabkit-comment-menu-edit-button"
-      />,
-      <MenuItem
-        label="Delete"
-        targetType="commentDeleteButton"
-        data-testid="collabkit-comment-menu-delete-button"
-      />,
-      isResolved && (
-        <MenuItem
-          label="Re-open"
-          targetType="reopenThreadButton"
-          data-testid="collabkit-comment-menu-re-open-button"
-        />
-      ),
-    ],
-    [isResolved]
+    () =>
+      [
+        isOwn && (
+          <MenuItem
+            label="Edit"
+            targetType="commentEditButton"
+            data-testid="collabkit-comment-menu-edit-button"
+          />
+        ),
+        isOwn && (
+          <MenuItem
+            label="Delete"
+            targetType="commentDeleteButton"
+            data-testid="collabkit-comment-menu-delete-button"
+          />
+        ),
+        isResolved && (
+          <MenuItem
+            label="Re-open"
+            targetType="reopenThreadButton"
+            data-testid="collabkit-comment-menu-re-open-button"
+          />
+        ),
+      ].filter(Boolean),
+    [isResolved, isOwn]
   );
+
+  if (items.length === 0) {
+    return null;
+  }
 
   return (
     <Menu<CommentMenuItemType>

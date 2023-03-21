@@ -2,6 +2,7 @@ import type React from 'react';
 import { $getSelection } from 'lexical';
 import type { LexicalEditor } from 'lexical';
 import type {
+  ChannelToggleShowResolvedTarget,
   CommentEmojiButtonTargets,
   CommentTarget,
   ComposerTarget,
@@ -209,6 +210,9 @@ export function createEvents(store: Store) {
               break;
             case 'resolveThreadButton':
               actions.resolveThread(store, target);
+              break;
+            case 'channelToggleShowResolved':
+              actions.toggleShowResolved(store, target);
               break;
           }
           break;

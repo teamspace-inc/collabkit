@@ -1,9 +1,16 @@
-import React, { ComponentPropsWithRef, useCallback, useEffect, useRef, useMemo } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useRef,
+  useMemo,
+  useState,
+  ComponentPropsWithoutRef,
+} from 'react';
 import { useSnapshot } from 'valtio';
 import { useApp } from '../hooks/useApp';
 import * as styles from '../theme/components/Channel.css';
 import { Scrollable } from './Scrollable';
-import { ChatCentered } from './icons';
+import { ChatCentered, CheckCircle, SortAscending } from './icons';
 import { emptyState } from '../theme/components/Thread.css';
 import { useInbox } from '../hooks/public/useInbox';
 import * as commentStyles from '../theme/components/Comment.css';
@@ -55,7 +62,6 @@ import PinButtonSvg from './pin-button.svg';
 import PinButtonHoverSvg from './pin-button-hover.svg';
 import DeletePinButtonSvg from './delete-pin-button.svg';
 import DeletePinButtonHoverSvg from './delete-pin-button-hover.svg';
-import { Root } from './Root';
 
 import { Authenticated } from './Authenticated';
 import { SidebarCloseButton, SidebarHeader, SidebarTitle } from './Sidebar';
@@ -63,6 +69,8 @@ import { usePopover } from '../hooks/usePopover';
 import { PopoverRoot, PopoverTrigger, PopoverPortal, PopoverContent } from './Popover';
 import { CommentPinSVG } from './composer/CommentPinSvg';
 import { ThemeWrapper } from './ThemeWrapper';
+import { CheckBoxMenuItem, Menu } from './Menu';
+import { IconButton } from './IconButton';
 
 function EmptyState() {
   return (
@@ -88,8 +96,13 @@ function useIsChannelSelected() {
   });
 }
 
-function ChannelScrollableThreadList(props: ComponentPropsWithRef<'div'>) {
-  const threadIds = useInbox({ filter: 'open', direction: 'asc' });
+function useResolvedVisible(channelId: string) {
+  const { resolvedVisible } = useSnapshot(useStore());
+  return resolvedVisible[channelId] ?? false;
+}
+
+function ChannelScrollableThreadList(props: ComponentPropsWithoutRef<'div'>) {
+  const threadIds = useInbox({ filter: 'all', direction: 'asc' });
   const threads = threadIds.map((threadId) => {
     return (
       <ThreadContext.Provider value={threadId} key={`inboxThread-${threadId}`}>
@@ -109,9 +122,12 @@ function ChannelScrollableThreadList(props: ComponentPropsWithRef<'div'>) {
   );
 }
 
-function ChannelCommentList(props: ComponentPropsWithRef<'div'>) {
+function ChannelCommentList(props: ComponentPropsWithoutRef<'div'>) {
   const isSelected = useIsChannelSelected();
   const commentList = useCommentList();
+  const threadId = useThreadContext();
+  const workspace = useSnapshot(useWorkspaceStore());
+  const { isResolved } = workspace.computed[threadId];
   const comments = commentList.map((comment, i) =>
     !isSelected && i > 0 ? null : (
       <CommentRoot
@@ -126,11 +142,13 @@ function ChannelCommentList(props: ComponentPropsWithRef<'div'>) {
             <CommentHeader>
               <CommentCreatorName />
               <CommentTimestamp />
+              <div style={{ flex: 1 }} />
+              {i === 0 && isResolved && <CheckCircle size={14} className={styles.resolvedIcon} />}
             </CommentHeader>
             <CommentActions>
               <CommentActionsEmojiButton />
               {i == 0 && <CommentActionsReplyButton />}
-              {i == 0 && <CommentThreadResolveIconButton />}
+              {i == 0 && !isResolved && <CommentThreadResolveIconButton />}
               <CommentMenu />
             </CommentActions>
             <CommentBody>
@@ -203,12 +221,13 @@ function ChannelThread() {
     },
     [threadId, workspaceId, channelId]
   );
+  const resolvedVisible = useResolvedVisible(channelId);
 
   if (!timeline) {
     return null;
   }
 
-  if (isResolved) {
+  if (isResolved && !resolvedVisible) {
     return null;
   }
 
@@ -272,7 +291,7 @@ function ChannelThread() {
 
 type ChannelProps = { channelId: string };
 
-function ChannelRoot(props: ComponentPropsWithRef<'div'> & ChannelProps) {
+function ChannelRoot(props: ComponentPropsWithoutRef<'div'> & ChannelProps) {
   const store = useStore();
   const { workspaceId } = useSnapshot(store);
   const { channelId, ...otherProps } = props;
@@ -286,7 +305,54 @@ function ChannelRoot(props: ComponentPropsWithRef<'div'> & ChannelProps) {
   ) : null;
 }
 
-function ChannelThreadList(props: ComponentPropsWithRef<'div'>) {
+type FilterMenuItemType =
+  // | 'channelSortByDate'
+  // | 'channelSortByUnread'
+  'channelToggleShowResolved';
+
+function ChannelFiltersMenu(props: { className?: string }) {
+  const { events } = useApp();
+  const channelId = useChannelContext();
+  const resolvedVisible = useResolvedVisible(channelId);
+
+  const onItemClick = useCallback(
+    (e: React.MouseEvent, type: FilterMenuItemType) => {
+      events.onClick(e, {
+        target: {
+          type,
+          channelId,
+        },
+      });
+    },
+    [channelId]
+  );
+
+  const items = [
+    <CheckBoxMenuItem
+      checked={resolvedVisible}
+      label="Show resolved comments"
+      targetType="channelToggleShowResolved"
+    />,
+  ];
+
+  return (
+    <Menu<FilterMenuItemType> className={props.className} onItemClick={onItemClick} items={items}>
+      <IconButton size={16} weight="light" color={vars.color.textPrimary}>
+        <SortAscending />
+      </IconButton>
+    </Menu>
+  );
+}
+
+function ChannelFilters(props: ComponentPropsWithoutRef<'div'>) {
+  return (
+    <div className={styles.filters}>
+      <ChannelFiltersMenu />
+    </div>
+  );
+}
+
+function ChannelThreadList(props: ComponentPropsWithoutRef<'div'>) {
   const threadIds = useInbox({ filter: 'open', direction: 'asc' });
   const threads = threadIds.map((threadId) => {
     return (
@@ -522,6 +588,7 @@ function Channel(props: React.ComponentPropsWithoutRef<'div'>) {
       <Authenticated>
         <div className={styles.wrapper} {...props}>
           <ChannelRoot channelId="default">
+            <ChannelFilters />
             <ChannelScrollableThreadList />
             <ChannelNewThreadComposer />
           </ChannelRoot>
@@ -546,7 +613,7 @@ function PopoverChannel() {
             <div className={styles.popover}>
               <ChannelRoot channelId="default">
                 <SidebarHeader>
-                  <SidebarTitle>Comments</SidebarTitle>
+                  <SidebarTitle>Comments (channel)</SidebarTitle>
                   <div style={{ flex: 1 }} />
                   <SidebarCloseButton />
                 </SidebarHeader>
@@ -566,6 +633,7 @@ function PopoverChannel() {
 export {
   Channel,
   ChannelRoot,
+  ChannelFilters,
   ChannelThreadList,
   ChannelThread,
   ChannelNewThreadComposer,
