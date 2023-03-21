@@ -15,6 +15,5 @@ export const cursor = style({
 
 export const overlay = style({
   position: 'absolute',
-  backgroundColor: 'rgba(255, 255, 127, 0.5)',
   pointerEvents: 'none',
 });

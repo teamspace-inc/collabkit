@@ -44,7 +44,7 @@ function PinLayer(props: { className?: string; children?: React.ReactNode }) {
         const { element } = commentable;
         element.classList.add(styles.activeContainer);
         hoveredElementRef.current = element;
-        cursorRef.current.style.display = 'block';
+        cursorRef.current.style.opacity = '1.0';
         const { left, top, width, height } = element.getBoundingClientRect();
         overlayRef.current.style.left = `${left}px`;
         overlayRef.current.style.top = `${top}px`;
@@ -52,7 +52,7 @@ function PinLayer(props: { className?: string; children?: React.ReactNode }) {
         overlayRef.current.style.height = `${height}px`;
         overlayRef.current.style.display = 'block';
       } else {
-        cursorRef.current.style.display = 'none';
+        cursorRef.current.style.opacity = '0.4';
         overlayRef.current.style.display = 'none';
       }
     },
