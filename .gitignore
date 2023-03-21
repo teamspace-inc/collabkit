@@ -17,3 +17,5 @@ tsconfig.tsbuildinfo
 /examples/*/stats.html
 /packages/@collabkit/*/stats.html
 /packages/@collabkit/*/types
+
+.buildt

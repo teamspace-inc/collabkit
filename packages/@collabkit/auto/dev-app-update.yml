@@ -1,0 +1,3 @@
+provider: generic
+updaterCacheDirName: auto-updater
+url: https://example.com/auto-updates
