@@ -23,6 +23,11 @@ export const root = recipe({
     fontFamily: vars.fontFamily,
   },
   variants: {
+    first: {
+      true: {
+        paddingTop: 0,
+      },
+    },
     indent: {
       true: {
         paddingLeft: fallbackVar(vars.comment.paddingLeft, calc.multiply(vars.space[4], 3.25)),

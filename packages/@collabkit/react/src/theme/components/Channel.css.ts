@@ -95,9 +95,7 @@ export const composerPinButton = style({
   height: '100%',
 });
 
-export const threadList = style({
-  padding: `${vars.space[2]} 0 0`,
-});
+export const threadList = style({});
 
 export const commentList = style({
   display: 'flex',
