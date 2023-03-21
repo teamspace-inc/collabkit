@@ -1,0 +1,26 @@
+{
+  "name": "ai",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.16"
+  },
+  "dependencies": {
+    "@types/terminal-kit": "^2.5.1",
+    "csv": "^6.2.5",
+    "multi-progress-bars": "^5.0.2",
+    "object-hash": "^3.0.0",
+    "openai": "^3.1.0",
+    "p-map": "^5.5.0",
+    "pinecone": "^0.1.0",
+    "pinecone-client": "^1.0.1",
+    "terminal-kit": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.18",
+    "@types/object-hash": "^3.0.2",
+    "ts-node": "^10.9.1"
+  }
+}
