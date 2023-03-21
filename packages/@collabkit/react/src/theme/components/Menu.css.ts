@@ -29,6 +29,7 @@ export const menuItem = style({
   width: '100%',
   border: 'none',
   textAlign: 'left',
+  whiteSpace: 'nowrap',
   margin: 0,
   outline: 0,
   padding: `${vars.space[1]} ${vars.space[2]}`,
@@ -56,4 +57,10 @@ export const menuItem = style({
       borderBottomRightRadius: 0,
     },
   },
+});
+
+export const checkBoxMenuItem = style([menuItem]);
+
+export const checkBoxMenuItemLabel = style({
+  marginLeft: vars.space[2],
 });

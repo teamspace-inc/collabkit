@@ -37,6 +37,14 @@ export const root = style([
   },
 ]);
 
+export const filters = style({
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'flex-end',
+  alignItems: 'center',
+  padding: `${vars.space[3]} ${vars.space[4]}`,
+});
+
 export const rootComposerRoot = style([
   composerStyles.root,
   {
@@ -112,6 +120,10 @@ export const thread = recipe({
       },
     },
   },
+});
+
+export const resolvedIcon = style({
+  color: vars.color.textPrimary,
 });
 
 export const commentPin = style({

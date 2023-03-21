@@ -17,3 +17,4 @@ export { default as ArrowBendDownRight } from 'phosphor-react/dist/icons/ArrowBe
 export { default as ArrowBendUpRight } from 'phosphor-react/dist/icons/ArrowBendUpRight.esm.js';
 export { default as CaretRight } from 'phosphor-react/dist/icons/CaretRight.esm.js';
 export { default as CaretLeft } from 'phosphor-react/dist/icons/CaretLeft.esm.js';
+export { default as SortAscending } from 'phosphor-react/dist/icons/SortAscending.esm.js';

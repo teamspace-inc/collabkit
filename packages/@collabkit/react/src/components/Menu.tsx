@@ -34,9 +34,10 @@ import { FloatingFocusManager } from './FloatingFocusManager';
 import { ThemeWrapper } from './ThemeWrapper';
 import { useApp } from '../hooks/useApp';
 import { useSnapshot } from 'valtio';
-import { menu, menuItem } from '../theme/components/Menu.css';
+import * as styles from '../theme/components/Menu.css';
 import { MenuTarget, Target } from '@collabkit/core';
 import { useStoreKeyMatches } from '../hooks/useSubscribeStoreKey';
+import { Check } from './icons';
 
 export const MenuItem = forwardRef<
   HTMLButtonElement,
@@ -44,7 +45,7 @@ export const MenuItem = forwardRef<
 >(({ label, disabled, targetType, ...props }, ref) => {
   return (
     <button
-      className={menuItem}
+      className={styles.menuItem}
       key={label}
       {...props}
       ref={ref}
@@ -52,6 +53,25 @@ export const MenuItem = forwardRef<
       disabled={disabled}
     >
       {label}
+    </button>
+  );
+});
+
+export const CheckBoxMenuItem = forwardRef<
+  HTMLButtonElement,
+  { label: string; disabled?: boolean; targetType: unknown; className?: string; checked: boolean }
+>(({ label, disabled, targetType, checked, ...props }, ref) => {
+  return (
+    <button
+      className={styles.checkBoxMenuItem}
+      key={label}
+      {...props}
+      ref={ref}
+      role="menuitem"
+      disabled={disabled}
+    >
+      {checked && <Check size={16} />}
+      <span className={styles.checkBoxMenuItemLabel}>{label}</span>
     </button>
   );
 });
@@ -244,7 +264,7 @@ export const Menu = React.memo(function Menu(props) {
             <ThemeWrapper>
               <div
                 {...getFloatingProps({
-                  className: className ?? menu,
+                  className: className ?? styles.menu,
                   ref: floating,
                   style: {
                     position: strategy,

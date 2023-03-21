@@ -59,6 +59,7 @@ import { toggleSidebar } from './toggleSidebar';
 import { install } from './install';
 import { destroy } from './destroy';
 import { setConfig } from './setConfig';
+import { toggleShowResolved } from './toggleShowResolved';
 
 export {
   attachComposerPin,
@@ -117,6 +118,7 @@ export {
   subscribeWorkspaceProfiles,
   toggleEmoji,
   toggleEmojiPicker,
+  toggleShowResolved,
   toggleSidebar,
   unhover,
   updateComment,
