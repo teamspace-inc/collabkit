@@ -337,8 +337,8 @@ function ChannelFiltersMenu(props: { className?: string }) {
 
   return (
     <Menu<FilterMenuItemType> className={props.className} onItemClick={onItemClick} items={items}>
-      <IconButton>
-        <SortAscending size={16} />
+      <IconButton size={16} weight="light" color={vars.color.textPrimary}>
+        <SortAscending />
       </IconButton>
     </Menu>
   );

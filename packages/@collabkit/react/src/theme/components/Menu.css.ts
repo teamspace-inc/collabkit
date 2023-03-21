@@ -26,6 +26,7 @@ export const menu = style({
 export const menuItem = style({
   display: 'flex',
   justifyContent: 'space-between',
+  alignItems: 'center',
   width: '100%',
   border: 'none',
   textAlign: 'left',

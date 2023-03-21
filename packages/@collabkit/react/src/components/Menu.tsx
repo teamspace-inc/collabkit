@@ -70,7 +70,7 @@ export const CheckBoxMenuItem = forwardRef<
       role="menuitem"
       disabled={disabled}
     >
-      {checked && <Check size={16} />}
+      {checked && <Check size={12} />}
       <span className={styles.checkBoxMenuItemLabel}>{label}</span>
     </button>
   );
