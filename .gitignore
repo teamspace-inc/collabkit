@@ -18,3 +18,4 @@ tsconfig.tsbuildinfo
 /packages/@collabkit/*/stats.html
 /packages/@collabkit/*/types
 *.csv
+.buildt
