@@ -143,7 +143,7 @@ function ChannelCommentList(props: ComponentPropsWithoutRef<'div'>) {
               <CommentCreatorName />
               <CommentTimestamp />
               <div style={{ flex: 1 }} />
-              {i === 0 && isResolved && <CheckCircle size={16} className={styles.resolvedIcon} />}
+              {i === 0 && isResolved && <CheckCircle size={14} className={styles.resolvedIcon} />}
             </CommentHeader>
             <CommentActions>
               <CommentActionsEmojiButton />
