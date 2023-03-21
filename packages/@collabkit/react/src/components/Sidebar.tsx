@@ -49,10 +49,10 @@ function SidebarRoot(props: React.ComponentPropsWithoutRef<'div'>) {
   return <div data-testid="collabkit-sidebar-root" className={styles.root} {...props} />;
 }
 
-function Sidebar(props: { children: React.ReactNode }) {
+function Sidebar(props: React.ComponentPropsWithoutRef<'div'>) {
   return useIsSidebarOpen() ? (
     <ThemeWrapper>
-      <SidebarRoot>{props.children}</SidebarRoot>
+      <SidebarRoot {...props} />
     </ThemeWrapper>
   ) : null;
 }
