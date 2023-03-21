@@ -76,6 +76,7 @@ import { Channel } from './components/Channel';
 
 import { LightTheme } from './theme/themes/BaseTheme';
 import { DarkTheme } from './theme/themes/DarkTheme';
+import { useIsAuthenticated } from './hooks/useIsAuthenticated';
 
 const Themes = {
   LightTheme,
@@ -107,6 +108,7 @@ export {
   Profile,
   Scrollable,
   ThreadFacepile,
+  useIsAuthenticated,
   useIsResolved,
   useReplyCount,
   useResolveThread,

@@ -19,7 +19,6 @@ export type OptionalThreadProps = {
   showHeader?: boolean;
   autoFocus?: boolean;
   hideComposer?: boolean;
-  hideResolveButton?: boolean;
   placeholder?: string;
 };
 
