@@ -153,7 +153,7 @@ export type Target =
   | PinDeleteButton
   | CommentSaveButtonTarget
   | CommentCancelButtonTarget
-  | OverlayTarget
+  | CommentableTarget
   | CommentReplyCountButtonTarget
   | CommentReplyButtonTarget
   | EmojiTarget
@@ -272,11 +272,16 @@ export type CommentPinTarget = {
   eventId: string;
 };
 
-export type OverlayTarget = {
-  type: 'overlay';
+export type CommentableTarget = {
+  type: 'commentable';
   objectId: string;
   x: number;
   y: number;
+  dataPoint?: {
+    x: number;
+    y: number;
+  };
+  xOffset?: number;
 };
 
 export type PinCommentButtonTarget = {
@@ -469,10 +474,17 @@ export type Attachments = {
   [attachmentId: string]: Attachment;
 };
 
-export type Attachment = {
+export type Attachment = PinAttachment;
+
+export type PinAttachment = {
   type: 'pin';
   x: number;
   y: number;
+  dataPoint: {
+    x: number;
+    y: number;
+  } | null;
+  xOffset: number;
   objectId: string;
   meta: string | null;
   pending?: boolean;
@@ -481,22 +493,32 @@ export type Attachment = {
 export type FirebasePin = {
   x: number;
   y: number;
+  xOffset: number;
   threadId: string;
   eventId: string;
   createdById: string;
   meta: string | null;
+  dataPoint?: {
+    x: number;
+    y: number;
+  } | null;
 };
 
 export type Pin = {
   id: string;
   objectId: string;
   x: number;
+  xOffset: number;
   y: number;
   workspaceId: string;
   threadId: string;
   eventId: string;
   createdById: string;
   meta: string | null;
+  dataPoint?: {
+    x: number;
+    y: number;
+  };
 };
 
 export type PendingPin = Pin & {
@@ -581,11 +603,21 @@ export interface Workspace {
   };
 }
 
-type CommentableObject = {
+export type CommentableObject = {
+  xStepWidth: number;
+  xScale: Function;
+  xOffset?: number;
+  type?: 'Discrete' | 'Bar';
+
   objectId: string;
 
   // null indicates a disconnected pin
   element: HTMLElement | SVGElement | null;
+
+  dataPoint?: {
+    x: number;
+    y: number;
+  };
 };
 
 // get all pins for the workspace that have an open thread attached to them (we don't want resolved ones)

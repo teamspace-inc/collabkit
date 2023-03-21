@@ -56,7 +56,7 @@ describe('pin', () => {
     initComposer(store as Store, { threadId, workspaceId, eventId: 'default' });
     composer = store.workspaces[workspaceId].composers[threadId].default;
     composer.editor = null;
-    pinId = attachComposerPin(store as Store, { x: 0, y: 0, objectId: 'test' });
+    pinId = attachComposerPin(store as Store, { x: 0, y: 0, objectId: 'test', type: 'commentable' });
 
     const x = 0;
     const y = 0;

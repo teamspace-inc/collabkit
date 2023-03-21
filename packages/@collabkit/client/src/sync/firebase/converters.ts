@@ -38,6 +38,8 @@ export function eventToFirebaseEvent(event: Event) {
             type: attachment.type,
             x: attachment.x,
             y: attachment.y,
+            xOffset: attachment.xOffset,
+            dataPoint: attachment.dataPoint,
             objectId: attachment.objectId,
             meta: attachment.meta,
           };
