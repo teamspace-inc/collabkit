@@ -134,7 +134,7 @@ function ChannelCommentList(props: ComponentPropsWithoutRef<'div'>) {
         commentId={comment.id}
         indent={i > 0}
         key={`comment-${comment.id}-${i}`}
-        className={`${commentStyles.root({ first: i === 0, indent: i > 0 })}`}
+        className={`${commentStyles.root({ indent: i > 0 })}`}
       >
         <ProfileAvatar />
         <div style={{ display: 'flex', flexDirection: 'column' }}>
