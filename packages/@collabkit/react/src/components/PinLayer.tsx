@@ -13,7 +13,9 @@ import { findCommentableElement } from './Commentable';
 function PinLayer(props: { className?: string; children?: React.ReactNode }) {
   const cursorRef = useRef<HTMLDivElement | null>(null);
   const overlayRef = useRef<HTMLDivElement | null>(null);
-  const hoveredElementRef = useRef<HTMLElement | SVGElement | null>(null);
+  const hoveredCommentableElementRef = useRef<HTMLElement | SVGElement | null>(null);
+  const hoveredUncommentableElementRef = useRef<Element | SVGElement | null>(null);
+
   const store = useStore();
   const { events } = useApp();
   const { userId, uiState, workspaceId, pins, selectedId, pinsVisible } = useSnapshot(store);
@@ -27,13 +29,19 @@ function PinLayer(props: { className?: string; children?: React.ReactNode }) {
 
   const updateCursor = useCallback(
     (e: PointerEvent) => {
-      if (hoveredElementRef.current) {
-        hoveredElementRef.current.classList.remove(styles.activeContainer);
-        hoveredElementRef.current = null;
+      if (hoveredCommentableElementRef.current) {
+        hoveredCommentableElementRef.current.classList.remove(styles.activeContainer);
+        hoveredCommentableElementRef.current = null;
       }
+      if (hoveredUncommentableElementRef.current) {
+        hoveredUncommentableElementRef.current.classList.remove(styles.activeContainer);
+        hoveredUncommentableElementRef.current = null;
+      }
+
       if (!cursorRef.current || !overlayRef.current) {
         return;
       }
+
       cursorRef.current.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
       store.clientX = e.clientX;
       store.clientY = e.clientY;
@@ -43,8 +51,8 @@ function PinLayer(props: { className?: string; children?: React.ReactNode }) {
       if (commentable && commentable.element) {
         const { element } = commentable;
         element.classList.add(styles.activeContainer);
-        hoveredElementRef.current = element;
-        cursorRef.current.style.display = 'block';
+        hoveredCommentableElementRef.current = element;
+        cursorRef.current.style.opacity = '1.0';
         const { left, top, width, height } = element.getBoundingClientRect();
         overlayRef.current.style.left = `${left}px`;
         overlayRef.current.style.top = `${top}px`;
@@ -52,8 +60,14 @@ function PinLayer(props: { className?: string; children?: React.ReactNode }) {
         overlayRef.current.style.height = `${height}px`;
         overlayRef.current.style.display = 'block';
       } else {
-        cursorRef.current.style.display = 'none';
+        cursorRef.current.style.opacity = '0.4';
         overlayRef.current.style.display = 'none';
+        const element = document.elementFromPoint(e.clientX, e.clientY);
+        if (element) {
+          element.classList.add(styles.activeContainer);
+          hoveredUncommentableElementRef.current = element;
+        }
+
       }
     },
     [cursorRef, store]
