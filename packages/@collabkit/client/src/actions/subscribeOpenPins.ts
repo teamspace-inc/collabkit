@@ -73,11 +73,12 @@ export function subscribeOpenPins(store: Store) {
         workspace.openPins[decodedObjectId] ||= {};
         for (const pinId in pins[decodedObjectId]) {
           const firebasePin = pins[decodedObjectId][pinId];
-          const { meta, ...otherProps } = firebasePin;
+          const { meta, dataPoint, ...otherProps } = firebasePin;
           const pin: Pin = {
             ...otherProps,
             id: pinId,
             workspaceId,
+            dataPoint: dataPoint ?? undefined,
             objectId: decodedObjectId,
             meta: meta ?? null,
           };

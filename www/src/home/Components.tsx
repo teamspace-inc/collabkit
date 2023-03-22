@@ -51,9 +51,9 @@ export const KEYED_COMPONENTS: { [key: string]: ComponentProps } = {
     title: 'Commentable',
     description: 'A comment thread that can be rendered anywhere in your app.',
     component: (
-      <Commentable objectId="foo">
+      <Commentable.Container objectId="foo">
         <div style={{ width: '320', height: 320, backgroundColor: vars.color.aubergine }}></div>
-      </Commentable>
+      </Commentable.Container>
     ),
   },
   Thread: {

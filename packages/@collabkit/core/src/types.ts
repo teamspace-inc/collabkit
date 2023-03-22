@@ -518,7 +518,7 @@ export type Pin = {
   dataPoint?: {
     x: number;
     y: number;
-  };
+  } | null;
 };
 
 export type PendingPin = Pin & {

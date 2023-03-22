@@ -10,7 +10,7 @@ import * as styles from '../theme/components/Commentable.css';
 import { SavedPin } from './Pin';
 import { PinCursor } from './PinCursor';
 
-export function findCommentableElement(store: Store, e: React.PointerEvent): CommentableObject | null {
+export function findCommentableElement(store: Store, e: PointerEvent): CommentableObject | null {
   const element = document.elementFromPoint(e.clientX, e.clientY);
   if (element == null) {
     return null;
@@ -44,8 +44,7 @@ export function CommentableRoot(props: { className?: string; children?: React.Re
       store.clientX = e.clientX;
       store.clientY = e.clientY;
 
-      const commentable = findCommentableElement(store, e);
-
+      const commentable = findCommentableElement(store, e.nativeEvent);
       if (commentable && commentable.element) {
         const { element } = commentable;
         element.classList.add(styles.activeContainer);
@@ -67,16 +66,20 @@ export function CommentableRoot(props: { className?: string; children?: React.Re
 
   const onPointerDown = useCallback(
     (e: React.PointerEvent) => {
-      const commentable = findCommentableElement(store, e);
+      const commentable = findCommentableElement(store, e.nativeEvent);
       if (commentable && commentable.element && workspaceId) {
         let { x, y, width, height } = commentable.element.getBoundingClientRect();
         if (!commentable.xOffset) {
           commentable.xOffset = 0;
         }
-        let xOffset = ((e.clientX - x - commentable.xOffset) / store.commentables[commentable.objectId].xStepWidth);
+        if(!commentable.xStepWidth){
+          commentable.xStepWidth = 0;
+        }
+        let xOffset = ((e.clientX - x - commentable.xOffset) / commentable.xStepWidth);
         if (commentable.type == 'Bar') {
           xOffset += 0.5;
         }
+        console.log(commentable);
         events.onClick(e, {
           target: {
             type: 'commentable',

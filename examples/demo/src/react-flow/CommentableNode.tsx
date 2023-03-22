@@ -8,7 +8,7 @@ function CommentableNode({ data }: { data: any }): JSX.Element {
 
   return (
     <>
-      <Commentable key={nodeId} objectId={nodeId ? nodeId : ''}>
+      <Commentable.Container key={nodeId} objectId={nodeId ? nodeId : ''}>
         <div className="commentable-node">
           {!data.hideTop ? <Handle type="target" position={Position.Top} /> : null}
           <div>
@@ -17,7 +17,7 @@ function CommentableNode({ data }: { data: any }): JSX.Element {
           </div>
           <Handle type="source" position={Position.Bottom} id="b" />
         </div>
-      </Commentable>
+      </Commentable.Container>
     </>
   );
 }
