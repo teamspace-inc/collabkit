@@ -106,9 +106,15 @@ function InboxItem({ threadId, ...props }: { threadId: string } & ComponentProps
   );
 }
 
-function InboxItemList() {
-  const treadIds = useOptionalFilterContext();
-  const threadIds = useInbox({ filter: 'open', threadIds: treadIds });
+export type InboxItemListProps = {
+  commentFilter?: (body: string) => boolean;
+  direction?: 'asc' | 'desc';
+  filter?: 'all' | 'open';
+  threadIds?: string[] | null;
+};
+
+function InboxItemList(props: InboxItemListProps) {
+  const threadIds = useInbox(props);
   return (
     <>
       {threadIds.map((threadId) => (
@@ -118,37 +124,29 @@ function InboxItemList() {
   );
 }
 
-function InboxRoot({
-  threadIds,
-  ...props
-}: { threadIds?: string[] } & ComponentPropsWithoutRef<'div'>) {
-  const store = useStore();
-  useEffect(() => {
-    actions.subscribeInbox(store);
-  }, [store]);
-
+function InboxRoot(props: ComponentPropsWithoutRef<'div'>) {
   return (
-    <FilterContext.Provider value={threadIds ?? null}>
-      <ThemeWrapper>
-        <div className={styles.root} {...props} />
-      </ThemeWrapper>
-    </FilterContext.Provider>
+    <ThemeWrapper>
+      <div className={styles.root} {...props} />
+    </ThemeWrapper>
   );
 }
 
-const FilterContext = React.createContext<string[] | null>(null);
-
-function useOptionalFilterContext() {
-  return React.useContext(FilterContext);
-}
-
 function Inbox({
+  commentFilter,
+  direction,
+  filter,
   threadIds,
   ...props
-}: { threadIds?: string[] } & ComponentPropsWithoutRef<'div'>) {
+}: InboxItemListProps & ComponentPropsWithoutRef<'div'>) {
   return (
     <InboxRoot {...props}>
-      <InboxItemList />
+      <InboxItemList
+        commentFilter={commentFilter}
+        direction={direction}
+        filter={filter}
+        threadIds={threadIds}
+      />
     </InboxRoot>
   );
 }
