@@ -23,7 +23,7 @@
     "pinecone-client": "^1.0.1",
     "terminal-kit": "^3.0.0",
     "date-fns": "^2.29.3",
-    "gray-matter": "^4.0.3"
+    "eventsource-parser": "^0.1.0"
   },
   "devDependencies": {
     "@types/node": "^18.11.18",
