@@ -17,11 +17,7 @@ export function InboxButtonDoc() {
         }}
       >
         <div style={{ background: 'white', borderRadius: '8px' }}>
-          <InboxButton
-            onClick={function (): void {
-              throw new Error('Function not implemented.');
-            }}
-          />
+          <InboxButton />
         </div>
       </ComponentDemo>
       <div>
