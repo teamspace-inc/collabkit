@@ -108,7 +108,7 @@ function InboxItem({ threadId, ...props }: { threadId: string } & ComponentProps
 
 function InboxItemList() {
   const treadIds = useOptionalFilterContext();
-  const threadIds = useInbox({ filter: 'open', threadIds: treadIds, latestFirst: true });
+  const threadIds = useInbox({ filter: 'open', threadIds: treadIds });
 
   if (!threadIds) return <InboxEmptyState />;
 

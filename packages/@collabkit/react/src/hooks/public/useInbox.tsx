@@ -8,7 +8,6 @@ export function useInbox(props: {
   filter: 'all' | 'open';
   threadIds?: string[] | null;
   direction?: 'asc' | 'desc';
-  latestFirst?: boolean;
 }) {
   const store = useStore();
   const { workspaceId, workspaces } = useSnapshot(store);
@@ -38,13 +37,10 @@ export function useInbox(props: {
     .filter(
       (threadId) => threadId && (props.filter === 'open' ? workspace.isOpen[threadId] : true)
     );
-  if (props.latestFirst) {
-    // show threads with latest activity first
-    openThreadIds.sort((a, b) => {
-      const aTime = +inbox[a]?.createdAt ?? 0;
-      const bTime = +inbox[b]?.createdAt ?? 0;
-      return props.direction === 'asc' ? aTime - bTime : bTime - aTime;
-    });
-  }
+  openThreadIds.sort((a, b) => {
+    const aTime = +inbox[a]?.createdAt ?? 0;
+    const bTime = +inbox[b]?.createdAt ?? 0;
+    return props.direction === 'asc' ? aTime - bTime : bTime - aTime;
+  });
   return openThreadIds;
 }
