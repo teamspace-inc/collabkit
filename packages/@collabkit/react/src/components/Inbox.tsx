@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { ComponentPropsWithoutRef, useEffect } from 'react';
 import { useSnapshot } from 'valtio';
 import * as styles from '../theme/components/Inbox.css';
 import { ThemeWrapper } from './ThemeWrapper';
@@ -41,7 +41,7 @@ function InboxEmptyState() {
   );
 }
 
-function InboxItem({ threadId }: { threadId: string }) {
+function InboxItem({ threadId, ...props }: { threadId: string } & ComponentPropsWithoutRef<'div'>) {
   const workspaceId = useWorkspaceContext();
   const store = useStore();
   const workspace = useSnapshot(useWorkspaceStore());
@@ -83,6 +83,7 @@ function InboxItem({ threadId }: { threadId: string }) {
             } as const,
           })
         }
+        {...props}
       >
         <div className={inboxItemStyles.header}>
           <ThreadUnreadDot />
@@ -123,7 +124,7 @@ function InboxItemList() {
 function InboxRoot({
   threadIds,
   ...props
-}: { threadIds?: string[] } & React.ComponentPropsWithoutRef<'div'>) {
+}: { threadIds?: string[] } & ComponentPropsWithoutRef<'div'>) {
   const store = useStore();
   useEffect(() => {
     actions.subscribeInbox(store);
@@ -147,7 +148,7 @@ function useOptionalFilterContext() {
 function Inbox({
   threadIds,
   ...props
-}: { threadIds?: string[] } & React.ComponentPropsWithoutRef<'div'>) {
+}: { threadIds?: string[] } & ComponentPropsWithoutRef<'div'>) {
   return (
     <InboxRoot {...props}>
       <InboxItemList />
