@@ -5,12 +5,12 @@ import { useStore } from '../useStore';
 import { useIsAuthenticated } from '../useIsAuthenticated';
 
 export function useInbox(props: {
-  filter?: 'all' | 'open';
+  statusFilter?: 'all' | 'open';
   threadIds?: string[] | null;
   commentFilter?: (body: string) => boolean;
   direction?: 'asc' | 'desc';
 }) {
-  const filter = props.filter ?? 'open';
+  const statusFilter = props.statusFilter ?? 'open';
   const store = useStore();
   const { workspaceId, workspaces } = useSnapshot(store);
 
@@ -38,7 +38,7 @@ export function useInbox(props: {
     // filter out resolved threads
     .filter((threadId) => {
       if (!threadId) return false;
-      if (filter === 'open' && !workspace.isOpen[threadId]) return false;
+      if (statusFilter === 'open' && !workspace.isOpen[threadId]) return false;
       if (props.commentFilter) {
         const body = inbox[threadId]?.body;
         if (!props.commentFilter(body)) {

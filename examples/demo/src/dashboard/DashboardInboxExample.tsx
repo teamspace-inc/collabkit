@@ -305,7 +305,12 @@ export function DashboardInboxExample() {
             <SidebarCloseButton />
           </SidebarHeader>
           <Scrollable>
-            <Inbox filter="all" />
+            <Inbox
+              commentFilter={(body: string) => true}
+              direction="desc"
+              statusFilter="open"
+              threadIds={undefined}
+            />
           </Scrollable>
         </Sidebar>
       </div>

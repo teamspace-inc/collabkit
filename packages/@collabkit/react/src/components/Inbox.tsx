@@ -107,7 +107,7 @@ function InboxItem({ threadId, ...props }: { threadId: string } & ComponentProps
 export type InboxItemListProps = {
   commentFilter?: (body: string) => boolean;
   direction?: 'asc' | 'desc';
-  filter?: 'all' | 'open';
+  statusFilter?: 'all' | 'open';
   threadIds?: string[] | null;
 };
 
@@ -133,7 +133,7 @@ function InboxRoot(props: ComponentPropsWithoutRef<'div'>) {
 function Inbox({
   commentFilter,
   direction,
-  filter,
+  statusFilter,
   threadIds,
   ...props
 }: InboxItemListProps & ComponentPropsWithoutRef<'div'>) {
@@ -142,7 +142,7 @@ function Inbox({
       <InboxItemList
         commentFilter={commentFilter}
         direction={direction}
-        filter={filter}
+        statusFilter={statusFilter}
         threadIds={threadIds}
       />
     </InboxRoot>

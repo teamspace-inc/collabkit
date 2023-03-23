@@ -95,7 +95,7 @@ function useResolvedVisible(channelId: string) {
 }
 
 function ChannelScrollableThreadList(props: ComponentPropsWithoutRef<'div'>) {
-  const threadIds = useInbox({ filter: 'all', direction: 'asc' });
+  const threadIds = useInbox({ statusFilter: 'all', direction: 'asc' });
   const threads = threadIds.map((threadId) => {
     return (
       <ThreadContext.Provider value={threadId} key={`inboxThread-${threadId}`}>
@@ -346,7 +346,7 @@ function ChannelFilters(props: ComponentPropsWithoutRef<'div'>) {
 }
 
 function ChannelThreadList(props: ComponentPropsWithoutRef<'div'>) {
-  const threadIds = useInbox({ filter: 'open', direction: 'asc' });
+  const threadIds = useInbox({ statusFilter: 'open', direction: 'asc' });
   const threads = threadIds.map((threadId) => {
     return (
       <ThreadContext.Provider value={threadId} key={`inboxThread-${threadId}`}>
