@@ -8,7 +8,7 @@ import { useInbox } from '../hooks/public/useInbox';
 import { useStore } from '../hooks/useStore';
 import { actions } from '@collabkit/client';
 import { SidebarCloseButton, SidebarHeader, SidebarRoot, SidebarTitle } from './Sidebar';
-import { ThreadContext, useThreadContext } from '../hooks/useThreadContext';
+import { ThreadContext } from '../hooks/useThreadContext';
 import { useWorkspaceContext } from '../hooks/useWorkspaceContext';
 import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
 import {
@@ -18,7 +18,7 @@ import {
   CommentTimestamp,
   CommentBody,
   CommentMarkdown,
-  CommentSeeAllRepliesButton,
+  CommentReplyCount,
 } from './Comment';
 import { ThreadFacepile } from './ThreadFacepile';
 import { ThreadUnreadDot } from './ThreadUnreadDot';
@@ -41,8 +41,7 @@ function InboxEmptyState() {
   );
 }
 
-function InboxItem() {
-  const threadId = useThreadContext();
+function InboxItem({ threadId }: { threadId: string }) {
   const workspaceId = useWorkspaceContext();
   const store = useStore();
   const workspace = useSnapshot(useWorkspaceStore());
@@ -72,36 +71,37 @@ function InboxItem() {
   }
 
   return (
-    <div
-      className={inboxItemStyles.root({ selected })}
-      onClick={(e) =>
-        events.onClick(e, {
-          target: {
-            type: 'inboxItem',
-            threadId,
-            workspaceId,
-          } as const,
-        })
-      }
-      key={`inboxThread-${threadId}`}
-    >
-      <div className={inboxItemStyles.header}>
-        <ThreadUnreadDot />
-        <ThreadFacepile size={inboxItemStyles.facepileSize} />
-        <div style={{ flex: 1 }}></div>
-        <CommentThreadResolveIconButton />
-      </div>
-      <CommentRoot commentId={firstCommentId} className={inboxItemStyles.commentRoot}>
-        <div className={inboxItemStyles.nameAndTimestampWrapper}>
-          <CommentCreatorName />
-          <CommentTimestamp />
+    <ThreadContext.Provider value={threadId} key={threadId}>
+      <div
+        className={inboxItemStyles.root({ selected })}
+        onClick={(e) =>
+          events.onClick(e, {
+            target: {
+              type: 'inboxItem',
+              threadId,
+              workspaceId,
+            } as const,
+          })
+        }
+      >
+        <div className={inboxItemStyles.header}>
+          <ThreadUnreadDot />
+          <ThreadFacepile size={inboxItemStyles.facepileSize} />
+          <div style={{ flex: 1 }}></div>
+          <CommentThreadResolveIconButton />
         </div>
-        <CommentBody>
-          <CommentMarkdown />
-        </CommentBody>
-        <CommentSeeAllRepliesButton />
-      </CommentRoot>
-    </div>
+        <CommentRoot commentId={firstCommentId} className={inboxItemStyles.commentRoot}>
+          <div className={inboxItemStyles.nameAndTimestampWrapper}>
+            <CommentCreatorName />
+            <CommentTimestamp />
+          </div>
+          <CommentBody>
+            <CommentMarkdown />
+          </CommentBody>
+          <CommentReplyCount />
+        </CommentRoot>
+      </div>
+    </ThreadContext.Provider>
   );
 }
 
@@ -113,27 +113,28 @@ function InboxItemList() {
 
   return (
     <>
-      {threadIds.map((threadId) => {
-        return (
-          <ThreadContext.Provider value={threadId} key={`inboxThread-${threadId}`}>
-            <InboxItem />
-          </ThreadContext.Provider>
-        );
-      })}
+      {threadIds.map((threadId) => (
+        <InboxItem threadId={threadId} key={threadId} />
+      ))}
     </>
   );
 }
 
-function InboxRoot(props: { children: React.ReactNode; threadIds?: string[] }) {
+function InboxRoot({
+  threadIds,
+  ...props
+}: { threadIds?: string[] } & React.ComponentPropsWithoutRef<'div'>) {
   const store = useStore();
   useEffect(() => {
     actions.subscribeInbox(store);
   }, [store]);
 
   return (
-    <ThemeWrapper>
-      <div className={styles.root}>{props.children}</div>
-    </ThemeWrapper>
+    <FilterContext.Provider value={threadIds ?? null}>
+      <ThemeWrapper>
+        <div className={styles.root} {...props} />
+      </ThemeWrapper>
+    </FilterContext.Provider>
   );
 }
 
@@ -143,35 +144,32 @@ function useOptionalFilterContext() {
   return React.useContext(FilterContext);
 }
 
-function Inbox(props: { threadIds?: string[] }) {
+function Inbox({
+  threadIds,
+  ...props
+}: { threadIds?: string[] } & React.ComponentPropsWithoutRef<'div'>) {
   return (
-    <ThemeWrapper>
-      <FilterContext.Provider value={props.threadIds ?? null}>
-        <InboxRoot>
-          <InboxItemList />
-        </InboxRoot>
-      </FilterContext.Provider>
-    </ThemeWrapper>
+    <InboxRoot {...props}>
+      <InboxItemList />
+    </InboxRoot>
   );
 }
 
 function SidebarInbox() {
   return useIsSidebarOpen() ? (
     <Root>
-      <Authenticated>
-        <SidebarRoot>
-          <InboxRoot>
-            <SidebarHeader>
-              <SidebarTitle>Comments</SidebarTitle>
-              <div style={{ flex: 1 }} />
-              <SidebarCloseButton />
-            </SidebarHeader>
-            <Scrollable>
-              <InboxItemList />
-            </Scrollable>
-          </InboxRoot>
-        </SidebarRoot>
-      </Authenticated>
+      <SidebarRoot>
+        <InboxRoot>
+          <SidebarHeader>
+            <SidebarTitle>Comments</SidebarTitle>
+            <div style={{ flex: 1 }} />
+            <SidebarCloseButton />
+          </SidebarHeader>
+          <Scrollable>
+            <InboxItemList />
+          </Scrollable>
+        </InboxRoot>
+      </SidebarRoot>
     </Root>
   ) : null;
 }

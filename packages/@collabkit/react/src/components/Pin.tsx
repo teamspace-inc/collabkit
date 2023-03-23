@@ -35,7 +35,7 @@ import {
   CommentReactions,
   CommentReactionsList,
   CommentRoot,
-  CommentSeeAllRepliesButton,
+  CommentReplyCountButton,
   CommentTimestamp,
 } from './Comment';
 import * as styles from '../theme/components/Pin.css';
@@ -200,43 +200,41 @@ function PinThreadPreview({ pin }: { pin: Pin }) {
   const { events } = useApp();
 
   return (
-    <Root>
-      <ThemeWrapper>
-        <ThreadContext.Provider value={pin.threadId}>
-          <div
-            className={styles.pinThread}
-            onClick={(e) =>
-              events.onClick(e, {
-                target: {
-                  type: 'pinThreadPreview',
-                  threadId: pin.threadId,
-                  workspaceId: pin.workspaceId,
-                  objectId: pin.objectId,
-                  eventId: pin.eventId,
-                  id: pin.id,
-                },
-              })
-            }
-          >
-            <CommentRoot commentId={pin.eventId} className={styles.pinPreview}>
-              <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <CommentHeader>
-                  <CommentCreatorName />
-                  <CommentTimestamp />
-                </CommentHeader>
-                <CommentBody>
-                  <CommentMarkdown />
-                </CommentBody>
-                <CommentReactions>
-                  <CommentReactionsList disabled={true} />
-                </CommentReactions>
-                <CommentSeeAllRepliesButton onClick={() => {}} />
-              </div>
-            </CommentRoot>
-          </div>
-        </ThreadContext.Provider>
-      </ThemeWrapper>
-    </Root>
+    <ThemeWrapper>
+      <ThreadContext.Provider value={pin.threadId}>
+        <div
+          className={styles.pinThread}
+          onClick={(e) =>
+            events.onClick(e, {
+              target: {
+                type: 'pinThreadPreview',
+                threadId: pin.threadId,
+                workspaceId: pin.workspaceId,
+                objectId: pin.objectId,
+                eventId: pin.eventId,
+                id: pin.id,
+              },
+            })
+          }
+        >
+          <CommentRoot commentId={pin.eventId} className={styles.pinPreview}>
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <CommentHeader>
+                <CommentCreatorName />
+                <CommentTimestamp />
+              </CommentHeader>
+              <CommentBody>
+                <CommentMarkdown />
+              </CommentBody>
+              <CommentReactions>
+                <CommentReactionsList disabled={true} />
+              </CommentReactions>
+              <CommentReplyCountButton onClick={() => {}} />
+            </div>
+          </CommentRoot>
+        </div>
+      </ThreadContext.Provider>
+    </ThemeWrapper>
   );
 }
 

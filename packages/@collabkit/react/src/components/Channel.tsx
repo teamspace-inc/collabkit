@@ -1,11 +1,4 @@
-import React, {
-  useCallback,
-  useEffect,
-  useRef,
-  useMemo,
-  useState,
-  ComponentPropsWithoutRef,
-} from 'react';
+import React, { useCallback, useEffect, useRef, useMemo, ComponentPropsWithoutRef } from 'react';
 import { useSnapshot } from 'valtio';
 import { useApp } from '../hooks/useApp';
 import * as styles from '../theme/components/Channel.css';
@@ -42,7 +35,7 @@ import {
   CommentMenu,
   CommentReactions,
   CommentRoot,
-  CommentSeeAllRepliesButton,
+  CommentReplyCountButton,
   CommentShowIfEditing,
   CommentThreadResolveIconButton,
   CommentTimestamp,
@@ -156,7 +149,7 @@ function ChannelCommentList(props: ComponentPropsWithoutRef<'div'>) {
               <CommentMarkdown />
             </CommentBody>
             <CommentReactions />
-            {i == 0 && !isSelected && <CommentSeeAllRepliesButton />}
+            {i == 0 && !isSelected && <CommentReplyCountButton />}
           </CommentHideIfEditing>
           <CommentShowIfEditing>
             <ChannelCommentEditor />
