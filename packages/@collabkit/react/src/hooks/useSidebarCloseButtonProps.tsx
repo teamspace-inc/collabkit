@@ -8,15 +8,11 @@ export function useSidebarCloseButtonProps() {
   const { store, events } = useApp();
   const userId = useOptionalUserContext();
   const workspaceId = useOptionalWorkspaceContext();
-  if (!userId) {
-    return { onClick: () => {} };
-  }
-  if (!workspaceId) {
-    return { onClick: () => {} };
-  }
 
   const onClick = useCallback(
     (e: React.MouseEvent) => {
+      if (!userId) return;
+      if (!workspaceId) return;
       store.callbacks?.onInboxCloseButtonClick?.({ userId, workspaceId });
 
       const target: HideSidebarButtonTarget = {

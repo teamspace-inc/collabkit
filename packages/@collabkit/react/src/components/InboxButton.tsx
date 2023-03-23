@@ -6,7 +6,7 @@ import CommentNotificationIcon from './CommentNotification.svg';
 import { ThemeWrapper } from './ThemeWrapper';
 import { useSidebarCommentsButton } from '../hooks/useSidebarCommentsButton';
 
-export function InboxButton(props: { onClick: () => void; children?: React.ReactNode }) {
+export function InboxButton(props: { children?: React.ReactNode }) {
   const { onClick, hasUnread } = useSidebarCommentsButton();
 
   return (

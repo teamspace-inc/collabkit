@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { ComponentPropsWithoutRef } from 'react';
 import { useSnapshot } from 'valtio';
 import * as styles from '../theme/components/Inbox.css';
 import { ThemeWrapper } from './ThemeWrapper';
@@ -6,9 +6,8 @@ import { ChatCentered } from './icons';
 import { emptyState } from '../theme/components/Thread.css';
 import { useInbox } from '../hooks/public/useInbox';
 import { useStore } from '../hooks/useStore';
-import { actions } from '@collabkit/client';
 import { SidebarCloseButton, SidebarHeader, SidebarRoot, SidebarTitle } from './Sidebar';
-import { ThreadContext, useThreadContext } from '../hooks/useThreadContext';
+import { ThreadContext } from '../hooks/useThreadContext';
 import { useWorkspaceContext } from '../hooks/useWorkspaceContext';
 import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
 import {
@@ -18,7 +17,7 @@ import {
   CommentTimestamp,
   CommentBody,
   CommentMarkdown,
-  CommentSeeAllRepliesButton,
+  CommentReplyCount,
 } from './Comment';
 import { ThreadFacepile } from './ThreadFacepile';
 import { ThreadUnreadDot } from './ThreadUnreadDot';
@@ -41,8 +40,7 @@ function InboxEmptyState() {
   );
 }
 
-function InboxItem() {
-  const threadId = useThreadContext();
+function InboxItem({ threadId, ...props }: { threadId: string } & ComponentPropsWithoutRef<'div'>) {
   const workspaceId = useWorkspaceContext();
   const store = useStore();
   const workspace = useSnapshot(useWorkspaceStore());
@@ -63,115 +61,109 @@ function InboxItem() {
 
   const timeline = workspace?.timeline[threadId];
   const firstCommentId = Object.keys(timeline ?? {})[0];
-  const isResolved = workspace?.isResolved[threadId];
 
   // wait till we know if the thread is resolved
   // is calculated when the firstComment is present
-  if (!firstCommentId || isResolved) {
+  if (!firstCommentId) {
     return null;
   }
 
   return (
-    <div
-      className={inboxItemStyles.root({ selected })}
-      onClick={(e) =>
-        events.onClick(e, {
-          target: {
-            type: 'inboxItem',
-            threadId,
-            workspaceId,
-          } as const,
-        })
-      }
-      key={`inboxThread-${threadId}`}
-    >
-      <div className={inboxItemStyles.header}>
-        <ThreadUnreadDot />
-        <ThreadFacepile size={inboxItemStyles.facepileSize} />
-        <div style={{ flex: 1 }}></div>
-        <CommentThreadResolveIconButton />
-      </div>
-      <CommentRoot commentId={firstCommentId} className={inboxItemStyles.commentRoot}>
-        <div className={inboxItemStyles.nameAndTimestampWrapper}>
-          <CommentCreatorName />
-          <CommentTimestamp />
+    <ThreadContext.Provider value={threadId} key={threadId}>
+      <div
+        className={inboxItemStyles.root({ selected })}
+        onClick={(e) =>
+          events.onClick(e, {
+            target: {
+              type: 'inboxItem',
+              threadId,
+              workspaceId,
+            } as const,
+          })
+        }
+        {...props}
+      >
+        <div className={inboxItemStyles.header}>
+          <ThreadUnreadDot />
+          <ThreadFacepile size={inboxItemStyles.facepileSize} />
+          <div style={{ flex: 1 }}></div>
+          <CommentThreadResolveIconButton />
         </div>
-        <CommentBody>
-          <CommentMarkdown />
-        </CommentBody>
-        <CommentSeeAllRepliesButton />
-      </CommentRoot>
-    </div>
+        <CommentRoot commentId={firstCommentId} className={inboxItemStyles.commentRoot}>
+          <div className={inboxItemStyles.nameAndTimestampWrapper}>
+            <CommentCreatorName />
+            <CommentTimestamp />
+          </div>
+          <CommentBody>
+            <CommentMarkdown />
+          </CommentBody>
+          <CommentReplyCount />
+        </CommentRoot>
+      </div>
+    </ThreadContext.Provider>
   );
 }
 
-function InboxItemList() {
-  const context = useOptionalFilterContext();
-  const threadIds = useInbox({ filter: 'open', threadIds: context, latestFirst: true });
+export type InboxItemListProps = {
+  commentFilter?: (body: string) => boolean;
+  direction?: 'asc' | 'desc';
+  statusFilter?: 'all' | 'open';
+  threadIds?: string[] | null;
+};
 
-  if (!threadIds) return <InboxEmptyState />;
-
+function InboxItemList(props: InboxItemListProps) {
+  const threadIds = useInbox(props);
   return (
     <>
-      {threadIds.map((threadId) => {
-        return (
-          <ThreadContext.Provider value={threadId} key={`inboxThread-${threadId}`}>
-            <InboxItem />
-          </ThreadContext.Provider>
-        );
-      })}
+      {threadIds.map((threadId) => (
+        <InboxItem threadId={threadId} key={threadId} />
+      ))}
     </>
   );
 }
 
-function InboxRoot(props: { children: React.ReactNode; threadIds?: string[] }) {
-  const store = useStore();
-  useEffect(() => {
-    actions.subscribeInbox(store);
-  }, [store]);
-
+function InboxRoot(props: ComponentPropsWithoutRef<'div'>) {
   return (
     <ThemeWrapper>
-      <div className={styles.root}>{props.children}</div>
+      <div className={styles.root} {...props} />
     </ThemeWrapper>
   );
 }
 
-const FilterContext = React.createContext<string[] | null>(null);
-
-function useOptionalFilterContext() {
-  return React.useContext(FilterContext);
-}
-
-function Inbox(props: { threadIds?: string[] }) {
+function Inbox({
+  commentFilter,
+  direction,
+  statusFilter,
+  threadIds,
+  ...props
+}: InboxItemListProps & ComponentPropsWithoutRef<'div'>) {
   return (
-    <ThemeWrapper>
-      <FilterContext.Provider value={props.threadIds ?? null}>
-        <InboxRoot>
-          <InboxItemList />
-        </InboxRoot>
-      </FilterContext.Provider>
-    </ThemeWrapper>
+    <InboxRoot {...props}>
+      <InboxItemList
+        commentFilter={commentFilter}
+        direction={direction}
+        statusFilter={statusFilter}
+        threadIds={threadIds}
+      />
+    </InboxRoot>
   );
 }
 
 function SidebarInbox() {
   return useIsSidebarOpen() ? (
     <Root>
-      <Authenticated>
-        <SidebarRoot>
-          <InboxRoot>
-            <SidebarHeader>
-              <SidebarTitle>Comments</SidebarTitle>
-              <div style={{ flex: 1 }} />
-              <SidebarCloseButton />
-            </SidebarHeader>
-            <Scrollable>
-              <InboxItemList />
-            </Scrollable>
-          </InboxRoot>
-        </SidebarRoot>
-      </Authenticated>
+      <SidebarRoot>
+        <InboxRoot>
+          <SidebarHeader>
+            <SidebarTitle>Comments</SidebarTitle>
+            <div style={{ flex: 1 }} />
+            <SidebarCloseButton />
+          </SidebarHeader>
+          <Scrollable>
+            <InboxItemList />
+          </Scrollable>
+        </InboxRoot>
+      </SidebarRoot>
     </Root>
   ) : null;
 }

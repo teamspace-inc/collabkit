@@ -46,15 +46,15 @@ function SidebarTitle(
 }
 
 function SidebarRoot(props: React.ComponentPropsWithoutRef<'div'>) {
-  return <div data-testid="collabkit-sidebar-root" className={styles.root} {...props} />;
+  return (
+    <ThemeWrapper>
+      <div data-testid="collabkit-sidebar-root" className={styles.root} {...props} />
+    </ThemeWrapper>
+  );
 }
 
 function Sidebar(props: React.ComponentPropsWithoutRef<'div'>) {
-  return useIsSidebarOpen() ? (
-    <ThemeWrapper>
-      <SidebarRoot {...props} />
-    </ThemeWrapper>
-  ) : null;
+  return useIsSidebarOpen() ? <SidebarRoot {...props} /> : null;
 }
 
 export { Sidebar, SidebarHeader, SidebarCloseButton, SidebarTitle, SidebarRoot };

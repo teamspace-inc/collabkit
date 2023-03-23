@@ -89,7 +89,6 @@ export const root = recipe({
     selectors: {
       '&:hover': {
         background: fallbackVar(vars.inbox.item.hover.background, vars.color.surfaceOverlay),
-        borderRadius: '11px',
       },
       '&:last-of-type': {
         marginBottom: fallbackVar(vars.inbox.item.paddingBottom, vars.color.surface),

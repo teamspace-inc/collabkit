@@ -3,6 +3,7 @@ import { Route, Switch } from 'wouter';
 import ReactFlowExample from './ReactFlowExample';
 import { useTestParams } from './hooks/useTestParams';
 import { DashboardExample } from './dashboard/DashboardExample';
+import { DashboardInboxExample } from './dashboard/DashboardInboxExample';
 import { DashboardStore, dashboardStore } from './dashboardStore';
 import { Home } from './Home';
 import { Logout } from './Logout';
@@ -74,6 +75,7 @@ export function Demo(props: Props) {
       <Switch>
         <Route path="/reactflow" component={ReactFlowExample} />
         <Route path="/dashboard" component={DashboardExample} />
+        <Route path="/dashboard/inbox" component={DashboardInboxExample} />
         <Route path="/" component={Home} />
         <Route path="/thread" component={Home} />
         <Route path="/logout" component={Logout} />

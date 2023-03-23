@@ -160,13 +160,18 @@ function CommentActionsReplyButton() {
   );
 }
 
-function CommentSeeAllRepliesButton(props: React.ComponentPropsWithoutRef<'div'>) {
+function useReplyCount() {
+  const threadId = useThreadContext();
+  const { computed } = useSnapshot(useWorkspaceStore());
+  return Math.max(0, Object.keys(computed[threadId].messageEvents).length - 1);
+}
+
+function CommentReplyCountButton(props: React.ComponentPropsWithoutRef<'div'>) {
   const { events } = useApp();
   const threadId = useThreadContext();
   const workspaceId = useWorkspaceContext();
   const eventId = useCommentContext();
-  const { computed } = useSnapshot(useWorkspaceStore());
-  const numComments = Object.keys(computed[threadId].messageEvents).length;
+  const replyCount = useReplyCount();
 
   const target = {
     type: 'commentSeeAllRepliesButton',
@@ -187,13 +192,32 @@ function CommentSeeAllRepliesButton(props: React.ComponentPropsWithoutRef<'div'>
         color={vars.color.textDisabled}
       />
       <span className={styles.replyCountButtonText}>
-        {numComments === 1 ? (
+        {replyCount === 0 ? (
           <>Reply</>
         ) : (
           <>
-            {numComments - 1} {numComments != 2 ? 'replies' : 'reply'}
+            {replyCount} {replyCount === 1 ? 'reply' : 'replies'}
           </>
         )}
+      </span>
+    </div>
+  );
+}
+
+export function CommentReplyCount(props: React.ComponentPropsWithoutRef<'span'>) {
+  const replyCount = useReplyCount();
+  if (replyCount === 0) {
+    return null;
+  }
+  return (
+    <div className={styles.replyCountButton} {...props}>
+      <ArrowBendDownRight
+        weight="regular"
+        className={styles.replyCountButtonIcon}
+        color={vars.color.textDisabled}
+      />
+      <span className={styles.replyCountButtonText}>
+        {replyCount} {replyCount === 1 ? 'reply' : 'replies'}
       </span>
     </div>
   );
@@ -560,7 +584,7 @@ export {
   CommentEditor,
   CommentUnreadDot,
   CommentActionsReplyButton,
-  CommentSeeAllRepliesButton,
+  CommentReplyCountButton,
   CommentActionsEmojiButton,
   CommentThreadResolveIconButton,
   CommentReactions,

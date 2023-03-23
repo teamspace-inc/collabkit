@@ -5,11 +5,12 @@ import { useStore } from '../useStore';
 import { useIsAuthenticated } from '../useIsAuthenticated';
 
 export function useInbox(props: {
-  filter: 'all' | 'open';
+  statusFilter?: 'all' | 'open';
   threadIds?: string[] | null;
+  commentFilter?: (body: string) => boolean;
   direction?: 'asc' | 'desc';
-  latestFirst?: boolean;
 }) {
+  const statusFilter = props.statusFilter ?? 'open';
   const store = useStore();
   const { workspaceId, workspaces } = useSnapshot(store);
 
@@ -35,16 +36,21 @@ export function useInbox(props: {
   const threadIds = props.threadIds ?? Object.keys(inbox);
   const openThreadIds = threadIds
     // filter out resolved threads
-    .filter(
-      (threadId) => threadId && (props.filter === 'open' ? workspace.isOpen[threadId] : true)
-    );
-  if (props.latestFirst) {
-    // show threads with latest activity first
-    openThreadIds.sort((a, b) => {
-      const aTime = +inbox[a]?.createdAt ?? 0;
-      const bTime = +inbox[b]?.createdAt ?? 0;
-      return props.direction === 'asc' ? aTime - bTime : bTime - aTime;
+    .filter((threadId) => {
+      if (!threadId) return false;
+      if (statusFilter === 'open' && !workspace.isOpen[threadId]) return false;
+      if (props.commentFilter) {
+        const body = inbox[threadId]?.body;
+        if (!props.commentFilter(body)) {
+          return false;
+        }
+      }
+      return true;
     });
-  }
+  openThreadIds.sort((a, b) => {
+    const aTime = +inbox[a]?.createdAt ?? 0;
+    const bTime = +inbox[b]?.createdAt ?? 0;
+    return props.direction === 'asc' ? aTime - bTime : bTime - aTime;
+  });
   return openThreadIds;
 }
