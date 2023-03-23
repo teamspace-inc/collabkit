@@ -1,4 +1,4 @@
-import React, { ComponentPropsWithoutRef, useEffect } from 'react';
+import React, { ComponentPropsWithoutRef } from 'react';
 import { useSnapshot } from 'valtio';
 import * as styles from '../theme/components/Inbox.css';
 import { ThemeWrapper } from './ThemeWrapper';
@@ -6,7 +6,6 @@ import { ChatCentered } from './icons';
 import { emptyState } from '../theme/components/Thread.css';
 import { useInbox } from '../hooks/public/useInbox';
 import { useStore } from '../hooks/useStore';
-import { actions } from '@collabkit/client';
 import { SidebarCloseButton, SidebarHeader, SidebarRoot, SidebarTitle } from './Sidebar';
 import { ThreadContext } from '../hooks/useThreadContext';
 import { useWorkspaceContext } from '../hooks/useWorkspaceContext';
@@ -62,11 +61,10 @@ function InboxItem({ threadId, ...props }: { threadId: string } & ComponentProps
 
   const timeline = workspace?.timeline[threadId];
   const firstCommentId = Object.keys(timeline ?? {})[0];
-  const isResolved = workspace?.isResolved[threadId];
 
   // wait till we know if the thread is resolved
   // is calculated when the firstComment is present
-  if (!firstCommentId || isResolved) {
+  if (!firstCommentId) {
     return null;
   }
 

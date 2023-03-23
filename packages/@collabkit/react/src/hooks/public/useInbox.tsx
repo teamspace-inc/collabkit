@@ -38,7 +38,7 @@ export function useInbox(props: {
     // filter out resolved threads
     .filter((threadId) => {
       if (!threadId) return false;
-      if (!workspace.isOpen[threadId]) return false;
+      if (filter === 'open' && !workspace.isOpen[threadId]) return false;
       if (props.commentFilter) {
         const body = inbox[threadId]?.body;
         if (!props.commentFilter(body)) {

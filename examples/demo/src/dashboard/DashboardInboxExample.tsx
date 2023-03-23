@@ -39,6 +39,11 @@ import {
   SidebarCloseButton,
   InboxItemList,
   InboxRoot,
+  Root,
+  Scrollable,
+  SidebarHeader,
+  SidebarTitle,
+  Inbox,
 } from '@collabkit/react';
 
 import { Charts } from './Charts';
@@ -292,7 +297,18 @@ export function DashboardInboxExample() {
         {selectedTab === 'charts' ? <Charts /> : null}
         {selectedTab === 'flowchart' ? <Flow /> : null}
       </main>
-      <SidebarInbox />
+      <div style={{ position: 'relative' }}>
+        <Sidebar>
+          <SidebarHeader>
+            <SidebarTitle>Comments</SidebarTitle>
+            <div style={{ flex: 1 }} />
+            <SidebarCloseButton />
+          </SidebarHeader>
+          <Scrollable>
+            <Inbox filter="all" />
+          </Scrollable>
+        </Sidebar>
+      </div>
       {/* <Sidebar>
         <div>
           <SidebarCloseButton />
