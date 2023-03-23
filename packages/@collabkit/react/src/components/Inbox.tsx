@@ -106,8 +106,8 @@ function InboxItem({ threadId }: { threadId: string }) {
 }
 
 function InboxItemList() {
-  const context = useOptionalFilterContext();
-  const threadIds = useInbox({ filter: 'open', threadIds: context, latestFirst: true });
+  const treadIds = useOptionalFilterContext();
+  const threadIds = useInbox({ filter: 'open', threadIds: treadIds, latestFirst: true });
 
   if (!threadIds) return <InboxEmptyState />;
 
