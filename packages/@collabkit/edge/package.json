@@ -23,14 +23,12 @@
     "pinecone-client": "^1.0.1",
     "terminal-kit": "^3.0.0",
     "date-fns": "^2.29.3",
-    "gray-matter": "^4.0.3"
+    "gray-matter": "^4.0.3",
+    "next": "latest"
   },
   "devDependencies": {
     "@types/node": "^18.11.18",
     "@types/object-hash": "^3.0.2",
     "ts-node": "^10.9.1"
-  },
-  "peerDependencies": {
-    "next": "latest"
   }
 }
