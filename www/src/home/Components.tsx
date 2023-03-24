@@ -164,7 +164,7 @@ export const KEYED_COMPONENTS: { [key: string]: ComponentProps } = {
     title: 'Charts',
     description: 'Chart integration demo',
     component: (
-      <>
+      <div style={{ width: "100%", height: "100%" , backgroundColor: "white"}}>
         <Commentable.Container objectId="dashboard-earnings-chart">
           <ResponsiveContainer width="100%" height={430}>
             <AreaChart
@@ -220,7 +220,7 @@ export const KEYED_COMPONENTS: { [key: string]: ComponentProps } = {
             </AreaChart>
           </ResponsiveContainer>
         </Commentable.Container>
-      </>
+      </div>
     )
   }
 };
