@@ -404,7 +404,7 @@ export function Charts() {
             <Legend />
             <Scatter name="A school" data={data01} fill="#8884d8" />
             <Scatter name="B school" data={data02} fill="#82ca9d" />
-            <Customized component={<Commentable.Chart />} />
+            {/* <Customized component={<Commentable.Chart />} /> */}
           </ScatterChart>
         </ResponsiveContainer>
       </Commentable.Container>
