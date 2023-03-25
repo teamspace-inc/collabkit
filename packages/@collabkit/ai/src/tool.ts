@@ -6,17 +6,6 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
-async function fetchGithubIssuesDocs() {
-  const issuesAPI = await fetch(
-    'https://docs.github.com/en/rest/issues/issues?apiVersion=2022-11-28'
-  );
-  const html = await issuesAPI.text();
-  const root = parse(html);
-  return root;
-}
-
-// async function scrapeAPI()
-
 async function chat(assistant: string, command: string) {
   const completion = await openai.createChatCompletion({
     model: 'gpt-4',
