@@ -1,9 +1,9 @@
 import { Configuration, OpenAIApi } from 'openai';
-import { parse } from 'node-html-parser';
 
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
+
 const openai = new OpenAIApi(configuration);
 
 async function chat(assistant: string, command: string) {
@@ -29,8 +29,5 @@ async function react(command: string) {
   process.exit();
 }
 
-// run();
 // react('Create a react component that displays a list of Github issues');
 shell('find all ts files in the current directory and subdirectories');
-
-// Create a react component that displays a list of Github issues
