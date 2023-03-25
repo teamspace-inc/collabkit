@@ -17,6 +17,12 @@ async function chat(assistant: string, command: string) {
   return completion.data.choices[0].message;
 }
 
+async function copywriter(type: string, command: string) {
+  let assistant = `You an AI copywriter. Write a ${type} for the provided text. Output markdown.`;
+  console.log(await chat(assistant, command));
+  process.exit();
+}
+
 async function shell(command: string) {
   let assistant = `You a shell script developer. For a given task you output the zsh command that can be used to complete it. Only write the code. Do not explain how it works. Output markdown.`;
   console.log(await chat(assistant, command));
@@ -30,4 +36,9 @@ async function react(command: string) {
 }
 
 // react('Create a react component that displays a list of Github issues');
-shell('find all ts files in the current directory and subdirectories');
+// shell('find all ts files in the current directory and subdirectories');
+// shell('remove all js files');
+copywriter(
+  'tagline',
+  'Write a tagline for CollabKit, a React SDK for adding collaborative features to your app.'
+);
