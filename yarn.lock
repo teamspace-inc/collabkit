@@ -5864,6 +5864,11 @@ array-includes@^3.1.5, array-includes@^3.1.6:
     get-intrinsic "^1.1.3"
     is-string "^1.0.7"
 
+array-keyed-map@^2.1.3:
+  version "2.1.3"
+  resolved "https://registry.yarnpkg.com/array-keyed-map/-/array-keyed-map-2.1.3.tgz#0d5c06ed58ccba2755a4f5bfb7a935a31f395b18"
+  integrity sha512-JIUwuFakO+jHjxyp4YgSiKXSZeC0U+R1jR94bXWBcVlFRBycqXlb+kH9JHxBGcxnVuSqx5bnn0Qz9xtSeKOjiA==
+
 array-union@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/array-union/-/array-union-2.1.0.tgz#b798420adbeb1de828d84acd8a2e23d3efe85e8d"
@@ -7779,6 +7784,11 @@ eventemitter3@^4.0.1, eventemitter3@^4.0.7:
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-4.0.7.tgz#2de9b68f6528d5644ef5c59526a1b4a07306169f"
   integrity sha512-8guHBZCwKnFhYdHr2ysuRWErTwhoN2X8XELRlrRwpmfeY2jjuUN4taQMsULKUVo1K4DvZl+0pgfyoysHxvmvEw==
 
+eventsource-parser@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/eventsource-parser/-/eventsource-parser-0.1.0.tgz#4a6b84751ca8e704040e6f7f50e7d77344fa1b7c"
+  integrity sha512-M9QjFtEIkwytUarnx113HGmgtk52LSn3jNAtnWKi3V+b9rqSfQeVdLsaD5AG/O4IrGQwmAAHBIsqbmURPTd2rA==
+
 execa@5.1.1, execa@^5.0.0:
   version "5.1.1"
   resolved "https://registry.npmjs.org/execa/-/execa-5.1.1.tgz"
@@ -8383,6 +8393,13 @@ gopd@^1.0.1:
   integrity sha512-d65bNlIadxvpb/A2abVdlqKqV563juRnZ1Wtk6s1sIR8uNsXR70xqIzVqxVf1eTqDunwT2MkczEeaezCKTZhwA==
   dependencies:
     get-intrinsic "^1.1.3"
+
+gpt3-tokenizer@^1.1.5:
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/gpt3-tokenizer/-/gpt3-tokenizer-1.1.5.tgz#79e5f96c435daf9c41a81117411ebce3bf475e78"
+  integrity sha512-O9iCL8MqGR0Oe9wTh0YftzIbysypNQmS5a5JG3cB3M4LMYjlAVvNnf8LUzVY9MrI7tj+YLY356uHtO2lLX2HpA==
+  dependencies:
+    array-keyed-map "^2.1.3"
 
 graceful-fs@^4.1.2, graceful-fs@^4.1.9, graceful-fs@^4.2.9:
   version "4.2.10"
@@ -9624,6 +9641,25 @@ ky@^0.33.1:
   version "0.33.1"
   resolved "https://registry.yarnpkg.com/ky/-/ky-0.33.1.tgz#8e4febabf4609baac41d0d3ec7c00999ffe73e39"
   integrity sha512-zZ9OlhgM4UEunvgJBH1bBl7+a7vas1HnCLSezu2CJawc4Ka+yJculRAVKbakUece4gW7kC5Dz+UGvbXIlpDt1w==
+
+langchain@^0.0.41:
+  version "0.0.41"
+  resolved "https://registry.yarnpkg.com/langchain/-/langchain-0.0.41.tgz#51937f3cc6af2d0ebcb37520a358563c3ed4fb3c"
+  integrity sha512-X7JaexSicy1xfXpJNaQtUSTAjuNmpx0m56ygpMhGZ1ZKhXCXUTIXN4odUMOyP2+h9UnsthjZFrILFNZglghv4g==
+  dependencies:
+    browser-or-node "^2.1.1"
+    eventsource-parser "^0.1.0"
+    exponential-backoff "^3.1.0"
+    expr-eval "^2.0.2"
+    gpt3-tokenizer "^1.1.5"
+    is-binary-path "^2.1.0"
+    jsonpointer "^5.0.1"
+    object-hash "^3.0.0"
+    openai "^3.2.0"
+    p-queue "^7.3.4"
+    uuid "^9.0.0"
+    yaml "^2.2.1"
+    zod "^3.21.4"
 
 langchain@^0.0.44:
   version "0.0.44"

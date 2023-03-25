@@ -6,7 +6,7 @@ const configuration = new Configuration({
 
 const openai = new OpenAIApi(configuration);
 
-async function chat(assistant: string, command: string) {
+async function chatGPT(assistant: string, command: string) {
   const completion = await openai.createChatCompletion({
     model: 'gpt-4',
     messages: [
@@ -19,17 +19,17 @@ async function chat(assistant: string, command: string) {
 
 async function copywriter(type: string, command: string) {
   let assistant = `You an AI copywriter. Write a ${type} for the provided text. Output markdown.`;
-  return await chat(assistant, command);
+  return await chatGPT(assistant, command);
 }
 
 async function shell(command: string) {
   let assistant = `You a shell script developer. For a given task you output the zsh command that can be used to complete it. Only write the code. Do not explain how it works. Output markdown.`;
-  return await chat(assistant, command);
+  return await chatGPT(assistant, command);
 }
 
 async function react(command: string) {
   let assistant = `You a React developer. For a given task you output a React Component that can be used to complete it. Only write the code. Do not explain how it works. Output markdown.`;
-  return await chat(assistant, command);
+  return await chatGPT(assistant, command);
 }
 
 export { copywriter, shell, react };
