@@ -17,6 +17,21 @@ async function fetchGithubIssuesDocs() {
 
 // async function scrapeAPI()
 
+async function react(command: string) {
+  let text = `You a React developer. For a given task you output a React Component that can be used to complete it.`;
+
+  const completion = await openai.createChatCompletion({
+    model: 'gpt-3.5-turbo',
+    messages: [
+      { role: 'system', content: text },
+      { role: 'user', content: command },
+    ],
+  });
+  console.log(completion.data.choices[0].message);
+
+  process.exit();
+}
+
 async function run() {
   const issuesDocs = await fetchGithubIssuesDocs();
   const fns = issuesDocs.querySelectorAll('.pb-8');
@@ -39,9 +54,12 @@ async function run() {
       { role: 'user', content: 'I want to create an issue' },
     ],
   });
-  console.log(completion.data.choices[0].message);
+  console.log(completion.data.choices[0].message?.content);
 
   process.exit();
 }
 
-run();
+// run();
+react('Create a react component that displays a list of Github issues');
+
+// Create a react component that displays a list of Github issues
