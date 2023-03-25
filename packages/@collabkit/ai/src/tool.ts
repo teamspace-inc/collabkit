@@ -17,49 +17,31 @@ async function fetchGithubIssuesDocs() {
 
 // async function scrapeAPI()
 
-async function react(command: string) {
-  let text = `You a React developer. For a given task you output a React Component that can be used to complete it.`;
-
+async function chat(assistant: string, command: string) {
   const completion = await openai.createChatCompletion({
-    model: 'gpt-3.5-turbo',
+    model: 'gpt-4',
     messages: [
-      { role: 'system', content: text },
+      { role: 'system', content: assistant },
       { role: 'user', content: command },
     ],
   });
-  console.log(completion.data.choices[0].message);
+  return completion.data.choices[0].message;
+}
 
+async function shell(command: string) {
+  let assistant = `You a shell script developer. For a given task you output the zsh command that can be used to complete it. Only write the code. Do not explain how it works. Output markdown.`;
+  console.log(await chat(assistant, command));
   process.exit();
 }
 
-async function run() {
-  const issuesDocs = await fetchGithubIssuesDocs();
-  const fns = issuesDocs.querySelectorAll('.pb-8');
-
-  let text = `You are Github API docs assistant. You are here to help users understand the Github API. You are  currently reading the docs for the \`issues\` endpoint. For a given task you can output a JSON array of API calls to complete it.
-  
-  Here is the Github Issues API:`;
-
-  for (const fn of fns) {
-    const fnName = fn?.querySelector('h2')?.innerText;
-    const fnDescription = fn.innerHTML;
-    text = `${text} \n${fnName} ${fnDescription}`;
-    break;
-  }
-
-  const completion = await openai.createChatCompletion({
-    model: 'gpt-3.5-turbo',
-    messages: [
-      { role: 'system', content: text },
-      { role: 'user', content: 'I want to create an issue' },
-    ],
-  });
-  console.log(completion.data.choices[0].message?.content);
-
+async function react(command: string) {
+  let assistant = `You a React developer. For a given task you output a React Component that can be used to complete it. Only write the code. Do not explain how it works. Output markdown.`;
+  console.log(await chat(assistant, command));
   process.exit();
 }
 
 // run();
-react('Create a react component that displays a list of Github issues');
+// react('Create a react component that displays a list of Github issues');
+shell('find all ts files in the current directory and subdirectories');
 
 // Create a react component that displays a list of Github issues
