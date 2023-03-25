@@ -19,3 +19,5 @@ tsconfig.tsbuildinfo
 /packages/@collabkit/*/types
 *.csv
 .buildt
+
+**/ai/**/response.json
