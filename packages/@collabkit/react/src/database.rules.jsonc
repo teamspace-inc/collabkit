@@ -320,7 +320,7 @@
                 ".validate": "newData.isString() && (newData.val() === 'message' || newData.val() ==='reaction' || newData.val() === 'adminMessage' || newData.val() === 'system' || newData.val() === 'delete' || newData.val() === 'edit')"
               },
               "createdById": {
-                ".validate": "newData.isString() && root.child('workspaces').child($appId).child($workspaceId).child('profiles').child(newData.val()).exists()"
+                ".validate": "newData.isString() && ($workspaceId === 'default' || root.child('workspaces').child($appId).child($workspaceId).child('profiles').child(newData.val()).exists())"
               },
               "createdAt": {
                 ".validate": "newData.isNumber()"
@@ -397,7 +397,7 @@
                 ".validate": "newData.isString()"
               },
               "createdById": {
-                ".validate": "newData.isString() && root.child('workspaces').child($appId).child($workspaceId).child('profiles').child(newData.val()).exists()"
+                ".validate": "newData.isString() && ($workspaceId === 'default' || root.child('workspaces').child($appId).child($workspaceId).child('profiles').child(newData.val()).exists())"
               },
               "createdAt": {
                 ".validate": "newData.isNumber()"
