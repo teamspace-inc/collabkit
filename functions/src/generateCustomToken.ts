@@ -45,16 +45,18 @@ export async function generateCustomTokenImpl(
 
     const { userId, workspaceId } = payload;
 
-    try {
-      const profile = await fetchWorkspaceProfile({ appId, workspaceId, profileId: userId });
-      if (!profile) {
-        response.status(400).send({ status: 400, error: '"userId" not found' });
+    if (workspaceId !== 'default') {
+      try {
+        const profile = await fetchWorkspaceProfile({ appId, workspaceId, profileId: userId });
+        if (!profile) {
+          response.status(400).send({ status: 400, error: '"userId" not found' });
+          return;
+        }
+      } catch (e) {
+        console.error(e);
+        response.status(400).send({ status: 400, error: '"workspaceId not found"' });
         return;
       }
-    } catch (e) {
-      console.error(e);
-      response.status(400).send({ status: 400, error: '"workspaceId not found"' });
-      return;
     }
 
     const token = await admin.auth().createCustomToken(apiKey, {
