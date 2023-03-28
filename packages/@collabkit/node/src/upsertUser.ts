@@ -8,7 +8,14 @@ export async function upsertUser(props: {
   userId: string;
   workspaceId: string;
   user: { name?: string; email?: string; avatar?: string };
-}): Promise<void> {
+}): Promise<{
+  avatar?: string;
+  color: string;
+  email?: string;
+  id: string;
+  isDeleted?: boolean;
+  name?: string;
+}> {
   const response = await fetch(`${API_HOST}/v1/user/${props.userId}`, {
     method: 'PUT',
     body: JSON.stringify({
@@ -25,4 +32,5 @@ export async function upsertUser(props: {
     const text = await response.text();
     throw new Error(`Failed to add/update user, status=${response.status}, ${text}`);
   }
+  return await response.json();
 }
