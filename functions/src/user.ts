@@ -54,7 +54,12 @@ export async function putUser(request: functions.https.Request, response: functi
 
   await updateUserAndWorkspace({ appId, userId, workspaceId, user });
 
-  response.status(200).send('Created/Updated User Successfully.');
+  const userSnapshot = await ref`/profiles/${appId}/${userId}`.get();
+  const result = {
+    ...userSnapshot.val(),
+    id: userId,
+  };
+  response.status(200).send(result);
 }
 
 export async function deleteUser(request: functions.https.Request, response: functions.Response) {
