@@ -22,7 +22,7 @@ function ProfileName(props: React.ComponentPropsWithoutRef<'span'>) {
   const profile = profiles[profileId];
   return (
     <span className={styles.name} {...props}>
-      {profile?.name ?? profile?.email ?? 'Anonymous'}
+      {profile?.name || profile?.email || 'Anonymous'}
     </span>
   );
 }
@@ -45,7 +45,7 @@ function AvatarPlaceholder({
           : {}),
       }}
     >
-      {profile.name?.charAt(0) ?? profile.email?.charAt(0) ?? 'A'}
+      {profile.name?.charAt(0) || profile.email?.charAt(0) || 'A'}
     </div>
   );
 }
