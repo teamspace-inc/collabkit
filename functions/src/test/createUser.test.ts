@@ -4,6 +4,7 @@ import sinon from 'sinon';
 import * as functions from 'firebase-functions';
 
 import { putUser } from '../user';
+import { nanoid } from 'nanoid';
 
 const mockHttp = (props: { path?: string; query?: object; body?: object; headers?: object }) => {
   const req = {
@@ -130,7 +131,8 @@ it('createUser: "apiKey" is invalid', async () => {
   expect(args[0]).toEqual({ status: 403, error: '"apiKey" invalid' });
 });
 
-it('createUser: sucess', async () => {
+it('createUser: success', async () => {
+  const userId = nanoid();
   const http = mockHttp({
     query: {},
     body: {
@@ -138,19 +140,82 @@ it('createUser: sucess', async () => {
       apiKey: 'dHchccA9yszQ3EFftTEQm',
       workspaceId: 'collabkit',
       user: {
-        name: 'name',
-        email: 'email',
+        name: 'Firstname Lastname',
+        email: 'email@xample.com',
       },
     },
-    path: '/v1/userId',
+    path: `/v1/${userId}`,
   });
   await putUser(http.req, http.res);
   const send = http.res.send as sinon.SinonSpy;
   const { args } = send.getCalls()[0];
   expect(args[0]).toEqual({
-    id: 'userId',
-    name: 'name',
-    email: 'email',
+    id: userId,
+    name: 'Firstname Lastname',
+    email: 'email@xample.com',
     color: expect.stringMatching(/^[a-z]+$/),
+  });
+});
+
+it('create anonymous user', async () => {
+  const userId = nanoid();
+  const http = mockHttp({
+    query: {},
+    body: {
+      appId: '0mO-P6YhtUwKsZNwnDSt9',
+      apiKey: 'dHchccA9yszQ3EFftTEQm',
+      workspaceId: 'collabkit',
+      user: {},
+    },
+    path: `/v1/${userId}`,
+  });
+  await putUser(http.req, http.res);
+  const send = http.res.send as sinon.SinonSpy;
+  const { args } = send.getCalls()[0];
+  expect(args[0]).toEqual({
+    id: userId,
+    color: expect.stringMatching(/^[a-z]+$/),
+  });
+});
+
+it('update existing user', async () => {
+  const userId = nanoid();
+  const http = mockHttp({
+    query: {},
+    body: {
+      appId: '0mO-P6YhtUwKsZNwnDSt9',
+      apiKey: 'dHchccA9yszQ3EFftTEQm',
+      workspaceId: 'collabkit',
+      user: {
+        name: 'Firstname Lastname',
+        email: 'email@xample.com',
+      },
+    },
+    path: `/v1/${userId}`,
+  });
+  await putUser(http.req, http.res);
+  const send = http.res.send as sinon.SinonSpy;
+  const { args } = send.getCalls()[0];
+  const createdUser = args[0];
+
+  const httpUpdate = mockHttp({
+    query: {},
+    body: {
+      appId: '0mO-P6YhtUwKsZNwnDSt9',
+      apiKey: 'dHchccA9yszQ3EFftTEQm',
+      workspaceId: 'collabkit',
+      user: {
+        name: 'Bob B. Lastname',
+        email: 'updated-email@example.org',
+      },
+    },
+    path: `/v1/${userId}`,
+  });
+  await putUser(httpUpdate.req, httpUpdate.res);
+  const updatedUser = (httpUpdate.res.send as sinon.SinonSpy).getCalls()[0].args[0];
+  expect(updatedUser).toEqual({
+    ...createdUser,
+    name: 'Bob B. Lastname',
+    email: 'updated-email@example.org',
   });
 });
