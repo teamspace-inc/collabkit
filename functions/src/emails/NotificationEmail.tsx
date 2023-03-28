@@ -53,7 +53,7 @@ function Comment(props: { actorColor: string; actorName: string; commentBody: st
           color={'white'}
           cssClass={`avatar color ${props.actorColor}`}
         >
-          {props.actorName.slice(0, 1)}
+          {props.actorName.slice(0, 1) || 'A'}
         </MjmlText>
       </MjmlColumn>
       <MjmlColumn padding={'0px'} width={'420px'}>
