@@ -157,14 +157,14 @@ it('createUser: success', async () => {
   });
 });
 
-it('create anonymous user', async () => {
+it('create anonymous user in default workspace', async () => {
   const userId = nanoid();
   const http = mockHttp({
     query: {},
     body: {
       appId: '0mO-P6YhtUwKsZNwnDSt9',
       apiKey: 'dHchccA9yszQ3EFftTEQm',
-      workspaceId: 'collabkit',
+      workspaceId: 'default',
       user: {},
     },
     path: `/v1/${userId}`,
@@ -179,13 +179,16 @@ it('create anonymous user', async () => {
 });
 
 it('update existing user', async () => {
+  const defaults = {
+    appId: '0mO-P6YhtUwKsZNwnDSt9',
+    apiKey: 'dHchccA9yszQ3EFftTEQm',
+    workspaceId: 'collabkit',
+  };
   const userId = nanoid();
   const http = mockHttp({
     query: {},
     body: {
-      appId: '0mO-P6YhtUwKsZNwnDSt9',
-      apiKey: 'dHchccA9yszQ3EFftTEQm',
-      workspaceId: 'collabkit',
+      ...defaults,
       user: {
         name: 'Firstname Lastname',
         email: 'email@xample.com',
@@ -201,9 +204,50 @@ it('update existing user', async () => {
   const httpUpdate = mockHttp({
     query: {},
     body: {
-      appId: '0mO-P6YhtUwKsZNwnDSt9',
-      apiKey: 'dHchccA9yszQ3EFftTEQm',
-      workspaceId: 'collabkit',
+      ...defaults,
+      user: {
+        name: 'Bob B. Lastname',
+        email: 'updated-email@example.org',
+      },
+    },
+    path: `/v1/${userId}`,
+  });
+  await putUser(httpUpdate.req, httpUpdate.res);
+  const updatedUser = (httpUpdate.res.send as sinon.SinonSpy).getCalls()[0].args[0];
+  expect(updatedUser).toEqual({
+    ...createdUser,
+    name: 'Bob B. Lastname',
+    email: 'updated-email@example.org',
+  });
+});
+
+it('update existing user (default workspace)', async () => {
+  const defaults = {
+    appId: '0mO-P6YhtUwKsZNwnDSt9',
+    apiKey: 'dHchccA9yszQ3EFftTEQm',
+    workspaceId: 'default',
+  };
+  const userId = nanoid();
+  const http = mockHttp({
+    query: {},
+    body: {
+      ...defaults,
+      user: {
+        name: 'Firstname Lastname',
+        email: 'email@xample.com',
+      },
+    },
+    path: `/v1/${userId}`,
+  });
+  await putUser(http.req, http.res);
+  const send = http.res.send as sinon.SinonSpy;
+  const { args } = send.getCalls()[0];
+  const createdUser = args[0];
+
+  const httpUpdate = mockHttp({
+    query: {},
+    body: {
+      ...defaults,
       user: {
         name: 'Bob B. Lastname',
         email: 'updated-email@example.org',

@@ -56,6 +56,8 @@ export async function updateUserAndWorkspace(props: {
   const colorSnapshot = await ref`/profiles/${appId}/${userId}/color`.get();
   if (!colorSnapshot.exists()) {
     user.color = getRandomColor();
+  } else {
+    user.color = colorSnapshot.val();
   }
 
   // contains an ancestor of the next set of updates
@@ -68,10 +70,7 @@ export async function updateUserAndWorkspace(props: {
 
   const updates: Updates = {};
   if (isValidUser(user)) {
-    const value = deleteUndefinedProps(user);
-    if (Object.keys(value).length > 0) {
-      updates[ref.path`/profiles/${appId}/${userId}/`] = value;
-    }
+    updates[ref.path`/profiles/${appId}/${userId}/`] = deleteUndefinedProps(user);
     if (workspaceId !== 'default') {
       updates[ref.path`/workspaces/${appId}/${workspaceId}/profiles/${userId}/`] = true;
       updates[ref.path`/views/workspaceProfiles/${appId}/${workspaceId}/${userId}`] =
