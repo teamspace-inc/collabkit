@@ -52,7 +52,6 @@ export async function updateUserAndWorkspace(props: {
 }) {
   const { appId, workspaceId, userId, workspace, user } = props;
   const workspaceUpdates: Updates = {};
-  const updates: Updates = {};
 
   const colorSnapshot = await ref`/profiles/${appId}/${userId}/color`.get();
   if (!colorSnapshot.exists()) {
@@ -67,8 +66,12 @@ export async function updateUserAndWorkspace(props: {
     await ref`/`.update(workspaceUpdates);
   }
 
+  const updates: Updates = {};
   if (isValidUser(user)) {
-    updates[ref.path`/profiles/${appId}/${userId}/`] = deleteUndefinedProps(user);
+    const value = deleteUndefinedProps(user);
+    if (Object.keys(value).length > 0) {
+      updates[ref.path`/profiles/${appId}/${userId}/`] = value;
+    }
     if (workspaceId !== 'default') {
       updates[ref.path`/workspaces/${appId}/${workspaceId}/profiles/${userId}/`] = true;
       updates[ref.path`/views/workspaceProfiles/${appId}/${workspaceId}/${userId}`] =
@@ -78,5 +81,7 @@ export async function updateUserAndWorkspace(props: {
     functions.logger.warn('Invalid profile. Skipping user profile update.', { user });
   }
 
-  await ref`/`.update(updates);
+  if (Object.keys(updates).length > 0) {
+    await ref`/`.update(updates);
+  }
 }
