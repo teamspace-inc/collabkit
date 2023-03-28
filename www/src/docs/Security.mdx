@@ -21,15 +21,7 @@ In addition you'll need to create users and workspaces via our API before you si
 
 Follow these steps to enable Secure Mode for your app:
 
-### Create a production app with Secure Mode
-
-1. Go to your [CollabKit Dashboard](https://app.collabkit.dev/dashboard)
-
-2. Click 'Create App' and fill out the form.
-
-3. Click on the '...' more menu for the app you just created.
-
-4. Choose "Enable Secure Mode" in the dropdown menu.
+### Create a production app with Secure Mode enabled
 
 ### Create users and workspaces via our API
 
@@ -40,19 +32,22 @@ For secure mode you need to create a workspace and a user via our API.
 ```ts
 import { upsertUser, upsertWorkspace } from '@collabkit/node';
 
+// Run this once to create a workspace.
 await upsertWorkspace({
-  apiKey: '<your API Key here>',
   appId: '<your app ID here>',
-  workspaceId: '<your workspace ID here>',
+  apiKey: '<your API key here>',
+  workspaceId: '<ID of the workspace>',
   workspace: {
     name: '<Name of the workspace>',
   },
 });
+
+// Run this once to create a user and again when you want to update the user.
 await upsertUser({
-  apiKey: '<your API Key here>',
-  userId: '<your user ID here>',
-  workspaceId: '<your workspace ID here>',
   appId: '<your app ID here>',
+  apiKey: '<your API key here>',
+  workspaceId: '<ID of the workspace>',
+  userId: '<ID of the user>',
   user: {
     name: '<Name of the user>',
     email: '<Email of the user>',
