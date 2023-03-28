@@ -147,5 +147,10 @@ it('createUser: sucess', async () => {
   await putUser(http.req, http.res);
   const send = http.res.send as sinon.SinonSpy;
   const { args } = send.getCalls()[0];
-  expect(args[0]).toEqual('Created/Updated User Successfully.');
+  expect(args[0]).toEqual({
+    id: 'userId',
+    name: 'name',
+    email: 'email',
+    color: expect.stringMatching(/^[a-z]+$/),
+  });
 });
