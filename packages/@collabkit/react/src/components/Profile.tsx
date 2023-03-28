@@ -22,7 +22,7 @@ function ProfileName(props: React.ComponentPropsWithoutRef<'span'>) {
   const profile = profiles[profileId];
   return (
     <span className={styles.name} {...props}>
-      {profile?.name ?? profile?.email}
+      {profile?.name ?? profile?.email ?? 'Anonymous'}
     </span>
   );
 }
