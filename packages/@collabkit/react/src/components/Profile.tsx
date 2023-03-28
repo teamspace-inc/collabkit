@@ -45,7 +45,7 @@ function AvatarPlaceholder({
           : {}),
       }}
     >
-      {profile.name?.charAt(0)}
+      {profile.name?.charAt(0) ?? profile.email?.charAt(0) ?? 'A'}
     </div>
   );
 }
