@@ -11,6 +11,7 @@ import { sendNotification } from './sendNotification';
 import { triggerWebhook } from './triggerWebhook';
 import { comment } from './comment';
 import { generateCustomToken } from './generateCustomToken';
+import { issueTracker } from './issueTracker';
 
 export {
   createOrg,
@@ -21,4 +22,5 @@ export {
   triggerWebhook,
   comment,
   generateCustomToken,
+  issueTracker
 };
