@@ -5453,11 +5453,6 @@ acorn@^8.8.0:
   resolved "https://registry.npmjs.org/acorn/-/acorn-8.8.0.tgz"
   integrity sha512-QOxyigPVrpZ2GXT+PFyZTl6TtOFc5egxHIP9IlQ+RbupQuX4RkT/Bee4/kQuC02Xkzg84JcT7oLYtDIQxp+v7w==
 
-acorn@~0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/acorn/-/acorn-0.5.0.tgz#f342114b20e314c5fe7f72e8b7b37239604ea40c"
-  integrity sha512-C+F0F79vOrEG1cNTBTKDJma7LSiWl6AkWJd1lqt6W784YLQSD+bFBLAbbLOXDHSr7+vSZvy5cX3CTMsCgocfxQ==
-
 agent-base@6:
   version "6.0.2"
   resolved "https://registry.yarnpkg.com/agent-base/-/agent-base-6.0.2.tgz#49fff58577cfee3f37176feab4c22e00f86d7f77"
@@ -6660,11 +6655,6 @@ debug@4.3.2:
   dependencies:
     ms "2.1.2"
 
-debug@^0.8.1:
-  version "0.8.1"
-  resolved "https://registry.yarnpkg.com/debug/-/debug-0.8.1.tgz#20ff4d26f5e422cb68a1bacbbb61039ad8c1c130"
-  integrity sha512-HlXEJm99YsRjLJ8xmuz0Lq8YUwrv7hAJkTEr6/Em3sUlSUNl0UdFA+1SrY4fnykeq1FVkUEUtwRGHs9VvlYbGA==
-
 decimal.js-light@^2.4.1:
   version "2.5.1"
   resolved "https://registry.yarnpkg.com/decimal.js-light/-/decimal.js-light-2.5.1.tgz#134fd32508f19e208f4fb2f8dac0d2626a867934"
@@ -7575,11 +7565,6 @@ fast-text-encoding@^1.0.0, fast-text-encoding@^1.0.3:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/fast-text-encoding/-/fast-text-encoding-1.0.6.tgz#0aa25f7f638222e3396d72bf936afcf1d42d6867"
   integrity sha512-VhXlQgj9ioXCqGstD37E/HBeqEGV/qOD/kmbVG8h5xKBYvM1L3lR1Zn4555cQ8GkYbJa8aJSipLPndE1k6zK2w==
-
-fast.js@0.0.3:
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/fast.js/-/fast.js-0.0.3.tgz#ff02d8f5f1ffe3f345ad1ac38c512187c3af65b2"
-  integrity sha512-BhCxo8TngNuFEflJydq06QJKFRnwh/HkFM36qFGibFzwImNr0u5gKtT0HiJGJT/jxBL322BBbc3C4g2+njAUIA==
 
 fastest-stable-stringify@^2.0.2:
   version "2.0.2"
@@ -10204,11 +10189,6 @@ minimatch@^5.0.1:
   dependencies:
     brace-expansion "^2.0.1"
 
-minimist@^1.1.0:
-  version "1.2.7"
-  resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.7.tgz#daa1c4d91f507390437c6a8bc01078e7000c4d18"
-  integrity sha512-bzfL1YUZsP41gmu/qjrEk0Q6i2ix/cVeAhbCbqH9u3zYutS1cLg00qhrD0M2MVdCcx4Sc0UpP2eBWo9rotpq6g==
-
 minimist@^1.2.0, minimist@^1.2.5, minimist@^1.2.6:
   version "1.2.6"
   resolved "https://registry.npmjs.org/minimist/-/minimist-1.2.6.tgz"
@@ -10833,16 +10813,6 @@ pinecone-client@^1.0.1:
   integrity sha512-Cgv9vtW8yU7DQwK57CsBgBFNliItkBKBvCq7HRt0I84Apa0MJg/WgE5LEe7SmGVKMVrbHX7GqrZH3IKE0UvrGA==
   dependencies:
     ky "^0.33.1"
-
-pinecone@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/pinecone/-/pinecone-0.1.0.tgz#bfebd6babc7245e5c42d9c81286dd507f403e3d9"
-  integrity sha512-iKu0Vs4ijfueG9fRoOfJ6Ko0Yb/y/XK2kmNXz9WgG8LuDwneXWcmPQqhm7nUvAxFroQQdGSmM2zM33d4l/4UfQ==
-  dependencies:
-    acorn "~0.5.0"
-    debug "^0.8.1"
-    fast.js "0.0.3"
-    minimist "^1.1.0"
 
 pirates@^4.0.4:
   version "4.0.5"
