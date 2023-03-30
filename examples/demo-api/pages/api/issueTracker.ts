@@ -29,7 +29,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   });
   const octokit = await app.getInstallationOctokit(response.data.id);
 
-  const model = new OpenAI({ openAIApiKey: process.env.OPENAI_API_KEY, temperature: 0.2 });
+  const model = new OpenAI({ openAIApiKey: process.env.OPENAI_API_KEY, temperature: 0.2, maxTokens: 1024 });
 
   // GITHUB API
   const CREATE_ISSUE = async ({
@@ -129,7 +129,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }),
     new DynamicTool({
       name: 'Get all issues',
-      description: `Gets all existing issues. Use this to answers questions about issues. Output is a list of issues of format : [#"issue_number": number,"title": "string","description": "string","state":"open or closed","assignees":["string"],"labels": ["string"]$] . Example output : [#"issue_number": 168, "title": "create landing page","description": "make a react app and deploy it","state":"open","assignees":["meetcshah19","nc"],"labels": ["website","html"]$]`,
+      description: `Gets all existing issues. Use this to answers questions about issues. Output is a list of issues of format : [#"issue_number": number,"title": "string","description": "string","state":"string","assignees":["string"],"labels": ["string"]$] . Example output : [#"issue_number": 168, "title": "create landing page","description": "make a react app and deploy it","state":"open","assignees":["meetcshah19","nc"],"labels": ["website","html"]$,#"issue_number": 168, "title": "create landing page","description": "make a react app and deploy it","state":"closed","assignees":["meetcshah19","nc"],"labels": ["website","html"]$]`,
       func: async (input: string) => {
         let output: any[] = [];
         let res = await GET_ISSUES();
