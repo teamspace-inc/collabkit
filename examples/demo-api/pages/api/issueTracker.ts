@@ -61,6 +61,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return 'Issue creation failed.';
     }
   };
+
   const GET_ISSUES = async ({
     owner = OWNER,
     repo = REPO,
@@ -80,12 +81,42 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
   };
 
+  const UPDATE_ISSUE = async ({
+    owner = OWNER,
+    repo = REPO,
+    title = '',
+    description = '',
+    assignees = [],
+    milestone = null,
+    labels = [],
+    headers = {
+      'X-GitHub-Api-Version': '2022-11-28',
+    },
+    issue_number = undefined,
+  } = {}) => {
+    const res = await octokit.request(`PATCH /repos/${owner}/${repo}/issues/${issue_number}`, {
+      owner: owner,
+      repo: repo,
+      title: title,
+      body: description,
+      assignees: assignees,
+      milestone: milestone,
+      labels: labels,
+      headers: headers,
+      issue_number: issue_number,
+    });
+    if (res.status == 201) {
+      return 'Isuue updated.';
+    } else {
+      return 'Issue updation failed.';
+    }
+  };
+
   const tools = [
     new DynamicTool({
       name: 'Create issue',
       description: `Creates a new issue inside the issue tracker. Only use when the action wants to create a new issue. Input should be of format: #"title": "string","description": "string","labels": ["string"]$ . Example input : #title": "create landing page","description": "make a react app and deploy it","labels": ["website","html"]$`,
       func: async (input: string) => {
-        console.log('CREATE ISSUE : ', input);
         input = input.replaceAll('#', '{');
         input = input.replaceAll('$', '}');
         console.log(input);
@@ -112,6 +143,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           });
         });
         return JSON.stringify(output).replaceAll('{', '#').replaceAll('}', '$');
+      },
+    }),
+    new DynamicTool({
+      name: 'Update issue',
+      description: `Updates an existing issue inside the issue tracker. Only use when the action wants to update an existing issue and the issue_number is known. If issue_number is unknown find it using Get all issues. Input should be of format: #"issue_number":number,"title": "string","description": "string","labels": ["string"]$ . Example input : #"issue_number":127,"title": "create landing page","description": "make a react app and deploy it","labels": ["website","html"]$`,
+      func: async (input: string) => {
+        input = input.replaceAll('#', '{');
+        input = input.replaceAll('$', '}');
+        console.log(input);
+        const args = JSON.parse(input);
+        return CREATE_ISSUE(args);
       },
     }),
   ];
