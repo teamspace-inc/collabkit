@@ -20,7 +20,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
   const app = new App({
     appId: process.env.APP_ID,
-    privateKey: fs.readFileSync(process.env.PRIVATE_KEY, 'utf8'),
+    privateKey: process.env.PRIVATE_KEY,
   });
   const { data: slug } = await app.octokit.rest.apps.getAuthenticated();
   const response = await app.octokit.request(`GET /repos/${OWNER}/${REPO}/installation`, {
