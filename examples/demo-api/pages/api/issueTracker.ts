@@ -4,7 +4,6 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { OpenAI } from 'langchain';
 import { initializeAgentExecutor } from 'langchain/agents';
 import { DynamicTool } from 'langchain/tools';
-import * as fs from 'fs';
 import { App } from 'octokit';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -30,7 +29,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   });
   const octokit = await app.getInstallationOctokit(response.data.id);
 
-  const model = new OpenAI({ openAIApiKey: process.env.OPENAI_API_KEY, temperature: 0.5 });
+  const model = new OpenAI({ openAIApiKey: process.env.OPENAI_API_KEY, temperature: 0.2 });
 
   // GITHUB API
   const CREATE_ISSUE = async ({
@@ -105,7 +104,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       headers: headers,
       issue_number: issue_number,
     });
-    if (res.status == 201) {
+    if (res.status == 200) {
       return 'Isuue updated.';
     } else {
       return 'Issue updation failed.';
@@ -126,20 +125,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }),
     new DynamicTool({
       name: 'Get all issues',
-      description: `Gets all existing issues. Use this to answers questions about issues. Output is a list of issues of format : [#"issue_number": number,"title": "string","description": "string","labels": ["string"]$] . Example output : [#"issue_number": 168, "title": "create landing page","description": "make a react app and deploy it","labels": ["website","html"]$]`,
+      description: `Gets all existing issues. Use this to answers questions about issues. Output is a list of issues of format : [#"issue_number": number,"title": "string","description": "string","state":"open or close","assignees":["string"],"labels": ["string"]$] . Example output : [#"issue_number": 168, "title": "create landing page","description": "make a react app and deploy it","state":"open","assignees":["meetcshah19","nc"],"labels": ["website","html"]$]`,
       func: async (input: string) => {
         let output: any[] = [];
         let res = await GET_ISSUES();
-        res.forEach((element: { labels: any[]; id: any; title: any; body: any }) => {
+        res.forEach((element: { labels: any[]; number: any; title: any; body: any; state: any; assignee: any}) => {
           let labelNames: string[] = [];
           element.labels.forEach((label) => {
             if (label.name) labelNames.push(label.name);
           });
           output.push({
-            issue_number: element.id,
+            issue_number: element.number,
             title: element.title,
             description: element.body,
             labels: labelNames,
+            state: element.state,
+            asignee: element.assignee
           });
         });
         return JSON.stringify(output).replaceAll('{', '#').replaceAll('}', '$');
@@ -147,13 +148,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }),
     new DynamicTool({
       name: 'Update issue',
-      description: `Updates an existing issue inside the issue tracker. Only use when the action wants to update an existing issue and the issue_number is known. If issue_number is unknown find it using Get all issues. Input should be of format: #"issue_number":number,"title": "string","description": "string","labels": ["string"]$ . Example input : #"issue_number":127,"title": "create landing page","description": "make a react app and deploy it","labels": ["website","html"]$`,
+      description: `Updates an existing issue inside the issue tracker. Only use when the action wants to update an existing issue and the issue_number is known. If issue_number is unknown find it using Get all issues. Input should be of format: #"issue_number":number,"title": "string","description": "string","state":"open or close","assignees":["string"],"labels":["string"]$ . Example input : #"issue_number":127,"title": "create landing page","description": "make a react app and deploy it","state":"open","assignees":["meetcshah19","nc"],"labels":["website","html"]$`,
       func: async (input: string) => {
         input = input.replaceAll('#', '{');
         input = input.replaceAll('$', '}');
         console.log(input);
         const args = JSON.parse(input);
-        return CREATE_ISSUE(args);
+        return UPDATE_ISSUE(args);
       },
     }),
   ];
