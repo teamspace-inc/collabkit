@@ -80,19 +80,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
   };
 
-  const UPDATE_ISSUE = async ({
-    owner = OWNER,
-    repo = REPO,
-    title = '',
-    description = '',
-    assignees = [],
-    milestone = null,
-    labels = [],
-    headers = {
-      'X-GitHub-Api-Version': '2022-11-28',
-    },
-    issue_number = undefined,
-  } = {}) => {
+  const UPDATE_ISSUE = async (
+    {
+      owner = OWNER,
+      repo = REPO,
+      title = '',
+      description = '',
+      assignees = [],
+      milestone = null,
+      labels = [],
+      headers = {
+        'X-GitHub-Api-Version': '2022-11-28',
+      },
+      issue_number = undefined,
+      state = undefined,
+    } = { state: 'open' || 'closed' }
+  ) => {
     const res = await octokit.request(`PATCH /repos/${owner}/${repo}/issues/${issue_number}`, {
       owner: owner,
       repo: repo,
@@ -103,6 +106,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       labels: labels,
       headers: headers,
       issue_number: issue_number,
+      state: state,
     });
     if (res.status == 200) {
       return 'Issue updated.';
@@ -125,7 +129,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }),
     new DynamicTool({
       name: 'Get all issues',
-      description: `Gets all existing issues. Use this to answers questions about issues. Output is a list of issues of format : [#"issue_number": number,"title": "string","description": "string","state":"open or close","assignees":["string"],"labels": ["string"]$] . Example output : [#"issue_number": 168, "title": "create landing page","description": "make a react app and deploy it","state":"open","assignees":["meetcshah19","nc"],"labels": ["website","html"]$]`,
+      description: `Gets all existing issues. Use this to answers questions about issues. Output is a list of issues of format : [#"issue_number": number,"title": "string","description": "string","state":"open or closed","assignees":["string"],"labels": ["string"]$] . Example output : [#"issue_number": 168, "title": "create landing page","description": "make a react app and deploy it","state":"open","assignees":["meetcshah19","nc"],"labels": ["website","html"]$]`,
       func: async (input: string) => {
         let output: any[] = [];
         let res = await GET_ISSUES();
@@ -161,7 +165,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }),
     new DynamicTool({
       name: 'Update issue with issue_number',
-      description: `Updates an existing issue inside the issue tracker. If issue_number is unknown find it using Get all issues. Only use when the action wants to update an existing issue and the issue_number is known. Use labels only when specified. Input should be of format: #"issue_number":number,"title": "string","description": "string","state":"open or close","assignees":["string"],"labels":["string"]$ . Example input : #"issue_number":127,"title": "create landing page","description": "make a react app and deploy it","state":"open","assignees":["meetcshah19","nc"],"labels":["website","html"]$`,
+      description: `Updates an existing issue inside the issue tracker. If issue_number is unknown find it using Get all issues. Only use when the action wants to update an existing issue and the issue_number is known. Use labels only when specified. Input should be of format: #"issue_number":number,"title": "string","description": "string","state":"open or closed","assignees":["string"],"labels":["string"]$ . Example input : #"issue_number":127,"title": "create landing page","description": "make a react app and deploy it","state":"closed","assignees":["meetcshah19","nc"],"labels":["website","html"]$`,
       func: async (input: string) => {
         input = input.replaceAll('#', '{');
         input = input.replaceAll('$', '}');
