@@ -29,7 +29,7 @@ export const name = style({
   lineHeight: fallbackVar(vars.profile.name.lineHeight, vars.text.base.lineHeight),
   letterSpacing: fallbackVar(vars.profile.name.letterSpacing, vars.text.base.letterSpacing),
   fontFamily: vars.fontFamily,
-  textTransform: 'capitalize',
+  wordBreak: 'break-word',
 });
 
 export const root = style({

@@ -124,6 +124,8 @@ export const thread = recipe({
 
 export const resolvedIcon = style({
   color: vars.color.textPrimary,
+  justifySelf: 'end',
+  alignSelf: 'first center',
 });
 
 export const commentPin = style({

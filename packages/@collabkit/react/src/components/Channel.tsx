@@ -135,7 +135,6 @@ function ChannelCommentList(props: ComponentPropsWithoutRef<'div'>) {
             <CommentHeader>
               <CommentCreatorName />
               <CommentTimestamp />
-              <div style={{ flex: 1 }} />
               {i === 0 && isResolved && <CheckCircle size={14} className={styles.resolvedIcon} />}
             </CommentHeader>
             <CommentActions>

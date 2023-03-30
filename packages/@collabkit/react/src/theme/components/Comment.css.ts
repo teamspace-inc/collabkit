@@ -33,9 +33,8 @@ export const root = recipe({
 });
 
 export const header = style({
-  flex: 1,
-  display: 'flex',
-  flexDirection: 'row',
+  display: 'grid',
+  gridTemplateColumns: 'auto auto 1fr',
   alignItems: 'baseline',
   gap: fallbackVar(vars.comment.header.nameAndTimestamp.gap, `${calc(vars.space[2])}`),
   fontFamily: vars.fontFamily,
