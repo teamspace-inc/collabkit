@@ -55,7 +55,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       headers: headers,
     });
     if (res.status == 201) {
-      return 'Isuue created.';
+      return 'Issue created.';
     } else {
       return 'Issue creation failed.';
     }
@@ -105,7 +105,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       issue_number: issue_number,
     });
     if (res.status == 200) {
-      return 'Isuue updated.';
+      return 'Issue updated.';
     } else {
       return 'Issue updation failed.';
     }
@@ -114,7 +114,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const tools = [
     new DynamicTool({
       name: 'Create issue',
-      description: `Creates a new issue inside the issue tracker. Only use when the action wants to create a new issue. Input should be of format: #"title": "string","description": "string","labels": ["string"]$ . Example input : #title": "create landing page","description": "make a react app and deploy it","labels": ["website","html"]$`,
+      description: `Creates a new issue inside the issue tracker. Only use when the action wants to create a new issue. Use labels only when specified. Input should be of format: #"title": "string","description": "string","assignees":["string"],"labels": ["string"]$ . Example input : #title": "create landing page","description": "make a react app and deploy it","assignees":["neetcshah19"],"labels": ["website","html"]$`,
       func: async (input: string) => {
         input = input.replaceAll('#', '{');
         input = input.replaceAll('$', '}');
@@ -129,26 +129,39 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       func: async (input: string) => {
         let output: any[] = [];
         let res = await GET_ISSUES();
-        res.forEach((element: { labels: any[]; number: any; title: any; body: any; state: any; assignee: any}) => {
-          let labelNames: string[] = [];
-          element.labels.forEach((label) => {
-            if (label.name) labelNames.push(label.name);
-          });
-          output.push({
-            issue_number: element.number,
-            title: element.title,
-            description: element.body,
-            labels: labelNames,
-            state: element.state,
-            asignee: element.assignee
-          });
-        });
+        res.forEach(
+          (element: {
+            labels: any[];
+            number: any;
+            title: any;
+            body: any;
+            state: any;
+            assignees: any[];
+          }) => {
+            let labelNames: string[] = [];
+            element.labels.forEach((label) => {
+              if (label.name) labelNames.push(label.name);
+            });
+            let assigneeNames: string[] = [];
+            element.assignees.forEach((assignee) => {
+              if (assignee.login) assigneeNames.push(assignee.login);
+            });
+            output.push({
+              issue_number: element.number,
+              title: element.title,
+              description: element.body,
+              labels: labelNames,
+              state: element.state,
+              assignees: assigneeNames,
+            });
+          }
+        );
         return JSON.stringify(output).replaceAll('{', '#').replaceAll('}', '$');
       },
     }),
     new DynamicTool({
-      name: 'Update issue',
-      description: `Updates an existing issue inside the issue tracker. Only use when the action wants to update an existing issue and the issue_number is known. If issue_number is unknown find it using Get all issues. Input should be of format: #"issue_number":number,"title": "string","description": "string","state":"open or close","assignees":["string"],"labels":["string"]$ . Example input : #"issue_number":127,"title": "create landing page","description": "make a react app and deploy it","state":"open","assignees":["meetcshah19","nc"],"labels":["website","html"]$`,
+      name: 'Update issue with issue_number',
+      description: `Updates an existing issue inside the issue tracker. If issue_number is unknown find it using Get all issues. Only use when the action wants to update an existing issue and the issue_number is known. Use labels only when specified. Input should be of format: #"issue_number":number,"title": "string","description": "string","state":"open or close","assignees":["string"],"labels":["string"]$ . Example input : #"issue_number":127,"title": "create landing page","description": "make a react app and deploy it","state":"open","assignees":["meetcshah19","nc"],"labels":["website","html"]$`,
       func: async (input: string) => {
         input = input.replaceAll('#', '{');
         input = input.replaceAll('$', '}');
