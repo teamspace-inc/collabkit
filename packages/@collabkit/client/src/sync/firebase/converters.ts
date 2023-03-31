@@ -8,7 +8,6 @@ import type {
 } from '@collabkit/core';
 import { FirebaseId } from '@collabkit/core';
 import type { DataSnapshot } from 'firebase/database';
-import type { Color } from '@collabkit/colors';
 import { getRandomColor, isColor } from '@collabkit/colors';
 
 export function idArrayToObject(

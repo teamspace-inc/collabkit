@@ -1,52 +1,9 @@
-import type {
-  DataSnapshot,
-  QueryConstraint} from 'firebase/database';
-import {
-  get,
-  onChildAdded,
-  onValue,
-  orderByKey,
-  query,
-  startAfter,
-} from 'firebase/database';
-import type { Sync, Subscriptions} from '@collabkit/core';
+import type { QueryConstraint } from 'firebase/database';
+import { get, onChildAdded, onValue, orderByKey, query, startAfter } from 'firebase/database';
+import type { Sync, Subscriptions } from '@collabkit/core';
 import { FirebaseId } from '@collabkit/core';
 import { ref } from './refs';
 import { snapshotToEvent } from './converters';
-
-function processChild(snapshot: DataSnapshot) {
-  const event = snapshotToEvent(snapshot);
-  if (!event) {
-    return null;
-  }
-
-  const eventId = event.id;
-  const workspaceId = snapshot.ref.parent?.ref.parent?.key;
-  const threadId = snapshot.ref.parent?.key;
-  if (!eventId || !workspaceId || !threadId) {
-    return null;
-  }
-
-  return {
-    threadId,
-    workspaceId,
-    eventId,
-    event,
-  };
-}
-
-function handleChild(
-  snapshot: DataSnapshot,
-  cb: (props: {
-    threadId: string;
-    workspaceId: string;
-    eventId: string;
-    event: Sync.TimelineChangeEvent['event'];
-  }) => void
-) {
-  const child = processChild(snapshot);
-  if (child) cb(child);
-}
 
 export async function subscribeTimeline({
   subs,
@@ -101,8 +58,15 @@ export async function subscribeTimeline({
   if (snapshots[0].status === 'fulfilled') {
     snapshots[0].value.forEach((childSnapshot) => {
       lastEventId = childSnapshot.key;
-      const child = processChild(childSnapshot);
-      if (child) events.push(child);
+      const event = snapshotToEvent(childSnapshot);
+      if (event) {
+        events.push({
+          event,
+          eventId: event.id,
+          threadId,
+          workspaceId,
+        });
+      }
     });
   } else {
     console.error('get timeline', snapshots[0].reason);
@@ -150,7 +114,15 @@ export async function subscribeTimeline({
 
   try {
     subs[timelineQuery.toString()] = onChildAdded(newTimelineEventsQuery, (snapshot) => {
-      handleChild(snapshot, props.onTimelineEventAdded);
+      const event = snapshotToEvent(snapshot);
+      if (event) {
+        props.onTimelineEventAdded({
+          event,
+          eventId: event.id,
+          threadId,
+          workspaceId,
+        });
+      }
     });
   } catch (e) {
     console.error('onChildAdded', e);
