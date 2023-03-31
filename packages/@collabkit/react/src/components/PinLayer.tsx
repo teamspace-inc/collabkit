@@ -67,7 +67,6 @@ function PinLayer(props: { className?: string; children?: React.ReactNode }) {
           element.classList.add(styles.activeContainer);
           hoveredUncommentableElementRef.current = element;
         }
-
       }
     },
     [cursorRef, store]
@@ -112,12 +111,9 @@ function PinLayer(props: { className?: string; children?: React.ReactNode }) {
     return null;
   }
 
-  const pinCursor = uiState === 'selecting' && (
-    <>
-      <div ref={overlayRef} className={styles.overlay} />
-      <PinCursor isSelected={false} ref={cursorRef} />
-    </>
-  );
+  if (uiState !== 'selecting' && pins.open.length === 0) {
+    return null;
+  }
 
   const pinsComponents =
     pinsVisible &&
@@ -137,7 +133,8 @@ function PinLayer(props: { className?: string; children?: React.ReactNode }) {
   return (
     <FloatingPortal id="collabkit-floating-root">
       <FloatingTree>
-        {pinCursor}
+        {uiState === 'selecting' && <div ref={overlayRef} className={styles.overlay} />}
+        {uiState === 'selecting' && <PinCursor isSelected={false} ref={cursorRef} />}
         {pinsComponents}
       </FloatingTree>
     </FloatingPortal>
