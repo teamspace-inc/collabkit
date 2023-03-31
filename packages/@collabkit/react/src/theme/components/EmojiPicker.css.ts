@@ -44,6 +44,7 @@ export const emoji = style({
   width: size,
   height: size,
   fontSize: vars.text.large.lineHeight,
+  fontFamily: 'sans-serif', // Needs to be a system font with emoji support
   lineHeight: vars.text.large.lineHeight,
   cursor: 'pointer',
   display: 'flex',
