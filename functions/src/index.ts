@@ -4,21 +4,17 @@ if (admin.apps.length === 0) {
 }
 
 import { routes } from './routes';
-import { createOrg } from './createOrg';
 import { generateToken } from './generateToken';
 import { onEvent } from './onEvent';
 import { sendNotification } from './sendNotification';
 import { triggerWebhook } from './triggerWebhook';
-import { comment } from './comment';
 import { generateCustomToken } from './generateCustomToken';
 
 export {
-  createOrg,
   routes as v1,
   generateToken,
   onEvent,
   sendNotification,
   triggerWebhook,
-  comment,
   generateCustomToken,
 };

@@ -28,7 +28,7 @@ const mockHttp = (props: { path?: string; query?: object; body?: object; headers
 
 it('createUser: appId not provided', async () => {
   const http = mockHttp({ query: {}, body: {} });
-  await putUser(http.req, http.res);
+  await putUser('', http.req, http.res);
   const send = http.res.send as sinon.SinonSpy;
   const { args } = send.getCalls()[0];
   expect(args[0]).toEqual({ status: 400, error: '"appId" not provided' });
@@ -41,7 +41,7 @@ it('createUser: apiKey not provided', async () => {
       appId: 'appId',
     },
   });
-  await putUser(http.req, http.res);
+  await putUser('userId', http.req, http.res);
   const send = http.res.send as sinon.SinonSpy;
   const { args } = send.getCalls()[0];
   expect(args[0]).toEqual({ status: 400, error: '"apiKey" not provided' });
@@ -55,25 +55,10 @@ it('createUser: workspaceId not provided', async () => {
       apiKey: 'apiKey',
     },
   });
-  await putUser(http.req, http.res);
+  await putUser('userId', http.req, http.res);
   const send = http.res.send as sinon.SinonSpy;
   const { args } = send.getCalls()[0];
   expect(args[0]).toEqual({ status: 400, error: '"workspaceId" not provided' });
-});
-
-it('createUser: userId not provided', async () => {
-  const http = mockHttp({
-    query: {},
-    body: {
-      appId: 'appId',
-      apiKey: 'apiKey',
-      workspaceId: 'workspaceId',
-    },
-  });
-  await putUser(http.req, http.res);
-  const send = http.res.send as sinon.SinonSpy;
-  const { args } = send.getCalls()[0];
-  expect(args[0]).toEqual({ status: 400, error: '"userId" not provided' });
 });
 
 it('createUser: user not provided', async () => {
@@ -86,7 +71,7 @@ it('createUser: user not provided', async () => {
     },
     path: '/v1/userId',
   });
-  await putUser(http.req, http.res);
+  await putUser('userId', http.req, http.res);
   const send = http.res.send as sinon.SinonSpy;
   const { args } = send.getCalls()[0];
   expect(args[0]).toEqual({ status: 400, error: '"user" not provided' });
@@ -105,7 +90,7 @@ it('createUser: "user" object is invalid', async () => {
     },
     path: '/v1/userId',
   });
-  await putUser(http.req, http.res);
+  await putUser('userId', http.req, http.res);
   const send = http.res.send as sinon.SinonSpy;
   const { args } = send.getCalls()[0];
   expect(args[0]).toEqual({ status: 400, error: '"user" object is invalid' });
@@ -125,7 +110,8 @@ it('createUser: "apiKey" is invalid', async () => {
     },
     path: '/v1/userId',
   });
-  await putUser(http.req, http.res);
+  const userId = nanoid();
+  await putUser(userId, http.req, http.res);
   const send = http.res.send as sinon.SinonSpy;
   const { args } = send.getCalls()[0];
   expect(args[0]).toEqual({ status: 403, error: '"apiKey" invalid' });
@@ -144,9 +130,9 @@ it('createUser: success', async () => {
         email: 'email@xample.com',
       },
     },
-    path: `/v1/${userId}`,
+    path: `/v1/${encodeURIComponent(userId)}`,
   });
-  await putUser(http.req, http.res);
+  await putUser(userId, http.req, http.res);
   const send = http.res.send as sinon.SinonSpy;
   const { args } = send.getCalls()[0];
   expect(args[0]).toEqual({
@@ -167,9 +153,9 @@ it('create anonymous user in default workspace', async () => {
       workspaceId: 'default',
       user: {},
     },
-    path: `/v1/${userId}`,
+    path: `/v1/${encodeURIComponent(userId)}`,
   });
-  await putUser(http.req, http.res);
+  await putUser(userId, http.req, http.res);
   const send = http.res.send as sinon.SinonSpy;
   const { args } = send.getCalls()[0];
   expect(args[0]).toEqual({
@@ -194,9 +180,9 @@ it('update existing user', async () => {
         email: 'email@xample.com',
       },
     },
-    path: `/v1/${userId}`,
+    path: `/v1/${encodeURIComponent(userId)}`,
   });
-  await putUser(http.req, http.res);
+  await putUser(userId, http.req, http.res);
   const send = http.res.send as sinon.SinonSpy;
   const { args } = send.getCalls()[0];
   const createdUser = args[0];
@@ -210,9 +196,9 @@ it('update existing user', async () => {
         email: 'updated-email@example.org',
       },
     },
-    path: `/v1/${userId}`,
+    path: `/v1/${encodeURIComponent(userId)}`,
   });
-  await putUser(httpUpdate.req, httpUpdate.res);
+  await putUser(userId, httpUpdate.req, httpUpdate.res);
   const updatedUser = (httpUpdate.res.send as sinon.SinonSpy).getCalls()[0].args[0];
   expect(updatedUser).toEqual({
     ...createdUser,
@@ -237,9 +223,9 @@ it('update existing user (default workspace)', async () => {
         email: 'email@xample.com',
       },
     },
-    path: `/v1/${userId}`,
+    path: `/v1/${encodeURIComponent(userId)}`,
   });
-  await putUser(http.req, http.res);
+  await putUser(userId, http.req, http.res);
   const send = http.res.send as sinon.SinonSpy;
   const { args } = send.getCalls()[0];
   const createdUser = args[0];
@@ -253,9 +239,9 @@ it('update existing user (default workspace)', async () => {
         email: 'updated-email@example.org',
       },
     },
-    path: `/v1/${userId}`,
+    path: `/v1/${encodeURIComponent(userId)}`,
   });
-  await putUser(httpUpdate.req, httpUpdate.res);
+  await putUser(userId, httpUpdate.req, httpUpdate.res);
   const updatedUser = (httpUpdate.res.send as sinon.SinonSpy).getCalls()[0].args[0];
   expect(updatedUser).toEqual({
     ...createdUser,

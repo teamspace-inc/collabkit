@@ -3,7 +3,11 @@ import { ref } from './actions/data/refs';
 import { isValidUser } from './actions/helpers/isValidUser';
 import { updateUserAndWorkspace } from './actions/helpers/updateUserAndWorkspace';
 
-export async function putUser(request: functions.https.Request, response: functions.Response) {
+export async function putUser(
+  userId: string,
+  request: functions.https.Request,
+  response: functions.Response
+) {
   const { appId, workspaceId, apiKey, user } = request.body;
 
   if (!appId) {
@@ -21,15 +25,6 @@ export async function putUser(request: functions.https.Request, response: functi
   if (!workspaceId || typeof workspaceId !== 'string') {
     console.debug('"workspaceId" not provided', workspaceId);
     response.status(400).send({ status: 400, error: '"workspaceId" not provided' });
-    return;
-  }
-
-  let pathParams = request.path.split('/');
-  const userId = pathParams.pop();
-
-  if (!userId || typeof userId !== 'string' || pathParams.length < 2) {
-    console.debug('"userId" not provided', userId);
-    response.status(400).send({ status: 400, error: '"userId" not provided' });
     return;
   }
 
@@ -62,7 +57,11 @@ export async function putUser(request: functions.https.Request, response: functi
   response.status(200).send(result);
 }
 
-export async function deleteUser(request: functions.https.Request, response: functions.Response) {
+export async function deleteUser(
+  userId: string,
+  request: functions.https.Request,
+  response: functions.Response
+) {
   const { appId, apiKey } = request.body;
 
   if (!appId) {
@@ -74,15 +73,6 @@ export async function deleteUser(request: functions.https.Request, response: fun
   if (!apiKey || typeof apiKey !== 'string') {
     console.debug('"apiKey" not provided', apiKey);
     response.status(400).send({ status: 400, error: '"apiKey" not provided' });
-    return;
-  }
-
-  let pathParams = request.path.split('/');
-  const userId = pathParams.pop();
-
-  if (!userId || typeof userId !== 'string' || pathParams.length < 2) {
-    console.debug('"userId" not provided', userId);
-    response.status(400).send({ status: 400, error: '"userId" not provided' });
     return;
   }
 
