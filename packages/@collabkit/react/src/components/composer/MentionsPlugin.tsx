@@ -159,7 +159,9 @@ function searchMentionableUsers(
   const { mentionableUsers } = snapshot(store);
   const results: MentionWithColor[] = (Object.values(mentionableUsers ?? {}) ?? []).filter(
     (mention) =>
-      mention.name && mention.name.toLowerCase().includes(string.toLowerCase()) && mention.email
+      mention.email &&
+      ((mention.name && mention.name.toLowerCase().includes(string.toLowerCase())) ||
+        mention.email.toLowerCase().includes(string.toLowerCase()))
   );
   if (results == null || results?.length === 0) {
     callback(null);
@@ -229,10 +231,7 @@ export function MentionsTypeaheadItem({
       </ProfileContext.Provider>
       <div className={styles.nameAndEmailWrapper}>
         <div className={styles.name} data-testid="collabkit-mentions-typeahead-item-name">
-          <Highlighted text={result.name ?? ''} highlight={query}></Highlighted>
-        </div>
-        <div className={styles.email} data-testid="collabkit-mentions-typeahead-item-email">
-          <Highlighted text={result.email ?? ''} highlight={query}></Highlighted>
+          <Highlighted text={result.name || result.email || ''} highlight={query}></Highlighted>
         </div>
       </div>
     </div>
@@ -615,8 +614,13 @@ function createMentionNodeFromSearchResult(
     if (!$isRangeSelection(selection) || !selection.isCollapsed()) {
       return;
     }
-    if (typeof mention.name !== 'string') {
-      console.error('CollabKit: Mention name must be a string');
+    if (
+      typeof mention.name !== 'string' &&
+      !mention.name &&
+      typeof mention.email !== 'string' &&
+      !mention.email
+    ) {
+      console.error('CollabKit: Mention name or email must be a non-empty string');
       return;
     }
     const anchor = selection.anchor;
@@ -634,7 +638,7 @@ function createMentionNodeFromSearchResult(
     const textContent = anchorNode.getTextContent().slice(0, selectionOffset);
     const characterOffset = match.replaceableString.length;
 
-    const mentionText = `@${mention.name}`;
+    const mentionText = `@${mention.name || mention.email}`;
     // Given a known offset for the mention match, look backward in the
     // text to see if there's a longer match to replace.
     const mentionOffset = getMentionOffset(textContent, mentionText, characterOffset);
