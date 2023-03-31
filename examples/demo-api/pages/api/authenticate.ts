@@ -45,14 +45,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       return;
     }
     const { id, ...user } = await verify(credential);
-
+    const workspaceId = 'demo';
     await upsertWorkspace({
       appId: appId,
       apiKey: apiKey,
       workspace: {
-        name: 'collabkit',
+        name: 'Demo',
       },
-      workspaceId: 'collabkit',
+      workspaceId,
     });
 
     await upsertUser({
@@ -60,13 +60,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       apiKey: apiKey,
       user: user,
       userId: id,
-      workspaceId: 'collabkit',
+      workspaceId,
     });
 
     const token = createUserToken({
       apiKey,
       userId: id,
-      workspaceId: 'collabkit',
+      workspaceId,
     });
     res.status(201).json({ token });
   } catch (e) {
