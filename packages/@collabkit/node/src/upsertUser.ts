@@ -16,7 +16,7 @@ export async function upsertUser(props: {
   isDeleted?: boolean;
   name?: string;
 }> {
-  const response = await fetch(`${API_HOST}/v1/user/${props.userId}`, {
+  const response = await fetch(`${API_HOST}/v1/user/${encodeURIComponent(props.userId)}`, {
     method: 'PUT',
     body: JSON.stringify({
       apiKey: props.apiKey,
