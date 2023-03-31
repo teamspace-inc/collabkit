@@ -2,12 +2,12 @@ export const config = {
   apiKey: import.meta.env.VITE_COLLABKIT_API_KEY,
   appId: import.meta.env.VITE_COLLABKIT_APP_ID,
   workspace: {
-    id: import.meta.env.VITE_COLLABKIT_WORKSPACE_ID,
-    name: import.meta.env.VITE_COLLABKIT_WORKSPACE_NAME,
+    id: 'ladle',
+    name: 'Ladle workspace',
   },
   user: {
-    name: 'Alice',
-    id: 'alice',
+    name: 'Ladle User',
+    id: 'ladle',
   },
   mentionableUsers: 'allWorkspace',
   theme: 'dark' as 'dark' | 'light',
