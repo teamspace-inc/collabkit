@@ -76,7 +76,7 @@ export const composerEditor = style([
 export const composerPlaceholder = style([
   composerStyles.placeholder,
   {
-    left: 0,
+    paddingLeft: 0,
   },
 ]);
 
