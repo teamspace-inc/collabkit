@@ -34,6 +34,7 @@ import { CommentList } from './components/CommentList';
 import { Button } from './components/Button';
 
 export * from './hooks/useSidebarCommentsButton';
+export * from './hooks/public/useInbox';
 
 export * from './components/Comment';
 export * from './components/composer/Composer';

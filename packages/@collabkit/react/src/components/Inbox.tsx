@@ -4,7 +4,7 @@ import * as styles from '../theme/components/Inbox.css';
 import { ThemeWrapper } from './ThemeWrapper';
 import { ChatCentered } from './icons';
 import { emptyState } from '../theme/components/Thread.css';
-import { useInbox } from '../hooks/public/useInbox';
+import { InboxFilters, useInbox } from '../hooks/public/useInbox';
 import { useStore } from '../hooks/useStore';
 import { SidebarCloseButton, SidebarHeader, SidebarRoot, SidebarTitle } from './Sidebar';
 import { ThreadContext } from '../hooks/useThreadContext';
@@ -31,9 +31,9 @@ import { useIsSidebarOpen } from '../hooks/useIsSidebarOpen';
 import { Root } from './Root';
 import { Scrollable } from './Scrollable';
 
-function InboxEmptyState() {
+function InboxEmptyState(props: ComponentPropsWithoutRef<'div'>) {
   return (
-    <div className={emptyState}>
+    <div className={emptyState} {...props}>
       <ChatCentered weight="thin" size={32} />
       <span>No comments yet</span>
     </div>
@@ -104,14 +104,7 @@ function InboxItem({ threadId, ...props }: { threadId: string } & ComponentProps
   );
 }
 
-export type InboxItemListProps = {
-  commentFilter?: (body: string) => boolean;
-  direction?: 'asc' | 'desc';
-  statusFilter?: 'all' | 'open';
-  threadIds?: string[] | null;
-};
-
-function InboxItemList(props: InboxItemListProps) {
+function InboxItemList(props: InboxFilters) {
   const threadIds = useInbox(props);
   return (
     <>
@@ -136,7 +129,7 @@ function Inbox({
   statusFilter,
   threadIds,
   ...props
-}: InboxItemListProps & ComponentPropsWithoutRef<'div'>) {
+}: InboxFilters & ComponentPropsWithoutRef<'div'>) {
   return (
     <InboxRoot {...props}>
       <InboxItemList

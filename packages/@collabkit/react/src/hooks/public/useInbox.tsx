@@ -4,12 +4,14 @@ import { useSnapshot } from 'valtio';
 import { useStore } from '../useStore';
 import { useIsAuthenticated } from '../useIsAuthenticated';
 
-export function useInbox(props: {
-  statusFilter?: 'all' | 'open';
-  threadIds?: string[] | null;
+export type InboxFilters = {
   commentFilter?: (body: string) => boolean;
   direction?: 'asc' | 'desc';
-}) {
+  statusFilter?: 'all' | 'open';
+  threadIds?: string[] | null;
+};
+
+export function useInbox(props: InboxFilters) {
   const statusFilter = props.statusFilter ?? 'open';
   const store = useStore();
   const { workspaceId, workspaces } = useSnapshot(store);
