@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.json",
+  "include": ["tests", "tests/**.test.ts"],
+  "compilerOptions": {
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "types": ["jest"],
+    "target": "ESNext",
+    "module": "ESNext",
+    "jsx": "react",
+    "moduleResolution": "node"
+  }
+}

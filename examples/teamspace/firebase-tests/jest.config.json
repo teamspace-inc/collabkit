@@ -1,0 +1,16 @@
+{
+  "moduleNameMapper": {
+    "^firebase/compat/app$": "@firebase/app-compat",
+    "^firebase/compat/database$": "@firebase/database-compat",
+    "^firebase/compat/firestore$": "<rootDir>/__mocks__/empty.js",
+    "^firebase/compat/storage$": "@firebase/storage-compat"
+  },
+  "transform": {
+    "^.+\\.(tsx|jsx|ts|js|mjs)?$": [
+      "@swc-node/jest",
+      {
+        "jsx": true
+      }
+    ]
+  }
+}

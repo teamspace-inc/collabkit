@@ -1,0 +1,34 @@
+{
+  "compilerOptions": {
+    "rootDir": "src",
+    "baseUrl": "src",
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "allowJs": false,
+    "skipLibCheck": true,
+    "esModuleInterop": false,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "noUnusedLocals": true,
+    "paths": {
+      "core": ["../../packages/@teamspace/core"],
+      "y-providers": ["../../packages/@teamspace/y-providers"],
+      "undo": ["../../packages/@teamspace/undo"]
+    },
+    "types": ["jest", "react/next", "react-dom/next"]
+  },
+  "references": [
+    { "path": "../../packages/@teamspace/core" },
+    { "path": "../../packages/@teamspace/y-providers" },
+    { "path": "../../packages/@teamspace/file-store" }
+  ],
+  "include": ["./src", "specs-app"]
+}

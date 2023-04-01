@@ -1,0 +1,15 @@
+import type { State } from 'state/constants';
+import { liftListItem as _liftListItem } from 'prosemirror-schema-list';
+import { EditorContextType } from 'hooks/useEditorContext';
+import { getEditorViewKey } from 'state/helpers';
+
+export const liftListItem = (state: State, info: { editorContext: EditorContextType }) => {
+  const { editingId, editors } = state.store.editing;
+  if (!editingId || editingId.type !== 'card') {
+    console.warn('[liftListItem] blank or invalid editingId');
+    return;
+  }
+  const key = getEditorViewKey(info.editorContext, editingId);
+  const view = editors[key];
+  _liftListItem(view.state.schema.nodes.list_item)(view.state, view.dispatch);
+};

@@ -1,0 +1,7 @@
+{
+  "setupFiles": ["../../setupTests.ts"],
+  "transform": {
+    "^.+\\.(tsx|jsx|ts|js|mjs)?$": "@swc-node/jest"
+  },
+  "transformIgnorePatterns": []
+}
