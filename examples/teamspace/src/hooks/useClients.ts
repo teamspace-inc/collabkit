@@ -1,4 +1,4 @@
-import { onChildAdded, onChildRemoved } from '@firebase/database';
+import { onChildAdded, onChildRemoved } from 'firebase/database';
 import { useSpaceEvents } from '../events';
 import { ClientState, docRef } from 'realtime';
 import { SpaceStore } from 'state/constants';

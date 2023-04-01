@@ -5,7 +5,7 @@ import {
   orderByKey,
   query,
   ref as databaseRef,
-} from '@firebase/database';
+} from 'firebase/database';
 import { CardType, GlobalStore, TableTarget, TextCardTarget } from 'state/constants';
 import { Doc } from 'yjs';
 import { ref } from 'valtio/vanilla';

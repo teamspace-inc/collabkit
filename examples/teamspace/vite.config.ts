@@ -1,3 +1,5 @@
+import dotenv from 'dotenv';
+dotenv.config({ path: '../../env/.env.local' });
 import { resolve } from 'path';
 
 import { defineConfig, Plugin } from 'vite';

@@ -12,7 +12,7 @@ import {
   getDatabase,
   serverTimestamp,
   onChildAdded,
-} from '@firebase/database';
+} from 'firebase/database';
 import { isTypedArray } from './utils';
 
 function validateUpdateBase(o: unknown): o is YUpdateBase {

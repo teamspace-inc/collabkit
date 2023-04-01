@@ -1,5 +1,5 @@
 import { getAuth, signInAnonymously } from '@firebase/auth';
-import { get, onDisconnect, serverTimestamp, set } from '@firebase/database';
+import { get, onDisconnect, serverTimestamp, set } from 'firebase/database';
 import {
   bindRealtime,
   clientRef,

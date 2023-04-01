@@ -1,4 +1,4 @@
-import { getDatabase, onValue, ref } from '@firebase/database';
+import { getDatabase, onValue, ref } from 'firebase/database';
 import { useEffect } from 'react';
 import { useAppEvents } from '../events';
 import { useSpaceContext } from './useSpaceContext';

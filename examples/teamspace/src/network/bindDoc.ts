@@ -11,7 +11,7 @@ import {
   ref,
   serverTimestamp,
   startAfter,
-} from '@firebase/database';
+} from 'firebase/database';
 import { applyUpdateV2, Doc, encodeStateAsUpdateV2, UndoManager } from 'yjs';
 import { toUint8Array, fromUint8Array } from 'js-base64';
 import { nanoid } from 'nanoid';

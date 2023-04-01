@@ -1,4 +1,4 @@
-import { remove } from '@firebase/database';
+import { remove } from 'firebase/database';
 import { clientRef, realtimeRef } from 'realtime';
 import { State } from 'state/constants';
 

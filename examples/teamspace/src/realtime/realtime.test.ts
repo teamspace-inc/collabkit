@@ -1,5 +1,5 @@
 import waitForExpect from 'wait-for-expect';
-import { DatabaseReference, get, getDatabase, ref } from '@firebase/database';
+import { DatabaseReference, get, getDatabase, ref } from 'firebase/database';
 import { Unsubscribe } from '@firebase/auth';
 
 import { bindRealtime, cancelDrag, cancelResize, nextTransactionId } from '.';

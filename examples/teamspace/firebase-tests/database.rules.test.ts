@@ -8,7 +8,7 @@ import {
   assertSucceeds,
   RulesTestEnvironment,
 } from '@firebase/rules-unit-testing';
-import { ref, get, update, remove, set, serverTimestamp, push, Database } from '@firebase/database';
+import { ref, get, update, remove, set, serverTimestamp, push, Database } from 'firebase/database';
 
 const DOC_ID = 'dddddddddddddddddddddddd';
 

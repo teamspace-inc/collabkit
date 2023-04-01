@@ -6,7 +6,7 @@ import {
   onChildAdded,
   Unsubscribe,
   update,
-} from '@firebase/database';
+} from 'firebase/database';
 import { RelativePosition } from 'yjs';
 import { subscribe } from 'valtio';
 import { subscribeKey } from 'valtio/utils';
