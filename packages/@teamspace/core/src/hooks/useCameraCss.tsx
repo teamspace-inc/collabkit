@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import * as React from 'react'
+import React from 'react'
 import type { TLPageState, TLShape } from '~types'
 
 export function useCameraCss<T extends TLShape>(

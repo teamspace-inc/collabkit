@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as React from 'react'
+import React from 'react'
 import Utils from '~utils'
 import { intersectPolylineBounds } from '@tldraw/intersect'
 import type {

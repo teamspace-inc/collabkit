@@ -1,4 +1,4 @@
-// import * as React from 'react';
+// import React from 'react';
 // import { DirectionProvider } from '@radix-ui/react-direction';
 // import { css, keyframes } from '../../../../stitches.config';
 // import * as ScrollArea from '@radix-ui/react-scroll-area';

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as React from 'react'
+import React from 'react'
 import type { TLShape, TLUser } from '~types'
 import { usePosition, useTLContext } from '~hooks'
 

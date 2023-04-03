@@ -1,3 +1,4 @@
+import React from 'react'
 import { usePosition } from '~hooks'
 import { TLShapeUtilsMap } from '~shape-utils'
 import { TLShape, ToolPreview as _ToolPreview } from '~types'

@@ -1,3 +1,4 @@
+import React from 'react'
 import type { TLShape, TLUsers } from '~types'
 import Utils from '~utils'
 import { Brush } from '~components/brush'

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import * as React from 'react'
+import React from 'react'
 import { useShapeEvents } from '~hooks'
 import type { IShapeTreeNode, TLShape } from '~types'
 import { RenderedShape } from './rendered-shape'

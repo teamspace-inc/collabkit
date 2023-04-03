@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { mockDocument, renderWithContext } from '~test'
 import { Canvas } from './canvas'
 

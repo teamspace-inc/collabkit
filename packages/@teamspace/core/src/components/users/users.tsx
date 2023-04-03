@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { User } from '~components/user/user'
 import type { TLShape, TLUsers } from '~types'
 

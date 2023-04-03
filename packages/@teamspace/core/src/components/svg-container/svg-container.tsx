@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 
 interface SvgContainerProps extends React.SVGProps<SVGSVGElement> {
   children: React.ReactNode

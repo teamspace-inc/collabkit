@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import type { TLBounds } from '~types'
 import { CloneButton } from './clone-button'
 

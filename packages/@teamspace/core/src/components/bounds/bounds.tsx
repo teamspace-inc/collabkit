@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import * as React from 'react'
+import React from 'react'
 import { TLBoundsEdge, TLBoundsCorner, TLBounds } from '~types'
 import { CenterHandle } from './center-handle'
 import { RotateHandle } from './rotate-handle'

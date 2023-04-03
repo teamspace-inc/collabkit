@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { styled } from '@stitches/react';
 import { COLUMN_WIDTH, MenuItem, MenuItemTarget, Z } from 'state/constants';
 import { useAppContext } from '../hooks/useAppContext';

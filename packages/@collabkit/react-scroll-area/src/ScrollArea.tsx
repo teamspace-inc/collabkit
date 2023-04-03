@@ -1,6 +1,6 @@
 /// <reference types="resize-observer-browser" />
 
-import * as React from 'react';
+import React from 'react';
 import { Primitive } from '@radix-ui/react-primitive';
 import { Presence } from '@radix-ui/react-presence';
 import { createContextScope } from '@radix-ui/react-context';

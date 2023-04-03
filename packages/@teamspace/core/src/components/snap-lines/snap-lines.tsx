@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import type { TLSnapLine } from '~types'
 import Utils from '~utils'
 

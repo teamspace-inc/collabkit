@@ -1,11 +1,11 @@
-import * as React from 'react'
+import React from 'react'
 import type { TLTheme } from '~types'
 
 const styles = new Map<string, HTMLStyleElement>()
 
 type AnyTheme = Record<string, string>
 
-function makeCssTheme<T = AnyTheme>(prefix: string, theme: T) {
+function makeCssTheme<T extends {} = AnyTheme>(prefix: string, theme: T) {
   return Object.keys(theme).reduce((acc, key) => {
     const value = theme[key as keyof T]
     if (value) {
@@ -15,7 +15,7 @@ function makeCssTheme<T = AnyTheme>(prefix: string, theme: T) {
   }, '')
 }
 
-function useTheme<T = AnyTheme>(prefix: string, theme: T, selector = ':root') {
+function useTheme<T extends {} = AnyTheme>(prefix: string, theme: T, selector = ':root') {
   React.useLayoutEffect(() => {
     const style = document.createElement('style')
     const cssTheme = makeCssTheme(prefix, theme)

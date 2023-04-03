@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import type { TLPageState, TLBounds, TLTarget } from '../types'
 import { mockDocument } from './mockDocument'
 import { mockUtils } from './mockUtils'

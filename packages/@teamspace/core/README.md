@@ -35,7 +35,7 @@ If you're working on an app that uses this library, I recommend referring back t
 Import the `Renderer` React component and pass it the required props.
 
 ```tsx
-import * as React from "react"
+import React from "react"
 import { Renderer, TLShape, TLShapeUtil, Vec } from '@tldraw/core'
 import { BoxShape, BoxUtil } from "./shapes/box"
 
@@ -298,7 +298,7 @@ Next, use `TLShapeUtil.Indicator` to create a second component for your shape's 
 ```tsx
 // BoxComponent.ts
 
-import * as React from 'react'
+import React from 'react'
 import { shapeComponent, SVGContainer } from '@tldraw/core'
 import type { BoxShape } from './BoxShape'
 

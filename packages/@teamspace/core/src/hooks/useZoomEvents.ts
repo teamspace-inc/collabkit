@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import * as React from 'react'
+import React from 'react'
 import { useTLContext } from './useTLContext'
-import { useGesture } from '@use-gesture/react'
+import { Vector2, useGesture } from '@use-gesture/react'
 import { Vec } from '@tldraw/vec'
 
 // Capture zoom gestures (pinches, wheels and pans)
@@ -104,7 +104,8 @@ export function useZoomEvents<T extends HTMLElement>(zoom: number, ref: React.Re
       target: ref,
       eventOptions: { passive: false },
       pinch: {
-        from: zoom,
+        // nc: not worth fixing this weird type error now
+        from: zoom as unknown as Vector2,
         scaleBounds: () => ({ from: inputs.zoom, max: 5, min: 0.1 }),
       },
     }

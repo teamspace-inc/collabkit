@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import * as React from 'react'
+import React from 'react'
 import type { IShapeTreeNode, TLPage, TLPageState, TLShape, TLBinding, TLBounds } from '~types'
 import { Utils } from '~utils'
 import { Vec } from '@tldraw/vec'

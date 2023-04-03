@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { renderWithSvg } from '~test'
 import { Brush } from './brush'
 

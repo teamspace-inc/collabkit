@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { Utils } from '~utils'
 import { TLContext } from '~hooks'
 import { TLTarget } from '~types'

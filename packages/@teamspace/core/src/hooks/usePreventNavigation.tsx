@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import * as React from 'react'
+import React from 'react'
 import { useTLContext } from '~hooks'
 
 export function usePreventNavigation(rCanvas: React.RefObject<HTMLDivElement>): void {

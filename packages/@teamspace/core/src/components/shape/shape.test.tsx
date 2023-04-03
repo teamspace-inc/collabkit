@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { renderWithContext } from '~test'
 import { Shape } from './shape'
 import { BoxUtil, boxShape } from '~shape-utils/TLShapeUtil.spec'

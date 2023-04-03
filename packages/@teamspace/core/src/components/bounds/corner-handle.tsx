@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { useBoundsHandleEvents } from '~hooks'
 import { TLBoundsCorner, TLBounds } from '~types'
 

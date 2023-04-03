@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as React from 'react'
+import React from 'react'
 import type { TLBinding, TLPage, TLPageState, TLShape } from '~types'
 import { useSelection, useShapeTree, useTLContext } from '~hooks'
 import { Bounds } from '~components/bounds'

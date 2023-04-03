@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import * as React from 'react'
+import React from 'react'
 import {
   usePreventNavigation,
   useZoomEvents,

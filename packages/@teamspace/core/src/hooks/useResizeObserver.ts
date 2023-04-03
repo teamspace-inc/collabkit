@@ -1,5 +1,5 @@
 import { useTLContext } from '~hooks'
-import * as React from 'react'
+import React from 'react'
 import { Utils } from '~utils'
 import type { TLBounds } from '~types'
 

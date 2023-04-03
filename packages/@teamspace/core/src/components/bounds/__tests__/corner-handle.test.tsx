@@ -1,6 +1,6 @@
 import { renderWithContext } from '~test'
 import { screen } from '@testing-library/react'
-import * as React from 'react'
+import React from 'react'
 import { CornerHandle } from '../corner-handle'
 import { TLBoundsCorner } from '~types'
 

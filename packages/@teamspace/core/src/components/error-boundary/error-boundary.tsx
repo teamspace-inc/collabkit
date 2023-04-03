@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 
 // Copied from https://github.com/bvaughn/react-error-boundary/blob/master/src/index.tsx
 // (There's an issue with esm builds of this library, so we can't use it directly.)
@@ -36,7 +36,7 @@ interface ErrorBoundaryPropsWithRender {
   onError?: (error: Error, info: { componentStack: string }) => void
   resetKeys?: Array<unknown>
   fallback?: never
-  FallbackComponent?: never
+  FallbackComponent?: any
   fallbackRender: typeof FallbackRender
 }
 
@@ -52,7 +52,7 @@ interface ErrorBoundaryPropsWithFallback {
     unknown,
     string | React.FunctionComponent | typeof React.Component
   > | null
-  FallbackComponent?: never
+  FallbackComponent?: any
   fallbackRender?: never
 }
 
@@ -118,7 +118,7 @@ class ErrorBoundary extends React.Component<
     }
   }
 
-  render() {
+  render(): React.ReactNode {
     const { error } = this.state
 
     const { fallbackRender, FallbackComponent, fallback } = this.props
@@ -129,6 +129,7 @@ class ErrorBoundary extends React.Component<
         resetErrorBoundary: this.resetErrorBoundary,
       }
       if (React.isValidElement(fallback)) {
+        // todo @nc: fix this to return fallbasck
         return fallback
       } else if (typeof fallbackRender === 'function') {
         return fallbackRender(props)
