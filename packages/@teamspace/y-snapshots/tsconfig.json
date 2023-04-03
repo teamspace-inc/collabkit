@@ -1,0 +1,19 @@
+{
+  "extends": "../../../tsconfig.base.json",
+  "include": ["src"],
+  "compilerOptions": {
+    "outDir": "./dist/types",
+    "baseUrl": "src"
+  },
+  "exclude": [
+    "node_modules",
+    "app",
+    "dist",
+    "src/**/*.js",
+    "src/**/*.test.ts",
+    "src/**/*.test.tsx",
+    "src/**/*.spec.ts",
+    "src/**/*.spec.tsx"
+  ],
+  "references": [{ "path": "../y-providers" }]
+}

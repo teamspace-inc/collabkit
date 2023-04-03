@@ -1,0 +1,26 @@
+{
+  "name": "file-store",
+  "version": "1.0.0",
+  "main": "index.js",
+  "module": "src/index.ts",
+  "private": true,
+  "types": "./dist/types/index.d.ts",
+  "license": "MIT",
+  "scripts": {
+    "clean": "rm -rf dist tsconfig.tsbuildinfo",
+    "prettier": "prettier -w .",
+    "test": "jest ./tests --maxWorkers=5",
+    "types:build": "tsc -p tsconfig.build.json"
+  },
+  "dependencies": {
+    "idb": "^7.0.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^27.0.2",
+    "jest": "^27.3.1",
+    "prettier": "^2.4.1"
+  },
+  "engines": {
+    "yarn": "^1.22.10"
+  }
+}

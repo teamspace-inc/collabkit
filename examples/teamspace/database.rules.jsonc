@@ -1,0 +1,145 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+
+    "clients": {
+      "$clientId": {
+        ".read": true,
+        ".write": "!data.exists() || data.child('uid').val() === auth.uid",
+        ".validate": "newData.hasChildren(['color', 'createdAt', 'uid'])",
+        "color": { ".validate": "newData.isString()" },
+        "createdAt": { ".validate": "newData.isNumber()" },
+        "uid": {
+          ".validate": "newData.val() === auth.uid"
+        }
+      }
+    },
+
+    "realtime": {
+      "$docId": {
+        ".read": true,
+        ".validate": "$docId.matches(/^[a-zA-Z0-9_-]{24}$/)",
+        "$clientId": {
+          ".write": "root.child('clients').child($clientId).child('uid').val() === auth.uid",
+
+          "camera": {
+            ".validate": "newData.hasChildren(['0', '1', '2', '3'])",
+            "0": { ".validate": "newData.isNumber()" }, // x
+            "1": { ".validate": "newData.isNumber()" }, // y
+            "2": { ".validate": "newData.isNumber()" }, // zoom
+            "3": { ".validate": "newData.isNumber()" } // timestamp
+          },
+
+          "cancellations": {
+            "$transactionId": {
+              ".validate": "newData.isBoolean()"
+            }
+          },
+
+          "cursor": {
+            ".validate": "newData.hasChildren(['0', '1', '2'])",
+            "0": { ".validate": "newData.isNumber()" }, // x
+            "1": { ".validate": "newData.isNumber()" }, // y
+            "2": { ".validate": "newData.isNumber()" } // timestamp
+          },
+
+          "drag": {
+            ".validate": "newData.hasChildren(['0', '1', '2', '3'])",
+            "0": { ".validate": "newData.isNumber()" }, // deltaX
+            "1": { ".validate": "newData.isNumber()" }, // deltaY
+            "2": { ".validate": "newData.isNumber()" }, // transactionId
+            "3": { ".validate": "newData.isNumber()" } // timestamp
+          },
+
+          "editing": { ".validate": "newData.hasChildren(['id', 'type'])" },
+
+          "fileUploadProgress": {
+            "$itemId": { ".validate": "newData.isNumber()" }
+          },
+
+          "openedAt": { ".validate": "newData.isNumber()" },
+
+          "resize": {
+            ".validate": "newData.hasChildren(['0', '1', '2', '3', '4', '5'])",
+            "0": { ".validate": "newData.isNumber()" }, // deltaX
+            "1": { ".validate": "newData.isNumber()" }, // deltaY
+            "2": { ".validate": "newData.isBoolean()" }, // isAspectRatioLocked
+            "3": { ".validate": "newData.isNumber()" }, // transactionId
+            "4": { ".validate": "newData.isNumber()" }, // handleId
+            "5": { ".validate": "newData.isNumber()" } // timestamp
+          },
+
+          "selectBox": {
+            ".validate": "newData.hasChildren(['0', '1', '2', '3', '4'])",
+            "0": { ".validate": "newData.isNumber()" }, // initialX
+            "1": { ".validate": "newData.isNumber()" }, // initialY
+            "2": { ".validate": "newData.isNumber()" }, // x
+            "3": { ".validate": "newData.isNumber()" }, // y
+            "4": { ".validate": "newData.isNumber()" } // timestamp
+          },
+
+          "selected": {
+            "$targetId": { ".validate": "newData.hasChildren(['type'])" }
+          },
+
+          "textCursor": {
+            ".validate": "newData.hasChildren(['anchor', 'head'])",
+            "anchor": { ".validate": true },
+            "head": { ".validate": true },
+            "$other": { ".validate": false }
+          }
+        }
+      }
+    },
+
+    "updates": {
+      "$docId": {
+        ".read": true,
+        ".write": false,
+        ".validate": "$docId.matches(/^[a-zA-Z0-9_-]{24}$/)",
+        "$fid": {
+          ".write": "!data.exists()",
+          ".validate": "newData.hasChildren(['cid', 'did', 'id', 's', 't', 'u', 'v', 'uid'])",
+          "cid": { ".validate": "newData.isNumber()" },
+          "did": { ".validate": "newData.isString()" },
+          "id": { ".validate": "newData.isString()" },
+          "o": { ".validate": true },
+          "s": { ".validate": "newData.isNumber()" },
+          "t": { ".validate": "newData.isNumber()" },
+          "u": { ".validate": "newData.isString()" },
+          "v": { ".validate": "newData.isNumber()" },
+          "uid": { ".validate": "newData.isString()" },
+          "$other": { ".validate": false }
+        }
+      }
+    },
+
+    "saves": {
+      "$docId": {
+        ".read": true,
+        ".write": false,
+        ".validate": "$docId.matches(/^[a-zA-Z0-9_-]{24}$/)",
+        "$fid": {
+          ".write": "!data.exists()",
+          ".validate": "newData.hasChildren(['fid', 'cid', 'did', 't', 'u', 'v', 'uid'])",
+          "fid": {
+            ".validate": "newData.isString() && root.child('updates').child($docId).child(newData.val()).exists()"
+          },
+          "cid": { ".validate": "newData.isNumber()" },
+          "did": { ".validate": "newData.isString()" },
+          "t": { ".validate": "newData.isNumber()" },
+          "u": { ".validate": "newData.isString()" },
+          "v": { ".validate": "newData.isNumber()" },
+          "uid": { ".validate": "newData.isString()" },
+          "l": {
+            "$linkedDocId": {
+              ".validate": "newData.isString()"
+            }
+          },
+          "$other": { ".validate": false }
+        }
+      }
+    }
+  }
+}

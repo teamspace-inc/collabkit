@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 type Machine<S> = { [k: string]: { [k: string]: S } };
 type MachineState<T> = keyof T;

@@ -5,6 +5,7 @@
     "packages": [
       "examples/*",
       "packages/@collabkit/*",
+      "packages/@teamspace/*",
       "packages/@collabkit/test-utils",
       "www"
     ],

@@ -1,6 +1,6 @@
 /// <reference types="react" />
 import { ShowSidebarButtonTarget } from '@collabkit/core';
-import * as React from 'react';
+import React from 'react';
 import React__default, { ReactNode } from 'react';
 
 declare const colors = {
