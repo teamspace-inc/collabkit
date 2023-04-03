@@ -3,6 +3,7 @@
   "name": "collabkit-monorepo",
   "workspaces": {
     "packages": [
+      "api",
       "examples/*",
       "packages/@collabkit/*",
       "packages/@collabkit/test-utils",
