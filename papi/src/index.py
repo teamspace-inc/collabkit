@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from langchain.llms import OpenAI
 
 from src.dtos.ISayHelloDto import ISayHelloDto
 
@@ -12,7 +13,8 @@ async def root():
 
 @app.get("/hello/{name}")
 async def say_hello(name: str):
-    return {"message": f"Hello {name}"}
+    llm = OpenAI(temperature=0.9)
+    return {"message": f"Hello {llm(name)}"}
 
 
 @app.post("/hello")
