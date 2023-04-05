@@ -110,11 +110,7 @@ function PinLayer(props: { className?: string; children?: React.ReactNode }) {
     };
   }, [updateCursor, onPointerDown]);
 
-  if (!workspaceId) {
-    return null;
-  }
-
-  if (!userId) {
+  if (!isAuthenticated) {
     return null;
   }
 
