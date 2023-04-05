@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "bigquerysandboxproject-382616",
+  "private_key_id": "5697645999d01d7d19c421764d8f629d678f390b",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDES142cTZYLXE+\n3gt4SOwfPF0E9wOKkbMa3MUHP4foY5/jZRFu7mzBV72sJxE0cLs/K/C+dhvhIscy\nJXsF2xhQ+eckztTM2mM3Haf/y8PpeJiOO0H78rhE8NQZBuIA3//03ab41iPN1A3l\napf2apCh4J/rudRyq4/3/pMGGJdXifC1FS4+zRBMrMPqdW5awONpX75wTBN0npa6\nW5FTnm0pNZWYJjeB3Lqfvyg/SlAwd5d8e6yRgZXtUlXzFmq1BgQ1nsjb3Lp6qVUo\nFkgZfaJ426Ps2Vhqur7RtdT6ap4w7svSS/pou3V+GQ0RU2ya4OEsuqFpQoseFP1V\n+zpL3ZF1AgMBAAECggEABGASIaIUmMurZRVym1WlqUJaZ/x62Sv1/e4RJqc1TxTa\nSA0oxVFxngUu+h5alUOmcbMGCCU3W95NlMkeMhfGNcGhkFAikQbNkqtCql7WPINu\noGiGZIwKyPvvceJ5R1xhfEKJaa1gryXqwdI4FgPk82a/kOWis2egOYzCwmc/eTj/\njffZ4JegyWfllWL5Sjgb4lvhHHW9Qib6tkgBi6LqVRPKwQS8fHMrI+e3qbO76vgk\nItdVY38KZSsOzk7m5+Gy9SJc1aXXwVitOQvQE5gb6Mw7swoe1sIyvsvlSCBU+dQu\n+Uf0jfFNLQmtBh5teUVs/ZPuRJAa5F+C0KYv0fSlwQKBgQDn9ABwzfikot5RbdlN\nyaNAsaUFuFbQHeVKX7WmHe4uOyKD+lZpXJ6H/Bet79hFNWpew57hs5DUqTW81VNN\nht7wSdPpJXFxS4MWih4w5/9qz/kmTEPOa1zJcwarIAFzmqCX07uRQNKUgRnDqm4D\n5oIl8KO4iUkOedFzSiU/+O/sUQKBgQDYpP1SmO6BVHAMWEFOuI4Hsi6sbj5LPnV2\nMWWr8vRiXtrN8fFYXWwRbSg+pvEqRBTMFxpmooOh+gnK5pcluj71l96ztCiP6afU\nRRyPUsv6jZRNCRVqEKHd6Cl0RZM/RvywPhM73LbQkn2/Unf4HHJaNFp3TgslcIic\n4vum61od5QKBgQDmhCTn9prTq5T8Igpi9zBKPAG/pIqKPBvChUm2dGpgAZ70wJae\nEVDv3gX+c61gYox67zh4IAeggSWJrAwksRPgg86ZFwAd0yjM/qiwe+/nzBZVDFga\nzbIh9jG7YYxvwk01dlQjL+PXeFINldPOBohzgiqDW9SCEWiphhds804lcQKBgCoM\nW96cMC6J5PWAa6yLxYVY4BY3j3+rL8Ew9TrafPRa1L0EKIOuHjuDpDwEyuoZLLAw\nC7+/6yyVCzGGb++ypmWkhGT8oqLMBvb8Mv7eYxjOQepxyOY9NC2N0f3vQxUVAhZy\n9ei4fgMda6qmpwJRAyDe6HAfhapOnTVWGOHc7DDBAoGBALMlFzNiAGm7FIfelblQ\nZb8Vi8IrdDps6yzLNkXdsQIoYQiA6ajgwXZ4YaHtjoJ62FDtqOGXEdSCkLRct6vg\nw/xiMiZwtfx5mJcv627D9uinJcIq7d9OeDF4k1A+reM9yFb67Ka941ztsnHfDivK\n1lDDwZewNepvEZSQdii8IsSH\n-----END PRIVATE KEY-----\n",
+  "client_email": "omarserviceaccountsandbox@bigquerysandboxproject-382616.iam.gserviceaccount.com",
+  "client_id": "115267140221364591938",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/omarserviceaccountsandbox%40bigquerysandboxproject-382616.iam.gserviceaccount.com"
+}
