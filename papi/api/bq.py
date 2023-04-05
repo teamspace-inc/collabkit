@@ -14,7 +14,7 @@ from langchain.agents import AgentExecutor
 app = FastAPI()
 
 @app.get("/")
-async def hello_message():
+async def runSQLAgent():
   uri = "bigquery://bigquerysandboxproject-382616/covid19_nyt"
 
   credentials_info = {
