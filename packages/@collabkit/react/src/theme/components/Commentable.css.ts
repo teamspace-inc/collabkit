@@ -1,16 +1,10 @@
-import { style } from '@vanilla-extract/css';
+import { globalStyle, style } from '@vanilla-extract/css';
 
-export const activeContainer = style({
-  outlineOffset: '2px',
+export const selecting = style({
   cursor: 'none !important',
 });
-
-export const cursor = style({
-  position: 'absolute',
-  width: 24,
-  height: 24,
-  background: 'yellow',
-  pointerEvents: 'none',
+globalStyle(`${selecting} *`, {
+  cursor: 'none !important',
 });
 
 export const overlay = style({
