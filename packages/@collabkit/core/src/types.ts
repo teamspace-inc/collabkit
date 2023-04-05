@@ -539,6 +539,7 @@ export interface Profile {
   id: string;
   isDeleted?: boolean;
   name?: string | null;
+  isBot?: boolean;
 }
 
 export interface Timeline {

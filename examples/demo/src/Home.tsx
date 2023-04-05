@@ -1,10 +1,6 @@
 import { Thread, useUnreadCount } from '@collabkit/react';
 import { useDocumentTitle } from './hooks/useDocumentTitle';
 
-// function CustomAvatar(props: AvatarProps) {
-//   return <Avatar user={props.profile} />;
-// }
-
 export function Home() {
   const threadId = 'new-your-thread-id2';
 

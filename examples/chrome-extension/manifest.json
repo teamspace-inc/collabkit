@@ -1,0 +1,12 @@
+{
+  "manifest_version": 3,
+  "name": "GitHub Issues Bot",
+  "version": "1.0.0",
+  "action": { "default_popup": "index.html" },
+  "content_scripts": [
+    {
+      "js": ["src/main.tsx"],
+      "matches": ["https://github.com/teamspace-inc/collabkit/*"]
+    }
+  ]
+}
