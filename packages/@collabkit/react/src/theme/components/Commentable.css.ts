@@ -1,7 +1,9 @@
-import { style } from '@vanilla-extract/css';
+import { globalStyle, style } from '@vanilla-extract/css';
 
-export const activeContainer = style({
-  outlineOffset: '2px',
+export const selecting = style({
+  cursor: 'none !important',
+});
+globalStyle(`${selecting} *`, {
   cursor: 'none !important',
 });
 
