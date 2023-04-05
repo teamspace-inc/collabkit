@@ -1,4 +1,4 @@
-const apiHost = 'http://collabkit-demo-api-git-meet-issue-copilot-demo.teamspace.dev';
+const apiHost = 'https://collabkit-demo-api-git-meet-issue-copilot-demo.teamspace.dev';
 
 export async function sendBotCommand({
   command,
@@ -24,6 +24,7 @@ export async function sendBotCommand({
     headers: {
       'Content-Type': 'application/json',
     },
+    mode: 'cors',
   });
   const res = await response.json();
   if (response.ok) {
