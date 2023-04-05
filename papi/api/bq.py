@@ -1,7 +1,7 @@
 import os
 os.environ["OPENAI_API_KEY"] = ""
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Query
 from sqlalchemy import *
 from sqlalchemy.engine import create_engine
 from sqlalchemy.schema import *
@@ -14,7 +14,7 @@ from langchain.agents import AgentExecutor
 app = FastAPI()
 
 @app.get("/")
-async def runSQLAgent():
+async def runSQLAgent(q: str = Query(None)):
   uri = "bigquery://bigquerysandboxproject-382616/covid19_nyt"
 
   credentials_info = {
@@ -30,5 +30,5 @@ async def runSQLAgent():
       toolkit=toolkit,
       verbose=True
   )
-  agentResponse = agent_executor.run("Which state had the highest covid cases?")
+  agentResponse = agent_executor.run(q)
   return {"message": agentResponse}
