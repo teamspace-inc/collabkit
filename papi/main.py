@@ -1,1 +1,1 @@
-from api.index import app
+from api.bq import app
