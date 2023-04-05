@@ -73,11 +73,11 @@ function PinLayer(props: { className?: string; children?: React.ReactNode }) {
     if (uiState === 'selecting') {
       document.addEventListener('pointerdown', onPointerDown);
       document.body.classList.add(styles.selecting);
+      return () => {
+        document.removeEventListener('pointerdown', onPointerDown);
+        document.body.classList.remove(styles.selecting);
+      };
     }
-    return () => {
-      document.removeEventListener('pointerdown', onPointerDown);
-      document.body.classList.remove(styles.selecting);
-    };
   }, [uiState, onPointerDown]);
 
   useEffect(() => {
