@@ -8,7 +8,7 @@ import { useId } from '../hooks/useId';
 import { ProfileAvatar, ProfileName } from './Profile';
 import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
 import { useApp } from '../hooks/useApp';
-import { CommentTarget, Target, ThreadResolveButtonTarget } from '@collabkit/core';
+import { CommentTarget, Profile, Target, ThreadResolveButtonTarget } from '@collabkit/core';
 import * as styles from '../theme/components/Comment.css';
 import { ArrowBendDownRight, CheckCircle, DotsThree } from './icons';
 import { Menu, MenuItem } from './Menu';
@@ -253,6 +253,20 @@ function CommentBody({ ...props }: React.ComponentPropsWithoutRef<'div'>) {
   );
 }
 
+function getNames(
+  userIds: readonly string[],
+  profiles: { [id: string]: Profile | undefined }
+): string[] {
+  const names = new Set<string>();
+  for (const id of userIds) {
+    const profile = profiles[id];
+    if (profile) {
+      names.add(profile.name || profile.email || 'Anonymous');
+    }
+  }
+  return [...names];
+}
+
 function EmojiCountButton({
   emojiU,
   count,
@@ -266,7 +280,7 @@ function EmojiCountButton({
 }) {
   const { events, store } = useApp();
   const { profiles } = useSnapshot(store);
-  const names = userIds.map((id) => profiles[id]?.name).filter((name) => !!name);
+
   const workspaceId = useWorkspaceContext();
   const threadId = useThreadContext();
   const eventId = useCommentContext();
@@ -293,7 +307,7 @@ function EmojiCountButton({
         </div>
       </TooltipTrigger>
       <TooltipContent className={styles.emojiCountTooltip}>
-        {names.map((name, i) => (
+        {getNames(userIds, profiles).map((name, i) => (
           <span key={i}>{name}</span>
         ))}
       </TooltipContent>
