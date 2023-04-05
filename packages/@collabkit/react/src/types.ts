@@ -20,6 +20,7 @@ export type OptionalThreadProps = {
   autoFocus?: boolean;
   hideComposer?: boolean;
   placeholder?: string;
+  bot?: boolean;
 };
 
 export type OptionalComposerProps = {

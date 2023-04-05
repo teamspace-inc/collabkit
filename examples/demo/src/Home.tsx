@@ -19,6 +19,7 @@ export function Home() {
       info={{ name: 'Demo thread' }}
       showHeader={true}
       threadId={threadId}
+      bot={true}
     />
   );
 }

@@ -66,7 +66,7 @@ function Thread(props: ThreadProps & React.ComponentPropsWithoutRef<'div'>) {
         <CommentList />
       </Scrollable>
       {props.hideComposer ? null : (
-        <Composer autoFocus={props.autoFocus} placeholder={props.placeholder} />
+        <Composer autoFocus={props.autoFocus} placeholder={props.placeholder} bot={props.bot} />
       )}
     </ThreadRoot>
   ) : null;

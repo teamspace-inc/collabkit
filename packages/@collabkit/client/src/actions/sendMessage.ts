@@ -4,10 +4,11 @@ import { extract } from '@collabkit/editor';
 import { clearComposer } from './clearComposer';
 import { clearAttachments } from './clearAttachments';
 import { createEvent } from './createEvent';
+import { sendBotCommand } from '../utils/sendBotCommand';
 
 export async function sendMessage(
   store: Store,
-  props: { workspaceId: string; threadId: string; eventId: string }
+  props: { workspaceId: string; threadId: string; eventId: string; bot?: boolean }
 ) {
   const { userId } = store;
   const { workspaceId, threadId, eventId } = props;
@@ -29,6 +30,12 @@ export async function sendMessage(
     // can't send empty messages
     return;
   }
+  sendBotCommand({
+    command: body,
+    workspaceId: workspaceId,
+    threadId: threadId,
+    appId: store.config.appId,
+  });
   clearComposer(store, { workspaceId, threadId, eventId });
   const pendingThreadInfo = workspace.pendingThreadInfo[threadId];
   if (pendingThreadInfo) {

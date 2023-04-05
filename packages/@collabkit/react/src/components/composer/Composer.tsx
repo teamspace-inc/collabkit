@@ -62,6 +62,7 @@ function ComposerRoot(props: {
   children: React.ReactNode;
   initialBody?: string;
   isNewThread?: boolean;
+  bot?: boolean;
   ['data-testid']?: string;
 }) {
   const eventId = useDefaultCommentContext();
@@ -70,7 +71,7 @@ function ComposerRoot(props: {
   const userId = useUserContext();
 
   const { onClick } = useOnMarkdownLinkClick({ threadId, workspaceId, userId, eventId });
-  const { isNewThread, initialBody, ...otherProps } = props;
+  const { isNewThread, initialBody, bot, ...otherProps } = props;
 
   const target: ComposerTarget = {
     workspaceId,
@@ -78,6 +79,7 @@ function ComposerRoot(props: {
     type: 'composer',
     isNewThread: isNewThread ?? false,
     eventId,
+    bot: bot
   };
 
   const store = useStore();
@@ -274,9 +276,9 @@ function ComposerConfirmCancelButtonGroup() {
   ) : null;
 }
 
-function Composer(props: { autoFocus?: boolean; placeholder?: string; isNewThread?: boolean }) {
+function Composer(props: { autoFocus?: boolean; placeholder?: string; isNewThread?: boolean; bot?: boolean }) {
   return (
-    <ComposerRoot isNewThread={props.isNewThread}>
+    <ComposerRoot isNewThread={props.isNewThread} bot={props.bot}>
       <ProfileAvatar />
       <ComposerEditor>
         <ComposerInput

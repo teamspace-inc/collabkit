@@ -24,7 +24,7 @@ export async function processCommand({
   const tools = [
     new DynamicTool({
       name: 'Create issue',
-      description: `Creates a new issue inside the issue tracker. Only use when the action wants to create a new issue. Use labels only when specified. Input should be of format: #"title": "string","description": "string","assignees":["string"],"labels": ["string"]$ . Example input : #title": "create landing page","description": "make a react app and deploy it","assignees":["neetcshah19"],"labels": ["website","html"]$`,
+      description: `Creates a new issue inside the issue tracker. Only use when the action wants to create a new issue. Use labels only when specified. Input should be of format: #"title": "string","description": "string","assignees":["string"],"labels": ["string"]$ . Example input : #title": "create landing page","description": "make a react app and deploy it","assignees":["meetcshah19"],"labels": ["website","html"]$`,
       func: async (input: string) => {
         input = input.replaceAll('#', '{');
         input = input.replaceAll('$', '}');
