@@ -71,25 +71,20 @@ function PinLayer(props: { className?: string; children?: React.ReactNode }) {
 
   useEffect(() => {
     if (uiState === 'selecting') {
-      document.addEventListener('pointerdown', onPointerDown);
       document.body.classList.add(styles.selecting);
+      document.addEventListener('pointerover', updateCursor);
+      document.addEventListener('pointermove', updateCursor);
+      document.addEventListener('pointerout', updateCursor);
+      document.addEventListener('pointerdown', onPointerDown);
       return () => {
-        document.removeEventListener('pointerdown', onPointerDown);
         document.body.classList.remove(styles.selecting);
+        document.removeEventListener('pointerover', updateCursor);
+        document.removeEventListener('pointermove', updateCursor);
+        document.removeEventListener('pointerout', updateCursor);
+        document.removeEventListener('pointerdown', onPointerDown);
       };
     }
   }, [uiState, onPointerDown]);
-
-  useEffect(() => {
-    document.addEventListener('pointerover', updateCursor);
-    document.addEventListener('pointermove', updateCursor);
-    document.addEventListener('pointerout', updateCursor);
-    return () => {
-      document.removeEventListener('pointerover', updateCursor);
-      document.removeEventListener('pointermove', updateCursor);
-      document.removeEventListener('pointerout', updateCursor);
-    };
-  }, [updateCursor, onPointerDown]);
 
   if (!isAuthenticated) {
     return null;
