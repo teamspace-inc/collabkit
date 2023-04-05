@@ -91,15 +91,22 @@ function PinLayer(props: { className?: string; children?: React.ReactNode }) {
   );
 
   useEffect(() => {
+    if (uiState === 'selecting') {
+      document.addEventListener('pointerdown', onPointerDown);
+    }
+    return () => {
+      document.removeEventListener('pointerdown', onPointerDown);
+    };
+  }, [uiState, onPointerDown]);
+
+  useEffect(() => {
     document.addEventListener('pointerover', updateCursor);
     document.addEventListener('pointermove', updateCursor);
     document.addEventListener('pointerout', updateCursor);
-    document.addEventListener('pointerdown', onPointerDown);
     return () => {
       document.removeEventListener('pointerover', updateCursor);
       document.removeEventListener('pointermove', updateCursor);
       document.removeEventListener('pointerout', updateCursor);
-      document.removeEventListener('pointerdown', onPointerDown);
     };
   }, [updateCursor, onPointerDown]);
 
