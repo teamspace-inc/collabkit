@@ -20,6 +20,7 @@ const colors = {
 export const ColorBase = {
   color: {
     background: colors.white,
+    backgroundMedium: '#eeeeee',
     surface: '#f6f6f6',
     surfaceHover: colors.grey96,
     surfaceOverlay: colors.opacity4,
@@ -27,7 +28,7 @@ export const ColorBase = {
     textSecondary: colors.grey30,
     textDisabled: colors.grey60,
     textLink: colors.black10,
-    border: colors.grey89,
+    border: '#dddddd',
     icon: colors.grey24,
     iconSecondary: colors.grey53,
     iconDisabled: colors.grey89,

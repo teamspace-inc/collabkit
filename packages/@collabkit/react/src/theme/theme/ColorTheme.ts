@@ -1,6 +1,7 @@
 export const ColorTheme = {
   color: {
     background: 'color-background',
+    backgroundMedium: 'color-background-medium',
     surface: 'color-surface',
     surfaceOverlay: 'color-surface-overlay',
     surfaceHover: 'color-surface-hover',
