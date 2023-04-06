@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect } from 'react';
 import type { Store, Target } from '@collabkit/core';
 import { subscribeKey } from 'valtio/utils';
+import { useCallbackRef } from '@radix-ui/react-use-callback-ref';
 
 export function useStoreKeyMatches(
   store: Store,
@@ -17,15 +18,11 @@ export function useStoreKeyMatches(
   matchFn: (target: Target | null) => boolean
 ) {
   const [state, setState] = React.useState<boolean>(() => matchFn(store[key]));
-  const match = useCallback(
-    (value: Target | null) => {
-      setState(matchFn(value));
-    },
-    [matchFn, setState]
-  );
-
+  const match = useCallbackRef(matchFn);
   useEffect(() => {
-    return subscribeKey(store, key, match);
-  }, [key, setState, store, match]);
+    return subscribeKey(store, key, (value: Target | null) => {
+      setState(match(value));
+    });
+  }, [key, store, match]);
   return state;
 }
