@@ -27,6 +27,7 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins,
+    envPrefix: [], // Don't expose any environment variables in the npm package
     build: {
       sourcemap: false,
       lib: {

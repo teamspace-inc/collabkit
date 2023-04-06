@@ -16,6 +16,7 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins,
+    envPrefix: [], // Don't expose any environment variables in the npm package
     build: {
       lib: {
         entry: resolve(__dirname, 'src/index.ts'),
