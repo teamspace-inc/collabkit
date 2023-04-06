@@ -316,7 +316,7 @@ type FilterMenuItemType =
 function ChannelFiltersMenu(props: { className?: string }) {
   const { events } = useApp();
   const channelId = useChannelContext();
-  const resolvedVisible = useChannelState(channelId);
+  const { resolvedVisible } = useChannelState(channelId);
 
   const onItemClick = useCallback(
     (e: React.MouseEvent, type: FilterMenuItemType) => {
