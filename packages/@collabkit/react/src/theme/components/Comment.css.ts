@@ -212,7 +212,7 @@ export const actions = style({
   right: vars.space[4],
   top: vars.space[2],
   transform: 'translateY(0%)',
-  background: vars.color.background,
+  background: vars.color.surface,
   border: `1px solid ${vars.color.border}`,
   borderRadius: '6px',
   opacity: 1,

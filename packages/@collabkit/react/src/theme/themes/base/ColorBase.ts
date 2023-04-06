@@ -22,7 +22,7 @@ export const ColorBase = {
     background: colors.white,
     surface: '#f6f6f6',
     surfaceHover: colors.grey96,
-    surfaceOverlay: colors.opacity7,
+    surfaceOverlay: colors.opacity4,
     textPrimary: colors.black10,
     textSecondary: colors.grey30,
     textDisabled: colors.grey60,
