@@ -1,5 +1,4 @@
 import os
-os.environ["OPENAI_API_KEY"] = ""
 
 from fastapi import FastAPI, Query
 from sqlalchemy import *
@@ -10,6 +9,7 @@ from langchain.agents.agent_toolkits import SQLDatabaseToolkit
 from langchain.sql_database import SQLDatabase
 from langchain.llms.openai import OpenAI
 from langchain.agents import AgentExecutor
+import json
 
 app = FastAPI()
 
@@ -22,7 +22,7 @@ async def runSQLAgent(q: str = Query(None)):
       "project_id": "bigquerysandboxproject-382616"
   }
 
-  engine = create_engine(uri, credentials_path='keyfile.json')
+  engine = create_engine(uri, credentials_info=json.loads(os.environ["BQ_API_KEY"]))
   db = SQLDatabase(engine)
   toolkit = SQLDatabaseToolkit(db=db)
   agent_executor = create_sql_agent(
