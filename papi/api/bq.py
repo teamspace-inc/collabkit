@@ -14,7 +14,7 @@ import json
 app = FastAPI()
 
 @app.get("/omar")
-async def runSQLAgent(q: str = Query(None)):
+async def omar(q: str = Query(None)):
   print("hey omar")
   return {"message":"omar"}
 
