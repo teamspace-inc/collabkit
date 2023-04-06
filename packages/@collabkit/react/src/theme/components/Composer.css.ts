@@ -145,9 +145,9 @@ export const root = style({
 
 export const editor = recipe({
   base: {
-    background: fallbackVar(vars.composer.input.background, vars.color.surface),
+    background: fallbackVar(vars.composer.input.background, vars.color.backgroundMedium),
     border: fallbackVar(vars.composer.input.border, 'none'),
-    borderRadius: fallbackVar(vars.composer.input.borderRadius, '6px'),
+    borderRadius: fallbackVar(vars.composer.input.borderRadius, '4px'),
     flex: 1,
     verticalAlign: 'top',
     boxSizing: 'border-box',

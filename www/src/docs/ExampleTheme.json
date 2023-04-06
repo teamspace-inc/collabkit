@@ -6,7 +6,6 @@
     "textPrimary": "hsl(0, 0%, 10%)",
     "textSecondary": "hsl(0, 0%, 30%)",
     "textDisabled": "hsl(0, 0%, 60%)",
-    "textLink": "hsl(0, 0%, 10%)",
     "border": "hsl(0, 0%, 89%)",
     "icon": "hsl(0, 0%, 24%)",
     "attention": "hsl(2, 73%, 62%)"

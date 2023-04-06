@@ -46,8 +46,8 @@ export const menuItem = style({
 
   selectors: {
     '&:focus, &:not([disabled]):active': {
-      color: fallbackVar(vars.menu.item.active.color, vars.color.textPrimary),
-      background: fallbackVar(vars.menu.item.active.background, vars.color.surface),
+      color: fallbackVar(vars.menu.item.active.color, vars.menu.item.color, vars.color.textPrimary),
+      background: fallbackVar(vars.menu.item.active.background, vars.color.surfaceOverlay),
     },
     '&:not(:first-of-type)': {
       borderTopRightRadius: 0,
@@ -56,6 +56,10 @@ export const menuItem = style({
     '&:not(:last-of-type)': {
       borderBottomLeftRadius: 0,
       borderBottomRightRadius: 0,
+    },
+    '&:hover': {
+      color: fallbackVar(vars.menu.item.hover.color, vars.menu.item.color, vars.color.textPrimary),
+      background: fallbackVar(vars.menu.item.hover.background, vars.color.surfaceOverlay),
     },
   },
 });

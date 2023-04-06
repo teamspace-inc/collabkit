@@ -189,7 +189,7 @@ function CommentReplyCountButton(props: React.ComponentPropsWithoutRef<'div'>) {
       <ArrowBendDownRight
         weight="regular"
         className={styles.replyCountButtonIcon}
-        color={vars.color.textDisabled}
+        color={vars.color.textSecondary}
       />
       <span className={styles.replyCountButtonText}>
         {replyCount === 0 ? (

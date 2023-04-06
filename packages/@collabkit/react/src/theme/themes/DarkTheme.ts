@@ -1,47 +1,33 @@
 import merge from 'deepmerge';
 import { BaseTheme } from './BaseTheme';
 
-const colors = {
-  black10: 'hsl(0, 0%, 10%)', // Black 10
-  black13: 'hsl(0, 0%, 13%)', // Black 13
-  grey24: 'hsl(0, 0%, 24%)', // Grey 24
-  grey30: 'hsl(0, 0%, 30%)', // Grey 30
-  grey60: 'hsl(0, 0%, 60%)', // Grey 60
-  grey73: 'hsl(0, 0%, 73%)', // Grey 73
-  grey89: 'hsl(0, 0%, 89%, 1)',
-  grey7: 'hsl(0, 0%, 7%)', // Grey 7
-  white: 'hsl(0, 0%, 100%)', // White
-  opacity7: 'hsla(0, 0%, 100%, 0.08)', // White Opacity 7
-  red: 'hsl(2, 73%, 62%)', // Red
-  blue: 'hsl(211, 95%, 59%)', // Blue
-};
+const bgContrastHigh = '#4D4D4D';
+const bgContrastLow = '#2C2C2C';
+const bgContrastLowest = '#222222';
+const blue = '#4DA0F9';
+const highlight = 'rgba(255, 255, 255, 0.06)';
+const red = '#E56865';
+const textContrastHigh = '#FFFFFF';
+const textContrastLow = '#999999';
+const textContrastMedium = '#BBBBBB';
 
 export const DarkTheme = merge(BaseTheme, {
   color: {
-    background: colors.black13,
-    surface: colors.grey24,
-    surfaceHover: colors.grey7,
-    surfaceOverlay: colors.opacity7,
-    textPrimary: colors.white,
-    textSecondary: colors.grey60,
-    textDisabled: colors.grey24,
-    border: colors.opacity7,
-    icon: colors.grey60,
-    iconSecondary: colors.grey60,
-    pin: colors.grey89,
-    pinHover: colors.grey73,
-    pinActive: colors.blue,
-    pinDisconnected: colors.red,
-  },
-  composer: {},
-  mentions: {
-    typeahead: {
-      item: {
-        email: {
-          display: 'none',
-        },
-      },
-    },
+    background: bgContrastLowest,
+    backgroundMedium: bgContrastLow,
+    surface: bgContrastLow,
+    surfaceOverlay: highlight,
+    textPrimary: textContrastHigh,
+    textSecondary: textContrastMedium,
+    textDisabled: textContrastLow,
+    border: bgContrastHigh,
+    attention: red,
+    attentionBlue: blue,
+    icon: textContrastHigh,
+    iconSecondary: textContrastMedium,
+    iconDisabled: textContrastLow,
+    pin: textContrastHigh,
+    pinActive: blue,
   },
   avatar: {
     colors: {
