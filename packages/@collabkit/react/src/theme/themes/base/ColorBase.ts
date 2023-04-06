@@ -1,6 +1,7 @@
 const bgContrastHigh = '#DDDDDD';
 const bgContrastLow = '#F6F6F6';
 const bgContrastLowest = '#FFFFFF';
+const bgContrastMedium = '#EEEEEE';
 const blue = '#3494FA';
 const highlight = 'rgba(0, 0, 0, 0.04)';
 const red = '#E55D59';
@@ -11,7 +12,7 @@ const textContrastMedium = '#888888';
 export const ColorBase = {
   color: {
     background: bgContrastLowest,
-    backgroundMedium: bgContrastLow,
+    backgroundMedium: bgContrastMedium,
     surface: bgContrastLow,
     surfaceOverlay: highlight,
     textPrimary: textContrastHigh,
