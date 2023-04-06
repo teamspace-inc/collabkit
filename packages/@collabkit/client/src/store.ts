@@ -82,6 +82,7 @@ export function createStore(): UnconfiguredStore {
     commentables: {},
     expandedThreadIds: [],
     resolvedVisible: {},
+    channelScrollTop: {},
     pinsVisible: true,
     dragPinObjectId: '',
     dragPinUpdate: [],

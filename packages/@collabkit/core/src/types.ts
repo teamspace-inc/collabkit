@@ -631,6 +631,7 @@ export interface UnconfiguredStore {
   commentables: { [objectId: string]: CommentableObject };
   expandedThreadIds: string[];
   resolvedVisible: { [channelId: string]: boolean };
+  channelScrollTop: { [channelId: string]: number };
   pinsVisible: boolean;
   dragPinObjectId: string;
   dragPinUpdate: Function[];

@@ -43,6 +43,8 @@ export const filters = style({
   justifyContent: 'flex-end',
   alignItems: 'center',
   padding: `${vars.space[3]} ${vars.space[4]}`,
+  borderBottom: fallbackVar(vars.sidebar.title.borderBottom, '1px solid'),
+  borderBottomColor: fallbackVar(vars.sidebar.title.borderBottomColor, vars.color.backgroundMedium),
 });
 
 export const rootComposerRoot = style([

@@ -89,12 +89,17 @@ function useIsChannelSelected() {
   });
 }
 
-function useResolvedVisible(channelId: string) {
-  const { resolvedVisible } = useSnapshot(useStore());
-  return resolvedVisible[channelId] ?? false;
+function useChannelState(channelId: string) {
+  const { resolvedVisible, channelScrollTop } = useSnapshot(useStore());
+  return {
+    resolvedVisible: resolvedVisible[channelId] ?? false,
+    channelScrollTop: channelScrollTop[channelId] ?? 0,
+  };
 }
 
 function ChannelScrollableThreadList(props: ComponentPropsWithoutRef<'div'>) {
+  const channelId = useChannelContext();
+  const store = useStore();
   const threadIds = useInbox({ statusFilter: 'all', direction: 'asc' });
   const threads = threadIds.map((threadId) => {
     return (
@@ -107,7 +112,13 @@ function ChannelScrollableThreadList(props: ComponentPropsWithoutRef<'div'>) {
   return threadIds.length === 0 ? (
     <EmptyState />
   ) : (
-    <Scrollable alignToBottom={false} autoScroll="bottom">
+    <Scrollable
+      alignToBottom={false}
+      autoScroll="bottom"
+      onScroll={(event) => {
+        store.channelScrollTop[channelId] = (event.target as HTMLDivElement).scrollTop;
+      }}
+    >
       <div className={styles.threadList} {...props}>
         {threads}
       </div>
@@ -213,7 +224,7 @@ function ChannelThread() {
     },
     [threadId, workspaceId, channelId]
   );
-  const resolvedVisible = useResolvedVisible(channelId);
+  const { resolvedVisible } = useChannelState(channelId);
 
   if (!timeline) {
     return null;
@@ -305,7 +316,7 @@ type FilterMenuItemType =
 function ChannelFiltersMenu(props: { className?: string }) {
   const { events } = useApp();
   const channelId = useChannelContext();
-  const resolvedVisible = useResolvedVisible(channelId);
+  const resolvedVisible = useChannelState(channelId);
 
   const onItemClick = useCallback(
     (e: React.MouseEvent, type: FilterMenuItemType) => {
@@ -337,8 +348,16 @@ function ChannelFiltersMenu(props: { className?: string }) {
 }
 
 function ChannelFilters(props: ComponentPropsWithoutRef<'div'>) {
+  const channelId = useChannelContext();
+  const { channelScrollTop } = useChannelState(channelId);
   return (
-    <div className={styles.filters}>
+    <div
+      className={styles.filters}
+      style={{
+        borderBottom: channelScrollTop === 0 ? 'none' : undefined,
+      }}
+      {...props}
+    >
       <ChannelFiltersMenu />
     </div>
   );
