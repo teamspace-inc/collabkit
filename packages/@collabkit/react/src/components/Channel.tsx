@@ -33,6 +33,7 @@ import {
   CommentHideIfEditing,
   CommentMarkdown,
   CommentMenu,
+  CommentPin,
   CommentReactions,
   CommentRoot,
   CommentReplyCountButton,
@@ -43,12 +44,12 @@ import {
 import { ProfileAvatar } from './Profile';
 import { useWorkspaceContext } from '../hooks/useWorkspaceContext';
 import { useCommentList } from '../hooks/useCommentList';
-import { CommentPinTarget, ComposerPinButtonTarget, ComposerPinTarget } from '@collabkit/core';
+import { ComposerPinButtonTarget, ComposerPinTarget } from '@collabkit/core';
 import { useComposerStore } from '../hooks/useComposerStore';
 import { useTarget } from '../hooks/useTarget';
 import { usePinAttachment } from '../hooks/usePinAttachment';
 import { Tooltip, TooltipTrigger, TooltipContent } from './Tooltip';
-import { useCommentContext, useDefaultCommentContext } from '../hooks/useCommentContext';
+import { useDefaultCommentContext } from '../hooks/useCommentContext';
 import { useCommentSnapshot } from '../hooks/useCommentSnapshot';
 
 import PinButtonSvg from './pin-button.svg';
@@ -60,7 +61,6 @@ import { Authenticated } from './Authenticated';
 import { SidebarCloseButton, SidebarHeader, SidebarTitle } from './Sidebar';
 import { usePopover } from '../hooks/usePopover';
 import { PopoverRoot, PopoverTrigger, PopoverPortal, PopoverContent } from './Popover';
-import { CommentPinSVG } from './composer/CommentPinSvg';
 import { ThemeWrapper } from './ThemeWrapper';
 import { CheckBoxMenuItem, Menu } from './Menu';
 import { IconButton } from './IconButton';
@@ -155,7 +155,7 @@ function ChannelCommentList(props: ComponentPropsWithoutRef<'div'>) {
               <CommentMenu />
             </CommentActions>
             <CommentBody>
-              <ChannelCommentPin />
+              <CommentPin />
               <CommentMarkdown />
             </CommentBody>
             <CommentReactions />
@@ -485,74 +485,6 @@ function ChannelComposerPinButton(props: { className?: string }) {
         {tooltip && <TooltipContent>{tooltip}</TooltipContent>}
       </Tooltip>
     </div>
-  );
-}
-
-function ChannelCommentPin(props: React.ComponentProps<'img'>) {
-  const threadId = useThreadContext();
-  const eventId = useCommentContext();
-  const workspaceId = useWorkspaceContext();
-  const { events } = useApp();
-  const { attachments } = useCommentSnapshot();
-  const pinId = attachments
-    ? Object.keys(attachments).find((id) => attachments[id].type === 'pin')
-    : null;
-  const pin = pinId ? { id: pinId, ...attachments![pinId] } : null;
-
-  const store = useStore();
-
-  const target: CommentPinTarget | null = useMemo(
-    () =>
-      pin
-        ? {
-            type: 'commentPin',
-            threadId,
-            eventId,
-            workspaceId,
-            objectId: pin.objectId,
-            id: pin.id,
-          }
-        : null,
-    [pin]
-  );
-
-  const isSelected = useStoreKeyMatches(
-    store,
-    'selectedId',
-    (selectedId) =>
-      (selectedId?.type === 'pin' || selectedId?.type === 'commentPin') && selectedId.id === pinId
-  );
-
-  const onClick = useCallback(
-    (e: React.MouseEvent<HTMLElement>) => {
-      target &&
-        events.onClick(e, {
-          target,
-        });
-    },
-    [target]
-  );
-
-  if (!pin) {
-    return null;
-  }
-
-  return (
-    <span
-      className={styles.commentPin}
-      data-testid="collabkit-comment-pin"
-      {...props}
-      onClick={onClick}
-    >
-      <Tooltip>
-        <TooltipTrigger>
-          <span onClick={onClick} {...props} className={styles.commentPin}>
-            <CommentPinSVG fill={isSelected ? vars.color.pinActive : vars.color.pin} />
-          </span>
-        </TooltipTrigger>
-        <TooltipContent>View annotation</TooltipContent>
-      </Tooltip>
-    </span>
   );
 }
 

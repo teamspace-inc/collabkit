@@ -130,12 +130,6 @@ export const resolvedIcon = style({
   alignSelf: 'first center',
 });
 
-export const commentPin = style({
-  paddingRight: calc.divide(vars.space[1], 2),
-  float: 'left',
-  cursor: 'pointer',
-});
-
 globalStyle('.collabkit-pin-node', {
   width: '16px',
   height: '16px',

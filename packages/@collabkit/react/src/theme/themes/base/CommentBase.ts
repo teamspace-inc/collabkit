@@ -29,6 +29,14 @@ export const CommentBase = {
       letterSpacing: 'initial',
       fontWeight: 'initial',
     },
+    pin: {
+      background: 'initial',
+      color: 'initial',
+      active: {
+        background: 'initial',
+        color: 'initial',
+      },
+    },
     timestamp: {
       color: 'initial',
       fontSize: 'initial',

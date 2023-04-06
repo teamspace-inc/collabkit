@@ -29,6 +29,14 @@ export const CommentTheme = {
       fontWeight: 'comment-body-font-weight',
       letterSpacing: 'comment-body-letter-spacing',
     },
+    pin: {
+      background: 'comment-pin-background',
+      color: 'comment-pin-color',
+      active: {
+        background: 'comment-pin-active-background',
+        color: 'comment-pin-active-color',
+      },
+    },
     timestamp: {
       color: 'comment-timestamp-color',
       fontSize: 'comment-timestamp-font-size',

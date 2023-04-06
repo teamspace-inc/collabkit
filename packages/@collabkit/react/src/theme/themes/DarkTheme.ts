@@ -26,8 +26,6 @@ export const DarkTheme = merge(BaseTheme, {
     icon: textContrastHigh,
     iconSecondary: textContrastMedium,
     iconDisabled: textContrastLow,
-    pin: textContrastHigh,
-    pinActive: blue,
   },
   avatar: {
     colors: {

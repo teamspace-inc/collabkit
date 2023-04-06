@@ -24,7 +24,5 @@ export const ColorBase = {
     icon: textContrastHigh,
     iconSecondary: textContrastMedium,
     iconDisabled: textContrastLow,
-    pin: textContrastHigh,
-    pinActive: blue,
   },
 };

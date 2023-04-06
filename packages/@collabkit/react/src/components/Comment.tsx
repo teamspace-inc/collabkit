@@ -8,14 +8,20 @@ import { useId } from '../hooks/useId';
 import { ProfileAvatar, ProfileName } from './Profile';
 import { useWorkspaceStore } from '../hooks/useWorkspaceStore';
 import { useApp } from '../hooks/useApp';
-import { CommentTarget, Profile, Target, ThreadResolveButtonTarget } from '@collabkit/core';
+import {
+  CommentTarget,
+  CommentPinTarget,
+  Profile,
+  Target,
+  ThreadResolveButtonTarget,
+} from '@collabkit/core';
 import * as styles from '../theme/components/Comment.css';
 import { ArrowBendDownRight, CheckCircle, DotsThree } from './icons';
 import { Menu, MenuItem } from './Menu';
 import { mergeRefs } from 'react-merge-refs';
 import { ComposerButtons, ComposerEditor, ComposerInput, ComposerRoot } from './composer/Composer';
 import { IconButton } from './IconButton';
-
+import { CommentPinSVG } from './composer/CommentPinSvg';
 import { Tooltip, TooltipContent, TooltipTrigger } from './Tooltip';
 import { vars } from '../theme/theme/index.css';
 import { EMOJI_U } from './EmojiPicker';
@@ -34,6 +40,7 @@ import { useUnreadCommentsCount } from '../hooks/public/useUnreadCommentsCount';
 import { TargetContext } from './Target';
 import { useTarget } from '../hooks/useTarget';
 import equals from 'fast-deep-equal';
+import { fallbackVar } from '@vanilla-extract/css';
 
 type CommentRootProps = {
   commentId: string;
@@ -220,6 +227,74 @@ export function CommentReplyCount(props: React.ComponentPropsWithoutRef<'span'>)
         {replyCount} {replyCount === 1 ? 'reply' : 'replies'}
       </span>
     </div>
+  );
+}
+
+function CommentPin(props: React.ComponentProps<'img'>) {
+  const threadId = useThreadContext();
+  const eventId = useCommentContext();
+  const workspaceId = useWorkspaceContext();
+  const { events } = useApp();
+  const { attachments } = useCommentSnapshot();
+  const pinId = attachments
+    ? Object.keys(attachments).find((id) => attachments[id].type === 'pin')
+    : null;
+  const pin = pinId ? { id: pinId, ...attachments![pinId] } : null;
+
+  const store = useStore();
+
+  const target: CommentPinTarget | null = useMemo(
+    () =>
+      pin
+        ? {
+            type: 'commentPin',
+            threadId,
+            eventId,
+            workspaceId,
+            objectId: pin.objectId,
+            id: pin.id,
+          }
+        : null,
+    [pin]
+  );
+
+  const isSelected = useStoreKeyMatches(
+    store,
+    'selectedId',
+    (selectedId) =>
+      (selectedId?.type === 'pin' || selectedId?.type === 'commentPin') && selectedId.id === pinId
+  );
+
+  const onClick = useCallback(
+    (e: React.MouseEvent<HTMLElement>) => {
+      target &&
+        events.onClick(e, {
+          target,
+        });
+    },
+    [target]
+  );
+
+  if (!pin) {
+    return null;
+  }
+
+  return (
+    <Tooltip>
+      <TooltipTrigger>
+        <span onClick={onClick} {...props} className={styles.pin({ isSelected })}>
+          <CommentPinSVG
+            fill={
+              isSelected
+                ? fallbackVar(vars.comment.pin.active.color, vars.color.attentionBlue)
+                : fallbackVar(vars.comment.pin.color, vars.color.textPrimary)
+            }
+          />
+          Pin
+        </span>
+      </TooltipTrigger>
+      <TooltipContent>View annotation</TooltipContent>
+    </Tooltip>
   );
 }
 
@@ -601,6 +676,7 @@ export {
   CommentReplyCountButton,
   CommentActionsEmojiButton,
   CommentThreadResolveIconButton,
+  CommentPin,
   CommentReactions,
   CommentReactionsList,
   CommentReactionsListAddEmojiButton,

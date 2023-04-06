@@ -1,4 +1,4 @@
-import { fallbackVar, globalStyle, style } from '@vanilla-extract/css';
+import { fallbackVar, globalStyle, style, styleVariants } from '@vanilla-extract/css';
 import { calc } from '@vanilla-extract/css-utils';
 import { recipe } from '@vanilla-extract/recipes';
 import { vars } from '../theme/index.css';
@@ -220,6 +220,28 @@ export const actions = style({
   selectors: {
     '&:empty': {
       display: 'none',
+    },
+  },
+});
+
+export const pin = recipe({
+  base: {
+    paddingRight: calc.divide(vars.space[1], 2),
+    float: 'left',
+    cursor: 'pointer',
+    // background: fallbackVar(vars.comment.pin.background, vars.color.backgroundMedium),
+    color: fallbackVar(vars.comment.pin.color, vars.color.textSecondary),
+    // borderRadius: 100,
+    // padding: `${vars.space[1]} ${vars.space[2]}`,
+    // display: 'flex',
+    // flexDirection: 'row',
+  },
+  variants: {
+    isSelected: {
+      true: {
+        // background: fallbackVar(vars.comment.pin.active.background, vars.color.attentionBlue),
+        color: fallbackVar(vars.comment.pin.active.color, vars.color.background),
+      },
     },
   },
 });
