@@ -5,9 +5,9 @@ import { vars } from '../theme/index.css';
 export const pin = recipe({
   base: {
     position: 'absolute',
-    width: 32,
-    height: 32,
-    marginTop: -32,
+    width: 34,
+    height: 34,
+    marginTop: -34,
     top: 0,
     left: 0,
   },
@@ -31,12 +31,14 @@ export const pinIcon = recipe({
   base: {
     fill: fallbackVar(vars.pin.background, vars.color.background),
     stroke: fallbackVar(vars.pin.borderColor, vars.color.icon),
+    strokeWidth: 1,
   },
   variants: {
     isSelected: {
       true: {
         fill: fallbackVar(vars.pin.active.background, vars.color.background),
         stroke: fallbackVar(vars.pin.active.borderColor, vars.color.attentionBlue),
+        strokeWidth: 2,
       },
     },
   },
@@ -44,8 +46,8 @@ export const pinIcon = recipe({
 
 export const pinAvatar = style({
   position: 'absolute',
-  top: 4,
-  left: 4,
+  top: 5,
+  left: 5,
 });
 
 export const pinThread = style({
