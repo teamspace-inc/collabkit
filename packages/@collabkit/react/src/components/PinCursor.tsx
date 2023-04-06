@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 import { ProfileAvatar, ProfileProvider } from './Profile';
 import * as styles from '../theme/components/Pin.css';
 import { useUserContext } from '../hooks/useUserContext';
-import { PinIconSVG } from './PinIcon';
+import { PinIconSVG } from './Pin';
 
 export const PinCursor = forwardRef<HTMLDivElement, { isSelected: boolean }>(function PinCursor(
   props,

@@ -17,6 +17,7 @@ import { SidebarTheme } from './SidebarTheme';
 import { SpaceTheme } from './SpaceTheme';
 import { TextTheme } from './TextTheme';
 import { ThreadTheme } from './ThreadTheme';
+import { PinTheme } from './PinTheme';
 
 export const vars = createGlobalThemeContract(
   {
@@ -30,6 +31,7 @@ export const vars = createGlobalThemeContract(
     ...InboxTheme,
     ...MentionsTheme,
     ...MenuTheme,
+    ...PinTheme,
     ...ProfileTheme,
     ...ScrollbarTheme,
     ...ShadowTheme,

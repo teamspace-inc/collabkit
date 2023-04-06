@@ -10,6 +10,7 @@ import { MentionsBase } from './base/MentionsBase';
 import { MenuBase } from './base/MenuBase';
 import { NewIndicatorBase } from './base/NewIndicatorBase';
 import { ProfileBase } from './base/ProfileBase';
+import { PinBase } from './base/PinBase';
 import { ScrollbarBase } from './base/ScrollbarBase';
 import { ShadowBase } from './base/ShadowBase';
 import { SidebarBase } from './base/SidebarBase';
@@ -31,6 +32,7 @@ export const BaseTheme = {
   ...InboxBase,
   ...MentionsBase,
   ...MenuBase,
+  ...PinBase,
   ...ProfileBase,
   ...ScrollbarBase,
   ...ShadowBase,

@@ -1,5 +1,4 @@
-import type { PendingPin, Pin, PinDeleteButton, PinTarget, WithID } from '@collabkit/core';
-
+import type { PendingPin, Pin, PinTarget, WithID } from '@collabkit/core';
 import {
   autoUpdate,
   FloatingNode,
@@ -7,7 +6,6 @@ import {
   useFloating,
   useFloatingNodeId,
 } from '@floating-ui/react';
-
 import React, {
   forwardRef,
   useCallback,
@@ -17,7 +15,6 @@ import React, {
   useRef,
   useState,
 } from 'react';
-
 import { useSnapshot } from 'valtio';
 import { useStore } from '../hooks/useStore';
 import { TargetContext } from './Target';
@@ -38,7 +35,6 @@ import {
 } from './Comment';
 import * as styles from '../theme/components/Pin.css';
 import { usePopover } from '../hooks/usePopover';
-import { PinIconSVG } from './PinIcon';
 import { ThreadContext, useThreadContext } from '../hooks/useThreadContext';
 import { CommentList } from './CommentList';
 import {
@@ -48,7 +44,6 @@ import {
   ComposerPlaceholder,
   ComposerRoot,
 } from './composer/Composer';
-import { Root } from './Root';
 import has from 'has';
 import { vars } from '../theme/theme/index.css';
 import { useStoreKeyMatches } from '../hooks/useSubscribeStoreKey';
@@ -455,7 +450,7 @@ const PinIcon = forwardRef<HTMLDivElement, PinIconProps>(function PinIcon(
   ref
 ) {
   return (
-    <div className={styles.pinIcon} onPointerDown={props.onPointerDown} ref={ref}>
+    <div onPointerDown={props.onPointerDown} ref={ref}>
       <PinIconSVG isSelected={props.isSelected} />
       <div className={styles.pinAvatar}>
         <ProfileAvatar />
@@ -463,6 +458,19 @@ const PinIcon = forwardRef<HTMLDivElement, PinIconProps>(function PinIcon(
     </div>
   );
 });
+
+export function PinIconSVG({ isSelected }: { isSelected: boolean }) {
+  return (
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        className={styles.pinIcon({ isSelected })}
+        d="M2.50894 31.4722H16.1209C20.1918 31.4722 24.096 29.8551 26.9746 26.9765C29.8531 24.0979 31.4703 20.1938 31.4703 16.1229V16.1228C31.4703 14.1071 31.0733 12.1112 30.3019 10.2489C29.5305 8.3866 28.3999 6.6945 26.9745 5.26917C25.5492 3.84385 23.8571 2.71322 21.9948 1.94184C20.1326 1.17046 18.1366 0.773438 16.1209 0.773438H16.1209C14.1051 0.773437 12.1092 1.17046 10.2469 1.94184C8.38463 2.71322 6.69253 3.84384 5.26721 5.26916C3.84189 6.69448 2.71126 8.38659 1.93989 10.2489C1.16851 12.1111 0.771484 14.1071 0.771484 16.1228L0.771484 29.7348C0.771484 30.1956 0.954536 30.6375 1.28037 30.9634C1.60621 31.2892 2.04814 31.4722 2.50894 31.4722Z"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
 
 const PinMarker = forwardRef<HTMLDivElement, PinMarkerProps>(function PinMarker(props, ref) {
   const { isSelected, pin, pointerEvents } = props;
