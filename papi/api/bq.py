@@ -13,6 +13,11 @@ import json
 
 app = FastAPI()
 
+@app.get("/omar")
+async def runSQLAgent(q: str = Query(None)):
+  print("hey omar")
+  return {"message":"omar"}
+
 @app.get("/")
 async def runSQLAgent(q: str = Query(None)):
   uri = "bigquery://bigquerysandboxproject-382616/covid19_nyt"
