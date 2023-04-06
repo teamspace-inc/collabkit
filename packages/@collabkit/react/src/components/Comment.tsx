@@ -290,7 +290,7 @@ function CommentPin(props: React.ComponentProps<'img'>) {
                 : fallbackVar(vars.comment.pin.color, vars.color.textPrimary)
             }
           />
-          Pin
+          {/*Pin*/}
         </span>
       </TooltipTrigger>
       <TooltipContent>View annotation</TooltipContent>
