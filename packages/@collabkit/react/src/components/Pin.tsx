@@ -11,7 +11,6 @@ import {
 import React, {
   forwardRef,
   useCallback,
-  useContext,
   useEffect,
   useLayoutEffect,
   useMemo,
@@ -24,7 +23,6 @@ import { useStore } from '../hooks/useStore';
 import { TargetContext } from './Target';
 import { useApp } from '../hooks/useApp';
 import { useTarget } from '../hooks/useTarget';
-import { Menu, MenuItem } from './Menu';
 import { PopoverContent, PopoverPreview, PopoverRoot, PopoverTrigger } from './Popover';
 import { ProfileAvatar, ProfileProvider } from './Profile';
 import {
@@ -145,47 +143,6 @@ function SavedPin({
         />
       </FloatingNode>
     </TargetContext.Provider>
-  );
-}
-
-function PinMenu(props: { className?: string; children: React.ReactNode }) {
-  const { events } = useApp();
-  const target = useContext(TargetContext);
-
-  const onItemClick = useCallback(
-    (e: React.MouseEvent) => {
-      if (target?.type === 'pin') {
-        events.onClick(e, {
-          target: {
-            type: 'pinDeleteButton',
-            objectId: target.objectId,
-            pinId: target.id,
-            workspaceId: target.workspaceId,
-            threadId: target.threadId,
-            eventId: target.eventId,
-          },
-        });
-      }
-    },
-    [events.onClick, target]
-  );
-
-  return (
-    <Menu<PinDeleteButton>
-      data-testid="collabkit-pin-menu"
-      className={props.className}
-      onItemClick={onItemClick}
-      event="contextmenu"
-      items={[
-        <MenuItem
-          label="Delete pin"
-          targetType="pinDeleteButton"
-          data-testid="collabkit-pin-menu-delete-button"
-        />,
-      ]}
-    >
-      {props.children}
-    </Menu>
   );
 }
 
