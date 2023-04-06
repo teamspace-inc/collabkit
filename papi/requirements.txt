@@ -1,3 +1,4 @@
 fastapi==0.88.0
-sqlalchemy-bigquery==1.6.1
+sqlalchemy==1.4.47
+
 langchain==0.0.132
