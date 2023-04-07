@@ -1,7 +1,7 @@
 'use client';
 import styles from './page.module.css';
 import { useCallback } from 'react';
-import { store } from './page';
+import { store } from './store';
 
 export function SearchForm() {
   const handleSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {

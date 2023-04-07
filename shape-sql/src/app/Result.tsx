@@ -1,7 +1,7 @@
 'use client';
 import styles from './page.module.css';
 import { useSnapshot } from 'valtio';
-import { store } from './page';
+import { store } from './store';
 
 export function Result() {
   const { response } = useSnapshot(store);
