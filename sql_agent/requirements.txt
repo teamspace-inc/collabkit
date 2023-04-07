@@ -1,0 +1,7 @@
+functions-framework==3.2.1
+flask==2.1.0
+google-cloud-error-reporting==1.9.1
+sqlalchemy==1.4.47
+sqlalchemy-bigquery==1.6.1
+langchain==0.0.132
+openai==0.27.2
