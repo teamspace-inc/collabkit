@@ -27,6 +27,10 @@
   margin-bottom: 40px;
 }
 
+.form {
+  width: 100%;
+}
+
 .input {
   height: 48px;
   width: 100%;
@@ -88,7 +92,6 @@
   justify-content: flex-start;
   align-items: flex-start;
   gap: 20px;
-  padding-bottom: 20px;
 
   width: 100%;
 

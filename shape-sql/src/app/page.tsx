@@ -1,18 +1,24 @@
+'use client';
 import Image from 'next/image';
 import { Inter } from 'next/font/google';
 import styles from './page.module.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
-import {
-  ThumbsUp,
-  ThumbsDown,
-  Clock,
-  DotsThree,
-  CheckCircle,
-  IconContext,
-} from '@phosphor-icons/react';
-import { FeedbackButtons } from './FeedbackButtons';
+// import { FeedbackButtons } from './FeedbackButtons';
+import { proxy } from 'valtio';
+import { Result } from './Result';
+import { SearchForm } from './SearchForm';
+
+type Store = {
+  query: string;
+  response: { data: string } | null;
+};
+
+export const store = proxy<Store>({
+  query: '',
+  response: null,
+});
 
 const LOGO_SIZES = {
   M: {
@@ -36,14 +42,6 @@ function Logo(props: { size: 'M' | 'L' }) {
       priority
     />
   );
-}
-
-function SearchInput() {
-  return <input type="search" className={styles.input} placeholder="Ask me anything" />;
-}
-
-function Result() {
-  return <div className={styles.result}>3224 users signed up last week</div>;
 }
 
 function Card(props: { children: React.ReactNode }) {
@@ -129,19 +127,19 @@ export default function Home() {
       <div className={styles.container}>
         <div className={`${styles.center} ${styles.spacing}`}>
           <Logo size="L" />
-          <SearchInput />
+          <SearchForm />
           <Card>
             <Result />
-            <Divider />
-            <Table />
-            <Divider />
+            {/* <Divider /> */}
+            {/* <Table /> */}
+            {/* <Divider /> */}
           </Card>
-          <FeedbackButtons />
-          <Divider />
+          {/* <FeedbackButtons /> */}
+          {/* <Divider />
           <H3>RELATED</H3>
           <Related />
           <H3>FOLLOW UP</H3>
-          <SearchInput />
+          <SearchInput /> */}
         </div>
       </div>
     </main>
