@@ -4,6 +4,7 @@ node_modules
 **/dist/
 **/.idea/*
 **/.next/*
+__pycache__/
 
 .env
 .env.*.local
