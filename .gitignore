@@ -19,3 +19,4 @@ tsconfig.tsbuildinfo
 /packages/@collabkit/*/types
 *.csv
 .buildt
+__pycache__/*
