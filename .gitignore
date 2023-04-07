@@ -4,6 +4,7 @@ node_modules
 **/dist/
 **/.idea/*
 **/.next/*
+**/__pycache__/
 
 .env
 .env.*.local
@@ -19,4 +20,3 @@ tsconfig.tsbuildinfo
 /packages/@collabkit/*/types
 *.csv
 .buildt
-**__pycache__/**
