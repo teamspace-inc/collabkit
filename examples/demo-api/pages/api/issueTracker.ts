@@ -5,6 +5,7 @@ import { OpenAI } from 'langchain';
 import { initializeAgentExecutor } from 'langchain/agents';
 import { DynamicTool } from 'langchain/tools';
 import { CREATE_ISSUE, GET_ISSUES, UPDATE_ISSUE } from './helpers/githubApi';
+import { CallbackManager } from 'langchain/dist/callbacks';
 
 export async function processCommand({
   OWNER,
@@ -85,7 +86,30 @@ export async function processCommand({
       },
     }),
   ];
-  const executor = await initializeAgentExecutor(tools, model, 'zero-shot-react-description', true);
+  const callbackManager = CallbackManager.fromHandlers({
+    async handleLLMNewToken(token: string) {
+      console.log('token', { token });
+    },
+    async handleLLMStart(llm, _prompts: string[]) {
+      console.log('handleLLMStart', { llm });
+    },
+    async handleChainStart(chain) {
+      console.log('handleChainStart', { chain });
+    },
+    async handleAgentAction(action) {
+      console.log('handleAgentAction', action);
+    },
+    async handleToolStart(tool) {
+      console.log('handleToolStart', { tool });
+    },
+  });
+  const executor = await initializeAgentExecutor(
+    tools,
+    model,
+    'zero-shot-react-description',
+    true,
+    callbackManager
+  );
   console.log('Loaded agent.');
   const result = await executor.call({ input: command });
   return result.output;

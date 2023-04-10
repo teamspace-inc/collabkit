@@ -1,7 +1,11 @@
 import { Thread, useUnreadCount } from '@collabkit/react';
 import { useDocumentTitle } from './hooks/useDocumentTitle';
 
-export function Home() {
+// function CustomAvatar(props: AvatarProps) {
+//   return <Avatar user={props.profile} />;
+// }
+
+export function Assistant() {
   const threadId = 'new-your-thread-id2';
 
   const unreadCount = useUnreadCount({ threadId });
@@ -15,7 +19,7 @@ export function Home() {
       info={{ name: 'Demo thread' }}
       showHeader={true}
       threadId={threadId}
-      bot={false}
+      bot={true}
     />
   );
 }

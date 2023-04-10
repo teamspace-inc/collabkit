@@ -32,6 +32,7 @@ function ThreadRoot({
   autoFocus,
   hideComposer,
   placeholder,
+  bot,
   ...props
 }: ThreadProps & React.ComponentPropsWithoutRef<'div'>) {
   const { userId } = useThread({

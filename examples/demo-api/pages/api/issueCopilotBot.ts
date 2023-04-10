@@ -32,7 +32,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const { OWNER, REPO, command, appId, workspaceId, threadId } = req.body;
   const apiKey = process.env.BOT_API_KEY;
   const botUserId = process.env.BOT_USER_ID;
-  
+
   // enable Bot
   var data = JSON.stringify({
     appId: appId,
@@ -47,7 +47,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       'Content-Type': 'application/json',
     },
     data: data,
-  }
+  };
 
   axios(config);
 

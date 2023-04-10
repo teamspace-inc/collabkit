@@ -7,6 +7,7 @@ import { DashboardInboxExample } from './dashboard/DashboardInboxExample';
 import { DashboardStore, dashboardStore } from './dashboardStore';
 import { Home } from './Home';
 import { Logout } from './Logout';
+import { Assistant } from './Assistant';
 
 type Props = {
   appId: string;
@@ -78,6 +79,7 @@ export function Demo(props: Props) {
         <Route path="/dashboard/inbox" component={DashboardInboxExample} />
         <Route path="/" component={Home} />
         <Route path="/thread" component={Home} />
+        <Route path="/assistant" component={Assistant} />
         <Route path="/logout" component={Logout} />
       </Switch>
     </CollabKitProvider>
