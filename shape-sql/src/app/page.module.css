@@ -1,5 +1,6 @@
 .main {
   min-height: 100vh;
+  padding: 40px;
 }
 
 .container {
@@ -12,6 +13,53 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.spinner {
+  padding: 10px;
+  background: #acefdb;
+}
+
+.thought {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  background: red;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-family: 'Menlo';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 20px;
+  display: flex;
+  color: #ffffff;
+}
+
+.thoughtLabel {
+  color: #acefdb;
+  text-transform: uppercase;
+}
+
+.list {
+  gap: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.answer {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 30px;
+  color: #ffffff;
+}
+
+.thinking {
+  gap: 2px;
+  display: flex;
+  flex-direction: column;
 }
 
 .spacing {

@@ -8,15 +8,21 @@ import { Result } from './Result';
 import { SearchForm } from './SearchForm';
 import { Logo } from './Logo';
 import { Card } from './Card';
+// import { H3 } from './H3';
+// import { Divider } from './Divider';
+import { Thinking, Thought } from './Thinking';
 
 export default function Home() {
   return (
-    <main className={`${styles.main} ${styles.center} ${inter.className}`}>
+    <main className={`${styles.main} ${inter.className}`}>
       <div className={styles.container}>
         <div className={`${styles.center} ${styles.spacing}`}>
-          <Logo size="L" />
+          <Logo size="M" />
           <SearchForm />
           <Card>
+            {/* <H3>Thinking</H3>
+            <Divider /> */}
+            <Thinking />
             <Result />
             {/* <Divider /> */}
             {/* <Table /> */}
