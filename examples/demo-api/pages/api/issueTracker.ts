@@ -5,7 +5,7 @@ import { OpenAI } from 'langchain';
 import { initializeAgentExecutor } from 'langchain/agents';
 import { DynamicTool } from 'langchain/tools';
 import { CREATE_ISSUE, GET_ISSUES, UPDATE_ISSUE } from './helpers/githubApi';
-import { CallbackManager } from 'langchain/dist/callbacks';
+import { CallbackManager } from 'langchain/callbacks';
 
 export async function processCommand({
   OWNER,
