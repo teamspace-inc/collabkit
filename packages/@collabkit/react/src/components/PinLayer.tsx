@@ -9,6 +9,7 @@ import * as styles from '../theme/components/Commentable.css';
 import { SavedPin } from './Pin';
 import { PinCursor } from './PinCursor';
 import { findCommentableElement } from './Commentable';
+import { ThemeWrapper } from './ThemeWrapper';
 
 function PinLayer(props: { className?: string; children?: React.ReactNode }) {
   const cursorRef = useRef<HTMLDivElement | null>(null);
@@ -108,9 +109,11 @@ function PinLayer(props: { className?: string; children?: React.ReactNode }) {
   return (
     <FloatingPortal id="collabkit-floating-root">
       <FloatingTree>
-        {uiState === 'selecting' && <div ref={overlayRef} className={styles.overlay} />}
-        {uiState === 'selecting' && <PinCursor isSelected={false} ref={cursorRef} />}
-        {pinsComponents}
+        <ThemeWrapper>
+          {uiState === 'selecting' && <div ref={overlayRef} className={styles.overlay} />}
+          {uiState === 'selecting' && <PinCursor isSelected={false} ref={cursorRef} />}
+          {pinsComponents}
+        </ThemeWrapper>
       </FloatingTree>
     </FloatingPortal>
   );
