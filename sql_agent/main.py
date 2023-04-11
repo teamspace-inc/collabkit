@@ -13,7 +13,6 @@ import os
 
 @functions_framework.http
 def runSQLAgent(request):
-    
   request_args = request.args
   query = request_args['query']
   query = escape(query)
@@ -28,9 +27,11 @@ def runSQLAgent(request):
   db = SQLDatabase(engine)
   toolkit = SQLDatabaseToolkit(db=db)
   agent_executor = create_sql_agent(
-      llm=OpenAI(temperature=0),
+      llm=OpenAI(temperature=0, 
+      model_name="gpt-4"),
       toolkit=toolkit,
-      verbose=True
+      verbose=True,
+      max_execution_time=240
   )
   agentResponse = agent_executor.run(query)
   return {"response":agentResponse}
