@@ -8,34 +8,35 @@ import { Result } from './Result';
 import { SearchForm } from './SearchForm';
 import { Logo } from './Logo';
 import { Card } from './Card';
-// import { H3 } from './H3';
-// import { Divider } from './Divider';
-import { Thinking, Thought } from './Thinking';
+import { Thinking } from './Thinking';
 
 export default function Home() {
   return (
-    <main className={`${styles.main} ${inter.className}`}>
-      <div className={styles.container}>
-        <div className={`${styles.center} ${styles.spacing}`}>
-          <Logo size="M" />
-          <SearchForm />
-          <Card>
-            {/* <H3>Thinking</H3>
+    <div className={styles.center} style={{ marginLeft: -100 }}>
+      <main className={`${styles.main} ${inter.className}`}>
+        <Logo size="M" />
+        <div className={styles.container}>
+
+          <div className={`${styles.center} ${styles.spacing}`}>
+            <SearchForm />
+            <Card>
+              {/* <H3>Thinking</H3>
             <Divider /> */}
-            <Thinking />
-            <Result />
-            {/* <Divider /> */}
-            {/* <Table /> */}
-            {/* <Divider /> */}
-          </Card>
-          {/* <FeedbackButtons /> */}
-          {/* <Divider />
+              <Thinking />
+              <Result />
+              {/* <Divider /> */}
+              {/* <Table /> */}
+              {/* <Divider /> */}
+            </Card>
+            {/* <FeedbackButtons /> */}
+            {/* <Divider />
           <H3>RELATED</H3>
           <Related />
           <H3>FOLLOW UP</H3>
           <SearchInput /> */}
+          </div>
         </div>
-      </div>
-    </main>
+      </main>
+    </div>
   );
 }

@@ -1,10 +1,12 @@
 .main {
   min-height: 100vh;
-  padding: 40px;
+  display: grid;
+  padding: 20px;
+  grid-template-columns: 200px 720px;
 }
 
 .container {
-  max-width: 800px;
+  max-width: 720px;
   width: 100%;
 }
 
@@ -54,6 +56,16 @@
   font-size: 18px;
   line-height: 30px;
   color: #ffffff;
+  white-space: pre-wrap;
+}
+
+.sql {
+  font-weight: 400;
+  font-size: 12px;
+  font-family: 'SF Mono', Consolas, monospace;
+  line-height: 20px;
+  color: #ffffff;
+  white-space: pre-wrap;
 }
 
 .thinking {
@@ -73,6 +85,8 @@
   width: 'auto';
   height: 'auto';
   margin-bottom: 40px;
+  top: 10px;
+  position: relative;
 }
 
 .form {
@@ -167,7 +181,7 @@
 .card {
   border: 1px solid #2d302f;
   width: 100%;
-  padding: 20px;
+  padding: 20px 20px;
   border-radius: 8px;
   display: flex;
   flex-direction: column;

@@ -3,21 +3,40 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import styles from './page.module.css';
 import { Divider } from './Divider';
 
+import { format } from 'sql-formatter';
+import { SpinnerCircular } from 'spinners-react';
+import { Check } from '@phosphor-icons/react';
+
 const LABELS = ['Observation:', 'Action Input:', 'Thought:', 'Action:', 'Final Answer:'];
+const FINAL_ANSWER = new RegExp(/Final Answer: (\s*.*)/gm);
+const ACTION_INPUT = new RegExp(/Action Input: (\s*.*)/gm);
+
+import { Light as SyntaxHighlighter } from 'react-syntax-highlighter';
+import sql from 'react-syntax-highlighter/dist/esm/languages/hljs/sql';
+SyntaxHighlighter.registerLanguage('sql', sql);
 
 export function Thought(props: { children: React.ReactNode }) {
   const children = props.children;
   const isLabel =
     typeof children === 'string' && LABELS.find((label) => children.trim().startsWith(label));
-  console.log(isLabel);
   return (
     <div className={[styles.thought, isLabel ? styles.thoughtLabel : null].join(' ')}>
-      {props.children}
+      {children}
     </div>
   );
 }
 
-const FINAL_ANSWER = new RegExp(/Final Answer: (\s*.*)/gm);
+function getLastActionInput(text: string) {
+  // used to get the generated SQL
+  let match;
+  let lastMatch;
+
+  while ((match = ACTION_INPUT.exec(text)) !== null) {
+    lastMatch = match[1];
+  }
+
+  return lastMatch;
+}
 
 export function Thinking() {
   const sampleInput = `> Entering new AgentExecutor chain...
@@ -56,9 +75,10 @@ export function Thinking() {
   Final Answer: The states with the most covid cases are California (12,169,158), Texas (8,447,168), Florida (7,542,869), New York (6,805,271), Illinois (4,107,931), Pennsylvania (3,539,135), North Carolina (3,481,732), Ohio (3,415,254), Michigan (3,068,195), and New Jersey (3,057,442).
   > Finished chain.`;
 
-  const [actions, setActions] = useState<string[][]>([]);
   const [thoughts, setThoughts] = useState<string[]>([]);
   const [finalAnswer, setFinalAnswer] = useState<string | null>(null);
+  const [finalSQL, setFinalSQL] = useState<string | null>(null);
+  const [done, setDone] = useState<boolean>(false);
 
   const streamRef = useRef<ReadableStream<Uint8Array> | null>(null);
 
@@ -71,22 +91,22 @@ export function Thinking() {
       if (i >= sampleInput.length) {
         controller.close();
       } else {
-        // console.log('queueChunk', i, text);
-        queueChunk(controller, i + Math.ceil(Math.random() * 12));
+        queueChunk(controller, i + Math.ceil(Math.random() * 4));
       }
-    }, Math.ceil(Math.random() * 1));
+    }, Math.ceil(Math.random() * 8));
   }, []);
 
   const processText = useCallback((text: string) => {
     if (text.length === 0) return;
     const match = FINAL_ANSWER.exec(text);
     if (match?.[1]) {
-      console.log('got match', match[1]);
       setFinalAnswer(match[1]);
+      setFinalSQL(getLastActionInput(text)?.toString() ?? null);
     } else {
       const splitText = text
         .replace('> Entering new AgentExecutor chain...', '')
         .replace(/> Finished chain\.$/, '')
+        .replace(/[`‘’]/g, "'")
         .split(new RegExp('\\s*(' + LABELS.join('|') + ')\\s*'));
       const result = splitText.filter((str) => str.trim() !== '');
       setThoughts(result);
@@ -106,6 +126,7 @@ export function Thinking() {
             // hack to stop it
             reader.releaseLock();
             cancelAnimationFrame(id);
+            setDone(true);
             streamRef.current = null;
           }
         })
@@ -131,15 +152,39 @@ export function Thinking() {
 
   return (
     <div className={styles.list}>
-      <span className={styles.spinner}>Thinking</span>
+      <div style={{ padding: 10, display: 'flex', gap: 10 }}>
+        <div style={{ height: 24, width: 24 }}>
+          {done ? (
+            <Check size="20" color="#9FEFD7" weight="bold" />
+          ) : (
+            <SpinnerCircular
+              enabled={!done}
+              color="#9FEFD7"
+              secondaryColor="#2D302F"
+              size={20}
+              thickness={200}
+            />
+          )}
+        </div>
+        {done ? 'Done' : 'Processing...'}
+      </div>
       <div className={styles.thinking}>
         {thoughts.map((thought, i) => (
           <Thought key={i}>{thought}</Thought>
         ))}
       </div>
-      <Divider></Divider>
-
-      <div className={styles.answer}>{finalAnswer}</div>
+      {finalAnswer ? (
+        <>
+          <Divider />
+          <div className={styles.answer}>{finalAnswer}</div>
+        </>
+      ) : null}
+      {finalSQL && done ? (
+        <>
+          <Divider />
+          <div className={styles.sql}>{finalSQL ? format(finalSQL) : ''}</div>
+        </>
+      ) : null}
     </div>
   );
 }
