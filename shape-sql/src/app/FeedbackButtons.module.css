@@ -1,13 +1,15 @@
 .root {
-  display: flex;
+  display: inline-flex;
   border: 1px solid #2d302f;
   border-radius: 100px;
   align-items: center;
   justify-content: center;
+  width: 85px;
 }
 
 .button {
   padding: 10px 10px 6px;
+  background: red;
 }
 
 .button:first-of-type {

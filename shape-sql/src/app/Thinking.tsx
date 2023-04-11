@@ -4,26 +4,18 @@ import styles from './page.module.css';
 import { Divider } from './Divider';
 
 import { format } from 'sql-formatter';
-import { SpinnerCircular } from 'spinners-react';
-import { Check } from '@phosphor-icons/react';
-
-const LABELS = ['Observation:', 'Action Input:', 'Thought:', 'Action:', 'Final Answer:'];
 const FINAL_ANSWER = new RegExp(/Final Answer: (\s*.*)/gm);
 const ACTION_INPUT = new RegExp(/Action Input: (\s*.*)/gm);
 
 import { Light as SyntaxHighlighter } from 'react-syntax-highlighter';
 import sql from 'react-syntax-highlighter/dist/esm/languages/hljs/sql';
+import { H3 } from './H3';
+import { FeedbackButtons } from './FeedbackButtons';
 SyntaxHighlighter.registerLanguage('sql', sql);
 
 export function Thought(props: { children: React.ReactNode }) {
   const children = props.children;
-  const isLabel =
-    typeof children === 'string' && LABELS.find((label) => children.trim().startsWith(label));
-  return (
-    <div className={[styles.thought, isLabel ? styles.thoughtLabel : null].join(' ')}>
-      {children}
-    </div>
-  );
+  return <div className={[styles.thought].join(' ')}>{children}</div>;
 }
 
 function getLastActionInput(text: string) {
@@ -91,9 +83,9 @@ export function Thinking() {
       if (i >= sampleInput.length) {
         controller.close();
       } else {
-        queueChunk(controller, i + Math.ceil(Math.random() * 4));
+        queueChunk(controller, i + Math.ceil(Math.random() * 400));
       }
-    }, Math.ceil(Math.random() * 8));
+    }, Math.ceil(Math.random() * 1));
   }, []);
 
   const processText = useCallback((text: string) => {
@@ -103,13 +95,13 @@ export function Thinking() {
       setFinalAnswer(match[1]);
       setFinalSQL(getLastActionInput(text)?.toString() ?? null);
     } else {
-      const splitText = text
-        .replace('> Entering new AgentExecutor chain...', '')
-        .replace(/> Finished chain\.$/, '')
-        .replace(/[`‘’]/g, "'")
-        .split(new RegExp('\\s*(' + LABELS.join('|') + ')\\s*'));
-      const result = splitText.filter((str) => str.trim() !== '');
-      setThoughts(result);
+      // const splitText = text;
+      // .replace('> Entering new AgentExecutor chain...', '')
+      // .replace(/> Finished chain\.$/, '')
+      // .replace(/[`‘’]/g, "'");
+      // .split(new RegExp('\\s*(' + LABELS.join('|') + ')\\s*'));
+      // const result = splitText.filter((str) => str.trim() !== '');
+      setThoughts([text]);
     }
   }, []);
 
@@ -152,7 +144,18 @@ export function Thinking() {
 
   return (
     <div className={styles.list}>
-      <div style={{ padding: 10, display: 'flex', gap: 10 }}>
+      <h1
+        style={{
+          fontSize: 28,
+          lineHeight: '30px',
+          marginTop: 20,
+          marginBottom: 0,
+          fontWeight: 600,
+        }}
+      >
+        Which states have the highest covid?
+      </h1>
+      {/* <div style={{ padding: 10, display: 'flex', gap: 10 }}>
         <div style={{ height: 24, width: 24 }}>
           {done ? (
             <Check size="20" color="#9FEFD7" weight="bold" />
@@ -167,7 +170,9 @@ export function Thinking() {
           )}
         </div>
         {done ? 'Done' : 'Processing...'}
-      </div>
+      </div> */}
+      <Divider />
+      <H3>Thinking</H3>
       <div className={styles.thinking}>
         {thoughts.map((thought, i) => (
           <Thought key={i}>{thought}</Thought>
@@ -176,12 +181,15 @@ export function Thinking() {
       {finalAnswer ? (
         <>
           <Divider />
+          <H3>Answer</H3>
           <div className={styles.answer}>{finalAnswer}</div>
+          <FeedbackButtons />
         </>
       ) : null}
       {finalSQL && done ? (
         <>
           <Divider />
+          <H3>Generated SQL</H3>
           <div className={styles.sql}>{finalSQL ? format(finalSQL) : ''}</div>
         </>
       ) : null}

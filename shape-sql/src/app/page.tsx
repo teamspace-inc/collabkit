@@ -3,8 +3,6 @@ import styles from './page.module.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
-// import { FeedbackButtons } from './FeedbackButtons';
-import { Result } from './Result';
 import { SearchForm } from './SearchForm';
 import { Logo } from './Logo';
 import { Card } from './Card';
@@ -14,21 +12,30 @@ export default function Home() {
   return (
     <div className={styles.center} style={{ marginLeft: -100 }}>
       <main className={`${styles.main} ${inter.className}`}>
-        <Logo size="M" />
-        <div className={styles.container}>
-
-          <div className={`${styles.center} ${styles.spacing}`}>
+        <nav className={styles.nav}>
+          <Logo size="M" />
+          <div
+            style={{
+              width: 720,
+              display: 'table',
+              margin: '0 auto',
+              left: -110,
+              position: 'relative',
+            }}
+          >
             <SearchForm />
+          </div>
+        </nav>
+        <div className={styles.container}>
+          <div className={`${styles.center} ${styles.spacing}`}>
             <Card>
               {/* <H3>Thinking</H3>
             <Divider /> */}
               <Thinking />
-              <Result />
               {/* <Divider /> */}
               {/* <Table /> */}
               {/* <Divider /> */}
             </Card>
-            {/* <FeedbackButtons /> */}
             {/* <Divider />
           <H3>RELATED</H3>
           <Related />
