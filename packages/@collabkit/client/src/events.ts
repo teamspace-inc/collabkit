@@ -86,6 +86,10 @@ export function createEvents(store: Store) {
             case 'composerPinButton':
               actions.stopSelecting(store);
               break;
+            case 'hideSidebarButton':
+              actions.stopSelecting(store);
+              actions.hideSidebar(store);
+              break;
           }
           break;
         }
