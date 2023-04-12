@@ -33,14 +33,15 @@ function AnswerRenderer(props: { queryId: string }) {
           marginTop: 20,
           marginBottom: 0,
           fontWeight: 600,
+          wordWrap: 'break-word',
         }}
       >
-        {query}
+        {decodeURIComponent(query)}
       </h1>
       <Divider />
       <H3>Processing</H3>
       <div className={styles.thinking}>
-        <div className={[styles.thought].join(' ')}>{result}</div>
+        <div className={styles.thought}>{result}</div>
       </div>
       {answer ? (
         <>

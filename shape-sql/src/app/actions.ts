@@ -1,6 +1,6 @@
 import { store } from './store';
 
-const FINAL_ANSWER = new RegExp(/Final Answer: (\s*.*)..[\s*.*]*Finished chain/gm);
+const FINAL_ANSWER = new RegExp(/Final Answer: (\s|.*)\.Finished chain/gm);
 const ACTION_INPUT = new RegExp(/Action Input: (\s*.*)/gm);
 
 // used to extract the generated SQL from:
@@ -36,7 +36,7 @@ export async function query(query: string) {
         if (text == undefined) {
           return;
         }
-        store.queries[id].result = `${store.queries[id].result ?? ''}${text}\n`;
+        store.queries[id].result = `${store.queries[id].result ?? ''}${text}`;
         const match = FINAL_ANSWER.exec(text);
         console.log({ text });
         if (match?.[1]) {
