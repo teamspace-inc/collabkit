@@ -17,6 +17,7 @@ import { SidebarBase } from './base/SidebarBase';
 import { SpaceBase } from './base/SpaceBase';
 import { TextBase } from './base/TextBase';
 import { ThreadBase } from './base/ThreadBase';
+import { ZIndexBase } from './base/ZIndexBase';
 
 export const BaseTheme = {
   ...NewIndicatorBase,
@@ -38,6 +39,7 @@ export const BaseTheme = {
   ...ShadowBase,
   ...SidebarBase,
   ...ThreadBase,
+  ...ZIndexBase,
 };
 
 export const LightTheme = BaseTheme;

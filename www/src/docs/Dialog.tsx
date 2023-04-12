@@ -139,7 +139,7 @@ export const DialogContent = React.forwardRef<
 
   return (
     <FloatingTree>
-      <FloatingPortal id={'collabkit-floating-root'}>
+      <FloatingPortal id="www-floating-root">
         {context.open && (
           <FloatingOverlay className={dialogOverlayClassName} lockScroll>
             <FloatingFocusManager context={floatingContext}>

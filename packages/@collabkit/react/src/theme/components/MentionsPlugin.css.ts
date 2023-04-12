@@ -6,7 +6,7 @@ export const typeahead = style({
   position: 'absolute',
   background: fallbackVar(vars.mentions.typeahead.background, vars.color.surface),
   borderRadius: vars.mentions.typeahead.borderRadius,
-  zIndex: 999,
+  zIndex: vars.zIndex.floating,
   padding: vars.mentions.typeahead.padding,
   boxShadow: fallbackVar(vars.mentions.typeahead.boxShadow, vars.shadow.standard),
   border: fallbackVar(vars.mentions.typeahead.border, `1px solid ${vars.color.border}`),

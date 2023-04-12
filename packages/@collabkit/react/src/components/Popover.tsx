@@ -26,6 +26,7 @@ import { FloatingFocusManager } from './FloatingFocusManager';
 
 import { mergeRefs } from 'react-merge-refs';
 import { ThemeWrapper } from './ThemeWrapper';
+import { vars } from '../theme/theme/index.css';
 
 export type PopoverTriggerProps =
   | {
@@ -94,22 +95,30 @@ function PopoverContent(props: PopoverContentProps) {
   const { context, open, getFloatingProps } = usePopoverContext();
 
   return context.open ? (
-    <FloatingOverlay lockScroll={props.lockScroll}>
+    <FloatingOverlay
+      lockScroll={props.lockScroll}
+      style={{
+        zIndex: vars.zIndex.floating,
+      }}
+    >
       <FloatingFocusManager context={context}>
-        <div
-          ref={context.floating}
-          style={{
-            position: context.strategy,
-            top: context.y ?? 0,
-            left: context.x ?? 0,
-            outline: 'none',
-            opacity: 0,
-            zIndex: 999,
-          }}
-          {...getFloatingProps({})}
-        >
-          {open ? <ThemeWrapper>{props.children}</ThemeWrapper> : null}
-        </div>
+        <ThemeWrapper>
+          <div
+            ref={context.floating}
+            style={{
+              position: context.strategy,
+              top: context.y ?? 0,
+              left: context.x ?? 0,
+              outline: 'none',
+              opacity: 0,
+              zIndex: vars.zIndex.floating,
+            }}
+            data-testid="collabkit-popover-content"
+            {...getFloatingProps({})}
+          >
+            {open ? props.children : null}
+          </div>
+        </ThemeWrapper>
       </FloatingFocusManager>
     </FloatingOverlay>
   ) : null;

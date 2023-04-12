@@ -18,6 +18,7 @@ import { SpaceTheme } from './SpaceTheme';
 import { TextTheme } from './TextTheme';
 import { ThreadTheme } from './ThreadTheme';
 import { PinTheme } from './PinTheme';
+import { ZIndexTheme } from './ZIndexTheme';
 
 export const vars = createGlobalThemeContract(
   {
@@ -40,6 +41,7 @@ export const vars = createGlobalThemeContract(
     ...TextTheme,
     ...ThreadTheme,
     ...NewIndicatorTheme,
+    ...ZIndexTheme,
   },
   (value) => `collabkit-${value}`
 );

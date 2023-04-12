@@ -16,7 +16,7 @@ export const root = recipe({
     boxSizing: 'border-box',
     width: 'max-content',
     maxWidth: 'calc(100vw - 10px)',
-    zIndex: 100,
+    zIndex: vars.zIndex.floating,
     selectors: {
       '&:before': {
         position: 'absolute',
