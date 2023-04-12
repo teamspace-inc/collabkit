@@ -8,8 +8,8 @@ const LOGO_SIZES = {
     height: 24,
   },
   L: {
-    width: 200,
-    height: 48,
+    width: 183,
+    height: 44,
   },
 } as const;
 
