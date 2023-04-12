@@ -35,29 +35,19 @@ function getRandomColor(): string {
 
 type Updates = { [path: string]: object | string | boolean };
 
-export async function updateUserAndWorkspace(props: {
+export async function updateUser(props: {
   appId: string;
   userId: string;
   workspaceId: string;
-  workspace?: WorkspaceProps;
   user: UserProps;
 }) {
-  const { appId, workspaceId, userId, workspace, user } = props;
-  const workspaceUpdates: Updates = {};
+  const { appId, workspaceId, userId, user } = props;
 
   const colorSnapshot = await ref`/profiles/${appId}/${userId}/color`.get();
   if (!colorSnapshot.exists()) {
     user.color = getRandomColor();
   } else {
     user.color = colorSnapshot.val();
-  }
-
-  // contains an ancestor of the next set of updates
-  // so we need to do this one first
-  if (workspaceId !== 'default' && isValidWorkspace(workspace)) {
-    workspaceUpdates[ref.path`/workspaces/${appId}/${workspaceId}/`] =
-      deleteUndefinedProps(workspace);
-    await ref`/`.update(workspaceUpdates);
   }
 
   const updates: Updates = {};

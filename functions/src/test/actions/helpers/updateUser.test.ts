@@ -2,13 +2,13 @@ import { it, describe, expect } from 'vitest';
 import admin from 'firebase-admin';
 import { ref } from '../../../actions/data/refs';
 
-import { updateUserAndWorkspace } from '../../../actions/helpers/updateUserAndWorkspace';
+import { updateUser } from '../../../actions/helpers/updateUser';
 
-describe('updateUserAndWorkspace', () => {
+describe('updateUser', () => {
   it('creates a user and sets the right props', async () => {
     const userId = admin.firestore().collection('any').doc().id;
     const appId = 'QLVIR4HE-wvV_mTjoMJP5';
-    await updateUserAndWorkspace({
+    await updateUser({
       appId: 'QLVIR4HE-wvV_mTjoMJP5',
       workspaceId: 'acme',
       userId,

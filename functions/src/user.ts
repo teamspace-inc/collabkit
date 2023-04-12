@@ -1,7 +1,7 @@
 import * as functions from 'firebase-functions';
 import { ref } from './actions/data/refs';
 import { isValidUser } from './actions/helpers/isValidUser';
-import { updateUserAndWorkspace } from './actions/helpers/updateUserAndWorkspace';
+import { updateUser } from './actions/helpers/updateUser';
 
 export async function putUser(
   userId: string,
@@ -47,7 +47,7 @@ export async function putUser(
     return;
   }
 
-  await updateUserAndWorkspace({ appId, userId, workspaceId, user });
+  await updateUser({ appId, userId, workspaceId, user });
 
   const userSnapshot = await ref`/profiles/${appId}/${userId}`.get();
   const result = {

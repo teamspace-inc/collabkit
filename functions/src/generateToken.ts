@@ -1,10 +1,11 @@
 import * as functions from 'firebase-functions';
 import * as cors from 'cors';
 import admin from 'firebase-admin';
-import { updateUserAndWorkspace } from './actions/helpers/updateUserAndWorkspace';
+import { updateUser } from './actions/helpers/updateUser';
 import { isValidUser } from './actions/helpers/isValidUser';
 import * as FirebaseId from './actions/data/FirebaseId';
 import { ref } from './actions/data/refs';
+import { updateWorkspace } from './actions/helpers/updateWorkspace';
 
 const corsHandler = cors.default({ origin: true });
 
@@ -129,7 +130,8 @@ export async function handleRequest(
           return;
         }
 
-        await updateUserAndWorkspace({ appId, userId, workspaceId, workspace, user });
+        await updateWorkspace({ appId, workspaceId, workspace });
+        await updateUser({ appId, userId, workspaceId, user });
 
         const token = await admin.auth().createCustomToken(apiKey, {
           api: true,
