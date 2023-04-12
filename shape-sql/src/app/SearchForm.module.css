@@ -1,0 +1,33 @@
+.form {
+  width: 100%;
+}
+
+.input {
+  height: 48px;
+  width: 100%;
+  border-radius: 100px;
+  padding: 10px 20px;
+  border: none;
+  border: 1px solid #2d302f;
+  background: transparent;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 18px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.input:active,
+.input:focus,
+.input:webkit-autofill {
+  background: #2d302f !important;
+  outline: none;
+  box-shadow: 0 0 0px 1000px #2d302f inset;
+}
+
+.input:-webkit-autofill,
+.input:-webkit-autofill:hover,
+.input:-webkit-autofill:focus,
+.input:-webkit-autofill:active {
+  transition: background-color 5000s ease-in-out 0s;
+}
