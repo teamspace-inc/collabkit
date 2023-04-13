@@ -15,14 +15,16 @@ const isRoot = (path: string) => {
 
 export default withClerkMiddleware((request: NextRequest) => {
   const { pathname } = request.nextUrl;
+  console.log(pathname);
   if (isSignInOut(pathname)) {
     return NextResponse.next();
   }
   // if the user is not signed in redirect them to the sign in page.
   const { userId } = getAuth(request);
-  console.log(pathname, userId);
   if (isRoot(pathname) && userId) {
-    return NextResponse.redirect('/ask');
+    const url = new URL(request.nextUrl);
+    url.pathname = '/ask';
+    return NextResponse.redirect(url);
   }
 
   if (!userId) {
