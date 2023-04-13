@@ -1,6 +1,6 @@
 import { store } from './store';
 
-const FINAL_ANSWER = new RegExp(/Final Answer: (\s|.*)\.Finished chain/gm);
+const FINAL_ANSWER = new RegExp(/Final Answer: (\s|.*)Finished chain/gm);
 const ACTION_INPUT = new RegExp(/Action Input: (\s*.*)/gm);
 
 // used to extract the generated SQL from:
