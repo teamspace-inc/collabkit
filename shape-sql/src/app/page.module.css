@@ -10,19 +10,6 @@
   justify-content: center;
 }
 
-.nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 60px;
-  display: grid;
-  padding: 10px 20px;
-  grid-template-columns: 120px 1fr;
-  border-bottom: 1px solid #2d302f;
-  background: var(--background-hex);
-}
-
 .center {
   display: flex;
   flex-direction: column;
@@ -101,14 +88,6 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 16px;
-}
-
-.pillButton {
-  height: 36px;
-  border-radius: 100px;
-  padding: 8px 16px 8px 16px;
-  border: 1px solid #2d302f;
-  background: transparent;
 }
 
 .h3 {
