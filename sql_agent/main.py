@@ -26,7 +26,6 @@ def agent_thread(threadedGntr: ThreadedGenerator, query: str):
             "type": "service_account",
             "project_id": "bigquerysandboxproject-382616"
         }
-
         engine = create_engine(uri, credentials_info=json.loads(os.environ["BQ_API_KEY"]))
         db = SQLDatabase(engine)
         toolkit = SQLDatabaseToolkit(db=db)
