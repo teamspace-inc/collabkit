@@ -1,14 +1,13 @@
 'use client';
-import c from '@/app/page.module.css';
+import styles from './page.module.css';
 
 import { SearchForm } from '@/app/SearchForm';
 import { Logo } from '@/app/Logo';
-import { cx } from '@/app/cx';
 
 export default function Page() {
   return (
-    <main className={cx(c.main, c['v-center'])}>
-      <div className={cx(c.center, c.spacing)}>
+    <main className={styles.main}>
+      <div className={styles.inner}>
         <Logo size="L" />
         <SearchForm />
       </div>
