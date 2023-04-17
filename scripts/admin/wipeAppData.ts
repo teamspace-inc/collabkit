@@ -66,7 +66,7 @@ async function run() {
 
   try {
     await Promise.allSettled([
-      admin.database().ref(`notifedUntil/${appId}`).remove(),
+      admin.database().ref(`notifiedUntil/${appId}`).remove(),
       admin.database().ref(`pins/${appId}`).remove(),
       admin.database().ref(`profiles/${appId}`).remove(),
       admin.database().ref(`seen/${appId}`).remove(),
