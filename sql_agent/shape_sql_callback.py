@@ -11,6 +11,8 @@ from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from langchain.chains.llm import LLMChain
 from langchain.llms.base import BaseLLM
 from threaded_generator import ThreadedGenerator
+import json 
+
 
 def create_shape_sql_agent(
     llm: BaseLLM,
@@ -51,17 +53,19 @@ class ShapeSQLCallbackHandler(StreamingStdOutCallbackHandler):
     def __init__(self, threadedGntr: ThreadedGenerator):
         super().__init__()
         self.threadedGntr = threadedGntr
-   
-    def on_llm_new_token(self, token: str, **kwargs):
-        self.threadedGntr.send(token)
 
     def on_agent_action(
         self, action: AgentAction, color: Optional[str] = None, **kwargs: Any
     ) -> Any:
         """Run on agent action."""
-        self.threadedGntr.send(action.tool)
-        self.threadedGntr.send(action.tool_input)
-        self.threadedGntr.send(action.log)
+        actionDict = {
+            "on_agent_action": {
+                "tool":action.tool,
+                "tool_input":action.tool_input,
+                "log":action.log
+            }
+        }
+        self.threadedGntr.send(json.dumps(actionDict))
 
     def on_llm_start(
         self, serialized: Dict[str, Any], prompts: List[str], **kwargs: Any
@@ -71,7 +75,7 @@ class ShapeSQLCallbackHandler(StreamingStdOutCallbackHandler):
 
     def on_llm_new_token(self, token: str, **kwargs: Any) -> Any:
         """Run on new LLM token. Only available when streaming is enabled."""
-        self.threadedGntr.send(token)
+        pass
 
     def on_llm_end(self, response: LLMResult, **kwargs: Any) -> Any:
         """Run when LLM ends running."""
@@ -87,12 +91,14 @@ class ShapeSQLCallbackHandler(StreamingStdOutCallbackHandler):
         self, serialized: Dict[str, Any], inputs: Dict[str, Any], **kwargs: Any
     ) -> Any:
         """Run when chain starts running."""
-        class_name = serialized["name"]
-        self.threadedGntr.send(f"Entering new {class_name} chain...")
+        
+        startDict = {"on_chain_start":"Entering new chain..."}
+        self.threadedGntr.send(json.dumps(startDict))
 
     def on_chain_end(self, outputs: Dict[str, Any], **kwargs: Any) -> Any:
         """Run when chain ends running."""
-        self.threadedGntr.send("Finished chain")
+        finishDict = {"on_chain_end":"Finished chain"}
+        self.threadedGntr.send(json.dumps(finishDict))
 
     def on_chain_error(
         self, error: Union[Exception, KeyboardInterrupt], **kwargs: Any
@@ -115,10 +121,15 @@ class ShapeSQLCallbackHandler(StreamingStdOutCallbackHandler):
         **kwargs: Any,
     ) -> None:
         """If not the final action, print out observation."""
-        # print(output)
-        self.threadedGntr.send(observation_prefix)
-        self.threadedGntr.send(output)
-        self.threadedGntr.send(llm_prefix)
+        toolEndDict = {
+            "on_tool_end":
+                {
+                    "observation_prefix":observation_prefix,
+                    "output":output,
+                    "llm_prefix":llm_prefix
+                }
+        }
+        self.threadedGntr.send(json.dumps(toolEndDict))
 
     def on_tool_error(
         self, error: Union[Exception, KeyboardInterrupt], **kwargs: Any
@@ -138,5 +149,12 @@ class ShapeSQLCallbackHandler(StreamingStdOutCallbackHandler):
 
     def on_agent_finish(self, finish: AgentFinish, **kwargs: Any) -> Any:
         """Run on agent end."""
-        self.threadedGntr.send(finish.log)
+        finishDict = {
+            "on_agent_finish":
+                {
+                    "log":finish.log,
+                    "return_values":finish.return_values
+                }
+        }
+        self.threadedGntr.send(json.dumps(finishDict))
         
