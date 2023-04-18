@@ -15,4 +15,4 @@ RUN pip install --trusted-host pypi.python.org -r requirements.txt
 EXPOSE 8080
 
 # Run the web service on container startup.
-CMD ["functions-framework","--target=runSQLAgent","--port=8080"]
+CMD ["functions-framework","--target=runSQLAgent"]

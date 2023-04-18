@@ -21,11 +21,7 @@ from typing import Any, Dict, List, Union
 
 def agent_thread(threadedGntr: ThreadedGenerator, query: str):
     try:
-        uri = "bigquery://bigquerysandboxproject-382616/covid19_nyt"
-        credentials_info = {
-            "type": "service_account",
-            "project_id": "bigquerysandboxproject-382616"
-        }
+        uri = os.environ["DATABASE_URI"]
         engine = create_engine(uri, credentials_info=json.loads(os.environ["BQ_API_KEY"]))
         db = SQLDatabase(engine)
         toolkit = SQLDatabaseToolkit(db=db)
