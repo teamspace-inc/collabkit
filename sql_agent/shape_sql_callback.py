@@ -12,7 +12,7 @@ from langchain.chains.llm import LLMChain
 from langchain.llms.base import BaseLLM
 from threaded_generator import ThreadedGenerator
 import json 
-
+from ss_analytics import SSAnalytics
 
 def create_shape_sql_agent(
     llm: BaseLLM,
@@ -50,9 +50,10 @@ def create_shape_sql_agent(
 
 class ShapeSQLCallbackHandler(StreamingStdOutCallbackHandler):
     """Callback Handler that handles for Shape SQL Events"""
-    def __init__(self, threadedGntr: ThreadedGenerator):
+    def __init__(self, threadedGntr: ThreadedGenerator, ss: SSAnalytics):
         super().__init__()
         self.threadedGntr = threadedGntr
+        self.ss = ss
 
     def on_agent_action(
         self, action: AgentAction, color: Optional[str] = None, **kwargs: Any
@@ -65,6 +66,12 @@ class ShapeSQLCallbackHandler(StreamingStdOutCallbackHandler):
                 "log":action.log
             }
         }
+        if action.tool == "query_sql_db":
+            self.ss.track('on_agent_action', {
+                'tool': action.tool,
+                'tool_input': action.tool_input,
+            })
+            
         self.threadedGntr.send(json.dumps(actionDict))
 
     def on_llm_start(
@@ -149,12 +156,13 @@ class ShapeSQLCallbackHandler(StreamingStdOutCallbackHandler):
 
     def on_agent_finish(self, finish: AgentFinish, **kwargs: Any) -> Any:
         """Run on agent end."""
+        finishResponse = {
+            "log":finish.log,
+            "return_values":finish.return_values
+        }
+        
         finishDict = {
-            "on_agent_finish":
-                {
-                    "log":finish.log,
-                    "return_values":finish.return_values
-                }
+            "on_agent_finish":finishResponse
         }
         self.threadedGntr.send(json.dumps(finishDict))
         
