@@ -11,6 +11,7 @@ from langchain.llms.openai import OpenAI
 from langchain.callbacks.base import CallbackManager
 from langchain.callbacks.stdout import StdOutCallbackHandler
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
+from mixpanel import Mixpanel
 from shape_sql_callback import ShapeSQLCallbackHandler
 from shape_sql_callback import create_shape_sql_agent
 from sqlalchemy import *
@@ -18,8 +19,10 @@ from sqlalchemy.engine import create_engine
 from sqlalchemy.schema import *
 from threaded_generator import ThreadedGenerator
 from typing import Any, Dict, List, Union
+from ss_analytics import SSAnalytics
 
-def agent_thread(threadedGntr: ThreadedGenerator, query: str):
+
+def agent_thread(threadedGntr: ThreadedGenerator, query: str, ss: SSAnalytics):
     try:
         uri = os.environ["DATABASE_URI"]
         engine = create_engine(uri, credentials_info=json.loads(os.environ["BQ_API_KEY"]))
@@ -30,18 +33,21 @@ def agent_thread(threadedGntr: ThreadedGenerator, query: str):
             llm=OpenAI(temperature=0, 
             model_name="gpt-4"),
             toolkit=toolkit,
-            callback_manager = CallbackManager([ShapeSQLCallbackHandler(threadedGntr), StdOutCallbackHandler()]),
+            callback_manager = CallbackManager([ShapeSQLCallbackHandler(threadedGntr,ss), StdOutCallbackHandler()]),
             verbose=True,
             max_execution_time=240,
             streaming=True
             )
         agent_executor.run(query) 
     finally:
+        ss.track('runSQLAgent Completed', {
+            'Query':query
+        })
         threadedGntr.close()
 
-def sqlChain(query: str) -> ThreadedGenerator:
+def sqlChain(query: str, ss: SSAnalytics) -> ThreadedGenerator:
     threadedGntr = ThreadedGenerator()
-    threading.Thread(target=agent_thread, args=(threadedGntr, query)).start()
+    threading.Thread(target=agent_thread, args=(threadedGntr, query, ss)).start()
     return threadedGntr
 
 @functions_framework.http
@@ -63,4 +69,12 @@ def runSQLAgent(request):
     request_args = request.args
     query = request_args['query']
     query = escape(query)
-    return Response(response=sqlChain(query), headers=headers)
+    
+    distinctId = "Bob" # TODO: Get distinctId from request
+    
+    mp = Mixpanel(os.environ["SS_API_KEY"])
+    ss = SSAnalytics(mp, distinctId)    
+    ss.track('runSQLAgent Invoked',{
+        'Query':query
+    })
+    return Response(response=sqlChain(query, ss), headers=headers)
