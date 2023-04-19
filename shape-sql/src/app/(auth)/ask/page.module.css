@@ -1,0 +1,15 @@
+.main {
+  min-height: 100vh;
+  display: grid;
+  padding: 20px;
+  grid-template-columns: 720px;
+  justify-content: center;
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+}

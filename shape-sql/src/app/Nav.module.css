@@ -1,0 +1,12 @@
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  display: grid;
+  padding: 0 20px;
+  align-items: center;
+  margin: 0 auto;
+  grid-template-columns: 1fr 30px;
+}

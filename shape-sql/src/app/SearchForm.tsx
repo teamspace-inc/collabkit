@@ -4,7 +4,7 @@ import { useCallback } from 'react';
 import { query } from './actions';
 import { useRouter } from 'next/navigation';
 
-export function SearchForm() {
+export function SearchForm(props: { placeholder?: string }) {
   const router = useRouter();
 
   const handleSubmit = useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
@@ -15,7 +15,12 @@ export function SearchForm() {
 
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
-      <input name="query" type="search" className={styles.input} placeholder="Ask me anything" />
+      <input
+        name="query"
+        type="search"
+        className={styles.input}
+        placeholder={props.placeholder ?? 'Ask a question'}
+      />
     </form>
   );
 }
