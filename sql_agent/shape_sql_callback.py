@@ -13,6 +13,7 @@ from langchain.llms.base import BaseLLM
 from threaded_generator import ThreadedGenerator
 import json 
 from ss_analytics import ShapeAnalytics
+from slack import SlackData
 
 def create_shape_sql_agent(
     llm: BaseLLM,
@@ -50,10 +51,11 @@ def create_shape_sql_agent(
 
 class ShapeSQLCallbackHandler(StreamingStdOutCallbackHandler):
     """Callback Handler that handles for Shape SQL Events"""
-    def __init__(self, threadedGntr: ThreadedGenerator, shapeAnalytics: ShapeAnalytics):
+    def __init__(self, threadedGntr: ThreadedGenerator, shapeAnalytics: ShapeAnalytics, slackData: SlackData):
         super().__init__()
         self.threadedGntr = threadedGntr
         self.shapeAnalytics = shapeAnalytics
+        self.slackData = slackData
 
     def on_agent_action(
         self, action: AgentAction, color: Optional[str] = None, **kwargs: Any
@@ -71,7 +73,8 @@ class ShapeSQLCallbackHandler(StreamingStdOutCallbackHandler):
                 'tool': action.tool,
                 'tool_input': action.tool_input,
             })
-            
+        if(self.slackData!=None and action.log.partition("Action:")[0] != ""):
+            self.slackData.send(action.log.partition("Action:")[0])
         self.threadedGntr.send(json.dumps(actionDict))
 
     def on_llm_start(
@@ -137,6 +140,8 @@ class ShapeSQLCallbackHandler(StreamingStdOutCallbackHandler):
                 }
         }
         self.threadedGntr.send(json.dumps(toolEndDict))
+        if(self.slackData!=None):
+            self.slackData.send(output.partition("Action:")[0])
 
     def on_tool_error(
         self, error: Union[Exception, KeyboardInterrupt], **kwargs: Any
@@ -164,5 +169,7 @@ class ShapeSQLCallbackHandler(StreamingStdOutCallbackHandler):
         finishDict = {
             "on_agent_finish":finishResponse
         }
+        if(self.slackData!=None):
+            self.slackData.send(finish.log)
         self.threadedGntr.send(json.dumps(finishDict))
         
