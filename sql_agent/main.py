@@ -71,7 +71,6 @@ def runSQLAgent(request):
     
     distinctId = "Bob" # TODO: Get distinctId from request
 
-    os.environ["SHAPE_API_KEY"]="7e221d1ec0008a63a3d805413e2011f1"
     mp = Mixpanel(os.environ["SS_API_KEY"])
     shapeAnalytics = ShapeAnalytics(mp, distinctId)    
     shapeAnalytics.track('runSQLAgent Invoked',{
