@@ -1,6 +1,6 @@
 from mixpanel import Mixpanel
 
-class SSAnalytics:
+class ShapeAnalytics:
   def __init__(self, mixpanel: Mixpanel, distinctId: str):
     self.mixpanel = mixpanel
     self.distinctId = distinctId
