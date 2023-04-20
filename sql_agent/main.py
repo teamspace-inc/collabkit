@@ -19,13 +19,12 @@ from sqlalchemy.engine import create_engine
 from sqlalchemy.schema import *
 from threaded_generator import ThreadedGenerator
 from typing import Any, Dict, List, Union
-from ss_analytics import SSAnalytics
+from ss_analytics import ShapeAnalytics
 
 
-def agent_thread(threadedGntr: ThreadedGenerator, query: str, ss: SSAnalytics):
+def agent_thread(threadedGntr: ThreadedGenerator, query: str, shapeAnalytics: ShapeAnalytics):
     try:
-        uri = os.environ["DATABASE_URI"]
-        engine = create_engine(uri, credentials_info=json.loads(os.environ["BQ_API_KEY"]))
+        engine = create_engine("bigquery://", credentials_info=json.loads(os.environ["BQ_API_KEY"]))
         db = SQLDatabase(engine)
         toolkit = SQLDatabaseToolkit(db=db)
 
@@ -33,21 +32,21 @@ def agent_thread(threadedGntr: ThreadedGenerator, query: str, ss: SSAnalytics):
             llm=OpenAI(temperature=0, 
             model_name="gpt-4"),
             toolkit=toolkit,
-            callback_manager = CallbackManager([ShapeSQLCallbackHandler(threadedGntr,ss), StdOutCallbackHandler()]),
+            callback_manager = CallbackManager([ShapeSQLCallbackHandler(threadedGntr,shapeAnalytics), StdOutCallbackHandler()]),
             verbose=True,
             max_execution_time=240,
             streaming=True
             )
         agent_executor.run(query) 
     finally:
-        ss.track('runSQLAgent Completed', {
+        shapeAnalytics.track('runSQLAgent Completed', {
             'Query':query
         })
         threadedGntr.close()
 
-def sqlChain(query: str, ss: SSAnalytics) -> ThreadedGenerator:
+def sqlChain(query: str, shapeAnalytics: ShapeAnalytics) -> ThreadedGenerator:
     threadedGntr = ThreadedGenerator()
-    threading.Thread(target=agent_thread, args=(threadedGntr, query, ss)).start()
+    threading.Thread(target=agent_thread, args=(threadedGntr, query, shapeAnalytics)).start()
     return threadedGntr
 
 @functions_framework.http
@@ -71,10 +70,11 @@ def runSQLAgent(request):
     query = escape(query)
     
     distinctId = "Bob" # TODO: Get distinctId from request
-    
+
+    os.environ["SHAPE_API_KEY"]="7e221d1ec0008a63a3d805413e2011f1"
     mp = Mixpanel(os.environ["SS_API_KEY"])
-    ss = SSAnalytics(mp, distinctId)    
-    ss.track('runSQLAgent Invoked',{
+    shapeAnalytics = ShapeAnalytics(mp, distinctId)    
+    shapeAnalytics.track('runSQLAgent Invoked',{
         'Query':query
     })
-    return Response(response=sqlChain(query, ss), headers=headers)
+    return Response(response=sqlChain(query, shapeAnalytics), headers=headers)
