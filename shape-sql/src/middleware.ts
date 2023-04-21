@@ -15,7 +15,6 @@ const isRoot = (path: string) => {
 
 export default withClerkMiddleware((request: NextRequest) => {
   const { pathname } = request.nextUrl;
-  console.log(pathname);
   if (isSignInOut(pathname)) {
     return NextResponse.next();
   }
@@ -23,7 +22,7 @@ export default withClerkMiddleware((request: NextRequest) => {
   const { userId } = getAuth(request);
   if (isRoot(pathname) && userId) {
     const url = new URL(request.nextUrl);
-    url.pathname = '/ask';
+    url.pathname = '/setup';
     return NextResponse.redirect(url);
   }
 
