@@ -12,6 +12,7 @@ export async function installShapeBotImpl(
   data.append('code', code);
   data.append('client_id', '3913993031188.5124245352709');
   data.append('client_secret', '1a135a7c0dbd8026ebb5f68380fb657f');
+  data.append('redirect_uri', 'https://us-central1-shape-sql.cloudfunctions.net/installShapeBot');
 
   let config = {
     method: 'post',
@@ -25,9 +26,6 @@ export async function installShapeBotImpl(
 
   axios(config)
     .then((res) => {
-      console.log(JSON.stringify(res.data));
-      console.log('access token: ' + res.data.access_token);
-      console.log('team id: ' + res.data.team.id);
       axios.post('https://api.clerk.com/v1/organizations', {
         name: res.data.team.name,
         created_by: userId,
