@@ -42,7 +42,6 @@ class UnitTestHandler(StreamingStdOutCallbackHandler):
     {result}
     Is the predicted answer correct? Answer Correct or Incorrect.
     """
-
     PROMPT = PromptTemplate(input_variables=["query", "answer", "result"], 
                             template=TEMPLATE)
 
@@ -106,5 +105,3 @@ def runUnitTests():
     sqlAgent.run(question)
     
 runUnitTests()
-
-
