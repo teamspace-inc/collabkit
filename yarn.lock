@@ -1735,6 +1735,11 @@
   resolved "https://registry.yarnpkg.com/@clerk/shared/-/shared-0.15.4.tgz#f73776b95b75d5fca1510261fd186b0e7a142d7e"
   integrity sha512-3+8nUo/KdjM80kBK+NjBGjMqUG2D8Sv4/2jGWr9Xv7HTo+6thEJ5P2waS3jznTPtglbzHnd9ps50gWZ3fRxW4A==
 
+"@clerk/themes@^1.6.3":
+  version "1.6.3"
+  resolved "https://registry.yarnpkg.com/@clerk/themes/-/themes-1.6.3.tgz#0427f544d70827fa8e79734534908d41caa5f30f"
+  integrity sha512-xkentFnCgyNaDavgqMLb2+4C/fh9PlXg1/QnBPe0vhv8riw20q1gSm3Jy3dG5LiUIAdjLUi34ilt6fufRw/AEQ==
+
 "@clerk/types@^3.35.1":
   version "3.35.1"
   resolved "https://registry.yarnpkg.com/@clerk/types/-/types-3.35.1.tgz#a99db129f224a01e016e6032bc34186002ef0b1e"
