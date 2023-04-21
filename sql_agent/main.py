@@ -2,6 +2,7 @@ import functions_framework
 import json
 import os
 import threading
+from typing import Callable
 from flask import Flask, Response
 from flask import escape
 from langchain.agents import AgentExecutor
@@ -55,7 +56,7 @@ def sqlChain(query: str, username: str) -> ThreadedGenerator:
     threading.Thread(target=agent_thread, args=(threadedGntr, query, shapeAnalytics, None)).start()
     return threadedGntr
 
-def slackSqlChain(query: str, username: str, sendMessage, threadTs) -> ThreadedGenerator:
+def slackSqlChain(query: str, username: str, sendMessage: Callable, threadTs: str) -> ThreadedGenerator:
     mp = Mixpanel(config("SHAPE_API_KEY"))
     shapeAnalytics = ShapeAnalytics(mp, username)
     shapeAnalytics.track('runSQLAgent Invoked',{
