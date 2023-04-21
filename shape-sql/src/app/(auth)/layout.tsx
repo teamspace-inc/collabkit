@@ -13,8 +13,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
           right: 0,
           height: '80px',
           display: 'grid',
-          padding: '0 20px',
-          alignItems: 'center',
+          padding: '20px 20px',
           margin: '0 auto',
           gridTemplateColumns: '6fr 240px 30px',
         }}
