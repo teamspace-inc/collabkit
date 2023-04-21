@@ -30,7 +30,7 @@ export async function installShapeBotImpl(
       axios.post('https://api.clerk.com/v1/organizations', {
         name: res.data.team.id,
         created_by: userId,
-        private_metadata: { botToken: res.data.access_token },
+        public_metadata: { botToken: res.data.access_token },
       }, {
         headers: {
           'Authorization': `Bearer sk_test_MCqEnnuR8Xt4uYXZhFqknfxX0TnFdH4symiqGOaUtY`,
