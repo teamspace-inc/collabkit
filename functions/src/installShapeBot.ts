@@ -12,7 +12,7 @@ export async function installShapeBotImpl(
   data.append('code', code);
   data.append('client_id', '3913993031188.5124245352709');
   data.append('client_secret', '1a135a7c0dbd8026ebb5f68380fb657f');
-  data.append('redirect_uri', 'https://us-central1-shape-sql.cloudfunctions.net/installShapeBot');
+  data.append('redirect_uri', 'https://us-central1-collabkit-test.cloudfunctions.net/installShapeBot');
 
   let config = {
     method: 'post',
