@@ -25,6 +25,7 @@ export async function installShapeBotImpl(
 
   axios(config)
     .then((res) => {
+      console.log(JSON.stringify(res.data));
       console.log('access token: ' + res.data.access_token);
       console.log('team id: ' + res.data.team.id);
       axios.post('https://api.clerk.com/v1/organizations', {
