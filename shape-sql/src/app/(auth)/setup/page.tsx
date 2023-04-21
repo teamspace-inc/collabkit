@@ -35,7 +35,7 @@ export default function Page({ params }: { params: { id: string } }) {
           {botToken ?? (
             <Link
               href={
-                'https://slack.com/oauth/v2/authorize?client_id=5104325368790.5123570453313&scope=chat:write,chat:write.customize,app_mentions:read,channels:history,groups:history,im:history,mpim:history&user_scope=&state=' +
+                'https://slack.com/oauth/v2/authorize?client_id=3913993031188.5124245352709&scope=app_mentions:read,channels:history,chat:write,chat:write.customize,groups:history,mpim:history,im:write,im:read,im:history,users.profile:read,mpim:write,mpim:read&user_scope=&redirect_uri=https://us-central1-collabkit-test.cloudfunctions.net/installShapeBot&state=' +
                 userId
               }
               style={{
