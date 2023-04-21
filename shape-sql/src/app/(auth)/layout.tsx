@@ -16,7 +16,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
           padding: '0 20px',
           alignItems: 'center',
           margin: '0 auto',
-          gridTemplateColumns: '6fr 180px 30px',
+          gridTemplateColumns: '6fr 240px 30px',
         }}
       >
         <Logo size="M" />
