@@ -10,8 +10,8 @@ export async function installShapeBotImpl(
   const userId = request.query.state;
   let data = new FormData();
   data.append('code', code);
-  data.append('client_id', '5104325368790.5123570453313');
-  data.append('client_secret', 'd38334f7efa4e1c968dbd2ed1b92f8a0');
+  data.append('client_id', '3913993031188.5124245352709');
+  data.append('client_secret', '1a135a7c0dbd8026ebb5f68380fb657f');
 
   let config = {
     method: 'post',
