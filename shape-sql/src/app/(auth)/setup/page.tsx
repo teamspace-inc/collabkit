@@ -24,7 +24,13 @@ export default function Page({ params }: { params: { id: string } }) {
         }}
       >
         <h1>Dashboard</h1>
-        <div>{botToken ?? <Button>Connect Slack</Button>}</div>
+        <div>
+          {botToken ?? (
+            <a href="https://slack.com/oauth/v2/authorize?client_id=5104325368790.5123570453313&scope=chat:write,chat:write.customize,app_mentions:read,channels:history,groups:history,im:history,mpim:history&user_scope=&state=">
+              Connect Slack
+            </a>
+          )}
+        </div>
       </div>
     </div>
   );
