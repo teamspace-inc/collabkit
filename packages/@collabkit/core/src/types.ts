@@ -330,6 +330,7 @@ export type ComposerTarget = {
   workspaceId: string;
   eventId: string | 'default';
   isNewThread?: boolean;
+  bot?: boolean;
 };
 
 export type ChannelComposerTarget = {

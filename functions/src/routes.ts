@@ -8,6 +8,7 @@ import { commentImpl } from './comment';
 import { sendNotificationImpl } from './sendNotification';
 import { triggerWebhookImpl } from './triggerWebhook';
 import { generateToken } from './generateToken';
+import { enableBotImpl } from './enableBot';
 
 const corsHandler = cors.default({ origin: true });
 
@@ -48,6 +49,8 @@ export const routesImpl = async (
         return sendNotificationImpl(request, response);
       case 'triggerWebhook':
         return triggerWebhookImpl(request, response);
+      case 'enableBot':
+        return enableBotImpl(request, response);
       default:
         response.status(404).send({ status: 404, error: 'Route not found' });
         return;

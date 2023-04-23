@@ -1,0 +1,2006 @@
+._1qia8j90 {
+  outline-offset: 2px;
+  cursor: none !important;
+}
+._1qia8j91 {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  background: yellow;
+  pointer-events: none;
+}
+._1qia8j92 {
+  position: absolute;
+  pointer-events: none;
+}
+:root {
+  --collabkit-inbox-new-indicator-color: initial;
+  --collabkit-inbox-new-indicator-font-size: initial;
+  --collabkit-inbox-new-indicator-font-weight: initial;
+  --collabkit-inbox-new-indicator-line-height: initial;
+  --collabkit-inbox-new-indicator-letter-spacing: initial;
+  --collabkit-inbox-new-indicator-inlay-background: initial;
+  --collabkit-inbox-new-indicator-line-background: initial;
+  --collabkit-inbox-new-indicator-padding: initial;
+  --collabkit-inbox-new-indicator-margin: initial;
+  --collabkit-color-background: hsl(0, 0%, 100%);
+  --collabkit-color-surface: #f6f6f6;
+  --collabkit-color-surface-hover: hsl(0, 0%, 96%, 1);
+  --collabkit-color-surface-overlay: rgba(0, 0, 0, 0.08);
+  --collabkit-color-text-primary: hsl(0, 0%, 10%);
+  --collabkit-color-text-secondary: hsl(0, 0%, 30%);
+  --collabkit-color-text-disabled: hsl(0, 0%, 60%);
+  --collabkit-color-text-link: hsl(0, 0%, 10%);
+  --collabkit-color-border: hsl(0, 0%, 89%, 1);
+  --collabkit-color-icon: hsl(0, 0%, 24%);
+  --collabkit-color-icon-secondary: hsl(0, 0%, 53%);
+  --collabkit-color-icon-disabled: hsl(0, 0%, 89%, 1);
+  --collabkit-color-attention: hsl(2, 73%, 62%);
+  --collabkit-color-attention-blue: hsl(211, 95%, 59%);
+  --collabkit-color-pin: hsl(0, 0%, 7%);
+  --collabkit-color-pin-hover: hsl(0, 0%, 24%);
+  --collabkit-color-pin-active: hsl(211, 95%, 59%);
+  --collabkit-color-pin-disconnected: hsl(0, 0%, 73%);
+  --collabkit-comment-list-gap: initial;
+  --collabkit-comment-list-padding: initial;
+  --collabkit-text-tiny-font-size: 9px;
+  --collabkit-text-tiny-line-height: 11px;
+  --collabkit-text-tiny-letter-spacing: 0px;
+  --collabkit-text-small-font-size: 11px;
+  --collabkit-text-small-line-height: 13px;
+  --collabkit-text-small-letter-spacing: 0px;
+  --collabkit-text-base-font-size: 13px;
+  --collabkit-text-base-line-height: 18px;
+  --collabkit-text-base-letter-spacing: 0px;
+  --collabkit-text-large-font-size: 14px;
+  --collabkit-text-large-line-height: 17px;
+  --collabkit-text-large-letter-spacing: 0px;
+  --collabkit-font-weight-regular: 400;
+  --collabkit-font-weight-medium: 500;
+  --collabkit-font-weight-bold: 700;
+  --collabkit-font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
+    Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  --collabkit-space-0: 0px;
+  --collabkit-space-1: 4px;
+  --collabkit-space-2: calc(var(--collabkit-space-1) * 2);
+  --collabkit-space-3: calc(var(--collabkit-space-1) * 3);
+  --collabkit-space-4: calc(var(--collabkit-space-1) * 4);
+  --collabkit-space-5: calc(var(--collabkit-space-1) * 5);
+  --collabkit-space-6: calc(var(--collabkit-space-1) * 6);
+  --collabkit-space-7: calc(var(--collabkit-space-1) * 7);
+  --collabkit-space-8: calc(var(--collabkit-space-1) * 8);
+  --collabkit-icon-button-background: initial;
+  --collabkit-icon-button-color: initial;
+  --collabkit-icon-button-width: initial;
+  --collabkit-icon-button-height: initial;
+  --collabkit-icon-button-border-radius: initial;
+  --collabkit-icon-button-active-background: initial;
+  --collabkit-icon-button-hover-background: initial;
+  --collabkit-icon-button-small-width: initial;
+  --collabkit-icon-button-small-height: initial;
+  --collabkit-button-group-gap: initial;
+  --collabkit-button-group-padding: initial;
+  --collabkit-button-font-size: initial;
+  --collabkit-button-line-height: initial;
+  --collabkit-button-font-weight: initial;
+  --collabkit-button-letter-spacing: initial;
+  --collabkit-button-border-radius: initial;
+  --collabkit-button-padding: initial;
+  --collabkit-button-primary-color: initial;
+  --collabkit-button-primary-background: initial;
+  --collabkit-button-primary-letter-spacing: initial;
+  --collabkit-button-primary-font-weight: initial;
+  --collabkit-button-primary-font-size: initial;
+  --collabkit-button-primary-line-height: initial;
+  --collabkit-button-primary-active-color: initial;
+  --collabkit-button-primary-active-background: initial;
+  --collabkit-button-primary-hover-color: initial;
+  --collabkit-button-primary-hover-background: initial;
+  --collabkit-button-primary-disabled-color: initial;
+  --collabkit-button-primary-disabled-background: initial;
+  --collabkit-button-secondary-color: initial;
+  --collabkit-button-secondary-background: initial;
+  --collabkit-button-secondary-font-weight: initial;
+  --collabkit-button-secondary-letter-spacing: initial;
+  --collabkit-button-secondary-font-size: initial;
+  --collabkit-button-secondary-line-height: initial;
+  --collabkit-button-secondary-active-color: initial;
+  --collabkit-button-secondary-active-background: initial;
+  --collabkit-button-secondary-hover-color: initial;
+  --collabkit-button-secondary-hover-background: initial;
+  --collabkit-button-secondary-disabled-color: initial;
+  --collabkit-button-secondary-disabled-background: initial;
+  --collabkit-button-disabled-color: initial;
+  --collabkit-button-disabled-background: initial;
+  --collabkit-avatar-size: 24px;
+  --collabkit-avatar-placeholder-font-size: 12px;
+  --collabkit-avatar-color-amber: hsla(41, 95%, 69%, 1);
+  --collabkit-avatar-color-blue: hsla(211, 93%, 64%, 1);
+  --collabkit-avatar-color-brown: hsla(28, 34%, 56%, 1);
+  --collabkit-avatar-color-crimson: hsla(342, 69%, 64%, 1);
+  --collabkit-avatar-color-cyan: hsla(192, 53%, 52%, 1);
+  --collabkit-avatar-color-grass: hsla(124, 28%, 55%, 1);
+  --collabkit-avatar-color-green: hsla(146, 31%, 51%, 1);
+  --collabkit-avatar-color-indigo: hsla(225, 68%, 61%, 1);
+  --collabkit-avatar-color-lime: hsla(74, 77%, 66%, 1);
+  --collabkit-avatar-color-mint: hsla(162, 68%, 81%, 1);
+  --collabkit-avatar-color-orange: hsla(23, 90%, 62%, 1);
+  --collabkit-avatar-color-pink: hsla(325, 58%, 61%, 1);
+  --collabkit-avatar-color-plum: hsla(291, 40%, 57%, 1);
+  --collabkit-avatar-color-purple: hsla(268, 47%, 60%, 1);
+  --collabkit-avatar-color-red: hsla(2, 71%, 65%, 1);
+  --collabkit-avatar-color-sky: hsla(194, 96%, 81%, 1);
+  --collabkit-avatar-color-teal: hsla(173, 40%, 48%, 1);
+  --collabkit-avatar-color-tomato: hsla(11, 70%, 60%, 1);
+  --collabkit-avatar-color-violet: hsla(246, 53%, 63%, 1);
+  --collabkit-avatar-color-yellow: hsla(52, 100%, 74%, 1);
+  --collabkit-comment-padding-left: initial;
+  --collabkit-comment-padding-right: initial;
+  --collabkit-comment-padding-top: initial;
+  --collabkit-comment-padding-bottom: initial;
+  --collabkit-comment-gap: initial;
+  --collabkit-comment-hover-background: initial;
+  --collabkit-comment-header-gap: initial;
+  --collabkit-comment-header-name-and-timestamp-gap: initial;
+  --collabkit-comment-header-name-and-timestamp-flex-direction: initial;
+  --collabkit-comment-header-profile-gap: initial;
+  --collabkit-comment-actions-gap: initial;
+  --collabkit-comment-body-color: initial;
+  --collabkit-comment-body-font-size: initial;
+  --collabkit-comment-body-line-height: initial;
+  --collabkit-comment-body-letter-spacing: initial;
+  --collabkit-comment-body-font-weight: initial;
+  --collabkit-comment-timestamp-color: initial;
+  --collabkit-comment-timestamp-font-size: initial;
+  --collabkit-comment-timestamp-line-height: initial;
+  --collabkit-comment-timestamp-letter-spacing: initial;
+  --collabkit-comment-timestamp-font-weight: initial;
+  --collabkit-comment-reply-count-button-padding: initial;
+  --collabkit-comment-reply-count-button-border-radius: initial;
+  --collabkit-comment-reply-count-button-background: initial;
+  --collabkit-comment-reply-count-button-border: initial;
+  --collabkit-comment-reply-count-button-hover-background: initial;
+  --collabkit-comment-reply-count-button-hover-border: initial;
+  --collabkit-comment-reply-count-button-text-color: initial;
+  --collabkit-comment-reply-count-button-text-font-size: initial;
+  --collabkit-comment-reply-count-button-text-line-height: initial;
+  --collabkit-comment-reply-count-button-text-letter-spacing: initial;
+  --collabkit-comment-reply-count-button-text-font-weight: initial;
+  --collabkit-comment-reply-count-button-icon-color: initial;
+  --collabkit-comment-reply-count-button-icon-font-size: initial;
+  --collabkit-comment-reply-count-button-icon-line-height: initial;
+  --collabkit-comment-reply-count-button-icon-letter-spacing: initial;
+  --collabkit-comment-reply-count-button-icon-font-weight: initial;
+  --collabkit-composer-border: initial;
+  --collabkit-composer-padding: initial;
+  --collabkit-composer-gap: initial;
+  --collabkit-composer-typing-indicator-color: initial;
+  --collabkit-composer-typing-indicator-font-size: initial;
+  --collabkit-composer-typing-indicator-line-height: initial;
+  --collabkit-composer-typing-indicator-font-weight: initial;
+  --collabkit-composer-typing-indicator-letter-spacing: initial;
+  --collabkit-composer-input-caret-color: initial;
+  --collabkit-composer-input-color: initial;
+  --collabkit-composer-input-font-size: initial;
+  --collabkit-composer-input-line-height: initial;
+  --collabkit-composer-input-letter-spacing: initial;
+  --collabkit-composer-input-font-weight: initial;
+  --collabkit-composer-input-padding: initial;
+  --collabkit-composer-input-background: initial;
+  --collabkit-composer-input-border: initial;
+  --collabkit-composer-input-border-radius: initial;
+  --collabkit-composer-input-hover-background: initial;
+  --collabkit-composer-input-hover-border: initial;
+  --collabkit-composer-input-active-background: initial;
+  --collabkit-composer-input-active-border: initial;
+  --collabkit-composer-input-disabled-background: initial;
+  --collabkit-composer-input-disabled-border: initial;
+  --collabkit-composer-input-disabled-color: initial;
+  --collabkit-composer-input-placeholder-color: initial;
+  --collabkit-facepile-overlap: initial;
+  --collabkit-facepile-avatar-border-size: initial;
+  --collabkit-facepile-avatar-border-color: initial;
+  --collabkit-facepile-avatar-hover-border-color: initial;
+  --collabkit-inbox-gap: initial;
+  --collabkit-inbox-width: initial;
+  --collabkit-inbox-background: initial;
+  --collabkit-inbox-header-color: initial;
+  --collabkit-inbox-header-font-size: initial;
+  --collabkit-inbox-header-font-weight: initial;
+  --collabkit-inbox-header-line-height: initial;
+  --collabkit-inbox-header-letter-spacing: initial;
+  --collabkit-inbox-item-gap: initial;
+  --collabkit-inbox-item-padding-top: initial;
+  --collabkit-inbox-item-padding-bottom: initial;
+  --collabkit-inbox-item-padding-left: initial;
+  --collabkit-inbox-item-padding-right: initial;
+  --collabkit-inbox-item-background: initial;
+  --collabkit-inbox-item-border-bottom: initial;
+  --collabkit-inbox-item-hover-background: initial;
+  --collabkit-inbox-item-active-background: initial;
+  --collabkit-inbox-item-facepile-avatar-size: initial;
+  --collabkit-inbox-item-reply-count-letter-spacing: initial;
+  --collabkit-inbox-item-reply-count-font-weight: initial;
+  --collabkit-inbox-item-reply-count-color: initial;
+  --collabkit-inbox-item-reply-count-font-size: initial;
+  --collabkit-inbox-item-reply-count-line-height: initial;
+  --collabkit-inbox-item-timestamp-font-weight: initial;
+  --collabkit-inbox-item-timestamp-font-size: initial;
+  --collabkit-inbox-item-timestamp-line-height: initial;
+  --collabkit-inbox-item-timestamp-letter-spacing: initial;
+  --collabkit-inbox-item-timestamp-color: initial;
+  --collabkit-inbox-item-unread-dot-width: initial;
+  --collabkit-inbox-item-unread-dot-height: initial;
+  --collabkit-inbox-item-unread-dot-border-radius: initial;
+  --collabkit-inbox-item-unread-dot-background: initial;
+  --collabkit-mentions-pill-font-weight: initial;
+  --collabkit-mentions-pill-font-size: initial;
+  --collabkit-mentions-pill-line-height: initial;
+  --collabkit-mentions-pill-letter-spacing: initial;
+  --collabkit-mentions-pill-color: initial;
+  --collabkit-mentions-pill-background: transparent;
+  --collabkit-mentions-pill-border-radius: 0px;
+  --collabkit-mentions-pill-padding: 0;
+  --collabkit-mentions-typeahead-background: initial;
+  --collabkit-mentions-typeahead-border: initial;
+  --collabkit-mentions-typeahead-border-radius: 6px;
+  --collabkit-mentions-typeahead-box-shadow: initial;
+  --collabkit-mentions-typeahead-padding: 0;
+  --collabkit-mentions-typeahead-item-font-size: initial;
+  --collabkit-mentions-typeahead-item-font-weight: initial;
+  --collabkit-mentions-typeahead-item-letter-spacing: initial;
+  --collabkit-mentions-typeahead-item-line-height: initial;
+  --collabkit-mentions-typeahead-item-padding: initial;
+  --collabkit-mentions-typeahead-item-color: initial;
+  --collabkit-mentions-typeahead-item-gap: initial;
+  --collabkit-mentions-typeahead-item-mark-color: inherit;
+  --collabkit-mentions-typeahead-item-mark-font-weight: initial;
+  --collabkit-mentions-typeahead-item-mark-background: transparent;
+  --collabkit-mentions-typeahead-item-mark-border-radius: 0;
+  --collabkit-mentions-typeahead-item-active-background: initial;
+  --collabkit-mentions-typeahead-item-active-color: initial;
+  --collabkit-mentions-typeahead-item-name-and-email-wrappper-gap: initial;
+  --collabkit-mentions-typeahead-item-name-and-email-wrappper-flex-direction: column;
+  --collabkit-mentions-typeahead-item-name-color: initial;
+  --collabkit-mentions-typeahead-item-name-font-size: initial;
+  --collabkit-mentions-typeahead-item-name-line-height: intial;
+  --collabkit-mentions-typeahead-item-name-font-weight: initial;
+  --collabkit-mentions-typeahead-item-name-letter-spacing: initial;
+  --collabkit-mentions-typeahead-item-email-display: inline;
+  --collabkit-mentions-typeahead-item-email-color: initial;
+  --collabkit-mentions-typeahead-item-email-font-size: initial;
+  --collabkit-mentions-typeahead-item-email-line-height: initial;
+  --collabkit-mentions-typeahead-item-email-font-weight: initial;
+  --collabkit-mentions-typeahead-item-email-letter-spacing: initial;
+  --collabkit-menu-background: initial;
+  --collabkit-menu-border: initial;
+  --collabkit-menu-border-radius: initial;
+  --collabkit-menu-box-shadow: initial;
+  --collabkit-menu-item-color: initial;
+  --collabkit-menu-item-font-size: initial;
+  --collabkit-menu-item-font-weight: initial;
+  --collabkit-menu-item-letter-spacing: initial;
+  --collabkit-menu-item-line-height: initial;
+  --collabkit-menu-item-active-color: initial;
+  --collabkit-menu-item-active-background: initial;
+  --collabkit-menu-item-hover-color: initial;
+  --collabkit-menu-item-hover-background: initial;
+  --collabkit-profile-gap: initial;
+  --collabkit-profile-avatar-border-radius: 50%;
+  --collabkit-profile-avatar-font-size: initial;
+  --collabkit-profile-avatar-color: initial;
+  --collabkit-profile-avatar-background: hsl(0, 0%, 60%);
+  --collabkit-profile-avatar-font-weight: initial;
+  --collabkit-profile-name-color: initial;
+  --collabkit-profile-name-font-size: initial;
+  --collabkit-profile-name-font-weight: initial;
+  --collabkit-profile-name-line-height: initial;
+  --collabkit-profile-name-letter-spacing: initial;
+  --collabkit-scrollbar-thumb-background: initial;
+  --collabkit-scrollbar-thumb-width: initial;
+  --collabkit-scrollbar-thumb-border-radius: initial;
+  --collabkit-scrollbar-padding: initial;
+  --collabkit-scrollbar-background: initial;
+  --collabkit-scrollbar-hover-background: initial;
+  --collabkit-scrollbar-border-radius: initial;
+  --collabkit-shadow-standard: 0px 1px 2px rgba(0, 0, 0, 0.1);
+  --collabkit-shadow-high: 0px -12px 24px rgba(0, 0, 0, 0.02), 0px 12px 24px rgba(0, 0, 0, 0.06);
+  --collabkit-sidebar-box-shadow: initial;
+  --collabkit-sidebar-background: initial;
+  --collabkit-sidebar-border-left: initial;
+  --collabkit-sidebar-width: initial;
+  --collabkit-sidebar-title-font-size: initial;
+  --collabkit-sidebar-title-line-height: initial;
+  --collabkit-sidebar-title-letter-spacing: initial;
+  --collabkit-sidebar-title-color: initial;
+  --collabkit-sidebar-title-font-weight: initial;
+  --collabkit-sidebar-title-padding-top: initial;
+  --collabkit-sidebar-title-padding-bottom: initial;
+  --collabkit-sidebar-title-border-bottom: initial;
+  --collabkit-sidebar-title-border-bottom-color: initial;
+  --collabkit-sidebar-unreadDot-color: initial;
+  --collabkit-thread-background: initial;
+  --collabkit-thread-border: initial;
+  --collabkit-thread-border-radius: initial;
+  --collabkit-thread-box-shadow: initial;
+  --collabkit-thread-header-color: initial;
+  --collabkit-thread-header-font-size: initial;
+  --collabkit-thread-header-font-weight: initial;
+  --collabkit-thread-header-line-height: initial;
+  --collabkit-thread-header-letter-spacing: initial;
+}
+._1dpjd7h0 {
+  --collabkit-inbox-new-indicator-color: initial;
+  --collabkit-inbox-new-indicator-font-size: initial;
+  --collabkit-inbox-new-indicator-font-weight: initial;
+  --collabkit-inbox-new-indicator-line-height: initial;
+  --collabkit-inbox-new-indicator-letter-spacing: initial;
+  --collabkit-inbox-new-indicator-inlay-background: initial;
+  --collabkit-inbox-new-indicator-line-background: initial;
+  --collabkit-inbox-new-indicator-padding: initial;
+  --collabkit-inbox-new-indicator-margin: initial;
+  --collabkit-color-background: hsl(0, 0%, 13%);
+  --collabkit-color-surface: hsl(0, 0%, 24%);
+  --collabkit-color-surface-hover: hsl(0, 0%, 7%);
+  --collabkit-color-surface-overlay: hsla(0, 0%, 100%, 0.08);
+  --collabkit-color-text-primary: hsl(0, 0%, 100%);
+  --collabkit-color-text-secondary: hsl(0, 0%, 60%);
+  --collabkit-color-text-disabled: hsl(0, 0%, 24%);
+  --collabkit-color-text-link: hsl(0, 0%, 10%);
+  --collabkit-color-border: hsla(0, 0%, 100%, 0.08);
+  --collabkit-color-icon: hsl(0, 0%, 60%);
+  --collabkit-color-icon-secondary: hsl(0, 0%, 60%);
+  --collabkit-color-icon-disabled: hsl(0, 0%, 89%, 1);
+  --collabkit-color-attention: hsl(2, 73%, 62%);
+  --collabkit-color-attention-blue: hsl(211, 95%, 59%);
+  --collabkit-color-pin: hsl(0, 0%, 89%, 1);
+  --collabkit-color-pin-hover: hsl(0, 0%, 73%);
+  --collabkit-color-pin-active: hsl(211, 95%, 59%);
+  --collabkit-color-pin-disconnected: hsl(2, 73%, 62%);
+  --collabkit-comment-list-gap: initial;
+  --collabkit-comment-list-padding: initial;
+  --collabkit-text-tiny-font-size: 9px;
+  --collabkit-text-tiny-line-height: 11px;
+  --collabkit-text-tiny-letter-spacing: 0px;
+  --collabkit-text-small-font-size: 11px;
+  --collabkit-text-small-line-height: 13px;
+  --collabkit-text-small-letter-spacing: 0px;
+  --collabkit-text-base-font-size: 13px;
+  --collabkit-text-base-line-height: 18px;
+  --collabkit-text-base-letter-spacing: 0px;
+  --collabkit-text-large-font-size: 14px;
+  --collabkit-text-large-line-height: 17px;
+  --collabkit-text-large-letter-spacing: 0px;
+  --collabkit-font-weight-regular: 400;
+  --collabkit-font-weight-medium: 500;
+  --collabkit-font-weight-bold: 700;
+  --collabkit-font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
+    Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  --collabkit-space-0: 0px;
+  --collabkit-space-1: 4px;
+  --collabkit-space-2: calc(var(--collabkit-space-1) * 2);
+  --collabkit-space-3: calc(var(--collabkit-space-1) * 3);
+  --collabkit-space-4: calc(var(--collabkit-space-1) * 4);
+  --collabkit-space-5: calc(var(--collabkit-space-1) * 5);
+  --collabkit-space-6: calc(var(--collabkit-space-1) * 6);
+  --collabkit-space-7: calc(var(--collabkit-space-1) * 7);
+  --collabkit-space-8: calc(var(--collabkit-space-1) * 8);
+  --collabkit-icon-button-background: initial;
+  --collabkit-icon-button-color: initial;
+  --collabkit-icon-button-width: initial;
+  --collabkit-icon-button-height: initial;
+  --collabkit-icon-button-border-radius: initial;
+  --collabkit-icon-button-active-background: initial;
+  --collabkit-icon-button-hover-background: initial;
+  --collabkit-icon-button-small-width: initial;
+  --collabkit-icon-button-small-height: initial;
+  --collabkit-button-group-gap: initial;
+  --collabkit-button-group-padding: initial;
+  --collabkit-button-font-size: initial;
+  --collabkit-button-line-height: initial;
+  --collabkit-button-font-weight: initial;
+  --collabkit-button-letter-spacing: initial;
+  --collabkit-button-border-radius: initial;
+  --collabkit-button-padding: initial;
+  --collabkit-button-primary-color: initial;
+  --collabkit-button-primary-background: initial;
+  --collabkit-button-primary-letter-spacing: initial;
+  --collabkit-button-primary-font-weight: initial;
+  --collabkit-button-primary-font-size: initial;
+  --collabkit-button-primary-line-height: initial;
+  --collabkit-button-primary-active-color: initial;
+  --collabkit-button-primary-active-background: initial;
+  --collabkit-button-primary-hover-color: initial;
+  --collabkit-button-primary-hover-background: initial;
+  --collabkit-button-primary-disabled-color: initial;
+  --collabkit-button-primary-disabled-background: initial;
+  --collabkit-button-secondary-color: initial;
+  --collabkit-button-secondary-background: initial;
+  --collabkit-button-secondary-font-weight: initial;
+  --collabkit-button-secondary-letter-spacing: initial;
+  --collabkit-button-secondary-font-size: initial;
+  --collabkit-button-secondary-line-height: initial;
+  --collabkit-button-secondary-active-color: initial;
+  --collabkit-button-secondary-active-background: initial;
+  --collabkit-button-secondary-hover-color: initial;
+  --collabkit-button-secondary-hover-background: initial;
+  --collabkit-button-secondary-disabled-color: initial;
+  --collabkit-button-secondary-disabled-background: initial;
+  --collabkit-button-disabled-color: initial;
+  --collabkit-button-disabled-background: initial;
+  --collabkit-avatar-size: 24px;
+  --collabkit-avatar-placeholder-font-size: 12px;
+  --collabkit-avatar-color-amber: hsla(41, 95%, 66%, 1);
+  --collabkit-avatar-color-blue: hsla(211, 94%, 62%, 1);
+  --collabkit-avatar-color-brown: hsla(28, 36%, 54%, 1);
+  --collabkit-avatar-color-crimson: hsla(342, 70%, 62%, 1);
+  --collabkit-avatar-color-cyan: hsla(192, 55%, 50%, 1);
+  --collabkit-avatar-color-grass: hsla(124, 30%, 53%, 1);
+  --collabkit-avatar-color-green: hsla(146, 34%, 49%, 1);
+  --collabkit-avatar-color-indigo: hsla(225, 70%, 59%, 1);
+  --collabkit-avatar-color-lime: hsla(74, 78%, 64%, 1);
+  --collabkit-avatar-color-mint: hsla(162, 71%, 78%, 1);
+  --collabkit-avatar-color-orange: hsla(23, 90%, 60%, 1);
+  --collabkit-avatar-color-pink: hsla(325, 60%, 59%, 1);
+  --collabkit-avatar-color-plum: hsla(291, 43%, 55%, 1);
+  --collabkit-avatar-color-purple: hsla(268, 50%, 58%, 1);
+  --collabkit-avatar-color-red: hsla(2, 73%, 62%, 1);
+  --collabkit-avatar-color-sky: hsla(194, 96%, 78%, 1);
+  --collabkit-avatar-color-teal: hsla(173, 45%, 46%, 1);
+  --collabkit-avatar-color-tomato: hsla(11, 71%, 58%, 1);
+  --collabkit-avatar-color-violet: hsla(11, 71%, 58%, 1);
+  --collabkit-avatar-color-yellow: hsla(52, 100%, 71%, 1);
+  --collabkit-comment-padding-left: initial;
+  --collabkit-comment-padding-right: initial;
+  --collabkit-comment-padding-top: initial;
+  --collabkit-comment-padding-bottom: initial;
+  --collabkit-comment-gap: initial;
+  --collabkit-comment-hover-background: initial;
+  --collabkit-comment-header-gap: initial;
+  --collabkit-comment-header-name-and-timestamp-gap: initial;
+  --collabkit-comment-header-name-and-timestamp-flex-direction: initial;
+  --collabkit-comment-header-profile-gap: initial;
+  --collabkit-comment-actions-gap: initial;
+  --collabkit-comment-body-color: initial;
+  --collabkit-comment-body-font-size: initial;
+  --collabkit-comment-body-line-height: initial;
+  --collabkit-comment-body-letter-spacing: initial;
+  --collabkit-comment-body-font-weight: initial;
+  --collabkit-comment-timestamp-color: initial;
+  --collabkit-comment-timestamp-font-size: initial;
+  --collabkit-comment-timestamp-line-height: initial;
+  --collabkit-comment-timestamp-letter-spacing: initial;
+  --collabkit-comment-timestamp-font-weight: initial;
+  --collabkit-comment-reply-count-button-padding: initial;
+  --collabkit-comment-reply-count-button-border-radius: initial;
+  --collabkit-comment-reply-count-button-background: initial;
+  --collabkit-comment-reply-count-button-border: initial;
+  --collabkit-comment-reply-count-button-hover-background: initial;
+  --collabkit-comment-reply-count-button-hover-border: initial;
+  --collabkit-comment-reply-count-button-text-color: initial;
+  --collabkit-comment-reply-count-button-text-font-size: initial;
+  --collabkit-comment-reply-count-button-text-line-height: initial;
+  --collabkit-comment-reply-count-button-text-letter-spacing: initial;
+  --collabkit-comment-reply-count-button-text-font-weight: initial;
+  --collabkit-comment-reply-count-button-icon-color: initial;
+  --collabkit-comment-reply-count-button-icon-font-size: initial;
+  --collabkit-comment-reply-count-button-icon-line-height: initial;
+  --collabkit-comment-reply-count-button-icon-letter-spacing: initial;
+  --collabkit-comment-reply-count-button-icon-font-weight: initial;
+  --collabkit-composer-border: initial;
+  --collabkit-composer-padding: initial;
+  --collabkit-composer-gap: initial;
+  --collabkit-composer-typing-indicator-color: initial;
+  --collabkit-composer-typing-indicator-font-size: initial;
+  --collabkit-composer-typing-indicator-line-height: initial;
+  --collabkit-composer-typing-indicator-font-weight: initial;
+  --collabkit-composer-typing-indicator-letter-spacing: initial;
+  --collabkit-composer-input-caret-color: initial;
+  --collabkit-composer-input-color: initial;
+  --collabkit-composer-input-font-size: initial;
+  --collabkit-composer-input-line-height: initial;
+  --collabkit-composer-input-letter-spacing: initial;
+  --collabkit-composer-input-font-weight: initial;
+  --collabkit-composer-input-padding: initial;
+  --collabkit-composer-input-background: initial;
+  --collabkit-composer-input-border: initial;
+  --collabkit-composer-input-border-radius: initial;
+  --collabkit-composer-input-hover-background: initial;
+  --collabkit-composer-input-hover-border: initial;
+  --collabkit-composer-input-active-background: initial;
+  --collabkit-composer-input-active-border: initial;
+  --collabkit-composer-input-disabled-background: initial;
+  --collabkit-composer-input-disabled-border: initial;
+  --collabkit-composer-input-disabled-color: initial;
+  --collabkit-composer-input-placeholder-color: initial;
+  --collabkit-facepile-overlap: initial;
+  --collabkit-facepile-avatar-border-size: initial;
+  --collabkit-facepile-avatar-border-color: initial;
+  --collabkit-facepile-avatar-hover-border-color: initial;
+  --collabkit-inbox-gap: initial;
+  --collabkit-inbox-width: initial;
+  --collabkit-inbox-background: initial;
+  --collabkit-inbox-header-color: initial;
+  --collabkit-inbox-header-font-size: initial;
+  --collabkit-inbox-header-font-weight: initial;
+  --collabkit-inbox-header-line-height: initial;
+  --collabkit-inbox-header-letter-spacing: initial;
+  --collabkit-inbox-item-gap: initial;
+  --collabkit-inbox-item-padding-top: initial;
+  --collabkit-inbox-item-padding-bottom: initial;
+  --collabkit-inbox-item-padding-left: initial;
+  --collabkit-inbox-item-padding-right: initial;
+  --collabkit-inbox-item-background: initial;
+  --collabkit-inbox-item-border-bottom: initial;
+  --collabkit-inbox-item-hover-background: initial;
+  --collabkit-inbox-item-active-background: initial;
+  --collabkit-inbox-item-facepile-avatar-size: initial;
+  --collabkit-inbox-item-reply-count-letter-spacing: initial;
+  --collabkit-inbox-item-reply-count-font-weight: initial;
+  --collabkit-inbox-item-reply-count-color: initial;
+  --collabkit-inbox-item-reply-count-font-size: initial;
+  --collabkit-inbox-item-reply-count-line-height: initial;
+  --collabkit-inbox-item-timestamp-font-weight: initial;
+  --collabkit-inbox-item-timestamp-font-size: initial;
+  --collabkit-inbox-item-timestamp-line-height: initial;
+  --collabkit-inbox-item-timestamp-letter-spacing: initial;
+  --collabkit-inbox-item-timestamp-color: initial;
+  --collabkit-inbox-item-unread-dot-width: initial;
+  --collabkit-inbox-item-unread-dot-height: initial;
+  --collabkit-inbox-item-unread-dot-border-radius: initial;
+  --collabkit-inbox-item-unread-dot-background: initial;
+  --collabkit-mentions-pill-font-weight: initial;
+  --collabkit-mentions-pill-font-size: initial;
+  --collabkit-mentions-pill-line-height: initial;
+  --collabkit-mentions-pill-letter-spacing: initial;
+  --collabkit-mentions-pill-color: initial;
+  --collabkit-mentions-pill-background: transparent;
+  --collabkit-mentions-pill-border-radius: 0px;
+  --collabkit-mentions-pill-padding: 0;
+  --collabkit-mentions-typeahead-background: initial;
+  --collabkit-mentions-typeahead-border: initial;
+  --collabkit-mentions-typeahead-border-radius: 6px;
+  --collabkit-mentions-typeahead-box-shadow: initial;
+  --collabkit-mentions-typeahead-padding: 0;
+  --collabkit-mentions-typeahead-item-font-size: initial;
+  --collabkit-mentions-typeahead-item-font-weight: initial;
+  --collabkit-mentions-typeahead-item-letter-spacing: initial;
+  --collabkit-mentions-typeahead-item-line-height: initial;
+  --collabkit-mentions-typeahead-item-padding: initial;
+  --collabkit-mentions-typeahead-item-color: initial;
+  --collabkit-mentions-typeahead-item-gap: initial;
+  --collabkit-mentions-typeahead-item-mark-color: inherit;
+  --collabkit-mentions-typeahead-item-mark-font-weight: initial;
+  --collabkit-mentions-typeahead-item-mark-background: transparent;
+  --collabkit-mentions-typeahead-item-mark-border-radius: 0;
+  --collabkit-mentions-typeahead-item-active-background: initial;
+  --collabkit-mentions-typeahead-item-active-color: initial;
+  --collabkit-mentions-typeahead-item-name-and-email-wrappper-gap: initial;
+  --collabkit-mentions-typeahead-item-name-and-email-wrappper-flex-direction: column;
+  --collabkit-mentions-typeahead-item-name-color: initial;
+  --collabkit-mentions-typeahead-item-name-font-size: initial;
+  --collabkit-mentions-typeahead-item-name-line-height: intial;
+  --collabkit-mentions-typeahead-item-name-font-weight: initial;
+  --collabkit-mentions-typeahead-item-name-letter-spacing: initial;
+  --collabkit-mentions-typeahead-item-email-display: none;
+  --collabkit-mentions-typeahead-item-email-color: initial;
+  --collabkit-mentions-typeahead-item-email-font-size: initial;
+  --collabkit-mentions-typeahead-item-email-line-height: initial;
+  --collabkit-mentions-typeahead-item-email-font-weight: initial;
+  --collabkit-mentions-typeahead-item-email-letter-spacing: initial;
+  --collabkit-menu-background: initial;
+  --collabkit-menu-border: initial;
+  --collabkit-menu-border-radius: initial;
+  --collabkit-menu-box-shadow: initial;
+  --collabkit-menu-item-color: initial;
+  --collabkit-menu-item-font-size: initial;
+  --collabkit-menu-item-font-weight: initial;
+  --collabkit-menu-item-letter-spacing: initial;
+  --collabkit-menu-item-line-height: initial;
+  --collabkit-menu-item-active-color: initial;
+  --collabkit-menu-item-active-background: initial;
+  --collabkit-menu-item-hover-color: initial;
+  --collabkit-menu-item-hover-background: initial;
+  --collabkit-profile-gap: initial;
+  --collabkit-profile-avatar-border-radius: 50%;
+  --collabkit-profile-avatar-font-size: initial;
+  --collabkit-profile-avatar-color: initial;
+  --collabkit-profile-avatar-background: hsl(0, 0%, 60%);
+  --collabkit-profile-avatar-font-weight: initial;
+  --collabkit-profile-name-color: initial;
+  --collabkit-profile-name-font-size: initial;
+  --collabkit-profile-name-font-weight: initial;
+  --collabkit-profile-name-line-height: initial;
+  --collabkit-profile-name-letter-spacing: initial;
+  --collabkit-scrollbar-thumb-background: initial;
+  --collabkit-scrollbar-thumb-width: initial;
+  --collabkit-scrollbar-thumb-border-radius: initial;
+  --collabkit-scrollbar-padding: initial;
+  --collabkit-scrollbar-background: initial;
+  --collabkit-scrollbar-hover-background: initial;
+  --collabkit-scrollbar-border-radius: initial;
+  --collabkit-shadow-standard: 0px 1px 2px rgba(0, 0, 0, 0.1);
+  --collabkit-shadow-high: 0px -12px 24px rgba(0, 0, 0, 0.02), 0px 12px 24px rgba(0, 0, 0, 0.06);
+  --collabkit-sidebar-box-shadow: initial;
+  --collabkit-sidebar-background: initial;
+  --collabkit-sidebar-border-left: initial;
+  --collabkit-sidebar-width: initial;
+  --collabkit-sidebar-title-font-size: initial;
+  --collabkit-sidebar-title-line-height: initial;
+  --collabkit-sidebar-title-letter-spacing: initial;
+  --collabkit-sidebar-title-color: initial;
+  --collabkit-sidebar-title-font-weight: initial;
+  --collabkit-sidebar-title-padding-top: initial;
+  --collabkit-sidebar-title-padding-bottom: initial;
+  --collabkit-sidebar-title-border-bottom: initial;
+  --collabkit-sidebar-title-border-bottom-color: initial;
+  --collabkit-sidebar-unreadDot-color: initial;
+  --collabkit-thread-background: initial;
+  --collabkit-thread-border: initial;
+  --collabkit-thread-border-radius: initial;
+  --collabkit-thread-box-shadow: initial;
+  --collabkit-thread-header-color: initial;
+  --collabkit-thread-header-font-size: initial;
+  --collabkit-thread-header-font-weight: initial;
+  --collabkit-thread-header-line-height: initial;
+  --collabkit-thread-header-letter-spacing: initial;
+}
+._43g8ad0 * {
+  box-sizing: border-box;
+}
+._1axa3ol0 {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  cursor: pointer;
+  pointer-events: all;
+  min-width: 110px;
+  border-radius: var(--collabkit-menu-border-radius, 6px);
+  background: var(--collabkit-menu-background, var(--collabkit-color-surface));
+  border: 1px solid var(--collabkit-color-border);
+  box-shadow: var(--collabkit-menu-box-shadow, var(--collabkit-shadow-standard));
+  outline: none;
+  font-family: var(--collabkit-font-family);
+  z-index: 3;
+}
+._1axa3ol0:hover {
+  cursor: pointer;
+}
+._1axa3ol1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  border: none;
+  text-align: left;
+  white-space: nowrap;
+  margin: 0;
+  outline: 0;
+  padding: var(--collabkit-space-1) var(--collabkit-space-2);
+  border-radius: 5px;
+  cursor: pointer;
+  background: var(--collabkit-menu-background, var(--collabkit-color-background));
+  color: var(--collabkit-menu-item-color, var(--collabkit-color-text-primary));
+  font-size: var(--collabkit-menu-item-font-size, var(--collabkit-text-base-font-size));
+  line-height: var(--collabkit-menu-item-line-height, var(--collabkit-text-base-line-height));
+  font-weight: var(--collabkit-menu-item-font-weight, var(--collabkit-font-weight-regular));
+  letter-spacing: var(
+    --collabkit-menu-item-letter-spacing,
+    var(--collabkit-text-base-letter-spacing)
+  );
+  font-family: var(--collabkit-font-family);
+}
+._1axa3ol1:focus,
+._1axa3ol1:not([disabled]):active {
+  color: var(--collabkit-menu-item-active-color, var(--collabkit-color-text-primary));
+  background: var(--collabkit-menu-item-active-background, var(--collabkit-color-surface));
+}
+._1axa3ol1:not(:first-of-type) {
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+}
+._1axa3ol1:not(:last-of-type) {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+._1axa3ol3 {
+  margin-left: var(--collabkit-space-2);
+}
+._1udouyv0 {
+  width: var(--collabkit-avatar-size, 24px);
+  height: var(--collabkit-avatar-size, 24px);
+  border-radius: var(--collabkit-profile-avatar-border-radius);
+  font-size: var(
+    --collabkit-profile-avatar-font-size,
+    var(--collabkit-avatar-placeholder-font-size)
+  );
+  line-height: var(--collabkit-avatar-size, 24px);
+  color: var(--collabkit-profile-avatar-color, var(--collabkit-color-background));
+  flex-shrink: 0;
+  background: var(--collabkit-profile-avatar-background);
+  font-weight: var(--collabkit-profile-avatar-font-weight, var(--collabkit-font-weight-bold));
+  text-align: center;
+  vertical-align: middle;
+  cursor: inherit;
+  box-sizing: border-box;
+  user-select: none;
+  font-family: var(--collabkit-font-family);
+  text-transform: uppercase;
+}
+._1udouyv1 {
+  color: var(--collabkit-profile-name-color, var(--collabkit-color-text-primary));
+  font-size: var(--collabkit-profile-name-font-size, var(--collabkit-text-base-font-size));
+  font-weight: var(--collabkit-profile-name-font-weight, var(--collabkit-font-weight-bold));
+  line-height: var(--collabkit-profile-name-line-height, var(--collabkit-text-base-line-height));
+  letter-spacing: var(
+    --collabkit-profile-name-letter-spacing,
+    var(--collabkit-text-base-letter-spacing)
+  );
+  font-family: var(--collabkit-font-family);
+  word-break: break-word;
+}
+._1udouyv2 {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  gap: var(--collabkit-profile-gap, var(--collabkit-space-2));
+}
+._1muzgsq0 {
+  display: grid;
+  grid-template-columns: var(--collabkit-avatar-size) 1fr;
+  column-gap: var(--collabkit-comment-gap, var(--collabkit-space-3));
+  position: relative;
+  padding-left: var(--collabkit-comment-padding-left, var(--collabkit-space-4));
+  padding-right: var(--collabkit-comment-padding-right, var(--collabkit-space-4));
+  padding-top: var(--collabkit-comment-padding-top, calc(var(--collabkit-space-1) * 2));
+  padding-bottom: var(--collabkit-comment-padding-bottom, calc(var(--collabkit-space-1) * 2));
+  font-family: var(--collabkit-font-family);
+}
+._1muzgsq1 {
+  padding-left: var(--collabkit-comment-padding-left, calc(var(--collabkit-space-4) * 3.25));
+}
+._1muzgsq3 {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  align-items: baseline;
+  gap: var(--collabkit-comment-header-name-and-timestamp-gap, var(--collabkit-space-2));
+  font-family: var(--collabkit-font-family);
+  margin-bottom: var(--collabkit-space-1);
+}
+._1muzgsq4 {
+  background: var(--collabkit-color-surface);
+  border-radius: 6px;
+}
+._1muzgsq5 {
+  margin-top: var(--collabkit-space-2);
+  border: 1px solid var(--collabkit-color-border);
+  border-radius: 6px;
+  padding: var(--collabkit-space-0) var(--collabkit-space-1);
+  display: flex;
+  gap: var(--collabkit-space-1);
+  align-items: center;
+  margin-right: var(--collabkit-space-1);
+  cursor: pointer;
+}
+._1muzgsq6:hover {
+  border: 1px solid var(--collabkit-color-surface);
+  background: var(--collabkit-color-surface-overlay);
+}
+._1muzgsq7 {
+  border: 1px solid transparent;
+  background: var(--collabkit-color-surface);
+}
+._1muzgsq8 {
+  color: var(--collabkit-color-text-primary);
+  font-size: var(--collabkit-text-small-font-size);
+  font-weight: var(--collabkit-font-weight-bold);
+  letter-spacing: var(--collabkit-text-small-letter-spacing);
+  line-height: var(--collabkit-text-small-line-height);
+  font-family: var(--collabkit-font-family);
+}
+._1muzgsq9 {
+  color: red;
+  font-size: var(--collabkit-text-base-font-size);
+  line-height: var(--collabkit-text-base-line-height);
+}
+._1muzgsqa {
+  display: flex;
+  flex-direction: column;
+  gap: var(--collabkit-space-1);
+  padding: var(--collabkit-space-1) var(--collabkit-space-1);
+  font-size: var(--collabkit-text-small-font-size);
+  font-weight: var(--collabkit-font-weight-regular);
+  letter-spacing: var(--collabkit-text-small-letter-spacing);
+  background: var(--collabkit-color-surface);
+  border-radius: 6px;
+  color: var(--collabkit-color-text-primary);
+  box-shadow: var(--collabkit-shadow-standard);
+  border: 1px solid var(--collabkit-color-border);
+}
+._1muzgsqb {
+  display: flex;
+  align-self: flex-start;
+  align-items: flex-end;
+}
+._1muzgsqc {
+  margin-left: calc(
+    var(--collabkit-avatar-size) + var(--collabkit-comment-gap, var(--collabkit-space-2))
+  );
+}
+._1muzgsqd {
+  font-size: var(--collabkit-comment-body-font-size, var(--collabkit-text-base-font-size));
+  font-weight: var(--collabkit-comment-body-font-weight, var(--collabkit-font-weight-regular));
+  letter-spacing: var(
+    --collabkit-comment-body-letter-spacing,
+    var(--collabkit-text-base-letter-spacing)
+  );
+  line-height: var(--collabkit-comment-body-line-height, var(--collabkit-text-base-line-height));
+  font-family: var(--collabkit-font-family);
+  gap: var(--collabkit-space-1);
+  text-align: left;
+  position: relative;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  min-height: var(--collabkit-comment-body-line-height, var(--collabkit-text-base-line-height));
+  color: var(--collabkit-comment-body-color, var(--collabkit-color-text-primary));
+  padding-right: calc(var(--collabkit-space-3) * 3);
+}
+._1muzgsqe {
+  width: var(--collabkit-inbox-item-unread-dot-width, var(--collabkit-space-2));
+  height: var(--collabkit-inbox-item-unread-dot-height, var(--collabkit-space-2));
+  border-radius: var(--collabkit-inbox-item-unread-dot-border-radius, 50%);
+  font-family: var(--collabkit-font-family);
+  position: inherit;
+  left: inherit;
+  background: var(--collabkit-sidebar-unreadDot-color, var(--collabkit-color-attention-blue));
+}
+._1muzgsqf {
+  margin-top: var(--collabkit-space-1);
+  padding: var(
+    --collabkit-comment-reply-count-button-padding,
+    var(--collabkit-space-1) var(--collabkit-space-0)
+  );
+  background: var(--collabkit-comment-reply-count-button-background, transparent);
+  display: flex;
+  border-radius: 6px;
+  align-items: flex-end;
+  gap: var(--collabkit-space-1);
+  cursor: pointer;
+}
+._1muzgsqg {
+  font-size: var(
+    --collabkit-comment-reply-count-button-text-font-size,
+    var(--collabkit-text-small-font-size)
+  );
+  line-height: var(
+    --collabkit-comment-reply-count-button-text-line-height,
+    var(--collabkit-text-small-line-height)
+  );
+  font-weight: var(
+    --collabkit-comment-reply-count-button-text-font-weight,
+    var(--collabkit-font-weight-regular)
+  );
+  letter-spacing: var(
+    --collabkit-comment-reply-count-button-text-letter-spacing,
+    var(--collabkit-text-small-letter-spacing)
+  );
+  color: var(
+    --collabkit-comment-reply-count-button-text-color,
+    var(--collabkit-color-text-secondary)
+  );
+  font-family: var(--collabkit-font-family);
+}
+._1muzgsqh {
+  color: var(
+    --collabkit-comment-reply-count-button-icon-color,
+    var(--collabkit-color-text-secondary)
+  );
+}
+._1muzgsqh:hover {
+  color: var(
+    --collabkit-comment-reply-count-button-icon-color,
+    var(--collabkit-color-text-primary)
+  );
+}
+._1muzgsqi {
+  display: flex;
+  flex-direction: column;
+  gap: var(--collabkit-space-2);
+  margin-right: calc(var(--collabkit-comment-padding-right, var(--collabkit-space-4)) * -1);
+  font-family: var(--collabkit-font-family);
+  padding: 0 var(--collabkit-space-4) 0 0;
+}
+._1muzgsqj {
+  font-size: var(--collabkit-comment-timestamp-font-size, var(--collabkit-text-small-font-size));
+  font-weight: var(--collabkit-comment-timestamp-font-weight, var(--collabkit-font-weight-regular));
+  letter-spacing: var(
+    --collabkit-comment-timestamp-letter-spacing,
+    var(--collabkit-text-small-letter-spacing)
+  );
+  line-height: var(
+    --collabkit-comment-timestamp-line-height,
+    var(--collabkit-text-small-line-height)
+  );
+  font-family: var(--collabkit-font-family);
+  text-decoration: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--collabkit-comment-timestamp-color, var(--collabkit-color-text-secondary));
+}
+._1muzgsqk {
+  display: flex;
+  flex-direction: row;
+  font-family: var(--collabkit-font-family);
+  position: absolute;
+  right: var(--collabkit-space-4);
+  top: var(--collabkit-space-2);
+  transform: translateY(0);
+  background: var(--collabkit-color-background);
+  border: 1px solid var(--collabkit-color-border);
+  border-radius: 6px;
+  opacity: 1;
+}
+._1muzgsqk:empty {
+  display: none;
+}
+._1muzgsql p {
+  margin: 0;
+  padding: 0;
+  font-size: var(--collabkit-comment-body-font-size, var(--collabkit-text-base-font-size));
+  font-weight: var(--collabkit-comment-body-font-weight, var(--collabkit-font-weight-regular));
+  color: var(--collabkit-comment-body-color, var(--collabkit-color-text-primary));
+  line-height: var(--collabkit-comment-body-line-height, var(--collabkit-text-base-line-height));
+  letter-spacing: var(
+    --collabkit-comment-body-letter-spacing,
+    var(--collabkit-text-base-letter-spacing)
+  );
+  font-family: var(--collabkit-font-family);
+}
+._1muzgsql a {
+  text-decoration: none !important;
+  font-weight: var(
+    --collabkit-mentions-pill-font-weight,
+    var(--collabkit-font-weight-bold)
+  ) !important;
+  color: var(--collabkit-mentions-pill-color, var(--collabkit-color-text-primary)) !important;
+  font-family: var(--collabkit-font-family) !important;
+}
+._1muzgsqm p {
+  margin: 0 !important;
+  padding: 0 !important;
+  font-size: var(
+    --collabkit-comment-body-font-size,
+    var(--collabkit-text-base-font-size)
+  ) !important;
+  font-weight: var(
+    --collabkit-comment-body-font-weight,
+    var(--collabkit-font-weight-regular)
+  ) !important;
+  color: var(--collabkit-comment-body-color, var(--collabkit-color-text-primary)) !important;
+  line-height: var(
+    --collabkit-comment-body-line-height,
+    var(--collabkit-text-base-line-height)
+  ) !important;
+  letter-spacing: var(
+    --collabkit-comment-body-letter-spacing,
+    var(--collabkit-text-base-letter-spacing)
+  ) !important;
+  font-family: var(--collabkit-font-family) !important;
+}
+._1muzgsqm a {
+  text-decoration: none !important;
+  font-weight: var(
+    --collabkit-mentions-pill-font-weight,
+    var(--collabkit-font-weight-bold)
+  ) !important;
+  color: var(--collabkit-mentions-pill-color, var(--collabkit-color-text-primary)) !important;
+  cursor: default !important;
+  font-family: var(--collabkit-font-family) !important;
+}
+._1qtl0z90 {
+  position: absolute;
+  background: var(--collabkit-mentions-typeahead-background, var(--collabkit-color-surface));
+  border-radius: var(--collabkit-mentions-typeahead-border-radius);
+  z-index: 999;
+  padding: var(--collabkit-mentions-typeahead-padding);
+  box-shadow: var(--collabkit-mentions-typeahead-box-shadow, var(--collabkit-shadow-standard));
+  border: var(--collabkit-mentions-typeahead-border, 1px solid var(--collabkit-color-border));
+  font-family: var(--collabkit-font-family);
+  min-width: 200px;
+}
+._1qtl0z91 {
+  background: var(--collabkit-mentions-typeahead-item-mark-background);
+  border-radius: var(--collabkit-mentions-typeahead-item-mark-border-radius);
+  color: var(--collabkit-mentions-typeahead-item-mark-color);
+  font-weight: var(
+    --collabkit-mentions-typeahead-item-mark-font-weight,
+    var(--collabkit-font-weight-bold)
+  );
+  font-family: var(--collabkit-font-family);
+}
+._1qtl0z92 {
+  padding: 0;
+  list-style: none;
+  margin: 0;
+  border-radius: var(--collabkit-mentions-typeahead-border-radius);
+  z-index: 999;
+  width: 100%;
+  max-height: 320px;
+}
+._1qtl0z93 {
+  gap: var(
+    --collabkit-mentions-typeahead-item-name-and-email-wrappper-gap,
+    var(--collabkit-space-1)
+  );
+  flex-direction: var(--collabkit-mentions-typeahead-item-name-and-email-wrappper-flex-direction);
+  display: flex;
+  font-family: var(--collabkit-font-family);
+}
+._1qtl0z94 {
+  padding: var(--collabkit-mentions-typeahead-item-padding, var(--collabkit-space-2));
+  margin: 0;
+  box-sizing: border-box;
+  min-width: 10ch;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: left;
+  align-items: center;
+  gap: var(--collabkit-mentions-typeahead-item-gap, var(--collabkit-space-2));
+  outline: none;
+  cursor: pointer;
+  color: var(--collabkit-mentions-typeahead-item-color, var(--collabkit-color-text-primary));
+  font-weight: var(
+    --collabkit-mentions-typeahead-item-font-weight,
+    var(--collabkit-font-weight-regular)
+  );
+  font-size: var(
+    --collabkit-mentions-typeahead-item-font-size,
+    var(--collabkit-text-base-font-size)
+  );
+  line-height: var(
+    --collabkit-mentions-typeahead-item-line-height,
+    var(--collabkit-text-base-line-height)
+  );
+  letter-spacing: var(
+    --collabkit-mentions-typeahead-item-letter-spacing,
+    var(--collabkit-text-base-letter-spacing)
+  );
+  font-family: var(--collabkit-font-family);
+}
+._1qtl0z94:first-of-type {
+  border-top-left-radius: var(--collabkit-mentions-typeahead-border-radius);
+  border-top-right-radius: var(--collabkit-mentions-typeahead-border-radius);
+}
+._1qtl0z94:last-of-type {
+  border-bottom-left-radius: var(--collabkit-mentions-typeahead-border-radius);
+  border-bottom-right-radius: var(--collabkit-mentions-typeahead-border-radius);
+}
+._1qtl0z95 {
+  background: var(
+    --collabkit-mentions-typeahead-item-active-background,
+    var(--collabkit-color-surface-overlay)
+  );
+  color: var(--collabkit-mentions-typeahead-item-active-color, var(--collabkit-color-text-primary));
+}
+._1qtl0z96 {
+  color: var(
+    --collabkit-mentions-typeahead-item-name-color,
+    var(--collabkit-mentions-typeahead-item-color, var(--collabkit-color-text-primary))
+  );
+  font-weight: var(
+    --collabkit-mentions-typeahead-item-name-font-weight,
+    var(--collabkit-mentions-typeahead-item-font-weight, var(--collabkit-font-weight-bold))
+  );
+  font-size: var(
+    --collabkit-mentions-typeahead-item-name-font-size,
+    var(--collabkit-mentions-typeahead-item-font-size, var(--collabkit-text-base-font-size))
+  );
+  line-height: var(
+    --collabkit-mentions-typeahead-item-name-line-height,
+    var(--collabkit-mentions-typeahead-item-line-height, var(--collabkit-text-base-line-height))
+  );
+  letter-spacing: var(
+    --collabkit-mentions-typeahead-item-name-letter-spacing,
+    var(
+      --collabkit-mentions-typeahead-item-letter-spacing,
+      var(--collabkit-text-base-letter-spacing)
+    )
+  );
+}
+._1qtl0z97 {
+  color: var(
+    --collabkit-mentions-typeahead-item-email-color,
+    var(--collabkit-mentions-typeahead-item-color, var(--collabkit-color-text-secondary))
+  );
+  font-weight: var(
+    --collabkit-mentions-typeahead-item-email-font-weight,
+    var(--collabkit-mentions-typeahead-item-font-weight, var(--collabkit-font-weight-regular))
+  );
+  font-size: var(
+    --collabkit-mentions-typeahead-item-email-font-size,
+    var(--collabkit-mentions-typeahead-item-font-size, var(--collabkit-text-small-font-size))
+  );
+  line-height: var(
+    --collabkit-mentions-typeahead-item-email-line-height,
+    var(--collabkit-mentions-typeahead-item-line-height, var(--collabkit-text-small-line-height))
+  );
+  letter-spacing: var(
+    --collabkit-mentions-typeahead-item-email-letter-spacing,
+    var(
+      --collabkit-mentions-typeahead-item-letter-spacing,
+      var(--collabkit-text-small-letter-spacing)
+    )
+  );
+}
+.collabkit-mention-node {
+  font-weight: var(--collabkit-mentions-pill-font-weight, var(--collabkit-font-weight-bold));
+  color: var(--collabkit-mentions-pill-color, var(--collabkit-color-text-primary));
+  background: var(--collabkit-mentions-pill-background);
+  border-radius: var(--collabkit-mentions-pill-border-radius);
+  padding: var(--collabkit-mentions-pill-padding);
+  font-size: var(--collabkit-mentions-pill-font-size, var(--collabkit-text-base-font-size));
+  line-height: var(--collabkit-mentions-pill-line-height, var(--collabkit-text-base-line-height));
+  letter-spacing: var(
+    --collabkit-mentions-pill-letter-spacing,
+    var(--collabkit-text-base-letter-spacing)
+  );
+}
+.ly3hvb0 {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.ly3hvb1 {
+  width: 100%;
+  height: 100%;
+  border-radius: var(--collabkit-scrollbar-border-radius);
+  display: flex;
+  flex-direction: column;
+  max-height: 0;
+}
+.ly3hvb2 {
+  display: flex;
+  user-select: none;
+  touch-action: none;
+  border-radius: var(--collabkit-scrollbar-border-radius, 6px);
+  padding: var(--collabkit-scrollbar-padding, 1px);
+  background: var(--collabkit-scrollbar-background, transparent);
+  transition: background 0.16s ease-out;
+  font-family: var(--collabkit-font-family);
+}
+.ly3hvb2:hover {
+  background: var(--collabkit-scrollbar-hover-background, transparent);
+}
+.ly3hvb2[data-orientation='vertical'] {
+  width: var(--collabkit-scrollbar-thumb-width, 8px);
+}
+.ly3hvb2[data-orientation='horizontal'] {
+  flex-direction: column;
+  height: var(--collabkit-scrollbar-thumb-width, 2px);
+}
+.ly3hvb3 {
+  flex: 1;
+  background: var(--collabkit-scrollbar-thumb-background, var(--collabkit-color-text-disabled));
+  border-radius: var(--collabkit-scrollbar-thumb-border-radius, 6px);
+  position: relative;
+}
+.ly3hvb3:before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  min-width: 44px;
+  min-height: 44px;
+}
+.ly3hvb4 {
+  background: hsl(0, 0%, 30%);
+}
+._1jc8iyc0 {
+  text-align: left;
+}
+._1jc8iyc1 {
+  text-align: right;
+}
+._1jc8iyc2 {
+  height: var(--collabkit-composer-typing-indicator-line-height, var(--collabkit-space-4));
+  margin-left: calc(
+    var(--collabkit-avatar-size) + var(--collabkit-comment-gap, var(--collabkit-space-5))
+  );
+  margin-top: calc(var(--collabkit-composer-gap, var(--collabkit-space-3)) * -1);
+  padding-top: 0;
+  padding-bottom: var(--collabkit-space-1);
+  overflow: hidden;
+  flex-basis: 100%;
+  color: var(--collabkit-composer-typing-indicator-color, var(--collabkit-color-text-secondary));
+  font-size: var(
+    --collabkit-composer-typing-indicator-font-size,
+    var(--collabkit-text-tiny-font-size)
+  );
+  line-height: var(--collabkit-composer-typing-indicator-line-height, var(--collabkit-space-4));
+  letter-spacing: var(
+    --collabkit-composer-typing-indicator-letter-spacing,
+    var(--collabkit-text-small-letter-spacing)
+  );
+  font-family: var(--collabkit-font-family);
+}
+._1jc8iyc3 {
+  width: var(--collabkit-space-2);
+}
+._1jc8iyc4 {
+  color: var(--collabkit-composer-input-placeholder-color, var(--collabkit-color-text-secondary));
+  font-size: var(--collabkit-composer-input-font-size, var(--collabkit-text-base-font-size));
+  font-weight: var(--collabkit-composer-input-font-weight, var(--collabkit-font-weight-regular));
+  letter-spacing: var(
+    --collabkit-composer-input-letter-spacing,
+    var(--collabkit-text-base-letter-spacing)
+  );
+  line-height: var(--collabkit-composer-input-line-height, var(--collabkit-text-base-line-height));
+  padding: var(--collabkit-composer-input-padding, var(--collabkit-space-2));
+  overflow: hidden;
+  position: absolute;
+  word-wrap: break-word;
+  max-width: 100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  top: 17px;
+  transform: translateY(-50%);
+  user-select: none;
+  display: inline-block;
+  pointer-events: none;
+  font-family: var(--collabkit-font-family);
+}
+._1jc8iyc5 {
+  margin: 0 !important;
+  font-size: var(
+    --collabkit-composer-input-font-size,
+    var(--collabkit-text-base-font-size)
+  ) !important;
+  line-height: var(
+    --collabkit-composer-input-line-height,
+    var(--collabkit-text-base-line-height)
+  ) !important;
+  color: var(--collabkit-composer-input-color, var(--collabkit-color-text-primary)) !important;
+  position: relative;
+  font-family: var(--collabkit-font-family);
+}
+._1jc8iyc6 {
+  margin: 0 !important;
+  font-size: var(
+    --collabkit-composer-input-font-size,
+    var(--collabkit-text-base-font-size)
+  ) !important;
+  line-height: var(
+    --collabkit-composer-input-line-height,
+    var(--collabkit-text-base-line-height)
+  ) !important;
+  position: relative;
+  color: var(--collabkit-composer-input-color, var(--collabkit-color-text-primary)) !important;
+  font-family: var(--collabkit-font-family);
+}
+._1jc8iyc7 p {
+  margin: 0 !important;
+  padding: 0 !important;
+  font-size: var(
+    --collabkit-comment-body-font-size,
+    var(--collabkit-text-base-font-size)
+  ) !important;
+  font-weight: var(
+    --collabkit-comment-body-font-weight,
+    var(--collabkit-font-weight-regular)
+  ) !important;
+  color: var(--collabkit-comment-body-color, var(--collabkit-color-text-primary)) !important;
+  line-height: var(
+    --collabkit-comment-body-line-height,
+    var(--collabkit-text-base-line-height)
+  ) !important;
+  letter-spacing: var(
+    --collabkit-comment-body-letter-spacing,
+    var(--collabkit-text-base-letter-spacing)
+  ) !important;
+  font-family: var(--collabkit-font-family) !important;
+}
+._1jc8iyc8 {
+  resize: none;
+  caret-color: var(--collabkit-composer-input-caret-color, var(--collabkit-color-text-primary));
+  color: var(--collabkit-composer-input-color, var(--collabkit-color-text-primary));
+  font-size: var(--collabkit-composer-input-font-size, var(--collabkit-text-base-font-size));
+  line-height: var(--collabkit-composer-input-line-height, var(--collabkit-text-base-line-height));
+  letter-spacing: var(
+    --collabkit-composer-input-letter-spacing,
+    var(--collabkit-text-base-letter-spacing)
+  );
+  font-weight: var(--collabkit-composer-input-font-weight, var(--collabkit-font-weight-regular));
+  padding: var(--collabkit-composer-input-padding, var(--collabkit-space-2));
+  position: relative;
+  tab-size: 1;
+  box-sizing: border-box;
+  outline: 0;
+  width: 100%;
+  text-align: left;
+  font-family: var(--collabkit-font-family);
+}
+._1jc8iyc9 {
+  color: var(--collabkit-composer-input-disabled-color);
+  background: var(--collabkit-composer-input-disabled-background);
+}
+._1jc8iyca {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  font-family: var(--collabkit-font-family);
+  padding: var(--collabkit-composer-padding, var(--collabkit-space-2) var(--collabkit-space-4) 0px);
+  border: var(--collabkit-composer-border, none);
+  gap: var(--collabkit-composer-gap, var(--collabkit-space-3));
+}
+._1jc8iycb {
+  background: var(--collabkit-composer-input-background, var(--collabkit-color-surface));
+  border: var(--collabkit-composer-input-border, none);
+  border-radius: var(--collabkit-composer-input-border-radius, 6px);
+  flex: 1;
+  vertical-align: top;
+  box-sizing: border-box;
+  font-family: var(--collabkit-font-family);
+}
+._1jc8iycc {
+  background: var(--collabkit-composer-input-active-background, var(--collabkit-color-surface));
+  border: var(--collabkit-composer-input-active-border, none);
+}
+._1jc8iycd {
+  background: var(--collabkit-composer-input-hover-background, var(--collabkit-color-surface));
+  border: var(--collabkit-composer-input-hover-border, none);
+}
+._1jc8iyce {
+  background: var(--collabkit-composer-input-disabled-background, var(--collabkit-color-surface));
+  border: var(--collabkit-composer-input-disabled-border, none);
+}
+._1jc8iycf {
+  border: none;
+  background: none;
+  height: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--collabkit-space-1) var(--collabkit-space-2);
+  border-radius: 4px;
+}
+._1jc8iycf:hover {
+  background: var(--collabkit-color-surface-overlay);
+}
+._1jc8iycg {
+  color: var(--collabkit-color-text-primary);
+  font-size: var(--collabkit-text-base-font-size);
+  line-height: var(--collabkit-text-base-line-height);
+  letter-spacing: var(--collabkit-text-base-letter-spacing);
+  font-weight: var(--collabkit-font-weight-bold);
+}
+._1jc8iych {
+  color: var(--collabkit-color-text-secondary);
+  font-size: var(--collabkit-text-base-font-size);
+  line-height: var(--collabkit-text-base-line-height);
+  letter-spacing: var(--collabkit-text-base-letter-spacing);
+  font-weight: var(--collabkit-font-weight-regular);
+}
+._1jc8iyci {
+  display: flex;
+  margin-top: calc(var(--collabkit-space-1) * -1);
+  padding: 0px var(--collabkit-space-2)
+    calc(var(--collabkit-space-1) + (var(--collabkit-space-1) / 2)) var(--collabkit-space-2);
+  gap: 0px;
+  margin-left: calc(var(--collabkit-space-1) * -1);
+}
+._1jc8iyci:empty {
+  display: none;
+}
+._1uptb4c0 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: var(--collabkit-icon-button-height, 24px);
+  width: var(--collabkit-icon-button-width, 24px);
+  cursor: pointer;
+  user-select: none;
+  pointer-events: all;
+  border-radius: var(--collabkit-icon-button-border-radius, 4px);
+  color: var(--collabkit-icon-button-color, var(--collabkit-color-icon));
+  background: var(--collabkit-icon-button-background, transparent);
+  font-family: var(--collabkit-font-family);
+}
+._1uptb4c0:active {
+  background: var(
+    --collabkit-icon-button-active-background,
+    var(--collabkit-color-surface-overlay)
+  );
+}
+._1uptb4c0:hover {
+  background: var(--collabkit-icon-button-hover-background, var(--collabkit-color-surface-overlay));
+}
+._1uptb4c1 {
+  color: var(--collabkit-icon-button-color, var(--collabkit-color-icon-secondary));
+}
+._1uptb4c2 {
+  background: var(
+    --collabkit-icon-button-active-background,
+    var(--collabkit-color-surface-overlay)
+  );
+}
+._1uptb4c3 {
+  height: var(--collabkit-icon-button-small-height, 20px);
+  width: var(--collabkit-icon-button-small-width, 20px);
+}
+.d9gru80 {
+  background-color: var(--collabkit-color-text-primary);
+  color: var(--collabkit-color-background);
+  font-size: var(--collabkit-text-small-font-size);
+  line-height: var(--collabkit-text-small-line-height);
+  letter-spacing: var(--collabkit-text-small-letter-spacing);
+  padding: var(--collabkit-space-2) var(--collabkit-space-2);
+  border-radius: 6px;
+  box-sizing: border-box;
+  width: max-content;
+  max-width: calc(100vw - 10px);
+  z-index: 100;
+}
+.d9gru80:before {
+  content: ' ';
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translate(-50%);
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid var(--collabkit-color-text-primary);
+}
+.d9gru8e:before {
+  content: ' ';
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translate(-50%);
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid var(--collabkit-color-text-primary);
+}
+.d9gru8f:before {
+  content: ' ';
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  transform: translate(-50%) rotate(180deg);
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid var(--collabkit-color-text-primary);
+}
+.d9gru8g:before {
+  content: ' ';
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translate(-50%);
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid var(--collabkit-color-text-primary);
+}
+._1trzxli0 {
+  background: var(--collabkit-color-surface);
+  border-radius: 6px;
+  z-index: 999;
+  border: 1px solid var(--collabkit-color-surface-overlay);
+}
+._1trzxli1 {
+  height: 40px;
+  padding: var(--collabkit-space-2);
+}
+._1trzxli2 {
+  display: grid;
+  grid-template-columns: repeat(6, 24px);
+}
+._1trzxli3 {
+  padding: var(--collabkit-space-0) var(--collabkit-space-2) var(--collabkit-space-2)
+    var(--collabkit-space-2);
+}
+._1trzxli3:first-of-type {
+  padding-top: var(--collabkit-space-2);
+}
+._1trzxli3:last-of-type {
+  padding-bottom: var(--collabkit-space-2);
+}
+._1trzxli4 {
+  width: 24px;
+  height: 24px;
+  font-size: var(--collabkit-text-large-line-height);
+  font-family: sans-serif;
+  line-height: var(--collabkit-text-large-line-height);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+._1trzxli4:hover {
+  background: var(--collabkit-color-attention-blue);
+  border-radius: 6px;
+}
+._1trzxli5 {
+  padding: 0 0 var(--collabkit-space-1);
+  color: var(--collabkit-color-text-disabled);
+  font-size: var(--collabkit-text-small-font-size);
+  font-weight: var(--collabkit-font-weight-regular);
+  letter-spacing: var(--collabkit-text-small-letter-spacing);
+  line-height: var(--collabkit-text-small-line-height);
+  font-family: var(--collabkit-font-family);
+}
+._1ecgpvg0 {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  margin-left: -20px;
+  margin-top: -40px;
+  top: 0;
+  left: 0;
+}
+._1ecgpvg1 {
+  pointer-events: none;
+}
+._1ecgpvg2 {
+  pointer-events: all;
+}
+._1ecgpvg6 {
+  position: absolute;
+  top: 5px;
+  left: 8px;
+}
+._1ecgpvg7 {
+  background: var(--collabkit-color-background);
+  border-radius: 12px;
+  width: 240px;
+  border: 1px solid var(--collabkit-color-border);
+  box-shadow: var(--collabkit-shadow-high);
+  display: flex;
+  flex-direction: column;
+}
+._1ecgpvg8 {
+  padding: var(--collabkit-space-2) var(--collabkit-space-4);
+  cursor: pointer;
+}
+._8otv880 {
+  display: flex;
+  flex-direction: column;
+  padding: var(--collabkit-comment-list-padding, var(--collabkit-space-2) 0);
+  gap: var(--collabkit-comment-list-gap, var(--collabkit-space-0));
+}
+._8otv880:empty {
+  display: none;
+}
+._1cqqzoj0 {
+  min-width: 40px;
+  height: var(--collabkit-inbox-new-indicator-line-height, 16px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  font-family: var(--collabkit-font-family);
+  margin: var(--collabkit-inbox-new-indicator-margin, 0 0 var(--collabkit-space-2));
+}
+._1cqqzoj1 {
+  background: var(
+    --collabkit-inbox-new-indicator-line-background,
+    var(--collabkit-color-attention)
+  );
+  height: 1px;
+  position: absolute;
+  left: var(--collabkit-comment-padding-left, var(--collabkit-space-4));
+  right: var(--collabkit-comment-padding-right, var(--collabkit-space-4));
+  bottom: 50%;
+}
+._1cqqzoj2 {
+  background: var(
+    --collabkit-inbox-new-indicator-inlay-background,
+    var(--collabkit-color-attention)
+  );
+  display: inline-block;
+  color: var(--collabkit-inbox-new-indicator-color, white);
+  font-size: var(--collabkit-inbox-new-indicator-font-size, var(--collabkit-text-tiny-font-size));
+  font-weight: var(--collabkit-inbox-new-indicator-font-weight, var(--collabkit-font-weight-bold));
+  line-height: var(--collabkit-inbox-new-indicator-line-height, 16px);
+  letter-spacing: var(
+    --collabkit-inbox-new-indicator-letter-spacing,
+    var(--collabkit-text-tiny-letter-spacing)
+  );
+  padding: var(--collabkit-inbox-new-indicator-padding, 0px var(--collabkit-space-2));
+  position: relative;
+  border-radius: calc(var(--collabkit-inbox-new-indicator-line-height, 16px) / 2);
+  font-family: var(--collabkit-font-family);
+}
+._6tp0mr0 {
+  display: flex;
+  height: 100%;
+  position: relative;
+  flex: 1;
+  flex-direction: column;
+  align-items: stretch;
+  justify-items: stretch;
+  overflow: hidden;
+  background: var(--collabkit-thread-background, var(--collabkit-color-background));
+  border: var(--collabkit-thread-border, none);
+  border-radius: var(--collabkit-thread-border-radius, var(--collabkit-space-0));
+  box-shadow: var(--collabkit-thread-box-shadow, none);
+  text-align: left;
+  min-width: 200px;
+  font-family: var(--collabkit-font-family);
+}
+._6tp0mr1 {
+  padding: var(--collabkit-space-4) var(--collabkit-space-4) var(--collabkit-space-4);
+  display: flex;
+  color: var(--collabkit-thread-header-color, var(--collabkit-color-text-primary));
+  font-size: var(--collabkit-thread-header-font-size, var(--collabkit-text-large-font-size));
+  font-weight: var(--collabkit-thread-header-font-weight, var(--collabkit-font-weight-bold));
+  line-height: var(--collabkit-thread-header-line-height, var(--collabkit-text-large-line-height));
+  letter-spacing: var(
+    --collabkit-thread-header-letter-spacing,
+    var(--collabkit-text-large-letter-spacing)
+  );
+  font-family: var(--collabkit-font-family);
+}
+._6tp0mr2 {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: var(--collabkit-space-2);
+  height: 100%;
+  font-weight: var(--collabkit-font-weight-regular);
+  font-size: var(--collabkit-text-small-font-size);
+  line-height: var(--collabkit-text-small-line-height);
+  color: var(--collabkit-color-text-secondary);
+  letter-spacing: var(--collabkit-text-small-letter-spacing);
+  font-family: var(--collabkit-font-family);
+}
+._6tp0mr3 {
+  display: flex;
+  flex-direction: column;
+  padding: var(--collabkit-comment-list-padding, var(--collabkit-space-4) 0);
+  gap: var(--collabkit-comment-list-gap, var(--collabkit-space-0));
+}
+._6tp0mr3:empty {
+  padding: 0;
+  height: var(--collabkit-space-4);
+}
+._1g3jo0q0 {
+  display: flex;
+  flex-direction: row;
+  margin-left: var(--collabkit-facepile-overlap, 4px);
+  font-family: var(--collabkit-font-family);
+}
+._1g3jo0q1 {
+  border: var(--collabkit-facepile-avatar-border-size, 2px) solid
+    var(--collabkit-facepile-avatar-border-color, var(--collabkit-color-background));
+  margin-left: calc(
+    (var(--collabkit-facepile-overlap, 4px) * -1) -
+      var(--collabkit-facepile-avatar-border-size, 2px)
+  );
+  border-radius: 50%;
+}
+._1g3jo0q2 {
+  border-color: var(--collabkit-facepile-avatar-hover-border-color, var(--collabkit-color-surface));
+}
+.fpxoy61 {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--collabkit-font-family);
+}
+.fpxoy61 p {
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.fpxoy63 {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 4px;
+  font-family: var(--collabkit-font-family);
+}
+.fpxoy64 {
+  width: var(--collabkit-inbox-item-unread-dot-width, var(--collabkit-space-2));
+  height: var(--collabkit-inbox-item-unread-dot-height, var(--collabkit-space-2));
+  border-radius: var(--collabkit-inbox-item-unread-dot-border-radius, 50%);
+  background: var(--collabkit-inbox-item-unread-dot-background, var(--collabkit-color-attention));
+  position: absolute;
+  left: calc(
+    (
+        (
+            var(--collabkit-inbox-item-padding-left, var(--collabkit-space-4)) +
+              var(--collabkit-inbox-item-unread-dot-width, var(--collabkit-space-2))
+          ) / 2
+      ) * -1
+  );
+  font-family: var(--collabkit-font-family);
+}
+.fpxoy65 {
+  display: flex;
+  align-items: center;
+  position: relative;
+  font-family: var(--collabkit-font-family);
+}
+.fpxoy66 {
+  font-weight: var(--collabkit-inbox-item-timestamp-font-weight, 400);
+  font-size: var(--collabkit-inbox-item-timestamp-font-size, var(--collabkit-text-small-font-size));
+  line-height: var(
+    --collabkit-inbox-item-timestamp-line-height,
+    var(--collabkit-text-small-line-height)
+  );
+  letter-spacing: var(
+    --collabkit-inbox-item-timestamp-letter-spacing,
+    var(--collabkit-text-small-letter-spacing)
+  );
+  color: var(--collabkit-inbox-item-timestamp-color, var(--collabkit-color-text-secondary));
+}
+.fpxoy67 {
+  display: flex;
+  border-bottom: var(--collabkit-inbox-item-border-bottom, none);
+  flex-direction: column;
+  flex: 1;
+  cursor: pointer;
+  box-sizing: border-box;
+  padding-top: var(--collabkit-inbox-item-padding-top, var(--collabkit-space-4));
+  padding-bottom: var(--collabkit-inbox-item-padding-bottom, var(--collabkit-space-4));
+  padding-left: var(--collabkit-inbox-item-padding-left, var(--collabkit-space-4));
+  padding-right: var(--collabkit-inbox-item-padding-right, var(--collabkit-space-4));
+  user-select: none;
+  font-family: var(--collabkit-font-family);
+  gap: 12px;
+}
+.fpxoy67:hover {
+  background: var(--collabkit-inbox-item-hover-background, var(--collabkit-color-surface-overlay));
+}
+.fpxoy67:last-of-type {
+  margin-bottom: var(--collabkit-inbox-item-padding-bottom, var(--collabkit-color-surface));
+}
+.fpxoy68 {
+  background: var(--collabkit-inbox-item-active-background, var(--collabkit-color-surface-overlay));
+}
+._1jyufpx0 {
+  width: var(--collabkit-inbox-width, 320px);
+  background: var(--collabkit-inbox-background, var(--collabkit-color-background));
+}
+._1jyufpx1 {
+  background: white;
+  border-radius: 12px;
+  width: 280px;
+  border: 1px solid var(--collabkit-color-border);
+  box-shadow: var(--collabkit-shadow-high);
+  padding: 12px;
+  z-index: 999;
+}
+._1ttpqqz0 {
+  box-sizing: border-box;
+  background: var(--collabkit-sidebar-background, var(--collabkit-color-background));
+  border-left: var(--collabkit-sidebar-border-left, 1px solid var(--collabkit-color-border));
+  box-shadow: var(--collabkit-sidebar-box-shadow, unset);
+  width: 100%;
+  font-family: var(--collabkit-font-family);
+  position: relative;
+  height: 100%;
+}
+._1ttpqqz1 {
+  font-size: var(--collabkit-sidebar-title-font-size, var(--collabkit-text-large-font-size));
+  font-weight: var(--collabkit-sidebar-title-font-weight, var(--collabkit-font-weight-bold));
+  color: var(--collabkit-sidebar-title-color, var(--collabkit-color-text-primary));
+  line-height: var(--collabkit-sidebar-title-line-height, var(--collabkit-text-large-line-height));
+  letter-spacing: var(
+    --collabkit-sidebar-title-letter-spacing,
+    var(--collabkit-text-large-letter-spacing)
+  );
+}
+._1ttpqqz2 {
+  font-weight: var(--collabkit-sidebar-title-font-weight, var(--collabkit-font-weight-bold));
+  font-size: var(--collabkit-sidebar-title-font-size, var(--collabkit-text-large-font-size));
+  color: var(--collabkit-sidebar-title-color, var(--collabkit-color-text-primary));
+  line-height: var(--collabkit-sidebar-title-line-height, var(--collabkit-text-large-line-height));
+  letter-spacing: var(
+    --collabkit-sidebar-title-letter-spacing,
+    var(--collabkit-text-large-letter-spacing)
+  );
+  margin: 0;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  padding-left: var(--collabkit-inbox-item-padding-left, var(--collabkit-space-4));
+  padding-right: var(--collabkit-inbox-item-padding-right, var(--collabkit-space-2));
+  border-bottom: var(--collabkit-sidebar-title-border-bottom, 1px solid);
+  border-bottom-color: var(
+    --collabkit-sidebar-title-border-bottom-color,
+    var(--collabkit-color-border)
+  );
+  font-family: var(--collabkit-font-family);
+  padding-top: var(--collabkit-space-1);
+  padding-bottom: var(--collabkit-space-1);
+}
+._1ttpqqz3 {
+  padding: 10.25px 12px;
+  user-select: none;
+  pointer-events: all;
+  visibility: hidden;
+}
+._1ttpqqz3:active,
+._1ttpqqz3:hover,
+._1ttpqqz4 {
+  background: var(--collabkit-icon-button-hover-background, var(--collabkit-color-surface-overlay));
+}
+._6t5ivp0 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: var(--collabkit-button-font-size, var(--collabkit-text-base-font-size));
+  font-weight: var(--collabkit-button-font-weight, var(--collabkit-font-weight-regular));
+  letter-spacing: var(--collabkit-button-letter-spacing, var(--collabkit-text-base-letter-spacing));
+  line-height: var(--collabkit-button-line-height, var(--collabkit-text-base-line-height));
+  border: none;
+  background: none;
+  padding: var(--collabkit-button-padding, 8px 12px);
+  cursor: pointer;
+  outline: none;
+  border-radius: var(--collabkit-button-border-radius, 4px);
+  font-family: var(--collabkit-font-family);
+}
+._6t5ivp1 {
+  background: var(--collabkit-button-primary-background, var(--collabkit-color-background));
+  color: var(--collabkit-button-primary-color, var(--collabkit-color-text-primary));
+  letter-spacing: var(
+    --collabkit-button-primary-letter-spacing,
+    var(--collabkit-text-base-letter-spacing)
+  );
+  font-weight: var(--collabkit-button-primary-font-weight, var(--collabkit-font-weight-bold));
+}
+._6t5ivp1:active {
+  background: var(--collabkit-button-primary-active-background, var(--collabkit-color-surface));
+  color: var(
+    --collabkit-button-primary-active-color,
+    var(--collabkit-button-primary-color, var(--collabkit-color-text-primary))
+  );
+}
+._6t5ivp1:hover {
+  background: var(--collabkit-button-primary-hover-background, var(--collabkit-color-surface));
+  color: var(
+    --collabkit-button-primary-hover-color,
+    var(--collabkit-button-primary-color, var(--collabkit-color-text-primary))
+  );
+}
+._6t5ivp2 {
+  background: var(--collabkit-button-secondary-background, transparent);
+  color: var(--collabkit-button-secondary-color, var(--collabkit-color-text-secondary));
+  letter-spacing: var(
+    --collabkit-button-secondary-letter-spacing,
+    var(--collabkit-text-base-letter-spacing)
+  );
+  font-weight: var(--collabkit-button-secondary-font-weight, var(--collabkit-font-weight-medium));
+}
+._6t5ivp2:active,
+._6t5ivp2:hover {
+  background: var(--collabkit-button-secondary-active-background, var(--collabkit-color-surface));
+  color: var(
+    --collabkit-button-secondary-active-color,
+    var(--collabkit-button-secondary-color, var(--collabkit-color-text-secondary))
+  );
+}
+._6t5ivp3 {
+  background: var(--collabkit-button-disabled-background, transparent) !important;
+  color: var(--collabkit-button-disabled-color, var(--collabkit-color-text-disabled)) !important;
+  cursor: default !important;
+}
+._1gdiiw50 {
+  gap: 8px;
+}
+.tg57690 {
+  width: 320px;
+}
+.tg57691 {
+  padding-left: var(--collabkit-space-2);
+  padding-right: var(--collabkit-space-2);
+}
+.tg57692 {
+  background: white;
+  border-radius: 12px;
+  width: 320px;
+  border: 1px solid var(--collabkit-color-border);
+  box-shadow: var(--collabkit-shadow-high);
+  padding: 0;
+  z-index: 999;
+}
+.tg57693 {
+  box-sizing: border-box;
+  font-family: var(--collabkit-font-family);
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+}
+.tg57694 {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  padding: var(--collabkit-space-3) var(--collabkit-space-4);
+}
+.tg57695 {
+  padding: var(
+    --collabkit-composer-padding,
+    var(--collabkit-space-2) var(--collabkit-space-6) var(--collabkit-space-4)
+  );
+}
+.tg57696 {
+  padding: var(--collabkit-composer-padding, var(--collabkit-space-2) var(--collabkit-space-4) 0px);
+}
+.tg57698 {
+  gap: 0;
+  display: grid;
+  grid-template-columns: 32px auto;
+}
+.tg57699,
+.tg5769a {
+  padding-left: 0;
+}
+.tg5769b {
+  padding: var(--collabkit-space-2);
+  display: inline-flex;
+  flex: 1;
+  border: none;
+  height: 100%;
+}
+.tg5769c {
+  padding: var(--collabkit-space-2) 0 0;
+}
+.tg5769d {
+  display: flex;
+  flex-direction: column;
+}
+.tg5769e {
+  margin-left: var(--collabkit-space-2);
+  margin-right: var(--collabkit-space-3);
+}
+.tg5769f {
+  border: 1px solid var(--collabkit-color-attention-blue);
+  border-radius: 8px;
+}
+.tg5769g {
+  border: 1px solid transparent;
+}
+.tg5769h {
+  color: var(--collabkit-color-text-primary);
+  justify-self: end;
+  align-self: first center;
+}
+.tg5769i {
+  padding-right: calc(var(--collabkit-space-1) / 2);
+  float: left;
+  cursor: pointer;
+}
+.collabkit-pin-node,
+.collabkit-composer-pin {
+  width: 16px;
+  height: 16px;
+  margin: -4px 0 0;
+}
+.collabkit-composer-pin {
+  display: inline;
+  margin: -4px 0 0;
+}
+._14sh7z10 {
+  width: 320px;
+}

@@ -278,7 +278,7 @@ export function createEvents(store: Store) {
           e.stopPropagation();
           e.preventDefault();
           if (store.focusedId.eventId === 'default') {
-            actions.sendMessage(store, { ...store.focusedId });
+            actions.sendMessage(store, { ...store.focusedId, bot: store.focusedId.bot });
             if (store.focusedId.isNewThread) {
               const { appId } = getConfig(store);
               store.nextThreadId = store.sync.nextThreadId({

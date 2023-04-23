@@ -5,17 +5,17 @@ import { OpenAI } from 'langchain';
 import { initializeAgentExecutor } from 'langchain/agents';
 import { DynamicTool } from 'langchain/tools';
 import { CREATE_ISSUE, GET_ISSUES, UPDATE_ISSUE } from './helpers/githubApi';
+import { CallbackManager } from 'langchain/callbacks';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { OWNER, REPO, command } = req.body;
-  if (
-    process.env.APP_ID == undefined ||
-    process.env.PRIVATE_KEY == undefined ||
-    process.env.OPENAI_API_KEY == undefined
-  ) {
-    res.status(500).send('Environment not set');
-    return;
-  }
+export async function processCommand({
+  OWNER,
+  REPO,
+  command,
+}: {
+  OWNER: string;
+  REPO: string;
+  command: string;
+}) {
   const model = new OpenAI({
     openAIApiKey: process.env.OPENAI_API_KEY,
     temperature: 0.2,
@@ -25,7 +25,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const tools = [
     new DynamicTool({
       name: 'Create issue',
-      description: `Creates a new issue inside the issue tracker. Only use when the action wants to create a new issue. Use labels only when specified. Input should be of format: #"title": "string","description": "string","assignees":["string"],"labels": ["string"]$ . Example input : #title": "create landing page","description": "make a react app and deploy it","assignees":["neetcshah19"],"labels": ["website","html"]$`,
+      description: `Creates a new issue inside the issue tracker. Only use when the action wants to create a new issue. Use labels only when specified. Input should be of format: #"title": "string","description": "string","assignees":["string"],"labels": ["string"]$ . Example input : #title": "create landing page","description": "make a react app and deploy it","assignees":["meetcshah19"],"labels": ["website","html"]$`,
       func: async (input: string) => {
         input = input.replaceAll('#', '{');
         input = input.replaceAll('$', '}');
@@ -86,8 +86,45 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       },
     }),
   ];
-  const executor = await initializeAgentExecutor(tools, model, 'zero-shot-react-description', true);
+  const callbackManager = CallbackManager.fromHandlers({
+    async handleLLMNewToken(token: string) {
+      console.log('token', { token });
+    },
+    async handleLLMStart(llm, _prompts: string[]) {
+      console.log('handleLLMStart', { llm });
+    },
+    async handleChainStart(chain) {
+      console.log('handleChainStart', { chain });
+    },
+    async handleAgentAction(action) {
+      console.log('handleAgentAction', action);
+    },
+    async handleToolStart(tool) {
+      console.log('handleToolStart', { tool });
+    },
+  });
+  const executor = await initializeAgentExecutor(
+    tools,
+    model,
+    'zero-shot-react-description',
+    true,
+    callbackManager
+  );
   console.log('Loaded agent.');
   const result = await executor.call({ input: command });
-  res.status(200).send(result.output);
+  return result.output;
+}
+
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  if (
+    process.env.APP_ID == undefined ||
+    process.env.PRIVATE_KEY == undefined ||
+    process.env.OPENAI_API_KEY == undefined
+  ) {
+    res.status(500).send('Environment not set');
+    return;
+  }
+  const { OWNER, REPO, command } = req.body;
+  const output = await processCommand({ OWNER, REPO, command });
+  res.status(200).send(output);
 }
