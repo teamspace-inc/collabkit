@@ -35,7 +35,7 @@ export async function installShapeBotImpl(
           'Authorization': `Bearer sk_test_MCqEnnuR8Xt4uYXZhFqknfxX0TnFdH4symiqGOaUtY`,
         }
       }).then((res) => {
-        response.status(200).send(); // redirect back to dashboard url here
+        response.redirect(`https://dashboard.shape.xyz/setup`);
       }).catch((error) => {
         response.status(500).send();
       });

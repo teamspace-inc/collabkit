@@ -11,12 +11,6 @@ COPY . /app
 # Install any needed packages specified in requirements.txt
 RUN pip install --trusted-host pypi.python.org -r requirements.txt
 
-# Expose port 8080 for the Functions Framework
-EXPOSE 8080
-
-# Run the web service on container startup.
-CMD ["functions-framework","--target=runSQLAgent"]
-
 CMD ["slackbot.py"]
 
 ENTRYPOINT ["python"]

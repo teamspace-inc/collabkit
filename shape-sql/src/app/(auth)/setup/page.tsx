@@ -1,11 +1,12 @@
 'use client';
 import { Button } from '@/app/Button';
-import { useUser } from '@clerk/nextjs';
+import { useOrganization, useUser } from '@clerk/nextjs';
 import Link from 'next/link';
 
 export default function Page({ params }: { params: { id: string } }) {
   const user = useUser();
-  const botToken = user ? (user.user?.publicMetadata['botToken'] as string) : null;
+  const org = useOrganization();
+  const botToken = org ? (org.organization?.publicMetadata['botToken'] as string) : null;
   const userId = user ? (user.user?.id as string) : null;
 
   return (
@@ -32,7 +33,13 @@ export default function Page({ params }: { params: { id: string } }) {
         }}
       >
         <div>
-          {botToken ?? (
+          {botToken ? <>
+            SLACK_BOT_TOKEN={botToken}
+            <br /> <br />
+            SHAPE_API_KEY={process.env.NEXT_PUBLIC_SHAPE_API_KEY}
+            <br /> <br />
+            SLACK_APP_TOKEN={process.env.NEXT_PUBLIC_SLACK_APP_TOKEN}
+          </> : (
             <Link
               href={
                 'https://slack.com/oauth/v2/authorize?client_id=3913993031188.5124245352709&scope=app_mentions:read,channels:history,chat:write,chat:write.customize,groups:history,mpim:history,im:write,im:read,im:history,users.profile:read,mpim:write,mpim:read&user_scope=&redirect_uri=https://us-central1-collabkit-test.cloudfunctions.net/installShapeBot&state=' +
