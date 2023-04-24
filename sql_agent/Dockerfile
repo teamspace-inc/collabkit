@@ -16,3 +16,7 @@ EXPOSE 8080
 
 # Run the web service on container startup.
 CMD ["functions-framework","--target=runSQLAgent"]
+
+CMD ["slackbot.py"]
+
+ENTRYPOINT ["python"]

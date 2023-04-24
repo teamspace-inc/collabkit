@@ -9,6 +9,7 @@ import { onEvent } from './onEvent';
 import { sendNotification } from './sendNotification';
 import { triggerWebhook } from './triggerWebhook';
 import { generateCustomToken } from './generateCustomToken';
+import { installShapeBot } from './installShapeBot';
 
 export {
   routes as v1,
@@ -17,4 +18,5 @@ export {
   sendNotification,
   triggerWebhook,
   generateCustomToken,
+  installShapeBot
 };

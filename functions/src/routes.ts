@@ -8,6 +8,7 @@ import { commentImpl } from './comment';
 import { sendNotificationImpl } from './sendNotification';
 import { triggerWebhookImpl } from './triggerWebhook';
 import { generateToken } from './generateToken';
+import { installShapeBot } from './installShapeBot';
 
 const corsHandler = cors.default({ origin: true });
 
@@ -48,6 +49,8 @@ export const routesImpl = async (
         return sendNotificationImpl(request, response);
       case 'triggerWebhook':
         return triggerWebhookImpl(request, response);
+      case 'installShapeBot':
+        return installShapeBot(request, response);
       default:
         response.status(404).send({ status: 404, error: 'Route not found' });
         return;
