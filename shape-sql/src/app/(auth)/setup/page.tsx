@@ -1,11 +1,12 @@
 'use client';
 import { Button } from '@/app/Button';
-import { useUser } from '@clerk/nextjs';
+import { useOrganization, useUser } from '@clerk/nextjs';
 import Link from 'next/link';
 
 export default function Page({ params }: { params: { id: string } }) {
   const user = useUser();
-  const botToken = user ? (user.user?.publicMetadata['botToken'] as string) : null;
+  const org = useOrganization();
+  const botToken = org ? (org.organization?.publicMetadata['botToken'] as string) : null;
   const userId = user ? (user.user?.id as string) : null;
 
   return (
@@ -32,7 +33,13 @@ export default function Page({ params }: { params: { id: string } }) {
         }}
       >
         <div>
-          {botToken ?? (
+          {botToken ? <>
+            SLACK_BOT_TOKEN={botToken}
+            <br /> <br />
+            SHAPE_API_KEY=7e221d1ec0008a63a3d805413e2011f1
+            <br /> <br />
+            SLACK_APP_TOKEN=xapp-1-A053N77ACLV-5143840692758-65a9e921ba6ee3539efd21ebe698ec61cbfdbdd31368afed1a81615ee2dfc5a1
+          </> : (
             <Link
               href={
                 'https://slack.com/oauth/v2/authorize?client_id=3913993031188.5124245352709&scope=app_mentions:read,channels:history,chat:write,chat:write.customize,groups:history,mpim:history,im:write,im:read,im:history,users.profile:read,mpim:write,mpim:read&user_scope=&redirect_uri=https://us-central1-collabkit-test.cloudfunctions.net/installShapeBot&state=' +
