@@ -36,9 +36,9 @@ export default function Page({ params }: { params: { id: string } }) {
           {botToken ? <>
             SLACK_BOT_TOKEN={botToken}
             <br /> <br />
-            SHAPE_API_KEY=7e221d1ec0008a63a3d805413e2011f1
+            SHAPE_API_KEY={process.env.SHAPE_API_KEY}
             <br /> <br />
-            SLACK_APP_TOKEN=xapp-1-A053N77ACLV-5143840692758-65a9e921ba6ee3539efd21ebe698ec61cbfdbdd31368afed1a81615ee2dfc5a1
+            SLACK_APP_TOKEN={process.env.SLACK_APP_TOKEN}
           </> : (
             <Link
               href={
