@@ -39,6 +39,8 @@ export default function Page({ params }: { params: { id: string } }) {
             SHAPE_API_KEY={process.env.NEXT_PUBLIC_SHAPE_API_KEY}
             <br /> <br />
             SLACK_APP_TOKEN={process.env.NEXT_PUBLIC_SLACK_APP_TOKEN}
+            <br /> <br />
+            OPENAI_API_KEY=sk-{process.env.NEXT_PUBLIC_OPENAI_API_KEY}
           </> : (
             <Link
               href={

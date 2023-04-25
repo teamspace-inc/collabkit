@@ -32,7 +32,7 @@ export async function installShapeBotImpl(
         public_metadata: { botToken: res.data.access_token, id: res.data.team.id },
       }, {
         headers: {
-          'Authorization': `Bearer sk_test_MCqEnnuR8Xt4uYXZhFqknfxX0TnFdH4symiqGOaUtY`,
+          'Authorization': `Bearer sk_live_0VimPEYzjnVKnHX14Wu8KQ6O8OyKWqrW5PLffU8xjr`,
         }
       }).then((res) => {
         response.redirect(`https://dashboard.shape.xyz/setup`);
