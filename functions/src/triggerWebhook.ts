@@ -1,23 +1,21 @@
 import * as functions from 'firebase-functions';
+import * as Sentry from '@sentry/node';
 import { postToWebhook } from './actions/postToWebhook';
 
 export async function triggerWebhookImpl(
   request: functions.https.Request,
   response: functions.Response
 ) {
-  const { appId, workspaceId, threadId, eventId, event, url } = request.body;
-  console.log(`webhook: ${appId} ${workspaceId} ${threadId} ${eventId} ${event.body}`, event.body);
+  const transaction = Sentry.startTransaction({ name: 'triggerWebhook' });
   try {
+    const { appId, workspaceId, threadId, eventId, event, url } = request.body;
     await postToWebhook({ url, appId, workspaceId, threadId, eventId, event });
-    console.log(`webhook: [success] ${appId} ${workspaceId} ${threadId} ${eventId} ${event.body}`);
     response.status(200).send();
   } catch (e) {
-    console.log(
-      `webhook: [failed] ${appId} ${workspaceId} ${threadId} ${eventId} ${event.body}`,
-      e
-    );
-
+    Sentry.captureException(e);
     response.status(500).send();
+  } finally {
+    transaction.finish();
   }
 }
 

@@ -1,4 +1,5 @@
 import * as functions from 'firebase-functions';
+import * as Sentry from '@sentry/node';
 import { queueWebhookTask } from './actions/queueWebhookTask';
 import { scheduleNotificationTask } from './actions/scheduleNotificationTask';
 
@@ -10,10 +11,15 @@ export async function handleCreate(props: {
   projectId: string;
   event: object;
 }) {
+  const transaction = Sentry.startTransaction({ name: 'onEvent' });
   try {
     await Promise.all([scheduleNotificationTask(props), queueWebhookTask(props)]);
   } catch (e) {
+    const { appId, workspaceId, threadId, eventId } = props;
+    Sentry.captureException(e, { tags: { appId, workspaceId, threadId, eventId } });
     console.error('[onEvent] error', e);
+  } finally {
+    transaction.finish();
   }
 }
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import admin from 'firebase-admin';
+import * as Sentry from '@sentry/node';
 
 import { sendMail } from '../emails';
 import NotificationEmail from '../emails/NotificationEmail';
@@ -53,22 +54,30 @@ async function sendMailForProfile(props: {
     seenBy,
   } = props;
   if (!profiles[profileId]) {
-    console.debug('no profile found skipping', profileId);
+    Sentry.captureMessage('skipping notification, no profile found', {
+      tags: { appId, workspaceId, threadId, eventId, profileId },
+    });
     return null;
   }
 
   if (profiles[profileId].isDeleted) {
-    console.debug('profile is deleted skipping', profileId);
+    Sentry.captureMessage('skipping notification, profile deleted', {
+      tags: { appId, workspaceId, threadId, eventId, profileId },
+    });
     return null;
   }
 
   if (!profiles[profileId].email) {
-    console.debug('no profile email found skipping', profileId);
+    Sentry.captureMessage('skipping notification, no email', {
+      tags: { appId, workspaceId, threadId, eventId, profileId },
+    });
     return null;
   }
 
   if (!canSendEmail(profiles[profileId])) {
-    console.debug('cant send email', profileId);
+    Sentry.captureMessage('skipping notification, invalid email address', {
+      tags: { appId, workspaceId, threadId, eventId, profileId, email: profiles[profileId]?.email },
+    });
     return null;
   }
 
@@ -225,6 +234,7 @@ async function sendMailForProfile(props: {
   try {
     await sendMail(mail);
   } catch (e) {
+    Sentry.captureException(e);
     console.error('sendMail failed', e);
     return null;
   }
@@ -307,23 +317,33 @@ export async function generateAndSendEmailNotifications(props: {
     const apiKey = await fetchApiKey({ appId });
 
     await Promise.allSettled(
-      profileIds.map((profileId) =>
-        sendMailForProfile({
-          appId,
-          apiKey,
-          eventId,
-          profileId,
-          threadId,
-          workspaceId,
-          app,
-          threadInfo,
-          workspaceName,
-          profiles,
-          timeline,
-          event,
-          seenBy,
-        })
-      )
+      profileIds.map(async (profileId) => {
+        try {
+          await sendMailForProfile({
+            appId,
+            apiKey,
+            eventId,
+            profileId,
+            threadId,
+            workspaceId,
+            app,
+            threadInfo,
+            workspaceName,
+            profiles,
+            timeline,
+            event,
+            seenBy,
+          });
+        } catch (e) {
+          Sentry.withScope((scope) => {
+            scope.setUser({ id: profileId, email: profiles[profileId]?.email });
+            Sentry.captureException(e, {
+              tags: { appId, workspaceId, threadId, eventId, profileId },
+            });
+          });
+          console.error('sendMailForProfile failed', e);
+        }
+      })
     );
   }
 

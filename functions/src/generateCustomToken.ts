@@ -1,4 +1,5 @@
 import * as functions from 'firebase-functions';
+import * as Sentry from '@sentry/node';
 import * as cors from 'cors';
 import admin from 'firebase-admin';
 import * as FirebaseId from './actions/data/FirebaseId';
@@ -13,9 +14,9 @@ export async function generateCustomTokenImpl(
   request: functions.https.Request,
   response: functions.Response
 ) {
+  const transaction = Sentry.startTransaction({ name: 'generateCustomToken' });
+  const { appId, userToken } = request.body;
   try {
-    const { appId, userToken } = request.body;
-
     if (!appId) {
       response.status(400).send({ status: 400, error: '"appId" not provided' });
       return;
@@ -53,6 +54,7 @@ export async function generateCustomTokenImpl(
           return;
         }
       } catch (e) {
+        Sentry.captureException(e, { tags: { appId, workspaceId, userId } });
         console.error(e);
         response.status(400).send({ status: 400, error: '"workspaceId not found"' });
         return;
@@ -82,8 +84,11 @@ export async function generateCustomTokenImpl(
       });
     return;
   } catch (e) {
+    Sentry.captureException(e, { tags: { appId } });
     response.status(401).send({ status: 401, error: e });
     return;
+  } finally {
+    transaction.finish();
   }
 }
 

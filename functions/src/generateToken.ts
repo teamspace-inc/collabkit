@@ -1,4 +1,5 @@
 import * as functions from 'firebase-functions';
+import * as Sentry from '@sentry/node';
 import * as cors from 'cors';
 import admin from 'firebase-admin';
 import { updateUser } from './actions/helpers/updateUser';
@@ -13,6 +14,7 @@ export async function handleRequest(
   request: functions.https.Request,
   response: functions.Response
 ) {
+  const transaction = Sentry.startTransaction({ name: 'generateToken' });
   const mode = request.query.mode || request.body.mode;
 
   if (!mode) {
@@ -42,15 +44,15 @@ export async function handleRequest(
           return;
         }
 
-        const snapshot = await ref`/apps/${appId}/keys/${apiKey}/`.once('value');
-
-        if (!snapshot.exists()) {
-          console.debug('"apiKey" not found', appId);
-          response.status(400).send({ status: 400, error: '"apiKey" invalid' });
-          return;
-        }
-
         try {
+          const snapshot = await ref`/apps/${appId}/keys/${apiKey}/`.once('value');
+
+          if (!snapshot.exists()) {
+            console.debug('"apiKey" not found', appId);
+            response.status(400).send({ status: 400, error: '"apiKey" invalid' });
+            return;
+          }
+
           const token = await admin
             .auth()
             .createCustomToken(apiKey.toString(), { api: true, appId, mode });
@@ -67,6 +69,7 @@ export async function handleRequest(
           });
           return;
         } catch (e) {
+          Sentry.captureException(e, { tags: { mode, appId } });
           console.error(e);
           functions.logger.error('Error with UNSECURED flow', { error: e });
           response.status(500).send({ status: 500, error: 'Something went wrong' });
@@ -122,36 +125,40 @@ export async function handleRequest(
           return;
         }
 
-        const snapshot = await ref`/apps/${appId}/keys/${apiKey}/`.once('value');
+        try {
+          const snapshot = await ref`/apps/${appId}/keys/${apiKey}/`.once('value');
 
-        if (!snapshot.exists()) {
-          console.debug('"apiKey" not found', appId);
-          response.status(403).send({ status: 403, error: '"apiKey" invalid', appId, apiKey });
-          return;
-        }
+          if (!snapshot.exists()) {
+            console.debug('"apiKey" not found', appId);
+            response.status(403).send({ status: 403, error: '"apiKey" invalid', appId, apiKey });
+            return;
+          }
 
-        await updateWorkspace({ appId, workspaceId, workspace });
-        await updateUser({ appId, userId, workspaceId, user });
+          await updateWorkspace({ appId, workspaceId, workspace });
+          await updateUser({ appId, userId, workspaceId, user });
 
-        const token = await admin.auth().createCustomToken(apiKey, {
-          api: true,
-          mode,
-          appId: FirebaseId.encode(appId),
-          userId: FirebaseId.encode(userId),
-          workspaceId: FirebaseId.encode(workspaceId),
-        });
-
-        response.set('Cache-Control', 'public, max-age=300, s-maxage=600').status(201).send({
-          status: 201,
-          data: {
-            appId,
-            userId,
-            workspaceId,
+          const token = await admin.auth().createCustomToken(apiKey, {
+            api: true,
             mode,
-            token,
-          },
-        });
-        return;
+            appId: FirebaseId.encode(appId),
+            userId: FirebaseId.encode(userId),
+            workspaceId: FirebaseId.encode(workspaceId),
+          });
+
+          response.set('Cache-Control', 'public, max-age=300, s-maxage=600').status(201).send({
+            status: 201,
+            data: {
+              appId,
+              userId,
+              workspaceId,
+              mode,
+              token,
+            },
+          });
+          return;
+        } catch (e) {
+          Sentry.captureException(e, { tags: { mode, appId, workspaceId, userId } });
+        }
       }
 
       default: {
@@ -161,9 +168,12 @@ export async function handleRequest(
       }
     }
   } catch (e) {
+    Sentry.captureException(e);
     console.error('Error with generateToken', { error: e });
     response.status(401).send({ status: 401, error: e });
     return;
+  } finally {
+    transaction.finish();
   }
 }
 

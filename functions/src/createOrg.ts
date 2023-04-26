@@ -1,4 +1,5 @@
 import * as functions from 'firebase-functions';
+import * as Sentry from '@sentry/node';
 import admin from 'firebase-admin';
 import * as cors from 'cors';
 import { App, Org, OrgApps } from './types';
@@ -9,7 +10,10 @@ async function generateId() {
   return admin.firestore().collection('name').doc().id;
 }
 
-export async function createOrgImpl(request: functions.https.Request, response: functions.Response) {
+export async function createOrgImpl(
+  request: functions.https.Request,
+  response: functions.Response
+) {
   const idToken = request.get('Authorization')?.split('Bearer ')[1];
 
   if (!idToken) {
@@ -22,6 +26,7 @@ export async function createOrgImpl(request: functions.https.Request, response: 
     return;
   }
 
+  const transaction = Sentry.startTransaction({ name: 'createOrg' });
   try {
     const decodedIdToken = await admin.auth().verifyIdToken(idToken.toString());
 
@@ -94,15 +99,20 @@ export async function createOrgImpl(request: functions.https.Request, response: 
           },
         });
       } catch (e) {
+        Sentry.captureException(e);
         functions.logger.error('Failed to create org', { error: e });
         response.status(400).send({ status: 400, error: 'Something went wrong' });
       }
     } catch (e) {
+      Sentry.captureException(e);
       functions.logger.error('Failed to create org', { error: e });
       response.status(400).send({ status: 400, error: 'Something went wrong' });
     }
   } catch (e) {
+    Sentry.captureException(e);
     functions.logger.error('Failed to verify id token', { error: e });
+  } finally {
+    transaction.finish();
   }
 }
 
