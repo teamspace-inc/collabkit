@@ -67,6 +67,7 @@ def slackSqlChain(query: str, username: str, sendMessage: Callable, threadTs: st
     threadedGntr = ThreadedGenerator()
     slackData = SlackData(username, sendMessage, threadTs)
     threading.Thread(target=agent_thread, args=(threadedGntr, query, shapeAnalytics, slackData)).start()
+    slackData.send("I'm workin' on it! Give me a moment...")
     return threadedGntr
 
 @functions_framework.http
