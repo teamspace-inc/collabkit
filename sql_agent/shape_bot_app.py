@@ -1,3 +1,4 @@
+""" Styleguide: https://google.github.io/styleguide/pyguide.html """
 import os
 from slack_bolt import App
 from slack_bolt.adapter.socket_mode import SocketModeHandler

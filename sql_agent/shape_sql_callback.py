@@ -13,7 +13,7 @@ from langchain.llms.base import BaseLLM
 from threaded_generator import ThreadedGenerator
 import json 
 from ss_analytics import ShapeAnalytics
-from slack import SlackData
+from slack_data import SlackData
 
 def create_shape_sql_agent(
     llm: BaseLLM,
