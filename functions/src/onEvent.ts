@@ -19,7 +19,7 @@ export async function handleCreate(props: {
     Sentry.captureException(e, { tags: { appId, workspaceId, threadId, eventId } });
     console.error('[onEvent] error', e);
   } finally {
-    transaction.finish();
+    transaction?.finish();
   }
 }
 

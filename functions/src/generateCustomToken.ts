@@ -88,7 +88,7 @@ export async function generateCustomTokenImpl(
     response.status(401).send({ status: 401, error: e });
     return;
   } finally {
-    transaction.finish();
+    transaction?.finish();
   }
 }
 

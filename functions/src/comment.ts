@@ -110,7 +110,7 @@ export async function commentImpl(request: functions.https.Request, response: fu
     Sentry.captureException(e, { tags: { appId, workspaceId } });
     response.status(500).send({ status: 500, error: 'Internal Server Error' });
   } finally {
-    transaction.finish();
+    transaction?.finish();
   }
 }
 

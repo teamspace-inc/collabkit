@@ -15,7 +15,7 @@ export async function triggerWebhookImpl(
     Sentry.captureException(e);
     response.status(500).send();
   } finally {
-    transaction.finish();
+    transaction?.finish();
   }
 }
 

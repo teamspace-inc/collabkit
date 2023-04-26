@@ -59,7 +59,7 @@ export async function workspaceImpl(
     console.error(error);
     response.status(500).send({ status: 500, error: 'Internal Server Error' });
   } finally {
-    transaction.finish();
+    transaction?.finish();
   }
 }
 

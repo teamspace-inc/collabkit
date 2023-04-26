@@ -112,7 +112,7 @@ export async function createOrgImpl(
     Sentry.captureException(e);
     functions.logger.error('Failed to verify id token', { error: e });
   } finally {
-    transaction.finish();
+    transaction?.finish();
   }
 }
 

@@ -15,7 +15,7 @@ export async function sendNotificationImpl(
     Sentry.captureException(e, { tags: { appId, workspaceId, threadId, eventId } });
     response.status(500).send();
   } finally {
-    transaction.finish();
+    transaction?.finish();
   }
 }
 

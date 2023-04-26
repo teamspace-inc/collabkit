@@ -62,7 +62,7 @@ export async function putUser(
     Sentry.captureException(error);
     response.status(500).send({ status: 500, error: 'Internal Server Error' });
   } finally {
-    transaction.finish();
+    transaction?.finish();
   }
 }
 
@@ -108,6 +108,6 @@ export async function deleteUser(
     Sentry.captureException(error);
     response.status(500).send({ status: 500, error: 'Internal Server Error' });
   } finally {
-    transaction.finish();
+    transaction?.finish();
   }
 }
