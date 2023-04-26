@@ -68,13 +68,15 @@ class ShapeSQLCallbackHandler(StreamingStdOutCallbackHandler):
                 "log":action.log
             }
         }
-        if action.tool == "query_sql_db":
-            self.shapeAnalytics.track('on_agent_action', {
-                'tool': action.tool,
-                'tool_input': action.tool_input,
-            })
+            
         if(self.slackData!=None and action.log.partition("Action:")[0] != ""):
             self.slackData.send(action.log.partition("Action:")[0])
+            if action.tool == "query_sql_db":
+                self.shapeAnalytics.track('on_agent_action', {
+                'tool': action.tool,
+                'tool_input': action.tool_input,
+                })
+                self.slackData.send(f"Here is the SQL Statement I will run: \n`{action.tool_input}`")
         self.threadedGntr.send(json.dumps(actionDict))
 
     def on_llm_start(
