@@ -1,3 +1,5 @@
+""" Styleguide: https://google.github.io/styleguide/pyguide.html """
+
 import functions_framework
 import json
 import os
@@ -22,7 +24,7 @@ from threaded_generator import ThreadedGenerator
 from typing import Any, Dict, List, Union
 from ss_analytics import ShapeAnalytics
 from decouple import config
-from slack import SlackData
+from slack_data import SlackData
 
 def agent_thread(threadedGntr: ThreadedGenerator, query: str, shapeAnalytics: ShapeAnalytics, slackData: SlackData):
     try:
