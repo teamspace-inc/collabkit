@@ -9,6 +9,7 @@ __pycache__/
 .env
 .env.*.local
 .env.local
+.env.prod
 .DS_Store
 coverage
 database-coverage.html
