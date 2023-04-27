@@ -1,6 +1,6 @@
 import { CollabKitProvider, Thread } from '@collabkit/react';
 
-function App() {
+function App({ threadId }: { threadId: string }) {
   return (
     <CollabKitProvider
       appId="rCTgBjF7mhdCmTf6chKnK"
@@ -26,7 +26,7 @@ function App() {
           borderLeft: '1px solid hsla(210,18%,87%,1)',
           zIndex: 1,
         }}
-        threadId="github-issues-thread"
+        threadId={threadId}
         info={{ name: 'Demo thread' }}
       />
     </CollabKitProvider>
