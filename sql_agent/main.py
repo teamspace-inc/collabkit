@@ -28,10 +28,10 @@ from slack_data import SlackData
 from snowflake.sqlalchemy import URL
 from database_factory import *
 
+db = DatabaseFactory.create_database()
+
 def agent_thread(threadedGntr: ThreadedGenerator, query: str, shapeAnalytics: ShapeAnalytics, slackData: SlackData):
     try:
-        db = DatabaseFactory.create_database()
-        
         os.environ["OPENAI_API_KEY"] = config("OPENAI_API_KEY")
         llm = OpenAI(temperature=0, model_name="gpt-4")
         toolkit = SQLDatabaseToolkit(db=db, 
