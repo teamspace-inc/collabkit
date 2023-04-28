@@ -25,16 +25,20 @@ from typing import Any, Dict, List, Union
 from ss_analytics import ShapeAnalytics
 from decouple import config
 from slack_data import SlackData
+from snowflake.sqlalchemy import URL
+from database_factory import *
 
 def agent_thread(threadedGntr: ThreadedGenerator, query: str, shapeAnalytics: ShapeAnalytics, slackData: SlackData):
     try:
-        engine = create_engine("bigquery://", credentials_info=json.loads(config("BQ_API_KEY")))
-        db = SQLDatabase(engine)
-        toolkit = SQLDatabaseToolkit(db=db)
+        db = DatabaseFactory.create_database()
+        
         os.environ["OPENAI_API_KEY"] = config("OPENAI_API_KEY")
+        llm = OpenAI(temperature=0, model_name="gpt-4")
+        toolkit = SQLDatabaseToolkit(db=db, 
+                                    llm=llm) 
+
         agent_executor = create_shape_sql_agent(
-            llm=OpenAI(temperature=0, 
-            model_name="gpt-4"), 
+            llm=llm, 
             toolkit=toolkit,
             callback_manager = CallbackManager([ShapeSQLCallbackHandler(threadedGntr,shapeAnalytics,slackData), StdOutCallbackHandler()]),
             verbose=True,
@@ -67,7 +71,7 @@ def slackSqlChain(query: str, username: str, sendMessage: Callable, threadTs: st
     threadedGntr = ThreadedGenerator()
     slackData = SlackData(username, sendMessage, threadTs)
     threading.Thread(target=agent_thread, args=(threadedGntr, query, shapeAnalytics, slackData)).start()
-    slackData.send("I'm workin' on it! Please give me a moment...")
+    slackData.send("Please give me a moment, it'll take about 1-2 minutes to figure this out")
     return threadedGntr
 
 @functions_framework.http
