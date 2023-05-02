@@ -7,20 +7,20 @@ from snowflake.sqlalchemy import URL
 import os
 
 class DatabaseType(Enum):
-    BigQuery = "big_query"
+    BigQuery = "bigquery"
     Snowflake = "snowflake"
 
 class DatabaseFactory:
     @classmethod
-    def create_database(cls) ->SQLDatabase:
+    def create_database(cls) -> SQLDatabase:
         db_type = DatabaseType(config("DB_TYPE"))
-
-        if DatabaseType.BigQuery == db_type:
-            return cls.__create_bigquery_database()
-        elif DatabaseType.Snowflake == db_type:
-            return cls.__create_snowflake_database()
-        else:
-            raise Exception("Database Type not supported")
+        match db_type:
+            case DatabaseType.BigQuery:
+                return cls.__create_bigquery_database()
+            case DatabaseType.Snowflake:
+                return cls.__create_snowflake_database()
+            case _:
+                raise Exception("Database Type not supported")
         
     @classmethod
     def __create_bigquery_database(cls) -> SQLDatabase:
