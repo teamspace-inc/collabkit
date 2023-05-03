@@ -14,28 +14,32 @@ from threaded_generator import ThreadedGenerator
 import json 
 from ss_analytics import ShapeAnalytics
 from slack_data import SlackData
+import os
+from decouple import config
+from langchain.llms.openai import OpenAI
+from langchain.sql_database import SQLDatabase
+from database_factory import *
 
 def create_shape_sql_agent(
-    llm: BaseLLM,
-    toolkit: SQLDatabaseToolkit,
     callback_manager: Optional[BaseCallbackManager] = None,
-    prefix: str = SQL_PREFIX,
-    suffix: str = SQL_SUFFIX,
-    format_instructions: str = FORMAT_INSTRUCTIONS,
-    input_variables: Optional[List[str]] = None,
-    top_k: int = 10,
-    verbose: bool = False,
     **kwargs: Any,
 ) -> AgentExecutor:
     """Construct a sql agent from an LLM and tools."""
+    os.environ["OPENAI_API_KEY"] = config("OPENAI_API_KEY")
+    
+    db = DatabaseFactory.create_database()
+    llm = OpenAI(temperature=0, 
+                 model_name="gpt-4")
+    toolkit = SQLDatabaseToolkit(db=db,
+                                 llm=llm)
     tools = toolkit.get_tools()
-    prefix = prefix.format(dialect=toolkit.dialect, top_k=top_k)
+    prefix = SQL_PREFIX.format(dialect=toolkit.dialect, 
+                               top_k=10)
     prompt = ZeroShotAgent.create_prompt(
         tools,
         prefix=prefix,
-        suffix=suffix,
-        format_instructions=format_instructions,
-        input_variables=input_variables,
+        suffix=SQL_SUFFIX,
+        format_instructions=FORMAT_INSTRUCTIONS,
     )
     llm_chain = LLMChain(
         llm=llm,
@@ -45,7 +49,11 @@ def create_shape_sql_agent(
     tool_names = [tool.name for tool in tools]
     agent = ZeroShotAgent(llm_chain=llm_chain, allowed_tools=tool_names, **kwargs)
     return AgentExecutor.from_agent_and_tools(
-        agent=agent, tools=toolkit.get_tools(), callback_manager=callback_manager, verbose=verbose
+        agent=agent, 
+        tools=toolkit.get_tools(), 
+        callback_manager=callback_manager, 
+        verbose=True,
+        max_execution_time=240,
     )
 
 
