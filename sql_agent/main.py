@@ -1,8 +1,6 @@
 """ Styleguide: https://google.github.io/styleguide/pyguide.html """
-
 import functions_framework
 import json
-import os
 import threading
 from typing import Callable
 from flask import Flask, Response
@@ -10,7 +8,6 @@ from flask import escape
 from langchain.agents import AgentExecutor
 from langchain.agents.agent_toolkits import SQLDatabaseToolkit
 from langchain.sql_database import SQLDatabase
-from langchain.llms.openai import OpenAI
 from langchain.callbacks.base import CallbackManager
 from langchain.callbacks.stdout import StdOutCallbackHandler
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
@@ -26,25 +23,12 @@ from ss_analytics import ShapeAnalytics
 from decouple import config
 from slack_data import SlackData
 from snowflake.sqlalchemy import URL
-from database_factory import *
 
 def agent_thread(threadedGntr: ThreadedGenerator, query: str, shapeAnalytics: ShapeAnalytics, slackData: SlackData):
     try:
-        db = DatabaseFactory.create_database()
-        
-        os.environ["OPENAI_API_KEY"] = config("OPENAI_API_KEY")
-        llm = OpenAI(temperature=0, model_name="gpt-4")
-        toolkit = SQLDatabaseToolkit(db=db, 
-                                    llm=llm) 
-
         agent_executor = create_shape_sql_agent(
-            llm=llm, 
-            toolkit=toolkit,
             callback_manager = CallbackManager([ShapeSQLCallbackHandler(threadedGntr,shapeAnalytics,slackData), StdOutCallbackHandler()]),
-            verbose=True,
-            max_execution_time=240,
-            streaming=True
-            )
+        )
         agent_executor.run(query) 
     finally:
         shapeAnalytics.track('agent_thread Completed', {
