@@ -6,8 +6,6 @@ from typing import Callable
 from flask import Flask, Response
 from flask import escape
 from langchain.agents import AgentExecutor
-from langchain.agents.agent_toolkits import SQLDatabaseToolkit
-from langchain.sql_database import SQLDatabase
 from langchain.callbacks.base import CallbackManager
 from langchain.callbacks.stdout import StdOutCallbackHandler
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
