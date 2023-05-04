@@ -97,6 +97,31 @@ function Chart() {
   );
 }
 
+const ButtonStyle: React.CSSProperties = {
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'center',
+  padding: '8px 16px',
+  border: '1px solid #2D302F',
+  borderRadius: '8px',
+  gap: '8px',
+  background: 'none',
+};
+
+const ButtonHoverStyle: React.CSSProperties = {
+  background: '#2D302F',
+  cursor: 'pointer',
+};
+
+const ButtonTextStyle: React.CSSProperties = {
+  fontWeight: 500,
+  fontSize: '12px',
+  color: 'white',
+  lineHeight: '20px',
+};
+
+const ButtonIconStyle: React.CSSProperties = {};
+
 const MainStyle: React.CSSProperties = {
   fontFamily: 'Inter, sans-serif',
   display: 'grid',
@@ -219,6 +244,11 @@ const ListItemStyle: React.CSSProperties = {
   gap: '12px',
 };
 
+const ListItemHoverStyle: React.CSSProperties = {
+  background: '#1D1F1F',
+  cursor: 'pointer',
+};
+
 const ListItemHeaderStyle: React.CSSProperties = {
   display: 'flex',
   alignItems: 'baseline',
@@ -270,6 +300,8 @@ const ListHeaderStyle: React.CSSProperties = {
 const QueryDetailViewStyle: React.CSSProperties = {
   display: 'flex',
   padding: 16,
+  flexDirection: 'column',
+  gap: '16px',
 };
 
 const QuestionStyle: React.CSSProperties = {
@@ -278,6 +310,13 @@ const QuestionStyle: React.CSSProperties = {
   fontSize: '16px',
   lineHeight: '18px',
   color: 'white',
+};
+
+const DividerStyle: React.CSSProperties = {
+  background: '#2D302F',
+  width: '100%',
+  height: '1px',
+  display: 'flex',
 };
 
 const ChartWrapperStyle: React.CSSProperties = {
@@ -294,6 +333,11 @@ const SQLStyle: React.CSSProperties = {
   border: '1px solid #2D302F',
   lineHeight: '20px',
   padding: 16,
+};
+
+const ActionBarStyle: React.CSSProperties = {
+  display: 'flex',
+  gap: '12px',
 };
 
 type Query = {
@@ -397,8 +441,75 @@ function useShape() {
   return { store, actions };
 }
 
-function useHover() {
-  // write a react hook that returns a boolean indicating whether the element is being hovered over
+function useHover<T extends HTMLElement>(): [React.RefObject<T>, boolean] {
+  const [isHovered, setHovered] = useState(false);
+  const ref = useRef<T>(null);
+
+  const handleMouseEnter = () => setHovered(true);
+  const handleMouseLeave = () => setHovered(false);
+
+  useEffect(() => {
+    const node = ref.current;
+    if (node) {
+      node.addEventListener('mouseenter', handleMouseEnter);
+      node.addEventListener('mouseleave', handleMouseLeave);
+
+      return () => {
+        node.removeEventListener('mouseenter', handleMouseEnter);
+        node.removeEventListener('mouseleave', handleMouseLeave);
+      };
+    }
+  }, [ref.current]);
+
+  return [ref, isHovered];
+}
+
+function useHoverStyle<T extends HTMLElement>(
+  style: React.CSSProperties,
+  hoverStyle: React.CSSProperties
+): [React.RefObject<T>, React.CSSProperties] {
+  const [ref, isHovered] = useHover<T>();
+
+  return [
+    ref,
+    {
+      ...style,
+      ...(isHovered ? hoverStyle : {}),
+    },
+  ];
+}
+
+function ListItem({ queryId, query }: { queryId: string; query: Query }) {
+  const [ref, listItemStyle] = useHoverStyle<HTMLDivElement>(ListItemStyle, ListItemHoverStyle);
+
+  return (
+    <div style={listItemStyle} key={queryId} ref={ref}>
+      <div style={ListItemHeaderStyle}>
+        <div style={query.verified ? VerifiedStyle : UnverifiedStyle}>
+          {query.verified ? <CheckCircle size={16} /> : <Clock size={16} />}
+          {query.verified ? 'Verified' : 'Unverified'}
+        </div>
+        <div style={SpacerStyle}></div>
+        <div style={TimestampStyle}>{query.timestamp}</div>
+      </div>
+      <div style={ListItemQuestionStyle}>{query.question}</div>
+    </div>
+  );
+}
+
+function Button(props: {
+  icon: React.ReactNode;
+  text: string;
+  onClick: (e: React.MouseEvent) => void;
+}) {
+  const [ref, buttonStyle] = useHoverStyle<HTMLButtonElement>(ButtonStyle, ButtonHoverStyle);
+
+  return (
+    <button style={buttonStyle} ref={ref}>
+      <div style={ButtonTextStyle}>{props.text}</div>
+      <div style={ButtonIconStyle}>{props.icon}</div>
+    </button>
+  );
 }
 
 export default function Home() {
@@ -412,19 +523,7 @@ export default function Home() {
   const listItems = [];
   for (const queryId in queries) {
     const query = queries[queryId];
-    listItems.push(
-      <div style={ListItemStyle} key={queryId}>
-        <div style={ListItemHeaderStyle}>
-          <div style={query.verified ? VerifiedStyle : UnverifiedStyle}>
-            {query.verified ? <CheckCircle /> : <Clock />}
-            {query.verified ? 'Verified' : 'Unverified'}
-          </div>
-          <div style={SpacerStyle}></div>
-          <div style={TimestampStyle}>{query.timestamp}</div>
-        </div>
-        <div style={ListItemQuestionStyle}>{query.question}</div>
-      </div>
-    );
+    listItems.push(<ListItem queryId={queryId} query={query} />);
   }
 
   const selectedQuery = selectedQueryId ? queries[selectedQueryId] : null;
@@ -437,24 +536,31 @@ export default function Home() {
       </div>
       <div style={QueryDetailViewStyle}>
         {selectedQuery ? (
-          <div>
+          <>
             <div style={QuestionStyle}>{selectedQuery.question}</div>
+            <div style={DividerStyle}></div>
             <div style={AnswerStyle}>{selectedQuery.answer}</div>
             <div style={ChartWrapperStyle}>
               <Chart />
             </div>
-            <button
-              onClick={() =>
-                selectedQuery.verified
-                  ? actions.unverify(selectedQuery.id)
-                  : actions.verify(selectedQuery.id)
-              }
-            >
-              {selectedQuery.verified ? 'Unverify' : 'Verify'}
-            </button>
-            <button onClick={() => actions.runQuery(selectedQuery.id)}>Run Query</button>
+            <div style={ActionBarStyle}>
+              <Button
+                icon={<CheckCircle size={16} color="#5BA97D" />}
+                text={selectedQuery.verified ? 'Unverify' : 'Verify'}
+                onClick={() =>
+                  selectedQuery.verified
+                    ? actions.unverify(selectedQuery.id)
+                    : actions.verify(selectedQuery.id)
+                }
+              />
+              <Button
+                onClick={() => actions.runQuery(selectedQuery.id)}
+                text="Run Query"
+                icon={null}
+              />
+            </div>
             <div style={SQLStyle}>{selectedQuery.sql}</div>
-          </div>
+          </>
         ) : null}
       </div>
     </main>

@@ -5,8 +5,10 @@ body {
 }
 
 * {
-  font-smooth: antialiased;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   box-sizing: border-box;
+  font-family: 'Inter';
 }
 
 .icon-spin {
