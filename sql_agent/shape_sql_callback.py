@@ -17,25 +17,41 @@ from decouple import config
 from langchain.llms.openai import OpenAI
 from database_factory import *
 
+SHAPE_SQL_PREFIX = """You are an agent designed to interact with a SQL database and write matplotlib code.
+Given an input question, create a syntactically correct {dialect} query to run, then look at the results of the query, summarize the result in english, and write detailed and correct matplotlib code to create a chart of the results.
 
-def create_shape_sql_agent(
-    callback_manager: Optional[BaseCallbackManager] = None,
-    **kwargs: Any,
-) -> AgentExecutor:
+Unless the user specifies a specific number of examples they wish to obtain, always limit your query to at most {top_k} results.
+You can order the results by a relevant column to return the most interesting examples in the database.
+Never query for all the columns from a specific table, only ask for the relevant columns given the question.
+You have access to tools for interacting with the database.
+Only use the below tools. Only use the information returned by the below tools to write your matplotlib code.
+You MUST double check your query before executing it. If you get an error while executing a query, rewrite the query and try again.
+
+DO NOT make any DML statements (INSERT, UPDATE, DELETE, DROP etc.) to the database.
+
+If the question does not seem related to the database, just return "I don't know" as the answer.
+
+
+"""
+
+def create_shape_sql_agent(callback_manager: Optional[BaseCallbackManager] = None, **kwargs: Any) -> AgentExecutor:
     """Construct a sql agent from an LLM and tools."""
-    os.environ["OPENAI_API_KEY"] = config("OPENAI_API_KEY")
-
+    
     db = DatabaseFactory.create_database()
-    llm = OpenAI(temperature=0, model_name="gpt-4")
-    toolkit = SQLDatabaseToolkit(db=db, llm=llm)
+
+    os.environ["OPENAI_API_KEY"] = config("OPENAI_API_KEY")
+    llm = OpenAI(temperature=0, 
+                 model_name="gpt-4")
+    toolkit = SQLDatabaseToolkit(db=db,
+                                 llm=llm)
     tools = toolkit.get_tools()
-    prefix = SQL_PREFIX.format(dialect=toolkit.dialect, top_k=10)
     prompt = ZeroShotAgent.create_prompt(
         tools,
-        prefix=prefix,
+        prefix=SHAPE_SQL_PREFIX.format(dialect=toolkit.dialect, top_k=10),
         suffix=SQL_SUFFIX,
         format_instructions=FORMAT_INSTRUCTIONS,
     )
+    
     llm_chain = LLMChain(
         llm=llm,
         prompt=prompt,
@@ -45,8 +61,8 @@ def create_shape_sql_agent(
     agent = ZeroShotAgent(llm_chain=llm_chain, allowed_tools=tool_names, **kwargs)
     return AgentExecutor.from_agent_and_tools(
         agent=agent,
-        tools=toolkit.get_tools(),
-        callback_manager=callback_manager,
+        tools=toolkit.get_tools(), 
+        callback_manager=callback_manager, 
         verbose=True,
         max_execution_time=240,
     )
@@ -97,6 +113,7 @@ class ShapeSQLCallbackHandler(StreamingStdOutCallbackHandler):
         self, serialized: Dict[str, Any], prompts: List[str], **kwargs: Any
     ) -> Any:
         """Run when LLM starts running."""
+        print(f"prompts: {prompts}")
         pass
 
     def on_llm_new_token(self, token: str, **kwargs: Any) -> Any:
