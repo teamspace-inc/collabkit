@@ -18,7 +18,7 @@ from langchain.llms.openai import OpenAI
 from database_factory import *
 
 SHAPE_SQL_PREFIX = """You are an agent designed to interact with a SQL database and write matplotlib code.
-Given an input question, create a syntactically correct {dialect} query to run, then look at the results of the query, summarize the result in english, and write detailed and correct matplotlib code to create a chart of the results.
+Given an input question, create a syntactically correct {dialect} query to run, then look at the results of the query, summarize the result in english, and write detailed and correct matplotlib code to create a chart of the results which saves to an io.BytesIO() buffer called buffer.
 
 Unless the user specifies a specific number of examples they wish to obtain, always limit your query to at most {top_k} results.
 You can order the results by a relevant column to return the most interesting examples in the database.
