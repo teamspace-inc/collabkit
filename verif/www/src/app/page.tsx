@@ -2,7 +2,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { proxy, useSnapshot } from 'valtio';
 import { Pie, PieChart, Sector } from 'recharts';
-import { CheckCircle, Clock } from '@phosphor-icons/react';
+import { CheckCircle, Clock, Play } from '@phosphor-icons/react';
 
 const data = [
   { name: 'Group A', value: 400 },
@@ -120,7 +120,10 @@ const ButtonTextStyle: React.CSSProperties = {
   lineHeight: '20px',
 };
 
-const ButtonIconStyle: React.CSSProperties = {};
+const ButtonIconStyle: React.CSSProperties = {
+  position: 'relative',
+  top: '1px',
+};
 
 const MainStyle: React.CSSProperties = {
   fontFamily: 'Inter, sans-serif',
@@ -242,6 +245,7 @@ const ListItemStyle: React.CSSProperties = {
   padding: 16,
   flexDirection: 'column',
   gap: '12px',
+  borderBottom: '1px solid #2D302F',
 };
 
 const ListItemHoverStyle: React.CSSProperties = {
@@ -295,6 +299,7 @@ const ListHeaderStyle: React.CSSProperties = {
   height: 52,
   padding: 16,
   color: 'white',
+  borderBottom: '1px solid #2D302F',
 };
 
 const QueryDetailViewStyle: React.CSSProperties = {
@@ -506,8 +511,8 @@ function Button(props: {
 
   return (
     <button style={buttonStyle} ref={ref}>
-      <div style={ButtonTextStyle}>{props.text}</div>
       <div style={ButtonIconStyle}>{props.icon}</div>
+      <div style={ButtonTextStyle}>{props.text}</div>
     </button>
   );
 }
@@ -545,6 +550,12 @@ export default function Home() {
             </div>
             <div style={ActionBarStyle}>
               <Button
+                onClick={() => actions.runQuery(selectedQuery.id)}
+                text="Run Query"
+                icon={<Play size={16} color="#fff" />}
+              />
+              <div style={SpacerStyle} />
+              <Button
                 icon={<CheckCircle size={16} color="#5BA97D" />}
                 text={selectedQuery.verified ? 'Unverify' : 'Verify'}
                 onClick={() =>
@@ -552,11 +563,6 @@ export default function Home() {
                     ? actions.unverify(selectedQuery.id)
                     : actions.verify(selectedQuery.id)
                 }
-              />
-              <Button
-                onClick={() => actions.runQuery(selectedQuery.id)}
-                text="Run Query"
-                icon={null}
               />
             </div>
             <div style={SQLStyle}>{selectedQuery.sql}</div>
