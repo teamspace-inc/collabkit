@@ -4,7 +4,7 @@ from decouple import config
 class ShapeAnalytics:
 
   def __init__(self, distinctId: str):
-    shape_analytics_api_key = config("SHAPE_API_KEY", default=None)
+    shape_analytics_api_key = config("SHAPE_ANALYTICS_API_KEY", default=None)
     # If customer has not opted into analytics via shape analytics api key, don't initialize Mixpanel
     self.mixpanel = None if shape_analytics_api_key is None else Mixpanel(shape_analytics_api_key)
     self.distinctId = distinctId
