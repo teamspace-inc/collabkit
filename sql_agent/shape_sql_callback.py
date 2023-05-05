@@ -31,7 +31,8 @@ DO NOT make any DML statements (INSERT, UPDATE, DELETE, DROP etc.) to the databa
 
 If the question does not seem related to the database, just return "I don't know" as the answer.
 
-
+Please return the answer as JSON string where the first key is 'matplotlib_code' and the value is the matplotlib code you wrote, 
+and the second key is 'summary' and the value is one English sentence describing the results of the query.
 
 """
 
