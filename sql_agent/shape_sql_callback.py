@@ -12,7 +12,7 @@ from langchain.chains.llm import LLMChain
 from langchain.llms.base import BaseLLM
 from threaded_generator import ThreadedGenerator
 import json 
-from ss_analytics import ShapeAnalytics
+from shape_analytics import ShapeAnalytics
 from slack_data import SlackData
 import os
 from decouple import config

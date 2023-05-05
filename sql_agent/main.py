@@ -17,7 +17,7 @@ from sqlalchemy.engine import create_engine
 from sqlalchemy.schema import *
 from threaded_generator import ThreadedGenerator
 from typing import Any, Dict, List, Union
-from ss_analytics import ShapeAnalytics
+from shape_analytics import ShapeAnalytics
 from decouple import config
 from slack_data import SlackData
 from snowflake.sqlalchemy import URL
