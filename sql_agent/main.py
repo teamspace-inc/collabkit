@@ -35,8 +35,7 @@ def agent_thread(threadedGntr: ThreadedGenerator, query: str, shapeAnalytics: Sh
         threadedGntr.close()
 
 def sqlChain(query: str, username: str) -> ThreadedGenerator:
-    mp = Mixpanel(config("SHAPE_API_KEY"))
-    shapeAnalytics = ShapeAnalytics(mp, username)
+    shapeAnalytics = ShapeAnalytics(username)
     shapeAnalytics.track('sqlChain Invoked',{
         'Query':query
     })
@@ -45,8 +44,7 @@ def sqlChain(query: str, username: str) -> ThreadedGenerator:
     return threadedGntr
 
 def slackSqlChain(query: str, username: str, sendMessage: Callable, threadTs: str) -> ThreadedGenerator:
-    mp = Mixpanel(config("SHAPE_API_KEY"))
-    shapeAnalytics = ShapeAnalytics(mp, username)
+    shapeAnalytics = ShapeAnalytics(username)
     shapeAnalytics.track('slackSqlChain Invoked',{
         'Query':query
     })
