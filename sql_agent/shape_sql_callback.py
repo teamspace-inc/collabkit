@@ -18,7 +18,7 @@ from langchain.llms.openai import OpenAI
 from database_factory import *
 
 SHAPE_SQL_PREFIX = """You are an agent designed to interact with a SQL database and write matplotlib code.
-Given an input question, create a syntactically correct {dialect} query to run, then look at the results of the query, summarize the result in english, and write detailed and correct matplotlib code to create a chart of the results which saves to an io.BytesIO() buffer called buffer.
+Given an input question, create a syntactically correct {dialect} query to run, then look at the results of the query and write detailed and correct matplotlib code to create a chart of the results which saves to an io.BytesIO() buffer called buffer. 
 
 Unless the user specifies a specific number of examples they wish to obtain, always limit your query to at most {top_k} results.
 You can order the results by a relevant column to return the most interesting examples in the database.
@@ -30,6 +30,7 @@ You MUST double check your query before executing it. If you get an error while 
 DO NOT make any DML statements (INSERT, UPDATE, DELETE, DROP etc.) to the database.
 
 If the question does not seem related to the database, just return "I don't know" as the answer.
+
 
 
 """
@@ -86,6 +87,7 @@ class ShapeSQLCallbackHandler(StreamingStdOutCallbackHandler):
         self, action: AgentAction, color: Optional[str] = None, **kwargs: Any
     ) -> Any:
         """Run on agent action."""
+        print("on_agent_action")
         actionDict = {
             "on_agent_action": {
                 "tool": action.tool,
@@ -113,6 +115,7 @@ class ShapeSQLCallbackHandler(StreamingStdOutCallbackHandler):
         self, serialized: Dict[str, Any], prompts: List[str], **kwargs: Any
     ) -> Any:
         """Run when LLM starts running."""
+        print("on_llm_start")
         print(f"prompts: {prompts}")
         pass
 
@@ -122,6 +125,7 @@ class ShapeSQLCallbackHandler(StreamingStdOutCallbackHandler):
 
     def on_llm_end(self, response: LLMResult, **kwargs: Any) -> Any:
         """Run when LLM ends running."""
+        print("on_llm_end")
         pass
 
     def on_llm_error(
@@ -134,13 +138,14 @@ class ShapeSQLCallbackHandler(StreamingStdOutCallbackHandler):
         self, serialized: Dict[str, Any], inputs: Dict[str, Any], **kwargs: Any
     ) -> Any:
         """Run when chain starts running."""
-
-        startDict = {"on_chain_start": "Entering new chain..."}
+        print("on_chain_start")
+        startDict = {"on_chain_start":"Entering new chain..."}
         self.threadedGntr.send(json.dumps(startDict))
 
     def on_chain_end(self, outputs: Dict[str, Any], **kwargs: Any) -> Any:
         """Run when chain ends running."""
-        finishDict = {"on_chain_end": "Finished chain"}
+        print("on_chain_end")
+        finishDict = {"on_chain_end":"Finished chain"}
         self.threadedGntr.send(json.dumps(finishDict))
 
     def on_chain_error(
@@ -153,7 +158,7 @@ class ShapeSQLCallbackHandler(StreamingStdOutCallbackHandler):
         self, serialized: Dict[str, Any], input_str: str, **kwargs: Any
     ) -> Any:
         """Run when tool starts running."""
-        print(input_str)
+        print("on_tool_start")
         pass
 
     def on_tool_end(
@@ -165,6 +170,7 @@ class ShapeSQLCallbackHandler(StreamingStdOutCallbackHandler):
         **kwargs: Any,
     ) -> None:
         """If not the final action, print out observation."""
+        print("on_tool_end")
         toolEndDict = {
             "on_tool_end": {
                 "observation_prefix": observation_prefix,
@@ -190,13 +196,20 @@ class ShapeSQLCallbackHandler(StreamingStdOutCallbackHandler):
         **kwargs: Optional[str],
     ) -> None:
         # """Run when agent ends."""
+        print("on_text")
         self.threadedGntr(text)
 
     def on_agent_finish(self, finish: AgentFinish, **kwargs: Any) -> Any:
         """Run on agent end."""
-        finishResponse = {"log": finish.log, "return_values": finish.return_values}
-
-        finishDict = {"on_agent_finish": finishResponse}
-        if self.slackData != None:
+        print("on_agent_finish")
+        finishResponse = {
+            "log":finish.log,
+            "return_values":finish.return_values
+        }
+        
+        finishDict = {
+            "on_agent_finish":finishResponse
+        }
+        if(self.slackData!=None):
             self.slackData.send(finish.log)
         self.threadedGntr.send(json.dumps(finishDict))
