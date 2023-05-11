@@ -134,8 +134,6 @@ class ShapeSQLCallbackHandler(StreamingStdOutCallbackHandler):
         self, serialized: Dict[str, Any], prompts: List[str], **kwargs: Any
     ) -> Any:
         """Run when LLM starts running."""
-        print("on_llm_start")
-        print(f"prompts: {prompts}")
         pass
 
     def on_llm_new_token(self, token: str, **kwargs: Any) -> Any:
@@ -144,7 +142,6 @@ class ShapeSQLCallbackHandler(StreamingStdOutCallbackHandler):
 
     def on_llm_end(self, response: LLMResult, **kwargs: Any) -> Any:
         """Run when LLM ends running."""
-        print("on_llm_end")
         pass
 
     def on_llm_error(
@@ -242,9 +239,7 @@ class ShapeSQLCallbackHandler(StreamingStdOutCallbackHandler):
         try:
             code = json_dict[MATPLOTLIB_CODE]
             local_vars = {}
-            exec(
-                code, {}, local_vars
-            )  # TODO: Add RestrictedPython https://restrictedpython.readthedocs.io/en/latest/
+            exec(code, {}, local_vars)
             buffer = local_vars["buffer"]
 
         except Exception as e:
