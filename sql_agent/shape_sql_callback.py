@@ -253,7 +253,6 @@ class ShapeSQLCallbackHandler(StreamingStdOutCallbackHandler):
             app = App(token=config("SLACK_BOT_TOKEN"))
             result = app.client.files_upload_v2(
                 channel=self.slackData.channel,
-                # initial_comment="Here's my file :smile:",
                 thread_ts=self.slackData.thread_ts,
                 file=buffer.getvalue(),
                 filename=f"chart_{uuid.uuid4()}.png",
