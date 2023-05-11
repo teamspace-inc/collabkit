@@ -23,7 +23,7 @@ from slack_sdk.errors import SlackApiError
 from slack_bolt import App
 
 SHAPE_SQL_PREFIX = """You are an agent designed to interact with a SQL database and write matplotlib code.
-Given an input question, create a syntactically correct {dialect} query to run, then look at the results of the query and write detailed and correct matplotlib code to create a chart of the results which saves to an io.BytesIO() buffer called buffer. 
+Given an input question, create a syntactically correct {dialect} query to run, then look at the results of the query and write concise and correct matplotlib code to create a chart of the results which saves to an io.BytesIO() buffer called buffer. 
 
 Unless the user specifies a specific number of examples they wish to obtain, always limit your query to at most {top_k} results.
 You can order the results by a relevant column to return the most interesting examples in the database.
@@ -34,14 +34,14 @@ You MUST double check your query before executing it. If you get an error while 
 
 DO NOT make any DML statements (INSERT, UPDATE, DELETE, DROP etc.) to the database.
 
-If the question does not seem related to the database, just return "I don't know" as the answer.
+If the question does not seem related to the database, immediately return a JSON string with one key-value pair where the key is '{summary}' and the value is 'I don't know'.
 
 Before importing pyplot, you should call 'matplotlib.use('Agg')'
 
 Make sure to close the figure after saving it to the buffer.
 
-Please return the answer as JSON string where the first key is '{first_key}' and the value is the matplotlib code you wrote as a string, 
-and the second key is '{second_key}' and the value is one English sentence describing the results of the query.
+Please return the answer as JSON string where the first key is '{matplotlib_code}' and the value is the matplotlib code you wrote as a string, 
+and the second key is '{summary}' and the value is one English sentence describing the results of the query.
 
 """
 
@@ -65,8 +65,8 @@ def create_shape_sql_agent(
         prefix=SHAPE_SQL_PREFIX.format(
             dialect=toolkit.dialect,
             top_k=10,
-            first_key=MATPLOTLIB_CODE,
-            second_key=SUMMARY,
+            matplotlib_code=MATPLOTLIB_CODE,
+            summary=SUMMARY,
         ),
         suffix=SQL_SUFFIX,
         format_instructions=FORMAT_INSTRUCTIONS,
