@@ -11,7 +11,6 @@ app = App(token=config("SLACK_BOT_TOKEN"))
 
 @app.event("app_mention")
 def message_hello(event, say: Say):
-    print("the FIRST shape bot function is getting triggered")
     user = app.client.users_profile_get(user=event["user"])
 
     thread_ts = event.get("thread_ts", None)
@@ -26,7 +25,6 @@ def message_hello(event, say: Say):
 
 @app.event("message")
 def message_hello(event, say: Say):
-    print("the SECOND shape bot function is getting triggered")
     if event["channel_type"] == "im":
         user = app.client.users_profile_get(user=event["user"])
         thread_ts = event.get("thread_ts", None)
