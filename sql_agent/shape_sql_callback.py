@@ -15,7 +15,6 @@ from slack_data import SlackData
 import os
 from decouple import config
 from langchain.llms.openai import OpenAI
-from langchain.sql_database import SQLDatabase
 from database_factory import *
 
 
