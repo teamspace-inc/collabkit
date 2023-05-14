@@ -9,6 +9,7 @@ from snowflake.sqlalchemy import URL
 class DatabaseType(Enum):
     BigQuery = "bigquery"
     Snowflake = "snowflake"
+    DuckDB = "duckdb"
 
 
 class DatabaseFactory:
@@ -20,6 +21,8 @@ class DatabaseFactory:
                 return cls.__create_bigquery_database()
             case DatabaseType.Snowflake:
                 return cls.__create_snowflake_database()
+            case DatabaseType.DuckDB:
+                return cls.__create_duck_db_database()
             case _:
                 raise Exception("Database Type not supported")
 
@@ -28,6 +31,11 @@ class DatabaseFactory:
         engine = create_engine(
             "bigquery://", credentials_info=json.loads(config("BQ_API_KEY"))
         )
+        return SQLDatabase(engine=engine)
+
+    @classmethod
+    def __create_duck_db_database(cls) -> SQLDatabase:
+        engine = create_engine("duckdb:///:memory:")
         return SQLDatabase(engine=engine)
 
     @classmethod
