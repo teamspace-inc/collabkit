@@ -1,24 +1,17 @@
 """ Styleguide: https://google.github.io/styleguide/pyguide.html """
 import functions_framework
-import json
 import threading
 from typing import Callable
-from flask import Flask, Response
+from flask import Response
 from flask import escape
-from langchain.agents import AgentExecutor
 from langchain.callbacks.base import CallbackManager
 from langchain.callbacks.stdout import StdOutCallbackHandler
-from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
-from mixpanel import Mixpanel
 from shape_sql_callback import ShapeSQLCallbackHandler
 from shape_sql_callback import create_shape_sql_agent
 from sqlalchemy import *
-from sqlalchemy.engine import create_engine
 from sqlalchemy.schema import *
 from threaded_generator import ThreadedGenerator
-from typing import Any, Dict, List, Union
 from shape_analytics import ShapeAnalytics
-from decouple import config
 from slack_data import SlackData
 from snowflake.sqlalchemy import URL
 
