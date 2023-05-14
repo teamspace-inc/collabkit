@@ -36,7 +36,19 @@ class DatabaseFactory:
     @classmethod
     def __create_duck_db_database(cls) -> SQLDatabase:
         engine = create_engine("duckdb:///:memory:")
-        return SQLDatabase(engine=engine)
+        # you need to create the table before SQLDatabase is initialised
+        # otherwise SQLAlchemy will say there are no tables
+        csv_path = config("DUCKDB_CSV_PATH")
+        if csv_path:
+            with engine.connect() as con:
+                con.execute(
+                    f"CREATE TABLE leads AS SELECT * FROM read_csv_auto('{csv_path}')"
+                )
+        else:
+            print("DUCKDB_CSV_PATH not set, skipping table creation")
+
+        db = SQLDatabase(engine=engine)
+        return db
 
     @classmethod
     def __create_snowflake_database(cls) -> SQLDatabase:

@@ -77,6 +77,8 @@ def runSQLAgent(request):
     headers = {"Access-Control-Allow-Origin": "*"}
     request_args = request.args
     query = request_args["query"]
-    query = escape(query)
-
-    return Response(response=sqlChain(query, "HTTP call"), headers=headers)
+    if query:
+        query = escape(query)
+        return Response(response=sqlChain(query, "HTTP call"), headers=headers)
+    else:
+        return ("Please provide 'query' param", 400, headers)

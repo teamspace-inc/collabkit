@@ -136,6 +136,7 @@ class ShapeSQLCallbackHandler(StreamingStdOutCallbackHandler):
         self, serialized: Dict[str, Any], input_str: str, **kwargs: Any
     ) -> Any:
         """Run when tool starts running."""
+        print(input_str)
         pass
 
     def on_tool_end(
