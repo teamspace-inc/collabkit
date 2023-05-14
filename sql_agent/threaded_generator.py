@@ -1,5 +1,6 @@
 import queue
 
+
 class ThreadedGenerator:
     def __init__(self):
         self.queue = queue.Queue()
@@ -9,7 +10,8 @@ class ThreadedGenerator:
 
     def __next__(self):
         item = self.queue.get()
-        if item is StopIteration: raise item
+        if item is StopIteration:
+            raise item
         return item
 
     def send(self, data):
