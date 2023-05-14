@@ -1,5 +1,4 @@
 from typing import Any, Dict, List, Optional, Union
-from langchain.callbacks.base import BaseCallbackHandler
 from langchain.schema import AgentAction, AgentFinish, LLMResult
 from langchain.agents.agent import AgentExecutor
 from langchain.agents.agent_toolkits.sql.prompt import SQL_PREFIX, SQL_SUFFIX
@@ -9,7 +8,6 @@ from langchain.agents.mrkl.prompt import FORMAT_INSTRUCTIONS
 from langchain.callbacks.base import BaseCallbackManager
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from langchain.chains.llm import LLMChain
-from langchain.llms.base import BaseLLM
 from threaded_generator import ThreadedGenerator
 import json
 from shape_analytics import ShapeAnalytics

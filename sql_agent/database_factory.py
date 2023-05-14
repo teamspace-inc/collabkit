@@ -4,7 +4,6 @@ from sqlalchemy.engine import create_engine
 import json
 from decouple import config
 from snowflake.sqlalchemy import URL
-import os
 
 
 class DatabaseType(Enum):

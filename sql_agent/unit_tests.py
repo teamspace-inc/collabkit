@@ -1,6 +1,5 @@
-from typing import Any, Dict, List, Union
+from typing import Any, List
 from langchain.prompts import PromptTemplate
-from langchain.chains import LLMChain
 from langchain.llms import OpenAI
 from langchain.evaluation.qa import QAEvalChain
 from shape_sql_callback import create_shape_sql_agent
@@ -12,8 +11,7 @@ from langchain.sql_database import SQLDatabase
 from langchain.callbacks.base import CallbackManager
 from langchain.callbacks.stdout import StdOutCallbackHandler
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
-from langchain.schema import AgentAction, AgentFinish, LLMResult
-from langchain.callbacks.base import BaseCallbackHandler
+from langchain.schema import AgentFinish
 from langchain.agents.agent import AgentExecutor
 import json
 import os
