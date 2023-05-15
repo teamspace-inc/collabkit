@@ -5,12 +5,16 @@ from slack_bolt.adapter.socket_mode import SocketModeHandler
 from slack_bolt.context.say import Say
 from decouple import config
 from main import slackSqlChain
+from typing import Dict, Any
+import logging
+
+# logging.basicConfig(level=logging.DEBUG)
 
 app = App(token=config("SLACK_BOT_TOKEN"))
 
 
 @app.event("app_mention")
-def message_hello(event, say: Say):
+def message_hello(event: Dict[str, Any], say: Say):
     user = app.client.users_profile_get(user=event["user"])
 
     thread_ts = event.get("thread_ts", None)
@@ -24,7 +28,7 @@ def message_hello(event, say: Say):
 
 
 @app.event("message")
-def message_hello(event, say: Say):
+def message_hello(event: Dict[str, Any], say: Say):
     if event["channel_type"] == "im":
         user = app.client.users_profile_get(user=event["user"])
         thread_ts = event.get("thread_ts", None)
