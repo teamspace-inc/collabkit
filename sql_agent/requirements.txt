@@ -14,3 +14,4 @@ snowflake-sqlalchemy==1.4.7
 snowflake-connector-python==3.0.3
 sqlalchemy-bigquery==1.6.1
 sqlalchemy==1.4.47
+matplotlib==3.7.1

@@ -14,19 +14,25 @@ from threaded_generator import ThreadedGenerator
 from shape_analytics import ShapeAnalytics
 from slack_data import SlackData
 from snowflake.sqlalchemy import URL
+from slack_bolt.context.say import Say
+from typing import Optional
 
 
 def agent_thread(
     threadedGntr: ThreadedGenerator,
     query: str,
     shapeAnalytics: ShapeAnalytics,
-    slackData: SlackData,
+    slackData: Optional[SlackData],
 ):
     try:
         agent_executor = create_shape_sql_agent(
             callback_manager=CallbackManager(
                 [
-                    ShapeSQLCallbackHandler(threadedGntr, shapeAnalytics, slackData),
+                    ShapeSQLCallbackHandler(
+                        threadedGntr=threadedGntr,
+                        shapeAnalytics=shapeAnalytics,
+                        slackData=slackData,
+                    ),
                     StdOutCallbackHandler(),
                 ]
             ),
@@ -48,12 +54,14 @@ def sqlChain(query: str, username: str) -> ThreadedGenerator:
 
 
 def slackSqlChain(
-    query: str, username: str, sendMessage: Callable, threadTs: str
+    query: str, username: str, sendMessage: Say, thread_ts: str, channel: str
 ) -> ThreadedGenerator:
     shapeAnalytics = ShapeAnalytics(username)
     shapeAnalytics.track("slackSqlChain Invoked", {"Query": query})
     threadedGntr = ThreadedGenerator()
-    slackData = SlackData(username, sendMessage, threadTs)
+    slackData = SlackData(
+        username=username, sendMessage=sendMessage, thread_ts=thread_ts, channel=channel
+    )
     threading.Thread(
         target=agent_thread, args=(threadedGntr, query, shapeAnalytics, slackData)
     ).start()

@@ -16,26 +16,62 @@ import os
 from decouple import config
 from langchain.llms.openai import OpenAI
 from database_factory import *
+import matplotlib
+import uuid
+from slack_sdk import WebClient
+from slack_sdk.errors import SlackApiError
+from slack_bolt import App
+
+SHAPE_SQL_PREFIX = """You are an agent designed to interact with a SQL database and write matplotlib code.
+Given an input question, create a syntactically correct {dialect} query to run, then look at the results of the query and write concise and correct matplotlib code to create a chart of the results which saves to an io.BytesIO() buffer called buffer. 
+
+Unless the user specifies a specific number of examples they wish to obtain, always limit your query to at most {top_k} results.
+You can order the results by a relevant column to return the most interesting examples in the database.
+Never query for all the columns from a specific table, only ask for the relevant columns given the question.
+You have access to tools for interacting with the database.
+Only use the below tools. Only use the information returned by the below tools to write your matplotlib code.
+You MUST double check your query before executing it. If you get an error while executing a query, rewrite the query and try again.
+
+DO NOT make any DML statements (INSERT, UPDATE, DELETE, DROP etc.) to the database.
+
+If the question does not seem related to the database, immediately return a JSON string with one key-value pair where the key is '{summary}' and the value is 'I don't know'.
+
+Before importing pyplot, you should call 'matplotlib.use('Agg')'
+
+Make sure to close the figure after saving it to the buffer.
+
+Please return the answer as JSON string where the first key is '{matplotlib_code}' and the value is the matplotlib code you wrote as a string, 
+and the second key is '{summary}' and the value is one English sentence describing the results of the query.
+
+"""
+
+MATPLOTLIB_CODE = "matplotlib_code"
+SUMMARY = "summary"
 
 
 def create_shape_sql_agent(
-    callback_manager: Optional[BaseCallbackManager] = None,
-    **kwargs: Any,
+    callback_manager: Optional[BaseCallbackManager] = None, **kwargs: Any
 ) -> AgentExecutor:
     """Construct a sql agent from an LLM and tools."""
-    os.environ["OPENAI_API_KEY"] = config("OPENAI_API_KEY")
 
     db = DatabaseFactory.create_database()
+
+    os.environ["OPENAI_API_KEY"] = config("OPENAI_API_KEY")
     llm = OpenAI(temperature=0, model_name="gpt-4")
     toolkit = SQLDatabaseToolkit(db=db, llm=llm)
     tools = toolkit.get_tools()
-    prefix = SQL_PREFIX.format(dialect=toolkit.dialect, top_k=10)
     prompt = ZeroShotAgent.create_prompt(
         tools,
-        prefix=prefix,
+        prefix=SHAPE_SQL_PREFIX.format(
+            dialect=toolkit.dialect,
+            top_k=10,
+            matplotlib_code=MATPLOTLIB_CODE,
+            summary=SUMMARY,
+        ),
         suffix=SQL_SUFFIX,
         format_instructions=FORMAT_INSTRUCTIONS,
     )
+
     llm_chain = LLMChain(
         llm=llm,
         prompt=prompt,
@@ -59,7 +95,7 @@ class ShapeSQLCallbackHandler(StreamingStdOutCallbackHandler):
         self,
         threadedGntr: ThreadedGenerator,
         shapeAnalytics: ShapeAnalytics,
-        slackData: SlackData,
+        slackData: Optional[SlackData] = None,
     ):
         super().__init__()
         self.threadedGntr = threadedGntr
@@ -70,6 +106,7 @@ class ShapeSQLCallbackHandler(StreamingStdOutCallbackHandler):
         self, action: AgentAction, color: Optional[str] = None, **kwargs: Any
     ) -> Any:
         """Run on agent action."""
+        print("on_agent_action")
         actionDict = {
             "on_agent_action": {
                 "tool": action.tool,
@@ -117,12 +154,13 @@ class ShapeSQLCallbackHandler(StreamingStdOutCallbackHandler):
         self, serialized: Dict[str, Any], inputs: Dict[str, Any], **kwargs: Any
     ) -> Any:
         """Run when chain starts running."""
-
+        print("on_chain_start")
         startDict = {"on_chain_start": "Entering new chain..."}
         self.threadedGntr.send(json.dumps(startDict))
 
     def on_chain_end(self, outputs: Dict[str, Any], **kwargs: Any) -> Any:
         """Run when chain ends running."""
+        print("on_chain_end")
         finishDict = {"on_chain_end": "Finished chain"}
         self.threadedGntr.send(json.dumps(finishDict))
 
@@ -136,7 +174,7 @@ class ShapeSQLCallbackHandler(StreamingStdOutCallbackHandler):
         self, serialized: Dict[str, Any], input_str: str, **kwargs: Any
     ) -> Any:
         """Run when tool starts running."""
-        print(input_str)
+        print("on_tool_start")
         pass
 
     def on_tool_end(
@@ -148,6 +186,7 @@ class ShapeSQLCallbackHandler(StreamingStdOutCallbackHandler):
         **kwargs: Any,
     ) -> None:
         """If not the final action, print out observation."""
+        print("on_tool_end")
         toolEndDict = {
             "on_tool_end": {
                 "observation_prefix": observation_prefix,
@@ -156,7 +195,7 @@ class ShapeSQLCallbackHandler(StreamingStdOutCallbackHandler):
             }
         }
         self.threadedGntr.send(json.dumps(toolEndDict))
-        if self.slackData != None:
+        if self.slackData is not None:
             self.slackData.send(output.partition("Action:")[0])
 
     def on_tool_error(
@@ -173,13 +212,55 @@ class ShapeSQLCallbackHandler(StreamingStdOutCallbackHandler):
         **kwargs: Optional[str],
     ) -> None:
         # """Run when agent ends."""
+        print("on_text")
         self.threadedGntr(text)
 
     def on_agent_finish(self, finish: AgentFinish, **kwargs: Any) -> Any:
         """Run on agent end."""
+        print("on_agent_finish")
         finishResponse = {"log": finish.log, "return_values": finish.return_values}
-
         finishDict = {"on_agent_finish": finishResponse}
-        if self.slackData != None:
-            self.slackData.send(finish.log)
         self.threadedGntr.send(json.dumps(finishDict))
+
+        # Send slack message if applicable
+        if self.slackData is None:
+            return
+
+        # Parse output
+        try:
+            json_string = finish.return_values["output"]
+            json_dict = json.loads(json_string)
+            summary = json_dict[SUMMARY]
+        except Exception as e:
+            print(e)
+            return
+
+        # Build chart
+        try:
+            code = json_dict[MATPLOTLIB_CODE]
+            local_vars = {}
+            exec(code, {}, local_vars)
+            buffer = local_vars["buffer"]
+
+        except Exception as e:
+            print(e)
+            # Just send the english text summary without the chart then.
+            self.slackData.send(summary)
+            return
+
+        # Upload chart to Slack
+        try:
+            app = App(token=config("SLACK_BOT_TOKEN"))
+            result = app.client.files_upload_v2(
+                channel=self.slackData.channel,
+                thread_ts=self.slackData.thread_ts,
+                file=buffer.getvalue(),
+                filename=f"chart_{uuid.uuid4()}.png",
+                initial_comment=summary,
+            )
+            print(f"SlackResponse is: {result}")
+        except SlackApiError as e:
+            print(f"Error uploading file: {e}")
+            # Just send the english text summary without the chart then.
+            self.slackData.send(summary)
+            return
