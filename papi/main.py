@@ -1,1 +1,0 @@
-from api.bq import app
