@@ -47,6 +47,7 @@ and the second key is '{summary}' and the value is one English sentence describi
 
 MATPLOTLIB_CODE = "matplotlib_code"
 SUMMARY = "summary"
+CHARTS_FEATURE_ON = False
 
 
 def create_shape_sql_agent(
@@ -235,6 +236,10 @@ class ShapeSQLCallbackHandler(StreamingStdOutCallbackHandler):
             print(e)
             return
 
+        if not CHARTS_FEATURE_ON:
+            self.slackData.send(summary)
+            return
+        
         # Build chart
         try:
             code = json_dict[MATPLOTLIB_CODE]
