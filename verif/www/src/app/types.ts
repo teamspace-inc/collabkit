@@ -31,3 +31,21 @@ export type RemoteEvalResult =
     };
 
 export type Message = z.infer<typeof Message>;
+
+export type Query = {
+  id: string;
+  question: string;
+  timestamp: string;
+  verified: boolean;
+  answer: string;
+  explanation: string;
+  sql: string;
+  error: string | null;
+};
+
+export type Queries = Record<string, Query>;
+
+export type ShapeStore = {
+  queries: Queries;
+  selectedQueryId: string | null;
+};
