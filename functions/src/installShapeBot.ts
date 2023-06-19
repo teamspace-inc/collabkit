@@ -11,7 +11,7 @@ export async function installShapeBotImpl(
   let data = new FormData();
   data.append('code', code);
   data.append('client_id', '3913993031188.5124245352709');
-  data.append('client_secret', '1a135a7c0dbd8026ebb5f68380fb657f');
+  data.append('client_secret', process.env.SLACK_CLIENT_SECRET);
   data.append('redirect_uri', 'https://us-central1-collabkit-test.cloudfunctions.net/installShapeBot');
 
   let config = {
@@ -32,7 +32,7 @@ export async function installShapeBotImpl(
         public_metadata: { botToken: res.data.access_token, id: res.data.team.id },
       }, {
         headers: {
-          'Authorization': `Bearer sk_live_0VimPEYzjnVKnHX14Wu8KQ6O8OyKWqrW5PLffU8xjr`,
+          'Authorization': `Bearer ${process.env.CLERK_SECRET_KEY}`,
         }
       }).then((res) => {
         response.redirect(`https://dashboard.shape.xyz/setup`);
