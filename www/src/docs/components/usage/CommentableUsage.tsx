@@ -2,8 +2,8 @@ import { Commentable } from '@collabkit/react';
 
 export function SomeComponent() {
   return (
-    <Commentable objectId="a-stable-unique-id">
+    <Commentable.Container objectId="a-stable-unique-id">
       <div>Content</div>
-    </Commentable>
+    </Commentable.Container>
   );
 }

@@ -53,7 +53,7 @@ function KpiCardGrid() {
   return (
     <ColGrid numColsMd={2} numColsLg={3} marginTop="mt-6" gapX="gap-x-6" gapY="gap-y-6">
       {kpiData.map((item) => (
-        <Commentable key={item.title} objectId={`dashboard-kpi-${item.title}`}>
+        <Commentable.Container key={item.title} objectId={`dashboard-kpi-${item.title}`}>
           <div data-testid={`dashboard-kpi-${item.title.toLowerCase()}`}>
             <Card key={item.title}>
               <Flex alignItems="items-start">
@@ -70,7 +70,7 @@ function KpiCardGrid() {
               <ProgressBar percentageValue={item.progress} marginTop="mt-2" />
             </Card>
           </div>
-        </Commentable>
+        </Commentable.Container>
       ))}
     </ColGrid>
   );
@@ -119,7 +119,7 @@ function ChartView({ chartData }: { chartData: any }) {
           </Toggle>
         </div>
       </div>
-      <Commentable objectId={`dashboard-performance-chart-${selectedKpi}`}>
+      <Commentable.Container objectId={`dashboard-performance-chart-${selectedKpi}`}>
         <AreaChart
           data={chartData}
           dataKey="date"
@@ -131,7 +131,7 @@ function ChartView({ chartData }: { chartData: any }) {
           height="h-96"
           marginTop="mt-8"
         />
-      </Commentable>
+      </Commentable.Container>
     </Card>
   );
 }

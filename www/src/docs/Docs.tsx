@@ -21,6 +21,7 @@ import Navigation from './Navigation.mdx';
 import Composability from './Composability.mdx';
 import Objects from './Objects.mdx';
 import CommentDoc from './rest/comment.mdx';
+import RechartsDoc from './integrations/Recharts.mdx';
 
 export const DOCS: RootDocNode = {
   'Getting Started': { component: GettingStarted },
@@ -66,4 +67,10 @@ export const DOCS: RootDocNode = {
       comment: { component: CommentDoc },
     },
   },
+  Integrations: {
+    title : 'Integrations',
+    children: {
+      Recharts: {component: RechartsDoc},
+    }
+  }
 };

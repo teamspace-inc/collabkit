@@ -1,0 +1,31 @@
+import { ComponentCard } from '../ComponentCard';
+import { KEYED_COMPONENTS } from '../../home/Components';
+
+## Integrate collabkit with Recharts.js
+
+Collabkit implements an integration with Recharts.js that allows comments to be linked to datapoint inside any chart.
+
+# Quickstart
+
+Just add the following Customzied component by Recharts to your Chart Component to enable the integration.
+
+```ts
+
+<Commentable.Container objectId="dashboard-earnings-chart">
+  <ResponsiveContainer width="100%" height={430}>
+    <AreaChart
+      data={data}
+      margin={{
+        left: 8,
+      }}
+    >
+    <Customized component={<Commentable.Chart />} /> /* add this */
+    </AreaChart>
+  </ResponsiveContainer>
+</Commentable.Container>
+
+```
+
+# Example
+<ComponentCard {...KEYED_COMPONENTS.Charts} />
+

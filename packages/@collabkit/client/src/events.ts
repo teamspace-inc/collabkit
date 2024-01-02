@@ -78,7 +78,7 @@ export function createEvents(store: Store) {
       switch (store.uiState) {
         case 'selecting': {
           switch (target.type) {
-            case 'overlay':
+            case 'commentable':
               e.stopPropagation();
               e.preventDefault();
               actions.attachComposerPin(store, target);
@@ -117,7 +117,7 @@ export function createEvents(store: Store) {
               actions.initComposer(store, { ...target, threadId, eventId: 'default' });
               actions.setComposer(store, { target: composerId });
               break;
-            case 'overlay':
+            case 'commentable':
               actions.deselectAll(store);
               break;
             case 'inboxItem':

@@ -70,7 +70,7 @@ function SavedPin({
     nodeId,
     middleware: [
       offset(({ rects }) => ({
-        crossAxis: rects.reference.width * pin.x,
+        crossAxis: pin.dataPoint && store.commentables[pin.objectId].xScale ? store.commentables[pin.objectId].xScale(pin.dataPoint?.x) + (pin.xOffset * store.commentables[pin.objectId].xStepWidth) : rects.reference.width * pin.x,
         mainAxis: -(rects.reference.height * pin.y + rects.floating.height),
       })),
     ],

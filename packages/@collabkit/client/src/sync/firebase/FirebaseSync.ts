@@ -109,7 +109,7 @@ const UpdateBuilder = {
       // be undone (should we add undo functionality).
       case 'pin': {
         const pinId = attachmentId;
-        const { objectId, x, y, meta } = attachment;
+        const { objectId, x, y, meta, xOffset, dataPoint } = attachment;
         let isValidMeta = false;
         if (meta === null) {
           isValidMeta = true;
@@ -128,6 +128,8 @@ const UpdateBuilder = {
         const firebasePin: FirebasePin | null = {
           x,
           y,
+          xOffset,
+          dataPoint,
           eventId,
           threadId,
           createdById: userId,

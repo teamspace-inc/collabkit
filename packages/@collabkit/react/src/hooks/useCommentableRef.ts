@@ -16,7 +16,7 @@ export function useCommentableRef(objectId: string) {
       }
 
       if (element) {
-        store.commentables[objectId] = { objectId, element: markRaw(element) };
+        store.commentables[objectId] = { objectId, element: markRaw(element), xStepWidth: 1, xScale: ()=>{} };
       } else {
         delete store.commentables[objectId];
       }

@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 
-const API_HOST = 'https://api.collabkit.dev';
+const API_HOST = 'https://test-api.collabkit.dev';
 
 export async function upsertUser(props: {
   appId: string;

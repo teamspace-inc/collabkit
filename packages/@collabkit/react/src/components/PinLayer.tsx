@@ -56,13 +56,26 @@ function PinLayer(props: { className?: string; children?: React.ReactNode }) {
     (e: PointerEvent) => {
       const commentable = findCommentableElement(store, e);
       if (commentable && commentable.element && workspaceId) {
-        const { x, y, width, height } = commentable.element.getBoundingClientRect();
+        let { x, y, width, height } = commentable.element.getBoundingClientRect();
+        if (!commentable.xOffset) {
+          commentable.xOffset = 0;
+        }
+        if(!commentable.xStepWidth){
+          commentable.xStepWidth = 0;
+        }
+        let xOffset = ((e.clientX - x - commentable.xOffset) / commentable.xStepWidth);
+        if (commentable.type == 'Bar') {
+          xOffset += 0.5;
+        }
+        // console.log(commentable);
         events.onClick(e, {
           target: {
-            type: 'overlay',
+            type: 'commentable',
             objectId: commentable.objectId,
             x: (e.clientX - x) / width,
             y: (e.clientY - y) / height,
+            dataPoint: commentable.dataPoint,
+            xOffset: xOffset
           },
         });
       }
